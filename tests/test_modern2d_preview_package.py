@@ -53,6 +53,12 @@ MODEL_CASES = (
 )
 
 
+VENDOR_LICENSE_FILES = {
+    "ppgt_author": "tests/vendor/ppgt_reference/LICENSE",
+    "esa_native": "tests/vendor/esa_reference/LICENSE",
+}
+
+
 def _isolated_cpu_script(module: str, config: dict) -> str:
     config_json = json.dumps(config, separators=(",", ":"))
     return f"""
@@ -131,14 +137,22 @@ def test_committed_modern2d_source_bundle_isolated_import_and_cpu128(
     assert archive_sha256 == bundle["archive_sha256"]
 
     committed = committed_payloads(ROOT, commit, closure.source_files)
+    archive_payloads = {}
     with tarfile.open(archive_path) as archive:
         assert archive.getnames() == list(closure.source_files)
         for member in archive.getmembers():
             assert member.isfile() and member.name in closure.source_files
             payload = archive.extractfile(member).read()
+            archive_payloads[member.name] = payload
             expected = _payload(ROOT / member.name)
             assert payload == expected, member.name
             assert payload == committed[member.name], member.name
+
+    model_member = f"src/molgap/{module}.py"
+    vendor_license = (ROOT / VENDOR_LICENSE_FILES[module]).read_bytes()
+    assert vendor_license in archive_payloads[model_member], (
+        f"{model_member} archive payload must contain the full matching vendor LICENSE"
+    )
 
     extracted = tmp_path / "isolated"
     with tarfile.open(archive_path) as archive:

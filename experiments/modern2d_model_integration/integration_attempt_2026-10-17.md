@@ -8,6 +8,10 @@ performed. The [API guide](../../docs/operations/MODERN2D_INPUT_INTEGRATION.md)
 owns reusable invocation and boundaries; the machine evidence record is
 [integration_attempt_report.json](integration_attempt_report.json).
 
+Outcome: **INFRA_CPU_ACCEPTED** for the declared code/generated-fixture scope.
+Real input export/mirror, native-preflight admission and scientific training
+remained **BLOCKED**; this was not an operational GPU two-arm release.
+
 ## Scientific implementation changes
 
 PPGT/2 is a new scoped port of author commit
@@ -68,6 +72,19 @@ The three refused cases then passed; both new model closures passed exact
 committed-byte extraction and isolated CPU128 forward, without vendor/trainer
 dependencies in the archive. A later metadata hardening bound feature-source
 changes into the new recipe identity; its focused recheck is separate.
+Its first run exposed a mapping-versus-list digest bug, which was repaired with
+an explicit chunk envelope. Review then replaced a constructor-only two-row
+metadata probe with a true128-row indexed loader fixture and added actual count
+and member checks. Authorization/type checks were kept before count inspection;
+the interim ordering regression and original assertions were retained as evidence.
+Standalone new model modules also retain the full upstream MIT notices so their
+isolated archives remain licensed without shipping the test reference tree.
+Final verification at63c20ca1 passed56 feature/lifecycle cases, including the
+true128-row indexed loader, all16 Session cases and16 old-feature checks. Both
+licensed model packages passed isolated CPU128 again; their algorithm ASTs
+matched91bc746a except module docstrings. Final shared compatibility passed4.
+Navigation's failed pointer case passed after repairing root-relative prefixes;
+the documentation checker and read-only RML validate/frozen checks passed.
 No whole-repository all-green or native qualification is claimed.
 
 The14 pre-existing dirty files, including the user's RML test, matched their
@@ -75,6 +92,9 @@ pre-task raw hashes. GPTrans source retained raw SHA256
 `04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2`.
 Raw reference whitespace was retained for exact hashes; first two leaf reports
 were copied byte-identically from C temporary storage to E durable storage.
+Their complete generated scratch directories were also retained and hash-checked
+on E (3,811 files,70,824,146 bytes). Automatic removal of the C duplicates was
+tool-policy refused; neither removal nor a fully cleared C drive is claimed.
 
 Real data/mirror/census, feature preparation cost and native BS128 qualification
 remain missing. PPGT published-small lineage and adapted ESA whole-family scope

@@ -24,6 +24,10 @@ the optimizer/schedule/sampler/state owners, Logger, Profiler and SessionOutputs
 They do not bind GPTrans execution layout. Preview CPU output inspection reports
 `INTEGRATION_PENDING`, not runtime qualification or scientific acceptance.
 Workflow/native dispatch and Kernel CUDA remain closed pending actual release.
+This delivery does not yet supply an admitted native-preflight route for these
+versions. That next adapter step must reuse the existing qualification/session
+owners after exact real-input, source, authority and resource bindings exist;
+it must not turn off the preview guards for a formal training push.
 The new preview recipe also pins its feature-transform source closure; changing
 the RRWP/mask/helper implementation changes recipe identity and invalidates an
 old serialized policy. Indexed views expose a source/config/row/topology/history
