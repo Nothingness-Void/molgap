@@ -80,6 +80,11 @@ content-keyed source reuse, accepted as `INFRA_CPU_ACCEPTED` for the server-loca
 scope after isolated package and continuation checks. Desktop application is explicitly excluded by the user.
 Live latency and arbitrary recipe compilation remain unestablished; no new compute
 or scientific release follows.
+The [daily-use verification](docs/operations/REFORM_MIGRATION.md#daily-research-workflow-verification-2026-10-17)
+checks cross-HEAD frozen continuation, actual K1/GPTrans addon checkpoint recovery
+and offline platform roundtrips. Original Kaggle campaign identities were
+rechecked read-only; fresh live submission/resumed execution and latency remain
+unverified. Closed archive modules no longer enter default worker payloads.
 The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
 inspection, and terminal entry point; it is never a platform submitter.
 Compatible new PCQM graph families reuse the [shared graph owner](docs/operations/GRAPH_SCREEN_EXTENSION.md).

@@ -784,3 +784,178 @@ changes remain with their owning contracts. None is silently promoted to a
 supported arbitrary override. New native/model/data qualification is separate
 from this CPU reform acceptance. The implementation commits and final compact
 records are local to `molgap-server`; no push was performed in this task.
+
+## Daily research workflow verification (2026-10-17)
+
+The next user request separated three questions: continuation of an already
+prepared scientific run across HEAD changes; ordinary K1/GPTrans addons through
+checkpoint recovery; and real platform submission/retrieval/recovery only under
+applicable authority. Desktop synchronization remained the human owner's task.
+The coordinator used the original training, package, journal, transport and
+resume owners. Sol workers edited disjoint tests/runtime inventory; Luna leaf
+workers executed verification. No new scientific run was authorized by a test.
+
+### Continuation is not an archive-cache claim
+
+The existing scientific-input test explicitly prepares successfully, adds an
+unrelated commit, removes the reference/generated/initialization development
+inputs, forbids compiler calls and continues the original frozen run. It checks
+the original Spec/package/source identity, every frozen input/prepared byte,
+one prospective record and zero platform requests. Earlier pre-publication
+failure at a different HEAD remains reconciliation-only rather than silently
+changing source. A fresh direct Luna execution passed both K1/3 and GPTrans/2
+cases in 139.37s; this was not inferred from cross-commit source-cache tests.
+
+The JUnit is
+`E:/MolGap/artifacts/reform/leaf-scientific-input-20261017-114529-104-822181c6ced6.junit.xml`,
+SHA256 `435fe1111674b6e0d803d70318ced9bc5a9337a845cf69131e12a2dc0e00bb30`.
+
+### Actual-family addon checkpoint verification
+
+`tests/test_scientific_addon_recovery.py` reuses the human scientific fixture,
+actual K1/3 and GPTrans/2 readout addons, FamilyKernel/Loaders/Session and their
+real family resume validator. Each family runs in a fresh interpreter selecting
+its own independently frozen fixture checkout. The parent workspace's validator
+is not permitted to validate another checkout by bypassing the source-origin
+gate. Synthetic physical batches are 128; no real accepted graph cache is read.
+
+The test connects compiler/package/preparation, two acknowledged CPU updates,
+atomic checkpoint/export/restore and continuation to four total updates. It
+compares model/addon tensors, optimizer moments, schedule, complete RNG/cursor
+and subsequent updates against uninterrupted execution, without numeric
+tolerance. Separate checks continue the addon run across HEAD without compiler
+or development inputs, prepare its original resume bundle, reject changed
+checkpoint/context/missing moments, and keep native release blocked when its
+real runtime provenance is absent. Session proof callbacks are used; this is
+not selected-output publication, real-data acceptance or a scientific result.
+
+Initial fixture title/slug and cross-checkout-origin setup errors were retained.
+The first isolated full-state comparison then failed for both families. A
+bounded diagnostic on the retained K1 fixture found exact model, optimizer,
+schedule, EMA, cursor and exposure; NumPy/Torch/CUDA RNG also matched. Only
+Python RNG differed. C-call profiling traced the single first-construction draw
+to this environment's `rich/style.py:22`, `_id_generator=count(getrandbits(24))`.
+The paused/restored path had consumed one MT state word, while the in-process
+control reseeded after Rich had already loaded. Explicit Dynamo import did not
+change RNG and was not accepted as an explanation.
+
+The diagnostic is
+`E:/MolGap/artifacts/reform/daily-state-diagnostic-8f352d052e84491ea2ca49ddc879644e.json`,
+SHA256 `41eb37f09a79778a0656f5d57abe458f1dcd1fb43af62ca91c60ffeacf9bfa5e`.
+The test resolves this optional display dependency before either comparison's
+scientific seeding. No production algorithm, restore behavior, native gate or
+full Python-RNG equality assertion was relaxed to make the comparison pass.
+
+The final direct run passed **two outer cases / eight child scenarios** in
+207.15s. Both families emitted `CPU_ADDON_RECOVERY_ACCEPTED`, exact state/next
+updates, zero platform requests, and no native/scientific qualification. The
+unchanged final test source SHA256 is
+`345f75a583021045fdcd8bc56d390944ea0fda767c2669b3562eca4be3dd3099`.
+JUnit:
+`E:/MolGap/artifacts/reform/scientific-addon-recovery-final-20261017-121145-752-7ccd1f9a/test_scientific_addon_recovery.junit.xml`,
+SHA256 `0b47fcd0a81fd6a669dc445e37ba7b51842ac3da07a0d405432b1c4b62d231cc`.
+Earlier red setup/state-comparison reports were preserved and not xfailed.
+
+### Platform evidence and its authority limit
+
+The new offline roundtrip test reuses actual package/release/journal/receipt/
+retrieval/resume owners with fake Kaggle responses and an explicitly synthetic
+family validator. After correcting a fixture title/slug mismatch, all eight
+cases passed in 121.34s: observed/lost response, duplicate invocation, unresolved
+outcome, version/source drift, pinned checkpoint/manifest corruption and
+completed-output recovery refusal. Ordinary repeated calls and observed lost
+responses create exactly one source publication and one kernel POST. Version
+listing limitations remain explicit, not relabeled as exact-version proof.
+
+The green JUnit is
+`E:/molgap-pytest-runs/reform_daily_platform_title_fix_902983eecdb04736ae4e0e97f6c04e5f/report/junit.xml`,
+SHA256 `ed3683aa957f284d11d0da783fe88842c0efcd8f5644d4a5800afe9f7bb86be1`.
+The first eight setup errors remain retained, not counted as passing behavior.
+Recovery preserves original run/action/prospective attempt IDs; `v2/prepared`
+is fresh local recovery staging, not a registered second platform attempt.
+This is not a native K1/GPTrans certificate or a resumed physical submission.
+
+No fresh scientific workflow had authority to consume compute merely to test
+the reform. The two existing campaign jobs were instead reconciled read-only:
+kernel138538171/version3 and kernel138538193/version3, both COMPLETE, private T4,
+unchanged source/mounts/receipt binding. Four small pause/resume-manifest JSON
+files were retrieved by exact version and matched their prior accepted pins.
+No tensor checkpoint, graph dataset, protected role, upload, POST, publication
+or training continuation was involved. The live observation is
+`E:/MolGap/artifacts/reform/daily-live-read-7d16c8ebe6dc4806ba6e7ded566e1a28/observation.json`,
+SHA256 `a372e97dd5511a7d333c0158f7b5e4b55dea63aeb430ae5f35465414de5c13a9`.
+
+Fresh authenticated submission-through-resumed-execution remains **NOT_RUN**.
+The original receipts do not retain code-ready/source-ready/queue endpoints;
+real end-to-end timing remains null, **INSUFFICIENT_EVIDENCE**, never a phase sum,
+filesystem timestamp or offline timing estimate. Those missing facts can be
+collected during the next independently authorized scientific operation, not
+by manufacturing an extra training run for this verification.
+
+### Additional bounded cleanup
+
+The new default runtime distribution excludes exactly `src/molgap/archive/`:
+23 Python files, 67,449 committed source bytes. Historical explicit inventories
+and frozen-package readers remain supported, with credential/path restrictions
+unchanged. Thirty focused boundary/cache tests passed in 72.16s. JUnit:
+`E:/MolGap/artifacts/reform/leaf-history-package-20261017-115414-146-37bed33e4d6b/junit.xml`,
+SHA256 `c8f7b347dedbeb93219ea74763c3b0eab56e18dbb982f7bb260de41ed9525e6d`.
+The exact archive subtree also remains reachable at remote `archive`
+`85062ce97e8744253aa2c3b7b7519fbe787a333e`. Source is retained for closed-study
+readers; excluding default payloads is not falsely described as deleting it.
+
+Two more physical worktrees were retired only after clean/untracked/ignored,
+process and environment checks. The ended archive-audit checkout at commit
+`071fb6b96411721c3bf5fe450d6543b151b28f97` had no ignored or uncommitted files;
+its complete-history E-drive bundle has SHA256
+`1c25a85cf5a2fe5f5e2e0b7b484d34dc00c7e167945a2638ba97ad5b13e65674`.
+Recovery details are at
+`E:/MolGap/artifacts/reform/retired-branch-audit-archive-071fb6b9/retention.json`.
+The already closed path/EMA staging checkout at `33c7bc2b` had 196 ignored
+cache files (4,391,379 bytes), all copied and verified before retirement. Its
+source is an ancestor of both remote Server and the previously verified
+`23784af0` source-history bundle. Its supplementary location/byte pins are in
+`E:/MolGap/artifacts/reform/retired-path-ema-stage-33c7bc2b/retention.json`, SHA256
+`dd65e012a8a2ef68234cacf9b5901ac60606ae55601dbe12ff8f73d625b04d06`.
+Original experimental manifests/decisions were not rewritten.
+
+Three merged local edit branches (`codex/modern2d-cpu`, `codex/reform`,
+`codex/review-hardening`) were deleted after their tips were confirmed reachable
+from fetched remote Server. No remote or long-lived branch was deleted.
+Git then listed only the main Server checkout and the untouched Desktop checkout.
+
+One test leaf incorrectly created a nested app thread and used C-drive temp,
+contrary to the no-recursive-delegation rule. Its two permission-error reports
+were preserved byte-identically under
+`E:/MolGap/artifacts/reform/daily-nested-executor-errors/`; the idle accidental
+thread was archived. Those runs are infrastructure failures, not module passes.
+The replacement leaf executed the thirty tests directly with E-drive temp.
+
+### Final committed distribution and delivery boundary
+
+The reduced actual distribution passed its isolated CPU check: 416 source
+files, 1,290,423 archive bytes; K1/GPTrans sandbox checks and all 116 original
+Core/Session/State cases passed from the extracted package, not host source.
+Cold/warm package samples were 5.087/3.673s; the isolated child took 15.798s.
+These are raw single observations, not stable latency quantiles. Both packages
+bound runtime source `9e673333`; a concurrent commit changed only the offline
+platform test file (`853aabab`), not the packaged runtime, during the later
+test interval. Both package builds passed the unchanged publication HEAD guard
+and retained their original source identities; no identical-HEAD claim is made
+for the full outer test interval.
+
+The outer JUnit at
+`E:/MolGap/artifacts/reform/leaf-distribution-20261017-120819-533-6747b28f7648/junit.xml`
+has SHA256 `b2bf1052c57ca9158c1cef18119254cb20003abb1794e6edd9fb4ff7953102d7`;
+its separately retained nested JUnit SHA256 is
+`984f9684677b912938043ebab8cc0e7ed092f62ac0d48c22947f151fbced7299`.
+
+Delivered daily-use scope: **INFRA_CPU_ACCEPTED**, plus
+**LIVE_READ_ONLY_VERIFIED** for the two original campaign jobs. Fresh live
+submission, real resumed execution and five-minute receipt latency remain
+**INSUFFICIENT_EVIDENCE / NOT_RUN** under this task's no-extra-training boundary.
+This is not a declaration that all platform/native/scientific gates passed.
+Desktop was not synchronized; the human may review explicit Server commits for
+its independent application. Historical source/readers, data assets, V5 text
+and experimental conclusions remain intact. No extra seed, candidate, dataset
+cache construction, protected-role access or GPU job was introduced.
