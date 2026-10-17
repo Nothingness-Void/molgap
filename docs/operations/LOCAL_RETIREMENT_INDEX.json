@@ -1,0 +1,2930 @@
+{
+  "format": "molgap-local-retirement-index-v1",
+  "local_date": "2026-10-17",
+  "scope": "66 registered worktrees from initial inventory; 65 nonprimary physical checkouts retired, primary retained.",
+  "scientific_effect": "Physical custody only. No new acceptance, closure, promotion, READY status, remote state determination or training authority. Original scientific statuses and UNKNOWN facts remain unchanged.",
+  "remote_queries_performed": false,
+  "archive": {
+    "ref": "refs/heads/archive",
+    "commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+    "initial_commit": "85062ce97e8744253aa2c3b7b7519fbe787a333e",
+    "tree": "847559970dac9274e6b031f436b9c09927dad5bd",
+    "initial_tree_unchanged": true,
+    "ancestry_only_no_implementation_adopted": true
+  },
+  "counts": {
+    "original_worktrees": 66,
+    "retired_nonprimary": 65,
+    "retained_primary": 1,
+    "registered_worktrees_after": 1
+  },
+  "source_recovery_bundle": {
+    "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\molgap-source-custody-20261017.bundle",
+    "verification_receipt": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\source-bundle-verification.json",
+    "availability_rule": "Bundle is generated after the docs-only publication commit. Verify its SHA and standalone restore proof against the external receipt; an absent receipt means bundle verification is pending."
+  },
+  "receipt_catalog": [
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\custody-journal.jsonl",
+      "sha256": "f9cd0d9f1690af8a28789ac0383c3b84c20bfe52e535913d62bfcace321de933"
+    },
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\keeper-resolution-overlay.json",
+      "sha256": "da3a6f4cf9faad956d466c9a9b7f3033da9304a1ebcbe9d751f420be7fb0f3d4"
+    },
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\third-party-cupti-disposition-correction.json",
+      "sha256": "24289d96d926ee0c49a75e83de7ff39cd8cccd0f0c94618ee626f2ac813940e5"
+    },
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\final-custody-resolution-verification.json",
+      "sha256": "06dcc277994f3f967c249f8deb7307b33b3c5379b7fd30bf73677f44f048c6fa"
+    },
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\local-availability-publication-verification.json",
+      "sha256": "8eef59bb6f86cb2ffab0c1c1559fd036c8e0017392345fe40b4eec27121c3960"
+    },
+    {
+      "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\bounded37-final-disposition.json",
+      "sha256": "e046343b48d066cc67c81354891b956f37e3d8d2ba1968fabb8bbc48097e895a"
+    }
+  ],
+  "restore": "Select one owner recovery/working/index ref and its hash-verified custody manifest. Restore only required artifacts according to manifest action; do not hydrate inherited catalogs or treat administrative archival as scientific closure.",
+  "worktrees": [
+    {
+      "owner_index": 0,
+      "retirement_owner_id": "owner-00",
+      "owner_id": "molgap-desktop",
+      "original_path": "D:\\文档\\molgap",
+      "original_head": "1ebb2e45d78d623374b50fb5df40b7af8e51ce59",
+      "original_branch": "refs/heads/molgap-desktop",
+      "original_source_locator_hint": "PRIMARY",
+      "scientific_status": "Integration checkout; scientific records unchanged",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "KEEP_PRIMARY",
+      "physical_disposition": "PRIMARY_RETAINED",
+      "recovery_ref": "refs/heads/molgap-desktop",
+      "source_snapshot": {
+        "status": "PRIMARY_RETAINED_NOT_SNAPSHOTTED",
+        "original_head": "1ebb2e45d78d623374b50fb5df40b7af8e51ce59",
+        "original_tree": "68fa24057aace0f9c2ab35d63f176a78bff86eac",
+        "note": "Original protected untracked bytes remain in primary checkout and are verified by permanent manifest; docs-only commit excludes them."
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\main-protected-cross-night-verification.json",
+        "sha256": "644630fea251ef0db391b8b768ef62254c93f65789d240ea6ebeb171f0e7e3fe"
+      },
+      "canonical_record": {
+        "path": "CURRENT_STATE.md",
+        "source_ref": "1ebb2e45d78d623374b50fb5df40b7af8e51ce59",
+        "blob": "ba8c45619c6c34b44ac602c40468b187b21e7056",
+        "blob_sha256": "ef2f8b27e37ae444558fcbd80c220d966110c09060822a7956119d93bf0e8835"
+      }
+    },
+    {
+      "owner_index": 1,
+      "retirement_owner_id": "owner-01",
+      "owner_id": "original-head:53b2de4b7c8f85d3d7afead15364b5d11f309fae",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\7bdb\\molgap",
+      "original_head": "53b2de4b7c8f85d3d7afead15364b5d11f309fae",
+      "original_branch": null,
+      "original_source_locator_hint": "src/molgap/experiment_terminal.py",
+      "scientific_status": "Infrastructure descriptor adapter; no scientific closure claim",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-01-molgap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-01-molgap-20261017",
+        "working_commit": "53b2de4b7c8f85d3d7afead15364b5d11f309fae",
+        "working_tree": "7458c509ec72e563dbc16252e5270ba99596d51c",
+        "original_index_ref": "refs/heads/codex/retired/owner-01-molgap-20261017",
+        "original_index_commit": "53b2de4b7c8f85d3d7afead15364b5d11f309fae",
+        "original_index_tree": "7458c509ec72e563dbc16252e5270ba99596d51c",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-53b2de4b.json",
+        "sha256": "790a866f42af18faf419d7a66e858fa869c75a0f7d7860f0350754068c99a228"
+      },
+      "canonical_record": {
+        "path": "src/molgap/experiment_terminal.py",
+        "source_ref": "refs/heads/codex/retired/owner-01-molgap-20261017",
+        "blob": "f725b1f40810eb209729e54f5ec084035c93e012",
+        "blob_sha256": "599e4508e5064e40774750e4687d6dc5e43a5ff845e668d84413e15c8eeee4b0"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 2,
+      "retirement_owner_id": "owner-02",
+      "owner_id": "codex/infra/common-contract-server",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\common-contract-server\\molgap",
+      "original_head": "0ea5cf188456507d8a6f6a905f8f18781c6b9e73",
+      "original_branch": "refs/heads/codex/infra/common-contract-server",
+      "original_source_locator_hint": "src/molgap/common",
+      "scientific_status": "Server common API extraction completed at owner HEAD; embedded execution questions have own terminal decisions",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-02-molgap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-02-molgap-20261017",
+        "working_commit": "0ea5cf188456507d8a6f6a905f8f18781c6b9e73",
+        "working_tree": "2ba095f9aa183ce470d6217cb9d82028d9de8312",
+        "original_index_ref": "refs/heads/codex/retired/owner-02-molgap-20261017",
+        "original_index_commit": "0ea5cf188456507d8a6f6a905f8f18781c6b9e73",
+        "original_index_tree": "2ba095f9aa183ce470d6217cb9d82028d9de8312",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-0ea5cf18.json",
+        "sha256": "289821561714533e9a23ead4ce0bb3d8f0e5ba4617774171f69c72f8680cd24b"
+      },
+      "canonical_record": {
+        "path": "src/molgap/common/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-02-molgap-20261017",
+        "blob": "a4c76284ea3cbdf89e7887f18c809cae2df06472",
+        "blob_sha256": "94980d55355bec8f03ac83fe4e02a44a74c2f6b921484f5eb8fe698c819f6678"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 3,
+      "retirement_owner_id": "owner-03",
+      "owner_id": "original-head:70ea5ee6dcb776efe982c77684ff50c3dddb918e",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\d3cc\\molgap",
+      "original_head": "70ea5ee6dcb776efe982c77684ff50c3dddb918e",
+      "original_branch": null,
+      "original_source_locator_hint": "src/molgap/experiment_launch.py",
+      "scientific_status": "Infrastructure launch-receipt reconciliation; no scientific closure claim",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-03-molgap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-03-molgap-20261017",
+        "working_commit": "70ea5ee6dcb776efe982c77684ff50c3dddb918e",
+        "working_tree": "fa536fc8009768f9371667d31ae281c61003ccd5",
+        "original_index_ref": "refs/heads/codex/retired/owner-03-molgap-20261017",
+        "original_index_commit": "70ea5ee6dcb776efe982c77684ff50c3dddb918e",
+        "original_index_tree": "fa536fc8009768f9371667d31ae281c61003ccd5",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-70ea5ee6.json",
+        "sha256": "bc1eb2e0b75776bac6a1c587829351c696ef2491271937f829415c588d59ac8f"
+      },
+      "canonical_record": {
+        "path": "src/molgap/experiment_launch.py",
+        "source_ref": "refs/heads/codex/retired/owner-03-molgap-20261017",
+        "blob": "04dd2013668eece57d2a4318deafcafb11cac628",
+        "blob_sha256": "c9f37a4e23feba30ae35beca129b5ca41b9376055db51573901f4b580145b13c"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 4,
+      "retirement_owner_id": "owner-04",
+      "owner_id": "original-head:8821b5ce893680121260627436dc11a8f7fd8403",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\hierarchy-exposure\\molgap",
+      "original_head": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_pretraining_family_pair",
+      "scientific_status": "Archived terminal attempts INCONCLUSIVE; strict comparison and unreviewed fusion supplement unresolved",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-04-molgap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-hierarchy-exposure-molgap-20261017",
+        "working_commit": "720262906fccbbd6e1c9858756e2e4a7dc00b026",
+        "working_tree": "af258af2b966a441ba8068e48e7f6dda22559bd3",
+        "original_index_ref": "refs/heads/codex/retired/owner-04-molgap-20261017",
+        "original_index_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+        "original_index_tree": "e0718c1918ae8ef1a4ae8b194c14b3ace1871100",
+        "commits": [
+          {
+            "commit": "720262906fccbbd6e1c9858756e2e4a7dc00b026",
+            "ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-hierarchy-exposure-molgap-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-8821b5ce.json",
+        "sha256": "c0c3ec6ef130e9f0f556e3cc89869f8ec82423d45b1439cd5a3baea2e4bba5be"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-hierarchy-exposure-molgap-20261017",
+        "blob": "4de80b939811fcd3e4ff042e859f773303606515",
+        "blob_sha256": "267f4c6462077e43debe6167607b08da79292b938ee1a4f23273f5de71d13f5b"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 5,
+      "retirement_owner_id": "owner-05",
+      "owner_id": "original-head:63d220d5d319672867ed902732162fbb1d287981",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\infra-complete",
+      "original_head": "63d220d5d319672867ed902732162fbb1d287981",
+      "original_branch": null,
+      "original_source_locator_hint": "src/molgap/experiment_preflight.py",
+      "scientific_status": "Superseded infrastructure draft explicitly archived in HEAD subject",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-05-infra-complete-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-05-infra-complete-20261017",
+        "working_commit": "63d220d5d319672867ed902732162fbb1d287981",
+        "working_tree": "e8c5e2feb41655c29081218ae878453b5153e720",
+        "original_index_ref": "refs/heads/codex/retired/owner-05-infra-complete-20261017",
+        "original_index_commit": "63d220d5d319672867ed902732162fbb1d287981",
+        "original_index_tree": "e8c5e2feb41655c29081218ae878453b5153e720",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\infra-complete-63d220d5.json",
+        "sha256": "26820c7fd7d64bfbdf4eff7d9fd761c365977909c972fc2fdf0f0051cf86c2ab"
+      },
+      "canonical_record": {
+        "path": "src/molgap/experiment_preflight.py",
+        "source_ref": "refs/heads/codex/retired/owner-05-infra-complete-20261017",
+        "blob": "be1aa2780625ad47262de61e9fc88da4486d7546",
+        "blob_sha256": "5b96cbf2c9c7516c584d274685184eea0715d6f9456f63395ba9cb60c5292189"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 6,
+      "retirement_owner_id": "owner-06",
+      "owner_id": "original-head:84fba89a221c3d65d1393b255fefe1826f206b43",
+      "original_path": "C:\\Users\\17449\\.codex\\worktrees\\norm-500k-integration\\molgap",
+      "original_head": "84fba89a221c3d65d1393b255fefe1826f206b43",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair",
+      "scientific_status": "Old integration snapshot; owner-local RUNNING text stale; main STATUS/dated custody own later closed evidence",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-06-molgap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-norm-500k-integration-molgap-20261017",
+        "working_commit": "314506929bd5c469d12abd55f6fc2de4116096c2",
+        "working_tree": "dc7eb0d9002ded6ec277426b960c546155d525f6",
+        "original_index_ref": "refs/heads/codex/retired/owner-06-molgap-20261017",
+        "original_index_commit": "84fba89a221c3d65d1393b255fefe1826f206b43",
+        "original_index_tree": "9dfcc7a0c673dc5817da41043c4d7aa36c0d63b0",
+        "commits": [
+          {
+            "commit": "314506929bd5c469d12abd55f6fc2de4116096c2",
+            "ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-norm-500k-integration-molgap-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-84fba89a.json",
+        "sha256": "66338b72835bc4c3b984debf3ad62915d988b804d52eeab35cb4fa731b3baf26"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/README.md",
+        "source_ref": "refs/heads/codex/retired/c-users-17449-.codex-worktrees-norm-500k-integration-molgap-20261017",
+        "blob": "222309a2e91cc65dd9d091cae1871cead1d4803f",
+        "blob_sha256": "29ead85cb40f5fde1b8cc225d028ee4fdd9ff0801c0a827143e649406da1c7eb"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 7,
+      "retirement_owner_id": "owner-07",
+      "owner_id": "codex/docs/local-artifact-lifetime",
+      "original_path": "C:\\Users\\17449\\AppData\\Local\\Temp\\molgap-storage-policy",
+      "original_head": "1ebb2e45d78d623374b50fb5df40b7af8e51ce59",
+      "original_branch": "refs/heads/codex/docs/local-artifact-lifetime",
+      "original_source_locator_hint": "SOURCE_REORGANIZATION_WIP",
+      "scientific_status": "Current cleanup source/document WIP; preserve full index/worktree and untracked state before final retirement",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "TRANSIENT_CLEANUP_TOOLING",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-07-molgap-storage-policy-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/c-users-17449-appdata-local-temp-molgap-storage-policy-20261017",
+        "working_commit": "2daeaf0b79b0d73b75298e5d897cc13a5d1857f1",
+        "working_tree": "4e43728b8718b176c86e395089b01bf786970b33",
+        "original_index_ref": "refs/heads/codex/retired/c-users-17449-appdata-local-temp-molgap-storage-policy-20261017-staged",
+        "original_index_commit": "2e3aec7996ae66f31eef79d9d16a7b247d5c8fc7",
+        "original_index_tree": "92f599dfe36a401a10f1efdb8a95e484b204d14c",
+        "commits": [
+          {
+            "commit": "2e3aec7996ae66f31eef79d9d16a7b247d5c8fc7",
+            "ref": "refs/heads/codex/retired/c-users-17449-appdata-local-temp-molgap-storage-policy-20261017-staged",
+            "kind": "original-index"
+          },
+          {
+            "commit": "2daeaf0b79b0d73b75298e5d897cc13a5d1857f1",
+            "ref": "refs/heads/codex/retired/c-users-17449-appdata-local-temp-molgap-storage-policy-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-storage-policy-1ebb2e45.json",
+        "sha256": "bffa4ad84fffb94ce7cbbfe350b5ae042e92b59271c7df2e82908832df704fef"
+      },
+      "canonical_record": {
+        "path": "BRANCHES.md",
+        "source_ref": "refs/heads/codex/retired/c-users-17449-appdata-local-temp-molgap-storage-policy-20261017",
+        "blob": "740d5f3cd2f12507ed19aa6f9cbeddbda1b701c0",
+        "blob_sha256": "25c1c59a8339756b67e89a3393e281c08cce8745d8b12b4b9789a5659022e1cf"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 8,
+      "retirement_owner_id": "owner-08",
+      "owner_id": "original-head:8ea728fc53432f2d6bb324ba519965083dbf571c",
+      "original_path": "D:\\mqap",
+      "original_head": "8ea728fc53432f2d6bb324ba519965083dbf571c",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/qm9_architecture/results/masked_charge_pretraining_seed42",
+      "scientific_status": "Masked charge pretraining rejected; archived owner HEAD",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-08-mqap-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-08-mqap-20261017",
+        "working_commit": "8ea728fc53432f2d6bb324ba519965083dbf571c",
+        "working_tree": "d3d0106531de4450399d61721be01b2e7d51b3c0",
+        "original_index_ref": "refs/heads/codex/retired/owner-08-mqap-20261017",
+        "original_index_commit": "8ea728fc53432f2d6bb324ba519965083dbf571c",
+        "original_index_tree": "d3d0106531de4450399d61721be01b2e7d51b3c0",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\mqap-8ea728fc.json",
+        "sha256": "fe2071f370a8d8b30652d4dca8c18aded859639b8173e30b9bee52e2a7a11d15"
+      },
+      "canonical_record": {
+        "path": "experiments/qm9_architecture/results/masked_charge_pretraining_seed42/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-08-mqap-20261017",
+        "blob": "bbafabd3ce91449be61b626e0da7bdaac3350272",
+        "blob_sha256": "9d2a3ed297727dd50d06890fb8e7176851e923aae25f71c61940b33e2f09d889"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 9,
+      "retirement_owner_id": "owner-09",
+      "owner_id": "codex/infra/terminal-status-sync",
+      "original_path": "D:\\w\\experiment-workflow",
+      "original_head": "a779e8cf9221274a50703d3323ddc41178b6f748",
+      "original_branch": "refs/heads/codex/infra/terminal-status-sync",
+      "original_source_locator_hint": "src/molgap/experiment_workflow.py",
+      "scientific_status": "Integrated workflow/terminal-sync infrastructure; dirty source and evidence require snapshot",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-09-experiment-workflow-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-experiment-workflow-20261017",
+        "working_commit": "03ced6e9d4e931497a01336805ed19e084c5c529",
+        "working_tree": "2b3578be382a5c9b4a9fbda012306e228b6c149e",
+        "original_index_ref": "refs/heads/codex/retired/owner-09-experiment-workflow-20261017",
+        "original_index_commit": "a779e8cf9221274a50703d3323ddc41178b6f748",
+        "original_index_tree": "54aa340a46e63c781eeaa8a061d7b3fea36c8540",
+        "commits": [
+          {
+            "commit": "03ced6e9d4e931497a01336805ed19e084c5c529",
+            "ref": "refs/heads/codex/retired/d-w-experiment-workflow-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\experiment-workflow-a779e8cf.json",
+        "sha256": "924e18f00f66e7a8c27f17e98a83ed60514d20371230ff951d8f74ba4fd06179"
+      },
+      "canonical_record": {
+        "path": "src/molgap/experiment_workflow.py",
+        "source_ref": "refs/heads/codex/retired/d-w-experiment-workflow-20261017",
+        "blob": "ad8d470e0d132945b9a3145a3d1d0c0c13853e31",
+        "blob_sha256": "2324df1f256b2a5b8074ed474c0999e19f91c9d0d5b8833b8ec5b0bf7dfe1857"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 10,
+      "retirement_owner_id": "owner-10",
+      "owner_id": "original-head:6b516b1043a8cc8effbdb8f7fecd67321deb2481",
+      "original_path": "D:\\w\\family-checkpoint-efficiency",
+      "original_head": "6b516b1043a8cc8effbdb8f7fecd67321deb2481",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/family_checkpoint_efficiency",
+      "scientific_status": "Accepted NO_TRAIN diagnostic, integrated in desktop/archive",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-10-family-checkpoint-efficiency-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-10-family-checkpoint-efficiency-20261017",
+        "working_commit": "6b516b1043a8cc8effbdb8f7fecd67321deb2481",
+        "working_tree": "063be62ef68e82d22baa0e357033489aeeccce77",
+        "original_index_ref": "refs/heads/codex/retired/owner-10-family-checkpoint-efficiency-20261017",
+        "original_index_commit": "6b516b1043a8cc8effbdb8f7fecd67321deb2481",
+        "original_index_tree": "063be62ef68e82d22baa0e357033489aeeccce77",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\family-checkpoint-efficiency-6b516b10.json",
+        "sha256": "623ee467787a8fb9b44861afdcd35afb3360c6b698316be287605a82d1806fa5"
+      },
+      "canonical_record": {
+        "path": "experiments/family_checkpoint_efficiency/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-10-family-checkpoint-efficiency-20261017",
+        "blob": "99b2faecc3b9809245b69654349748b819dd4d37",
+        "blob_sha256": "eec199aad764031ba8511dc944d7e1fdbb3ebf17c1cf3e9c26dec5e0f30645bc"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 11,
+      "retirement_owner_id": "owner-11",
+      "owner_id": "original-head:2340fbe5cecae7650ddbd3f06130ae67f3b2ea3f",
+      "original_path": "D:\\w\\family-session-speed-local",
+      "original_head": "2340fbe5cecae7650ddbd3f06130ae67f3b2ea3f",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/family_session_execution_speed",
+      "scientific_status": "Accepted NO_TRAIN diagnostic, integrated in desktop/archive",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-11-family-session-speed-local-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-family-session-speed-local-20261017",
+        "working_commit": "26b51a0e16e12de25c116178674ebf3857aab5ab",
+        "working_tree": "523df02b8967ea9e5aee613a2166690e8d3c92e3",
+        "original_index_ref": "refs/heads/codex/retired/owner-11-family-session-speed-local-20261017",
+        "original_index_commit": "2340fbe5cecae7650ddbd3f06130ae67f3b2ea3f",
+        "original_index_tree": "2484f77b49c85af56680eb744159cf2de194f29b",
+        "commits": [
+          {
+            "commit": "26b51a0e16e12de25c116178674ebf3857aab5ab",
+            "ref": "refs/heads/codex/retired/d-w-family-session-speed-local-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\family-session-speed-local-2340fbe5.json",
+        "sha256": "830beef5c6862f9ff680bee36b709edbb6f08391902778f3b24aeb80e926c057"
+      },
+      "canonical_record": {
+        "path": "experiments/family_session_execution_speed/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-family-session-speed-local-20261017",
+        "blob": "c38cb8799c461d5c8582e5b7be55ff4163f8ec33",
+        "blob_sha256": "9c810830e65cfbaaea74b487b79ca82c867712d0fbb11b89322f1bcdbf4b45ff"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 12,
+      "retirement_owner_id": "owner-12",
+      "owner_id": "codex/exp/family-topology-t4-100k",
+      "original_path": "D:\\w\\family-topology-t4-100k",
+      "original_head": "4e8e94b7457746428042189203390031ec0155a6",
+      "original_branch": "refs/heads/codex/exp/family-topology-t4-100k",
+      "original_source_locator_hint": "experiments/family_topology_t4_100k",
+      "scientific_status": "Accepted COMPLETE execution comparison; RML closed diagnostic non-promotion, strict replay excluded",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-12-family-topology-t4-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-12-family-topology-t4-100k-20261017",
+        "working_commit": "4e8e94b7457746428042189203390031ec0155a6",
+        "working_tree": "1db5498a26998d25a5ec38910ad087f81c52d219",
+        "original_index_ref": "refs/heads/codex/retired/owner-12-family-topology-t4-100k-20261017",
+        "original_index_commit": "4e8e94b7457746428042189203390031ec0155a6",
+        "original_index_tree": "1db5498a26998d25a5ec38910ad087f81c52d219",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\family-topology-t4-100k-4e8e94b7.json",
+        "sha256": "87ea80ec53d6df5ace0b5c399b066a578697ee29c721fd538e620d35d1044fce"
+      },
+      "canonical_record": {
+        "path": "experiments/family_topology_t4_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-12-family-topology-t4-100k-20261017",
+        "blob": "25ca03ae4eaf200c4b385d8789dd3de703eb8225",
+        "blob_sha256": "ce7441468c52b45087656a40b460ffe08c1280b133e24bca60bc9e3513decc94"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 13,
+      "retirement_owner_id": "owner-13",
+      "owner_id": "original-head:575a30afb90c3d40309921be31308ea3273eec38",
+      "original_path": "D:\\w\\gcf",
+      "original_head": "575a30afb90c3d40309921be31308ea3273eec38",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_conditional_flow_100k",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-13-gcf-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-13-gcf-20261017",
+        "working_commit": "575a30afb90c3d40309921be31308ea3273eec38",
+        "working_tree": "69e85807241c126ec32a9d6a0e4ad851162d7337",
+        "original_index_ref": "refs/heads/codex/retired/owner-13-gcf-20261017",
+        "original_index_commit": "575a30afb90c3d40309921be31308ea3273eec38",
+        "original_index_tree": "69e85807241c126ec32a9d6a0e4ad851162d7337",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\gcf-575a30af.json",
+        "sha256": "5e7c0b6a2d7795bfb6d10386e1b5d92683007910afcf9b358cbdf57437cf52b1"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_conditional_flow_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-13-gcf-20261017",
+        "blob": "7864efac66be10b5476b46ae673aa9a12408bfb3",
+        "blob_sha256": "5ada32122cf877e638989fc9ea931ea97cb15765f0339d60aad24acb88e20b34"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 14,
+      "retirement_owner_id": "owner-14",
+      "owner_id": "original-head:818cf7e3fc117abbff7acce164b22a5b3eb7529c",
+      "original_path": "D:\\w\\gfd",
+      "original_head": "818cf7e3fc117abbff7acce164b22a5b3eb7529c",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_feature_denoising_100k",
+      "scientific_status": "Observed negative endpoints; INCONCLUSIVE frozen-contract qualification; finalization binding gaps retained",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-14-gfd-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-gfd-20261017",
+        "working_commit": "32be28a01f4c5cf38c408bc7cf372f6f694661fb",
+        "working_tree": "d308cb31377b07a63d4596ddbfbc66db3b7b3f92",
+        "original_index_ref": "refs/heads/codex/retired/owner-14-gfd-20261017",
+        "original_index_commit": "818cf7e3fc117abbff7acce164b22a5b3eb7529c",
+        "original_index_tree": "d99c2ebf82ebd830d944b29257a853404f42df73",
+        "commits": [
+          {
+            "commit": "32be28a01f4c5cf38c408bc7cf372f6f694661fb",
+            "ref": "refs/heads/codex/retired/d-w-gfd-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\gfd-818cf7e3.json",
+        "sha256": "0742d3b7908cf1e490af749f878cc6847def465fe6a8e2843a18775c85af8249"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_feature_denoising_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-gfd-20261017",
+        "blob": "021e7a21e9cce13c7a094468cc8e40a77e4b78f3",
+        "blob_sha256": "8b5008366dab1fd49557623981b17b021cc62b3efbfced3b733884632da51450"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 15,
+      "retirement_owner_id": "owner-15",
+      "owner_id": "codex/exp/k1-500k-bottleneck-diagnostic",
+      "original_path": "D:\\w\\k1-500k-diagnostic",
+      "original_head": "365c0108bb75bb4bdeeac3e43d4f52fb95a20076",
+      "original_branch": "refs/heads/codex/exp/k1-500k-bottleneck-diagnostic",
+      "original_source_locator_hint": "experiments/pcqm_k1_500k_bottleneck_diagnostic",
+      "scientific_status": "Accepted NO_TRAIN frozen500K bottleneck diagnostic; no model promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-15-k1-500k-diagnostic-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-500k-diagnostic-20261017",
+        "working_commit": "1cd0ad77aad7f0ea495edfd6f8c3e9846ae737c7",
+        "working_tree": "7a5771bce70cad4c4fe519546244fcb50060d47d",
+        "original_index_ref": "refs/heads/codex/retired/owner-15-k1-500k-diagnostic-20261017",
+        "original_index_commit": "365c0108bb75bb4bdeeac3e43d4f52fb95a20076",
+        "original_index_tree": "c2d59768c6713e0f9f33676ca97b3050f86d0304",
+        "commits": [
+          {
+            "commit": "1cd0ad77aad7f0ea495edfd6f8c3e9846ae737c7",
+            "ref": "refs/heads/codex/retired/d-w-k1-500k-diagnostic-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-500k-diagnostic-365c0108.json",
+        "sha256": "5c2ed5bad216a28ecd911300fa59c9a8e914a9d14abc55cda89b2c19ba0e52f4"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-500k-diagnostic-20261017",
+        "blob": "75bce0f3c5c69dc9531076c341961fb4fa8e9a37",
+        "blob_sha256": "4a763b492fc96b6714bb618fb25743f97b4b69dfdd4b3ae1b1d311630ab687a9"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 16,
+      "retirement_owner_id": "owner-16",
+      "owner_id": "codex/exp/k1-bn-mechanism-a100",
+      "original_path": "D:\\w\\k1-bn-mechanism",
+      "original_head": "8e1fb4da7e8012b498dcb09375f0d866928dd8e4",
+      "original_branch": "refs/heads/codex/exp/k1-bn-mechanism-a100",
+      "original_source_locator_hint": "experiments/pcqm_k1_bn_mechanism_a100",
+      "scientific_status": "Accepted NO_TRAIN A100 BN mechanism diagnostic; no training-time causal verdict",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-16-k1-bn-mechanism-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-bn-mechanism-20261017",
+        "working_commit": "f3790df1855146a45041612dba8b553e546ea994",
+        "working_tree": "7d619f000a225f6ee25a3d319cba87cc1e2cb641",
+        "original_index_ref": "refs/heads/codex/retired/owner-16-k1-bn-mechanism-20261017",
+        "original_index_commit": "8e1fb4da7e8012b498dcb09375f0d866928dd8e4",
+        "original_index_tree": "b3a2fd0ebb60ec73efa2c35542df088c4da98df7",
+        "commits": [
+          {
+            "commit": "f3790df1855146a45041612dba8b553e546ea994",
+            "ref": "refs/heads/codex/retired/d-w-k1-bn-mechanism-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-bn-mechanism-8e1fb4da.json",
+        "sha256": "d3e05306524b1ce6b25f4960996667b3dd767b018a3fa9e93124adffe7f33366"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-bn-mechanism-20261017",
+        "blob": "4d8c0a40a493a32b7025a1ef75a320176d820173",
+        "blob_sha256": "26d8e51626c823f00c48da07d10e3fe27433e6d8ab9c089e229c6b638db27313"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 17,
+      "retirement_owner_id": "owner-17",
+      "owner_id": "codex/exp/k1-clean-ema-gptrans-local-500k",
+      "original_path": "D:\\w\\k1-clean-ema-gptrans-local-500k",
+      "original_head": "a6c03723af01a205a5a167b3cd0bd8d1693b660f",
+      "original_branch": "refs/heads/codex/exp/k1-clean-ema-gptrans-local-500k",
+      "original_source_locator_hint": "experiments/pcqm_clean_k1_gptrans_local_500k",
+      "scientific_status": "Both COMPLETE60 and independently RML finalized; INCONCLUSIVE missing frozen reference; no adoption",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-17-k1-clean-ema-gptrans-local-500k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-clean-ema-gptrans-local-500k-20261017",
+        "working_commit": "6081909b399ec12529a0676ce337708c94e9bead",
+        "working_tree": "36757c1f6950d21bee7e61556dcab46a7415df32",
+        "original_index_ref": "refs/heads/codex/retired/owner-17-k1-clean-ema-gptrans-local-500k-20261017",
+        "original_index_commit": "a6c03723af01a205a5a167b3cd0bd8d1693b660f",
+        "original_index_tree": "1293c4e46aa3d8a4bea72e9eb2ea796c8129a6bd",
+        "commits": [
+          {
+            "commit": "6081909b399ec12529a0676ce337708c94e9bead",
+            "ref": "refs/heads/codex/retired/d-w-k1-clean-ema-gptrans-local-500k-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-clean-ema-gptrans-local-500k-a6c03723.json",
+        "sha256": "5800313adf8aaef4f06f95ccd2849678f22c3c2799e7f0623dc0d0830aa1f1fa"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_clean_k1_gptrans_local_500k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-clean-ema-gptrans-local-500k-20261017",
+        "blob": "65c1b096d0dcf1f6a13880fac3e21d9661aa5c09",
+        "blob_sha256": "ed1a9ef44101512d02f80b0067eb4ba32f9051ef616cca960947f99ad6251b01"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 18,
+      "retirement_owner_id": "owner-18",
+      "owner_id": "codex/exp/k1-clean-second-100k",
+      "original_path": "D:\\w\\k1-clean-second",
+      "original_head": "b470d878f3d27ab15c084690f33f32fda646f433",
+      "original_branch": "refs/heads/codex/exp/k1-clean-second-100k",
+      "original_source_locator_hint": "experiments/pcqm_k1_clean_second_100k",
+      "scientific_status": "Reference CLOSED; candidate NEGATIVE_UNDER_CONTRACT; both RML finalized, archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-18-k1-clean-second-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-18-k1-clean-second-20261017",
+        "working_commit": "b470d878f3d27ab15c084690f33f32fda646f433",
+        "working_tree": "b3d143c305d997e6c3618becda98b84c0f33c566",
+        "original_index_ref": "refs/heads/codex/retired/owner-18-k1-clean-second-20261017",
+        "original_index_commit": "b470d878f3d27ab15c084690f33f32fda646f433",
+        "original_index_tree": "b3d143c305d997e6c3618becda98b84c0f33c566",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-clean-second-b470d878.json",
+        "sha256": "02747f80e9f607a9fcb973e837ba9be3d29a797b1f668b70ce437169a291ec3e"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-18-k1-clean-second-20261017",
+        "blob": "3cb3b0ea3a869aae63d7f0bb8ebcd1583466cf99",
+        "blob_sha256": "a0e6ce0983bf215925ad4922ce60b270b8183f3430b18e444e84cc14226e7c01"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 19,
+      "retirement_owner_id": "owner-19",
+      "owner_id": "codex/exp/k1-colab-500k-efficient",
+      "original_path": "D:\\w\\k1-colab-500k-efficient",
+      "original_head": "8c14e49e4890b9fe7d978e2fbb81e88661b48c53",
+      "original_branch": "refs/heads/codex/exp/k1-colab-500k-efficient",
+      "original_source_locator_hint": "experiments/pcqm_k1_single_ema_500k",
+      "scientific_status": "STOP_FOR_COST retained partial; INCONCLUSIVE; formal V5/RML closure blocked; separate parent A100 custody remains",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-19-k1-colab-500k-efficient-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-colab-500k-efficient-20261017",
+        "working_commit": "dc042b6805d589ccf203842c9301759413fc6e48",
+        "working_tree": "b4e9c19d619477b5b8b7641e4f8c47918f2f1bf9",
+        "original_index_ref": "refs/heads/codex/retired/owner-19-k1-colab-500k-efficient-20261017",
+        "original_index_commit": "8c14e49e4890b9fe7d978e2fbb81e88661b48c53",
+        "original_index_tree": "18ef5886526062ac67dee7ee97e2a893204c9586",
+        "commits": [
+          {
+            "commit": "dc042b6805d589ccf203842c9301759413fc6e48",
+            "ref": "refs/heads/codex/retired/d-w-k1-colab-500k-efficient-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-colab-500k-efficient-8c14e49e.json",
+        "sha256": "14f311e00dc6cb33d519eeb2ee2ae0026a7ba5d4c2ffdd4565459901b9954154"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_single_ema_500k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-colab-500k-efficient-20261017",
+        "blob": "a0ca1e5e39c7e66977c6539a1c9803590342cfff",
+        "blob_sha256": "19af953f059c87de1b6be2077fc770404eb32109c30fcb43c5662250765f8f11"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 20,
+      "retirement_owner_id": "owner-20",
+      "owner_id": "codex/exp/k1-colab-profile-a100",
+      "original_path": "D:\\w\\k1-colab-profile",
+      "original_head": "143708ebc8c7576d678d3e570ef8001d9cbff208",
+      "original_branch": "refs/heads/codex/exp/k1-colab-profile-a100",
+      "original_source_locator_hint": "experiments/pcqm_k1_colab_execution_profile",
+      "scientific_status": "Accepted NO_TRAIN A100 execution diagnostic; no model adoption",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-20-k1-colab-profile-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-20-k1-colab-profile-20261017",
+        "working_commit": "143708ebc8c7576d678d3e570ef8001d9cbff208",
+        "working_tree": "b63add27e2a67ab54e1173154d8ee3fda63c2f82",
+        "original_index_ref": "refs/heads/codex/retired/owner-20-k1-colab-profile-20261017",
+        "original_index_commit": "143708ebc8c7576d678d3e570ef8001d9cbff208",
+        "original_index_tree": "b63add27e2a67ab54e1173154d8ee3fda63c2f82",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-colab-profile-143708eb.json",
+        "sha256": "9f45712c3dc12604dedcabaaae4ee89a0c75bfea231e3b57045b31ac63252b7a"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-20-k1-colab-profile-20261017",
+        "blob": "9ba0c7155fa168736b1de3d0e2b96011be0351f5",
+        "blob_sha256": "bba1413c1c74973693ec959e7f530255998fbb23a81eaa0d3fba41e5803e79d4"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 21,
+      "retirement_owner_id": "owner-21",
+      "owner_id": "codex/exp/k1-consistency-ablation-500k",
+      "original_path": "D:\\w\\k1-consistency-500k",
+      "original_head": "1b0a8de2308bcb018a60acba103aac369970712e",
+      "original_branch": "refs/heads/codex/exp/k1-consistency-ablation-500k",
+      "original_source_locator_hint": "experiments/pcqm_k1_consistency_ablation_500k",
+      "scientific_status": "Both500K arms NEGATIVE_UNDER_CONTRACT and official RML finalized; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-21-k1-consistency-500k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-consistency-500k-20261017",
+        "working_commit": "3925dc1a39e0fd83dfa3d6739dbd24100ca250bb",
+        "working_tree": "1aae36a266d190ea87af62e85595f87f97b6d6c1",
+        "original_index_ref": "refs/heads/codex/retired/owner-21-k1-consistency-500k-20261017",
+        "original_index_commit": "1b0a8de2308bcb018a60acba103aac369970712e",
+        "original_index_tree": "43fcfa4408e23999d6f07d157965b68844d4a7bf",
+        "commits": [
+          {
+            "commit": "3925dc1a39e0fd83dfa3d6739dbd24100ca250bb",
+            "ref": "refs/heads/codex/retired/d-w-k1-consistency-500k-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-consistency-500k-1b0a8de2.json",
+        "sha256": "17b24befb2682f42e1643cb6916d0b6585695a891085a875eb0d5f11da734bf2"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_consistency_ablation_500k/README.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-consistency-500k-20261017",
+        "blob": "b181b93fdb542e08681a4260b76b18b0846dc2f9",
+        "blob_sha256": "31bd8ef8c1e100635b16f926fa1b5215fb941ba24867dcad3db35a2a8cb108cb"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 22,
+      "retirement_owner_id": "owner-22",
+      "owner_id": "codex/exp/k1-dropout-consistency",
+      "original_path": "D:\\w\\k1-dropout-consistency",
+      "original_head": "d83fd8a952267d9f5612b128a6c03e173948fc2b",
+      "original_branch": "refs/heads/codex/exp/k1-dropout-consistency",
+      "original_source_locator_hint": "experiments/pcqm_k1_dropout_consistency",
+      "scientific_status": "Both40epoch arms finalized; gain below material gate, NEGATIVE_UNDER_CONTRACT; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-22-k1-dropout-consistency-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-22-k1-dropout-consistency-20261017",
+        "working_commit": "d83fd8a952267d9f5612b128a6c03e173948fc2b",
+        "working_tree": "7b0fc336969d8017582d9e9b3df89776422748c5",
+        "original_index_ref": "refs/heads/codex/retired/owner-22-k1-dropout-consistency-20261017",
+        "original_index_commit": "d83fd8a952267d9f5612b128a6c03e173948fc2b",
+        "original_index_tree": "7b0fc336969d8017582d9e9b3df89776422748c5",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-dropout-consistency-d83fd8a9.json",
+        "sha256": "ab2957063c3cf3d0a6183e86f580e6dd9ef6c02a3f9dab52238a8aa5194007ba"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-22-k1-dropout-consistency-20261017",
+        "blob": "e2bba93a6cad331aa4bcb2f505319df49cb89aad",
+        "blob_sha256": "801278262a3b1424160ff4f7aaf45797351635e256621dc013260270382e6a76"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 23,
+      "retirement_owner_id": "owner-23",
+      "owner_id": "codex/exp/k1-ema-100k-night-20261006",
+      "original_path": "D:\\w\\k1-ema-night",
+      "original_head": "667b68dc15b9750f082e5b68564ca2972a5ee8f7",
+      "original_branch": "refs/heads/codex/exp/k1-ema-100k-night-20261006",
+      "original_source_locator_hint": "experiments/pcqm_k1_weight_ema",
+      "scientific_status": "Version2 ERROR empty logs/output; science and costs pending; original prospective remains open; no retry",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_PENDING_REMOTE_IDENTITY_ARCHIVE",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-23-k1-ema-night-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-23-k1-ema-night-20261017",
+        "working_commit": "667b68dc15b9750f082e5b68564ca2972a5ee8f7",
+        "working_tree": "5a9a003cd71f9ce3d4662961c3c7b569e391c46e",
+        "original_index_ref": "refs/heads/codex/retired/owner-23-k1-ema-night-20261017",
+        "original_index_commit": "667b68dc15b9750f082e5b68564ca2972a5ee8f7",
+        "original_index_tree": "5a9a003cd71f9ce3d4662961c3c7b569e391c46e",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-ema-night-667b68dc.json",
+        "sha256": "3839d22ffb1de39dbe75cfae297a18cb90a85ae4f27ede9be40ccc5979616c02"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_weight_ema/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-23-k1-ema-night-20261017",
+        "blob": "a8dc494fe42a7573d54cf7beec305bc7c6dc2a99",
+        "blob_sha256": "0c6054a76e7b68aa342ca30724a3fdefa77f4744a28cb3392c5df19257435d18"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 24,
+      "retirement_owner_id": "owner-24",
+      "owner_id": "codex/exp/k1-execution-efficiency",
+      "original_path": "D:\\w\\k1-execution-efficiency",
+      "original_head": "9bec8ded1fdc9f731a4488a693ec59152803ea6e",
+      "original_branch": "refs/heads/codex/exp/k1-execution-efficiency",
+      "original_source_locator_hint": "experiments/pcqm_k1_execution_efficiency",
+      "scientific_status": "Multiple completed NO_TRAIN execution probes; only scoped qualifications, latest opt-in RNG loader helper not native training adopted",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-24-k1-execution-efficiency-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-execution-efficiency-20261017",
+        "working_commit": "085643c2050b0e58628aa6366231cf10f9794050",
+        "working_tree": "c07d64615385d04d448c0cc3fc74d36fd8608e80",
+        "original_index_ref": "refs/heads/codex/retired/owner-24-k1-execution-efficiency-20261017",
+        "original_index_commit": "9bec8ded1fdc9f731a4488a693ec59152803ea6e",
+        "original_index_tree": "25ee9a36fe7e78068dbe4590dc65175b65268c77",
+        "commits": [
+          {
+            "commit": "085643c2050b0e58628aa6366231cf10f9794050",
+            "ref": "refs/heads/codex/retired/d-w-k1-execution-efficiency-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-execution-efficiency-9bec8ded.json",
+        "sha256": "6ba2831f21a1ffb590467bac142f0031127914ae01580b1fa32ce57db6250158"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_execution_efficiency/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-execution-efficiency-20261017",
+        "blob": "aa62e47b72c62d7b2990a4860426a572f6177684",
+        "blob_sha256": "4e41b87b986c3545d6e23e6d2641953700d128158ede7989b58c7bff92cdaece"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 25,
+      "retirement_owner_id": "owner-25",
+      "owner_id": "original-head:1ddc159028b8a5a9703940df5828e5dc17f9ba8b",
+      "original_path": "D:\\w\\k1-flag",
+      "original_head": "1ddc159028b8a5a9703940df5828e5dc17f9ba8b",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_flag",
+      "scientific_status": "FLAG100K NEGATIVE_UNDER_CONTRACT; separate CPU NO_TRAIN finalized; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-25-k1-flag-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-flag-20261017",
+        "working_commit": "cfc9bc17164816320e1a101ea0bc69d5837939b4",
+        "working_tree": "37e7a8dd0c5a2981c53b6a64b6d4f7e71f5a0c58",
+        "original_index_ref": "refs/heads/codex/retired/owner-25-k1-flag-20261017",
+        "original_index_commit": "1ddc159028b8a5a9703940df5828e5dc17f9ba8b",
+        "original_index_tree": "67e882fa8439cc4a40cdfe2ebf7b02d4061c3254",
+        "commits": [
+          {
+            "commit": "cfc9bc17164816320e1a101ea0bc69d5837939b4",
+            "ref": "refs/heads/codex/retired/d-w-k1-flag-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-flag-1ddc1590.json",
+        "sha256": "dd1e5dcee8b207288557fedbb4e43bf58de3dc7b0eefb62de51b6c537edc4ff3"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_flag/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-flag-20261017",
+        "blob": "5ab5e7c7340020f32a3cce5c599a5d22f8ddb258",
+        "blob_sha256": "b9d99ad49c3f119dd2922ac79f2d4ae55846cb7cb5b23ec1c6c1d720247debe9"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 26,
+      "retirement_owner_id": "owner-26",
+      "owner_id": "codex/exp/k1-fused-layout-speed-100k",
+      "original_path": "D:\\w\\k1-fused-quality",
+      "original_head": "e54108b55aab877da5062faf5b4ad04f59c742f2",
+      "original_branch": "refs/heads/codex/exp/k1-fused-layout-speed-100k",
+      "original_source_locator_hint": "experiments/pcqm_k1_fused_layout_speed",
+      "scientific_status": "Accepted bounded ten-epoch execution-speed diagnostic; NO_TRAIN, no model promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-26-k1-fused-quality-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-26-k1-fused-quality-20261017",
+        "working_commit": "e54108b55aab877da5062faf5b4ad04f59c742f2",
+        "working_tree": "e8199fe910c7621017db7f33be37c21e4344a99c",
+        "original_index_ref": "refs/heads/codex/retired/owner-26-k1-fused-quality-20261017",
+        "original_index_commit": "e54108b55aab877da5062faf5b4ad04f59c742f2",
+        "original_index_tree": "e8199fe910c7621017db7f33be37c21e4344a99c",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-fused-quality-e54108b5.json",
+        "sha256": "a791cb9eee25cec2ad0de2e1e4928113bb5bb6b2dc52446eb81ad86b66445093"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-26-k1-fused-quality-20261017",
+        "blob": "5d4e90a2cfd8fe16c3097bd97e9ee2de9b28cf01",
+        "blob_sha256": "5cefdc502d958c38d46b8a05f6679e9b1751da181a604e3b9b6427717e876368"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 27,
+      "retirement_owner_id": "owner-27",
+      "owner_id": "codex/exp/k1-fused-layout-t4-100k",
+      "original_path": "D:\\w\\k1-fused-t4",
+      "original_head": "d601daa187641b56eefdf2713b79a9b7cdc7d57c",
+      "original_branch": "refs/heads/codex/exp/k1-fused-layout-t4-100k",
+      "original_source_locator_hint": "experiments/pcqm_k1_fused_layout_t4",
+      "scientific_status": "Native execution attempts complete; speed gates fail; formal owner terminal RML/history routing pending",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-27-k1-fused-t4-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-27-k1-fused-t4-20261017",
+        "working_commit": "d601daa187641b56eefdf2713b79a9b7cdc7d57c",
+        "working_tree": "f8834b9cfea5d405f61d048d009e717f25c117f2",
+        "original_index_ref": "refs/heads/codex/retired/owner-27-k1-fused-t4-20261017",
+        "original_index_commit": "d601daa187641b56eefdf2713b79a9b7cdc7d57c",
+        "original_index_tree": "f8834b9cfea5d405f61d048d009e717f25c117f2",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-fused-t4-d601daa1.json",
+        "sha256": "444ffff2ce5e4da99603c302a3903e6918507adb59f1f655194a3ab13425ca60"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_fused_layout_t4/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-27-k1-fused-t4-20261017",
+        "blob": "13e4e45d817eca99410da30963fb29f3d2d50d9f",
+        "blob_sha256": "8dc0cc013ef879db6981c5ac5d9b17aa5793e043d478b722f280718cc7f3b532"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 28,
+      "retirement_owner_id": "owner-28",
+      "owner_id": "original-head:97d667f4417ff03b6e46fe1f7ba756975cb6497a",
+      "original_path": "D:\\w\\k1-fusion-distillation",
+      "original_head": "97d667f4417ff03b6e46fe1f7ba756975cb6497a",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_fusion_distillation",
+      "scientific_status": "Weak/strong students NEGATIVE_UNDER_CONTRACT and independently finalized; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-28-k1-fusion-distillation-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-fusion-distillation-20261017",
+        "working_commit": "dc85f1ded7db27c29e8189010962b095051dad83",
+        "working_tree": "58a970b2690f6e6129ab8231dc0f9a034281024c",
+        "original_index_ref": "refs/heads/codex/retired/owner-28-k1-fusion-distillation-20261017",
+        "original_index_commit": "97d667f4417ff03b6e46fe1f7ba756975cb6497a",
+        "original_index_tree": "0ffe27d06d2bb5381a869991773f57e276611155",
+        "commits": [
+          {
+            "commit": "dc85f1ded7db27c29e8189010962b095051dad83",
+            "ref": "refs/heads/codex/retired/d-w-k1-fusion-distillation-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-fusion-distillation-97d667f4.json",
+        "sha256": "c4640bb0144cef26b648c82b874bfddf695a26ccf0e24332e3c0b3bbc4c26fbf"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-fusion-distillation-20261017",
+        "blob": "7751ad1ec4571a33e3930916ba312fbc99315a87",
+        "blob_sha256": "25ef5a07566acf39a3e283dcd7ed49fec796a40e388394d80d5250f852b36fac"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 29,
+      "retirement_owner_id": "owner-29",
+      "owner_id": "codex/exp/k1-gptrans-500k-package",
+      "original_path": "D:\\w\\k1-gptrans-500k-package",
+      "original_head": "031a890b4d604fc4614cde2da10e6e76cf2f836e",
+      "original_branch": "refs/heads/codex/exp/k1-gptrans-500k-package",
+      "original_source_locator_hint": "experiments/pcqm_k1_gptrans_package_transfer_500k",
+      "scientific_status": "Both COMPLETE60; POSITIVE_UNDER_CONTRACT fixed blend complementarity; component causality INCONCLUSIVE, no adoption/full release",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_NO_PROMOTION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-29-k1-gptrans-500k-package-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-29-k1-gptrans-500k-package-20261017",
+        "working_commit": "031a890b4d604fc4614cde2da10e6e76cf2f836e",
+        "working_tree": "cd3063174d5b45a3c70d0c27796e8305692a915b",
+        "original_index_ref": "refs/heads/codex/retired/owner-29-k1-gptrans-500k-package-20261017",
+        "original_index_commit": "031a890b4d604fc4614cde2da10e6e76cf2f836e",
+        "original_index_tree": "cd3063174d5b45a3c70d0c27796e8305692a915b",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-gptrans-500k-package-031a890b.json",
+        "sha256": "bfab59168f3c495904e8e4acb3dfd33e8320276fddf10f2e9c9f5e102c6ef20b"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-29-k1-gptrans-500k-package-20261017",
+        "blob": "fd5a966997f757c1391e51e8637e6cb98cfada21",
+        "blob_sha256": "c155e5521a7445265347c65bd084fcc63f556e2f0eaf8321757cfaee779bc2fe"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 30,
+      "retirement_owner_id": "owner-30",
+      "owner_id": "codex/exp/k1-gptrans-profiler-100k",
+      "original_path": "D:\\w\\k1-gptrans-profiler",
+      "original_head": "a6b7f2cc91a0e186fefd064f72602ba5d9cbdd5e",
+      "original_branch": "refs/heads/codex/exp/k1-gptrans-profiler-100k",
+      "original_source_locator_hint": "experiments/family_100k_operator_profile",
+      "scientific_status": "Accepted operator-profile diagnostic; no strict reference/native throughput nomination; finalized non-promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-30-k1-gptrans-profiler-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-30-k1-gptrans-profiler-20261017",
+        "working_commit": "a6b7f2cc91a0e186fefd064f72602ba5d9cbdd5e",
+        "working_tree": "6bc769a257636b6088c3891a2f68ebfca07f49e6",
+        "original_index_ref": "refs/heads/codex/retired/owner-30-k1-gptrans-profiler-20261017",
+        "original_index_commit": "a6b7f2cc91a0e186fefd064f72602ba5d9cbdd5e",
+        "original_index_tree": "6bc769a257636b6088c3891a2f68ebfca07f49e6",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-gptrans-profiler-a6b7f2cc.json",
+        "sha256": "a84921fac09181a987456ffaecb7378dda45e0e82377c1ff266f0bb8eb6c4418"
+      },
+      "canonical_record": {
+        "path": "experiments/family_100k_operator_profile/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-30-k1-gptrans-profiler-20261017",
+        "blob": "cebdd6bf9e24da66d8513746dc46ff9d67c1504e",
+        "blob_sha256": "b32755ee6baf7a632b79ed1519909e39231eb5bbd13a2bc1eed5a8e3ec0d0472"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 31,
+      "retirement_owner_id": "owner-31",
+      "owner_id": "original-head:4517a5b03bc73c3dd7f751fa919f1b0189aac9a9",
+      "original_path": "D:\\w\\k1-input-pipeline-local",
+      "original_head": "4517a5b03bc73c3dd7f751fa919f1b0189aac9a9",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_input_pipeline",
+      "scientific_status": "Accepted NO_TRAIN fixed input-pipeline diagnostic; no sampler adoption",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-31-k1-input-pipeline-local-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-input-pipeline-local-20261017",
+        "working_commit": "c5e474d238b121a211358010ec1745fdab1c6323",
+        "working_tree": "44d6b4206c6364f01c05ee3b9c0d68baee025100",
+        "original_index_ref": "refs/heads/codex/retired/owner-31-k1-input-pipeline-local-20261017",
+        "original_index_commit": "4517a5b03bc73c3dd7f751fa919f1b0189aac9a9",
+        "original_index_tree": "15a81fcb13ac5577c3fe81e77cbd6d00ad16158e",
+        "commits": [
+          {
+            "commit": "c5e474d238b121a211358010ec1745fdab1c6323",
+            "ref": "refs/heads/codex/retired/d-w-k1-input-pipeline-local-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-input-pipeline-local-4517a5b0.json",
+        "sha256": "4e41ab9d0b4cd9dc27e115e1d8c9012fa17622e1672c03a0e822dd51fde52df7"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_input_pipeline/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-input-pipeline-local-20261017",
+        "blob": "6b499e19266366618dc3ad8335120ed4ba16c96c",
+        "blob_sha256": "6a8b7dc516421c1c78ec2cb0c53a9ca2ce350ef9fd09a477f19724323c8c240c"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 32,
+      "retirement_owner_id": "owner-32",
+      "owner_id": "codex/exp/k1-local-mixing-clean-aux",
+      "original_path": "D:\\w\\k1-local-aux",
+      "original_head": "d92f3615670ddc20013eb2e986a09438ef009b47",
+      "original_branch": "refs/heads/codex/exp/k1-local-mixing-clean-aux",
+      "original_source_locator_hint": "experiments/pcqm_k1_local_mixing_clean_aux",
+      "scientific_status": "K1 V4/SSMA pair accepted NEGATIVE_UNDER_CONTRACT; archived, no successor",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-32-k1-local-aux-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-32-k1-local-aux-20261017",
+        "working_commit": "d92f3615670ddc20013eb2e986a09438ef009b47",
+        "working_tree": "650d5edf7adc0c39be97baa69bf989837c761777",
+        "original_index_ref": "refs/heads/codex/retired/owner-32-k1-local-aux-20261017",
+        "original_index_commit": "d92f3615670ddc20013eb2e986a09438ef009b47",
+        "original_index_tree": "650d5edf7adc0c39be97baa69bf989837c761777",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-local-aux-d92f3615.json",
+        "sha256": "33192bb48ce1e53b901eebb3f44adefb788c7bbf359565c9c60823a58eb7db6e"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_local_mixing_clean_aux/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-32-k1-local-aux-20261017",
+        "blob": "8a1698643ca90624912e9e6547e9f66a45f920ae",
+        "blob_sha256": "5ff62adf1226c556766c37d8078b2d50047da915670fa4dea30692978f1a21bc"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 33,
+      "retirement_owner_id": "owner-33",
+      "owner_id": "codex/exp/k1-mean2-single-ema-500k-20261013",
+      "original_path": "D:\\w\\k1-mean2-single-ema-500k-20261013",
+      "original_head": "a313e364c5cdff786ccf90d41cebd8307ab7824c",
+      "original_branch": "refs/heads/codex/exp/k1-mean2-single-ema-500k-20261013",
+      "original_source_locator_hint": "experiments/pcqm_k1_mean2_single_ema_500k",
+      "scientific_status": "v1 NO_TRAIN; corrected attempt002 budget-pause observation retained; research unresolved; current remote UNKNOWN",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_PENDING_REMOTE_IDENTITY_ARCHIVE",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-33-k1-mean2-single-ema-500k-20261013-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-33-k1-mean2-single-ema-500k-20261013-20261017",
+        "working_commit": "a313e364c5cdff786ccf90d41cebd8307ab7824c",
+        "working_tree": "b8966c6545b5a53492b27431ba558464f6829769",
+        "original_index_ref": "refs/heads/codex/retired/owner-33-k1-mean2-single-ema-500k-20261013-20261017",
+        "original_index_commit": "a313e364c5cdff786ccf90d41cebd8307ab7824c",
+        "original_index_tree": "b8966c6545b5a53492b27431ba558464f6829769",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-mean2-single-ema-500k-20261013-a313e364.json",
+        "sha256": "c85f9c35b632b5a13d6443d3be1a5ecdea39af7f859a28b31b91d03ff4617015"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-33-k1-mean2-single-ema-500k-20261013-20261017",
+        "blob": "dc6120048f6b4c7f585e66a70730919e294f4d65",
+        "blob_sha256": "03dacd77f1e151600086d141236d4766fc6c6b55e3f469c30f9d309c413de82a"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 34,
+      "retirement_owner_id": "owner-34",
+      "owner_id": "codex/exp/k1-norm-ablation-100k",
+      "original_path": "D:\\w\\k1-norm-ablation-100k",
+      "original_head": "36b936a212a0c02168d5886a1fbf8b168858b051",
+      "original_branch": "refs/heads/codex/exp/k1-norm-ablation-100k",
+      "original_source_locator_hint": "experiments/pcqm_k1_norm_ablation_100k",
+      "scientific_status": "Both COMPLETE40 independently finalized; candidate NEGATIVE_UNDER_CONTRACT and control CLOSED",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-34-k1-norm-ablation-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-34-k1-norm-ablation-100k-20261017",
+        "working_commit": "36b936a212a0c02168d5886a1fbf8b168858b051",
+        "working_tree": "eecc9b3e0e4e6f6b47c668405177864969176870",
+        "original_index_ref": "refs/heads/codex/retired/owner-34-k1-norm-ablation-100k-20261017",
+        "original_index_commit": "36b936a212a0c02168d5886a1fbf8b168858b051",
+        "original_index_tree": "eecc9b3e0e4e6f6b47c668405177864969176870",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-norm-ablation-100k-36b936a2.json",
+        "sha256": "a292428458d29055e07e1248881912a2297bb2ff7433762b72e29a1a77406f36"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_norm_ablation_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-34-k1-norm-ablation-100k-20261017",
+        "blob": "f55bda6e2265095f8bba8585a10f1ae1a6c5acaa",
+        "blob_sha256": "b69de015cbf68c117134f5780ffc6cfce297bc16563a5825a787615ae982769a"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 35,
+      "retirement_owner_id": "owner-35",
+      "owner_id": "codex/exp/k1-pretrained-consistency-teacher",
+      "original_path": "D:\\w\\k1-pretrained-combo",
+      "original_head": "51bc61fc28691fa771c50e231ee86eb8a4e1c42a",
+      "original_branch": "refs/heads/codex/exp/k1-pretrained-consistency-teacher",
+      "original_source_locator_hint": "experiments/pcqm_k1_pretrained_consistency_teacher",
+      "scientific_status": "Both COMPLETE40 and independently finalized; narrow teacher increment POSITIVE_UNDER_CONTRACT, compression gate fails; no adoption",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_NO_PROMOTION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-35-k1-pretrained-combo-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-pretrained-combo-20261017",
+        "working_commit": "4e1a547b8062643d4a2cd00e69d6ea8b81636dec",
+        "working_tree": "f3b59fe6706db19e24ccdfbf75df1ef3d177291f",
+        "original_index_ref": "refs/heads/codex/retired/owner-35-k1-pretrained-combo-20261017",
+        "original_index_commit": "51bc61fc28691fa771c50e231ee86eb8a4e1c42a",
+        "original_index_tree": "c2f2468b4fe088e4627fdf860b90587cf7a057f9",
+        "commits": [
+          {
+            "commit": "4e1a547b8062643d4a2cd00e69d6ea8b81636dec",
+            "ref": "refs/heads/codex/retired/d-w-k1-pretrained-combo-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-pretrained-combo-51bc61fc.json",
+        "sha256": "0f9cf7243d4e86c495ec3d12f601d34c73d9e11e14b870202d03a650644d93c3"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-pretrained-combo-20261017",
+        "blob": "bc5c86f456e489e6d15e0529e2787efb7eb8fd26",
+        "blob_sha256": "0a722f6e474b26d3918a3f22edcbde695b0a6b45c071a1f5831b7a2a5d067df9"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 36,
+      "retirement_owner_id": "owner-36",
+      "owner_id": "original-head:5869d0d33511a2eb3dcdfebd72249e97b5c11a8b",
+      "original_path": "D:\\w\\k1-saved-attribution",
+      "original_head": "5869d0d33511a2eb3dcdfebd72249e97b5c11a8b",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_consistency_stage_analysis",
+      "scientific_status": "Accepted NO_TRAIN saved stage/BN-row attribution; diagnostic non-promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-36-k1-saved-attribution-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-36-k1-saved-attribution-20261017",
+        "working_commit": "5869d0d33511a2eb3dcdfebd72249e97b5c11a8b",
+        "working_tree": "e68d2181518be1bb146cfc85a608251f91d50957",
+        "original_index_ref": "refs/heads/codex/retired/owner-36-k1-saved-attribution-20261017",
+        "original_index_commit": "5869d0d33511a2eb3dcdfebd72249e97b5c11a8b",
+        "original_index_tree": "e68d2181518be1bb146cfc85a608251f91d50957",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-saved-attribution-5869d0d3.json",
+        "sha256": "2f46d614a924dcb7c24833a5cbf8ef1e43fbaee5dbc7af77a1b441f9e2e120ee"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-36-k1-saved-attribution-20261017",
+        "blob": "679f1904d35e6127124838cd72d1f2c84bf8a4be",
+        "blob_sha256": "983ca37a111d8e0f0b92415ffea7e7ba10ce668f0f349c4ba7824999fa294921"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 37,
+      "retirement_owner_id": "owner-37",
+      "owner_id": "codex/exp/k1-slot-readout-diagnostic",
+      "original_path": "D:\\w\\k1-slot-diagnostic",
+      "original_head": "56578394bb7a12de98dfd20ec5e9898487f05341",
+      "original_branch": "refs/heads/codex/exp/k1-slot-readout-diagnostic",
+      "original_source_locator_hint": "experiments/pcqm_k1_slot_readout_diagnostic",
+      "scientific_status": "Accepted NO_TRAIN slot/readout diagnostic; no model promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-37-k1-slot-diagnostic-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-37-k1-slot-diagnostic-20261017",
+        "working_commit": "56578394bb7a12de98dfd20ec5e9898487f05341",
+        "working_tree": "6183bc83ab256b733e498e420c3b84e74a6dbda0",
+        "original_index_ref": "refs/heads/codex/retired/owner-37-k1-slot-diagnostic-20261017",
+        "original_index_commit": "56578394bb7a12de98dfd20ec5e9898487f05341",
+        "original_index_tree": "6183bc83ab256b733e498e420c3b84e74a6dbda0",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-slot-diagnostic-56578394.json",
+        "sha256": "6a616676be66f84c27a2e82ba13aa412122998ff34437216ed36694d973153f6"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_slot_readout_diagnostic/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-37-k1-slot-diagnostic-20261017",
+        "blob": "d3ba98b6f9d928bfa83bbd1c592ed18ed013f6d3",
+        "blob_sha256": "db39710b327f5b2ec0713e07e82b7790dd052cbc0e1e4f9c42e4396b2e463dd5"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 38,
+      "retirement_owner_id": "owner-38",
+      "owner_id": "codex/exp/k1-slot-width96",
+      "original_path": "D:\\w\\k1-slot96",
+      "original_head": "cae2fd934169a5c1b052efc33da5c5ec2243a2ce",
+      "original_branch": "refs/heads/codex/exp/k1-slot-width96",
+      "original_source_locator_hint": "experiments/pcqm_k1_slot_width96",
+      "scientific_status": "Slot96 NEGATIVE_UNDER_CONTRACT; RML finalized; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-38-k1-slot96-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-slot96-20261017",
+        "working_commit": "1fc7422fe0e20cb9e92eda2b50eefcd75e67a2b7",
+        "working_tree": "bfbcea75a8c1620578e2ff5b638070e093f5613d",
+        "original_index_ref": "refs/heads/codex/retired/owner-38-k1-slot96-20261017",
+        "original_index_commit": "cae2fd934169a5c1b052efc33da5c5ec2243a2ce",
+        "original_index_tree": "1e0c850e28f079fad23233d9f66256d1ab283909",
+        "commits": [
+          {
+            "commit": "1fc7422fe0e20cb9e92eda2b50eefcd75e67a2b7",
+            "ref": "refs/heads/codex/retired/d-w-k1-slot96-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-slot96-cae2fd93.json",
+        "sha256": "d7a24959b93f3fe3b98c60c4f79930d750f323f4332675d70244a708bfb5730f"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_slot_width96/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-slot96-20261017",
+        "blob": "be900b1fb47d6b73abf2f26a5a3710bbd98e6bb6",
+        "blob_sha256": "91c2f28b648bb03d50892606b8041f335bb45f5dd3c47ca0a24f4806d4b3ac8a"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 39,
+      "retirement_owner_id": "owner-39",
+      "owner_id": "codex/exp/k1-spectral-100k-night-20261006",
+      "original_path": "D:\\w\\k1-spectral-night",
+      "original_head": "d82714770772dc46e7d7a8500cd9d795600c2b68",
+      "original_branch": "refs/heads/codex/exp/k1-spectral-100k-night-20261006",
+      "original_source_locator_hint": "experiments/pcqm_k1_spectral_100k",
+      "scientific_status": "COMPLETE40 mechanical/native accepted; material gate fails; canonical terminal package/RML custody unresolved",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-39-k1-spectral-night-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-39-k1-spectral-night-20261017",
+        "working_commit": "d82714770772dc46e7d7a8500cd9d795600c2b68",
+        "working_tree": "ba582b9402ca90ef9c0318117661ef54a5f5f6f7",
+        "original_index_ref": "refs/heads/codex/retired/owner-39-k1-spectral-night-20261017",
+        "original_index_commit": "d82714770772dc46e7d7a8500cd9d795600c2b68",
+        "original_index_tree": "ba582b9402ca90ef9c0318117661ef54a5f5f6f7",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-spectral-night-d8271477.json",
+        "sha256": "191fa81657c3ca5191c89b07bbebe4b1cf1a05a2cc78e714790521ce6c9250ca"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_spectral_100k/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-39-k1-spectral-night-20261017",
+        "blob": "5c51fce637af7041b8cfa2638a3210c76759a6fb",
+        "blob_sha256": "4aad5552e6343997560dbcf67524698c6ddfcf3cdf9390473f027b0c05dc3065"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 40,
+      "retirement_owner_id": "owner-40",
+      "owner_id": "codex/exp/k1-t4-cost-quality-100k",
+      "original_path": "D:\\w\\k1-t4-cost-quality",
+      "original_head": "a9ff9342b59f62d307940112d560b4d994307892",
+      "original_branch": "refs/heads/codex/exp/k1-t4-cost-quality-100k",
+      "original_source_locator_hint": "experiments/pcqm_k1_t4_cost_quality",
+      "scientific_status": "Seed42 NEGATIVE_UNDER_CONTRACT, formal RML blocked; seed43 qualification failure leaves replication unresolved; no retry",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-40-k1-t4-cost-quality-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-40-k1-t4-cost-quality-20261017",
+        "working_commit": "a9ff9342b59f62d307940112d560b4d994307892",
+        "working_tree": "f721277ab85e657d49489b874e9e4853322c09f3",
+        "original_index_ref": "refs/heads/codex/retired/owner-40-k1-t4-cost-quality-20261017",
+        "original_index_commit": "a9ff9342b59f62d307940112d560b4d994307892",
+        "original_index_tree": "f721277ab85e657d49489b874e9e4853322c09f3",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-t4-cost-quality-a9ff9342.json",
+        "sha256": "3b1bdcd2e3a4ad00c4d88c160d11d1c9260bba812c1d6f36acd9a8d1057d4dde"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_t4_cost_quality/terminal_acceptance/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-40-k1-t4-cost-quality-20261017",
+        "blob": "cb0fa4a1c0ef4fdc37966a57f9c6c3abecc26561",
+        "blob_sha256": "21b9e4000ea4191a56bc322b5528f062776874b29827153ace45f1b097e1ae5a"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 41,
+      "retirement_owner_id": "owner-41",
+      "owner_id": "codex/exp/k1-late-weight-average-cpu",
+      "original_path": "D:\\w\\k1-weight-average-cpu",
+      "original_head": "ae0a9738147514b30210453f27df2b63a075f578",
+      "original_branch": "refs/heads/codex/exp/k1-late-weight-average-cpu",
+      "original_source_locator_hint": "experiments/pcqm_k1_complete_local_audit",
+      "scientific_status": "Accepted NO_TRAIN complete local audit and fixed late-weight-average diagnostic; no promotion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-41-k1-weight-average-cpu-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-41-k1-weight-average-cpu-20261017",
+        "working_commit": "ae0a9738147514b30210453f27df2b63a075f578",
+        "working_tree": "0b484f52231bd4adf63c202d3440548af90f3704",
+        "original_index_ref": "refs/heads/codex/retired/owner-41-k1-weight-average-cpu-20261017",
+        "original_index_commit": "ae0a9738147514b30210453f27df2b63a075f578",
+        "original_index_tree": "0b484f52231bd4adf63c202d3440548af90f3704",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-weight-average-cpu-ae0a9738.json",
+        "sha256": "31e47079530a13ed65e09c23a085c21f959b0a5e05b77f4dec1fa1637bc012f7"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_complete_local_audit/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-41-k1-weight-average-cpu-20261017",
+        "blob": "8ec44dfe5e965239ca4706141155633de766614e",
+        "blob_sha256": "d18389ba6ede6fad362c0010bfd85e94e7f5f30188715d51efab071cbbc77ba1"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 42,
+      "retirement_owner_id": "owner-42",
+      "owner_id": "codex/exp/k1-node-width256",
+      "original_path": "D:\\w\\k1-width256",
+      "original_head": "b6e6e7a5fc60b45b6c596c3d2e83d14b22e584aa",
+      "original_branch": "refs/heads/codex/exp/k1-node-width256",
+      "original_source_locator_hint": "experiments/pcqm_k1_node_width256",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT finalized; strict replay excluded; Git terminal routing not yet adopted",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-42-k1-width256-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-k1-width256-20261017",
+        "working_commit": "860962fd1cd38bba539c397b20100198ce384422",
+        "working_tree": "bafd1c303608dfb26dee2c631ba1f230df1eda95",
+        "original_index_ref": "refs/heads/codex/retired/owner-42-k1-width256-20261017",
+        "original_index_commit": "b6e6e7a5fc60b45b6c596c3d2e83d14b22e584aa",
+        "original_index_tree": "b87a1a1b6e9bfa18812b958435703a1006548865",
+        "commits": [
+          {
+            "commit": "860962fd1cd38bba539c397b20100198ce384422",
+            "ref": "refs/heads/codex/retired/d-w-k1-width256-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-width256-b6e6e7a5.json",
+        "sha256": "d069c8a637c7a8f2e79d76fc1c2398c9f2596adb0282b06510aa59ca04bc1871"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_node_width256/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/d-w-k1-width256-20261017",
+        "blob": "78e94166f30ad4ea0384b2c724e6310af36ba6a7",
+        "blob_sha256": "7e040041be9d1f9fcd768ded2612f87330793ea243f8b55349a02c82a2199772"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 43,
+      "retirement_owner_id": "owner-43",
+      "owner_id": "original-head:b78b978d581c7543c603aa17e4cd0d2393f2462a",
+      "original_path": "D:\\w\\rml-500k-fix",
+      "original_head": "b78b978d581c7543c603aa17e4cd0d2393f2462a",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_dsar_500k",
+      "scientific_status": "Archived server DSAR/DSMR draft; incomplete exact job/attempt identity; current remote UNKNOWN; no takeover",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_PENDING_REMOTE_IDENTITY_ARCHIVE",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-43-rml-500k-fix-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-43-rml-500k-fix-20261017",
+        "working_commit": "b78b978d581c7543c603aa17e4cd0d2393f2462a",
+        "working_tree": "773effe76c3fe06c678b3a2de50c01812dbb46cf",
+        "original_index_ref": "refs/heads/codex/retired/owner-43-rml-500k-fix-20261017",
+        "original_index_commit": "b78b978d581c7543c603aa17e4cd0d2393f2462a",
+        "original_index_tree": "773effe76c3fe06c678b3a2de50c01812dbb46cf",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\rml-500k-fix-b78b978d.json",
+        "sha256": "247b8caa8701c582e29c8be5bbb4264d2a9e52e7f704cd18bcb2c3b5da843c90"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_dsar_500k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-43-rml-500k-fix-20261017",
+        "blob": "87414e36becf1d73769cb615b912b003dff59848",
+        "blob_sha256": "06aa6bdff75f6d6da94e4f4429d6e5b6eae7cab7a196d41fd8b5621bccf2fb2c"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 44,
+      "retirement_owner_id": "owner-44",
+      "owner_id": "codex/infra/rml-unreferenced-trace",
+      "original_path": "D:\\w\\rml-unreferenced-trace",
+      "original_head": "f5906722aaa6a102aabf355292521bd7b758cba9",
+      "original_branch": "refs/heads/codex/infra/rml-unreferenced-trace",
+      "original_source_locator_hint": "src/molgap/research_memory/finalize.py",
+      "scientific_status": "Infrastructure finalizer retains explicitly ineligible traces; no new scientific conclusion",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-44-rml-unreferenced-trace-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-44-rml-unreferenced-trace-20261017",
+        "working_commit": "f5906722aaa6a102aabf355292521bd7b758cba9",
+        "working_tree": "c248a2fd16f70f2a7cef6f0bcadbe806922211de",
+        "original_index_ref": "refs/heads/codex/retired/owner-44-rml-unreferenced-trace-20261017",
+        "original_index_commit": "f5906722aaa6a102aabf355292521bd7b758cba9",
+        "original_index_tree": "c248a2fd16f70f2a7cef6f0bcadbe806922211de",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\rml-unreferenced-trace-f5906722.json",
+        "sha256": "a0d70419393e46aa289a59129f4678a0f5eef31b107e5208f8c00b6e0712b7e5"
+      },
+      "canonical_record": {
+        "path": "src/molgap/research_memory/finalize.py",
+        "source_ref": "refs/heads/codex/retired/owner-44-rml-unreferenced-trace-20261017",
+        "blob": "36225eebfc91b1b6230724e1939cf3f9091aef80",
+        "blob_sha256": "51c83dd1c50704ca027bb87546480e545759217c63b44a09fe819555a51a0fe9"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 45,
+      "retirement_owner_id": "owner-45",
+      "owner_id": "original-head:67129e608d2a7b7e3b9927d6a194d54be640674a",
+      "original_path": "D:\\w\\scale-fit",
+      "original_head": "67129e608d2a7b7e3b9927d6a194d54be640674a",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_scale_fit_retained",
+      "scientific_status": "Accepted NO_TRAIN retained scale-fit diagnostic; integrated, no training release",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-45-scale-fit-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-45-scale-fit-20261017",
+        "working_commit": "67129e608d2a7b7e3b9927d6a194d54be640674a",
+        "working_tree": "914b0b593754b279d8c5d234ac04cc68ca6753c4",
+        "original_index_ref": "refs/heads/codex/retired/owner-45-scale-fit-20261017",
+        "original_index_commit": "67129e608d2a7b7e3b9927d6a194d54be640674a",
+        "original_index_tree": "914b0b593754b279d8c5d234ac04cc68ca6753c4",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\scale-fit-67129e60.json",
+        "sha256": "e6672c89da1b70ebbef812af86451ffb814be7ed73afd8cf85b10bd94ea3a264"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_scale_fit_retained/terminal_decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-45-scale-fit-20261017",
+        "blob": "e6d06842517d77db593af88dd5c4a2f758cd4dd8",
+        "blob_sha256": "3175f07a5534b976c631c4e5c3584f78b4ab25686d6f4f15c12a5fdf05b36289"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 46,
+      "retirement_owner_id": "owner-46",
+      "owner_id": "codex/infra/v5-entrypoint-audit",
+      "original_path": "D:\\w\\v5-entrypoint-audit",
+      "original_head": "e351689b765741e36872733f9cc9bbda4f2454fe",
+      "original_branch": "refs/heads/codex/infra/v5-entrypoint-audit",
+      "original_source_locator_hint": "src/molgap/family_training_runner.py",
+      "scientific_status": "V5 entrypoint infrastructure audit integrated; dirty source work must be snapshotted",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-46-v5-entrypoint-audit-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-w-v5-entrypoint-audit-20261017",
+        "working_commit": "afab761a8c41e9da727198672dc06c68287bdbd4",
+        "working_tree": "2ca6d498d2d0a36db4bcb12cd623875871ead423",
+        "original_index_ref": "refs/heads/codex/retired/owner-46-v5-entrypoint-audit-20261017",
+        "original_index_commit": "e351689b765741e36872733f9cc9bbda4f2454fe",
+        "original_index_tree": "d43c1456800d043ebf47704dc80d3841d130855f",
+        "commits": [
+          {
+            "commit": "afab761a8c41e9da727198672dc06c68287bdbd4",
+            "ref": "refs/heads/codex/retired/d-w-v5-entrypoint-audit-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\v5-entrypoint-audit-e351689b.json",
+        "sha256": "5daaed27e457f98ee0a4790e631cca052055a4a934a1f627ad85e62ae3b98864"
+      },
+      "canonical_record": {
+        "path": "docs/operations/EXPERIMENT_WORKFLOW.md",
+        "source_ref": "refs/heads/codex/retired/d-w-v5-entrypoint-audit-20261017",
+        "blob": "7ebf7cf89c89ae5ea5f5fb3e454859e16678b390",
+        "blob_sha256": "fcb672aaf9853fb8e2e52a27d4819c7f7b2d3cb77c6a95513dd8a5270aef0637"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 47,
+      "retirement_owner_id": "owner-47",
+      "owner_id": "original-head:2519f4e3acd6aa9b3172d4b00937be7f36943dae",
+      "original_path": "D:\\文档\\molgap-exp\\k1-pair-value-100k",
+      "original_head": "2519f4e3acd6aa9b3172d4b00937be7f36943dae",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_pair_value_100k",
+      "scientific_status": "Archived pair-value evidence; owner-specific decision retained; qualification gaps unchanged",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-47-k1-pair-value-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-k1-pair-value-100k-20261017",
+        "working_commit": "262cc935726a0bdcf2dd00007d96d61d49128365",
+        "working_tree": "09465bf698284c010ca6f3d71b5dd7621ea57227",
+        "original_index_ref": "refs/heads/codex/retired/owner-47-k1-pair-value-100k-20261017",
+        "original_index_commit": "2519f4e3acd6aa9b3172d4b00937be7f36943dae",
+        "original_index_tree": "05bfb1a791b267b163b5ef2f91fb9636ba23630d",
+        "commits": [
+          {
+            "commit": "262cc935726a0bdcf2dd00007d96d61d49128365",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-k1-pair-value-100k-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\k1-pair-value-100k-2519f4e3.json",
+        "sha256": "b72b1ba72eb73c207b98b52ffbf3e6a1efb130b02e7fb58444caa3c09c58c1a2"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_pair_value_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-k1-pair-value-100k-20261017",
+        "blob": "e36a56e96cfed29d81c1468a18836ad27dd8ec98",
+        "blob_sha256": "86ffdaf75c3334447ed63334fa1de00e46382670da5d3259b1c11da982f1ae8c"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 48,
+      "retirement_owner_id": "owner-48",
+      "owner_id": "original-head:8421d1d8fe4ced0d822a79420a28fe0249733d50",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-500k-attribution",
+      "original_head": "8421d1d8fe4ced0d822a79420a28fe0249733d50",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_500k_module_attribution",
+      "scientific_status": "Archived matched500K attribution; evidence retained; no reopening",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-48-molgap-500k-attribution-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-48-molgap-500k-attribution-20261017",
+        "working_commit": "8421d1d8fe4ced0d822a79420a28fe0249733d50",
+        "working_tree": "aa1727ce4c7168640e28c0edb304d28616708c71",
+        "original_index_ref": "refs/heads/codex/retired/owner-48-molgap-500k-attribution-20261017",
+        "original_index_commit": "8421d1d8fe4ced0d822a79420a28fe0249733d50",
+        "original_index_tree": "aa1727ce4c7168640e28c0edb304d28616708c71",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-500k-attribution-8421d1d8.json",
+        "sha256": "cdc7e01df607061338d45f929ea98d7d8bab4f0907e279572a6d7a6a9dd2a681"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_500k_module_attribution/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-48-molgap-500k-attribution-20261017",
+        "blob": "ea87392479f704ab220828f8ca7d5958d90314b1",
+        "blob_sha256": "15620a1af962628172c777b9ee05607d13ba28be104981ee8663edeab9214581"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 49,
+      "retirement_owner_id": "owner-49",
+      "owner_id": "original-head:efef2ab7390fe5e1d426e3545c8ede9c929ad4c0",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-500k-v4-evidence",
+      "original_head": "efef2ab7390fe5e1d426e3545c8ede9c929ad4c0",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_500k_v4_evidence",
+      "scientific_status": "Matched V4 evidence terminal/integrated; dirty evidence tree requires exact snapshot",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-49-molgap-500k-v4-evidence-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-500k-v4-evidence-20261017",
+        "working_commit": "9594a454cfcfeb8fd26722f12a30d595c48d9114",
+        "working_tree": "6c3d2346dfe771b86f07d0877d4f22ad91441abc",
+        "original_index_ref": "refs/heads/codex/retired/owner-49-molgap-500k-v4-evidence-20261017",
+        "original_index_commit": "efef2ab7390fe5e1d426e3545c8ede9c929ad4c0",
+        "original_index_tree": "686c28dc77ae5bf77414afae5ecc8ce195a4f1dd",
+        "commits": [
+          {
+            "commit": "9594a454cfcfeb8fd26722f12a30d595c48d9114",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-500k-v4-evidence-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-500k-v4-evidence-efef2ab7.json",
+        "sha256": "70242deba5df7c091e1ac0a11c67a95e6f974c4f8695e48a291f569ee4b45249"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_500k_v4_evidence/README.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-500k-v4-evidence-20261017",
+        "blob": "887f0ea931d61f21eb2794468d052db673e946a2",
+        "blob_sha256": "f2b11c6088e51125bb38a4f56e0bf9ae76506fffb2e380f3dde436e9e0bcc43d"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 50,
+      "retirement_owner_id": "owner-50",
+      "owner_id": "archive",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-archive-width",
+      "original_head": "85062ce97e8744253aa2c3b7b7519fbe787a333e",
+      "original_branch": "refs/heads/archive",
+      "original_source_locator_hint": "ARCHIVE_CUSTODY",
+      "scientific_status": "Long-lived archive branch checkout; no reason to retain physical checkout after artifact preservation",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-50-molgap-archive-width-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-50-molgap-archive-width-20261017",
+        "working_commit": "85062ce97e8744253aa2c3b7b7519fbe787a333e",
+        "working_tree": "847559970dac9274e6b031f436b9c09927dad5bd",
+        "original_index_ref": "refs/heads/codex/retired/owner-50-molgap-archive-width-20261017",
+        "original_index_commit": "85062ce97e8744253aa2c3b7b7519fbe787a333e",
+        "original_index_tree": "847559970dac9274e6b031f436b9c09927dad5bd",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-archive-width-656aa196.json",
+        "sha256": "d596be3756c35cd3f235312fb530a14bc0f721aa7bab3b9371f983395f4b8633"
+      },
+      "canonical_record": {
+        "path": "README.md",
+        "source_ref": "refs/heads/codex/retired/owner-50-molgap-archive-width-20261017",
+        "blob": "59bc2fd11cfacf52cd37a1b8fe1cb8d655c3f0dd",
+        "blob_sha256": "69c99c87617f5e4760912bbd1272ddae17beedf762b59c676189c6777aeaa495"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 51,
+      "retirement_owner_id": "owner-51",
+      "owner_id": "original-head:e777ebcb2bf1741cb5a1a1e1f1d880c032b5708a",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-convergence-fix",
+      "original_head": "e777ebcb2bf1741cb5a1a1e1f1d880c032b5708a",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_full_convergence",
+      "scientific_status": "Terminal full K1 continuation closed; integrated with desktop/archive",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-51-molgap-convergence-fix-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-51-molgap-convergence-fix-20261017",
+        "working_commit": "e777ebcb2bf1741cb5a1a1e1f1d880c032b5708a",
+        "working_tree": "0602e0b841a10a48b1d6c69e4ab5f4a6ab98de99",
+        "original_index_ref": "refs/heads/codex/retired/owner-51-molgap-convergence-fix-20261017",
+        "original_index_commit": "e777ebcb2bf1741cb5a1a1e1f1d880c032b5708a",
+        "original_index_tree": "0602e0b841a10a48b1d6c69e4ab5f4a6ab98de99",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-convergence-fix-e777ebcb.json",
+        "sha256": "d204f436344d419a35b7d2eaec759610668c3a70749e3083e8bfc0b663413d52"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_full_convergence/protocol.md",
+        "source_ref": "refs/heads/codex/retired/owner-51-molgap-convergence-fix-20261017",
+        "blob": "18e22032addeee98cf20b2036d4b3a8c2e6b79c1",
+        "blob_sha256": "a3088c94db3ecead9b8e5a0e91189f0f0b8a6a0a7a9288754cf1ad6c8983a083"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 52,
+      "retirement_owner_id": "owner-52",
+      "owner_id": "original-head:76c8fd3ed713774cc155477e925fbce97b1418cb",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-gptrans-flow-ablation",
+      "original_head": "76c8fd3ed713774cc155477e925fbce97b1418cb",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_flow_ablation_100k",
+      "scientific_status": "Archived completed flow ablation; per-arm mechanism conclusions remain owner decision",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-52-molgap-gptrans-flow-ablation-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-52-molgap-gptrans-flow-ablation-20261017",
+        "working_commit": "76c8fd3ed713774cc155477e925fbce97b1418cb",
+        "working_tree": "68e62911b8bef36586d1fc6de63cfea97c11d19f",
+        "original_index_ref": "refs/heads/codex/retired/owner-52-molgap-gptrans-flow-ablation-20261017",
+        "original_index_commit": "76c8fd3ed713774cc155477e925fbce97b1418cb",
+        "original_index_tree": "68e62911b8bef36586d1fc6de63cfea97c11d19f",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-gptrans-flow-ablation-76c8fd3e.json",
+        "sha256": "c07c8927bfca75c8f430cc46c4890aaf41c3b74d6bf53fb7285bb06ad25bd0d4"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_flow_ablation_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-52-molgap-gptrans-flow-ablation-20261017",
+        "blob": "3b07a14540afa782e44ef3c28cb5f391b13c55f1",
+        "blob_sha256": "0d59838c91d2c4eb02d7962ca99e65fee9216e86cc62e072213e74b54bd77e57"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 53,
+      "retirement_owner_id": "owner-53",
+      "owner_id": "original-head:22915f9a7b981ec8bd408a5f1be6281d14712c62",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-gptrans-fp16-precision-100k",
+      "original_head": "22915f9a7b981ec8bd408a5f1be6281d14712c62",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT precision gate; formal V5 and dual replay blocked, prospective unfinalized",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_SNAPSHOT_PENDING_CUSTODY",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-53-molgap-gptrans-fp16-precision-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-53-molgap-gptrans-fp16-precision-100k-20261017",
+        "working_commit": "22915f9a7b981ec8bd408a5f1be6281d14712c62",
+        "working_tree": "ee6e581e6f2dfd0be5aea7b6e965e05e14233b98",
+        "original_index_ref": "refs/heads/codex/retired/owner-53-molgap-gptrans-fp16-precision-100k-20261017",
+        "original_index_commit": "22915f9a7b981ec8bd408a5f1be6281d14712c62",
+        "original_index_tree": "ee6e581e6f2dfd0be5aea7b6e965e05e14233b98",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-gptrans-fp16-precision-100k-22915f9a.json",
+        "sha256": "1fefb5edc5e163d1875f2fbdc78336b076e7c89ab9fcc81cfabdc2f1d8795c79"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_precision_fp16_100k_kaggle1/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-53-molgap-gptrans-fp16-precision-100k-20261017",
+        "blob": "768a434991d6ce43abb3bc132a993b89c12ca6f7",
+        "blob_sha256": "0210406010aabd3028cb22dd86bfdc2683087d189f9eeaace746fa8fc9d3ef48"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 54,
+      "retirement_owner_id": "owner-54",
+      "owner_id": "original-head:30872aa38f76ae4be17e9b6ccdfa214161e06c6c",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-gptrans-full-convergence",
+      "original_head": "30872aa38f76ae4be17e9b6ccdfa214161e06c6c",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_full_convergence",
+      "scientific_status": "Bounded GPTrans continuation terminal; integrated, separate official role decisions unchanged",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-54-molgap-gptrans-full-convergence-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-gptrans-full-convergence-20261017",
+        "working_commit": "d0ce7d376d4621ffb4ca90a9e586f9ae060f1ff1",
+        "working_tree": "53d2bbf311459d2169e119710edd6ed851199cfc",
+        "original_index_ref": "refs/heads/codex/retired/owner-54-molgap-gptrans-full-convergence-20261017",
+        "original_index_commit": "30872aa38f76ae4be17e9b6ccdfa214161e06c6c",
+        "original_index_tree": "74091a8b884b1dd445e9eb02fe8b9a1e4bd67d1e",
+        "commits": [
+          {
+            "commit": "d0ce7d376d4621ffb4ca90a9e586f9ae060f1ff1",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-gptrans-full-convergence-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-gptrans-full-convergence-30872aa3.json",
+        "sha256": "e0a255a1fb200d1d0c55daf3a5f6741e90a55fe288e01fb38112c9f4388d4c94"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_full_convergence/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-gptrans-full-convergence-20261017",
+        "blob": "49786a97b790eb1f2fa2a46d710a0d0eb5c14e61",
+        "blob_sha256": "e9b351f6154e1ad117dc15a21a421950dfe16bddfce12651575cb11091ab8fbe"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 55,
+      "retirement_owner_id": "owner-55",
+      "owner_id": "original-head:6ccc949640c0b361a98c86e87b45b1c4d4519254",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-gptrans-pair-capacity-100k",
+      "original_head": "6ccc949640c0b361a98c86e87b45b1c4d4519254",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1",
+      "scientific_status": "Attempt002 NEGATIVE_UNDER_CONTRACT archived; v1 infrastructure-only closures separate",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-55-molgap-gptrans-pair-capacity-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-55-molgap-gptrans-pair-capacity-100k-20261017",
+        "working_commit": "6ccc949640c0b361a98c86e87b45b1c4d4519254",
+        "working_tree": "b99e91eb586e2eb4844e1124f51b6748536d30d9",
+        "original_index_ref": "refs/heads/codex/retired/owner-55-molgap-gptrans-pair-capacity-100k-20261017",
+        "original_index_commit": "6ccc949640c0b361a98c86e87b45b1c4d4519254",
+        "original_index_tree": "b99e91eb586e2eb4844e1124f51b6748536d30d9",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-gptrans-pair-capacity-100k-6ccc9496.json",
+        "sha256": "972afae9753a8c5d7ed5e05130654beaa054a71a35e8fd323c830234b7e777db"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-55-molgap-gptrans-pair-capacity-100k-20261017",
+        "blob": "421cdbdd8185b1c63d9ce000b380eafb162fbd55",
+        "blob_sha256": "dbbe7ae5e2343d3cea283afd0a10744deafc9ba81f9b8f62cc13e1bdd10319f1"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 56,
+      "retirement_owner_id": "owner-56",
+      "owner_id": "original-head:89e4ddf4943ccc79571c85623054b248ed3f4913",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-gptrans100k-v4",
+      "original_head": "89e4ddf4943ccc79571c85623054b248ed3f4913",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_t_100k_v4",
+      "scientific_status": "Old V4 reference startup/qualification snapshot already archive+desktop reachable; do not infer job completion from old snapshot",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_PENDING_REMOTE_IDENTITY_ARCHIVE",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-56-molgap-gptrans100k-v4-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-56-molgap-gptrans100k-v4-20261017",
+        "working_commit": "89e4ddf4943ccc79571c85623054b248ed3f4913",
+        "working_tree": "9769d3a033cff78882797a92402469677e3eadf0",
+        "original_index_ref": "refs/heads/codex/retired/owner-56-molgap-gptrans100k-v4-20261017",
+        "original_index_commit": "89e4ddf4943ccc79571c85623054b248ed3f4913",
+        "original_index_tree": "9769d3a033cff78882797a92402469677e3eadf0",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-gptrans100k-v4-89e4ddf4.json",
+        "sha256": "a76fc7fe9be97e4ba79ea618c822fd58c54c5702cf3f1abc2bdfb9ae4a7611a2"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_t_100k_v4/README.md",
+        "source_ref": "refs/heads/codex/retired/owner-56-molgap-gptrans100k-v4-20261017",
+        "blob": "ae069384a35b214420cba00139cebfcf466b9df2",
+        "blob_sha256": "c451799da384236f095ea33407c6b18ba6d8c7b717e96ce58868210c7f12a63d"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 57,
+      "retirement_owner_id": "owner-57",
+      "owner_id": "original-head:19fefd18f0fe8a353693fb72f49f82fcfb244d94",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-graphstate-width128",
+      "original_head": "19fefd18f0fe8a353693fb72f49f82fcfb244d94",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gap_architecture/results/graph_state_width_seed42",
+      "scientific_status": "GraphState width increase scientifically closed; preserve dirty tree and unique detached HEAD before archive retirement",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-57-molgap-graphstate-width128-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-graphstate-width128-20261017",
+        "working_commit": "ba419fbc03ac0491713c5fc6a80e083729bec2bc",
+        "working_tree": "9b161e1202927db119cdb0e7342936fa1b3234b5",
+        "original_index_ref": "refs/heads/codex/retired/owner-57-molgap-graphstate-width128-20261017",
+        "original_index_commit": "19fefd18f0fe8a353693fb72f49f82fcfb244d94",
+        "original_index_tree": "ce4d8e7b3bfc01281ae331b49d42ce3f99ffa83e",
+        "commits": [
+          {
+            "commit": "ba419fbc03ac0491713c5fc6a80e083729bec2bc",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-graphstate-width128-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-graphstate-width128-19fefd18.json",
+        "sha256": "ae8084fd536a1e8f82d2881f6dbe3135f87748761332ef26d0953c33a51096bd"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gap_architecture/results/graph_state_width_seed42/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-graphstate-width128-20261017",
+        "blob": "dd8524bba32fb61827f741c6e0221f1b8d072e28",
+        "blob_sha256": "53efc56dc8a3dfa1397fc490c675cfa039f1a29607e40908959706065265a93b"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 58,
+      "retirement_owner_id": "owner-58",
+      "owner_id": "original-head:fc131155a6fcb2461d2c1a5b63e4fcb8229b482d",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-k1-recurrent-pair",
+      "original_head": "fc131155a6fcb2461d2c1a5b63e4fcb8229b482d",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_recurrent_pair_bridge_100k",
+      "scientific_status": "CLOSED_NEGATIVE_UNDER_CONTRACT archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-58-molgap-k1-recurrent-pair-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-recurrent-pair-20261017",
+        "working_commit": "4963bd8aa78c70415eb7ebad685a7af57c24f3c6",
+        "working_tree": "7b5f47d598307f3f55b2e91c0287be6bf56e37e6",
+        "original_index_ref": "refs/heads/codex/retired/owner-58-molgap-k1-recurrent-pair-20261017",
+        "original_index_commit": "fc131155a6fcb2461d2c1a5b63e4fcb8229b482d",
+        "original_index_tree": "1b83810ebfcef27ae1b995a7d99a1c5c58edecd4",
+        "commits": [
+          {
+            "commit": "4963bd8aa78c70415eb7ebad685a7af57c24f3c6",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-recurrent-pair-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-k1-recurrent-pair-fc131155.json",
+        "sha256": "9c3273e4b15d7e0dfd61e4282a90002c5bea435513b38075eb6a3a6ffa9ea7df"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_recurrent_pair_bridge_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-recurrent-pair-20261017",
+        "blob": "079856d6dd4e8397f84e59cbcd8b259e5e4f21f9",
+        "blob_sha256": "2056b386b2b38135a8ec553fa34c3a31209596b9b0670cc46f9a490094ef587f"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 59,
+      "retirement_owner_id": "owner-59",
+      "owner_id": "original-head:e56f7c6f9225f4bc0eabb3445d5c51402a16bbf6",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-k1-stateless-pair",
+      "original_head": "e56f7c6f9225f4bc0eabb3445d5c51402a16bbf6",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_stateless_pair_bridge_100k",
+      "scientific_status": "CLOSED_NEGATIVE_UNDER_CONTRACT archived; inherited recurrent RUNNING text is unrelated owner",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-59-molgap-k1-stateless-pair-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-stateless-pair-20261017",
+        "working_commit": "70b81cbb61e51fc4baec88036a935c22ec15fbff",
+        "working_tree": "050f4e6cf0baeb6630fc25e5d321ffdd90d55327",
+        "original_index_ref": "refs/heads/codex/retired/owner-59-molgap-k1-stateless-pair-20261017",
+        "original_index_commit": "e56f7c6f9225f4bc0eabb3445d5c51402a16bbf6",
+        "original_index_tree": "ceecd36b858e8c0a676eed8826264458c6103a42",
+        "commits": [
+          {
+            "commit": "70b81cbb61e51fc4baec88036a935c22ec15fbff",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-stateless-pair-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-k1-stateless-pair-e56f7c6f.json",
+        "sha256": "47353f7471a03bab47af9c0a7b9fbf8dd2c7b299da3297c014c5364c3b278e1b"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_stateless_pair_bridge_100k/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-k1-stateless-pair-20261017",
+        "blob": "179ace677aba387d69fa12f2e440f694de88fb19",
+        "blob_sha256": "36eb783159a3b6292121a43ddf8f5fd7e94ceb30d8a921d1b468e3e4e03ad164"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 60,
+      "retirement_owner_id": "owner-60",
+      "owner_id": "original-head:2ec21c11d0cde3cd64da894303b963156fa5b70c",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-ogbrich-v4-100k",
+      "original_head": "2ec21c11d0cde3cd64da894303b963156fa5b70c",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_ogb_rich_edgegps9_100k_v4",
+      "scientific_status": "Archived old OGB-rich reference preparation/Slurm sidecar repair; current remote UNKNOWN",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_PENDING_REMOTE_IDENTITY_ARCHIVE",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-60-molgap-ogbrich-v4-100k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-60-molgap-ogbrich-v4-100k-20261017",
+        "working_commit": "2ec21c11d0cde3cd64da894303b963156fa5b70c",
+        "working_tree": "a8c66dede409ed1ead29b295f3cbd56391835ed8",
+        "original_index_ref": "refs/heads/codex/retired/owner-60-molgap-ogbrich-v4-100k-20261017",
+        "original_index_commit": "2ec21c11d0cde3cd64da894303b963156fa5b70c",
+        "original_index_tree": "a8c66dede409ed1ead29b295f3cbd56391835ed8",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-ogbrich-v4-100k-2ec21c11.json",
+        "sha256": "04d87949a27bd7ddeb854ec0e505e3997ff9d037e89fcdb88668ca2c1bb4ba16"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_ogb_rich_edgegps9_100k_v4/protocol.md",
+        "source_ref": "refs/heads/codex/retired/owner-60-molgap-ogbrich-v4-100k-20261017",
+        "blob": "149abce7ec3adfe6406c1747292bcf7b9149554e",
+        "blob_sha256": "7e8a5bff0b3afdc302a0cb39d31bc26a1e756854f63ca45ff99e9a2149823fc3"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 61,
+      "retirement_owner_id": "owner-61",
+      "owner_id": "original-head:fb0526093510fd477af695f46edd227754a7c2c1",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-pcqm-k1-gptrans-full-fusion",
+      "original_head": "fb0526093510fd477af695f46edd227754a7c2c1",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_k1_gptrans_full_fusion",
+      "scientific_status": "Archived+desktop reachable full/fusion dispatch snapshot; later owning evidence may supersede it; no new evaluation or remote claim",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "ADMIN_ARCHIVE_SNAPSHOT",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-61-molgap-pcqm-k1-gptrans-full-fusion-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-pcqm-k1-gptrans-full-fusion-20261017",
+        "working_commit": "bb6bcdd45cf2e55cd95d726ac6d3ecfc7dee5a15",
+        "working_tree": "62290f19217cdbe99cbc39e62fc2972b66d6b3e5",
+        "original_index_ref": "refs/heads/codex/retired/owner-61-molgap-pcqm-k1-gptrans-full-fusion-20261017",
+        "original_index_commit": "fb0526093510fd477af695f46edd227754a7c2c1",
+        "original_index_tree": "fa5f1ee72a19a640b8cdf96f2e31282d8006feb6",
+        "commits": [
+          {
+            "commit": "bb6bcdd45cf2e55cd95d726ac6d3ecfc7dee5a15",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-pcqm-k1-gptrans-full-fusion-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-pcqm-k1-gptrans-full-fusion-fb052609.json",
+        "sha256": "9a9d8c2cc069500947b6f19d36ea0f039a7fad5cbaef2c83ffe5ba79991aa99b"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_gptrans_full_fusion/README.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-pcqm-k1-gptrans-full-fusion-20261017",
+        "blob": "e52933a71dd317a7a4aece4c7bcd39932c46b801",
+        "blob_sha256": "a1cb7479c159fd5614b6d04376067add1afac54df1f42d52889b55b5769e4ded"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 62,
+      "retirement_owner_id": "owner-62",
+      "owner_id": "original-head:86a44892a73f3dd81054c5e77f1d2cfd0fe6e939",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-scnet-da-triangle-500k",
+      "original_head": "86a44892a73f3dd81054c5e77f1d2cfd0fe6e939",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_distance_angle_500k",
+      "scientific_status": "Accepted terminal distance-angle500K replay package; integrated",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-62-molgap-scnet-da-triangle-500k-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/owner-62-molgap-scnet-da-triangle-500k-20261017",
+        "working_commit": "86a44892a73f3dd81054c5e77f1d2cfd0fe6e939",
+        "working_tree": "3dd8afe781f4cca17baff278b1e7c7e7975cea1a",
+        "original_index_ref": "refs/heads/codex/retired/owner-62-molgap-scnet-da-triangle-500k-20261017",
+        "original_index_commit": "86a44892a73f3dd81054c5e77f1d2cfd0fe6e939",
+        "original_index_tree": "3dd8afe781f4cca17baff278b1e7c7e7975cea1a",
+        "commits": [],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-scnet-da-triangle-500k-86a44892.json",
+        "sha256": "3ab01bea4914a2dbd54b2344b76019b15bf940f89dc08c18cdc198648480e3dc"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_distance_angle_500k/decision.md",
+        "source_ref": "refs/heads/codex/retired/owner-62-molgap-scnet-da-triangle-500k-20261017",
+        "blob": "c0ddd177ee03aaf160e0458f3167c9b5b9499bc8",
+        "blob_sha256": "8d72c258928edc30b94a566158622cfa81d5f984eed6bc65358108cdc08440dd"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 63,
+      "retirement_owner_id": "owner-63",
+      "owner_id": "original-head:03f5253dcf86edb87512a4bbd5dcececa5a7c0dd",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-scnet-edgestate304",
+      "original_head": "03f5253dcf86edb87512a4bbd5dcececa5a7c0dd",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_esgps6_304_500k",
+      "scientific_status": "Accepted ESGPS6 relation-pretraining500K terminal evidence; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-63-molgap-scnet-edgestate304-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-edgestate304-20261017",
+        "working_commit": "6834f384bee130bc15b51dbe1e6d6e5b7f6ae835",
+        "working_tree": "5204c7508992507e810a1341eb65d4d00912b529",
+        "original_index_ref": "refs/heads/codex/retired/owner-63-molgap-scnet-edgestate304-20261017",
+        "original_index_commit": "03f5253dcf86edb87512a4bbd5dcececa5a7c0dd",
+        "original_index_tree": "093e4a2e34335190207e80b6d5c3a0e3ac6d2f1a",
+        "commits": [
+          {
+            "commit": "6834f384bee130bc15b51dbe1e6d6e5b7f6ae835",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-edgestate304-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-scnet-edgestate304-03f5253d.json",
+        "sha256": "cf6fbd775e428392e186b363bfe61240c945a375b3f5cffa868b2c3f145e16b9"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_esgps6_304_500k/README.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-edgestate304-20261017",
+        "blob": "88c6c4ddf11299e4dcacb61f1723a0dfc1a25b1b",
+        "blob_sha256": "469399d72af6ddb4125db2bd1a0515b42dbbff6cd29a89899907cf1323deb96b"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 64,
+      "retirement_owner_id": "owner-64",
+      "owner_id": "original-head:c86970d0e309f23c4380de8d5935ec961d0bb209",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-scnet-gptrans-t",
+      "original_head": "c86970d0e309f23c4380de8d5935ec961d0bb209",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_gptrans_t_500k",
+      "scientific_status": "Accepted GPTrans-T500K terminal core evidence; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-64-molgap-scnet-gptrans-t-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-gptrans-t-20261017",
+        "working_commit": "4a27323acecf3c17c6aaac3ddf49526d9449c170",
+        "working_tree": "db5aef9f27eb9f1ec700a1a07277354631afa614",
+        "original_index_ref": "refs/heads/codex/retired/owner-64-molgap-scnet-gptrans-t-20261017",
+        "original_index_commit": "c86970d0e309f23c4380de8d5935ec961d0bb209",
+        "original_index_tree": "30f12c09e8874e7ce5fc47331f48be9eed729df8",
+        "commits": [
+          {
+            "commit": "4a27323acecf3c17c6aaac3ddf49526d9449c170",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-gptrans-t-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-scnet-gptrans-t-c86970d0.json",
+        "sha256": "19df8775001737ddfd2e07d6028b0f341e43d87b7767f75c98029239e9667d94"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_gptrans_t_500k/README.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-scnet-gptrans-t-20261017",
+        "blob": "01260a704297086ad3416bd66ac1038c15fc4fa1",
+        "blob_sha256": "fbc0172f67a0d9daccf954be09a0581fabd3be13c0525f6910612ce91bcafec0"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    },
+    {
+      "owner_index": 65,
+      "retirement_owner_id": "owner-65",
+      "owner_id": "original-head:3fc1d80f704a4bcbd7a44be1bf7e2aab62c9bee1",
+      "original_path": "D:\\文档\\molgap-exp\\molgap-xian-determinism",
+      "original_head": "3fc1d80f704a4bcbd7a44be1bf7e2aab62c9bee1",
+      "original_branch": null,
+      "original_source_locator_hint": "experiments/pcqm_xian_determinism",
+      "scientific_status": "Bounded Xi’an determinism audit terminal negative; archived",
+      "scientific_state_changed": false,
+      "original_disposition_classification": "RETIRE_AFTER_PRESERVATION",
+      "physical_disposition": "PHYSICALLY_RETIRED_COLD_CUSTODY",
+      "recovery_ref": "refs/heads/codex/retired/owner-65-molgap-xian-determinism-20261017",
+      "source_snapshot": {
+        "working_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-xian-determinism-20261017",
+        "working_commit": "8d72890f4119f9d1d92d3d62378c036bc61d96d2",
+        "working_tree": "0622bda7cc3fea77e903a8603f739420953443c1",
+        "original_index_ref": "refs/heads/codex/retired/owner-65-molgap-xian-determinism-20261017",
+        "original_index_commit": "3fc1d80f704a4bcbd7a44be1bf7e2aab62c9bee1",
+        "original_index_tree": "77179dfd40391e962025a9a478287c603124ee0d",
+        "commits": [
+          {
+            "commit": "8d72890f4119f9d1d92d3d62378c036bc61d96d2",
+            "ref": "refs/heads/codex/retired/d-molgap-exp-molgap-xian-determinism-20261017",
+            "kind": "working-source"
+          }
+        ],
+        "dirty_source_proof_in_manifest": true
+      },
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "656aa1962993b21c8adafa7e7152853b8bd69791",
+        "original_head_is_ancestor": true,
+        "snapshot_commits_are_ancestors": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-cleanup-retained-20261017\\final-retirement\\manifests\\molgap-xian-determinism-3fc1d80f.json",
+        "sha256": "35d86b4343c0f63d1cd647c71ef293a365848639799f3e4b4d0cf69591560aa3"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_xian_determinism/decision.md",
+        "source_ref": "refs/heads/codex/retired/d-molgap-exp-molgap-xian-determinism-20261017",
+        "blob": "821507ccd2ec2f692b2b3f57182eb12a07f8e8b3",
+        "blob_sha256": "49e329c438324d3d94a8be98a7caecd5375eab6ef48636cfcffce440acc43f0a"
+      },
+      "artifact_restore_limits": "Manifest actions distinguish exact original bytes, endpoint tensors, reproducible caches and retired native optimizer/RNG states. Tensor-only custody does not restore the original checkpoint SHA or native resume state."
+    }
+  ],
+  "published_local_date": "2026-10-18"
+}

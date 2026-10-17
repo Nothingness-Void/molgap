@@ -97,7 +97,9 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 ## Hard Constraints
 
 - **Python:** use `.venv\Scripts\python.exe` on this Windows checkout, not
-  system Python. Install editable with that environment's `pip install -e .`.
+  system Python. Reuse the primary checkout environment across temporary worktrees;
+  do not reinstall editable from a temporary checkout and redirect its shared import.
+  Install editable from the primary checkout with that environment's `pip install -e .`.
 - **Targets:** `homo`, `lumo`, `gap` in eV under applicable PubChemQC /
   B3LYP Kohn-Sham contracts; no experimental or alternate target substitution.
 - **Geometry:** generated-3D training/inference contracts must be compatible.
@@ -127,7 +129,7 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 
 ## Branch Ownership
 
-[BRANCHES.md](BRANCHES.md) owns checkout mapping and terminal Git routing.
+[BRANCHES.md](BRANCHES.md) owns branch/custody navigation and terminal Git routing.
 Compute host does not determine ownership: source/protocol/branch decisions do.
 
 - `molgap-desktop`: integration, full training, official evaluation, submission,
@@ -149,6 +151,11 @@ Use an owning branch when safe, otherwise a temporary `codex/` isolation branch.
 Integrate only reviewed reusable work with provenance; never wholesale merge an
 unrelated branch for a helper. Delete a completed temporary ref only after its
 commits are durably reachable from its owning long-lived branch or archive.
+A worktree is temporary execution space, not evidence authority. After verified
+source/evidence/artifact preservation, remove completed checkouts promptly.
+Pending questions may use recoverable cold snapshots without changing scientific
+status; retain their owner refs and unresolved facts. Follow the
+[local storage lifecycle](docs/operations/LOCAL_STORAGE_RETIREMENT.md).
 
 ## Desktop Offline / V5
 

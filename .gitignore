@@ -22,7 +22,9 @@ catboost_info/
 
 # ── Binary and bulk artifacts ────────────────────────────────────────────────
 # Rule of thumb: a decision record and its compact metrics are tracked; the raw
-# payload that backs them is regenerable or retrievable, and stays local.
+# payload is temporarily local when needed, then retrieved or regenerated.
+# Ignored does not mean permanently resident; preserve unique evidence first.
+# Lifecycle: docs/operations/LOCAL_STORAGE_RETIREMENT.md.
 
 # Model weights and caches
 models/**/*.pt
