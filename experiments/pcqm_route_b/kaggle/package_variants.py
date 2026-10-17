@@ -52,7 +52,7 @@ def main() -> None:
         )
         for source in (
             ROOT / "src/molgap/gps.py",
-            ROOT / "src/molgap/schnet.py",
+            ROOT / "src/molgap/models/schnet.py",
             ROOT / "src/molgap/pcqm_route_b_training.py",
         ):
             shutil.copy2(source, package / source.name)

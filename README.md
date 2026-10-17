@@ -23,6 +23,10 @@ Query [RML](research_memory/README.md) before opening a new research question;
 follow its pointers to canonical evidence. Platform submission and retrieval
 remain in the applicable workload skills and existing adapters.
 
+The [three working guides](docs/operations/README.md) cover experiment execution,
+research decisions and repository maintenance without reading every historical
+runbook. Worktree storage and environment repair start with the maintenance guide.
+
 ## Install
 
 Use the repository virtual environment:

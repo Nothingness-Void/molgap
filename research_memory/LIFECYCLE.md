@@ -200,6 +200,13 @@ hash-bound decision artifacts required by those commands (including the
 selected checkpoint, aligned predictions, trace, manifests, source identity
 and acceptance metadata). Do not download every epoch checkpoint/prediction or
 write a one-off terminal adapter when these entry points already cover the run.
+This is the operation's minimum evidence set, not permanent residency in every
+worktree. Keep source and compact canonical records in Git; artifact custody and
+local retirement follow [branch routing](../BRANCHES.md#local-checkout-and-artifact-lifetime).
+Do not copy unrelated historical payloads to satisfy an inherited catalog.
+Existing strict validators still require their declared local inputs; report a
+storage limitation until supported custody reconciliation resolves it. Do not
+turn a metadata inventory into strict acceptance or silently remove sole bytes.
 Reconcile the frozen contract against observed source, optimizer, schedule and
 role identity before assigning strict comparison status. A contract mismatch
 remains visible as a terminal anomaly; a valid trace alone does not grant strict
@@ -224,7 +231,8 @@ The pipeline always leaves `next_decision=SOL_REQUIRED`; it has no submission,
 heartbeat, takeover, or cross-machine controller integration.
 
 Each checkout discovers and rebuilds only its own selected repository corpus.
-This port includes no Server trajectories, evidence, policy instances, or derived
-data. The existing Desktop derived files are retained unchanged. At the user's
-request, no tests, RML validation, acceptance, or rebuild were run for this port;
-Luna owns testing and regeneration of Desktop replay/policy derived outputs.
+The original port from `209a7349` did not import Server records or regenerate
+Desktop derived files, and its initial test handoff was unexecuted. That is a
+historical implementation observation, not a permanent testing assignment or an
+exemption for subsequent changes. Verify each change under the selected source
+identity; do not infer present validation from the original handoff.

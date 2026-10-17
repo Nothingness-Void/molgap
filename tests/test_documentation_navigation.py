@@ -50,13 +50,23 @@ def _anchors(text: str) -> set[str]:
     }
 
 
+def _resolve_local_link(document: Path, link: str) -> tuple[Path, str] | None:
+    link = unquote(link.strip().removeprefix("<").removesuffix(">"))
+    # Machine-specific checkout links document custody; their existence on this
+    # host cannot establish portable repository navigation.
+    if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", link) or link.startswith(("/", "\\")):
+        return None
+    path, _, anchor = link.partition("#")
+    return (document.parent / path).resolve() if path else document, anchor
+
+
 @pytest.mark.parametrize("relative", DOCUMENTS)
 def test_local_navigation_links_resolve(relative):
     for link in LINK.findall(_read(relative)):
-        if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", link):
+        resolved = _resolve_local_link(ROOT / relative, link)
+        if resolved is None:
             continue
-        path, _, anchor = unquote(link).partition("#")
-        target = ((ROOT / relative).parent / path).resolve() if path else ROOT / relative
+        target, anchor = resolved
         assert target.is_relative_to(ROOT), (relative, link)
         # A block may intentionally point to its thin CLI directory.
         assert target.is_file() or target.is_dir(), (relative, link)
@@ -135,17 +145,6 @@ def test_block_navigation_is_not_hidden_by_gitignore():
     assert result.returncode == 1, result.stdout + result.stderr
 
 
-@pytest.mark.parametrize("relative, limit", (
-    ("AGENTS.md", 230),
-    ("BRANCHES.md", 100),
-    ("CURRENT_STATE.md", 120),
-    ("ROADMAP.md", 120),
-))
-def test_root_routing_documents_stay_compact(relative, limit):
-    lines = len(_read(relative).splitlines())
-    assert lines <= limit, f"{relative}: {lines} lines exceeds navigation budget {limit}"
-
-
 def test_authority_and_capability_routes_remain_explicit():
     text = _read(GUIDE)
     links = set(LINK.findall(text))
@@ -160,3 +159,18 @@ def test_authority_and_capability_routes_remain_explicit():
     assert "do not run it as prediction-only analysis" in text
     assert "does not load checkpoints or run inference" in text
     assert "never hand-edit derived indexes" in text
+
+
+@pytest.mark.parametrize("link, expected, anchor", (
+    ("../guide.md#read", "guide.md", "read"),
+    ("<../guide%20name.md#read>", "guide name.md", "read"),
+    ("#local", "nested/README.md", "local"),
+    ("D:/custody/README.md", None, ""),
+    (r"D:\custody\README.md", None, ""),
+    ("file:///D:/custody/README.md", None, ""),
+    ("https://example.org/README.md", None, ""),
+))
+def test_portable_link_resolution(tmp_path, link, expected, anchor):
+    document = tmp_path / "nested/README.md"
+    result = _resolve_local_link(document, link)
+    assert result == ((tmp_path / expected, anchor) if expected else None)

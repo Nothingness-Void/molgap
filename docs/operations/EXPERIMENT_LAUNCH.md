@@ -192,15 +192,15 @@ conflicts without guessing, and reconcile authoritative existing identities
 before permitting any separately authorized retry. No such adapter is implemented
 here, and no historical platform script is modified.
 
-## Unexecuted Test Handoff
+## Local verification
 
-Tests were authored but not executed. Luna may run this local-only suite in the
-specified worktree after a project virtualenv is provisioned there:
+Run the local-only suite from the selected source checkout using the primary
+project environment. Do not provision an environment in a temporary worktree or
+install that worktree into the shared environment:
 
 ```powershell
-Set-Location 'C:\Users\17449\.codex\worktrees\d3cc\molgap'
 $env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_launch.py -q
+& $projectPython -m pytest tests/test_experiment_launch.py -q
 ```
 
 Fixtures create a tiny synthetic local Git repository/package in pytest's

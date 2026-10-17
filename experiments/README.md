@@ -97,6 +97,16 @@ Track C.
 | Historical flow ablation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_flow_ablation_100k/` |
 | Frozen 100K weights on the 500K development cohort? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_frozen_transfer_probe/` |
 
+Additional canonical entries:
+
+| Question | Evidence entry |
+|---|---|
+| K1/GPTrans operator profile | [family_100k_operator_profile](family_100k_operator_profile/README.md) |
+| K1/GPTrans topology reuse | [family_topology_t4_100k](family_topology_t4_100k/README.md) |
+| K1 clean second view | [pcqm_k1_clean_second_100k](pcqm_k1_clean_second_100k/README.md) |
+| K1 T4 native cost/quality | [pcqm_k1_t4_cost_quality](pcqm_k1_t4_cost_quality/README.md) |
+| Local single-forward and true EMA | [pcqm_k1_single_true_ema_100k](pcqm_k1_single_true_ema_100k/README.md) |
+
 `_closed/` holds branches that are settled and must not be rerun without a
 materially new hypothesis. `_scripts/` holds entrypoints shared by more than one
 experiment; single-use runners live with their experiment, at its directory root
@@ -120,7 +130,8 @@ Every active experiment must satisfy this chain:
 5. live state links to the decision and never copies its metrics.
 
 `tests/test_repository_layout.py` enforces index coverage, decision reachability,
-machine-evidence presence, and size limits on the two live control documents.
+machine-evidence presence and maintained-code navigation. It does not impose
+document line budgets or redefine scientific acceptance.
 
 ## File roles inside an experiment
 

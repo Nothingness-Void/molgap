@@ -22,7 +22,8 @@ catboost_info/
 
 # ── Binary and bulk artifacts ────────────────────────────────────────────────
 # Rule of thumb: a decision record and its compact metrics are tracked; the raw
-# payload that backs them is regenerable or retrievable, and stays local.
+# payload that backs them is regenerable or durably retrievable. Local copies
+# are temporary operation inputs; BRANCHES.md owns custody and retirement.
 
 # Model weights and caches
 models/**/*.pt

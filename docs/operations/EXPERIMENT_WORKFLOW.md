@@ -199,9 +199,15 @@ the explicit `NvidiaTeslaT4` allocation only.
 
 `prepare-workflow` requires a fresh output directory outside `experiments/`;
 use ignored `platforms/_records/<platform>/staging/` so staged trajectory copies
-cannot be rediscovered as canonical RML. In a new worktree, verify existing RML
-and materialize its declared retained artifacts before preparation; Git does
-not copy ignored artifacts between checkouts. It checks every arm and
+cannot be rediscovered as canonical RML. In a new worktree, retain the owning
+canonical metadata and materialize only the pinned inputs needed by this task;
+do not copy the entire inherited RML artifact catalog. Git does not copy ignored
+artifacts between checkouts. A repository-wide check may still require artifacts
+declared locally retained by historical evidence: report those exact missing
+locators as a storage/check limitation, rather than bulk-copying unrelated data,
+changing frozen evidence, weakening checks or claiming success. See
+[checkout and artifact lifetime](../../BRANCHES.md#local-checkout-and-artifact-lifetime).
+Preparation checks every arm and
 the pinned acceptance inputs, builds the immutable source package, runs the
 family's static recipe checks, and runs `check_release_inputs`. These checks
 bind the fixed recipe, initialization, sampler, roles, exposure and packaged

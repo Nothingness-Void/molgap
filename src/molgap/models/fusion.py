@@ -1,0 +1,239 @@
+"""Embedding-level fusion head for the hybrid model (GPS 2D + 3D encoder).
+
+The hybrid is *late* fusion: the two encoders are frozen, their pooled
+embeddings are pre-computed, and only this head is trained. Gate fusion
+forms a per-molecule, per-dimension convex combination of the two projected
+embeddings (g·h2d + (1-g)·h3d), which beat plain concatenation in the Optuna
+search — see `docs/phase7.md`.
+
+Supports asymmetric input dims (e.g. GPS 2D = 192, TensorNet 3D = 128).
+"""
+from __future__ import annotations
+
+import torch
+import torch.nn as nn
+
+
+class FusionHead(nn.Module):
+    """Combine pre-computed 2D and 3D molecular embeddings into HOMO/LUMO/Gap.
+
+    Args:
+        fusion_type: ``"gate"`` (convex combination, default) or ``"concat"``.
+        hidden: projection / head width.
+        dropout: dropout in the regression head.
+        dim_2d, dim_3d: input embedding dims (both 192 in Phase 7).
+    """
+
+    def __init__(self, fusion_type="gate", hidden=128, dropout=0.0,
+                 dim_2d=192, dim_3d=192, n_targets=3):
+        super().__init__()
+        self.fusion_type = fusion_type
+        self.proj_2d = nn.Linear(dim_2d, hidden)
+        self.proj_3d = nn.Linear(dim_3d, hidden)
+        if fusion_type == "gate":
+            self.gate = nn.Sequential(nn.Linear(hidden * 2, hidden), nn.Sigmoid())
+            head_in = hidden
+        else:
+            head_in = hidden * 2
+        self.head = nn.Sequential(
+            nn.Linear(head_in, hidden), nn.SiLU(), nn.Dropout(dropout),
+            nn.Linear(hidden, hidden // 2), nn.SiLU(),
+            nn.Linear(hidden // 2, n_targets),
+        )
+
+    def encode(self, h_2d, h_3d):
+        """Return the fused hidden representation before the regression head."""
+        h_2d = self.proj_2d(h_2d)
+        h_3d = self.proj_3d(h_3d)
+        if self.fusion_type == "gate":
+            g = self.gate(torch.cat([h_2d, h_3d], dim=-1))
+            return g * h_2d + (1 - g) * h_3d
+        return torch.cat([h_2d, h_3d], dim=-1)
+
+    def forward(self, h_2d, h_3d):
+        return self.head(self.encode(h_2d, h_3d))
+
+
+class BoundedResidualFusionHead(nn.Module):
+    """Correct a frozen baseline without replacing its prediction path."""
+
+    def __init__(
+        self,
+        hidden=192,
+        dropout=0.0,
+        dim_2d=192,
+        dim_3d=192,
+        n_targets=3,
+        max_abs_correction_eV=0.2,
+    ):
+        super().__init__()
+        self.norm_2d = nn.LayerNorm(dim_2d)
+        self.norm_3d = nn.LayerNorm(dim_3d)
+        self.proj_2d = nn.Linear(dim_2d, hidden)
+        self.proj_3d = nn.Linear(dim_3d, hidden)
+        self.delta_head = nn.Sequential(
+            nn.Linear(hidden * 2 + n_targets, hidden),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden, hidden // 2),
+            nn.SiLU(),
+            nn.Linear(hidden // 2, n_targets),
+        )
+        nn.init.zeros_(self.delta_head[-1].weight)
+        nn.init.zeros_(self.delta_head[-1].bias)
+        self.max_abs_correction_eV = float(max_abs_correction_eV)
+
+    def correction(self, h_2d, h_3d, baseline):
+        h_2d = self.proj_2d(self.norm_2d(h_2d))
+        h_3d = self.proj_3d(self.norm_3d(h_3d))
+        raw = self.delta_head(torch.cat((h_2d, h_3d, baseline), dim=-1))
+        return self.max_abs_correction_eV * torch.tanh(raw)
+
+    def forward(self, h_2d, h_3d, baseline):
+        return baseline + self.correction(h_2d, h_3d, baseline)
+
+
+class DualGPSFusionHead(nn.Module):
+    """Fuse complementary GPS7/GPS9 embeddings without any 3D encoder.
+
+    This deliberately mirrors the gated late-fusion parameterization used by
+    :class:`FusionHead`, but its two inputs are distinct 2D receptive fields.
+    It is used as a low-cost data-mixture gate before allocating ETKDG/SchNet
+    compute, not as a replacement for the production 2D+3D hybrid.
+    """
+
+    def __init__(self, hidden=192, dropout=0.0, dim_gps7=192, dim_gps9=192, n_targets=3):
+        super().__init__()
+        self.proj_gps7 = nn.Linear(dim_gps7, hidden)
+        self.proj_gps9 = nn.Linear(dim_gps9, hidden)
+        self.gate = nn.Sequential(nn.Linear(hidden * 2, hidden), nn.Sigmoid())
+        self.head = nn.Sequential(
+            nn.Linear(hidden, hidden), nn.SiLU(), nn.Dropout(dropout),
+            nn.Linear(hidden, hidden // 2), nn.SiLU(),
+            nn.Linear(hidden // 2, n_targets),
+        )
+
+    def encode(self, h_gps7, h_gps9):
+        h_gps7 = self.proj_gps7(h_gps7)
+        h_gps9 = self.proj_gps9(h_gps9)
+        gate = self.gate(torch.cat([h_gps7, h_gps9], dim=-1))
+        return gate * h_gps7 + (1 - gate) * h_gps9
+
+    def forward(self, h_gps7, h_gps9):
+        return self.head(self.encode(h_gps7, h_gps9))
+
+
+class MoEFusionHead(nn.Module):
+    """Fusion head variant with learned soft routing over expert MLP heads.
+
+    This keeps the Phase 7 frozen-encoder setup intact: GPS 2D and 3D encoder
+    embeddings are projected, gate-fused into a shared representation, then a
+    router assigns per-molecule soft weights over regression experts.
+    """
+
+    def __init__(
+        self,
+        hidden=192,
+        dropout=0.0,
+        dim_2d=192,
+        dim_3d=192,
+        n_targets=3,
+        n_experts=4,
+    ):
+        super().__init__()
+        if n_experts < 1:
+            raise ValueError("n_experts must be >= 1")
+        self.n_experts = n_experts
+        self.n_targets = n_targets
+        self.proj_2d = nn.Linear(dim_2d, hidden)
+        self.proj_3d = nn.Linear(dim_3d, hidden)
+        self.gate_fuse = nn.Sequential(nn.Linear(hidden * 2, hidden), nn.Sigmoid())
+        self.router = nn.Sequential(
+            nn.Linear(hidden, hidden),
+            nn.SiLU(),
+            nn.Linear(hidden, n_experts),
+        )
+        self.experts = nn.ModuleList([
+            nn.Sequential(
+                nn.Linear(hidden, hidden),
+                nn.SiLU(),
+                nn.Dropout(dropout),
+                nn.Linear(hidden, hidden // 2),
+                nn.SiLU(),
+                nn.Linear(hidden // 2, n_targets),
+            )
+            for _ in range(n_experts)
+        ])
+
+    def forward(self, h_2d, h_3d, return_gate=False):
+        h_2d = self.proj_2d(h_2d)
+        h_3d = self.proj_3d(h_3d)
+        g = self.gate_fuse(torch.cat([h_2d, h_3d], dim=-1))
+        h = g * h_2d + (1 - g) * h_3d
+        w = torch.softmax(self.router(h), dim=-1)
+        outs = torch.stack([expert(h) for expert in self.experts], dim=1)
+        y = torch.sum(w.unsqueeze(-1) * outs, dim=1)
+        if return_gate:
+            return y, w
+        return y
+
+
+class DescriptorAwareFusionHead(nn.Module):
+    """Fusion head whose 2D/3D gate also sees lightweight molecule descriptors.
+
+    The descriptors are standardized scalar context features such as fragment
+    count, rotatable bonds, element flags, and 2D topology proxies. They are not
+    a replacement for the frozen GPS/SchNet encoders; they tell the fusion gate
+    when a molecule resembles known failure modes such as salts or flexible
+    structures.
+    """
+
+    def __init__(
+        self,
+        n_desc,
+        hidden=192,
+        desc_hidden=64,
+        dropout=0.0,
+        dim_2d=192,
+        dim_3d=192,
+        n_targets=3,
+    ):
+        super().__init__()
+        if n_desc < 1:
+            raise ValueError("n_desc must be >= 1")
+        self.n_desc = n_desc
+        self.proj_2d = nn.Linear(dim_2d, hidden)
+        self.proj_3d = nn.Linear(dim_3d, hidden)
+        self.proj_desc = nn.Sequential(
+            nn.Linear(n_desc, desc_hidden),
+            nn.SiLU(),
+            nn.Linear(desc_hidden, hidden),
+            nn.SiLU(),
+        )
+        self.gate = nn.Sequential(nn.Linear(hidden * 3, hidden), nn.Sigmoid())
+        self.head = nn.Sequential(
+            nn.Linear(hidden * 2, hidden),
+            nn.SiLU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden, hidden // 2),
+            nn.SiLU(),
+            nn.Linear(hidden // 2, n_targets),
+        )
+
+    def forward(self, h_2d, h_3d, desc, return_gate=False):
+        h_2d = self.proj_2d(h_2d)
+        h_3d = self.proj_3d(h_3d)
+        h_desc = self.proj_desc(desc)
+        g = self.gate(torch.cat([h_2d, h_3d, h_desc], dim=-1))
+        h = g * h_2d + (1 - g) * h_3d
+        y = self.head(torch.cat([h, h_desc], dim=-1))
+        if return_gate:
+            return y, g
+        return y
+
+# Existing full-object checkpoints resolve these historical module paths.
+FusionHead.__module__ = "molgap.fusion"
+BoundedResidualFusionHead.__module__ = "molgap.fusion"
+DualGPSFusionHead.__module__ = "molgap.fusion"
+MoEFusionHead.__module__ = "molgap.fusion"
+DescriptorAwareFusionHead.__module__ = "molgap.fusion"
