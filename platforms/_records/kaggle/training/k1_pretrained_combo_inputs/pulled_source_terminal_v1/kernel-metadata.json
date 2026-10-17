@@ -1,0 +1,23 @@
+{
+  "id": "nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+  "id_no": 137071131,
+  "title": "MolGap K1 Pretrain Consistency Pair 100K S42 V1",
+  "code_file": "molgap-k1-pretrain-consistency-pair-100k-s42-v1.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-fusion-teacher-train100k-v1",
+    "nothingnessvoid/molgap-k1-pretrain-consistency-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": []
+}
