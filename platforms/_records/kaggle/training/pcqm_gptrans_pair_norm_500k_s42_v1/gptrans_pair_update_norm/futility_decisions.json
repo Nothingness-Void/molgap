@@ -1,0 +1,24 @@
+{
+  "format": "molgap-matched-prefix-futility-v1",
+  "arm": "gptrans_pair_update_norm",
+  "decisions": [
+    {
+      "completed_epochs": 30,
+      "candidate_best_mae_eV": 0.11192209273576736,
+      "reference_best_mae_eV": 0.112521231174469,
+      "candidate_minus_reference_eV": -0.0005991384387016296,
+      "maximum_deficit_eV": 0.006,
+      "futility_stopped": false,
+      "reference_trace_sha256": "22cb2bea6ee531402b951334fb791f091ec64c68b3e6f539fe1c9851dcdce1d4"
+    },
+    {
+      "completed_epochs": 40,
+      "candidate_best_mae_eV": 0.10729768872261047,
+      "reference_best_mae_eV": 0.10822822153568268,
+      "candidate_minus_reference_eV": -0.0009305328130722046,
+      "maximum_deficit_eV": 0.003,
+      "futility_stopped": false,
+      "reference_trace_sha256": "22cb2bea6ee531402b951334fb791f091ec64c68b3e6f539fe1c9851dcdce1d4"
+    }
+  ]
+}
