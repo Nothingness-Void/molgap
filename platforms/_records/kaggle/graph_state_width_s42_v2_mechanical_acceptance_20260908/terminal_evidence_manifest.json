@@ -1,0 +1,25 @@
+{
+  "format": "molgap-pcqm-graph-state-width-terminal-evidence-v1",
+  "retrieved_at": "2026-09-08T18:10:42.8198477+09:00",
+  "terminal_status": "COMPLETE",
+  "source_commit": "f68047e36a8bccb8c6052e661c70f6afa63d3280",
+  "geometry_cache_aggregate_sha256": "3e4206fd239942ab79f9c4978cd4334f6025ba14e8f1cd1df78c20060a0d1d22",
+  "kernels": {
+    "baseline": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w64-s42",
+      "version": 2,
+      "gpu": "Tesla P100-PCIE-16GB",
+      "raw_directory": "D:\\文档\\molgap-graphstate-width128\\platforms\\_records\\kaggle\\graph_state_width_w64_s42_v2_terminal_20260908"
+    },
+    "candidate": {
+      "slug": "nothingnessvoid/molgap-pcqm-graphstate-w128-s42",
+      "version": 2,
+      "gpu": "Tesla P100-PCIE-16GB",
+      "raw_directory": "D:\\文档\\molgap-graphstate-width128\\platforms\\_records\\kaggle\\graph_state_width_w128_s42_v2_terminal_20260908"
+    }
+  },
+  "acceptance_staging": "D:\\文档\\molgap-graphstate-width128\\platforms\\_records\\kaggle\\graph_state_width_s42_v2_mechanical_acceptance_20260908",
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "molecular_research_server_accessed": false
+}
