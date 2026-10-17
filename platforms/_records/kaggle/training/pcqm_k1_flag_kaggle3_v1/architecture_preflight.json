@@ -1,0 +1,69 @@
+{
+  "accepted": true,
+  "mode": "flag",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7888156771659851,
+      0.7888156771659851
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "bf438746383ffad0b27950ff6d41ec76af25ad451a19e4df50e2b28903e019c2",
+      "bf438746383ffad0b27950ff6d41ec76af25ad451a19e4df50e2b28903e019c2"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7888156771659851,
+      0.7888156771659851
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "dd8d32296da11f296c13cac5842c5f676304d4e2fd2a8145fcfef8803482b859",
+      "dd8d32296da11f296c13cac5842c5f676304d4e2fd2a8145fcfef8803482b859"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.09965228199996545,
+      "samples_seconds": [
+        0.10044912299997577,
+        0.09965228199996545,
+        0.10090074200002164,
+        0.09754725100003725,
+        0.09797732599997744
+      ],
+      "peak_memory_bytes": 572913664
+    },
+    "flag": {
+      "median_step_seconds": 0.2910103980000258,
+      "samples_seconds": [
+        0.2968627550000065,
+        0.3027944109999794,
+        0.28309267899999213,
+        0.2910103980000258,
+        0.2773487839999689
+      ],
+      "peak_memory_bytes": 589711872
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 1.9202582435606113,
+  "maximum_overhead_fraction": 3.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption",
+  "flag_gradient_checks_passed": true
+}
