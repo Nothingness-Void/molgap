@@ -71,6 +71,20 @@
     "observed_on_jst": "2026-10-18",
     "verbatim_quote_in_this_record": false
   },
+  "committed_code_only_packaging": {
+    "status": "PASSED",
+    "source_commit": "426a9f6cc61ce7bfcdb710c75062810aa40a42b5",
+    "archive_sha256": "b4e1835b29fee63a26c7c81a3a550771612fd11a89437a94cc10a8383286a679",
+    "file_count": 4,
+    "uncompressed_payload_bytes": 67864,
+    "validator": "molgap.v4_runtime.validate_standard_source_bundle",
+    "raw_receipt": "luna-bootstrap/freshsource-packaging-owner-qualified-receipt.json",
+    "raw_receipt_sha256": "421df0c35b7b900d310c0ebf893c16a8779c4291241e9e2b8c12d06b22f81466",
+    "original_bundle_preserved": true,
+    "experiment_spec_created": false,
+    "rml_writes": false,
+    "formal_experiment_release": false
+  },
   "cost_scope": "Bootstrap Python observation is not full allocation or billing; unknown full cost remains null",
   "review": {"additional_deterministic_code_defects_found": [], "full_model_or_cuda_execution_reviewed": false},
   "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight/repair",
