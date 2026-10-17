@@ -202,11 +202,15 @@ def runtime_source_files(repo_root, records=()):
 
     AST discovery remains available for diagnostics, not this preparation path.
     Legacy registered_source_files inventories remain readable and unchanged.
+    Closed archive modules require explicit selection by historical callers.
     """
     from .v4_bundle import _tracked_paths
     from .experiment_package import _allowlist
     tracked = _tracked_paths(repo_root)
+    # Only closed-experiment reproduction imports this subtree. Keep the
+    # exclusion here so explicit frozen package inventories/readers still work.
     names = {p for p in tracked if p.startswith("src/molgap/") and p.endswith(".py")
+             and not p.startswith("src/molgap/archive/")
              and p not in _HOST_ONLY}
     if "platforms/kaggle/run_experiment.py" in tracked:
         names.add("platforms/kaggle/run_experiment.py")
