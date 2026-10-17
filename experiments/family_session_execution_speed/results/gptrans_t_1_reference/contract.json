@@ -1,0 +1,62 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "gptrans_t",
+  "mode": "reference",
+  "seed": 42,
+  "initialization_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "dataset": {
+    "manifest": "synthetic-only.json",
+    "manifest_sha256": "0d580fbfb7fa9937d3408be151e1fd9b3cd71ff1b5df31a21bd88b207a7941fe",
+    "development": false
+  },
+  "train_rows": 4096,
+  "development_rows": 0,
+  "optimizer_steps": 64,
+  "learning_rate": 0.0004,
+  "weight_decay": 1e-05,
+  "schedule": {
+    "kind": "cosine_step",
+    "total_units": 64,
+    "minimum_lr": 1e-06,
+    "warmup_units": 0,
+    "reference_epochs": 60
+  },
+  "selection": "final-ema",
+  "sampler": "torch-pass-randperm",
+  "checkpoint_every": 16,
+  "target_mean_eV": 0.0,
+  "target_std_eV": 1.0,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.7.1",
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "gptrans_t",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "foreach-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.7.1"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 64,
+    "sample_presentations": 8192,
+    "completed_passes": 2,
+    "next_batch": 0,
+    "development_rows": 0,
+    "source_idx_sha256": null,
+    "target_sha256": null,
+    "precision": "fp32"
+  },
+  "train_role_identity": "synthetic-only-no-molecular-role",
+  "development_role_identity": null
+}
