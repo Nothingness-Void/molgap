@@ -114,6 +114,11 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         assignments={job["arm_id"]: job["device"] for job in jobs}, started=allocation_started,
         prior_segments=prior_segments)
     prior_wall = retired_cost["wall_seconds"] + sum(s.get("wall_seconds", 0) for s in ledger.prior_segments)
+    if cost_bounded:
+        prior_debit = diagnostic.get("prior_budget_wall_seconds", 0)
+        prior_wall += prior_debit
+        report["prior_allocation_budget_debit_wall_seconds"] = prior_debit
+        report["budget_scope"] = "aggregate authorization; prior debit is not added to the current invocation's measured ledger"
     if (bounded or cost_bounded) and ledger.snapshot("running")["prior_unobserved_intervals"]:
         raise ValueError("Unknown prior allocation intervals require cost reconciliation before continuation")
     ledger.write(output, "running")
@@ -175,6 +180,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 env.update(CUDA_VISIBLE_DEVICES=str(job["device"]), PYTHONHASHSEED="42",
                            CUBLAS_WORKSPACE_CONFIG=":4096:8", PYTHONPATH=str(source_root / "src"))
                 if cost_bounded:
+                    from .gptrans_execution_tuning import ExecutionTuning
+                    env.update(ExecutionTuning(independent_models=len(jobs),
+                        total_cpu_budget=declaration["platform"]["cpu_cores"]).environment())
                     env["MOLGAP_ALLOCATION_PAUSE_AT"] = str(ledger.started + extension.wall_ceiling_seconds
                         - prior_wall - diagnostic["checkpoint_reserve_seconds"])
                 log = (arm_output / (phase + ".log")).open("a", encoding="utf-8")

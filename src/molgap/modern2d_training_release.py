@@ -4,6 +4,7 @@ Existing recipe, package, role and Session owners retain their checks. This
 adapter only binds their small metadata and the explicitly authorized budget.
 """
 from pathlib import Path
+import math
 
 from .common.wire import canonical_fingerprint
 from .experiment_family_workflow import _artifact_path, _json
@@ -13,6 +14,47 @@ from .research_memory.trace import file_digest
 PLAN_FORMAT = "molgap-modern2d-formal-reference-plan-v1"
 WALL_CEILING_SECONDS = 16200
 CHECKPOINT_RESERVE_SECONDS = 600
+BUDGET_FORMAT = "molgap-modern2d-retry-budget-v1"
+
+
+def validate_retry_budget(record):
+    """Charge the entire observed account increment, never an invented bill.
+
+    Kaggle quota is an account observation. Charging twice its complete settled
+    increment is conservative for the observed T4x2 allocation; unrelated
+    consumption, if any, is charged too rather than subtracted speculatively.
+    """
+    from datetime import datetime
+    if (record.get("format") != BUDGET_FORMAT or record.get("retry_authorized") is not True or
+            record.get("aggregate_t4_hours_ceiling") != 9 or
+            record.get("allocated_devices") != 2 or
+            record.get("prior_attempt") != {"kernel": "kaseichou/molgap-modern2d-formal-100k-v1",
+                "kernel_id": 139364627, "version": 1, "status": "ERROR"}):
+        raise ValueError("Retry budget requires the separately authorized exact failed allocation")
+    snapshots = record["quota_observations"]
+    before, after, confirmed = (snapshots[k] for k in ("before", "after", "confirmed"))
+    def seconds(item):
+        value = item["seconds"] + item.get("nanos", 0) / 1e9
+        if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
+            raise ValueError("Invalid quota observation")
+        return value
+    windows = [s["quota"]["quotaRefreshTime"] for s in (before, after, confirmed)]
+    totals = [seconds(s["quota"]["gpuQuota"]["totalTimeAllowed"]) for s in (before, after, confirmed)]
+    stamps = [datetime.fromisoformat(s["observed_at"].replace("Z", "+00:00")) for s in (before, after, confirmed)]
+    used = [seconds(s["quota"]["gpuQuota"]["timeUsed"]) for s in (before, after, confirmed)]
+    if (len(set(windows)) != 1 or len(set(totals)) != 1 or totals[0] <= 0 or
+            any(s.tzinfo is None for s in stamps) or not stamps[0] < stamps[1] < stamps[2] or
+            (stamps[2] - stamps[1]).total_seconds() < 30 or
+            used[1] != used[2] or not 0 < used[1] - used[0] <= 600 or
+            any(seconds(s["quota"]["gpuQuota"]["timeReserved"]) != 0 for s in (before, after, confirmed))):
+        raise ValueError("Quota window/reset/reservation/settlement is not reconciled")
+    debit = math.ceil(used[1] - used[0])
+    if (record.get("prior_debit_wall_seconds") != debit or
+            record.get("prior_debit_allocated_t4_hours") != 2 * debit / 3600 or
+            record.get("budget_attribution") != "entire-settled-account-increment-charged-at-two-devices" or
+            record.get("per_job_full_billing_status") != "NOT_INFERRED_FROM_ACCOUNT_QUOTA"):
+        raise ValueError("Prior allocation debit differs from the conservative account observation")
+    return debit
 
 
 def is_formal_screen(spec):
@@ -50,10 +92,15 @@ def check_plan(spec, root, plan):
     root = Path(root).absolute()
     declaration = spec.to_dict()
     if (not is_formal_screen(spec) or type(plan) is not dict or
-            set(plan) != {"format", "spec_identity", "authority", "inputs", "arms"} or
+            set(plan) not in ({"format", "spec_identity", "authority", "inputs", "arms"},
+                {"format", "spec_identity", "authority", "inputs", "arms", "budget_reconciliation"}) or
             plan["format"] != PLAN_FORMAT or plan["spec_identity"] != spec.identity):
         raise ValueError("Formal reference plan/Spec mismatch")
     authority = _json(_pinned(root, plan["authority"]))
+    if "budget_reconciliation" in plan:
+        validate_retry_budget(_json(_pinned(root, plan["budget_reconciliation"])))
+        if authority.get("retry_authorized") is not True or authority.get("budget_reconciliation") != plan["budget_reconciliation"]:
+            raise ValueError("Retry authority and reconciled prior debit differ")
     metadata = _json(_pinned(root, plan["inputs"]))
     arm_ids = [a["arm_id"] for a in declaration["arms"]]
     gpu = authority.get("gpu", {})
@@ -171,5 +218,8 @@ def execution_extension(spec, source_root):
     from .experiment_execution import ExecutionExtension
     plan = _json(_artifact_path(Path(source_root).absolute(), plan_path(spec)))
     check_plan(spec, source_root, plan)
-    return ExecutionExtension(wall_ceiling_seconds=WALL_CEILING_SECONDS,
-        configuration={"format": PLAN_FORMAT, "checkpoint_reserve_seconds": CHECKPOINT_RESERVE_SECONDS})
+    configuration = {"format": PLAN_FORMAT, "checkpoint_reserve_seconds": CHECKPOINT_RESERVE_SECONDS}
+    if "budget_reconciliation" in plan:
+        configuration["prior_budget_wall_seconds"] = validate_retry_budget(
+            _json(_pinned(source_root, plan["budget_reconciliation"])))
+    return ExecutionExtension(wall_ceiling_seconds=WALL_CEILING_SECONDS, configuration=configuration)

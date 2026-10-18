@@ -85,12 +85,14 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
     path = tmp_path / "formal-paused.pt"
     atomic_torch_save(path, checkpoints[-1])
     retained = torch.load(path, map_location="cpu", weights_only=True)
+    retained_before_resume = deepcopy(retained)
     resumed = actual_session(case, [])
     # AdamW retains tensor references from the input state; keep the serialized
     # evidence immutable so its pre-resume exposure can be validated below.
     resumed.load_state_dict(deepcopy(retained))
     assert resumed.run() == endpoint
     assert_equal(expected, resumed.state_dict())
+    assert_equal(retained_before_resume, retained)
     assert endpoint.optimizer_step == 4 and endpoint.sample_presentations == 512
     if case.recipe.schedule.kind == "cosine_step":
         assert expected["scheduler"]["native"]["T_max"] == 46860
@@ -133,6 +135,87 @@ def test_native_admission_and_preview_fail_before_payload(case, tmp_path, monkey
         runner._bootstrap(**options)
     with pytest.raises(ValueError, match="INTEGRATION_PENDING"):
         FamilyKernel(case.preview, case.initial, device="cuda:0")
+
+
+def test_formal_bootstrap_sets_threads_before_data_read_without_payload(tmp_path, monkeypatch):
+    """The formal thread policy must cover CPU label/statistics admission too."""
+    from molgap import experiment_execution, family_training_data, v4_runtime
+    from molgap.family_training_data import DatasetSelection
+    from molgap.modern2d_training import Modern2DFormalTrainingContext
+
+    # Keep this seam entirely synthetic: no model, graph, or CUDA payload is
+    # needed to prove the ordering of the formal CPU policy and data read.
+    recipe = SimpleNamespace(
+        integration_preview=False, cpu_synthetic_only=False, formal_interface=True,
+        mode="reference", family="ppgt_small", identity="a" * 64,
+        initialization_sha256="b" * 64, input_sidecar=None, train_rows=256,
+        development_rows=0, target_mean_eV=3.0, target_std_eV=2.0,
+        dataset=DatasetSelection("binding.json", "c" * 64, False),
+    )
+    spec = SimpleNamespace(to_dict=lambda: {
+        "arms": [{"arm_id": "ppgt", "data": {"roles": []}},
+                 {"arm_id": "esa", "data": {"roles": []}}],
+        "platform": {"cpu_cores": 4, "accelerator": "NvidiaTeslaT4"},
+    })
+    context = SimpleNamespace(
+        training_recipe_sha256="d" * 64, source_commit="e" * 40,
+        to_dict=lambda: {},
+    )
+    formal_context = object.__new__(Modern2DFormalTrainingContext)
+    reads = []
+
+    def read_data(root, selection):
+        reads.append(torch.get_num_threads())
+        return SimpleNamespace(
+            train_rows=recipe.train_rows, development_rows=0,
+            train_source_start=0, development_source_start=None,
+            train_source_indices=None, development_source_indices=None,
+            indexed=False, target_mean_eV=recipe.target_mean_eV,
+            target_std_eV=recipe.target_std_eV,
+        )
+
+    monkeypatch.setattr(runner, "read_recipe", lambda path: ({}, recipe))
+    monkeypatch.setattr(runner, "validate_screen_recipe", lambda *args: None)
+    monkeypatch.setattr(runner, "RunContext",
+                        SimpleNamespace(for_training=lambda *args, **kwargs: context))
+    monkeypatch.setattr(runner, "normalized_source_sha256",
+                        lambda path: context.training_recipe_sha256)
+    monkeypatch.setattr(runner, "_loaded_source", lambda path: tmp_path)
+    monkeypatch.setattr(experiment_execution, "validate_staged_trajectory",
+                        lambda *args: {"trajectory_id": "fixture",
+                                       "state_at_start": {"source_commit": context.source_commit}})
+    monkeypatch.setattr(v4_runtime, "inspect_frozen_state_artifact",
+                        lambda *args, **kwargs: {"sha256": "f" * 64})
+    monkeypatch.setattr(Modern2DFormalTrainingContext, "validate_before_payload",
+                        lambda *args, **kwargs: None)
+    monkeypatch.setattr(Modern2DFormalTrainingContext, "validate_loaded_data",
+                        lambda *args, **kwargs: None)
+    monkeypatch.setattr(family_training_data, "load_training_data", read_data)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+
+    previous_threads = torch.get_num_threads()
+    torch.set_num_threads(4)
+    try:
+        with pytest.raises(ValueError, match="isolated observed accelerator"):
+            runner._bootstrap(
+                spec=spec, package_dir=tmp_path, expected_package_identity="1" * 64,
+                arm_id="ppgt", mode="reference", recipe_path=tmp_path / "recipe.json",
+                initial_state_path=tmp_path / "initial.pt", input_root=tmp_path,
+                account="fixture", run_reference="fixture/run", trajectory_id="fixture",
+                training_only=True, formal_training=formal_context,
+            )
+    finally:
+        torch.set_num_threads(previous_threads)
+    assert reads == [1]
+
+
+def test_formal_target_statistics_keep_exact_frozen_comparison():
+    recipe = SimpleNamespace(
+        family="ppgt_small", target_mean_eV=1.275090206323082, target_std_eV=2.0,
+    )
+    data = SimpleNamespace(target_mean_eV=1.2750902063230574, target_std_eV=2.0)
+    with pytest.raises(ValueError, match="Decoded train target statistics differ"):
+        runner._assert_target_statistics(recipe, data)
 
 
 @pytest.mark.parametrize("change", [

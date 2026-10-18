@@ -179,6 +179,72 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
                          development_target_manifest_sha256, init_root=INITIAL_ROOT,
                          role_manifest_root=ROLE_MANIFEST_ROOT, machine_profile=MACHINE_PROFILE,
                          base=BASE, timestamp=None):
+    """Freeze fresh reference declarations without preparing or submitting work."""
+    return _freeze_formal_screen(repo_root, authorization=authorization,
+        development_target_manifest=development_target_manifest,
+        development_target_manifest_sha256=development_target_manifest_sha256,
+        init_root=init_root, role_manifest_root=role_manifest_root,
+        machine_profile=machine_profile, base=base, timestamp=timestamp)
+
+
+def freeze_formal_retry(repo_root, *, authorization, budget_reconciliation):
+    """Declare the single V2 retry; ``budget_reconciliation`` is {path, sha256}.
+
+    Paths are repository-relative; the reconciled record must already be
+    committed along with the reviewed execution repair. Its owning release
+    checker validates debit accounting and subtracts it from the same 9 T4h.
+    This helper neither freezes a new model nor prepares or submits a job.
+    """
+    root = Path(repo_root).absolute()
+    _safe_local(root)
+    if type(budget_reconciliation) is not dict or set(budget_reconciliation) != {"path", "sha256"}:
+        raise ValueError("Retry requires a pinned budget reconciliation {path, sha256}")
+    budget = deepcopy(budget_reconciliation)
+    safe_comparison_base(budget["path"], base=BASE)
+    _digest(budget["sha256"], "retry budget reconciliation SHA256")
+    record, raw = _read_metadata(repo_local_path(root, budget["path"]))
+    if hashlib.sha256(raw).hexdigest() != budget["sha256"]:
+        raise ValueError("Retry budget reconciliation bytes changed")
+    from .modern2d_training_release import validate_retry_budget
+    validate_retry_budget(record)
+    workflow, _ = _read_metadata(root / BASE / "workflow.json")
+    inputs, _ = _read_metadata(root / BASE / "experiment_input.json")
+    spec_record, _ = _read_metadata(root / BASE / "experiment_spec.json")
+    from .experiment_spec import ExperimentSpec
+    spec = ExperimentSpec(spec_record)
+    if (spec_record["logical_run_id"] != RUN or workflow["spec_identity"] != spec.identity
+            or workflow["kaggle"]["kernel"] != KERNEL
+            or workflow["kaggle"]["source_dataset"] != SOURCE_DATASET):
+        raise ValueError("Retry must retain the original V1 formal declaration")
+    initial_roots = {Path(j["initial_state"]).parent for j in workflow["arms"]}
+    if len(initial_roots) != 1 or [j["arm_id"] for j in workflow["arms"]] != list(ARMS):
+        raise ValueError("Retry requires the two original frozen initial-state paths")
+    # STATUS is mutable custody, not a frozen declaration or submission receipt.
+    records = set(workflow["source_records"]) - {BASE + "/STATUS.md"}
+    records.update(BASE + "/" + name for name in (
+        "experiment_spec.json", "workflow.json", "experiment_input.json",
+        "results/submission_2026-10-18.json"))
+    records.add(budget["path"])
+    prior = {name: _read_metadata(repo_local_path(root, name)) for name in sorted(records)}
+    metadata = prior[BASE + "/training_inputs.json"][0]
+    role_paths = prior[BASE + "/role_plan.json"][0]["role_manifests"]
+    role_roots = {repo_local_path(root, pin["path"]).parent for pin in role_paths.values()}
+    if len(role_roots) != 1:
+        raise ValueError("Retry requires the original role manifest root")
+    target = prior[BASE + "/development_target_proof.json"][1]
+    retry = {"records": sorted(records), "prior": prior, "budget": budget, "budget_raw": raw,
+        "spec": spec_record, "metadata": metadata}
+    return _freeze_formal_screen(root, authorization=authorization,
+        development_target_manifest=root / BASE / "development_target_proof.json",
+        development_target_manifest_sha256=hashlib.sha256(target).hexdigest(),
+        init_root=initial_roots.pop(), role_manifest_root=role_roots.pop(),
+        machine_profile=inputs["machine_profile"], base=BASE + "/retry_v2", retry=retry)
+
+
+def _freeze_formal_screen(repo_root, *, authorization, development_target_manifest,
+                         development_target_manifest_sha256, init_root=INITIAL_ROOT,
+                         role_manifest_root=ROLE_MANIFEST_ROOT, machine_profile=MACHINE_PROFILE,
+                         base=BASE, timestamp=None, retry=None):
     """Write a fresh two-reference declaration set, returning files to commit.
 
     ``authorization`` is the human's quoted grant of sixty passes/aggregate9 T4h.
@@ -219,6 +285,14 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         raise ValueError("Reuse initial states from external storage")
     stamp = timestamp or datetime.now(timezone.utc).isoformat()
     names, observed, old_metadata, binding, manifests, preparation, old_spec = _inputs(root, role_manifest_root)
+    version = "v2" if retry else "v1"
+    run = RUN[:-2] + version
+    kernel = KERNEL[:-2] + version
+    source_dataset = SOURCE_DATASET[:-2] + version
+    policy_id = POLICY_ID + ("-retry-v2" if retry else "")
+    policy_ref = "research_memory/policies/" + policy_id + "." + version + ".json"
+    if retry:
+        names = sorted(set(names) | set(retry["records"]))
     target, target_raw = _target_manifest(development_target_manifest,
         development_target_manifest_sha256, metadata=old_metadata, binding=binding)
     snapshot = _source_snapshot(root, names)
@@ -233,6 +307,17 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         return {"path": name, "sha256": hashlib.sha256(payload).hexdigest()}
 
     authority_ref, role_ref = base + "/authority.json", base + "/role_plan.json"
+    retry_authority = {}
+    if retry:
+        budget_pin = retain(base + "/budget_reconciliation.json", None, raw=retry["budget_raw"])
+        def prior_pin(name):
+            return {"path": name, "sha256": hashlib.sha256(retry["prior"][name][1]).hexdigest()}
+        retry_authority = {"retry_authorized": True, "budget_reconciliation": budget_pin,
+            "budget_reconciliation_source": retry["budget"],
+            "prior_attempt": {"authority": prior_pin(BASE + "/authority.json"),
+                "source_identity": prior_pin(BASE + "/source_identity.json"),
+                "submission": prior_pin(BASE + "/results/submission_2026-10-18.json"),
+                "logical_run_id": RUN, "spec_identity": canonical_fingerprint(retry["spec"])}}
     authority = retain(authority_ref, {"format": AUTHORITY_FORMAT, "owner": "server",
         "purpose": "FORMAL_100K_TRAINING", "user_authorized": True, "authorization": authorization,
         "arms": list(ARMS), "interfaces": [list(i) for i in ARMS.values()], "seeds": [42],
@@ -241,7 +326,8 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         "scientific_training_authorized": True, "protected_role_access_authorized": False,
         "extra_seed_authorized": False, "automatic_successor_authorized": False,
         "scale_500k_authorized": False, "full_training_authorized": False,
-        "run_reference": KERNEL, "source_dataset": SOURCE_DATASET, "logical_run_id": RUN,
+        **retry_authority,
+        "run_reference": kernel, "source_dataset": source_dataset, "logical_run_id": run,
         "source_commit": commit, "gpu": {"platform": "kaggle2", "owner": ACCOUNT,
             "accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
             "wall_ceiling_seconds": 16200, "allocated_t4_hours_ceiling": 9}})
@@ -250,13 +336,13 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
                             raw=observed[OLD_BASE + "/training_input.json"][1])
     target["identity_proof"] = retain(base + "/development_target_proof.json", None, raw=target_raw)
     target_pin = retain(base + "/target_manifest.json", target)
-    role_pins = {role: retain(base + "/roles/" + role + ".json", value, raw=raw)
+    role_pins = {role: retain(base + "/input_role_manifests/" + role + ".json", value, raw=raw)
                  for role, (value, raw) in manifests.items()}
     retain(role_ref, {"purpose": "FORMAL_100K_TRAINING", "roles_opened": ["train_100k", "common_dev"],
         "uses": {"train_100k": "training-and-normalization", "common_dev": "selection-used"},
         "role_manifests": role_pins, "target_manifest": target_pin,
         "protected_role_access_authorized": False})
-    policy = {"schema": "molgap-policy-v1", "policy_id": POLICY_ID, "version": "v1",
+    policy = {"schema": "molgap-policy-v1", "policy_id": policy_id, "version": version,
         "policy_type": "research_action", "status": "candidate", "observation_point": None,
         "comparability_selector": {"scientific_contract": "modern2d-v2-commondev-independent-reference-100k-v1"},
         "required_observable_fields": ["user_authorized_formal_screen"],
@@ -269,12 +355,13 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
             "V5 context-only/INCONCLUSIVE; no matched reference, Replay or superiority",
             "No STQS, uncalibrated early-stop rule,100K veto,500K/full or automatic successor"]}}
     validate_policy(policy)
-    retain(POLICY, policy)
+    retain(policy_ref, policy)
     retain(base + "/STATUS.md", None, raw=(
         "# Formal Modern2D reference declarations\n\n"
         "Declarations frozen; preparation, native admission and execution remain separate.\n"
         "[Authority](authority.json): two independent seed42 references,60 passes, BS128, FP32/TF32off, "
-        "T4x2 at most4.5h wall/9 allocated T4-hours.\n"
+        + ("One authorized retry; prior debit remains charged against aggregate9 T4-hours.\n"
+           if retry else "T4x2 at most4.5h wall/9 allocated T4-hours.\n") +
         "CommonDev V2 context only; INCONCLUSIVE without a matched reference, noReplay or superiority.\n"
         "No500K, extra seeds, full training, protected roles or automatic successor.\n").encode())
     metadata = deepcopy(old_metadata)
@@ -321,6 +408,11 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
             model["feature_binding_sha256"][role] = validate_indexed_feature_binding(feature, feature)
         usage = {name: canonical_fingerprint({"authority_sha256": authority["sha256"], "role": name,
             "arm_id": arm_id, "permit": binding[name]["permit"]}) for name in ("train", "development")}
+        if retry:
+            frozen_contract, frozen_raw = retry["prior"][BASE + "/" + arm_id + "/contract.json"]
+            if model != retry["metadata"]["models"][arm_id]:
+                raise ValueError("Retry feature bindings or model config differ from V1")
+            usage = {name: frozen_contract[name + "_role_identity"] for name in ("train", "development")}
         recipe = FamilyRecipe(family=interface[0], family_version=interface[1], mode="reference", seed=42,
             initialization_sha256=old_contract["initialization_sha256"],
             dataset=DatasetSelection("training_input.json", training_input["sha256"], True),
@@ -334,7 +426,10 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         contract = build_family_recipe(interface, configuration=recipe,
             source_idx_sha256=target["development_source_idx_sha256"], target_sha256=target["development_target_sha256"],
             train_role_identity=usage["train"], development_role_identity=usage["development"])
-        contract_pin = retain(base + "/" + arm_id + "/contract.json", contract)
+        if retry and contract != frozen_contract:
+            raise ValueError("Retry scientific recipe differs from the frozen V1 contract")
+        contract_pin = retain(base + "/" + arm_id + "/contract.json", contract,
+            raw=frozen_raw if retry else None)
         bindings, catalog = family_arm_bindings(recipe), FAMILIES[interface]
         arm = {"arm_id": arm_id, "scientific_role": "reference", "family": {"name": interface[0], "version": interface[1]},
             "base": bindings["base"], "initialization": deepcopy(old_arm["initialization"]),
@@ -348,19 +443,25 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
             "training": {"recipe": ref(catalog.recipe, contract_pin["sha256"]), "overrides": {},
                 **{key: bindings[key] for key in ("objective", "sampler", "transform")}},
             "addons": [], "addon_semantics": "baseline"}
-        tid = "TC-modern2d-formal-100k-" + arm_id + "-s42-v1"
-        proposal = build_execution_proposal(question=ExecutionQuestion(POLICY_ID, "RUN_SCREEN60",
+        if retry and arm != next(a for a in retry["spec"]["arms"] if a["arm_id"] == arm_id):
+            raise ValueError("Retry scientific arm differs from the frozen V1 declaration")
+        tid = "TC-modern2d-formal-100k-" + arm_id + "-s42-" + version
+        proposal = build_execution_proposal(question=ExecutionQuestion(policy_id, "RUN_SCREEN60",
             "Establish this unchanged model's independent V2 CommonDev100K reference",
             "No accepted matched reference exists for this formal contract", "Independent new reference screen; no model tuning",
             (SESSION_EVIDENCE,), ("runtime cost may exceed the ceiling", "unmatched historical contracts"),
             ("k1-infrastructure-execution",), "retain new reference evidence for review; context-only/INCONCLUSIVE, noReplay",
             "retain bounded evidence; no100K veto or automatic successor"), arm=arm, trajectory_id=tid,
-            source_commit=commit, run=RUN, version="v1", contract_ref=contract_pin["path"],
-            contract_refs=[contract_pin["path"], authority_ref, role_ref, source_pin["path"], target_pin["path"], POLICY],
+            source_commit=commit, run=run, version=version, contract_ref=contract_pin["path"],
+            contract_refs=[contract_pin["path"], authority_ref, role_ref, source_pin["path"], target_pin["path"], policy_ref],
             authority_ref=authority_ref, role_ref=role_ref, decision_ref=base + "/STATUS.md", timestamp=stamp,
             profile=ExecutionProfile("server", "C", "kaggle2", "NvidiaTeslaT4x2_shared_allocation",
                 "One independent seed42 reference per device;60 passes within aggregate9 T4-hours", None, None),
             action_type="training")
+        if retry:
+            proposal["decision_state"]["policy_version"] = version
+            proposal["trajectory"]["state_at_start"]["prior_trajectory_ids"] = [
+                "TC-modern2d-formal-100k-" + arm_id + "-s42-v1"]
         proposal_pin = retain(base + "/" + arm_id + "/plan_input.json", proposal)
         prospective.append({"arm_id": arm_id, "trajectory_id": tid, "plan_spec_ref": proposal_pin["path"],
             "plan_spec_sha256": proposal_pin["sha256"], "output": base + "/" + arm_id + "/rml"})
@@ -371,21 +472,22 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         arms.append(arm)
     metadata_pin = retain(base + "/training_inputs.json", metadata)
     spec = ExperimentSpec({"schema_version": "molgap-experiment-spec-v2", "experiment_id": "modern2d-formal-100k-reference-screen",
-        "logical_run_id": RUN, "arms": arms, "prospective": {"arms": prospective},
+        "logical_run_id": run, "arms": arms, "prospective": {"arms": prospective},
         "platform": {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2,
             "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True},
         "evidence": {"policy": ref("molgap-v5", canonical_fingerprint({"contract": "MOLGAP-COMMON-V5-FINAL"})),
             "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]},
         "terminal_protocol": TERMINAL_PROTOCOL})
     retain(base + "/acceptance_plan.json", {"format": PLAN_FORMAT, "spec_identity": spec.identity,
-        "authority": authority, "inputs": metadata_pin, "arms": acceptance})
+        "authority": authority, "inputs": metadata_pin, "arms": acceptance,
+        **({"budget_reconciliation": budget_pin} if retry else {})})
     spec_ref = base + "/experiment_spec.json"
     retain(spec_ref, spec.to_dict())
     # The package owner supplies the canonical Spec as its reserved sidecar.
     source_records = sorted(set(outputs) - {spec_ref})
     _allowlist(source_records)
-    kaggle = {"account": ACCOUNT, "kernel": KERNEL, "title": "MolGap Modern2D Formal 100K V1",
-        "datasets": [SOURCE_DATASET, DATASET], "source_dataset": SOURCE_DATASET, "accelerator": "NvidiaTeslaT4"}
+    kaggle = {"account": ACCOUNT, "kernel": kernel, "title": "MolGap Modern2D Formal 100K " + version.upper(),
+        "datasets": [source_dataset, DATASET], "source_dataset": source_dataset, "accelerator": "NvidiaTeslaT4"}
     validate_plan(spec, kaggle)
     workflow_ref = base + "/workflow.json"
     retain(workflow_ref, {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity,
@@ -393,7 +495,7 @@ def freeze_formal_screen(repo_root, *, authorization, development_target_manifes
         "source_profile": "runtime-v1", "source_records": source_records})
     input_pin = retain(base + "/experiment_input.json", {"format": "molgap-experiment-input-v1",
         "spec_ref": spec_ref, "workflow_ref": workflow_ref, "machine_profile": str(machine_profile),
-        "authority_ref": authority_ref, "monitor_paths": [base + "/STATUS.md"], "attempt_id": "v1"})
+        "authority_ref": authority_ref, "monitor_paths": [base + "/STATUS.md"], "attempt_id": version})
     if _source_snapshot(root, names) != snapshot:
         raise ValueError("Committed source changed during formal declaration construction")
     # Check the entire write set first; even partial earlier freezes are retained.

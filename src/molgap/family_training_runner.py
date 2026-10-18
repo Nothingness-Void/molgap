@@ -247,6 +247,13 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         _recover_commit(root, context)
         _begin_cost_interval(root, context, had_checkpoint=(root / "last_checkpoint.pt").is_file())
     initial = inspect_frozen_state_artifact(Path(initial_state_path), expected_state_sha256=recipe.initialization_sha256)
+    tuning = None
+    if recipe.formal_interface:
+        # FP64 reductions depend on CPU thread count. Match the qualified
+        # execution policy before observing labels, not only before training.
+        tuning = ExecutionTuning(independent_models=len(spec.to_dict()["arms"]),
+            total_cpu_budget=spec.to_dict()["platform"]["cpu_cores"])
+        torch.set_num_threads(tuning.cpu_threads)
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
     data = load_training_data(Path(input_root), selection)
@@ -281,8 +288,9 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         raise ValueError("Native training requires one isolated observed accelerator per worker")
     validate_accelerator_request(spec.to_dict()["platform"]["accelerator"], torch.cuda.get_device_name(0),
         hip_runtime=torch.version.hip is not None)
-    tuning = ExecutionTuning(independent_models=len(spec.to_dict()["arms"]),
-        total_cpu_budget=spec.to_dict()["platform"]["cpu_cores"])
+    if tuning is None:
+        tuning = ExecutionTuning(independent_models=len(spec.to_dict()["arms"]),
+            total_cpu_budget=spec.to_dict()["platform"]["cpu_cores"])
     torch.set_num_threads(tuning.cpu_threads)
     runtime = build_runtime_manifest(configure_fp32_determinism(recipe.seed))
     source_root = _loaded_source(package_dir)

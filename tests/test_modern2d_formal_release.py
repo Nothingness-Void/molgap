@@ -37,6 +37,7 @@ class _FormalSpec:
             ],
             "platform": {
                 "name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2,
+                "cpu_cores": 4,
             },
         }
 
@@ -266,6 +267,9 @@ def test_formal_deadline_stops_both_workers_for_cost_and_retains_state(tmp_path,
     assert report["exit_reason"] == "STOP_FOR_COST"
     assert [item.phase for item in calls] == ["preflight", "preflight", "train", "train"]
     assert {item.env["CUDA_VISIBLE_DEVICES"] for item in calls} == {"0", "1"}
+    assert _FormalSpec().to_dict()["platform"]["cpu_cores"] == 4
+    assert all(item.env["OMP_NUM_THREADS"] == "1" for item in calls)
+    assert all(item.env["MKL_NUM_THREADS"] == "1" for item in calls)
     assert {float(item.env["MOLGAP_ALLOCATION_PAUSE_AT"]) for item in calls} == {400.0}
     assert all(item.terminated for item in calls if item.phase == "train")
     assert all(state["terminal_status"] == "interrupted"
