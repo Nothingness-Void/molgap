@@ -3,6 +3,8 @@
 Use the [quickstart](EXPERIMENT_QUICKSTART.md) for the default workflow. This
 page owns extension APIs; the [registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md)
 owns preparation, acceptance and recovery contracts.
+The [CLI reference](EXPERIMENT_CLI.md) documents the existing local commands;
+submission remains with the owning platform adapter.
 
 Before adding plumbing, use the repository's
 [experiment reuse skill](../../.agents/skills/molgap-experiment-reuse/SKILL.md).

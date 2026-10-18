@@ -50,8 +50,17 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
     if manifest.get("format") != "molgap-family-output-v1":
         raise ValueError("Unsupported output protocol; use the owning legacy retriever")
     _check_context(manifest["context"], context)
-    artifact_adapter(manifest["adapter"], (context.family_name, context.family_version))
-    if set(manifest["artifacts"]) != ROLES:
+    profile = artifact_adapter(manifest["adapter"], (context.family_name, context.family_version))
+    # The shared session already defines final-only outputs without prediction
+    # payloads. Retrieval transports that profile, while the owning inspector
+    # still validates the pinned recipe's role/selection requirements.
+    roles = ROLES - {"predictions"} if (profile.protocol == "family-session" and
+        "predictions" not in manifest["artifacts"]) else ROLES
+    if profile.protocol == "family-session" and "trace_context" in manifest["artifacts"]:
+        roles = roles | {"trace_context"}
+        if manifest["artifacts"]["trace_context"]["path"] != manifest["artifacts"]["trace"]["path"] + ".context.json":
+            raise ValueError("Trace companion is not bound to the declared trace")
+    if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent
     required = {}
@@ -126,7 +135,7 @@ def main(argv=None):
             _path(args.remote_manifest_path)
             manifest, files = _family_files(context, args.remote_manifest_path,
                                            args.local_manifest, args.manifest_sha256)
-            if len(files) != len(ROLES) + 1:
+            if len(files) != len(manifest["artifacts"]) + 1:
                 raise ValueError("Remote manifest aliases an artifact")
             files = _selected_files(files)
             # _family_files checks known producer versions against the receipt.

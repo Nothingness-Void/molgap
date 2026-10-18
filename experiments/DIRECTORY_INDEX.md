@@ -14,6 +14,8 @@ and its decision remains the authority. Grouping is by routing domain only.
 
 ## QM9 and architecture discovery
 
+`family_workflow_trial_100k/`
+
 `qm9_adaptive_denoising/` · `qm9_architecture/` · `qm9_cardinality_channel/` ·
 `qm9_fourier_edge/` · `qm9_gape_pretraining/` · `qm9_local_hierarchy/` ·
 `qm9_neural_atom_mixer/` · `top20_architecture_qm9/`

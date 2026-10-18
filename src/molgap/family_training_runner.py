@@ -818,7 +818,9 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
                 authority_path=options.get("authority_path"), input_root=options["input_root"])
         return inspect_output(root, context=context, expected=record["acceptance_requirements"], target_identity=target_identity)
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
-    pause_deadline = _formal_pause_deadline() if recipe.formal_interface else None
+    from .family_workflow_trial import is_trial
+    workflow_trial = is_trial(options["spec"])
+    pause_deadline = _formal_pause_deadline() if recipe.formal_interface or workflow_trial else None
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
     from .k1_infrastructure_comparison import is_comparison

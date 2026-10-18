@@ -2,8 +2,14 @@
 
 Owner: server. The single authorized retry is bound through the existing journal
 to Kaggle2 `kaseichou/molgap-modern2d-formal-100k-v2`, kernel139370303/version1.
-The exact version was observed RUNNING at2026-10-18T06:33:30.132276+00:00.
+The human reported canceling this allocation after about2000 seconds without
+training-log output. The exact version was observed `CANCEL_ACKNOWLEDGED` at
+2026-10-18T07:13:04.309875+00:00 and2026-10-18T07:13:45.475832+00:00.
 Native qualification, formal progress and terminal acceptance remain unobserved.
+The [cancellation inspection](results/cancellation_2026-10-18.md) owns retained
+status, output availability, quota and bounded storage observations. The earlier
+continue-to-budget instruction below was superseded by the human cancellation;
+no Modern2D resume, retry or replacement GPU allocation is released.
 [Authority](authority.json): two independent seed42 references,60 passes, BS128, FP32/TF32off, One authorized retry; prior debit remains charged against aggregate9 T4-hours.
 CommonDev V2 context only; INCONCLUSIVE without a matched reference, noReplay or superiority.
 No500K, extra seeds, full training, protected roles or automatic successor.

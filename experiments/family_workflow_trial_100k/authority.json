@@ -1,0 +1,21 @@
+{
+  "purpose": "WORKFLOW_EXECUTION_TRIAL",
+  "owner": "server",
+  "user_authorized": true,
+  "arms": ["k1", "gptrans"],
+  "seeds": [42],
+  "physical_batch_size": 128,
+  "optimizer_steps_per_arm": 32,
+  "platform": "kaggle2",
+  "account": "kaseichou",
+  "accelerator": "NvidiaTeslaT4",
+  "allocated_devices": 2,
+  "wall_ceiling_seconds": 1800,
+  "allocated_t4_hours_ceiling": 1,
+  "checkpoint_reserve_seconds": 60,
+  "development_role_access": false,
+  "protected_role_access": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "authorization": "Human approved this exact bounded32-step train-only two-arm workflow trial on2026-10-18. One allocation, no automatic retry. Includes environment setup, native repeat/resume qualification,32 downstream updates per arm and retention. No development/official validation/test access or MAE ranking."
+}

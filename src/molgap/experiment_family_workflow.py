@@ -231,6 +231,10 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
     roles = ROLES
     if profile.protocol == "family-session" and "predictions" not in artifacts:
         roles = ROLES - {"predictions"}
+    if profile.protocol == "family-session" and "trace_context" in artifacts:
+        roles = roles | {"trace_context"}
+        if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
+            raise ValueError("Session trace companion must match the declared trace")
     if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}
@@ -706,6 +710,9 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     The owning contract still provides comparison_prelaunch and reference_bundle.
     A passing plan only checks availability and schemas, not trainer execution.
     """
+    if plan.get("format") == "molgap-family-workflow-trial-plan-v1":
+        from .family_workflow_trial import check_plan
+        return check_plan(spec, repo_root, plan)
     if plan.get("format") == "molgap-modern2d-formal-reference-plan-v1":
         from .modern2d_training_release import check_plan
         return check_plan(spec, repo_root, plan)

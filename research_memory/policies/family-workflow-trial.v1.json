@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "family-workflow-trial",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "family-workflow-trial-100k-s42-v1"},
+  "required_observable_fields": ["authorized_workflow_trial"],
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "action_rule": {"field": "authorized_workflow_trial", "operator": "eq", "threshold": true, "action": "RUN_WORKFLOW_TRIAL"},
+  "borderline_action": "DEFER",
+  "cost_model": {"kind": "measured_only", "assumptions": ["full observed T4x2 allocation including bootstrap/preflight/idle tail", "no model-quality or cross-hardware conversion"]},
+  "created_from_source_digest": "e21595f56fa8f36520484605dccd525ac7968c6fa1cd8fae229c4efa44cb8510",
+  "approval": {"activation": "one-human-authorized32-update-train-only-workflow-trial", "authority_ref": "experiments/family_workflow_trial_100k/authority.json"}
+}

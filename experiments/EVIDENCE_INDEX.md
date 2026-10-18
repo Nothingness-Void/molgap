@@ -13,6 +13,7 @@ those claims distinct.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does the new front door submit and accept a bounded mature-family train-only pair? | [Authorized prelaunch](family_workflow_trial_100k/decision_prelaunch.md); no runtime verdict | [family_workflow_trial_100k](family_workflow_trial_100k/) |
 | Can independent PPGT/ESA families reuse Server CPU lifecycle without training release? | CPU-only integration; scientific/fidelity limitations are separate from mechanics | `modern2d_model_integration/` |
 | Can unchanged Modern2D families complete authorized100K references through the shared lifecycle? | Prospective references; [V1 infrastructure failure only](modern2d_100k_formal_screen/results/preflight_failure_2026-10-18.md), no completed model comparison | `modern2d_100k_formal_screen/` |
 | How much does the optimized shared K1 infrastructure change fixed100K execution cost? | [Accepted execution benefit with identical endpoints](k1_infrastructure_t4_100k/results/decision_2026-10-15.md); no scientific promotion or Replay eligibility | `k1_infrastructure_t4_100k/` |

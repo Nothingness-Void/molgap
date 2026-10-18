@@ -1,0 +1,136 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-family-workflow-trial-k1-100k-s42-v1-planned",
+      "evidence_ref": "experiments/family_workflow_trial_100k/authority.json",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 1
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.5
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_WORKFLOW_TRIAL",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/family_workflow_trial_100k/authority.json",
+    "chosen_action": "RUN_WORKFLOW_TRIAL",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "family-workflow-trial",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/family_workflow_trial_100k/role_plan.json"
+    ],
+    "source_commit": "773c423dcd8962cd8529360c0cfecf9b7f4edfdc",
+    "state_timestamp": "2026-10-18T11:23:05.753100+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "k1-v1"
+        ],
+        "cost_event_ids": [
+          "cost-TC-family-workflow-trial-k1-100k-s42-v1-planned"
+        ],
+        "evidence_refs": [
+          "experiments/family_workflow_trial_100k/k1/contract.json"
+        ],
+        "run_ids": [
+          "family-workflow-trial-100k-s42-v1:k1:downstream"
+        ],
+        "source_commit": "773c423dcd8962cd8529360c0cfecf9b7f4edfdc",
+        "type": "execution_diagnostic"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/family_workflow_trial_100k/decision_prelaunch.md",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "family-workflow-trial",
+    "hypothesis": {
+      "alternative_explanations": [
+        "remote bootstrap delay",
+        "loader overhead",
+        "output retrieval mismatch"
+      ],
+      "changed_mechanism": "Exercise existing mature models and fixed loader through the new workflow front door.",
+      "cheapest_falsifier": "one32-step train-only mature-family workflow trial",
+      "decision_changed_if_negative": "Keep workflow unaccepted; retain exact failure and do not automatically resubmit.",
+      "decision_changed_if_positive": "Accept only the bounded workflow execution chain, not model quality.",
+      "expected_native_cost_ref": "cost-TC-family-workflow-trial-k1-100k-s42-v1-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-family-workflow-trial-k1-100k-s42-v1",
+      "observed_deficiency": "Local preparation alone did not establish remote training or end-to-end acceptance.",
+      "related_closed_family_ids": [
+        "k1-infrastructure-execution",
+        "gptrans-infrastructure-execution"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+        "pcqm-gptrans-infrastructure-optimized-100k-s42-v3"
+      ]
+    },
+    "owner": "server",
+    "question": "Can the new front door submit, train, retain and accept mature-family outputs with bounded storage?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/family_workflow_trial_100k/authority.json",
+      "contract_refs": [
+        "experiments/family_workflow_trial_100k/k1/contract.json",
+        "experiments/family_workflow_trial_100k/protocol.md",
+        "experiments/family_workflow_trial_100k/authority.json"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+        "pcqm-gptrans-infrastructure-optimized-100k-s42-v3"
+      ],
+      "prior_trajectory_ids": [],
+      "reference_ids": [],
+      "role_snapshot_refs": [
+        "experiments/family_workflow_trial_100k/role_plan.json"
+      ],
+      "source_commit": "773c423dcd8962cd8529360c0cfecf9b7f4edfdc",
+      "source_config_identity": "ccf8748f7feb0371f160fbf40e430d48dd0a543fa1dc53dd25eb0f24b1c427bb"
+    },
+    "track": "C",
+    "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+  }
+}

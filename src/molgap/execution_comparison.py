@@ -62,6 +62,9 @@ def freeze_comparison_declarations(root, *, base, experiment_id, logical_run_id,
 def execution_extension(spec, source_root):
     """Select trusted experiment hooks here; no callback names are read from JSON."""
     from .experiment_execution import ExecutionExtension
+    from .family_workflow_trial import is_trial, execution_extension as trial_extension
+    if is_trial(spec):
+        return trial_extension(spec, source_root)
     arms = spec.to_dict()["arms"]
     if (len(arms) == 2 and {(a["family"]["name"], a["family"]["version"]) for a in arms}
             == {("ppgt_small", "3"), ("esa_small", "4")}):

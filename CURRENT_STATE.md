@@ -4,14 +4,22 @@
 > [conditional history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md)
 > and the linked experiment decisions; task order lives in `ROADMAP.md`.
 
-## Server active screen
+## Server execution status
+
+The human authorized a separate [mature-family workflow trial](experiments/family_workflow_trial_100k/STATUS.md):
+Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,
+train-only accepted fixed100K,1800 seconds/1 allocated T4-hour including startup
+and native qualification. No development/protected roles, MAE ranking or
+automatic retry. Real submission and output acceptance remain to be observed.
 
 The human-authorized [Modern2D100K retry](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md)
 is bound to Kaggle2 `kaseichou/molgap-modern2d-formal-100k-v2`,
 kernel139370303/version1, source `943fd3a596379144bbb559e690ebbd2cd9da9282`.
-The latest exact-version observation is RUNNING; fresh native qualification,
-training progress and terminal acceptance are not yet observed. The single
-authorized retry charges77 prior wall seconds at both devices against the
+The human canceled this allocation; the exact version was observed
+`CANCEL_ACKNOWLEDGED` twice on2026-10-18. No successor or Modern2D resume is
+released. Native qualification, training progress, terminal outputs and full
+per-job cost remain unobserved; see the [cancellation inspection](experiments/modern2d_100k_formal_screen/retry_v2/results/cancellation_2026-10-18.md).
+The canceled retry retained77 prior wall seconds at both devices against the
 same9 T4-hours. Its [V1 predecessor](experiments/modern2d_100k_formal_screen/STATUS.md)
 failed before either formal trainer started and is RML-closed as
 INFRASTRUCTURE_ONLY, not an architecture negative. The shared startup now applies
@@ -22,10 +30,12 @@ Common-Dev50K, seed42, BS128, FP32/TF32off,60 passes. Aggregate authority is9 T4
 (T4x2/4.5h), with a checkpoint reserve and no automatic continuation. Partial work
 is STOP_FOR_COST/INCONCLUSIVE. Fresh all-arm native preflight remains mandatory;
 submission is not model-quality acceptance, Replay or a500K decision.
-A bounded CPU probe found a repeated whole-shard hashing risk in the indexed
-loader. The human chose to continue the existing job to completion or its
-original budget limit, not stop/repair/retry. The [bound status](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md#loader-budget-risk-and-continuation-authority)
-owns that decision; no additional allocation or loader change is authorized.
+A bounded CPU probe found repeated whole-shard hashing under random indexed
+access; remote attribution remains unestablished. The human's cancellation
+superseded the earlier continue-to-budget choice. The immediate request is to
+assess mature K1/GPTrans-T through the new front door for submission latency
+and storage growth, not to retry Modern2D or claim a model-quality result.
+No new allocation or loader change follows from the canceled declaration.
 
 The user-authorized
 [four-arm campaign](experiments/pcqm_gptrans_research_four_arm_100k/protocol.md)

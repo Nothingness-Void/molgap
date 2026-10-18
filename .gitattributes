@@ -127,3 +127,6 @@ research_memory/policies/modern2d-formal-100k-reference-screen-retry-v2.v2.json 
 experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/** -text whitespace=cr-at-eol
 experiments/modern2d_100k_formal_screen/retry_v2/results/indexed_loader_probe_2026-10-18.json -text whitespace=cr-at-eol
 experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/** -text whitespace=cr-at-eol
+# This bounded workflow binds literal metadata bytes across host checkouts.
+experiments/family_workflow_trial_100k/** -text whitespace=cr-at-eol
+research_memory/policies/family-workflow-trial.v1.json text eol=lf

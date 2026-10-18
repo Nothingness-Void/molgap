@@ -39,7 +39,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     extension = execution_extension(spec, source_root)
     diagnostic = extension.configuration
     explicit_budget = extension.wall_ceiling_seconds is not None
-    cost_bounded = bool(diagnostic and diagnostic.get("format") == "molgap-modern2d-formal-reference-plan-v1")
+    cost_bounded = bool(diagnostic and diagnostic.get("format") in {
+        "molgap-modern2d-formal-reference-plan-v1", "molgap-family-workflow-trial-plan-v1"})
+    hard_stop_reserve = 45 if diagnostic and diagnostic.get("format") == "molgap-family-workflow-trial-plan-v1" else 60
     if execution_comparison:
         from .k1_infrastructure_comparison import check_plan, comparison_base
         check_plan(spec, source_root, _json(source_root / comparison_base(spec) / "acceptance_plan.json"),
@@ -216,7 +218,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         for process, _, _ in workers:
                             if process.poll() is None:
                                 process.terminate()
-                if (bounded or execution_comparison or explicit_budget) and elapsed_allocation >= wall_ceiling - 60:
+                if (bounded or execution_comparison or explicit_budget) and elapsed_allocation >= wall_ceiling - hard_stop_reserve:
                     report["exit_reason"] = "native_allocation_hard_budget"
                     raise TimeoutError("Frozen allocation ceiling; stop and retain checkpoints")
                 if any(p.poll() not in (None, 0) for p, _, _ in workers):

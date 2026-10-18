@@ -1,0 +1,66 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 0,
+    "development_rows": 0,
+    "next_batch": 32,
+    "optimizer_steps": 32,
+    "precision": "fp32",
+    "sample_presentations": 4096,
+    "source_idx_sha256": null,
+    "target_sha256": null
+  },
+  "batch_size": 128,
+  "checkpoint_every": 8,
+  "dataset": {
+    "development": false,
+    "manifest": "fixed100k/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+  },
+  "development_role_identity": null,
+  "development_rows": 0,
+  "drop_last": true,
+  "ema_decay": 0.9999,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": true,
+    "ema": "bound-foreach",
+    "family": "gptrans_t",
+    "name": "shared-family-accelerated",
+    "optimizer": "foreach-adamw",
+    "precision": "fp32",
+    "tf32": false,
+    "torch_version": "2.7.1"
+  },
+  "family": "gptrans_t",
+  "finite_check_every": 1,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": 1,
+    "mode": "batches"
+  },
+  "mode": "reference",
+  "optimizer_steps": 32,
+  "sampler": "torch-pass-randperm",
+  "schedule": {
+    "kind": "warmup_cosine_epoch",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 60,
+    "warmup_units": 4
+  },
+  "seed": 42,
+  "selection": "final-ema",
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.275090206323082,
+  "torch_version": "2.7.1",
+  "train_role_identity": "fb4f35b9adba8b806d2c074ec868e5014ab44413d6975be0588f26aaced4ddb0",
+  "train_rows": 100000,
+  "weight_decay": 0.05
+}

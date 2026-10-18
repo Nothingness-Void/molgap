@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import tarfile
@@ -14,6 +15,32 @@ import time
 
 # Local preparation replaces this marker and binds the resulting entry bytes.
 EXPECTED_LAUNCH_SHA256 = None
+
+
+def _run_trial_pair(command, *, cwd, env, timeout):
+    """The outer allocation cutoff owns the entire nested worker process group."""
+    process = subprocess.Popen(command, cwd=cwd, env=env, start_new_session=True)
+    try:
+        code = process.wait(timeout=timeout)
+        if code:
+            raise subprocess.CalledProcessError(code, command)
+    except BaseException:
+        # The coordinator may be killed while its children are checkpointing.
+        # Kill the process group even if its leader exits before the grace ends.
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            pass
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=5)
+        raise
 
 
 def _workload(allocation_started):
@@ -63,31 +90,57 @@ def _workload(allocation_started):
     modern2d_formal = (len(arms) == 2 and
         {(a["family"]["name"], a["family"]["version"]) for a in arms} ==
         {("ppgt_small", "3"), ("esa_small", "4")})
+    workflow_trial = declaration["experiment_id"] == "family-workflow-trial-100k"
+    if workflow_trial:
+        # The source is already byte-verified. Check the small authority before
+        # provisioning the pinned runtime; the owning release validator repeats
+        # the complete recipe/role checks inside the qualified interpreter.
+        plans = {str(Path(b["plan_spec_ref"]).parent.parent).replace("\\", "/")
+                 for b in declaration["prospective"]["arms"]}
+        if len(plans) != 1:
+            raise RuntimeError("Workflow trial has no unique authority owner")
+        authority = json.loads((source / plans.pop() / "authority.json").read_bytes())
+        if (authority.get("user_authorized") is not True or
+                authority.get("purpose") != "WORKFLOW_EXECUTION_TRIAL" or
+                authority.get("wall_ceiling_seconds") != 1800 or
+                authority.get("allocated_t4_hours_ceiling") != 1):
+            raise RuntimeError("Workflow trial allocation is not authorized")
+        os.environ.update(OMP_NUM_THREADS="1", MKL_NUM_THREADS="1")
     diagnostic = None
     if gptrans_comparison:
         plan_ref = declaration["prospective"]["arms"][0]["plan_spec_ref"]
         diagnostic_path = source / plan_ref.removesuffix("/original/plan_input.json") / "diagnostic.json"
         if diagnostic_path.is_file():
             diagnostic = json.loads(diagnostic_path.read_bytes())
-    if shared_cycle_pair or k1_comparison or gptrans_comparison or modern2d_formal:
+    if shared_cycle_pair or k1_comparison or gptrans_comparison or modern2d_formal or workflow_trial:
         # Read the stdlib-only owner from the already hash-verified source archive.
         import runpy
         prepare = runpy.run_path(str(source / "src/molgap/kaggle_python_environment.py"))["prepare_python"]
-        if modern2d_formal:
+        if workflow_trial:
+            print("WORKFLOW_STAGE preparing_pinned_runtime", flush=True)
+            remaining = 1800 - (time.perf_counter() - allocation_started) - 120
+        elif modern2d_formal:
             remaining = min(1200, 16200 - (time.perf_counter() - allocation_started) - 600)
         else:
             remaining = 1200 if diagnostic is None else diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started)
         executable, qualified = prepare(root / "runtime", deadline=time.time() + remaining - 60,
-            source_root=source, profile="family-shared" if k1_comparison or modern2d_formal else "gptrans-shared")
+            source_root=source, profile="family-shared" if k1_comparison or modern2d_formal or workflow_trial else "gptrans-shared")
         working = Path("/kaggle/working")
         (working / "environment_qualification.json").write_text(json.dumps(qualified, indent=2), encoding="utf-8")
-        subprocess.run([str(executable), "-m", "molgap.kaggle_pair_runtime",
+        if workflow_trial:
+            print("WORKFLOW_STAGE native_preflight_then_32_updates", flush=True)
+        command = [str(executable), "-m", "molgap.kaggle_pair_runtime",
             "--source-root", str(source), "--package-dir", str(package), "--input-root", str(mounted),
             "--launch", str(launch), "--output", str(working / "experiment"),
-            "--allocation-started", repr(allocation_started)], check=True,
-            env=dict(os.environ, PYTHONPATH=str(source / "src")),
-            timeout=(max(1, 16200 - (time.perf_counter() - allocation_started) - 30) if modern2d_formal else
-                None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10)))
+            "--allocation-started", repr(allocation_started)]
+        environment = dict(os.environ, PYTHONPATH=str(source / "src"))
+        if workflow_trial:
+            _run_trial_pair(command, cwd=source, env=environment,
+                timeout=max(1, 1800 - (time.perf_counter() - allocation_started) - 15))
+        else:
+            subprocess.run(command, check=True, env=environment,
+                timeout=(max(1, 16200 - (time.perf_counter() - allocation_started) - 30) if modern2d_formal else
+                    None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10)))
         return
     # Legacy/default bootstrap remains separate from the pinned shared runtime.
     subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy<2",

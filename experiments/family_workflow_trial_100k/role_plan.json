@@ -1,0 +1,11 @@
+{
+  "purpose": "WORKFLOW_EXECUTION_TRIAL",
+  "train": {"source_idx_start": 0, "source_idx_stop": 100000, "rows": 100000},
+  "development": "forbidden",
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "external_submission": "not_applicable",
+  "geometry_use": "not_a_model_input",
+  "note": "Existing fixed packed train shards incidentally deserialize their accepted geometry storage; no geometry computation or development shard loading is authorized."
+}

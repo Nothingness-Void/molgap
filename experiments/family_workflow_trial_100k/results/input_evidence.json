@@ -1,0 +1,110 @@
+{
+  "chunks": [
+    {
+      "bytes_expected": 155088895,
+      "bytes_observed": 155088895,
+      "graph_items_materialized": false,
+      "memory_mapped": true,
+      "path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\data_roundtrip\\indexed_assets\\payloads\\full_minus_holdout\\train_100k_000000.pt",
+      "payload_sha256_expected": "7e1324525e2f69c7fabf877cdd1d7b887650b2f93d2f97d8fd1088f22d0614bc",
+      "payload_sha256_observed": "7e1324525e2f69c7fabf877cdd1d7b887650b2f93d2f97d8fd1088f22d0614bc",
+      "rows": 50000,
+      "source_rows_exact_expected_interval": true,
+      "source_tensor_digest_expected": "33236cc6bd19fa6b89e06d441d3fcd8eb37dc8540f6a4f2b627b20af10894a41",
+      "source_tensor_digest_observed": "33236cc6bd19fa6b89e06d441d3fcd8eb37dc8540f6a4f2b627b20af10894a41",
+      "target_digest_expected": "741a948f1fc989299986c9b2879c570e7a0e7efe739749c397da325a240acbb8",
+      "target_digest_observed": "741a948f1fc989299986c9b2879c570e7a0e7efe739749c397da325a240acbb8",
+      "target_raw_dtype": "torch.float32",
+      "target_shape": [
+        50000
+      ]
+    },
+    {
+      "bytes_expected": 155261311,
+      "bytes_observed": 155261311,
+      "graph_items_materialized": false,
+      "memory_mapped": true,
+      "path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\data_roundtrip\\indexed_assets\\payloads\\full_minus_holdout\\train_100k_000001.pt",
+      "payload_sha256_expected": "2e4c973c0a30b697077e16984e9499c5ef3bc11ebb4aa9e0893550baf7aa8875",
+      "payload_sha256_observed": "2e4c973c0a30b697077e16984e9499c5ef3bc11ebb4aa9e0893550baf7aa8875",
+      "rows": 50000,
+      "source_rows_exact_expected_interval": true,
+      "source_tensor_digest_expected": "cad20d04a3d2f8fb446b225d9a676dc84ec29e351e009cd9cb6c663bd6864aae",
+      "source_tensor_digest_observed": "cad20d04a3d2f8fb446b225d9a676dc84ec29e351e009cd9cb6c663bd6864aae",
+      "target_digest_expected": "94d76c3b9ed7d255f936cca26fb8cec46c5df30b975dec1b06c8c02b5239b999",
+      "target_digest_observed": "94d76c3b9ed7d255f936cca26fb8cec46c5df30b975dec1b06c8c02b5239b999",
+      "target_raw_dtype": "torch.float32",
+      "target_shape": [
+        50000
+      ]
+    }
+  ],
+  "concatenated": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "expected_source_tensor_digest": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "rows": 100000,
+    "source_digest_matches_expected": true,
+    "source_rows_equal_arange_0_99999": true,
+    "source_tensor_digest": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "stats_thread_count": 1,
+    "target_mean_eV": 5.338300266634226,
+    "target_rows": 100000,
+    "target_sample_std_eV_correction_1": 1.275090206323082,
+    "target_tensor_digest": "0c4ff8a6d73e237f1b36643e2717408f255f6083ea7ea9c6592d290a7ddd27f5"
+  },
+  "created_at_utc": "2026-10-18T11:22:15.634497+00:00",
+  "format": "family-workflow-trial-v1-input-evidence",
+  "initial_states": {
+    "gptrans": {
+      "device": "cpu",
+      "expected_state_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+      "file_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+      "path": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\initial_states\\gptrans.pt",
+      "state_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+      "state_sha256_matches_expected": true,
+      "tensor_count": 265
+    },
+    "k1": {
+      "device": "cpu",
+      "expected_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "file_sha256": "166862d4f6f37200cfb2e73473ed1a213cfe22699ead032edcc562c0f1bf335d",
+      "path": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\initial_states\\k1.pt",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "state_sha256_matches_expected": true,
+      "tensor_count": 367
+    }
+  },
+  "role": {
+    "access": "TRAIN_OR_COMMON_DEVELOPMENT",
+    "format": "molgap-pcqm4mv2-unified-roles-v2",
+    "ordering": "ascending-source-index",
+    "parent_acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+    "parent_manifest_sha256": "c722bea060d2450b9c79430374d817c167d98776c496e01fa9a7020af1fee030",
+    "protected": false,
+    "pure_2d": true,
+    "role": "train_100k",
+    "rows": 100000,
+    "status": "complete",
+    "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077"
+  },
+  "role_json_file_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+  "role_json_path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\data_roundtrip\\indexed_assets\\roles\\train_100k.json",
+  "scope": "CPU metadata/identity/statistics inspection only; no tests, model execution, training, development or protected-role access",
+  "source_membership": {
+    "bytes": 800000,
+    "digest_matches_expected": true,
+    "equals_arange_0_99999": true,
+    "expected_tensor_digest": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "manifest_file_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "manifest_tensor_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "observed_file_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "observed_tensor_digest": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\data_roundtrip\\indexed_assets\\members\\train_100k.i64le",
+    "rows": 100000
+  },
+  "verification": {
+    "errors": [],
+    "status": "PASS"
+  }
+}
