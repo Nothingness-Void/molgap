@@ -29,6 +29,9 @@ unobserved startup, not a scientific failure or a passed native certificate.
 Local preparation took43.0464 seconds, excluding implementation/tests, platform
 calls, waits, queue and training. Immutable preparation and operations remain at
 `E:/MolGap/artifacts/runs/modern2d-formal-100k-s42-v2/v2`.
+The [submission observation](results/submission_2026-10-18.json) retains compact
+identities; the [CPU record](results/cpu_retry_2026-10-18.md) separates regression,
+actual package, canonical RML closure and cross-HEAD continuation evidence.
 Read-only status/log observations are retained separately under
 `E:/MolGap/artifacts/modern2d-formal-screen/inspection_retry_v2`.
 
