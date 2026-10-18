@@ -23,9 +23,9 @@ Common-Dev50K, seed42, BS128, FP32/TF32off,60 passes. Aggregate authority is9 T4
 is STOP_FOR_COST/INCONCLUSIVE. Fresh all-arm native preflight remains mandatory;
 submission is not model-quality acceptance, Replay or a500K decision.
 A bounded CPU probe found a repeated whole-shard hashing risk in the indexed
-loader. The [bound status](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md#loader-budget-risk-awaiting-a-human-decision)
-owns the evidence and pending stop/repair/retry question; the running job and
-original budget remain unchanged until an explicit human decision.
+loader. The human chose to continue the existing job to completion or its
+original budget limit, not stop/repair/retry. The [bound status](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md#loader-budget-risk-and-continuation-authority)
+owns that decision; no additional allocation or loader change is authorized.
 
 The user-authorized
 [four-arm campaign](experiments/pcqm_gptrans_research_four_arm_100k/protocol.md)

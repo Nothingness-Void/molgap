@@ -43,7 +43,7 @@ and strict all-arm native barrier remain mandatory; incomplete work is
 STOP_FOR_COST/INCONCLUSIVE, not a completed screen or architecture negative.
 No further retry or allocation is authorized by this declaration.
 
-## Loader budget risk awaiting a human decision
+## Loader budget risk and continuation authority
 
 The [CPU counter probe](results/loader_risk_2026-10-18.md) established repeated
 whole-shard hashing under random indexed access. Its100K first-pass one-cache
@@ -53,5 +53,9 @@ native elapsed time nor physical disk IO. The exact job was still RUNNING at
 retrieved. The coordinator asked whether to stop, reconcile cost, repair/test
 the loader and authorize one additional same-science allocation within the
 original remaining budget, or let this job continue to its existing limit.
-No cancellation, loader modification, extra allocation or budget expansion
-followed from this request alone.
+The human explicitly chose: "Continue the existing job until completion or the
+original budget ceiling." This retained the original allocation and immutable
+source, not cancellation, loader repair, another retry or expanded authority.
+No additional GPU POST, loader modification, seed, model or budget follows.
+The60-pass endpoint remains required for completed-screen acceptance; a
+budget-limited prefix remains STOP_FOR_COST/INCONCLUSIVE.
