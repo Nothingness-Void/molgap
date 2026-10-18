@@ -426,7 +426,9 @@ def _freeze_formal_screen(repo_root, *, authorization, development_target_manife
         contract = build_family_recipe(interface, configuration=recipe,
             source_idx_sha256=target["development_source_idx_sha256"], target_sha256=target["development_target_sha256"],
             train_role_identity=usage["train"], development_role_identity=usage["development"])
-        if retry and contract != frozen_contract:
+        # ESA's typed configuration uses tuples in memory; JSON retains arrays.
+        # Compare canonical wire identity, then retain the exact V1 raw bytes.
+        if retry and canonical_fingerprint(contract) != canonical_fingerprint(frozen_contract):
             raise ValueError("Retry scientific recipe differs from the frozen V1 contract")
         contract_pin = retain(base + "/" + arm_id + "/contract.json", contract,
             raw=frozen_raw if retry else None)
