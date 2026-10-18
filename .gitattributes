@@ -125,3 +125,4 @@ research_memory/policies/modern2d-formal-100k-reference-screen.v1.json text eol=
 research_memory/policies/modern2d-formal-100k-reference-screen-retry-v2.v2.json text eol=lf
 # Retained failure evidence includes raw Windows and Linux byte-bound metadata.
 experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/** -text whitespace=cr-at-eol
+experiments/modern2d_100k_formal_screen/retry_v2/results/indexed_loader_probe_2026-10-18.json -text whitespace=cr-at-eol

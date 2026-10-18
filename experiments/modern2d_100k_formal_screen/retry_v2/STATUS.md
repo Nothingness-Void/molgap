@@ -42,3 +42,16 @@ invoice; unknown billing/provisioning is not silently zero. The60-pass endpoint
 and strict all-arm native barrier remain mandatory; incomplete work is
 STOP_FOR_COST/INCONCLUSIVE, not a completed screen or architecture negative.
 No further retry or allocation is authorized by this declaration.
+
+## Loader budget risk awaiting a human decision
+
+The [CPU counter probe](results/loader_risk_2026-10-18.md) established repeated
+whole-shard hashing under random indexed access. Its100K first-pass one-cache
+model counts50181 opens/pins and about7.79TB of hash input; this is neither
+native elapsed time nor physical disk IO. The exact job was still RUNNING at
+2026-10-18T07:01:58.197787+00:00, with native certificates/pass progress not
+retrieved. The coordinator asked whether to stop, reconcile cost, repair/test
+the loader and authorize one additional same-science allocation within the
+original remaining budget, or let this job continue to its existing limit.
+No cancellation, loader modification, extra allocation or budget expansion
+followed from this request alone.

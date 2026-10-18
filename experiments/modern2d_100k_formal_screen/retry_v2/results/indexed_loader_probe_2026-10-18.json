@@ -1,0 +1,318 @@
+{
+  "format": "molgap-indexed-shard-cache-thrash-diagnostic-v1",
+  "limits": [
+    "No formal real shard payload was opened or hashed.",
+    "No model, graph batching, optimizer, GPU, remote job, or native elapsed-time experiment was run.",
+    "The 100K byte estimate is deterministic for a serial one-cache traversal of the emitted sampler order; worker-specific scheduling requires a separate model."
+  ],
+  "real_100k_sampler_metadata": {
+    "accounting_semantics": "One serial _loaded_index cache. Every cache miss invokes one _pin full-file SHA check and one PackedGraphDataset(mmap=True) constructor in the current implementation. Pass-level counts include an initial miss if the first sampled chunk differs from the retained chunk. DataLoader worker partitioning is not simulated.",
+    "adjacent_cross_chunk_transitions": 50180,
+    "authority": "metadata-only; actual PassBatchSampler output, no real dataset or graph payload opened",
+    "batch_size": 128,
+    "batches": 781,
+    "drop_last": true,
+    "dropped_tail_indices": 32,
+    "emitted_indices": 99968,
+    "first_sample_chunk": 0,
+    "frozen_sampler_contracts": [
+      {
+        "batch_size": 128,
+        "drop_last": true,
+        "path": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/contract.json",
+        "sampler": "torch-pass-randperm",
+        "seed": 42,
+        "sha256": "668f9323ab9600212b396ae1c8b912cd812d83291dae51305a808993bfe94d51",
+        "train_rows": 100000
+      },
+      {
+        "batch_size": 128,
+        "drop_last": true,
+        "path": "experiments/modern2d_100k_formal_screen/esa_native_v3/contract.json",
+        "sampler": "torch-pass-randperm",
+        "seed": 42,
+        "sha256": "9230b7ecfa1ee0a04443b291e0a14bb9b861f548e831cb34d85577cef4e4fa03",
+        "train_rows": 100000
+      }
+    ],
+    "index_partition_counts": {
+      "index_ge_50000": 49985,
+      "index_lt_50000": 49983
+    },
+    "modeled_cache_miss_pin_calls_by_shard": {
+      "index_ge_50000": 25090,
+      "index_lt_50000": 25091,
+      "total": 50181
+    },
+    "not_measured": [
+      "native elapsed seconds",
+      "concurrent DataLoader worker interleavings",
+      "real payload opens",
+      "GPU/model work"
+    ],
+    "pass_index": 0,
+    "role_manifest": "experiments/modern2d_100k_formal_screen/retry_v2/input_role_manifests/train_100k.json",
+    "role_manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+    "rows": 100000,
+    "sampler": "torch-pass-randperm",
+    "seed": 42,
+    "sequential_reference": {
+      "adjacent_cross_chunk_transitions": 1,
+      "modeled_cache_miss_pin_calls_by_shard": {
+        "index_ge_50000": 1,
+        "index_lt_50000": 1,
+        "total": 2
+      },
+      "shard_hash_input_bytes_by_shard": {
+        "index_ge_50000": 155261311,
+        "index_lt_50000": 155088895,
+        "total": 310350206
+      }
+    },
+    "shard_hash_input_bytes_by_shard": {
+      "index_ge_50000": 3895506292990,
+      "index_lt_50000": 3891335464445,
+      "total": 7786841757435
+    },
+    "shard_sizes_from_frozen_role_manifest": [
+      {
+        "bytes": 155088895,
+        "file": "payloads/full_minus_holdout/train_100k_000000.pt",
+        "rows": 50000
+      },
+      {
+        "bytes": 155261311,
+        "file": "payloads/full_minus_holdout/train_100k_000001.pt",
+        "rows": 50000
+      }
+    ],
+    "single_cache_start_assumption": {
+      "basis": "IndexedRoleDataset._load retains the last shard; selected_targets iterates chunks in order and also ends on the last shard",
+      "loaded_chunk_after_dataset_construction_and_selected_targets": 1
+    }
+  },
+  "scope": "CPU synthetic two-shard count + metadata-only 100K sampler pass",
+  "synthetic_fixture": {
+    "access_runs": [
+      {
+        "access": "sequential",
+        "access_counts": {
+          "hash_input_bytes": 13694,
+          "hash_inputs": [
+            {
+              "bytes": 5759,
+              "file": "0000000_0000004.pt"
+            },
+            {
+              "bytes": 7935,
+              "file": "0000004_0000008.pt"
+            }
+          ],
+          "packed_graph_dataset_constructors": 2,
+          "packed_opens": [
+            {
+              "file": "0000000_0000004.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000004_0000008.pt",
+              "mmap": true
+            }
+          ],
+          "pin_calls": 2,
+          "pin_files": [
+            "payloads/full_minus_holdout/0000000_0000004.pt",
+            "payloads/full_minus_holdout/0000004_0000008.pt"
+          ],
+          "whole_shard_hash_calls": 2
+        },
+        "chunk_order": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "initialization_counts": {
+          "hash_input_bytes": 13694,
+          "hash_inputs": [
+            {
+              "bytes": 5759,
+              "file": "0000000_0000004.pt"
+            },
+            {
+              "bytes": 7935,
+              "file": "0000004_0000008.pt"
+            }
+          ],
+          "packed_graph_dataset_constructors": 2,
+          "packed_opens": [
+            {
+              "file": "0000000_0000004.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000004_0000008.pt",
+              "mmap": true
+            }
+          ],
+          "pin_calls": 2,
+          "pin_files": [
+            "payloads/full_minus_holdout/0000000_0000004.pt",
+            "payloads/full_minus_holdout/0000004_0000008.pt"
+          ],
+          "whole_shard_hash_calls": 2
+        },
+        "retained_chunk_after_initialization": 1,
+        "row_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "synthetic_chunk_files": [
+          {
+            "bytes": 5759,
+            "file": "payloads/full_minus_holdout/0000000_0000004.pt",
+            "rows": 4
+          },
+          {
+            "bytes": 7935,
+            "file": "payloads/full_minus_holdout/0000004_0000008.pt",
+            "rows": 4
+          }
+        ]
+      },
+      {
+        "access": "torch-pass-randperm-seed42",
+        "access_counts": {
+          "hash_input_bytes": 27388,
+          "hash_inputs": [
+            {
+              "bytes": 5759,
+              "file": "0000000_0000004.pt"
+            },
+            {
+              "bytes": 7935,
+              "file": "0000004_0000008.pt"
+            },
+            {
+              "bytes": 5759,
+              "file": "0000000_0000004.pt"
+            },
+            {
+              "bytes": 7935,
+              "file": "0000004_0000008.pt"
+            }
+          ],
+          "packed_graph_dataset_constructors": 4,
+          "packed_opens": [
+            {
+              "file": "0000000_0000004.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000004_0000008.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000000_0000004.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000004_0000008.pt",
+              "mmap": true
+            }
+          ],
+          "pin_calls": 4,
+          "pin_files": [
+            "payloads/full_minus_holdout/0000000_0000004.pt",
+            "payloads/full_minus_holdout/0000004_0000008.pt",
+            "payloads/full_minus_holdout/0000000_0000004.pt",
+            "payloads/full_minus_holdout/0000004_0000008.pt"
+          ],
+          "whole_shard_hash_calls": 4
+        },
+        "chunk_order": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "initialization_counts": {
+          "hash_input_bytes": 13694,
+          "hash_inputs": [
+            {
+              "bytes": 5759,
+              "file": "0000000_0000004.pt"
+            },
+            {
+              "bytes": 7935,
+              "file": "0000004_0000008.pt"
+            }
+          ],
+          "packed_graph_dataset_constructors": 2,
+          "packed_opens": [
+            {
+              "file": "0000000_0000004.pt",
+              "mmap": true
+            },
+            {
+              "file": "0000004_0000008.pt",
+              "mmap": true
+            }
+          ],
+          "pin_calls": 2,
+          "pin_files": [
+            "payloads/full_minus_holdout/0000000_0000004.pt",
+            "payloads/full_minus_holdout/0000004_0000008.pt"
+          ],
+          "whole_shard_hash_calls": 2
+        },
+        "retained_chunk_after_initialization": 1,
+        "row_order": [
+          6,
+          3,
+          0,
+          7,
+          2,
+          1,
+          4,
+          5
+        ],
+        "synthetic_chunk_files": [
+          {
+            "bytes": 5759,
+            "file": "payloads/full_minus_holdout/0000000_0000004.pt",
+            "rows": 4
+          },
+          {
+            "bytes": 7935,
+            "file": "payloads/full_minus_holdout/0000004_0000008.pt",
+            "rows": 4
+          }
+        ]
+      }
+    ],
+    "conclusion": "current one-shard cache reloads, re-hashes, and reconstructs a PackedGraphDataset on each observed chunk transition",
+    "indexed_chunk_rows": [
+      4,
+      4
+    ],
+    "indexed_rows": 8,
+    "permit_scope": "CPU_SYNTHETIC_ONLY",
+    "source": "existing tests/test_pcqm_unified_roles.py::source_fixture and tests/test_pcqm_indexed_inputs.py permit schema",
+    "source_graph_rows": 30
+  }
+}
