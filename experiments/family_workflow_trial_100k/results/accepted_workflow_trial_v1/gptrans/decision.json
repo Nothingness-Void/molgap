@@ -1,0 +1,48 @@
+{
+  "automatic_successor_authorized": false,
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "gptrans",
+    "arm_identity": "fc735de14f613b13d2a6b141825d34fc89e13257138dd57bd548630423e8e19f",
+    "experiment_id": "family-workflow-trial-100k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "family-workflow-trial-100k-s42-v1",
+    "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-family-workflow-trial-100k-v1",
+    "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+    "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+    "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+    "training_recipe_sha256": "7b53ee0cc77f3ebdde353c6a92b79d34e95b50f497594c184d53b2a593827cd0"
+  },
+  "decision_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/gptrans/decision.json",
+  "development_rows": 0,
+  "final": true,
+  "inspection_snapshot_sha256": "5e3f5a8da5b8300418d1ccfcce38c287aecde90b72193361e4b885f872f9f107",
+  "large_artifacts_retained_at": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\inspection\\gptrans",
+  "next_allowed_actions": [],
+  "noReplay": true,
+  "optimizer_updates": 32,
+  "outcome": "INCONCLUSIVE",
+  "promotion_authorized": false,
+  "reopen_conditions": [
+    "separate human authority"
+  ],
+  "sample_presentations": 4096,
+  "shared_allocation_observation": {
+    "additive_with_other_arm": false,
+    "allocation_device_count": 2,
+    "allocation_identity": "8b2894ddd5adbd8d272453075aa0fe63dbceac6491b30503fdca6ffd4a18be52",
+    "bootstrap_additive_with_ledger": false,
+    "bootstrap_device_seconds": 231.76558087199987,
+    "bootstrap_wall_seconds": 115.88279043599994,
+    "full_billing_status": "measurement_missing",
+    "ledger_device_seconds": 231.0646374219998,
+    "ledger_wall_seconds": 115.5323187109999,
+    "provisioning_before_python_seconds": null,
+    "queue_seconds": null
+  },
+  "training_executed": true
+}

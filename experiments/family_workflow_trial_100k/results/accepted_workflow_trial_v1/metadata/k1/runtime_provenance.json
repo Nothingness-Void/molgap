@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "family-workflow-trial-100k",
+    "logical_run_id": "family-workflow-trial-100k-s42-v1",
+    "arm_id": "k1",
+    "arm_identity": "ccf8748f7feb0371f160fbf40e430d48dd0a543fa1dc53dd25eb0f24b1c427bb",
+    "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+    "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+    "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+    "training_recipe_sha256": "1c64eacf2f4153326c36281af41480cd5b8c71156bafcfcf95457df707e6a866",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-family-workflow-trial-100k-v1",
+    "platform_version": null
+  },
+  "recipe_identity": "0176ceefb7e3b903d442b2fb5a956f5bf2f1f99242c51a03f6ff1b6c44800efe",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "166862d4f6f37200cfb2e73473ed1a213cfe22699ead032edcc562c0f1bf335d",
+    "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "tensor_count": 367,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "a0d6f72c348cac6d261b2e5e8836beab90cde9cd78a9a778ae7949d0ce342289",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4"
+}

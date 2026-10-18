@@ -10,8 +10,13 @@ The human authorized a separate [mature-family workflow trial](experiments/famil
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,
 train-only accepted fixed100K,1800 seconds/1 allocated T4-hour including startup
 and native qualification. No development/protected roles, MAE ranking or
-automatic retry. The exact first allocation is bound to kernel139412008/version1,
-observed QUEUED; real training and output acceptance remain to be observed.
+automatic retry. The exact allocation kernel139412008/version1 completed and
+[passed saved-artifact acceptance](experiments/family_workflow_trial_100k/results/decision_2026_10_19.md).
+Both32-update arms are RML-finalized as INCONCLUSIVE/context_only; the temporary
+follow-up is PAUSED. The observed two-T4 bootstrap window was115.8828 seconds;
+full billing, pre-Python provisioning and queue duration remain missing.
+User-derived RML views were preserved rather than rebuilt. This accepts the
+bounded mature-family workflow, without a quality rank or Modern2D release.
 
 The human-authorized [Modern2D100K retry](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md)
 is bound to Kaggle2 `kaseichou/molgap-modern2d-formal-100k-v2`,
@@ -143,6 +148,10 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 Cross-scale infrastructure is CPU-accepted; V2 IMS data passed [role acceptance](docs/operations/PCQM_UNIFIED_TWO_P_ACCEPTANCE.md).
 Job `1733250.ccpbs1` exited0 with a retained memory warning; Kaggle mirrors are NOT_PUBLISHED.
 Modern2D [versioned integration](experiments/modern2d_model_integration/integration_attempt_2026-10-17.md) is CPU-accepted for PPGT/2, ESA/3 and indexed loading.
+The local [addon/loader cleanup](experiments/modern2d_model_integration/addon_loader_implementation.md)
+adds CPU-tested readout-slot composition and per-process shard verification reuse.
+Configured Modern2D native release and the ordinary scientific-input compiler
+are still incomplete; old campaign authority cannot release these new recipes.
 The human authorized a separate bounded [native qualification](experiments/modern2d_model_integration/native_preflight/STATUS.md): IMS CPU at most2h, then Kaggle2 T4x2 at most30min, no formal training/protected roles.
 The selected100K/Common-Dev export and private Kaggle2 byte roundtrips passed. The [V1 acceptance](experiments/modern2d_model_integration/native_preflight/results/decision_2026-10-18.md) and [V2 inspection](experiments/modern2d_model_integration/native_preflight/retry_v2/results/inspection_2026-10-18.md) preserve separate bootstrap/device-interface failures, not scientific route negatives. The [repaired exact attempt](experiments/modern2d_model_integration/native_preflight/retry_v4/STATUS.md), kernel139279865/version1, is COMPLETE; independent inspection accepted both arms' native numerical/update and exact repeat/resume proofs. Both V4 qualification arms are now RML-finalized as `NO_TRAIN`, with full allocation/billing cost explicitly missing; the qualification certificate does not release formal training or automatic successors. V3 was local-only and never uploaded/submitted. The new formal screen above has separate human authority and prospective records. User-derived RML views were preserved, so index rebuilding is explicitly deferred rather than described as terminal-publication failure.
 

@@ -1,0 +1,36 @@
+{
+  "device_time_semantics": null,
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": null,
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "fb4f35b9adba8b806d2c074ec868e5014ab44413d6975be0588f26aaced4ddb0",
+      "target": "Gap",
+      "unit": "normalized-Gap",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.040973111395646605,
+      "event": "observation",
+      "learning_rate": null,
+      "live_dev_metric": null,
+      "live_train_metric": null,
+      "optimizer_step": 32,
+      "sample_presentations": 4096,
+      "sequence": 0,
+      "wall_time_seconds": null
+    }
+  ],
+  "run_id": "family-workflow-trial-100k-s42-v1:gptrans:downstream",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+}

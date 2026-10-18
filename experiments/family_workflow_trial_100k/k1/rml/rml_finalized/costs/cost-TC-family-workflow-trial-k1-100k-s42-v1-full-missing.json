@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1-v1",
+  "category": "other",
+  "cost_event_id": "cost-TC-family-workflow-trial-k1-100k-s42-v1-full-missing",
+  "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+}

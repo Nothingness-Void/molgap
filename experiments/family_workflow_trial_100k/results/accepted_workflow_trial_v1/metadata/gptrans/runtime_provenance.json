@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "family-workflow-trial-100k",
+    "logical_run_id": "family-workflow-trial-100k-s42-v1",
+    "arm_id": "gptrans",
+    "arm_identity": "fc735de14f613b13d2a6b141825d34fc89e13257138dd57bd548630423e8e19f",
+    "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+    "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+    "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+    "training_recipe_sha256": "7b53ee0cc77f3ebdde353c6a92b79d34e95b50f497594c184d53b2a593827cd0",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-family-workflow-trial-100k-v1",
+    "platform_version": null
+  },
+  "recipe_identity": "9377a9bcdc4a27e29db20d943613e36d9c3c1ec8039d4a0eb31e03e98d736ec5",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+    "state_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+    "tensor_count": 265,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "a0d6f72c348cac6d261b2e5e8836beab90cde9cd78a9a778ae7949d0ce342289",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4"
+}

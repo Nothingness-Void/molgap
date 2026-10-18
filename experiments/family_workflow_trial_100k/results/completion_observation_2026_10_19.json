@@ -1,0 +1,24 @@
+{
+  "kernel": "kaseichou/molgap-family-workflow-trial-100k-v1",
+  "kernel_id": 139412008,
+  "observed_at": "2026-10-18T16:58:18.278027+00:00",
+  "scheduler": {
+    "failureMessage": "",
+    "status": "COMPLETE"
+  },
+  "source": {
+    "current_version": 1,
+    "enable_gpu": true,
+    "kernel_id": 139412008,
+    "machine_shape": "NvidiaTeslaT4",
+    "private": true
+  },
+  "startup": null,
+  "status_binding": {
+    "explicit_version_label_endpoint": "HTTP_ERROR_RECORDED",
+    "method": "current-status-between-two-physical-id-version-checks",
+    "source_version_after": 1,
+    "source_version_before": 1
+  },
+  "version": 1
+}

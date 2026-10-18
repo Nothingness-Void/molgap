@@ -1,0 +1,301 @@
+{
+  "acceptance_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/metadata/acceptance.json",
+  "acceptance_sha256": "1fa26cb388d731aa6be694225316743c3506ea873858971426778209c31544fc",
+  "arms": {
+    "gptrans": {
+      "native_proof_artifacts": 5,
+      "optimizer_steps": 32,
+      "rml_status": "FINALIZED",
+      "sample_presentations": 4096,
+      "scientific_status": "INCONCLUSIVE",
+      "selected_weights": "ema"
+    },
+    "k1": {
+      "native_proof_artifacts": 8,
+      "optimizer_steps": 32,
+      "rml_status": "FINALIZED",
+      "sample_presentations": 4096,
+      "scientific_status": "INCONCLUSIVE",
+      "selected_weights": "live"
+    }
+  },
+  "automatic_successor_authorized": false,
+  "automation": {
+    "id": "molgap-mature-workflow-acceptance",
+    "status": "PAUSED"
+  },
+  "budget_status": "observed allocation within cap; full per-job invoice and pre-Python provisioning missing",
+  "external_inspection_root": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\inspection",
+  "external_reports": {
+    "metadata_retrieval.json": "8468a10267cd9a63d272fabb0a6783ace60310b4e6b6cd248d60137bc9009946",
+    "pinned_retrieval.json": "4d55ca16bafa95e1d9831b0ce15296e60a41d01a53f697816208080eb5cc38bd",
+    "progress_retrieval.json": "fd81234228192a109a066cd5dd611bb5a54992ff3419ef6652a2574820b970de",
+    "regression_execution.stdout.txt": "b5002981f7611665479db2ad35f97eac63d468a5580f1cfda0f38ae841dd1232",
+    "regression_execution.time.json": "c361e1c6968e0bf6d58b5884b0f77f4a5f760147ee71b0ae22b7f31b2ade5127",
+    "rml_finalization.json": "6a67b89d4d75ebc6504554ad6d597828fc948105f4287aea676a699d0d2d93d8",
+    "timing_cost_storage_report.json": "95d39d7a08c4385ecf069172a89b0756427d92a69ef525647ce2ca26e09acebe",
+    "user_file_pins_after_terminal.json": "e35739aac70e8a6a12bf46546e64352bc0db60bab631b5492c75f03e7518410a",
+    "verification_execution.stdout.txt": "35537efa3addcdaba59da9d872adc47ec0eba7b7fe604ffd52ab168004b0b35f",
+    "verification_execution.time.json": "c21ef567477cc290d944f30f813f7dce388f9220c911830f3a5fffeb9147bcdc"
+  },
+  "format": "molgap-workflow-trial-result-v1",
+  "kernel": "kaseichou/molgap-family-workflow-trial-100k-v1",
+  "kernel_id": 139412008,
+  "measurements": {
+    "bootstrap_allocated_t4_hours": 0.06437932801999996,
+    "bootstrap_allocation_wall_seconds": 115.88279043599994,
+    "cross_head_reuse_seconds": 0.14241530001163483,
+    "full_billing_status": "measurement_missing",
+    "ledger_overlaps_bootstrap": true,
+    "ledger_wall_seconds": 115.5323187109999,
+    "local_preparation_outer_seconds": 50.27347249997547,
+    "local_preparation_seconds": 49.77411130000837,
+    "metadata_retrieval_seconds": 11.894800199981546,
+    "pair_orchestration_wall_seconds": 53.08360460899996,
+    "pinned_payload_retrieval_seconds": 120.06359199999133,
+    "provisioning_before_python_seconds": null,
+    "queue_reason": "Not measured by platform; queue snapshots and bootstrap timestamps do not establish a per-job queue invoice.",
+    "queue_seconds": null,
+    "quota_account_observation": {
+      "not_added_to_bootstrap_or_ledger": true,
+      "per_job_invoice": false,
+      "same_refresh_window": true,
+      "time_reserved_seconds_after": 0.0,
+      "time_used_increment_seconds": 124.3140000000003
+    },
+    "scope": "Exact K1/GPTrans 32-update workflow only; no scientific quality, global cleanup or Modern2D throughput claim",
+    "storage_census": {
+      "byte_basis": "logical_regular_files; hardlinks count by path",
+      "complete": true,
+      "custody": "UNKNOWN",
+      "deletion_eligibility": "NOT_ASSESSED",
+      "entries_visited": 155,
+      "evidence": "INSUFFICIENT_FOR_CLEANUP",
+      "format": "molgap-artifact-census-v1",
+      "limits": {
+        "max_depth": 32,
+        "max_entries": 5000,
+        "max_git_bytes": 4000000,
+        "max_seconds": 10
+      },
+      "paths": [
+        {
+          "complete": true,
+          "counts": {
+            "ignored": {
+              "bytes": 0,
+              "files": 0
+            },
+            "tracked": {
+              "bytes": 0,
+              "files": 0
+            },
+            "unknown": {
+              "bytes": 35877977,
+              "files": 2
+            },
+            "untracked": {
+              "bytes": 0,
+              "files": 0
+            }
+          },
+          "duplicate_of": null,
+          "issues": [
+            "NO_GIT_CLASSIFICATION"
+          ],
+          "path": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\initial_states",
+          "possible_unique_files": 2,
+          "skipped_git_admin": 0,
+          "skipped_links": 0,
+          "skipped_special": 0
+        },
+        {
+          "complete": true,
+          "counts": {
+            "ignored": {
+              "bytes": 0,
+              "files": 0
+            },
+            "tracked": {
+              "bytes": 0,
+              "files": 0
+            },
+            "unknown": {
+              "bytes": 808433084,
+              "files": 75
+            },
+            "untracked": {
+              "bytes": 0,
+              "files": 0
+            }
+          },
+          "duplicate_of": null,
+          "issues": [
+            "NO_GIT_CLASSIFICATION"
+          ],
+          "path": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\inspection",
+          "possible_unique_files": 75,
+          "skipped_git_admin": 0,
+          "skipped_links": 0,
+          "skipped_special": 0
+        },
+        {
+          "complete": true,
+          "counts": {
+            "ignored": {
+              "bytes": 0,
+              "files": 0
+            },
+            "tracked": {
+              "bytes": 0,
+              "files": 0
+            },
+            "unknown": {
+              "bytes": 76617904,
+              "files": 50
+            },
+            "untracked": {
+              "bytes": 0,
+              "files": 0
+            }
+          },
+          "duplicate_of": null,
+          "issues": [
+            "NO_GIT_CLASSIFICATION"
+          ],
+          "path": "E:\\MolGap\\artifacts\\runs\\family-workflow-trial-100k-s42-v1\\v1",
+          "possible_unique_files": 50,
+          "skipped_git_admin": 0,
+          "skipped_links": 0,
+          "skipped_special": 0
+        }
+      ],
+      "process_dependencies": "UNKNOWN",
+      "totals": {
+        "ignored": {
+          "bytes": 0,
+          "files": 0
+        },
+        "tracked": {
+          "bytes": 0,
+          "files": 0
+        },
+        "unknown": {
+          "bytes": 920928965,
+          "files": 127
+        },
+        "untracked": {
+          "bytes": 0,
+          "files": 0
+        }
+      },
+      "unique_copies": "UNKNOWN",
+      "worktrees": []
+    },
+    "submission_active_phases": [
+      {
+        "metric": "submission_prechecks_active",
+        "scope": "Local admission/quota/status work during active invocations. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": 22.488192499993602
+      },
+      {
+        "metric": "source_publication_request_active",
+        "scope": "Publication request including upload/API overhead; not isolated transfer time. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": 20.504384500003653
+      },
+      {
+        "metric": "source_ready_checks_active",
+        "scope": "Active readiness/verification work; excludes offline waiting. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": 41.95100080000702
+      },
+      {
+        "metric": "source_ready_checks_active",
+        "scope": "Active resumed readiness, download, release and quota checks; excludes offline waiting. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": null
+      },
+      {
+        "metric": "source_reconciliation_active",
+        "scope": "Active reconciliation after an uncertain publication outcome. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": null
+      },
+      {
+        "metric": "kernel_post_active",
+        "scope": "Push wrapper, before-POST checks and response persistence; not isolated HTTP POST time. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": 14.174794999998994
+      },
+      {
+        "metric": "kernel_reconciliation_active",
+        "scope": "Active reconciliation; not the original lost response latency. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": null
+      },
+      {
+        "metric": "receipt_binding_active",
+        "scope": "Source/receipt binding plus scheduler/startup observations; not isolated receipt writing. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": 11.472079699975438
+      },
+      {
+        "metric": "bound_reobservation_active",
+        "scope": "Repeated bound-run checks; not a new submission or queue sample. One aggregate over recorded active invocations; excludes unrecorded/crashed intervals and time between invocations.",
+        "seconds": null
+      }
+    ],
+    "training_loop_telemetry_seconds": {
+      "gptrans": 8.681933831000038,
+      "k1": 9.25157548300001
+    },
+    "workers": [
+      {
+        "phase": "preflight",
+        "status": "complete",
+        "workers": [
+          {
+            "arm_id": "k1",
+            "device": 0,
+            "returncode": 0,
+            "worker_wall_seconds": 29.51323689100002
+          },
+          {
+            "arm_id": "gptrans",
+            "device": 1,
+            "returncode": 0,
+            "worker_wall_seconds": 28.511698386000035
+          }
+        ]
+      },
+      {
+        "phase": "train",
+        "status": "complete",
+        "workers": [
+          {
+            "arm_id": "k1",
+            "device": 0,
+            "returncode": 0,
+            "worker_wall_seconds": 23.03671848900001
+          },
+          {
+            "arm_id": "gptrans",
+            "device": 1,
+            "returncode": 0,
+            "worker_wall_seconds": 23.535920208999983
+          }
+        ]
+      }
+    ]
+  },
+  "noReplay": true,
+  "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+  "scientific_comparison": "context_only",
+  "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+  "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+  "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+  "status": "WORKFLOW_EXECUTION_ACCEPTED",
+  "verification": {
+    "actual_saved_artifacts": "VERIFIED_BY_LUNA",
+    "canonical_trace_and_context": "hash-bound retained evidence; no canonical Replay admission",
+    "derived_views_rebuilt": false,
+    "regression_seconds": 9.03,
+    "regression_tests": 19,
+    "user_files_unchanged": true
+  },
+  "version": 1
+}

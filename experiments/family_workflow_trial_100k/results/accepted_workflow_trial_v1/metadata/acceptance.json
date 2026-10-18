@@ -1,0 +1,280 @@
+{
+  "arms": {
+    "gptrans": {
+      "inspection_snapshot_sha256": "5e3f5a8da5b8300418d1ccfcce38c287aecde90b72193361e4b885f872f9f107",
+      "native_qualification": {
+        "certificate_sha256": "cd1db5d06e0735fb8279874127229e48982b113c715b257af33e268e72219acd",
+        "proof_artifacts": [
+          {
+            "path": "gptrans/fill-enabled.pt",
+            "sha256": "c2bd1b7b108cce883894381f8204468820e6fc5f46d7a55077c93afe707d50a5"
+          },
+          {
+            "path": "gptrans/repeat-a.pt",
+            "sha256": "ded7791c2614c63cf9160932eb20b86f674ea600e5865682b97ed2ac6bb7f505"
+          },
+          {
+            "path": "gptrans/repeat-b.pt",
+            "sha256": "a53f4a8e36f4cbc9b6b2300ad45956dafd55c9dffc9d79e74de37bbe3cd15b8a"
+          },
+          {
+            "path": "gptrans/resumed-first.pt",
+            "sha256": "11c7778cef996d4b0f789503e8de3c8eb0449744b7ff805670c4ba29ca172df1"
+          },
+          {
+            "path": "gptrans/resumed.pt",
+            "sha256": "3e02172e1116836bec4765dbe4f4d971c3a994c4fe51dd7cc465e32cdde18b0e"
+          }
+        ],
+        "provenance_sha256": "2ece0e7899c4b005423ff0a46d3483ae3a202d7901820166db6f65e1f82d0c17",
+        "status": "VERIFIED"
+      },
+      "observed": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "7b53ee0cc77f3ebdde353c6a92b79d34e95b50f497594c184d53b2a593827cd0"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "91ccd72498ea661d124e1490105847093659c3ba3ce176733e67a3828ae66c2e"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "872040acb00495e9133cea6e7bc06ebdd11c7f61506358dcd6bc1480f80b1711"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "131f3f109fc74da504432c04b103c67cf870055989410b91eb5f40ac75df704e"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "1ededf2ecc04d7044cb39f378faf8f5e427c0a2500c9587d5f6e8328bcdb6337"
+          }
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 18.74160291999999
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "reason": "requires platform allocation accounting",
+            "semantics": "allocated_device",
+            "status": "missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "producer_platform_version": null,
+        "progress": {
+          "completed_passes": 0,
+          "next_batch": 32,
+          "optimizer_steps": 32,
+          "sample_presentations": 4096,
+          "status": "complete"
+        },
+        "selected_optimizer_step": 32,
+        "selected_weights": "ema"
+      },
+      "role_use": {
+        "audit": "untouched",
+        "common_dev": "untouched",
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_100k": "consumed"
+      },
+      "snapshot_metadata_path": "gptrans/inspection_snapshot.json",
+      "telemetry": {
+        "arm_id": "gptrans",
+        "best_development_mae_eV": null,
+        "best_metric_pass": null,
+        "checkpoint_optimizer_steps": 32,
+        "completed_passes": 0,
+        "development_mae_eV": null,
+        "elapsed_seconds": 8.681933831000038,
+        "eta_seconds": 0.0,
+        "event": "terminal",
+        "family": "gptrans_t",
+        "format": "molgap-training-log-v1",
+        "learning_rates": [
+          0.00025
+        ],
+        "metric_pass": null,
+        "next_batch": 32,
+        "optimizer_steps": 32,
+        "pass_timing_scope": null,
+        "pass_wall_seconds": null,
+        "planned_optimizer_steps": 32,
+        "planned_passes": 0.040973111395646605,
+        "sample_presentations": 4096,
+        "status": "complete",
+        "train_live_mae_eV": null,
+        "updates_per_second": 3.6858147761665268,
+        "weight_state": "ema"
+      }
+    },
+    "k1": {
+      "inspection_snapshot_sha256": "6b838c36c1c761e77f84bc2531082b036f2fefad682345741d72ccb4651715e1",
+      "native_qualification": {
+        "certificate_sha256": "4a04b0adc3d31e340cb2f1c6f0e65d9c7e3e492baedf29f60b80f56556099ed6",
+        "proof_artifacts": [
+          {
+            "path": "k1/execution-candidate-evaluation.pt",
+            "sha256": "b5957749e17aa9b0e23ecb8244760a492fcd24de66e5e06d78addf752e3332f1"
+          },
+          {
+            "path": "k1/execution-evaluation-source-idx.pt",
+            "sha256": "cc1adc9a44bb1a7c77d46e46977e10a7c35e109b62a1e042ee844960e4202b88"
+          },
+          {
+            "path": "k1/execution-native-evaluation.pt",
+            "sha256": "98a9393cfad03e5d671bb2661475d98627187f95517b92958fdd997d8c8a6aaa"
+          },
+          {
+            "path": "k1/execution-native-state.pt",
+            "sha256": "be9674caa68741c0e2900212327b65227aeebdb528a22c4269c33babcb356bb0"
+          },
+          {
+            "path": "k1/repeat-a.pt",
+            "sha256": "44b027a75c8864f4840ad259f01ba655bcf6a99d6e254441f691804c79993511"
+          },
+          {
+            "path": "k1/repeat-b.pt",
+            "sha256": "ea42fc4d7a15b1b56b6b59d03a42602ed3524682dc0bf4dba22c7b27f9ad2e23"
+          },
+          {
+            "path": "k1/resumed-first.pt",
+            "sha256": "fd60acb0f6f1e52fcc2fad11a8691380da7be08dc637439e471e171dc9bf941c"
+          },
+          {
+            "path": "k1/resumed.pt",
+            "sha256": "851d40774d928561b33dbd825553304ea88f742544b6f9ec992258a4c3bcc07f"
+          }
+        ],
+        "provenance_sha256": "c3059dec9ff5cd17f5b3719706d901cbd19b4ca65f5dda7e4b5b853f994bef98",
+        "status": "VERIFIED"
+      },
+      "observed": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "1c64eacf2f4153326c36281af41480cd5b8c71156bafcfcf95457df707e6a866"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "c7a75e91b4155955cc181ef62c583467cce8e9ee0096dbfc54c15c6b957cfb47"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "b7ebaaa187253740891fad25a2905c5b3eeb0597bc5e29cf30289d33203c860a"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "4dd580500d993e623789717893f5f42e00b2c6cab4346e326aee93d27f8769eb"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "e8fdf21e12443a0ffcc18fc4a12c00bd675397722da6a17fe800c69f8969fb70"
+          }
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 18.649995320999892
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "reason": "requires platform allocation accounting",
+            "semantics": "allocated_device",
+            "status": "missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "producer_platform_version": null,
+        "progress": {
+          "completed_passes": 0,
+          "next_batch": 32,
+          "optimizer_steps": 32,
+          "sample_presentations": 4096,
+          "status": "complete"
+        },
+        "selected_optimizer_step": 32,
+        "selected_weights": "live"
+      },
+      "role_use": {
+        "audit": "untouched",
+        "common_dev": "untouched",
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_100k": "consumed"
+      },
+      "snapshot_metadata_path": "k1/inspection_snapshot.json",
+      "telemetry": {
+        "arm_id": "k1",
+        "best_development_mae_eV": null,
+        "best_metric_pass": null,
+        "checkpoint_optimizer_steps": 32,
+        "completed_passes": 0,
+        "development_mae_eV": null,
+        "elapsed_seconds": 9.25157548300001,
+        "eta_seconds": 0.0,
+        "event": "terminal",
+        "family": "neural_atom_k1",
+        "format": "molgap-training-log-v1",
+        "learning_rates": [
+          0.0004
+        ],
+        "metric_pass": null,
+        "next_batch": 32,
+        "optimizer_steps": 32,
+        "pass_timing_scope": null,
+        "pass_wall_seconds": null,
+        "planned_optimizer_steps": 32,
+        "planned_passes": 0.040973111395646605,
+        "sample_presentations": 4096,
+        "status": "complete",
+        "train_live_mae_eV": null,
+        "updates_per_second": 3.458870336063383,
+        "weight_state": "live"
+      }
+    }
+  },
+  "comparison_status": "context_only",
+  "cost": {
+    "full_per_job_invoice": null,
+    "observed_allocated_t4_hours": 0.06437932801999996,
+    "observed_bootstrap_wall_seconds": 115.88279043599994,
+    "overlapping_ledger_not_added": true,
+    "provisioning_before_python_seconds": null,
+    "queue_seconds": null
+  },
+  "finalized_at": "2026-10-18T17:04:57.975723+00:00",
+  "format": "molgap-family-workflow-trial-acceptance-v1",
+  "full_billing_status": "measurement_missing",
+  "noReplay": true,
+  "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+  "scientific_status": "INCONCLUSIVE",
+  "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+  "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+  "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+  "verified": true,
+  "verifier_script_sha256": "d027df101a8ed398c25c40b20774a2944406855f30b74a57c7f966e3b5480b46"
+}

@@ -1,0 +1,144 @@
+{
+  "automatic_successor_authorized": false,
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "k1",
+    "arm_identity": "ccf8748f7feb0371f160fbf40e430d48dd0a543fa1dc53dd25eb0f24b1c427bb",
+    "experiment_id": "family-workflow-trial-100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "family-workflow-trial-100k-s42-v1",
+    "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-family-workflow-trial-100k-v1",
+    "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+    "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+    "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+    "training_recipe_sha256": "1c64eacf2f4153326c36281af41480cd5b8c71156bafcfcf95457df707e6a866"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-v1",
+      "category": "other",
+      "cost_event_id": "cost-TC-family-workflow-trial-k1-100k-s42-v1-full-missing",
+      "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    }
+  ],
+  "development_rows": 0,
+  "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "inspection_snapshot_sha256": "6b838c36c1c761e77f84bc2531082b036f2fefad682345741d72ccb4651715e1",
+  "large_artifacts_retained_at": "E:\\MolGap\\artifacts\\family-workflow-trial-v1\\inspection\\k1",
+  "noReplay": true,
+  "optimizer_updates": 32,
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "measurement_missing",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "promotion_authorized": false,
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/acceptance.json",
+      "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-training_membership",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/acceptance.json",
+      "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/acceptance.json",
+      "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    }
+  ],
+  "run_id": "family-workflow-trial-100k-s42-v1:k1:downstream",
+  "sample_presentations": 4096,
+  "shared_allocation_observation": {
+    "additive_with_other_arm": false,
+    "allocation_device_count": 2,
+    "allocation_identity": "8b2894ddd5adbd8d272453075aa0fe63dbceac6491b30503fdca6ffd4a18be52",
+    "bootstrap_additive_with_ledger": false,
+    "bootstrap_device_seconds": 231.76558087199987,
+    "bootstrap_wall_seconds": 115.88279043599994,
+    "full_billing_status": "measurement_missing",
+    "ledger_device_seconds": 231.0646374219998,
+    "ledger_wall_seconds": 115.5323187109999,
+    "provisioning_before_python_seconds": null,
+    "queue_seconds": null
+  },
+  "training_executed": true,
+  "trajectory_decision": {
+    "decision_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "separate human authority"
+    ]
+  }
+}

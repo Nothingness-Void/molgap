@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "gptrans-v1",
+  "category": "other",
+  "cost_event_id": "cost-TC-family-workflow-trial-gptrans-100k-s42-v1-full-missing",
+  "evidence_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/gptrans/acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "family-workflow-trial-100k-s42-v1:gptrans:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+}
