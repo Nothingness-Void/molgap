@@ -1,0 +1,75 @@
+{
+  "allocated_t4_hours_ceiling": 9,
+  "arms": [
+    "ppgt_author_v2",
+    "esa_native_v3"
+  ],
+  "authorization": "User approved one retry after cost reconciliation within the original aggregate9 T4 GPU-hours; unchanged PPGT/ESA,100K/CommonDev, seed42, BS128,60 passes. No budget increase or additional retry.",
+  "automatic_successor_authorized": false,
+  "budget_reconciliation": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/budget_reconciliation.json",
+    "sha256": "aad4d0394e011a9c7b7882cc1de3530b322ed1c4b70d7da71536868a9922b248"
+  },
+  "budget_reconciliation_source": {
+    "path": "experiments/modern2d_100k_formal_screen/results/retry_budget.json",
+    "sha256": "aad4d0394e011a9c7b7882cc1de3530b322ed1c4b70d7da71536868a9922b248"
+  },
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-formal-training-authority-v1",
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 9,
+    "owner": "kaseichou",
+    "platform": "kaggle2",
+    "wall_ceiling_seconds": 16200
+  },
+  "horizon_passes": 60,
+  "horizon_steps": 46860,
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "logical_run_id": "modern2d-formal-100k-s42-v2",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "prior_attempt": {
+    "authority": {
+      "path": "experiments/modern2d_100k_formal_screen/authority.json",
+      "sha256": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315"
+    },
+    "logical_run_id": "modern2d-formal-100k-s42-v1",
+    "source_identity": {
+      "path": "experiments/modern2d_100k_formal_screen/source_identity.json",
+      "sha256": "b5fa1d87e9da079750f5b8aca723a1155142d2002f5e0d9e5a256d7c673d36fc"
+    },
+    "spec_identity": "5436d6b9a9eb05a8a76a96d21911b1a4e82b03f2c9aa8647aab27940a98f941b",
+    "submission": {
+      "path": "experiments/modern2d_100k_formal_screen/results/submission_2026-10-18.json",
+      "sha256": "1a255780c3a0eed6a1a22e1a6fd5cff4ec3000043fa9abcc12bf3ca04002e0d8"
+    }
+  },
+  "protected_role_access_authorized": false,
+  "purpose": "FORMAL_100K_TRAINING",
+  "retry_authorized": true,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-modern2d-formal-100k-v2",
+  "scale_500k_authorized": false,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_commit": "bd7b07c7fb889a18de2e7b2748a9bf50623c81ca",
+  "source_dataset": "kaseichou/molgap-modern2d-formal-source-v2",
+  "user_authorized": true
+}

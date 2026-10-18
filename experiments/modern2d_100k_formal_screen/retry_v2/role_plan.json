@@ -1,0 +1,26 @@
+{
+  "protected_role_access_authorized": false,
+  "purpose": "FORMAL_100K_TRAINING",
+  "role_manifests": {
+    "common_dev": {
+      "path": "experiments/modern2d_100k_formal_screen/retry_v2/input_role_manifests/common_dev.json",
+      "sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323"
+    },
+    "train_100k": {
+      "path": "experiments/modern2d_100k_formal_screen/retry_v2/input_role_manifests/train_100k.json",
+      "sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc"
+    }
+  },
+  "roles_opened": [
+    "train_100k",
+    "common_dev"
+  ],
+  "target_manifest": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+    "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+  },
+  "uses": {
+    "common_dev": "selection-used",
+    "train_100k": "training-and-normalization"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "arms": [
+    {
+      "adapter": "modern2d-formal-session-v1",
+      "arm_id": "ppgt_author_v2",
+      "contract": {
+        "path": "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/contract.json",
+        "sha256": "668f9323ab9600212b396ae1c8b912cd812d83291dae51305a808993bfe94d51"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "target_manifest": {
+        "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+        "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+      }
+    },
+    {
+      "adapter": "modern2d-formal-session-v1",
+      "arm_id": "esa_native_v3",
+      "contract": {
+        "path": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+        "sha256": "9230b7ecfa1ee0a04443b291e0a14bb9b861f548e831cb34d85577cef4e4fa03"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "target_manifest": {
+        "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+        "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+      }
+    }
+  ],
+  "authority": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/authority.json",
+    "sha256": "adbef3f1cc23864026e9e66760655ea502f7abc9e2994cabcb82b52a3c93c33b"
+  },
+  "budget_reconciliation": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/budget_reconciliation.json",
+    "sha256": "aad4d0394e011a9c7b7882cc1de3530b322ed1c4b70d7da71536868a9922b248"
+  },
+  "format": "molgap-modern2d-formal-reference-plan-v1",
+  "inputs": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/training_inputs.json",
+    "sha256": "a47399deaf0ae3e49a12739ce45bf38910ccdf4e25604022db4b141ef97fb205"
+  },
+  "spec_identity": "12cc2276e9cb673d32487ffaa05018c6f357a81b57eb91cce50591c71373b6e8"
+}

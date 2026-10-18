@@ -1,0 +1,174 @@
+{
+  "format": "molgap-modern2d-retry-budget-v1",
+  "retry_authorized": true,
+  "authorization": "User approved one retry after cost reconciliation within the same aggregate9 T4-hours, no additional budget or model change.",
+  "aggregate_t4_hours_ceiling": 9,
+  "allocated_devices": 2,
+  "prior_attempt": {
+    "kernel": "kaseichou/molgap-modern2d-formal-100k-v1",
+    "kernel_id": 139364627,
+    "version": 1,
+    "status": "ERROR"
+  },
+  "quota_observations": {
+    "before": {
+      "observed_at": "2026-10-18T05:51:16.987520+00:00",
+      "quota": {
+        "quotaRefreshTime": "2026-10-24T00:00:00Z",
+        "gpuQuota": {
+          "timeUsed": {
+            "seconds": 459,
+            "nanos": 68000000
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": false
+        }
+      },
+      "available_gpu_hours": 29.87248111111111,
+      "authorized_ceiling_gpu_hours": 9
+    },
+    "after": {
+      "observed_at": "2026-10-18T05:56:42.665857+00:00",
+      "quota": {
+        "quotaRefreshTime": "2026-10-24T00:00:00Z",
+        "gpuQuota": {
+          "timeUsed": {
+            "seconds": 535,
+            "nanos": 912000000
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": false
+        }
+      },
+      "available_gpu_hours": 29.851135555555558,
+      "authorized_ceiling_gpu_hours": 0
+    },
+    "confirmed": {
+      "observed_at": "2026-10-18T06:00:40.260952+00:00",
+      "quota": {
+        "quotaRefreshTime": "2026-10-24T00:00:00Z",
+        "gpuQuota": {
+          "timeUsed": {
+            "seconds": 535,
+            "nanos": 912000000
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 108000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "timeReserved": {
+            "seconds": 0,
+            "nanos": 0
+          },
+          "totalTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "minimumTimeAllowed": {
+            "seconds": 72000,
+            "nanos": 0
+          },
+          "isPayToScaleEnabled": false,
+          "hasEverRun": false
+        }
+      },
+      "available_gpu_hours": 29.851135555555558,
+      "authorized_ceiling_gpu_hours": 0
+    }
+  },
+  "quota_artifact_sha256": {
+    "before": "7165f3a24a73b1b1ce362242dbda43485219122f8f9312f2061b9098767dcdca",
+    "after": "e782967e25a638289ad35d5b074f3494203d24cc9a366da49eb43cd21c706391",
+    "confirmed": "67e0db10a798d17b4801d695771eb0e477a57153e82aa2b4f46779c7b7345c3c"
+  },
+  "prior_debit_wall_seconds": 77,
+  "prior_debit_allocated_t4_hours": 0.042777777777777776,
+  "budget_attribution": "entire-settled-account-increment-charged-at-two-devices",
+  "per_job_full_billing_status": "NOT_INFERRED_FROM_ACCOUNT_QUOTA",
+  "observed_python_wall_seconds": 71.42726459599999,
+  "observed_python_allocated_device_seconds": 142.85452919199997,
+  "measured_intervals_overlap_do_not_sum": true,
+  "remaining_observed_wall_ceiling_seconds": 16123,
+  "checkpoint_retention_reserve_seconds": 600,
+  "account_window_caveat": "An account-wide settled increment is conservatively charged in full at2 devices; it is not labeled a per-job billing observation."
+}

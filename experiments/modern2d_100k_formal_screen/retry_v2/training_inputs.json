@@ -1,0 +1,164 @@
+{
+  "authority": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/authority.json",
+    "sha256": "adbef3f1cc23864026e9e66760655ea502f7abc9e2994cabcb82b52a3c93c33b"
+  },
+  "data_root": "indexed_assets",
+  "development_label_statistics_exposed": false,
+  "export_acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+  "format": "molgap-modern2d-formal-input-metadata-v1",
+  "inventory_sha256": "2c951dbe146dfb7dd7b1ab544ef77ace04d675f67fba1e453c7ec567a021f25a",
+  "models": {
+    "esa_native_v3": {
+      "family": [
+        "esa_small",
+        "4"
+      ],
+      "feature_binding_sha256": {
+        "common_dev": "6297fe4b3ad87e4d76a4e4edb951d5230f8061d9d29674a657a6cecfa3967ac8",
+        "train_100k": "5ee36edbbad0fb8bc4a1c10f33eeba5f7a7d84b9c9bfc32619cc3fec1aaad50a"
+      },
+      "feature_bindings": {
+        "common_dev": {
+          "base_dataset_manifest_sha": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+          "derived_feature_sha": null,
+          "feature_schema_version": "ogb-atom9-bond3-directed-edge-isolate-mask-v3",
+          "role": "common_dev",
+          "role_history_sha": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+          "scope": "ACCEPTED_INDEXED_INPUT_V1",
+          "source_row_sha": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+          "source_topology_sha": "4c996e3a098f77005b54e6044d382eb8fd9f76b09deb5358f798f00f375f2ff7",
+          "transform_code_sha": "1b6325a227194424a4623ad5440ee47efab6a1c69cedbe694092e1def6f8378c",
+          "transform_config_sha": "1541a73ee3d6d96a6b6398d349479f1da8d4cac26fc162a7bee2b03a8750254f"
+        },
+        "train_100k": {
+          "base_dataset_manifest_sha": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+          "derived_feature_sha": null,
+          "feature_schema_version": "ogb-atom9-bond3-directed-edge-isolate-mask-v3",
+          "role": "train_100k",
+          "role_history_sha": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+          "scope": "ACCEPTED_INDEXED_INPUT_V1",
+          "source_row_sha": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+          "source_topology_sha": "8e54b741d73b9caafb881e4d78b8f5a91a7bb035933db268eea19941741976fd",
+          "transform_code_sha": "1b6325a227194424a4623ad5440ee47efab6a1c69cedbe694092e1def6f8378c",
+          "transform_config_sha": "1541a73ee3d6d96a6b6398d349479f1da8d4cac26fc162a7bee2b03a8750254f"
+        }
+      },
+      "model_config": {
+        "epsilon": 1e-08,
+        "graph_dim": 256,
+        "heads": 8,
+        "hidden": 192,
+        "include_self": true,
+        "isolated_atom_policy": "explicit-atom-only-token-v3",
+        "layer_types": [
+          "M",
+          "S",
+          "M",
+          "S",
+          "M",
+          "P"
+        ],
+        "max_edges": 4096,
+        "max_nodes": 1024,
+        "mlp_hidden": 384,
+        "readout_version": "pma-no-input-residual-v2",
+        "seeds": 32,
+        "tensor_device": "cpu_or_cuda",
+        "tokenization_version": "directed-bond-and-isolated-atom-v3"
+      }
+    },
+    "ppgt_author_v2": {
+      "family": [
+        "ppgt_small",
+        "3"
+      ],
+      "feature_binding_sha256": {
+        "common_dev": "760f8df16e0ef728214f34d7b46a71e17bfdbf0aef48e56c10c0e970483d1f1b",
+        "train_100k": "53d95bce87ffb731664a3aed33160c2eedf3bf8553c011bd0b8af64947c48845"
+      },
+      "feature_bindings": {
+        "common_dev": {
+          "base_dataset_manifest_sha": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+          "derived_feature_sha": null,
+          "feature_schema_version": "ogb-atom9-bond3-author-rrwp-spe-v2",
+          "role": "common_dev",
+          "role_history_sha": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+          "scope": "ACCEPTED_INDEXED_INPUT_V1",
+          "source_row_sha": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+          "source_topology_sha": "4c996e3a098f77005b54e6044d382eb8fd9f76b09deb5358f798f00f375f2ff7",
+          "transform_code_sha": "866abcb2fb71176ec5b2dd6089ca832ac6c9a37bfae1eb7d0e085c170587dfa5",
+          "transform_config_sha": "6fd1f0478e3b14aef789fc84499b83c6569fb14d1949aad8ce09856b5e450ad7"
+        },
+        "train_100k": {
+          "base_dataset_manifest_sha": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+          "derived_feature_sha": null,
+          "feature_schema_version": "ogb-atom9-bond3-author-rrwp-spe-v2",
+          "role": "train_100k",
+          "role_history_sha": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+          "scope": "ACCEPTED_INDEXED_INPUT_V1",
+          "source_row_sha": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+          "source_topology_sha": "8e54b741d73b9caafb881e4d78b8f5a91a7bb035933db268eea19941741976fd",
+          "transform_code_sha": "866abcb2fb71176ec5b2dd6089ca832ac6c9a37bfae1eb7d0e085c170587dfa5",
+          "transform_config_sha": "6fd1f0478e3b14aef789fc84499b83c6569fb14d1949aad8ce09856b5e450ad7"
+        }
+      },
+      "model_config": {
+        "attention_dropout": 0.0,
+        "blocks": 16,
+        "epsilon": 1e-06,
+        "expansion": 2,
+        "heads": 8,
+        "hidden": 256,
+        "layer_scale": 0.0001,
+        "max_edges": 1024,
+        "max_nodes": 256,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stem_expansion": 2,
+        "stochastic_depth": 0.0,
+        "sym_norm": true,
+        "use_phi": true
+      }
+    }
+  },
+  "normalization": {
+    "correction": 1,
+    "dtype": "float64",
+    "role": "train_100k",
+    "std_floor": 1e-06
+  },
+  "parent_acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+  "publication_status": "NOT_PUBLISHED",
+  "qualification_metadata": {
+    "path": "experiments/modern2d_model_integration/native_preflight/retry_v4/qualification_inputs.json",
+    "sha256": "b67653c4c353c9c1201c6cb1d8399e846658dd21053490154d934e2c80adb8a4"
+  },
+  "roles": {
+    "common_dev": {
+      "rows": 50000,
+      "source_idx_tensor_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89"
+    },
+    "train_100k": {
+      "rows": 100000,
+      "source_idx_tensor_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e"
+    }
+  },
+  "scientific_training_authorized": true,
+  "source_identity": {
+    "path": "experiments/modern2d_100k_formal_screen/retry_v2/source_identity.json",
+    "sha256": "158ca84ef45f63213be04cfe2dcbea6832388079981a8a1bfce876bcfda0a4e7"
+  },
+  "status": "INPUT_METADATA_PREPARED",
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.275090206323082,
+  "training_input": {
+    "bytes": 2772,
+    "path": "training_input.json",
+    "sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690"
+  }
+}

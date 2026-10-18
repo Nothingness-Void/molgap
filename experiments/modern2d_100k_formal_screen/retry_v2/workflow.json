@@ -1,0 +1,50 @@
+{
+  "acceptance_plan": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+  "arms": [
+    {
+      "arm_id": "ppgt_author_v2",
+      "device": 0,
+      "initial_state": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/ppgt_author_v2.pt",
+      "recipe": "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/contract.json"
+    },
+    {
+      "arm_id": "esa_native_v3",
+      "device": 1,
+      "initial_state": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "recipe": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json"
+    }
+  ],
+  "format": "molgap-experiment-workflow-v1",
+  "kaggle": {
+    "accelerator": "NvidiaTeslaT4",
+    "account": "kaseichou",
+    "datasets": [
+      "kaseichou/molgap-modern2d-formal-source-v2",
+      "kaseichou/molgap-modern2d-100k-commondev-v1"
+    ],
+    "kernel": "kaseichou/molgap-modern2d-formal-100k-v2",
+    "source_dataset": "kaseichou/molgap-modern2d-formal-source-v2",
+    "title": "MolGap Modern2D Formal 100K V2"
+  },
+  "source_profile": "runtime-v1",
+  "source_records": [
+    "experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md",
+    "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/authority.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/budget_reconciliation.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/development_target_proof.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/plan_input.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/input_role_manifests/common_dev.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/input_role_manifests/train_100k.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/contract.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/plan_input.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/role_plan.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/source_identity.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/training_input.json",
+    "experiments/modern2d_100k_formal_screen/retry_v2/training_inputs.json",
+    "research_memory/policies/modern2d-formal-100k-reference-screen-retry-v2.v2.json"
+  ],
+  "spec_identity": "12cc2276e9cb673d32487ffaa05018c6f357a81b57eb91cce50591c71373b6e8"
+}
