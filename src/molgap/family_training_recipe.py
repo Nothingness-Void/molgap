@@ -119,17 +119,18 @@ class FamilyRecipe:
     model_config: object | None = None
     family_version: str | None = None
     qualification: object | None = None
+    formal_training: object | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
-        if self.cpu_synthetic_only or self.integration_preview:
+        if self.cpu_synthetic_only or self.integration_preview or self.formal_interface:
             from copy import deepcopy
             from importlib import import_module
             adapter = TRAINING_ADAPTERS[self.interface]
             config_type = import_module(adapter.model_factory.split(":")[0]).CONFIG_TYPE
-            if self.integration_preview and type(self.dataset) is not DatasetSelection:
+            if (self.integration_preview or self.formal_interface) and type(self.dataset) is not DatasetSelection:
                 raise TypeError("Integration preview requires the typed dataset selection")
             bounded_fixture = self.cpu_synthetic_only or self.dataset.manifest.startswith("synthetic/")
             if (type(self.model_config) not in (dict, config_type) or self.mode != "reference" or self.addons
@@ -218,6 +219,13 @@ class FamilyRecipe:
             if type(self.qualification) is not QualificationProbe:
                 raise TypeError("Expected explicit Modern2D QualificationProbe")
             self.qualification.validate(self)
+        if self.formal_interface:
+            from .modern2d_training import Modern2DFormalTrainingProfile
+            if type(self.formal_training) is not Modern2DFormalTrainingProfile:
+                raise TypeError("Formal interface requires an explicit Modern2DFormalTrainingProfile")
+            self.formal_training.validate(self)
+        elif self.formal_training is not None:
+            raise ValueError("Formal profile cannot admit a preview or historical interface")
 
     @property
     def cpu_synthetic_only(self):
@@ -228,12 +236,21 @@ class FamilyRecipe:
         return TRAINING_ADAPTERS[self.interface].integration_preview
 
     @property
+    def formal_interface(self):
+        return TRAINING_ADAPTERS[self.interface].formal_training
+
+    @property
+    def modern2d_model(self):
+        return self.cpu_synthetic_only or self.integration_preview or self.formal_interface
+
+    @property
     def interface(self):
         if self.family_version is None:
             return SESSION_INTERFACES[self.family]
         key = (self.family,self.family_version)
         if (type(self.family_version) is not str or key not in TRAINING_ADAPTERS or
-                not (TRAINING_ADAPTERS[key].cpu_synthetic_only or TRAINING_ADAPTERS[key].integration_preview)):
+                not (TRAINING_ADAPTERS[key].cpu_synthetic_only or TRAINING_ADAPTERS[key].integration_preview
+                     or TRAINING_ADAPTERS[key].formal_training)):
             raise ValueError("Explicit family version is restricted to reviewed CPU synthetic or integration preview interfaces")
         return key
 
@@ -268,6 +285,12 @@ class FamilyRecipe:
         if self.qualification is not None:
             policy.update(scope="QUALIFICATION_ONLY", device="cpu_or_admitted_cuda",
                           native_qualification="NOT_EVALUATED")
+        if self.formal_interface:
+            from .modern2d_feature_binding import indexed_transform_identity
+            policy.update(name="modern2d-formal-session-v1", scope="FORMAL_100K_TRAINING",
+                          cpu_layout=False, device="admitted_cuda_or_bounded_synthetic_cpu",
+                          native_qualification="requires_exact_formal_runtime_certificate",
+                          feature_transform_source_sha256=indexed_transform_identity(self.interface))
         return policy
 
     def to_dict(self):
@@ -276,6 +299,8 @@ class FamilyRecipe:
             values.pop("family_version")
         if self.qualification is None:
             values.pop("qualification")
+        if self.formal_training is None:
+            values.pop("formal_training")
         if self.model_config is None:
             values.pop("model_config")
         if self.input_sidecar is None:
@@ -303,7 +328,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "model_config", "family_version", "qualification"):
+        for name in ("addons", "clean_bn", "model_config", "family_version", "qualification", "formal_training"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
@@ -314,6 +339,11 @@ class FamilyRecipe:
         try:
             values["dataset"] = DatasetSelection(**values["dataset"])
             values["schedule"] = ScheduleSpec(**values["schedule"])
+            if "formal_training" in values:
+                from .modern2d_training import Modern2DFormalTrainingProfile
+                if type(values["formal_training"]) is not dict:
+                    raise ValueError("Formal profile must be an object")
+                values["formal_training"] = Modern2DFormalTrainingProfile(**values["formal_training"])
             if "qualification" in values:
                 from .modern2d_qualification import QualificationProbe
                 if type(values["qualification"]) is not dict:

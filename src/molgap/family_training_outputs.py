@@ -115,6 +115,13 @@ class SessionOutputs:
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
+        if self.recipe.formal_interface:
+            from .experiment_family_artifacts import artifact_adapter
+            from .experiment_execution import MODERN2D_FORMAL_PROFILE
+            if (adapter != MODERN2D_FORMAL_PROFILE or
+                    self.recipe.interface != (context.family_name, context.family_version)):
+                raise ValueError("Formal output family/version/profile differs from its training contract")
+            artifact_adapter(adapter, self.recipe.interface)
         if self.recipe.integration_preview:
             from .experiment_family_artifacts import artifact_adapter
             from .experiment_execution import MODERN2D_PREVIEW_PROFILE
@@ -321,6 +328,12 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         contract, recipe = read_recipe(paths["contract"])
         if recipe.interface != (context.family_name, context.family_version):
             raise ValueError("Session contract family/version differs from context")
+        if recipe.formal_interface:
+            from .experiment_execution import MODERN2D_FORMAL_PROFILE
+            if manifest["adapter"] != MODERN2D_FORMAL_PROFILE:
+                raise ValueError("Formal training requires its distinct output profile")
+            observed.update(execution_scope="FORMAL_100K_TRAINING",
+                scientific_acceptance="NOT_EVALUATED", replay_readiness="NOT_EVALUATED")
         if recipe.integration_preview:
             from .experiment_execution import MODERN2D_PREVIEW_PROFILE
             if manifest["adapter"] != MODERN2D_PREVIEW_PROFILE:

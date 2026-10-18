@@ -19,6 +19,8 @@ class ArtifactAdapter:
 
 
 ADAPTERS = MappingProxyType({
+    "modern2d-formal-session-v1": ArtifactAdapter("modern2d-formal-session-v1", None,
+        ("model", "optimizer", "scheduler", "rng_state"), False, "family-session"),
     "modern2d-session-preview-v1": ArtifactAdapter("modern2d-session-preview-v1", None,
         ("model", "optimizer", "scheduler", "rng_state"), False, "family-session"),
     "modern2d-cpu-v1": ArtifactAdapter("modern2d-cpu-v1", None,
@@ -48,6 +50,12 @@ def artifact_adapter(name: str, family: tuple[str, str]) -> ArtifactAdapter:
     if adapter.family is None:
         from .experiment_execution import TRAINING_ADAPTERS
         owner = TRAINING_ADAPTERS.get(family)
+        if name == "modern2d-formal-session-v1":
+            if (owner is None or not owner.formal_training or owner.cpu_synthetic_only
+                    or owner.integration_preview or owner.module != "molgap.family_training_runner"
+                    or owner.artifact_adapter != name):
+                raise ValueError("Formal artifact profile requires its separately admitted Modern2D interface")
+            return adapter
         if name == "modern2d-session-preview-v1":
             if (owner is None or not owner.integration_preview or owner.cpu_synthetic_only
                     or owner.module != "molgap.family_training_runner" or owner.artifact_adapter != name):

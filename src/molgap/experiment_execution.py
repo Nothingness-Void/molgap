@@ -15,6 +15,15 @@ from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2
 
 
 MODERN2D_PREVIEW_PROFILE = "modern2d-session-preview-v1"
+MODERN2D_FORMAL_PROFILE = "modern2d-formal-session-v1"
+MODERN2D_FORMAL_INTERFACES = MappingProxyType({
+    ("ppgt_small", "3"): ("molgap.ppgt_author:make_model", "ogb-atom9-bond3-author-rrwp-spe-v2"),
+    ("esa_small", "4"): ("molgap.esa_native:make_model", "ogb-atom9-bond3-directed-edge-isolate-mask-v3"),
+})
+MODERN2D_FORMAL_MODEL_INTERFACES = MappingProxyType({
+    ("ppgt_small", "3"): ("ppgt_small", "2"),
+    ("esa_small", "4"): ("esa_small", "3"),
+})
 MODERN2D_PREVIEW_INTERFACES = MappingProxyType({
     ("ppgt_small", "2"): ("molgap.ppgt_author:make_model", "ogb-atom9-bond3-author-rrwp-spe-v2"),
     ("esa_small", "3"): ("molgap.esa_native:make_model", "ogb-atom9-bond3-directed-edge-isolate-mask-v3"),
@@ -89,6 +98,11 @@ class TrainingAdapter:
                 self.artifact_adapter == MODERN2D_PREVIEW_PROFILE)
 
     @property
+    def formal_training(self):
+        return (self.family in MODERN2D_FORMAL_INTERFACES and
+                self.artifact_adapter == MODERN2D_FORMAL_PROFILE)
+
+    @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
         return tuple((addon.name, addon.mode) for addon in self.addons)
 
@@ -124,21 +138,29 @@ def _hook_source(hook: str) -> str:
 
 def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
                            serialization_modules=(), cpu_synthetic_only=False,
-                           integration_preview=False) -> TrainingAdapter:
+                           integration_preview=False, formal_training=False) -> TrainingAdapter:
     """Bind a small model to the shared pure-2D normalized-Gap training owner."""
     sources = {"src/molgap/graph_screen_training.py", "src/molgap/pcqm_graph_inputs.py",
                "src/molgap/shared_model_adapter.py", "src/molgap/pcqm_topology.py",
                "src/molgap/ogb_features.py",
                _hook_source(model_factory), *source_files}
-    if integration_preview:
-        expected = MODERN2D_PREVIEW_INTERFACES.get(tuple(family))
+    if integration_preview or formal_training:
+        if integration_preview and formal_training:
+            raise ValueError("Preview and formal profiles are separate interfaces")
+        interfaces = MODERN2D_FORMAL_INTERFACES if formal_training else MODERN2D_PREVIEW_INTERFACES
+        expected = interfaces.get(tuple(family))
         if cpu_synthetic_only or expected is None or model_factory != expected[0] or addons:
             raise ValueError("Unreviewed Modern2D session integration preview")
         sources.update({"src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
                         "src/molgap/family_training_recipe.py", "src/molgap/family_training_outputs.py",
                         "src/molgap/family_execution_profile.py"})
-        return TrainingAdapter(tuple(family), "molgap.family_training_runner", MODERN2D_PREVIEW_PROFILE,
+        if formal_training:
+            sources.update({"src/molgap/modern2d_training.py", "src/molgap/modern2d_training_release.py",
+                            "src/molgap/modern2d_feature_binding.py"})
+        return TrainingAdapter(tuple(family), "molgap.family_training_runner",
+            MODERN2D_FORMAL_PROFILE if formal_training else MODERN2D_PREVIEW_PROFILE,
             tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory,
+            target_identity_in_completion=formal_training,
             profile_adapter="molgap.family_execution_profile")
     if cpu_synthetic_only:
         sources.add("src/molgap/family_training_runner.py")
@@ -176,7 +198,8 @@ def _catalog_training_adapters():
                 addons=catalog_addons(key), source_files=entry.source_files,
                 serialization_modules=entry.serialization_modules,
                 cpu_synthetic_only=entry.cpu_synthetic_only,
-                integration_preview=entry.artifact_adapter == MODERN2D_PREVIEW_PROFILE)
+                integration_preview=entry.artifact_adapter == MODERN2D_PREVIEW_PROFILE,
+                formal_training=entry.artifact_adapter == MODERN2D_FORMAL_PROFILE)
             if (adapter.module,adapter.artifact_adapter) != (entry.module,entry.artifact_adapter):
                 raise ValueError("Catalog graph family execution boundary differs from its owner")
         else:
@@ -203,17 +226,19 @@ def validate_training_registry() -> None:
         artifact_adapter(adapter.artifact_adapter, family)
         if "src/" + adapter.module.replace(".", "/") + ".py" not in adapter.source_files:
             raise ValueError("Training registration omits its owning source module")
-        if adapter.integration_preview:
+        if adapter.integration_preview or adapter.formal_training:
             contract = FAMILIES[family]
-            factory, schema = MODERN2D_PREVIEW_INTERFACES[family]
+            factory, schema = (MODERN2D_FORMAL_INTERFACES if adapter.formal_training else MODERN2D_PREVIEW_INTERFACES)[family]
             if (adapter.cpu_synthetic_only or adapter.module != "molgap.family_training_runner"
                     or adapter.addons or adapter.model_factory != factory
                     or contract.source_module != factory.split(":")[0]
-                    or contract.feature_schema != schema or contract.recipe != "modern2d_session_preview_v1"
+                    or contract.feature_schema != schema or contract.recipe != (
+                        "modern2d_formal_training_v1" if adapter.formal_training else "modern2d_session_preview_v1")
                     or contract.roles != ("train",) or contract.optional_roles != ("development",)
                     or contract.sampler != "frozen-family-pass-order"
                     or contract.transform != "frozen-train-mean-sample-std"
                     or adapter.profile_adapter != "molgap.family_execution_profile"
+                    or (adapter.formal_training and not adapter.target_identity_in_completion)
                     or _hook_source(factory) not in adapter.source_files):
                 raise ValueError("Unreviewed Modern2D integration preview registration")
             continue
@@ -473,7 +498,8 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
                            account, run_reference, staged_root=None, prospective_sha256=None,
-                           preflight_dir=None, resume_output=None, target_identity=None):
+                           preflight_dir=None, resume_output=None, target_identity=None,
+                           formal_training=None, authority_path=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
@@ -499,12 +525,24 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     initial = _artifact_path(staged_root, job["initial_state"])
     if arm["initialization"]["state_sha256"] is None:
         raise ValueError("Screen adapter requires pinned initialization state")
-    inspect_frozen_state_artifact(initial, expected_state_sha256=arm["initialization"]["state_sha256"])
+    if adapter.formal_training:
+        if formal_training is None:
+            from .modern2d_training_release import build_formal_context
+            formal_training, authority_path = build_formal_context(spec=spec, job=job,
+                source_root=source_root, staged_root=staged_root, input_root=input_root,
+                run_context=context)
+        # The runner validates authority and both role permits before state IO.
+    else:
+        inspect_frozen_state_artifact(initial, expected_state_sha256=arm["initialization"]["state_sha256"])
     # The import string comes exclusively from the immutable reviewed registry.
     # A new family extends that registry, never this orchestration function.
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
+    if adapter.formal_training:
+        options.update(formal_training=formal_training, authority_path=authority_path)
+    elif formal_training is not None or authority_path is not None:
+        raise ValueError("Formal admission requires its reviewed versioned interface")
     if adapter.module == "molgap.family_training_runner":
         options["prospective_root"] = staged_root
         if phase == "train":

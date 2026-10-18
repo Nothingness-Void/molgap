@@ -93,6 +93,15 @@ def check_prospective(spec: ExperimentSpec, repo_root: Path) -> dict:
 
 
 def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None) -> tuple[dict, int]:
+    # Derived views are regenerable, but a user's uncommitted edits are not ours
+    # to overwrite as a side effect of publishing a new scientific trajectory.
+    import subprocess
+    root = Path(repo_root).absolute()
+    protect_derived = False
+    if (root / ".git").exists():
+        status = subprocess.run(["git", "status", "--porcelain", "--untracked-files=all", "--",
+            "research_memory/derived"], cwd=root, text=True, capture_output=True)
+        protect_derived = status.returncode != 0 or bool(status.stdout.strip())
     if execution_source_commit is not None:
         import subprocess
         observed = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo_root, text=True).strip()
@@ -140,6 +149,13 @@ def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_
             "rml_rebuilt": False,
             "submission_authorized": False,
         }, 1
+    if protect_derived:
+        return {"status": "PROSPECTIVE_PLANNED_DERIVED_DEFERRED_USER_CHANGES",
+            "completed_records": records, "batch": result["batch"],
+            "rml_derived_files": [], "rml_rebuilt": False,
+            "scope": "prospective_planning_only", "submission_authorized": False,
+            "training_authorized": False, "ready_for_desktop": False,
+            "derived_rebuild_reason": "Preserved existing uncommitted derived views; canonical prospective records were published."}, 0
     try:
         derived = rebuild_research_memory(repo_root)
     except Exception as exc:

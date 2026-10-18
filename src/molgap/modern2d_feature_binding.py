@@ -27,9 +27,11 @@ def indexed_transform_identity(family):
     """Pin the actual versioned transform closure, not just a schema string."""
     from pathlib import Path
     from .experiment_catalog import FAMILIES
-    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES
+    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES, MODERN2D_FORMAL_MODEL_INTERFACES
     from .v4_runtime import normalized_source_sha256
     family = tuple(family)
+    # A new execution admission must not silently change the reviewed transform.
+    family = MODERN2D_FORMAL_MODEL_INTERFACES.get(family, family)
     if family not in MODERN2D_PREVIEW_INTERFACES:
         raise ValueError("Unreviewed indexed feature family/version")
     contract = FAMILIES[family]
@@ -49,9 +51,10 @@ def build_indexed_feature_binding(dataset, *, family, configuration):
     from importlib import import_module
     from .data.indexed_inputs import AcceptedIndexedInputPermit, IndexedInputPermit, IndexedRoleDataset
     from .experiment_catalog import FAMILIES
-    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES
+    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES, MODERN2D_FORMAL_INTERFACES
     family = tuple(family)
-    if (family not in MODERN2D_PREVIEW_INTERFACES or type(dataset) is not IndexedRoleDataset or
+    if ((family not in MODERN2D_PREVIEW_INTERFACES and family not in MODERN2D_FORMAL_INTERFACES)
+            or type(dataset) is not IndexedRoleDataset or
             type(dataset.permit) not in (IndexedInputPermit, AcceptedIndexedInputPermit)):
         raise ValueError("Verified indexed view and explicit new model version required")
     config_type = import_module(FAMILIES[family].source_module).CONFIG_TYPE

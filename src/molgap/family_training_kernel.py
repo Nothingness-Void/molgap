@@ -27,7 +27,7 @@ def load_family_model(recipe, initial_state):
                 for key, value in state.items()):
             raise ValueError("Frozen initialization tensor keys/shape/dtype differ from the base model")
         model.load_state_dict(state, strict=True)
-    if recipe.cpu_synthetic_only or recipe.integration_preview:
+    if recipe.modern2d_model:
         from .experiment_execution import TRAINING_ADAPTERS
         from .shared_model_adapter import resolve_model_factory
         factory = resolve_model_factory(TRAINING_ADAPTERS[recipe.interface])
@@ -79,7 +79,8 @@ def make_family_optimizer(recipe, parameters):
 
 class FamilyKernel:
     """Exclusively owned by one worker; never shared by concurrent threads."""
-    def __init__(self, recipe: FamilyRecipe, initial_state: Path, *, device, qualification=None):
+    def __init__(self, recipe: FamilyRecipe, initial_state: Path, *, device, qualification=None,
+                 formal_training=None):
         import torch
 
         if type(recipe) is not FamilyRecipe:
@@ -87,6 +88,13 @@ class FamilyKernel:
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)
+        if recipe.formal_interface:
+            from .modern2d_training import _FormalTrainingAdmission
+            if type(formal_training) is not _FormalTrainingAdmission or qualification is not None:
+                raise ValueError("Formal training requires bound authority before model payload loading")
+            formal_training.validate(recipe, device=self.device)
+        elif formal_training is not None:
+            raise ValueError("Formal admission cannot authorize a preview or historical interface")
         if recipe.cpu_synthetic_only and self.device.type != "cpu":
             raise ValueError("CPU synthetic family cannot allocate an accelerator")
         self._qualification_admission = None
@@ -179,10 +187,10 @@ class FamilyKernel:
             self._qualification_admission.before_update(self.recipe)
         observer = observer if observer is not None else getattr(self, "update_observer", None)
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
-        if self.recipe.cpu_synthetic_only or self.recipe.integration_preview:
+        if self.recipe.modern2d_model:
             from .family_training_core import normalized_gap_update
-            batch = self._model_batch(cpu_batch, training=True) if self.recipe.integration_preview else cpu_batch
-            forward = self._model_forward if self.recipe.integration_preview else lambda model, batch: model(batch)
+            batch = self._model_batch(cpu_batch, training=True) if not self.recipe.cpu_synthetic_only else cpu_batch
+            forward = self._model_forward if not self.recipe.cpu_synthetic_only else lambda model, batch: model(batch)
             loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
                 forward=forward, clip_norm=self.recipe.gradient_clip,
                 check_finite=check_finite, cast_target_float=True,
@@ -243,7 +251,7 @@ class FamilyKernel:
         model = self.model if model is None else model
         if self.recipe.cpu_synthetic_only:
             return self._model_forward(model, cpu_batch)
-        if self.recipe.integration_preview:
+        if self.recipe.integration_preview or self.recipe.formal_interface:
             return self._model_forward(model, self._model_batch(cpu_batch, training=False))
         if self.recipe.family == "neural_atom_k1":
             from contextlib import nullcontext

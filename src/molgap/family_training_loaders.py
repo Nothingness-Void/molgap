@@ -26,9 +26,9 @@ class FamilyLoaders:
                 type(data.train) not in (list, tuple) or
                 (data.development is not None and type(data.development) not in (list, tuple))):
             raise ValueError("CPU family cannot load real/packed/protected datasets")
-        if data.indexed and not getattr(recipe, "integration_preview", False):
+        if data.indexed and not (recipe.integration_preview or recipe.formal_interface):
             raise ValueError("Indexed data requires its explicitly versioned integration interface")
-        if getattr(recipe, "integration_preview", False):
+        if recipe.integration_preview or recipe.formal_interface:
             if recipe.dataset.manifest.startswith("synthetic/"):
                 if data.synthetic is not True:
                     raise ValueError("Integration fixture cannot substitute real data")
@@ -66,7 +66,7 @@ class FamilyLoaders:
         assert_static_dataset(data.train)
         self.recipe, self.data, self.tuning = recipe, data, tuning
         self.feature_bindings = None
-        if getattr(recipe, "integration_preview", False) and data.indexed:
+        if (recipe.integration_preview or recipe.formal_interface) and data.indexed:
             from .data.indexed_inputs import IndexedRoleDataset
             if type(data.train) is IndexedRoleDataset:
                 from .modern2d_feature_binding import build_indexed_feature_binding
@@ -87,7 +87,7 @@ class FamilyLoaders:
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
                 **training_loader_options(tuning.development_workers))
             source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
-            self.development_cache = None if recipe.cpu_synthetic_only or data.indexed or getattr(recipe, "integration_preview", False) else PreparedDevelopmentCache(source, rows=data.development_rows,
+            self.development_cache = None if recipe.modern2d_model or data.indexed else PreparedDevelopmentCache(source, rows=data.development_rows,
                 batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
                 source_start=data.development_source_start, retain_model_inputs=True,
                 retain_random_walk_pe=recipe.family == "neural_atom_k1")
@@ -105,7 +105,7 @@ class FamilyLoaders:
 
     def dev(self):
         if not self.closed and (self.recipe.cpu_synthetic_only or self.data.indexed or
-                getattr(self.recipe, "integration_preview", False)) and self.development is not None:
+                self.recipe.integration_preview or self.recipe.formal_interface) and self.development is not None:
             return self.development
         if self.closed or self.development_cache is None:
             raise ValueError("No selected development role in this loader pool")

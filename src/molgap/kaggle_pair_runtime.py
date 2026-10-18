@@ -38,6 +38,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     execution_comparison = is_comparison(spec)
     extension = execution_extension(spec, source_root)
     diagnostic = extension.configuration
+    explicit_budget = extension.wall_ceiling_seconds is not None
+    cost_bounded = bool(diagnostic and diagnostic.get("format") == "molgap-modern2d-formal-reference-plan-v1")
     if execution_comparison:
         from .k1_infrastructure_comparison import check_plan, comparison_base
         check_plan(spec, source_root, _json(source_root / comparison_base(spec) / "acceptance_plan.json"),
@@ -112,7 +114,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         assignments={job["arm_id"]: job["device"] for job in jobs}, started=allocation_started,
         prior_segments=prior_segments)
     prior_wall = retired_cost["wall_seconds"] + sum(s.get("wall_seconds", 0) for s in ledger.prior_segments)
-    if bounded and ledger.snapshot("running")["prior_unobserved_intervals"]:
+    if (bounded or cost_bounded) and ledger.snapshot("running")["prior_unobserved_intervals"]:
         raise ValueError("Unknown prior allocation intervals require cost reconciliation before continuation")
     ledger.write(output, "running")
     atomic_json(output / "pair_state.json", report)
@@ -142,6 +144,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 raise TimeoutError("Whole allocation budget blocks formal training")
         workers, phase_record = [], {"phase": phase, "workers": [], "status": "running"}
         ledger_updated = time.perf_counter()
+        cost_pause_requested = False
         try:
             for declared_job in jobs:
                 job = {**declared_job, "device": descriptor.device(declared_job["device"])}
@@ -171,6 +174,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 env = dict(os.environ)
                 env.update(CUDA_VISIBLE_DEVICES=str(job["device"]), PYTHONHASHSEED="42",
                            CUBLAS_WORKSPACE_CONFIG=":4096:8", PYTHONPATH=str(source_root / "src"))
+                if cost_bounded:
+                    env["MOLGAP_ALLOCATION_PAUSE_AT"] = str(ledger.started + extension.wall_ceiling_seconds
+                        - prior_wall - diagnostic["checkpoint_reserve_seconds"])
                 log = (arm_output / (phase + ".log")).open("a", encoding="utf-8")
                 log_offset = log.tell()
                 try:
@@ -192,11 +198,19 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 return any(p.returncode is None for p, _, _ in workers)
             while poll_workers():
                 wall_ceiling = 7 * 3600 if execution_comparison else WALL_CEILING_SECONDS
-                if diagnostic is not None:
+                if explicit_budget:
                     wall_ceiling = extension.wall_ceiling_seconds
-                if (bounded or execution_comparison) and prior_wall + time.perf_counter() - ledger.started >= wall_ceiling - 60:
+                elapsed_allocation = prior_wall + time.perf_counter() - ledger.started
+                if cost_bounded and elapsed_allocation >= wall_ceiling - diagnostic["checkpoint_reserve_seconds"]:
+                    if not cost_pause_requested:
+                        cost_pause_requested = True
+                        report["exit_reason"] = "STOP_FOR_COST"
+                        for process, _, _ in workers:
+                            if process.poll() is None:
+                                process.terminate()
+                if (bounded or execution_comparison or explicit_budget) and elapsed_allocation >= wall_ceiling - 60:
                     report["exit_reason"] = "native_allocation_hard_budget"
-                    raise TimeoutError("Frozen8wall-hour allocation ceiling; stop and retain checkpoints")
+                    raise TimeoutError("Frozen allocation ceiling; stop and retain checkpoints")
                 if any(p.poll() not in (None, 0) for p, _, _ in workers):
                     raise RuntimeError(f"Arm failed during {phase}; retained logs identify the blocker")
                 if time.perf_counter() - ledger_updated >= 30:
@@ -206,6 +220,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             if any(p.returncode != 0 for p, _, _ in workers):
                 raise RuntimeError(f"Arm failed during {phase}; retained logs identify the blocker")
             phase_record["status"] = "complete"
+            if cost_pause_requested:
+                phase_record["status"] = "paused_for_cost"
         except BaseException:
             report["status"], phase_record["status"] = "failed", "failed"
             for p, _, _ in workers:
@@ -226,7 +242,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 state["exit_reason"] = phase + "_worker_exit_" + str(p.returncode)
                 if phase == "train" and p.returncode == 0 and (output / job["arm_id"] / "pause_receipt.json").is_file():
                     state["terminal_status"] = "interrupted"
-                    state["exit_reason"] = "durable_ten_pass_segment_complete_scientific_horizon_incomplete"
+                    state["exit_reason"] = ("STOP_FOR_COST" if cost_bounded else
+                        "durable_ten_pass_segment_complete_scientific_horizon_incomplete")
             if report["status"] == "failed":
                 for state in report["arms"].values():
                     if not state["training_started"] and state["terminal_status"] != "failed":
@@ -265,8 +282,12 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             ledger.write(output, "failed", arm_roots=[output / j["arm_id"] for j in jobs])
             retain_execution()
             raise
-    report["status"] = "complete"
+    cost_stopped = cost_bounded and any(s["terminal_status"] == "interrupted" for s in report["arms"].values())
+    report["status"] = "STOP_FOR_COST" if cost_stopped else "complete"
+    if cost_stopped:
+        report.update(scientific_acceptance="INCONCLUSIVE", exit_reason="STOP_FOR_COST")
     atomic_json(output / "pair_state.json", report)
+    # Allocation observation ended normally even when science stopped for cost.
     ledger.write(output, "complete", arm_roots=[output / j["arm_id"] for j in jobs])
     retain_execution()
     return report

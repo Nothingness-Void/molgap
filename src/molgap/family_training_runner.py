@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 import math
+import os
 import signal
 import sys
 import time
@@ -27,6 +28,18 @@ METADATA = {"acceptance_requirements", "train_role_identity", "development_role_
 OPTIONAL_METADATA = {"profiling", "logging"}
 
 
+def _formal_pause_deadline():
+    """The owning allocation runtime supplies one absolute monotonic deadline."""
+    value = os.environ.get("MOLGAP_ALLOCATION_PAUSE_AT")
+    try:
+        deadline = float(value)
+    except (ValueError, TypeError) as exc:
+        raise ValueError("Formal training requires a finite allocation pause deadline") from exc
+    if not math.isfinite(deadline) or deadline <= 0:
+        raise ValueError("Formal training requires a finite positive allocation pause deadline")
+    return deadline
+
+
 def _recipe_configuration(record):
     if "logging" in record:
         from .training_logging import TrainingLogPolicy
@@ -42,7 +55,7 @@ def _recipe_configuration(record):
 
 def family_arm_bindings(recipe):
     """Static source/sampler/transform/objective bindings for a new Spec arm."""
-    if recipe.cpu_synthetic_only or recipe.integration_preview:
+    if recipe.modern2d_model:
         from .experiment_execution import TRAINING_ADAPTERS
         module = TRAINING_ADAPTERS[recipe.interface].model_factory.split(":")[0]
         base = normalized_source_sha256(Path(__file__).with_name(module.rsplit(".", 1)[1] + ".py"))
@@ -191,7 +204,7 @@ def _assert_target_statistics(recipe, data):
 
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
-               training_only=False, cost_root=None):
+               training_only=False, cost_root=None, formal_training=None, authority_path=None):
     import torch
     from .experiment_execution import validate_staged_trajectory
     from .family_training_data import load_training_data
@@ -203,6 +216,14 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         raise ValueError("INTEGRATION_PENDING: Modern2D preview requires future family fidelity, real-input acceptance and native qualification before native preflight or training")
     if recipe.cpu_synthetic_only:
         raise ValueError("Modern2D CPU profile is not released for native preflight or training")
+    if recipe.formal_interface:
+        from .modern2d_training import Modern2DFormalTrainingContext
+        if type(formal_training) is not Modern2DFormalTrainingContext:
+            raise ValueError("Formal training requires bound authority before payload loading")
+        if not training_only:
+            _formal_pause_deadline()
+    elif formal_training is not None or authority_path is not None:
+        raise ValueError("Formal admission cannot authorize a historical interface")
     validate_screen_recipe(spec, arm_id, record)
     if recipe.mode != mode:
         raise ValueError("Executable mode differs from recipe")
@@ -210,6 +231,10 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         arm_id=arm_id, account=account, run_reference=run_reference)
     if normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256:
         raise ValueError("Recipe bytes differ from Spec")
+    if recipe.formal_interface:
+        formal_training.validate_before_payload(recipe=recipe, context=context, spec=spec,
+            authority_path=authority_path, input_root=input_root)
+        _loaded_source(package_dir)
     trajectory = validate_staged_trajectory(spec, arm_id, Path(prospective_root or input_root))
     if trajectory["trajectory_id"] != trajectory_id or trajectory["state_at_start"]["source_commit"] != context.source_commit:
         raise ValueError("Prospective trajectory/source mismatch")
@@ -225,6 +250,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
     data = load_training_data(Path(input_root), selection)
+    if recipe.formal_interface:
+        formal_training.validate_loaded_data(recipe, data, training_only=training_only)
     if recipe.input_sidecar is not None:
         data = mode_policy(recipe.family, recipe.mode).attach_inputs(Path(input_root), recipe.input_sidecar, data)
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
@@ -263,6 +290,9 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         "dataset_manifest_sha256": recipe.dataset.manifest_sha256, "initialization": initial,
         "runtime_fingerprint": runtime["runtime_fingerprint"], "tuning_identity": tuning.identity,
         "accelerator": torch.cuda.get_device_name(0)}
+    if recipe.formal_interface:
+        provenance.update(formal_training_context=formal_training.to_dict(),
+                          formal_training_context_identity=formal_training.identity)
     return record, recipe, data, tuning, context, provenance, source_root
 
 
@@ -296,11 +326,11 @@ def run_screen_preflight(*, qualification=None, **options):
             raise ValueError("Qualification output must be a fresh scratch directory")
         prepared, admission = bootstrap_qualification(qualification, began=began, **options)
     return _run_screen_preflight(prepared, output=output, options=options,
-        qualification=admission, began=began)
+        qualification=admission, formal_training=options.get("formal_training"), began=began)
 
 
 def _run_screen_preflight(prepared, *, output, options, device="cuda", qualification=None,
-                          synthetic=False, began=None):
+                          synthetic=False, began=None, formal_training=None):
     """Scratch repeat/resume plus a GPTrans safety-fill reference; never dev."""
     import torch
     from .k1_execution_qualification import (
@@ -325,6 +355,10 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         _loaded_source(options["package_dir"])
     # Preflight consumes training topology only, never development selection.
     probe = _probe_recipe(recipe)
+    formal_admission = None
+    if recipe.formal_interface:
+        from .modern2d_training import _admit_formal_training
+        formal_admission = _admit_formal_training(formal_training, recipe)
     data = replace(data, development=None, development_rows=0, development_source_start=None,
                    development_source_indices=None)
     if qualification is not None:
@@ -341,6 +375,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         path_began = time.perf_counter()
         configure_fp32_determinism(recipe.seed)
         kernel_options = {"qualification": qualification} if qualification is not None else {}
+        if formal_admission is not None:
+            kernel_options["formal_training"] = formal_admission
         kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device=device, **kernel_options)
         kernel._qualification_memory_fill = label == "fill-enabled"
         observations = []
@@ -495,6 +531,10 @@ def normalized_file_sha(path):
 
 
 def _probe_recipe(recipe):
+    if recipe.formal_interface:
+        return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
+            optimizer_steps=2, checkpoint_every=1, selection="final-live",
+            formal_training=replace(recipe.formal_training, phase="native-preflight"))
     if recipe.integration_preview and not recipe.dataset.manifest.startswith("synthetic/"):
         from .modern2d_qualification import QualificationProbe
         return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
@@ -560,7 +600,11 @@ def run_screen_resume_preflight(*, resume_output, **options):
     proofs = []
     for label in ("actual-resume-a", "actual-resume-b"):
         configure_fp32_determinism(recipe.seed)
-        kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
+        kernel_options = {}
+        if recipe.formal_interface:
+            from .modern2d_training import _admit_formal_training
+            kernel_options["formal_training"] = _admit_formal_training(options.get("formal_training"), recipe)
+        kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda", **kernel_options)
         session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
             checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
             selected=lambda *args: None, pass_finished=lambda *args: None)
@@ -757,22 +801,36 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
             account=options["account"], run_reference=options["run_reference"])
         if normalized_source_sha256(Path(options["recipe_path"])) != context.training_recipe_sha256:
             raise ValueError("Recipe bytes differ from Spec")
+        if recipe.formal_interface:
+            from .modern2d_training import Modern2DFormalTrainingContext
+            binding = options.get("formal_training")
+            if type(binding) is not Modern2DFormalTrainingContext:
+                raise ValueError("Formal output inspection requires the bound formal context")
+            binding.validate_before_payload(recipe=recipe, context=context, spec=options["spec"],
+                authority_path=options.get("authority_path"), input_root=options["input_root"])
         return inspect_output(root, context=context, expected=record["acceptance_requirements"], target_identity=target_identity)
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
+    pause_deadline = _formal_pause_deadline() if recipe.formal_interface else None
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
     from .k1_infrastructure_comparison import is_comparison
     from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
-    outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
+    from .experiment_execution import TRAINING_ADAPTERS
+    outputs = SessionOutputs(root, context, contract=options["recipe_path"],
+        adapter=TRAINING_ADAPTERS[recipe.interface].artifact_adapter,
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
-        resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
+        resume_trajectory=(_artifact_path(Path(options.get("prospective_root") or options["input_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
+            if recipe.formal_interface or mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)
     prior_cost = interval["prior_wall_seconds"]
-    kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
+    kernel_options = {}
+    if recipe.formal_interface:
+        from .modern2d_training import _admit_formal_training
+        kernel_options["formal_training"] = _admit_formal_training(options.get("formal_training"), recipe)
+    kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda", **kernel_options)
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
@@ -798,7 +856,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         segment = mode_policy(recipe.family, recipe.mode).segment_passes
         bounded = segment is not None
         stop_pass = ((session.progress.pass_index // segment + 1) * segment) if bounded else None
-        should_pause = lambda: pause[0] or (
+        cost_exhausted = lambda: pause_deadline is not None and time.perf_counter() >= pause_deadline
+        should_pause = lambda: pause[0] or cost_exhausted() or (
             bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
         if "profiling" in record:
             from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
@@ -816,10 +875,19 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     elapsed = time.perf_counter() - began
     total = _finish_cost_interval(root, context, prior_cost, elapsed)
     if progress.status != "complete":
-        atomic_json(root / "pause_receipt.json", {"context": context.to_dict(), "status": "PAUSED",
+        receipt = {"context": context.to_dict(), "status": "PAUSED",
             "optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,
-            "checkpoint_sha256": normalized_file_sha(root / "last_checkpoint.pt")})
-        return {"status": "PAUSED", "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+            "checkpoint_sha256": normalized_file_sha(root / "last_checkpoint.pt")}
+        result = {"status": "PAUSED", "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+        if recipe.formal_interface:
+            receipt.update(scientific_acceptance="INCONCLUSIVE", horizon_steps=recipe.formal_training.horizon_steps,
+                           completed_steps=progress.optimizer_step)
+            result.update(scientific_acceptance="INCONCLUSIVE", horizon_steps=recipe.formal_training.horizon_steps,
+                          completed_steps=progress.optimizer_step)
+            if cost_exhausted():
+                receipt["reason"] = result["reason"] = "STOP_FOR_COST"
+        atomic_json(root / "pause_receipt.json", receipt)
+        return result
     hardware = provenance["accelerator"]
     costs = [{"metric": "wall_seconds", "unit": "seconds", "value": total,
         "status": "measured" if total is not None else "missing",

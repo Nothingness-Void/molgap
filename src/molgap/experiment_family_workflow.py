@@ -706,6 +706,9 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     The owning contract still provides comparison_prelaunch and reference_bundle.
     A passing plan only checks availability and schemas, not trainer execution.
     """
+    if plan.get("format") == "molgap-modern2d-formal-reference-plan-v1":
+        from .modern2d_training_release import check_plan
+        return check_plan(spec, repo_root, plan)
     if plan.get("format") == "molgap-k1-infrastructure-comparison-plan-v1":
         from .k1_infrastructure_comparison import check_plan
         return check_plan(spec, repo_root, plan)
@@ -1158,7 +1161,7 @@ class TargetIdentityBinding:
         if file_digest(path) != self.plan_sha256:
             raise ValueError("Target identity acceptance plan hash mismatch")
         plan = _json(path)
-        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
+        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
             raise ValueError("Target identity plan/Spec mismatch")
         entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
         if len(entries) != 1:
@@ -1166,7 +1169,7 @@ class TargetIdentityBinding:
         entry = entries[0]
         if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Target identity plan/frozen expectations mismatch")
-        pointer = (entry["target_manifest"] if plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
+        pointer = (entry["target_manifest"] if plan["format"] in {"molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1"}
                    else entry["reference_artifacts"]["target_manifest"])
         if set(pointer) != {"path", "sha256"}:
             raise ValueError("Target identity requires a pinned manifest")
