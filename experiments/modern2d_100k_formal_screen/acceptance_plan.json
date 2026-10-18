@@ -1,0 +1,58 @@
+{
+  "arms": [
+    {
+      "adapter": "modern2d-formal-session-v1",
+      "arm_id": "ppgt_author_v2",
+      "contract": {
+        "path": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/contract.json",
+        "sha256": "668f9323ab9600212b396ae1c8b912cd812d83291dae51305a808993bfe94d51"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "target_manifest": {
+        "path": "experiments/modern2d_100k_formal_screen/target_manifest.json",
+        "sha256": "12dfe1146fa82f688515c7c7cdee970529d88a22dc7b3d01e42217c5af9c8fe9"
+      }
+    },
+    {
+      "adapter": "modern2d-formal-session-v1",
+      "arm_id": "esa_native_v3",
+      "contract": {
+        "path": "experiments/modern2d_100k_formal_screen/esa_native_v3/contract.json",
+        "sha256": "9230b7ecfa1ee0a04443b291e0a14bb9b861f548e831cb34d85577cef4e4fa03"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "target_manifest": {
+        "path": "experiments/modern2d_100k_formal_screen/target_manifest.json",
+        "sha256": "12dfe1146fa82f688515c7c7cdee970529d88a22dc7b3d01e42217c5af9c8fe9"
+      }
+    }
+  ],
+  "authority": {
+    "path": "experiments/modern2d_100k_formal_screen/authority.json",
+    "sha256": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315"
+  },
+  "format": "molgap-modern2d-formal-reference-plan-v1",
+  "inputs": {
+    "path": "experiments/modern2d_100k_formal_screen/training_inputs.json",
+    "sha256": "90c6b020082ef8ac278210ad04dfc2deab5d69879f720a9e39a23c9ec0c1e099"
+  },
+  "spec_identity": "5436d6b9a9eb05a8a76a96d21911b1a4e82b03f2c9aa8647aab27940a98f941b"
+}

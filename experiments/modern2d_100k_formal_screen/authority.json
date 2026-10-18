@@ -1,0 +1,50 @@
+{
+  "allocated_t4_hours_ceiling": 9,
+  "arms": [
+    "ppgt_author_v2",
+    "esa_native_v3"
+  ],
+  "authorization": "\u7528\u6237\u660e\u786e\u6388\u6743\uff1aPPGT/2\uff0bESA/3\uff0c\u539f100K\uff0bCommon-Dev\uff0cseed42\uff0cBS128\uff1b\u5b8c\u657460\u4e2a\u8bad\u7ec3pass\uff0c\u7528\u4e8e\u6a21\u578bscreen\uff1b\u603b\u8ba19\u4e2aT4 GPU\u5c0f\u65f6\uff0cT4x2\u8ba1\u5168\u90e8\u5206\u914d\uff0c\u4e0d\u81ea\u52a8\u8ffd\u52a0\u9884\u7b97\u3002",
+  "automatic_successor_authorized": false,
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-formal-training-authority-v1",
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 9,
+    "owner": "kaseichou",
+    "platform": "kaggle2",
+    "wall_ceiling_seconds": 16200
+  },
+  "horizon_passes": 60,
+  "horizon_steps": 46860,
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "logical_run_id": "modern2d-formal-100k-s42-v1",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "protected_role_access_authorized": false,
+  "purpose": "FORMAL_100K_TRAINING",
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-modern2d-formal-100k-v1",
+  "scale_500k_authorized": false,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_commit": "e9ddfb4eb0ef55a9123fe5f61044e3e765317401",
+  "source_dataset": "kaseichou/molgap-modern2d-formal-source-v1",
+  "user_authorized": true
+}

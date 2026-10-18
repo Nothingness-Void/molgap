@@ -1,0 +1,135 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-planned",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/authority.json",
+      "hardware": "NvidiaTeslaT4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_SCREEN60",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/modern2d_100k_formal_screen/authority.json",
+    "chosen_action": "RUN_SCREEN60",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "modern2d-formal-100k-reference-screen",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/modern2d_100k_formal_screen/role_plan.json"
+    ],
+    "source_commit": "e9ddfb4eb0ef55a9123fe5f61044e3e765317401",
+    "state_timestamp": "2026-10-18T05:48:08.920106+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "ppgt_author_v2-v1"
+        ],
+        "cost_event_ids": [
+          "cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-planned"
+        ],
+        "evidence_refs": [
+          "experiments/modern2d_100k_formal_screen/ppgt_author_v2/contract.json"
+        ],
+        "run_ids": [
+          "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream"
+        ],
+        "source_commit": "e9ddfb4eb0ef55a9123fe5f61044e3e765317401",
+        "type": "training"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/modern2d_100k_formal_screen/STATUS.md",
+      "next_allowed_actions": [
+        "one authorized frozen experiment"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "modern2d-formal-100k-reference-screen",
+    "hypothesis": {
+      "alternative_explanations": [
+        "runtime cost may exceed the ceiling",
+        "unmatched historical contracts"
+      ],
+      "changed_mechanism": "Independent new reference screen; no model tuning",
+      "cheapest_falsifier": "One independent seed42 reference per device;60 passes within aggregate9 T4-hours",
+      "decision_changed_if_negative": "retain bounded evidence; no100K veto or automatic successor",
+      "decision_changed_if_positive": "retain new reference evidence for review; context-only/INCONCLUSIVE, noReplay",
+      "expected_native_cost_ref": "cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1",
+      "observed_deficiency": "No accepted matched reference exists for this formal contract",
+      "related_closed_family_ids": [
+        "k1-infrastructure-execution"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42"
+      ]
+    },
+    "owner": "server",
+    "question": "Establish this unchanged model's independent V2 CommonDev100K reference",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/modern2d_100k_formal_screen/authority.json",
+      "contract_refs": [
+        "experiments/modern2d_100k_formal_screen/ppgt_author_v2/contract.json",
+        "experiments/modern2d_100k_formal_screen/authority.json",
+        "experiments/modern2d_100k_formal_screen/role_plan.json",
+        "experiments/modern2d_100k_formal_screen/source_identity.json",
+        "experiments/modern2d_100k_formal_screen/target_manifest.json",
+        "research_memory/policies/modern2d-formal-100k-reference-screen.v1.json"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42"
+      ],
+      "prior_trajectory_ids": [],
+      "reference_ids": [],
+      "role_snapshot_refs": [
+        "experiments/modern2d_100k_formal_screen/role_plan.json"
+      ],
+      "source_commit": "e9ddfb4eb0ef55a9123fe5f61044e3e765317401",
+      "source_config_identity": "b861b2f11df8b5914e9b4f97a6c43ab8d9d90d321e4fd8d4196ae4c81611ded2"
+    },
+    "track": "C",
+    "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+  }
+}
