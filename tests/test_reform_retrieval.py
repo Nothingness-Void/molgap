@@ -11,6 +11,7 @@ import pytest
 
 from molgap import experiment_run as runs
 from molgap.experiment_family_workflow import ROLES, RunContext
+from test_experiment_launch import build, unknown
 from test_experiment_run import frozen_run, repo, snapshot, write
 from test_experiment_spec import payload as base_payload
 from test_kaggle_family_retrieval import (
@@ -73,6 +74,99 @@ def arguments(case, *, execute=False):
         # This path never exists; only the fake authentication owner receives it.
         result += ["--execute", "--credentials", str(case.profile.parent / "unread-credentials.json")]
     return result
+
+
+@pytest.fixture
+def unknown_producer(retrieval):
+    case = retrieval
+    # Exercise the actual training producer, not a hand-built null context.
+    case.producer = RunContext.for_training(case.spec, case.package,
+        expected_package_identity=case.manifest["package_identity"], arm_id="gptrans_t",
+        account=case.context.account, run_reference=case.context.run_reference)
+    assert case.producer.platform_version is None
+    assert case.producer.to_dict() == {**case.context.to_dict(), "platform_version": None}
+    case.output["context"] = case.producer.to_dict()
+    write(case.local, case.output)
+    case.manifest_url = next(item.url for item in case.remote_files if item.file_name == case.remote)
+    case.payloads[case.manifest_url] = case.local.read_bytes()
+    return case
+
+
+@pytest.mark.parametrize("execute", [False, True])
+def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_producer, capsys, execute):
+    case = unknown_producer
+    original = snapshot(case.run)
+    pinned = case.local.read_bytes()
+    assert case.context.platform_version == "7"
+    assert case.adapter.main(arguments(case, execute=execute)) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["producer_version"] is None
+    assert result["manifest_sha256"] == hashlib.sha256(pinned).hexdigest()
+    assert result["scientific_acceptance"] is False
+    if execute:
+        assert result["status"] == "RETRIEVED" and result["receipt_version"] == "7"
+        assert result["platform_version_verified_by_output_api"] is False
+        assert result["unselected_outputs_downloaded"] is False
+        assert case.retrieve.call_args.kwargs["context"] == case.context
+        retained = (case.destination / "output_manifest.json").read_bytes()
+        assert retained == pinned
+        assert json.loads(retained)["context"]["platform_version"] is None
+        assert len(case.http.urls) == len(ROLES) + 1
+    else:
+        assert result["status"] == "READY_FOR_RETRIEVAL"
+        case.auth.assert_not_called()
+        case.retrieve.assert_not_called()
+        assert case.http.urls == [] and not case.destination.exists()
+    assert case.local.read_bytes() == pinned and snapshot(case.run) == original
+
+
+@pytest.mark.parametrize("missing", ["physical", "all"])
+def test_unknown_producer_cannot_replace_missing_receipt_version(unknown_producer, capsys, missing):
+    case = unknown_producer
+    response = deepcopy(case.receipt["response"])
+    for physical in response["physical_runs"]["value"]:
+        physical["platform_version"] = unknown()
+    if missing == "all":
+        response["platform_version"] = unknown()
+    # Rebuild a valid receipt so rejection is about missing observation, not tampering.
+    receipt = build((case.spec, case.package, case.manifest["package_identity"]), response)
+    write(case.run / "operations/launch_receipt.json", receipt)
+    original = snapshot(case.run)
+    assert case.adapter.main(arguments(case, execute=True)) == 2
+    result = json.loads(capsys.readouterr().out)
+    assert result["status"] == "BLOCKED" and result["stage"] == "original_run"
+    case.auth.assert_not_called()
+    case.retrieve.assert_not_called()
+    assert case.http.urls == [] and not case.destination.exists()
+    assert snapshot(case.run) == original
+
+
+@pytest.mark.parametrize("changed", ["local", "remote"])
+def test_unknown_producer_still_requires_unchanged_pinned_manifest(unknown_producer, capsys, changed):
+    case = unknown_producer
+    args = arguments(case, execute=True)
+    original = snapshot(case.run)
+    pinned = case.local.read_bytes()
+    altered = deepcopy(case.output)
+    altered["context"]["platform_version"] = "8"
+    if changed == "local":
+        write(case.local, altered)
+    else:
+        case.payloads[case.manifest_url] = json.dumps(altered).encode()
+    assert case.adapter.main(args) == 2
+    result = json.loads(capsys.readouterr().out)
+    assert result["status"] == "BLOCKED"
+    if changed == "local":
+        assert result["stage"] == "manifest"
+        case.auth.assert_not_called()
+        case.retrieve.assert_not_called()
+        assert case.http.urls == [] and not case.destination.exists()
+    else:
+        assert result["stage"] == "platform_retrieval"
+        case.retrieve.assert_called_once()
+        assert case.local.read_bytes() == pinned
+        assert not (case.destination / "output_manifest.json").exists()
+    assert snapshot(case.run) == original
 
 
 def test_no_execute_verifies_actual_original_context_without_auth_or_writes(retrieval, monkeypatch, capsys):
@@ -176,12 +270,11 @@ def test_abbreviated_execute_flag_cannot_resolve_run_or_authenticate(retrieval, 
     assert not case.destination.exists()
 
 
-@pytest.mark.parametrize("fault", ["hash", "version", "unknown_version", "package", "account",
+@pytest.mark.parametrize("fault", ["hash", "version", "package", "account",
     "arm", "roles", "format", "path", "local_alias", "remote_alias", "nonfinite"])
 def test_invalid_manifest_is_blocked_before_auth_or_destination(retrieval, capsys, fault):
     case = retrieval
     if fault == "version": case.output["context"]["platform_version"] = "8"
-    elif fault == "unknown_version": case.output["context"]["platform_version"] = None
     elif fault == "package": case.output["context"]["package_identity"] = "0" * 64
     elif fault == "account": case.output["context"]["account"] = "other-owner"
     elif fault == "arm": case.output["context"]["arm_id"] = "other-arm"

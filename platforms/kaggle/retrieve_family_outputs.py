@@ -129,9 +129,11 @@ def main(argv=None):
             if len(files) != len(ROLES) + 1:
                 raise ValueError("Remote manifest aliases an artifact")
             files = _selected_files(files)
-            if (context.platform_version is None
-                    or manifest["context"]["platform_version"] != context.platform_version):
-                raise ValueError("An exact independently pinned producer version is required")
+            # _family_files checks known producer versions against the receipt.
+            # A normal pre-launch producer has no version; retain that null and
+            # bind retrieval through the reconciled receipt and pinned bytes.
+            if context.platform_version is None:
+                raise ValueError("An exact reconciled receipt version is required")
             stage = "destination"
             destination = args.destination.absolute()
             _safe_local(destination)
@@ -156,7 +158,7 @@ def main(argv=None):
                     raise ValueError("Retained output conflicts with pinned artifact")
             result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
                       "network_accessed": False, "scientific_acceptance": False,
-                      "producer_version": context.platform_version,
+                      "producer_version": manifest["context"]["platform_version"],
                       "manifest_sha256": args.manifest_sha256}
             if args.execute:
                 stage = "platform_retrieval"
