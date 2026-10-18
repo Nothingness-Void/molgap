@@ -1,0 +1,46 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ppgt_author_v2",
+    "arm_identity": "b861b2f11df8b5914e9b4f97a6c43ab8d9d90d321e4fd8d4196ae4c81611ded2",
+    "experiment_id": "modern2d-formal-100k-reference-screen",
+    "family_name": "ppgt_small",
+    "family_version": "3",
+    "logical_run_id": "modern2d-formal-100k-s42-v1",
+    "package_identity": "1a64c0dadc0e610565ea692a38df64f1bd1c95570ddfe14492cc485517f60a85",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-modern2d-formal-100k-v1",
+    "source_archive_sha256": "6870a62e99d159d0239a7c350e006b805f815c0fc81c4a6f2928be6f714e5c90",
+    "source_commit": "d67e30894089ffaa40569b93ca9c5130cfbb87ba",
+    "spec_identity": "5436d6b9a9eb05a8a76a96d21911b1a4e82b03f2c9aa8647aab27940a98f941b",
+    "training_recipe_sha256": "668f9323ab9600212b396ae1c8b912cd812d83291dae51305a808993bfe94d51"
+  },
+  "decision_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json",
+  "exit_reason": "preflight_worker_exit_1",
+  "final": true,
+  "full_cost_status": "measurement_missing",
+  "model_updates": 0,
+  "next_allowed_actions": [],
+  "noReplay": true,
+  "observed_python_window_lower_bound": {
+    "additive_with_ledger": false,
+    "device_count": 2,
+    "device_seconds": 142.85452919199997,
+    "scope": "Shared allocation lower bound only; excludes pre-Python provisioning and queue.",
+    "wall_seconds": 71.42726459599999
+  },
+  "optimizer_updates": 0,
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "platform_status": "ERROR",
+  "progress": {
+    "epoch": 0,
+    "samples": 0,
+    "step": 0
+  },
+  "reopen_conditions": [
+    "separate authority"
+  ],
+  "scientific_acceptance": "NOT_EVALUATED",
+  "training_started": false
+}

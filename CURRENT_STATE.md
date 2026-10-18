@@ -6,6 +6,23 @@
 
 ## Server active screen
 
+The human-authorized [Modern2D100K retry](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md)
+is bound to Kaggle2 `kaseichou/molgap-modern2d-formal-100k-v2`,
+kernel139370303/version1, source `943fd3a596379144bbb559e690ebbd2cd9da9282`.
+The latest exact-version observation is RUNNING; fresh native qualification,
+training progress and terminal acceptance are not yet observed. The single
+authorized retry charges77 prior wall seconds at both devices against the
+same9 T4-hours. Its [V1 predecessor](experiments/modern2d_100k_formal_screen/STATUS.md)
+failed before either formal trainer started and is RML-closed as
+INFRASTRUCTURE_ONLY, not an architecture negative. The shared startup now applies
+the qualified1-thread policy before label reductions, without relaxing exact
+statistics checks. It retains unchanged PPGT author v2 and ESA isolate v3
+through separately admitted execution interfaces3/4, accepted train100K plus
+Common-Dev50K, seed42, BS128, FP32/TF32off,60 passes. Aggregate authority is9 T4-hours
+(T4x2/4.5h), with a checkpoint reserve and no automatic continuation. Partial work
+is STOP_FOR_COST/INCONCLUSIVE. Fresh all-arm native preflight remains mandatory;
+submission is not model-quality acceptance, Replay or a500K decision.
+
 The user-authorized
 [four-arm campaign](experiments/pcqm_gptrans_research_four_arm_100k/protocol.md)
 was submitted once per slot on the human-selected Kaggle3 account `nvoid912`:
@@ -112,7 +129,7 @@ Cross-scale infrastructure is CPU-accepted; V2 IMS data passed [role acceptance]
 Job `1733250.ccpbs1` exited0 with a retained memory warning; Kaggle mirrors are NOT_PUBLISHED.
 Modern2D [versioned integration](experiments/modern2d_model_integration/integration_attempt_2026-10-17.md) is CPU-accepted for PPGT/2, ESA/3 and indexed loading.
 The human authorized a separate bounded [native qualification](experiments/modern2d_model_integration/native_preflight/STATUS.md): IMS CPU at most2h, then Kaggle2 T4x2 at most30min, no formal training/protected roles.
-The selected100K/Common-Dev export and private Kaggle2 byte roundtrips passed. The [V1 acceptance](experiments/modern2d_model_integration/native_preflight/results/decision_2026-10-18.md) and [V2 inspection](experiments/modern2d_model_integration/native_preflight/retry_v2/results/inspection_2026-10-18.md) preserve separate bootstrap/device-interface failures, not scientific route negatives. After explicit repair/resubmission authority, device/registry CPU regressions and real packaging passed. The [repaired exact attempt](experiments/modern2d_model_integration/native_preflight/retry_v4/STATUS.md), kernel139279865/version1, was submitted once and observed QUEUED. V3 was rejected only during local preparation and never uploaded/submitted. Native numerics and full GPU cost remain unverified; scientific training and automatic successors remain blocked.
+The selected100K/Common-Dev export and private Kaggle2 byte roundtrips passed. The [V1 acceptance](experiments/modern2d_model_integration/native_preflight/results/decision_2026-10-18.md) and [V2 inspection](experiments/modern2d_model_integration/native_preflight/retry_v2/results/inspection_2026-10-18.md) preserve separate bootstrap/device-interface failures, not scientific route negatives. The [repaired exact attempt](experiments/modern2d_model_integration/native_preflight/retry_v4/STATUS.md), kernel139279865/version1, is COMPLETE; independent inspection accepted both arms' native numerical/update and exact repeat/resume proofs. Both V4 qualification arms are now RML-finalized as `NO_TRAIN`, with full allocation/billing cost explicitly missing; the qualification certificate does not release formal training or automatic successors. V3 was local-only and never uploaded/submitted. The new formal screen above has separate human authority and prospective records. User-derived RML views were preserved, so index rebuilding is explicitly deferred rather than described as terminal-publication failure.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

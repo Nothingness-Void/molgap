@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "RUN_SCREEN60",
+    "field": "user_authorized_formal_screen",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one seed42 two-arm60-pass allocation under9 T4h",
+    "authority_ref": "experiments/modern2d_100k_formal_screen/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "modern2d-v2-commondev-independent-reference-100k-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Charge the full T4x2 allocation including preparation, idle devices and tail; aggregate ceiling9 T4h",
+      "V5 context-only/INCONCLUSIVE; no matched reference, Replay or superiority",
+      "No STQS, uncalibrated early-stop rule,100K veto,500K/full or automatic successor"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "modern2d-formal-100k-reference-screen",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_formal_screen"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

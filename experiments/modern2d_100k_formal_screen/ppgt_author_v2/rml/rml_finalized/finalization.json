@@ -1,0 +1,41 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-b90e5a5990e6e51625bcd8dd1e10b72445dbcbfb3c0c86bce9ad16be41745255",
+  "finalized_at": "2026-10-18T06:32:15.695418+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/modern2d_100k_formal_screen/authority.json": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315",
+    "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json": "1eebd17568c9104a1ce5cf71de693e4fe5fa77d279f8d87ad724ce32887d822b",
+    "experiments/modern2d_100k_formal_screen/experiment_spec.json": "7e523ddd89cdf28ed4f0e4e6cf66f96da5832eef4ba24748ed1b2fb6bcd3c152",
+    "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json": "bfe6e371dbfe095306ee5a40f29c9331260b2bd67e5698e7249849eb200fe498",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/bootstrap_allocation.json": "781078816e00c2e6a4be04f425c1b3765263f8f787cb60c9eac989543a41a00d",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/allocation_ledger.json": "092f41a91073e56aa3b0f190334695e315c9962d635747b4ae017151c59cc44c",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_report.json": "3995072c40b02ff1b471cd58c32d0860894cfc65b1e3b627c58e152524bc0e58",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_retention.json": "0cb6fe761bb364ba47bfaa9c0f091650c04399d5797b32c4a0381e67a70c2d94",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/esa_native_v3/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/ppgt_author_v2/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/launch_receipt.json": "5b3519dfe97051fec49733c23f3539acb521e86ce11101c0bc7c21fee92b2916",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/source_verification.json": "ba1d4cb89d765d52856a41876e636e9a6b76ea6c5b93ff6b5021fdadc6cc7835",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json": "73e77105728de3248e4f0656bde9bb7d374f90e44bb2bea682fba4d1c96ceece",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json": "d88b01d5e1fb17ec84a50b2b56c06cf2e96803a4f5be62038f2bb9b3675fd598",
+    "experiments/modern2d_100k_formal_screen/roles/train_100k.json": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-full-missing.json": "ab9529b0682f6bad07c1722fb5bf48d19ba635183b64d6a1505c251e7afa4a69",
+    "prospective_snapshot.json": "bfe6e371dbfe095306ee5a40f29c9331260b2bd67e5698e7249849eb200fe498",
+    "roles/role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-labels_read.json": "afb4c127c68b8d8d0c15cd6a206c90fa9fba117bc854b5dd06c697b6fa60290a",
+    "roles/role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-prediction_input.json": "23bfa596c4f991a98a80599eb0ec30bc1632660e0af55aa7c67dc1459b20f314",
+    "terminal_input.json": "03c17ab0d5ac0adf25fe3b01b17b1a1cb024ea68ba41f65571277e68d828529f",
+    "trajectory.json": "3362b413a3c583f8ce4178d57e73c7a7818bba9090e4fdf9c1f4d4376057d408",
+    "v5_evidence.json": "56c372ec6578dca2b1fe5fac2f21fcbf4f48e9ef241f410e86fe9650d3c9e037"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "b90e5a5990e6e51625bcd8dd1e10b72445dbcbfb3c0c86bce9ad16be41745255",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+}

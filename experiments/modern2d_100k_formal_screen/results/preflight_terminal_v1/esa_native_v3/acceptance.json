@@ -1,0 +1,128 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "esa_native_v3",
+    "arm_identity": "3f1bda2a436c9c57f65ad73bcfa9aa45d70139c833c26bae05d734b085176167",
+    "experiment_id": "modern2d-formal-100k-reference-screen",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "logical_run_id": "modern2d-formal-100k-s42-v1",
+    "package_identity": "1a64c0dadc0e610565ea692a38df64f1bd1c95570ddfe14492cc485517f60a85",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-modern2d-formal-100k-v1",
+    "source_archive_sha256": "6870a62e99d159d0239a7c350e006b805f815c0fc81c4a6f2928be6f714e5c90",
+    "source_commit": "d67e30894089ffaa40569b93ca9c5130cfbb87ba",
+    "spec_identity": "5436d6b9a9eb05a8a76a96d21911b1a4e82b03f2c9aa8647aab27940a98f941b",
+    "training_recipe_sha256": "9230b7ecfa1ee0a04443b291e0a14bb9b861f548e831cb34d85577cef4e4fa03"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "esa_native_v3-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-modern2d-formal-100k-esa_native_v3-s42-v1-full-missing",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-formal-100k-s42-v1:esa_native_v3:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+    }
+  ],
+  "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+  "exit_reason": "preflight_worker_exit_1",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "full_cost_status": "measurement_missing",
+  "model_updates": 0,
+  "noReplay": true,
+  "observed_python_window_lower_bound": {
+    "additive_with_ledger": false,
+    "device_count": 2,
+    "device_seconds": 142.85452919199997,
+    "scope": "Shared allocation lower bound only; excludes pre-Python provisioning and queue.",
+    "wall_seconds": 71.42726459599999
+  },
+  "optimizer_updates": 0,
+  "outcome": {
+    "artifact_status": "metadata_verified",
+    "budget_decision": "measurement_missing",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NOT_EVALUATED",
+    "transfer_status": "not_evaluated"
+  },
+  "platform_status": "ERROR",
+  "progress": {
+    "epoch": 0,
+    "samples": 0,
+    "step": 0
+  },
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/acceptance.json",
+      "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-formal-100k-s42-v1:esa_native_v3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/acceptance.json",
+      "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-formal-100k-s42-v1:esa_native_v3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+    }
+  ],
+  "run_id": "modern2d-formal-100k-s42-v1:esa_native_v3:downstream",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "training_started": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "separate authority"
+    ]
+  }
+}

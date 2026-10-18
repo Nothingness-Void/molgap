@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 40, in <module>
+    main()
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 26, in main
+    result = execute_training_phase(spec=spec, job=job, phase=args.phase,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py", line 555, in execute_training_phase
+    return runner(spec=spec, package_dir=package_dir,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 318, in run_screen_preflight
+    prepared = _bootstrap(training_only=True, **options)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 279, in _bootstrap
+    _assert_target_statistics(recipe, data)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 199, in _assert_target_statistics
+    raise ValueError(
+ValueError: Decoded train target statistics differ from frozen recipe: observed=(5.338300266634226, 1.2750902063230574), expected=(5.338300266634226, 1.275090206323082)

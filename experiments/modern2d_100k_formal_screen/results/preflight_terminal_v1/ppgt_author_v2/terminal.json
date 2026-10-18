@@ -1,0 +1,221 @@
+{
+  "acceptance_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_100k_formal_screen/authority.json": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315",
+    "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json": "1eebd17568c9104a1ce5cf71de693e4fe5fa77d279f8d87ad724ce32887d822b",
+    "experiments/modern2d_100k_formal_screen/experiment_spec.json": "7e523ddd89cdf28ed4f0e4e6cf66f96da5832eef4ba24748ed1b2fb6bcd3c152",
+    "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json": "bfe6e371dbfe095306ee5a40f29c9331260b2bd67e5698e7249849eb200fe498",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/bootstrap_allocation.json": "781078816e00c2e6a4be04f425c1b3765263f8f787cb60c9eac989543a41a00d",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/allocation_ledger.json": "092f41a91073e56aa3b0f190334695e315c9962d635747b4ae017151c59cc44c",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_report.json": "3995072c40b02ff1b471cd58c32d0860894cfc65b1e3b627c58e152524bc0e58",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_retention.json": "0cb6fe761bb364ba47bfaa9c0f091650c04399d5797b32c4a0381e67a70c2d94",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/esa_native_v3/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/ppgt_author_v2/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/launch_receipt.json": "5b3519dfe97051fec49733c23f3539acb521e86ce11101c0bc7c21fee92b2916",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/source_verification.json": "ba1d4cb89d765d52856a41876e636e9a6b76ea6c5b93ff6b5021fdadc6cc7835",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json": "73e77105728de3248e4f0656bde9bb7d374f90e44bb2bea682fba4d1c96ceece",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json": "d88b01d5e1fb17ec84a50b2b56c06cf2e96803a4f5be62038f2bb9b3675fd598",
+    "experiments/modern2d_100k_formal_screen/roles/train_100k.json": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-full-missing",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "separate authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/authority.json",
+        "name": "experiments/modern2d_100k_formal_screen/authority.json",
+        "sha256": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json",
+        "name": "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json",
+        "sha256": "1eebd17568c9104a1ce5cf71de693e4fe5fa77d279f8d87ad724ce32887d822b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/experiment_spec.json",
+        "name": "experiments/modern2d_100k_formal_screen/experiment_spec.json",
+        "sha256": "7e523ddd89cdf28ed4f0e4e6cf66f96da5832eef4ba24748ed1b2fb6bcd3c152"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json",
+        "name": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json",
+        "sha256": "bfe6e371dbfe095306ee5a40f29c9331260b2bd67e5698e7249849eb200fe498"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/bootstrap_allocation.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/bootstrap_allocation.json",
+        "sha256": "781078816e00c2e6a4be04f425c1b3765263f8f787cb60c9eac989543a41a00d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/allocation_ledger.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/allocation_ledger.json",
+        "sha256": "092f41a91073e56aa3b0f190334695e315c9962d635747b4ae017151c59cc44c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_report.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_report.json",
+        "sha256": "3995072c40b02ff1b471cd58c32d0860894cfc65b1e3b627c58e152524bc0e58"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_retention.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_retention.json",
+        "sha256": "0cb6fe761bb364ba47bfaa9c0f091650c04399d5797b32c4a0381e67a70c2d94"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/esa_native_v3/preflight.log",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/esa_native_v3/preflight.log",
+        "sha256": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/ppgt_author_v2/preflight.log",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/ppgt_author_v2/preflight.log",
+        "sha256": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/launch_receipt.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/launch_receipt.json",
+        "sha256": "5b3519dfe97051fec49733c23f3539acb521e86ce11101c0bc7c21fee92b2916"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/source_verification.json",
+        "name": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/source_verification.json",
+        "sha256": "ba1d4cb89d765d52856a41876e636e9a6b76ea6c5b93ff6b5021fdadc6cc7835"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_100k_formal_screen/roles/train_100k.json",
+        "name": "experiments/modern2d_100k_formal_screen/roles/train_100k.json",
+        "sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json",
+        "experiments/modern2d_100k_formal_screen/authority.json",
+        "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-18T06:32:15.695418+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Pinned saved metadata/logs only; train-only normalization failed before model/optimizer updates."
+    },
+    "outcome": {
+      "artifact_status": "metadata_verified",
+      "budget_decision": "measurement_missing",
+      "comparison_status": "not_evaluated",
+      "execution_status": "failed",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "audit": "untouched",
+      "common_dev": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "consumed"
+    },
+    "scope": "PREFLIGHT_INFRASTRUCTURE_FAILURE",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-18T06:32:15.695418+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+    }
+  ],
+  "run_id": "modern2d-formal-100k-s42-v1:ppgt_author_v2:downstream",
+  "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+}

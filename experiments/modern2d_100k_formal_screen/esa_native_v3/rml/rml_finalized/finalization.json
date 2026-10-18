@@ -1,0 +1,41 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-1a42187ed1e284df7a27fce288234879e4c189b7004913581fd4ec0137b5f3fc",
+  "finalized_at": "2026-10-18T06:32:15.695418+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/modern2d_100k_formal_screen/authority.json": "8c60c607abe743a4772657201ff81e3777a5859ec37cefa1ce475e9391d8a315",
+    "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json": "1eebd17568c9104a1ce5cf71de693e4fe5fa77d279f8d87ad724ce32887d822b",
+    "experiments/modern2d_100k_formal_screen/experiment_spec.json": "7e523ddd89cdf28ed4f0e4e6cf66f96da5832eef4ba24748ed1b2fb6bcd3c152",
+    "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/trajectory.json": "bfe6e371dbfe095306ee5a40f29c9331260b2bd67e5698e7249849eb200fe498",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/acceptance.json": "b6e745f365f4c1ba3b116f597f9854d34b1dbe9fb540ba755482964321485a23",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/decision.json": "59664cb27edd42b3e4a3a82ceeee1b903b62d49c6b7d7ee1623a4b746ae1ac22",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/bootstrap_allocation.json": "781078816e00c2e6a4be04f425c1b3765263f8f787cb60c9eac989543a41a00d",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/allocation_ledger.json": "092f41a91073e56aa3b0f190334695e315c9962d635747b4ae017151c59cc44c",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_report.json": "3995072c40b02ff1b471cd58c32d0860894cfc65b1e3b627c58e152524bc0e58",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/experiment/execution_retention.json": "0cb6fe761bb364ba47bfaa9c0f091650c04399d5797b32c4a0381e67a70c2d94",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/esa_native_v3/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/metadata/worker_logs/experiment/ppgt_author_v2/preflight.log": "b50f81b3a96c11ba2f811ff41cf8e92eaade4b5c7244c1ad49d62caf23d9328b",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/launch_receipt.json": "5b3519dfe97051fec49733c23f3539acb521e86ce11101c0bc7c21fee92b2916",
+    "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/operations/source_verification.json": "ba1d4cb89d765d52856a41876e636e9a6b76ea6c5b93ff6b5021fdadc6cc7835",
+    "experiments/modern2d_100k_formal_screen/roles/train_100k.json": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-modern2d-formal-100k-esa_native_v3-s42-v1-full-missing.json": "c87671c640d9554e4d832924fa3b002d5d6652247f80ca1d586920faa326ee05",
+    "prospective_snapshot.json": "1eebd17568c9104a1ce5cf71de693e4fe5fa77d279f8d87ad724ce32887d822b",
+    "roles/role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-labels_read.json": "d7845ad0668e17adb686bf7dd9e225653ca3274f08ba5d4d4ea6ccf8345bcab4",
+    "roles/role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-prediction_input.json": "c033cae282b6c12d767c8ffbf32c2a549eabb1cc3b95fa405b6ce81fd72250c4",
+    "terminal_input.json": "97cd310b167a81266b91175f4d59b9edd9bdf589f8c7db6b9a39665b2c939fbd",
+    "trajectory.json": "2d30b2eece459b373d8c79039c5489772e9661bfe74ce6c80881bfbfa4f6dc71",
+    "v5_evidence.json": "50266c9f91c483b872fe1342b9feb8a35a86ecba0b815d37e7b3b8743b50b1fc"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "1a42187ed1e284df7a27fce288234879e4c189b7004913581fd4ec0137b5f3fc",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+}
