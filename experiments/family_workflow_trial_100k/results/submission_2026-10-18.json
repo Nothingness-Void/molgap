@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-18T12:50:00.364795+00:00",
+  "kernel": "kaseichou/molgap-family-workflow-trial-100k-v1",
+  "kernel_id": 139412008,
+  "version": 1,
+  "scheduler": {
+    "status": "QUEUED",
+    "failureMessage": null
+  },
+  "gpu_posts": 1,
+  "source_commit": "33276db9600d3c90a9039201fde90da4e8a64b9a",
+  "spec_identity": "3d2fe2faa7a7b0dd7136c319d19f19b5a70542c5356a11be26a23e69c3360b82",
+  "package_identity": "a10bf26135763db93b927043e528ec71d49213055bb9f63ca3029cc29fda5f3f",
+  "source_archive_sha256": "13e670f2c53d6a83d2e259b8f40d014ff4e5e4fbde033b7f95913987080e4102",
+  "local_workflow_preparation_seconds": 49.77411130000837,
+  "cross_head_reuse_internal_seconds": 0.14241530001163483,
+  "recorded_active_platform_phase_seconds": 110.59045249997871,
+  "phase_timing_is_not_end_to_end": true,
+  "submission_state": "BOUND",
+  "native_qualification": "NOT_OBSERVED",
+  "downstream_training": "NOT_OBSERVED",
+  "artifact_acceptance": "NOT_EVALUATED",
+  "scientific_comparison": "NOT_APPLICABLE",
+  "run_folder_logical_bytes_after_submission": 76617904,
+  "run_folder_census_complete": true,
+  "disk_scope_excludes_original_initial_states_and_shared_cache": true,
+  "remote_checkpoint_or_prediction_payloads_downloaded": false,
+  "automatic_followup_created": false,
+  "old_automation_update_result": "gptrans-100k not found; no modification or duplicate automation created",
+  "next_action": "Wait for exact allocation; retrieve and inspect native proofs and32-update outputs. No new submission/retry."
+}

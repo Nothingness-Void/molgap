@@ -10,7 +10,8 @@ The human authorized a separate [mature-family workflow trial](experiments/famil
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,
 train-only accepted fixed100K,1800 seconds/1 allocated T4-hour including startup
 and native qualification. No development/protected roles, MAE ranking or
-automatic retry. Real submission and output acceptance remain to be observed.
+automatic retry. The exact first allocation is bound to kernel139412008/version1,
+observed QUEUED; real training and output acceptance remain to be observed.
 
 The human-authorized [Modern2D100K retry](experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md)
 is bound to Kaggle2 `kaseichou/molgap-modern2d-formal-100k-v2`,
