@@ -1,0 +1,18 @@
+{
+  "scope": "QUALIFICATION_ONLY",
+  "physical_batch_size": 128,
+  "scratch_optimizer_updates": 6,
+  "process_wall_seconds": 178.34121477000002,
+  "scratch_sample_presentations": 768,
+  "end_to_end_scratch_samples_per_second": 4.306351696848675,
+  "timing_scope": "input admission, model construction, repeat/resume updates and serialization",
+  "peak_allocated_bytes": 1084035584,
+  "peak_reserved_bytes": 1178599424,
+  "allocated_accelerators": [
+    "NvidiaTeslaT4",
+    "NvidiaTeslaT4"
+  ],
+  "allocation_wall_ceiling_seconds": 1800,
+  "allocated_device_seconds": null,
+  "allocation_accounting": "requires platform allocation observations"
+}

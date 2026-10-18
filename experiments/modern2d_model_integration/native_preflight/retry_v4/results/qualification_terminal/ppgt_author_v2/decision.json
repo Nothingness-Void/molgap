@@ -1,0 +1,29 @@
+{
+  "actual_run": {
+    "arm_id": "ppgt_author_v2",
+    "kernel": "kaseichou/molgap-modern2d-native-100k-v4",
+    "kernel_id": 139279865,
+    "version": 1
+  },
+  "common_dev_permit_is_access": false,
+  "cost_scope": "One shared T4x2 allocation; retained windows overlap and are not additive. Full billing unknown.",
+  "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/decision.json",
+  "exposure_scope": "Three independent two-update scratch paths; no full100K training exposure or model-quality claim.",
+  "final": true,
+  "formal_training_exposure": 0,
+  "full_cost_status": "measurement_missing",
+  "native_execution_released": false,
+  "native_training_release": false,
+  "next_allowed_actions": [],
+  "noReplay": true,
+  "outcome": "NO_TRAIN",
+  "protected_roles_opened": false,
+  "reopen_conditions": [
+    "separate prospective authority"
+  ],
+  "roles_opened": [
+    "train"
+  ],
+  "scientific_acceptance": "NOT_EVALUATED",
+  "scratch_optimizer_updates": 6
+}

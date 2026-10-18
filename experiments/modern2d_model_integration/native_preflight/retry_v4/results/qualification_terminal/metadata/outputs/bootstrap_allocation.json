@@ -1,0 +1,51 @@
+{
+  "allocated_device_seconds": null,
+  "allocation_device_count": 2,
+  "cost_status": "PYTHON_OBSERVED_WINDOW_ONLY",
+  "full_allocation_cost": null,
+  "full_allocation_device_seconds": null,
+  "full_allocation_seconds": null,
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "hardware_measurement_status": "observed",
+  "measurement_scope": "PYTHON_OBSERVED_WINDOW_ONLY",
+  "overlap": "Same allocation as qualification/allocation_ledger.json; do not double count",
+  "phase": "runtime_returned",
+  "provisioning_before_python_seconds": null,
+  "python_observed_device_seconds": 667.1791009699999,
+  "python_observed_wall_seconds": 333.58955048499996,
+  "queue_seconds": null,
+  "source_discovery": {
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "exists": false,
+        "layout": "flat",
+        "marker_present": null,
+        "path": "molgap-modern2d-qualification-source-v4"
+      },
+      {
+        "exists": false,
+        "layout": "owner_qualified",
+        "marker_present": null,
+        "path": "kaseichou/molgap-modern2d-qualification-source-v4"
+      },
+      {
+        "exists": true,
+        "layout": "owner_namespaced",
+        "marker_present": true,
+        "path": "datasets/kaseichou/molgap-modern2d-qualification-source-v4"
+      }
+    ],
+    "dataset_source": "kaseichou/molgap-modern2d-qualification-source-v4",
+    "file_contents_read": false,
+    "format": "molgap-kaggle-dataset-location-v1",
+    "recursive_scan": false,
+    "selected_root": "datasets/kaseichou/molgap-modern2d-qualification-source-v4",
+    "status": "selected"
+  },
+  "status": "complete",
+  "wall_seconds": 333.58955048499996
+}

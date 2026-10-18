@@ -1,0 +1,63 @@
+{
+  "bootstrap_through_environment_wall_seconds": 61.72468370199999,
+  "data_discovery": {
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "exists": false,
+        "layout": "flat",
+        "marker_present": null,
+        "path": "molgap-modern2d-100k-commondev-v1"
+      },
+      {
+        "exists": false,
+        "layout": "owner_qualified",
+        "marker_present": null,
+        "path": "kaseichou/molgap-modern2d-100k-commondev-v1"
+      },
+      {
+        "exists": true,
+        "layout": "owner_namespaced",
+        "marker_present": null,
+        "path": "datasets/kaseichou/molgap-modern2d-100k-commondev-v1"
+      }
+    ],
+    "dataset_source": "kaseichou/molgap-modern2d-100k-commondev-v1",
+    "file_contents_read": false,
+    "format": "molgap-kaggle-dataset-location-v1",
+    "recursive_scan": false,
+    "selected_root": "datasets/kaseichou/molgap-modern2d-100k-commondev-v1",
+    "status": "selected"
+  },
+  "environment_wall_seconds": 59.284187546,
+  "formal_training_exposure": 0,
+  "format": "molgap-modern2d-qualification-pair-v1",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "launch_sha256": "e12c3817624d1ec1f43533dd273abbd0c38c8bb01b4b696d1e5399d6167035b2",
+  "max_wall_seconds": 1800,
+  "native_execution_released": false,
+  "phase": "sealed",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "scope": "QUALIFICATION_ONLY",
+  "seal_reserve_seconds": 60,
+  "spec_identity": "a207acd2e09b18f5f04bb310154a58e7799eb4c4f5948397289c2c469b2dbe23",
+  "status": "complete",
+  "wall_seconds": 331.61869728999994,
+  "workers": {
+    "esa_native_v3": {
+      "device": 1,
+      "pid": 120,
+      "returncode": 0,
+      "status": "QUALIFICATION_VERIFIED"
+    },
+    "ppgt_author_v2": {
+      "device": 0,
+      "pid": 119,
+      "returncode": 0,
+      "status": "QUALIFICATION_VERIFIED"
+    }
+  }
+}

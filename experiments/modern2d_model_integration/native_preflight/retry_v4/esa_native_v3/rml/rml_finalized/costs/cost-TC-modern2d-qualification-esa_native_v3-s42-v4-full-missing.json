@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "esa_native_v3-v4",
+  "category": "preflight",
+  "cost_event_id": "cost-TC-modern2d-qualification-esa_native_v3-s42-v4-full-missing",
+  "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/esa_native_v3/acceptance.json",
+  "hardware": "Tesla_T4_16GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "modern2d-native-100k-s42-v4:esa_native_v3:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+}

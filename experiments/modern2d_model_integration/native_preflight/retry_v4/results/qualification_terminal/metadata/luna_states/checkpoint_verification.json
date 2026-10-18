@@ -1,0 +1,156 @@
+{
+  "arms": {
+    "esa_native_v3": {
+      "initial_state": {
+        "model_state_sha256": "3e6a7beecfc14880cad68e365bb25255dd12359b2dc8c3c5ee219b3582efa8c0",
+        "path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\initial_states_v1\\esa_native_v3.pt",
+        "tensor_count": 130
+      },
+      "proofs": {
+        "repeat-a.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "9826b2d9f07df5f1ce8c928abda1b9418a563e235df7eee307b9797c3fde7692",
+          "next_batch": 2,
+          "optimizer_parameter_count": 130,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "ad3faa2c39ac93152a1aefc6c26950929b5f5bed7eb936f544fc24a345194f63",
+          "status": "complete"
+        },
+        "repeat-b.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "9826b2d9f07df5f1ce8c928abda1b9418a563e235df7eee307b9797c3fde7692",
+          "next_batch": 2,
+          "optimizer_parameter_count": 130,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "ad3faa2c39ac93152a1aefc6c26950929b5f5bed7eb936f544fc24a345194f63",
+          "status": "complete"
+        },
+        "resumed.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "9826b2d9f07df5f1ce8c928abda1b9418a563e235df7eee307b9797c3fde7692",
+          "next_batch": 2,
+          "optimizer_parameter_count": 130,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "ad3faa2c39ac93152a1aefc6c26950929b5f5bed7eb936f544fc24a345194f63",
+          "status": "complete"
+        }
+      },
+      "resume_origin": {
+        "cuda_rng_count": 1,
+        "development": false,
+        "ema": false,
+        "model_state_sha256": "178b9a91befa000390b549c68695f64084b95a3c7ab612ee961c617ab7647ec8",
+        "next_batch": 1,
+        "optimizer_parameter_count": 130,
+        "optimizer_step": 1,
+        "optimizer_step_values": [
+          1
+        ],
+        "sample_presentations": 128,
+        "state_fingerprint": "d8f76f697fd709357333cbb8f4fa7034bc42aefec9d105bfb26f03a042276ff5",
+        "status": "paused"
+      }
+    },
+    "ppgt_author_v2": {
+      "initial_state": {
+        "model_state_sha256": "dd0b414662721b61e2183cedfd929cd09ddc4b7b3a79164165f2935452ede18e",
+        "path": "E:\\MolGap\\artifacts\\modern2d-native-preflight\\initial_states_v1\\ppgt_author_v2.pt",
+        "tensor_count": 370
+      },
+      "proofs": {
+        "repeat-a.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "372b8197e03c3313600ea984714ca4bfb755a9ec5f9078c504ca14b8ac1e83b0",
+          "next_batch": 2,
+          "optimizer_parameter_count": 370,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "c963ded224c5ffea00b9fa4ac3284e86611f4f3d4fb3d7aed8644c392b5e1028",
+          "status": "complete"
+        },
+        "repeat-b.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "372b8197e03c3313600ea984714ca4bfb755a9ec5f9078c504ca14b8ac1e83b0",
+          "next_batch": 2,
+          "optimizer_parameter_count": 370,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "c963ded224c5ffea00b9fa4ac3284e86611f4f3d4fb3d7aed8644c392b5e1028",
+          "status": "complete"
+        },
+        "resumed.pt": {
+          "cuda_rng_count": 1,
+          "development": false,
+          "ema": false,
+          "model_state_sha256": "372b8197e03c3313600ea984714ca4bfb755a9ec5f9078c504ca14b8ac1e83b0",
+          "next_batch": 2,
+          "optimizer_parameter_count": 370,
+          "optimizer_step": 2,
+          "optimizer_step_values": [
+            2
+          ],
+          "sample_presentations": 256,
+          "state_fingerprint": "c963ded224c5ffea00b9fa4ac3284e86611f4f3d4fb3d7aed8644c392b5e1028",
+          "status": "complete"
+        }
+      },
+      "resume_origin": {
+        "cuda_rng_count": 1,
+        "development": false,
+        "ema": false,
+        "model_state_sha256": "2e459d95d927d5bec55e0f0a3412dbc815154260a6b4787e3da24c9a14abea92",
+        "next_batch": 1,
+        "optimizer_parameter_count": 370,
+        "optimizer_step": 1,
+        "optimizer_step_values": [
+          1
+        ],
+        "sample_presentations": 128,
+        "state_fingerprint": "03069cbab3a7217c30131810870c19d148c23a166ffc794af8834af834ee6bff",
+        "status": "paused"
+      }
+    }
+  },
+  "cuda_initialized_after_load": false,
+  "cuda_initialized_before_load": false,
+  "cuda_visible_devices": "",
+  "peak_rss_bytes": null,
+  "peak_rss_mib": null,
+  "peak_rss_under_800mb": null,
+  "source_helpers": [
+    "read_recipe",
+    "_probe_recipe",
+    "_state_fingerprint",
+    "validate_session_resume",
+    "state_dict_sha256"
+  ],
+  "status": "PASS"
+}

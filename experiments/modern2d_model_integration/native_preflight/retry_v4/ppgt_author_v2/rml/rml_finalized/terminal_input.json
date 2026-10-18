@@ -1,0 +1,248 @@
+{
+  "acceptance_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/authority.json": "973613feb8d9ee70b96ca6d2c7b8e2fd9b18a4eb36c6fcc31f680ae0ecf02a63",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/esa_native_v3/contract.json": "cd86787955af9b6f7f4fbf85dc9ed6c8b97d02c1b66fe83ec5b93d3f59c0ef46",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/esa_native_v3/rml/trajectory.json": "c8d5e61f1860bcfcf296b4cbc58b984241cb507a698e287452b7adfd629fc862",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/ppgt_author_v2/contract.json": "2975c12beca40db56c117f16243b361285d0a1f1b69cd638992332b1f58eec37",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/ppgt_author_v2/rml/trajectory.json": "2b50fdf0d1424619a04e8b27c1e8bfb89c950cd54fd455c9a3e831b2c095d64c",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/checkpoint_hash_acceptance.json": "8ae59232513854f8f691c8fd16b67f48bd16c226d3bc8aacdf2c21734e126000",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/luna_states/checkpoint_verification.json": "87b254c73fba3ce1b169a7f05b4081acd0cc4db541d787db5dd923d5578dff95",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/bootstrap_allocation.json": "e987e7298af71047b8ea961e05126295765210f4530f9cbab39ba818007af351",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/allocation_ledger.json": "4de30f2104308c7210805536a34ffcdf385ec03cc5f7697e2559fb7816ce5b73",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/resource_qualification.json": "1bc69c0a4a7755cd82f28bac1661dce1f128749145b0aee38f5473c84d368833",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/runtime_certificate.json": "9450e737369aa67497dc9d94639d4559b47e95c04907b72f13a1127f65448330",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/runtime_provenance.json": "186e33680f89fd02c3823e4fe89b4d5d2920b765b4f3b7e37cce63abf140bc54",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/worker_result.json": "d0c08c3f8bf67a8de4a36408967122aecf27a13602b4eb13d83963702b5a4076",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/execution_report.json": "f8b84ff84fc529cf58fcc44193b1dd9ef059bd75a5ddd70c25fc573249c7614a",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/resource_qualification.json": "68a58fcdee72247e10383c326a410dff91a5df058cecf4650426c2d0fc37c30a",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/runtime_certificate.json": "d03bf7a0ce516080341066987b807627aa117591d8bbad7cc4cc6f2d79d80dc7",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/runtime_provenance.json": "d4e74fb1f4528e9d277f20193abb11896cd881b281e1e30697da4ab1043b2949",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/worker_result.json": "3755e808aa0321e44b93c351f1ae8f0d25d3e3d2229ba7bceeba3f96a9d9a6b2",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/qualification_manifest.json": "d2d752da084b3dfe5a2378aa1a5dda799fed0b960b86b39a5522ed25eb37d33f",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/platform_observation.json": "336e04d694023e7b792812f83b52aee654a7cd43533c0809a57e4526aff84b28",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/scratchinspection/luna_metadata/native_certificate_audit.json": "6ef178b713b9bba59788f9d420d1895b60c1710818a294cff7cdbe6b3b9f15b1",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json": "2ebf0559b174c793325384a84a293d7726f65dcc098962c4d5424d5c9e6f002b",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/decision.json": "0b255bb7752599713673b5bdd23b0960c078208c2472a817dd4586530567271b",
+    "experiments/modern2d_model_integration/native_preflight/retry_v4/role_plan.json": "d5b1d4c5d9f00c5182a398b980d3d27a80bacc8a734e6cce85805e5048ccc39c"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v4",
+      "category": "preflight",
+      "cost_event_id": "cost-TC-modern2d-qualification-ppgt_author_v2-s42-v4-full-missing",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "separate prospective authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/checkpoint_hash_acceptance.json",
+        "name": "checkpoint_hash_acceptance.json",
+        "sha256": "8ae59232513854f8f691c8fd16b67f48bd16c226d3bc8aacdf2c21734e126000"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/luna_states/checkpoint_verification.json",
+        "name": "luna_states_checkpoint_verification.json",
+        "sha256": "87b254c73fba3ce1b169a7f05b4081acd0cc4db541d787db5dd923d5578dff95"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/bootstrap_allocation.json",
+        "name": "outputs_bootstrap_allocation.json",
+        "sha256": "e987e7298af71047b8ea961e05126295765210f4530f9cbab39ba818007af351"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/allocation_ledger.json",
+        "name": "outputs_qualification_allocation_ledger.json",
+        "sha256": "4de30f2104308c7210805536a34ffcdf385ec03cc5f7697e2559fb7816ce5b73"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/resource_qualification.json",
+        "name": "outputs_qualification_esa_native_v3_scratch_resource_qualification.json",
+        "sha256": "1bc69c0a4a7755cd82f28bac1661dce1f128749145b0aee38f5473c84d368833"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/runtime_certificate.json",
+        "name": "outputs_qualification_esa_native_v3_scratch_runtime_certificate.json",
+        "sha256": "9450e737369aa67497dc9d94639d4559b47e95c04907b72f13a1127f65448330"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/runtime_provenance.json",
+        "name": "outputs_qualification_esa_native_v3_scratch_runtime_provenance.json",
+        "sha256": "186e33680f89fd02c3823e4fe89b4d5d2920b765b4f3b7e37cce63abf140bc54"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/esa_native_v3/scratch/worker_result.json",
+        "name": "outputs_qualification_esa_native_v3_scratch_worker_result.json",
+        "sha256": "d0c08c3f8bf67a8de4a36408967122aecf27a13602b4eb13d83963702b5a4076"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/execution_report.json",
+        "name": "outputs_qualification_execution_report.json",
+        "sha256": "f8b84ff84fc529cf58fcc44193b1dd9ef059bd75a5ddd70c25fc573249c7614a"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/resource_qualification.json",
+        "name": "outputs_qualification_ppgt_author_v2_scratch_resource_qualification.json",
+        "sha256": "68a58fcdee72247e10383c326a410dff91a5df058cecf4650426c2d0fc37c30a"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/runtime_certificate.json",
+        "name": "outputs_qualification_ppgt_author_v2_scratch_runtime_certificate.json",
+        "sha256": "d03bf7a0ce516080341066987b807627aa117591d8bbad7cc4cc6f2d79d80dc7"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/runtime_provenance.json",
+        "name": "outputs_qualification_ppgt_author_v2_scratch_runtime_provenance.json",
+        "sha256": "d4e74fb1f4528e9d277f20193abb11896cd881b281e1e30697da4ab1043b2949"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/ppgt_author_v2/scratch/worker_result.json",
+        "name": "outputs_qualification_ppgt_author_v2_scratch_worker_result.json",
+        "sha256": "3755e808aa0321e44b93c351f1ae8f0d25d3e3d2229ba7bceeba3f96a9d9a6b2"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/outputs/qualification/qualification_manifest.json",
+        "name": "outputs_qualification_qualification_manifest.json",
+        "sha256": "d2d752da084b3dfe5a2378aa1a5dda799fed0b960b86b39a5522ed25eb37d33f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/platform_observation.json",
+        "name": "platform_observation.json",
+        "sha256": "336e04d694023e7b792812f83b52aee654a7cd43533c0809a57e4526aff84b28"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/metadata/scratchinspection/luna_metadata/native_certificate_audit.json",
+        "name": "scratchinspection_luna_metadata_native_certificate_audit.json",
+        "sha256": "6ef178b713b9bba59788f9d420d1895b60c1710818a294cff7cdbe6b3b9f15b1"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_model_integration/native_preflight/retry_v4/ppgt_author_v2/rml/trajectory.json",
+        "experiments/modern2d_model_integration/native_preflight/retry_v4/authority.json",
+        "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/decision.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-18T05:40:00+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Pinned saved metadata only; no local checkpoint loading or execution."
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "measurement_missing",
+      "comparison_status": "context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "audit": "untouched",
+      "common_dev": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "consumed"
+    },
+    "scope": "QUALIFICATION_ONLY_NO_TRAIN",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-18T05:40:00+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    }
+  ],
+  "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+  "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+}

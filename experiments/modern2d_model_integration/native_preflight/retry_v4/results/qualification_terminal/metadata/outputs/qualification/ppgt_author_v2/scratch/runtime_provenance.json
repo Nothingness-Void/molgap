@@ -1,0 +1,80 @@
+{
+  "context": {
+    "experiment_id": "modern2d-native-qualification",
+    "logical_run_id": "modern2d-native-100k-s42-v4",
+    "arm_id": "ppgt_author_v2",
+    "arm_identity": "611e307e4d898a64c21cdb303fec9f21e419412dc7af06989c97a18786550028",
+    "spec_identity": "a207acd2e09b18f5f04bb310154a58e7799eb4c4f5948397289c2c469b2dbe23",
+    "family_name": "ppgt_small",
+    "family_version": "2",
+    "source_commit": "24419d42e49fe3aa1852674c2463bf58a77463a3",
+    "source_archive_sha256": "4d492817f005f0161205baeae08d27e2f9a34fe4a38ba30e4436acae951bcf87",
+    "package_identity": "16cc8f4a5410addea47dac547a063a635b9c79c3dc0b6e85c0b153a732e48144",
+    "training_recipe_sha256": "2975c12beca40db56c117f16243b361285d0a1f1b69cd638992332b1f58eec37",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-modern2d-native-100k-v4",
+    "platform_version": null
+  },
+  "recipe_identity": "c7bf225dd6a09fcc72a2ce8b45cd44362a1de9ab263b471aabc95e20b44abdbf",
+  "dataset_manifest_sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+  "initialization": {
+    "file_sha256": "f772ebc41d426c11757a01c38da2ca5eda7a79dbc80e3a0680b0623d7c1293d4",
+    "state_sha256": "dd0b414662721b61e2183cedfd929cd09ddc4b7b3a79164165f2935452ede18e",
+    "tensor_count": 370,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "37fc2e0ed70c98e944e6392853efaaec65184c0615f8f0ad48e4a656e890f2cd",
+  "tuning_identity": "57137fa2f77132f803e31437e29a9f48f4fa20be14c690fc551ffc5bb8ddd81d",
+  "accelerator": "Tesla T4",
+  "qualification_context": {
+    "run_context": {
+      "experiment_id": "modern2d-native-qualification",
+      "logical_run_id": "modern2d-native-100k-s42-v4",
+      "arm_id": "ppgt_author_v2",
+      "arm_identity": "611e307e4d898a64c21cdb303fec9f21e419412dc7af06989c97a18786550028",
+      "spec_identity": "a207acd2e09b18f5f04bb310154a58e7799eb4c4f5948397289c2c469b2dbe23",
+      "family_name": "ppgt_small",
+      "family_version": "2",
+      "source_commit": "24419d42e49fe3aa1852674c2463bf58a77463a3",
+      "source_archive_sha256": "4d492817f005f0161205baeae08d27e2f9a34fe4a38ba30e4436acae951bcf87",
+      "package_identity": "16cc8f4a5410addea47dac547a063a635b9c79c3dc0b6e85c0b153a732e48144",
+      "training_recipe_sha256": "2975c12beca40db56c117f16243b361285d0a1f1b69cd638992332b1f58eec37",
+      "platform": "kaggle",
+      "account": "kaseichou",
+      "run_reference": "kaseichou/molgap-modern2d-native-100k-v4",
+      "platform_version": null
+    },
+    "recipe_identity": "c7bf225dd6a09fcc72a2ce8b45cd44362a1de9ab263b471aabc95e20b44abdbf",
+    "authority_sha256": "973613feb8d9ee70b96ca6d2c7b8e2fd9b18a4eb36c6fcc31f680ae0ecf02a63",
+    "train_permit": {
+      "role": "train_100k",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "6ff650abbbe9c49cd8c38b48894a466aed561ba1901836112ea4f6e6eee5d229",
+      "role_history_sha256": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "development_permit": {
+      "role": "common_dev",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "30bbaac38bd37d966bf94ba0758cd97707f842d76912e69bb5a2ea5c8de77d7a",
+      "role_history_sha256": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "train_feature_binding_sha256": "53d95bce87ffb731664a3aed33160c2eedf3bf8553c011bd0b8af64947c48845",
+    "max_wall_seconds": 1800,
+    "allocated_accelerators": [
+      "NvidiaTeslaT4",
+      "NvidiaTeslaT4"
+    ],
+    "purpose": "numerical-resume-resources-only"
+  },
+  "qualification_context_identity": "3b9b1a32d0d90ac666278d98859f821f2075caf56488b959b047d1896ad9ac43",
+  "scope": "QUALIFICATION_ONLY"
+}

@@ -1,0 +1,62 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v4",
+      "category": "preflight",
+      "cost_event_id": "cost-TC-modern2d-qualification-ppgt_author_v2-s42-v4-full-missing",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    }
+  ],
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/acceptance.json",
+      "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-native-100k-s42-v4:ppgt_author_v2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+    }
+  ]
+}
