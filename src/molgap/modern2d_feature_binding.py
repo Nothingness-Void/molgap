@@ -23,7 +23,7 @@ def validate_feature_binding(binding, expected):
     return canonical_fingerprint(binding)
 
 
-def indexed_transform_identity(family):
+def indexed_transform_identity(family, *, feature_only=False):
     """Pin the actual versioned transform closure, not just a schema string."""
     from pathlib import Path
     from .experiment_catalog import FAMILIES
@@ -38,10 +38,33 @@ def indexed_transform_identity(family):
     root = Path(__file__).resolve().parents[2]
     files = {"src/" + contract.source_module.replace(".", "/") + ".py",
              "src/molgap/ogb_features.py", *contract.execution.source_files}
+    if feature_only:
+        # Model weights/head code remain bound by the Spec, independently of
+        # label-free topology derivation. Legacy bindings keep their old closure.
+        feature_module = "ppgt_author_features" if family[0] == "ppgt_small" else "esa_features"
+        files = {"src/molgap/modern2d_inputs.py", "src/molgap/ogb_features.py",
+                 "src/molgap/" + feature_module + ".py"}
+        if family[0] == "esa_small":
+            # Tokenization and padding/incidence masks still live with the
+            # native model. Keep that whole owner pinned until those helpers
+            # are separated; omitting it would silently miss feature changes.
+            files.add("src/molgap/esa_native.py")
     return canonical_fingerprint({name: normalized_source_sha256(root / name) for name in sorted(files)})
 
 
-def build_indexed_feature_binding(dataset, *, family, configuration):
+def transform_configuration(family, configuration):
+    """Only values consumed by topology derivation, not encoder/readout width."""
+    from dataclasses import asdict
+    from .experiment_execution import MODERN2D_FORMAL_MODEL_INTERFACES, MODERN2D_PREVIEW_INTERFACES
+    family = MODERN2D_FORMAL_MODEL_INTERFACES.get(tuple(family), tuple(family))
+    if family not in MODERN2D_PREVIEW_INTERFACES:
+        raise ValueError("Unreviewed indexed feature family/version")
+    values = dict(configuration) if type(configuration) is dict else asdict(configuration)
+    fields = ("rrwp_steps", "sym_norm", "spe_bases", "max_nodes", "max_edges") if family[0] == "ppgt_small" else ("max_nodes", "max_edges")
+    return {key: values[key] for key in fields}
+
+
+def build_indexed_feature_binding(dataset, *, family, configuration, feature_only=False):
     """Freeze on-the-fly derivation from an already verified indexed view.
 
     This records observed input/source/config identity; it does not authorize a
@@ -75,8 +98,8 @@ def build_indexed_feature_binding(dataset, *, family, configuration):
         "source_row_sha": manifest["source_index_sha256"],
         "source_topology_sha": canonical_fingerprint({"chunks": [c["topology_sha256"] for c in manifest["graph_chunks"]]}),
         "feature_schema_version": FAMILIES[family].feature_schema,
-        "transform_code_sha": indexed_transform_identity(family),
-        "transform_config_sha": canonical_fingerprint(asdict(config)),
+        "transform_code_sha": indexed_transform_identity(family, feature_only=feature_only),
+        "transform_config_sha": canonical_fingerprint(transform_configuration(family, config) if feature_only else asdict(config)),
         "derived_feature_sha": None,
         "role_history_sha": permit.role_history_sha256,
         "role": permit.role, "scope": permit.scope,

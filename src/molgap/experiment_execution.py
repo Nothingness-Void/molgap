@@ -149,7 +149,7 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
             raise ValueError("Preview and formal profiles are separate interfaces")
         interfaces = MODERN2D_FORMAL_INTERFACES if formal_training else MODERN2D_PREVIEW_INTERFACES
         expected = interfaces.get(tuple(family))
-        if cpu_synthetic_only or expected is None or model_factory != expected[0] or addons:
+        if cpu_synthetic_only or expected is None or model_factory != expected[0] or (addons and not formal_training):
             raise ValueError("Unreviewed Modern2D session integration preview")
         sources.update({"src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
                         "src/molgap/family_training_recipe.py", "src/molgap/family_training_outputs.py",
@@ -230,7 +230,7 @@ def validate_training_registry() -> None:
             contract = FAMILIES[family]
             factory, schema = (MODERN2D_FORMAL_INTERFACES if adapter.formal_training else MODERN2D_PREVIEW_INTERFACES)[family]
             if (adapter.cpu_synthetic_only or adapter.module != "molgap.family_training_runner"
-                    or adapter.addons or adapter.model_factory != factory
+                    or (adapter.addons and not adapter.formal_training) or adapter.model_factory != factory
                     or contract.source_module != factory.split(":")[0]
                     or contract.feature_schema != schema or contract.recipe != (
                         "modern2d_formal_training_v1" if adapter.formal_training else "modern2d_session_preview_v1")
@@ -241,6 +241,7 @@ def validate_training_registry() -> None:
                     or (adapter.formal_training and not adapter.target_identity_in_completion)
                     or _hook_source(factory) not in adapter.source_files):
                 raise ValueError("Unreviewed Modern2D integration preview registration")
+            _validate_registered_addons(family, adapter)
             continue
         if adapter.cpu_synthetic_only:
             contract = FAMILIES[family]
@@ -271,27 +272,31 @@ def validate_training_registry() -> None:
                 raise ValueError("Shared graph training requires its explicit feature/role/recipe contract")
         elif adapter.module == "molgap.graph_screen_training":
             raise ValueError("Shared graph training requires a reviewed model factory")
-        if len({(a.name, a.version) for a in adapter.addons}) != len(adapter.addons):
-            raise ValueError("Duplicate executable addon registration")
-        for addon in adapter.addons:
-            contract = ADDONS.get((addon.name, addon.version))
-            if contract is None or contract.family != family[0]:
-                raise ValueError("Executable addon differs from its declaration contract")
-            if contract.family_versions and family[1] not in contract.family_versions:
-                raise ValueError("Executable addon differs from its declared family version")
-            if type(addon.mode) is not str or not addon.mode:
-                raise ValueError("Executable addon requires an explicit owning mode")
-            if addon.policy_hook is not None and (adapter.module != "molgap.family_training_runner" or
-                    not addon.policy_hook.endswith(":policy")):
-                raise ValueError("Policy hooks require the reviewed family session")
-            if addon.policy_hook is not None:
-                _hook_source(addon.policy_hook)
-            if adapter.model_factory is not None or addon.apply_hook is not None:
-                if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
-                        or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):
-                    raise ValueError("Shared graph addon requires its reviewed model-delta hook")
-                if adapter.model_factory is None and adapter.module != "molgap.family_training_runner":
-                    raise ValueError("Slot addons require the accelerated family session")
+        _validate_registered_addons(family, adapter)
+
+
+def _validate_registered_addons(family, adapter):
+    if len({(a.name, a.version) for a in adapter.addons}) != len(adapter.addons):
+        raise ValueError("Duplicate executable addon registration")
+    for addon in adapter.addons:
+        contract = ADDONS.get((addon.name, addon.version))
+        if contract is None or contract.family != family[0]:
+            raise ValueError("Executable addon differs from its declaration contract")
+        if contract.family_versions and family[1] not in contract.family_versions:
+            raise ValueError("Executable addon differs from its declared family version")
+        if type(addon.mode) is not str or not addon.mode:
+            raise ValueError("Executable addon requires an explicit owning mode")
+        if addon.policy_hook is not None and (adapter.module != "molgap.family_training_runner" or
+                not addon.policy_hook.endswith(":policy")):
+            raise ValueError("Policy hooks require the reviewed family session")
+        if addon.policy_hook is not None:
+            _hook_source(addon.policy_hook)
+        if adapter.model_factory is not None or addon.apply_hook is not None:
+            if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
+                    or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):
+                raise ValueError("Shared graph addon requires its reviewed model-delta hook")
+            if adapter.model_factory is None and adapter.module != "molgap.family_training_runner":
+                raise ValueError("Slot addons require the accelerated family session")
 
 
 def build_addon_declaration(family, addon, *, repo_root, config=None, version="1") -> dict:

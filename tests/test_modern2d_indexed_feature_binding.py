@@ -27,6 +27,7 @@ from molgap.modern2d_feature_binding import (
     indexed_transform_identity,
     validate_feature_binding,
     validate_indexed_feature_binding,
+    transform_configuration,
 )
 from molgap.ppgt_author import PPGTAuthorConfig
 from molgap.pcqm_unified_roles import prepare_unified_roles
@@ -69,6 +70,27 @@ CASES = (
         id="esa-3",
     ),
 )
+
+
+@pytest.mark.parametrize("family,config", CASES)
+def test_feature_configuration_ignores_width_but_not_topology(family, config):
+    from dataclasses import replace
+    assert transform_configuration(family, config) == transform_configuration(family, replace(config, hidden=16))
+    assert transform_configuration(family, config) != transform_configuration(family, replace(config, max_nodes=9))
+
+
+def test_feature_only_identity_still_pins_native_esa_tokenization(monkeypatch):
+    from molgap import v4_runtime
+    seen = []
+    def source(path):
+        seen.append(path.as_posix())
+        return "a" * 64
+    monkeypatch.setattr(v4_runtime, "normalized_source_sha256", source)
+    indexed_transform_identity(("esa_small", "4"), feature_only=True)
+    assert any(path.endswith("/esa_native.py") for path in seen)
+    assert any(path.endswith("/esa_features.py") for path in seen)
+    with pytest.raises(ValueError, match="Unreviewed"):
+        transform_configuration(("unregistered", "1"), {})
 
 
 def _dataset(tmp_path, role="train_100k"):

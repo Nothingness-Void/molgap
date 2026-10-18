@@ -52,7 +52,7 @@ def load_family_model(recipe, initial_state):
     if recipe.addons:
         from .experiment_execution import TRAINING_ADAPTERS
         from .shared_model_adapter import apply_reviewed_addons
-        interface = (recipe.family, "3" if recipe.family == "neural_atom_k1" else "2")
+        interface = recipe.interface
         model = apply_reviewed_addons(TRAINING_ADAPTERS[interface],
             {"addons": list(recipe.addons)}, model)
         substrate = getattr(model, "_molgap_substrate", None)

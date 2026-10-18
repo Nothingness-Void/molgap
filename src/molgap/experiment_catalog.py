@@ -113,6 +113,13 @@ FAMILIES = MappingProxyType({
 
 
 ADDONS = MappingProxyType({
+    **{(prefix + "_readout_scale", "1"): AddonContract(family,
+        "slot-readout", "molgap.substrate_scale_addon",
+        tuple(AddonConfigField(key, value=value) for key, value in (
+            ("family", family), ("slot", "pre_readout"), ("name", "readout_scale"))),
+        (version,), execution_modes=((version, "composed"),),
+        apply_hook="molgap.substrate_scale_addon:apply_addon")
+       for family, prefix, version in (("ppgt_small", "ppgt", "3"), ("esa_small", "esa", "4"))},
     **{(prefix + "_" + suffix + "_scale", "1"): AddonContract(family,
         "slot-" + suffix, "molgap.substrate_scale_addon",
         tuple(AddonConfigField(key, value=value) for key, value in (

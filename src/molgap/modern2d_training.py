@@ -25,14 +25,47 @@ class Modern2DFormalTrainingProfile:
     horizon_steps: int = FORMAL_STEPS
 
     def __post_init__(self):
+        if self.configured:
+            if (self.phase not in {"train", "native-preflight"}
+                    or type(self.horizon_passes) is not int or self.horizon_passes < 1
+                    or type(self.horizon_steps) is not int or self.horizon_steps < 1):
+                raise ValueError("Configured training requires a positive explicit horizon")
+            return
         if (self.purpose != "formal-100k-common-dev" or self.phase not in {"train", "native-preflight"}
                 or type(self.horizon_passes) is not int or self.horizon_passes != 60
                 or type(self.horizon_steps) is not int or self.horizon_steps != FORMAL_STEPS):
             raise ValueError("Formal Modern2D profile fixes a sixty-pass 46860-step horizon")
 
+    @property
+    def configured(self):
+        return self.purpose == "configured-screen"
+
     def validate(self, recipe):
         synthetic = recipe.dataset.manifest.startswith("synthetic/")
         probe = self.phase == "native-preflight"
+        if self.configured:
+            if (recipe.interface not in INTERFACES or recipe.mode not in {"reference", "composed"} or recipe.seed != 42
+                    or recipe.batch_size != 128 or not recipe.drop_last
+                    or recipe.qualification is not None or recipe.input_sidecar is not None
+                    or recipe.k1_execution is not None or recipe.ema_decay is not None or recipe.clean_bn is not None
+                    or recipe.schedule.epoch_based or recipe.schedule.total_units != self.horizon_steps
+                    or recipe.schedule.reference_epochs != self.horizon_passes):
+                raise ValueError("Configured profile differs from the model recipe or explicit schedule")
+            if synthetic:
+                if recipe.train_rows not in (128, 256) or recipe.development_rows > 128 or recipe.optimizer_steps > 4:
+                    raise ValueError("Configured CPU fixtures retain bounded synthetic data and four updates")
+            elif (recipe.train_rows not in (100000, 500000)
+                    or self.horizon_steps != self.horizon_passes * (recipe.train_rows // recipe.batch_size)):
+                raise ValueError("Configured horizon differs from the selected training scale")
+            if probe:
+                if (recipe.optimizer_steps != 2 or recipe.dataset.development or recipe.development_rows
+                        or recipe.selection != "final-live" or recipe.checkpoint_every != 1):
+                    raise ValueError("Configured preflight requires two train-only updates")
+            elif (recipe.optimizer_steps != self.horizon_steps
+                    or recipe.selection not in {"best-development-live", "final-live"}
+                    or (not synthetic and recipe.dataset.development and recipe.development_rows != 50000)):
+                raise ValueError("Configured endpoint or selected development role differs")
+            return
         if (recipe.interface not in INTERFACES or recipe.mode != "reference" or recipe.seed != 42
                 or recipe.batch_size != 128 or not recipe.drop_last or recipe.ema_decay is not None
                 or recipe.clean_bn is not None or recipe.addons or recipe.input_sidecar is not None
@@ -120,6 +153,10 @@ class Modern2DFormalTrainingContext:
         if type(recipe.formal_training) is not Modern2DFormalTrainingProfile:
             raise TypeError("Explicit formal training profile required")
         recipe.formal_training.validate(recipe)
+        # Recipe composition is independently CPU-testable. It must not inherit
+        # the old campaign's authority through this native context.
+        if recipe.formal_training.configured:
+            raise ValueError("Configured screen native release is not implemented; CPU synthetic admission only")
         if (recipe.formal_training.phase != "train" or recipe.dataset.manifest.startswith("synthetic/")
                 or recipe.identity != self.recipe_identity
                 or recipe.interface != (self.run_context.family_name, self.run_context.family_version)):
@@ -167,6 +204,12 @@ class Modern2DFormalTrainingContext:
                 or gpu.get("allocated_devices") != 2 or gpu.get("wall_ceiling_seconds") != self.max_wall_seconds
                 or gpu.get("allocated_t4_hours_ceiling") != 9):
             raise ValueError("Formal authority does not cover the exact two-arm train100K/CommonDev allocation")
+        self._validate_input_binding(recipe, input_root)
+
+    def _validate_input_binding(self, recipe, input_root):
+        from .family_training_data import resolve_pinned_manifest
+        from .family_training_runner import normalized_file_sha
+        from .experiment_family_workflow import _json
         binding_path = resolve_pinned_manifest(Path(input_root).absolute(), recipe.dataset)
         if binding_path.stat().st_size > 1024**2 or normalized_file_sha(binding_path) != recipe.dataset.manifest_sha256:
             raise ValueError("Formal indexed binding changed or exceeds the metadata ceiling")

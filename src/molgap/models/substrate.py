@@ -18,6 +18,10 @@ class SlotName(str, Enum):
     PRE_READOUT = "pre_readout"
 
 
+READOUT_MODULES = {"neural_atom_k1": "head", "gptrans_t": "readout",
+                   "ppgt_small": "head", "esa_small": "head"}
+
+
 @dataclass(frozen=True)
 class SlotBinding:
     family: str
@@ -25,10 +29,12 @@ class SlotBinding:
     layer: int | None = None
 
     def __post_init__(self):
-        if self.family not in {"neural_atom_k1", "gptrans_t"}:
+        if self.family not in READOUT_MODULES:
             raise ValueError("Unsupported substrate family")
         if type(self.slot) is not SlotName:
             raise TypeError("Expected a typed SlotName")
+        if self.family in {"ppgt_small", "esa_small"} and self.slot is not SlotName.PRE_READOUT:
+            raise ValueError("This family exposes only the reviewed readout slot")
         if self.slot is SlotName.PRE_READOUT:
             if self.layer is not None:
                 raise ValueError("Readout binding has no layer")
@@ -122,7 +128,7 @@ class ModelSubstrate:
         import torch
         if not isinstance(model, torch.nn.Module):
             raise TypeError("Expected torch.nn.Module substrate")
-        if family not in {"neural_atom_k1", "gptrans_t"}:
+        if family not in READOUT_MODULES:
             raise ValueError("Unsupported substrate family")
         if hasattr(model, self.namespace) or hasattr(model, "_molgap_substrate"):
             raise ValueError("Model already has an addon owner or reserved namespace")
@@ -156,7 +162,7 @@ class ModelSubstrate:
         if type(binding) is not SlotBinding or binding.family != self.family:
             raise ValueError("Slot binding differs from substrate family")
         if binding.slot is SlotName.PRE_READOUT:
-            name = "head" if self.family == "neural_atom_k1" else "readout"
+            name = READOUT_MODULES[self.family]
             target = getattr(self.model, name, None)
         else:
             blocks = getattr(self.model, "local_blocks" if self.family == "neural_atom_k1" else "blocks", ())

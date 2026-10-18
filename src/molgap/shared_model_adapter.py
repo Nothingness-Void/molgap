@@ -144,11 +144,15 @@ def apply_reviewed_addons(adapter, arm: dict, model, *, addon_observer=None):
     return model
 
 
-def validate_family_addons(family, addons):
+def validate_family_addons(family, addons, *, interface=None):
     """Reuse static Spec/execution registrations for accelerated slot composition."""
     from .experiment_execution import TRAINING_ADAPTERS
     from .experiment_spec import ADDONS, _digest, validate_addon_config
-    interface = (family, "3" if family == "neural_atom_k1" else "2")
+    if interface is None:
+        from .experiment_execution import SESSION_INTERFACES
+        interface = SESSION_INTERFACES[family]
+    if interface[0] != family:
+        raise ValueError("Addon interface differs from its family")
     adapter = TRAINING_ADAPTERS[interface]
     names, groups = set(), set()
     for addon in addons:

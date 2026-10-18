@@ -5,6 +5,7 @@ building, train loop, role promotion, upload or real/native release lives here.
 Only generated acceptance fixtures can be opened in this implementation stage.
 """
 from bisect import bisect_right
+from collections import OrderedDict
 from dataclasses import dataclass
 import json
 from pathlib import Path
@@ -91,7 +92,7 @@ class AcceptedIndexedInputPermit:
 
 
 class IndexedRoleDataset:
-    """One retained packed chunk at a time, explicit offsets, immutable copies."""
+    """Bounded packed-shard handles, explicit offsets, immutable graph copies."""
     def __init__(self,root,permit,*,authority,role_history):
         if type(permit) not in (IndexedInputPermit, AcceptedIndexedInputPermit):
             raise TypeError("Reviewed indexed input permit required")
@@ -142,6 +143,10 @@ class IndexedRoleDataset:
             raise ValueError("Indexed logical content mismatch")
         self._loaded_index,self._loaded,self._maps=None,None,[]
         self._loaded_file_identity=None
+        # Integrity belongs to the immutable file, not the current sampler shard.
+        # mmap handles are bounded independently from the small verification map.
+        self._verified_files = {}
+        self._open_shards = OrderedDict()
         self._ends=[];decoded=[]
         for index,item in enumerate(m["graph_chunks"]):
             shard=self._load(index)
@@ -195,12 +200,19 @@ class IndexedRoleDataset:
             raise ValueError("CPU indexed chunk safety cap exceeded")
         identity=(info.st_dev,info.st_ino,info.st_size,info.st_mtime_ns,info.st_ctime_ns,item["sha256"])
         if self._loaded_index != index or self._loaded_file_identity != identity:
-            path=_pin(self.root,item)
+            if self._verified_files.get(index) != identity:
+                path=_pin(self.root,item)
+                self._open_shards.pop(index, None)
             from .packed_graph import PackedGraphDataset
-            loaded=PackedGraphDataset(path,mmap=True)
+            cached = self._open_shards.pop(index, None)
+            loaded = cached[1] if cached is not None and cached[0] == identity else PackedGraphDataset(path,mmap=True)
             after=path.stat()
             if (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns,item["sha256"]) != identity:
                 raise ValueError("Indexed shard changed while opening")
+            self._verified_files[index] = identity
+            self._open_shards[index] = (identity, loaded)
+            while len(self._open_shards) > 2:
+                self._open_shards.popitem(last=False)
             self._loaded,self._loaded_index=loaded,index
             self._loaded_file_identity=identity
         return self._loaded
@@ -216,7 +228,7 @@ class IndexedRoleDataset:
         graph = self._load(chunk).get(self._maps[chunk][local]).clone()
         if int(graph.source_idx.item()) != self.source_indices[index]:
             raise ValueError("Decoded row identity changed during indexed access")
-        # Clearing PyG's per-graph memoization keeps the one-chunk memory bound.
+        # Do not retain per-graph copies inside the bounded mmap handle cache.
         self._loaded._data_list = None
         graph.role_name = "CPU_SYNTHETIC_ONLY" if type(self.permit) is IndexedInputPermit else self.permit.role
         return graph
@@ -231,6 +243,8 @@ class IndexedRoleDataset:
     def __getstate__(self):
         state = self.__dict__.copy()
         state.update(_loaded=None, _loaded_index=None, _loaded_file_identity=None)
+        # A spawned worker establishes its own verified file lifetime.
+        state.update(_verified_files={}, _open_shards=OrderedDict())
         return state
 
 

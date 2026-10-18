@@ -71,7 +71,8 @@ class FamilyLoaders:
             if type(data.train) is IndexedRoleDataset:
                 from .modern2d_feature_binding import build_indexed_feature_binding
                 self.feature_bindings = {role: build_indexed_feature_binding(dataset,
-                    family=recipe.interface, configuration=recipe.model_config) for role, dataset in
+                    family=recipe.interface, configuration=recipe.model_config,
+                    feature_only=bool(recipe.formal_interface and recipe.formal_training.configured)) for role, dataset in
                     (("train", data.train), ("development", data.development)) if dataset is not None}
         self.sampler = PassBatchSampler(data.train_rows, recipe.batch_size, recipe.seed,
             algorithm=recipe.sampler, drop_last=recipe.drop_last)

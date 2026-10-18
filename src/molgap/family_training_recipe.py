@@ -21,8 +21,8 @@ ADAMW_EPSILON = 1e-8
 from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
 from .family_training_policy import mode_policy
 
-MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in
-    TRAINING_ADAPTERS[(family, version)].addons))))
+MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for key, adapter in
+    TRAINING_ADAPTERS.items() if key[0] == family for entry in adapter.addons))))
     for family, version in SESSION_INTERFACES.values()}
 
 
@@ -133,7 +133,9 @@ class FamilyRecipe:
             if (self.integration_preview or self.formal_interface) and type(self.dataset) is not DatasetSelection:
                 raise TypeError("Integration preview requires the typed dataset selection")
             bounded_fixture = self.cpu_synthetic_only or self.dataset.manifest.startswith("synthetic/")
-            if (type(self.model_config) not in (dict, config_type) or self.mode != "reference" or self.addons
+            configurable = self.formal_interface and getattr(self.formal_training, "configured", False)
+            if (type(self.model_config) not in (dict, config_type)
+                    or (not configurable and (self.mode != "reference" or self.addons))
                     or self.ema_decay is not None or self.clean_bn is not None or not self.drop_last
                     or (self.cpu_synthetic_only and not self.dataset.manifest.startswith("synthetic/"))
                     or (bounded_fixture and (self.train_rows > 256 or self.development_rows > 128 or self.optimizer_steps > 4))):
@@ -155,7 +157,7 @@ class FamilyRecipe:
             raise ValueError("Ordered slot addons require the explicit composed mode")
         if self.addons:
             from .shared_model_adapter import validate_family_addons
-            validate_family_addons(self.family, self.addons)
+            validate_family_addons(self.family, self.addons, interface=self.interface)
         if self.k1_execution is not None and (self.family != "neural_atom_k1" or
                 type(self.k1_execution) is not K1ExecutionConfig):
             raise ValueError("K1 execution options require the typed K1 family")
@@ -290,7 +292,10 @@ class FamilyRecipe:
             policy.update(name="modern2d-formal-session-v1", scope="FORMAL_100K_TRAINING",
                           cpu_layout=False, device="admitted_cuda_or_bounded_synthetic_cpu",
                           native_qualification="requires_exact_formal_runtime_certificate",
-                          feature_transform_source_sha256=indexed_transform_identity(self.interface))
+                          feature_transform_source_sha256=indexed_transform_identity(self.interface,
+                              feature_only=self.formal_training.configured))
+            if self.formal_training.configured:
+                policy["scope"] = "CONFIGURED_CPU_SYNTHETIC_ONLY"
         return policy
 
     def to_dict(self):
