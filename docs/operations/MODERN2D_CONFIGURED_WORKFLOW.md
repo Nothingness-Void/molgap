@@ -1,0 +1,86 @@
+# Configured PPGT / ESA workflow
+
+This extends the ordinary `molgap-scientific-experiment-v1` front door. It uses
+PPGT execution interface `ppgt_small/3` and ESA execution interface
+`esa_small/4`, the existing models, indexed role loader, FamilyRecipe, Session,
+source package, Kaggle journal and saved-output inspector. No replacement
+training loop, optimizer, sampler, recovery engine or platform client is added.
+
+## Scientific input
+
+Use the fields and invocation in [the quickstart](EXPERIMENT_QUICKSTART.md).
+For each Modern2D arm:
+
+- `model` selects one of the two execution interfaces above. Ordered catalog
+  addons are compiled normally; `ppgt_readout_scale/1` and
+  `esa_readout_scale/1` are the existing pre-readout examples.
+- `recipe_ref` and `data_ref` identify an existing frozen declaration with
+  accepted indexed train100K or train500K plus Common-Dev50K. The source recipe
+  supplies the model configuration, normalization, initialization and schedule.
+- `reference_ref` locates that declaration's pinned input and target metadata.
+  Its name is retained for input compatibility; it does **not** imply that the
+  model is an accepted scientific reference.
+- `training` permits `learning_rate`, `weight_decay` and `horizon_passes`.
+  The compiler derives optimizer steps from complete passes and BS128, retains
+  the schedule kind, and validates its constraints (the four-stage warmup
+  schedule requires more than four passes).
+- `purpose` is `context_only`. These initial model screens collect evidence;
+  they do not manufacture a matched comparison, superiority or Replay admission.
+
+One slot can contain one or two independent Modern2D arms, including two arms
+of the same family. A single arm needs an explicit reason for leaving the other
+allocated T4 idle. Each worker retains its independent state and assigned GPU.
+Mature fixed-data and Modern2D indexed-data families use separate workflows.
+
+The compiler generates the Spec, recipes, prospective inputs, feature bindings
+and acceptance plan. The human does not write those envelopes or compute their
+hashes. Feature identity binds topology/role/transform parameters separately
+from model/addon identity. Generated metadata stays compact; graph and
+checkpoint payloads stay outside Git.
+
+## Explicit resource and role binding
+
+New screens use `molgap-modern2d-configured-authority-v1` with purpose
+`CONFIGURED_SCREEN`. The declaration records the actual server run, ordered
+arm IDs/interfaces, seed42, BS128, accepted roles, per-arm `recipes` horizons
+(`horizon_passes` and `horizon_steps`), and the full two-T4 wall/GPU-hour ceiling.
+The `gpu` object names the account owner, `NvidiaTeslaT4`, two allocated devices,
+wall ceiling and the same allocated-hour ceiling. Both devices count, even for
+a single arm. A 600-second checkpoint reserve and the existing hard-stop guard
+apply within that ceiling. The configured wall range is 660–43200 seconds.
+
+Required positive flags are `user_authorized` and
+`scientific_training_authorized`; `owner` is `server`. The following remain
+false: `protected_role_access_authorized`, `extra_seed_authorized`,
+`automatic_successor_authorized`, and `full_training_authorized`.
+`scale_500k_authorized` is true only for an explicitly authorized train500K
+declaration. Neither a 100K MAE nor an early-stop heuristic decides this flag.
+`single_arm_reason` is required when there is one arm.
+
+Historical formal60-pass authorities and canceled attempts are not compatible
+with this format. New configuration support itself creates no compute authority.
+The existing workload adapter still owns any separately authorized publication,
+submission, uncertain-receipt reconciliation and selective retrieval.
+
+## Preparation, runtime and acceptance
+
+The usual platform `--experiment` command prepares locally without SDK calls.
+Preparation validates recipes, accepted-role metadata, frozen initial weights,
+source closure and the new acceptance plan before publication. Continuing a
+completed run keeps its original package and source across HEAD changes.
+
+The runtime extension reads the configured budget. It builds the existing
+formal context with an explicit configured flag, checks authority and both role
+permits before payload access, and validates decoded feature identities. Fresh
+all-arm native repeat/resume qualification remains mandatory. Passing CPU
+fixtures does not supply a native certificate.
+
+Session outputs retain selected/last weights, optimizer/RNG state, predictions,
+canonical trace and its context companion. Target identity uses the pinned
+manifest. The shared inspector verifies saved bytes; shared terminal/RML owners
+retain context-only/INCONCLUSIVE semantics. Missing costs remain missing.
+Portable recovery uses the existing package/receipt/resume-bundle owners.
+
+This implementation does not certify native throughput, model quality, a
+completed formal training run or Desktop migration. Those require evidence from
+their own authorized execution, not a successful declaration or CPU test.

@@ -12,6 +12,8 @@ from .research_memory.trace import file_digest
 
 
 PLAN_FORMAT = "molgap-modern2d-formal-reference-plan-v1"
+CONFIGURED_PLAN_FORMAT = "molgap-modern2d-configured-plan-v1"
+CONFIGURED_AUTHORITY_FORMAT = "molgap-modern2d-configured-authority-v1"
 WALL_CEILING_SECONDS = 16200
 CHECKPOINT_RESERVE_SECONDS = 600
 BUDGET_FORMAT = "molgap-modern2d-retry-budget-v1"
@@ -60,8 +62,53 @@ def validate_retry_budget(record):
 def is_formal_screen(spec):
     from .modern2d_training import INTERFACES
     arms = spec.to_dict()["arms"]
-    return (len(arms) == 2 and
-            {(a["family"]["name"], a["family"]["version"]) for a in arms} == set(INTERFACES))
+    return (1 <= len(arms) <= 2 and all(
+        (a["family"]["name"], a["family"]["version"]) in INTERFACES for a in arms))
+
+
+def validate_configured_authority(authority, declaration, recipes=None):
+    """Bind new runs explicitly; historical campaign permission is never inherited."""
+    from .modern2d_training import INTERFACES
+    arms, platform = declaration["arms"], declaration["platform"]
+    gpu = authority.get("gpu", {})
+    wall, budget = gpu.get("wall_ceiling_seconds"), authority.get("allocated_t4_hours_ceiling")
+    if (authority.get("format") != CONFIGURED_AUTHORITY_FORMAT or authority.get("owner") != "server"
+            or authority.get("user_authorized") is not True
+            or authority.get("scientific_training_authorized") is not True
+            or authority.get("purpose") != "CONFIGURED_SCREEN"
+            or authority.get("logical_run_id") != declaration["logical_run_id"]
+            or authority.get("arms") != [a["arm_id"] for a in arms]
+            or authority.get("interfaces") != [[a["family"]["name"], a["family"]["version"]] for a in arms]
+            or not 1 <= len(arms) <= 2
+            or any((a["family"]["name"], a["family"]["version"]) not in INTERFACES for a in arms)
+            or authority.get("seeds") != [42] or authority.get("physical_batch_size") != 128
+            or authority.get("roles") not in (["train_100k", "common_dev"], ["train_500k", "common_dev"])
+            or authority.get("scale_500k_authorized") is not (authority.get("roles") == ["train_500k", "common_dev"])
+            or any(authority.get(k) is not False for k in ("protected_role_access_authorized",
+                "extra_seed_authorized", "automatic_successor_authorized", "full_training_authorized"))
+            or platform["name"] != "kaggle" or platform["accelerator"] != "NvidiaTeslaT4"
+            or platform["device_count"] != 2 or gpu.get("allocated_devices") != 2
+            or gpu.get("accelerator") != "NvidiaTeslaT4"
+            or type(wall) is not int or not 660 <= wall <= 43200
+            or type(budget) not in (int, float) or not math.isfinite(budget) or budget <= 0
+            or gpu.get("allocated_t4_hours_ceiling") != budget or 2 * wall / 3600 > budget
+            or not isinstance(gpu.get("owner"), str) or not gpu["owner"]
+            or not isinstance(authority.get("run_reference"), str)
+            or not authority["run_reference"].startswith(gpu["owner"] + "/")
+            or (len(arms) == 1 and not authority.get("single_arm_reason"))):
+        raise ValueError("Configured authority does not cover the exact roles, arms and full allocation")
+    if recipes is not None:
+        expected = {name: {"horizon_passes": recipe.formal_training.horizon_passes,
+            "horizon_steps": recipe.formal_training.horizon_steps} for name, recipe in recipes.items()}
+        if authority.get("recipes") != expected:
+            raise ValueError("Configured authority recipe/horizon binding changed")
+        for recipe in recipes.values():
+            if (not recipe.formal_training.configured or recipe.formal_training.phase != "train"
+                    or recipe.dataset.manifest.startswith("synthetic/")
+                    or recipe.train_rows != (100000 if authority["roles"][0] == "train_100k" else 500000)
+                    or not recipe.dataset.development or recipe.development_rows != 50000):
+                raise ValueError("Configured recipe differs from authorized scale/development role")
+    return wall
 
 
 def plan_path(spec):
@@ -69,7 +116,7 @@ def plan_path(spec):
     parents = {str(Path(a["plan_spec_ref"]).parent.parent).replace("\\", "/")
                for a in spec.to_dict()["prospective"]["arms"]}
     if not is_formal_screen(spec) or len(parents) != 1:
-        raise ValueError("Formal screen requires one two-arm declaration owner")
+        raise ValueError("Modern2D screen requires one shared declaration owner")
     return parents.pop() + "/acceptance_plan.json"
 
 
@@ -86,15 +133,16 @@ def check_plan(spec, root, plan):
     """No payload/model IO and no accepted-reference or superiority claim."""
     from .family_training_runner import read_recipe, validate_screen_recipe
     from .modern2d_training import AUTHORITY_FORMAT, INTERFACES, FORMAL_STEPS, PROFILE
-    from .modern2d_feature_binding import indexed_transform_identity, validate_indexed_feature_binding
+    from .modern2d_feature_binding import indexed_transform_identity, validate_indexed_feature_binding, transform_configuration
     from .experiment_family_artifacts import artifact_adapter
     from .data.indexed_inputs import AcceptedIndexedInputPermit
     root = Path(root).absolute()
     declaration = spec.to_dict()
+    configured = type(plan) is dict and plan.get("format") == CONFIGURED_PLAN_FORMAT
     if (not is_formal_screen(spec) or type(plan) is not dict or
             set(plan) not in ({"format", "spec_identity", "authority", "inputs", "arms"},
                 {"format", "spec_identity", "authority", "inputs", "arms", "budget_reconciliation"}) or
-            plan["format"] != PLAN_FORMAT or plan["spec_identity"] != spec.identity):
+            plan["format"] not in {PLAN_FORMAT, CONFIGURED_PLAN_FORMAT} or plan["spec_identity"] != spec.identity):
         raise ValueError("Formal reference plan/Spec mismatch")
     authority = _json(_pinned(root, plan["authority"]))
     if "budget_reconciliation" in plan:
@@ -104,7 +152,13 @@ def check_plan(spec, root, plan):
     metadata = _json(_pinned(root, plan["inputs"]))
     arm_ids = [a["arm_id"] for a in declaration["arms"]]
     gpu = authority.get("gpu", {})
-    if (authority.get("format") != AUTHORITY_FORMAT or authority.get("owner") != "server" or
+    if configured:
+        if "budget_reconciliation" in plan:
+            raise ValueError("Configured runs cannot inherit historical retry budgets")
+        validate_configured_authority(authority, declaration)
+    elif (len(declaration["arms"]) != 2 or
+            [(a["family"]["name"], a["family"]["version"]) for a in declaration["arms"]] != list(INTERFACES) or
+            authority.get("format") != AUTHORITY_FORMAT or authority.get("owner") != "server" or
             authority.get("user_authorized") is not True or
             authority.get("purpose") != "FORMAL_100K_TRAINING" or
             authority.get("interfaces") != [list(item) for item in INTERFACES] or
@@ -134,8 +188,9 @@ def check_plan(spec, root, plan):
     if (binding.get("format") != "molgap-indexed-training-input-v1" or
             binding.get("scope") != "ACCEPTED_INDEXED_INPUT_V1"):
         raise ValueError("Formal release requires the accepted indexed binding")
-    permits = {}
-    for name, role in (("train", "train_100k"), ("development", "common_dev")):
+    permits, recipes = {}, {}
+    train_role = authority["roles"][0]
+    for name, role in (("train", train_role), ("development", "common_dev")):
         item = binding[name]
         permit = AcceptedIndexedInputPermit(**item["permit"])
         permit.verify(item["authority"], item["role_history"])
@@ -153,12 +208,15 @@ def check_plan(spec, root, plan):
             raise ValueError("Formal screen must retain the existing Session output contract")
         contract_path = _pinned(root, entry["contract"])
         record, recipe = read_recipe(contract_path)
+        recipes[arm["arm_id"]] = recipe
         validate_screen_recipe(spec, arm["arm_id"], record)
         if (recipe.execution_policy["name"] != PROFILE or
                 recipe.formal_training.phase != "train" or record["acceptance_requirements"] != entry["expected"] or
                 entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or
                 recipe.dataset.manifest_sha256 != file_digest(binding_path) or
-                recipe.learning_rate != .001 or recipe.weight_decay != 1e-5 or recipe.gradient_clip != 1 or
+                recipe.formal_training.configured != configured):
+            raise ValueError("Formal prospective recipe or input identity changed")
+        if not configured and (recipe.learning_rate != .001 or recipe.weight_decay != 1e-5 or recipe.gradient_clip != 1 or
                 recipe.schedule.kind != "four_stage_warmup_cosine_step" or
                 recipe.schedule.total_units != FORMAL_STEPS or recipe.schedule.warmup_units != 4 or
                 recipe.schedule.minimum_lr != 1e-6 or recipe.schedule.reference_epochs != 60 or
@@ -167,20 +225,32 @@ def check_plan(spec, root, plan):
         model = metadata["models"][arm["arm_id"]]
         if model["family"] != list(family) or model["model_config"] != record["model_config"]:
             raise ValueError("Formal model/config identity differs from input derivation")
-        for name, role in (("train", "train_100k"), ("development", "common_dev")):
+        if configured and (metadata.get("target_mean_eV") != recipe.target_mean_eV
+                or metadata.get("target_std_eV") != recipe.target_std_eV
+                or arm["data"]["feature_sha256"] != canonical_fingerprint(model["feature_binding_sha256"])):
+            raise ValueError("Configured normalization or feature identity differs from Spec")
+        for name, role in (("train", train_role), ("development", "common_dev")):
             feature = model["feature_bindings"][role]
             validate_indexed_feature_binding(feature, feature)
             if (feature["base_dataset_manifest_sha"] != permits[name].manifest_sha256 or
+                    feature["role"] != role or feature["scope"] != "ACCEPTED_INDEXED_INPUT_V1" or
                     feature["role_history_sha"] != permits[name].role_history_sha256 or
-                    feature["transform_code_sha"] != indexed_transform_identity(family) or
-                    feature["transform_config_sha"] != canonical_fingerprint(record["model_config"]) or
+                    feature["transform_code_sha"] != indexed_transform_identity(family, feature_only=configured) or
+                    feature["transform_config_sha"] != canonical_fingerprint(
+                        transform_configuration(family, record["model_config"]) if configured else record["model_config"]) or
                     canonical_fingerprint(feature) != model["feature_binding_sha256"][role]):
                 raise ValueError("Formal feature/source/role derivation changed")
+            if configured:
+                role_entry = next(r for r in arm["data"]["roles"] if r["role"] == name)
+                if role_entry["row_order_sha256"] != feature["source_row_sha"]:
+                    raise ValueError("Configured feature row order differs from Spec")
         target = _json(_pinned(root, entry["target_manifest"]))
         if (target.get("development_target_sha256") != entry["expected"]["target_sha256"] or
                 target.get("target_encoding") != "little-endian-float64-contiguous-raw-bytes" or
                 entry["expected"]["source_idx_sha256"] != model["feature_bindings"]["common_dev"]["source_row_sha"]):
             raise ValueError("Formal target encoding or row-order identity changed")
+    if configured:
+        validate_configured_authority(authority, declaration, recipes)
     return {"status": "ACCEPTANCE_INPUTS_AVAILABLE", "spec_identity": spec.identity,
         "reference_status": "NEW_REFERENCES_NOT_ACCEPTED", "scientific_acceptance": "NOT_EVALUATED",
         "comparison_scope": "CONTEXT_ONLY", "noReplay": True,
@@ -209,8 +279,10 @@ def build_formal_context(*, spec, job, source_root, staged_root, input_root, run
         authority_sha256=plan["authority"]["sha256"],
         train_permit=AcceptedIndexedInputPermit(**binding["train"]["permit"]),
         development_permit=AcceptedIndexedInputPermit(**binding["development"]["permit"]),
-        train_feature_binding_sha256=model["feature_binding_sha256"]["train_100k"],
-        development_feature_binding_sha256=model["feature_binding_sha256"]["common_dev"])
+        train_feature_binding_sha256=model["feature_binding_sha256"][authority["roles"][0]],
+        development_feature_binding_sha256=model["feature_binding_sha256"]["common_dev"],
+        **({"configured": True, "max_wall_seconds": authority["gpu"]["wall_ceiling_seconds"]}
+           if plan["format"] == CONFIGURED_PLAN_FORMAT else {}))
     return context, authority_path
 
 
@@ -218,8 +290,10 @@ def execution_extension(spec, source_root):
     from .experiment_execution import ExecutionExtension
     plan = _json(_artifact_path(Path(source_root).absolute(), plan_path(spec)))
     check_plan(spec, source_root, plan)
-    configuration = {"format": PLAN_FORMAT, "checkpoint_reserve_seconds": CHECKPOINT_RESERVE_SECONDS}
+    configuration = {"format": plan["format"], "checkpoint_reserve_seconds": CHECKPOINT_RESERVE_SECONDS}
     if "budget_reconciliation" in plan:
         configuration["prior_budget_wall_seconds"] = validate_retry_budget(
             _json(_pinned(source_root, plan["budget_reconciliation"])))
-    return ExecutionExtension(wall_ceiling_seconds=WALL_CEILING_SECONDS, configuration=configuration)
+    wall = (_json(_pinned(source_root, plan["authority"]))["gpu"]["wall_ceiling_seconds"]
+            if plan["format"] == CONFIGURED_PLAN_FORMAT else WALL_CEILING_SECONDS)
+    return ExecutionExtension(wall_ceiling_seconds=wall, configuration=configuration)

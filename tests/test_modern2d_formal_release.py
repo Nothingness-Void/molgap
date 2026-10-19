@@ -203,7 +203,7 @@ def test_formal_workflow_dispatches_explicit_budget_extension(monkeypatch, tmp_p
     (tmp_path / "formal").mkdir()
     (tmp_path / "formal" / "acceptance_plan.json").write_text("{}", encoding="utf-8")
     monkeypatch.setattr(release, "plan_path", lambda value: "formal/acceptance_plan.json")
-    monkeypatch.setattr(release, "_json", lambda path: {})
+    monkeypatch.setattr(release, "_json", lambda path: {"format": FORMAL_PLAN})
     monkeypatch.setattr(release, "check_plan", lambda *args, **kwargs: None)
     extension = release.execution_extension(spec=spec, source_root=tmp_path)
     assert extension.wall_ceiling_seconds == 16200

@@ -65,6 +65,12 @@ baseline or add seeds to fill an allocation.
 
 ## 3. Write one scientific input
 
+PPGT/3 and ESA/4 also use this front door through the
+[configured Modern2D contract](MODERN2D_CONFIGURED_WORKFLOW.md), including
+ordinary readout addons, explicit pass horizons and accepted indexed roles.
+Their initial screens are context-only; the K1/GPTrans matched-reference example
+below retains its own comparison checks.
+
 For shared K1/3 and GPTrans/2, one human JSON supplies the scientific question,
 supported parameter/addon delta, frozen recipe/data/reference inputs, seed 42,
 existing authority, platform metadata and local paths. It does not require a

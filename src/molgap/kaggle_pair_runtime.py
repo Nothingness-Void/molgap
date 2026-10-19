@@ -40,7 +40,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     diagnostic = extension.configuration
     explicit_budget = extension.wall_ceiling_seconds is not None
     cost_bounded = bool(diagnostic and diagnostic.get("format") in {
-        "molgap-modern2d-formal-reference-plan-v1", "molgap-family-workflow-trial-plan-v1"})
+        "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1", "molgap-family-workflow-trial-plan-v1"})
     hard_stop_reserve = 45 if diagnostic and diagnostic.get("format") == "molgap-family-workflow-trial-plan-v1" else 60
     if execution_comparison:
         from .k1_infrastructure_comparison import check_plan, comparison_base

@@ -510,9 +510,9 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict, tar
     from .training_reproducibility import assert_finite_state_dict
     root = Path(output_dir).absolute()
     _safe_local(root)
-    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES
+    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES, MODERN2D_FORMAL_INTERFACES
     if (context.family_name, context.family_version) in {
-            ("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN2D_PREVIEW_INTERFACES}:
+            ("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN2D_PREVIEW_INTERFACES, *MODERN2D_FORMAL_INTERFACES}:
         from .family_training_outputs import inspect_session_output
         return inspect_session_output(root, context=context, expected=expected, target_identity=target_identity)
     blockers, observed = [], {}
@@ -713,7 +713,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     if plan.get("format") == "molgap-family-workflow-trial-plan-v1":
         from .family_workflow_trial import check_plan
         return check_plan(spec, repo_root, plan)
-    if plan.get("format") == "molgap-modern2d-formal-reference-plan-v1":
+    if plan.get("format") in {"molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"}:
         from .modern2d_training_release import check_plan
         return check_plan(spec, repo_root, plan)
     if plan.get("format") == "molgap-k1-infrastructure-comparison-plan-v1":
@@ -1168,7 +1168,7 @@ class TargetIdentityBinding:
         if file_digest(path) != self.plan_sha256:
             raise ValueError("Target identity acceptance plan hash mismatch")
         plan = _json(path)
-        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
+        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
             raise ValueError("Target identity plan/Spec mismatch")
         entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
         if len(entries) != 1:
@@ -1176,7 +1176,7 @@ class TargetIdentityBinding:
         entry = entries[0]
         if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Target identity plan/frozen expectations mismatch")
-        pointer = (entry["target_manifest"] if plan["format"] in {"molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1"}
+        pointer = (entry["target_manifest"] if plan["format"] in {"molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"}
                    else entry["reference_artifacts"]["target_manifest"])
         if set(pointer) != {"path", "sha256"}:
             raise ValueError("Target identity requires a pinned manifest")

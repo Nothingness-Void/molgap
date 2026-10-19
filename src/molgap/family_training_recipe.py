@@ -295,7 +295,7 @@ class FamilyRecipe:
                           feature_transform_source_sha256=indexed_transform_identity(self.interface,
                               feature_only=self.formal_training.configured))
             if self.formal_training.configured:
-                policy["scope"] = "CONFIGURED_CPU_SYNTHETIC_ONLY"
+                policy["scope"] = "CONFIGURED_SCREEN"
         return policy
 
     def to_dict(self):

@@ -39,9 +39,14 @@ bindings keep their original full source/config closure.
 
 ## Remaining integration
 
-The ordinary scientific-input compiler still supports K1/3 and GPTrans/2 only.
-Configured Modern2D publication, resource authority and acceptance-plan wiring
-are unfinished and deliberately blocked, not silently mapped to the historical
+The limitations below describe the initial addon/loader batch. The later
+[configured workflow verification](configured_workflow_verification.md)
+records completion of the compiler, authority and inspection wiring through
+the existing owners; its CPU/native evidence distinction remains applicable.
+
+At the end of the initial batch, the scientific-input compiler supported K1/3
+and GPTrans/2 only. Configured Modern2D publication, resource authority and
+acceptance-plan wiring were unfinished and deliberately blocked, not mapped to the historical
 campaign adapter. Native qualification, GPU training, throughput, scientific
 comparison and desktop migration are not certified by CPU checks.
 
@@ -64,5 +69,6 @@ Warnings concerned CPU pin-memory, pkg_resources deprecation and JUnit
 record_property compatibility. The main agent authored all implementation and
 test changes; Luna only executed tests. No remote compute was used or released.
 
-The bounded addon/loader CPU implementation is verified. The full normal-entry
-Modern2D workflow remains **INCOMPLETE**, as described above.
+That batch verified the bounded addon/loader CPU implementation. It left the
+normal-entry Modern2D workflow incomplete; the linked follow-up owns its later
+integration and verification.

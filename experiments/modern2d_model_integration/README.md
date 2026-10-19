@@ -26,3 +26,8 @@ The [2026-10-17 integration attempt](integration_attempt_2026-10-17.md) adds
 versioned author-code PPGT/2, isolate-safe ESA/3, explicit accepted indexed input
 loading and safe selected-role export. The [API guide](../../docs/operations/MODERN2D_INPUT_INTEGRATION.md)
 owns invocation. CPU evidence does not publish real mirrors or release native training.
+
+The [configured workflow verification](configured_workflow_verification.md)
+records the later scientific-input, addon, budget and saved-artifact integration.
+The [workflow guide](../../docs/operations/MODERN2D_CONFIGURED_WORKFLOW.md)
+owns the reusable configuration interface.

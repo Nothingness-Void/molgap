@@ -56,5 +56,5 @@ def test_configured_recipe_cannot_reuse_historical_native_authority(native_metad
     original = native_metadata.recipe
     recipe = replace(original, formal_training=Modern2DFormalTrainingProfile("configured-screen"))
     context = replace(native_metadata.context, recipe_identity=recipe.identity)
-    with pytest.raises(ValueError, match="CPU synthetic admission only"):
+    with pytest.raises(ValueError, match="separately bound native context"):
         context.validate_recipe(recipe)

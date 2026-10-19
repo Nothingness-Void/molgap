@@ -333,7 +333,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             from .experiment_execution import MODERN2D_FORMAL_PROFILE
             if manifest["adapter"] != MODERN2D_FORMAL_PROFILE:
                 raise ValueError("Formal training requires its distinct output profile")
-            observed.update(execution_scope="FORMAL_100K_TRAINING",
+            observed.update(execution_scope="CONFIGURED_SCREEN" if recipe.formal_training.configured else "FORMAL_100K_TRAINING",
                 scientific_acceptance="NOT_EVALUATED", replay_readiness="NOT_EVALUATED")
         if recipe.integration_preview:
             from .experiment_execution import MODERN2D_PREVIEW_PROFILE

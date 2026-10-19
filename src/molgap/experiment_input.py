@@ -142,11 +142,13 @@ def _bound_source_commit(run, spec, root):
 def _compile_scientific_input(path, root, value):
     """Compile declarations, not permission, reference acceptance or trainer code.
 
-    The existing recipe fixes data, sampler, budget, selection and runtime. Only
-    catalog addons and typed optimizer parameters are editable in this version.
+    The existing recipe fixes data, sampler, selection and runtime. Catalog
+    addons and optimizer parameters are editable; Modern2D additionally binds
+    an explicit pass horizon to its independent authority.
     Derived JSON is explicitly separate from committed executable source.
     """
     from copy import deepcopy
+    from .modern2d_training import INTERFACES as MODERN_INTERFACES, Modern2DFormalTrainingProfile
     from dataclasses import replace
     import hashlib
     import math
@@ -214,13 +216,17 @@ def _compile_scientific_input(path, root, value):
             or authority.get("seeds") != [42]):
         raise ValueError("Existing authority does not cover exactly these arms, seed and positive ceiling")
     compiled, data_specs = [], set()
+    modern_inputs = {}
+    modern = all((a["model"]["family"], a["model"]["version"]) in MODERN_INTERFACES for a in value["arms"])
+    if not modern and any((a["model"]["family"], a["model"]["version"]) in MODERN_INTERFACES for a in value["arms"]):
+        raise ValueError("Modern2D indexed inputs require a separate workflow from mature fixed inputs")
     for item in value["arms"]:
         _object(item, "arm_id model recipe_ref data_ref initial_state_ref training reference_ref purpose", "scientific arm")
         _identifier(item["arm_id"], "arm_id")
         _object(item["model"], "family version addons", "model")
         family = (item["model"]["family"], item["model"]["version"])
-        if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
-            raise ValueError("Scientific compiler supports reviewed shared K1/3 and GPTrans/2 only")
+        if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN_INTERFACES}:
+            raise ValueError("Scientific compiler requires a reviewed K1/3, GPTrans/2, PPGT/3 or ESA/4 interface")
         record, baseline = read_recipe(local(item["recipe_ref"]))
         if baseline.interface != family or baseline.seed != 42 or not baseline.dataset.development:
             raise ValueError("Frozen screen recipe does not match model, seed or development contract")
@@ -241,8 +247,8 @@ def _compile_scientific_input(path, root, value):
         if set(roles) != {"train", "development"} or any(
                 record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - {"learning_rate", "weight_decay"}:
-            raise ValueError("Unsupported training parameter; only learning_rate and weight_decay are editable")
+        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes"} if modern else {"learning_rate", "weight_decay"}):
+            raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
         addons = []
@@ -254,7 +260,17 @@ def _compile_scientific_input(path, root, value):
         arm.update(arm_id=item["arm_id"], scientific_role="candidate", addons=addons,
                    addon_semantics="ordered" if addons else "baseline")
         mode = training_adapter(arm).mode(arm)
-        recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **item["training"])
+        edits = dict(item["training"])
+        if modern:
+            passes = edits.pop("horizon_passes", baseline.formal_training.horizon_passes)
+            if type(passes) is not int or passes < 1:
+                raise ValueError("Modern2D horizon_passes must be a positive integer")
+            steps = passes * (baseline.train_rows // baseline.batch_size)
+            edits.update(optimizer_steps=steps,
+                schedule=replace(baseline.schedule, total_units=steps, reference_epochs=passes),
+                formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
+                    horizon_passes=passes, horizon_steps=steps))
+        recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **edits)
         bindings = family_arm_bindings(recipe)
         arm["base"] = bindings["base"]
         arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
@@ -284,6 +300,39 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Existing retained reference arm is missing; no baseline is trained")
         if reference["contract"] != pin(item["recipe_ref"]):
             raise ValueError("Retained reference is not bound to the frozen baseline recipe")
+        if modern:
+            # A retained declaration supplies data provenance, not an accepted
+            # scientific reference. Keep initial screens explicitly context-only.
+            if item["purpose"] != "context_only":
+                raise ValueError("Modern2D initial screens require context_only; no matched reference is inferred")
+            from .modern2d_training_release import PLAN_FORMAT, CONFIGURED_PLAN_FORMAT
+            if reference_plan.get("format") not in {PLAN_FORMAT, CONFIGURED_PLAN_FORMAT}:
+                raise ValueError("Modern2D requires an existing pinned indexed input plan")
+            metadata = retained(reference_plan["inputs"])
+            input_ref = (Path(reference_plan["inputs"]["path"]).parent / metadata["training_input"]["path"]).as_posix()
+            input_pin = pin(input_ref)
+            if (input_pin["sha256"] != recipe.dataset.manifest_sha256
+                    or input_pin["sha256"] != metadata["training_input"]["sha256"]):
+                raise ValueError("Modern2D accepted binding differs from selected recipe")
+            target = retained(reference["target_manifest"])
+            if (target["development_source_idx_sha256"] != requirements["source_idx_sha256"]
+                    or target["development_target_sha256"] != requirements["target_sha256"]):
+                raise ValueError("Modern2D targets differ from retained declaration")
+            source_model = deepcopy(metadata["models"][item["reference_ref"]["arm_id"]])
+            if source_model["family"] != list(family) or source_model["model_config"] != record["model_config"]:
+                raise ValueError("Modern2D source feature config differs from retained recipe")
+            from .modern2d_feature_binding import indexed_transform_identity, transform_configuration, validate_indexed_feature_binding
+            for role, feature in source_model["feature_bindings"].items():
+                if canonical_fingerprint(feature) != source_model["feature_binding_sha256"][role]:
+                    raise ValueError("Modern2D source feature binding changed")
+                validate_indexed_feature_binding(feature, feature)
+                feature["transform_code_sha"] = indexed_transform_identity(family, feature_only=True)
+                feature["transform_config_sha"] = canonical_fingerprint(transform_configuration(family, recipe.model_config))
+                source_model["feature_binding_sha256"][role] = canonical_fingerprint(feature)
+            arm["data"]["feature_sha256"] = canonical_fingerprint(source_model["feature_binding_sha256"])
+            modern_inputs[item["arm_id"]] = (metadata, input_ref, source_model, recipe)
+            compiled.append((item, arm, new_record, reference, None, None, None, [], str(initial.absolute()), source["evidence"]))
+            continue
         bundle = validate_reference_bundle(retained(reference["reference_bundle"]))
         context = retained(reference["comparison_prelaunch"])
         for pointer in reference["reference_artifacts"].values():
@@ -346,14 +395,14 @@ def _compile_scientific_input(path, root, value):
         recipe_pin = derive(prefix + "/" + arm_id + "/recipe.json", recipe)
         arm["training"]["recipe"] = {"name": FAMILIES[(arm["family"]["name"], arm["family"]["version"])].recipe,
                                      "version": "1", "sha256": recipe_pin["sha256"]}
-        prelaunch = assess_comparison_prelaunch(candidate_id=arm_id,
+        prelaunch = None if modern else assess_comparison_prelaunch(candidate_id=arm_id,
             candidate_plan={"comparison_identity": identity, "source_config_status": "frozen", "source_commit_or_archive": commit},
             reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose=item["purpose"],
             intervention_group_id=question.changed_mechanism, declared_intervention_fields=changed,
             **{k: context[k] for k in ("role_applicability_plan", "trace_plan", "runtime_qualification_plan")})
-        if not prelaunch["prelaunch_ready"]:
+        if not modern and not prelaunch["prelaunch_ready"]:
             raise ValueError("Scientific change is not a comparable declared intervention")
-        comparison_pin = derive(prefix + "/" + arm_id + "/comparison_prelaunch.json", prelaunch)
+        comparison_pin = None if modern else derive(prefix + "/" + arm_id + "/comparison_prelaunch.json", prelaunch)
         tid = "T-" + value["logical_run_id"] + "-" + arm_id
         proposal = build_execution_proposal(question=question, arm=arm, trajectory_id=tid, source_commit=commit,
             run=value["logical_run_id"], version="v1", contract_ref=recipe_pin["path"],
@@ -365,18 +414,42 @@ def _compile_scientific_input(path, root, value):
             "plan_spec_sha256": proposal_pin["sha256"],
             "output": f"experiments/{value['experiment_id']}/runs/{value['logical_run_id']}/prospective/{arm_id}"})
         arms.append(arm)
-        acceptance.append({"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
+        entry = {"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
             "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
             "comparison_prelaunch": comparison_pin, "reference_bundle": reference["reference_bundle"],
-            "reference_artifacts": reference["reference_artifacts"]})
+            "reference_artifacts": reference["reference_artifacts"]} if not modern else {
+                "arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
+                "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
+                "target_manifest": reference["target_manifest"]}
+        acceptance.append(entry)
         jobs.append({"arm_id": arm_id, "device": device, "recipe": recipe_pin["path"], "initial_state": initial})
     if any(c[-1] != compiled[0][-1] for c in compiled):
         raise ValueError("Scientific arms must share the existing V5 evidence policy")
     spec = ExperimentSpec({"schema_version": SCHEMA_VERSION_V2, "experiment_id": value["experiment_id"],
         "logical_run_id": value["logical_run_id"], "arms": arms, "platform": platform["platform"],
         "prospective": {"arms": prospective}, "evidence": evidence, "terminal_protocol": TERMINAL_PROTOCOL})
-    acceptance_pin = derive(prefix + "/acceptance_plan.json", {"format": "molgap-family-acceptance-plan-v1",
-        "spec_identity": spec.identity, "arms": acceptance})
+    acceptance_value = {"format": "molgap-family-acceptance-plan-v1", "spec_identity": spec.identity, "arms": acceptance}
+    if modern:
+        from .modern2d_training_release import CONFIGURED_PLAN_FORMAT, validate_configured_authority
+        validate_configured_authority(authority, spec.to_dict(), {name: item[3] for name, item in modern_inputs.items()})
+        if (authority["run_reference"] != platform["kaggle"]["kernel"]
+                or authority["gpu"]["owner"] != platform["kaggle"]["account"]):
+            raise ValueError("Configured platform differs from human authority")
+        if len({item[1] for item in modern_inputs.values()}) != 1:
+            raise ValueError("Modern2D arms must share one accepted indexed input binding")
+        metadata, input_ref, _, _ = next(iter(modern_inputs.values()))
+        metadata = {key: deepcopy(metadata[key]) for key in (
+            "format", "scientific_training_authorized", "target_mean_eV", "target_std_eV")}
+        binding = derive(prefix + "/training_input.json", _read(local(input_ref)))
+        # Keep the accepted binding byte identity; JSON reformatting cannot
+        # silently substitute a different DatasetSelection.
+        generated[binding["path"]] = local(input_ref).read_bytes()
+        metadata["training_input"] = {"path": "training_input.json", "sha256": hashlib.sha256(generated[binding["path"]]).hexdigest()}
+        metadata["models"] = {name: item[2] for name, item in modern_inputs.items()}
+        metadata["authority"] = pin(value["authority_ref"])
+        metadata_pin = derive(prefix + "/training_inputs.json", metadata)
+        acceptance_value.update(format=CONFIGURED_PLAN_FORMAT, authority=pin(value["authority_ref"]), inputs=metadata_pin)
+    acceptance_pin = derive(prefix + "/acceptance_plan.json", acceptance_value)
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",
         "source_records": sorted(records - data_specs), "generated_records": {n: hashlib.sha256(b).hexdigest() for n, b in generated.items()},

@@ -66,8 +66,8 @@ def execution_extension(spec, source_root):
     if is_trial(spec):
         return trial_extension(spec, source_root)
     arms = spec.to_dict()["arms"]
-    if (len(arms) == 2 and {(a["family"]["name"], a["family"]["version"]) for a in arms}
-            == {("ppgt_small", "3"), ("esa_small", "4")}):
+    from .modern2d_training_release import is_formal_screen
+    if is_formal_screen(spec):
         from .modern2d_training_release import execution_extension as formal_extension
         return formal_extension(spec, source_root)
     from .gptrans_infrastructure_comparison import is_comparison, comparison_base

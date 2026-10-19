@@ -103,6 +103,7 @@ class Modern2DFormalTrainingContext:
     development_feature_binding_sha256: str
     max_wall_seconds: int = 16200
     allocated_accelerators: tuple[str, ...] = ("NvidiaTeslaT4", "NvidiaTeslaT4")
+    configured: bool = False
 
     def __post_init__(self):
         from .experiment_family_workflow import RunContext, _digest
@@ -114,13 +115,14 @@ class Modern2DFormalTrainingContext:
             _digest(getattr(self, name), name)
         if (type(self.train_permit) is not AcceptedIndexedInputPermit
                 or type(self.development_permit) is not AcceptedIndexedInputPermit
-                or self.train_permit.role != "train_100k" or self.development_permit.role != "common_dev"
+                or self.train_permit.role not in (("train_100k", "train_500k") if self.configured else ("train_100k",)) or self.development_permit.role != "common_dev"
                 or self.train_permit.version_identity != self.development_permit.version_identity
                 or self.train_permit.acceptance_sha256 != self.development_permit.acceptance_sha256):
             raise ValueError("ROLE_BLOCKED: formal training requires independently bound train100K/CommonDev permits")
         if ((self.run_context.family_name, self.run_context.family_version) not in INTERFACES
                 or self.run_context.platform != "kaggle" or type(self.max_wall_seconds) is not int
-                or not 1 <= self.max_wall_seconds <= 16200
+                or type(self.configured) is not bool
+                or not 1 <= self.max_wall_seconds <= (43200 if self.configured else 16200)
                 or type(self.allocated_accelerators) is not tuple
                 or self.allocated_accelerators != ("NvidiaTeslaT4", "NvidiaTeslaT4")):
             raise ValueError("Formal allocation is exactly T4x2 within 4.5h/aggregate9 T4-hours")
@@ -131,6 +133,8 @@ class Modern2DFormalTrainingContext:
 
     def to_dict(self):
         values = asdict(self)
+        if not self.configured:
+            values.pop("configured")
         values["allocated_accelerators"] = list(self.allocated_accelerators)
         return values
 
@@ -153,10 +157,8 @@ class Modern2DFormalTrainingContext:
         if type(recipe.formal_training) is not Modern2DFormalTrainingProfile:
             raise TypeError("Explicit formal training profile required")
         recipe.formal_training.validate(recipe)
-        # Recipe composition is independently CPU-testable. It must not inherit
-        # the old campaign's authority through this native context.
-        if recipe.formal_training.configured:
-            raise ValueError("Configured screen native release is not implemented; CPU synthetic admission only")
+        if recipe.formal_training.configured != self.configured:
+            raise ValueError("Configured screen requires its separately bound native context")
         if (recipe.formal_training.phase != "train" or recipe.dataset.manifest.startswith("synthetic/")
                 or recipe.identity != self.recipe_identity
                 or recipe.interface != (self.run_context.family_name, self.run_context.family_version)):
@@ -181,6 +183,19 @@ class Modern2DFormalTrainingContext:
         declaration = spec.to_dict()
         arms, platform = declaration["arms"], declaration["platform"]
         gpu = authority.get("gpu", {})
+        if self.configured:
+            from .modern2d_training_release import validate_configured_authority
+            validate_configured_authority(authority, declaration)
+            horizon = {"horizon_passes": recipe.formal_training.horizon_passes,
+                       "horizon_steps": recipe.formal_training.horizon_steps}
+            if (authority.get("recipes", {}).get(context.arm_id) != horizon
+                    or authority["run_reference"] != context.run_reference
+                    or gpu["owner"] != context.account or gpu["wall_ceiling_seconds"] != self.max_wall_seconds
+                    or authority["roles"][0] != self.train_permit.role
+                    or recipe.train_rows != (100000 if self.train_permit.role == "train_100k" else 500000)):
+                raise ValueError("Configured runtime differs from frozen authority")
+            self._validate_input_binding(recipe, input_root)
+            return
         if (authority.get("format") != AUTHORITY_FORMAT or authority.get("owner") != "server"
                 or authority.get("user_authorized") is not True or authority.get("purpose") != "FORMAL_100K_TRAINING"
                 or authority.get("logical_run_id") != context.logical_run_id
@@ -228,7 +243,7 @@ class Modern2DFormalTrainingContext:
     def validate_loaded_data(self, recipe, data, *, training_only):
         from .data.indexed_inputs import IndexedRoleDataset
         from .modern2d_feature_binding import build_indexed_feature_binding
-        if data.synthetic or not data.indexed or data.train_rows != 100000:
+        if data.synthetic or not data.indexed or data.train_rows != (recipe.train_rows if self.configured else 100000):
             raise ValueError("Formal native admission requires actual accepted indexed100K")
         roles = [("train", self.train_permit, self.train_feature_binding_sha256)]
         if not training_only:
@@ -237,7 +252,8 @@ class Modern2DFormalTrainingContext:
             dataset = getattr(data, role)
             if type(dataset) is not IndexedRoleDataset or dataset.permit != permit:
                 raise ValueError("Formal decoded dataset differs from its frozen accepted role")
-            binding = build_indexed_feature_binding(dataset, family=recipe.interface, configuration=recipe.model_config)
+            binding = build_indexed_feature_binding(dataset, family=recipe.interface, configuration=recipe.model_config,
+                                                    **({"feature_only": True} if self.configured else {}))
             if canonical_fingerprint(binding) != digest:
                 raise ValueError("Formal feature/source/config/history binding differs")
 
