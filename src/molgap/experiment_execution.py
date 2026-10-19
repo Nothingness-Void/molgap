@@ -66,6 +66,10 @@ class TrainingAdapter:
             if any(entry.apply_hook is not None for entry in entries):
                 if not all(entry.apply_hook is not None for entry in entries):
                     raise ValueError("Slot composition cannot mix frozen mode dispatch")
+                if len(entries) == 1 and entries[0].policy_hook is not None:
+                    return entries[0].mode
+                if any(entry.policy_hook is not None for entry in entries):
+                    raise ValueError("Policy-backed slot requires its single reviewed mode")
                 return "composed"
         if self.model_factory is not None:
             modes = [self.addon(a["name"], a["version"]).mode for a in addons]
@@ -284,8 +288,9 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
         if any(value is not None for value in (seed, initialization_sha256, execution_torch_version)):
             raise ValueError("Shared recipe pins seed/initialization/runtime in configuration")
         names = addon if isinstance(addon, tuple) else (() if addon is None else (addon,))
+        slot_hooks = bool(names) and all(adapter.addon(name, addon_version).apply_hook is not None for name in names)
         if configuration is None or tuple(a["name"] for a in configuration.addons) != (
-                names if mode == "composed" else ()):
+                names if slot_hooks else ()):
             raise ValueError("Recipe ordered slot addons differ from the selected declarations")
         if mode == "composed" and any(adapter.addon(name, addon_version).apply_hook is None for name in names):
             raise ValueError("Slot composition requires reviewed model-delta hooks")

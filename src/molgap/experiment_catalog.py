@@ -50,6 +50,18 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    ("k1_post_layernorm", "1"): AddonContract(
+        "neural_atom_k1", "k1-local-normalization", "molgap.k1_post_layernorm",
+        family_versions=("3",), execution_modes=(("3", "post_layernorm"),),
+        policy_hook="molgap.k1_post_layernorm:policy",
+        apply_hook="molgap.k1_post_layernorm:apply_addon",
+    ),
+    ("gptrans_bond_local_resistance", "1"): AddonContract(
+        "gptrans_t", "local-bond-resistance", "molgap.gptrans_resistance",
+        family_versions=("2",), execution_modes=(("2", "degree_bond_local_resistance"),),
+        policy_hook="molgap.gptrans_resistance:policy",
+        apply_hook="molgap.gptrans_resistance:apply_addon",
+    ),
     **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",

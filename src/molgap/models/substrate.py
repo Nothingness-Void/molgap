@@ -163,6 +163,10 @@ class ModelSubstrate:
             if binding.layer > len(blocks):
                 raise ValueError("Slot layer exceeds substrate depth")
             block = blocks[binding.layer - 1]
+            if self.family == "gptrans_t" and hasattr(block, "core"):
+                from ..gptrans_bond_local import BondLocalBlock
+                if isinstance(block, BondLocalBlock):
+                    block = block.core
             target = getattr(block, "conv" if self.family == "neural_atom_k1" else "attention", None)
         import torch
         if not isinstance(target, torch.nn.Module):

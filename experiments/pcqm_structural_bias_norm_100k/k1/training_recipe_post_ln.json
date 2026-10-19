@@ -1,0 +1,87 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "neural_atom_k1",
+  "mode": "post_layernorm",
+  "seed": 42,
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "dataset": {
+    "manifest": "pcqm_fixed_100k_v1/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "development": true
+  },
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "optimizer_steps": 31240,
+  "learning_rate": 0.0004,
+  "weight_decay": 1e-05,
+  "schedule": {
+    "kind": "cosine_epoch",
+    "total_units": 40,
+    "minimum_lr": 1e-06,
+    "warmup_units": 0,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-live",
+  "sampler": "python-epoch-shuffle",
+  "checkpoint_every": 128,
+  "target_mean_eV": 5.3383002281188965,
+  "target_std_eV": 1.275090217590332,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.11.0",
+  "addons": [
+    {
+      "name": "k1_post_layernorm",
+      "version": "1",
+      "config": {},
+      "source_sha256": "5df77954f75e4335c01a94da7cdca7588c184ebe4310a6ea8aa9972aacbfdeec"
+    }
+  ],
+  "resume_chunks": true,
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "neural_atom_k1",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "native-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.11.0"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "completed_passes": 40,
+    "next_batch": 0,
+    "development_rows": 50000,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+    "precision": "fp32"
+  },
+  "train_role_identity": "3ab52b0597245128d166f49d159243ebc74f972e229aa7d4075e86efcea2f399",
+  "development_role_identity": "9665620c5704e481f8d534122873d95bc55b944445a12ce57acc3f61a31d4dfc",
+  "logging": {
+    "mode": "epoch",
+    "interval": null
+  },
+  "profiling": {
+    "warmup_steps": 120,
+    "active_steps": 16,
+    "record_shapes": false,
+    "profile_memory": false,
+    "with_stack": false,
+    "row_limit": 50,
+    "module_paths": [
+      "local_blocks.0",
+      "local_blocks.8"
+    ]
+  }
+}

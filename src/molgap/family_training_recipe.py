@@ -124,11 +124,22 @@ class FamilyRecipe:
             raise ValueError("Unknown executable family/addon mode")
         if type(self.resume_chunks) is not bool:
             raise ValueError("Resume chunk selection must be an exact boolean")
-        if type(self.addons) is not tuple or (self.mode == "composed") != bool(self.addons):
-            raise ValueError("Ordered slot addons require the explicit composed mode")
+        entries = TRAINING_ADAPTERS[(self.family, "3" if self.family == "neural_atom_k1" else "2")].addons
+        policy_slot_mode = any(entry.mode == self.mode and entry.apply_hook is not None
+                               and entry.policy_hook is not None for entry in entries)
+        if type(self.addons) is not tuple or (self.mode == "composed" or policy_slot_mode) != bool(self.addons):
+            raise ValueError("Ordered slot addons require composed or their registered policy-backed mode")
         if self.addons:
             from .shared_model_adapter import validate_family_addons
             validate_family_addons(self.family, self.addons)
+            if self.mode == "composed" and any(entry.policy_hook is not None
+                    and (entry.name, entry.version) in {(a["name"], a["version"]) for a in self.addons}
+                    for entry in entries):
+                raise ValueError("Policy-backed slot cannot lose its registered construction policy")
+            if policy_slot_mode and (len(self.addons) != 1 or not any(
+                    entry.mode == self.mode and entry.name == self.addons[0]["name"]
+                    and entry.version == self.addons[0]["version"] for entry in entries)):
+                raise ValueError("Policy-backed slot must match its single registered mode")
         if self.k1_execution is not None and (self.family != "neural_atom_k1" or
                 type(self.k1_execution) is not K1ExecutionConfig):
             raise ValueError("K1 execution options require the typed K1 family")

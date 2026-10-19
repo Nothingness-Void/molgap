@@ -242,7 +242,7 @@ def _compile_scientific_input(path, root, value):
                 or previous["initialization"] != {"kind": "frozen_state", "seed": 42,
                                                    "state_sha256": baseline.initialization_sha256}
                 or training_adapter(previous).mode(previous) != baseline.mode
-                or (baseline.mode == "composed" and list(baseline.addons) != previous["addons"])):
+                or (baseline.addons and list(baseline.addons) != previous["addons"])):
             raise ValueError("Frozen data declaration, initialization and reference recipe differ")
         roles = {r["role"]: r for r in previous["data"]["roles"]}
         if set(roles) != {"train", "development"} or any(
@@ -261,7 +261,9 @@ def _compile_scientific_input(path, root, value):
         arm.update(arm_id=item["arm_id"], scientific_role="candidate", addons=addons,
                    addon_semantics="ordered" if addons else "baseline")
         mode = training_adapter(arm).mode(arm)
-        recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **item["training"])
+        slot_addons = bool(addons) and all(training_adapter(arm).addon(a["name"], a["version"]).apply_hook
+                                          is not None for a in addons)
+        recipe = replace(baseline, mode=mode, addons=tuple(addons) if slot_addons else (), **item["training"])
         bindings = family_arm_bindings(recipe)
         arm["base"] = bindings["base"]
         arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})

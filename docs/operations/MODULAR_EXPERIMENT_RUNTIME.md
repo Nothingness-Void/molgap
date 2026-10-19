@@ -54,6 +54,17 @@ wrapper factories must explicitly seal nested substrates. A sealed substrate
 rejects attachment changes. Reconstruct attachments before loading
 the tensor state. Retained scientific modes keep their frozen compatibility owner.
 
+A shared-family addon may also register one explicit `execution_mode` with both
+`policy_hook` and `apply_hook`. The policy selects a reviewed base constructor
+and objective identity; the apply hook runs **after frozen base initialization**
+and before optimizer construction. Declare the exact single addon in
+`FamilyRecipe.addons`; it cannot be mixed into generic `composed` mode or with
+another slot until that composition is separately supported. Reuse
+`FamilyKernel` for this ordering, not the generic graph factory's
+addon-before-initialization path. This supports structural surgery without
+another training loop. Checkpoint resume reconstructs the same addon before
+loading the complete candidate state.
+
 ## 2. Calibrate and retain Clean EMA
 
 Reuse the existing single update loop and EMA owner. Ordinary normalized Gap
