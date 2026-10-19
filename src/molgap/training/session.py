@@ -140,7 +140,19 @@ def validate_session_resume(recipe, state):
         raise ValueError("Resume lost acknowledged optimizer moments")
     # SSMA can legitimately skip its conditional residual on an edgeless batch.
     # Other registered modes update every parameter; do not permit lazy reset.
-    if recipe.mode != "ssma" and set(initialized) != set(optimizer["param_groups"][0].get("params", [])):
+    parameter_ids = optimizer["param_groups"][0].get("params", [])
+    required_ids = set(parameter_ids)
+    if recipe.mode == "ssma":
+        # The registered SSMA hook appends its module after the backbone. Its
+        # two fixed affine buffers are not optimizer parameters. Only this tail
+        # may stay uninitialized on edgeless batches; backbone moments are required.
+        conditional = [name for name in state["model"]
+            if name.startswith("k1_joint_aggregation.")
+            and name not in {"k1_joint_aggregation.affine_weight", "k1_joint_aggregation.affine_bias"}]
+        if len(conditional) > len(parameter_ids):
+            raise ValueError("Resume conditional optimizer schema differs")
+        required_ids = set(parameter_ids[:-len(conditional)] if conditional else parameter_ids)
+    if not required_ids <= set(initialized):
         raise ValueError("Resume is missing required optimizer moments")
     if any(not isinstance(value, torch.Tensor) for value in state["model"].values()):
         raise ValueError("Invalid resume model tensors")

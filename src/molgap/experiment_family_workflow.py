@@ -613,7 +613,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict, tar
                 cursor = state.get("cursor")
                 if type(cursor) is not dict or set(cursor) != {"epoch", "next_batch", "sampler_order_sha256"}:
                     raise ValueError("Missing acknowledged sampler cursor")
-                if type(cursor["epoch"]) is not int or cursor["epoch"] != progress["epochs"] or type(cursor["next_batch"]) is not int or cursor["next_batch"] < 0:
+                if type(cursor["epoch"]) is not int or cursor["epoch"] != progress["epochs"] or type(cursor["next_batch"]) is not int or cursor["next_batch"] != 0:
                     raise ValueError("Resume cursor/epoch mismatch")
                 _digest(cursor["sampler_order_sha256"], "resume.sampler_order_sha256")
                 _positive(state.get("optimizer_step"), "resume.optimizer_step")

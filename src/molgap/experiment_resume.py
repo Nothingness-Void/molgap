@@ -565,6 +565,9 @@ def _validate_manifest(root: Path, manifest: dict) -> dict[str, Any]:
     all_bundle_paths = {pointers[role].as_posix().casefold() for role in pointers if pointers[role] is not None}
     all_restore = {manifest["artifacts"][role]["restore_path"].casefold()
                    for role in pointers if pointers[role] is not None}
+    primary_count = sum(value is not None for value in pointers.values())
+    if len(all_bundle_paths) != primary_count or len(all_restore) != primary_count:
+        raise ValueError("Resume primary artifact paths alias each other")
     sidecars: dict[str, list[Path]] = {}
     for group in ("runtime", "provenance", "context", "cost_segments"):
         entries = manifest[group]
@@ -639,12 +642,18 @@ def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = 
     if context_value is not None:
         for sidecar in checked["sidecars"]["context"]:
             payload = _strict_json(sidecar)
-            if "context" in payload and isinstance(payload["context"], dict):
+            if "context" in payload:
                 _same_context(context_value, payload["context"])
             elif set(payload) == set(context_value):
                 _same_context(context_value, payload)
+            else:
+                raise ValueError("Resume context sidecar lacks a complete identity")
         for sidecar in checked["sidecars"]["cost_segments"]:
             payload = _strict_json(sidecar)
+            if "context" in payload:
+                _same_context(context_value, payload["context"])
+            elif "spec_identity" not in payload:
+                raise ValueError("Resume prior cost segment lacks an identity")
             if ("spec_identity" in payload
                     and payload["spec_identity"] != context_value["spec_identity"]):
                 raise ValueError("Resume prior cost segment/Spec identity mismatch")

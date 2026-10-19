@@ -361,6 +361,8 @@ class FamilyTrainingState:
         validate_training_state(state, live, raw_available=self.raw_ema is not None,
                                 calibration_policy=calibration_policy)
         clean = state["clean"]
+        if clean is not None and calibration_policy is None:
+            raise ValueError("Loading Clean EMA requires an explicit calibration policy")
         rng = capture_rng_state()
         previous_live = _copy_state(live)
         previous_raw = _copy_state(self._raw_state()) if self.raw_ema is not None else None
