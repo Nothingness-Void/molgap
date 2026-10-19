@@ -49,6 +49,8 @@ Final repository metadata verification reported 125 trajectories, 109 evidence,
 250 costs, 313 roles, 37 traces and zero READY packages, with no validation
 errors. `check --frozen` confirmed generated RML is current; `git diff --check`
 passed. This is not a terminal replay-readiness or native runtime acceptance.
+Imported platform JSON receipts preserve exact original CRLF bytes; the local
+Git attributes recognize CR-at-EOL instead of rewriting hash-bound evidence.
 
 ## Platform Compatibility
 

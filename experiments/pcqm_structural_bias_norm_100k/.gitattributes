@@ -1,0 +1,2 @@
+# Preserve exact platform receipt bytes, including Windows CRLF.
+**/submission/*.json -text whitespace=cr-at-eol
