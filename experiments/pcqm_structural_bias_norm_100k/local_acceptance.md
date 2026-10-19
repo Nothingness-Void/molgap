@@ -126,3 +126,11 @@ continuing the same journal. No source POST was repeated and no extra notebook
 was launched to bypass that uncertainty. Both submissions subsequently bound
 actual physical version 1. See [status](STATUS.md), not this dated local report,
 for scheduler observations and native-startup limitations.
+
+Post-commit `check --frozen --portable` did not pass in this isolated worktree:
+historical V5 records claim locally retained payloads not mounted here, including
+old operator-profile/topology outputs and archived checkpoints. Ordinary
+`validate` and `check --frozen` passed. No inherited artifact catalog was hydrated,
+historical evidence rewritten or full-library portable acceptance claimed.
+This storage-availability limitation is separate from the two new submissions'
+verified source/input release and their pending native qualification.
