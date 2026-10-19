@@ -39,3 +39,6 @@ event evt-f2ea90a52ea116492de95cdc to A and was PAUSED. A claimed the same event
 idempotently for retrieval/inspection. No new chat, cron, retry or continuation.
 Canonical terminal RML is blocked by the missing no-reference partial-training
 trace representation; raw traces are preserved rather than omitted or invented.
+The [independent audit](results/luna_saved_evidence_check.md) passed14 saved-evidence
+checks, including both native tensor proofs. Partial checkpoint/prediction deep
+acceptance remains pending; no complete endpoint acceptance is substituted.
