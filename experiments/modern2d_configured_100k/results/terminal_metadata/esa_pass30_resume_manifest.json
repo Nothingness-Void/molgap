@@ -1,0 +1,258 @@
+{
+  "arm": {
+    "family": {
+      "name": "esa_small",
+      "version": "4"
+    },
+    "id": "esa_native_v3",
+    "identity": "f42ae5aadd84a797300206b014c166d1ca3cbb692403c56c527c3709af1843c5",
+    "recipe_sha256": "9c557ca28aa3dbb152be8efee454ec9bceb73ef5f4d647d8074a5ff649dcc134"
+  },
+  "artifacts": {
+    "checkpoint": {
+      "path": "files/last_checkpoint.pt",
+      "required": true,
+      "restore_path": "last_checkpoint.pt",
+      "sha256": "f01450e3cc09722ff308ba4e2073667895caae69ec4192bf86b3f259b61c0c8e"
+    },
+    "predictions": {
+      "path": "files/development_predictions.pt",
+      "required": false,
+      "restore_path": "development_predictions.pt",
+      "sha256": "ee83190d3e405ade295b811ac08b0bc00f5337b7c82f7850e57494d5e916ac1c"
+    },
+    "selected_model": {
+      "path": "files/selected_model.pt",
+      "required": false,
+      "restore_path": "selected_model.pt",
+      "sha256": "276a8a6e2b5b1818c68660595ee6b09f0fe44ef8b1cb70c5fcfef9fb31557174"
+    },
+    "trace": {
+      "path": "files/canonical_trace.json",
+      "required": true,
+      "restore_path": "canonical_trace.json",
+      "sha256": "980af5e6fbc32544fa57880137243fe51c4f1b0cf76237325dac61992cfeb34f"
+    },
+    "trajectory": {
+      "path": "files/trajectory.json",
+      "required": true,
+      "restore_path": "trajectory.json",
+      "sha256": "f7a0a6cf3d82f5b49691810750512623a57c9bf2dab1c40141476c52d6af0b7a"
+    }
+  },
+  "context": [
+    {
+      "path": "files/canonical_trace.json.context.json",
+      "required": true,
+      "restore_path": "canonical_trace.json.context.json",
+      "sha256": "fdcc12af0fcc0e35ef2b3930d6960508176bb856a04cdb810571b2a6f31af2ed"
+    }
+  ],
+  "cost_segments": [
+    {
+      "path": "files/allocation_ledger.json",
+      "required": true,
+      "restore_path": "allocation_ledger.json",
+      "sha256": "1b1d54b3f09b0e39791901e0d6ce80eaf4ba35d0f01f202b2d180cbec447998f"
+    },
+    {
+      "path": "files/invocation_cost_state.json",
+      "required": true,
+      "restore_path": "invocation_cost_state.json",
+      "sha256": "12b16341641deec530d78097e2c4297dedd10f319895e6f9cda71499e7665881"
+    },
+    {
+      "path": "files/preflight_costs.json",
+      "required": true,
+      "restore_path": "preflight_costs.json",
+      "sha256": "23a028594c417bb4b59e4b3b182f579eb448f2045a0586f1a266149684291b32"
+    }
+  ],
+  "cursor": {
+    "best_development_mae_eV": 0.22706197202205658,
+    "next_batch": 0,
+    "optimizer_state_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129
+    ],
+    "optimizer_step": 23430,
+    "pass_index": 30,
+    "pending_absolute": [],
+    "pending_rows": 0,
+    "recipe_identity": "37aea6e3ab77ffd51defa638438a129265ed3b9b69323f436582f833824c793b",
+    "sample_presentations": 2999040,
+    "selected_step": 23430,
+    "status": "running"
+  },
+  "format": "molgap-resume-bundle-v1",
+  "provenance": [
+    {
+      "path": "files/runtime_provenance.json",
+      "required": true,
+      "restore_path": "runtime_provenance.json",
+      "sha256": "2c10765e69b425178481a4cdd2336acfbd3a072ffbb2b58c8e57aae9ed06aa91"
+    },
+    {
+      "path": "files/training_contract.json",
+      "required": true,
+      "restore_path": "training_contract.json",
+      "sha256": "9c557ca28aa3dbb152be8efee454ec9bceb73ef5f4d647d8074a5ff649dcc134"
+    }
+  ],
+  "run": {
+    "action_id": "A001",
+    "attempt_id": "esa_native_v3-v1",
+    "logical_run_id": "modern2d-configured-100k-s42-v2",
+    "run_id": "modern2d-configured-100k-s42-v2:esa_native_v3:downstream"
+  },
+  "runtime": [
+    {
+      "path": "files/runtime_certificate.json",
+      "required": true,
+      "restore_path": "runtime_certificate.json",
+      "sha256": "76e0015ceef834a6789987d426d89e676c6dde37cab9c8db16b57cca05d823c2"
+    }
+  ],
+  "source": {
+    "archive_sha256": "c119ba6ff1713612b10e46609148df12bd425be4338a3542dbfabb23eb7d4c4e",
+    "commit": "ce3ac5a8b93c2e6d86f1ad067c6480a2cdbcd43a",
+    "package_identity": "9bc80bbc329c8d7c00079a0af024b6e25d653917fe16b65a9694c6eb39751659"
+  },
+  "spec": {
+    "identity": "3acf709a443754cf2fdaab6acbfc44c294ac4b5c079837ef6d62d4c6d308a178"
+  },
+  "status": "incomplete",
+  "trajectory": {
+    "id": "T-modern2d-configured-100k-s42-v2-esa_native_v3",
+    "sha256": "f7a0a6cf3d82f5b49691810750512623a57c9bf2dab1c40141476c52d6af0b7a",
+    "source_path": null
+  }
+}

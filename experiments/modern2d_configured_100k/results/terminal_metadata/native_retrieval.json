@@ -1,0 +1,64 @@
+{
+  "reports": [
+    {
+      "arm_id": "ppgt_author_v2",
+      "kernel": "kaseichou/molgap-modern2d-configured-100k-v1",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "repeat-a.pt",
+          "sha256": "e08d5190d17f12d3419dd5e6ecf1deaaab22f08cdfdbc35065ac52aa65e16c5e",
+          "state": "RETAINED"
+        },
+        {
+          "path": "repeat-b.pt",
+          "sha256": "0b9e06ab707ebacf82dc172faefb24e2af7b3f76113ee5aa601ce35793cb48e5",
+          "state": "RETAINED"
+        },
+        {
+          "path": "resumed.pt",
+          "sha256": "a6d01fd567b5227c90c6e60f139440083b518e6b88480cea06c0337f9d547a74",
+          "state": "RETAINED"
+        },
+        {
+          "path": "resumed-first.pt",
+          "sha256": "a8e48f2dc3a33f12822080dcfca73b9ee704c2d40a79bcef2be9a8e263e246f7",
+          "state": "RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    },
+    {
+      "arm_id": "esa_native_v3",
+      "kernel": "kaseichou/molgap-modern2d-configured-100k-v1",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "repeat-a.pt",
+          "sha256": "08b44c5f8a64ef56a2a2c136fbc2f08cb0eb64273b4319eb63906bda377da6ba",
+          "state": "RETAINED"
+        },
+        {
+          "path": "repeat-b.pt",
+          "sha256": "69961ba6fe7cba954b4f558388082089ab3a8c9f10b859be1590fce3b5278f61",
+          "state": "RETAINED"
+        },
+        {
+          "path": "resumed.pt",
+          "sha256": "8e46c7970b99270facb2a62f3abb3effe5903386e70e5359feb993379b15a441",
+          "state": "RETAINED"
+        },
+        {
+          "path": "resumed-first.pt",
+          "sha256": "dcca6946fac300e41ca5df961afc5cd048159df4a856b0b7d0f08ee3dca8130a",
+          "state": "RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    }
+  ]
+}

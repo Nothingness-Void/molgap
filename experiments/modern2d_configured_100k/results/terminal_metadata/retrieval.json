@@ -1,0 +1,105 @@
+{
+  "kernel": "kaseichou/molgap-modern2d-configured-100k-v1",
+  "version": 1,
+  "files": [
+    {
+      "path": "bootstrap_allocation.json",
+      "sha256": "6202b7e3066ddb117023530764687e1a41b3c41e82992c0fcf12cd565efb1ebf"
+    },
+    {
+      "path": "environment_qualification.json",
+      "sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f"
+    },
+    {
+      "path": "experiment/allocation_ledger.json",
+      "sha256": "2d3e2bbbe4111434d7a8b189fcc07a961dc1d0565dcc0375a447936534db812b"
+    },
+    {
+      "path": "experiment/esa_native_v3/allocation_ledger.json",
+      "sha256": "2d3e2bbbe4111434d7a8b189fcc07a961dc1d0565dcc0375a447936534db812b"
+    },
+    {
+      "path": "experiment/esa_native_v3/canonical_trace.json",
+      "sha256": "fe5b20977f3f546c7a972c80203c0fb6d3bce1a77568dbb07ba6f7e6cba6107a"
+    },
+    {
+      "path": "experiment/esa_native_v3/canonical_trace.json.context.json",
+      "sha256": "fdcc12af0fcc0e35ef2b3930d6960508176bb856a04cdb810571b2a6f31af2ed"
+    },
+    {
+      "path": "experiment/esa_native_v3/invocation_cost_state.json",
+      "sha256": "12b16341641deec530d78097e2c4297dedd10f319895e6f9cda71499e7665881"
+    },
+    {
+      "path": "experiment/esa_native_v3/preflight_costs.json",
+      "sha256": "23a028594c417bb4b59e4b3b182f579eb448f2045a0586f1a266149684291b32"
+    },
+    {
+      "path": "experiment/esa_native_v3/runtime_certificate.json",
+      "sha256": "76e0015ceef834a6789987d426d89e676c6dde37cab9c8db16b57cca05d823c2"
+    },
+    {
+      "path": "experiment/esa_native_v3/runtime_provenance.json",
+      "sha256": "2c10765e69b425178481a4cdd2336acfbd3a072ffbb2b58c8e57aae9ed06aa91"
+    },
+    {
+      "path": "experiment/esa_native_v3/training_contract.json",
+      "sha256": "9c557ca28aa3dbb152be8efee454ec9bceb73ef5f4d647d8074a5ff649dcc134"
+    },
+    {
+      "path": "experiment/esa_native_v3/training_progress.json",
+      "sha256": "c5959bda859e1f04a2a36890822d8e2e638750b9c435d8170f42b1dac4c90ef0"
+    },
+    {
+      "path": "experiment/execution_report.json",
+      "sha256": "641675478d38243b1d2e7cb92160919c724080c479e4d8d8df29c847214fc1d4"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "8813d83b11fe7ed87401fbf9ba6a23cc1c5259c69a51ecff067f79b61ac55900"
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "641675478d38243b1d2e7cb92160919c724080c479e4d8d8df29c847214fc1d4"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/allocation_ledger.json",
+      "sha256": "2d3e2bbbe4111434d7a8b189fcc07a961dc1d0565dcc0375a447936534db812b"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/canonical_trace.json",
+      "sha256": "e5b1f8b21d620088c3ecd62597e7bff5ec48358191986753c19a3e1cb4b3176f"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/canonical_trace.json.context.json",
+      "sha256": "3c62c3fa8a8a5afd3f93dc01a185cd0cbcdab51813b64853d4cef13b91b351b2"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/invocation_cost_state.json",
+      "sha256": "9ed9e28ed638e941d7a96e47f9391a2ffa97c3df27b70678f82581dbce277f55"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/preflight_costs.json",
+      "sha256": "c4621284e913ce3c01981cd7ca4e967394dafd0505fc473985345a1e746fb122"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/runtime_certificate.json",
+      "sha256": "2dd55309f44e9b90ab92367e00d2e747658c675c9afae4836bec7464ee8b7e9e"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/runtime_provenance.json",
+      "sha256": "5562ce779ac35fc39463d1050be61f918bbbab74c84a15954a6fb05ff48c5152"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/training_contract.json",
+      "sha256": "6c9b27dff22f35b9a3696c2fbe797f4f7401b58631652ad28f9eadd92d3f62b7"
+    },
+    {
+      "path": "experiment/ppgt_author_v2/training_progress.json",
+      "sha256": "e4deb30d082ab60cb1679fe8d535278d3a6252a5d46dd84eeb3a19012518285f"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

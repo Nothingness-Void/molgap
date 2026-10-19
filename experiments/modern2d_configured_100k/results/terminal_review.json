@@ -1,0 +1,81 @@
+{
+  "format": "molgap-partial-run-review-v1",
+  "kernel": "kaseichou/molgap-modern2d-configured-100k-v1",
+  "kernel_id": 139575819,
+  "version": 1,
+  "logical_run_id": "modern2d-configured-100k-s42-v2",
+  "attempt_id": "v2",
+  "monitor_event_id": "evt-f2ea90a52ea116492de95cdc",
+  "execution_status": "ERROR",
+  "orchestration_exit_reason": "STOP_FOR_COST",
+  "scientific_status": "INCONCLUSIVE",
+  "comparison_status": "CONTEXT_ONLY",
+  "completed_endpoint_acceptance": false,
+  "replay_ready": false,
+  "canonical_rml_finalization": "BLOCKED",
+  "rml_blockers": [
+    "No frozen accepted reference_id for standalone initial family training traces.",
+    "Existing standalone self-anchor exception is scoped to complete execution_diagnostic, not stopped training.",
+    "No completed output_manifest exists; partial state evidence cannot impersonate completed Session acceptance.",
+    "Raw full-pass trace time/LR/checkpoint axes are null; original bytes retained without inferred values."
+  ],
+  "arms": [
+    {
+      "arm_id": "ppgt_author_v2",
+      "preflight_returncode": 0,
+      "training_returncode": -9,
+      "reported_status": "paused",
+      "completed_passes": 1,
+      "next_batch": 93,
+      "optimizer_steps": 874,
+      "sample_presentations": 111872,
+      "best_development_mae_eV": 0.8889995813369751,
+      "selected_pass": 1,
+      "training_invocation_seconds": 15431.980266393,
+      "updates_per_second": 0.0566356348901867
+    },
+    {
+      "arm_id": "esa_native_v3",
+      "preflight_returncode": 0,
+      "training_returncode": -15,
+      "reported_status": "paused",
+      "completed_passes": 37,
+      "next_batch": 258,
+      "optimizer_steps": 29155,
+      "sample_presentations": 3731840,
+      "best_development_mae_eV": 0.21514646708965302,
+      "selected_pass": 36,
+      "training_invocation_seconds": 15423.679289230999,
+      "updates_per_second": 1.890275300288199
+    }
+  ],
+  "full_allocation": {
+    "wall_seconds": 15611.252946686,
+    "allocated_device_seconds": 31222.505893372,
+    "allocated_t4_hours": 8.672918303714445,
+    "full_per_job_billing": null,
+    "queue_seconds": null,
+    "provisioning_before_python_seconds": null,
+    "overlap": "Bootstrap summary and per-arm ledgers overlap the same allocation; not summed."
+  },
+  "role_observations": {
+    "train_100k": "Actual native training and normalization observed",
+    "common_dev": "Actual development evaluation and selection observed",
+    "protected_roles": "No access demonstrated by retained recipe/code/provenance; no protected payload fetched in this review"
+  },
+  "retrieval": {
+    "metadata_files": 24,
+    "partial_files": 10,
+    "partial_total_bytes": 235320750,
+    "native_proof_files": 8,
+    "partial_root_hashes": "Observed exact-version transport bytes, no fabricated producer manifest",
+    "root": "E:/MolGap/artifacts/runs/modern2d-configured-100k-s42-v2/v2/inspection"
+  },
+  "host_model_execution": false,
+  "host_training": false,
+  "new_remote_submissions": 0,
+  "continuation_authorized": false,
+  "automatic_successor_authorized": false,
+  "independent_saved_artifact_verification": "PENDING_LUNA_REPORT",
+  "decision_ref": "experiments/modern2d_configured_100k/results/decision_2026_10_20.md"
+}

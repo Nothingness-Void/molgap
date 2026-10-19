@@ -6,13 +6,14 @@
 
 ## Server execution status
 
-The fresh [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
-is submitted and bound to Kaggle2, with the existing Luna B monitor rebound.
-It tests infrastructure and independent family endpoints, reusing the
-accepted indexed100K/Common-Dev50K input, unchanged model configurations and
-frozen initial states through the configured workflow. Native qualification and
-terminal inspection remain required; no K1/GPTrans causal rank or Replay claim
-is released. Exact allocation, preparation and submission facts live in its status.
+The [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
+ended ERROR/STOP_FOR_COST; Luna delivered the terminal event and paused its
+existing heartbeat. Both preflights passed remotely but neither60-pass endpoint
+finished. The [partial-run decision](experiments/modern2d_configured_100k/results/decision_2026_10_20.md)
+retains the severe PPGT execution bottleneck, ESA partial curve and missing trace
+axes. No scientific family rejection, K1/GPTrans rank or Replay claim follows.
+Canonical RML finalization is blocked rather than forced; exact outputs and
+checkpoints are retained. No retry, continuation or successor was submitted.
 
 The human authorized a separate [mature-family workflow trial](experiments/family_workflow_trial_100k/STATUS.md):
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,

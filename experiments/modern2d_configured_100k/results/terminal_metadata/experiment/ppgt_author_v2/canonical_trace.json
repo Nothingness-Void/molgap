@@ -1,0 +1,43 @@
+{
+  "device_time_semantics": null,
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+      "target": "Gap",
+      "unit": "normalized-Gap",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": null,
+      "live_dev_metric": 0.8889995813369751,
+      "live_train_metric": 0.49672370935371685,
+      "optimizer_step": 781,
+      "sample_presentations": 99968,
+      "sequence": 0,
+      "wall_time_seconds": null
+    }
+  ],
+  "run_id": "modern2d-configured-100k-s42-v2:ppgt_author_v2:downstream",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "T-modern2d-configured-100k-s42-v2-ppgt_author_v2"
+}

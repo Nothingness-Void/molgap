@@ -1,0 +1,70 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "3acf709a443754cf2fdaab6acbfc44c294ac4b5c079837ef6d62d4c6d308a178",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "ppgt_author_v2",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 104.04270721499995
+        },
+        {
+          "arm_id": "esa_native_v3",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 20.50744904300001
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "ppgt_author_v2",
+          "device": 0,
+          "returncode": -9,
+          "worker_wall_seconds": 15444.965096337
+        },
+        {
+          "arm_id": "esa_native_v3",
+          "device": 1,
+          "returncode": -15,
+          "worker_wall_seconds": 15434.679107737
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "arms": {
+    "ppgt_author_v2": {
+      "device": 0,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 15549.007781303,
+      "exit_reason": "train_worker_exit_-9"
+    },
+    "esa_native_v3": {
+      "device": 1,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 15455.18655678,
+      "exit_reason": "train_worker_exit_-15"
+    }
+  },
+  "prior_allocation_budget_debit_wall_seconds": 0,
+  "budget_scope": "aggregate authorization; prior debit is not added to the current invocation's measured ledger",
+  "pair_process_wall_seconds": 15549.037771687,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "exit_reason": "STOP_FOR_COST"
+}

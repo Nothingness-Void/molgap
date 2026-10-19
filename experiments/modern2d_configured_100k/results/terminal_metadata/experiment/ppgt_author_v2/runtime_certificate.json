@@ -1,0 +1,29 @@
+{
+  "format": "molgap-runtime-certificate-v1",
+  "status": "accepted",
+  "provenance_sha256": "27c8be18ce47cb08182d3c73e53579094c03fc7347c92b5f15fe15bfaae8a9f2",
+  "probe_recipe_identity": "92da2b0f9215a99c9a4b74e25a36eafb6b0477333613b9615da1383997459ece",
+  "proofs": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "e08d5190d17f12d3419dd5e6ecf1deaaab22f08cdfdbc35065ac52aa65e16c5e",
+      "state_fingerprint": "261140ec25c7f9a4ab7f125bf23fcd7e5c0e6279ecb66ae9d1779df77b1feff6"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "0b9e06ab707ebacf82dc172faefb24e2af7b3f76113ee5aa601ce35793cb48e5",
+      "state_fingerprint": "261140ec25c7f9a4ab7f125bf23fcd7e5c0e6279ecb66ae9d1779df77b1feff6"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "a6d01fd567b5227c90c6e60f139440083b518e6b88480cea06c0337f9d547a74",
+      "state_fingerprint": "261140ec25c7f9a4ab7f125bf23fcd7e5c0e6279ecb66ae9d1779df77b1feff6"
+    }
+  ],
+  "resume_origin": {
+    "path": "resumed-first.pt",
+    "sha256": "a8e48f2dc3a33f12822080dcfca73b9ee704c2d40a79bcef2be9a8e263e246f7"
+  },
+  "formal_training_exposure": 0,
+  "scientific_acceptance": "NOT_EVALUATED"
+}
