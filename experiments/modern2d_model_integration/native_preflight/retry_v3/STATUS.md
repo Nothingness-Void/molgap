@@ -2,7 +2,7 @@
 
 V3 was never uploaded or submitted. Its frozen declarations and source
 commit099130ac were preserved after the shared source allowlist rejected the
-historical `retry_v2/results/inspection_2026-10-18.md` path during local package
+historical [V2 inspection](../retry_v2/results/inspection_2026-10-18.md) path during local package
 preparation. The rejection occurred in1.0445525s before an output package or
 initial-state validation was created; no GPU or scientific exposure followed.
 

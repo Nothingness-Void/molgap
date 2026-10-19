@@ -49,7 +49,7 @@ needs them; the two model representations need not share an artificial payload.
 no EMA and Common-Dev live selection. Its context additionally fixes Kaggle,
 two T4 devices and the exact two-family combination (`:83-93,145-169`).
 `modern2d_training_release.py:159-166` fixes LR=.001, weight decay=1e-5,
-warmup=4 and the schedule. `platforms/kaggle/run_experiment.py:90-93,122-142`
+warmup=4 and the schedule. `platforms/kaggle/run_experiment.py` (lines 90–93, 122–142)
 selects the runtime/deadline through the exact PPGT/ESA pair.
 
 These checks correctly bound the authorized historical screen. As the sole

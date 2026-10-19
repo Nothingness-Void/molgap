@@ -130,7 +130,7 @@ Key raw-file SHA256 pins:
 | `outputs/qualification/execution_report.json` | `f8b84ff84fc529cf58fcc44193b1dd9ef059bd75a5ddd70c25fc573249c7614a` |
 | `outputs/qualification/allocation_ledger.json` | `4de30f2104308c7210805536a34ffcdf385ec03cc5f7697e2559fb7816ce5b73` |
 | `luna_states/checkpoint_verification.json` | `87b254c73fba3ce1b169a7f05b4081acd0cc4db541d787db5dd923d5578dff95` |
-| `luna_states/verify_qualification_checkpoints.py` | `2e0d8388fdfa153cf445fdcef34f26f488211e1b5a34021dd259a02cfb2a2d44` |
+| luna_states/verify_qualification_checkpoints.py (raw evidence relative path) | `2e0d8388fdfa153cf445fdcef34f26f488211e1b5a34021dd259a02cfb2a2d44` |
 | `scratchinspection/luna_metadata/native_certificate_audit.json` | `6ef178b713b9bba59788f9d420d1895b60c1710818a294cff7cdbe6b3b9f15b1` |
 
 All14 pre-existing dirty-file SHA pins matched the preserved review record,

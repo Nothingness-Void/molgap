@@ -5,6 +5,10 @@ verification scope. Update this record after infrastructure changes; keep
 experiment outcomes in their owning decisions and route them through the
 [experiment indexes](../../experiments/README.md).
 
+The [2026-10-20 failure-path audit](INFRASTRUCTURE_AUDIT_20261020.md) records
+reproduced packaging, terminal-state and recovery defects, their repairs and
+the first-submission adapter's explicit continuation limit.
+
 ## Reusable lifecycle
 
 The [quickstart](EXPERIMENT_QUICKSTART.md) is the entry for a new agent. The
