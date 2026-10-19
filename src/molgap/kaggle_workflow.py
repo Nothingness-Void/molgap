@@ -8,6 +8,7 @@ import shutil
 
 from .experiment_family_workflow import _artifact_path
 from .experiment_launch import canonical_json, publish_immutable_bytes
+from .experiment_package import read_packaged_text
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
@@ -55,9 +56,8 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "licenses": [{"name": "CC0-1.0"}]}).encode())
     kernel = output / "kernel"
     kernel.mkdir()
-    entry = _artifact_path(repo_root, "platforms/kaggle/run_experiment.py")
     marker = "EXPECTED_LAUNCH_SHA256 = None"
-    entry_text = entry.read_text(encoding="utf-8")
+    entry_text = read_packaged_text(package, "platforms/kaggle/run_experiment.py")
     if entry_text.count(marker) != 1:
         raise ValueError("Expected one reviewed launch digest marker in the platform entry")
     publish_immutable_bytes(kernel / "kernel-metadata.json", canonical_json(metadata).encode())
@@ -116,8 +116,9 @@ def freeze_inputs(stage, trajectories):
     config["prospective_sha256"] = {}
     for arm_id, trajectory in trajectories.items():
         destination = stage["input_root"] / "prospective" / arm_id
-        publish_immutable_bytes(destination / "trajectory.json", trajectory.read_bytes())
-        config["prospective_sha256"][arm_id] = hashlib.sha256(trajectory.read_bytes()).hexdigest()
+        raw = trajectory if type(trajectory) is bytes else Path(trajectory).read_bytes()
+        publish_immutable_bytes(destination / "trajectory.json", raw)
+        config["prospective_sha256"][arm_id] = hashlib.sha256(raw).hexdigest()
     publish_immutable_bytes(stage["launch_path"], canonical_json(config).encode())
     entry_text = stage["entry_text"].replace("EXPECTED_LAUNCH_SHA256 = None",
         "EXPECTED_LAUNCH_SHA256 = " + repr(hashlib.sha256(stage["launch_path"].read_bytes()).hexdigest()))

@@ -40,12 +40,64 @@ def _assert_clean_paths(repo_root: Path, names: list[str]) -> str:
     )
     commit = result.stdout.strip()
     status = subprocess.run(
-        ["git", "status", "--porcelain=v1", "--", *names],
+        ["git", "status", "--porcelain=v1", "-z", "--untracked-files=no"],
         cwd=repo_root, check=True, capture_output=True, text=True,
     )
-    if status.stdout.strip():
+    rows = status.stdout.split("\0")
+    changed, index = set(), 0
+    while index < len(rows):
+        row = rows[index]
+        if row:
+            changed.add(row[3:])
+            if "R" in row[:2] or "C" in row[:2]:
+                index += 1
+                changed.add(rows[index])
+        index += 1
+    if set(names) & changed:
         raise RuntimeError("V4 bundle source files must be committed before packaging")
     return commit
+
+
+def committed_payloads(repo_root, commit, names):
+    """One tree read and one batch object read, independent of file count."""
+    tree = subprocess.run(["git", "ls-tree", "-r", "-l", "-z", commit],
+        cwd=repo_root, check=True, capture_output=True).stdout
+    wanted, objects = set(names), {}
+    total = 0
+    for row in tree.split(b"\0"):
+        if not row:
+            continue
+        header, path = row.split(b"\t", 1)
+        name = path.decode("utf-8")
+        if name not in wanted:
+            continue
+        mode, kind, oid, size = header.split()
+        if mode not in {b"100644", b"100755"} or kind != b"blob":
+            raise ValueError("Commit source is not a regular tracked file: " + name)
+        total += int(size)
+        if total > 64 * 1024**2:
+            raise ValueError("Runtime source snapshot exceeds bounded 64MiB source limit")
+        objects[name] = oid
+    if set(objects) != wanted:
+        raise ValueError("Source absent from the frozen commit: " + str(sorted(wanted - set(objects))))
+    names = list(names)
+    requested = b"".join(objects[name] + b"\n" for name in names)
+    raw = subprocess.run(["git", "cat-file", "--batch"], cwd=repo_root,
+        input=requested, check=True, capture_output=True).stdout
+    result, cursor = {}, 0
+    for name in names:
+        end = raw.index(b"\n", cursor)
+        oid, kind, size = raw[cursor:end].split()
+        size = int(size);cursor = end + 1
+        if oid != objects[name] or kind != b"blob" or raw[cursor + size:cursor + size + 1] != b"\n":
+            raise ValueError("Git batch source response mismatch")
+        payload = raw[cursor:cursor + size];cursor += size + 1
+        if Path(name).suffix.lower() in TEXT_SUFFIXES:
+            payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        result[name] = payload
+    if cursor != len(raw):
+        raise ValueError("Unexpected Git batch trailing bytes")
+    return result
 
 
 def build_v4_source_bundle(
@@ -55,8 +107,14 @@ def build_v4_source_bundle(
     output_dir: Path,
     source_commit: str,
     archive_name: str = "source.tar.gz",
+    generated_records: dict[str, bytes] | None = None,
 ) -> dict:
-    """Build a small LF-normalized archive from an explicit tracked allowlist."""
+    """Build a small LF-normalized archive from an explicit source allowlist.
+
+    Derived JSON is an inner transport option for the V2 package owner, which
+    binds its configuration provenance separately. Legacy callers remain wholly
+    commit-bound; this inventory alone is not a derived-compilation certificate.
+    """
     repo_root = repo_root.resolve()
     output_dir = output_dir.resolve()
     tracked = _tracked_paths(repo_root)
@@ -71,10 +129,17 @@ def build_v4_source_bundle(
         for name in names
     ):
         raise ValueError("V4 source paths must stay inside the repository")
-    missing = [name for name in names if name not in tracked]
+    generated_records = {} if generated_records is None else generated_records
+    if (type(generated_records) is not dict or len(generated_records)>128 or
+            set(generated_records)-set(names) or any(not n.startswith("experiments/") or
+            "/generated/" not in n or not n.endswith(".json") or type(b) is not bytes
+            or len(b)>1024**2 for n,b in generated_records.items())):
+        raise ValueError("Only bounded explicitly derived JSON records may be untracked")
+    missing = [name for name in names if name not in tracked and name not in generated_records]
     if missing:
         raise RuntimeError(f"V4 source bundle includes untracked paths: {missing}")
-    observed_commit = _assert_clean_paths(repo_root, names)
+    source_names = [n for n in names if n not in generated_records]
+    observed_commit = _assert_clean_paths(repo_root, source_names)
     if source_commit != observed_commit:
         raise RuntimeError(
             f"Requested source commit {source_commit} is not checked-out HEAD {observed_commit}"
@@ -82,6 +147,7 @@ def build_v4_source_bundle(
 
     entries = []
     payloads = {}
+    committed = {**committed_payloads(repo_root, source_commit, source_names), **generated_records}
     for name in names:
         path = repo_root / Path(name)
         if not path.is_file():
@@ -89,6 +155,8 @@ def build_v4_source_bundle(
         if path.is_symlink():
             raise RuntimeError(f"V4 bundles do not accept symlinked source: {name}")
         payload = _payload(path)
+        if payload != committed[name]:
+            raise ValueError("Repository source payload mismatch: " + name)
         payloads[name] = payload
         entries.append({"path": name, "sha256": hashlib.sha256(payload).hexdigest(), "bytes": len(payload)})
 

@@ -953,12 +953,21 @@ def test_incomplete_terminal_descriptor_preserves_explicit_zero_observations(sta
         }]
 
 
+def _mock_pair_runtime_source(monkeypatch, spec):
+    """Worker lifecycle fixtures do not build a scientific source archive."""
+    manifest = {"spec_identity": spec.identity, "package_identity": HEX_A,
+                "archive_sha256": HEX_B, "source_commit": "c" * 40}
+    monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",
+                        lambda _package: dict(manifest))
+
+
 def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_training(
     tmp_path, monkeypatch,
 ):
     from molgap import kaggle_pair_runtime as pair_runtime
 
     spec = _candidate_pair_spec()
+    _mock_pair_runtime_source(monkeypatch, spec)
     source_root = tmp_path / "source"
     package_dir = tmp_path / "package"
     input_root = tmp_path / "input"
@@ -1071,6 +1080,7 @@ def test_pair_runtime_train_failure_drains_peer_and_freezes_per_worker_wall(
     from molgap import kaggle_pair_runtime as pair_runtime
 
     spec = _candidate_pair_spec()
+    _mock_pair_runtime_source(monkeypatch, spec)
     source_root = tmp_path / "source"
     package_dir = tmp_path / "package"
     input_root = tmp_path / "input"
@@ -1176,11 +1186,13 @@ def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_pa
     from molgap import kaggle_pair_runtime as pair_runtime
 
     spec = _candidate_pair_spec()
+    _mock_pair_runtime_source(monkeypatch, spec)
     package = tmp_path / "package"
     package.mkdir()
     (package / "experiment_spec.json").write_bytes(spec.to_json().encode())
     launch = tmp_path / "launch.json"
-    _write_json(launch, {"jobs": _jobs(spec)})
+    _write_json(launch, {"jobs": _jobs(spec), "expected_package_identity": HEX_A,
+                         "expected_source_archive_sha256": HEX_B})
     monkeypatch.setattr(pair_runtime.subprocess, "check_output",
                         lambda *args, **kwargs: "Tesla T4\nTesla T4\n")
     clock = [0.0]

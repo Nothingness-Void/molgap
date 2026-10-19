@@ -106,7 +106,7 @@ def test_exact_reviewed_dataset_source_roundtrip(repo, payload, tmp_path):
     "src/molgap/packed_graph_dataset.json", "src/molgap/packed_graph_dataset.py.pt",
     "src/molgap/PACKED_GRAPH_DATASET.py", "src/Molgap/packed_graph_dataset.py",
     "src/other/packed_graph_dataset.py",
-    "src/molgap/dataset/packed_graph_dataset.py", "datasets/packed_graph_dataset.py",
+    "src/molgap/data/private_key.py", "datasets/packed_graph_dataset.py",
     "data/src/molgap/packed_graph_dataset.py", "artifacts/src/molgap/packed_graph_dataset.py",
     "src/molgap/packed_graph_dataset.py/loader.py",
     "src/molgap/packed_graph_dataset.py/../loader.py",
@@ -118,7 +118,8 @@ def test_reviewed_dataset_source_exception_is_exact(repo, payload, tmp_path, nam
 
 
 @pytest.mark.parametrize("name", ["src/molgap/other_dataset.py",
-    "src/molgap/packed_graph_datasets.py", "src/molgap/nested/packed_graph_dataset.py"])
+    "src/molgap/packed_graph_datasets.py", "src/molgap/nested/packed_graph_dataset.py",
+    "src/molgap/data/packed_graph.py", "src/molgap/dataset/packed_graph_dataset.py"])
 def test_reviewed_python_io_owner_roundtrip(repo, payload, tmp_path, name):
     path = repo / name
     path.parent.mkdir(parents=True, exist_ok=True)

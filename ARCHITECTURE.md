@@ -9,8 +9,9 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 ## Reuse Entry Point
 
-Start with the [modular experiment workflow](docs/operations/EXPERIMENT_WORKFLOW.md)
-for preparation, family dispatch, platform handoff and acceptance. The
+Start with the [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
+The [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md)
+owns preparation, family dispatch, platform handoff and acceptance. The
 [addon reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) routes existing
 family trainers, checkpoint/inference, saved-prediction analysis and RML
 owners. The [local CLI](docs/operations/EXPERIMENT_CLI.md) exposes those local
@@ -30,6 +31,9 @@ ownership index, not execution authority or a copy of scientific contracts.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `experiment_catalog.py`, `experiment_execution.py` | Single family/addon declarations and derived execution adapters | Adding supported capabilities once, retaining explicit qualification limits |
+| `experiment_input.py`, `experiment_run.py`, `local_runtime.py` | Human input compilation, frozen-run lifecycle and selected-checkout execution | Changing preparation/recovery mechanics without changing scientific contracts |
+| `training/`, `data/`, `models/` under `src/molgap/` | Shared loop/state/session, packed/fixed records and model substrate | Existing top-level module aliases retain import and checkpoint compatibility |
 | `model_substrate.py`, `family_training_state.py`, `fast_sandbox.py`, `source_dependencies.py` | Reviewed addon slots, optional Live/Raw/Clean state, synthetic CPU checks and AST source closure | See [four-layer runtime and limitations](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md); existing accelerated sessions remain the default |
 | `shared_model_adapter.py`, `graph_screen_training.py`, `pcqm_graph_inputs.py` | Opt-in registered pure-2D graph factory ABI and bounded normalized-Gap lifecycle | Compatible new factories reuse this owner; registration is not native qualification or authority |
 | `family_training_*.py` | K1/GPTrans common loop, pinned recipe/data, accelerated family hooks, persistent loaders and resumable session | See [owners and migration status](docs/operations/FAMILY_TRAINING_CORE.md); public registration/native qualification and artifact acceptance remain explicit gates |

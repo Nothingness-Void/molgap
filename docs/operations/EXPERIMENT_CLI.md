@@ -1,5 +1,8 @@
 # Unified Local Experiment CLI
 
+Start new work with the [quickstart](EXPERIMENT_QUICKSTART.md). This page is an
+operation lookup, not a required end-to-end reading or validation checklist.
+
 `sandbox`, `source-dependencies` and optional `--auto-dependencies` packaging
 are documented in the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md).
 They provide local diagnostics/source preparation, not submission authority.
@@ -11,7 +14,8 @@ inputs, not submission/full admission/scientific acceptance. See
 
 Run from the selected checkout using its configured project environment.
 These examples assume PowerShell is already at that checkout's root; use its
-own `.venv`, not an old worktree path or system Python:
+primary `.venv` (shared across temporary worktrees), not system Python. For a
+temporary checkout use the selected-checkout wrapper in the quickstart:
 
 ```powershell
 $repoRoot = (Get-Location).Path
@@ -66,6 +70,51 @@ repository-relative POSIX names; package core checks confinement and tracked
 source identity. Descriptor references remain confined to `--repo-root` by the
 terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
 import, training shortcut, platform submit command or authority override exists.
+
+## Editable inputs and frozen records
+
+The [quickstart](EXPERIMENT_QUICKSTART.md) is the default human-input path.
+`catalog` lists declared family/addon capabilities and their derived execution
+support. `freeze-input --experiment $experiment --repo-root $repoRoot` freezes
+the editable input locally; it is optional because the platform preparation
+entry performs the same operation. The scientific compiler currently supports
+shared K1/3 and GPTrans/2 parameter/addon deltas; unsupported recipe changes use
+their existing typed builders. Missing authority/reference/target/data identity
+remains a blocker.
+
+New source packages use the fixed tracked `runtime-v1` distribution and an
+external content cache. Specs, release identities and operation journals remain
+run-specific. V1 source packages and explicit legacy source inventories remain
+readable. Frozen generated metadata never substitutes for committed executable
+source. Data/weight payloads are not part of this source distribution.
+
+## Local lifecycle by run ID
+
+`locate-run --profile $profilePath --repo-root $repoRoot --run-id $runId
+--attempt-id $attemptId` reads the frozen local run without contacting a platform.
+The following commands can use these same four options instead of `--spec`:
+
+| Command | Additional inputs / behavior |
+|---|---|
+| `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
+| `accept-workflow` | `--outputs`, `--locations`; mechanically inspect by default, explicit `--execute` invokes existing terminal closure |
+| `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
+| `prepare-resume` | `--resume-plan`, `--output`; use existing checkpoint/resume preparation |
+
+Run lookup resolves the original package, identity, receipt and preparation;
+do not override them with explicit package/receipt arguments. Output paths and
+descriptors retain their existing local safety and evidence boundaries. Missing
+or uncertain journal/receipt identity requires platform reconciliation.
+
+The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
+can reuse the original journal when separately authorized to execute. The
+family-output retrieval adapter accepts run identity plus independently pinned
+manifest/arm identity; `--execute` is explicit. Neither path infers scientific
+acceptance. Other platform and historical protocols keep their owning adapters.
+
+Preparation timing samples live outside immutable frozen inputs. The read-only
+`molgap.experiment_timings --run-directory $runDirectory` report combines observed
+local/journal timings; it does not invent upload, queue or native training speed.
 
 ## Commands
 

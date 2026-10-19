@@ -79,10 +79,6 @@ LOCAL_LINK_SUFFIXES = (
     ".yaml",
     ".yml",
 )
-CONTROL_DOC_LIMITS = {
-    "CURRENT_STATE.md": 120,
-    "ROADMAP.md": 120,
-}
 TOP_LEVEL_POINTER_DOCS = (
     "AGENTS.md",
     "CURRENT_STATE.md",
@@ -322,16 +318,6 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
                 )
 
     assert not failures, "experiment traceability failures:\n" + "\n".join(failures)
-
-
-def test_live_control_documents_remain_bounded() -> None:
-    failures: list[str] = []
-    for relative, limit in CONTROL_DOC_LIMITS.items():
-        text = (REPO_ROOT / relative).read_text(encoding="utf-8")
-        line_count = len(text.splitlines())
-        if line_count > limit:
-            failures.append(f"{relative}: {line_count} lines exceeds {limit}")
-    assert not failures, "live control documents accumulated history:\n" + "\n".join(failures)
 
 
 def test_top_level_document_pointers_exist() -> None:

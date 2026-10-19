@@ -36,6 +36,7 @@ class TrainingAdapter:
     model_factory: str | None = None
     target_identity_in_completion: bool = False
     profile_adapter: str | None = None
+    cpu_synthetic_only: bool = False
 
     def __post_init__(self):
         # Preserve reviewed legacy tuple registrations while exposing typed hooks.
@@ -81,45 +82,60 @@ def _hook_source(hook: str) -> str:
 
 
 def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
-                           serialization_modules=()) -> TrainingAdapter:
+                           serialization_modules=(), cpu_synthetic_only=False) -> TrainingAdapter:
     """Bind a small model to the shared pure-2D normalized-Gap training owner."""
     sources = {"src/molgap/graph_screen_training.py", "src/molgap/pcqm_graph_inputs.py",
                "src/molgap/shared_model_adapter.py", "src/molgap/pcqm_topology.py",
                "src/molgap/ogb_features.py",
                _hook_source(model_factory), *source_files}
+    if cpu_synthetic_only:
+        sources.add("src/molgap/family_training_runner.py")
+        return TrainingAdapter(tuple(family), "molgap.family_training_runner", "modern2d-cpu-v1",
+            tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory,
+            cpu_synthetic_only=True)
     return TrainingAdapter(tuple(family), "molgap.graph_screen_training", "graph-screen-v1",
         tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory)
 
 
 
-TRAINING_ADAPTERS = MappingProxyType({
-    ("neural_atom_k1", "3"): TrainingAdapter(
-        ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
-        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
-              for name in ("k1_node_scale", "k1_aggregate_scale", "k1_readout_scale")) +
-        (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
-        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
-    ("gptrans_t", "2"): TrainingAdapter(
-        ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
-        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
-              for name in ("gptrans_node_scale", "gptrans_aggregate_scale", "gptrans_readout_scale")) +
-        (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
-         ("memory_value", "memory_value"), ("memory_message", "memory_message"),
-         TrainingAddon("gptrans_degree_bond_local", "1", "degree_bond_local_ema999",
-                       policy_hook="molgap.gptrans_bond_local:policy")),
-        ("molgap.pcqm_wedge",), target_identity_in_completion=True,
-        profile_adapter="molgap.family_execution_profile"),
-    ("neural_atom_k1", "2"): TrainingAdapter(
-        ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
-        (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
-        target_identity_in_completion=True),
-    ("gptrans_t", "1"): TrainingAdapter(
-        ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
-        (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
-         ("memory_value", "memory_value"), ("memory_message", "memory_message")), ("molgap.pcqm_wedge",)),
-})
+def catalog_addons(family):
+    """Read-only execution projection of the single human-maintained catalog."""
+    result=[]
+    for (name,version), contract in ADDONS.items():
+        if contract.family != family[0]:
+            continue
+        modes=dict(contract.execution_modes)
+        if len(modes) != len(contract.execution_modes):
+            raise ValueError("Duplicate catalog execution family version")
+        if family[1] in modes:
+            result.append(TrainingAddon(name,version,modes[family[1]],contract.extra_source_files,
+                                        contract.apply_hook,contract.policy_hook))
+    return tuple(result)
+
+
+def _catalog_training_adapters():
+    result={}
+    for key, contract in FAMILIES.items():
+        entry=contract.execution
+        if entry is None:
+            continue
+        if entry.model_factory is not None:
+            adapter=graph_training_adapter(key, model_factory=entry.model_factory,
+                addons=catalog_addons(key), source_files=entry.source_files,
+                serialization_modules=entry.serialization_modules,
+                cpu_synthetic_only=entry.cpu_synthetic_only)
+            if (adapter.module,adapter.artifact_adapter) != (entry.module,entry.artifact_adapter):
+                raise ValueError("Catalog graph family execution boundary differs from its owner")
+        else:
+            adapter=TrainingAdapter(key,entry.module,entry.artifact_adapter,catalog_addons(key),
+                entry.serialization_modules,entry.source_files,entry.model_factory,
+                entry.target_identity_in_completion,entry.profile_adapter,entry.cpu_synthetic_only)
+        result[key]=adapter
+    return result
+
+
+TRAINING_ADAPTERS = MappingProxyType(_catalog_training_adapters())
+
 
 def validate_training_registry() -> None:
     """Check cross-owner registrations without importing or executing trainers."""
@@ -390,7 +406,7 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
                            account, run_reference, staged_root=None, prospective_sha256=None,
-                           target_identity=None):
+                           target_identity=None, preflight_dir=None, resume_output=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
@@ -419,7 +435,12 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     # A new family extends that registry, never this orchestration function.
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
-    options = {} if phase == "preflight" else {"preflight_dir": output}
+    options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
+    if phase == "preflight" and resume_output is not None:
+        runner = getattr(owner, "run_screen_resume_preflight", None)
+        if not callable(runner):
+            raise ValueError("Owning family has no portable resume preflight hook")
+        options["resume_output"] = resume_output
     if staged_root.resolve() != Path(input_root).resolve():
         if adapter.family != ("neural_atom_k1", "2") and adapter.module != "molgap.family_training_runner":
             raise ValueError("Separate prospective/data roots are not supported by this family")

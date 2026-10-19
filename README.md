@@ -13,8 +13,9 @@ Start with [AGENTS.md](AGENTS.md) for the reading protocol and constraints;
 [ARCHITECTURE.md](ARCHITECTURE.md) maps code ownership. Track definitions live
 in [TRACKS.md](TRACKS.md), not in historical results.
 
-Before writing experiment plumbing, use the
-[modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then the
+Start infrastructure work with the
+[quickstart](docs/operations/EXPERIMENT_QUICKSTART.md). Use the
+[workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md) and the
 [operation-oriented reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 for family trainers, checkpoint/inference owners, saved-prediction analysis,
 and acceptance/V5/RML. The [local experiment CLI](docs/operations/EXPERIMENT_CLI.md)

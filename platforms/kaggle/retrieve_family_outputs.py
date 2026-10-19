@@ -14,6 +14,10 @@ from molgap.experiment_family_workflow import RunContext, ROLES, _check_context,
 from molgap.experiment_family_artifacts import artifact_adapter
 from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
+from molgap.kaggle_output_retrieval import (
+    retrieve_execution_retention as _retrieve_execution_retention,
+    retrieve_selected_kaggle_files,
+)
 from molgap.research_memory.trace import file_digest
 
 
@@ -26,7 +30,19 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     local_manifest is the independently retained small remote manifest. No
     kernel submission, retry, inference, or platform-version guess occurs here.
     """
-    _path(remote_manifest_path)
+    manifest, required = _family_files(context, remote_manifest_path, local_manifest,
+                                       manifest_sha256)
+    result = retrieve_selected_kaggle_files(
+        api, context=context, remote_manifest_path=remote_manifest_path,
+        files=required, destination=destination, http_session=http_session,
+    )
+    result.update({"producer_version": manifest["context"]["platform_version"],
+                   "manifest_sha256": manifest_sha256})
+    return result
+
+
+def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256):
+    """Keep CLI preflight and the original retriever on the same manifest checks."""
     _safe_local(Path(local_manifest).absolute())
     if file_digest(local_manifest) != manifest_sha256:
         raise ValueError("Pinned remote manifest hash mismatch")
@@ -34,11 +50,18 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     if manifest.get("format") != "molgap-family-output-v1":
         raise ValueError("Unsupported output protocol; use the owning legacy retriever")
     _check_context(manifest["context"], context)
-    artifact_adapter(manifest["adapter"], (context.family_name, context.family_version))
-    if set(manifest["artifacts"]) != ROLES:
+    profile = artifact_adapter(manifest["adapter"], (context.family_name, context.family_version))
+    # The shared session already defines final-only outputs without prediction
+    # payloads. Retrieval transports that profile, while the owning inspector
+    # still validates the pinned recipe's role/selection requirements.
+    roles = ROLES - {"predictions"} if (profile.protocol == "family-session" and
+        "predictions" not in manifest["artifacts"]) else ROLES
+    if profile.protocol == "family-session" and "trace_context" in manifest["artifacts"]:
+        roles = roles | {"trace_context"}
+        if manifest["artifacts"]["trace_context"]["path"] != manifest["artifacts"]["trace"]["path"] + ".context.json":
+            raise ValueError("Trace companion is not bound to the declared trace")
+    if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
-    if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
-        raise ValueError("Authenticated account does not match owning run")
     prefix = PurePosixPath(remote_manifest_path).parent
     required = {}
     for role, item in manifest["artifacts"].items():
@@ -50,40 +73,120 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
             raise ValueError("Aliased retention roles")
         required[remote] = (item["path"], item["sha256"])
     required[remote_manifest_path] = ("output_manifest.json", manifest_sha256)
-    root = Path(destination).absolute()
-    _safe_local(root)
-    root.mkdir(parents=True, exist_ok=True)
-    from kagglesdk.kernels.types.kernels_api_service import ApiListKernelSessionOutputRequest
-    owner, separator, slug = context.run_reference.partition("/")
-    if not separator or "/" in slug or owner != context.account:
-        raise ValueError("Expected exact owner/kernel reference")
-    urls, seen_tokens = {}, set()
-    with api.build_kaggle_client() as client:
-        token = None
-        for _ in range(1000):
-            request = ApiListKernelSessionOutputRequest()
-            request.user_name, request.kernel_slug = owner, slug
-            request.page_size, request.page_token = 100, token
-            response = client.kernels.kernels_api_client.list_kernel_session_output(request)
-            for item in response.files:
-                if item.file_name in required:
-                    if item.file_name in urls:
-                        raise ValueError("Duplicate remote output path")
-                    urls[item.file_name] = item.url
-            token = response.next_page_token
-            if not token:
-                break
-            if token in seen_tokens:
-                raise ValueError("Repeated output pagination token")
-            seen_tokens.add(token)
-        else:
-            raise ValueError("Unbounded output listing")
-    if set(urls) != set(required):
-        raise ValueError("Required remote output files are missing; no bulk fallback")
-    from molgap.kaggle_output_retrieval import _download_selected
-    retained = _download_selected(urls=urls, required=required,
-                                  destination=root, http_session=http_session)
-    return {"kernel": context.run_reference, "receipt_version": context.platform_version,
-            "producer_version": manifest["context"]["platform_version"], "files": retained,
-            "manifest_sha256": manifest_sha256, "unselected_outputs_downloaded": False,
-            "platform_version_verified_by_output_api": False}
+    return manifest, required
+
+
+def retrieve_execution_retention(api, *, context, spec, remote_manifest_path: str,
+                                 local_manifest: Path, manifest_sha256: str,
+                                 destination: Path, http_session=None) -> dict:
+    """Thin Kaggle adapter for the shared execution-retention retriever."""
+    return _retrieve_execution_retention(
+        api,
+        context=context,
+        spec=spec,
+        remote_manifest_path=remote_manifest_path,
+        local_manifest=local_manifest,
+        manifest_sha256=manifest_sha256,
+        destination=destination,
+        http_session=http_session,
+    )
+
+
+def main(argv=None):
+    """Validate an original run locally, or explicitly retrieve its pinned files."""
+    import argparse
+    from contextlib import redirect_stderr, redirect_stdout
+    import io
+    from molgap.common.paths import MachinePaths
+    from molgap.experiment_launch import canonical_json
+    from molgap.experiment_run import _original_run, RunReconciliationRequired
+    from molgap.kaggle_output_retrieval import _selected_files
+
+    class Parser(argparse.ArgumentParser):
+        def error(self, message):
+            # argparse's message may echo a credential-bearing argument.
+            raise ValueError("Invalid retrieval arguments")
+
+    parser = Parser(description=main.__doc__, allow_abbrev=False)
+    for name in ("run-id", "attempt-id", "arm", "manifest-sha256", "remote-manifest-path"):
+        parser.add_argument("--" + name, required=True)
+    for name in ("profile", "local-manifest", "destination"):
+        parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--repo-root", type=Path, default=Path.cwd())
+    parser.add_argument("--credentials", type=Path)
+    parser.add_argument("--execute", action="store_true")
+    stage = "arguments"
+    try:
+        args = parser.parse_args(argv)
+        if bool(args.credentials) != args.execute:
+            raise ValueError("Explicit credentials are required only with --execute")
+        # SDK diagnostics may contain credentials or signed URLs. Only the
+        # adapter's finite JSON receipt is allowed on either output stream.
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            stage = "original_run"
+            paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
+            spec, options, prepared = _original_run(
+                args.profile, args.repo_root, args.run_id, args.attempt_id)
+            context = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
+                expected_package_identity=options["expected_package_identity"], arm_id=args.arm)
+            if context.platform != "kaggle":
+                raise ValueError("Expected an original Kaggle run")
+            stage = "manifest"
+            _path(args.remote_manifest_path)
+            manifest, files = _family_files(context, args.remote_manifest_path,
+                                           args.local_manifest, args.manifest_sha256)
+            if len(files) != len(manifest["artifacts"]) + 1:
+                raise ValueError("Remote manifest aliases an artifact")
+            files = _selected_files(files)
+            # _family_files checks known producer versions against the receipt.
+            # A normal pre-launch producer has no version; retain that null and
+            # bind retrieval through the reconciled receipt and pinned bytes.
+            if context.platform_version is None:
+                raise ValueError("An exact reconciled receipt version is required")
+            stage = "destination"
+            destination = args.destination.absolute()
+            _safe_local(destination)
+            artifact_root = paths.artifact_root
+            run = prepared.parent
+            if (destination == artifact_root or not destination.is_relative_to(artifact_root)
+                    or destination.is_relative_to(run) or run.is_relative_to(destination)):
+                raise ValueError("Destination must be under artifact_root, outside the frozen run")
+            if destination.exists():
+                if not destination.is_dir():
+                    raise ValueError("Destination must be a directory")
+                retained_manifest = destination / "output_manifest.json"
+                _safe_local(retained_manifest)
+                if next(destination.iterdir(), None) is not None and (
+                        not retained_manifest.is_file()
+                        or file_digest(retained_manifest) != args.manifest_sha256):
+                    raise ValueError("Existing retrieval must retain the original pinned manifest")
+            for relative, pin in files.values():
+                target = destination / relative
+                _safe_local(target)
+                if target.exists() and (not target.is_file() or file_digest(target) != pin):
+                    raise ValueError("Retained output conflicts with pinned artifact")
+            result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
+                      "network_accessed": False, "scientific_acceptance": False,
+                      "producer_version": manifest["context"]["platform_version"],
+                      "manifest_sha256": args.manifest_sha256}
+            if args.execute:
+                stage = "platform_retrieval"
+                from molgap.kaggle_submission import connect_kaggle
+                api = connect_kaggle(args.credentials)
+                result = retrieve_family_outputs(api, context=context,
+                    remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
+                    manifest_sha256=args.manifest_sha256, destination=destination)
+                result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
+            encoded = canonical_json(result)
+    except Exception as error:
+        # Never serialize exception text: even local paths may contain secrets.
+        status = "RECONCILIATION_REQUIRED" if isinstance(error, RunReconciliationRequired) else "BLOCKED"
+        print(canonical_json({"status": status, "stage": stage,
+                              "error": "Retrieval checks or operation failed"}))
+        return 2
+    print(encoded)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

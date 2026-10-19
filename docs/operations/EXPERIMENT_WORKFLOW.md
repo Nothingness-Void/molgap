@@ -1,6 +1,7 @@
 # Modular Experiment Workflow
 
-This is the entry point for shared family training preparation and the legacy
+For normal new work, start with the [quickstart](EXPERIMENT_QUICKSTART.md).
+This page is the compatibility/API reference for shared family training preparation and the legacy
 registered local-to-Kaggle comparison path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.

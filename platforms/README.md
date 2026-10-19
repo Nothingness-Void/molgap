@@ -4,6 +4,11 @@ How a run reaches a compute environment. These directories adapt package
 behavior to a platform; they do not define model logic and do not declare live
 job status.
 
+New local preparation starts with the
+[infrastructure quickstart](../docs/operations/EXPERIMENT_QUICKSTART.md).
+`local/run.py` selects the checkout with the shared dependency interpreter;
+machine profiles keep new data, run artifacts and scratch outside the repository.
+
 For explicitly authorized same-owner platform migration, connection-independent
 resume and bootstrap rules, read [REMOTE_HANDOFF](REMOTE_HANDOFF.md).
 This does not authorize automatic desktop/server job takeover.
@@ -15,6 +20,7 @@ and [desktop handoff](../docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md).
 
 | Platform | Path | Role |
 |---|---|---|
+| Local | `local/` | Selected-checkout entry; no environment installation or platform submission |
 | Kaggle | `kaggle/` | Cross-experiment packages and account lifecycle (`organize_account.py`) |
 | SCNet | `scnet/` | Slurm job files, DCU environment checks, storage migration |
 | Colab | `colab/` | Drive-backed resumable notebooks for graph construction, GPU training, and fusion |

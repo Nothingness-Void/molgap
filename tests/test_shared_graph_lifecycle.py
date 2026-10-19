@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+from dataclasses import replace
 import importlib.util
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ import pytest
 
 from molgap import experiment_execution as execution
 from molgap import experiment_spec as declaration
+from molgap.common.spec import FamilyExecution
 from molgap.experiment_family_workflow import RunContext
 from molgap.experiment_source_inventory import registered_source_files
 from molgap.experiment_preflight import _unpack
@@ -81,8 +83,18 @@ def _install_family(repo, monkeypatch):
         model_factory="molgap.synthetic_shared_graph:make_model",
         addons=(execution.TrainingAddon("synthetic_shift", "1", "shift",
                     apply_hook="molgap.synthetic_shared_addon:apply_addon"),))
+    contract = replace(contract, execution=FamilyExecution(adapter.module, adapter.artifact_adapter,
+        adapter.serialization_modules, adapter.source_files, adapter.model_factory))
+    addon_contract = replace(addon_contract, execution_modes=((FAMILY[1], "shift"),),
+        apply_hook="molgap.synthetic_shared_addon:apply_addon")
+    families = MappingProxyType({**declaration.FAMILIES, FAMILY: contract})
+    addons = MappingProxyType({**declaration.ADDONS, ("synthetic_shift", "1"): addon_contract})
+    monkeypatch.setattr(declaration, "FAMILIES", families)
+    monkeypatch.setattr(declaration, "ADDONS", addons)
+    monkeypatch.setattr(execution, "FAMILIES", families)
+    monkeypatch.setattr(execution, "ADDONS", addons)
     monkeypatch.setattr(execution, "TRAINING_ADAPTERS",
-        MappingProxyType({**execution.TRAINING_ADAPTERS, FAMILY: adapter}))
+        MappingProxyType(execution._catalog_training_adapters()))
     arm = _arm("neural_atom_k1", "2", "new_graph")
     arm["family"] = dict(name=FAMILY[0], version=FAMILY[1])
     for field, name in (("recipe", contract.recipe), ("sampler", contract.sampler),
@@ -107,13 +119,6 @@ def _install_family(repo, monkeypatch):
     with spec_path.open("a", encoding="utf-8") as handle:
         handle.write(f"\nFAMILIES = MappingProxyType({{**FAMILIES, {FAMILY!r}: {contract!r}}})\n")
         handle.write(f"ADDONS = MappingProxyType({{**ADDONS, ('synthetic_shift', '1'): {addon_contract!r}}})\n")
-    execution_path = repo / "src/molgap/experiment_execution.py"
-    source = execution_path.read_text(encoding="utf-8")
-    registration = (f"\n    {FAMILY!r}: graph_training_adapter({FAMILY!r}, "
-        f"model_factory={adapter.model_factory!r}, addons={adapter.addons!r}),")
-    source = source.replace("TRAINING_ADAPTERS = MappingProxyType({",
-        "TRAINING_ADAPTERS = MappingProxyType({" + registration, 1)
-    execution_path.write_text(source, encoding="utf-8")
     model_module = _load_module("molgap.synthetic_shared_graph", repo / "src/molgap/synthetic_shared_graph.py", monkeypatch)
     _load_module("molgap.synthetic_shared_addon", repo / "src/molgap/synthetic_shared_addon.py", monkeypatch)
     owner = _load_module("molgap.graph_screen_training", repo / "src/molgap/graph_screen_training.py", monkeypatch)
@@ -242,6 +247,7 @@ print("published model/addon/trainer ABI resolved")
         trajectory_id=binding["trajectory_id"])
     # The fixture proves local mechanics; the production device gate is
     # independently tested and an actual T4 allocation remains required.
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
     monkeypatch.setattr(owner, "_execution_device", lambda spec: torch.device("cpu"), raising=False)
     qualified_cuda_devices = owner._qualified_cuda_devices
     monkeypatch.setattr(owner, "_qualified_cuda_devices",

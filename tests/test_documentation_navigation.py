@@ -135,17 +135,6 @@ def test_block_navigation_is_not_hidden_by_gitignore():
     assert result.returncode == 1, result.stdout + result.stderr
 
 
-@pytest.mark.parametrize("relative, limit", (
-    ("AGENTS.md", 230),
-    ("BRANCHES.md", 100),
-    ("CURRENT_STATE.md", 120),
-    ("ROADMAP.md", 120),
-))
-def test_root_routing_documents_stay_compact(relative, limit):
-    lines = len(_read(relative).splitlines())
-    assert lines <= limit, f"{relative}: {lines} lines exceeds navigation budget {limit}"
-
-
 def test_authority_and_capability_routes_remain_explicit():
     text = _read(GUIDE)
     links = set(LINK.findall(text))

@@ -449,4 +449,5 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
                              "launch-receipt", "terminal", "plan-prospective", "check-release",
                              "check-acceptance", "inspect-output", "accept-terminal",
                              "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "source-dependencies", "sandbox",
-                             "workflow-info", "check-workflow"}
+                             "workflow-info", "check-workflow", "catalog", "freeze-input", "locate-run",
+                             "prepare-release", "check-preparation", "build-resume", "prepare-resume"}

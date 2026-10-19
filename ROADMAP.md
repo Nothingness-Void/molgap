@@ -4,7 +4,8 @@ This file owns task order/triggers/exits. CURRENT_STATE.md owns live state,
 experiment decisions own evidence, TRACKS.md owns tracks.
 ## Reuse Navigation
 
-First use the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
+First use the [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md), then the
+[workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md) or
 the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 and [local CLI](docs/operations/EXPERIMENT_CLI.md). Platform work stays in
 `kaggle-molgap-workloads`, `ims-molgap-workloads` and `scnet-bw-dcu-molgap`.

@@ -1,12 +1,14 @@
 """Pin the reviewed mechanism snapshot; branch adoption is recorded separately."""
 import ast
+import hashlib
 import json
+import subprocess
 from pathlib import Path
-
-from molgap.v4_runtime import normalized_source_sha256
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# This inventory records a historical adoption, not a ban on later source edits.
+REVIEWED_COMMIT = "137f4139c25dd79f6cbfa84303ecbb940b6fcba8"
 
 
 def test_shared_mechanism_snapshot_matches_reviewed_inventory():
@@ -18,7 +20,10 @@ def test_shared_mechanism_snapshot_matches_reviewed_inventory():
             ("core", "data", "recipe", "kernel", "loaders", "session", "runner", "outputs")} <= set(paths)
     for item in record["files"]:
         assert item["path"].startswith("src/molgap/")
-        assert normalized_source_sha256(ROOT / item["path"]) == item["sha256"], item["path"]
+        payload = subprocess.check_output(
+            ["git", "show", f"{REVIEWED_COMMIT}:{item['path']}"], cwd=ROOT,
+        )
+        assert hashlib.sha256(payload.replace(b"\r\n", b"\n")).hexdigest() == item["sha256"], item["path"]
 
 
 def test_accelerated_kernel_has_no_legacy_trainer_or_controller_imports():

@@ -1,8 +1,13 @@
 # Experiment Addon Guide
 
-Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the registered prepare,
+Start with the [quickstart](EXPERIMENT_QUICKSTART.md); use this page to locate
+the implementation owner. Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the registered prepare,
 platform handoff and acceptance path. This page is the short reuse map; linked
 contracts own detailed schemas and evidence rules.
+
+Declare capabilities once in `experiment_catalog.py`; execution adapters are
+derived from its typed family/addon metadata. New catalog entries still require
+their actual implementation and applicable qualification.
 
 Small registered model deltas start at the
 [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md): attach/seal hooks, explicit

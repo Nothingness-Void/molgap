@@ -9,6 +9,7 @@ from pathlib import Path
 
 from molgap import experiment_execution as execution
 from molgap import experiment_spec as declaration
+from molgap.common.spec import FamilyExecution
 from molgap.experiment_family_artifacts import artifact_adapter
 from molgap.experiment_source_inventory import registered_source_files
 from test_experiment_workflow import _arm, _spec_payload
@@ -72,8 +73,13 @@ def new_family(monkeypatch):
     monkeypatch.setattr(execution, "FAMILIES", families)
     adapter = execution.graph_training_adapter(key,
         model_factory="molgap.synthetic_graph_model:make_model")
+    contract = replace(contract, execution=FamilyExecution(adapter.module, adapter.artifact_adapter,
+        adapter.serialization_modules, adapter.source_files, adapter.model_factory))
+    families = MappingProxyType({**declaration.FAMILIES, key: contract})
+    monkeypatch.setattr(declaration, "FAMILIES", families)
+    monkeypatch.setattr(execution, "FAMILIES", families)
     monkeypatch.setattr(execution, "TRAINING_ADAPTERS",
-        MappingProxyType({**execution.TRAINING_ADAPTERS, key: adapter}))
+        MappingProxyType(execution._catalog_training_adapters()))
     arm = _arm("neural_atom_k1", "2", "new_family")
     arm["family"] = dict(name=key[0], version=key[1])
     for field, name in (("recipe", contract.recipe), ("sampler", contract.sampler),

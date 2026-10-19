@@ -2,7 +2,8 @@
 
 ## Reuse Navigation
 
-Start with the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md),
+Start with the [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md); use the
+[workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
 [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 and [local CLI](docs/operations/EXPERIMENT_CLI.md), not a copied launcher.
 Platform skills own remote operations; reuse does not authorize execution.

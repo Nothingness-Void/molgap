@@ -6,10 +6,11 @@ One fact has one authoritative owner: follow pointers rather than copy facts.
 
 ## Reuse First
 
-Start with the [modular experiment workflow](docs/operations/EXPERIMENT_WORKFLOW.md),
-then use its [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
-[local CLI](docs/operations/EXPERIMENT_CLI.md) before adding plumbing. Read them
-before a desktop multi-arm runner, source package or prospective record. The
+Start with the [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
+Use the [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
+[reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
+[local CLI](docs/operations/EXPERIMENT_CLI.md) for the operation being changed;
+do not load every API or historical audit for routine configuration work. The
 workflow and CLI stage local identity/evidence and registered training; the
 platform skill owns remote submission and reconciliation.
 Reuse family trainers, checkpoint/inference owners, saved-prediction analysis,

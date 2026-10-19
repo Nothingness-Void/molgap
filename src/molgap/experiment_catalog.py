@@ -1,7 +1,7 @@
-"""Reviewed family/addon declarations only; parser and IO live in common."""
+"""Reviewed family/addon capabilities; parsing and IO live in common."""
 from types import MappingProxyType
 from .common.spec import (
-    FamilyContract, AddonContract, AddonConfigField,
+    FamilyContract, FamilyExecution, AddonContract, AddonConfigField,
     EDGE_STATE_BASE_LAYERS, EDGE_STATE_MIN_LAYERS, EDGE_STATE_MAX_LAYERS,
 )
 
@@ -10,11 +10,15 @@ FAMILIES = MappingProxyType({
     ("neural_atom_k1", "3"): FamilyContract(
         "neural_atom_k1", "3", "molgap.family_training_runner", "shared-family-training",
         "ogb-atom9-bond3-rwse16-v1", ("train",), "frozen-family-pass-order",
-        "frozen-train-mean-sample-std", "ogb_edge_state_structural_gps9", ("development",), allow_any_seed=True),
+        "frozen-train-mean-sample-std", "ogb_edge_state_structural_gps9", ("development",), allow_any_seed=True,
+        execution=FamilyExecution("molgap.family_training_runner", "k1-session-v1", ("molgap.pcqm_wedge",), target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
+    ),
     ("gptrans_t", "2"): FamilyContract(
         "gptrans_t", "2", "molgap.family_training_runner", "shared-family-training",
         "ogb-atom9-bond3-shortest-path-cap20", ("train",), "frozen-family-pass-order",
-        "frozen-train-mean-sample-std", optional_roles=("development",), allow_any_seed=True),
+        "frozen-train-mean-sample-std", optional_roles=("development",), allow_any_seed=True,
+        execution=FamilyExecution("molgap.family_training_runner", "gptrans-session-v1", ("molgap.pcqm_wedge",), target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
+    ),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
@@ -25,6 +29,7 @@ FAMILIES = MappingProxyType({
         "gptrans_t", "1", "molgap.gptrans", "pcqm_gptrans_v4",
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
         "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
+        execution=FamilyExecution("molgap.gptrans_screen_workflow", "gptrans-v1", ("molgap.pcqm_wedge",)),
     ),
     ("neural_atom_k1", "1"): FamilyContract(
         "neural_atom_k1", "1", "molgap.qm9_neural_atom", "pcqm_k1_full",
@@ -38,6 +43,7 @@ FAMILIES = MappingProxyType({
         "seed42-python-epoch-shuffle-v4", "fixed-train-100k-mean-sample-std",
         "ogb_edge_state_structural_gps9",
         replication_samplers=((43, "seed43-python-epoch-shuffle-v4"),),
+        execution=FamilyExecution("molgap.k1_screen_training", "k1-screen-v1", ("molgap.pcqm_wedge",), target_identity_in_completion=True),
     ),
 })
 
@@ -50,6 +56,8 @@ ADDONS = MappingProxyType({
             tuple(AddonConfigField(key, value=value) for key, value in (
                 ("family", family), ("slot", slot), ("name", suffix + "_scale"))),
             (version,),
+            execution_modes=((version, "composed"),),
+            apply_hook="molgap.substrate_scale_addon:apply_addon",
         )
         for family, prefix, version in (("neural_atom_k1", "k1", "3"), ("gptrans_t", "gptrans", "2"))
         for suffix, slot in (("node", "pre_message"), ("aggregate", "post_aggregation"),
@@ -58,6 +66,7 @@ ADDONS = MappingProxyType({
     ("gptrans_degree_bond_local", "1"): AddonContract(
         "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
         family_versions=("2",), single_addon=True,
+        execution_modes=(("2", "degree_bond_local_ema999"),), policy_hook="molgap.gptrans_bond_local:policy",
     ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
@@ -68,11 +77,15 @@ ADDONS = MappingProxyType({
         "edge_state_gps", "edge-state-architecture", "molgap.qm9_neural_atom",
     ),
     **{
-        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants")
+        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants",
+            execution_modes=(("1", name), ("2", name)),
+        )
         for name in ("pair_prenorm", "centered_logits")
     },
     **{
-        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory")
+        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory",
+            execution_modes=(("1", name), ("2", name)),
+        )
         for name in ("memory_value", "memory_message")
     },
     ("k1_pair_value", "1"): AddonContract(
@@ -84,14 +97,17 @@ ADDONS = MappingProxyType({
          AddonConfigField("kappa", value=4), AddonConfigField("seed", "initialization_seed", value=42),
          AddonConfigField("degree_policy", value="original-sum-above-four")),
         ("2", "3"), True,
+        execution_modes=(("2", "ssma"), ("3", "ssma")),
     ),
     ("k1_two_pass_mean", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
         family_versions=("2", "3"), single_addon=True,
+        execution_modes=(("2", "mean2"), ("3", "mean2")),
     ),
     ("k1_mean2_clean_second", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
         family_versions=("2", "3"), single_addon=True,
+        execution_modes=(("2", "mean2_clean_second"), ("3", "mean2_clean_second")),
     ),
     # Historical declaration compatibility only; live training dispatch retires these.
     ("k1_fused_layout", "1"): AddonContract(

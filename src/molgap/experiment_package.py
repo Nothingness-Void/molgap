@@ -9,14 +9,16 @@ import stat
 import subprocess
 import tarfile
 import tempfile
+from uuid import uuid4
 from pathlib import Path, PurePosixPath, PureWindowsPath
 
 from .experiment_spec import ExperimentSpec
 from .screen_policy import canonical_fingerprint
-from .v4_bundle import TEXT_SUFFIXES, _payload, build_v4_source_bundle
+from .v4_bundle import TEXT_SUFFIXES, _payload, build_v4_source_bundle, committed_payloads
 
 
 PACKAGE_FORMAT = "molgap-experiment-source-package-v1"
+GENERATED_PACKAGE_FORMAT = "molgap-experiment-source-package-v2"
 PACKAGE_STATUS = "source_packaged"
 SIDECARS = frozenset({
     "source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt",
@@ -77,9 +79,13 @@ def _name(value) -> str:
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
-        # A reviewed pair-token module is model source, not an auth token file.
-        if value == "src/molgap/k1_pair_token.py":
+        # Token model source is not an authentication payload. Credential-like
+        # token names and directories remain blocked, even under the source root.
+        leaf_tokens = set(re.split(r"[._-]+", lowered[-1]))
+        if ("token" in leaf_tokens and path.stem not in {"token","tokens"} and
+                not leaf_tokens & {"auth","access","refresh","bearer","api","private"}):
             io_tokens.add("token")
+        lowered = [part for part in lowered if part not in io_tokens]
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens
@@ -103,6 +109,18 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
+def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+    """Read a reviewed source member from an already verified immutable package."""
+    name = _name(relative_path)
+    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
+        members = [member for member in archive.getmembers() if member.name == name]
+        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
+            raise ValueError("Expected one regular packaged text source")
+        stream = archive.extractfile(members[0])
+        if stream is None:
+            raise ValueError("Missing packaged text source")
+        with stream:
+            return stream.read().decode("utf-8")
 def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict) -> Path:
     """Common immutable worker inputs; no platform metadata or submission."""
     from .experiment_launch import _safe_local, publish_immutable_bytes
@@ -123,9 +141,8 @@ def stage_source_inputs(package_dir: Path, destination: Path, initial_states: di
 
 
 def _no_links(path: Path) -> None:
-    for part in (path, *path.parents):
-        if part.is_symlink() or (hasattr(part, "is_junction") and part.is_junction()):
-            raise ValueError(f"Symlink/junction path is forbidden: {part}")
+    from .common.io import _safe_local
+    _safe_local(path)
 
 
 def _source(root: Path, name: str) -> Path:
@@ -152,7 +169,24 @@ def _spec(spec: ExperimentSpec) -> ExperimentSpec:
     return rebuilt
 
 
-def _manifest(spec, names, commit, archive_hash, inventory_hash):
+def _generation_bindings(generated_hashes, configuration_source, names):
+    from .common.spec import _digest
+    if (type(generated_hashes) is not dict or not generated_hashes or len(generated_hashes)>128 or
+            type(configuration_source) is not dict or set(configuration_source)!={"path","sha256","compiler"}
+            or configuration_source["compiler"]!="molgap-scientific-experiment-v1"):
+        raise ValueError("Explicit scientific configuration provenance is required")
+    config_name=_name(configuration_source["path"])
+    if config_name not in names or config_name in generated_hashes or not config_name.endswith(".json"):
+        raise ValueError("Configuration provenance must name committed source JSON")
+    _digest(configuration_source["sha256"],"configuration_source.sha256")
+    for name,digest in generated_hashes.items():
+        _name(name);_digest(digest,"generated record sha256")
+        if name not in names or not name.startswith("experiments/") or "/generated/" not in name or not name.endswith(".json"):
+            raise ValueError("Derived records cannot replace executable Python or arbitrary files")
+    return {"generated_records":dict(sorted(generated_hashes.items())),"configuration_source":dict(configuration_source)}
+
+
+def _manifest(spec, names, commit, archive_hash, inventory_hash, *, generated_hashes=None,configuration_source=None):
     declaration = spec.to_dict()
     stable = {
         "format": PACKAGE_FORMAT, "package_status": PACKAGE_STATUS,
@@ -165,6 +199,9 @@ def _manifest(spec, names, commit, archive_hash, inventory_hash):
         "source_commit": commit, "archive_sha256": archive_hash,
         "inventory_sha256": inventory_hash, "relative_allowlist": names,
     }
+    if generated_hashes is not None or configuration_source is not None:
+        stable.update(format=GENERATED_PACKAGE_FORMAT,
+            **_generation_bindings(generated_hashes,configuration_source,names))
     # Only package_identity is excluded; every other field is stable and bound.
     return {**stable, "package_identity": canonical_fingerprint(stable)}
 
@@ -180,11 +217,17 @@ def _atomic(path: Path, payload: bytes) -> None:
 
 
 def build_experiment_source_package(
-    spec: ExperimentSpec, repo_root: Path, relative_paths, output_dir: Path,
+    spec: ExperimentSpec, repo_root: Path, relative_paths, output_dir: Path, *, source_cache=None,
+    generated_records=None,configuration_source=None,
 ) -> dict:
     """Publish a new source-only package, manifest last; never overwrite a package."""
     spec = _spec(spec)
     names = _allowlist(relative_paths)
+    generated = {} if generated_records is None else dict(generated_records)
+    if generated or configuration_source is not None:
+        _generation_bindings({n:_sha(b) for n,b in generated.items()},configuration_source,names)
+        if any(type(b) is not bytes or len(b)>1024**2 or _json_bytes(_load(b))!=b for b in generated.values()):
+            raise ValueError("Derived JSON must be bounded and canonical")
     root = Path(repo_root).absolute()
     output = Path(output_dir).absolute()
     _no_links(root)
@@ -197,6 +240,12 @@ def build_experiment_source_package(
     if output.exists() and (not output.is_dir() or any(output.iterdir())):
         raise ValueError("Package output must be new or empty")
     commit = _git(root, "rev-parse", "HEAD").decode().strip()
+    if generated:
+        if _sha(_payload(_source(root,configuration_source["path"]))) != configuration_source["sha256"]:
+            raise ValueError("Scientific configuration provenance bytes changed")
+        if any(_payload(_source(root,n)) != b for n,b in generated.items()):
+            raise ValueError("Generated configuration record bytes changed")
+    bundle_options={"generated_records":generated} if generated else {}
     output.mkdir(parents=True, exist_ok=True)
     # Exclusive reservation also prevents two cooperating builders sharing an empty dir.
     lock = output / ".package-building"
@@ -205,14 +254,82 @@ def build_experiment_source_package(
     try:
         with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name:
             stage = Path(stage_name)
-            bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
-                                           output_dir=stage, source_commit=commit)
+            if source_cache is None:
+                bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
+                                               output_dir=stage, source_commit=commit,**bundle_options)
+            else:
+                from .common.io import copy_immutable_file, publish_immutable_bytes
+                from .v4_bundle import _assert_clean_paths
+                if _assert_clean_paths(root, [n for n in names if n not in generated]) != commit:
+                    raise ValueError("Source HEAD changed before cache lookup")
+                committed = {**committed_payloads(root, commit, [n for n in names if n not in generated]),**generated}
+                if any(_payload(_source(root,n)) != committed[n] for n in names):
+                    raise ValueError("Repository source payload mismatch before cache lookup")
+                # Commit provenance belongs to each package, not to reusable tar bytes.
+                key = canonical_fingerprint({"builder":"v4-source-content-v1",
+                    "files":{n:_sha(committed[n]) for n in sorted(names)}})
+                cached = Path(source_cache).absolute() / key
+                _no_links(cached)
+                cache_names={"source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"}
+                if cached.exists() and {p.name for p in cached.iterdir()} != cache_names:
+                    # Legacy partial cache objects are reproducible, not evidence.
+                    # Retain them, then rebuild from the already verified commit.
+                    retained=cached.with_name(".incomplete-"+key+"-"+uuid4().hex)
+                    _no_links(retained)
+                    if retained.parent.resolve() != cached.parent.resolve():
+                        raise ValueError("Cache recovery escaped its configured root")
+                    cached.rename(retained)
+                if not cached.exists():
+                    cached.parent.mkdir(parents=True, exist_ok=True)
+                    with tempfile.TemporaryDirectory(dir=cached.parent, prefix=".source-cache-") as temporary_root:
+                        temporary = Path(temporary_root)/"complete"
+                        built=build_v4_source_bundle(repo_root=root, relative_paths=names,
+                            output_dir=temporary, source_commit=commit,**bundle_options)
+                        from .v4_runtime import validate_standard_source_bundle
+                        validate_standard_source_bundle(temporary/"source.tar.gz",built["archive_sha256"],commit)
+                        try:
+                            temporary.rename(cached)  # One atomic directory publication, never four exposed writes.
+                        except OSError:
+                            if not cached.is_dir() or {p.name for p in cached.iterdir()} != cache_names:
+                                raise
+                            # A concurrent complete publisher won. Every byte is
+                            # checked again below and by the package verifier.
+                for name in ("source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
+                    _source(cached, name)
+                cached_commit = (cached / "SOURCE_COMMIT.txt").read_bytes()
+                if not re.fullmatch(rb"(?:[0-9a-f]{40}|[0-9a-f]{64})\n", cached_commit):
+                    raise ValueError("Invalid cached source commit")
+                inventory = {"format":"molgap-v4-source-inventory-v1",
+                    "source_commit":cached_commit.decode("ascii").removesuffix("\n"),
+                    "files":[{"path":n,"sha256":_sha(committed[n]),"bytes":len(committed[n])}
+                             for n in sorted(names)]}
+                if (cached / "SOURCE_FILES.json").read_bytes() != (json.dumps(inventory, indent=2)+"\n").encode():
+                    raise ValueError("Cached source inventory payload or commit mismatch")
+                cached_hash = (cached / "SOURCE_ARCHIVE_SHA256.txt").read_bytes()
+                if not re.fullmatch(rb"[0-9a-f]{64}\n", cached_hash):
+                    raise ValueError("Invalid cached archive hash")
+                archive_hash = cached_hash.decode("ascii").removesuffix("\n")
+                copy_immutable_file(cached / "source.tar.gz",stage / "source.tar.gz",expected_sha256=archive_hash)
+                # Rebind only after checking the cache's original metadata. The
+                # ordinary package verifier below checks every archived payload.
+                inventory["source_commit"] = commit
+                for name, contents in (
+                    ("SOURCE_COMMIT.txt", (commit+"\n").encode()),
+                    ("SOURCE_ARCHIVE_SHA256.txt", cached_hash),
+                    ("SOURCE_FILES.json", (json.dumps(inventory, indent=2)+"\n").encode()),
+                ):
+                    publish_immutable_bytes(stage / name, contents)
+                bundle = {"archive_sha256":archive_hash}
             manifest = _manifest(spec, names, commit, bundle["archive_sha256"],
-                                 _sha((stage / "SOURCE_FILES.json").read_bytes()))
+                _sha((stage / "SOURCE_FILES.json").read_bytes()),
+                **({"generated_hashes":{n:_sha(b) for n,b in generated.items()},
+                    "configuration_source":configuration_source} if generated else {}))
             _atomic(stage / "experiment_spec.json", spec.to_json().encode("utf-8"))
             _atomic(stage / "package_manifest.json", _json_bytes(manifest))
             # Recheck commit blobs too: Git clean filters must not conceal changed bytes.
             verify_experiment_source_package(stage, repo_root=root)
+            if _git(root, "rev-parse", "HEAD").decode().strip() != commit:
+                raise ValueError("Source HEAD changed before package publication")
             for name in sorted(SIDECARS - {"package_manifest.json"}):
                 os.replace(stage / name, output / name)
         _atomic(output / "package_manifest.json", _json_bytes(manifest))
@@ -241,7 +358,9 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", commit):
         raise ValueError("Invalid source commit")
     archive_hash = _sha(raw["source.tar.gz"])
-    expected = _manifest(spec, names, commit, archive_hash, _sha(raw["SOURCE_FILES.json"]))
+    generation=({"generated_hashes":manifest.get("generated_records"),"configuration_source":manifest.get("configuration_source")}
+                if manifest.get("format")==GENERATED_PACKAGE_FORMAT else {})
+    expected = _manifest(spec, names, commit, archive_hash, _sha(raw["SOURCE_FILES.json"]),**generation)
     if manifest != expected:
         raise ValueError("Package manifest identity or binding mismatch")
     if (raw["SOURCE_COMMIT.txt"] != (commit + "\n").encode()
@@ -275,27 +394,41 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
             if member.size != entry["bytes"]:
                 raise ValueError("Archive member size mismatch")
             stream = archive.extractfile(member)
-            if stream is None or _sha(stream.read()) != entry["sha256"]:
+            payload = None if stream is None else stream.read()
+            if payload is None or _sha(payload) != entry["sha256"]:
                 raise ValueError("Archive member payload mismatch")
+            if name in manifest.get("generated_records", {}):
+                if len(payload) > 1024**2 or _json_bytes(_load(payload)) != payload:
+                    raise ValueError("Derived JSON must be bounded and canonical")
             seen.add(name)
     if seen != set(entries):
         raise ValueError("Archive member set differs from inventory")
+    generated=manifest.get("generated_records",{})
+    if generated:
+        if any(entries[n]["sha256"]!=digest or entries[n]["bytes"]>1024**2 for n,digest in generated.items()):
+            raise ValueError("Derived configuration inventory differs from its provenance")
+        config=manifest["configuration_source"]
+        if entries[config["path"]]["sha256"] != config["sha256"]:
+            raise ValueError("Configuration provenance differs from archived source")
+        config_value = _load(read_packaged_text(directory, config["path"]).encode())
+        if type(config_value) is not dict or config_value.get("format") != config["compiler"]:
+            raise ValueError("Configuration provenance is not a scientific input")
+        prefix = "experiments/" + spec.to_dict()["experiment_id"] + "/generated/" + canonical_fingerprint({
+            "input": config["sha256"], "commit": commit}) + "/"
+        if config_value.get("experiment_id") != spec.to_dict()["experiment_id"] or any(
+                not n.startswith(prefix) for n in generated):
+            raise ValueError("Derived records differ from their configuration/source namespace")
     if repo_root is not None:
         root = Path(repo_root).absolute()
         _no_links(root)
         root = root.resolve()
         tracked = set(_git(root, "ls-files", "-z").decode("utf-8").split("\0"))
+        committed = committed_payloads(root, commit, [n for n in entries if n not in generated])
         for name, entry in entries.items():
-            if name not in tracked:
+            if name not in tracked and name not in generated:
                 raise ValueError(f"Source no longer tracked: {name}")
             path = _source(root, name)
-            tree = _git(root, "ls-tree", "-z", commit, "--", name).split(b"\0")
-            expected_tree = [row for row in tree if row]
-            if len(expected_tree) != 1 or expected_tree[0].split(b" ", 1)[0] not in {b"100644", b"100755"}:
-                raise ValueError(f"Commit source is not a regular tracked file: {name}")
-            payload = _git(root, "show", f"{commit}:{name}")
-            if path.suffix.lower() in TEXT_SUFFIXES:
-                payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            payload = committed[name] if name not in generated else _payload(_source(root,name))
             if any(len(data) != entry["bytes"] or _sha(data) != entry["sha256"]
                    for data in (payload, _payload(path))):
                 raise ValueError(f"Repository source payload mismatch: {name}")
@@ -305,17 +438,3 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
 def inspect_experiment_source_package(package_dir: Path, repo_root: Path | None = None) -> dict:
     """Inspection is fail-closed verification, never a readiness decision."""
     return verify_experiment_source_package(package_dir, repo_root)
-
-
-def read_packaged_text(package_dir: Path, relative_path: str) -> str:
-    """Read a reviewed member after the existing immutable-package verifier."""
-    name = _name(relative_path)
-    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
-        members = [member for member in archive.getmembers() if member.name == name]
-        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
-            raise ValueError("Expected one regular packaged text source")
-        stream = archive.extractfile(members[0])
-        if stream is None:
-            raise ValueError("Missing packaged text source")
-        with stream:
-            return stream.read().decode("utf-8")

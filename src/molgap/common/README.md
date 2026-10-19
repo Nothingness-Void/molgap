@@ -3,7 +3,8 @@
 One mechanism for desktop and server, within this repository. No separate
 service, duplicate trainer, controller import or cross-machine coordination.
 
-Start with the [workflow](../../../docs/operations/EXPERIMENT_WORKFLOW.md).
+Start with the [quickstart](../../../docs/operations/EXPERIMENT_QUICKSTART.md);
+the [workflow](../../../docs/operations/EXPERIMENT_WORKFLOW.md) is the API reference.
 This API factors mechanisms out of the existing owners; it grants no execution,
 role, submission, promotion or full-admission authority.
 

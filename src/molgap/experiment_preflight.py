@@ -739,7 +739,7 @@ def _release_imports(request):
                 with tempfile.TemporaryDirectory(dir=root.parent, prefix="dataset-mount-") as temporary:
                     mounted = Path(temporary)
                     target = mounted / relative
-                    target.parent.mkdir(parents=True)
+                    target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(source_manifest, target)
                     resolved = data.resolve_training_manifest(mounted, selection)
                     if resolved != target.resolve():
@@ -958,7 +958,10 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
         check("entry_script", "kernel", lambda: _file_sha(_regular(Path(entry_script).absolute())))
     if launch_config is not None or kernel_metadata is not None:
         check("workflow", "launch", lambda: check_workflow_binding(spec,
-            launch_config=launch_config, kernel_metadata=kernel_metadata, entry_script=entry_script))
+            launch_config=launch_config, kernel_metadata=kernel_metadata, entry_script=entry_script,
+            package_dir=package, expected_package_identity=expected_package_identity,
+            recipe_files=recipe_files, initial_states=initial_states, input_root=input_root,
+            manifest=manifest))
     if input_root:
         def layout():
             root = Path(input_root).absolute()
@@ -977,7 +980,10 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                 "No model execution, GPU qualification, scientific acceptance or submission authority."]}
 
 
-def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script):
+def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script,
+                           package_dir=None, expected_package_identity=None,
+                           recipe_files=None, initial_states=None, input_root=None,
+                           manifest=None, staged_root=None):
     """Bind final configuration, per-arm prospective bytes and platform metadata."""
     import ast
     if any(value is None for value in (launch_config, kernel_metadata, entry_script)):
@@ -985,6 +991,13 @@ def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script
     launch_path, metadata_path, entry_path = [
         _regular(Path(value).absolute()) for value in (launch_config, kernel_metadata, entry_script)]
     launch, metadata = _load(launch_path.read_bytes()), _load(metadata_path.read_bytes())
+    if "resume" in launch:
+        from .experiment_launch_config import validate_launch_config
+        validate_launch_config(spec, launch_path, manifest=manifest,
+            staged_root=staged_root, package_dir=package_dir,
+            expected_package_identity=expected_package_identity,
+            input_root=input_root, recipe_files=recipe_files,
+            initial_states=initial_states)
     if (launch.get("spec_identity") != spec.identity or
         launch.get("run_reference") != metadata.get("id") or
         launch.get("account") != metadata["id"].split("/")[0] or
