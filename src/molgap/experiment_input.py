@@ -440,11 +440,10 @@ def _compile_scientific_input(path, root, value):
         metadata, input_ref, _, _ = next(iter(modern_inputs.values()))
         metadata = {key: deepcopy(metadata[key]) for key in (
             "format", "scientific_training_authorized", "target_mean_eV", "target_std_eV")}
-        binding = derive(prefix + "/training_input.json", _read(local(input_ref)))
-        # Keep the accepted binding byte identity; JSON reformatting cannot
-        # silently substitute a different DatasetSelection.
-        generated[binding["path"]] = local(input_ref).read_bytes()
-        metadata["training_input"] = {"path": "training_input.json", "sha256": hashlib.sha256(generated[binding["path"]]).hexdigest()}
+        # An accepted input is retained source, not compiler-generated JSON.
+        # Pin its original bytes so pretty-printed accepted manifests need not
+        # be canonicalized or admitted through a weaker package validator.
+        metadata["training_input"] = pin(input_ref)
         metadata["models"] = {name: item[2] for name, item in modern_inputs.items()}
         metadata["authority"] = pin(value["authority_ref"])
         metadata_pin = derive(prefix + "/training_inputs.json", metadata)

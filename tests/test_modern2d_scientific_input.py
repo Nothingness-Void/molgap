@@ -44,6 +44,10 @@ def configured(case, tmp_path):
     binding_ref = "experiments/reference/training_input.json"
     _write_json(repo / binding_ref, dict(format="molgap-indexed-training-input-v1", data_root="absent",
         scope="ACCEPTED_INDEXED_INPUT_V1", train=train_record, development=dev_record))
+    # Real accepted manifests predate the compiler and are not canonical JSON.
+    # Packaging must retain their original pin, not treat them as derived bytes.
+    binding_path = repo / binding_ref
+    binding_path.write_text(json.dumps(json.loads(binding_path.read_bytes()), indent=2) + "\n", encoding="utf-8")
     recipe = replace(case.recipe, train_rows=100000, development_rows=50000, optimizer_steps=46860,
         dataset=replace(case.recipe.dataset, manifest="training_input.json", manifest_sha256=file_digest(repo / binding_ref)))
     family = recipe.interface

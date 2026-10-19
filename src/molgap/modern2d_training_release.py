@@ -182,7 +182,7 @@ def check_plan(spec, root, plan):
             type(plan["arms"]) is not list or [e.get("arm_id") for e in plan["arms"]] != arm_ids or
             set(metadata.get("models", {})) != set(arm_ids)):
         raise ValueError("Formal release must cover both independent reference arms")
-    binding_path = _pinned(_pinned(root, plan["inputs"]).parent, {
+    binding_path = _pinned(root if configured else _pinned(root, plan["inputs"]).parent, {
         k: metadata["training_input"][k] for k in ("path", "sha256")})
     binding = _json(binding_path)
     if (binding.get("format") != "molgap-indexed-training-input-v1" or
