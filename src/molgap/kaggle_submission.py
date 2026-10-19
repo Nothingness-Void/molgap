@@ -186,6 +186,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     source_metadata = _json(staged / "dataset-metadata.json")
     account, ref, dataset = values["username"], metadata["id"], source_metadata["id"]
     launch = _json(staged / "experiment_launch.json")
+    if "resume" in launch:
+        raise ValueError("Resumed workflow staging is local-only here; use the owning platform continuation adapter after reconciling the original run")
     if (ref.split("/")[0] != account or dataset.split("/")[0] != account
             or launch["account"] != account or launch["run_reference"] != ref
             or launch["accelerator"] != "NvidiaTeslaT4" or dataset not in metadata["dataset_sources"]
@@ -275,7 +277,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     if actual != dataset or response.error:
                         raise ValueError("Source publication identity differs")
                 except Exception as error:
-                    save("SOURCE_UNKNOWN", error_type=type(error).__name__)
+                    try:
+                        save("SOURCE_UNKNOWN", error_type=type(error).__name__)
+                    except Exception as publication_error:
+                        raise error from publication_error
                     return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN", "submitted": False}
                 save("SOURCE_PUBLISHED")
                 source_status = _dataset_status(api, dataset)
@@ -305,7 +310,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
                     accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json")
             except Exception as error:
-                save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
+                try:
+                    save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
+                except Exception as publication_error:
+                    raise error from publication_error
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
             atomic_json(output / "platform_response.json", response)
             if response["status"] != "submitted" or response.get("reconciliation_required"):

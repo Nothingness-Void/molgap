@@ -12,7 +12,7 @@ from .experiment_launch_config import validate_launch_config
 from .experiment_package import verify_experiment_source_package, read_packaged_text
 from .experiment_preflight import check_release_inputs, _atomic
 from .experiment_resume import RESUME_BUNDLE_FILE, create_resume_bundle, validate_resume_bundle
-from .experiment_workflow import _platform_adapter, _path
+from .experiment_workflow import _platform_adapter, _path, _write_preparation_report
 
 
 RESUME_PLAN_FORMAT = "molgap-workflow-resume-v1"
@@ -139,6 +139,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
               "original_prepared": str(Path(prepared).absolute()),
               "original_receipt": str(Path(receipt_path).absolute()),
               "prospective_published": False, "submitted": False}
+    preparation_error = None
     try:
         stage = backend.stage_inputs(repo_root=Path(repo_root), output=output, package=Path(package_dir),
             manifest=manifest, spec=spec, platform_plan=platform_plan, metadata=metadata,
@@ -173,8 +174,10 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
             limitations=["All arms must have incomplete owner-validated checkpoints.",
                          "Workload skill must reconcile the prior launch before submitting a successor."])
         return report
-    except Exception as exc:
+    except BaseException as exc:
+        preparation_error = exc
         report.update(status="ERROR", error=str(exc))
         raise
     finally:
-        _atomic(output / "workflow_report.json", report)
+        _write_preparation_report(output / "workflow_report.json", report,
+            primary_error=preparation_error, writer=_atomic)

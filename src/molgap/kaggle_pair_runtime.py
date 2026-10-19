@@ -16,6 +16,18 @@ from .training_logging import forward_training_logs
 from .experiment_allocation import AllocationLedger
 
 
+def _retain_failure(report, operations):
+    """Attempt independent receipts without replacing the active worker fault."""
+    for name, publish in operations:
+        try:
+            publish()
+        except Exception as error:
+            report["retention_error"] = str(error)
+            report.setdefault("retention_errors", []).append({"operation": name,
+                "error_type": type(error).__name__, "message": str(error)})
+            print(f"Failed execution retention ({name}): {error}", file=sys.stderr)
+
+
 def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path,
                        launch_path: Path, output: Path, allocation_started=None,
                        manifest=None) -> dict:
@@ -152,6 +164,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         workers, phase_record = [], {"phase": phase, "workers": [], "status": "running"}
         ledger_updated = time.perf_counter()
         cost_pause_requested = False
+        phase_error = None
         try:
             for declared_job in jobs:
                 job = {**declared_job, "device": descriptor.device(declared_job["device"])}
@@ -232,7 +245,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             phase_record["status"] = "complete"
             if cost_pause_requested:
                 phase_record["status"] = "paused_for_cost"
-        except BaseException:
+        except BaseException as error:
+            phase_error = error
             report["status"], phase_record["status"] = "failed", "failed"
             for p, _, _ in workers:
                 if p.poll() is None:
@@ -264,33 +278,40 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 "worker_wall_seconds": j.get("finished", time.perf_counter()) - j["started"]}
                 for p, _, j in workers]
             for _, log, item in workers:
-                log.close()
-                if phase == "train":
+                def relay():
                     item["log_offset"] = forward_training_logs(
                         output / item["arm_id"] / "train.log", item["log_offset"], arm_id=item["arm_id"])
+                operations = (("worker_log_close", log.close),)
+                if phase == "train":
+                    operations += (("worker_log_relay", relay),)
+                if phase_error is None:
+                    for _, publish in operations:
+                        publish()
+                else:
+                    _retain_failure(report, operations)
             report["phases"].append(phase_record)
             report["pair_process_wall_seconds"] = time.perf_counter() - started
             report["scope"] = "orchestration window excluding bootstrap and queue; not per-arm native device cost"
-            atomic_json(output / "pair_state.json", report)
-            ledger.write(output, report["status"],
-                arm_roots=[output / j["arm_id"] for j in jobs])
-            if report["status"] == "failed":
-                try:
-                    retain_execution()
-                except Exception as exc:
-                    report["retention_error"] = str(exc)
-                    try:
-                        atomic_json(output / "pair_state.json", report)
-                    except OSError:
-                        pass  # Preserve the original worker failure if storage also failed.
+            publications = (
+                ("pair_state", lambda: atomic_json(output / "pair_state.json", report)),
+                ("allocation_ledger", lambda: ledger.write(output, report["status"],
+                    arm_roots=[output / j["arm_id"] for j in jobs])))
+            if phase_error is None:
+                for _, publish in publications:
+                    publish()
+            else:
+                _retain_failure(report, (*publications, ("execution_retention", retain_execution),
+                    ("failure_observation", lambda: atomic_json(output / "pair_state.json", report))))
     if extension.finalize is not None:
         try:
             report.update(extension.finalize(output))
         except BaseException:
             report["status"] = "failed"
             report["exit_reason"] = "diagnostic_summary_failed_preserve_worker_outputs"
-            ledger.write(output, "failed", arm_roots=[output / j["arm_id"] for j in jobs])
-            retain_execution()
+            _retain_failure(report, (
+                ("allocation_ledger", lambda: ledger.write(output, "failed",
+                    arm_roots=[output / j["arm_id"] for j in jobs])),
+                ("execution_retention", retain_execution)))
             raise
     cost_stopped = cost_bounded and any(s["terminal_status"] == "interrupted" for s in report["arms"].values())
     report["status"] = "STOP_FOR_COST" if cost_stopped else "complete"

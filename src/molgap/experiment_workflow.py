@@ -4,6 +4,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import sys
 from pathlib import Path
 from time import perf_counter
 
@@ -32,6 +33,15 @@ _FIELDS = {
     "initial_states", "required_modules", "entry_template", "kernel_metadata",
     "dataset_metadata", "pickle_inputs",
 }
+
+
+def _write_preparation_report(path, report, *, primary_error=None, writer=None):
+    try:
+        (writer or _atomic)(path, report)
+    except Exception as error:
+        if primary_error is None:
+            raise
+        print(f"Preparation report publication failed: {error}", file=sys.stderr)
 
 
 def _path(root: Path, value: str) -> Path:
@@ -377,6 +387,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
               "prospective_published": False, "publication_intent": False,
               "timings": {"input_validation_seconds": perf_counter() - started}}
     phase_started = perf_counter()
+    preparation_error = None
     def record(stage, result):
         nonlocal phase_started
         report["timings"][stage + "_seconds"] = perf_counter() - phase_started
@@ -434,13 +445,14 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
                       limitations=["Local preparation only; workload skill publishes and submits.",
                                    "Remote all-arm runtime qualification is still mandatory."])
         return report
-    except Exception as exc:
+    except BaseException as exc:
+        preparation_error = exc
         status = "ERROR_BEFORE_PUBLICATION" if report["prospective_published"] is False else "ERROR_REQUIRES_RECONCILIATION"
         report.update(status=status, error=str(exc))
         raise
     finally:
         report["timings"]["total_local_preparation_seconds"] = perf_counter() - started
-        _atomic(output / "workflow_report.json", report)
+        _write_preparation_report(output / "workflow_report.json", report, primary_error=preparation_error)
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
