@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "package_identity": "456a940dc0270a697abef0fc08852d2c8a0f70193790744422e69faefec39ed8",
+    "kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "dataset": "nothingnessvoid/k1-postln-100k-s42-src-r2",
+    "authority_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json",
+    "authority_sha256": "26ecfd55174c688b95bdbf1749e8a23c545a7234df9754c01169fe30d470f3af",
+    "monitor_paths": [
+      "experiments/pcqm_structural_bias_norm_100k/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 30.072975099996256,
+    "SOURCE_SUBMITTING": 23.170674599998165,
+    "SOURCE_PUBLISHED": 54.86576879999484,
+    "KERNEL_SUBMITTING": 17.659894399999757,
+    "KERNEL_ACCEPTED": 11.692093899997417
+  },
+  "observed_at": "2026-10-19T16:32:23.595295+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 139648081,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590",
+      "package_identity": "456a940dc0270a697abef0fc08852d2c8a0f70193790744422e69faefec39ed8",
+      "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+      "source_archive_sha256": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde"
+    },
+    "platform_response": {
+      "ref": "/code/nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+      "versionNumber": 1,
+      "kernelId": 139648081,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}

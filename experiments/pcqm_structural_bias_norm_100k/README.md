@@ -16,6 +16,12 @@ logging, resumable checkpoints, submission receipts and terminal inspection.
 
 See [status and exact submissions](STATUS.md). No model result is claimed here.
 
+`k1/attempt_002/` and `gptrans/attempt_002/` retain the explicitly authorized
+bootstrap retries, linked to the [original failure](failure_v1.md).
+`prepare_retry.py` declares only those retries through existing owners; it is
+not a replacement launcher or permission for further attempts. Published
+declarations and the original frozen releases must not be regenerated in place.
+
 ## Local Preparation
 
 `prepare.py` generates only experiment declarations through existing APIs.

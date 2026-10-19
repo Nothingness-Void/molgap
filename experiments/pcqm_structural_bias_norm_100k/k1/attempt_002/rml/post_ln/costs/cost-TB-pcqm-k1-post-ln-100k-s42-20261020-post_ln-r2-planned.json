@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-post-ln-100k-s42-20261020-r2-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-planned",
+  "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_ln:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2"
+}

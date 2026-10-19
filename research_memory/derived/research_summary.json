@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 125,
+      "trajectories_total": 129,
       "with_complete_native_measurement": 24,
-      "with_cost_event": 114,
-      "with_incomplete_native_measurement": 90,
+      "with_cost_event": 118,
+      "with_incomplete_native_measurement": 94,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1524,7 +1524,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 27
+          "unknown_records": 31
         },
         "device_hours": {
           "estimated": {
@@ -1536,7 +1536,7 @@
             "known_total": 43.27577882215583
           },
           "not_applicable_records": 0,
-          "unknown_records": 8
+          "unknown_records": 12
         },
         "queue_hours": {
           "estimated": {
@@ -1548,7 +1548,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 27
+          "unknown_records": 31
         },
         "wall_hours": {
           "estimated": {
@@ -1560,7 +1560,7 @@
             "known_total": 40.47952885453777
           },
           "not_applicable_records": 0,
-          "unknown_records": 8
+          "unknown_records": 12
         }
       },
       "Tesla T4 x2 allocation; candidate assigned GPU0": {
@@ -3064,7 +3064,7 @@
         }
       }
     },
-    "unknown_events": 218
+    "unknown_events": 222
   },
   "evidence": {
     "validated": 109,
@@ -3074,7 +3074,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 88,
+      "count": 92,
       "severity": "INFO"
     },
     {
@@ -3084,7 +3084,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 90,
+      "count": 94,
       "severity": "WARN"
     },
     {
@@ -3094,12 +3094,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 44,
+      "count": 48,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 16,
+      "count": 20,
       "severity": "WARN"
     }
   ],
@@ -3108,11 +3108,11 @@
     "explicit_events": 313,
     "repeatedly_selected": 22
   },
-  "source_digest": "11c02b34acd5eff18a571ce81a002e4b2e0b5b4dbd7a1347577aa99a0e8a50c2",
+  "source_digest": "586ca17c192ea998aced8bb92916da3926ce7d86a52486d15c19076a887b9907",
   "trajectories": {
-    "count": 125,
+    "count": 129,
     "outcomes": {
-      "ACTIVE": 5,
+      "ACTIVE": 9,
       "CLOSED": 13,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 7,

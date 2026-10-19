@@ -100,3 +100,29 @@ Before the explicitly authorized retry, one grouped CPU run of
 `tests/test_kaggle_bootstrap.py tests/test_experiment_workflow.py -k 'bootstrap or pair_runtime'`
 reported **87 passed, 43 deselected** in 7.15s. It covers the repaired entry
 and pair-runtime guard/worker boundaries without accessing GPU or remote roles.
+
+## Explicit Retry Preparation
+
+The source repair is committed at `d6058bc5`; the identical shared entry and
+test patch is selectively integrated into local `molgap-desktop` at `eea8269f`.
+The entry, bootstrap tests and pair-runtime owner match across those tips;
+no experimental model adoption or whole-branch merge is implied.
+
+`prepare_retry.py` only declares `attempt_002/` through existing Spec and Common
+proposal APIs. Luna's read-only review found both retry arm declarations exactly
+equal to their originals, with unchanged recipe, initialization and data paths.
+All four prospective source/action/attempt/plan hashes match `d6058bc5` and their
+new logical runs. Each workflow's seven source-record refs exist in that commit.
+
+Both attempts completed existing preparation, release checks, prospective
+publication and RML rebuild. Full RML validation reported 129 trajectories,
+109 evidence, 254 cost records, 313 role records, 37 traces and zero READY;
+this is not terminal replay qualification. Frozen packages and API publication
+proofs remain under the machine artifact root and each retry's `submission/`.
+
+Source publication initially left status queries unknown. Read-only reconciliation
+confirmed each exact source dataset ready and its new kernel absent before
+continuing the same journal. No source POST was repeated and no extra notebook
+was launched to bypass that uncertainty. Both submissions subsequently bound
+actual physical version 1. See [status](STATUS.md), not this dated local report,
+for scheduler observations and native-startup limitations.

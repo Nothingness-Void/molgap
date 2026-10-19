@@ -1,0 +1,82 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/k1-postln-100k-s42-src-r2",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "ae63eeae27d62c26ad0ff3aa821828a7d9910ae6ad6d456fb7fe5777ccd58f63",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "42fff3ee3c991c31a31274a6996514254258e1a6b2d97508928eacce2742cb61",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "93c95ac7e57e53effa9708214e9c7de6a978a7afdf797d9bda2e05a46a1d7b76",
+      "bytes": 46408
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/acceptance_plan.json",
+      "sha256": "de14f41e0c9ab73590b2c24d5c21571ecea88fad489df291ea2bade08aba6512",
+      "bytes": 1977
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+      "sha256": "e606d0597b5026d6aef42cc079f6cd1b40baf96cc12d89a00600c977ead5121e",
+      "bytes": 2264
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_ln.json",
+      "sha256": "a78fc2103e8cf9a29a945424f62666ed22a1192d86ee36bb6307ac72b4ba138c",
+      "bytes": 2467
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "674dbcbc82b7cde29f06bce087359d8a2daa62e60185d0465ae5f87493d5c423",
+      "bytes": 1400
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590",
+      "bytes": 5440
+    },
+    {
+      "path": "initial_states/post_bn.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "initial_states/post_ln.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "de857eb774f990526ae46ada2fefa1fb5cba375636b393736e460a6f5b6e46cf",
+      "bytes": 10771
+    },
+    {
+      "path": "prospective/post_bn/trajectory.json",
+      "sha256": "0ab953f33301abdd64f19a2db658e88a42d5c4076f3eeadc712ff6ce74f1b8f6",
+      "bytes": 56885
+    },
+    {
+      "path": "prospective/post_ln/trajectory.json",
+      "sha256": "25cd7ca28b42f25d1e9dd2cd990e42e8d0cb5ffa46bec9bbb2d5de1d2b1c9299",
+      "bytes": 56885
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde",
+      "bytes": 851089
+    }
+  ]
+}
