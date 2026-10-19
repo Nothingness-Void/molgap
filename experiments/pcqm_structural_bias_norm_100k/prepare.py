@@ -14,6 +14,7 @@ from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
 from molgap.family_training_runner import family_arm_bindings, INTERFACES
 from molgap.training_reproducibility import atomic_json, canonical_fingerprint, sha256_file
 from molgap.v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
+from molgap.research_memory.trace import atomic_write
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -33,7 +34,8 @@ def generate(initials, profile):
     targets = json.loads((ROOT / TARGET).read_bytes())
     profile_value = json.loads(profile.read_bytes())
     def write(path, record):
-        atomic_json(ROOT / path, record)
+        # Raw artifact pins and packaged text pins must agree on Windows too.
+        atomic_write(ROOT / path, (json.dumps(record, indent=2) + "\n").encode("utf-8"))
     def pin(path):
         return {"path": path, "sha256": sha256_file(ROOT / path)}
     def ref(name, digest):
@@ -47,7 +49,7 @@ def generate(initials, profile):
         dest = REL + "/" + key
         if (ROOT / dest / "rml").exists():
             raise ValueError("Prospective already published; reconcile original declarations")
-        run = "pcqm-" + key + "-" + ("post-ln" if key == "k1" else "resistance") + "-100k-s42"
+        run = "pcqm-" + key + "-" + ("post-ln" if key == "k1" else "resistance") + "-100k-s42-20261020"
         names = [control, candidate]
         facts = config["arms"][selected]
         initial = initials[key]
