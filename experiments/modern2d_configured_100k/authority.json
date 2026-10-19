@@ -1,0 +1,55 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "logical_run_id": "modern2d-configured-100k-s42-v1",
+  "arms": [
+    "ppgt_author_v2",
+    "esa_native_v3"
+  ],
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 9,
+  "recipes": {
+    "ppgt_author_v2": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    },
+    "esa_native_v3": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    }
+  },
+  "run_reference": "kaseichou/molgap-modern2d-configured-100k-v1",
+  "gpu": {
+    "owner": "kaseichou",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 16200,
+    "allocated_t4_hours_ceiling": 9
+  },
+  "authorization_basis": "Human request 2026-10-19: fresh two-arm infrastructure and model-family screen; not a restart of canceled kernel139370303/version1."
+}

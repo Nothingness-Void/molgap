@@ -1,0 +1,96 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "modern2d-configured-100k-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/authority.json",
+  "monitor_paths": [
+    "experiments/modern2d_configured_100k/STATUS.md"
+  ],
+  "timestamp": "2026-10-19T08:30:00Z",
+  "platform_ref": "experiments/modern2d_configured_100k/platform.json",
+  "role_ref": "experiments/modern2d_100k_formal_screen/retry_v2/role_plan.json",
+  "decision_ref": "experiments/modern2d_configured_100k/protocol.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "modern2d-configured-100k-screen",
+    "action": "RUN_SCREEN60",
+    "question": "Can unchanged PPGT author-v2 and ESA isolate-v3 complete the configured lifecycle and produce useful 100K/Common-Dev family reference endpoints?",
+    "deficiency": "Mature K1/GPTrans bounded trial is accepted, but new-family native configured training, throughput and quality endpoints are unobserved; the old formal job was canceled before acceptance.",
+    "changed_mechanism": "Separate PPGT node-pair RRWP/SPE backbone and ESA directed-edge-set backbone; no addon, geometry, pretraining or optimizer search.",
+    "supporting_evidence": [
+      "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "modern2d-qualification-esa_native_v3-s42-v4"
+    ],
+    "alternatives": [
+      "Initialization or optimization may dominate a one-seed result.",
+      "Transform/collation or model compute may exceed the budget.",
+      "Historical K1/GPTrans contracts or development roles may differ; absolute MAE is contextual unless identities match."
+    ],
+    "closed_families": [
+      "modern2d-formal-100k-s42-v2-human-canceled"
+    ],
+    "positive_decision": "Retain complete new-family reference evidence and inspect contextual K1/GPTrans gaps; separately authorize any matched comparison or scale-up.",
+    "negative_decision": "Separate infrastructure/budget failure from model quality; retain all artifacts and stop with no automatic successor.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "One unchanged family per GPU, seed42 BS128 FP32, at most 60 passes each within one 4.5-hour full allocation.",
+    "estimated_device_hours": 9,
+    "estimated_wall_hours": 4.5
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt_author_v2",
+      "model": {
+        "family": "ppgt_small",
+        "version": "3",
+        "addons": []
+      },
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/ppgt_author_v2.pt",
+      "training": {
+        "horizon_passes": 60
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "esa_native_v3",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": []
+      },
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 60
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    }
+  ]
+}
