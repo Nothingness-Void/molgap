@@ -79,6 +79,8 @@ def _name(value) -> str:
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
+        if path.stem in {"payload", "payloads"} and set(lowered[2:-1]) & io_tokens:
+            raise ValueError(f"Source allowlist includes reserved payload path: {value}")
         # Token model source is not an authentication payload. Credential-like
         # token names and directories remain blocked, even under the source root.
         leaf_tokens = set(re.split(r"[._-]+", lowered[-1]))

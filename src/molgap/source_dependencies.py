@@ -94,7 +94,7 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
         module = _module(seed)
         if module is not None:
             pending.extend(_package_paths(root, module))
-    parsed, import_aliases = {}, {}
+    parsed, import_aliases, module_aliases = {}, {}, {}
 
     def tree_for(relative):
         if relative not in parsed:
@@ -108,6 +108,28 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
                 if isinstance(statement, ast.ImportFrom) and statement.module == "importlib"
                 for alias in statement.names if alias.name == "import_module"}
         return import_aliases[relative]
+
+    def referenced_module(relative, node):
+        if relative not in module_aliases:
+            aliases = {}
+            for statement in ast.walk(tree_for(relative)):
+                if isinstance(statement, ast.Import):
+                    for alias in statement.names:
+                        aliases[alias.asname or alias.name.split(".", 1)[0]] = (
+                            alias.name if alias.asname else alias.name.split(".", 1)[0])
+                elif isinstance(statement, ast.ImportFrom):
+                    module = (_relative_module(relative, statement.level, statement.module)
+                        if statement.level else statement.module)
+                    if module:
+                        for alias in statement.names:
+                            aliases[alias.asname or alias.name] = module + "." + alias.name
+            module_aliases[relative] = aliases
+        if isinstance(node, ast.Name):
+            return module_aliases[relative].get(node.id)
+        if isinstance(node, ast.Attribute):
+            parent = referenced_module(relative, node.value)
+            return parent + "." + node.attr if parent else None
+        return None
 
     def unresolved(importer, node, callee=None):
         # Report the source location/callee, never literal arguments which may
@@ -169,6 +191,10 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     include(importer, alias.name)
+            elif isinstance(node, ast.Attribute):
+                module = referenced_module(importer, node.value)
+                if module is not None and (module == "molgap" or module.startswith("molgap.")):
+                    nodes.extend(export_nodes(module, node.attr))
             elif isinstance(node, ast.ImportFrom):
                 name = (_relative_module(importer, node.level, node.module)
                         if node.level else node.module)
