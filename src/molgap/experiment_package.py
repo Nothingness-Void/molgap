@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
 import re
@@ -384,8 +385,11 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     if list(entries) != sorted(names):
         raise ValueError("Inventory and explicit allowlist differ")
     seen = set()
+    config_name = manifest.get("configuration_source", {}).get("path")
+    config_payload = None
     # Never extract untrusted tar members onto the filesystem.
-    with tarfile.open(directory / "source.tar.gz", mode="r:gz") as archive:
+    # Parse the exact snapshot whose hash was checked, without reopening the file.
+    with tarfile.open(fileobj=io.BytesIO(raw["source.tar.gz"]), mode="r:gz") as archive:
         for member in archive:
             name = _name(member.name)
             if not member.isfile() or member.linkname or name in seen or name not in entries:
@@ -400,6 +404,8 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
             if name in manifest.get("generated_records", {}):
                 if len(payload) > 1024**2 or _json_bytes(_load(payload)) != payload:
                     raise ValueError("Derived JSON must be bounded and canonical")
+            if name == config_name:
+                config_payload = payload
             seen.add(name)
     if seen != set(entries):
         raise ValueError("Archive member set differs from inventory")
@@ -410,7 +416,7 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
         config=manifest["configuration_source"]
         if entries[config["path"]]["sha256"] != config["sha256"]:
             raise ValueError("Configuration provenance differs from archived source")
-        config_value = _load(read_packaged_text(directory, config["path"]).encode())
+        config_value = _load(config_payload.decode("utf-8"))
         if type(config_value) is not dict or config_value.get("format") != config["compiler"]:
             raise ValueError("Configuration provenance is not a scientific input")
         prefix = "experiments/" + spec.to_dict()["experiment_id"] + "/generated/" + canonical_fingerprint({

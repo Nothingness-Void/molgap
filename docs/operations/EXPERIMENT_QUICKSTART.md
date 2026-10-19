@@ -32,6 +32,10 @@ $profilePath = 'D:/molgap-machine-profile.json'
 
 The local wrapper selects this checkout in an isolated child and reports its
 actual interpreter and MolGap module. Do not redirect the shared editable install.
+With a machine profile, each child owns a temporary subdirectory of `scratch_root`;
+normal success, nonzero exit and launch exceptions clean that subdirectory. Keep
+durable outputs and diagnostic logs in `artifact_root`, outside temporary scratch.
+Forced process termination can still leave scratch behind.
 
 ## Change the scientific delta
 
@@ -126,6 +130,30 @@ still uses desktop's existing V5/RML pipeline. Mechanical acceptance, scientific
 comparison, Replay, cost/roles, native qualification and full admission remain
 separate. New configuration work needs focused tests, not a full historical audit
 or document line-count checks.
+
+## Test the changed flows once
+
+Use the existing tests through one selected-checkout invocation. Select only the
+affected flows; overlapping selections are deduplicated before pytest starts.
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope package --scope prepare -- -q
+```
+
+Available scopes: `runtime` (checkout and scratch isolation), `package` (source
+identity/cache/tampering), `prepare` (compile, reuse and preparation), `submit`
+(bootstrap and journal reconciliation), `accept` (retrieval and terminal output),
+and `resume` (continuation and interrupted state). `--list` shows their existing
+test files without execution. Pass pytest filters such as `-k` after `--`; use
+ordinary pytest for tests outside these infrastructure flows. These selections
+are conveniences, not a mandatory release gate or native platform qualification.
+
+Run relevant tests after the final code changes. Re-run a failing or affected
+selection after a fix; do not repeat successful unchanged selections at every
+handoff, commit or merge. Broaden coverage when the change crosses another owner.
+The profile wrapper removes its own test scratch on exit; save any needed pytest
+logs/JUnit reports explicitly under `artifact_root` before returning. Do not create
+another worktree or environment merely for a test stage.
 
 The [desktop migration record](DESKTOP_INFRASTRUCTURE_UPGRADE.md) owns provenance
 and executed verification. [Storage retirement](LOCAL_STORAGE_RETIREMENT.md)
