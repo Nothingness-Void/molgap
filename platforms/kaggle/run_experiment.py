@@ -164,24 +164,39 @@ def _workload(allocation_started):
 def main():
     started = time.perf_counter()
     status, hardware = "failed", []
+    workload_error = None
     try:
         hardware = [s.strip() for s in subprocess.check_output(
             ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True).splitlines() if s.strip()]
         _workload(started)
         status = "complete"
+    except BaseException as error:
+        workload_error = error
+        raise
     finally:
         # Even environment/bootstrap failures retain their full observed allocation.
         # This overlaps the runtime ledger: it must never be added to it again.
         elapsed = time.perf_counter() - started
         destination = Path("/kaggle/working/bootstrap_allocation.json")
         temporary = destination.with_suffix(".tmp")
-        temporary.write_text(json.dumps({"status": status, "hardware": hardware,
-            "wall_seconds": elapsed, "allocation_device_count": len(hardware) if hardware else None,
-            "allocated_device_seconds": len(hardware) * elapsed if hardware else None,
-            "cost_status": "measured" if hardware else "measurement_missing",
-            "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
-            "provisioning_before_python_seconds": None, "queue_seconds": None}), encoding="utf-8")
-        os.replace(temporary, destination)
+        try:
+            temporary.write_text(json.dumps({"status": status, "hardware": hardware,
+                "wall_seconds": elapsed, "allocation_device_count": len(hardware) if hardware else None,
+                "allocated_device_seconds": len(hardware) * elapsed if hardware else None,
+                "cost_status": "measured" if hardware else "measurement_missing",
+                "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+                "provisioning_before_python_seconds": None, "queue_seconds": None}), encoding="utf-8")
+            os.replace(temporary, destination)
+        except OSError as error:
+            # A receipt failure must not obscure the startup fault that caused it.
+            if workload_error is None:
+                raise
+            print(f"Bootstrap allocation publication failed: {error}", file=sys.stderr)
+        finally:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as error:
+                print(f"Bootstrap allocation temporary cleanup failed: {error}", file=sys.stderr)
 
 
 if __name__ == "__main__":

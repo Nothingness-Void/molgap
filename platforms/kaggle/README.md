@@ -56,6 +56,23 @@ Both Kaggle accounts hold accepted, byte-identical fixed OGB PCQM4Mv2
 `platforms/_records/kaggle/pcqm_fixed_datasets_kaggle2_v1/`. Both accounts are
 excluded from holding the 1M and full identities.
 
+## Bootstrap output ownership
+
+The pair runtime owns a fresh `experiment/` directory. Bootstrap environment
+and allocation receipts stay in its parent; publishing entry metadata inside
+`experiment/` before delegation would trip the existing nonempty-output guard.
+Never relax that guard or remove an existing checkpoint to make startup pass.
+
+The 2026-10-20 review of Desktop `eea8269f` found no corresponding prewrite in
+the Server entry. It repaired an adjacent failure path: allocation-receipt IO
+failure preserves the original startup exception and cleans the temporary file;
+receipt failure after successful execution still propagates. Frozen submitted
+packages retain their original entry bytes. The CPU regression is
+`tests/test_kaggle_bootstrap_server.py`, exercising the real pair freshness guard
+for generic and pinned entry paths without data decoding, network or GPU work.
+An independent Luna worker passed120 tests plus5 subtests across bootstrap,
+workflow trial, formal release, qualification runtime and training-record suites.
+
 ## Frozen package release and response receipts
 
 For new ExperimentSpec source packages, run the shared CLI's `check-release`
