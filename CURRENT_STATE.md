@@ -6,8 +6,9 @@
 
 ## Server execution status
 
-The human authorized a fresh [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
-to test infrastructure and obtain independent family endpoints. It reuses the
+The fresh [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
+is submitted and bound to Kaggle2, with the existing Luna B monitor rebound.
+It tests infrastructure and independent family endpoints, reusing the
 accepted indexed100K/Common-Dev50K input, unchanged model configurations and
 frozen initial states through the configured workflow. Native qualification and
 terminal inspection remain required; no K1/GPTrans causal rank or Replay claim
