@@ -211,8 +211,9 @@ def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch
     assert calls == [32220]
 
 
+@pytest.mark.parametrize("runtime_failure", [False, True])
 def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
-        entry, monkeypatch, capsys):
+        entry, monkeypatch, capsys, runtime_failure):
     manifest_record = {"assets": {"topology": [
         {"role": "train", "file": "train.pt"}]}}
     manifest_bytes = json.dumps(manifest_record).encode()
@@ -247,12 +248,19 @@ def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
         assert path.is_file()
         return path
 
+    def run(**kwargs):
+        # Do not replace the runtime with a permissive no-op: its real entry
+        # contract rejects receipt files created before it owns the directory.
+        assert not kwargs["output"].exists() or not any(kwargs["output"].iterdir())
+        if runtime_failure:
+            raise RuntimeError("synthetic native preflight failure")
+
     modules = {
         "molgap": {},
         "molgap.training_reproducibility": {"atomic_json": atomic_json},
         "molgap.experiment_package": {"verify_experiment_source_package": lambda _: {
             "package_identity": "package", "spec_identity": "spec"}},
-        "molgap.kaggle_pair_runtime": {"run_two_phase_pair": lambda **kwargs: None},
+        "molgap.kaggle_pair_runtime": {"run_two_phase_pair": run},
         "molgap.family_training_runner": {"read_recipe": read_recipe},
         "molgap.family_training_data": {"resolve_training_manifest": resolve_training_manifest},
         "molgap.experiment_family_workflow": {"_artifact_path": artifact_path},
@@ -263,7 +271,11 @@ def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
         monkeypatch.setitem(sys.modules, name, module)
     monkeypatch.setattr(sys, "path", list(sys.path))
 
-    entry.main()
+    if runtime_failure:
+        with pytest.raises(RuntimeError, match="synthetic native preflight failure"):
+            entry.main()
+    else:
+        entry.main()
 
     value = json.loads((entry.OUTPUT_ROOT / "input_resolution.json").read_text())
     assert value == {"format": "molgap-kaggle-input-resolution-v1", "spec_identity": "spec",
@@ -274,6 +286,58 @@ def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
                          "shards_decoded": False,
                      }}}
     assert "INPUT_RESOLVED fixture_arm datasets/release-owner/slug/manifest.json" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("existing_output", [False, True])
+def test_shared_resolution_reaches_real_pair_freshness_guard(entry, monkeypatch, existing_output):
+    from molgap import kaggle_pair_runtime as pair_runtime
+    # Run the actual freshness guard, then stop before any package/data/hardware
+    # probe. This catches the bootstrap/runtime interaction missed by no-op mocks.
+    class ReachedPairParser(RuntimeError):
+        pass
+
+    def stop_at_config(path):
+        raise ReachedPairParser("freshness guard passed")
+
+    real_pair = pair_runtime.run_two_phase_pair
+    monkeypatch.setattr(pair_runtime, "_json", stop_at_config)
+    manifest_bytes = b'{"assets":{"topology":[{"role":"train","file":"train.pt"}]}}'
+    frozen_launch(entry, None, recipe_fields={"format": "molgap-family-training-recipe-v1",
+        "dataset": {"manifest": "data/manifest.json", "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+                    "development": False}})
+    manifest = entry.INPUT_ROOT / "data/manifest.json"
+    manifest.parent.mkdir()
+    manifest.write_bytes(manifest_bytes)
+    (manifest.parent / "train.pt").write_bytes(b"synthetic")
+    monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: None)
+    modules = {
+        "molgap": {},
+        "molgap.training_reproducibility": {"atomic_json": entry._atomic_entry_json},
+        "molgap.experiment_package": {"verify_experiment_source_package": lambda _: {
+            "package_identity": "package", "spec_identity": "spec"}},
+        "molgap.kaggle_pair_runtime": {"run_two_phase_pair": real_pair},
+        "molgap.family_training_runner": {"read_recipe": lambda path: ({}, types.SimpleNamespace(
+            dataset=types.SimpleNamespace(manifest="data/manifest.json", development=False,
+                manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest())))},
+        "molgap.family_training_data": {"resolve_training_manifest": lambda *args: manifest},
+        "molgap.experiment_family_workflow": {"_artifact_path": lambda root, name: root / name},
+    }
+    for name, attrs in modules.items():
+        module = types.ModuleType(name)
+        module.__dict__.update(attrs)
+        monkeypatch.setitem(sys.modules, name, module)
+    monkeypatch.setattr(sys, "path", list(sys.path))
+    if existing_output:
+        entry.OUTPUT_ROOT.mkdir()
+        sentinel = entry.OUTPUT_ROOT / "last_checkpoint.pt"
+        sentinel.write_bytes(b"existing checkpoint; never delete")
+        with pytest.raises(ValueError, match="fresh output root"):
+            entry.main()
+        assert sentinel.read_bytes() == b"existing checkpoint; never delete"
+    else:
+        with pytest.raises(ReachedPairParser, match="freshness guard passed"):
+            entry.main()
+    assert json.loads((entry.OUTPUT_ROOT / "input_resolution.json").read_bytes())["arms"]
 
 
 def test_atomic_fallback_cleans_up_failed_replace(entry, monkeypatch):

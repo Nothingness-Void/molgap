@@ -67,3 +67,36 @@ unchanged; source publication continues through the original journaled API.
 
 Remote scheduler state, actual version, native preflight and terminal science
 remain separate from this local report. Follow retained submission receipts.
+
+## Version 1 Failure Repair, 2026-10-20 JST
+
+See [failure attribution](failure_v1.md). Luna ran CPU-only tests with the
+primary checkout interpreter, this worktree's `src` on `PYTHONPATH`, and
+CUDA/HIP/ROCR devices hidden:
+
+```powershell
+D:/文档/molgap/.venv/Scripts/python.exe -m pytest -q tests/test_kaggle_bootstrap.py tests/test_experiment_workflow.py tests/test_experiment_workflow_resume.py
+D:/文档/molgap/.venv/Scripts/python.exe -m pytest -q tests/test_kaggle_bootstrap.py
+```
+
+The grouped run reported 138 passed and two new-test failures in 385.15s.
+Both failures were the regression fixture's missing `manifest_sha256`, before
+reaching the guard; only that fixture was corrected. The focused repeat then
+passed all 77 bootstrap cases in 2.53s. These invocation counts overlap; they
+are not additive. The workflow/resume tests were not rerun unnecessarily.
+
+A temporary copy outside the checkout exercised both real-guard cases against
+the old entry at `20f5a35c`: the fresh-root case reproduced the same ValueError;
+the existing-checkpoint rejection case passed (one expected failure, one pass,
+15.98s). No checkout files were changed for this negative control. The old
+entry contains the version-1 publication ordering described in the failure
+report; no frozen source payload or remote version was modified.
+
+Parent verification matched all four downloaded output SHA256 values to their
+version-specific retrieval receipts. `git diff --check` passed. This repair
+has no new GPU, native preflight, model-quality or retry acceptance attached.
+
+Before the explicitly authorized retry, one grouped CPU run of
+`tests/test_kaggle_bootstrap.py tests/test_experiment_workflow.py -k 'bootstrap or pair_runtime'`
+reported **87 passed, 43 deselected** in 7.15s. It covers the repaired entry
+and pair-runtime guard/worker boundaries without accessing GPU or remote roles.

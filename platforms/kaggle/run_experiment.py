@@ -73,6 +73,8 @@ def main():
                            allocated_device_seconds=None if count is None else elapsed * count)
         try:
             state["writer"](OUTPUT_ROOT / "allocation_entry_observation.json", observation)
+            if "input_resolution" in state:
+                state["writer"](OUTPUT_ROOT / "input_resolution.json", state["input_resolution"])
         except Exception as exc:
             if observation["error"] is None:
                 raise
@@ -183,7 +185,9 @@ def _bootstrap(allocation_started, state):
             "selected_shard_paths_present": len(selected), "shards_decoded": False}
         print("INPUT_RESOLVED", job["arm_id"], observed_path, flush=True)
     if resolution["arms"]:
-        atomic_json(OUTPUT_ROOT / "input_resolution.json", resolution)
+        # The pair owner must inspect a fresh directory before entry receipts
+        # are published. main's finally retains this metadata on success/failure.
+        state["input_resolution"] = resolution
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
                        launch_path=launch, output=OUTPUT_ROOT,
                        maximum_wall_seconds=remaining())

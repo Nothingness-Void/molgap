@@ -1,21 +1,23 @@
 # Status
 
-Submission observation on 2026-10-20 JST, not a live progress feed:
+Failure reconciliation on 2026-10-20 JST, not a live progress feed:
 
 | Pair | Actual Kaggle kernel/version | Scheduler observation | Receipt |
 |---|---|---|---|
-| K1 Post-BN / Post-LN, 40 passes | 139639058 / 1 | RUNNING at 00:29:28 +09:00 | [K1 receipt](k1/submission/launch_receipt.json) |
-| BondLocal GPTrans / resistance, 60 passes | 139639070 / 1 | RUNNING at 00:29:34 +09:00 | [GPTrans receipt](gptrans/submission/launch_receipt.json) |
+| K1 Post-BN / Post-LN, 40 passes | 139639058 / 1 | ERROR at 00:46:29 +09:00 | [K1 observation](k1/failure_v1/scheduler.json) |
+| BondLocal GPTrans / resistance, 60 passes | 139639070 / 1 | ERROR at 00:46:30 +09:00 | [GPTrans observation](gptrans/failure_v1/scheduler.json) |
 
 Each is a private Kaggle1 T4x2 notebook, one arm per card; fixed100K, seed42.
 No user wall-clock ceiling, local trigger, recurring monitor, automatic retry,
 scale-up or shutdown was added. Kaggle's session limit still applies.
 
-The platform accepted both exact source/config/mount versions with no invalid
-dataset sources. API startup log capture timed out with zero events in both
-bounded samples: native preflight and formal training exposure are therefore
-**not yet observed**, not declared passed or failed. RUNNING is not native or
-scientific acceptance. Reconcile these exact versions before any successor.
+Both attempts failed in the shared bootstrap before native pair preflight or
+formal training. The entry wrote `input_resolution.json` into the output root
+before the pair runtime checked that it was fresh. See the dated
+[failure attribution](failure_v1.md) and exact retrieved files in each
+`failure_v1/` directory. Original submission receipts remain unchanged.
+These are infrastructure failures, not model results. No retry was submitted
+during this reconciliation; native qualification remains unpassed.
 
 Worker source is frozen at `1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f`.
 Frozen package and platform journals are retained externally under

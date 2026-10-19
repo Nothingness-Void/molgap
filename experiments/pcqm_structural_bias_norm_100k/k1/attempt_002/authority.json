@@ -1,0 +1,16 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "authorized_at": "2026-10-19T16:25:29+00:00",
+  "account": "nothingnessvoid",
+  "platform": "kaggle",
+  "arms": ["post_bn", "post_ln"],
+  "seeds": [42],
+  "allocated_t4_hours_ceiling": 12.0,
+  "allocation_wall_limit_seconds": null,
+  "ceiling_basis": "platform session maximum, not user timeout",
+  "platform_limit_ref": "https://www.kaggle.com/docs/notebooks#technical-specifications",
+  "scope": "One explicit retry after version-1 bootstrap failure; unchanged fixed100K pair; no automatic retry, scale-up, protected roles or adoption",
+  "user_authorization": "Fix local infrastructure and resubmit both Kaggle1 pairs under their unchanged contracts",
+  "prior_failure_ref": "experiments/pcqm_structural_bias_norm_100k/failure_v1.md"
+}
