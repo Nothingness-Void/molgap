@@ -14,7 +14,7 @@ per-notebook `authority.json`, `experiment_spec.json`, `workflow_plan.json` and
 `rml/` records. Shared code owns training, source packaging, native preflight,
 logging, resumable checkpoints, submission receipts and terminal inspection.
 
-Status: preparing; no remote submission or model result is claimed here.
+See [status and exact submissions](STATUS.md). No model result is claimed here.
 
 ## Local Preparation
 

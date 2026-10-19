@@ -481,6 +481,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local:A001",
+      "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance:A001",
+      "target": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_resistance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn:A001",
+      "target": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln:A001",
+      "target": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_ln.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada:A001",
       "target": "experiments/pcqm_k1_prenorm_norm_100k/config.json",
       "type": "action_produced_evidence"
@@ -1171,6 +1191,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal",
+      "target": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal",
+      "target": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
+      "type": "prior_evidence"
+    },
+    {
       "source": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
       "target": "TB-family-topology-t4-100k-gptrans_local-s42",
       "type": "prior_evidence"
@@ -1178,6 +1208,16 @@
     {
       "source": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "target": "TB-family-topology-t4-100k-k1_mean2-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
+      "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
+      "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
       "type": "prior_evidence"
     },
     {
@@ -3346,6 +3386,22 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
       "type": "trajectory"
     },
     {

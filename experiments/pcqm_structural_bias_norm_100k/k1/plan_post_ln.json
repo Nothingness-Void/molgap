@@ -1,0 +1,134 @@
+{
+  "trajectory": {
+    "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "pcqm-k1-post-ln-100k-s42-20261020",
+    "question": "Does only Post-LN improve K1 against its same-job Post-BN control?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
+      "observed_deficiency": "Prior normalization results do not establish a beneficial post-LN replacement.",
+      "supporting_evidence_ids": [
+        "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal"
+      ],
+      "alternative_explanations": [
+        "Seed variability",
+        "Optimization interaction",
+        "Graph-size cohorts",
+        "Platform contention"
+      ],
+      "changed_mechanism": "Only18 post-residual local BN sites become node-wise LN.",
+      "cheapest_falsifier": "Synthetic wiring/mask/gradient checks then one native preflight and authorized100K pair.",
+      "related_closed_family_ids": [
+        "pcqm-k1-prenorm-norm-100k-s42"
+      ],
+      "expected_native_cost_ref": "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-planned",
+      "decision_changed_if_positive": "Nominate for independent review only; no automatic500K or production adoption.",
+      "decision_changed_if_negative": "Close the precise frozen mechanism; retain attribution and no automatic retry.",
+      "historical_unknowns": []
+    },
+    "state_at_start": {
+      "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f",
+      "source_config_identity": "853493efbde3849b9d4c2a72998d93b8b58c64fb6db886d6dac697e6e554b130",
+      "contract_refs": [
+        "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+        "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+        "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_ln.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_structural_bias_norm_100k/k1/authority.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "training",
+        "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f",
+        "run_ids": [
+          "pcqm-k1-post-ln-100k-s42-20261020:post_ln:downstream"
+        ],
+        "attempt_ids": [
+          "pcqm-k1-post-ln-100k-s42-20261020-v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_ln.json"
+        ],
+        "cost_event_ids": [
+          "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_structural_bias_norm_100k/k1/decision.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one authorized frozen experiment"
+      ],
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-post-ln-100k-s42-20261020",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_structural_bias_norm_100k/k1/authority.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-19T15:12:16.346193+00:00",
+    "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-planned",
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020:post_ln:downstream",
+      "attempt_id": "pcqm-k1-post-ln-100k-s42-20261020-v1",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/authority.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "format": "molgap-experiment-input-v1",
+  "spec_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/experiment_spec.json",
+  "workflow_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/workflow_plan.json",
+  "machine_profile": "D:\\molgap-machine-profile.json",
+  "authority_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json",
+  "monitor_paths": [
+    "experiments/pcqm_structural_bias_norm_100k/STATUS.md"
+  ],
+  "attempt_id": "v1"
+}

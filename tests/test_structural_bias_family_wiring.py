@@ -9,6 +9,7 @@ from molgap.experiment_execution import TRAINING_ADAPTERS, build_addon_declarati
 from molgap.family_training_data import DatasetSelection
 from molgap.family_training_kernel import FamilyKernel, load_family_model
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
+from molgap.family_training_runner import family_arm_bindings
 from molgap.training_reproducibility import atomic_torch_save
 from molgap.v4_runtime import state_dict_sha256
 
@@ -39,6 +40,10 @@ def test_registered_post_load_recipe_factory_and_optimizer(tmp_path, family, nam
         assert TRAINING_ADAPTERS[interface].mode({"addons": [addon]}) == mode
         record = build_family_recipe(interface, addon=name, configuration=recipe, train_role_identity="synthetic-role")
         assert record["addons"] == [addon]
+        reference = replace(recipe, addons=(), mode="reference" if family == "neural_atom_k1"
+                            else "degree_bond_local_ema999")
+        for field in ("objective", "sampler", "transform"):
+            assert family_arm_bindings(recipe)[field] == family_arm_bindings(reference)[field]
         model, _ = load_family_model(recipe, initial)
         assert model._molgap_substrate.sealed
         assert len(model._molgap_substrate.bindings) == 1
@@ -52,7 +57,29 @@ def test_registered_post_load_recipe_factory_and_optimizer(tmp_path, family, nam
         expected = {id(p) for p in kernel.model.parameters() if p.requires_grad}
         actual = [id(p) for group in kernel.optimizer.param_groups for p in group["params"] if p.requires_grad]
         assert len(actual) == len(set(actual)) and set(actual) == expected
+        from test_family_training_kernel import synthetic_batch
+        threads = torch.get_num_threads()
+        deterministic = torch.are_deterministic_algorithms_enabled()
+        fill = torch.utils.deterministic.fill_uninitialized_memory
+        try:
+            torch.set_num_threads(1)
+            torch.use_deterministic_algorithms(True)
+            batch = synthetic_batch()
+            batch.y = torch.full_like(batch.y, 20.)
+            loss, absolute, rows = kernel.step(batch, check_finite=True)
+            assert torch.isfinite(loss) and torch.isfinite(absolute) and rows == 2
+            assert kernel.optimizer.state
+            if family == "gptrans_t":
+                parameter = kernel.model._molgap_addons["resistance"].projection.weight
+                assert parameter in kernel.optimizer.state
+                assert parameter.grad is not None and parameter.grad.abs().sum() > 0
+        finally:
+            torch.use_deterministic_algorithms(deterministic)
+            torch.utils.deterministic.fill_uninitialized_memory = fill
+            torch.set_num_threads(threads)
         kernel.close()
+        with pytest.raises(ValueError, match="Policy-backed"):
+            replace(recipe, mode="composed")
         if family == "gptrans_t":
             with pytest.raises(ValueError):
                 replace(recipe, addons=())

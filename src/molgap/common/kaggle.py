@@ -42,6 +42,7 @@ def owned_absence(api, ref, kind, error):
     if status != 403 or ref.split("/")[0] != owner:
         return False
     seen = set()
+    opaque = False
     for page in range(1, 51):
         rows = (api.kernels_list(mine=True, user=owner, page=page, page_size=20)
                 if kind == "kernel" else api.dataset_list(mine=True, page=page))
@@ -49,13 +50,39 @@ def owned_absence(api, ref, kind, error):
             raise RuntimeError("Owned listing is unknown; absence is unverified")
         for row in rows:
             identity = str(row.ref)
+            if (kind == "kernel" and not identity and getattr(row, "id", None) == 0
+                    and getattr(row, "title", None) == "[Private Notebook]"
+                    and getattr(row, "author", None) == ""
+                    and getattr(row, "slug", None) == ""):
+                opaque = True
+                continue
             if identity.split("/")[0].lower() != owner.lower() or identity in seen:
                 raise RuntimeError("Owned listing scope/pagination differs")
             if identity.lower() == ref.lower():
                 return False
             seen.add(identity)
         if len(rows) < 20:
-            return True
+            if not opaque:
+                return True
+            # Frozen privacy placeholders have no identity. Do not guess what
+            # they hide: ask the authenticated server to filter this exact slug.
+            # A matching opaque row, malformed page or duplicate stays UNKNOWN.
+            filtered_seen = set()
+            for filtered_page in range(1, 51):
+                filtered = api.kernels_list(mine=True, user=owner, search=ref.split("/")[1],
+                    page=filtered_page, page_size=20)
+                if not isinstance(filtered, list):
+                    raise RuntimeError("Scoped owned listing is unknown")
+                for item in filtered:
+                    candidate = str(item.ref)
+                    if candidate.lower() == ref.lower():
+                        return False
+                    if candidate.split("/")[0].lower() != owner.lower() or candidate in filtered_seen:
+                        raise RuntimeError("Scoped owned listing is ambiguous")
+                    filtered_seen.add(candidate)
+                if len(filtered) < 20:
+                    return True
+            raise RuntimeError("Scoped owned listing exceeded its bounded absence check")
     raise RuntimeError("Owned listing exceeded its bounded absence check")
 
 
