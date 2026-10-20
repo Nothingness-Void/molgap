@@ -272,12 +272,13 @@ def reconcile_platform_response(spec: ExperimentSpec, package_dir: Path, respons
                                 response_json=response_json)
 
 
-def _validated_receipt(raw, spec, package_dir, expected_package_identity):
+def _validated_receipt(raw, spec, package_dir, expected_package_identity, *, _verification=None):
     value = _parse(raw)
     if "response" not in value:
         raise ValueError("Missing receipt response")
     rebuilt = build_launch_receipt(spec, package_dir, expected_package_identity=expected_package_identity,
-                                  response_json=None if value["response"] is None else canonical_json(value["response"]))
+                                  response_json=None if value["response"] is None else canonical_json(value["response"]),
+                                  **({"_verification": _verification} if _verification is not None else {}))
     if canonical_json(rebuilt) != raw:
         raise ValueError("Receipt schema, identity or derived state mismatch")
     return rebuilt
@@ -285,12 +286,14 @@ def _validated_receipt(raw, spec, package_dir, expected_package_identity):
 
 
 
-def read_launch_receipt(path: Path, spec: ExperimentSpec, package_dir: Path, *, expected_package_identity: str) -> dict:
+def read_launch_receipt(path: Path, spec: ExperimentSpec, package_dir: Path, *,
+                        expected_package_identity: str, _verification=None) -> dict:
     """Read canonical bytes and reverify package, schema, binding and derived state."""
     _safe_local(path)
     if not stat.S_ISREG(path.stat().st_mode):
         raise ValueError("Receipt must be a regular file")
-    return _validated_receipt(path.read_bytes().decode("utf-8"), spec, package_dir, expected_package_identity)
+    return _validated_receipt(path.read_bytes().decode("utf-8"), spec, package_dir, expected_package_identity,
+                              **({"_verification": _verification} if _verification is not None else {}))
 
 
 def write_launch_receipt(receipt_json: str, output_dir: Path, spec: ExperimentSpec,
