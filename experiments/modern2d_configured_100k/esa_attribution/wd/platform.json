@@ -1,0 +1,22 @@
+{
+  "platform": {
+    "name": "kaggle",
+    "accelerator": "NvidiaTeslaT4",
+    "atomic_checkpoints": true,
+    "cpu_cores": 4,
+    "device_count": 2,
+    "memory_gib": 29,
+    "retrievable_chunks": true
+  },
+  "kaggle": {
+    "accelerator": "NvidiaTeslaT4",
+    "account": "nvoid912",
+    "datasets": [
+      "nvoid912/molgap-esa-wd-source-v1",
+      "nvoid912/molgap-modern2d-100k-commondev-v1"
+    ],
+    "kernel": "nvoid912/molgap-esa-wd-attribution-100k-v1",
+    "source_dataset": "nvoid912/molgap-esa-wd-source-v1",
+    "title": "MolGap ESA WD Attribution 100K V1"
+  }
+}

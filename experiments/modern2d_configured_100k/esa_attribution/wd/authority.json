@@ -1,0 +1,55 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "logical_run_id": "esa-wd-attribution-100k-s42-v1",
+  "arms": [
+    "reference",
+    "wd1e3"
+  ],
+  "interfaces": [
+    [
+      "esa_small",
+      "4"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 16,
+  "recipes": {
+    "reference": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    },
+    "wd1e3": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    }
+  },
+  "run_reference": "nvoid912/molgap-esa-wd-attribution-100k-v1",
+  "gpu": {
+    "owner": "nvoid912",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 28800,
+    "allocated_t4_hours_ceiling": 16
+  },
+  "authorization_basis": "Human authorization2026-10-21 JST: Kaggle2/3, at most3 slots including separately bound PPGT profile; each task <=10h. This slot is bounded8h/16 allocated T4-hours, exact two ESA arms with profiler, no automatic successor."
+}

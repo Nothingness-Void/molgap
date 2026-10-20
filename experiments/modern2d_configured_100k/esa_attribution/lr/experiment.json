@@ -1,0 +1,118 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "esa-lr-attribution-100k-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+  "monitor_paths": [
+    "experiments/modern2d_configured_100k/esa_attribution/lr/STATUS.md"
+  ],
+  "timestamp": "2026-10-20T17:40:00Z",
+  "platform_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/platform.json",
+  "role_ref": "experiments/modern2d_100k_formal_screen/retry_v2/role_plan.json",
+  "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/protocol.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "modern2d-configured-100k-screen",
+    "action": "RUN_SCREEN60",
+    "question": "Can a lower peak learning rate reduce ESA development error under the same60-pass exposure?",
+    "deficiency": "Existing incomplete ESA run reached train0.13192 vs Common-Dev0.21544 at pass37; no accepted completed60-pass endpoint, and optimization vs representation causes remain unresolved.",
+    "changed_mechanism": "Only peak learning rate relative to the shared reference; model, initialization, schedule shape and all other training fields remain identical.",
+    "supporting_evidence": [
+      "modern2d-qualification-esa_native_v3-s42-v4"
+    ],
+    "alternatives": [
+      "Incomplete convergence or representation limitations may dominate.",
+      "A single seed and reused Common-Dev cannot establish scale transfer."
+    ],
+    "closed_families": [
+      "modern2d-configured-100k-s42-v2-budget-stop"
+    ],
+    "positive_decision": "Inspect complete saved outputs, row-paired contrasts and trajectories; no automatic scale, additional seeds or full training.",
+    "negative_decision": "Retain evidence and close; no automatic successor or budget extension.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "Two isolated ESA/4 arms, seed42 BS128 FP32,60 passes, native repeat/resume and short profiler windows, at most8 hours for both T4s.",
+    "estimated_device_hours": 16,
+    "estimated_wall_hours": 8
+  },
+  "arms": [
+    {
+      "arm_id": "lr3e4",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": []
+      },
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 60,
+        "learning_rate": 0.0003,
+        "weight_decay": 0.00001,
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 8,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 75,
+          "module_paths": [],
+          "ppgt_phases": false
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "lr1e4",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": []
+      },
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 60,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.00001,
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 8,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 75,
+          "module_paths": [],
+          "ppgt_phases": false
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    }
+  ]
+}
