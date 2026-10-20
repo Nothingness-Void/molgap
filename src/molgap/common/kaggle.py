@@ -34,7 +34,7 @@ def is_not_found(error):
 
 
 def owned_absence(api, ref, kind, error):
-    """A private 403 is absence only after a complete authenticated owner listing."""
+    """Resolve a private 403 through a complete authenticated target-owner listing."""
     status = getattr(getattr(error, "response", None), "status_code", None)
     if status != 403:
         return False
@@ -43,7 +43,9 @@ def owned_absence(api, ref, kind, error):
         return False
     seen = set()
     for page in range(1, 51):
-        rows = (api.kernels_list(mine=True, user=owner, page=page, page_size=20)
+        # Query the target slug so unrelated redacted private-notebook sentinels
+        # do not pollute discovery. Validate every returned identity as before.
+        rows = (api.kernels_list(mine=True, user=owner, search=ref.split("/")[1], page=page, page_size=20)
                 if kind == "kernel" else api.dataset_list(mine=True, page=page))
         if not isinstance(rows, list):
             raise RuntimeError("Owned listing is unknown; absence is unverified")
