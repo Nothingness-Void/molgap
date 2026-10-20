@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "PROFILE_SCRATCH",
+    "field": "user_authorized_ppgt_profile",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "One bounded PPGT execution-only preflight",
+    "authority_ref": "experiments/modern2d_configured_100k/ppgt_profile/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "ppgt-train100k-six-scratch-update-profile-only-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Full T4x2 allocation at most1800 seconds/1 allocated T4-hour.",
+      "No development payload, scientific endpoint, protected roles or automatic successor."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "8c9fe99e4e2a2b68d296943cd73c19c8e91ecd9c95fc3bbbe6eb56aae5ec00e0",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "ppgt-execution-profile",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_ppgt_profile"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

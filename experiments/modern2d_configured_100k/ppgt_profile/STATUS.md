@@ -1,5 +1,8 @@
 # PPGT execution profile
 
+The separately human-authorized [repaired retry](retry_v2/STATUS.md) is submitted:
+kernel139854711/version1, exact existing Luna B binding; native result pending.
+
 Owner: server. Exact kernel139778481/version1 ended ERROR; Luna observed the
 terminal state at2026-10-20T08:33:52Z. The
 [failure decision](results/decision_2026_10_20.md) owns cause, cost and evidence.

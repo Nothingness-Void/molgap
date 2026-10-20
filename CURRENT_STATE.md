@@ -21,7 +21,12 @@ single-arm bootstrap selected the legacy environment. The [failure closure](expe
 is RML-finalized as INFRASTRUCTURE_ONLY; it produced no profile or model result.
 The existing Luna heartbeat is paused. Bootstrap repair passed
 [independent CPU regression](experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_repair_verification_2026_10_21.md);
-native profiling remains unverified. No retry, continuation or500K task was submitted.
+native profiling remains unverified. The human then authorized one repaired
+[profile retry](experiments/modern2d_configured_100k/ppgt_profile/retry_v2/STATUS.md):
+Kaggle2 kernel139854711/version1 was submitted once and observed QUEUED;
+the existing Luna B/30-minute heartbeat is rebound to its exact identity.
+Only six train-only scratch updates are released, at most1800 seconds/1 T4-hour
+for the full allocation; no formal training,500K or automatic successor.
 
 The human authorized a separate [mature-family workflow trial](experiments/family_workflow_trial_100k/STATUS.md):
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,
