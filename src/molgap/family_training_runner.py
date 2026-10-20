@@ -125,7 +125,7 @@ def validate_screen_recipe(spec, arm_id, record):
         raise ValueError("Selected roles differ from the executable recipe")
     if any(record.get(role + "_role_identity") != value["usage_sha256"] for role, value in roles.items()):
         raise ValueError("Contract role usage identity differs from Spec")
-    if recipe.mode == "composed":
+    if recipe.addons:
         from .shared_model_adapter import _addon_hook
         if list(recipe.addons) != arm["addons"]:
             raise ValueError("Recipe addon order/configuration differs from Spec")

@@ -92,6 +92,19 @@ Historical or active payloads retain their frozen source and logging behavior.
 A later authorized release selects the new source through the existing package,
 release-check and native qualification path.
 
+## Canonical pass publication
+
+New shared-session releases bind every completed pass to its successfully
+published checkpoint SHA through the existing checkpoint-last transaction,
+including modes without resource timing. Canonical `learning_rate` records the
+Python optimizer rate observed immediately before the pass's last update.
+Telemetry `learning_rates` remains the current reporting-boundary rate, which
+can differ after a post-update scheduler advance. Neither field is reconstructed
+from a schedule during acceptance. Each pass carries measured process wall;
+device seconds remain null unless the owning resource policy supplies them.
+Historical trace nulls remain immutable. See
+[publication verification](SHARED_TRACE_PUBLICATION_20261021.md).
+
 ## Local verification —2026-10-15
 
 CPU synthetic regressions cover the logger, real shared session/output hooks,

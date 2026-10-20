@@ -1,0 +1,75 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "neural_atom_k1",
+  "mode": "post_layernorm",
+  "seed": 42,
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "dataset": {
+    "manifest": "pcqm_fixed_100k_v1/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "development": true
+  },
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "optimizer_steps": 124960,
+  "learning_rate": 0.0002,
+  "weight_decay": 1e-05,
+  "schedule": {
+    "kind": "cosine_epoch",
+    "total_units": 160,
+    "minimum_lr": 1e-06,
+    "warmup_units": 0,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-live",
+  "sampler": "python-epoch-shuffle",
+  "checkpoint_every": 128,
+  "target_mean_eV": 5.3383002281188965,
+  "target_std_eV": 1.275090217590332,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.11.0",
+  "addons": [
+    {
+      "name": "k1_post_layernorm",
+      "version": "1",
+      "config": {},
+      "source_sha256": "5df77954f75e4335c01a94da7cdca7588c184ebe4310a6ea8aa9972aacbfdeec"
+    }
+  ],
+  "resume_chunks": true,
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "neural_atom_k1",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "native-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.11.0"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 124960,
+    "sample_presentations": 15994880,
+    "completed_passes": 160,
+    "next_batch": 0,
+    "development_rows": 50000,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+    "precision": "fp32"
+  },
+  "train_role_identity": "776e902ea79425cd69ea7083a6d912df717d6643d823d30df8e92b542a5fc94a",
+  "development_role_identity": "57adfc79b6ef0165fe24b3477371778f02a396b32699456108f5e6d1d7972bc3",
+  "logging": {
+    "mode": "epoch",
+    "interval": null
+  }
+}

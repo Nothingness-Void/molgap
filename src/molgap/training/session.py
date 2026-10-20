@@ -186,6 +186,7 @@ class FamilyTrainingSession:
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
         self.best, self.selected_step = None, None
+        self.last_update_learning_rate = None
         self.closed = False
 
     def _flush_metrics(self):
@@ -335,7 +336,8 @@ class FamilyTrainingSession:
                     if weights != "live":
                         raise ValueError("No reporting field for this extra development state")
                     live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
-        metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
+        metrics = {"normalized_train_gap_mae": metric, "development": evaluation,
+                   "learning_rate": self.last_update_learning_rate}
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
         self.pass_finished(progress, metrics)
@@ -362,6 +364,8 @@ class FamilyTrainingSession:
         if self.closed:
             raise RuntimeError("Family session is closed")
         def step(batch, *, check_finite):
+            # Observe the rate used by this update, before a post-update schedule advances.
+            self.last_update_learning_rate = self.kernel.optimizer.param_groups[0]["lr"]
             return self.kernel.step(batch, check_finite=check_finite)
         def observe(processed):
             _, absolute, rows = processed.value

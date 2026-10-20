@@ -153,7 +153,7 @@ class SessionOutputs:
             observations=self.stage.recorder.record["observations"],
             observation_train_unit=semantics["live_train_metric"]["unit"])
         rows = self.stage.recorder.record["observations"]
-        self.previous_cumulative = rows[-1]["cumulative_wall_time_seconds"] if rows and self.bounded_pair else 0.
+        self.previous_cumulative = rows[-1]["cumulative_wall_time_seconds"] if rows else 0.
         self.segment_started = self.previous_observation = time.perf_counter()
 
     def batch_finished(self, progress, *, learning_rates):
@@ -192,15 +192,18 @@ class SessionOutputs:
             _, fields = self.pending_pass
             observed = time.perf_counter()
             duration = observed - self.previous_observation
-            cumulative = self.previous_cumulative + observed - self.segment_started
+            cumulative = (self.previous_cumulative + observed - self.segment_started
+                          if self.previous_cumulative is not None else None)
             # Bind the staged trace to the next checkpoint before publishing either.
             recorder = deepcopy(self.stage.recorder)
             recorder.path = self.pending / "canonical_trace.json"
+            timing = {"wall_time_seconds": duration, "cumulative_wall_time_seconds": cumulative}
+            if self.bounded_pair:
+                timing.update(device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
             recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
                 epoch_or_pass=progress.pass_index, **fields,
                 checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
-                wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
-                device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+                **timing)
             if "canonical_trace.json" not in changed:
                 changed.append("canonical_trace.json")
         if changed:
@@ -231,20 +234,16 @@ class SessionOutputs:
 
     def pass_finished(self, progress, metrics):
         self.logger.pass_finished(progress, metrics)
-        fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
+        fields = {"live_train_metric": metrics["normalized_train_gap_mae"],
+                  "learning_rate": metrics.get("learning_rate")}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
         if metrics.get("development_live") is not None:
             fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
         if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
-        if self.bounded_pair:
-            self.pending_pass = (progress, fields)
-            return
-        recorder = deepcopy(self.stage.recorder)
-        recorder.path = self.pending / "canonical_trace.json"
-        recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
-            epoch_or_pass=progress.pass_index, **fields)
+        # Every mode binds its epoch observation to the checkpoint-last transaction.
+        self.pending_pass = (progress, fields)
 
     def retained_state(self):
         import torch

@@ -2,6 +2,7 @@
 from copy import deepcopy
 from dataclasses import replace
 import json
+import math
 
 import pytest
 import torch
@@ -12,6 +13,7 @@ from molgap.experiment_package import _name
 from molgap.experiment_spec import ExperimentSpec
 from molgap.family_training_outputs import SessionOutputs
 from molgap.family_training_runner import INTERFACES, PROFILES, family_arm_bindings, read_recipe
+from molgap.research_memory.trace import load_canonical_trace
 from molgap.training_reproducibility import sha256_file, validate_accelerator_request
 from test_family_training_session import events, make_session
 from test_experiment_spec import payload
@@ -68,7 +70,16 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
 @pytest.mark.parametrize("development", [False, True])
-def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_path, family, development):
+@pytest.mark.parametrize("process_timing", [False, True])
+def test_actual_session_output_translation_and_cpu_mechanical_inspection(
+        tmp_path, family, development, process_timing, monkeypatch):
+    import molgap.family_training_policy as family_policy
+    base_mode_policy = family_policy.mode_policy
+
+    def timing_policy(policy_family, mode):
+        return replace(base_mode_policy(policy_family, mode), process_timing=process_timing)
+
+    monkeypatch.setattr(family_policy, "mode_policy", timing_policy)
     session = make_session(family, development=development, schedule_kind="cosine_step", events=events())
     path, record = contract_file(tmp_path, session)
     ctx = context(family, path)
@@ -76,8 +87,30 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
         trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
+    published_checkpoints = {}
+
+    def publish_checkpoint(progress, state_builder):
+        outputs.checkpoint_from_builder(progress, state_builder)
+        published_checkpoints[progress.optimizer_step] = sha256_file(outputs.root / "last_checkpoint.pt")
+
+    session.checkpoint_builder = publish_checkpoint
+    update_learning_rates = []
+    kernel_step = session.kernel.step
+
+    def observe_update_rate(batch, *, check_finite):
+        update_learning_rates.append(tuple(group["lr"] for group in session.kernel.optimizer.param_groups))
+        return kernel_step(batch, check_finite=check_finite)
+
+    session.kernel.step = observe_update_rate
     outputs.logger.start(session.progress)
     progress = session.run()
+    schedule = session.recipe.schedule
+    expected_update_lrs = [schedule.minimum_lr +
+        (session.recipe.learning_rate - schedule.minimum_lr) * .5 *
+        (1 + math.cos(math.pi * unit / schedule.total_units))
+        for unit in range(session.recipe.optimizer_steps)]
+    assert all(len(groups) == 1 for groups in update_learning_rates)
+    assert [groups[0] for groups in update_learning_rates] == pytest.approx(expected_update_lrs)
     runtime = {"platform": ctx.platform, "account": ctx.account, "precision": "fp32",
         "source_commit": ctx.source_commit, "source_archive_sha256": ctx.source_archive_sha256}
     costs = [{"metric": "wall_seconds", "unit": "seconds", "status": "measured", "value": 1.,
@@ -96,6 +129,34 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
         assert telemetry["best_development_mae_eV"] == pytest.approx(report["observed"]["development_mae_eV"])
     else:
         assert telemetry["development_mae_eV"] is telemetry["best_development_mae_eV"] is None
+
+    trace = load_canonical_trace(outputs.root / "canonical_trace.json")
+    observations = [row for row in trace["observations"] if row["event"] == "observation"]
+    steps_per_pass = session.recipe.loop_plan.steps_per_pass
+    full_pass_rows = [row for row in observations if row["optimizer_step"] % steps_per_pass == 0]
+    assert len(full_pass_rows) == progress.pass_index
+    assert trace["device_time_semantics"] == ("sum_over_devices" if process_timing else None)
+    for row in full_pass_rows:
+        step = row["optimizer_step"]
+        assert row["learning_rate"] == pytest.approx(update_learning_rates[step - 1][0])
+        assert row["checkpoint_identity"] == published_checkpoints[step]
+        assert len(row["checkpoint_identity"]) == 64
+        assert row["wall_time_seconds"] > 0
+        assert row["cumulative_wall_time_seconds"] > 0
+        if process_timing:
+            assert row["device_time_seconds"] > 0
+            assert row["cumulative_device_time_seconds"] > 0
+        else:
+            assert row["device_time_seconds"] is None
+            assert row["cumulative_device_time_seconds"] is None
+
+    final_row = observations[-1]
+    if (final_row["optimizer_step"] == progress.optimizer_step and
+            final_row["optimizer_step"] % steps_per_pass == 0):
+        assert final_row["checkpoint_identity"] == sha256_file(outputs.root / "last_checkpoint.pt")
+    else:
+        assert not development and progress.next_batch != 0
+        assert final_row["epoch_or_pass"] == pytest.approx(progress.optimizer_step / steps_per_pass)
     manifest_path = outputs.root / "output_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     resume_path = outputs.root / manifest["artifacts"]["resume"]["path"]
