@@ -131,7 +131,9 @@ class SessionOutputs:
             artifact_adapter(adapter, self.recipe.interface)
         from .family_training_policy import mode_policy
         self.policy = mode_policy(self.recipe.family, self.recipe.mode)
-        self.bounded_pair = self.policy.process_timing
+        # Formal Modern2D references need the same checkpoint-bound time axes as
+        # timed addon modes; a reference policy must not silently erase evidence.
+        self.bounded_pair = self.policy.process_timing or self.recipe.formal_interface
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
         if train_role_identity != record["train_role_identity"]:
@@ -204,6 +206,12 @@ class SessionOutputs:
         observed = None
         if self.pending_pass is not None:
             _, fields = self.pending_pass
+            if self.recipe.formal_interface:
+                # Record the observed checkpoint LR, not a reconstructed schedule.
+                rates = [group["lr"] for group in state["optimizer"]["param_groups"]]
+                if len(rates) != 1:
+                    raise ValueError("Formal trace requires one observed optimizer learning rate")
+                fields = {**fields, "learning_rate": rates[0]}
             observed = time.perf_counter()
             duration = observed - self.previous_observation
             cumulative = self.previous_cumulative + observed - self.segment_started

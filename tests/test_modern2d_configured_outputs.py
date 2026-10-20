@@ -37,6 +37,14 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path):
              dict(metric="device_seconds", unit="seconds", status="missing", value=None,
                   semantics="allocated_device", hardware="synthetic-cpu")]
     report = output.complete(progress, runtime=runtime, costs=costs)
+    rows = json.loads((output.root / "canonical_trace.json").read_bytes())["observations"]
+    observed = [row for row in rows if row["event"] == "observation"]
+    assert observed
+    assert all(row["wall_time_seconds"] is not None and
+               row["cumulative_wall_time_seconds"] is not None and
+               row["checkpoint_identity"] is not None and
+               row["learning_rate"] is not None for row in observed)
+    assert observed[-1]["learning_rate"] == session.state_dict()["optimizer"]["param_groups"][0]["lr"]
     assert report["status"] == "MECHANICALLY_VERIFIED", report
     assert report["observed"]["execution_scope"] == "CONFIGURED_SCREEN"
     assert report["scientific_acceptance"] == "NOT_EVALUATED"
