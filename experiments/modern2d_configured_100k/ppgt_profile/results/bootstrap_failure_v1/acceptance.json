@@ -1,0 +1,82 @@
+{
+  "cause": "Single formal Modern2D arm was misrouted to legacy/system-Python bootstrap before native worker dispatch.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-T-ppgt-execution-profile-s42-v1-ppgt_author_v2-full-missing",
+      "evidence_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json",
+      "hardware": "Tesla_T4x2",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "ppgt-execution-profile-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+    }
+  ],
+  "error": "ModuleNotFoundError: No module named 'rdkit'",
+  "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "inference_executed": false,
+  "kernel": "kaseichou/molgap-ppgt-execution-profile-v1",
+  "kernel_id": 139778481,
+  "monitor_event_id": "evt-fdd07c4810c57743756136a1",
+  "noReplay": true,
+  "observed_python_window_lower_bound": {
+    "additive_with_other_allocation_windows": false,
+    "allocated_device_seconds": 428.65330106000005,
+    "allocated_t4_hours": 0.11907036140555557,
+    "full_billing_status": "measurement_missing",
+    "wall_seconds": 214.32665053000002
+  },
+  "optimizer_updates": 0,
+  "outcome": {
+    "artifact_status": "metadata_verified",
+    "budget_decision": "measurement_missing",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NOT_EVALUATED",
+    "transfer_status": "not_evaluated"
+  },
+  "profile_capture_started": false,
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "untouched"
+  },
+  "roles": [],
+  "run_id": "ppgt-execution-profile-s42-v1:ppgt_author_v2:downstream",
+  "training_started": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "separate authority and independently accepted bootstrap repair"
+    ]
+  },
+  "version": 1
+}

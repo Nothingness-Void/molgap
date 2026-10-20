@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "ppgt_author_v2-v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-T-ppgt-execution-profile-s42-v1-ppgt_author_v2-full-missing",
+  "evidence_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json",
+  "hardware": "Tesla_T4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "ppgt-execution-profile-s42-v1:ppgt_author_v2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+}

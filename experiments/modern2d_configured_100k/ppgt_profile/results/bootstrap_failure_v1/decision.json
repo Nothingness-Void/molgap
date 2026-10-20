@@ -1,0 +1,27 @@
+{
+  "cause": "Single formal Modern2D arm was misrouted to legacy/system-Python bootstrap before native worker dispatch.",
+  "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json",
+  "error": "ModuleNotFoundError: No module named 'rdkit'",
+  "final": true,
+  "inference_executed": false,
+  "kernel": "kaseichou/molgap-ppgt-execution-profile-v1",
+  "kernel_id": 139778481,
+  "monitor_event_id": "evt-fdd07c4810c57743756136a1",
+  "next_allowed_actions": [],
+  "noReplay": true,
+  "observed_python_window_lower_bound": {
+    "additive_with_other_allocation_windows": false,
+    "allocated_device_seconds": 428.65330106000005,
+    "allocated_t4_hours": 0.11907036140555557,
+    "full_billing_status": "measurement_missing",
+    "wall_seconds": 214.32665053000002
+  },
+  "optimizer_updates": 0,
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "profile_capture_started": false,
+  "reopen_conditions": [
+    "separate authority and independently accepted bootstrap repair"
+  ],
+  "training_started": false,
+  "version": 1
+}

@@ -1,0 +1,166 @@
+{
+  "acceptance_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_configured_100k/ppgt_profile/authority.json": "e89fcb1ea6b4f32e476bfa5e03005345468f3aeaedd1a251051d05ceaf93831f",
+    "experiments/modern2d_configured_100k/ppgt_profile/protocol.md": "c1fe09b760441182d3abbe41ef5b92497ca919ce79be5f1ed3167d75e13bb7ce",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json": "365ed7475c4a6a2b78ebf60094f08f4c19f40daf169a55b2cbbd874938e7b25e",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json": "adc53d70979747c718235a557183d5aa8e0e2ca7b28c2273cc26cfd1c682bc4b",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/bootstrap_allocation.json": "5d564ae9e55e19dc5bd0a2ffcfa10fcc19ce10bee66c9a298791a3961f2b3165",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/launch_receipt.json": "d551a9c71c19697b48ae126973f384a2ac65fedfcb7d3cc850ccd7b216bee09c",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/source_verification.json": "eb91903649d5bd8c43817b1f2f31bec40a42a6c2750aefbfb2b761b4a28e8981",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log.txt": "b98efb11ee9bdc0210461dc769da86979b574cdca55523b6b742d3c9aa0647be",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log_receipt.json": "e5aff846f765efd778e2e19298d6043f2a3c4a229dcdf8f90ca579f1fe4d48a9",
+    "experiments/modern2d_configured_100k/ppgt_profile/roles.json": "2867300ec1b040c5483bec63ce82eced037df63c3e433f0617534b47f2612fbf",
+    "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json": "11f42751fc35e85d8faf50f471da176e9e058a8f568cc23ad124b769b615d416"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-T-ppgt-execution-profile-s42-v1-ppgt_author_v2-full-missing",
+      "evidence_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json",
+      "hardware": "Tesla_T4x2",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "ppgt-execution-profile-s42-v1:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "separate authority and independently accepted bootstrap repair"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/authority.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/authority.json",
+        "sha256": "e89fcb1ea6b4f32e476bfa5e03005345468f3aeaedd1a251051d05ceaf93831f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/protocol.md",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/protocol.md",
+        "sha256": "c1fe09b760441182d3abbe41ef5b92497ca919ce79be5f1ed3167d75e13bb7ce"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/bootstrap_allocation.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/bootstrap_allocation.json",
+        "sha256": "5d564ae9e55e19dc5bd0a2ffcfa10fcc19ce10bee66c9a298791a3961f2b3165"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/launch_receipt.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/launch_receipt.json",
+        "sha256": "d551a9c71c19697b48ae126973f384a2ac65fedfcb7d3cc850ccd7b216bee09c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/source_verification.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/source_verification.json",
+        "sha256": "eb91903649d5bd8c43817b1f2f31bec40a42a6c2750aefbfb2b761b4a28e8981"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log.txt",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log.txt",
+        "sha256": "b98efb11ee9bdc0210461dc769da86979b574cdca55523b6b742d3c9aa0647be"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log_receipt.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log_receipt.json",
+        "sha256": "e5aff846f765efd778e2e19298d6043f2a3c4a229dcdf8f90ca579f1fe4d48a9"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/ppgt_profile/roles.json",
+        "name": "experiments/modern2d_configured_100k/ppgt_profile/roles.json",
+        "sha256": "2867300ec1b040c5483bec63ce82eced037df63c3e433f0617534b47f2612fbf"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json",
+        "name": "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json",
+        "sha256": "11f42751fc35e85d8faf50f471da176e9e058a8f568cc23ad124b769b615d416"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json",
+        "experiments/modern2d_configured_100k/ppgt_profile/authority.json",
+        "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-20T14:12:17Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Saved exact-job metadata and traceback; failed during import before graph payload/model/update/profile dispatch."
+    },
+    "outcome": {
+      "artifact_status": "metadata_verified",
+      "budget_decision": "measurement_missing",
+      "comparison_status": "not_evaluated",
+      "execution_status": "failed",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "audit": "untouched",
+      "common_dev": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "untouched"
+    },
+    "scope": "BOOTSTRAP_INFRASTRUCTURE_FAILURE",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-20T14:12:17Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "untouched"
+  },
+  "roles": [],
+  "run_id": "ppgt-execution-profile-s42-v1:ppgt_author_v2:downstream",
+  "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+}

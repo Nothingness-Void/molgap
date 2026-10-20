@@ -1,0 +1,35 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-ed94130d7bc099119e98f72c860ccf85446496d1f0b6b1622901e417d336cd28",
+  "finalized_at": "2026-10-20T14:12:17Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/modern2d_configured_100k/ppgt_profile/authority.json": "e89fcb1ea6b4f32e476bfa5e03005345468f3aeaedd1a251051d05ceaf93831f",
+    "experiments/modern2d_configured_100k/ppgt_profile/protocol.md": "c1fe09b760441182d3abbe41ef5b92497ca919ce79be5f1ed3167d75e13bb7ce",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/acceptance.json": "365ed7475c4a6a2b78ebf60094f08f4c19f40daf169a55b2cbbd874938e7b25e",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json": "adc53d70979747c718235a557183d5aa8e0e2ca7b28c2273cc26cfd1c682bc4b",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/bootstrap_allocation.json": "5d564ae9e55e19dc5bd0a2ffcfa10fcc19ce10bee66c9a298791a3961f2b3165",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/launch_receipt.json": "d551a9c71c19697b48ae126973f384a2ac65fedfcb7d3cc850ccd7b216bee09c",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/source_verification.json": "eb91903649d5bd8c43817b1f2f31bec40a42a6c2750aefbfb2b761b4a28e8981",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log.txt": "b98efb11ee9bdc0210461dc769da86979b574cdca55523b6b742d3c9aa0647be",
+    "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/retained/terminal_log_receipt.json": "e5aff846f765efd778e2e19298d6043f2a3c4a229dcdf8f90ca579f1fe4d48a9",
+    "experiments/modern2d_configured_100k/ppgt_profile/roles.json": "2867300ec1b040c5483bec63ce82eced037df63c3e433f0617534b47f2612fbf",
+    "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json": "11f42751fc35e85d8faf50f471da176e9e058a8f568cc23ad124b769b615d416"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-T-ppgt-execution-profile-s42-v1-ppgt_author_v2-full-missing.json": "22f33d7da1faa8268cf77d080f41b3fd618b8025e5b9d75479b534dc0bef7af3",
+    "prospective_snapshot.json": "11f42751fc35e85d8faf50f471da176e9e058a8f568cc23ad124b769b615d416",
+    "terminal_input.json": "140db0dc7aa088f097f319a07bf458b712b128e328d30d7f69f380baa0cf3d65",
+    "trajectory.json": "d3bf6d7850985a4087edbae1ffef2eb50dc8c6cd80e12bf4d8a174c444aeb964",
+    "v5_evidence.json": "3521a2eb32663b0a54a1e33df4cdbe6ca33e86070cc8768ffe869724c9d966b8"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "ed94130d7bc099119e98f72c860ccf85446496d1f0b6b1622901e417d336cd28",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+}

@@ -1,0 +1,90 @@
+[{"stream_name":"stdout","time":6.078603359,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.8/15.8 MB 104.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":198.918308008,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.1/63.1 kB 3.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":199.401536537,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 47.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":199.424195237,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 4.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":205.584441832,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":205.584467748,"data":"bigframes 2.48.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":205.584473762,"data":"opencv-python-headless 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584478769,"data":"kaggle-environments 1.27.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584483265,"data":"mne 1.13.2 requires numpy\u003c3,\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584493384,"data":"opencv-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584497082,"data":"bayesian-optimization 3.3.0 requires numpy\u003e=2.1.3; python_full_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584500285,"data":"cesium 0.12.4 requires numpy\u003c3.0,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584503363,"data":"google-colab 1.0.0 requires jupyter-server==2.20.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584506561,"data":"google-colab 1.0.0 requires pandas==2.2.3, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584509476,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584512424,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584515331,"data":"cupy-cuda12x 14.0.1 requires numpy\u003c2.6,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584518212,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584521133,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.0.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584523962,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584526921,"data":"tobler 0.14.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.58452974,"data":"jax 0.11.1 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584540111,"data":"opencv-contrib-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584543843,"data":"dm-tree 0.1.10 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584546312,"data":"jaxlib 0.11.1 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584548553,"data":"xarray-einstats 0.11.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584550915,"data":"tifffile 2026.8.23 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584553347,"data":"pytensor 2.38.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584555693,"data":"shap 0.52.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":205.584557972,"data":"rasterio 1.5.1 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":214.977954134,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":214.979627587,"data":"  File \"/kaggle/src/script.py\", line 203, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":214.979645401,"data":"    main()\n"}
+,{"stream_name":"stderr","time":214.979649682,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":214.979653098,"data":"  File \"/kaggle/src/script.py\", line 171, in main\n"}
+,{"stream_name":"stderr","time":214.979656692,"data":"    _workload(started)\n"}
+,{"stream_name":"stderr","time":214.979660002,"data":"    ~~~~~~~~~^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979663278,"data":"  File \"/kaggle/src/script.py\", line 159, in _workload\n"}
+,{"stream_name":"stderr","time":214.97966678,"data":"    run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,\n"}
+,{"stream_name":"stderr","time":214.979670328,"data":"    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979673454,"data":"                       launch_path=launch, output=Path(\"/kaggle/working/experiment\"),\n"}
+,{"stream_name":"stderr","time":214.979677066,"data":"                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979680815,"data":"                       allocation_started=allocation_started, manifest=manifest)\n"}
+,{"stream_name":"stderr","time":214.979684112,"data":"                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979687467,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/kaggle_pair_runtime.py\", line 51, in run_two_phase_pair\n"}
+,{"stream_name":"stderr","time":214.979691041,"data":"    extension = execution_extension(spec, source_root)\n"}
+,{"stream_name":"stderr","time":214.979694427,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/execution_comparison.py\", line 72, in execution_extension\n"}
+,{"stream_name":"stderr","time":214.979697982,"data":"    return formal_extension(spec, source_root)\n"}
+,{"stream_name":"stderr","time":214.979701323,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_training_release.py\", line 306, in execution_extension\n"}
+,{"stream_name":"stderr","time":214.979704997,"data":"    check_plan(spec, source_root, plan)\n"}
+,{"stream_name":"stderr","time":214.979717055,"data":"    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979720582,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_training_release.py\", line 216, in check_plan\n"}
+,{"stream_name":"stderr","time":214.979724184,"data":"    record, recipe = read_recipe(contract_path)\n"}
+,{"stream_name":"stderr","time":214.979727281,"data":"                     ~~~~~~~~~~~^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979730452,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py\", line 112, in read_recipe\n"}
+,{"stream_name":"stderr","time":214.979733913,"data":"    recipe = _recipe_configuration(record)\n"}
+,{"stream_name":"stderr","time":214.979737154,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py\", line 52, in _recipe_configuration\n"}
+,{"stream_name":"stderr","time":214.979741462,"data":"    return FamilyRecipe.from_dict({key: value for key, value in record.items()\n"}
+,{"stream_name":"stderr","time":214.979744777,"data":"           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.97974801,"data":"        if key not in METADATA | OPTIONAL_METADATA})\n"}
+,{"stream_name":"stderr","time":214.979751346,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979756178,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_recipe.py\", line 369, in from_dict\n"}
+,{"stream_name":"stderr","time":214.979759975,"data":"    recipe = cls(**values)\n"}
+,{"stream_name":"stderr","time":214.979763314,"data":"  File \"\u003cstring\u003e\", line 33, in __init__\n"}
+,{"stream_name":"stderr","time":214.979767012,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_recipe.py\", line 132, in __post_init__\n"}
+,{"stream_name":"stderr","time":214.979770757,"data":"    config_type = import_module(adapter.model_factory.split(\":\")[0]).CONFIG_TYPE\n"}
+,{"stream_name":"stderr","time":214.979774389,"data":"                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979777937,"data":"  File \"/usr/lib/python3.13/importlib/__init__.py\", line 88, in import_module\n"}
+,{"stream_name":"stderr","time":214.979781626,"data":"    return _bootstrap._gcd_import(name[level:], package, level)\n"}
+,{"stream_name":"stderr","time":214.97978494,"data":"           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":214.979788298,"data":"  File \"\u003cfrozen importlib._bootstrap\u003e\", line 1395, in _gcd_import\n"}
+,{"stream_name":"stderr","time":214.979791719,"data":"  File \"\u003cfrozen importlib._bootstrap\u003e\", line 1360, in _find_and_load\n"}
+,{"stream_name":"stderr","time":214.979795243,"data":"  File \"\u003cfrozen importlib._bootstrap\u003e\", line 1331, in _find_and_load_unlocked\n"}
+,{"stream_name":"stderr","time":214.979798285,"data":"  File \"\u003cfrozen importlib._bootstrap\u003e\", line 935, in _load_unlocked\n"}
+,{"stream_name":"stderr","time":214.979801564,"data":"  File \"\u003cfrozen importlib._bootstrap_external\u003e\", line 1023, in exec_module\n"}
+,{"stream_name":"stderr","time":214.979805224,"data":"  File \"\u003cfrozen importlib._bootstrap\u003e\", line 488, in _call_with_frames_removed\n"}
+,{"stream_name":"stderr","time":214.979808612,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/ppgt_author.py\", line 46, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":214.979811942,"data":"    from .modern2d_inputs import validated_topology_views\n"}
+,{"stream_name":"stderr","time":214.979815175,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_inputs.py\", line 7, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":214.97982264,"data":"    from .ogb_features import ATOM_FEATURE_DIMS, BOND_FEATURE_DIMS\n"}
+,{"stream_name":"stderr","time":214.979826003,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/ogb_features.py\", line 9, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":214.979829277,"data":"    from rdkit import Chem\n"}
+,{"stream_name":"stderr","time":214.979832267,"data":"ModuleNotFoundError: No module named 'rdkit'\n"}
+,{"stream_name":"stderr","time":219.240665675,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":219.240694084,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":219.495828546,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":219.495869128,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":220.272314081,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":221.262935377,"data":"[NbConvertApp] Writing 319438 bytes to __results__.html\n"}
+]
