@@ -505,6 +505,52 @@ def workflow_case(tmp_path):
     }
 
 
+@pytest.mark.parametrize("entry", ["family", "workflow"])
+@pytest.mark.parametrize("absolute", [False, True])
+def test_preparation_initialization_uses_selected_repo_from_other_cwd(
+    workflow_case, tmp_path, monkeypatch, entry, absolute,
+):
+    from copy import deepcopy
+    from molgap import experiment_package, family_training_runner
+    case = workflow_case
+    repo, spec = case["repo"], case["spec"]
+    plan = deepcopy(case["plan"])
+    other = tmp_path / "different-cwd"
+    other.mkdir()
+    expected = {}
+    for arm in plan["arms"]:
+        name = arm["arm_id"] + ".pt"
+        expected[arm["arm_id"]] = repo / name
+        expected[arm["arm_id"]].write_bytes(b"selected repository initialization")
+        (other / name).write_bytes(b"wrong current directory initialization")
+        arm["initial_state"] = str(expected[arm["arm_id"]]) if absolute else name
+    monkeypatch.chdir(other)
+    if entry == "workflow":
+        result = workflow._workflow_inputs(spec, repo, plan)
+        assert result["initial_states"] == expected
+    else:
+        # Exercise the public family entry up to staging without publishing RML.
+        monkeypatch.setattr(family_training_runner, "INTERFACES", {
+            arm["family"]["name"]: (arm["family"]["name"], arm["family"]["version"])
+            for arm in spec.to_dict()["arms"]})
+        monkeypatch.setattr(workflow, "build_experiment_source_package", lambda *a, **kw: {})
+        # This synthetic repo has placeholder source, not a family qualification.
+        monkeypatch.setattr(workflow, "check_family_recipes", lambda *a, **kw: {})
+        class StagingObserved(Exception):
+            pass
+        def stage(package, destination, initial_states):
+            assert initial_states == expected
+            assert all(path.read_bytes() == b"selected repository initialization"
+                       for path in initial_states.values())
+            raise StagingObserved
+        monkeypatch.setattr(experiment_package, "stage_source_inputs", stage)
+        family_plan = {"format": "molgap-family-training-preparation-v1",
+                       "spec_identity": spec.identity, "arms": plan["arms"],
+                       "source_files": plan["source_files"]}
+        with pytest.raises(StagingObserved):
+            workflow.prepare_family_training(spec, repo, family_plan, tmp_path / "family-prepared")
+
+
 def _git(root: Path, *args: str) -> str:
     return subprocess.run(["git", *args], cwd=root, check=True,
                           capture_output=True, text=True).stdout.strip()
@@ -597,9 +643,13 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
 def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates(
     workflow_case, tmp_path, monkeypatch,
 ):
+    import molgap.experiment_package as package_owner
+
     repo, spec, plan = workflow_case["repo"], workflow_case["spec"], workflow_case["plan"]
     output = tmp_path / "prepared"
     events = []
+    full_verifications = Mock(wraps=package_owner._verify_package_snapshot)
+    monkeypatch.setattr(package_owner, "_verify_package_snapshot", full_verifications)
     real_package = workflow.build_experiment_source_package
     package_manifest = {}
 
@@ -616,6 +666,8 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
 
     def release(release_spec, package_dir, **kwargs):
         events.append("release")
+        package_owner.verify_experiment_source_package(package_dir,
+            _verification=kwargs["_verification"])
         assert release_spec == spec
         assert (package_dir / "package_manifest.json").is_file()
         assert "molgap.pcqm_wedge" in kwargs["required_modules"]
@@ -666,13 +718,14 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
 
     assert result["status"] == "PREPARED_FOR_PLATFORM", result
     assert result["submitted"] is False
+    # Builder, input staging, release and receipt share one exact-byte validation.
+    assert full_verifications.call_count == 1
     assert events.index("package") < events.index("release") < events.index("prospective")
     assert events.index("prospective") < events.index("rebuild") < events.index("final_binding")
     assert "src/molgap/pcqm_wedge.py" in package_manifest["relative_allowlist"]
     assert (Path(result["source_dataset_dir"]) / "experiment_launch.json").is_file()
     assert (Path(result["kernel_dir"]) / "run.py").is_file()
     assert result["prospective_published"] is True
-
 
 def test_release_static_failure_never_starts_prospective_planning(
     workflow_case, tmp_path, monkeypatch,

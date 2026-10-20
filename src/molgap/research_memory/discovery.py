@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, fields
 from pathlib import Path
 from .paths import repo_local_path
@@ -21,12 +22,7 @@ class DiscoveredRecords:
     target_transform_assets: tuple[Path, ...] = ()
 
 
-def _find(root: Path, pattern: str) -> tuple[Path, ...]:
-    paths = (repo_local_path(root, path) for path in root.glob(pattern))
-    return tuple(sorted(path for path in paths if path.is_file()))
-
-
-def _role_events(root: Path) -> tuple[Path, ...]:
+def _role_events(candidates) -> tuple[Path, ...]:
     """An input-role manifest is not an observed RML access event.
 
     Frozen packages may retain accepted data metadata in a roles directory.
@@ -35,7 +31,7 @@ def _role_events(root: Path) -> tuple[Path, ...]:
     """
     from molgap.evidence_pointers import load_json_object
     result = []
-    for path in _find(root, "experiments/**/roles/*.json"):
+    for path in candidates:
         record = load_json_object(path)
         if record.get("format") == "molgap-pcqm4mv2-unified-roles-v2":
             if ("schema" in record or "role_event_id" in record or
@@ -53,23 +49,52 @@ def _role_events(root: Path) -> tuple[Path, ...]:
 
 def discover_records(repo_root: str | Path) -> DiscoveredRecords:
     root = Path(repo_root).resolve()
-    discovered = DiscoveredRecords(
-        evidence=_find(root, "experiments/**/v5_evidence.json"),
-        trajectories=_find(root, "experiments/**/trajectory.json"),
-        costs=_find(root, "experiments/**/costs/*.json"),
-        roles=_role_events(root),
-        traces=_find(root, "experiments/**/trace_manifest.json"),
-        ready=_find(root, "experiments/**/handoff/READY_FOR_DESKTOP.json"),
-        comparison_prelaunch=_find(root, "experiments/**/comparison_readiness_prelaunch.json"),
-        comparison_readiness=_find(root, "experiments/**/comparison_readiness.json"),
-        reference_bundles=_find(root, "experiments/**/reference_bundle.json"),
-        target_transform_assets=_find(root, "experiments/**/target_transform.json"),
-    )
+    paths = {field.name: set() for field in fields(DiscoveredRecords)}
+    names = {
+        "v5_evidence.json": "evidence", "trajectory.json": "trajectories",
+        "trace_manifest.json": "traces",
+        "comparison_readiness_prelaunch.json": "comparison_prelaunch",
+        "comparison_readiness.json": "comparison_readiness",
+        "reference_bundle.json": "reference_bundles",
+        "target_transform.json": "target_transform_assets",
+    }
+    finalized = set()
+
+    def collect(path: Path, *, suffix_only: bool = False) -> None:
+        name, parent = os.path.normcase(path.name), os.path.normcase(path.parent.name)
+        kinds = set()
+        if not suffix_only and name in names and path.exists():
+            kinds.add(names[name])
+        if parent in {"costs", "roles"} and name.endswith(".json"):
+            kinds.add(parent)
+        elif parent == "handoff" and name == os.path.normcase("READY_FOR_DESKTOP.json"):
+            if path.exists():
+                kinds.add("ready")
+        if kinds:
+            local = repo_local_path(root, path)
+            if local.is_file():
+                for kind in kinds:
+                    paths[kind].add(local)
+        if not suffix_only and name == "rml_finalized" and path.exists():
+            finalized.add(repo_local_path(root, path))
+
+    # One recursive inventory replaces one complete walk per record kind. Match
+    # lexical names before resolving links, just as the original glob selectors do.
+    for path in root.glob("experiments/**/*"):
+        collect(path)
+        # Recursive glob does not descend symbolic links, but the explicit
+        # costs/roles/handoff suffixes historically inspect their direct children.
+        name = os.path.normcase(path.name)
+        if name in {"costs", "roles", "handoff"} and path.is_symlink() and path.is_dir():
+            if name in {"costs", "roles"}:
+                for child in path.glob("*.json"):
+                    collect(child, suffix_only=True)
+            elif name == "handoff":
+                collect(path / "READY_FOR_DESKTOP.json", suffix_only=True)
+    paths["roles"] = set(_role_events(sorted(paths["roles"])))
     from .finalize import verified_receipt
 
-    paths = {field.name: set(getattr(discovered, field.name)) for field in fields(discovered)}
-    for directory in sorted((root / "experiments").glob("**/rml_finalized")):
-        directory = repo_local_path(root, directory)
+    for directory in sorted(finalized):
         receipt = verified_receipt(directory)
         for published, original in receipt["replacements"].items():
             old = repo_local_path(root, original)

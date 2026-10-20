@@ -1,9 +1,13 @@
 """Fixed source boundary, batch Git validation and safe archive-only reuse."""
 from copy import deepcopy
 from dataclasses import replace
+import builtins
+import gzip
+import hashlib
 import json
 from pathlib import Path
 import subprocess
+import tarfile
 from unittest.mock import patch
 
 import pytest
@@ -12,6 +16,7 @@ from molgap.experiment_package import build_experiment_source_package,verify_exp
 from molgap.experiment_source_inventory import runtime_source_files
 from molgap.experiment_spec import ExperimentSpec
 from molgap import experiment_spec as spec_module
+from molgap.screen_policy import canonical_fingerprint
 from test_experiment_package import repo,payload,git
 
 
@@ -68,6 +73,42 @@ def test_git_verification_process_count_is_constant_not_per_file(repo,payload,tm
     with patch("subprocess.run",observe):verify_experiment_source_package(package,repo)
     assert len(calls)==3,calls
     assert any("--batch" in c for c in calls)
+
+
+@pytest.mark.parametrize("generated", [False, True])
+def test_verification_reads_and_decompresses_one_archive_snapshot(repo,payload,tmp_path,generated):
+    spec=ExperimentSpec(payload);names=["README.md"];options={}
+    if generated:
+        config_name="scientific.json"
+        config={"format":"molgap-scientific-experiment-v1","experiment_id":payload["experiment_id"]}
+        config_bytes=json.dumps(config,sort_keys=True,separators=(",", ":")).encode()
+        (repo/config_name).write_bytes(config_bytes)
+        git(repo,"add",config_name)
+        git(repo,"-c","commit.gpgsign=false","commit","-m","Synthetic configuration provenance")
+        digest=hashlib.sha256(config_bytes).hexdigest();commit=git(repo,"rev-parse","HEAD")
+        namespace=canonical_fingerprint({"input":digest,"commit":commit})
+        derived=f"experiments/{payload['experiment_id']}/generated/{namespace}/recipe.json"
+        path=repo/derived;path.parent.mkdir(parents=True);path.write_bytes(b'{}')
+        names.extend([config_name,derived])
+        options={"generated_records":{derived:b'{}'},"configuration_source":{
+            "path":config_name,"sha256":digest,"compiler":config["format"]}}
+    package=tmp_path/"package"
+    manifest=build_experiment_source_package(spec,repo,names,package,**options)
+    archive=package/"source.tar.gz";reads=[];path_open=Path.open;file_open=builtins.open
+    def observe(path,*args,**kwargs):
+        if path==archive:reads.append((args,kwargs))
+        return path_open(path,*args,**kwargs)
+    def observe_file(path,*args,**kwargs):
+        if isinstance(path,(str,Path)) and Path(path)==archive:reads.append((args,kwargs))
+        return file_open(path,*args,**kwargs)
+    with patch.object(Path,"open",observe), patch("builtins.open",observe_file), patch(
+            "tarfile.bltn_open",observe_file), patch(
+            "gzip._GzipReader",wraps=gzip._GzipReader) as gzip_reader, patch(
+            "molgap.experiment_package.tarfile.open",wraps=tarfile.open) as tar_open:
+        assert verify_experiment_source_package(package,repo)==manifest
+    assert len(reads)==1,reads
+    assert tar_open.call_count==1
+    assert gzip_reader.call_count==1
 
 
 def test_clean_filter_or_index_flag_cannot_hide_changed_source_on_cache_hit(repo,payload,tmp_path):

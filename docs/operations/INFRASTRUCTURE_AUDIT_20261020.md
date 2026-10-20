@@ -76,3 +76,23 @@ its bounded mmap cache; the earlier repeated-whole-shard-hash observation was
 not attributed to this implementation. Package interruption still left partial
 local preparation for reconciliation rather than silently overwriting it.
 Existing user edits, derived RML views and active frozen task custody were preserved.
+
+## Desktop simplification integration
+
+The subsequent authorized synchronization selectively applied Desktop commits
+`711d2c87`, `1c3003c4`, `22deb5c6`, and `3eead61d` to the Server integration branch.
+It reused exact-byte package verification within one preparation/lookup,
+unified repository-relative initialization, collected RML records in one walk,
+deduplicated validate-only source rechecks, and added scoped local tests,
+portable host test bundles and bounded retired-cache cleanup.
+
+Server fault-publication and recovery repairs were retained. Mount checks still
+included every staged package sidecar. Modern2D CPU defaults and explicit native
+admission were preserved; mature-family metadata followed the shared catalog.
+The RML collector retained Server's Unified-V2 input-role classifier. The new
+test/cleanup tools were explicitly excluded from training runtime distributions.
+The [quickstart](EXPERIMENT_QUICKSTART.md#6-check-affected-flows-and-manage-temporary-storage)
+owned usage instructions. No remote submission or scientific computation followed.
+
+Post-integration local validation was delegated to independent configured Luna
+workers; results were recorded after their final affected suites completed.

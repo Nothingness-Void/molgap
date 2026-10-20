@@ -9,6 +9,7 @@ import hashlib
 import importlib
 import importlib.abc
 import importlib.machinery
+import io
 import json
 import math
 import os
@@ -205,10 +206,12 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
     return manifest
 
 
-def _unpack(package, root):
+def _unpack(package, root, *, archive_bytes=None):
     """Defense in depth after the existing package verifier; never extractall."""
     seen = set()
-    with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
+    archive_args = ({"fileobj": io.BytesIO(archive_bytes)} if archive_bytes is not None
+                    else {"name": package / "source.tar.gz"})
+    with tarfile.open(mode="r:gz", **archive_args) as archive:
         for member in archive:
             name = _relative(member.name)
             if (member.type not in {tarfile.REGTYPE, tarfile.AREGTYPE}
@@ -738,7 +741,7 @@ def _release_imports(request):
 def check_release_inputs(spec, package_dir, *, expected_package_identity,
                          recipe_files, initial_states, required_modules,
                          pickle_inputs=(), entry_script=None, input_root=None,
-                         launch_config=None, kernel_metadata=None):
+                         launch_config=None, kernel_metadata=None, _verification=None):
     """Collect source/recipe/serialization/init defects before platform publication.
 
     Only caller-selected trusted training shards are inspected. Pickle opcodes
@@ -749,11 +752,11 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     import ast
     import pickletools
     import zipfile
-    from .experiment_package import SIDECARS, verify_experiment_source_package
+    from .experiment_package import SIDECARS, _read_verified_package
     from .v4_runtime import inspect_frozen_state_artifact
 
     package = Path(package_dir).absolute()
-    manifest = verify_experiment_source_package(package)
+    package_bytes, manifest = _read_verified_package(package, _verification=_verification)
     if manifest["package_identity"] != expected_package_identity or manifest["spec_identity"] != spec.identity:
         raise ValueError("Pinned package/Spec identity mismatch")
     arms = {a["arm_id"]: a for a in spec.to_dict()["arms"]}
@@ -783,7 +786,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
         workspace = Path(temporary)
         source = workspace / "source"
         source.mkdir()
-        _unpack(package, source)
+        _unpack(package, source, archive_bytes=package_bytes["source.tar.gz"])
         for path in source.rglob("*.py"):
             check("syntax", path.relative_to(source).as_posix(),
                   lambda p=path: bool(ast.parse(p.read_bytes(), filename=str(p))))
@@ -875,7 +878,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
         def layout():
             root = Path(input_root).absolute()
             for name in sorted(SIDECARS - {"source.tar.gz"}):
-                if _regular(root / name).read_bytes() != (package / name).read_bytes():
+                if _regular(root / name).read_bytes() != package_bytes[name]:
                     raise ValueError(f"Staged sidecar differs: {name}")
             if _file_sha(_regular(root / "source_payload.bin")) != manifest["archive_sha256"]:
                 raise ValueError("Staged source_payload.bin differs from frozen archive")

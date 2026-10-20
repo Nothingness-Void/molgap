@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 
 from .common.io import _safe_local
 
@@ -59,7 +60,10 @@ def launch_local(repo_root, module, arguments=(), *, python=None, package_identi
         scratch = Path(scratch_root).absolute()
         _safe_local(scratch)
         scratch.mkdir(parents=True, exist_ok=True)
-        environment.update(TMP=str(scratch), TEMP=str(scratch), TMPDIR=str(scratch))
+        # Own only this invocation's temporary files, never the shared root.
+        with tempfile.TemporaryDirectory(prefix="molgap-", dir=scratch) as child_scratch:
+            environment.update(TMP=child_scratch, TEMP=child_scratch, TMPDIR=child_scratch)
+            return subprocess.run(command, cwd=root, env=environment).returncode
     return subprocess.run(command, cwd=root, env=environment).returncode
 
 

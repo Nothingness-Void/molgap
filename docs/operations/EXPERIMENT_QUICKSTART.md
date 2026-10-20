@@ -177,6 +177,11 @@ the same commit. `--prepared` and old
 canonical `--spec` operations remain compatible. IMS/SCNet do not acquire this
 new front door implicitly. See the [platform API](KAGGLE_WORKFLOW_SUBMISSION.md).
 
+Both preparation entries resolve relative initialization paths against the
+selected repository. One preparation or run lookup reuses full package validation
+for identical bytes; each boundary still reads and hashes all six files.
+Repository comparisons remain fresh; no validation memo survives the invocation.
+
 Scientific-input continuation looks up the external frozen run **before**
 compilation. The same human input reuses its original Spec/workflow/package,
 even after unrelated HEAD changes or removal of development reference files,
@@ -242,6 +247,43 @@ This read-only report does not qualify live latency. Active phase timers exclude
 offline waiting; upload transfer, source-ready wait, end-to-end receipt latency
 and training queue time remain unmeasured without their required observations.
 
-For targeted tests, migration measurements, portable commits and remaining
-work, see the [cumulative reform record](REFORM_MIGRATION.md). Do not run a full
-historical/document-format audit for a routine model configuration change.
+## 6. Check affected flows and manage temporary storage
+
+Select the affected flows in one pytest session; overlapping files are deduplicated:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope package --scope prepare -- -q
+```
+
+Scopes are `runtime`, `package`, `prepare`, `submit`, `accept`, and `resume`.
+`--list` previews selections. Use ordinary pytest for other tests. These scopes
+are conveniences, not additional release gates. Recheck affected failures after
+a fix; do not repeat unchanged successful suites at every handoff.
+
+The profile wrapper gives each invocation its own scratch and removes it on exit.
+Save reports explicitly under `artifact_root`. To distribute tests after committing
+source, use the existing source-bundle writer:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --repo-root . --package E:/MolGap/artifacts/test-source
+```
+
+The absent/empty destination receives tracked source/tests and compact flow
+fixtures, excluding datasets, weights and accounts. Transfer the hash/inventory
+sidecars with the archive. From its extracted directory, use the host's dependency
+interpreter and the same wrapper/scopes; no editable reinstall is needed.
+Historical tests outside these scopes may require their own retained records.
+
+Inspect bounded temporary-storage candidates without opening payloads:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_storage -- --profile $profilePath --repo-root .
+```
+
+Removal requires an exact `--candidate` and `--execute`. Only atomically retired
+`.incomplete-*` source caches with known generated files are eligible; scratch of
+unknown ownership, live caches and run evidence remain report-only. Interrupted
+removal reports `STOPPED`. Age alone never establishes that a file is disposable.
+
+Migration evidence and remaining capabilities route through the
+[cumulative reform record](REFORM_MIGRATION.md).

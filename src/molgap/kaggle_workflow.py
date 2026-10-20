@@ -44,10 +44,11 @@ def validate_plan(spec, plan):
 
 
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
-                 metadata, initial_states, jobs):
+                 metadata, initial_states, jobs, _verification=None):
     staged = output / "source_dataset"
     from .experiment_package import stage_source_inputs
-    stage_source_inputs(package, staged, initial_states)
+    stage_source_inputs(package, staged, initial_states,
+        **({"_verification": _verification} if _verification is not None else {}))
     publish_immutable_bytes(staged / "dataset-metadata.json", canonical_json({
         "id": platform_plan["source_dataset"], "title": platform_plan["source_dataset"].split("/")[1],
         "licenses": [{"name": "CC0-1.0"}]}).encode())

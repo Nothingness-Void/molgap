@@ -2,13 +2,14 @@
 import hashlib
 import io
 import json
+import os
 import subprocess
 import tarfile
 
 import pytest
 
 from molgap.experiment_package import (
-    PACKAGE_FORMAT, build_experiment_source_package,
+    PACKAGE_FORMAT, SIDECARS, build_experiment_source_package,
     inspect_experiment_source_package, verify_experiment_source_package,
 )
 from molgap.experiment_spec import ExperimentSpec
@@ -313,3 +314,74 @@ def test_no_runtime_or_evidence_authority(package):
     assert manifest["package_status"] == "source_packaged"
     assert not ({"ready", "replay_ready", "training_success", "cost_measured", "rml_closed"}
                 & manifest.keys())
+
+
+def test_scoped_verification_reuses_exact_bytes_and_defends_cached_result(package, monkeypatch):
+    import molgap.experiment_package as owner
+
+    original = owner._verify_package_snapshot
+    calls = []
+
+    def verify(*args, **kwargs):
+        calls.append(1)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(owner, "_verify_package_snapshot", verify)
+    memo = owner._PackageVerification()
+    manifest = owner.verify_experiment_source_package(package, _verification=memo)
+    expected = json.loads(json.dumps(manifest))
+    manifest["arms"][0]["identity"] = "0" * 64
+    assert owner.verify_experiment_source_package(package, _verification=memo) == expected
+    assert len(calls) == 1
+
+    # A separate preparation and ordinary boundary calls do independent work.
+    owner.verify_experiment_source_package(package, _verification=owner._PackageVerification())
+    owner.verify_experiment_source_package(package)
+    owner.verify_experiment_source_package(package)
+    assert len(calls) == 4
+
+
+@pytest.mark.parametrize("name", sorted(SIDECARS))
+def test_scoped_verification_detects_same_stat_sidecar_tampering(package, name):
+    import molgap.experiment_package as owner
+
+    memo = owner._PackageVerification()
+    owner.verify_experiment_source_package(package, _verification=memo)
+    target = package / name
+    before = target.stat()
+    raw = target.read_bytes()
+    target.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+    os.utime(target, ns=(before.st_atime_ns, before.st_mtime_ns))
+    assert target.stat().st_size == before.st_size
+    assert target.stat().st_mtime_ns == before.st_mtime_ns
+    with pytest.raises(ValueError):
+        owner.verify_experiment_source_package(package, _verification=memo)
+
+
+def test_scoped_verification_never_reuses_repository_comparison(package, repo):
+    import molgap.experiment_package as owner
+
+    memo = owner._PackageVerification()
+    owner.verify_experiment_source_package(package, repo, _verification=memo)
+    (repo / "src" / "example.py").write_bytes(b"VALUE = 2\r\n")
+    with pytest.raises(ValueError, match="Repository source payload mismatch"):
+        owner.verify_experiment_source_package(package, repo, _verification=memo)
+
+
+def test_source_staging_publishes_verified_snapshot_when_package_changes(package, tmp_path, monkeypatch):
+    import molgap.experiment_launch as launch
+    import molgap.experiment_package as owner
+
+    expected = {name: (package / name).read_bytes() for name in owner.SIDECARS}
+    publish = launch.publish_immutable_bytes
+
+    def mutate_after_publish(path, raw):
+        result = publish(path, raw)
+        (package / "source.tar.gz").write_bytes(b"changed during staging")
+        return result
+
+    monkeypatch.setattr(launch, "publish_immutable_bytes", mutate_after_publish)
+    staged = owner.stage_source_inputs(package, tmp_path / "staged", {})
+    for name, raw in expected.items():
+        target = "source_payload.bin" if name == "source.tar.gz" else name
+        assert (staged / target).read_bytes() == raw

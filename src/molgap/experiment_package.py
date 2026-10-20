@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
 import re
@@ -75,12 +76,17 @@ def _name(value) -> str:
     # A Python module under the reviewed package is source, even when its
     # responsibility is data/checkpoint IO. Directories and credential names
     # retain their existing confinement; artifact payload suffixes stay blocked.
-    if (value.startswith("src/molgap/") and path.suffix == ".py"
+    if ((value.startswith(("src/molgap/", "tests/")) or
+         value == "platforms/kaggle/retrieve_family_outputs.py") and path.suffix == ".py"
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
         if path.stem in {"payload", "payloads"} and set(lowered[2:-1]) & io_tokens:
             raise ValueError(f"Source allowlist includes reserved payload path: {value}")
+        # This reviewed compatibility alias contains adapter code, not account
+        # material. The explicit test distribution needs the host import too.
+        if value == "src/molgap/kaggle_credentials.py":
+            io_tokens.add("credentials")
         # Token model source is not an authentication payload. Credential-like
         # token names and directories remain blocked, even under the source root.
         leaf_tokens = set(re.split(r"[._-]+", lowered[-1]))
@@ -123,17 +129,18 @@ def read_packaged_text(package_dir: Path, relative_path: str) -> str:
             raise ValueError("Missing packaged text source")
         with stream:
             return stream.read().decode("utf-8")
-def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict) -> Path:
+def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict, *,
+                        _verification=None) -> Path:
     """Common immutable worker inputs; no platform metadata or submission."""
     from .experiment_launch import _safe_local, publish_immutable_bytes
     from .experiment_spec import _identifier
     package_dir, destination = Path(package_dir).absolute(), Path(destination).absolute()
-    verify_experiment_source_package(package_dir)
+    raw, _ = _read_verified_package(package_dir, _verification=_verification)
     _safe_local(destination)
     destination.mkdir(parents=True, exist_ok=True)
     for name in sorted(SIDECARS):
         target = "source_payload.bin" if name == "source.tar.gz" else name
-        publish_immutable_bytes(destination / target, (package_dir / name).read_bytes())
+        publish_immutable_bytes(destination / target, raw[name])
     for arm_id, path in initial_states.items():
         _identifier(arm_id, "arm_id")
         path = Path(path).absolute()
@@ -220,7 +227,7 @@ def _atomic(path: Path, payload: bytes) -> None:
 
 def build_experiment_source_package(
     spec: ExperimentSpec, repo_root: Path, relative_paths, output_dir: Path, *, source_cache=None,
-    generated_records=None,configuration_source=None,
+    generated_records=None,configuration_source=None, _verification=None,
 ) -> dict:
     """Publish a new source-only package, manifest last; never overwrite a package."""
     spec = _spec(spec)
@@ -329,7 +336,8 @@ def build_experiment_source_package(
             _atomic(stage / "experiment_spec.json", spec.to_json().encode("utf-8"))
             _atomic(stage / "package_manifest.json", _json_bytes(manifest))
             # Recheck commit blobs too: Git clean filters must not conceal changed bytes.
-            verify_experiment_source_package(stage, repo_root=root)
+            verify_experiment_source_package(stage, repo_root=root,
+                **({"_verification": _verification} if _verification is not None else {}))
             if _git(root, "rev-parse", "HEAD").decode().strip() != commit:
                 raise ValueError("Source HEAD changed before package publication")
             for name in sorted(SIDECARS - {"package_manifest.json"}):
@@ -340,8 +348,27 @@ def build_experiment_source_package(
         lock.unlink(missing_ok=True)
 
 
-def verify_experiment_source_package(package_dir: Path, repo_root: Path | None = None) -> dict:
-    """Verify source integrity only, optionally against commit blobs and tracked payloads."""
+class _PackageVerification:
+    """One synchronous preparation's exact-content validation memo.
+
+    Paths and stat metadata never establish a hit. Repository comparisons are
+    always fresh, and callers cannot mutate the cached canonical result.
+    """
+
+    def __init__(self):
+        self._fingerprint = None
+        self._manifest = None
+
+    def verify(self, raw, repo_root=None):
+        fingerprint = tuple((name, _sha(raw[name])) for name in sorted(SIDECARS))
+        if repo_root is not None or fingerprint != self._fingerprint:
+            manifest = _verify_package_snapshot(raw, repo_root)
+            self._fingerprint = fingerprint
+            self._manifest = _json_bytes(manifest)
+        return _load(self._manifest)
+
+
+def _read_verified_package(package_dir, repo_root=None, *, _verification=None):
     directory = Path(package_dir).absolute()
     _no_links(directory)
     if not directory.is_dir() or {p.name for p in directory.iterdir()} != SIDECARS:
@@ -349,6 +376,23 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     for name in SIDECARS:
         _source(directory, name)
     raw = {name: (directory / name).read_bytes() for name in SIDECARS}
+    if _verification is not None:
+        if type(_verification) is not _PackageVerification:
+            raise TypeError("Expected a scoped package verification memo")
+        manifest = _verification.verify(raw, repo_root)
+    else:
+        manifest = _verify_package_snapshot(raw, repo_root)
+    return raw, manifest
+
+
+def verify_experiment_source_package(package_dir: Path, repo_root: Path | None = None, *,
+                                     _verification=None) -> dict:
+    """Verify source integrity only, optionally against commit blobs and tracked payloads."""
+    return _read_verified_package(package_dir, repo_root, _verification=_verification)[1]
+
+
+def _verify_package_snapshot(raw, repo_root=None):
+    """Validate the exact bytes read by the package owner, never reopen the archive."""
     manifest = _load(raw["package_manifest.json"])
     if type(manifest) is not dict or raw["package_manifest.json"] != _json_bytes(manifest):
         raise ValueError("Manifest must be a canonical JSON object")
@@ -386,8 +430,11 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     if list(entries) != sorted(names):
         raise ValueError("Inventory and explicit allowlist differ")
     seen = set()
+    config_name = manifest.get("configuration_source", {}).get("path")
+    config_payload = None
     # Never extract untrusted tar members onto the filesystem.
-    with tarfile.open(directory / "source.tar.gz", mode="r:gz") as archive:
+    # Parse the exact snapshot whose hash was checked, without reopening the file.
+    with tarfile.open(fileobj=io.BytesIO(raw["source.tar.gz"]), mode="r:gz") as archive:
         for member in archive:
             name = _name(member.name)
             if not member.isfile() or member.linkname or name in seen or name not in entries:
@@ -402,6 +449,8 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
             if name in manifest.get("generated_records", {}):
                 if len(payload) > 1024**2 or _json_bytes(_load(payload)) != payload:
                     raise ValueError("Derived JSON must be bounded and canonical")
+            if name == config_name:
+                config_payload = payload
             seen.add(name)
     if seen != set(entries):
         raise ValueError("Archive member set differs from inventory")
@@ -412,7 +461,7 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
         config=manifest["configuration_source"]
         if entries[config["path"]]["sha256"] != config["sha256"]:
             raise ValueError("Configuration provenance differs from archived source")
-        config_value = _load(read_packaged_text(directory, config["path"]).encode())
+        config_value = _load(config_payload.decode("utf-8"))
         if type(config_value) is not dict or config_value.get("format") != config["compiler"]:
             raise ValueError("Configuration provenance is not a scientific input")
         prefix = "experiments/" + spec.to_dict()["experiment_id"] + "/generated/" + canonical_fingerprint({

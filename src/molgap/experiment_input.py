@@ -473,7 +473,7 @@ def freeze_experiment_input(path, repo_root):
 def locate_run(profile, repo_root, run_id, attempt_id):
     """Read the original frozen run by ID; never create a run or infer artifacts."""
     from .experiment_launch import read_launch_receipt
-    from .experiment_package import verify_experiment_source_package
+    from .experiment_package import _PackageVerification, verify_experiment_source_package
     from .research_memory.trace import file_digest
     paths=MachinePaths.from_file(profile).outside_checkout(repo_root)
     run=paths.run_directory(run_id,attempt_id)
@@ -499,7 +499,9 @@ def locate_run(profile, repo_root, run_id, attempt_id):
             or canonical_fingerprint(plan) != binding.get("workflow_identity")):
         raise ValueError("Original frozen run binding changed")
     package=run/"prepared/package"
-    manifest=verify_experiment_source_package(package) if package.exists() else None
+    verification=_PackageVerification()
+    manifest=(verify_experiment_source_package(package, _verification=verification)
+              if package.exists() else None)
     if manifest and manifest["spec_identity"] != spec.identity:
         raise ValueError("Run package differs from original frozen input")
     if "source_commit" in binding:
@@ -511,7 +513,8 @@ def locate_run(profile, repo_root, run_id, attempt_id):
     if receipt_path.exists() and manifest is None:
         raise ValueError("A receipt without its original package cannot be resolved")
     receipt=(read_launch_receipt(receipt_path,spec,package,
-        expected_package_identity=manifest["package_identity"]) if receipt_path.exists() else None)
+        expected_package_identity=manifest["package_identity"], _verification=verification)
+        if receipt_path.exists() else None)
     files={}
     for name in ("inputs/input_binding.json","inputs/experiment_spec.json","inputs/workflow_plan.json",
                  "prepared/workflow_report.json","prepared/release_report.json",

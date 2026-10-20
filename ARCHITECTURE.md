@@ -33,6 +33,7 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
 | Documentation pointers | `documentation_check.py`; no automatic line-count gate | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
 | Checkout selection / external new-run storage | `local_runtime.py`, `common/paths.py`, `common/io.py` | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
+| Local test scopes / host test bundle / retired-cache cleanup | `local_testing.py`, `experiment_source_inventory.py`, `local_storage.py` | [local tools](docs/operations/EXPERIMENT_QUICKSTART.md#6-check-affected-flows-and-manage-temporary-storage); host tools stay outside worker packages |
 | Bounded local artifact census | `artifact_inventory.py` | Explicit selections only; metadata/size counts never authorize cleanup |
 | Original run-ID lifecycle / measured preparation timings | `experiment_run.py`, `experiment_timings.py`, existing lifecycle owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md); local operations only, no inferred scientific verdict |
 | Scientific config compiler / editable references / fixed runtime distribution | `experiment_input.py`, `common/declarations.py`, `experiment_source_inventory.py`, existing Recipe/package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |

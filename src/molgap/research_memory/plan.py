@@ -359,12 +359,18 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
                 raise PlanBatchError(index, len(prepared), [], exc) from exc
             raise
     results = []
+    if validate_only:
+        # Each arm carries the same union from this snapshot. Recheck it once
+        # after all deep validation so mutations in any arm are still rejected.
+        try:
+            for pointer, digest in snapshot.source_hashes.items():
+                if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                    raise ValueError("decision source changed during planning validation")
+        except Exception as exc:
+            raise PlanBatchError(0, len(prepared), [], exc) from exc
     for index, item in enumerate(validated):
         try:
             if validate_only:
-                for pointer, digest in item["source_hashes"].items():
-                    if file_digest(resolve_repo_pointer(root, pointer)) != digest:
-                        raise ValueError("decision source changed during planning validation")
                 results.append({"trajectory_id": item["trajectory_id"], "status": "VALIDATED",
                                 "path": item["destination"].relative_to(root).as_posix()})
             else:

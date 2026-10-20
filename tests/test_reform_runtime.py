@@ -47,17 +47,82 @@ def test_two_workspaces_select_their_own_sources_not_inherited_editable(tmp_path
     assert "PYTHONPATH" in __import__('os').environ
 
 
-def test_scratch_environment_is_only_applied_to_the_selected_child(tmp_path,capfd):
+@pytest.mark.parametrize("exit_code", [0, 7])
+def test_child_scratch_is_cleaned_after_success_or_failure(tmp_path,capfd,exit_code):
     import os
     root=tmp_path/"checkout";package=root/"src/molgap";package.mkdir(parents=True)
     (package/"__init__.py").write_text("")
-    (package/"probe.py").write_text("import tempfile\nprint(tempfile.gettempdir())\n")
+    (package/"probe.py").write_text(
+        "import os, sys, tempfile\nfrom pathlib import Path\n"
+        "scratch = Path(tempfile.gettempdir())\n"
+        "assert all(Path(os.environ[key]) == scratch for key in ('TMP', 'TEMP', 'TMPDIR'))\n"
+        "nested = Path(tempfile.mkdtemp())\n(nested / 'payload').write_bytes(b'temporary')\n"
+        "print(scratch)\nsys.exit(int(sys.argv[1]))\n")
     before={key:os.environ.get(key) for key in ("TMP","TEMP","TMPDIR")}
     scratch=tmp_path/"external-scratch"
-    assert launch_local(root,"molgap.probe",scratch_root=scratch)==0
+    retained=scratch/"existing-run"/"retained.bin"
+    retained.parent.mkdir(parents=True);retained.write_bytes(b"existing artifact")
+    assert launch_local(root,"molgap.probe",[exit_code],scratch_root=scratch)==exit_code
     output,_=capfd.readouterr()
-    assert Path(output.strip())==scratch
+    child_scratch=Path(output.strip())
+    assert child_scratch.parent==scratch and not child_scratch.exists()
+    assert retained.read_bytes()==b"existing artifact"
+    assert list(scratch.iterdir())==[retained.parent]
     assert before=={key:os.environ.get(key) for key in before}
+
+
+def test_child_scratch_is_cleaned_if_process_cannot_start(tmp_path,monkeypatch):
+    root=tmp_path/"checkout";package=root/"src/molgap";package.mkdir(parents=True)
+    (package/"__init__.py").write_text("")
+    scratch=tmp_path/"external-scratch"
+    seen=[]
+
+    def fail_to_start(*args,env,**kwargs):
+        child_scratch=Path(env["TMP"])
+        assert child_scratch.is_dir()
+        (child_scratch/"payload").write_bytes(b"temporary")
+        seen.append(child_scratch)
+        raise OSError("synthetic process start failure")
+
+    monkeypatch.setattr(subprocess,"run",fail_to_start)
+    with pytest.raises(OSError,match="synthetic process start failure"):
+        launch_local(root,"molgap.probe",scratch_root=scratch)
+    assert len(seen)==1 and not seen[0].exists()
+    assert scratch.is_dir() and not list(scratch.iterdir())
+
+
+def test_concurrent_launches_have_independent_scratch(tmp_path,monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+    root=tmp_path/"checkout";package=root/"src/molgap";package.mkdir(parents=True)
+    (package/"__init__.py").write_text("")
+    (package/"probe.py").write_text(
+        "import sys, tempfile\nfrom pathlib import Path\n"
+        "scratch = Path(tempfile.gettempdir())\n"
+        "(scratch / 'payload').write_bytes(b'temporary')\n"
+        "Path(sys.argv[1]).write_text(str(scratch))\n")
+    scratch=tmp_path/"external-scratch"
+    barrier=Barrier(2)
+    run=subprocess.run
+
+    def overlap_launches(*args,env,**kwargs):
+        child_scratch=Path(env["TMP"])
+        (child_scratch/"ready").write_bytes(b"temporary")
+        barrier.wait(timeout=30)
+        assert len(list(scratch.iterdir()))==2
+        barrier.wait(timeout=30)
+        return run(*args,env=env,timeout=30,**kwargs)
+
+    monkeypatch.setattr(subprocess,"run",overlap_launches)
+    receipts=[tmp_path/f"child-{index}.txt" for index in range(2)]
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        launches=[pool.submit(launch_local,root,"molgap.probe",[receipt],scratch_root=scratch)
+                  for receipt in receipts]
+        assert [launch.result(timeout=30) for launch in launches]==[0,0]
+    child_scratch=[Path(receipt.read_text()) for receipt in receipts]
+    assert len(set(child_scratch))==2
+    assert all(path.parent==scratch and not path.exists() for path in child_scratch)
+    assert scratch.is_dir() and not list(scratch.iterdir())
 
 
 def test_platform_script_uses_selected_checkout_and_cannot_escape(tmp_path,capfd):

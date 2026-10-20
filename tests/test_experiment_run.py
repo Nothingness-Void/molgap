@@ -71,6 +71,61 @@ def snapshot(root):
     return {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob("*") if p.is_file()}
 
 
+def test_locate_run_reuses_validation_only_within_one_lookup(frozen_run, monkeypatch):
+    from molgap import experiment_package as packages
+
+    case = frozen_run
+    full_validation = Mock(wraps=packages._verify_package_snapshot)
+    monkeypatch.setattr(packages, "_verify_package_snapshot", full_validation)
+    for expected_calls in (1, 2):
+        assert locate_run(*case.original)["receipt"] == case.receipt
+        assert full_validation.call_count == expected_calls
+
+    archive = case.package / "source.tar.gz"
+    archive.write_bytes(archive.read_bytes() + b"tampered")
+    with pytest.raises(ValueError):
+        locate_run(*case.original)
+    assert full_validation.call_count == 3
+
+
+def test_locate_run_rechecks_package_before_receipt_validation(frozen_run, monkeypatch):
+    from molgap import experiment_launch as launch
+    from molgap import experiment_package as packages
+
+    case = frozen_run
+    full_validation = Mock(wraps=packages._verify_package_snapshot)
+    monkeypatch.setattr(packages, "_verify_package_snapshot", full_validation)
+    original_read = launch.read_launch_receipt
+
+    def changed_before_receipt(*args, **kwargs):
+        assert full_validation.call_count == 1
+        archive = case.package / "source.tar.gz"
+        archive.write_bytes(archive.read_bytes() + b"tampered")
+        return original_read(*args, **kwargs)
+
+    monkeypatch.setattr(launch, "read_launch_receipt", changed_before_receipt)
+    with pytest.raises(ValueError):
+        locate_run(*case.original)
+    assert full_validation.call_count == 2
+
+
+def test_independent_receipt_reads_and_writes_keep_full_validation(frozen_run, tmp_path, monkeypatch):
+    from molgap import experiment_launch as launch
+    from molgap import experiment_package as packages
+
+    case = frozen_run
+    full_validation = Mock(wraps=packages._verify_package_snapshot)
+    monkeypatch.setattr(packages, "_verify_package_snapshot", full_validation)
+    receipts = tmp_path / "receipts"
+    receipts.mkdir()
+    for expected_calls in (2, 4):
+        assert launch.read_launch_receipt(case.run / "operations/launch_receipt.json",
+            case.spec, case.package, expected_package_identity=case.manifest["package_identity"]) == case.receipt
+        launch.write_launch_receipt(canonical_json(case.receipt), receipts, case.spec,
+            case.package, expected_package_identity=case.manifest["package_identity"])
+        assert full_validation.call_count == expected_calls
+
+
 def test_inspect_resolves_original_run_and_explicit_external_output(frozen_run, tmp_path, monkeypatch):
     case = frozen_run
     before = snapshot(case.run)

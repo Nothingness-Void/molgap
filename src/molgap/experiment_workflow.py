@@ -208,6 +208,29 @@ def _platform_adapter(name):
     return import_module(_PLATFORM_ADAPTERS[name])
 
 
+def _arm_inputs(repo_root, arms, bindings):
+    """Bind worker inputs relative to the selected repository for both front doors."""
+    if type(arms) is not list:
+        raise ValueError("Expected explicit workflow arms")
+    jobs, recipes, initial_states = [], {}, {}
+    for arm in arms:
+        if (type(arm) is not dict
+                or set(arm) != {"arm_id", "device", "recipe", "initial_state"}
+                or arm["arm_id"] not in bindings):
+            raise ValueError("Expected known arm/device/recipe/initial_state")
+        arm_id = arm["arm_id"]
+        if arm_id in initial_states:
+            raise ValueError("Duplicate workflow arm")
+        initial = _path(repo_root, arm["initial_state"])
+        if not initial.is_file():
+            raise ValueError("Missing frozen initialization file")
+        initial_states[arm_id], recipes[arm_id] = initial, arm["recipe"]
+        jobs.append({"arm_id": arm_id, "device": arm["device"], "recipe": arm["recipe"],
+                     "initial_state": f"initial_states/{arm_id}.pt",
+                     "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    return jobs, recipes, initial_states
+
+
 def prepare_family_training(spec, repo_root, plan, output):
     """Stage the shared worker for any platform; skills add platform release/metadata.
 
@@ -231,18 +254,7 @@ def prepare_family_training(spec, repo_root, plan, output):
     if any((arm["family"]["name"], arm["family"]["version"]) not in INTERFACES.values() for arm in declaration["arms"]):
         raise ValueError("Shared preparation requires shared K1/GPTrans interfaces")
     bindings = {entry["arm_id"]: entry for entry in declaration["prospective"].get("arms", [])}
-    if type(plan["arms"]) is not list:
-        raise ValueError("Expected explicit arm bindings")
-    jobs, recipes, initial_states = [], {}, {}
-    for entry in plan["arms"]:
-        if type(entry) is not dict or set(entry) != {"arm_id", "device", "recipe", "initial_state"}:
-            raise ValueError("Expected arm/device/recipe/initial_state")
-        arm_id = entry["arm_id"]
-        if arm_id not in bindings or arm_id in recipes:
-            raise ValueError("Unknown or duplicate arm")
-        recipes[arm_id], initial_states[arm_id] = entry["recipe"], Path(entry["initial_state"]).absolute()
-        jobs.append({"arm_id": arm_id, "device": entry["device"], "recipe": entry["recipe"],
-            "initial_state": "initial_states/" + arm_id + ".pt", "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    jobs, recipes, initial_states = _arm_inputs(repo_root, plan["arms"], bindings)
     validated = validate_execution_plan(spec, jobs)
     check_family_recipes(spec, repo_root, recipes)
     source_files = _allowlist(sorted(set(SHARED_SOURCE_FILES) | set(plan["source_files"]) | set(recipes.values())))
@@ -294,22 +306,7 @@ def _workflow_inputs(spec, repo_root, plan):
     metadata = backend.validate_plan(spec, plan[platform_name])
     declaration = spec.to_dict()
     bindings = {b["arm_id"]: b for b in declaration["prospective"].get("arms", [])}
-    if type(plan["arms"]) is not list:
-        raise ValueError("Expected explicit workflow arms")
-    jobs, initial_states, recipes = [], {}, {}
-    for arm in plan["arms"]:
-        if type(arm) is not dict or set(arm) != {"arm_id", "device", "recipe", "initial_state"} or arm["arm_id"] not in bindings:
-            raise ValueError("Expected known arm/device/recipe/initial_state")
-        arm_id = arm["arm_id"]
-        if arm_id in initial_states:
-            raise ValueError("Duplicate workflow arm")
-        initial = _path(repo_root, arm["initial_state"])
-        _safe_local(initial)
-        if not initial.is_file():
-            raise ValueError("Missing frozen initialization file")
-        initial_states[arm_id], recipes[arm_id] = initial, arm["recipe"]
-        jobs.append({"arm_id": arm_id, "device": arm["device"], "recipe": arm["recipe"],
-                     "initial_state": f"initial_states/{arm_id}.pt", "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    jobs, recipes, initial_states = _arm_inputs(repo_root, plan["arms"], bindings)
     validated_jobs = validate_execution_plan(spec, jobs)
     acceptance_path = _artifact_path(repo_root, plan["acceptance_plan"])
     acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path))
@@ -363,6 +360,9 @@ def check_workflow_readiness(spec, repo_root, plan):
 
 def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
+    from .experiment_package import _PackageVerification
+
+    verification = _PackageVerification()
     started = perf_counter()
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
     _safe_local(output)
@@ -398,7 +398,9 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("family_recipes", observations["family_recipes"])
         record("prospective_check", observations["prospective"])
         package = output / "package"
-        options = {} if source_cache is None else {"source_cache": source_cache}
+        options = {"_verification": verification}
+        if source_cache is not None:
+            options["source_cache"] = source_cache
         if "generated_records" in plan:
             options.update(generated_records={n: _payload(_source(repo_root.resolve(), n))
                 for n in plan["generated_records"]}, configuration_source=plan["configuration_source"])
@@ -406,14 +408,14 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("package", manifest)
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
-            initial_states=initial_states, jobs=jobs)
+            initial_states=initial_states, jobs=jobs, _verification=verification)
         staged, kernel = stage["input_root"], stage["kernel_dir"]
         release = check_release_inputs(spec, package,
             expected_package_identity=manifest["package_identity"], recipe_files=recipes,
             initial_states={a: staged / "initial_states" / (a + ".pt") for a in initial_states},
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
-            input_root=staged)
+            input_root=staged, _verification=verification)
         _atomic(output / "release_report.json", release)
         record("check_release", release)
         if release["errors"]:
@@ -437,7 +439,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         backend.bind_release(stage, spec, release)
         _atomic(output / "release_report.json", release)
         record("final_release_binding", release)
-        record("launch_receipt", build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"]))
+        record("launch_receipt", build_launch_receipt(spec, package,
+            expected_package_identity=manifest["package_identity"], _verification=verification))
         report.update(status="PREPARED_FOR_PLATFORM", prospective_published=True,
                       package_identity=manifest["package_identity"], source_commit=manifest["source_commit"],
                       release_report=str(output / "release_report.json"), kernel_dir=str(kernel),

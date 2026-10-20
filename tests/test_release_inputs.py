@@ -103,8 +103,8 @@ def test_missing_transitive_import_does_not_fall_back_to_host(release, monkeypat
     spec, package, options = release
     from molgap import experiment_preflight
     unpack = experiment_preflight._unpack
-    def incomplete(source, root):
-        unpack(source, root)
+    def incomplete(source, root, **kwargs):
+        unpack(source, root, **kwargs)
         (root / "src/molgap/child.py").unlink()
     monkeypatch.setattr(experiment_preflight, "_unpack", incomplete)
     report = check_release_inputs(spec, package, **options)
