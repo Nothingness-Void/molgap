@@ -84,3 +84,21 @@ Portable recovery uses the existing package/receipt/resume-bundle owners.
 This implementation does not certify native throughput, model quality, a
 completed formal training run or Desktop migration. Those require evidence from
 their own authorized execution, not a successful declaration or CPU test.
+
+## Execution-only PPGT profiling
+
+The same input/recipe/Session/package/platform owners support a separately
+authorized `CONFIGURED_EXECUTION_PROFILE` purpose. It requires
+`scientific_training_authorized=false`, one PPGT/3 arm, train100K, six scratch
+updates and at most1800 seconds/1 allocated T4-hour. The phase extension contains
+**preflight only**; the runtime rejects development/formal training access.
+Both allocated devices are charged, including the deliberately idle second T4.
+
+`training.profiling` selects the existing profiler. `ppgt_phases=true` adds
+temporary PPGT function/module observations without changing model arithmetic.
+Disable shape, stack and memory capture for the bounded native profile. The
+two-update captured repeat must equal the unprofiled and serialized-resume
+endpoints; report timing overhead rather than treating it as native throughput.
+The [owning protocol](../../experiments/modern2d_configured_100k/ppgt_profile/protocol.md)
+defines outputs, roles, bounds and interpretation. Profiling is not a scientific
+screen,500K release or training Replay claim.

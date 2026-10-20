@@ -50,13 +50,14 @@ class ProfileConfig:
     with_stack: bool = False
     row_limit: int = 50
     module_paths: tuple[str, ...] = ()
+    ppgt_phases: bool = False
 
     def __post_init__(self):
         for name, minimum in (("warmup_steps", 0), ("active_steps", 1), ("row_limit", 1)):
             value = getattr(self, name)
             if type(value) is not int or value < minimum:
                 raise ValueError("Invalid profile setting: " + name)
-        for name in ("record_shapes", "profile_memory", "with_stack"):
+        for name in ("record_shapes", "profile_memory", "with_stack", "ppgt_phases"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError("Expected profile boolean: " + name)
         if (type(self.module_paths) is not tuple or
@@ -241,6 +242,8 @@ class _ExecutionCapture:
             self._wrap(kernel, "_model_batch", "topology_transfer")
         for path in self.config.module_paths:
             self._observe_module(kernel.model.get_submodule(path), "module/" + path)
+        if self.config.ppgt_phases:
+            self._install_ppgt_phases(kernel.model)
         original_step, original_loader = kernel.step, session.loaders.train
         @wraps(original_step)
         def step(*args, **kwargs):
@@ -255,6 +258,29 @@ class _ExecutionCapture:
             return _ObservedBatches(source, self)
         self._replace(kernel, "step", step)
         self._replace(session.loaders, "train", loader)
+
+    def _install_ppgt_phases(self, model):
+        # Only the exclusive profiler owns these temporary module-level wraps.
+        # Observe the existing implementation, never substitute a faster formula.
+        from . import ppgt_author, ppgt_author_features
+        if type(model) is not ppgt_author.PPGTAuthor:
+            raise ValueError("PPGT phase capture requires the unchanged PPGTAuthor model")
+        for obj, name, label in (
+            (ppgt_author, "validated_topology_views", "ppgt/topology_views"),
+            (model, "graph_forward", "ppgt/graph_forward"),
+            (ppgt_author, "positional_inputs", "ppgt/positional_inputs"),
+            (ppgt_author_features, "rrwp", "ppgt/rrwp"),
+            (ppgt_author, "sinusoidal_pe", "ppgt/sinusoidal_pe"),
+        ):
+            self._wrap(obj, name, label)
+        self._observe_module(model.pe_mlp, "ppgt/pe_mlp")
+        for block in model.stem:
+            self._observe_module(block, "ppgt/pair_stem")
+        for block in model.blocks:
+            self._observe_module(block, "ppgt/backbone")
+            self._observe_module(block.attention, "ppgt/attention")
+            self._observe_module(block.FFN, "ppgt/ffn")
+        self._observe_module(model.head, "ppgt/readout")
 
     def _synchronize(self):
         if self.session.kernel.device.type == "cuda":

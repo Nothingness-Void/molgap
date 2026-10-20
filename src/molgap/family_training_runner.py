@@ -233,7 +233,7 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         raise ValueError("Recipe bytes differ from Spec")
     if recipe.formal_interface:
         formal_training.validate_before_payload(recipe=recipe, context=context, spec=spec,
-            authority_path=authority_path, input_root=input_root)
+            authority_path=authority_path, input_root=input_root, training_only=training_only)
         _loaded_source(package_dir)
     trajectory = validate_staged_trajectory(spec, arm_id, Path(prospective_root or input_root))
     if trajectory["trajectory_id"] != trajectory_id or trajectory["state_at_start"]["source_commit"] != context.source_commit:

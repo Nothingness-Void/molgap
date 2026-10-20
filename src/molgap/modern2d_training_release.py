@@ -14,6 +14,7 @@ from .research_memory.trace import file_digest
 PLAN_FORMAT = "molgap-modern2d-formal-reference-plan-v1"
 CONFIGURED_PLAN_FORMAT = "molgap-modern2d-configured-plan-v1"
 CONFIGURED_AUTHORITY_FORMAT = "molgap-modern2d-configured-authority-v1"
+PROFILE_PURPOSE = "CONFIGURED_EXECUTION_PROFILE"
 WALL_CEILING_SECONDS = 16200
 CHECKPOINT_RESERVE_SECONDS = 600
 BUDGET_FORMAT = "molgap-modern2d-retry-budget-v1"
@@ -72,10 +73,11 @@ def validate_configured_authority(authority, declaration, recipes=None):
     arms, platform = declaration["arms"], declaration["platform"]
     gpu = authority.get("gpu", {})
     wall, budget = gpu.get("wall_ceiling_seconds"), authority.get("allocated_t4_hours_ceiling")
+    profiling = authority.get("purpose") == PROFILE_PURPOSE
     if (authority.get("format") != CONFIGURED_AUTHORITY_FORMAT or authority.get("owner") != "server"
             or authority.get("user_authorized") is not True
-            or authority.get("scientific_training_authorized") is not True
-            or authority.get("purpose") != "CONFIGURED_SCREEN"
+            or authority.get("scientific_training_authorized") is not (not profiling)
+            or authority.get("purpose") not in {"CONFIGURED_SCREEN", PROFILE_PURPOSE}
             or authority.get("logical_run_id") != declaration["logical_run_id"]
             or authority.get("arms") != [a["arm_id"] for a in arms]
             or authority.get("interfaces") != [[a["family"]["name"], a["family"]["version"]] for a in arms]
@@ -97,6 +99,10 @@ def validate_configured_authority(authority, declaration, recipes=None):
             or not authority["run_reference"].startswith(gpu["owner"] + "/")
             or (len(arms) == 1 and not authority.get("single_arm_reason"))):
         raise ValueError("Configured authority does not cover the exact roles, arms and full allocation")
+    if profiling and (len(arms) != 1 or authority["interfaces"] != [["ppgt_small", "3"]]
+            or authority["roles"] != ["train_100k", "common_dev"] or wall > 1800
+            or budget > 1 or authority.get("scratch_optimizer_updates_per_model") != 6):
+        raise ValueError("Execution profile permits one PPGT train-only six-update preflight within1 T4h")
     if recipes is not None:
         expected = {name: {"horizon_passes": recipe.formal_training.horizon_passes,
             "horizon_steps": recipe.formal_training.horizon_steps} for name, recipe in recipes.items()}
@@ -251,6 +257,14 @@ def check_plan(spec, root, plan):
             raise ValueError("Formal target encoding or row-order identity changed")
     if configured:
         validate_configured_authority(authority, declaration, recipes)
+        if authority.get("purpose") == PROFILE_PURPOSE:
+            from .family_execution_profile import ProfileConfig
+            for entry in plan["arms"]:
+                record = _json(_pinned(root, entry["contract"]))
+                config = ProfileConfig.from_dict(record.get("profiling", {}))
+                if ("profiling" not in record or config.ppgt_phases is not True
+                        or config.record_shapes or config.profile_memory or config.with_stack):
+                    raise ValueError("Bounded PPGT profile requires explicit lightweight phase capture")
     return {"status": "ACCEPTANCE_INPUTS_AVAILABLE", "spec_identity": spec.identity,
         "reference_status": "NEW_REFERENCES_NOT_ACCEPTED", "scientific_acceptance": "NOT_EVALUATED",
         "comparison_scope": "CONTEXT_ONLY", "noReplay": True,
@@ -287,7 +301,7 @@ def build_formal_context(*, spec, job, source_root, staged_root, input_root, run
 
 
 def execution_extension(spec, source_root):
-    from .experiment_execution import ExecutionExtension
+    from .experiment_execution import ExecutionExtension, ExecutionPhase
     plan = _json(_artifact_path(Path(source_root).absolute(), plan_path(spec)))
     check_plan(spec, source_root, plan)
     configuration = {"format": plan["format"], "checkpoint_reserve_seconds": CHECKPOINT_RESERVE_SECONDS}
@@ -296,4 +310,15 @@ def execution_extension(spec, source_root):
             _json(_pinned(source_root, plan["budget_reconciliation"])))
     wall = (_json(_pinned(source_root, plan["authority"]))["gpu"]["wall_ceiling_seconds"]
             if plan["format"] == CONFIGURED_PLAN_FORMAT else WALL_CEILING_SECONDS)
+    authority = _json(_pinned(source_root, plan["authority"]))
+    if authority.get("purpose") == PROFILE_PURPOSE:
+        # No train phase can be spawned by this profiling-only release.
+        return ExecutionExtension(phases=(ExecutionPhase("preflight"),),
+            wall_ceiling_seconds=wall, configuration=configuration,
+            artifacts=_profile_artifacts)
     return ExecutionExtension(wall_ceiling_seconds=wall, configuration=configuration)
+
+
+def _profile_artifacts(output, arm_ids):
+    from .family_execution_profile import profile_artifact_refs
+    return {"profile_artifacts": {arm: profile_artifact_refs(Path(output) / arm) for arm in arm_ids}}

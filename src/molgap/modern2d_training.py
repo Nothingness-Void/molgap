@@ -166,7 +166,8 @@ class Modern2DFormalTrainingContext:
         if recipe.family == "esa_small" and recipe.model_config.tensor_device == "cpu":
             raise ValueError("A CPU-only ESA configuration cannot authorize native CUDA training")
 
-    def validate_before_payload(self, *, recipe, context, spec, authority_path, input_root):
+    def validate_before_payload(self, *, recipe, context, spec, authority_path, input_root,
+                                training_only=False):
         """Read only small pinned authority/input metadata before graph payload IO."""
         from .experiment_family_workflow import _json
         from .family_training_data import resolve_pinned_manifest
@@ -186,6 +187,8 @@ class Modern2DFormalTrainingContext:
         if self.configured:
             from .modern2d_training_release import validate_configured_authority
             validate_configured_authority(authority, declaration)
+            if authority.get("purpose") == "CONFIGURED_EXECUTION_PROFILE" and not training_only:
+                raise ValueError("Execution-profile authority cannot open development or release formal training")
             horizon = {"horizon_passes": recipe.formal_training.horizon_passes,
                        "horizon_steps": recipe.formal_training.horizon_steps}
             if (authority.get("recipes", {}).get(context.arm_id) != horizon

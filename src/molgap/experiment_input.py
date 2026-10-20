@@ -247,7 +247,7 @@ def _compile_scientific_input(path, root, value):
         if set(roles) != {"train", "development"} or any(
                 record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes"} if modern else {"learning_rate", "weight_decay"}):
+        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "profiling"} if modern else {"learning_rate", "weight_decay"}):
             raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
@@ -261,6 +261,10 @@ def _compile_scientific_input(path, root, value):
                    addon_semantics="ordered" if addons else "baseline")
         mode = training_adapter(arm).mode(arm)
         edits = dict(item["training"])
+        profiling_config = edits.pop("profiling", None)
+        if profiling_config is not None:
+            from .family_execution_profile import ProfileConfig
+            ProfileConfig.from_dict(profiling_config)
         if modern:
             passes = edits.pop("horizon_passes", baseline.formal_training.horizon_passes)
             if type(passes) is not int or passes < 1:
@@ -287,6 +291,8 @@ def _compile_scientific_input(path, root, value):
             new_record = build_family_recipe(family, addon=selected, **kwargs)
         if "profiling" in record:
             new_record["profiling"] = deepcopy(record["profiling"])
+        if profiling_config is not None:
+            new_record["profiling"] = deepcopy(profiling_config)
         initial = Path(item["initial_state_ref"])
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())
@@ -408,7 +414,8 @@ def _compile_scientific_input(path, root, value):
             run=value["logical_run_id"], version="v1", contract_ref=recipe_pin["path"],
             contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name],
             authority_ref=value["authority_ref"], role_ref=value["role_ref"], decision_ref=value["decision_ref"],
-            timestamp=value["timestamp"], profile=profile, action_type="training")
+            timestamp=value["timestamp"], profile=profile,
+            action_type=("execution_diagnostic" if authority.get("purpose") == "CONFIGURED_EXECUTION_PROFILE" else "training"))
         proposal_pin = derive(prefix + "/" + arm_id + "/plan_input.json", proposal)
         prospective.append({"arm_id": arm_id, "trajectory_id": tid, "plan_spec_ref": proposal_pin["path"],
             "plan_spec_sha256": proposal_pin["sha256"],
