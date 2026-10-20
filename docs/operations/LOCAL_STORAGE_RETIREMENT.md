@@ -19,6 +19,26 @@ temporary; retain their identity/rebuild or retrieval instructions instead of al
 copies. Keep one verified necessary artifact copy; a hardlink alias is not another
 independent backup or another allocation of logical bytes.
 
+## Inspect disposable preparation caches
+
+Use the configured interpreter and the existing checkout wrapper:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_storage -- --profile $profilePath --repo-root .
+```
+
+This bounded listing reads direct scratch and runtime-cache entries without
+opening payloads. To remove a reported `DISPOSABLE_RETIRED_CACHE`, add its exact
+`--candidate` path and `--execute`. Execution rechecks the selection and removes
+only the generated files in an atomically retired `.incomplete-*` cache directory.
+An ineligible selection blocks the batch before deletion begins.
+
+Normal invocation scratch still cleans itself on exit. Scratch of unknown
+ownership, package locks/staging directories, complete caches and failed run
+preparations remain report-only; age alone is not proof that they are unused.
+This command does not retire worktrees or remove scientific records. Interrupted
+removal reports `STOPPED`; inspect the remaining directory before retrying.
+
 ## Retire physical checkouts
 
 1. Identify the exact owner, HEAD/ref, source/configuration and scientific status.

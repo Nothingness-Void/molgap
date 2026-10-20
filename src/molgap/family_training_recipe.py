@@ -18,12 +18,11 @@ from .family_training_state import CalibrationPolicy
 RECIPE_FORMAT = "molgap-family-training-recipe-v1"
 ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
-from .experiment_execution import TRAINING_ADAPTERS
+from .experiment_execution import shared_training_adapters
 from .family_training_policy import mode_policy
 
-MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in
-    TRAINING_ADAPTERS[(family, version)].addons))))
-    for family, version in (("neural_atom_k1", "3"), ("gptrans_t", "2"))}
+MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in adapter.addons))))
+    for family, adapter in shared_training_adapters().items()}
 
 
 def _integer(value, name, minimum=1):

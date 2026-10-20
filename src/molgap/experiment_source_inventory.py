@@ -226,3 +226,61 @@ def runtime_source_files(repo_root, records=()):
     if names - tracked:
         raise ValueError("Runtime distribution has untracked record/source inputs")
     return _allowlist(sorted(names))
+
+
+# These are compact inputs read by the existing local flow tests. Tests create
+# molecular data, model states and Git repositories under temporary directories.
+# Retain all test Python so shared fixtures do not need a second import catalog.
+_TEST_SUPPORT_FILES = frozenset({
+    "pyproject.toml",
+    "platforms/local/run.py",
+    "platforms/kaggle/run_experiment.py",
+    "platforms/kaggle/submit_workflow.py",
+    "platforms/kaggle/retrieve_family_outputs.py",
+    "research_memory/policies/family-session-speed.1.json",
+    "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+    "docs/operations/EXPERIMENT_ADDON_GUIDE.md",
+    "docs/operations/EXPERIMENT_CLI.md",
+})
+
+
+def testing_source_files(repo_root):
+    """Explicit host test distribution; never added to worker runtime-v1.
+
+    All tracked active package/test Python is retained, plus the compact inputs
+    needed by local_testing's scopes. Other historical tests may still require
+    their own repository records/assets. No weights, datasets or host accounts
+    are discovered or copied. The dependency interpreter supplies pytest and
+    the project's normal dependencies.
+    """
+    from .experiment_package import _allowlist
+    from .v4_bundle import _tracked_paths
+    tracked = _tracked_paths(repo_root)
+    missing = _TEST_SUPPORT_FILES - tracked
+    if missing:
+        raise ValueError("Test distribution is missing tracked support files: " + str(sorted(missing)))
+    names = {p for p in tracked if p.endswith(".py") and (
+        p.startswith("tests/") or (p.startswith("src/molgap/") and
+                                  not p.startswith("src/molgap/archive/")))}
+    return _allowlist(sorted(names | _TEST_SUPPORT_FILES))
+
+
+def build_testing_source_package(repo_root, output_dir):
+    """Reuse the committed V4 source bundle without inventing a scientific Spec."""
+    from pathlib import Path
+    from .common.io import _safe_local
+    from .experiment_package import _git, _source
+    from .v4_bundle import build_v4_source_bundle
+    root, output = Path(repo_root).resolve(), Path(output_dir).absolute()
+    _safe_local(root)
+    _safe_local(output)
+    if output == root or root.is_relative_to(output):
+        raise ValueError("Test package output must not contain the selected checkout")
+    if output.exists() and (not output.is_dir() or any(output.iterdir())):
+        raise ValueError("Test package output must be absent or empty")
+    names = testing_source_files(root)
+    for name in names:
+        _source(root, name)
+    commit = _git(root, "rev-parse", "HEAD").decode().strip()
+    return build_v4_source_bundle(repo_root=root, relative_paths=names,
+                                 output_dir=output, source_commit=commit)

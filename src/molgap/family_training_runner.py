@@ -18,10 +18,11 @@ from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
+from .experiment_execution import shared_training_adapters
 
 
-INTERFACES = {"neural_atom_k1": ("neural_atom_k1", "3"), "gptrans_t": ("gptrans_t", "2")}
-PROFILES = {"neural_atom_k1": "k1-session-v1", "gptrans_t": "gptrans-session-v1"}
+INTERFACES = {name: adapter.family for name, adapter in shared_training_adapters().items()}
+PROFILES = {name: adapter.artifact_adapter for name, adapter in shared_training_adapters().items()}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
 OPTIONAL_METADATA = {"profiling", "logging"}
 

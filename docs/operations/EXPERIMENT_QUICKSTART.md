@@ -45,6 +45,9 @@ Forced process termination can still leave scratch behind.
 - Add an ordinary addon once in `experiment_catalog.py`, with its typed fields,
   supported family/version and execution modes/hooks. `experiment_execution.py`
   derives its read-only adapters from that catalog; do not register it twice.
+  Shared recipe versions, modes and output profiles follow those adapters.
+  Multiple versions for the same shared recipe owner require an explicit routing
+  decision; the projection does not silently choose the newest version.
 - Keep input ABI, objective and parameter ownership explicit. Reuse the family
   trainer and [runtime extension API](MODULAR_EXPERIMENT_RUNTIME.md). Use the
   [operation map](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) to find the owner.
@@ -160,6 +163,35 @@ handoff, commit or merge. Broaden coverage when the change crosses another owner
 The profile wrapper removes its own test scratch on exit; save any needed pytest
 logs/JUnit reports explicitly under `artifact_root` before returning. Do not create
 another worktree or environment merely for a test stage.
+
+## Distribute tests to server
+
+Git synchronization carries the tracked tests and configuration. For an extracted
+source distribution, use the existing source-bundle writer through the test entry:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --repo-root . --package D:/molgap-artifacts/test-source
+```
+
+Commit source changes first. The output directory must be absent or empty.
+`--list --package <output>` previews the inventory without building it. The bundle
+includes active package Python, tracked test Python, pytest configuration and
+compact support inputs for the listed infrastructure scopes. It excludes weights,
+datasets, accounts and dependency environments. Other historical tests may need
+their own repository evidence; this is not a full experiment archive.
+
+Transfer the bundle and its existing hash/inventory sidecars, then extract
+`source.tar.gz` into an empty directory. On server, use its dependency environment
+with pytest and Git installed and run from that directory. Tests create their own
+temporary Git fixtures; the extracted directory does not need Git metadata:
+
+```bash
+python platforms/local/run.py --module molgap.local_testing -- --scope runtime -- -q
+```
+
+Select the affected scopes as usual. The wrapper selects the extracted source;
+no editable reinstall or new worktree is required. Test distribution is separate
+from the training `runtime-v1` inventory, which retains its worker boundary.
 
 The [desktop migration record](DESKTOP_INFRASTRUCTURE_UPGRADE.md) owns provenance
 and executed verification. [Storage retirement](LOCAL_STORAGE_RETIREMENT.md)

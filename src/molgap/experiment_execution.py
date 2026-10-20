@@ -137,6 +137,19 @@ def _catalog_training_adapters():
 TRAINING_ADAPTERS = MappingProxyType(_catalog_training_adapters())
 
 
+def shared_training_adapters():
+    """Project the shared recipe owners without guessing a family version."""
+    result = {}
+    for adapter in TRAINING_ADAPTERS.values():
+        if adapter.module != "molgap.family_training_runner" or adapter.model_factory is not None:
+            continue
+        name = adapter.family[0]
+        if name in result:
+            raise ValueError("Ambiguous shared training family version: " + name)
+        result[name] = adapter
+    return MappingProxyType(result)
+
+
 def validate_training_registry() -> None:
     """Check cross-owner registrations without importing or executing trainers."""
     from .experiment_family_artifacts import artifact_adapter

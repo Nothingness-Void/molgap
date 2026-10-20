@@ -76,10 +76,15 @@ def _name(value) -> str:
     # A Python module under the reviewed package is source, even when its
     # responsibility is data/checkpoint IO. Directories and credential names
     # retain their existing confinement; artifact payload suffixes stay blocked.
-    if (value.startswith("src/molgap/") and path.suffix == ".py"
+    if ((value.startswith(("src/molgap/", "tests/")) or
+         value == "platforms/kaggle/retrieve_family_outputs.py") and path.suffix == ".py"
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
+        # This reviewed compatibility alias contains adapter code, not account
+        # material. The explicit test distribution needs the host import too.
+        if value == "src/molgap/kaggle_credentials.py":
+            io_tokens.add("credentials")
         # Token model source is not an authentication payload. Credential-like
         # token names and directories remain blocked, even under the source root.
         leaf_tokens = set(re.split(r"[._-]+", lowered[-1]))

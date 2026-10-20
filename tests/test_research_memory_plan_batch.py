@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from importlib import import_module
 from pathlib import Path
 
@@ -344,5 +345,72 @@ def test_publish_failure_preserves_only_the_completed_arm(planning_root, monkeyp
         {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"},
     )
     assert isinstance(caught.value.__cause__, OSError)
+    assert (root / "experiments/arm-a/trajectory.json").is_file()
+    assert not (root / "experiments/arm-b").exists()
+
+
+@pytest.mark.parametrize("validate_only,expected_reads", [(True, 2), (False, 3)])
+def test_batch_rechecks_shared_sources_once_for_validation_and_each_publication(
+        planning_root, monkeypatch, validate_only, expected_reads):
+    root, _ = planning_root
+    digest = plan_module.file_digest
+    reads = Counter()
+
+    def counted(path):
+        reads[Path(path)] += 1
+        return digest(path)
+
+    monkeypatch.setattr(plan_module, "file_digest", counted)
+    result = plan_module.plan_many(root, [_item("a"), _item("b")], validate_only=validate_only)
+    assert result["status"] == ("VALIDATED" if validate_only else "PLANNED")
+    assert reads[root / "contract-a.json"] == expected_reads
+    assert reads[root / "contract-b.json"] == expected_reads
+    assert set(reads.values()) == {expected_reads}
+
+
+@pytest.mark.parametrize("mutation", ["changed", "missing"])
+def test_validation_batch_detects_source_mutation_after_last_arm_without_publication(
+        planning_root, monkeypatch, mutation):
+    root, _ = planning_root
+    prepare = plan_module._prepare_plan
+    calls = 0
+
+    def mutate_after_preparation(*args, **kwargs):
+        nonlocal calls
+        prepared = prepare(*args, **kwargs)
+        calls += 1
+        if calls == 2:
+            source = root / "contract-b.json"
+            if mutation == "changed":
+                source.write_text("changed", encoding="utf-8")
+            else:
+                source.unlink()
+        return prepared
+
+    monkeypatch.setattr(plan_module, "_prepare_plan", mutate_after_preparation)
+    with pytest.raises(plan_module.PlanBatchError) as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")], validate_only=True)
+    assert caught.value.failed_index == 0
+    assert caught.value.completed_results == ()
+    assert isinstance(caught.value.__cause__, ValueError)
+    assert not (root / "experiments/arm-a").exists()
+    assert not (root / "experiments/arm-b").exists()
+    assert not (root / "research_memory/.staging").exists()
+
+
+def test_formal_batch_still_rechecks_sources_before_each_publication(planning_root, monkeypatch):
+    root, _ = planning_root
+    publish = plan_module._publish_plan
+
+    def mutate_after_first_publish(repo_root, prepared):
+        result = publish(repo_root, prepared)
+        (root / "contract-b.json").write_text("changed", encoding="utf-8")
+        return result
+
+    monkeypatch.setattr(plan_module, "_publish_plan", mutate_after_first_publish)
+    with pytest.raises(plan_module.PlanBatchError, match="item 2/2") as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")])
+    assert caught.value.failed_index == 1
+    assert len(caught.value.completed_results) == 1
     assert (root / "experiments/arm-a/trajectory.json").is_file()
     assert not (root / "experiments/arm-b").exists()
