@@ -47,6 +47,10 @@ handoff rules; this root file stays a short navigation and safety protocol.
   ceiling, not a required count. Test workers execute their assigned suites
   themselves, without recursive delegation. This grants no additional remote compute or
   scientific experiment authority.
+  Only the main coordinator may create or assign workers. Test workers must not
+  create/fork chats, spawn agents, or relay their assignment to another worker.
+  Reuse an existing worker for a related retry; report recurring environment
+  blockers instead of multiplying workers. Close workers after collecting results.
 - **Remote durability**: every cloud job MUST checkpoint progress atomically and
   produce independently retrievable output chunks. Never rely on a transient
   worker filesystem or a single long-running task as the only copy of results.
