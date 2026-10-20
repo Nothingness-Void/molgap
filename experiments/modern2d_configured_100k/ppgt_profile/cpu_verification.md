@@ -12,6 +12,8 @@ operation or scientific training was executed by the test workers.
   Default `training_only=False` rejected before binding/payload access. Explicit
   train-only access reached the metadata binding gate. This did not validate a
   real payload or qualify a native device.
+- Existing shared profiler regression:16 passed,0 skipped/failed/errors,
+  9.77 seconds. This is a completed focused suite, not the interrupted broad run.
 - The earlier broad five-file invocation was interrupted while slow temporary
   package fixtures ran; it retained an initial setup error before the missing
   fixture import was repaired. There is no completed broad-suite pass claim.

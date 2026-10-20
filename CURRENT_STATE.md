@@ -15,6 +15,11 @@ axes. No scientific family rejection, K1/GPTrans rank or Replay claim follows.
 Canonical RML finalization is blocked rather than forced; exact outputs and
 checkpoints are retained. No retry, continuation or successor was submitted.
 
+The human separately authorized a bounded [PPGT execution profile](experiments/modern2d_configured_100k/ppgt_profile/STATUS.md).
+Kaggle2 kernel139778481/version1 is submitted and scheduler-observed RUNNING.
+It releases only train100K native scratch profiling, not formal/500K training;
+the existing Luna B owns silent30-minute monitoring and terminal handoff.
+
 The human authorized a separate [mature-family workflow trial](experiments/family_workflow_trial_100k/STATUS.md):
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,
 train-only accepted fixed100K,1800 seconds/1 allocated T4-hour including startup
