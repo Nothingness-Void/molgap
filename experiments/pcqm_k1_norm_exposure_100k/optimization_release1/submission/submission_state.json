@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "package_identity": "39b2d7edb51310e04dd57204a37ba80e959f936934c876da14c95727089b9194",
+    "kernel": "nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "dataset": "nothingnessvoid/k1-ln-optimization-160ep-src-20261021",
+    "authority_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/authority.json",
+    "authority_sha256": "2702d6f43a219ec95473b9dda76fdc0fbcb72fa68e6b06b75a22e28446de6eea",
+    "monitor_paths": [
+      "experiments/pcqm_k1_norm_exposure_100k/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 15.278923900004884,
+    "SOURCE_SUBMITTING": 22.03862439999648,
+    "SOURCE_PUBLISHED": 2.030330200002936,
+    "SOURCE_PENDING": 38.40572080000129,
+    "KERNEL_SUBMITTING": 15.060363200005668,
+    "KERNEL_ACCEPTED": 11.500292199998512
+  },
+  "observed_at": "2026-10-20T17:11:46.845279+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "kernel": "nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 139859934,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "8230927a983f1a79b6a34190ef2360e136cd960ea8003dc7530e6fdcf66859f9",
+      "package_identity": "39b2d7edb51310e04dd57204a37ba80e959f936934c876da14c95727089b9194",
+      "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+      "source_archive_sha256": "2c9f67769c5371beeccd6a96f9020a191ae4832131ed491995238d28fa09f7db"
+    },
+    "platform_response": {
+      "ref": "/code/nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+      "versionNumber": 1,
+      "kernelId": 139859934,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}

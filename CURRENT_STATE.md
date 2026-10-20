@@ -65,6 +65,14 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+Kaggle1 extended-exposure K1 normalization is submitted on the owning branch
+`codex/exp/k1-norm-exposure-100k`: two version1 jobs, four fixed100K arms,
+160 passes each. [Status](experiments/pcqm_k1_norm_exposure_100k/STATUS.md)
+owns exact submission/source identities and timestamped scheduler observations;
+the [protocol](experiments/pcqm_k1_norm_exposure_100k/protocol.md) owns the BN/LN,
+low-LR and warmup comparisons. Native training qualification and terminal
+acceptance are pending. This releases no adoption or scale-up.
+
 Kaggle2 K1 pre-norm BN/Ada100K, kernel138980611/version1, is COMPLETE and
 accepted at40/40 passes. BN closes CLOSED; Ada closes NEGATIVE_UNDER_CONTRACT.
 The [decision](experiments/pcqm_k1_prenorm_norm_100k/decision.md) and
