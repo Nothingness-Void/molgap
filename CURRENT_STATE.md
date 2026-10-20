@@ -19,8 +19,9 @@ The human separately authorized a bounded [PPGT execution profile](experiments/m
 Kaggle2 kernel139778481/version1 ended ERROR before native workers because the
 single-arm bootstrap selected the legacy environment. The [failure closure](experiments/modern2d_configured_100k/ppgt_profile/results/decision_2026_10_20.md)
 is RML-finalized as INFRASTRUCTURE_ONLY; it produced no profile or model result.
-The existing Luna heartbeat is paused. Bootstrap repair needs independent
-verification; no retry, continuation or500K task was submitted.
+The existing Luna heartbeat is paused. Bootstrap repair passed
+[independent CPU regression](experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_repair_verification_2026_10_21.md);
+native profiling remains unverified. No retry, continuation or500K task was submitted.
 
 The human authorized a separate [mature-family workflow trial](experiments/family_workflow_trial_100k/STATUS.md):
 Kaggle2 T4x2, independent K1/3 and GPTrans/2, seed42, BS128,32 updates per arm,

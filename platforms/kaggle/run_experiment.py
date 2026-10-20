@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -15,6 +16,48 @@ import time
 
 # Local preparation replaces this marker and binds the resulting entry bytes.
 EXPECTED_LAUNCH_SHA256 = None
+
+
+def _modern2d_wall_ceiling(declaration, source):
+    """Stdlib-only startup admission; native recipe/role checks still run later."""
+    arms = declaration["arms"]
+    supported = {("ppgt_small", "3"), ("esa_small", "4")}
+    if not (1 <= len(arms) <= 2 and all(
+            (a["family"]["name"], a["family"]["version"]) in supported for a in arms)):
+        return None
+    owners = {str(Path(b["plan_spec_ref"]).parent.parent) for b in declaration["prospective"]["arms"]}
+    if len(owners) != 1:
+        raise ValueError("Modern2D startup requires one frozen authority owner")
+    def small_json(relative):
+        path = Path(relative)
+        if path.is_absolute() or ".." in path.parts:
+            raise ValueError("Modern2D metadata must stay inside the frozen source")
+        target = source / path
+        if not target.resolve().is_relative_to(source.resolve()) or target.stat().st_size > 1024**2:
+            raise ValueError("Modern2D startup metadata escaped its bounded source")
+        raw = target.read_bytes()
+        return raw, json.loads(raw)
+    _, plan = small_json(owners.pop() + "/acceptance_plan.json")
+    pointer = plan["authority"]
+    raw, authority = small_json(pointer["path"])
+    if hashlib.sha256(raw).hexdigest() != pointer["sha256"]:
+        raise ValueError("Modern2D startup authority hash differs")
+    gpu = authority.get("gpu", {})
+    wall = gpu.get("wall_ceiling_seconds")
+    budget = authority.get("allocated_t4_hours_ceiling", gpu.get("allocated_t4_hours_ceiling"))
+    if (authority.get("user_authorized") is not True or type(wall) is not int
+            or not 660 <= wall <= 43200 or type(budget) not in {int, float}
+            or not math.isfinite(budget) or budget <= 0 or 2 * wall / 3600 > budget
+            or gpu.get("allocated_devices") != 2 or gpu.get("accelerator") != "NvidiaTeslaT4"):
+        raise ValueError("Modern2D startup requires the frozen full-allocation ceiling")
+    purpose = authority.get("purpose")
+    if purpose == "CONFIGURED_EXECUTION_PROFILE":
+        if (authority.get("scientific_training_authorized") is not False or wall > 1800
+                or budget > 1 or len(arms) != 1 or authority.get("scratch_optimizer_updates_per_model") != 6):
+            raise ValueError("Profiling startup cannot release scientific training or an expanded allocation")
+    elif purpose not in {"CONFIGURED_SCREEN", "FORMAL_100K_TRAINING"} or authority.get("scientific_training_authorized") is not True:
+        raise ValueError("Unknown Modern2D startup purpose")
+    return wall
 
 
 def _run_trial_pair(command, *, cwd, env, timeout):
@@ -87,9 +130,8 @@ def _workload(allocation_started):
          or all(a["addons"][0]["name"].startswith("degree_aggregate_") for a in arms)))
     k1_comparison = declaration["experiment_id"] == "k1-infrastructure-t4-100k"
     gptrans_comparison = declaration["experiment_id"] == "gptrans-infrastructure-t4-100k"
-    modern2d_formal = (len(arms) == 2 and
-        {(a["family"]["name"], a["family"]["version"]) for a in arms} ==
-        {("ppgt_small", "3"), ("esa_small", "4")})
+    modern2d_wall = _modern2d_wall_ceiling(declaration, source)
+    modern2d_formal = modern2d_wall is not None
     workflow_trial = declaration["experiment_id"] == "family-workflow-trial-100k"
     if workflow_trial:
         # The source is already byte-verified. Check the small authority before
@@ -120,7 +162,7 @@ def _workload(allocation_started):
             print("WORKFLOW_STAGE preparing_pinned_runtime", flush=True)
             remaining = 1800 - (time.perf_counter() - allocation_started) - 120
         elif modern2d_formal:
-            remaining = min(1200, 16200 - (time.perf_counter() - allocation_started) - 600)
+            remaining = min(1200, modern2d_wall - (time.perf_counter() - allocation_started) - 600)
         else:
             remaining = 1200 if diagnostic is None else diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started)
         executable, qualified = prepare(root / "runtime", deadline=time.time() + remaining - 60,
@@ -134,13 +176,13 @@ def _workload(allocation_started):
             "--launch", str(launch), "--output", str(working / "experiment"),
             "--allocation-started", repr(allocation_started)]
         environment = dict(os.environ, PYTHONPATH=str(source / "src"))
-        if workflow_trial:
+        if workflow_trial or modern2d_formal:
             _run_trial_pair(command, cwd=source, env=environment,
-                timeout=max(1, 1800 - (time.perf_counter() - allocation_started) - 15))
+                timeout=max(1, (1800 if workflow_trial else modern2d_wall)
+                            - (time.perf_counter() - allocation_started) - 15))
         else:
             subprocess.run(command, check=True, env=environment,
-                timeout=(max(1, 16200 - (time.perf_counter() - allocation_started) - 30) if modern2d_formal else
-                    None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10)))
+                timeout=(None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10)))
         return
     # Legacy/default bootstrap remains separate from the pinned shared runtime.
     subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy<2",

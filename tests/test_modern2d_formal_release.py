@@ -201,9 +201,14 @@ def test_formal_workflow_dispatches_explicit_budget_extension(monkeypatch, tmp_p
     spec = _FormalSpec()
     sentinel = object()
     (tmp_path / "formal").mkdir()
-    (tmp_path / "formal" / "acceptance_plan.json").write_text("{}", encoding="utf-8")
+    authority = tmp_path / "formal" / "authority.json"
+    authority.write_text(json.dumps({"purpose": "FORMAL_100K_TRAINING"}), encoding="utf-8")
+    plan = {"format": FORMAL_PLAN, "authority": {
+        "path": "formal/authority.json",
+        "sha256": hashlib.sha256(authority.read_bytes()).hexdigest(),
+    }}
+    (tmp_path / "formal" / "acceptance_plan.json").write_text(json.dumps(plan), encoding="utf-8")
     monkeypatch.setattr(release, "plan_path", lambda value: "formal/acceptance_plan.json")
-    monkeypatch.setattr(release, "_json", lambda path: {"format": FORMAL_PLAN})
     monkeypatch.setattr(release, "check_plan", lambda *args, **kwargs: None)
     extension = release.execution_extension(spec=spec, source_root=tmp_path)
     assert extension.wall_ceiling_seconds == 16200
@@ -445,7 +450,14 @@ def _load_module(path, name):
     return module
 
 
-def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monkeypatch):
+@pytest.mark.parametrize("families", [
+    [("ppgt_small", "3"), ("esa_small", "4")],
+    [("ppgt_small", "3")],
+    [("esa_small", "4")],
+    [("ppgt_small", "3"), ("ppgt_small", "3")],
+    [("esa_small", "4"), ("esa_small", "4")],
+])
+def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monkeypatch, families):
     entry = _load_module(
         Path(__file__).parents[1] / "platforms/kaggle/run_experiment.py",
         "formal_release_bootstrap_fixture",
@@ -458,13 +470,27 @@ def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monk
     working.mkdir()
     temp.mkdir()
     declaration = _FormalSpec().to_dict()
+    declaration["arms"] = [dict(arm_id="arm" + str(i),
+        family=dict(name=family, version=version), addons=[])
+        for i, (family, version) in enumerate(families)]
+    declaration["prospective"] = dict(arms=[dict(
+        plan_spec_ref="experiments/profile/" + a["arm_id"] + "/plan_input.json")
+        for a in declaration["arms"]])
+    authority = dict(user_authorized=True, scientific_training_authorized=True,
+        purpose="CONFIGURED_SCREEN", allocated_t4_hours_ceiling=1,
+        gpu=dict(wall_ceiling_seconds=1800, allocated_devices=2, accelerator="NvidiaTeslaT4"))
+    authority_bytes = json.dumps(authority).encode()
+    plan_bytes = json.dumps(dict(authority=dict(path="experiments/profile/authority.json",
+        sha256=hashlib.sha256(authority_bytes).hexdigest()))).encode()
     preflight = (
         "import tarfile\n"
         "def _unpack(package, source):\n"
         "    with tarfile.open(package / 'source.tar.gz', 'r:gz') as archive:\n"
         "        archive.extractall(source)\n"
     ).encode()
-    archive_bytes = _tar_bytes([("src/molgap/experiment_preflight.py", preflight)])
+    archive_bytes = _tar_bytes([("src/molgap/experiment_preflight.py", preflight),
+        ("experiments/profile/acceptance_plan.json", plan_bytes),
+        ("experiments/profile/authority.json", authority_bytes)])
     archive = mount / "source_payload.bin"
     archive.write_bytes(archive_bytes)
     (mount / "experiment_launch.json").write_text(json.dumps({
@@ -504,6 +530,7 @@ def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monk
     monkeypatch.setattr(runpy, "run_path", lambda path: {"prepare_python": fake_prepare})
     monkeypatch.setattr(entry, "Path", redirect)
     monkeypatch.setattr(entry.subprocess, "run", fake_run)
+    monkeypatch.setattr(entry, "_run_trial_pair", fake_run)
     launch = mount / "experiment_launch.json"
     entry.EXPECTED_LAUNCH_SHA256 = hashlib.sha256(launch.read_bytes()).hexdigest()
     monkeypatch.setattr(entry.time, "perf_counter", lambda: 1000.0)
@@ -512,7 +539,7 @@ def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monk
 
     assert prepared and prepared[0]["profile"] == "family-shared"
     assert prepared[0]["directory"].name == "runtime"
-    assert runs and runs[0][1]["timeout"] > 0
+    assert runs and runs[0][1]["timeout"] == 1785
     command = runs[0][0]
     assert command[command.index("--input-root") + 1] == str(input_root)
     assert command[command.index("--launch") + 1] == str(launch)

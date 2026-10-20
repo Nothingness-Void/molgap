@@ -13,5 +13,6 @@ The [CPU verification](cpu_verification.md) owns the scoped checks.
 The [compact binding](monitor_binding.json) is closed; existing Luna B delivered
 one terminal event and the existing heartbeat is PAUSED. RML was finalized as
 INFRASTRUCTURE_ONLY, not a successful profile or training Replay record.
-Local bootstrap repair awaits its independent regression verdict; no new GPU
-release follows from this failure closure.
+Local bootstrap repair passed its [independent CPU regression](results/bootstrap_repair_verification_2026_10_21.md):
+35 tests passed. No native profile result or new GPU release follows from this
+verification; reopening still needs separate compute authority.

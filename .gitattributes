@@ -2,6 +2,9 @@
 # The frozen GPTrans architecture contract hashes its historical source file.
 src/molgap/gptrans.py text eol=lf
 tests/vendor/ppgt_reference/* -text
+# This failed profile retains hashed remote bytes and canonical closure metadata.
+experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/** -text
+experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/rml_finalized/** -text
 # Modern2D pinned author files and compact CPU evidence bind exact bytes.
 tests/vendor/esa_reference/* -text
 src/molgap/ppgt_*.py text eol=lf
