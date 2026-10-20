@@ -17,7 +17,23 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def test_committed_distribution_imports_actual_families_and_resumes_without_host_source(tmp_path,payload,record_property):
-    names=runtime_source_files(ROOT)
+    # Freeze this migration's active source in a separate fixture repository.
+    # The shared checkout may have uncommitted migration edits during validation.
+    repository=tmp_path/"fixture-source"
+    for source in (ROOT/"src/molgap").rglob("*.py"):
+        if "archive" in source.relative_to(ROOT/"src/molgap").parts:
+            continue
+        target=repository/source.relative_to(ROOT)
+        target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(source.read_bytes().replace(b"\r\n",b"\n"))
+    entry=repository/"platforms/kaggle/run_experiment.py"
+    entry.parent.mkdir(parents=True,exist_ok=True)
+    entry.write_bytes((ROOT/"platforms/kaggle/run_experiment.py").read_bytes().replace(b"\r\n",b"\n"))
+    for arguments in (("init",),("config","user.email","fixture@example.invalid"),
+                      ("config","user.name","Distribution fixture"),("config","core.autocrlf","false"),
+                      ("add","."),("-c","commit.gpgsign=false","commit","-m","Frozen migration source")):
+        subprocess.run(["git",*arguments],cwd=repository,check=True,capture_output=True)
+    names=runtime_source_files(repository)
     cache=tmp_path/"source-cache"
     measurements={}
     manifests=[]
@@ -25,17 +41,17 @@ def test_committed_distribution_imports_actual_families_and_resumes_without_host
         value=deepcopy(payload);value["logical_run_id"]="distribution-"+label
         started=perf_counter()
         target=tmp_path/label
-        manifests.append(build_experiment_source_package(ExperimentSpec(value),ROOT,names,target,source_cache=cache))
+        manifests.append(build_experiment_source_package(ExperimentSpec(value),repository,names,target,source_cache=cache))
         measurements[label+"_package_seconds"]=perf_counter()-started
-        assert verify_experiment_source_package(target,ROOT)==manifests[-1]
+        assert verify_experiment_source_package(target,repository)==manifests[-1]
     assert manifests[0]["archive_sha256"]==manifests[1]["archive_sha256"]
     assert manifests[0]["package_identity"]!=manifests[1]["package_identity"]
     # The one-time pre-reform byte comparison is retained in migration evidence.
     # Regular tests check this distribution's integrity and runtime behavior,
     # not a permanent prohibition on repairing active scientific owners.
     extracted=tmp_path/"isolated";extracted.mkdir()
-    with tarfile.open(tmp_path/"warm/source.tar.gz") as archive:
-        archive.extractall(extracted,filter="data")  # verified regular source members only
+    from molgap.experiment_preflight import _unpack
+    _unpack(tmp_path/"warm", extracted)
     driver=tmp_path/"driver";driver.mkdir()
     # Reuse existing tests instead of writing a second training/resume loop.
     files=["test_family_training_core.py","test_family_training_session.py","test_family_training_state.py"]

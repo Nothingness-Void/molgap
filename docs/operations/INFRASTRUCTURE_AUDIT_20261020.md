@@ -94,5 +94,23 @@ test/cleanup tools were explicitly excluded from training runtime distributions.
 The [quickstart](EXPERIMENT_QUICKSTART.md#6-check-affected-flows-and-manage-temporary-storage)
 owned usage instructions. No remote submission or scientific computation followed.
 
-Post-integration local validation was delegated to independent configured Luna
-workers; results were recorded after their final affected suites completed.
+The integration was committed as `7a7c4388`. Post-integration local validation
+was delegated to three independent configured Luna workers:
+
+| Scope | Final result |
+|---|---|
+| Packaging, preflight, receipts, lookup, preparation and earlier fault regressions | 301 passed, 2 skipped |
+| Local runtime, storage, scoped testing and family catalog | 39 passed |
+| RML discovery, planning, role classification and recovery | 60 passed, 6 skipped |
+| Shared inventory, documentation navigation and reuse routing | 17 passed |
+| Isolated worker distribution / Git-independent test fixture | 1 passed in checkout and 1 passed from the extracted test package |
+
+The last row was one test rerun in two environments, not two unique cases.
+The Windows RML symlink checks lacked native privileges. The distribution check
+retained actual synthetic CPU K1/GPTrans addon, Session and state assertions.
+Its fixture setup was adapted from Desktop so an extracted test package did not
+require Git metadata in its own root; temporary fixtures still froze source in Git.
+The portable test inventory omitted a Desktop-only policy input and selected the
+existing Server bootstrap regression. The host credential compatibility alias
+was also excluded from worker runtime. All final affected checks passed; live
+submission, full-data performance and new native qualification were not evaluated.
