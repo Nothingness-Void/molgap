@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 129,
+    "trajectories_total": 133,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 118,
-    "with_incomplete_native_measurement": 94,
+    "with_cost_event": 122,
+    "with_incomplete_native_measurement": 98,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 88,
+      "count": 92,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -92,6 +92,10 @@
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -137,7 +141,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 94,
+      "count": 98,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -219,6 +223,10 @@
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
@@ -256,7 +264,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 44,
+      "count": 48,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -290,6 +298,10 @@
         "TB-k1-ssma-kaggle3-100k-s42-v1",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -307,7 +319,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 16,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -318,6 +330,10 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+        "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+        "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
         "TB-pcqm-k1-single-true-ema-100k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"

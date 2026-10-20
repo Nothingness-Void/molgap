@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "41aae4ae042afc0c38f40c88b67999329178d06e8ca622313a7110282d833d25",
+  "source_digest": "51ef490278582a828d14f5ece3680764d2789902ae84c07efeecf8d0d3a2b788",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1915,6 +1915,62 @@
       ],
       "track": "B",
       "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/decision.md",
+      "family_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/bn_long/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/decision.md",
+      "family_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/ln_long/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/decision.md",
+      "family_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/decision.md",
+      "family_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr_warmup/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
     },
     {
       "completeness_status": "complete",

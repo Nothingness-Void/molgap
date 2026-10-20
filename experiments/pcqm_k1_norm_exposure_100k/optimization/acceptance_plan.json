@@ -1,0 +1,50 @@
+{
+  "arms": [
+    {
+      "adapter": "k1-session-v1",
+      "arm_id": "ln_low_lr",
+      "contract": {
+        "path": "experiments/pcqm_k1_norm_exposure_100k/optimization/training_recipe_ln_low_lr.json",
+        "sha256": "bf175d7c87aa8c7e58830773b6bbab46fae2c1b34c282aad2b339d5f86ca0af8"
+      },
+      "expected": {
+        "completed_passes": 160,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 124960,
+        "precision": "fp32",
+        "sample_presentations": 15994880,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      },
+      "target_manifest": {
+        "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      }
+    },
+    {
+      "adapter": "k1-session-v1",
+      "arm_id": "ln_low_lr_warmup",
+      "contract": {
+        "path": "experiments/pcqm_k1_norm_exposure_100k/optimization/training_recipe_ln_low_lr_warmup.json",
+        "sha256": "995124bea17e79d585fe639d036d777462624a4c71ff88b2849b96e103b6c1a6"
+      },
+      "expected": {
+        "completed_passes": 160,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 124960,
+        "precision": "fp32",
+        "sample_presentations": 15994880,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      },
+      "target_manifest": {
+        "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      }
+    }
+  ],
+  "format": "molgap-family-same-run-acceptance-plan-v1",
+  "spec_identity": "67bd44cd2953d930bf178f1ccdfc8678f8a37d234ec63f61f209505627b2ca32"
+}

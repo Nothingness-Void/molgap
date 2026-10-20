@@ -501,6 +501,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long:A001",
+      "target": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/training_recipe_bn_long.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long:A001",
+      "target": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/training_recipe_ln_long.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr:A001",
+      "target": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup:A001",
+      "target": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr_warmup.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
       "type": "action_produced_evidence"
@@ -1209,6 +1229,26 @@
       "source": "TC-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
+      "target": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
+      "target": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
+      "target": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
+      "target": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "type": "prior_evidence"
     },
     {
       "source": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal",
@@ -3474,6 +3514,22 @@
     },
     {
       "id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "type": "trajectory"
     },
     {
