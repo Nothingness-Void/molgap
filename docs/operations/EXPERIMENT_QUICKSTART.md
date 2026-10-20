@@ -99,6 +99,12 @@ remains an optional diagnostic. Source archives use a content cache; each run
 still has its own Spec, package identity, release and receipts. No data or weight
 download is implied by preparing a source package.
 
+Both preparation entries resolve relative initialization paths against the selected
+`repo_root`, independent of the caller's working directory. Within one workflow
+preparation, identical package bytes reuse full validation; each stage still reads
+and hashes all six package files. Independent calls and transport boundaries retain
+their own checks. No verification result is persisted between preparations.
+
 With existing submission authority, the platform's `--execute` path uses its
 original journaled submitter. Unknown publication outcomes require reconciliation.
 Old `--spec` and `--prepared` APIs remain available. IMS/SCNet retain their existing

@@ -44,10 +44,11 @@ def validate_plan(spec, plan):
 
 
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
-                 metadata, initial_states, jobs, acceptance_plan_path=None):
+                 metadata, initial_states, jobs, acceptance_plan_path=None, _verification=None):
     staged = output / "source_dataset"
     from .experiment_package import stage_source_inputs
-    stage_source_inputs(package, staged, initial_states)
+    stage_source_inputs(package, staged, initial_states,
+        **({"_verification": _verification} if _verification is not None else {}))
     acceptance_binding = None
     if acceptance_plan_path is not None:
         acceptance_binding = stage_acceptance_inputs(spec, repo_root, acceptance_plan_path, staged / "acceptance")

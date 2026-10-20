@@ -15,7 +15,17 @@ from test_experiment_package import git
 from test_experiment_spec import payload
 
 
+COMMON_PACKAGE_MODULES = (
+    "common/__init__.py",
+    "common/io.py",
+    "common/spec.py",
+    "common/wire.py",
+    "experiment_catalog.py",
+)
+
+
 DATASET_PACKAGE_MODULES = (
+    *COMMON_PACKAGE_MODULES,
     "family_training_data.py",
     "experiment_family_workflow.py",
     "experiment_family_artifacts.py",
@@ -52,7 +62,10 @@ def release(tmp_path, payload, request):
     allowlist = ["src/molgap/__init__.py", "src/molgap/loader.py", "src/molgap/child.py", "recipe.json"]
     if loader_mode not in {"generic", "dataset_binding", "broken_dataset_resolver"}:
         owner = Path(__file__).resolve().parents[1] / "src/molgap"
-        for name in ("k1_screen_training.py", "v4_runtime.py", "screen_policy.py", "training_reproducibility.py"):
+        for name in (*COMMON_PACKAGE_MODULES, "experiment_spec.py",
+                     "packed_graph_dataset.py", "data/__init__.py", "data/packed_graph.py",
+                     "k1_screen_training.py", "v4_runtime.py", "screen_policy.py",
+                     "training_reproducibility.py"):
             source = (owner / name).read_bytes()
             if name == "k1_screen_training.py" and loader_mode == "broken":
                 source += (b"\ndef _load_initial_state(path, recipe):\n"
@@ -65,7 +78,9 @@ def release(tmp_path, payload, request):
                 source += (b"\ndef atomic_json(path, value):\n"
                            b"    path.parent.mkdir(parents=True, exist_ok=True)\n"
                            b"    path.write_text(json.dumps({'rows': value} if isinstance(value, list) else value))\n")
-            (module / name).write_bytes(source)
+            destination = module / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(source)
             allowlist.append("src/molgap/" + name)
         # Importable model owner, but any constructor use fails inside the clean worker.
         (module / "qm9_neural_atom.py").write_bytes(
@@ -293,8 +308,8 @@ def test_missing_transitive_import_does_not_fall_back_to_host(release, monkeypat
     spec, package, options = release
     from molgap import experiment_preflight
     unpack = experiment_preflight._unpack
-    def incomplete(source, root):
-        unpack(source, root)
+    def incomplete(source, root, **kwargs):
+        unpack(source, root, **kwargs)
         (root / "src/molgap/child.py").unlink()
     monkeypatch.setattr(experiment_preflight, "_unpack", incomplete)
     report = check_release_inputs(spec, package, **options)

@@ -112,7 +112,7 @@ def _paths(value):
         raise ValueError("Duplicate monitor paths")
 
 
-def _binding(spec, package_dir, expected_package_identity):
+def _binding(spec, package_dir, expected_package_identity, *, _verification=None):
     if type(spec) is not ExperimentSpec:
         raise TypeError("Expected exactly ExperimentSpec")
     if set(vars(spec)) != {"_canonical_json"} or type(spec._canonical_json) is not str:
@@ -122,7 +122,8 @@ def _binding(spec, package_dir, expected_package_identity):
         raise ValueError("Noncanonical ExperimentSpec")
     _digest(expected_package_identity)
     _safe_local(package_dir)
-    manifest = verify_experiment_source_package(package_dir)
+    manifest = verify_experiment_source_package(package_dir,
+        **({"_verification": _verification} if _verification is not None else {}))
     declaration = rebuilt.to_dict()
     arms = [{"arm_id": arm["arm_id"], "arm_identity": canonical_fingerprint(arm)}
             for arm in declaration["arms"]]
@@ -217,13 +218,14 @@ def _response(raw):
 
 
 def build_launch_receipt(spec: ExperimentSpec, package_dir: Path, *,
-                         expected_package_identity: str, response_json: str | None = None) -> dict:
+                         expected_package_identity: str, response_json: str | None = None,
+                         _verification=None) -> dict:
     """Verify a pinned package and deterministically describe a local observation.
 
     No response means NOT_SUBMITTED. Supplied observed responses are assertions
     by the caller, not proof that this library contacted a platform.
     """
-    binding = _binding(spec, package_dir, expected_package_identity)
+    binding = _binding(spec, package_dir, expected_package_identity, _verification=_verification)
     response = None if response_json is None else _response(response_json)
     state, result, action = "NOT_SUBMITTED", "SUBMIT_UNIMPLEMENTED", "IMPLEMENT_VERIFIED_ADAPTER"
     if response is not None:
