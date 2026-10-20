@@ -1,0 +1,41 @@
+{
+  "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/retry_v2/results/accepted_profile/decision.json",
+  "facts": {
+    "backward_host_capture_fraction": 0.5815227265209022,
+    "backward_host_self_seconds": 27.758854697000032,
+    "capture_wall_seconds": 47.734771886000004,
+    "captured_optimizer_updates": 2,
+    "formal_optimizer_updates": 0,
+    "full_billing_status": "measurement_missing",
+    "kernel": "kaseichou/molgap-ppgt-execution-profile-v2",
+    "kernel_id": 139854711,
+    "limitations": [
+      "Cold two-step profiling, not steady-state throughput or GPU utilization",
+      "Inclusive phase times overlap; host phase share is not GPU-compute share",
+      "Raw trace export overhead was not separately measured",
+      "Runtime provenance platform_version is null; exact version is bound by pinned output retrieval",
+      "No complete invoice/provisioning/queue cost",
+      "Execution diagnostic, not scientific model ranking or Replay-Ready"
+    ],
+    "local_model_execution": false,
+    "observed_allocated_t4_hours": 0.5568105814777777,
+    "observed_bootstrap_wall_seconds": 1002.25904666,
+    "overlap_not_additive": true,
+    "package_identity": "03b325abd9e8fb8cc8ca06c2b8fe40423704937973cf87cd4d0e02ec33cf96b5",
+    "peak_allocated_bytes": 1855784448,
+    "raw_trace_bytes": 2316472118,
+    "raw_trace_location": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1\\inspection\\proofs\\profile_qualification\\trace.json",
+    "raw_trace_sha256": "72b3db5d3cb90dd09e08cb5a24d6e1f672d121fdbaf8ce32cae6b441119ae331",
+    "role_basis": "Frozen train-only native path and saved-state source audit; no independent payload IO telemetry",
+    "scratch_optimizer_updates": 6,
+    "source_commit": "bc17a051fb533737e9e4970e9c7a549e78037da5",
+    "version": 1
+  },
+  "final": true,
+  "interpretation": "Graph-wise dispatch and very many small launches/autograd operations are the leading optimization target. RRWP-only caching is unlikely to explain the overall delay. No batched speedup has yet been measured.",
+  "next_allowed_actions": [],
+  "outcome": "NO_TRAIN",
+  "reopen_conditions": [
+    "Separate bounded execution-equivalence authority; no automatic successor"
+  ]
+}

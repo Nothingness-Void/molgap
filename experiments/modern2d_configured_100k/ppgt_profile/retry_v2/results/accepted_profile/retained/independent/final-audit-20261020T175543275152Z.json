@@ -1,0 +1,33 @@
+{
+  "format": "molgap-independent-final-preflight-audit-v1",
+  "run": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1",
+  "utc": "20261020T175543275152Z",
+  "scope": "CPU saved-state and retained-trace verification only",
+  "errors": [],
+  "RML_acceptance": "PENDING; not evaluated",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "prior_saved_state_audit": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1\\inspection\\independent\\saved-state-audit-20261020T175310188293Z.json",
+  "raw_trace": {
+    "path": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1\\inspection\\proofs\\profile_qualification\\trace.json",
+    "size_bytes": 2316472118,
+    "sha256": "72b3db5d3cb90dd09e08cb5a24d6e1f672d121fdbaf8ce32cae6b441119ae331",
+    "verified": true
+  },
+  "existing_preflight_verifier": {
+    "helper": "_verify_preflight",
+    "profiling_required": true,
+    "passed": true,
+    "certificate_status": "accepted",
+    "recipe_identity": "9d7ed9a79d419c4bbbd85365f0f8ea54d9b7917dbace4697cdc874a1496e74c5",
+    "probe_recipe_identity": "92da2b0f9215a99c9a4b74e25a36eafb6b0477333613b9615da1383997459ece",
+    "provenance_canonical_sha256": "d0e85c5e317858d42406b45f5e980dd634402582cc95354069170ae3e6044b35",
+    "formal_training_exposure": 0,
+    "proof_count": 3
+  },
+  "status": "SAVED_STATE_AND_RAW_TRACE_VERIFIED_RML_PENDING",
+  "duration_seconds": 69.50689340004465,
+  "artifacts": {
+    "json": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1\\inspection\\independent\\final-audit-20261020T175543275152Z.json",
+    "report": "E:\\MolGap\\artifacts\\runs\\ppgt-execution-profile-s42-v2\\v1\\inspection\\independent\\final-audit-20261020T175543275152Z.md"
+  }
+}
