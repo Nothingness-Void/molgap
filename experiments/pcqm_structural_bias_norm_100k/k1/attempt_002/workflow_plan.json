@@ -1,0 +1,44 @@
+{
+  "format": "molgap-experiment-workflow-v1",
+  "spec_identity": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590",
+  "source_profile": "runtime-v1",
+  "source_records": [
+    "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+    "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json",
+    "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/decision.md",
+    "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+    "experiments/pcqm_structural_bias_norm_100k/failure_v1.md"
+  ],
+  "arms": [
+    {
+      "arm_id": "post_bn",
+      "device": 0,
+      "recipe": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+      "initial_state": "D:\\molgap-artifacts\\initializations\\structural-bias-norm-100k\\k1.pt"
+    },
+    {
+      "arm_id": "post_ln",
+      "device": 1,
+      "recipe": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_ln.json",
+      "initial_state": "D:\\molgap-artifacts\\initializations\\structural-bias-norm-100k\\k1.pt"
+    }
+  ],
+  "acceptance_plan": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/acceptance_plan.json",
+  "dataset_manifests": {
+    "post_bn": "D:\\molgap-data\\pcqm_fixed_100k_v1\\manifest.json",
+    "post_ln": "D:\\molgap-data\\pcqm_fixed_100k_v1\\manifest.json"
+  },
+  "kaggle": {
+    "account": "nothingnessvoid",
+    "kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "title": "MolGap K1 PostLN 100K S42 R2",
+    "datasets": [
+      "nothingnessvoid/k1-postln-100k-s42-src-r2",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "source_dataset": "nothingnessvoid/k1-postln-100k-s42-src-r2",
+    "accelerator": "NvidiaTeslaT4"
+  }
+}

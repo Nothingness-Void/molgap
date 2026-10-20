@@ -1,0 +1,861 @@
+{
+  "acceptance_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_structural_bias_norm_100k/evidence_review.md": "965f90ca3ae37611884182acb88cb991c403474d7e6748bb99452b848ad188da",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/acceptance_plan.json": "de14f41e0c9ab73590b2c24d5c21571ecea88fad489df291ea2bade08aba6512",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json": "22655742f9e9ac57a84e2014ff2c4fd2d0b613043ef11034a880fcb43e3c21c4",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/experiment_spec.json": "4f877325a788243ccf77f3b1fb3d054f9dd059793b8e0a41f1964240e030b30c",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/experiment_launch.json": "674dbcbc82b7cde29f06bce087359d8a2daa62e60185d0465ae5f87493d5c423",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/final_scheduler_observation.json": "8cc9c799ba1ca9b7be8d74e0826548612cc436b5568291067b495608e666af55",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/launch_receipt.json": "4a03228a48efa2f547369985d6dd5a8d79c32538c88f4b38255461ef1fa8709e",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/package_manifest.json": "de857eb774f990526ae46ada2fefa1fb5cba375636b393736e460a6f5b6e46cf",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/platform_response.json": "1db3fac4bdeb06776206afb983887c8871afcd9f78d77d63bc98213c40ee3e4b",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/prior_failure_observation.json": "c33c3807b5f5dd54feb25c954a4248b3d3c0c66dd23f5bb887859f3b9f09c8aa",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_publication.json": "6906e628028daee4d681b27ab579d2fd7f69c02cdcaf950e4c9f3ed8ada2a6c7",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_submit.json": "ba1180a401da1ce7a9a3b4f4938cefa54f7bd3132dce5f6a2ea19d06ca332d03",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/remote_release_report.json": "200272649b4da560ad3605914c8e98fe7aaa6cdf715f1e2be3a0ff2d3fbc6b14",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/scheduler_observation.json": "2082cd18476ee03b953c1913c4f87cee70a478d662d0506ce02010289782e18c",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_upload_verification.json": "dfc1011963f84e13915e5f0dea1dcbf9e823c95d4d833e882f039acfd5f5a3a9",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_verification.json": "db4a2ab3071783b59a20a01f33a764ae8f06fd5391e1d7759877d1ee6e46f9b1",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/startup_observation.json": "d49bee7541b6b01e020c386ca56679cb3bec59ae7394b0d80b48d9bf6f01d37b",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/submission_state.json": "e917f8c1fbb35ae5a0d8ad30646b32cba4a9e4948795851e6fa18db6e4b5b7fe",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json": "d9955dbde8c83aef80a164bf7b99d1c6e1e32dc97fc13f1f29c6a3a245be3034",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/execution_retention_verification.json": "29305af860c4bce34310b9899d5aaca2deb2c159ae664e13874f1dbeed8e506a",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/mechanical_post_bn.json": "612e277f168cd48cf8082ccb9c2e3cafd8dd30e9d36fedcdd4ce57d2be01cba9",
+    "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/native_post_bn.json": "22fa53201abcacb0ee0604a731e0f8a8e9c190c6ac99e107d8c42ab5354db9e0",
+    "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json": "2af40555c99ec690fbffbb5ebe369714d20024f375d3969e27edfae9b4310bac",
+    "experiments/pcqm_structural_bias_norm_100k/protocol.md": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json": "4f67c46662e88c77d4a180ce86eff5db41c58bb106643b2ceb32df867690cfea",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py": "6babde0ccbdff02b81b9682439a5efbc61d062d495182439baaa718727341122",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md": "f6d24431c491e8479e9b3edeae5127ef149724f7c7800679fdaffb078418702c",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md": "e66136800f7b7fdf48dbe60a069617e12ccf64c198a651ca1a39b1907955a588",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/development_curves.png": "a69e7ab5b4372c2d605890813a819788daa2d7a0d193c11c5314543bf219f484",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_bn.json": "2bc5726e37781a519721b990a2cc5068c825417b1af970e876200632f03683f1",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_ln.json": "7002d490515e64fa495f63216a94e98ccc9632f665402e1aaa245db0e2663259",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_costs.json": "7421b5be952b4dafd3849225f3f725ae3bc19b32b8a5574d115937b51493ca10",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_ledger.json": "dd49f0dc60d3bc4bbac93c6b783f34bd9902a12c623fb9eb70464df65940089d",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json": "d0cb6e36bd1a6ad476534641f140d64728a0afd8ab0ce61f030252cd1ead7dc0",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json.context.json": "67a349c91196f85ab473b4feb0eab4078bca740a60d9705dde934bbbcae42785",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/development_predictions.pt": "b5bf966379d92fd9a0e0d0b6626ed60e56712368c037bc43b0110181ed68ca20",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/execution_profile_receipt.json": "f33ba09451860afc4409d6065bc84a6cc10c036dea8d419ae884ec85e319b31a",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/last_checkpoint.pt": "0c345ca6f9794ebd90d37c1b0b1077408a6d908d5515b878ead840b603b32d9d",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/output_manifest.json": "8e2169fd26ab7be4f564c494abf7e5da8d309b7b03b5dd3655b5cd75d90c3ff4",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/preflight_costs.json": "63a7c2725bbe5a9633bcf3922eca4d079a5db17c7514e25e0a8948f3a1b7bfd9",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/profile.json": "bc8055ff6818aa8de0999586b0458de9d81a43baf474c171fc206bef0dcef32f",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/trace.json": "99b13c0b7f7014047a97fd270c75483f03e7fbd51a02fd8395ab7ae163f733ce",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profiles/step_0_1792427837035640800/profile.json": "f8b35b2f12ceccce9b1392631e16ab335112a45d50d042f2875985c3874e3b1f",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-a.pt": "bc8a1879f3a851e1345935f1c452d00a1248d4b69946562e10c858c62dac09e8",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-b.pt": "4644b8715b3aa189c206a5fb04c8ef229a3b60353b3d67f43ea00f2ff4270678",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed-first.pt": "d7a0c16078463026cc55eb1abdcee04368e984bbac94b6127f53d3f6041d3192",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed.pt": "c211df8bb5bb589900b6ae4033893f555229b54306b3354b82db23ef550c5836",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_certificate.json": "dfe5b66003bc9a52a2644f94ea69a6f3c54ca45482c32731806489acb940e7bf",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_provenance.json": "1278b7fb01441ee958a1be28ea0f52e4255e9717d42aa819ba63cc82fc724ca8",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/selected_model.pt": "a34a6ef656d08c5d687a57107438020eace3e9cf8401f2e4744eaa236d872cab",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_contract.json": "e606d0597b5026d6aef42cc079f6cd1b40baf96cc12d89a00600c977ead5121e",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_progress.json": "4228caef49545abdb4f47cc354ad0107fe2a79f191b16413ae5501bb0b4b3239",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_bn.json": "d7d3cc1ccd0dd891fcc949a4b81f6f1cb885121ef78381dfedf92ddd29264b8b",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_ln.json": "251d908d49172a102d468deed6d262f88dfa7b3972672ee1fb7cba11eb78eff9",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_entry_observation.json": "6a02f07f760a0d6f3f694a9f7bca6c09d1d5c9e075b9201303f29dbc5d7253c8",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_ledger.json": "dd49f0dc60d3bc4bbac93c6b783f34bd9902a12c623fb9eb70464df65940089d",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_report.json": "26a38f099e97df2df00c5e27502caeac6772ca8ff43b6102acb01b9c46a7d6fd",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_retention.json": "a1704dbf043e49b36ca219a1f1265e3331aba3cb985680ec49b04fe25d0a77e6",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/input_resolution.json": "879ae31d55b972760f73589b2b85fa0661ec1739f93e275cb7b10560d1eb0045",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/pair_state.json": "26a38f099e97df2df00c5e27502caeac6772ca8ff43b6102acb01b9c46a7d6fd",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata_retention.json": "488f893cb245a4ac48dd6407a041b18d74bebb08e776ddee26accbaa49af58bf",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/qualification_metadata_retention.json": "13e175f3a4bf7c05a79dd546ee5afb9ded0f8f2a343b4db5e3f1f7e3fccdaa02",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_metadata.json": "25e1485714814202867d6b6ef119b715c309d7677b324f4ff6dc25e9899e6164",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_source.py": "0cca3e91d0375b368f41d12bb523dcd08e860de8d6be03ac991d37413abdc1c5",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/observation.json": "d72f8b7a681feb54ed471bc9cfe030ff6efa1cd73d60d1081a7831c84f8572ef",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_ARCHIVE_SHA256.txt": "ae63eeae27d62c26ad0ff3aa821828a7d9910ae6ad6d456fb7fe5777ccd58f63",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_COMMIT.txt": "42fff3ee3c991c31a31274a6996514254258e1a6b2d97508928eacce2742cb61",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_FILES.json": "93c95ac7e57e53effa9708214e9c7de6a978a7afdf797d9bda2e05a46a1d7b76",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/experiment_spec.json": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/package_manifest.json": "de857eb774f990526ae46ada2fefa1fb5cba375636b393736e460a6f5b6e46cf",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/source.tar.gz": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/trace_context_profile_receipt_retention.json": "74d569ddf0a2c4db000af8180aa83786f3bbd55beaffaee2566544ff410fc440"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-post-ln-100k-s42-20261020-r2-v1",
+      "category": "training",
+      "cost_event_id": "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-measured-slot",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.5916144635102778
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.5916144635102778
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-cost-event-v1",
+      "scope": "Python bootstrap/runtime observation window; includes idle allocated devices; one assigned device slot; overlapping arm wall is not additive job wall",
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": [
+      "New explicitly authorized decision-relevant question"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+        "name": "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+        "role": "provenance",
+        "sha256": "965f90ca3ae37611884182acb88cb991c403474d7e6748bb99452b848ad188da"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/acceptance_plan.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/acceptance_plan.json",
+        "role": "provenance",
+        "sha256": "de14f41e0c9ab73590b2c24d5c21571ecea88fad489df291ea2bade08aba6512"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/authority.json",
+        "role": "provenance",
+        "sha256": "22655742f9e9ac57a84e2014ff2c4fd2d0b613043ef11034a880fcb43e3c21c4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/experiment_spec.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/experiment_spec.json",
+        "role": "provenance",
+        "sha256": "4f877325a788243ccf77f3b1fb3d054f9dd059793b8e0a41f1964240e030b30c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/experiment_launch.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/experiment_launch.json",
+        "role": "provenance",
+        "sha256": "674dbcbc82b7cde29f06bce087359d8a2daa62e60185d0465ae5f87493d5c423"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/final_scheduler_observation.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/final_scheduler_observation.json",
+        "role": "provenance",
+        "sha256": "8cc9c799ba1ca9b7be8d74e0826548612cc436b5568291067b495608e666af55"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/launch_receipt.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/launch_receipt.json",
+        "role": "provenance",
+        "sha256": "4a03228a48efa2f547369985d6dd5a8d79c32538c88f4b38255461ef1fa8709e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/package_manifest.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/package_manifest.json",
+        "role": "provenance",
+        "sha256": "de857eb774f990526ae46ada2fefa1fb5cba375636b393736e460a6f5b6e46cf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/platform_response.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/platform_response.json",
+        "role": "provenance",
+        "sha256": "1db3fac4bdeb06776206afb983887c8871afcd9f78d77d63bc98213c40ee3e4b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/prior_failure_observation.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/prior_failure_observation.json",
+        "role": "provenance",
+        "sha256": "c33c3807b5f5dd54feb25c954a4248b3d3c0c66dd23f5bb887859f3b9f09c8aa"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_publication.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_publication.json",
+        "role": "provenance",
+        "sha256": "6906e628028daee4d681b27ab579d2fd7f69c02cdcaf950e4c9f3ed8ada2a6c7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_submit.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/quota_before_submit.json",
+        "role": "provenance",
+        "sha256": "ba1180a401da1ce7a9a3b4f4938cefa54f7bd3132dce5f6a2ea19d06ca332d03"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/remote_release_report.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/remote_release_report.json",
+        "role": "provenance",
+        "sha256": "200272649b4da560ad3605914c8e98fe7aaa6cdf715f1e2be3a0ff2d3fbc6b14"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/scheduler_observation.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/scheduler_observation.json",
+        "role": "provenance",
+        "sha256": "2082cd18476ee03b953c1913c4f87cee70a478d662d0506ce02010289782e18c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_upload_verification.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_upload_verification.json",
+        "role": "provenance",
+        "sha256": "dfc1011963f84e13915e5f0dea1dcbf9e823c95d4d833e882f039acfd5f5a3a9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_verification.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/source_verification.json",
+        "role": "provenance",
+        "sha256": "db4a2ab3071783b59a20a01f33a764ae8f06fd5391e1d7759877d1ee6e46f9b1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/startup_observation.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/startup_observation.json",
+        "role": "provenance",
+        "sha256": "d49bee7541b6b01e020c386ca56679cb3bec59ae7394b0d80b48d9bf6f01d37b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/submission_state.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/submission/submission_state.json",
+        "role": "provenance",
+        "sha256": "e917f8c1fbb35ae5a0d8ad30646b32cba4a9e4948795851e6fa18db6e4b5b7fe"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+        "role": "provenance",
+        "sha256": "d9955dbde8c83aef80a164bf7b99d1c6e1e32dc97fc13f1f29c6a3a245be3034"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/execution_retention_verification.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/execution_retention_verification.json",
+        "role": "provenance",
+        "sha256": "29305af860c4bce34310b9899d5aaca2deb2c159ae664e13874f1dbeed8e506a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/mechanical_post_bn.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/mechanical_post_bn.json",
+        "role": "provenance",
+        "sha256": "612e277f168cd48cf8082ccb9c2e3cafd8dd30e9d36fedcdd4ce57d2be01cba9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/native_post_bn.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/native_post_bn.json",
+        "role": "provenance",
+        "sha256": "22fa53201abcacb0ee0604a731e0f8a8e9c190c6ac99e107d8c42ab5354db9e0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/k1/role_plan.json",
+        "role": "provenance",
+        "sha256": "2af40555c99ec690fbffbb5ebe369714d20024f375d3969e27edfae9b4310bac"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+        "name": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+        "role": "provenance",
+        "sha256": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json",
+        "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json",
+        "role": "provenance",
+        "sha256": "4f67c46662e88c77d4a180ce86eff5db41c58bb106643b2ceb32df867690cfea"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py",
+        "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py",
+        "role": "provenance",
+        "sha256": "6babde0ccbdff02b81b9682439a5efbc61d062d495182439baaa718727341122"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+        "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+        "role": "provenance",
+        "sha256": "f6d24431c491e8479e9b3edeae5127ef149724f7c7800679fdaffb078418702c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+        "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+        "role": "provenance",
+        "sha256": "e66136800f7b7fdf48dbe60a069617e12ccf64c198a651ca1a39b1907955a588"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/development_curves.png",
+        "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/development_curves.png",
+        "role": "provenance",
+        "sha256": "a69e7ab5b4372c2d605890813a819788daa2d7a0d193c11c5314543bf219f484"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_bn.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_bn.json",
+        "role": "provenance",
+        "sha256": "2bc5726e37781a519721b990a2cc5068c825417b1af970e876200632f03683f1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_ln.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/artifact_retention_post_ln.json",
+        "role": "provenance",
+        "sha256": "7002d490515e64fa495f63216a94e98ccc9632f665402e1aaa245db0e2663259"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_costs.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_costs.json",
+        "role": "provenance",
+        "sha256": "7421b5be952b4dafd3849225f3f725ae3bc19b32b8a5574d115937b51493ca10"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_ledger.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/allocation_ledger.json",
+        "role": "provenance",
+        "sha256": "dd49f0dc60d3bc4bbac93c6b783f34bd9902a12c623fb9eb70464df65940089d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json",
+        "role": "trace",
+        "sha256": "d0cb6e36bd1a6ad476534641f140d64728a0afd8ab0ce61f030252cd1ead7dc0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json.context.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json.context.json",
+        "role": "provenance",
+        "sha256": "67a349c91196f85ab473b4feb0eab4078bca740a60d9705dde934bbbcae42785"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/development_predictions.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/development_predictions.pt",
+        "role": "predictions",
+        "sha256": "b5bf966379d92fd9a0e0d0b6626ed60e56712368c037bc43b0110181ed68ca20"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/execution_profile_receipt.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/execution_profile_receipt.json",
+        "role": "provenance",
+        "sha256": "f33ba09451860afc4409d6065bc84a6cc10c036dea8d419ae884ec85e319b31a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/last_checkpoint.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/last_checkpoint.pt",
+        "role": "provenance",
+        "sha256": "0c345ca6f9794ebd90d37c1b0b1077408a6d908d5515b878ead840b603b32d9d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/output_manifest.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/output_manifest.json",
+        "role": "provenance",
+        "sha256": "8e2169fd26ab7be4f564c494abf7e5da8d309b7b03b5dd3655b5cd75d90c3ff4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/preflight_costs.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/preflight_costs.json",
+        "role": "provenance",
+        "sha256": "63a7c2725bbe5a9633bcf3922eca4d079a5db17c7514e25e0a8948f3a1b7bfd9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/profile.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/profile.json",
+        "role": "provenance",
+        "sha256": "bc8055ff6818aa8de0999586b0458de9d81a43baf474c171fc206bef0dcef32f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/trace.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profile_qualification/trace.json",
+        "role": "provenance",
+        "sha256": "99b13c0b7f7014047a97fd270c75483f03e7fbd51a02fd8395ab7ae163f733ce"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profiles/step_0_1792427837035640800/profile.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/profiles/step_0_1792427837035640800/profile.json",
+        "role": "provenance",
+        "sha256": "f8b35b2f12ceccce9b1392631e16ab335112a45d50d042f2875985c3874e3b1f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-a.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-a.pt",
+        "role": "provenance",
+        "sha256": "bc8a1879f3a851e1345935f1c452d00a1248d4b69946562e10c858c62dac09e8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-b.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/repeat-b.pt",
+        "role": "provenance",
+        "sha256": "4644b8715b3aa189c206a5fb04c8ef229a3b60353b3d67f43ea00f2ff4270678"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed-first.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed-first.pt",
+        "role": "provenance",
+        "sha256": "d7a0c16078463026cc55eb1abdcee04368e984bbac94b6127f53d3f6041d3192"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/resumed.pt",
+        "role": "provenance",
+        "sha256": "c211df8bb5bb589900b6ae4033893f555229b54306b3354b82db23ef550c5836"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_certificate.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_certificate.json",
+        "role": "provenance",
+        "sha256": "dfe5b66003bc9a52a2644f94ea69a6f3c54ca45482c32731806489acb940e7bf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_provenance.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/runtime_provenance.json",
+        "role": "provenance",
+        "sha256": "1278b7fb01441ee958a1be28ea0f52e4255e9717d42aa819ba63cc82fc724ca8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/selected_model.pt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/selected_model.pt",
+        "role": "checkpoint",
+        "sha256": "a34a6ef656d08c5d687a57107438020eace3e9cf8401f2e4744eaa236d872cab"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_contract.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_contract.json",
+        "role": "provenance",
+        "sha256": "e606d0597b5026d6aef42cc079f6cd1b40baf96cc12d89a00600c977ead5121e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_progress.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/training_progress.json",
+        "role": "provenance",
+        "sha256": "4228caef49545abdb4f47cc354ad0107fe2a79f191b16413ae5501bb0b4b3239"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_bn.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_bn.json",
+        "role": "provenance",
+        "sha256": "d7d3cc1ccd0dd891fcc949a4b81f6f1cb885121ef78381dfedf92ddd29264b8b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_ln.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/formal_profile_metadata_retention_post_ln.json",
+        "role": "provenance",
+        "sha256": "251d908d49172a102d468deed6d262f88dfa7b3972672ee1fb7cba11eb78eff9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_entry_observation.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_entry_observation.json",
+        "role": "provenance",
+        "sha256": "6a02f07f760a0d6f3f694a9f7bca6c09d1d5c9e075b9201303f29dbc5d7253c8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_ledger.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/allocation_ledger.json",
+        "role": "provenance",
+        "sha256": "dd49f0dc60d3bc4bbac93c6b783f34bd9902a12c623fb9eb70464df65940089d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_report.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_report.json",
+        "role": "provenance",
+        "sha256": "26a38f099e97df2df00c5e27502caeac6772ca8ff43b6102acb01b9c46a7d6fd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_retention.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/execution_retention.json",
+        "role": "provenance",
+        "sha256": "a1704dbf043e49b36ca219a1f1265e3331aba3cb985680ec49b04fe25d0a77e6"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/input_resolution.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/input_resolution.json",
+        "role": "provenance",
+        "sha256": "879ae31d55b972760f73589b2b85fa0661ec1739f93e275cb7b10560d1eb0045"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/pair_state.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata/experiment/pair_state.json",
+        "role": "provenance",
+        "sha256": "26a38f099e97df2df00c5e27502caeac6772ca8ff43b6102acb01b9c46a7d6fd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata_retention.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/metadata_retention.json",
+        "role": "provenance",
+        "sha256": "488f893cb245a4ac48dd6407a041b18d74bebb08e776ddee26accbaa49af58bf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/qualification_metadata_retention.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/qualification_metadata_retention.json",
+        "role": "provenance",
+        "sha256": "13e175f3a4bf7c05a79dd546ee5afb9ded0f8f2a343b4db5e3f1f7e3fccdaa02"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_metadata.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_metadata.json",
+        "role": "provenance",
+        "sha256": "25e1485714814202867d6b6ef119b715c309d7677b324f4ff6dc25e9899e6164"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_source.py",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/kernel_source.py",
+        "role": "provenance",
+        "sha256": "0cca3e91d0375b368f41d12bb523dcd08e860de8d6be03ac991d37413abdc1c5"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/observation.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/reconciliation/observation.json",
+        "role": "provenance",
+        "sha256": "d72f8b7a681feb54ed471bc9cfe030ff6efa1cd73d60d1081a7831c84f8572ef"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/experiment_spec.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/experiment_spec.json",
+        "role": "provenance",
+        "sha256": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/package_manifest.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/package_manifest.json",
+        "role": "provenance",
+        "sha256": "de857eb774f990526ae46ada2fefa1fb5cba375636b393736e460a6f5b6e46cf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/source.tar.gz",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/source.tar.gz",
+        "role": "provenance",
+        "sha256": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_ARCHIVE_SHA256.txt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_ARCHIVE_SHA256.txt",
+        "role": "provenance",
+        "sha256": "ae63eeae27d62c26ad0ff3aa821828a7d9910ae6ad6d456fb7fe5777ccd58f63"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_COMMIT.txt",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_COMMIT.txt",
+        "role": "provenance",
+        "sha256": "42fff3ee3c991c31a31274a6996514254258e1a6b2d97508928eacce2742cb61"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_FILES.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/source_package/SOURCE_FILES.json",
+        "role": "provenance",
+        "sha256": "93c95ac7e57e53effa9708214e9c7de6a978a7afdf797d9bda2e05a46a1d7b76"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/trace_context_profile_receipt_retention.json",
+        "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/trace_context_profile_receipt_retention.json",
+        "role": "provenance",
+        "sha256": "74d569ddf0a2c4db000af8180aa83786f3bbd55beaffaee2566544ff410fc440"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+        "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+        "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+        "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-post-ln-100k-s42-20261020-r2",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-20T14:14:59.938152+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Local ingestion of accepted remote training evidence; no local training or inference"
+    },
+    "observed_execution": {
+      "completed_passes": 40,
+      "development_evaluation_executed": true,
+      "development_gap_mae_eV": 0.1412944608205557,
+      "execution_ref": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/output_manifest.json",
+      "local_inference_executed": false,
+      "local_training_executed": false,
+      "next_batch": 0,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "selected_pass": 40,
+      "selected_step": 31240,
+      "selected_weights": "live",
+      "status": "complete",
+      "training_executed": true
+    },
+    "outcome": {
+      "artifact_status": "locally_retained_hash_verified",
+      "budget_decision": "observed_python_window_below_platform_session_limit",
+      "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "CLOSED",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+    "source_identity": {
+      "arms": [
+        {
+          "arm_id": "post_bn",
+          "arm_identity": "5709452734f90ef030d5921df933d9eb60f9f113c549f00f9eda729f0a6446f8"
+        },
+        {
+          "arm_id": "post_ln",
+          "arm_identity": "853493efbde3849b9d4c2a72998d93b8b58c64fb6db886d6dac697e6e554b130"
+        }
+      ],
+      "experiment_id": "pcqm-k1-post-ln-100k-s42-20261020-r2",
+      "kernel_id": 139648081,
+      "logical_run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2",
+      "package_identity": "456a940dc0270a697abef0fc08852d2c8a0f70193790744422e69faefec39ed8",
+      "producer_platform_version": null,
+      "reconciled_platform_version": 1,
+      "requested_logical_platform": "kaggle",
+      "source_archive_sha256": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde",
+      "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+      "spec_identity": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590",
+      "spec_sha256": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590"
+    },
+    "strict_replay_ready": false,
+    "track": "B"
+  },
+  "finalized_at": "2026-10-20T14:14:59.938152+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/terminal_acceptance/acceptance_post_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    }
+  ],
+  "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-post-ln-100k-s42-20261020-r2-v1",
+    "logical_run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+    "source_package_sha256": "108b712710b241ee81015647211ed5aadc6f050e5c9e86748defdc2bad06cfde",
+    "spec_identity": "8f151c15e6cfae63fdfa53fc6d5fc67313bbcc77699bb03796262c88083b3590"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "canonical_learning_rate_history_missing",
+        "canonical_checkpoint_identity_history_missing",
+        "strict_v5_comparison_not_qualified"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "c0d60576a118280c03b9434939ca2cebb6360c287f0be7370122bf9d2ee6ff25",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "step-ema-0.999;primary-live",
+      "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+      "lr_schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+      "matched_architecture_required": false,
+      "optimizer_identity": "3298cfdec6f86a18c53a3cc0643879de1934e7823856caf80ca72d2e4d9445b4",
+      "precision_identity": "fp32-no-tf32",
+      "row_split_identity": "08a7963be3b663b44bb477bc849a97ad0a91f26420b70932f89faaebd19a10ce",
+      "scientific_contract": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b:best-development-live",
+      "target_transform_identity": "84c5c073ee370e8b57214e6582e4c00587c41a75b88932bd5bdedca22e30fcad",
+      "terminal_endpoint_identity": "31240-updates-3998720-presentations",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE eV",
+    "model_identity": "neural_atom_k1/3:reference",
+    "presentation_semantics_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+    "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+    "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best-development-live",
+    "terminal_evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/rml/post_bn/rml_finalized/v5_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/k1/family_outputs/post_bn/canonical_trace.json",
+    "trace_artifact_sha256": "d0cb6e36bd1a6ad476534641f140d64728a0afd8ab0ce61f030252cd1ead7dc0",
+    "trace_fields": {
+      "checkpoint_identity": false,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": false,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+}

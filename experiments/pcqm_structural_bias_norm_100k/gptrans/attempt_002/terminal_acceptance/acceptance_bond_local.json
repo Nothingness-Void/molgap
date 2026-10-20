@@ -1,0 +1,169 @@
+{
+  "cost_attribution": "Measured root allocation ledger and explicit assigned per-arm device slot",
+  "cost_source": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/allocation_ledger.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2-v1",
+      "category": "training",
+      "cost_event_id": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-measured-slot",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.674120521017778
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.674120521017778
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "scope": "Python bootstrap/runtime observation window; includes idle allocated devices; one assigned device slot; overlapping arm wall is not additive job wall",
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    }
+  ],
+  "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal",
+  "format": "molgap-family-terminal-acceptance-v1",
+  "mechanical_report": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/mechanical_bond_local.json",
+  "native_report": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/native_bond_local.json",
+  "observed_progress": {
+    "completed_passes": 60,
+    "next_batch": 0,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080,
+    "status": "complete"
+  },
+  "outcome": {
+    "artifact_status": "locally_retained_hash_verified",
+    "budget_decision": "observed_python_window_below_platform_session_limit",
+    "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "CLOSED",
+    "transfer_status": "not_evaluated"
+  },
+  "paired_analysis": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json",
+  "producer_platform_version": null,
+  "reconciled_platform_version": 1,
+  "replay_blockers": [
+    "canonical_learning_rate_history_missing",
+    "canonical_checkpoint_identity_history_missing",
+    "strict_v5_comparison_not_qualified"
+  ],
+  "role_observation_sources": [
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/training_contract.json",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/canonical_trace.json",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/development_predictions.pt",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/selected_model.pt",
+    "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/runtime_provenance.json"
+  ],
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_bond_local.json",
+      "role_event_id": "role-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    }
+  ],
+  "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+  "strict_replay_ready": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": [
+      "New explicitly authorized decision-relevant question"
+    ]
+  }
+}

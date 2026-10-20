@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-9debabee0392ba58c684f9b288dbbd8eb023454d644719584578cfbe60047aaf",
+  "finalized_at": "2026-10-20T14:22:50.285305+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_structural_bias_norm_100k/failure_v1.md": "cc1093862353684f9b4aa6bf89c6a9f58ead45ed690c7b79c6e4a042e8e9db80",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json": "6cd598cf253506908205c39bdb388dd71b0ad942d418dd19a0586cc2d5609d11",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/experiment_spec.json": "05f3b59b3f92d86943b1beba18ca19bda5bb74339405eb4577511995e1aebc6a",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/allocation_entry_observation.json": "44c663c779538cc40dcec724a183c50eb431b4bc2fe163a432c19d5a79dfe6cf",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/input_resolution.json": "0c98fe59a8e06981e92a9eeb4a87f47f80dc9a5857766870daad154ddf40e2ce",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/retrieval.json": "7afde07abead5b61f53e96bfe02cac67f6a8ada7efc828dbe65f185c56fd141f",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_reconciliation.json": "98351b521d7ff31a63ed226034dc3b64503f9cea34d8f83e24246e4997fdc871",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_resistance/acceptance.json": "78fd67062fa61bbb782c8da1e0983ad0d8220fbd17140fc04595b7c0e1e4d52e",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/launch_receipt.json": "71eda6cc0b0bb5c021e0b7196d463c520985b908dc4214d50045ad47bc953b9d",
+    "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/source_verification.json": "649405868de8314e487ff4f6712b52c461bbfa4c4154f0e70a6771fd680a56cf",
+    "experiments/pcqm_structural_bias_norm_100k/protocol.md": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md": "092d25bfbdcddef7e3354a22605a9e92851e548a979761ac32e7197983d1299f"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-bootstrap-terminal.json": "1f85f9e04ca1540b55e466b48325daf5ee366cb2b07ae911605eb56cb2b55c21",
+    "prospective_snapshot.json": "d73953918103f72da10c57d17e57580258e81599536d9af61ab5a290fa15d2bd",
+    "terminal_input.json": "68ca4eabb41efbcafd3c59b9e04b4c764c30696488cb9fd572f0c3503007ba4b",
+    "trajectory.json": "3c674397159a65012aff1ac8d4335899b990c354149587131cff32bf091a1c11",
+    "v5_evidence.json": "fad8220867deb224eb9bfb7dd5ca05859260ab9717a2d0e8c3a59aeb3ea4e1c5"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_structural_bias_norm_100k/gptrans/rml/resistance/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "9debabee0392ba58c684f9b288dbbd8eb023454d644719584578cfbe60047aaf",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance"
+}

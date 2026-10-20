@@ -1,0 +1,152 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_bond_local/acceptance.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_bond_local/acceptance.json",
+      "role": "provenance",
+      "sha256": "1a2dfa46521798d74cfea60a6a8ba796c094dbb522735ed312723eecfab8524a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "role": "provenance",
+      "sha256": "cc1093862353684f9b4aa6bf89c6a9f58ead45ed690c7b79c6e4a042e8e9db80"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "role": "provenance",
+      "sha256": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "role": "provenance",
+      "sha256": "092d25bfbdcddef7e3354a22605a9e92851e548a979761ac32e7197983d1299f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/experiment_spec.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/experiment_spec.json",
+      "role": "provenance",
+      "sha256": "05f3b59b3f92d86943b1beba18ca19bda5bb74339405eb4577511995e1aebc6a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json",
+      "role": "provenance",
+      "sha256": "6cd598cf253506908205c39bdb388dd71b0ad942d418dd19a0586cc2d5609d11"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/launch_receipt.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/launch_receipt.json",
+      "role": "provenance",
+      "sha256": "71eda6cc0b0bb5c021e0b7196d463c520985b908dc4214d50045ad47bc953b9d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/source_verification.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/submission/source_verification.json",
+      "role": "provenance",
+      "sha256": "649405868de8314e487ff4f6712b52c461bbfa4c4154f0e70a6771fd680a56cf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/allocation_entry_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "44c663c779538cc40dcec724a183c50eb431b4bc2fe163a432c19d5a79dfe6cf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/input_resolution.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/input_resolution.json",
+      "role": "provenance",
+      "sha256": "0c98fe59a8e06981e92a9eeb4a87f47f80dc9a5857766870daad154ddf40e2ce"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/retrieval.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/retrieval.json",
+      "role": "provenance",
+      "sha256": "7afde07abead5b61f53e96bfe02cac67f6a8ada7efc828dbe65f185c56fd141f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_reconciliation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_reconciliation.json",
+      "role": "provenance",
+      "sha256": "98351b521d7ff31a63ed226034dc3b64503f9cea34d8f83e24246e4997fdc871"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_bond_local/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-gptrans-resistance-100k-s42-20261020",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-20T14:22:50.285305+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Exact source/version and pre-dispatch error; no model execution"
+  },
+  "observed_execution": {
+    "development_evaluation_executed": false,
+    "formal_training_exposure": 0,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "retained_bootstrap_failure_metadata",
+    "budget_decision": "shared_bootstrap_debit_with_attribution_limits",
+    "comparison_status": "not_evaluated_no_training",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "untouched"
+  },
+  "scope": "Desktop original bootstrap failure before arm dispatch",
+  "source_identity": {
+    "arms": [
+      {
+        "arm_id": "bond_local",
+        "arm_identity": "9d72e1af814011f8039f865a6c50ec467fe20fd384c69acceb1755c857c9fced"
+      },
+      {
+        "arm_id": "resistance",
+        "arm_identity": "3a84fcebe01eb257650a89918bc1331be5ab4b886f4a4043b4fc2963b86fb207"
+      }
+    ],
+    "experiment_id": "pcqm-gptrans-resistance-100k-s42-20261020",
+    "kernel_id": 139639070,
+    "logical_run_id": "pcqm-gptrans-resistance-100k-s42-20261020",
+    "package_identity": "2b14146067c1c99997c916bbec7ae791fac1295ac92bcc700ebd1c1863665ca6",
+    "platform_version": 1,
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "a8d20f2384effa239c5e39761983b9c895bd63d60b71b9b5c94a221132388541",
+    "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f",
+    "spec_identity": "e6aa1bdd30aa9e14fc49ab16b4f0a67bb45421d2d86ebea6d612ef687a8f9b23",
+    "spec_sha256": "e6aa1bdd30aa9e14fc49ab16b4f0a67bb45421d2d86ebea6d612ef687a8f9b23"
+  },
+  "strict_replay_ready": false,
+  "track": "B"
+}

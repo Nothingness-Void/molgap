@@ -63,6 +63,11 @@ Remote reconciliation and every training/evaluation release retain their existin
 platform, role and scientific authority requirements.
 
 ## Historical Audit Pointer
+
+Structural-bias/normalization100K complete negative history is reachable from
+archive commit `ac7857565c4c84d9d70a56f003082a0ef8c4c290`, including owner tip
+`13c623721696c941cd1819d8be162a09029d08ca`. Desktop keeps accepted canonical
+evidence only; see [terminal custody](experiments/pcqm_structural_bias_norm_100k/terminal_custody.md).
 The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous
 audit and cleanup records intact, including dated commit/reachability claims.
 The [2026-09-30 reconciliation](docs/operations/LOCAL_RECONCILIATION_20260930.md)

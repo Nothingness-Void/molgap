@@ -1,0 +1,27 @@
+{
+  "estimated_total_bytes": 1048576,
+  "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+  "paths": [
+    "experiment/bond_local/output_manifest.json",
+    "experiment/bond_local/runtime_certificate.json",
+    "experiment/bond_local/runtime_provenance.json",
+    "experiment/bond_local/canonical_trace.json",
+    "experiment/bond_local/training_progress.json",
+    "experiment/bond_local/allocation_costs.json",
+    "experiment/bond_local/preflight_costs.json",
+    "experiment/resistance/output_manifest.json",
+    "experiment/resistance/runtime_certificate.json",
+    "experiment/resistance/runtime_provenance.json",
+    "experiment/resistance/canonical_trace.json",
+    "experiment/resistance/training_progress.json",
+    "experiment/resistance/allocation_costs.json",
+    "experiment/resistance/preflight_costs.json",
+    "experiment/pair_state.json",
+    "experiment/allocation_entry_observation.json",
+    "experiment/input_resolution.json",
+    "experiment/execution_retention.json"
+  ],
+  "per_file_max_bytes": 1048576,
+  "purpose": "four-arm terminal acceptance metadata only",
+  "version": 1
+}

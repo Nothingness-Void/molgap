@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "canonical_learning_rate_history_missing",
+      "canonical_checkpoint_identity_history_missing",
+      "strict_v5_comparison_not_qualified"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "c0d60576a118280c03b9434939ca2cebb6360c287f0be7370122bf9d2ee6ff25",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "step-ema-0.999;primary-live",
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "lr_schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "matched_architecture_required": false,
+    "optimizer_identity": "3298cfdec6f86a18c53a3cc0643879de1934e7823856caf80ca72d2e4d9445b4",
+    "precision_identity": "fp32-no-tf32",
+    "row_split_identity": "08a7963be3b663b44bb477bc849a97ad0a91f26420b70932f89faaebd19a10ce",
+    "scientific_contract": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b:best-development-live",
+    "target_transform_identity": "84c5c073ee370e8b57214e6582e4c00587c41a75b88932bd5bdedca22e30fcad",
+    "terminal_endpoint_identity": "31240-updates-3998720-presentations",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+  "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE eV",
+  "model_identity": "neural_atom_k1/3:reference",
+  "presentation_semantics_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+  "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+  "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-live",
+  "terminal_evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/rml/post_bn/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/rml/post_bn/rml_finalized/trace.json",
+  "trace_artifact_sha256": "d0cb6e36bd1a6ad476534641f140d64728a0afd8ab0ce61f030252cd1ead7dc0",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

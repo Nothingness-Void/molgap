@@ -1,15 +1,15 @@
 {
   "backtest": {
     "eligible": 10,
-    "excluded": 27,
+    "excluded": 31,
     "status": "available"
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 121,
+      "trajectories_total": 129,
       "with_complete_native_measurement": 24,
-      "with_cost_event": 110,
-      "with_incomplete_native_measurement": 86,
+      "with_cost_event": 118,
+      "with_incomplete_native_measurement": 94,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1524,7 +1524,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 23
+          "unknown_records": 31
         },
         "device_hours": {
           "estimated": {
@@ -1536,7 +1536,7 @@
             "known_total": 43.27577882215583
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 12
         },
         "queue_hours": {
           "estimated": {
@@ -1548,7 +1548,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 23
+          "unknown_records": 31
         },
         "wall_hours": {
           "estimated": {
@@ -1560,7 +1560,7 @@
             "known_total": 40.47952885453777
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 12
         }
       },
       "Tesla T4 x2 allocation; candidate assigned GPU0": {
@@ -2724,7 +2724,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 13
+          "unknown_records": 21
         },
         "device_hours": {
           "estimated": {
@@ -2732,11 +2732,11 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 11,
-            "known_total": 48.53417041207055
+            "known_records": 17,
+            "known_total": 57.32707513646888
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "queue_hours": {
           "estimated": {
@@ -2748,7 +2748,7 @@
             "known_total": null
           },
           "not_applicable_records": 9,
-          "unknown_records": 15
+          "unknown_records": 23
         },
         "wall_hours": {
           "estimated": {
@@ -2756,11 +2756,11 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 15,
-            "known_total": 54.216560059226936
+            "known_records": 21,
+            "known_total": 62.87874740595415
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 3
         }
       },
       "Z100SM DCU": {
@@ -3064,17 +3064,17 @@
         }
       }
     },
-    "unknown_events": 214
+    "unknown_events": 230
   },
   "evidence": {
-    "validated": 109,
+    "validated": 117,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 84,
+      "count": 88,
       "severity": "INFO"
     },
     {
@@ -3084,7 +3084,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 86,
+      "count": 94,
       "severity": "WARN"
     },
     {
@@ -3094,7 +3094,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 40,
+      "count": 44,
       "severity": "WARN"
     },
     {
@@ -3104,20 +3104,20 @@
     }
   ],
   "roles": {
-    "coarse_historical": 522,
-    "explicit_events": 313,
+    "coarse_historical": 562,
+    "explicit_events": 337,
     "repeatedly_selected": 22
   },
-  "source_digest": "689f57ea77f99a075371f7689fa17f2fca67ee192997d811a3bb62e09e5975e4",
+  "source_digest": "41aae4ae042afc0c38f40c88b67999329178d06e8ca622313a7110282d833d25",
   "trajectories": {
-    "count": 121,
+    "count": 129,
     "outcomes": {
       "ACTIVE": 1,
-      "CLOSED": 13,
+      "CLOSED": 15,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 7,
-      "NEGATIVE_UNDER_CONTRACT": 25,
-      "NO_TRAIN": 44,
+      "NEGATIVE_UNDER_CONTRACT": 27,
+      "NO_TRAIN": 48,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

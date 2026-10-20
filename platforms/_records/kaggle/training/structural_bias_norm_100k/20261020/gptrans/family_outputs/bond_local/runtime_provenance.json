@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "logical_run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "arm_id": "bond_local",
+    "arm_identity": "9d72e1af814011f8039f865a6c50ec467fe20fd384c69acceb1755c857c9fced",
+    "spec_identity": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+    "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+    "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+    "training_recipe_sha256": "1a4291738cfb8afcf3c1a668a211bf5398a64303b2b26791d26fe80eb87fae62",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "platform_version": null
+  },
+  "recipe_identity": "3c20a859c077464592d538eb50d04f3643acd290ba7f13f345c6864f5e95dd12",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+    "state_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
+    "tensor_count": 337,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4"
+}

@@ -11050,6 +11050,46 @@
         "canonical_trace_marked_ineligible",
         "strict_v5_comparison_not_qualified"
       ],
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    },
+    {
+      "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:resistance:downstream",
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+    },
+    {
+      "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_bn:downstream",
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"
+    },
+    {
+      "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
+      "run_id": "pcqm-k1-post-ln-100k-s42-20261020-r2:post_ln:downstream",
+      "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2"
+    },
+    {
+      "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
       "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
       "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
     },
@@ -11072,5 +11112,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "d605576187e54fa2ac22120822088300154f9fd0a16cfba43d7eb30dc2ff38c6"
+  "source_digest": "16e5a3f125cb156094d6dc58b6ec7c2343c32d8eba702d638808bd42b5985a66"
 }

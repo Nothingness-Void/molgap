@@ -1,0 +1,81 @@
+{
+  "files": [
+    {
+      "path": "experiment/post_bn/output_manifest.json",
+      "sha256": "8e2169fd26ab7be4f564c494abf7e5da8d309b7b03b5dd3655b5cd75d90c3ff4"
+    },
+    {
+      "path": "experiment/post_bn/runtime_certificate.json",
+      "sha256": "dfe5b66003bc9a52a2644f94ea69a6f3c54ca45482c32731806489acb940e7bf"
+    },
+    {
+      "path": "experiment/post_bn/runtime_provenance.json",
+      "sha256": "1278b7fb01441ee958a1be28ea0f52e4255e9717d42aa819ba63cc82fc724ca8"
+    },
+    {
+      "path": "experiment/post_bn/canonical_trace.json",
+      "sha256": "d0cb6e36bd1a6ad476534641f140d64728a0afd8ab0ce61f030252cd1ead7dc0"
+    },
+    {
+      "path": "experiment/post_bn/training_progress.json",
+      "sha256": "4228caef49545abdb4f47cc354ad0107fe2a79f191b16413ae5501bb0b4b3239"
+    },
+    {
+      "path": "experiment/post_bn/allocation_costs.json",
+      "sha256": "7421b5be952b4dafd3849225f3f725ae3bc19b32b8a5574d115937b51493ca10"
+    },
+    {
+      "path": "experiment/post_bn/preflight_costs.json",
+      "sha256": "63a7c2725bbe5a9633bcf3922eca4d079a5db17c7514e25e0a8948f3a1b7bfd9"
+    },
+    {
+      "path": "experiment/post_ln/output_manifest.json",
+      "sha256": "6e041fc78b15d99640d31dd0893cc9fd9de9e5b53226ec286f50f4c3b64a95e9"
+    },
+    {
+      "path": "experiment/post_ln/runtime_certificate.json",
+      "sha256": "6f8c58b85bdecb7c14ca574109f0196165a830ab4b62fd9dc429881519710ff0"
+    },
+    {
+      "path": "experiment/post_ln/runtime_provenance.json",
+      "sha256": "39c2c9619ada4c0148b22e729a8acce1c70ddadebe739dfa4a4641881f2da50d"
+    },
+    {
+      "path": "experiment/post_ln/canonical_trace.json",
+      "sha256": "e4456722084b56b4dea4b761069bc5c8c7f331acd71d8390f225f2e891d4a581"
+    },
+    {
+      "path": "experiment/post_ln/training_progress.json",
+      "sha256": "e33c291caa7478e9b432640353eb3e400d1cee61b61feaa99a919509c696e1c0"
+    },
+    {
+      "path": "experiment/post_ln/allocation_costs.json",
+      "sha256": "ca2c4ba3274f49d73912f83e4d5ed1798a48eada6b4074b5fc4c056e45aab25c"
+    },
+    {
+      "path": "experiment/post_ln/preflight_costs.json",
+      "sha256": "5ba7d4a0a7419dada46a162d18be8b4441f828363833ca9a6dd659bee324f1f5"
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "26a38f099e97df2df00c5e27502caeac6772ca8ff43b6102acb01b9c46a7d6fd"
+    },
+    {
+      "path": "experiment/allocation_entry_observation.json",
+      "sha256": "6a02f07f760a0d6f3f694a9f7bca6c09d1d5c9e075b9201303f29dbc5d7253c8"
+    },
+    {
+      "path": "experiment/input_resolution.json",
+      "sha256": "879ae31d55b972760f73589b2b85fa0661ec1739f93e275cb7b10560d1eb0045"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "a1704dbf043e49b36ca219a1f1265e3331aba3cb985680ec49b04fe25d0a77e6"
+    }
+  ],
+  "kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+  "scientific_acceptance": false,
+  "transport": "version_specific_exact_file",
+  "unselected_outputs_downloaded": false,
+  "version": 1
+}

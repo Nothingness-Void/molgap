@@ -1,0 +1,45 @@
+{
+  "certificate": {
+    "formal_training_exposure": 0,
+    "format": "molgap-runtime-certificate-v1",
+    "memory_fill_proof": {
+      "path": "fill-enabled.pt",
+      "sha256": "bddff8ef62ffb0c84fdeaa8af63fb783626f5abe58c1b859b1dbfcc8ca6e35f3",
+      "state_fingerprint": "7f03c64962473eeebbcca6620022bc2df7ea6388c4c7e89694b44c693528c065"
+    },
+    "probe_recipe_identity": "3404a77875d288c7c7eac9cd98be6ca836b13e57db1aa2e16e2d988e03af2bf5",
+    "profile_proof": {
+      "report": "profile_qualification/profile.json",
+      "sha256": "e1dc6a93acd8e608204feb076486bdf5d1f509f21f00705ed15a0536769377a4"
+    },
+    "proofs": [
+      {
+        "path": "repeat-a.pt",
+        "sha256": "72c151bf6b142129f0077e5d973d1a09ef5f3db778a15462dd743f762e5948a6",
+        "state_fingerprint": "7f03c64962473eeebbcca6620022bc2df7ea6388c4c7e89694b44c693528c065"
+      },
+      {
+        "path": "repeat-b.pt",
+        "sha256": "7bd4f012fde92edda46764313358c2cb0991aac8963e6ec48aa9669af735c28f",
+        "state_fingerprint": "7f03c64962473eeebbcca6620022bc2df7ea6388c4c7e89694b44c693528c065"
+      },
+      {
+        "path": "resumed.pt",
+        "sha256": "eec8a29f60d99aa97a2794e947ab5962b0d6fb606d7aff2402b3ba50367ce19a",
+        "state_fingerprint": "7f03c64962473eeebbcca6620022bc2df7ea6388c4c7e89694b44c693528c065"
+      }
+    ],
+    "provenance_sha256": "0f89ce7e35875c3764cacaa77699fc26fad03aca85f53a4702d94df7ee03eda8",
+    "resume_origin": {
+      "path": "resumed-first.pt",
+      "sha256": "99b8ed766675243b4bce6c916b099cc2bffdd4529c5430287e3563e0d28b185f"
+    },
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "accepted"
+  },
+  "certificate_sha256": "9356cf70a00f61f36306574bd55279bd8484bfeec3fdaf623d53694b611ed3e4",
+  "checked_seconds": 1.735000000000582,
+  "provenance_sha256": "1118d73a89fb2f7c11b0cfad1d72cb62ed989961fe3634e86549af4196d7aa50",
+  "scope": "CPU verification of retained native T4 repeat, serialized resume, profiling and applicable safety-fill proofs; no model execution",
+  "status": "VERIFIED"
+}

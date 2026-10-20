@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-resistance-100k-s42-20261020-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-planned",
+  "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-resistance-100k-s42-20261020:resistance:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance"
+}

@@ -1,0 +1,139 @@
+{
+  "trajectory": {
+    "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "pcqm-gptrans-resistance-100k-s42-20261020",
+    "question": "Does resistance topology improve BondLocalGPTrans enough to justify measured overhead?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
+      "observed_deficiency": "No accepted resistance-pair endpoint exists; topology benefit and online pinv cost are unknown.",
+      "supporting_evidence_ids": [
+        "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014"
+      ],
+      "alternative_explanations": [
+        "Seed variability",
+        "Optimization interaction",
+        "Graph-size cohorts",
+        "Platform contention"
+      ],
+      "changed_mechanism": "Only a zero-initialized four-channel resistance projection before first attention.",
+      "cheapest_falsifier": "Repaired bootstrap real-guard regression, then native all-arm preflight before training.",
+      "related_closed_family_ids": [
+        "family-topology-t4-execution"
+      ],
+      "expected_native_cost_ref": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-planned",
+      "decision_changed_if_positive": "Nominate for independent review only; no automatic500K or production adoption.",
+      "decision_changed_if_negative": "Close the precise frozen mechanism; retain attribution and no automatic retry.",
+      "historical_unknowns": []
+    },
+    "state_at_start": {
+      "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+      "source_config_identity": "9d72e1af814011f8039f865a6c50ec467fe20fd384c69acceb1755c857c9fced",
+      "contract_refs": [
+        "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+        "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+        "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
+        "experiments/pcqm_structural_bias_norm_100k/failure_v1.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_trajectory_ids": [
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local"
+      ],
+      "prior_evidence_ids": [
+        "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_structural_bias_norm_100k/gptrans/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "training",
+        "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+        "run_ids": [
+          "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream"
+        ],
+        "attempt_ids": [
+          "pcqm-gptrans-resistance-100k-s42-20261020-r2-v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json"
+        ],
+        "cost_event_ids": [
+          "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/decision.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one authorized frozen experiment"
+      ],
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [
+      "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local"
+    ],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-resistance-100k-s42-20261020",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_structural_bias_norm_100k/gptrans/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-19T16:27:02.425119+00:00",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-planned",
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+      "attempt_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2-v1",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

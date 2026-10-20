@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "package_identity": "2b14146067c1c99997c916bbec7ae791fac1295ac92bcc700ebd1c1863665ca6",
+    "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+    "dataset": "nothingnessvoid/gptrans-resistance-100k-s42-src",
+    "authority_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/authority.json",
+    "authority_sha256": "43293bd2b7ccdf6df52fb5490790d8c6311fa9b341857a4b9f2cc175854a76ed",
+    "monitor_paths": [
+      "experiments/pcqm_structural_bias_norm_100k/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 30.29587220000394,
+    "SOURCE_SUBMITTING": 31.68622950000281,
+    "SOURCE_PUBLISHED": 56.84938230000262,
+    "KERNEL_SUBMITTING": 19.617467199997918,
+    "KERNEL_ACCEPTED": 11.55458780000481
+  },
+  "observed_at": "2026-10-19T15:29:44.501219+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+    "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 139639070,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "e6aa1bdd30aa9e14fc49ab16b4f0a67bb45421d2d86ebea6d612ef687a8f9b23",
+      "package_identity": "2b14146067c1c99997c916bbec7ae791fac1295ac92bcc700ebd1c1863665ca6",
+      "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f",
+      "source_archive_sha256": "a8d20f2384effa239c5e39761983b9c895bd63d60b71b9b5c94a221132388541"
+    },
+    "platform_response": {
+      "ref": "/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42",
+      "versionNumber": 1,
+      "kernelId": 139639070,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}

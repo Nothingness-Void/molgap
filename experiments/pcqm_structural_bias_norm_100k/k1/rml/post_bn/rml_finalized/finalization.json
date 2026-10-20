@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-140d686d8cd563279fef16f5c020535f5b2812736608a3780d7aebb1e4c50653",
+  "finalized_at": "2026-10-20T14:22:50.285305+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_structural_bias_norm_100k/failure_v1.md": "cc1093862353684f9b4aa6bf89c6a9f58ead45ed690c7b79c6e4a042e8e9db80",
+    "experiments/pcqm_structural_bias_norm_100k/k1/authority.json": "bd3a7de3128e658296af319fd7645a16419d95e9db5cad349e38e223550d1acc",
+    "experiments/pcqm_structural_bias_norm_100k/k1/experiment_spec.json": "360f456f53f0086f8008f5c0229b6524eb232245c0d3cddc8be34cdad00de41a",
+    "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/allocation_entry_observation.json": "cb5d4c766a5c48eabf1757692d880d03c930cccc5b552bba4a89a8a599f0d534",
+    "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/input_resolution.json": "0e56b46f082e1e128af9c0c56325596f6b0c4c7a761abf0ce920f80ba543fc19",
+    "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/retrieval.json": "b226c6cb2ec4c469bb4dc86742329c9c90b76faafc71064cc3d52b7df2002efa",
+    "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_post_bn/acceptance.json": "39fe56d514d108e3b167822cf3a73d488d9997caff8d1c6151adcde92e29b9a0",
+    "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_reconciliation.json": "7cbf183448b74ae4356b6566191b4d9745d56064b0a23d82636f02fa4d0c0f76",
+    "experiments/pcqm_structural_bias_norm_100k/k1/submission/launch_receipt.json": "edeb866a0403a35063a2b2c0e6250ce68919eb808dc6bf0aaef24142566a1859",
+    "experiments/pcqm_structural_bias_norm_100k/k1/submission/source_verification.json": "8346e643c6ae2a2a8ad70a00a811eb8e2f0b9dddb63f8debd4cab78a0eb1a2e1",
+    "experiments/pcqm_structural_bias_norm_100k/protocol.md": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11",
+    "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md": "092d25bfbdcddef7e3354a22605a9e92851e548a979761ac32e7197983d1299f"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-bootstrap-terminal.json": "a422c56ec64d90c15372009dfcfaf3b34dbb17d121fc9f923ff026df827d420a",
+    "prospective_snapshot.json": "ea9eaca310a59529c68da25e37a0edcc4fc4b76d721b3a5517e172d2744b9e57",
+    "terminal_input.json": "f690ac105b57cfd840c5684bd1de571ae340e23d12d8290aa2616a88c20275c7",
+    "trajectory.json": "d42fa7d959f9b6def08ab9cf10dbfc953593b69b8148882e3d8160b4413df039",
+    "v5_evidence.json": "dbdca3aa10b45250f51960134fbb77d53e13839f7218935274978a3857614b9a"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_structural_bias_norm_100k/k1/rml/post_bn/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "140d686d8cd563279fef16f5c020535f5b2812736608a3780d7aebb1e4c50653",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn"
+}

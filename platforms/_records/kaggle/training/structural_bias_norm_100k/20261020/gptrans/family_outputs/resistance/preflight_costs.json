@@ -1,0 +1,39 @@
+{
+  "context": {
+    "experiment_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "logical_run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "arm_id": "resistance",
+    "arm_identity": "3a84fcebe01eb257650a89918bc1331be5ab4b886f4a4043b4fc2963b86fb207",
+    "spec_identity": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+    "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+    "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+    "training_recipe_sha256": "7fab01952d61c10dad423922a140d87e01f787cbb98d7febbec116785ccef685",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "platform_version": null
+  },
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 53.66941732300006,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "native qualification entry through proof publication"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": null,
+      "status": "missing",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "reason": "requires platform allocation accounting"
+    }
+  ]
+}

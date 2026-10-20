@@ -202,3 +202,9 @@ experiments/pcqm_k1_slot_readout_diagnostic/results/measurement/*_rows.json
 
 # Retained private PreNorm artifacts; reviewed evidence receipts stay in experiments.
 platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/
+
+# External custody for structural-bias acceptance payloads.
+platforms/_records/kaggle/training/structural_bias_norm_100k/**/*.pt
+platforms/_records/kaggle/training/structural_bias_norm_100k/**/profile_qualification/trace.json
+platforms/_records/kaggle/training/structural_bias_norm_100k/**/profiles/**/trace.json
+platforms/_records/kaggle/training/structural_bias_norm_100k/**/source_package/*.tar.gz

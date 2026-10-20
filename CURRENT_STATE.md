@@ -141,6 +141,14 @@ qualification stays pending under `platforms/_records/kaggle/preflight/`.
 
 ## Closed Evidence Navigation
 
+Kaggle1 structural-bias/normalization100K retries 139648081/1 and139648367/1
+are COMPLETE and terminally accepted. K1 Post-LN closes negative against Post-BN;
+GPTrans resistance has a favorable signal below its material gate and also
+closes negative. Four trained and four original NO_TRAIN records are finalized;
+strict replay exclusions remain. [Decision and custody](experiments/pcqm_structural_bias_norm_100k/terminal_custody.md)
+own exact results, archive reachability and external artifact custody.
+No adoption, successor or scale-up is released by this closure.
+
 Decisions/attribution below own historical values and qualification exclusions;
 do not repeat them as current work or infer a successor from a negative result.
 

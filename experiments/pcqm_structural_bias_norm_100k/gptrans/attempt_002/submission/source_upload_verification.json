@@ -1,0 +1,82 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/gptrans-resistance-100k-s42-src-r2",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "fc1922447a78a292e88cf4e6062be92e30f61b117ebc9dd53baf60d5189e5c84",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "42fff3ee3c991c31a31274a6996514254258e1a6b2d97508928eacce2742cb61",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "ad1e159b176ab899e00cd6d0c25b96f73c43e8fa097e0b968787e7dc505ea2a4",
+      "bytes": 46439
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/acceptance_plan.json",
+      "sha256": "a343374059a5ee087604dce08c428d25da80faae203f02042e50c219ff249c20",
+      "bytes": 2009
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
+      "sha256": "1a4291738cfb8afcf3c1a668a211bf5398a64303b2b26791d26fe80eb87fae62",
+      "bytes": 2262
+    },
+    {
+      "path": "acceptance/experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_resistance.json",
+      "sha256": "7fab01952d61c10dad423922a140d87e01f787cbb98d7febbec116785ccef685",
+      "bytes": 2476
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "06de44291b3db3ee411a7887e372d692a8149261306af609b9a31293f8b604c8",
+      "bytes": 1479
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+      "bytes": 5684
+    },
+    {
+      "path": "initial_states/bond_local.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "bytes": 23606979
+    },
+    {
+      "path": "initial_states/resistance.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "bytes": 23606979
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "cafbd496dc87b45a155524c6e84d1f4535ee9bb40897a26fcd12ca1bfec362f9",
+      "bytes": 10824
+    },
+    {
+      "path": "prospective/bond_local/trajectory.json",
+      "sha256": "62ef5c9c48c16b33cd0e443a730470bf6137343bb61055e2ba0ffcfafa7ae9a8",
+      "bytes": 57614
+    },
+    {
+      "path": "prospective/resistance/trajectory.json",
+      "sha256": "1c6d9434a33d98a08f0699d5bdd4c9a90bc5a63b17554a78c247358adc7694df",
+      "bytes": 57614
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+      "bytes": 851086
+    }
+  ]
+}

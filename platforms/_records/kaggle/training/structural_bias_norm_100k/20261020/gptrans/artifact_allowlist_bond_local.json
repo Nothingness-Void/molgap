@@ -1,0 +1,91 @@
+{
+  "estimated_bytes": 681574400,
+  "excluded": [
+    "worker environments",
+    "graph caches",
+    "per-epoch checkpoints",
+    "checkpoint chunks",
+    "unrelated experiment artifacts"
+  ],
+  "files": {
+    "experiment/bond_local/allocation_costs.json": {
+      "local_path": "allocation_costs.json",
+      "sha256": "0516e5c22994244977894a02b8651d4be73c359b23f04e0043c344e114a6b3df"
+    },
+    "experiment/bond_local/allocation_ledger.json": {
+      "local_path": "allocation_ledger.json",
+      "sha256": "84bdba5036a2bcc8021337fc438759139c666770aa1bd7284af58bfd1024094a"
+    },
+    "experiment/bond_local/canonical_trace.json": {
+      "local_path": "canonical_trace.json",
+      "sha256": "2e0869c5256f600874a42be7f2025b0ce50e81fde5107d36ae76f45800ecf60b"
+    },
+    "experiment/bond_local/development_predictions.pt": {
+      "local_path": "development_predictions.pt",
+      "sha256": "eb97a19b1cd64fd132fa065775c985d081989b73b23429dce19bf39994cfb2d8"
+    },
+    "experiment/bond_local/fill-enabled.pt": {
+      "local_path": "fill-enabled.pt",
+      "sha256": "bddff8ef62ffb0c84fdeaa8af63fb783626f5abe58c1b859b1dbfcc8ca6e35f3"
+    },
+    "experiment/bond_local/last_checkpoint.pt": {
+      "local_path": "last_checkpoint.pt",
+      "sha256": "db2c4ef1d1bf7cb6b19061a26f2f6445cb72b2792c5a15ffe0435089efb36295"
+    },
+    "experiment/bond_local/output_manifest.json": {
+      "local_path": "output_manifest.json",
+      "sha256": "53833e2656ceef8c5a5dcb40ce35361f73f387a83c72d3e7035bd6c8b9df6260"
+    },
+    "experiment/bond_local/preflight_costs.json": {
+      "local_path": "preflight_costs.json",
+      "sha256": "ab40a503873205f293aba17ff2d89b9992eed3c05f73d4e7abec96e038ca087a"
+    },
+    "experiment/bond_local/profile_qualification/profile.json": {
+      "local_path": "profile_qualification/profile.json",
+      "sha256": "e1dc6a93acd8e608204feb076486bdf5d1f509f21f00705ed15a0536769377a4"
+    },
+    "experiment/bond_local/profile_qualification/trace.json": {
+      "local_path": "profile_qualification/trace.json",
+      "sha256": "49964c50193ee0a2e3e0597635f4b4df0eb7ee60ad2924711cdb8907ac59f4da"
+    },
+    "experiment/bond_local/repeat-a.pt": {
+      "local_path": "repeat-a.pt",
+      "sha256": "72c151bf6b142129f0077e5d973d1a09ef5f3db778a15462dd743f762e5948a6"
+    },
+    "experiment/bond_local/repeat-b.pt": {
+      "local_path": "repeat-b.pt",
+      "sha256": "7bd4f012fde92edda46764313358c2cb0991aac8963e6ec48aa9669af735c28f"
+    },
+    "experiment/bond_local/resumed-first.pt": {
+      "local_path": "resumed-first.pt",
+      "sha256": "99b8ed766675243b4bce6c916b099cc2bffdd4529c5430287e3563e0d28b185f"
+    },
+    "experiment/bond_local/resumed.pt": {
+      "local_path": "resumed.pt",
+      "sha256": "eec8a29f60d99aa97a2794e947ab5962b0d6fb606d7aff2402b3ba50367ce19a"
+    },
+    "experiment/bond_local/runtime_certificate.json": {
+      "local_path": "runtime_certificate.json",
+      "sha256": "9356cf70a00f61f36306574bd55279bd8484bfeec3fdaf623d53694b611ed3e4"
+    },
+    "experiment/bond_local/runtime_provenance.json": {
+      "local_path": "runtime_provenance.json",
+      "sha256": "1118d73a89fb2f7c11b0cfad1d72cb62ed989961fe3634e86549af4196d7aa50"
+    },
+    "experiment/bond_local/selected_model.pt": {
+      "local_path": "selected_model.pt",
+      "sha256": "2a274ca16874a83b32553af7ae09f5bd089e77a7601fc8d522601503d593dc06"
+    },
+    "experiment/bond_local/training_contract.json": {
+      "local_path": "training_contract.json",
+      "sha256": "1a4291738cfb8afcf3c1a668a211bf5398a64303b2b26791d26fe80eb87fae62"
+    },
+    "experiment/bond_local/training_progress.json": {
+      "local_path": "training_progress.json",
+      "sha256": "5d31955f41fad9f921ef2deddb048aac4b019a16ddc449e92886f53df34edfd3"
+    }
+  },
+  "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+  "size_status": "estimated; exact remote sizes not supplied by manifest",
+  "version": "1"
+}

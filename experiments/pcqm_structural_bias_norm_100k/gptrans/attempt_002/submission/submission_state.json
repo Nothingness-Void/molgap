@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+    "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "dataset": "nothingnessvoid/gptrans-resistance-100k-s42-src-r2",
+    "authority_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json",
+    "authority_sha256": "6caac2e87affd360726fe5f319a87f61af65d2afd6b4a33a2369846ba3e7e275",
+    "monitor_paths": [
+      "experiments/pcqm_structural_bias_norm_100k/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 26.56676139999763,
+    "SOURCE_SUBMITTING": 25.10370690000127,
+    "SOURCE_PUBLISHED": 54.54811979999795,
+    "KERNEL_SUBMITTING": 18.378627799997048,
+    "KERNEL_ACCEPTED": 11.009478500003752
+  },
+  "observed_at": "2026-10-19T16:34:14.695714+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 139648367,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+      "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+      "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+      "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12"
+    },
+    "platform_response": {
+      "ref": "/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+      "versionNumber": 1,
+      "kernelId": 139648367,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}

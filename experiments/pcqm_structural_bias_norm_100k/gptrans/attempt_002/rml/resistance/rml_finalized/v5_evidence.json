@@ -1,0 +1,592 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/evidence_review.md",
+      "role": "provenance",
+      "sha256": "965f90ca3ae37611884182acb88cb991c403474d7e6748bb99452b848ad188da"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/acceptance_plan.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/acceptance_plan.json",
+      "role": "provenance",
+      "sha256": "a343374059a5ee087604dce08c428d25da80faae203f02042e50c219ff249c20"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/authority.json",
+      "role": "provenance",
+      "sha256": "f729eea96400080b66d64c113686721a969d91bed05629b9924228e23f12657c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/experiment_spec.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/experiment_spec.json",
+      "role": "provenance",
+      "sha256": "81bbc513695209cb1f4d4a805adc42681957221a377c547c3120ae4139f79848"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/experiment_launch.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/experiment_launch.json",
+      "role": "provenance",
+      "sha256": "06de44291b3db3ee411a7887e372d692a8149261306af609b9a31293f8b604c8"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/final_scheduler_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/final_scheduler_observation.json",
+      "role": "provenance",
+      "sha256": "b7a69ba11bb9e6faee9fe0b533a667f8d5d358c0d1fb67587cb0a38e5e7c781f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/launch_receipt.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/launch_receipt.json",
+      "role": "provenance",
+      "sha256": "907906b71682de9cc866c47b60ad32b24360b829439b36dbd742fc75df2d3d9e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/package_manifest.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/package_manifest.json",
+      "role": "provenance",
+      "sha256": "cafbd496dc87b45a155524c6e84d1f4535ee9bb40897a26fcd12ca1bfec362f9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/platform_response.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/platform_response.json",
+      "role": "provenance",
+      "sha256": "bbcd4b9c90466b951ba83feeea163a583880aa2489a8dcb3f8be83547b8ba0ee"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/prior_failure_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/prior_failure_observation.json",
+      "role": "provenance",
+      "sha256": "bf4a2b7246fcaa35595d1acf69d547e6be683d04476bb37db34ccbe100bb1884"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/quota_before_publication.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/quota_before_publication.json",
+      "role": "provenance",
+      "sha256": "147a3cec5e9f3ad6fc1cc63a4141e7e8027f0926facdf6605b25d063ffe96d31"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/quota_before_submit.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/quota_before_submit.json",
+      "role": "provenance",
+      "sha256": "db6ce5e7cf65b287d616e1cf5bf87468cad1db2875aab357168a5078bf907f3a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/remote_release_report.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/remote_release_report.json",
+      "role": "provenance",
+      "sha256": "9ad023cb7e52c69f705436994aa5359f97de363b895e6d1de0460d185e368090"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/scheduler_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/scheduler_observation.json",
+      "role": "provenance",
+      "sha256": "7f370d976f6dac4baf191d9c9f1fa1f5b5c25e25afebffcbca27f767d322d7df"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/source_upload_verification.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/source_upload_verification.json",
+      "role": "provenance",
+      "sha256": "5baa315175eef0037fe6cc0aa7d8b3e8b2bb1eae7edbc5a1116c0fe430c90d82"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/source_verification.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/source_verification.json",
+      "role": "provenance",
+      "sha256": "edafcd8490ee9f086accf7452934085ba8582bc0b02a58f395de5783a637b4c6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/startup_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/startup_observation.json",
+      "role": "provenance",
+      "sha256": "5b435066b3f999327f1ea4ffaf7bbdf1ad1bf4c5a44bc7f17a37d7b19a50e4cf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/submission_state.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/submission/submission_state.json",
+      "role": "provenance",
+      "sha256": "de89d7000359dcc4c74a30b8748d45a282584d9fec6339da9a63620e2422a632"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_resistance.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_resistance.json",
+      "role": "provenance",
+      "sha256": "2883ec3598f95a12df3656be441dffdc48ce36cbf85b35f04666547669414744"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/execution_retention_verification.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/execution_retention_verification.json",
+      "role": "provenance",
+      "sha256": "1ff8da663fba8792f57b402a908ec2a157208beba28d3e7c85dc1f0dcd81ce1c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/mechanical_resistance.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/mechanical_resistance.json",
+      "role": "provenance",
+      "sha256": "44a51ce041154b1072943952e1087269cba394db32b2d1bcf1b3d6cdf0ea42cf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/native_resistance.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/native_resistance.json",
+      "role": "provenance",
+      "sha256": "e94a6372630d15ad4b8ef130cb400a93385da06d8e60f91de7f2104b048f733b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/gptrans/role_plan.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/gptrans/role_plan.json",
+      "role": "provenance",
+      "sha256": "ebb38312696d5f07280118def14b6df6287275386b5652bb1a575a653a4c62ca"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "role": "provenance",
+      "sha256": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analysis_summary.json",
+      "role": "provenance",
+      "sha256": "4f67c46662e88c77d4a180ce86eff5db41c58bb106643b2ceb32df867690cfea"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py",
+      "role": "provenance",
+      "sha256": "6babde0ccbdff02b81b9682439a5efbc61d062d495182439baaa718727341122"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+      "role": "provenance",
+      "sha256": "f6d24431c491e8479e9b3edeae5127ef149724f7c7800679fdaffb078418702c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+      "role": "provenance",
+      "sha256": "e66136800f7b7fdf48dbe60a069617e12ccf64c198a651ca1a39b1907955a588"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/development_curves.png",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/development_curves.png",
+      "role": "provenance",
+      "sha256": "a69e7ab5b4372c2d605890813a819788daa2d7a0d193c11c5314543bf219f484"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/artifact_retention_bond_local.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/artifact_retention_bond_local.json",
+      "role": "provenance",
+      "sha256": "f8225c7fb004244cabe1a3418014d95582a7638988010362bb877c40ec84f872"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/artifact_retention_resistance.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/artifact_retention_resistance.json",
+      "role": "provenance",
+      "sha256": "4b469eceb7a17ca79bb121d5ff00f6620e2823d2b26eb0729c34f728226f6e1f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/allocation_costs.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/allocation_costs.json",
+      "role": "provenance",
+      "sha256": "593b8ef1c010dcdffaeec6be4b4095e4e73f1bb1ab15f98eb9676065a8d7a8e6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/allocation_ledger.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/allocation_ledger.json",
+      "role": "provenance",
+      "sha256": "84bdba5036a2bcc8021337fc438759139c666770aa1bd7284af58bfd1024094a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/canonical_trace.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/canonical_trace.json",
+      "role": "trace",
+      "sha256": "e8692727f1ef4583b875addf9fdec20308e802a97460bf89da3f04ee7e8ced66"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/canonical_trace.json.context.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/canonical_trace.json.context.json",
+      "role": "provenance",
+      "sha256": "d9ae8240e8196f06c8010873baebdc65c951de32dc0fe70c50d6f3a4fbf3db56"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/development_predictions.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/development_predictions.pt",
+      "role": "predictions",
+      "sha256": "41e431b1749af798e5a7c86de8d87875aa4b0de40ac4e88203ff296894b3c938"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/execution_profile_receipt.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/execution_profile_receipt.json",
+      "role": "provenance",
+      "sha256": "d45a0bfd09529c420a24c0adacf0485354fd8846a15cc63fcde37756cce16492"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/fill-enabled.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/fill-enabled.pt",
+      "role": "provenance",
+      "sha256": "ff7491f660f9345acc8841e6c81424bc61a9716b2a96638bd754cec17a70136f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/last_checkpoint.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/last_checkpoint.pt",
+      "role": "provenance",
+      "sha256": "9c3fa0f378278b5e3dbf61d1ceda27bd8962f41a07987b9d549a2541852131cc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/output_manifest.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/output_manifest.json",
+      "role": "provenance",
+      "sha256": "244b627877e7253a13f7e3a6d63f98e8f2b808738c711492268af9ac6fd1b595"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/preflight_costs.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/preflight_costs.json",
+      "role": "provenance",
+      "sha256": "507a8b7ba5e2a2c6f053b7fc7e746a48ac563d78b2b825eaaecde34f283c0051"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profile_qualification/profile.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profile_qualification/profile.json",
+      "role": "provenance",
+      "sha256": "e8b6b6188a58bb1c66963b24106bd295cadd20920ffa320b9fbaeab06e411155"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profile_qualification/trace.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profile_qualification/trace.json",
+      "role": "provenance",
+      "sha256": "166f0449ffde6ac80440ac5230f8c828d78c5c7f91f9a826e51e8d72d506833e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profiles/step_0_1792427984313941617/profile.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/profiles/step_0_1792427984313941617/profile.json",
+      "role": "provenance",
+      "sha256": "08caa88e1561757c4ca5ae45a2245f088a586223a9a1d75f643c17e58f01c202"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/repeat-a.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/repeat-a.pt",
+      "role": "provenance",
+      "sha256": "de9de2f5d7920c7c06c6ed79f38dd959d4239f7a2bf0eb2fc1ed2791c0c53ba6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/repeat-b.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/repeat-b.pt",
+      "role": "provenance",
+      "sha256": "800ed15ce32e9852148fec19290f858d4bd115a37959f7aeeebc630a677e68a5"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/resumed-first.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/resumed-first.pt",
+      "role": "provenance",
+      "sha256": "9bf056164c20f0e2b2321bd7efa05566e4ee3752ea28cfa89108115b9cde8495"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/resumed.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/resumed.pt",
+      "role": "provenance",
+      "sha256": "de9bfb88b9c0530ffc3d1ee4781be0df13d70ffb8e64c962604584c6ee9d4e30"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/runtime_certificate.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/runtime_certificate.json",
+      "role": "provenance",
+      "sha256": "07e2fcdaeef39ffd3b7ab9b6648b893911896059697fd1dcff3401438252bf7e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/runtime_provenance.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/runtime_provenance.json",
+      "role": "provenance",
+      "sha256": "c49f5486304bec6bf9db1c35bda4e80cc565121a59a6ec40e687c0a028dd3a0d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/selected_model.pt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/selected_model.pt",
+      "role": "checkpoint",
+      "sha256": "32b0542c479a2705e13a919c33ccf400891843d8f44cb6691227215cc27a72df"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/training_contract.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/training_contract.json",
+      "role": "provenance",
+      "sha256": "7fab01952d61c10dad423922a140d87e01f787cbb98d7febbec116785ccef685"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/training_progress.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/training_progress.json",
+      "role": "provenance",
+      "sha256": "2476943f4ae79e8a0b0c501214303a2aa76a69d423859fcc7ad89e337d60a178"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/formal_profile_metadata_retention_bond_local.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/formal_profile_metadata_retention_bond_local.json",
+      "role": "provenance",
+      "sha256": "1895d72f89e643bfa431637210df2cfa032951f4ec1be5b60c25c2cb4279fdb4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/formal_profile_metadata_retention_resistance.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/formal_profile_metadata_retention_resistance.json",
+      "role": "provenance",
+      "sha256": "114d1fd2da809ca4c3dfa303e56e80914585a3347acbba6ea53a2e1a4cdd314c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/allocation_entry_observation.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "3619271cfb972aa69d619b9ef712505b51a8939ae8edcf5ae0f0f0a32af68e5c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/allocation_ledger.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/allocation_ledger.json",
+      "role": "provenance",
+      "sha256": "84bdba5036a2bcc8021337fc438759139c666770aa1bd7284af58bfd1024094a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/execution_report.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/execution_report.json",
+      "role": "provenance",
+      "sha256": "f1b3bb122789045e9d15ef27365ed9d48dc1e2b8a8a83fadb385dca05ac2907d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/execution_retention.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/execution_retention.json",
+      "role": "provenance",
+      "sha256": "cf172c177df19be616192179fc0f99f9e95a3f110e3aa3a82ca967d64c94ef74"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/input_resolution.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/input_resolution.json",
+      "role": "provenance",
+      "sha256": "eed9ebec0bf5efeb461138ef12db19552d0a20d448a5183c9dc12457759ea768"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/pair_state.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata/experiment/pair_state.json",
+      "role": "provenance",
+      "sha256": "f1b3bb122789045e9d15ef27365ed9d48dc1e2b8a8a83fadb385dca05ac2907d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata_retention.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/metadata_retention.json",
+      "role": "provenance",
+      "sha256": "a0f62fff2b6c562f4e4a662bb38e4b28b8b1ec7795eb451d964a3e47a40bae87"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/qualification_metadata_retention.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/qualification_metadata_retention.json",
+      "role": "provenance",
+      "sha256": "f59d1cc4daa39219d64a56727a4cb39255b5a777cc84cde5eda6aa725ef90bbc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/kernel_metadata.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/kernel_metadata.json",
+      "role": "provenance",
+      "sha256": "c587bb0b8a98591870e7925b21aee3a56ecec2b6ed1576f3dd3fd86940da27d0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/kernel_source.py",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/kernel_source.py",
+      "role": "provenance",
+      "sha256": "00841ccf7a694dec8971da5cc9e34f94332fd08ccb3795873becb53b41450c28"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/observation.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/reconciliation/observation.json",
+      "role": "provenance",
+      "sha256": "5944f496bd5eea0b436d32ef06b0d6871f9043ee5cbd8bd1cd00b29cad94863f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/experiment_spec.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/experiment_spec.json",
+      "role": "provenance",
+      "sha256": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/package_manifest.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/package_manifest.json",
+      "role": "provenance",
+      "sha256": "cafbd496dc87b45a155524c6e84d1f4535ee9bb40897a26fcd12ca1bfec362f9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/source.tar.gz",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/source.tar.gz",
+      "role": "provenance",
+      "sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_ARCHIVE_SHA256.txt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_ARCHIVE_SHA256.txt",
+      "role": "provenance",
+      "sha256": "fc1922447a78a292e88cf4e6062be92e30f61b117ebc9dd53baf60d5189e5c84"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_COMMIT.txt",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_COMMIT.txt",
+      "role": "provenance",
+      "sha256": "42fff3ee3c991c31a31274a6996514254258e1a6b2d97508928eacce2742cb61"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_FILES.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/source_package/SOURCE_FILES.json",
+      "role": "provenance",
+      "sha256": "ad1e159b176ab899e00cd6d0c25b96f73c43e8fa097e0b968787e7dc505ea2a4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/trace_context_profile_receipt_retention.json",
+      "name": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/trace_context_profile_receipt_retention.json",
+      "role": "provenance",
+      "sha256": "565ee30c1f55e873b459e7f67602179837f9e8f103468bcd827046ada6816542"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/decision.md",
+      "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/attribution.md",
+      "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/acceptance_resistance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-20T14:14:59.938152+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local ingestion of accepted remote training evidence; no local training or inference"
+  },
+  "observed_execution": {
+    "completed_passes": 60,
+    "development_evaluation_executed": true,
+    "development_gap_mae_eV": 0.14174266690194606,
+    "execution_ref": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/output_manifest.json",
+    "local_inference_executed": false,
+    "local_training_executed": false,
+    "next_batch": 0,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080,
+    "selected_pass": 45,
+    "selected_step": 35145,
+    "selected_weights": "ema",
+    "status": "complete",
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "locally_retained_hash_verified",
+    "budget_decision": "observed_python_window_below_platform_session_limit",
+    "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+  "source_identity": {
+    "arms": [
+      {
+        "arm_id": "bond_local",
+        "arm_identity": "9d72e1af814011f8039f865a6c50ec467fe20fd384c69acceb1755c857c9fced"
+      },
+      {
+        "arm_id": "resistance",
+        "arm_identity": "3a84fcebe01eb257650a89918bc1331be5ab4b886f4a4043b4fc2963b86fb207"
+      }
+    ],
+    "experiment_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "kernel_id": 139648367,
+    "logical_run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+    "producer_platform_version": null,
+    "reconciled_platform_version": 1,
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+    "spec_identity": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+    "spec_sha256": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97"
+  },
+  "strict_replay_ready": false,
+  "track": "B"
+}

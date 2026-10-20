@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 121,
+    "trajectories_total": 129,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 110,
-    "with_incomplete_native_measurement": 86,
+    "with_cost_event": 118,
+    "with_incomplete_native_measurement": 94,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 84,
+      "count": 88,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -90,6 +90,10 @@
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
@@ -133,7 +137,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 86,
+      "count": 94,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -211,6 +215,14 @@
         "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2",
         "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada",
         "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -244,7 +256,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 40,
+      "count": 44,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -276,6 +288,10 @@
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
+        "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
+        "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",

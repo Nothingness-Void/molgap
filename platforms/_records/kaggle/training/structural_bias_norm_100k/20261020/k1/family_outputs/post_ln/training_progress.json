@@ -1,0 +1,28 @@
+{
+  "format": "molgap-training-log-v1",
+  "event": "epoch",
+  "arm_id": "post_ln",
+  "family": "neural_atom_k1",
+  "weight_state": "live",
+  "status": "complete",
+  "completed_passes": 40,
+  "planned_passes": 40.0,
+  "next_batch": 0,
+  "optimizer_steps": 31240,
+  "planned_optimizer_steps": 31240,
+  "sample_presentations": 3998720,
+  "train_live_mae_eV": 0.09555164514116223,
+  "development_mae_eV": 0.1463593989610672,
+  "best_development_mae_eV": 0.14600591361522675,
+  "metric_pass": 40,
+  "best_metric_pass": 36,
+  "learning_rates": [
+    1e-06
+  ],
+  "elapsed_seconds": 5613.3754281989995,
+  "updates_per_second": 5.565278930581536,
+  "eta_seconds": 0.0,
+  "pass_wall_seconds": 132.73607988299955,
+  "pass_timing_scope": "full_pass",
+  "checkpoint_optimizer_steps": 31240
+}
