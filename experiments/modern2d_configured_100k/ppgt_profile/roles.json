@@ -1,0 +1,11 @@
+{
+  "purpose": "EXECUTION_PROFILE_ONLY",
+  "roles_opened": ["train_100k"],
+  "uses": {"train_100k": "six-scratch-updates-and-execution-attribution"},
+  "common_dev_payload_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "protected_role_access_authorized": false,
+  "input_authority_ref": "experiments/modern2d_100k_formal_screen/retry_v2/role_plan.json",
+  "metadata_scope": "Retain original permits, target and feature identity metadata only; do not open Common-Dev payload."
+}

@@ -1,0 +1,31 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_EXECUTION_PROFILE",
+  "user_authorized": true,
+  "scientific_training_authorized": false,
+  "logical_run_id": "ppgt-execution-profile-s42-v1",
+  "arms": ["ppgt_author_v2"],
+  "interfaces": [["ppgt_small", "3"]],
+  "seeds": [42],
+  "physical_batch_size": 128,
+  "roles": ["train_100k", "common_dev"],
+  "scratch_optimizer_updates_per_model": 6,
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 1,
+  "single_arm_reason": "Only the unchanged PPGT implementation is profiled; no second scientific experiment is authorized. Both allocated T4s count toward cost.",
+  "recipes": {"ppgt_author_v2": {"horizon_passes": 60, "horizon_steps": 46860}},
+  "run_reference": "kaseichou/molgap-ppgt-execution-profile-v1",
+  "gpu": {
+    "owner": "kaseichou",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 1800,
+    "allocated_t4_hours_ceiling": 1
+  },
+  "authorization_basis": "Human request2026-10-20 to profile PPGT and identify why execution is slow; bounded scratch profiling only, not another formal screen or500K training."
+}
