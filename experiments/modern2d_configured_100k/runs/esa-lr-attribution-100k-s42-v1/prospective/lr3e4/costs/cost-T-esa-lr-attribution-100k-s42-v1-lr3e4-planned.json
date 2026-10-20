@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "lr3e4-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-esa-lr-attribution-100k-s42-v1-lr3e4-planned",
+  "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+  "hardware": "NvidiaTeslaT4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 16
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 8
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+}

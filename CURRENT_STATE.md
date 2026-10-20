@@ -6,6 +6,18 @@
 
 ## Server execution status
 
+The human authorized a three-slot Modern2D attribution campaign including the
+separately bound PPGT short profile. Two [ESA notebooks](experiments/modern2d_configured_100k/esa_attribution/protocol.md)
+were submitted once: Kaggle2 LR kernel139862234/version1 and Kaggle3 WD
+kernel139862322/version1, both observed QUEUED. Four independent seed42/BS128/
+FP32 arms retain60 passes and accepted identical100K/Common-Dev inputs; each
+notebook is bounded8h/16 allocated T4-hours. Native repeat/resume and short
+in-training profiler windows are required. The same Luna B/30-minute heartbeat
+monitors all three exact bindings and stays silent while healthy. A terminal
+job does not pause remaining jobs. No500K/full/extra seed/protected-role release
+or automatic successor follows. Producer endpoints, scientific results and
+Replay remain pending, not implied by submission.
+
 The [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
 ended ERROR/STOP_FOR_COST; Luna delivered the terminal event and paused its
 existing heartbeat. Both preflights passed remotely but neither60-pass endpoint

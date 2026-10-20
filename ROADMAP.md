@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+|1 | C-ESA-ATTRIBUTION | Accept the paired [ESA LR and WD screens](experiments/modern2d_configured_100k/esa_attribution/protocol.md), profiling, curves and exact role/cost/terminal evidence. | Four seed42 arms, one shared reference,60 passes; each slot8h/16T4h; no forced Replay or automatic scale/successor |
 |1 | C-MODERN2D-CONFIGURED | Existing Luna B monitors the separately authorized [repaired profile retry](experiments/modern2d_configured_100k/ppgt_profile/retry_v2/STATUS.md); A accepts exact native/profile/repeat/resume/role/cost evidence at terminal. | Six train-only scratch updates within1800 seconds/1 allocated T4-hour; no formal continuation,500K, automatic retry/successor or forced Replay |
 | 1 | C-WORKFLOW-DAILY-USE | Human authorized a [32-update mature K1/GPTrans-T trial](experiments/family_workflow_trial_100k/STATUS.md) through the new front door. | Real submission, first update, independent checkpoint/output inspection and storage census; train-only fixed100K, T4x2 at most1800s/1T4h, no automatic retry or quality ranking |
 | — | C-MODERN2D-REFERENCE | Human canceled the single reconciled retry; exact version acknowledged cancellation. | Preserve [cancellation evidence](experiments/modern2d_100k_formal_screen/retry_v2/results/cancellation_2026-10-18.md), recover any available outputs and retain missing cost/progress explicitly; no resume or automatic retry; no architecture-negative verdict |

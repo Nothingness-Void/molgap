@@ -1,0 +1,26 @@
+{
+  "format": "molgap-esa-attribution-submission-v1",
+  "spec_identity": "dc2406a4ff36aecb96c65841e608d804bdd61f7134168f67efc898b8b1db3203",
+  "package_identity": "af7c4fec3d9b4fd6470b2a514bb4e4369f7fa6acd2fff4ef18971366ff484a79",
+  "source_commit": "ed4ade246a6a33df8e5eea18b99836fbe9b965a8",
+  "source_archive_sha256": "b417fae585c862d12adf3fde4f39b1f7801d2fdaf03baed4a33910f7270bfdfe",
+  "kernel": "nvoid912/molgap-esa-wd-attribution-100k-v1",
+  "kernel_id": 139862322,
+  "version": 1,
+  "gpu_post_count": 1,
+  "status": "SUBMISSION_BOUND",
+  "scheduler_status": "KernelWorkerStatus.QUEUED",
+  "scheduler_observed_at": "2026-10-21T02:23:08.842265+09:00",
+  "private": true,
+  "entry_bytes_equal": true,
+  "entry_sha256": "2dd6165d6c5b4e6e7af9dccd5207224d8f9a872ae0c5ad274fc462894c2eac13",
+  "dataset_sources": [
+    "nvoid912/molgap-modern2d-100k-commondev-v1",
+    "nvoid912/molgap-esa-wd-source-v1"
+  ],
+  "receipt_identity": "b08d8bb86da1044d56be2815d1eb0d6a81881fc7fc4d1778da10e380644a1158",
+  "operations_directory": "E:/MolGap/artifacts/runs/esa-wd-attribution-100k-s42-v1/v1/operations",
+  "native_qualification": "PENDING",
+  "scientific_acceptance": "PENDING",
+  "replay_ready": false
+}

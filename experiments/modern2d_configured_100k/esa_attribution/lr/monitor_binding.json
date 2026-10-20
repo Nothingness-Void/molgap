@@ -1,0 +1,26 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "kaseichou",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "jobs": [
+    {
+      "slot": "esa-lr-attribution",
+      "kernel": "kaseichou/molgap-esa-lr-attribution-100k-v1",
+      "kernel_id": 139862234,
+      "version": 1,
+      "closed": false,
+      "control_state": "E:/MolGap/artifacts/runs/esa-lr-attribution-100k-s42-v1/v1/monitor/control_state.json",
+      "output_directory": "E:/MolGap/artifacts/runs/esa-lr-attribution-100k-s42-v1/v1/inspection"
+    }
+  ],
+  "run_directory": "E:/MolGap/artifacts/runs/esa-lr-attribution-100k-s42-v1/v1",
+  "source_commit": "ed4ade246a6a33df8e5eea18b99836fbe9b965a8",
+  "package_identity": "3011a55927643a31e1f2038a01d80fbfb1083d32a04d54229e3e91022c631f58",
+  "authority_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+  "comparison_scope": "CONTEXT_ONLY_OPTIMIZATION_ATTRIBUTION",
+  "successor_authorized": false,
+  "automatic_retry_authorized": false
+}
