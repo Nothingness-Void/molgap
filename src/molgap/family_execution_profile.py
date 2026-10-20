@@ -8,6 +8,7 @@ from __future__ import annotations
 from contextlib import ExitStack, contextmanager
 from dataclasses import asdict, dataclass
 from functools import wraps
+import os
 from pathlib import Path
 import threading
 import time
@@ -131,6 +132,7 @@ class _ExecutionCapture:
         self._thread = None
         self._train_spans = []
         self._span = None
+        self._finalization_error = None
 
     def _after_update(self):
         self._updates += 1
@@ -313,7 +315,18 @@ class _ExecutionCapture:
         finally:
             self._prof.__exit__(None, None, None)
         self._events = list(self._prof.events())
-        self._prof.export_chrome_trace(str(self.output / "trace.json"))
+        destination = self.output / "trace.json"
+        temporary = destination.with_suffix(".json.tmp")
+        try:
+            self._prof.export_chrome_trace(str(temporary))
+            os.replace(temporary, destination)
+        except BaseException as error:
+            # Incomplete exports must not look like hash-verifiable final traces.
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as cleanup_error:
+                error.add_note("Partial trace cleanup also failed: " + repr(cleanup_error))
+            raise
 
     def __enter__(self):
         import torch
@@ -366,6 +379,7 @@ class _ExecutionCapture:
         self.report = {"format": "molgap-family-execution-profile-v1",
             "status": "ERROR" if error else "COMPLETE" if completed else "PARTIAL",
             "error": None if error is None else {"type": type(error).__name__, "message": str(error)},
+            "finalization_error": self._finalization_error,
             "recipe_identity": self.session.recipe.identity, "family": self.session.recipe.family,
             "config": asdict(self.config), "starting_optimizer_step": self._start_step,
             "observed_updates": self._updates, "captured_updates": self._captured,
@@ -404,8 +418,17 @@ class _ExecutionCapture:
 
     def __exit__(self, exc_type, error, traceback):
         try:
-            self._finish_capture()
-            self._report(error)
+            finalization_error = None
+            try:
+                self._finish_capture()
+            except BaseException as diagnostic_error:
+                finalization_error = diagnostic_error
+                self._finalization_error = {"type": type(diagnostic_error).__name__,
+                    "message": str(diagnostic_error)}
+            # Retain the error summary even when publishing the large trace failed.
+            self._report(error if error is not None else finalization_error)
+            if finalization_error is not None:
+                raise finalization_error
         except BaseException as diagnostic_error:
             if error is None:
                 raise

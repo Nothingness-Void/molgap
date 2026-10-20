@@ -93,6 +93,72 @@ def test_failed_checkpoint_propagates_and_restores_instrumentation(tmp_path):
         replacement.run(should_pause=lambda: True)
 
 
+def test_trace_is_published_only_after_complete_export(tmp_path, monkeypatch):
+    from pathlib import Path
+    from molgap.training_reproducibility import sha256_file
+
+    observed = session()
+    root = tmp_path / "atomic-profile"
+    original_export = torch.profiler.profile.export_chrome_trace
+    exports = []
+
+    def export(profiler, path):
+        assert Path(path) == root / "trace.json.tmp"
+        assert not (root / "trace.json").exists()
+        original_export(profiler, path)
+        assert Path(path).is_file()
+        assert not (root / "trace.json").exists()
+        exports.append(path)
+
+    monkeypatch.setattr(torch.profiler.profile, "export_chrome_trace", export)
+    with FamilyExecutionProfiler(observed, root, ProfileConfig(0, 1)) as profile:
+        observed.run(should_pause=lambda: True)
+    assert len(exports) == 1
+    assert not (root / "trace.json.tmp").exists()
+    assert profile.report["status"] == "COMPLETE"
+    assert profile.report["trace_sha256"] == sha256_file(root / "trace.json")
+    assert profile.report["finalization_error"] is None
+    observed.close()
+
+
+@pytest.mark.parametrize("body_fails", [False, True])
+def test_trace_export_failure_retains_error_summary_and_restores_owner(tmp_path, monkeypatch, body_fails):
+    from pathlib import Path
+    from molgap import family_execution_profile as module
+
+    observed = session()
+    root = tmp_path / "failed-export"
+    export_error = OSError("synthetic trace export fault")
+    body_error = RuntimeError("synthetic caller fault")
+    model_keys = set(vars(observed.kernel.model))
+    kernel_keys = set(vars(observed.kernel))
+
+    def fail_export(profiler, path):
+        Path(path).write_bytes(b"incomplete trace")
+        raise export_error
+
+    monkeypatch.setattr(torch.profiler.profile, "export_chrome_trace", fail_export)
+    with pytest.raises(RuntimeError if body_fails else OSError) as caught:
+        with FamilyExecutionProfiler(observed, root, ProfileConfig(0, 1)) as profile:
+            observed.run(should_pause=lambda: True)
+            if body_fails:
+                raise body_error
+    assert caught.value is (body_error if body_fails else export_error)
+    assert not (root / "trace.json").exists()
+    assert not (root / "trace.json.tmp").exists()
+    report = json.loads((root / "profile.json").read_text())
+    assert report["status"] == "ERROR"
+    assert report["trace_sha256"] is None
+    assert report["error"]["message"] == str(caught.value)
+    assert report["finalization_error"]["message"] == str(export_error)
+    assert set(vars(observed.kernel.model)) == model_keys
+    assert set(vars(observed.kernel)) == kernel_keys
+    assert not module._OWNER.locked()
+    if body_fails:
+        assert any("synthetic trace export fault" in note for note in body_error.__notes__)
+    observed.close()
+
+
 def test_invalid_module_and_existing_output_do_not_leave_wrappers(tmp_path):
     observed = session()
     original = torch.autograd.backward
