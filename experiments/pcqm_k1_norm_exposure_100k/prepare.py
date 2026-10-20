@@ -38,7 +38,7 @@ def write(path, value):
 
 
 def run_id(pair):
-    return "pcqm-k1-ln-" + pair + "-160ep-100k-s42-20261021"
+    return "pcqm-k1-ln-" + pair + "-160ep-100k-s42-20261021-release1"
 
 
 def contracts():
@@ -50,7 +50,7 @@ def contracts():
         raise ValueError("Fixed data manifest differs")
     inspect_frozen_state_artifact(INITIAL, expected_state_sha256=facts["initialization_sha256"])
     for pair, choices in PAIRS.items():
-        dest, run = REL + "/" + pair, run_id(pair)
+        dest, run = REL + "/" + pair + "_release1", run_id(pair)
         if (ROOT / dest / "authority.json").exists():
             raise ValueError("Contracts already declared; preserve frozen inputs")
         roles = deepcopy(prior["data"]["roles"])
@@ -97,7 +97,7 @@ def plans():
     timestamp = datetime.now(timezone.utc).isoformat()
     manifest_path = str(Path(json.loads(PROFILE.read_bytes())["data_root"]) / "pcqm_fixed_100k_v1/manifest.json")
     for pair, choices in PAIRS.items():
-        dest, run = REL + "/" + pair, run_id(pair)
+        dest, run = REL + "/" + pair + "_release1", run_id(pair)
         roles = json.loads((ROOT / dest / "role_plan.json").read_bytes())["roles"]
         question = ExecutionQuestion(run, "RUN_PAIRED_100K",
             "Does LN catch up with BN over160 passes under a matched long cosine schedule?" if pair == "norm" else
@@ -154,7 +154,7 @@ def plans():
             same_run_replay={"reference_arm_id": choices[0][0], "candidate_arm_ids": [choices[1][0]]})
         workflow = json.loads((ROOT / dest / "workflow_plan.json").read_bytes())
         workflow.pop("source_files")
-        workflow.update(source_profile="runtime-v1", source_records=[dest + "/authority.json", *extras, dest + "/acceptance_plan.json"])
+        workflow.update(source_profile="runtime-v1", source_records=[dest + "/authority.json", *extras])
         write(dest + "/workflow_plan.json", workflow)
         write(dest + "/input.json", {"format": "molgap-experiment-input-v1", "spec_ref": dest + "/experiment_spec.json",
             "workflow_ref": dest + "/workflow_plan.json", "machine_profile": str(PROFILE),

@@ -1,0 +1,13 @@
+{
+  "status": "LOCAL_ADMISSION_REJECTED_BEFORE_PACKAGING_OR_RML",
+  "reason": "Declaration included the newly generated untracked acceptance plan among committed runtime source records. The existing runtime distribution guard correctly rejected it.",
+  "remote_submission_attempted": false,
+  "training_executed": false,
+  "original_frozen_input_directory": "D:/molgap-artifacts/runs/pcqm-k1-ln-norm-160ep-100k-s42-20261021/v1/inputs",
+  "correction": "Use the acceptance owner staging path, not a runtime source record. Declare fresh release1 logical identities; original local draft/frozen inputs are preserved.",
+  "published_RML": false,
+  "draft_paths": [
+    "norm",
+    "optimization"
+  ]
+}
