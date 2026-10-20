@@ -8,6 +8,174 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "not_evaluated_no_training",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "untouched"
+      },
+      "scientific_scope": "Desktop original bootstrap failure before arm dispatch",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/gptrans/rml/bond_local/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/bond_local/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "not_evaluated_no_training",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-resistance-bootstrap-terminal",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "untouched"
+      },
+      "scientific_scope": "Desktop original bootstrap failure before arm dispatch",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/gptrans/rml/resistance/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/resistance/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "not_evaluated_no_training",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-bootstrap-terminal",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "untouched"
+      },
+      "scientific_scope": "Desktop original bootstrap failure before arm dispatch",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/k1/rml/post_bn/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/rml/post_bn/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "not_evaluated_no_training",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-bootstrap-terminal",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "untouched"
+      },
+      "scientific_scope": "Desktop original bootstrap failure before arm dispatch",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/k1/rml/post_ln/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_job_paired_endpoint_frozen_material_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "Desktop-owned frozen100K same-family pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/rml/post_ln/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "paired_endpoint_frozen_gate",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

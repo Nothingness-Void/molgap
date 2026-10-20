@@ -1,0 +1,31 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-resistance-100k-s42-20261020-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
+  "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_bond_local/acceptance.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.13256724369944445
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.06628362184972222
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "pcqm-gptrans-resistance-100k-s42-20261020:bond_local:downstream",
+  "schema": "molgap-cost-event-v1",
+  "scope": "Shared bootstrap debit accounted once on reference; no separately observed candidate worker cost",
+  "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local"
+}

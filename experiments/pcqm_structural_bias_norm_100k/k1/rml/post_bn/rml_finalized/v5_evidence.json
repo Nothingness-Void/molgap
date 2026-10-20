@@ -1,0 +1,152 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_post_bn/acceptance.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_post_bn/acceptance.json",
+      "role": "provenance",
+      "sha256": "39fe56d514d108e3b167822cf3a73d488d9997caff8d1c6151adcde92e29b9a0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "role": "provenance",
+      "sha256": "cc1093862353684f9b4aa6bf89c6a9f58ead45ed690c7b79c6e4a042e8e9db80"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+      "role": "provenance",
+      "sha256": "a1b7d92127106f81f4608b5f150d93441194d7b9ef63d77aa8e014dc025b5b11"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "name": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "role": "provenance",
+      "sha256": "092d25bfbdcddef7e3354a22605a9e92851e548a979761ac32e7197983d1299f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/experiment_spec.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/experiment_spec.json",
+      "role": "provenance",
+      "sha256": "360f456f53f0086f8008f5c0229b6524eb232245c0d3cddc8be34cdad00de41a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/authority.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/authority.json",
+      "role": "provenance",
+      "sha256": "bd3a7de3128e658296af319fd7645a16419d95e9db5cad349e38e223550d1acc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/submission/launch_receipt.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/submission/launch_receipt.json",
+      "role": "provenance",
+      "sha256": "edeb866a0403a35063a2b2c0e6250ce68919eb808dc6bf0aaef24142566a1859"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/submission/source_verification.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/submission/source_verification.json",
+      "role": "provenance",
+      "sha256": "8346e643c6ae2a2a8ad70a00a811eb8e2f0b9dddb63f8debd4cab78a0eb1a2e1"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/allocation_entry_observation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "cb5d4c766a5c48eabf1757692d880d03c930cccc5b552bba4a89a8a599f0d534"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/input_resolution.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/input_resolution.json",
+      "role": "provenance",
+      "sha256": "0e56b46f082e1e128af9c0c56325596f6b0c4c7a761abf0ce920f80ba543fc19"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/retrieval.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/retrieval.json",
+      "role": "provenance",
+      "sha256": "b226c6cb2ec4c469bb4dc86742329c9c90b76faafc71064cc3d52b7df2002efa"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_reconciliation.json",
+      "name": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_reconciliation.json",
+      "role": "provenance",
+      "sha256": "7cbf183448b74ae4356b6566191b4d9745d56064b0a23d82636f02fa4d0c0f76"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+      "experiments/pcqm_structural_bias_norm_100k/failure_v1.md",
+      "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_post_bn/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-bootstrap-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-post-ln-100k-s42-20261020",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-20T14:22:50.285305+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Exact source/version and pre-dispatch error; no model execution"
+  },
+  "observed_execution": {
+    "development_evaluation_executed": false,
+    "formal_training_exposure": 0,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "retained_bootstrap_failure_metadata",
+    "budget_decision": "shared_bootstrap_debit_with_attribution_limits",
+    "comparison_status": "not_evaluated_no_training",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "untouched"
+  },
+  "scope": "Desktop original bootstrap failure before arm dispatch",
+  "source_identity": {
+    "arms": [
+      {
+        "arm_id": "post_bn",
+        "arm_identity": "5709452734f90ef030d5921df933d9eb60f9f113c549f00f9eda729f0a6446f8"
+      },
+      {
+        "arm_id": "post_ln",
+        "arm_identity": "853493efbde3849b9d4c2a72998d93b8b58c64fb6db886d6dac697e6e554b130"
+      }
+    ],
+    "experiment_id": "pcqm-k1-post-ln-100k-s42-20261020",
+    "kernel_id": 139639058,
+    "logical_run_id": "pcqm-k1-post-ln-100k-s42-20261020",
+    "package_identity": "aa2cfd0a5912fc29b4154ff34f9616a6150ca5b9e03edcbb8dab1fff8db4242c",
+    "platform_version": 1,
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "d02d522f8a211ebe8065a2b9535e88669bc3782aa5871c2fe09657608918fa9b",
+    "source_commit": "1b8c7b5c8b5e7f51738fb35b5bcce76876506d3f",
+    "spec_identity": "1801d982b80e2e40dec623b3a1fc53d57632314ace270ab6c17144da889d763b",
+    "spec_sha256": "1801d982b80e2e40dec623b3a1fc53d57632314ace270ab6c17144da889d763b"
+  },
+  "strict_replay_ready": false,
+  "track": "B"
+}

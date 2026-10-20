@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 10,
-    "excluded": 27,
+    "excluded": 31,
     "status": "available"
   },
   "cost": {
@@ -2724,7 +2724,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 13
+          "unknown_records": 21
         },
         "device_hours": {
           "estimated": {
@@ -2732,11 +2732,11 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 11,
-            "known_total": 48.53417041207055
+            "known_records": 17,
+            "known_total": 57.32707513646888
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "queue_hours": {
           "estimated": {
@@ -2748,7 +2748,7 @@
             "known_total": null
           },
           "not_applicable_records": 9,
-          "unknown_records": 15
+          "unknown_records": 23
         },
         "wall_hours": {
           "estimated": {
@@ -2756,11 +2756,11 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 15,
-            "known_total": 54.216560059226936
+            "known_records": 21,
+            "known_total": 62.87874740595415
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 3
         }
       },
       "Z100SM DCU": {
@@ -3064,17 +3064,17 @@
         }
       }
     },
-    "unknown_events": 222
+    "unknown_events": 230
   },
   "evidence": {
-    "validated": 109,
+    "validated": 117,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 92,
+      "count": 88,
       "severity": "INFO"
     },
     {
@@ -3094,30 +3094,30 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 48,
+      "count": 44,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 20,
+      "count": 12,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 522,
-    "explicit_events": 313,
+    "coarse_historical": 562,
+    "explicit_events": 337,
     "repeatedly_selected": 22
   },
-  "source_digest": "586ca17c192ea998aced8bb92916da3926ce7d86a52486d15c19076a887b9907",
+  "source_digest": "41aae4ae042afc0c38f40c88b67999329178d06e8ca622313a7110282d833d25",
   "trajectories": {
     "count": 129,
     "outcomes": {
-      "ACTIVE": 9,
-      "CLOSED": 13,
+      "ACTIVE": 1,
+      "CLOSED": 15,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 7,
-      "NEGATIVE_UNDER_CONTRACT": 25,
-      "NO_TRAIN": 44,
+      "NEGATIVE_UNDER_CONTRACT": 27,
+      "NO_TRAIN": 48,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

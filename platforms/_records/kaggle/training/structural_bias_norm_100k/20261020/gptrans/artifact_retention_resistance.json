@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "allocation_costs.json",
+      "sha256": "593b8ef1c010dcdffaeec6be4b4095e4e73f1bb1ab15f98eb9676065a8d7a8e6",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "allocation_ledger.json",
+      "sha256": "84bdba5036a2bcc8021337fc438759139c666770aa1bd7284af58bfd1024094a",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "e8692727f1ef4583b875addf9fdec20308e802a97460bf89da3f04ee7e8ced66",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "41e431b1749af798e5a7c86de8d87875aa4b0de40ac4e88203ff296894b3c938",
+      "state": "RETAINED"
+    },
+    {
+      "path": "fill-enabled.pt",
+      "sha256": "ff7491f660f9345acc8841e6c81424bc61a9716b2a96638bd754cec17a70136f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "9c3fa0f378278b5e3dbf61d1ceda27bd8962f41a07987b9d549a2541852131cc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "244b627877e7253a13f7e3a6d63f98e8f2b808738c711492268af9ac6fd1b595",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "preflight_costs.json",
+      "sha256": "507a8b7ba5e2a2c6f053b7fc7e746a48ac563d78b2b825eaaecde34f283c0051",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "profile_qualification/profile.json",
+      "sha256": "e8b6b6188a58bb1c66963b24106bd295cadd20920ffa320b9fbaeab06e411155",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "profile_qualification/trace.json",
+      "sha256": "166f0449ffde6ac80440ac5230f8c828d78c5c7f91f9a826e51e8d72d506833e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "repeat-a.pt",
+      "sha256": "de9de2f5d7920c7c06c6ed79f38dd959d4239f7a2bf0eb2fc1ed2791c0c53ba6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "800ed15ce32e9852148fec19290f858d4bd115a37959f7aeeebc630a677e68a5",
+      "state": "RETAINED"
+    },
+    {
+      "path": "resumed-first.pt",
+      "sha256": "9bf056164c20f0e2b2321bd7efa05566e4ee3752ea28cfa89108115b9cde8495",
+      "state": "RETAINED"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "de9bfb88b9c0530ffc3d1ee4781be0df13d70ffb8e64c962604584c6ee9d4e30",
+      "state": "RETAINED"
+    },
+    {
+      "path": "runtime_certificate.json",
+      "sha256": "07e2fcdaeef39ffd3b7ab9b6648b893911896059697fd1dcff3401438252bf7e",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "runtime_provenance.json",
+      "sha256": "c49f5486304bec6bf9db1c35bda4e80cc565121a59a6ec40e687c0a028dd3a0d",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "32b0542c479a2705e13a919c33ccf400891843d8f44cb6691227215cc27a72df",
+      "state": "RETAINED"
+    },
+    {
+      "path": "training_contract.json",
+      "sha256": "7fab01952d61c10dad423922a140d87e01f787cbb98d7febbec116785ccef685",
+      "state": "RETAINED"
+    },
+    {
+      "path": "training_progress.json",
+      "sha256": "2476943f4ae79e8a0b0c501214303a2aa76a69d423859fcc7ad89e337d60a178",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+  "platform_version_verified_by_output_api": true,
+  "receipt_version": 1,
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false
+}

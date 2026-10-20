@@ -1,0 +1,78 @@
+{
+  "adapter": "gptrans-session-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "1a4291738cfb8afcf3c1a668a211bf5398a64303b2b26791d26fe80eb87fae62"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "eb97a19b1cd64fd132fa065775c985d081989b73b23429dce19bf39994cfb2d8"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "db2c4ef1d1bf7cb6b19061a26f2f6445cb72b2792c5a15ffe0435089efb36295"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "2a274ca16874a83b32553af7ae09f5bd089e77a7601fc8d522601503d593dc06"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "2e0869c5256f600874a42be7f2025b0ce50e81fde5107d36ae76f45800ecf60b"
+    }
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "bond_local",
+    "arm_identity": "9d72e1af814011f8039f865a6c50ec467fe20fd384c69acceb1755c857c9fced",
+    "experiment_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2",
+    "package_identity": "0731c1c92fe9ba8c576182ee03f1881d48ac71a412cf78d16e1497a33b8b528e",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+    "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95",
+    "spec_identity": "8a781a43c51b6d870c0667c2aa0609d32d5cc3cc520781937b3dc6c81b027b97",
+    "training_recipe_sha256": "1a4291738cfb8afcf3c1a668a211bf5398a64303b2b26791d26fe80eb87fae62"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 9431.774742606
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "completed_passes": 60,
+    "next_batch": 0,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080,
+    "status": "complete"
+  },
+  "runtime": {
+    "account": "nothingnessvoid",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "4d94ba019618071a558fd5fd0e310f43f954cad0d53193ecaf65980f9bc76c07",
+    "source_archive_sha256": "64e8240b75cb8191b3c7b7ac75eabf42549b757412acfc8a07bc5d9b6e3d0e12",
+    "source_commit": "d6058bc57fc92b6bcb336ddac13fca6846ef4d95"
+  }
+}

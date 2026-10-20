@@ -14,17 +14,20 @@ per-notebook `authority.json`, `experiment_spec.json`, `workflow_plan.json` and
 `rml/` records. Shared code owns training, source packaging, native preflight,
 logging, resumable checkpoints, submission receipts and terminal inspection.
 
-See [status and exact submissions](STATUS.md). No model result is claimed here.
+See [terminal status](STATUS.md), [decision](terminal_acceptance/decision.md),
+[attribution](terminal_acceptance/attribution.md), and
+[acceptance closure](terminal_acceptance/closure.md). Both candidates close
+NEGATIVE_UNDER_CONTRACT. Four trained arms are finalized, with explicit strict
+replay exclusions; four original bootstrap failures are independently NO_TRAIN.
 
 `k1/attempt_002/` and `gptrans/attempt_002/` retain the explicitly authorized
 bootstrap retries, linked to the [original failure](failure_v1.md).
-`prepare_retry.py` declares only those retries through existing owners; it is
-not a replacement launcher or permission for further attempts. Published
-declarations and the original frozen releases must not be regenerated in place.
+Preparation wrappers are preserved in the archived source history. Published
+declarations and original frozen releases must not be regenerated in place.
 
 ## Local Preparation
 
-`prepare.py` generates only experiment declarations through existing APIs.
+The archived `prepare.py` generated experiment declarations through existing APIs.
 Run it after committing component source; it never submits or implements a
 trainer. Then use the infrastructure quickstart's `submit_workflow.py` with
 each generated `input.json`, explicit Kaggle1 credentials and `--execute`.

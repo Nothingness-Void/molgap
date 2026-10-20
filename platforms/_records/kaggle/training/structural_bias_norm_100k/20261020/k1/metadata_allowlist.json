@@ -1,0 +1,27 @@
+{
+  "estimated_total_bytes": 1048576,
+  "kernel": "nothingnessvoid/molgap-k1-postln-100k-s42-r2",
+  "paths": [
+    "experiment/post_bn/output_manifest.json",
+    "experiment/post_bn/runtime_certificate.json",
+    "experiment/post_bn/runtime_provenance.json",
+    "experiment/post_bn/canonical_trace.json",
+    "experiment/post_bn/training_progress.json",
+    "experiment/post_bn/allocation_costs.json",
+    "experiment/post_bn/preflight_costs.json",
+    "experiment/post_ln/output_manifest.json",
+    "experiment/post_ln/runtime_certificate.json",
+    "experiment/post_ln/runtime_provenance.json",
+    "experiment/post_ln/canonical_trace.json",
+    "experiment/post_ln/training_progress.json",
+    "experiment/post_ln/allocation_costs.json",
+    "experiment/post_ln/preflight_costs.json",
+    "experiment/pair_state.json",
+    "experiment/allocation_entry_observation.json",
+    "experiment/input_resolution.json",
+    "experiment/execution_retention.json"
+  ],
+  "per_file_max_bytes": 1048576,
+  "purpose": "four-arm terminal acceptance metadata only",
+  "version": 1
+}

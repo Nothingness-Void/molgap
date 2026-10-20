@@ -1,0 +1,307 @@
+{
+  "analysis_script": "analyze_saved_artifacts.py",
+  "bootstrap": {
+    "ci": "percentile 95% interval returned by the existing helper",
+    "delta": "candidate absolute error minus control absolute error",
+    "function": "molgap.router.paired_bootstrap_mean",
+    "interpretation": "Row bootstrap is not training-seed variance.",
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "computation_seconds": 4.297032999998919,
+  "development_curves": "development_curves.png",
+  "format": "molgap-structural-bias-norm-saved-analysis-v1",
+  "pairs": {
+    "gptrans": {
+      "arms": {
+        "bond_local": {
+          "absolute_error_quantiles_eV": {
+            "p50": 0.09236717224121094,
+            "p90": 0.32135100364685054,
+            "p95": 0.43645148277282675,
+            "p99": 0.7766063261032106
+          },
+          "arm_id": "bond_local",
+          "best_trace": {
+            "epoch": 52,
+            "metric_eV": 0.14286130666732788,
+            "optimizer_step": 40612
+          },
+          "completed_exposure": {
+            "completed_passes": 60,
+            "next_batch": 0,
+            "optimizer_steps": 46860,
+            "sample_presentations": 5998080,
+            "status": "complete"
+          },
+          "development_rows": 50000,
+          "final_trace": {
+            "epoch": 60,
+            "metric_eV": 0.14295192062854767,
+            "optimizer_step": 46860
+          },
+          "last_online_train_mae": {
+            "interpretation": "Online training metric; eV scaling is descriptive and is not a fixed-checkpoint training evaluation.",
+            "target_std_eV": 1.2750902063230574,
+            "unit": "normalized-Gap",
+            "value_eV_scaled_by_contract_target_std": 0.07443374346139776,
+            "value_normalized_gap": 0.05837527658222732
+          },
+          "mean_signed_error_eV": 0.0037383174461126326,
+          "selected_prediction_mae_eV": 0.14286130827367305,
+          "trailing_improvement": {
+            "last_10_epochs": {
+              "end_epoch": 60,
+              "end_metric_eV": 0.14295192062854767,
+              "improvement_eV": 7.297098636627197e-05,
+              "span_epochs": 10,
+              "start_epoch": 50,
+              "start_metric_eV": 0.14302489161491394
+            },
+            "last_5_epochs": {
+              "end_epoch": 60,
+              "end_metric_eV": 0.14295192062854767,
+              "improvement_eV": -3.664195537567139e-05,
+              "span_epochs": 5,
+              "start_epoch": 55,
+              "start_metric_eV": 0.142915278673172
+            }
+          }
+        },
+        "resistance": {
+          "absolute_error_quantiles_eV": {
+            "p50": 0.09284734725952148,
+            "p90": 0.3168221950531005,
+            "p95": 0.4287007093429558,
+            "p99": 0.7579173278808595
+          },
+          "arm_id": "resistance",
+          "best_trace": {
+            "epoch": 45,
+            "metric_eV": 0.14174267649650574,
+            "optimizer_step": 35145
+          },
+          "completed_exposure": {
+            "completed_passes": 60,
+            "next_batch": 0,
+            "optimizer_steps": 46860,
+            "sample_presentations": 5998080,
+            "status": "complete"
+          },
+          "development_rows": 50000,
+          "final_trace": {
+            "epoch": 60,
+            "metric_eV": 0.14228402078151703,
+            "optimizer_step": 46860
+          },
+          "last_online_train_mae": {
+            "interpretation": "Online training metric; eV scaling is descriptive and is not a fixed-checkpoint training evaluation.",
+            "target_std_eV": 1.2750902063230574,
+            "unit": "normalized-Gap",
+            "value_eV_scaled_by_contract_target_std": 0.07462378483678139,
+            "value_normalized_gap": 0.05852431809665604
+          },
+          "mean_signed_error_eV": 0.007317045139670372,
+          "selected_prediction_mae_eV": 0.14174266690194606,
+          "trailing_improvement": {
+            "last_10_epochs": {
+              "end_epoch": 60,
+              "end_metric_eV": 0.14228402078151703,
+              "improvement_eV": -2.1323561668395996e-05,
+              "span_epochs": 10,
+              "start_epoch": 50,
+              "start_metric_eV": 0.14226269721984863
+            },
+            "last_5_epochs": {
+              "end_epoch": 60,
+              "end_metric_eV": 0.14228402078151703,
+              "improvement_eV": 5.842745304107666e-05,
+              "span_epochs": 5,
+              "start_epoch": 55,
+              "start_metric_eV": 0.1423424482345581
+            }
+          }
+        }
+      },
+      "candidate_arm": "resistance",
+      "candidate_gain_eV": 0.0011186413717269898,
+      "candidate_minus_control_absolute_error_eV": {
+        "ci95": [
+          -0.00205690669798851,
+          -0.00016120140564441685
+        ],
+        "delta": -0.0011186413717269898,
+        "n_bootstrap": 10000,
+        "probability_better": 0.9897,
+        "seed": 42
+      },
+      "control_arm": "bond_local",
+      "development_row_alignment": {
+        "all_target_and_prediction_values_finite": true,
+        "row_count": 50000,
+        "source_idx_equal_row_by_row": true,
+        "target_eV_equal_row_by_row": true
+      },
+      "material_gate": {
+        "ci95_upper_below_minus_threshold": false,
+        "interpretation": "Point estimate is checked against the frozen 0.003 eV threshold; the CI is reported separately. Row bootstrap does not estimate training-seed variance.",
+        "point_estimate_gain_meets_threshold": false,
+        "threshold_eV": 0.003
+      },
+      "primary_development_metric": "ema_dev_metric",
+      "row_outcomes": {
+        "candidate_higher_absolute_error": 24948,
+        "candidate_lower_absolute_error": 25052,
+        "exact_ties": 0
+      }
+    },
+    "k1": {
+      "arms": {
+        "post_bn": {
+          "absolute_error_quantiles_eV": {
+            "p50": 0.09318113327026367,
+            "p90": 0.31502413749694813,
+            "p95": 0.42704145908355695,
+            "p99": 0.7477201867103579
+          },
+          "arm_id": "post_bn",
+          "best_trace": {
+            "epoch": 40,
+            "metric_eV": 0.141294464468956,
+            "optimizer_step": 31240
+          },
+          "completed_exposure": {
+            "completed_passes": 40,
+            "next_batch": 0,
+            "optimizer_steps": 31240,
+            "sample_presentations": 3998720,
+            "status": "complete"
+          },
+          "development_rows": 50000,
+          "final_trace": {
+            "epoch": 40,
+            "metric_eV": 0.141294464468956,
+            "optimizer_step": 31240
+          },
+          "last_online_train_mae": {
+            "interpretation": "Online training metric; eV scaling is descriptive and is not a fixed-checkpoint training evaluation.",
+            "target_std_eV": 1.275090217590332,
+            "unit": "normalized-Gap",
+            "value_eV_scaled_by_contract_target_std": 0.09823122512808116,
+            "value_normalized_gap": 0.0770386469701875
+          },
+          "mean_signed_error_eV": 0.0038683849519491197,
+          "selected_prediction_mae_eV": 0.1412944608205557,
+          "trailing_improvement": {
+            "last_10_epochs": {
+              "end_epoch": 40,
+              "end_metric_eV": 0.141294464468956,
+              "improvement_eV": 0.004013001918792725,
+              "span_epochs": 10,
+              "start_epoch": 30,
+              "start_metric_eV": 0.14530746638774872
+            },
+            "last_5_epochs": {
+              "end_epoch": 40,
+              "end_metric_eV": 0.141294464468956,
+              "improvement_eV": 0.0009676963090896606,
+              "span_epochs": 5,
+              "start_epoch": 35,
+              "start_metric_eV": 0.14226216077804565
+            }
+          }
+        },
+        "post_ln": {
+          "absolute_error_quantiles_eV": {
+            "p50": 0.09589362144470215,
+            "p90": 0.3261248588562012,
+            "p95": 0.4392211198806761,
+            "p99": 0.7803024339675966
+          },
+          "arm_id": "post_ln",
+          "best_trace": {
+            "epoch": 36,
+            "metric_eV": 0.14600591361522675,
+            "optimizer_step": 28116
+          },
+          "completed_exposure": {
+            "completed_passes": 40,
+            "next_batch": 0,
+            "optimizer_steps": 31240,
+            "sample_presentations": 3998720,
+            "status": "complete"
+          },
+          "development_rows": 50000,
+          "final_trace": {
+            "epoch": 40,
+            "metric_eV": 0.1463593989610672,
+            "optimizer_step": 31240
+          },
+          "last_online_train_mae": {
+            "interpretation": "Online training metric; eV scaling is descriptive and is not a fixed-checkpoint training evaluation.",
+            "target_std_eV": 1.275090217590332,
+            "unit": "normalized-Gap",
+            "value_eV_scaled_by_contract_target_std": 0.09555164514116223,
+            "value_normalized_gap": 0.07493716430648799
+          },
+          "mean_signed_error_eV": -0.0033968591076135634,
+          "selected_prediction_mae_eV": 0.14600592190682887,
+          "trailing_improvement": {
+            "last_10_epochs": {
+              "end_epoch": 40,
+              "end_metric_eV": 0.1463593989610672,
+              "improvement_eV": 0.005269065499305725,
+              "span_epochs": 10,
+              "start_epoch": 30,
+              "start_metric_eV": 0.15162846446037292
+            },
+            "last_5_epochs": {
+              "end_epoch": 40,
+              "end_metric_eV": 0.1463593989610672,
+              "improvement_eV": -3.723800182342529e-05,
+              "span_epochs": 5,
+              "start_epoch": 35,
+              "start_metric_eV": 0.14632216095924377
+            }
+          }
+        }
+      },
+      "candidate_arm": "post_ln",
+      "candidate_gain_eV": -0.004711461086273194,
+      "candidate_minus_control_absolute_error_eV": {
+        "ci95": [
+          0.003639988986492157,
+          0.005756066775441169
+        ],
+        "delta": 0.004711461086273194,
+        "n_bootstrap": 10000,
+        "probability_better": 0.0,
+        "seed": 42
+      },
+      "control_arm": "post_bn",
+      "development_row_alignment": {
+        "all_target_and_prediction_values_finite": true,
+        "row_count": 50000,
+        "source_idx_equal_row_by_row": true,
+        "target_eV_equal_row_by_row": true
+      },
+      "material_gate": {
+        "ci95_upper_below_minus_threshold": false,
+        "interpretation": "Point estimate is checked against the frozen 0.003 eV threshold; the CI is reported separately. Row bootstrap does not estimate training-seed variance.",
+        "point_estimate_gain_meets_threshold": false,
+        "threshold_eV": 0.003
+      },
+      "primary_development_metric": "live_dev_metric",
+      "row_outcomes": {
+        "candidate_higher_absolute_error": 25686,
+        "candidate_lower_absolute_error": 24314,
+        "exact_ties": 0
+      }
+    }
+  },
+  "primary_metrics": {
+    "gptrans": "ema_dev_metric",
+    "k1": "live_dev_metric"
+  },
+  "scope": "Saved development predictions and canonical traces only; no checkpoint/model execution."
+}

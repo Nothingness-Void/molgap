@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "canonical_learning_rate_history_missing",
+      "canonical_checkpoint_identity_history_missing",
+      "strict_v5_comparison_not_qualified"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "3259f3f70152fe6d20c10e1e4ae5bfa697457eb867780239744defb2dd4281ea",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "step-ema-0.999;primary-ema",
+    "evaluation_role_identity": "b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d",
+    "lr_schedule_identity": "5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0",
+    "matched_architecture_required": false,
+    "optimizer_identity": "966b89cbf7c704d637abaebefd9a5143faa8a2364df5e6c089435c303c4c4616",
+    "precision_identity": "fp32-no-tf32",
+    "row_split_identity": "a64c3d97276c025c104612ddf83857b3a5ac09192233139d72ff1e7be145b1f1",
+    "scientific_contract": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+    "selection_role_identity": "b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d:best-development-ema",
+    "target_transform_identity": "874d8d92d27e63d4142ff4cd62bf3542834cf0bcf293a10bcd8ccc8ca6e0b6b8",
+    "terminal_endpoint_identity": "46860-updates-5998080-presentations",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+  "evaluation_role_identity": "b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "metric_semantics": "Gap MAE eV",
+  "model_identity": "gptrans_t/2:degree_bond_local_ema999",
+  "presentation_semantics_ref": "experiments/pcqm_structural_bias_norm_100k/protocol.md",
+  "reference_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal",
+  "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-ema",
+  "terminal_evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/bond_local/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/bond_local/rml_finalized/trace.json",
+  "trace_artifact_sha256": "2e0869c5256f600874a42be7f2025b0ce50e81fde5107d36ae76f45800ecf60b",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2",
+  "weight_semantics": "ema",
+  "x_axis": "optimizer_steps"
+}

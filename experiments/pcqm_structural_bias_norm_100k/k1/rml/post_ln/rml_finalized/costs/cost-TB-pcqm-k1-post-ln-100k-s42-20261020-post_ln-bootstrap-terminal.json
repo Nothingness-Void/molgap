@@ -1,0 +1,31 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-post-ln-100k-s42-20261020-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln-bootstrap-terminal",
+  "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/k1/failure_v1/terminal_post_ln/acceptance.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "pcqm-k1-post-ln-100k-s42-20261020:post_ln:downstream",
+  "schema": "molgap-cost-event-v1",
+  "scope": "Shared bootstrap debit accounted once on reference; no separately observed candidate worker cost",
+  "trajectory_id": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln"
+}

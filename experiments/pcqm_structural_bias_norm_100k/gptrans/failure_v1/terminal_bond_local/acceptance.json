@@ -1,0 +1,69 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-resistance-100k-s42-20261020-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
+      "evidence_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/failure_v1/terminal_bond_local/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.13256724369944445
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.06628362184972222
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "pcqm-gptrans-resistance-100k-s42-20261020:bond_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "scope": "Shared bootstrap debit accounted once on reference; no separately observed candidate worker cost",
+      "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local"
+    }
+  ],
+  "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
+  "format": "molgap-family-terminal-acceptance-v1",
+  "infrastructure_reason": "Fresh-root guard rejected bootstrap metadata before arm dispatch",
+  "observed_execution": {
+    "development_evaluation_executed": false,
+    "formal_training_exposure": 0,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "retained_bootstrap_failure_metadata",
+    "budget_decision": "shared_bootstrap_debit_with_attribution_limits",
+    "comparison_status": "not_evaluated_no_training",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "untouched"
+  },
+  "roles": [],
+  "run_id": "pcqm-gptrans-resistance-100k-s42-20261020:bond_local:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/bootstrap_disposition.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "New explicit authorization; no automatic successor"
+    ]
+  }
+}

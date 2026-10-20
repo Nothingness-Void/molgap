@@ -1,0 +1,16 @@
+{
+  "bond_local": {
+    "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:bond_local:downstream",
+    "terminal": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/rml_terminal_bond_local.json",
+    "trace": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/bond_local/canonical_trace.json",
+    "trajectory": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/bond_local/trajectory.json",
+    "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+  },
+  "resistance": {
+    "run_id": "pcqm-gptrans-resistance-100k-s42-20261020-r2:resistance:downstream",
+    "terminal": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/terminal_acceptance/rml_terminal_resistance.json",
+    "trace": "platforms/_records/kaggle/training/structural_bias_norm_100k/20261020/gptrans/family_outputs/resistance/canonical_trace.json",
+    "trajectory": "experiments/pcqm_structural_bias_norm_100k/gptrans/attempt_002/rml/resistance/trajectory.json",
+    "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+  }
+}

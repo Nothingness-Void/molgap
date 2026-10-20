@@ -1,0 +1,91 @@
+{
+  "estimated_bytes": 681574400,
+  "excluded": [
+    "worker environments",
+    "graph caches",
+    "per-epoch checkpoints",
+    "checkpoint chunks",
+    "unrelated experiment artifacts"
+  ],
+  "files": {
+    "experiment/resistance/allocation_costs.json": {
+      "local_path": "allocation_costs.json",
+      "sha256": "593b8ef1c010dcdffaeec6be4b4095e4e73f1bb1ab15f98eb9676065a8d7a8e6"
+    },
+    "experiment/resistance/allocation_ledger.json": {
+      "local_path": "allocation_ledger.json",
+      "sha256": "84bdba5036a2bcc8021337fc438759139c666770aa1bd7284af58bfd1024094a"
+    },
+    "experiment/resistance/canonical_trace.json": {
+      "local_path": "canonical_trace.json",
+      "sha256": "e8692727f1ef4583b875addf9fdec20308e802a97460bf89da3f04ee7e8ced66"
+    },
+    "experiment/resistance/development_predictions.pt": {
+      "local_path": "development_predictions.pt",
+      "sha256": "41e431b1749af798e5a7c86de8d87875aa4b0de40ac4e88203ff296894b3c938"
+    },
+    "experiment/resistance/fill-enabled.pt": {
+      "local_path": "fill-enabled.pt",
+      "sha256": "ff7491f660f9345acc8841e6c81424bc61a9716b2a96638bd754cec17a70136f"
+    },
+    "experiment/resistance/last_checkpoint.pt": {
+      "local_path": "last_checkpoint.pt",
+      "sha256": "9c3fa0f378278b5e3dbf61d1ceda27bd8962f41a07987b9d549a2541852131cc"
+    },
+    "experiment/resistance/output_manifest.json": {
+      "local_path": "output_manifest.json",
+      "sha256": "244b627877e7253a13f7e3a6d63f98e8f2b808738c711492268af9ac6fd1b595"
+    },
+    "experiment/resistance/preflight_costs.json": {
+      "local_path": "preflight_costs.json",
+      "sha256": "507a8b7ba5e2a2c6f053b7fc7e746a48ac563d78b2b825eaaecde34f283c0051"
+    },
+    "experiment/resistance/profile_qualification/profile.json": {
+      "local_path": "profile_qualification/profile.json",
+      "sha256": "e8b6b6188a58bb1c66963b24106bd295cadd20920ffa320b9fbaeab06e411155"
+    },
+    "experiment/resistance/profile_qualification/trace.json": {
+      "local_path": "profile_qualification/trace.json",
+      "sha256": "166f0449ffde6ac80440ac5230f8c828d78c5c7f91f9a826e51e8d72d506833e"
+    },
+    "experiment/resistance/repeat-a.pt": {
+      "local_path": "repeat-a.pt",
+      "sha256": "de9de2f5d7920c7c06c6ed79f38dd959d4239f7a2bf0eb2fc1ed2791c0c53ba6"
+    },
+    "experiment/resistance/repeat-b.pt": {
+      "local_path": "repeat-b.pt",
+      "sha256": "800ed15ce32e9852148fec19290f858d4bd115a37959f7aeeebc630a677e68a5"
+    },
+    "experiment/resistance/resumed-first.pt": {
+      "local_path": "resumed-first.pt",
+      "sha256": "9bf056164c20f0e2b2321bd7efa05566e4ee3752ea28cfa89108115b9cde8495"
+    },
+    "experiment/resistance/resumed.pt": {
+      "local_path": "resumed.pt",
+      "sha256": "de9bfb88b9c0530ffc3d1ee4781be0df13d70ffb8e64c962604584c6ee9d4e30"
+    },
+    "experiment/resistance/runtime_certificate.json": {
+      "local_path": "runtime_certificate.json",
+      "sha256": "07e2fcdaeef39ffd3b7ab9b6648b893911896059697fd1dcff3401438252bf7e"
+    },
+    "experiment/resistance/runtime_provenance.json": {
+      "local_path": "runtime_provenance.json",
+      "sha256": "c49f5486304bec6bf9db1c35bda4e80cc565121a59a6ec40e687c0a028dd3a0d"
+    },
+    "experiment/resistance/selected_model.pt": {
+      "local_path": "selected_model.pt",
+      "sha256": "32b0542c479a2705e13a919c33ccf400891843d8f44cb6691227215cc27a72df"
+    },
+    "experiment/resistance/training_contract.json": {
+      "local_path": "training_contract.json",
+      "sha256": "7fab01952d61c10dad423922a140d87e01f787cbb98d7febbec116785ccef685"
+    },
+    "experiment/resistance/training_progress.json": {
+      "local_path": "training_progress.json",
+      "sha256": "2476943f4ae79e8a0b0c501214303a2aa76a69d423859fcc7ad89e337d60a178"
+    }
+  },
+  "kernel": "nothingnessvoid/molgap-gptrans-resistance-100k-s42-r2",
+  "size_status": "estimated; exact remote sizes not supplied by manifest",
+  "version": "1"
+}

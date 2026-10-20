@@ -1,0 +1,28 @@
+{
+  "format": "molgap-training-log-v1",
+  "event": "epoch",
+  "arm_id": "resistance",
+  "family": "gptrans_t",
+  "weight_state": "ema",
+  "status": "complete",
+  "completed_passes": 60,
+  "planned_passes": 60.0,
+  "next_batch": 0,
+  "optimizer_steps": 46860,
+  "planned_optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "train_live_mae_eV": 0.07462378483678139,
+  "development_mae_eV": 0.14228402078151703,
+  "best_development_mae_eV": 0.14174267649650574,
+  "metric_pass": 60,
+  "best_metric_pass": 45,
+  "learning_rates": [
+    1e-06
+  ],
+  "elapsed_seconds": 9524.415390699001,
+  "updates_per_second": 4.919987009991269,
+  "eta_seconds": 0.0,
+  "pass_wall_seconds": 135.36221377100082,
+  "pass_timing_scope": "full_pass",
+  "checkpoint_optimizer_steps": 46860
+}
