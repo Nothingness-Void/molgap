@@ -587,6 +587,9 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
         _check_context(saved.pop("context"), RunContext(**context))
     else:
         saved.pop("context")
+    # The wire writer omits disabled EMA, as SessionOutputs.retained_state handles.
+    # The session validator still rejects a missing EMA state for EMA-enabled recipes.
+    saved.setdefault("ema", None)
     progress = validate_session_resume(recipe, saved)
     if progress.status == "complete" or progress.optimizer_step >= recipe.optimizer_steps:
         raise ValueError("Completed shared session cannot be resumed")
