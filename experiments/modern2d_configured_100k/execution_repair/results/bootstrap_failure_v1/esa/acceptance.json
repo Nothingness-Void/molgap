@@ -1,0 +1,90 @@
+{
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+  "run_id": "modern2d-execution-repair-s42-v1:esa:downstream",
+  "trajectory_id": "T-modern2d-execution-repair-s42-v1-esa",
+  "kernel": "nvoid912/molgap-modern2d-execution-repair-v1",
+  "kernel_id": 139974457,
+  "version": 1,
+  "source_commit": "329dca4fb0afe9cd034c13fb62437602427a611e",
+  "package_identity": "e6735dde721be8546dc58176cbc2f1c4724a0a9e051c371781f7e34b0d752a0b",
+  "outcome": {
+    "artifact_status": "metadata_verified",
+    "budget_decision": "measurement_missing",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NOT_EVALUATED",
+    "transfer_status": "not_evaluated"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/execution_repair/results/bootstrap_failure_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "independently accepted bootstrap repair and explicit new bounded authority"
+    ]
+  },
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "untouched"
+  },
+  "roles": [],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-T-modern2d-execution-repair-s42-v1-esa-full-missing",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v1-esa",
+      "action_id": "A001",
+      "run_id": "modern2d-execution-repair-s42-v1:esa:downstream",
+      "attempt_id": "esa-v1",
+      "category": "infrastructure_failure",
+      "platform": "kaggle3",
+      "hardware": "Tesla_T4x2",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/results/bootstrap_failure_v1/esa/acceptance.json",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "training_started": false,
+  "inference_executed": false,
+  "optimizer_updates": 0,
+  "profile_capture_started": false,
+  "noReplay": true,
+  "error": "ValueError: Unknown Modern2D startup purpose",
+  "cause": "Distribution bootstrap omitted CONFIGURED_EXECUTION_REPAIR before environment and native worker dispatch.",
+  "remote_terminal_observation": {
+    "kernel_id": 139974457,
+    "version": 1,
+    "status": "ERROR",
+    "latest_identity_qualified": true
+  },
+  "observed_python_window_lower_bound": {
+    "wall_seconds": 4.9443309609999915,
+    "allocated_device_seconds": 9.888661921999983,
+    "full_billing_status": "measurement_missing",
+    "additive_with_other_allocation_windows": false,
+    "cost_attribution": "Whole shared allocation, not independently chargeable per arm; full per-arm costs remain missing"
+  }
+}

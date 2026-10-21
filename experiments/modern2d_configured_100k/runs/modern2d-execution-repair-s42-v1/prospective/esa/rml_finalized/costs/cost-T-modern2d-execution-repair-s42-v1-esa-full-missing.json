@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "esa-v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-T-modern2d-execution-repair-s42-v1-esa-full-missing",
+  "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/results/bootstrap_failure_v1/esa/acceptance.json",
+  "hardware": "Tesla_T4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "modern2d-execution-repair-s42-v1:esa:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-modern2d-execution-repair-s42-v1-esa"
+}
