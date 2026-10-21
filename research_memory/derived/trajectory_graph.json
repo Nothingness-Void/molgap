@@ -1,6 +1,26 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms:A001",
+      "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/post_node_rms/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms:A001",
+      "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/pre_node_rms/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms:A001",
+      "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/385f8909e602c5a8ddbb42bb81559e5ef4bc43933f27aff28156bd34a31c4b3e/post_graph_rms/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada:A001",
+      "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/385f8909e602c5a8ddbb42bb81559e5ef4bc43933f27aff28156bd34a31c4b3e/post_node_ada/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-distance-angle-triangle-500k-20260911:A000",
       "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
       "type": "action_produced_evidence"
@@ -1298,6 +1318,86 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
       "type": "prior_evidence"
     },
     {
@@ -3094,6 +3194,22 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
       "type": "trajectory"
     },
     {
