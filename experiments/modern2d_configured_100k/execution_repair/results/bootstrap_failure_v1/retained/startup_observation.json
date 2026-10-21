@@ -1,0 +1,97 @@
+{
+  "kernel": "nvoid912/molgap-modern2d-execution-repair-v1",
+  "scope": "startup observation; not native qualification",
+  "transport": "bounded_observation",
+  "events": [
+    {
+      "stream_name": "stderr",
+      "time": 5.763509923,
+      "data": "Traceback (most recent call last):\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764373563,
+      "data": "  File \"/kaggle/src/script.py\", line 245, in <module>\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764398212,
+      "data": "    main()\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764403169,
+      "data": "    ~~~~^^\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764407657,
+      "data": "  File \"/kaggle/src/script.py\", line 213, in main\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764412818,
+      "data": "    _workload(started)\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.7644173389999995,
+      "data": "    ~~~~~~~~~^^^^^^^^^\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764421575,
+      "data": "  File \"/kaggle/src/script.py\", line 133, in _workload\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764426246,
+      "data": "    modern2d_wall = _modern2d_wall_ceiling(declaration, source)\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764430266,
+      "data": "  File \"/kaggle/src/script.py\", line 59, in _modern2d_wall_ceiling\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764434295,
+      "data": "    raise ValueError(\"Unknown Modern2D startup purpose\")\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 5.764438365,
+      "data": "ValueError: Unknown Modern2D startup purpose\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 8.075017687,
+      "data": "/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 8.075053871,
+      "data": "  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 8.435058964,
+      "data": "/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 8.435092569,
+      "data": "  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 10.063460425,
+      "data": "[NbConvertApp] Converting notebook __script__.ipynb to html\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 11.21328665,
+      "data": "[NbConvertApp] Writing 331031 bytes to __results__.html\n"
+    }
+  ]
+}
