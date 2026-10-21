@@ -1,0 +1,40 @@
+{
+  "derived_rebuilt": false,
+  "forced_eligibility": false,
+  "format": "molgap-terminal-closure-readiness-v1",
+  "paths": {
+    "esa_identity3": {
+      "acceptance": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_identity3\\terminal_staging\\v1\\1942ee2b801b27fa\\acceptance.json",
+      "blockers": [],
+      "closure_ready": true,
+      "observed": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_identity3\\terminal_staging\\v1\\1942ee2b801b27fa\\observed.json",
+      "terminal": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_identity3\\terminal_staging\\v1\\1942ee2b801b27fa\\terminal.json"
+    },
+    "esa_lr3": {
+      "acceptance": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_lr3\\terminal_staging\\v1\\1fbbd0e15b8f7c20\\acceptance.json",
+      "blockers": [],
+      "closure_ready": true,
+      "observed": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_lr3\\terminal_staging\\v1\\1fbbd0e15b8f7c20\\observed.json",
+      "terminal": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_configured_100k\\runs\\modern2d-esa-research-slot1-s42-v1\\prospective\\esa_lr3\\terminal_staging\\v1\\1fbbd0e15b8f7c20\\terminal.json"
+    }
+  },
+  "results": {
+    "esa_identity3": {
+      "error_type": "ValueError",
+      "prospective_unmodified": true,
+      "reason": "filesystem path escapes repository: E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot1-s42-v1\\v1\\esa_identity3\\canonical_trace.json",
+      "status": "CANONICAL_FINALIZATION_BLOCKED",
+      "trace_and_all_artifacts_retained": true
+    },
+    "esa_lr3": {
+      "error_type": "ValueError",
+      "prospective_unmodified": true,
+      "reason": "filesystem path escapes repository: E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot1-s42-v1\\v1\\esa_lr3\\canonical_trace.json",
+      "status": "CANONICAL_FINALIZATION_BLOCKED",
+      "trace_and_all_artifacts_retained": true
+    }
+  },
+  "run_id": "modern2d-esa-research-slot1-s42-v1",
+  "scientific_replay_ready": false,
+  "stage_status": "STAGED_CLOSURE_READY"
+}

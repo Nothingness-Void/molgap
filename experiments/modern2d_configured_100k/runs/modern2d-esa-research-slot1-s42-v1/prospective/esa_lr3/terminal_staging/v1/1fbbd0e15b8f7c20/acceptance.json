@@ -1,0 +1,30 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-modern2d-esa-research-slot1-s42-v1-esa_lr3",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "run_id": "modern2d-esa-research-slot1-s42-v1:esa_lr3:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  }
+}

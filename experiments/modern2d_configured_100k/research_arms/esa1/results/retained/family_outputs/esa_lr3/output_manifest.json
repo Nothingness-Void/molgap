@@ -1,0 +1,82 @@
+{
+  "adapter": "modern2d-formal-session-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "7b3ea479b0f1a45c846862ac3f2c6a5b5464dc4672072c0066f6e666d217031a"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "67dc9a851c436b09120df036f1881f4fc1f19a075aefa3f8191cd68b9153c6b7"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "613a8b92939e65fc3d326812c9938b00c8022a11ef40452c7293705277fbf0af"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55"
+    },
+    "trace_context": {
+      "path": "canonical_trace.json.context.json",
+      "sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281"
+    }
+  },
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "esa_lr3",
+    "arm_identity": "71980297c7a8a81e01f99ac145acc34d1c2cfe288eb4179ded5a60be450c3a70",
+    "experiment_id": "modern2d_configured_100k",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "logical_run_id": "modern2d-esa-research-slot1-s42-v1",
+    "package_identity": "5ccd2342d26c9a9f93e91a38afc7c7961790cc1b9d043a62196368ac275a9cb3",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "kaseichou/molgap-esa-research-slot1-v1",
+    "source_archive_sha256": "d6b1ac6b44e89d0898f9e084dc8d74680a522fab5230584222257afc5bbadf95",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+    "spec_identity": "815de09dbfed41b544c9648b6c1379e75ea3c64c9405e8fc9b24749851acf4fb",
+    "training_recipe_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 13493.387854983
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "completed_passes": 20,
+    "next_batch": 0,
+    "optimizer_steps": 15620,
+    "sample_presentations": 1999360,
+    "status": "complete"
+  },
+  "runtime": {
+    "account": "kaseichou",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "a17e0ad238b49bec918cc4d23b1b0a64503981de7ff03ed2c315e67316bc2ff9",
+    "source_archive_sha256": "d6b1ac6b44e89d0898f9e084dc8d74680a522fab5230584222257afc5bbadf95",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "context": {
+    "experiment_id": "modern2d_configured_100k",
+    "logical_run_id": "modern2d-esa-research-slot1-s42-v1",
+    "arm_id": "esa_identity3",
+    "arm_identity": "1eb79375bd6323c5be0b2c9a8f55d22855a52df711d29bd23bf514212b377af6",
+    "spec_identity": "815de09dbfed41b544c9648b6c1379e75ea3c64c9405e8fc9b24749851acf4fb",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+    "source_archive_sha256": "d6b1ac6b44e89d0898f9e084dc8d74680a522fab5230584222257afc5bbadf95",
+    "package_identity": "5ccd2342d26c9a9f93e91a38afc7c7961790cc1b9d043a62196368ac275a9cb3",
+    "training_recipe_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-esa-research-slot1-v1",
+    "platform_version": null
+  },
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 59.71846939400001,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "native qualification entry through proof publication"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": null,
+      "status": "missing",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "reason": "requires platform allocation accounting"
+    }
+  ]
+}

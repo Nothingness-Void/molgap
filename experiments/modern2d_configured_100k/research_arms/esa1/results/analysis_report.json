@@ -1,0 +1,780 @@
+{
+  "all_requested_checks_passed": true,
+  "artifact_integrity": {
+    "esa_identity3": {
+      "contract": {
+        "actual_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+        "expected_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+        "matches_manifest": true,
+        "path": "training_contract.json"
+      },
+      "predictions": {
+        "actual_sha256": "ae4d867670570dfe0bdcf69eefcf33d685bfc4555c192a8c0bef639ab044efd9",
+        "expected_sha256": "ae4d867670570dfe0bdcf69eefcf33d685bfc4555c192a8c0bef639ab044efd9",
+        "matches_manifest": true,
+        "path": "development_predictions.pt"
+      },
+      "resume": {
+        "actual_sha256": "ac062723187b44eb327af74120e52c7509df2cb4feee6af952479ce9901079d3",
+        "expected_sha256": "ac062723187b44eb327af74120e52c7509df2cb4feee6af952479ce9901079d3",
+        "matches_manifest": true,
+        "path": "last_checkpoint.pt"
+      },
+      "selected_model": {
+        "actual_sha256": "97e0ec682c9e921e69357a3e2ba513e6165c280d5f4c0c5e515aef7468a442d9",
+        "expected_sha256": "97e0ec682c9e921e69357a3e2ba513e6165c280d5f4c0c5e515aef7468a442d9",
+        "matches_manifest": true,
+        "path": "selected_model.pt"
+      },
+      "trace": {
+        "actual_sha256": "013ba0de58378c4a3e12e39a4c12036565f1ed5889a9537c2262dadcfdffa1fc",
+        "expected_sha256": "013ba0de58378c4a3e12e39a4c12036565f1ed5889a9537c2262dadcfdffa1fc",
+        "matches_manifest": true,
+        "path": "canonical_trace.json"
+      },
+      "trace_context": {
+        "actual_sha256": "374d7b12123ddfdcf0b0bdba3a58d3874384e875a4b07d101d3b2680edcb2689",
+        "expected_sha256": "374d7b12123ddfdcf0b0bdba3a58d3874384e875a4b07d101d3b2680edcb2689",
+        "matches_manifest": true,
+        "path": "canonical_trace.json.context.json"
+      }
+    },
+    "esa_lr3": {
+      "contract": {
+        "actual_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+        "expected_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+        "matches_manifest": true,
+        "path": "training_contract.json"
+      },
+      "predictions": {
+        "actual_sha256": "7b3ea479b0f1a45c846862ac3f2c6a5b5464dc4672072c0066f6e666d217031a",
+        "expected_sha256": "7b3ea479b0f1a45c846862ac3f2c6a5b5464dc4672072c0066f6e666d217031a",
+        "matches_manifest": true,
+        "path": "development_predictions.pt"
+      },
+      "resume": {
+        "actual_sha256": "67dc9a851c436b09120df036f1881f4fc1f19a075aefa3f8191cd68b9153c6b7",
+        "expected_sha256": "67dc9a851c436b09120df036f1881f4fc1f19a075aefa3f8191cd68b9153c6b7",
+        "matches_manifest": true,
+        "path": "last_checkpoint.pt"
+      },
+      "selected_model": {
+        "actual_sha256": "613a8b92939e65fc3d326812c9938b00c8022a11ef40452c7293705277fbf0af",
+        "expected_sha256": "613a8b92939e65fc3d326812c9938b00c8022a11ef40452c7293705277fbf0af",
+        "matches_manifest": true,
+        "path": "selected_model.pt"
+      },
+      "trace": {
+        "actual_sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55",
+        "expected_sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55",
+        "matches_manifest": true,
+        "path": "canonical_trace.json"
+      },
+      "trace_context": {
+        "actual_sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281",
+        "expected_sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281",
+        "matches_manifest": true,
+        "path": "canonical_trace.json.context.json"
+      }
+    }
+  },
+  "attempt_id": "v1",
+  "canonical_learning_curves": {
+    "esa_identity3": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 0.00029712739942028293,
+          "live_development_mae_eV": 0.25766730308532715,
+          "live_train_mae_converted_eV": 0.23091952939812438,
+          "live_train_mae_normalized_gap": 0.18110054351685143,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 0.00020771117313858088,
+          "live_development_mae_eV": 0.22348031401634216,
+          "live_train_mae_converted_eV": 0.16620754325375062,
+          "live_train_mae_normalized_gap": 0.13034963520975942,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 6.744225016356949e-05,
+          "live_development_mae_eV": 0.2058018147945404,
+          "live_train_mae_converted_eV": 0.11898591187181129,
+          "live_train_mae_normalized_gap": 0.0933156817311972,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.20268592238426208,
+          "live_train_mae_converted_eV": 0.09215012539312438,
+          "live_train_mae_normalized_gap": 0.07226949508055072,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_mae_conversion": "normalized-Gap MAE multiplied by target_std_eV; mean offset cancels for absolute error"
+    },
+    "esa_lr3": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 0.00029712739942028293,
+          "live_development_mae_eV": 0.26421383023262024,
+          "live_train_mae_converted_eV": 0.22696958274416762,
+          "live_train_mae_normalized_gap": 0.17800276530918482,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 0.00020771117313858088,
+          "live_development_mae_eV": 0.2219582051038742,
+          "live_train_mae_converted_eV": 0.16128404235621735,
+          "live_train_mae_normalized_gap": 0.12648833906528434,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 6.744225016356949e-05,
+          "live_development_mae_eV": 0.20796990394592285,
+          "live_train_mae_converted_eV": 0.11475939057975233,
+          "live_train_mae_normalized_gap": 0.09000099758485215,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.20367467403411865,
+          "live_train_mae_converted_eV": 0.08724946158432312,
+          "live_train_mae_normalized_gap": 0.06842610911107247,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_mae_conversion": "normalized-Gap MAE multiplied by target_std_eV; mean offset cancels for absolute error"
+    }
+  },
+  "checkpoint_inspection": {
+    "esa_identity3": {
+      "contract_endpoint": {
+        "last_checkpoint_matches_required_endpoint": true,
+        "observed_trace_passes": 20,
+        "pass_sequence_exact_1_to_20": true,
+        "required_completed_passes": 20,
+        "required_optimizer_steps": 15620,
+        "required_sample_presentations": 1999360,
+        "trace_matches_required_endpoint": true,
+        "trace_presentations_at_endpoint": 1999360,
+        "trace_steps_at_endpoint": 15620
+      },
+      "last": {
+        "endpoint": {
+          "cursor_next_batch": 0,
+          "cursor_pass_index": 20,
+          "cursor_status": "complete",
+          "optimizer_step": 15620,
+          "sample_presentations": 1999360
+        },
+        "finite_tensor_scan": {
+          "all_saved_tensors_finite": true,
+          "floating_or_complex_tensors": 520,
+          "nonfinite_paths": [],
+          "nonfinite_tensors": 0,
+          "tensors": 522
+        },
+        "model_state": {
+          "model_state_all_finite": true,
+          "model_state_tensor_count": 130,
+          "parameter_count_from_model_state": 5015233
+        },
+        "path": "last_checkpoint.pt",
+        "sha256": "ac062723187b44eb327af74120e52c7509df2cb4feee6af952479ce9901079d3",
+        "weights_only": true
+      },
+      "model_state_schema_matches_last_selected": true,
+      "selected": {
+        "finite_tensor_scan": {
+          "all_saved_tensors_finite": true,
+          "floating_or_complex_tensors": 130,
+          "nonfinite_paths": [],
+          "nonfinite_tensors": 0,
+          "tensors": 130
+        },
+        "model_state": {
+          "model_state_all_finite": true,
+          "model_state_tensor_count": 130,
+          "parameter_count_from_model_state": 5015233
+        },
+        "path": "selected_model.pt",
+        "selection": {
+          "development_mae_eV": 0.20268592238426208,
+          "epoch_or_pass": 20.0,
+          "optimizer_step": 15620,
+          "selection": "best-development-live",
+          "weights": "live"
+        },
+        "sha256": "97e0ec682c9e921e69357a3e2ba513e6165c280d5f4c0c5e515aef7468a442d9",
+        "weights_only": true
+      },
+      "selected_vs_canonical_trace": {
+        "absolute_mae_difference_eV": 0.0,
+        "matching_trace_observation_present": true,
+        "selected_development_mae_eV": 0.20268592238426208,
+        "selected_epoch_or_pass": 20.0,
+        "selected_optimizer_step": 15620,
+        "trace_live_development_mae_eV": 0.20268592238426208,
+        "trace_optimizer_step": 15620
+      }
+    },
+    "esa_lr3": {
+      "contract_endpoint": {
+        "last_checkpoint_matches_required_endpoint": true,
+        "observed_trace_passes": 20,
+        "pass_sequence_exact_1_to_20": true,
+        "required_completed_passes": 20,
+        "required_optimizer_steps": 15620,
+        "required_sample_presentations": 1999360,
+        "trace_matches_required_endpoint": true,
+        "trace_presentations_at_endpoint": 1999360,
+        "trace_steps_at_endpoint": 15620
+      },
+      "last": {
+        "endpoint": {
+          "cursor_next_batch": 0,
+          "cursor_pass_index": 20,
+          "cursor_status": "complete",
+          "optimizer_step": 15620,
+          "sample_presentations": 1999360
+        },
+        "finite_tensor_scan": {
+          "all_saved_tensors_finite": true,
+          "floating_or_complex_tensors": 520,
+          "nonfinite_paths": [],
+          "nonfinite_tensors": 0,
+          "tensors": 522
+        },
+        "model_state": {
+          "model_state_all_finite": true,
+          "model_state_tensor_count": 130,
+          "parameter_count_from_model_state": 5015233
+        },
+        "path": "last_checkpoint.pt",
+        "sha256": "67dc9a851c436b09120df036f1881f4fc1f19a075aefa3f8191cd68b9153c6b7",
+        "weights_only": true
+      },
+      "model_state_schema_matches_last_selected": true,
+      "selected": {
+        "finite_tensor_scan": {
+          "all_saved_tensors_finite": true,
+          "floating_or_complex_tensors": 130,
+          "nonfinite_paths": [],
+          "nonfinite_tensors": 0,
+          "tensors": 130
+        },
+        "model_state": {
+          "model_state_all_finite": true,
+          "model_state_tensor_count": 130,
+          "parameter_count_from_model_state": 5015233
+        },
+        "path": "selected_model.pt",
+        "selection": {
+          "development_mae_eV": 0.20367467403411865,
+          "epoch_or_pass": 20.0,
+          "optimizer_step": 15620,
+          "selection": "best-development-live",
+          "weights": "live"
+        },
+        "sha256": "613a8b92939e65fc3d326812c9938b00c8022a11ef40452c7293705277fbf0af",
+        "weights_only": true
+      },
+      "selected_vs_canonical_trace": {
+        "absolute_mae_difference_eV": 0.0,
+        "matching_trace_observation_present": true,
+        "selected_development_mae_eV": 0.20367467403411865,
+        "selected_epoch_or_pass": 20.0,
+        "selected_optimizer_step": 15620,
+        "trace_live_development_mae_eV": 0.20367467403411865,
+        "trace_optimizer_step": 15620
+      }
+    }
+  },
+  "checks": {
+    "all_last_and_selected_checkpoint_tensors_finite": true,
+    "all_manifest_artifact_hashes_match": true,
+    "all_profile_and_spans_hash_checks_pass": true,
+    "both_arms_mechanically_verified": true,
+    "both_exact_20_pass_endpoints": true,
+    "mechanical_acceptance_status": true,
+    "prediction_rows_exactly_aligned": true,
+    "selected_epoch_matches_canonical_trace": true
+  },
+  "decision_limits": {
+    "bootstrap_is_training_seed_variance": false,
+    "bootstrap_scope": "2,000 paired resamples of fixed Common-Dev rows only; no multiplicity adjustment.",
+    "classification_claim": false,
+    "junit_report": null,
+    "model_seed_scope": "single seed 42 pair; no seed replication or architecture confirmation claim.",
+    "optional_native_repeat_resume_comparison": "Not run per focused handoff scope; supplied certificate-verified proofs were not needed for endpoint metrics.",
+    "replay_ready": false,
+    "rml_closed_here": false,
+    "scientific_outcome": "NOT_EVALUATED by the mechanical acceptance workflow; paired metrics here are descriptive saved-artifact analysis.",
+    "tests_run": false
+  },
+  "execution_profile_analysis": {
+    "esa_identity3": {
+      "capture": {
+        "active_steps": 4,
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 2.326181410000004,
+        "captured_updates": 4,
+        "chrome_trace_loaded": false,
+        "chrome_trace_sha256_reference_only": "ddfa8a486de7975b45ab7fd8ea084b0640de38426944eafcc384ed3819845a9f",
+        "device_events_observed": true,
+        "warmup_steps": 8
+      },
+      "capture_off_training_span_throughput": {
+        "optimizer_updates": 14839,
+        "optimizer_updates_per_second": 1.7064664288493923,
+        "sample_presentations": 1899392,
+        "sample_presentations_per_second": 218.4277028927222,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "seconds_per_781_update_span_mean": 457.6708845814211,
+        "span_count": 19,
+        "wall_seconds": 8695.746807047
+      },
+      "capture_status": "COMPLETE",
+      "dominant_operators_by_self_cpu": [
+        {
+          "calls": 4,
+          "name": "enumerate(DataLoader)#_MultiProcessingDataLoaderIter.__next__",
+          "self_cpu_seconds": 1.765308169,
+          "self_device_seconds": 0.0
+        },
+        {
+          "calls": 6141,
+          "name": "cudaLaunchKernel",
+          "self_cpu_seconds": 0.08025422699998232,
+          "self_device_seconds": 0.0
+        },
+        {
+          "calls": 416,
+          "name": "aten::mm",
+          "self_cpu_seconds": 0.06834866099999903,
+          "self_device_seconds": 0.11526447900000518
+        },
+        {
+          "calls": 204,
+          "name": "aten::addmm",
+          "self_cpu_seconds": 0.039056375999999525,
+          "self_device_seconds": 0.06234283900000044
+        },
+        {
+          "calls": 2968,
+          "name": "aten::fill_",
+          "self_cpu_seconds": 0.023779201000014263,
+          "self_device_seconds": 0.013000759999998671
+        }
+      ],
+      "dominant_operators_by_self_device": [
+        {
+          "calls": 416,
+          "name": "aten::mm",
+          "self_cpu_seconds": 0.06834866099999903,
+          "self_device_seconds": 0.11526447900000518
+        },
+        {
+          "calls": 204,
+          "name": "aten::addmm",
+          "self_cpu_seconds": 0.039056375999999525,
+          "self_device_seconds": 0.06234283900000044
+        },
+        {
+          "calls": 146,
+          "name": "volta_sgemm_128x64_nt",
+          "self_cpu_seconds": 0.0,
+          "self_device_seconds": 0.042524059999999995
+        },
+        {
+          "calls": 24,
+          "name": "aten::_efficient_attention_backward",
+          "self_cpu_seconds": 0.0011917859999988577,
+          "self_device_seconds": 0.03157448000000115
+        },
+        {
+          "calls": 24,
+          "name": "fmha_cutlassB_f32_aligned_64x64_k32_sm75(PyTorchMemEffAttention::AttentionBackwardKernel<cutlass::arch::Sm75, float, true, false, false, 64, 64, 32, false>::Params)",
+          "self_cpu_seconds": 0.0,
+          "self_device_seconds": 0.03157448000000115
+        }
+      ],
+      "dominant_profile_phases_by_host_self_time": [
+        {
+          "calls": 4,
+          "host_self_seconds": 1.7696194989999867,
+          "name": "loader_wait"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.26065013199996656,
+          "name": "forward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.2189626759999328,
+          "name": "backward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.03746491499998683,
+          "name": "optimizer"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.023233435999998164,
+          "name": "gradient_clip"
+        }
+      ],
+      "execution_profile_receipt_sha256": "1872857d3d33e2167dcd582282e81a3b47a46ebc559742762c6f6042a60d0f62",
+      "execution_profile_receipt_sha_verified_by_metadata_retrieval": true,
+      "profile_context_peak": {
+        "allocated_MiB": 907.3056640625,
+        "allocated_bytes": 951378944,
+        "reserved_MiB": 1054.0,
+        "reserved_bytes": 1105199104
+      },
+      "profile_limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment\\esa_identity3\\profiles\\step_0_1792598074692436729\\profile.json",
+      "profile_sha256": "476a5047e200ebd99fd73bdf559c9d7a1acbeb8472a1457d0da853388cd150a6",
+      "profile_sha_verified_against_execution_profile_receipt_and_retrieval_receipt": true,
+      "profile_status": "COMPLETE",
+      "runtime": {
+        "cpu_threads": 1,
+        "cuda": "12.6",
+        "device": "cuda",
+        "device_name": "Tesla T4",
+        "hip": null,
+        "torch": "2.7.1+cu126"
+      },
+      "source_root": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment",
+      "training_spans_equal_profile_embedded_capture_off_spans": true,
+      "training_spans_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment\\esa_identity3\\profiles\\step_0_1792598074692436729\\training_spans.json",
+      "training_spans_sha256": "da5aebe9055bd75afd87bd60de1a836cfb273b67194ce0bf0ab139d4d31242b7",
+      "training_spans_sha_verified_by_profile_metadata_retrieval": true
+    },
+    "esa_lr3": {
+      "capture": {
+        "active_steps": 4,
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 2.3320422310000026,
+        "captured_updates": 4,
+        "chrome_trace_loaded": false,
+        "chrome_trace_sha256_reference_only": "40ba8e48c0a9d7d4041edae4a16cfe91d95a19cb9a825ab638b8c0744303ebac",
+        "device_events_observed": true,
+        "warmup_steps": 8
+      },
+      "capture_off_training_span_throughput": {
+        "optimizer_updates": 14839,
+        "optimizer_updates_per_second": 1.7056192691681236,
+        "sample_presentations": 1899392,
+        "sample_presentations_per_second": 218.31926645351982,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "seconds_per_781_update_span_mean": 457.89820396489466,
+        "span_count": 19,
+        "wall_seconds": 8700.065875332999
+      },
+      "capture_status": "COMPLETE",
+      "dominant_operators_by_self_cpu": [
+        {
+          "calls": 4,
+          "name": "enumerate(DataLoader)#_MultiProcessingDataLoaderIter.__next__",
+          "self_cpu_seconds": 1.7904198220000005,
+          "self_device_seconds": 0.0
+        },
+        {
+          "calls": 6141,
+          "name": "cudaLaunchKernel",
+          "self_cpu_seconds": 0.0762071760000179,
+          "self_device_seconds": 0.0
+        },
+        {
+          "calls": 416,
+          "name": "aten::mm",
+          "self_cpu_seconds": 0.06587723600000062,
+          "self_device_seconds": 0.1155415979999957
+        },
+        {
+          "calls": 204,
+          "name": "aten::addmm",
+          "self_cpu_seconds": 0.04217629099999659,
+          "self_device_seconds": 0.06258919400000253
+        },
+        {
+          "calls": 2968,
+          "name": "aten::fill_",
+          "self_cpu_seconds": 0.022397090000002645,
+          "self_device_seconds": 0.012942154999999156
+        }
+      ],
+      "dominant_operators_by_self_device": [
+        {
+          "calls": 416,
+          "name": "aten::mm",
+          "self_cpu_seconds": 0.06587723600000062,
+          "self_device_seconds": 0.1155415979999957
+        },
+        {
+          "calls": 204,
+          "name": "aten::addmm",
+          "self_cpu_seconds": 0.04217629099999659,
+          "self_device_seconds": 0.06258919400000253
+        },
+        {
+          "calls": 146,
+          "name": "volta_sgemm_128x64_nt",
+          "self_cpu_seconds": 0.0,
+          "self_device_seconds": 0.04345131599999941
+        },
+        {
+          "calls": 24,
+          "name": "aten::_efficient_attention_backward",
+          "self_cpu_seconds": 0.0011533120000008495,
+          "self_device_seconds": 0.03176710399999947
+        },
+        {
+          "calls": 24,
+          "name": "fmha_cutlassB_f32_aligned_64x64_k32_sm75(PyTorchMemEffAttention::AttentionBackwardKernel<cutlass::arch::Sm75, float, true, false, false, 64, 64, 32, false>::Params)",
+          "self_cpu_seconds": 0.0,
+          "self_device_seconds": 0.03176710399999947
+        }
+      ],
+      "dominant_profile_phases_by_host_self_time": [
+        {
+          "calls": 4,
+          "host_self_seconds": 1.7948317649999126,
+          "name": "loader_wait"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.26006718900009673,
+          "name": "forward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.212909188000026,
+          "name": "backward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.02990343099997972,
+          "name": "optimizer"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.018956233999972483,
+          "name": "gradient_clip"
+        }
+      ],
+      "execution_profile_receipt_sha256": "5126328f2160dbfb5d6393a453f0ffec84444e8fc10ee146df6e4184b3fce79b",
+      "execution_profile_receipt_sha_verified_by_metadata_retrieval": true,
+      "profile_context_peak": {
+        "allocated_MiB": 907.3056640625,
+        "allocated_bytes": 951378944,
+        "reserved_MiB": 1054.0,
+        "reserved_bytes": 1105199104
+      },
+      "profile_limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment\\esa_lr3\\profiles\\step_0_1792598074699926240\\profile.json",
+      "profile_sha256": "5c5996e50553e76c6d9c4ab66751bae14f7965662111f2940d63171d3cf845a3",
+      "profile_sha_verified_against_execution_profile_receipt_and_retrieval_receipt": true,
+      "profile_status": "COMPLETE",
+      "runtime": {
+        "cpu_threads": 1,
+        "cuda": "12.6",
+        "device": "cuda",
+        "device_name": "Tesla T4",
+        "hip": null,
+        "torch": "2.7.1+cu126"
+      },
+      "source_root": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment",
+      "training_spans_equal_profile_embedded_capture_off_spans": true,
+      "training_spans_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot1-s42-v1\\v1\\inspection\\experiment\\esa_lr3\\profiles\\step_0_1792598074699926240\\training_spans.json",
+      "training_spans_sha256": "8526e5c45f91adefbdb7582a3c44d2b2a345ee2f778238368fd61486a16b99ac",
+      "training_spans_sha_verified_by_profile_metadata_retrieval": true
+    }
+  },
+  "format": "molgap-esa1-independent-acceptance-analysis-v1",
+  "frozen_prospective_closure_limit": {
+    "reason": "The frozen prospective has no reference IDs and no same_run_replay field; no retroactive repair or Replay admission is made. Main-agent terminal/RML staging remains separate.",
+    "reference_ids": [],
+    "replay_admission_claimed": false,
+    "same_run_replay_present": false
+  },
+  "generated_at_utc": "2026-10-21T20:05:50.798424+00:00",
+  "mechanical_acceptance": {
+    "arms": {
+      "esa_identity3": "MECHANICALLY_VERIFIED",
+      "esa_lr3": "MECHANICALLY_VERIFIED"
+    },
+    "execution_retention_status": "EXECUTION_RETENTION_VERIFIED",
+    "full_report_path": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa1_acceptance\\20261021T200132Z_d8be1683\\mechanical_acceptance.json",
+    "scientific_outcome": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "paired_fixed_row_analysis": {
+    "bootstrap": {
+      "index_matrix_max_bytes_per_chunk": 16000000,
+      "max_chunk_cells": 2000000,
+      "method": "paired row bootstrap with replacement on the fixed 50,000-row development set",
+      "multiplicity_adjustment": "none",
+      "resamples": 2000,
+      "seed_for_error_delta": 42,
+      "seed_for_win_fraction": 43,
+      "uncertainty_scope": "fixed-row sampling uncertainty only; not training-seed variance"
+    },
+    "candidate_arm": "esa_identity3",
+    "classification_claim": false,
+    "mean_absolute_error_eV": {
+      "esa_identity3": 0.2026859096312523,
+      "esa_lr3": 0.2036746614909172
+    },
+    "mean_signed_residual_delta_eV_identity_minus_lr3": 0.0035349725914001467,
+    "mean_signed_residual_eV": {
+      "esa_identity3": 0.006650505425930023,
+      "esa_lr3": 0.003115532834529877
+    },
+    "paired_absolute_error_delta_bootstrap": {
+      "ci95": [
+        -0.002326466182947159,
+        0.0003762302612066259
+      ],
+      "delta": -0.000988751859664917,
+      "n_bootstrap": 2000,
+      "probability_better": 0.9275,
+      "seed": 42
+    },
+    "paired_mean_absolute_error_delta_eV_identity_minus_lr3": -0.000988751859664917,
+    "reference_arm": "esa_lr3",
+    "residual_definition": "prediction_eV - target_eV",
+    "row_count": 50000,
+    "row_wins": {
+      "identity3_strict_win_fraction": 0.50638,
+      "identity3_strict_win_fraction_bootstrap": {
+        "ci95": [
+          0.50194,
+          0.51082
+        ],
+        "delta": 0.50638,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "seed": 43
+      },
+      "identity3_strict_wins": 25319,
+      "lr3_strict_wins": 24681,
+      "ties": 0
+    },
+    "signed_residual_delta_definition": "esa_identity3 residual - esa_lr3 residual; negative means more negative signed error"
+  },
+  "prediction_validation": {
+    "arms": {
+      "esa_identity3": {
+        "canonical_trace_pass20_mae_eV": 0.20268592238426208,
+        "independent_prediction_mae_eV": 0.2026859096312523,
+        "prediction_context_matches_manifest": true,
+        "prediction_tensors_finite": true,
+        "prediction_vs_selected_abs_difference_eV": 1.275300978709204e-08,
+        "prediction_vs_trace_pass20_abs_difference_eV": 1.275300978709204e-08,
+        "selected_checkpoint_mae_eV": 0.20268592238426208
+      },
+      "esa_lr3": {
+        "canonical_trace_pass20_mae_eV": 0.20367467403411865,
+        "independent_prediction_mae_eV": 0.2036746614909172,
+        "prediction_context_matches_manifest": true,
+        "prediction_tensors_finite": true,
+        "prediction_vs_selected_abs_difference_eV": 1.2543201449721764e-08,
+        "prediction_vs_trace_pass20_abs_difference_eV": 1.2543201449721764e-08,
+        "selected_checkpoint_mae_eV": 0.20367467403411865
+      }
+    },
+    "development_rows_per_arm": 50000,
+    "source_idx_exact_crossarm_alignment": true,
+    "source_idx_sha256_tensor_bytes": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+    "target_y_exact_crossarm_alignment": true,
+    "target_y_sha256_tensor_bytes": "99fbaf953218ed38b64da4a7222f147a998ae658ec35778ae97814186f6683e8"
+  },
+  "run_id": "modern2d-esa-research-slot1-s42-v1",
+  "scope": "Saved-artifact endpoint acceptance and descriptive paired analysis only; no model construction, training, inference, graphdata access, protected roles, network, or repository edits.",
+  "thread_limits": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "torch_num_interop_threads": 1,
+    "torch_num_threads": 1
+  }
+}

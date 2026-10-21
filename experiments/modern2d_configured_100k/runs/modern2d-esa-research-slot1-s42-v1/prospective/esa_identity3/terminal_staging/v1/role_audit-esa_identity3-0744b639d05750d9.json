@@ -1,0 +1,126 @@
+{
+  "boundary": "Observed train/Dev metrics and exact role/source binding; frozen admitted loader confined to accepted train100K/CommonDev. No new data or protected role accessed by acceptance.",
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "esa_identity3",
+    "arm_identity": "1eb79375bd6323c5be0b2c9a8f55d22855a52df711d29bd23bf514212b377af6",
+    "experiment_id": "modern2d_configured_100k",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "logical_run_id": "modern2d-esa-research-slot1-s42-v1",
+    "package_identity": "5ccd2342d26c9a9f93e91a38afc7c7961790cc1b9d043a62196368ac275a9cb3",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-esa-research-slot1-v1",
+    "source_archive_sha256": "d6b1ac6b44e89d0898f9e084dc8d74680a522fab5230584222257afc5bbadf95",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+    "spec_identity": "815de09dbfed41b544c9648b6c1379e75ea3c64c9405e8fc9b24749851acf4fb",
+    "training_recipe_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee"
+  },
+  "observed_role_sources": [
+    "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot1-s42-v1\\v1\\esa_identity3\\output_manifest.json",
+    "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot1-s42-v1\\v1\\esa_identity3\\canonical_trace.json",
+    "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot1-s42-v1\\v1\\esa_identity3\\development_predictions.pt"
+  ],
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-train_100k-training_membership",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-train_100k-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-train_100k-metric_computed",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-common_dev-metric_computed",
+      "role_name": "common_dev",
+      "row_manifest_hash": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+      "role_event_id": "role-T-modern2d-esa-research-slot1-s42-v1-esa_identity3-common_dev-selection_used",
+      "role_name": "common_dev",
+      "row_manifest_hash": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+      "run_id": "modern2d-esa-research-slot1-s42-v1:esa_identity3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    }
+  ]
+}
