@@ -1,0 +1,436 @@
+{
+  "acceptance_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json": "fbf14ebf7dfcf6e214bb3ef9ca1602bffec48b042d1153995b2d71820d520a63",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json": "85eeb9a85981732e8412a1d8f429847ffad30411cc8591e98ea02071d3b9c4f7",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json": "7ea3003401d33ac4324e78aba441e67ea4e2265d2a1c27b1607a31aee0ff67cc",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/analysis.json": "8066221accf73242415decd04bf12ccafd45f95abf30b50b45ce562c6b7ec46c",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/arm_metadata_retrieval.json": "3773faf20b2fddd02540ed2e6f96a28d2737c0b028ff42406b068d5631623e00",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/campaign_analysis.json": "9e1ff63b8de869e8510117c7ae36b4a6dac3c3beb71846eaf93583a857e43832",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/chunk_metadata_retrieval.json": "3e93d353235305fbe03404b5cc6906443a7fb64672a641aecfffd271e908b15b",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.json": "63c1e720f41666f73d9987b70a9dd54a496be39603f1062ce032505e74eaced5",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.md": "c89e7f35ac2d90859c0a0a7466c2cd99b67058e878d3b3bcc796041a1f2783d0",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.json": "e74c5e9e332b140b2ff2d298bc55f9fb6100de711f7fbde80bfc09f471fbd1c3",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.md": "fcffe370301869ef00b4fbff1dac96cf8ebf1569a82b8fbf217e4d3a566c52af",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/bootstrap_allocation.json": "f215e97e88af8bd621343266e33726f087582609dfff7c60be0179f7a82fc838",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/allocation_ledger.json": "b441af1c770a922753ee1149d69b91ab4c0a417bd11f3edc157f7f519c0dfc78",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr1e4/pass_20/resume_bundle.json": "c3441625918de145436326821137c8871fb1c42f933f14b47a58ffca2fe83abb",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr3e4/pass_20/resume_bundle.json": "356808a94a7e8e3fe47441871e70a5c28d95cd3dad58f39c098ad529bc7db10c",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_report.json": "21978f74eaa09fdc172e2cbbad7fd652e02ea8b88ac47d4acbed211ba7957653",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_retention.json": "55eefc9397d224fc750e604ad5dc1eb2bb76394ec284a666380eb409c6975762",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/allocation_costs.json": "3edf373b80f3b603fc4e387ca1ff5727e44ed85452225fe2f99ba7369fc9e8e6",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json": "3f06f48d6aa8089e433179897ad02c13af3abf043ba3017896f9daeaf5a4736d",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json.context.json": "0f42e9fb451fca9ea0c1832697fccb8c4834eb0c093d2881b710a83e1e1620e5",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/execution_profile_receipt.json": "6ac80f0654ee18be6f30f1b640e62461643f30f45e64937fab5b0151b9f95ab3",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/pause_receipt.json": "bab07c0098ca7b65076d7adac4f2845392e5f15162feebd52c341d8454265a74",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/profiles/step_0_1792518559902523523/profile.json": "b08203de584312c1f2c0cf08573822ccd9db98e72b57d10c78616c012d92a6d8",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_certificate.json": "df28670d216bebf6bbbcef1d833228227b97be90e9ad0626bdf3d144fc197ff6",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_provenance.json": "1146998fd3cbd5b45d8ea827a488ea8e92d6b841938a6f6ce4b53b4a774d078f",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/training_contract.json": "84e6bad3482896dcd52d6f128f8503a2aee6dcd012c4f15d785c5fc943e2aa63",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/allocation_costs.json": "a0dfa0511c9bb67cd2d0ea7abadb3b56a7ad2d3c134aa5221df7ef235b0a55f8",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json": "0e87d41afcdec630a55617d55073b0be25be0cd66e207e37f9c48f3325b0f1b0",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json.context.json": "4edab60e33f51787478faea8d4a2bfb2623053641f021b64d6a3277a3334d12f",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/execution_profile_receipt.json": "831481b559b26e6167e9c2a31ec5ff48cf9da504db8e245a1aca87531898be55",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/pause_receipt.json": "45bfba5a05e6c951d937871df60d2d8429fab5db723dc4ff1233c2c2f035cb8b",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/profiles/step_0_1792518559910042610/profile.json": "7069c2dad59f3426b40cf3cb4265e1ee3ce6f4b729da1edcd0b8d5df39ec9bc1",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_certificate.json": "c586a7b44b65b47b95f97bfd1b45a94fe10ecefece9cf33710f955239544f9a4",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_provenance.json": "92e853aa0658ede8c45d09987889f184d9859ebe8bc80bcfa48fd7bd7d52c3a4",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/training_contract.json": "78e36cb2d9c109219efc52f06566e6d0801f7b324622bda7e0cada0d8b425937",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata_retrieval.json": "7c90100ea0faa258e24a159f16f09968d740a9fe889868f3cac9e9b8ca8405db",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/profiles_retrieval.json": "93d8071fe764f60fc93fc3830176224ea9cc5ae084be2a714456fb3cd1db744a",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/retention.json": "06b6deb5a15d7f237cc33d851a8d8102bde5165ea8ff395de5d8320fe1aa3257",
+    "experiments/modern2d_configured_100k/esa_attribution/lr/submission.json": "dcc26ccf964f8fdce2c29092e59a7a7b0d8ed6ead7fbdddc9f03d70bff0be3ae",
+    "experiments/modern2d_configured_100k/esa_attribution/protocol.md": "f693427e4aa5176a9d1f34ae648dd1609927fd791754aa2f56d63fc143487f40",
+    "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr3e4/trajectory.json": "371cb2ec59f02d02ce716b9dcd0b16b29de772990300b75007ed62b9398cd1cc"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "lr3e4-v1",
+      "category": "training",
+      "cost_event_id": "cost-T-esa-lr-attribution-100k-s42-v1-lr3e4-full-missing",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+      "hardware": "Tesla_T4x2",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": [
+      "Separate authority after execution/budget feasibility and reference review"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+        "sha256": "fbf14ebf7dfcf6e214bb3ef9ca1602bffec48b042d1153995b2d71820d520a63"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json",
+        "sha256": "7ea3003401d33ac4324e78aba441e67ea4e2265d2a1c27b1607a31aee0ff67cc"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/analysis.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/analysis.json",
+        "sha256": "8066221accf73242415decd04bf12ccafd45f95abf30b50b45ce562c6b7ec46c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/arm_metadata_retrieval.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/arm_metadata_retrieval.json",
+        "sha256": "3773faf20b2fddd02540ed2e6f96a28d2737c0b028ff42406b068d5631623e00"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/campaign_analysis.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/campaign_analysis.json",
+        "sha256": "9e1ff63b8de869e8510117c7ae36b4a6dac3c3beb71846eaf93583a857e43832"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/chunk_metadata_retrieval.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/chunk_metadata_retrieval.json",
+        "sha256": "3e93d353235305fbe03404b5cc6906443a7fb64672a641aecfffd271e908b15b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.json",
+        "sha256": "63c1e720f41666f73d9987b70a9dd54a496be39603f1062ce032505e74eaced5"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.md",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/metadata-audit.md",
+        "sha256": "c89e7f35ac2d90859c0a0a7466c2cd99b67058e878d3b3bcc796041a1f2783d0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.json",
+        "sha256": "e74c5e9e332b140b2ff2d298bc55f9fb6100de711f7fbde80bfc09f471fbd1c3"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.md",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/independent/partial-state-audit.md",
+        "sha256": "fcffe370301869ef00b4fbff1dac96cf8ebf1569a82b8fbf217e4d3a566c52af"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/bootstrap_allocation.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/bootstrap_allocation.json",
+        "sha256": "f215e97e88af8bd621343266e33726f087582609dfff7c60be0179f7a82fc838"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/allocation_ledger.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/allocation_ledger.json",
+        "sha256": "b441af1c770a922753ee1149d69b91ab4c0a417bd11f3edc157f7f519c0dfc78"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr1e4/pass_20/resume_bundle.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr1e4/pass_20/resume_bundle.json",
+        "sha256": "c3441625918de145436326821137c8871fb1c42f933f14b47a58ffca2fe83abb"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr3e4/pass_20/resume_bundle.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/checkpoint_chunks/lr3e4/pass_20/resume_bundle.json",
+        "sha256": "356808a94a7e8e3fe47441871e70a5c28d95cd3dad58f39c098ad529bc7db10c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_report.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_report.json",
+        "sha256": "21978f74eaa09fdc172e2cbbad7fd652e02ea8b88ac47d4acbed211ba7957653"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_retention.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/execution_retention.json",
+        "sha256": "55eefc9397d224fc750e604ad5dc1eb2bb76394ec284a666380eb409c6975762"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/allocation_costs.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/allocation_costs.json",
+        "sha256": "3edf373b80f3b603fc4e387ca1ff5727e44ed85452225fe2f99ba7369fc9e8e6"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json",
+        "sha256": "3f06f48d6aa8089e433179897ad02c13af3abf043ba3017896f9daeaf5a4736d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json.context.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/canonical_trace.json.context.json",
+        "sha256": "0f42e9fb451fca9ea0c1832697fccb8c4834eb0c093d2881b710a83e1e1620e5"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/execution_profile_receipt.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/execution_profile_receipt.json",
+        "sha256": "6ac80f0654ee18be6f30f1b640e62461643f30f45e64937fab5b0151b9f95ab3"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/pause_receipt.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/pause_receipt.json",
+        "sha256": "bab07c0098ca7b65076d7adac4f2845392e5f15162feebd52c341d8454265a74"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/profiles/step_0_1792518559902523523/profile.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/profiles/step_0_1792518559902523523/profile.json",
+        "sha256": "b08203de584312c1f2c0cf08573822ccd9db98e72b57d10c78616c012d92a6d8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_certificate.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_certificate.json",
+        "sha256": "df28670d216bebf6bbbcef1d833228227b97be90e9ad0626bdf3d144fc197ff6"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_provenance.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/runtime_provenance.json",
+        "sha256": "1146998fd3cbd5b45d8ea827a488ea8e92d6b841938a6f6ce4b53b4a774d078f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/training_contract.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr1e4/training_contract.json",
+        "sha256": "84e6bad3482896dcd52d6f128f8503a2aee6dcd012c4f15d785c5fc943e2aa63"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/allocation_costs.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/allocation_costs.json",
+        "sha256": "a0dfa0511c9bb67cd2d0ea7abadb3b56a7ad2d3c134aa5221df7ef235b0a55f8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json",
+        "sha256": "0e87d41afcdec630a55617d55073b0be25be0cd66e207e37f9c48f3325b0f1b0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json.context.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/canonical_trace.json.context.json",
+        "sha256": "4edab60e33f51787478faea8d4a2bfb2623053641f021b64d6a3277a3334d12f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/execution_profile_receipt.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/execution_profile_receipt.json",
+        "sha256": "831481b559b26e6167e9c2a31ec5ff48cf9da504db8e245a1aca87531898be55"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/pause_receipt.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/pause_receipt.json",
+        "sha256": "45bfba5a05e6c951d937871df60d2d8429fab5db723dc4ff1233c2c2f035cb8b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/profiles/step_0_1792518559910042610/profile.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/profiles/step_0_1792518559910042610/profile.json",
+        "sha256": "7069c2dad59f3426b40cf3cb4265e1ee3ce6f4b729da1edcd0b8d5df39ec9bc1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_certificate.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_certificate.json",
+        "sha256": "c586a7b44b65b47b95f97bfd1b45a94fe10ecefece9cf33710f955239544f9a4"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_provenance.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/runtime_provenance.json",
+        "sha256": "92e853aa0658ede8c45d09987889f184d9859ebe8bc80bcfa48fd7bd7d52c3a4"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/training_contract.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata/experiment/lr3e4/training_contract.json",
+        "sha256": "78e36cb2d9c109219efc52f06566e6d0801f7b324622bda7e0cada0d8b425937"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata_retrieval.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/metadata_retrieval.json",
+        "sha256": "7c90100ea0faa258e24a159f16f09968d740a9fe889868f3cac9e9b8ca8405db"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/profiles_retrieval.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/profiles_retrieval.json",
+        "sha256": "93d8071fe764f60fc93fc3830176224ea9cc5ae084be2a714456fb3cd1db744a"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/retention.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/retained/retention.json",
+        "sha256": "06b6deb5a15d7f237cc33d851a8d8102bde5165ea8ff395de5d8320fe1aa3257"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/lr/submission.json",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/lr/submission.json",
+        "sha256": "dcc26ccf964f8fdce2c29092e59a7a7b0d8ed6ead7fbdddc9f03d70bff0be3ae"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/esa_attribution/protocol.md",
+        "name": "experiments/modern2d_configured_100k/esa_attribution/protocol.md",
+        "sha256": "f693427e4aa5176a9d1f34ae648dd1609927fd791754aa2f56d63fc143487f40"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr3e4/trajectory.json",
+        "name": "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr3e4/trajectory.json",
+        "sha256": "371cb2ec59f02d02ce716b9dcd0b16b29de772990300b75007ed62b9398cd1cc"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr3e4/trajectory.json",
+        "experiments/modern2d_configured_100k/esa_attribution/lr/authority.json",
+        "experiments/modern2d_configured_100k/esa_attribution/protocol.md",
+        "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-21T01:53:09.112913+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Saved remote partial artifacts only; no local model execution. Remote training stopped before frozen horizon."
+    },
+    "outcome": {
+      "artifact_status": "partial_verified",
+      "budget_decision": "STOP_FOR_COST",
+      "comparison_status": "context_only",
+      "execution_status": "interrupted",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "audit": "untouched",
+      "common_dev": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "consumed"
+    },
+    "scope": "PARTIAL_SCIENTIFIC_SCREEN_STOP_FOR_COST",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-21T01:53:09.112913+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    }
+  ],
+  "run_id": "esa-lr-attribution-100k-s42-v1:lr3e4:downstream",
+  "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+}

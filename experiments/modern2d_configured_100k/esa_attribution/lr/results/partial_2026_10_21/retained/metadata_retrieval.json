@@ -1,0 +1,25 @@
+{
+  "kernel": "kaseichou/molgap-esa-lr-attribution-100k-v1",
+  "version": 1,
+  "files": [
+    {
+      "path": "bootstrap_allocation.json",
+      "sha256": "f215e97e88af8bd621343266e33726f087582609dfff7c60be0179f7a82fc838"
+    },
+    {
+      "path": "experiment/execution_report.json",
+      "sha256": "21978f74eaa09fdc172e2cbbad7fd652e02ea8b88ac47d4acbed211ba7957653"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "55eefc9397d224fc750e604ad5dc1eb2bb76394ec284a666380eb409c6975762"
+    },
+    {
+      "path": "experiment/allocation_ledger.json",
+      "sha256": "b441af1c770a922753ee1149d69b91ab4c0a417bd11f3edc157f7f519c0dfc78"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

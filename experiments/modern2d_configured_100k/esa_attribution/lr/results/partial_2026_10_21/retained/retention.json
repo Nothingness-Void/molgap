@@ -1,0 +1,78 @@
+{
+  "kernel_id": 139862234,
+  "version": 1,
+  "files": [
+    {
+      "path": "experiment/lr3e4/last_checkpoint.pt",
+      "sha256": "3fbe6dcf7a1ef6ac511c5261969cc2998bbcf88216dd9ce5a9e7f979a3d419b9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr3e4/pass_20/files/last_checkpoint.pt",
+      "sha256": "cc9efb4f04e4da54b553133e1343c7f3cd4d30df9615ff0e2f2402423f92504d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr3e4/pass_20/files/development_predictions.pt",
+      "sha256": "7a6a0a63d83cc450d7417394446a9ca6a1d1b41d76c065ab5b926eb109ca5c41",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr3e4/pass_20/files/selected_model.pt",
+      "sha256": "53d8d467b8e5e95197cb5e60df0ac6eda621ba07120f6363c5c8001eb1887746",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr3e4/pass_20/files/canonical_trace.json",
+      "sha256": "e3d7e6ad62dcc083b951d1c6aa6cd3374acfd05124687957e183e02ee2a0215f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr3e4/pass_20/files/trajectory.json",
+      "sha256": "371cb2ec59f02d02ce716b9dcd0b16b29de772990300b75007ed62b9398cd1cc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/lr3e4/profiles/step_0_1792518559910042610/trace.json",
+      "sha256": "b264145c49b44086544b88a70eba0e08e69e1829064990f0ff5c34f18535a5a1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/lr1e4/last_checkpoint.pt",
+      "sha256": "f2fc17972482f3538e170f844d03fdb732cf5ccf5e1c9917f1e24918ca7dec79",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr1e4/pass_20/files/last_checkpoint.pt",
+      "sha256": "0f8f981a728bf7c35983b8753fe379bd84fd1eeedf368368f07611a5869642e7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr1e4/pass_20/files/development_predictions.pt",
+      "sha256": "d7d77d3c911ad0dcd1f029f0785ddcd26cab5142b1a91163a913e65bf0f3ac3c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr1e4/pass_20/files/selected_model.pt",
+      "sha256": "76fdab6d439415977284983aaeb61eb0fdc540c9c62852ed3f6193624875d367",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr1e4/pass_20/files/canonical_trace.json",
+      "sha256": "a601676a8d57ac17fcea71ebf215cd5ee2d8ad6900b56774693fb3b198f29852",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/lr1e4/pass_20/files/trajectory.json",
+      "sha256": "a0d233e95cc0e03bea35d43a54d95e14100242c50e1fdf244bf7a71ce08c7eef",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/lr1e4/profiles/step_0_1792518559902523523/trace.json",
+      "sha256": "263a81818bbbd6f1a88524d49f7afa7dbed573b3e54fadccdbab875abddd0fac",
+      "state": "RETAINED"
+    }
+  ],
+  "scope": "Paused terminal checkpoints plus independently retained pass20 snapshots and training profile raw traces; no completed manifest",
+  "model_inference_executed": false
+}

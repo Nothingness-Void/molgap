@@ -1,0 +1,262 @@
+{
+  "arm": "lr1e4",
+  "best_scalar_is_not_accepted_endpoint": true,
+  "canonical_replay_manifest_admitted": false,
+  "canonical_trace_gate": "No frozen accepted reference, interrupted scientific horizon; original trace preserved unchanged as evidence artifact",
+  "complete_billing": "measurement_missing",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "lr1e4-v1",
+      "category": "training",
+      "cost_event_id": "cost-T-esa-lr-attribution-100k-s42-v1-lr1e4-full-missing",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/acceptance.json",
+      "hardware": "Tesla_T4x2",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    }
+  ],
+  "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+  "kernel_id": 139862234,
+  "observed": {
+    "best_observed_dev_mae_eV": 0.21137726306915283,
+    "best_observed_pass": 27,
+    "capture_off_train_graphs_per_second": 166.2473026656886,
+    "capture_off_train_spans": 28,
+    "durable_updates": 23357,
+    "full_passes_observed": 29,
+    "horizon_updates": 46860,
+    "last5": [
+      {
+        "epoch_or_pass": 25,
+        "learning_rate": 6.944282990207195e-05,
+        "live_dev_metric": 0.2123951017856598,
+        "live_train_metric": 0.09172196802653362,
+        "optimizer_step": 19525
+      },
+      {
+        "epoch_or_pass": 26,
+        "learning_rate": 6.684881356678078e-05,
+        "live_dev_metric": 0.21320529282093048,
+        "live_train_metric": 0.0889637615345657,
+        "optimizer_step": 20306
+      },
+      {
+        "epoch_or_pass": 27,
+        "learning_rate": 6.420335781553005e-05,
+        "live_dev_metric": 0.21137726306915283,
+        "live_train_metric": 0.08647771555544015,
+        "optimizer_step": 21087
+      },
+      {
+        "epoch_or_pass": 28,
+        "learning_rate": 6.151478623083756e-05,
+        "live_dev_metric": 0.2136206179857254,
+        "live_train_metric": 0.08376015069752588,
+        "optimizer_step": 21868
+      },
+      {
+        "epoch_or_pass": 29,
+        "learning_rate": 5.8791558053584456e-05,
+        "live_dev_metric": 0.21529927849769592,
+        "live_train_metric": 0.08143311036838917,
+        "optimizer_step": 22649
+      }
+    ],
+    "last_dev_mae_eV": 0.21529927849769592,
+    "last_train_normalized_gap_mae": 0.08143311036838917,
+    "pass_wall_seconds_median": 948.0856078710003,
+    "presentations": 2989696,
+    "profile_capture_seconds": 8.315618086000029,
+    "profile_captured_updates": 8,
+    "profile_keys": [
+      "format",
+      "status",
+      "error",
+      "finalization_error",
+      "recipe_identity",
+      "family",
+      "config",
+      "starting_optimizer_step",
+      "observed_updates",
+      "captured_updates",
+      "capture_start_optimizer_step",
+      "capture_wall_seconds",
+      "capture_off_training_spans",
+      "runtime",
+      "device_events_observed",
+      "context_peak_allocated_bytes",
+      "context_peak_reserved_bytes",
+      "phases_by_host_self_time",
+      "operators_by_self_cpu",
+      "operators_by_self_device",
+      "trace_sha256",
+      "limitations"
+    ],
+    "profile_peak_allocated_bytes": 949921792,
+    "profile_phases": [
+      {
+        "calls": 8,
+        "host_self_seconds": 7.617058100999998,
+        "host_total_seconds": 7.617058100999998,
+        "name": "forward"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.3828885009999681,
+        "host_total_seconds": 0.3828885009999681,
+        "name": "backward"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.14808515199996464,
+        "host_total_seconds": 0.14808515199996464,
+        "name": "loader_wait"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.06695055800003047,
+        "host_total_seconds": 0.06695055800003047,
+        "name": "optimizer"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.05188705799997706,
+        "host_total_seconds": 0.05188705799997706,
+        "name": "gradient_clip"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.03981573600003685,
+        "host_total_seconds": 8.162920800000052,
+        "name": "train_update"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.004320846000041456,
+        "host_total_seconds": 0.004320846000041456,
+        "name": "zero_grad"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.000735577999932957,
+        "host_total_seconds": 0.000735577999932957,
+        "name": "schedule_before"
+      },
+      {
+        "calls": 8,
+        "host_self_seconds": 0.00047340899993741914,
+        "host_total_seconds": 0.00047340899993741914,
+        "name": "schedule_after"
+      }
+    ]
+  },
+  "observed_shared_allocation_t4_hours": 15.689419696875555,
+  "observed_shared_allocation_wall_seconds": 28240.955454376,
+  "outcome": {
+    "artifact_status": "partial_verified",
+    "budget_decision": "STOP_FOR_COST",
+    "comparison_status": "context_only",
+    "execution_status": "interrupted",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "raw_partial_trace_retained": true,
+  "replay_ready": false,
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/acceptance.json",
+      "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    }
+  ],
+  "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream",
+  "shared_cost_not_additive_per_arm": true,
+  "successor_submitted": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/decision.json",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "STOP_FOR_COST",
+    "reopen_conditions": [
+      "Separate authority after execution/budget feasibility and reference review"
+    ]
+  },
+  "version": 1
+}

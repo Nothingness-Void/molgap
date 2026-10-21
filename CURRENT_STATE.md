@@ -6,21 +6,20 @@
 
 ## Server execution status
 
-The human authorized a three-slot Modern2D attribution campaign including the
-separately bound PPGT short profile. Two [ESA notebooks](experiments/modern2d_configured_100k/esa_attribution/protocol.md)
-were submitted once: Kaggle2 LR kernel139862234/version1 and Kaggle3 WD
-kernel139862322/version1. The WD slot ended scheduler COMPLETE but producer
-[STOP_FOR_COST with29 observed passes](experiments/modern2d_configured_100k/esa_attribution/wd/results/decision_2026_10_21.md),
-not a60-pass endpoint or winner. Its original partial traces/checkpoints/profile
-are retained; the LR slot remains under its separate Luna binding.
-Four independent seed42/BS128/
-FP32 arms retain60 passes and accepted identical100K/Common-Dev inputs; each
-notebook is bounded8h/16 allocated T4-hours. Native repeat/resume and short
-in-training profiler windows are required. The same Luna B/30-minute heartbeat
-monitors all three exact bindings and stays silent while healthy. A terminal
-job does not pause remaining jobs. No500K/full/extra seed/protected-role release
-or automatic successor follows. Producer endpoints, scientific results and
-Replay remain pending, not implied by submission.
+The human-authorized three-slot Modern2D campaign is terminal. Both ESA
+notebooks (Kaggle2 kernel139862234/version1, Kaggle3 kernel139862322/version1)
+ended scheduler COMPLETE but producer STOP_FOR_COST with29 observed passes,
+not60-pass endpoints. The [LR interpretation](experiments/modern2d_configured_100k/esa_attribution/lr/results/decision_2026_10_21.md)
+retains LR3e-4 as the strongest partial optimization lead, not a scientific
+winner; the [WD interpretation](experiments/modern2d_configured_100k/esa_attribution/wd/results/decision_2026_10_21.md)
+and both slots' execution profiles retain the forward/token preparation budget
+bottleneck. All four partial metadata records are RML-finalized as
+STOP_FOR_COST/INCONCLUSIVE/context_only, with original curves retained as
+evidence but no accepted replay reference/manifest or Replay-Ready claim.
+The separately accepted PPGT profile is execution-only. All campaign bindings
+are closed; no continuation,500K/full/extra seed/protected role or successor
+was submitted. Execution-equivalent optimization and budget feasibility need
+resolution before another bounded authority; the existing monitor may pause.
 
 The [configured PPGT/ESA paired100K screen](experiments/modern2d_configured_100k/STATUS.md)
 ended ERROR/STOP_FOR_COST; Luna delivered the terminal event and paused its

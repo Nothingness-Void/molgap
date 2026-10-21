@@ -1,0 +1,258 @@
+{
+  "arm": {
+    "family": {
+      "name": "esa_small",
+      "version": "4"
+    },
+    "id": "lr1e4",
+    "identity": "e43885ab90491d8ae07ecf89ad4cf2590138016f1364f806f227c0f457dd4874",
+    "recipe_sha256": "84e6bad3482896dcd52d6f128f8503a2aee6dcd012c4f15d785c5fc943e2aa63"
+  },
+  "artifacts": {
+    "checkpoint": {
+      "path": "files/last_checkpoint.pt",
+      "required": true,
+      "restore_path": "last_checkpoint.pt",
+      "sha256": "0f8f981a728bf7c35983b8753fe379bd84fd1eeedf368368f07611a5869642e7"
+    },
+    "predictions": {
+      "path": "files/development_predictions.pt",
+      "required": false,
+      "restore_path": "development_predictions.pt",
+      "sha256": "d7d77d3c911ad0dcd1f029f0785ddcd26cab5142b1a91163a913e65bf0f3ac3c"
+    },
+    "selected_model": {
+      "path": "files/selected_model.pt",
+      "required": false,
+      "restore_path": "selected_model.pt",
+      "sha256": "76fdab6d439415977284983aaeb61eb0fdc540c9c62852ed3f6193624875d367"
+    },
+    "trace": {
+      "path": "files/canonical_trace.json",
+      "required": true,
+      "restore_path": "canonical_trace.json",
+      "sha256": "a601676a8d57ac17fcea71ebf215cd5ee2d8ad6900b56774693fb3b198f29852"
+    },
+    "trajectory": {
+      "path": "files/trajectory.json",
+      "required": true,
+      "restore_path": "trajectory.json",
+      "sha256": "a0d233e95cc0e03bea35d43a54d95e14100242c50e1fdf244bf7a71ce08c7eef"
+    }
+  },
+  "context": [
+    {
+      "path": "files/canonical_trace.json.context.json",
+      "required": true,
+      "restore_path": "canonical_trace.json.context.json",
+      "sha256": "0f42e9fb451fca9ea0c1832697fccb8c4834eb0c093d2881b710a83e1e1620e5"
+    }
+  ],
+  "cost_segments": [
+    {
+      "path": "files/allocation_ledger.json",
+      "required": true,
+      "restore_path": "allocation_ledger.json",
+      "sha256": "99c96f745257e7cb85f8925bf5aef1ac8d5270fcd4711218c23cc3f0bccc0f86"
+    },
+    {
+      "path": "files/invocation_cost_state.json",
+      "required": true,
+      "restore_path": "invocation_cost_state.json",
+      "sha256": "674cb6017ab3f89f89aa59730d181a4ca8683e53b5aee1bb94a326db940d5538"
+    },
+    {
+      "path": "files/preflight_costs.json",
+      "required": true,
+      "restore_path": "preflight_costs.json",
+      "sha256": "984f28bc0c39638e5748b039acdd82236218fb1565b5423855a742619b3da385"
+    }
+  ],
+  "cursor": {
+    "best_development_mae_eV": 0.21429133415222168,
+    "next_batch": 0,
+    "optimizer_state_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129
+    ],
+    "optimizer_step": 15620,
+    "pass_index": 20,
+    "pending_absolute": [],
+    "pending_rows": 0,
+    "recipe_identity": "0acdc03a59ac59cf646d2ee370f0e30452b05ecd3962270b5bf53aa6f1de925e",
+    "sample_presentations": 1999360,
+    "selected_step": 14839,
+    "status": "running"
+  },
+  "format": "molgap-resume-bundle-v1",
+  "provenance": [
+    {
+      "path": "files/runtime_provenance.json",
+      "required": true,
+      "restore_path": "runtime_provenance.json",
+      "sha256": "1146998fd3cbd5b45d8ea827a488ea8e92d6b841938a6f6ce4b53b4a774d078f"
+    },
+    {
+      "path": "files/training_contract.json",
+      "required": true,
+      "restore_path": "training_contract.json",
+      "sha256": "84e6bad3482896dcd52d6f128f8503a2aee6dcd012c4f15d785c5fc943e2aa63"
+    }
+  ],
+  "run": {
+    "action_id": "A001",
+    "attempt_id": "lr1e4-v1",
+    "logical_run_id": "esa-lr-attribution-100k-s42-v1",
+    "run_id": "esa-lr-attribution-100k-s42-v1:lr1e4:downstream"
+  },
+  "runtime": [
+    {
+      "path": "files/runtime_certificate.json",
+      "required": true,
+      "restore_path": "runtime_certificate.json",
+      "sha256": "df28670d216bebf6bbbcef1d833228227b97be90e9ad0626bdf3d144fc197ff6"
+    }
+  ],
+  "source": {
+    "archive_sha256": "cdfa34a83fd76b81b3638b416109c556d9f651fb939beb1e3c20118d41830ed9",
+    "commit": "ed4ade246a6a33df8e5eea18b99836fbe9b965a8",
+    "package_identity": "3011a55927643a31e1f2038a01d80fbfb1083d32a04d54229e3e91022c631f58"
+  },
+  "spec": {
+    "identity": "b0dd1eb3fe27df4fe17784569563618bf228c1f6911d81ef7a5d437c896c58f8"
+  },
+  "status": "incomplete",
+  "trajectory": {
+    "id": "T-esa-lr-attribution-100k-s42-v1-lr1e4",
+    "sha256": "a0d233e95cc0e03bea35d43a54d95e14100242c50e1fdf244bf7a71ce08c7eef",
+    "source_path": null
+  }
+}

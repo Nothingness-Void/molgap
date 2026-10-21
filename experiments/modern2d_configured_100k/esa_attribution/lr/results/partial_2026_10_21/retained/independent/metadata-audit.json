@@ -1,0 +1,230 @@
+{
+  "format": "molgap-esa-lr-independent-metadata-audit-v1",
+  "utc": "2026-10-21T01:51:24.683811+00:00",
+  "scope": "Existing saved JSON only; no .pt opened before readiness confirmation",
+  "checks": {
+    "exact_submission": {
+      "passed": true
+    },
+    "spec_identity": {
+      "passed": true
+    },
+    "source_package_identity": {
+      "passed": true
+    },
+    "authority_boundary": {
+      "passed": true
+    },
+    "terminal_stopped_inconclusive": {
+      "passed": true
+    },
+    "execution_retention_report_hash": {
+      "passed": true
+    },
+    "execution_retention_ledger_hash": {
+      "passed": true
+    },
+    "lr3e4:canonical_validator": {
+      "passed": true,
+      "detail": {
+        "observations": 29,
+        "sha256": "0e87d41afcdec630a55617d55073b0be25be0cd66e207e37f9c48f3325b0f1b0"
+      }
+    },
+    "lr3e4:context_alignment": {
+      "passed": true
+    },
+    "lr3e4:source_package_spec_arm": {
+      "passed": true
+    },
+    "lr3e4:frozen_recipe_file": {
+      "passed": true
+    },
+    "lr3e4:recipe_provenance": {
+      "passed": true
+    },
+    "lr3e4:authority_sha": {
+      "passed": true
+    },
+    "lr3e4:precision_batch_seed_lr_wd": {
+      "passed": true
+    },
+    "lr3e4:fixed_data_identity": {
+      "passed": true
+    },
+    "lr3e4:accepted_roles": {
+      "passed": true
+    },
+    "lr3e4:role_trace_binding": {
+      "passed": true
+    },
+    "lr3e4:trace_trajectory_run": {
+      "passed": true
+    },
+    "lr3e4:native_certificate_metadata": {
+      "passed": true
+    },
+    "lr3e4:partial_not_horizon_complete": {
+      "passed": true
+    },
+    "lr3e4:exposure_axes": {
+      "passed": true
+    },
+    "lr3e4:finite_time_lr_checkpoint_axes": {
+      "passed": true
+    },
+    "lr3e4:metric_units": {
+      "passed": true
+    },
+    "lr3e4:profile_report_hash": {
+      "passed": true
+    },
+    "lr3e4:profile_receipt_binding": {
+      "passed": true
+    },
+    "lr1e4:canonical_validator": {
+      "passed": true,
+      "detail": {
+        "observations": 29,
+        "sha256": "3f06f48d6aa8089e433179897ad02c13af3abf043ba3017896f9daeaf5a4736d"
+      }
+    },
+    "lr1e4:context_alignment": {
+      "passed": true
+    },
+    "lr1e4:source_package_spec_arm": {
+      "passed": true
+    },
+    "lr1e4:frozen_recipe_file": {
+      "passed": true
+    },
+    "lr1e4:recipe_provenance": {
+      "passed": true
+    },
+    "lr1e4:authority_sha": {
+      "passed": true
+    },
+    "lr1e4:precision_batch_seed_lr_wd": {
+      "passed": true
+    },
+    "lr1e4:fixed_data_identity": {
+      "passed": true
+    },
+    "lr1e4:accepted_roles": {
+      "passed": true
+    },
+    "lr1e4:role_trace_binding": {
+      "passed": true
+    },
+    "lr1e4:trace_trajectory_run": {
+      "passed": true
+    },
+    "lr1e4:native_certificate_metadata": {
+      "passed": true
+    },
+    "lr1e4:partial_not_horizon_complete": {
+      "passed": true
+    },
+    "lr1e4:exposure_axes": {
+      "passed": true
+    },
+    "lr1e4:finite_time_lr_checkpoint_axes": {
+      "passed": true
+    },
+    "lr1e4:metric_units": {
+      "passed": true
+    },
+    "lr1e4:profile_report_hash": {
+      "passed": true
+    },
+    "lr1e4:profile_receipt_binding": {
+      "passed": true
+    },
+    "pair_only_LR_delta": {
+      "passed": true,
+      "detail": [
+        "learning_rate"
+      ]
+    },
+    "pair_same_initialization": {
+      "passed": true
+    },
+    "allocation_observed_ceiling": {
+      "passed": true
+    }
+  },
+  "errors": [],
+  "missing": [],
+  "arms": {
+    "lr3e4": {
+      "observations": 29,
+      "last_observed_pass": 29,
+      "last_observed_step": 22649,
+      "last_train_normalized_Gap": 0.06658266682211171,
+      "last_dev_MAE_eV": 0.2099905014038086,
+      "best_observed_dev_MAE_eV": 0.20648691058158875,
+      "best_observed_pass": 27,
+      "paused_optimizer_step": 23334,
+      "paused_cursor": {
+        "completed_passes": 29,
+        "next_batch": 685
+      },
+      "horizon_steps": 46860,
+      "recipe_identity": "9eaf295634f92458b3606ad9c3a231f83091e1d578f1819d6788842b46cfb580",
+      "profile_summary_sha256": "7069c2dad59f3426b40cf3cb4265e1ee3ce6f4b729da1edcd0b8d5df39ec9bc1",
+      "raw_trace_sha256_DECLARED_ONLY": "b264145c49b44086544b88a70eba0e08e69e1829064990f0ff5c34f18535a5a1",
+      "native_state_validation": "PENDING .pt readiness confirmation",
+      "runtime_platform_version": null
+    },
+    "lr1e4": {
+      "observations": 29,
+      "last_observed_pass": 29,
+      "last_observed_step": 22649,
+      "last_train_normalized_Gap": 0.08143311036838917,
+      "last_dev_MAE_eV": 0.21529927849769592,
+      "best_observed_dev_MAE_eV": 0.21137726306915283,
+      "best_observed_pass": 27,
+      "paused_optimizer_step": 23357,
+      "paused_cursor": {
+        "completed_passes": 29,
+        "next_batch": 708
+      },
+      "horizon_steps": 46860,
+      "recipe_identity": "0acdc03a59ac59cf646d2ee370f0e30452b05ecd3962270b5bf53aa6f1de925e",
+      "profile_summary_sha256": "b08203de584312c1f2c0cf08573822ccd9db98e72b57d10c78616c012d92a6d8",
+      "raw_trace_sha256_DECLARED_ONLY": "263a81818bbbd6f1a88524d49f7afa7dbed573b3e54fadccdbab875abddd0fac",
+      "native_state_validation": "PENDING .pt readiness confirmation",
+      "runtime_platform_version": null
+    }
+  },
+  "blockers": [
+    "Native/partial saved states awaiting main readiness confirmation",
+    "Raw Chrome trace bytes not independently checked in metadata audit",
+    "Interrupted run has no completed 60-pass output manifest; no full reference/scientific acceptance or Replay claim"
+  ],
+  "outcome_dimensions": {
+    "execution": "interrupted",
+    "budget": "STOP_FOR_COST",
+    "scientific": "INCONCLUSIVE",
+    "comparison": "context_only"
+  },
+  "pair_trace_exposure_aligned": true,
+  "observed_cost": {
+    "whole_bootstrap_wall_seconds": 28240.955454376,
+    "whole_allocated_T4_hours": 15.689419696875555,
+    "inner_ledger_wall_seconds": 28240.585977713,
+    "overlapping_windows_not_additive": true,
+    "full_billing_queue_pre_python_provisioning": "missing"
+  },
+  "counts": {
+    "passed": 46,
+    "failed": 0
+  },
+  "status": "METADATA_VERIFIED_ACCEPTANCE_PENDING",
+  "duration_seconds": 3.4386474000057206,
+  "metric_units": "Train MAE is normalized-Gap, NOT eV; development MAE is eV. No cross-unit subtraction or completed-reference comparison.",
+  "artifacts": {
+    "json": "E:\\MolGap\\artifacts\\runs\\esa-lr-attribution-100k-s42-v1\\v1\\inspection\\independent\\metadata-audit.json",
+    "report": "E:\\MolGap\\artifacts\\runs\\esa-lr-attribution-100k-s42-v1\\v1\\inspection\\independent\\metadata-audit.md"
+  }
+}

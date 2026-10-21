@@ -1,0 +1,27 @@
+{
+  "context": {
+    "experiment_id": "modern2d_configured_100k",
+    "logical_run_id": "esa-lr-attribution-100k-s42-v1",
+    "arm_id": "lr1e4",
+    "arm_identity": "e43885ab90491d8ae07ecf89ad4cf2590138016f1364f806f227c0f457dd4874",
+    "spec_identity": "b0dd1eb3fe27df4fe17784569563618bf228c1f6911d81ef7a5d437c896c58f8",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "source_commit": "ed4ade246a6a33df8e5eea18b99836fbe9b965a8",
+    "source_archive_sha256": "cdfa34a83fd76b81b3638b416109c556d9f651fb939beb1e3c20118d41830ed9",
+    "package_identity": "3011a55927643a31e1f2038a01d80fbfb1083d32a04d54229e3e91022c631f58",
+    "training_recipe_sha256": "84e6bad3482896dcd52d6f128f8503a2aee6dcd012c4f15d785c5fc943e2aa63",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-esa-lr-attribution-100k-v1",
+    "platform_version": null
+  },
+  "status": "PAUSED",
+  "optimizer_steps": 23357,
+  "sample_presentations": 2989696,
+  "checkpoint_sha256": "f2fc17972482f3538e170f844d03fdb732cf5ccf5e1c9917f1e24918ca7dec79",
+  "scientific_acceptance": "INCONCLUSIVE",
+  "horizon_steps": 46860,
+  "completed_steps": 23357,
+  "reason": "STOP_FOR_COST"
+}
