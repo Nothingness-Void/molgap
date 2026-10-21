@@ -55,6 +55,13 @@ def _modern2d_wall_ceiling(declaration, source):
         if (authority.get("scientific_training_authorized") is not False or wall > 1800
                 or budget > 1 or len(arms) != 1 or authority.get("scratch_optimizer_updates_per_model") != 6):
             raise ValueError("Profiling startup cannot release scientific training or an expanded allocation")
+    elif purpose == "CONFIGURED_EXECUTION_REPAIR":
+        if (authority.get("scientific_training_authorized") is not False or wall > 1800
+                or budget > 1 or authority.get("scratch_optimizer_updates_per_model") != 8
+                or authority.get("execution_reference_required") is not True
+                or [(a["family"]["name"], a["family"]["version"]) for a in arms]
+                    != [("ppgt_small", "3"), ("esa_small", "4")]):
+            raise ValueError("Execution repair startup requires two train-only reference probes within1 T4h")
     elif purpose not in {"CONFIGURED_SCREEN", "FORMAL_100K_TRAINING"} or authority.get("scientific_training_authorized") is not True:
         raise ValueError("Unknown Modern2D startup purpose")
     return wall

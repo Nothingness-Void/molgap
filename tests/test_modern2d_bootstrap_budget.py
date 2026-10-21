@@ -47,3 +47,38 @@ def test_profile_scope_expansion_fails_before_environment(tmp_path, delta):
     publish(folder, authority)
     with pytest.raises(ValueError):
         entry._modern2d_wall_ceiling(declaration, tmp_path)
+
+
+def test_repair_bootstrap_accepts_exact_two_family_probe(tmp_path):
+    entry, declaration, authority, folder = setup(tmp_path)
+    declaration["arms"].append(dict(family=dict(name="esa_small", version="4")))
+    authority.update(purpose="CONFIGURED_EXECUTION_REPAIR",
+        scratch_optimizer_updates_per_model=8, execution_reference_required=True)
+    publish(folder, authority)
+    assert entry._modern2d_wall_ceiling(declaration, tmp_path) == 1800
+
+
+@pytest.mark.parametrize("delta", [dict(scientific_training_authorized=True),
+    dict(scratch_optimizer_updates_per_model=6), dict(execution_reference_required=False),
+    dict(allocated_t4_hours_ceiling=2)])
+def test_repair_bootstrap_rejects_expanded_or_missing_reference_probe(tmp_path, delta):
+    entry, declaration, authority, folder = setup(tmp_path)
+    declaration["arms"].append(dict(family=dict(name="esa_small", version="4")))
+    authority.update(purpose="CONFIGURED_EXECUTION_REPAIR",
+        scratch_optimizer_updates_per_model=8, execution_reference_required=True)
+    authority.update(delta)
+    publish(folder, authority)
+    with pytest.raises(ValueError):
+        entry._modern2d_wall_ceiling(declaration, tmp_path)
+
+
+def test_repair_bootstrap_rejects_single_or_reordered_families(tmp_path):
+    entry, declaration, authority, folder = setup(tmp_path)
+    authority.update(purpose="CONFIGURED_EXECUTION_REPAIR",
+        scratch_optimizer_updates_per_model=8, execution_reference_required=True)
+    publish(folder, authority)
+    with pytest.raises(ValueError):
+        entry._modern2d_wall_ceiling(declaration, tmp_path)
+    declaration["arms"].insert(0, dict(family=dict(name="esa_small", version="4")))
+    with pytest.raises(ValueError):
+        entry._modern2d_wall_ceiling(declaration, tmp_path)
