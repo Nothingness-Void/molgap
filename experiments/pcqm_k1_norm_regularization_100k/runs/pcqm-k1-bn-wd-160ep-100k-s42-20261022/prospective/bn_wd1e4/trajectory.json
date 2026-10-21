@@ -1,0 +1,118 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-bn-wd-160ep-100k-s42-20261022-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_norm_regularization_100k/generated/00c8437e8f377c01364046fbdd7f50feaceaa5cd1ee89dc9d07b02db36099d83/bn_wd1e4/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-bn-wd-160ep-100k-s42-20261022:bn_wd1e4:downstream"
+      ],
+      "source_commit": "718e3c00c200de55e4b5680c6a57d94c6d73b105",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_norm_regularization_100k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_norm_regularization_100k/bn/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-bn-wd-160ep-100k-s42-20261022",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_norm_regularization_100k/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_norm_regularization_100k/runs/pcqm-k1-bn-wd-160ep-100k-s42-20261022/prospective/rml_decision_snapshots/346aa6d6dbced2502f736e30cb0e8479bd6734a925f0d38d82e9d632409423b1.json",
+    "snapshot_sha256": "346aa6d6dbced2502f736e30cb0e8479bd6734a925f0d38d82e9d632409423b1",
+    "state_timestamp": "2026-10-21T16:47:55.538790+00:00"
+  },
+  "family_id": "pcqm-k1-bn-wd-160ep-100k-s42-20261022",
+  "hypothesis": {
+    "alternative_explanations": [
+      "No benefit or underfitting",
+      "Optimization trajectory rather than norm class explains prior benefit",
+      "Cross-job and seed variation"
+    ],
+    "changed_mechanism": "decoupled-weight-decay",
+    "cheapest_falsifier": "One new paired100K160epoch regularization comparison",
+    "decision_changed_if_negative": "Close without changing recommendation",
+    "decision_changed_if_positive": "Nominate independently qualified regularization candidate",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4",
+    "observed_deficiency": "Prior train fit improves beyond40 while development benefits slow; optimization sensitivity is observed, regularization cause is not proven",
+    "related_closed_family_ids": [
+      "original-LR LN160",
+      "K1 distillation",
+      "K1 slot96"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does stronger decoupled weight decay improve BN K1 with low LR and warmup?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_norm_regularization_100k/bn/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_norm_regularization_100k/generated/00c8437e8f377c01364046fbdd7f50feaceaa5cd1ee89dc9d07b02db36099d83/bn_wd1e4/recipe.json",
+      "experiments/pcqm_k1_norm_regularization_100k/bn/declaration_template.json",
+      "experiments/pcqm_k1_norm_regularization_100k/bn/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_norm_regularization_100k/role_plan.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "bn_wd1e4",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-bn-wd-160ep-100k-s42-20261022",
+      "reference_arm_id": "bn_wd1e4",
+      "reference_trajectory_id": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4",
+      "reference_trajectory_ref": "experiments/pcqm_k1_norm_regularization_100k/runs/pcqm-k1-bn-wd-160ep-100k-s42-20261022/prospective/bn_wd1e4/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "3e8e46c66c0d29826378dd7e4c59a776db9247d6723de4ebbfed511be1106bb8"
+    },
+    "source_commit": "718e3c00c200de55e4b5680c6a57d94c6d73b105",
+    "source_config_identity": "bb4dbf23cb92ba36ad7437c1e921e12cc08d85b5b7a2619c8f8ac83c34a24955"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4"
+}
