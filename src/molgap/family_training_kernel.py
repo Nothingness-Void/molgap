@@ -34,6 +34,10 @@ def load_family_model(recipe, initial_state):
         from dataclasses import asdict
         model = factory({"model_config": asdict(recipe.model_config)})
         exact_load(model)
+        if (recipe.formal_interface and recipe.formal_training.execution_mode == "batched-v1"):
+            # An explicitly frozen new screen adopts the T4-qualified backend;
+            # historical recipes and their graphwise default stay unchanged.
+            model.forward = model.forward_bucketed
     elif recipe.family == "neural_atom_k1":
         from .qm9_neural_atom import make_encoder
         model = make_encoder("neural_atom_k1")

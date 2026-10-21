@@ -117,6 +117,10 @@ def validate_configured_authority(authority, declaration, recipes=None):
         if authority.get("recipes") != expected:
             raise ValueError("Configured authority recipe/horizon binding changed")
         for recipe in recipes.values():
+            if recipe.formal_training.execution_mode == "batched-v1" and (
+                    authority.get("execution_mode") != "batched-v1"
+                    or not authority.get("execution_qualification_ref")):
+                raise ValueError("Batched scientific execution requires explicit native qualification authority")
             if (not recipe.formal_training.configured or recipe.formal_training.phase != "train"
                     or recipe.dataset.manifest.startswith("synthetic/")
                     or recipe.train_rows != (100000 if authority["roles"][0] == "train_100k" else 500000)
@@ -265,6 +269,14 @@ def check_plan(spec, root, plan):
             raise ValueError("Formal target encoding or row-order identity changed")
     if configured:
         validate_configured_authority(authority, declaration, recipes)
+        if any(r.formal_training.execution_mode == "batched-v1" for r in recipes.values()):
+            qualification = _json(_pinned(root, authority["execution_qualification_ref"]))
+            probe = qualification.get("execution_repair", {})
+            if (qualification.get("native_certificate_status") != "accepted"
+                    or probe.get("family") != "ppgt_small"
+                    or probe.get("update_equivalent") is not True
+                    or probe.get("scientific_training_released") is not False):
+                raise ValueError("Saved native execution qualification is missing or incompatible")
         if authority.get("purpose") in {PROFILE_PURPOSE, REPAIR_PURPOSE}:
             from .family_execution_profile import ProfileConfig
             for entry in plan["arms"]:

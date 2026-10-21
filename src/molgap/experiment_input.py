@@ -149,8 +149,12 @@ def _read_scientific_recipe(path, family, authority):
     try:
         return read_recipe(path)
     except ValueError as error:
-        if (authority.get("purpose") != "CONFIGURED_EXECUTION_REPAIR"
-                or authority.get("scientific_training_authorized") is not False
+        repair = (authority.get("purpose") == "CONFIGURED_EXECUTION_REPAIR"
+                  and authority.get("scientific_training_authorized") is False)
+        fresh_screen = (authority.get("purpose") == "CONFIGURED_SCREEN"
+                  and authority.get("scientific_training_authorized") is True
+                  and authority.get("source_reissue_authorized") is True)
+        if (not (repair or fresh_screen)
                 or family not in INTERFACES
                 or str(error) != "Execution policy differs from the accelerated family default"):
             raise
@@ -223,6 +227,10 @@ def _compile_scientific_input(path, root, value):
     config_name = config_path.relative_to(root).as_posix()
     local(config_name)
     authority = _read(local(value["authority_ref"]))
+    if "execution_qualification_ref" in authority:
+        retained(authority["execution_qualification_ref"])
+    if authority.get("research_design", {}).get("campaign_ref"):
+        local(authority["research_design"]["campaign_ref"])
     local(value["role_ref"]); local(value["decision_ref"])
     platform = _read(local(value["platform_ref"]))
     _object(platform, "platform kaggle", "platform input")
@@ -272,7 +280,7 @@ def _compile_scientific_input(path, root, value):
         if set(roles) != {"train", "development"} or any(
                 record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "profiling"} if modern else {"learning_rate", "weight_decay"}):
+        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling"} if modern else {"learning_rate", "weight_decay"}):
             raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
@@ -292,13 +300,14 @@ def _compile_scientific_input(path, root, value):
             ProfileConfig.from_dict(profiling_config)
         if modern:
             passes = edits.pop("horizon_passes", baseline.formal_training.horizon_passes)
+            execution_mode = edits.pop("execution_mode", "original")
             if type(passes) is not int or passes < 1:
                 raise ValueError("Modern2D horizon_passes must be a positive integer")
             steps = passes * (baseline.train_rows // baseline.batch_size)
             edits.update(optimizer_steps=steps,
                 schedule=replace(baseline.schedule, total_units=steps, reference_epochs=passes),
                 formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
-                    horizon_passes=passes, horizon_steps=steps))
+                    horizon_passes=passes, horizon_steps=steps, execution_mode=execution_mode))
         recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **edits)
         bindings = family_arm_bindings(recipe)
         arm["base"] = bindings["base"]

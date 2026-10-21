@@ -20,10 +20,15 @@ For each Modern2D arm:
 - `reference_ref` locates that declaration's pinned input and target metadata.
   Its name is retained for input compatibility; it does **not** imply that the
   model is an accepted scientific reference.
-- `training` permits `learning_rate`, `weight_decay` and `horizon_passes`.
+- `training` permits `learning_rate`, `weight_decay`, `horizon_passes`,
+  `profiling` and an explicitly frozen `execution_mode`.
   The compiler derives optimizer steps from complete passes and BS128, retains
   the schedule kind, and validates its constraints (the four-stage warmup
   schedule requires more than four passes).
+- `execution_mode="batched-v1"` is PPGT-only and requires a new configured
+  recipe plus a pinned accepted native qualification in the authority.
+  The compiler packages that evidence; historical recipes keep the original
+  graphwise default. The exact new model/recipe still passes native admission.
 - `purpose` is `context_only`. These initial model screens collect evidence;
   they do not manufacture a matched comparison, superiority or Replay admission.
 

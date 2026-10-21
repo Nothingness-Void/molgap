@@ -23,8 +23,12 @@ class Modern2DFormalTrainingProfile:
     phase: str = "train"
     horizon_passes: int = 60
     horizon_steps: int = FORMAL_STEPS
+    execution_mode: str = "original"
 
     def __post_init__(self):
+        if self.execution_mode not in {"original", "batched-v1"} or (
+                self.execution_mode != "original" and not self.configured):
+            raise ValueError("Batched execution requires an explicit new configured recipe")
         if self.configured:
             if (self.phase not in {"train", "native-preflight"}
                     or type(self.horizon_passes) is not int or self.horizon_passes < 1
@@ -44,6 +48,8 @@ class Modern2DFormalTrainingProfile:
         synthetic = recipe.dataset.manifest.startswith("synthetic/")
         probe = self.phase == "native-preflight"
         if self.configured:
+            if self.execution_mode == "batched-v1" and recipe.family != "ppgt_small":
+                raise ValueError("PPGT bucketing cannot select an unrelated family backend")
             if (recipe.interface not in INTERFACES or recipe.mode not in {"reference", "composed"} or recipe.seed != 42
                     or recipe.batch_size != 128 or not recipe.drop_last
                     or recipe.qualification is not None or recipe.input_sidecar is not None

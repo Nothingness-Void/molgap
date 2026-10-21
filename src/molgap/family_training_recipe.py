@@ -300,6 +300,10 @@ class FamilyRecipe:
 
     def to_dict(self):
         values = asdict(self)
+        if (values.get("formal_training") or {}).get("execution_mode") == "original":
+            # Preserve historical serialized recipes while new execution modes
+            # remain explicit in newly frozen contracts.
+            values["formal_training"].pop("execution_mode")
         if self.family_version is None:
             values.pop("family_version")
         if self.qualification is None:
