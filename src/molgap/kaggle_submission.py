@@ -123,6 +123,38 @@ def _roundtrip_source(api, http, staged, remote, ref):
     return {"status": "REMOTE_SOURCE_BYTES_VERIFIED", "dataset": ref, "version": 1, "files": records}
 
 
+def _retire_source_copies(prepared, output, state, journal):
+    """The bound upload stage owns these copies; the package/receipts remain."""
+    from .local_storage import _remove_verified_files
+    if state.get("phase") != "BOUND" or not (output / "launch_receipt.json").is_file():
+        return {"status": "REPORT_ONLY", "reason": "Submission is not durably bound"}
+    proof = _json(output / "source_upload_verification.json")
+    if (proof.get("status") != "REMOTE_SOURCE_BYTES_VERIFIED"
+            or proof.get("dataset") != state["binding"]["dataset"] or proof.get("version") != 1):
+        raise ValueError("Source retirement requires its bound upload verification")
+    expected = {item["path"]: {key: item[key] for key in ("sha256", "bytes")}
+                for item in proof["files"]}
+    # Keep compact launch/metadata/prospective records at their original paths.
+    # The source archive and initial weights remain in their durable owners.
+    uploaded = {name: record for name, record in expected.items()
+                if name == "source_payload.bin" or name.startswith("initial_states/")}
+    retirement = {"uploaded": uploaded, "roundtrip": expected, "status": "PENDING"}
+    prior = state.get("source_copy_retirement")
+    if prior is not None and any(prior[key] != retirement[key] for key in ("uploaded", "roundtrip")):
+        raise ValueError("Source copy retirement binding changed")
+    state["source_copy_retirement"] = retirement
+    atomic_json(journal, state)  # Recover a crash between any pair of unlinks.
+    try:
+        _remove_verified_files(output / "source_roundtrip", expected, whole_tree=True)
+        _remove_verified_files(prepared / "source_dataset", uploaded)
+    except (OSError, ValueError) as exc:
+        retirement.update(status="BLOCKED", reason=str(exc))
+    else:
+        retirement["status"] = "REMOVED"
+    atomic_json(journal, state)
+    return {"status": retirement["status"], "reason": retirement.get("reason")}
+
+
 def _verify_remote_kernel(remote, response, metadata, entry):
     if remote is None:
         raise ValueError("Submitted kernel is not yet observable")
@@ -139,6 +171,49 @@ def _verify_remote_kernel(remote, response, metadata, entry):
             "entry_sha256": hashlib.sha256(payload).hexdigest(), "entry_bytes_equal": True,
             "private": m.is_private, "machine_shape": m.machine_shape,
             "dataset_sources": list(m.dataset_data_sources), "observed_at": datetime.now(timezone.utc).isoformat()}
+
+
+def _bound_submission_status(output, spec, package, package_identity, binding):
+    """Return a locally verified bound receipt without consulting or mutating Kaggle."""
+    journal = output / "submission_state.json"
+    _safe_local(journal)
+    if not journal.is_file():
+        return None
+    state = _json(journal)
+    if state.get("phase") != "BOUND":
+        return None
+    if state.get("binding") != binding:
+        raise ValueError("BOUND submission journal identity differs from prepared inputs")
+    response = state.get("kernel_response")
+    if (type(response) is not dict or response.get("status") != "submitted"
+            or response.get("reconciliation_required") is not False
+            or response.get("kernel") != binding["kernel"]
+            or type(response.get("kernel_id")) is not int or response["kernel_id"] <= 0
+            or type(response.get("version_number")) is not int or response["version_number"] <= 0):
+        raise ValueError("BOUND submission journal has no valid kernel response identity")
+
+    from .experiment_launch import read_launch_receipt
+    receipt = read_launch_receipt(output / "launch_receipt.json", spec, package,
+                                  expected_package_identity=package_identity)
+    expected = build_launch_receipt(spec, package,
+                                   expected_package_identity=package_identity)
+    fact = lambda value: {"value": value, "missing_reason": None}
+    arms = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
+    expected_runs = fact([{"arm_ids": arms, "canonical_reference": response["kernel"],
+        "platform_version": fact(str(response["version_number"])),
+        "run_identity": f"kernel{response['kernel_id']}/version{response['version_number']}"}])
+    if (receipt["submission_state"] != "ACCEPTED"
+            or receipt["binding"] != expected["binding"]
+            or receipt["canonical_platform_reference"] != fact(response["kernel"])
+            or receipt["platform_version"] != fact(str(response["version_number"]))
+            or receipt["physical_runs"] != expected_runs):
+        raise ValueError("BOUND launch receipt differs from the journaled kernel identity")
+    retirement = state.get("source_copy_retirement", {"status": "NOT_REQUESTED"})
+    return {"status": "SUBMISSION_BOUND", "binding": binding,
+            "kernel": response["kernel"], "kernel_id": response["kernel_id"],
+            "version": response["version_number"], "submitted": True,
+            "native_qualification": "NOT_EVALUATED",
+            "source_copy_retirement": {"status": retirement.get("status", "PENDING")}}
 
 
 def _startup(http, ref):
@@ -209,12 +284,22 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             raise ValueError("Staged acceptance plan differs from frozen launch")
         allowed.update("acceptance/" + path for path in
                        acceptance_input_pins(spec, acceptance_root, binding["plan_path"]))
+    # A completed upload can have retired its bulky local copies. Only the
+    # journal-bound names may be absent; active/unknown attempts keep all bytes.
+    journal_path = output / "submission_state.json"
+    _safe_local(journal_path)
+    retained_state = _json(journal_path) if journal_path.exists() else {}
+    retired = (retained_state.get("source_copy_retirement", {}).get("uploaded", {})
+               if retained_state.get("phase") == "BOUND" else {})
+    if set(retired) - {"source_payload.bin", *("initial_states/" + arm["arm_id"] + ".pt"
+                                            for arm in spec.to_dict()["arms"])}:
+        raise ValueError("Retired upload names differ from the prepared allowlist")
     observed = set()
     for path in staged.rglob("*"):
         _safe_local(path)
         if path.is_file():
             observed.add(path.relative_to(staged).as_posix())
-    if observed != allowed:
+    if observed - allowed or allowed - observed - set(retired):
         raise ValueError("Source upload contains missing or unbound files")
     if output.is_relative_to(prepared) or prepared.is_relative_to(output):
         raise ValueError("Keep operation records separate from immutable prepared inputs")
@@ -236,8 +321,14 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                "authority_ref": authority_ref, "authority_sha256": hashlib.sha256(canonical_json(authority).encode()).hexdigest(),
                "monitor_paths": list(monitor_paths)}
     if not execute:
+        already_bound = _bound_submission_status(
+            output, spec, package, manifest["package_identity"], binding)
+        if already_bound is not None:
+            return already_bound
         _verify_release_report(prepared / "release_report.json", kernel / "run.py")
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
+    from .experiment_preflight import _ReleaseContentVerification
+    content_verification = _ReleaseContentVerification()
     output.mkdir(parents=True, exist_ok=True)
     with _exclusive(output):
         journal = output / "submission_state.json"
@@ -271,7 +362,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
             save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
-            _verify_release_report(prepared / "release_report.json", kernel / "run.py")
+            _verify_release_report(prepared / "release_report.json", kernel / "run.py",
+                                   _content_verification=content_verification)
             atomic_json(output / "quota_before_publication.json", _quota(http_session, budget))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel already exists; reconcile its owning journal")
@@ -307,7 +399,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 dataset_manifests=prior["inputs"].get("dataset_manifests"),
                 initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
                 input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
-                kernel_metadata=kernel / "kernel-metadata.json")
+                kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification)
             if release["errors"]:
                 raise ValueError("Remote source failed existing release checks")
             atomic_json(output / "remote_release_report.json", release)
@@ -317,7 +409,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             save("KERNEL_SUBMITTING")
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
-                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json")
+                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json",
+                    _content_verification=content_verification)
             except Exception as error:
                 save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
@@ -357,6 +450,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         if not (output / "startup_observation.json").exists():
             atomic_json(output / "startup_observation.json", _startup(http_session, response["kernel"]))
         save("BOUND")
-        return {"status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
+        retirement = _retire_source_copies(prepared, output, state, journal)
+        return {"source_copy_retirement": retirement, "status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
                 "version": response["version_number"], "scheduler_status": str(status.status), "submitted": True,
                 "native_qualification": "NOT_EVALUATED", "timings": state["timings"]}

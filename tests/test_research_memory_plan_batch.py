@@ -196,7 +196,7 @@ def test_batch_shares_frozen_snapshot_and_preserves_input_order(planning_root):
         json.loads((root / item["path"] / "trajectory.json").read_text(encoding="utf-8"))
         for item in result["results"]
     ]
-    first_state, second_state = (record["decision_state"] for record in records)
+    first_state, second_state = (plan_module.resolve_decision_state(root, record)["decision_state"] for record in records)
     for key in ("known_trajectory_ids", "known_evidence_ids", "source_commit",
                 "source_hashes", "policy_sha256"):
         assert first_state[key] == second_state[key]
@@ -238,7 +238,7 @@ def test_same_run_pair_is_frozen_in_one_batch(planning_root):
     records = [json.loads((root / item["path"] / "trajectory.json").read_text()) for item in result["results"]]
     assert records[0]["state_at_start"]["same_run_replay"]["comparison_role"] == "reference"
     assert records[1]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] == "T-a"
-    assert records[0]["decision_state"]["known_evidence_ids"] == records[1]["decision_state"]["known_evidence_ids"] == ["E-existing"]
+    assert all(plan_module.resolve_decision_state(root, record)["decision_state"]["known_evidence_ids"] == ["E-existing"] for record in records)
 
 
 def test_same_run_pair_rejects_unbound_peer_before_publication(planning_root):
@@ -288,11 +288,34 @@ def test_single_plan_still_discovers_each_time(planning_root):
     assert first == {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"}
     assert second == {"trajectory_id": "T-b", "status": "PLANNED", "path": "experiments/arm-b"}
     assert len(discovery_calls) == 2
-    first_state = json.loads((root / first["path"] / "decision_state.json").read_text(encoding="utf-8"))
-    second_state = json.loads((root / second["path"] / "decision_state.json").read_text(encoding="utf-8"))
+    first_state = plan_module.resolve_decision_state(root, json.loads((root / first["path"] / "trajectory.json").read_text(encoding="utf-8")))["decision_state"]
+    second_state = plan_module.resolve_decision_state(root, json.loads((root / second["path"] / "trajectory.json").read_text(encoding="utf-8")))["decision_state"]
     assert first_state["known_trajectory_ids"] == ["T-existing"]
     assert second_state["known_trajectory_ids"] == ["T-a", "T-existing"]
     assert str(Path("experiments/arm-a/trajectory.json")) in second_state["source_hashes"]
+
+
+def test_single_plan_accepts_absolute_confined_output(planning_root):
+    root, _ = planning_root
+    output = root / "experiments" / "absolute-arm"
+    result = plan_module.plan(root, _item("a")["spec"], output)
+
+    assert result == {
+        "trajectory_id": "T-a",
+        "status": "PLANNED",
+        "path": "experiments/absolute-arm",
+    }
+    assert (output / "trajectory.json").is_file()
+
+
+def test_single_plan_rejects_absolute_output_outside_experiments(planning_root):
+    root, _ = planning_root
+    outside = root / "outside-arm"
+
+    with pytest.raises(ValueError, match="under experiments"):
+        plan_module.plan(root, _item("a")["spec"], outside)
+
+    assert not outside.exists()
 
 
 def test_validate_only_uses_real_batch_validators_without_publication(planning_root):
@@ -414,3 +437,66 @@ def test_formal_batch_still_rechecks_sources_before_each_publication(planning_ro
     assert len(caught.value.completed_results) == 1
     assert (root / "experiments/arm-a/trajectory.json").is_file()
     assert not (root / "experiments/arm-b").exists()
+
+
+def test_compact_batch_binds_one_policy_snapshot_and_keeps_actual_references(planning_root):
+    root, _ = planning_root
+    result = plan_module.plan_many(root, [_item("a"), _item("b")])
+    records = [json.loads((root / row["path"] / "trajectory.json").read_text()) for row in result["results"]]
+    assert len({row["decision_state"]["snapshot_ref"] for row in records}) == 1
+    assert len(list(root.glob("experiments/**/rml_decision_snapshots/*.json"))) == 1
+    for row in records:
+        state = row["decision_state"]
+        assert "known_evidence_ids" not in state and "source_hashes" not in state
+        assert state["active_reference_ids"] == ["E-existing"]
+        directory = root / next(item["path"] for item in result["results"] if item["trajectory_id"] == row["trajectory_id"])
+        assert not (directory / "decision_state.json").exists()
+        assert not (directory / "policy_snapshot.json").exists()
+        expanded = plan_module.resolve_decision_state(root, row)
+        assert expanded["decision_state"]["known_evidence_ids"] == ["E-existing"]
+        assert expanded["decision_state"]["policy_snapshot"]["policy_id"] == "fixture-policy"
+    # New evidence later cannot enter the frozen decision-time knowledge.
+    _write_json(root / "experiments/future/v5_evidence.json", {"evidence_id": "E-future"})
+    assert plan_module.resolve_decision_state(root, records[0])["decision_state"]["known_evidence_ids"] == ["E-existing"]
+    snapshot = root / records[0]["decision_state"]["snapshot_ref"]
+    snapshot.write_bytes(snapshot.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        plan_module.resolve_decision_state(root, records[1])
+
+
+def test_legacy_inline_state_remains_readable(planning_root):
+    root, _ = planning_root
+    result = plan_module.plan(root, _item("a")["spec"], "experiments/arm-a")
+    record = json.loads((root / result["path"] / "trajectory.json").read_text())
+    record = plan_module.resolve_decision_state(root, record)
+    for key in ("schema", "snapshot_ref", "snapshot_sha256", "policy_snapshot"):
+        record["decision_state"].pop(key)
+    plan_module.validate_decision_state(record["decision_state"])
+    assert plan_module.resolve_decision_state(root, record) == record
+
+
+def test_four_arm_shared_knowledge_synthetic_inventory(planning_root):
+    root, _ = planning_root
+    for label in ("c", "d"):
+        (root / f"contract-{label}.json").write_text("fixture")
+        (root / f"decision-{label}.md").write_text("fixture")
+    for index in range(200):
+        _write_json(root / f"experiments/known-{index}/v5_evidence.json", {"evidence_id": f"E-known-{index}"})
+    before = set(path for path in root.rglob("*") if path.is_file())
+    result = plan_module.plan_many(root, [_item(label) for label in "abcd"])
+    new_files = [path for path in root.rglob("*") if path.is_file() and path not in before]
+    legacy_bytes = 0
+    for item in result["results"]:
+        directory = root / item["path"]
+        record = json.loads((directory / "trajectory.json").read_text())
+        expanded = plan_module.resolve_decision_state(root, record)
+        state = expanded["decision_state"]
+        policy = state.pop("policy_snapshot")
+        for key in ("schema", "snapshot_ref", "snapshot_sha256"):
+            state.pop(key)
+        legacy_bytes += len(plan_module.json_bytes(expanded)) + len(plan_module.json_bytes(state)) + len(plan_module.json_bytes(policy))
+        legacy_bytes += sum(path.stat().st_size for path in (directory / "costs").glob("*.json"))
+    new_bytes = sum(path.stat().st_size for path in new_files)
+    assert len(new_files) == 9  # four trajectories, four costs, one common snapshot
+    assert new_bytes < legacy_bytes
+    print(f"synthetic prospective 4 arms/201 known evidence: legacy=16 files/{legacy_bytes} bytes; compact={len(new_files)} files/{new_bytes} bytes")

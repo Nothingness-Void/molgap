@@ -27,7 +27,7 @@ from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
 from .trace import atomic_write, file_digest, json_bytes, load_canonical_trace, sync_directory, validate_manifest_trace
 
-FINALIZER_VERSION = "1"
+FINALIZER_VERSION = "2"
 
 
 def _local(root: Path, pointer: str) -> Path:
@@ -44,9 +44,49 @@ def _bindings(root: Path, bindings: dict[str, str]) -> None:
         verify_bound_artifact(root, pointer, digest)
 
 
+def prospective_bytes(directory: Path, receipt: dict[str, Any] | None = None) -> bytes:
+    receipt = receipt or load_json_object(directory / "finalization.json")
+    if receipt.get("format") == "molgap-rml-finalization-v1":
+        return (directory / "prospective_snapshot.json").read_bytes()
+    # The original prospective input remains canonical; bind it instead of copying it.
+    root = next(parent for parent in directory.parents if (parent / "experiments").is_dir())
+    path = repo_local_path(root, receipt["prospective_ref"])
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != receipt["prospective_sha256"]:
+        raise ValueError("prospective input changed after finalization")
+    return raw
+
+
+def load_terminal_input(directory: Path) -> dict[str, Any]:
+    """Read legacy embedded inputs or v2 pointers to the same published records."""
+    package = load_json_object(directory / "terminal_input.json")
+    if package.get("format") != "molgap-rml-terminal-input-v2":
+        return package
+    bindings = package.pop("published_components")
+    package["format"] = "molgap-rml-terminal-package-v1"
+    for key, entries in bindings.items():
+        if key not in {"evidence", "decision", "costs", "roles"}:
+            raise ValueError("unsupported terminal component")
+        values = []
+        for binding in entries:
+            path = repo_local_path(directory, binding["ref"])
+            if file_digest(path) != binding["sha256"]:
+                raise ValueError("terminal component hash mismatch")
+            value = load_json_object(path)
+            if key == "decision":
+                value = value["decision"]
+            values.append(value)
+        if key in {"evidence", "decision"} and len(values) != 1:
+            raise ValueError("terminal input requires one evidence and decision")
+        package[key] = values[0] if key in {"evidence", "decision"} else values
+    if not {"evidence", "decision", "costs", "roles"} <= package.keys():
+        raise ValueError("incomplete terminal components")
+    return package
+
+
 def verified_receipt(directory: Path) -> dict[str, Any]:
     receipt = load_json_object(repo_local_path(directory, "finalization.json"))
-    if receipt.get("format") != "molgap-rml-finalization-v1":
+    if receipt.get("format") not in {"molgap-rml-finalization-v1", "molgap-rml-finalization-v2"}:
         raise ValueError("unsupported finalization receipt")
     actual_files = {p.relative_to(directory).as_posix() for p in directory.rglob("*") if p.is_file()}
     if actual_files != set(receipt["published_hashes"]) | {"finalization.json"}:
@@ -57,11 +97,14 @@ def verified_receipt(directory: Path) -> dict[str, Any]:
         path = repo_local_path(directory, relative)
         if file_digest(path) != digest:
             raise ValueError(f"finalized package changed: {relative}")
-    if not {"trajectory.json", "v5_evidence.json", "prospective_snapshot.json", "terminal_input.json"} <= set(receipt["published_hashes"]):
+    required = {"trajectory.json", "v5_evidence.json", "terminal_input.json"}
+    if receipt["format"] == "molgap-rml-finalization-v1":
+        required.add("prospective_snapshot.json")
+    if not required <= set(receipt["published_hashes"]):
         raise ValueError("incomplete finalization publication")
     source_digest = hashlib.sha256(json_bytes({
-        "trajectory_sha256": file_digest(directory / "prospective_snapshot.json"),
-        "terminal": load_json_object(directory / "terminal_input.json"),
+        "trajectory_sha256": hashlib.sha256(prospective_bytes(directory, receipt)).hexdigest(),
+        "terminal": load_terminal_input(directory),
         "trace_sha256": file_digest(directory / "trace.json") if "trace.json" in receipt["published_hashes"] else None,
     })).hexdigest()
     if source_digest != receipt["source_artifact_digest"]:
@@ -88,6 +131,9 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
     records = {}
     for name in receipt["published_hashes"]:
         record = load_json_object(staging / name)
+        if name == "trajectory.json":
+            from .plan import resolve_decision_state
+            record = resolve_decision_state(root, record)
         records[name] = record
         validator, field = validators.get(name, (None, None))
         if name.startswith("costs/"):
@@ -146,7 +192,9 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     if "rml_finalized" in trajectory_path.relative_to(root).parts:
         raise ValueError("pass the original prospective trajectory, not its finalized overlay")
     frozen_bytes = trajectory_path.read_bytes()
-    frozen = validate_trajectory(json.loads(frozen_bytes))
+    from .plan import resolve_decision_state
+    frozen_raw = json.loads(frozen_bytes)
+    frozen = validate_trajectory(resolve_decision_state(root, frozen_raw))
     paired = pair_binding(frozen)
     if paired is not None:
         reference_trajectory(root, frozen)
@@ -245,8 +293,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         updated["action_replay"] = copy.deepcopy(package["action_replay"])
         from .replay import _action_replay
         _action_replay(root, updated)
-    files = {"v5_evidence.json": json_bytes(evidence),
-             "prospective_snapshot.json": frozen_bytes, "terminal_input.json": json_bytes(package)}
+    files = {"v5_evidence.json": json_bytes(evidence)}
     replacements = {"trajectory.json": trajectory_path.relative_to(root).as_posix()}
     original_evidence = repo_local_path(root, trajectory_path.parent / "v5_evidence.json")
     if original_evidence.is_file():
@@ -334,7 +381,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             if paired["comparison_role"] == "candidate":
                 reference_path = resolve_repo_pointer(root, paired["reference_trajectory_ref"])
                 assert reference_path is not None
-                reference_terminal = load_json_object(reference_path.parent / "rml_finalized/terminal_input.json")
+                reference_terminal = load_terminal_input(reference_path.parent / "rml_finalized")
                 if validate_pair_observation(reference_terminal.get("same_run_observation")) != observation:
                     if eligible or validate_ineligible_continuation(root, reference_terminal) != observation:
                         raise ValueError("same-run candidate and control have different observed platform jobs")
@@ -360,10 +407,25 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             replacements["trace_manifest.json"] = old.relative_to(root).as_posix()
     elif package.get("trace_manifest") is not None:
         raise ValueError("trace manifest supplied without a canonical artifact")
+    # Preserve compact prospective state in the terminal overlay as well.
+    if "decision_state" in frozen_raw:
+        updated["decision_state"] = frozen_raw["decision_state"]
     validate_trajectory(updated)
     files["trajectory.json"] = json_bytes(updated)
+    compact = copy.deepcopy(package)
+    compact["format"] = "molgap-rml-terminal-input-v2"
+    components = {"evidence": ["v5_evidence.json"], "decision": ["trajectory.json"],
+        "costs": [f"costs/{event['cost_event_id']}.json" for event in package.get("costs", [])],
+        "roles": [f"roles/{event['role_event_id']}.json" for event in package.get("roles", [])]}
+    compact["published_components"] = {key: [{"ref": name, "sha256": hashlib.sha256(files[name]).hexdigest()}
+        for name in names] for key, names in components.items()}
+    for key in components:
+        compact.pop(key, None)
+    files["terminal_input.json"] = json_bytes(compact)
     receipt = {
-        "format": "molgap-rml-finalization-v1", "finalization_id": "finalize-" + digest,
+        "format": "molgap-rml-finalization-v2", "finalization_id": "finalize-" + digest,
+        "prospective_ref": trajectory_path.relative_to(root).as_posix(),
+        "prospective_sha256": hashlib.sha256(frozen_bytes).hexdigest(),
         "finalizer_version": FINALIZER_VERSION, "source_artifact_digest": digest,
         "finalized_at": package["finalized_at"], "trajectory_id": frozen["trajectory_id"],
         "outcome": updated["decision"]["outcome"], "replacements": replacements,

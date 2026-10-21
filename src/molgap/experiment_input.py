@@ -161,8 +161,11 @@ def _compile_scientific_input(path, root, value):
     from .v4_runtime import inspect_frozen_state_artifact
     from .research_memory.trace import file_digest
 
+    optional = {"shared", "same_run", "retry_of"} & set(value)
     _object(value, "format experiment_id logical_run_id attempt_id machine_profile authority_ref monitor_paths "
-            "timestamp question profile platform_ref role_ref decision_ref arms seeds", "scientific input")
+            "timestamp question profile platform_ref role_ref decision_ref arms seeds " + " ".join(optional), "scientific input")
+    from .common.declarations import run_version
+    run_version(value["attempt_id"])
     for key in ("experiment_id", "logical_run_id", "attempt_id"):
         _identifier(value[key], key)
     if value["seeds"] != [42] or any(type(s) is not int for s in value["seeds"]):
@@ -210,7 +213,18 @@ def _compile_scientific_input(path, root, value):
         raise ValueError("Scientific preparation requires the existing Kaggle workflow adapter")
     if type(value["arms"]) is not list or not 1 <= len(value["arms"]) <= 2:
         raise ValueError("One T4x2 slot supports one or two independent arms")
-    arm_ids = [a["arm_id"] for a in value["arms"]]
+    arm_override_fields = {"arm_id", "model", "recipe_ref", "data_ref", "initial_state_ref",
+                           "training", "reference_ref", "purpose"}
+    for item in value["arms"]:
+        if type(item) is not dict or "arm_id" not in item or set(item) - arm_override_fields:
+            raise ValueError("Scientific arm entries must be objects with a supported arm_id override")
+        _identifier(item["arm_id"], "arm_id")
+    shared = value.get("shared", {})
+    if type(shared) is not dict or set(shared) - {
+            "model", "recipe_ref", "data_ref", "initial_state_ref", "training", "reference_ref", "purpose"}:
+        raise ValueError("Unsupported shared scientific arm fields")
+    items = [{**deepcopy(shared), **item} for item in value["arms"]]
+    arm_ids = [a["arm_id"] for a in items]
     if len(set(arm_ids)) != len(arm_ids):
         raise ValueError("Duplicate scientific arm")
     budget = authority.get("allocated_t4_hours_ceiling")
@@ -218,9 +232,65 @@ def _compile_scientific_input(path, root, value):
             or not math.isfinite(budget) or budget <= 0 or authority.get("arms") != arm_ids
             or authority.get("seeds") != [42]):
         raise ValueError("Existing authority does not cover exactly these arms, seed and positive ceiling")
+    pair = value.get("same_run")
+    if pair is not None:
+        _object(pair, "reference_arm_id target_manifest_ref", "same_run")
+        if len(items) != 2 or pair["reference_arm_id"] not in arm_ids:
+            raise ValueError("Same-run comparison requires one reference and one candidate")
+        if authority.get("same_run_reference_arm_id") != pair["reference_arm_id"]:
+            raise ValueError("Authority must explicitly release the same-run reference arm")
+        target_pin = pin(pair["target_manifest_ref"])
+    retry = value.get("retry_of")
+    if value["attempt_id"] != "v1":
+        _object(retry, "logical_run_id attempt_id spec_identity decision_ref", "retry_of")
+        run_version(retry["attempt_id"])
+        if (authority.get("retry_of") != retry or value["attempt_id"] not in authority.get("attempt_ids", [])
+                or int(value["attempt_id"][1:]) <= int(retry["attempt_id"][1:])):
+            raise ValueError("Retry requires explicit attempt and predecessor authority")
+        predecessor = paths.run_directory(retry["logical_run_id"], retry["attempt_id"])
+        previous_spec = ExperimentSpec(_read(predecessor / "inputs/experiment_spec.json"))
+        if previous_spec.identity != retry["spec_identity"]:
+            raise ValueError("Retry predecessor differs from the frozen Spec")
+        disposition = _read(local(retry["decision_ref"]))
+        if (disposition.get("retry_authorized") is not True or disposition.get("retry_of") != {
+                k: retry[k] for k in ("logical_run_id", "attempt_id", "spec_identity")}
+                or disposition.get("remote_state") not in {"COMPLETE", "ERROR", "CANCELLED", "NOT_SUBMITTED"}
+                or not disposition.get("evidence_ref")):
+            raise ValueError("Retry requires a reconciled terminal disposition with evidence")
+        local(disposition["evidence_ref"])
+        journal_path = predecessor / "operations/submission_state.json"
+        journal = _read(journal_path) if journal_path.exists() else None
+        if disposition["remote_state"] == "NOT_SUBMITTED":
+            if journal is not None and journal.get("phase") != "NEW":
+                raise ValueError("Retry predecessor has unreconciled platform effects")
+            prepared = predecessor / "prepared"
+            if prepared.exists():
+                report_path = prepared / "workflow_report.json"
+                if not report_path.is_file():
+                    raise ValueError("Retry predecessor workflow publication state is unknown")
+                report = _read(report_path)
+                if (report.get("format") != "molgap-workflow-preparation-v1"
+                        or report.get("spec_identity") != previous_spec.identity
+                        or report.get("status") not in {"ERROR_BEFORE_PUBLICATION", "BLOCKED"}
+                        or report.get("submitted") is not False
+                        or report.get("prospective_published") is not False
+                        or report.get("publication_intent") is not False):
+                    raise ValueError("Retry predecessor workflow publication state is unknown or published")
+        else:
+            if journal is None or journal.get("phase") != "BOUND":
+                raise ValueError("Retry predecessor has unreconciled platform effects")
+            observed = _read(predecessor / "operations/scheduler_observation.json")
+            response = journal.get("kernel_response", {})
+            if (str(observed.get("status", "")).upper() != disposition["remote_state"]
+                    or observed.get("kernel") != response.get("kernel")
+                    or observed.get("version") != response.get("version_number")):
+                raise ValueError("Retry predecessor terminal observation differs from its exact job")
+    elif retry is not None:
+        raise ValueError("A retry must use a new attempt version")
     compiled, data_specs, dataset_manifests = [], set(), {}
-    for item in value["arms"]:
-        _object(item, "arm_id model recipe_ref data_ref initial_state_ref training reference_ref purpose", "scientific arm")
+    for item in items:
+        _object(item, "arm_id model recipe_ref data_ref initial_state_ref training purpose" +
+                ("" if pair is not None else " reference_ref"), "scientific arm")
         _identifier(item["arm_id"], "arm_id")
         _object(item["model"], "family version addons", "model")
         family = (item["model"]["family"], item["model"]["version"])
@@ -258,7 +328,8 @@ def _compile_scientific_input(path, root, value):
             addons.append(build_addon_declaration(family, addon["name"], repo_root=root,
                 version=addon["version"], config=addon["config"]))
         arm = deepcopy(previous)
-        arm.update(arm_id=item["arm_id"], scientific_role="candidate", addons=addons,
+        is_reference = pair is not None and item["arm_id"] == pair["reference_arm_id"]
+        arm.update(arm_id=item["arm_id"], scientific_role="reference" if is_reference else "candidate", addons=addons,
                    addon_semantics="ordered" if addons else "baseline")
         mode = training_adapter(arm).mode(arm)
         recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **item["training"])
@@ -278,10 +349,23 @@ def _compile_scientific_input(path, root, value):
             new_record = build_family_recipe(family, addon=selected, **kwargs)
         if "profiling" in record:
             new_record["profiling"] = deepcopy(record["profiling"])
+        if "resume_keep_count" in record:
+            new_record["resume_keep_count"] = record["resume_keep_count"]
         initial = Path(item["initial_state_ref"])
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())
         inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
+        if pair is not None:
+            if is_reference and (item["training"] or addons != previous["addons"]):
+                raise ValueError("Same-run reference must retain its frozen recipe and addons")
+            if not is_reference and recipe == baseline:
+                raise ValueError("Same-run candidate must declare a scientific change")
+            target = _read(local(pair["target_manifest_ref"]))
+            if target.get("development_target_sha256") != requirements["target_sha256"]:
+                raise ValueError("Same-run target manifest differs from the frozen recipe")
+            compiled.append((item, arm, new_record, None, None, None, None, [],
+                             str(initial.absolute()), source["evidence"]))
+            continue
         _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
         reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
         if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
@@ -353,37 +437,49 @@ def _compile_scientific_input(path, root, value):
         recipe_pin = derive(prefix + "/" + arm_id + "/recipe.json", recipe)
         arm["training"]["recipe"] = {"name": FAMILIES[(arm["family"]["name"], arm["family"]["version"])].recipe,
                                      "version": "1", "sha256": recipe_pin["sha256"]}
-        prelaunch = assess_comparison_prelaunch(candidate_id=arm_id,
+        prelaunch = None if pair is not None else assess_comparison_prelaunch(candidate_id=arm_id,
             candidate_plan={"comparison_identity": identity, "source_config_status": "frozen", "source_commit_or_archive": commit},
             reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose=item["purpose"],
             intervention_group_id=question.changed_mechanism, declared_intervention_fields=changed,
             **{k: context[k] for k in ("role_applicability_plan", "trace_plan", "runtime_qualification_plan")})
-        if not prelaunch["prelaunch_ready"]:
+        if prelaunch is not None and not prelaunch["prelaunch_ready"]:
             raise ValueError("Scientific change is not a comparable declared intervention")
-        comparison_pin = derive(prefix + "/" + arm_id + "/comparison_prelaunch.json", prelaunch)
-        tid = "T-" + value["logical_run_id"] + "-" + arm_id
+        comparison_pin = (derive(prefix + "/" + arm_id + "/comparison_prelaunch.json", prelaunch)
+                          if prelaunch is not None else None)
+        attempt_suffix = "" if value["attempt_id"] == "v1" else "-" + value["attempt_id"]
+        tid = "T-" + value["logical_run_id"] + attempt_suffix + "-" + arm_id
         proposal = build_execution_proposal(question=question, arm=arm, trajectory_id=tid, source_commit=commit,
-            run=value["logical_run_id"], version="v1", contract_ref=recipe_pin["path"],
+            run=value["logical_run_id"], version=value["attempt_id"], contract_ref=recipe_pin["path"],
             contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name],
             authority_ref=value["authority_ref"], role_ref=value["role_ref"], decision_ref=value["decision_ref"],
             timestamp=value["timestamp"], profile=profile, action_type="training")
         proposal["decision_state"]["policy_version"] = policy_version
+        if pair is not None:
+            attempt = value["logical_run_id"] + "-" + value["attempt_id"]
+            proposal["trajectory"]["actions"][0]["attempt_ids"] = [attempt]
+            for cost in proposal["costs"]:
+                cost["attempt_id"] = attempt
         proposal_pin = derive(prefix + "/" + arm_id + "/plan_input.json", proposal)
         prospective.append({"arm_id": arm_id, "trajectory_id": tid, "plan_spec_ref": proposal_pin["path"],
             "plan_spec_sha256": proposal_pin["sha256"],
-            "output": f"experiments/{value['experiment_id']}/runs/{value['logical_run_id']}/prospective/{arm_id}"})
+            "output": f"experiments/{value['experiment_id']}/runs/{value['logical_run_id']}{attempt_suffix}/prospective/{arm_id}"})
         arms.append(arm)
         acceptance.append({"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
             "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
-            "comparison_prelaunch": comparison_pin, "reference_bundle": reference["reference_bundle"],
-            "reference_artifacts": reference["reference_artifacts"]})
+            **({"target_manifest": target_pin} if pair is not None else {
+                "comparison_prelaunch": comparison_pin, "reference_bundle": reference["reference_bundle"],
+                "reference_artifacts": reference["reference_artifacts"]})})
         jobs.append({"arm_id": arm_id, "device": device, "recipe": recipe_pin["path"], "initial_state": initial})
     if any(c[-1] != compiled[0][-1] for c in compiled):
         raise ValueError("Scientific arms must share the existing V5 evidence policy")
     spec = ExperimentSpec({"schema_version": SCHEMA_VERSION_V2, "experiment_id": value["experiment_id"],
         "logical_run_id": value["logical_run_id"], "arms": arms, "platform": platform["platform"],
-        "prospective": {"arms": prospective}, "evidence": evidence, "terminal_protocol": TERMINAL_PROTOCOL})
-    acceptance_pin = derive(prefix + "/acceptance_plan.json", {"format": "molgap-family-acceptance-plan-v1",
+        "prospective": {"arms": prospective, **({"same_run_replay": {
+            "reference_arm_id": pair["reference_arm_id"],
+            "candidate_arm_ids": [a for a in arm_ids if a != pair["reference_arm_id"]]}} if pair is not None else {})},
+        "evidence": evidence, "terminal_protocol": TERMINAL_PROTOCOL})
+    acceptance_pin = derive(prefix + "/acceptance_plan.json", {"format": (
+        "molgap-family-same-run-acceptance-plan-v1" if pair is not None else "molgap-family-acceptance-plan-v1"),
         "spec_identity": spec.identity, "arms": acceptance})
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",
@@ -553,6 +649,13 @@ def prepare_experiment_input(path, repo_root):
               "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"],
               "local_call_seconds":perf_counter()-started,"submitted":False}
     if result["status"] == "PREPARED_FOR_PLATFORM":
+        from .local_storage import retire_failed_preparations
+        if (run / "local_preparation_failures").exists():
+            try:
+                result["retired_failed_preparations"] = retire_failed_preparations(
+                    run, spec.identity, result["package_identity"])
+            except (OSError, ValueError):
+                result["retirement_status"] = "PENDING_INSPECTION"
         _observe_preparation(run, spec, result)
     return result
 
@@ -568,6 +671,10 @@ def _observe_preparation(run, spec, result):
         "source_commit":result.get("source_commit"),
         "reused_preparation":result.get("reused_preparation",False),
         "local_call_seconds":result["local_call_seconds"]}
+    # Reusing immutable preparation adds no new evidence; retain the original
+    # measurement instead of one permanent file per status/check invocation.
+    if result.get("reused_preparation"):
+        return
     path = run / "local_observations" / ("preparation-" + uuid4().hex + ".json")
     try:
         publish_immutable_bytes(path, canonical_json(observation).encode())
@@ -601,4 +708,28 @@ def local_preparation_error(error,stage):
     field,reason=known.get(str(error),("configuration","Local validation failed; check configuration fields and referenced files"))
     if isinstance(error,FileNotFoundError):
         field,reason="referenced_file","A required local file is missing"
-    return {"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,"field":field,"reason":reason}
+    return {"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,"field":field,"reason":reason,
+            "error_code":stage.upper() + "_" + type(error).__name__.upper(),
+            "next_action":"Inspect the indicated field and retained report; do not resubmit unknown work"}
+
+
+def compact_operation_report(result, *, prepared=None, operations=None):
+    """Human-facing summary; full library reports remain at their existing owners."""
+    keys = ("status", "stage", "field", "error_type", "error_code", "reason", "submitted",
+            "run_directory", "spec_identity", "package_identity", "source_commit",
+            "kernel", "kernel_id", "version", "scheduler_status", "reused_preparation",
+            "prepared", "operations", "release_report", "local_call_seconds")
+    summary = {key: result[key] for key in keys if key in result}
+    prepared = result.get("prepared", prepared)
+    operations = result.get("operations", operations)
+    if prepared is not None:
+        summary["report"] = str(Path(prepared) / "workflow_report.json")
+    if operations is not None:
+        summary["journal"] = str(Path(operations) / "submission_state.json")
+    status = result.get("status", "")
+    summary["next_action"] = result.get("next_action") or {
+        "PREPARED_FOR_PLATFORM": "Submit only under the existing explicit authority",
+        "READY_FOR_PLATFORM_OPERATIONS": "Use --execute only under the existing explicit authority",
+        "SUBMISSION_BOUND": "Reconcile this exact job; do not submit a duplicate",
+    }.get(status, "Inspect the retained report and resolve this stage before continuing")
+    return summary

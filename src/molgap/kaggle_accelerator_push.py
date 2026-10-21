@@ -48,7 +48,7 @@ def _observed_identity(result: dict, owner: str) -> dict:
             "kernel_id": result.get("kernelId") or None, "identity_conflicts": conflicts}
 
 
-def _verify_release_report(path: Path, code_path: Path) -> dict:
+def _verify_release_report(path: Path, code_path: Path, *, _content_verification=None) -> dict:
     from .experiment_preflight import check_release_inputs
     from .experiment_spec import ExperimentSpec
     from .training_reproducibility import sha256_file
@@ -64,7 +64,7 @@ def _verify_release_report(path: Path, code_path: Path) -> dict:
         required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
         entry_script=inputs["entry_script"], input_root=inputs["input_root"],
         launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"),
-        dataset_manifests=inputs.get("dataset_manifests"))
+        dataset_manifests=inputs.get("dataset_manifests"), _content_verification=_content_verification)
     if observed != report or observed["errors"]:
         raise ValueError("Release inputs changed after verification")
     if report["checks"].get("entry_script:kernel") != sha256_file(code_path):
@@ -79,6 +79,7 @@ def push_kernel_with_accelerator(
     accelerator: str,
     timeout_seconds: int = 120,
     release_report_path: Path | None = None,
+    _content_verification=None,
 ) -> dict[str, Any]:
     if accelerator in UNSUPPORTED_BATCH_ACCELERATORS:
         raise ValueError(
@@ -97,7 +98,7 @@ def push_kernel_with_accelerator(
         raise ValueError("Kernel entry script is outside the package")
     if "EXPECTED_LAUNCH_SHA256" in code_path.read_text(encoding="utf-8") and release_report_path is None:
         raise ValueError("Prepared workflow entry requires its verified release report")
-    release_binding = _verify_release_report(release_report_path, code_path) if release_report_path else None
+    release_binding = _verify_release_report(release_report_path, code_path, _content_verification=_content_verification) if release_report_path else None
     if release_report_path:
         report_inputs = json.loads(release_report_path.read_text(encoding="utf-8"))["inputs"]
         if report_inputs.get("kernel_metadata") and Path(report_inputs["kernel_metadata"]).resolve() != (package / "kernel-metadata.json").resolve():

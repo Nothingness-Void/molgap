@@ -95,6 +95,11 @@ def _name(value) -> str:
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens
+    # Versioned RML policy/schema JSON describes checkpoint semantics, not weights.
+    if (len(path.parts) == 3 and path.parts[:2] in {
+            ("research_memory", "policies"), ("research_memory", "schemas")}
+            and path.suffix == ".json"):
+        tokens.discard("checkpoint")
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES

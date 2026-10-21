@@ -34,10 +34,23 @@ only the generated files in an atomically retired `.incomplete-*` cache director
 An ineligible selection blocks the batch before deletion begins.
 
 Normal invocation scratch still cleans itself on exit. Scratch of unknown
-ownership, package locks/staging directories, complete caches and failed run
-preparations remain report-only; age alone is not proof that they are unused.
+ownership, package locks/staging directories and complete caches remain report-only;
+age alone is not proof that they are unused.
 This command does not retire worktrees or remove scientific records. Interrupted
 removal reports `STOPPED`; inspect the remaining directory before retrying.
+
+Successful preparation retires earlier unpublished failed preparations only when
+their payload bytes match the verified replacement. Unique files, uncertain
+publication, operation journals and links block retirement. Compact reports and
+an inventory receipt survive; interrupted deletion resumes against that receipt.
+After a Kaggle submission reaches `BOUND`, its journaled cleanup removes verified
+upload payload copies and `source_roundtrip`. Reentry uses the bound identity and
+retirement receipt; failed or unknown publication keeps its recovery inputs.
+
+Recipe metadata may set `resume_keep_count` to retire older resume packages that
+are exact duplicates of retained packages. Omission retains existing behavior.
+The count never authorizes deleting a unique resumable state or evidence file.
+These paths do not sweep complete caches, historical evidence or active worktrees.
 
 ## Retire physical checkouts
 

@@ -143,18 +143,14 @@ def test_legacy_scientific_freeze_reuses_without_compiler_or_current_git(frozen_
     assert result["reused_preparation"] and result["status"]=="PREPARED_FOR_PLATFORM"
     assert before=={str(p):p.read_bytes() for base in (case.run/"inputs",case.run/"prepared")
                    for p in base.rglob("*") if p.is_file()}
-    observation=json.loads(Path(result["local_observation"]).read_bytes())
-    assert result["local_observation_status"]=="RETAINED"
-    assert observation["spec_identity"]==case.spec.identity and observation["reused_preparation"]
-    assert observation["local_call_seconds"]>=0 and observation["source_commit"] is None
+    assert "local_observation" not in result and "local_observation_status" not in result
+    assert not (case.run/"local_observations").exists()
     assert not (case.run/"operations").exists()
     forbidden.assert_not_called();verify.assert_called_once()
 
 
 def test_timing_observation_failure_does_not_invalidate_durable_preparation(frozen_scientific,monkeypatch):
     case=frozen_scientific
-    monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",
-        Mock(return_value={"spec_identity":case.spec.identity,"package_identity":"a"*64}))
     from molgap import experiment_input as owner
     publish=owner.publish_immutable_bytes
     def interrupted(path,payload):
@@ -162,10 +158,14 @@ def test_timing_observation_failure_does_not_invalidate_durable_preparation(froz
             raise OSError("untrusted exception details must not be returned")
         return publish(path,payload)
     monkeypatch.setattr(owner,"publish_immutable_bytes",interrupted)
-    result=prepare_experiment_input(case.path,case.repo)
-    assert result["status"]=="PREPARED_FOR_PLATFORM" and result["reused_preparation"]
+    result={"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64,
+        "local_call_seconds":0.25,"source_commit":"frozen-source","reused_preparation":False}
+    report=(case.run/"prepared/workflow_report.json").read_bytes()
+    owner._observe_preparation(case.run,case.spec,result)
+    assert result["status"]=="PREPARED_FOR_PLATFORM" and not result["reused_preparation"]
     assert result["local_observation_status"]=="MISSING" and "local_observation" not in result
     assert "untrusted" not in str(result) and not (case.run/"operations").exists()
+    assert (case.run/"prepared/workflow_report.json").read_bytes()==report
 
 
 @pytest.mark.parametrize("fault",["input","spec","workflow","authority","partial","published"])
@@ -231,13 +231,18 @@ def platform_entry():
 
 
 def test_new_platform_entry_has_no_post_without_execute(platform_entry,monkeypatch,capsys):
-    prep=Mock(return_value={"status":"PREPARED_FOR_PLATFORM","submitted":False})
+    prep=Mock(return_value={"status":"PREPARED_FOR_PLATFORM","submitted":False,
+        "package_identity":"a"*64,"full_owner_detail":{"retained":True}})
     backend=Mock(side_effect=AssertionError("no POST or SDK on preparation"))
     monkeypatch.setattr("molgap.experiment_input.prepare_experiment_input",prep)
     monkeypatch.setattr(platform_entry,"submit_prepared_workflow",backend)
     assert platform_entry.main(["--experiment","experiment.json"])==0
-    assert not json.loads(capsys.readouterr().out)["submitted"]
-    backend.assert_not_called();prep.assert_called_once()
+    compact=json.loads(capsys.readouterr().out)
+    assert not compact["submitted"] and compact["package_identity"]=="a"*64
+    assert "full_owner_detail" not in compact
+    assert platform_entry.main(["--experiment","experiment.json","--verbose"])==0
+    assert json.loads(capsys.readouterr().out)==prep.return_value
+    backend.assert_not_called();assert prep.call_count==2
 
 
 def test_execute_requires_credentials_before_any_preparation(platform_entry,monkeypatch):

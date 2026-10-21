@@ -23,7 +23,7 @@ def test_prepublication_io_failure_recovers_same_identity_without_losing_failed_
             (output/"failed-byte-evidence.txt").write_bytes(b"original failed attempt")
             raise OSError("injected local IO interruption")
         write(output/"workflow_report.json",{"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64})
-        return {"status":"PREPARED_FOR_PLATFORM"}
+        return {"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64}
     monkeypatch.setattr("molgap.experiment_workflow.prepare_workflow",owner)
     with pytest.raises(OSError):prepare_experiment_input(editable.path,editable.repo)
     result=prepare_experiment_input(editable.path,editable.repo)

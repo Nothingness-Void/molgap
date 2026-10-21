@@ -638,6 +638,7 @@ def close_terminal_arm(
     trace_source: str | Path | None = None,
     canonical_trace_output: str | Path | None = None,
     recovery_spec: dict[str, Any] | None = None,
+    _defer_derived: bool = False,
 ) -> dict[str, Any]:
     """Execute terminal trace closure and invoke terminal-pipeline with strict fail-closed guard."""
     root = Path(repo_root).resolve()
@@ -691,10 +692,15 @@ def close_terminal_arm(
     else:
         final_trace = trace
 
-    result = finalize_rebuild_backtest(root, trajectory, terminal_to_use, trace=final_trace)
+    if _defer_derived:
+        from .finalize import finalize
+        from .pipeline import terminal_handoff
+        result = terminal_handoff(finalize(root, trajectory, terminal_to_use, final_trace))
+    else:
+        result = finalize_rebuild_backtest(root, trajectory, terminal_to_use, trace=final_trace)
 
     if trace_required:
-        if result.get("pipeline_status") != "COMPLETE":
+        if not _defer_derived and result.get("pipeline_status") != "COMPLETE":
             raise RuntimeError(
                 f"FAIL CLOSED: terminal-pipeline failed for required trace: {result.get('error')}"
             )
@@ -723,15 +729,19 @@ def close_terminal_multi_arm(
     root = Path(repo_root).resolve()
     results = []
     for arm in arms:
-        res = close_terminal_arm(
-            repo_root=root,
-            trajectory=arm["trajectory"],
-            terminal=arm["terminal"],
-            trace=arm.get("trace"),
-            arm_identifier=arm.get("arm_identifier") or arm.get("arm"),
-            trace_source=arm.get("trace_source") or arm.get("raw_trace_path"),
-            canonical_trace_output=arm.get("canonical_trace_output"),
-            recovery_spec=arm.get("recovery_spec"),
-        )
-        results.append(res)
-    return results
+        try:
+            result = close_terminal_arm(
+                repo_root=root, trajectory=arm["trajectory"], terminal=arm["terminal"],
+                trace=arm.get("trace"),
+                arm_identifier=arm.get("arm_identifier") or arm.get("arm"),
+                trace_source=arm.get("trace_source") or arm.get("raw_trace_path"),
+                canonical_trace_output=arm.get("canonical_trace_output"),
+                recovery_spec=arm.get("recovery_spec"), _defer_derived=True,
+            )
+        except (ValueError, OSError, RuntimeError) as exc:
+            # One invalid arm cannot erase another arm's durable terminal result.
+            result = {"pipeline_status": "FINALIZATION_FAILED", "trajectory": str(arm["trajectory"]),
+                      "error": str(exc), "next_decision": "SOL_REQUIRED"}
+        results.append(result)
+    from .pipeline import rebuild_terminal_handoffs
+    return rebuild_terminal_handoffs(root, results)

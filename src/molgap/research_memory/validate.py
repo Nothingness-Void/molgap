@@ -41,6 +41,9 @@ def _validate_pointers(root: Path, pointers: Iterable[str]) -> None:
 def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
     state = record["state_at_start"]
     pointers = [*state["contract_refs"], *state["role_snapshot_refs"]]
+    decision_state = record.get("decision_state", {})
+    if decision_state.get("schema") == "molgap-decision-state-v2":
+        pointers.append(decision_state["snapshot_ref"])
     paired = pair_binding(record)
     if paired is not None:
         pointers.append(paired["reference_trajectory_ref"])
@@ -104,7 +107,8 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         unique("evidence_id", record["evidence_id"], path)
         records["evidence"].append((path, record))
     for path in discovered.trajectories:
-        record = validate_trajectory(load_json(path))
+        from .plan import resolve_decision_state
+        record = validate_trajectory(resolve_decision_state(root, load_json(path)))
         unique("trajectory_id", record["trajectory_id"], path)
         unique("hypothesis_id", record["hypothesis"]["hypothesis_id"], path)
         _validate_pointers(root, _trajectory_pointers(record))

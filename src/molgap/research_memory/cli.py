@@ -51,6 +51,8 @@ def main(argv: list[str] | None = None) -> None:
     terminal_cmd.add_argument("--trace")
     terminal_cmd.add_argument("--trace-source")
     terminal_cmd.add_argument("--arm")
+    terminal_rebuild = commands.add_parser("terminal-rebuild")
+    terminal_rebuild.add_argument("--trajectory", action="append", required=True)
     recovery = commands.add_parser("recover-trace")
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
@@ -62,6 +64,13 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     root = _root(args.repo_root)
 
+    if args.command == "terminal-rebuild":
+        from .pipeline import recover_terminal_derived
+        results = recover_terminal_derived(root, args.trajectory)
+        print(json.dumps(results, indent=2, sort_keys=True))
+        if any(result["pipeline_status"] != "COMPLETE" for result in results):
+            raise SystemExit(1)
+        return
     if args.command in {"plan", "finalize", "recover-trace", "terminal-pipeline"}:
         from molgap.evidence_pointers import load_json_object
         if args.command == "plan":

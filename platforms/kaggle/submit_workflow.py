@@ -19,6 +19,7 @@ def main(argv=None):
     parser.add_argument("--authority",help="Authority path inside the immutable source package")
     parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--verbose", action="store_true", help="Print the full owner report")
     args = parser.parse_args(argv)
     stage="arguments"
     try:
@@ -32,7 +33,8 @@ def main(argv=None):
             with redirect_stdout(sys.stderr):
                 prepared=prepare_experiment_input(args.experiment,args.repo_root)
             if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
-                print(canonical_json(prepared))
+                from molgap.experiment_input import compact_operation_report
+                print(canonical_json(prepared if args.verbose else compact_operation_report(prepared)))
                 return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
             args.prepared=Path(prepared["prepared"]);args.output=Path(prepared["operations"])
             args.authority=prepared["authority_ref"];args.monitor_path=prepared["monitor_paths"]
@@ -47,10 +49,17 @@ def main(argv=None):
             from molgap.experiment_input import local_preparation_error
             payload=local_preparation_error(error,stage)
         else:
-            payload={"status":"BLOCKED","error_type":type(error).__name__,"stage":stage}
+            payload={"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,
+                     "error_code":"PLATFORM_" + type(error).__name__.upper(),
+                     "field":"platform.journal",
+                     "next_action":"Inspect the submission journal and reconcile before retrying"}
+            if args.output:
+                payload["journal"]=str(args.output / "submission_state.json")
         print(canonical_json(payload))
         return 2
-    print(canonical_json(result))
+    from molgap.experiment_input import compact_operation_report
+    print(canonical_json(result if args.verbose else compact_operation_report(
+        result, prepared=args.prepared, operations=args.output)))
     return 0 if result["status"] in {"READY_FOR_PLATFORM_OPERATIONS", "SUBMISSION_BOUND"} else 1
 
 

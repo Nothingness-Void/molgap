@@ -184,6 +184,30 @@ def test_plan_prospective_keeps_library_output_off_stdout(
     assert output.err == "planning diagnostic\n"
 
 
+@pytest.mark.parametrize(("command", "input_option", "input_name"), [
+    ("prepare-workflow", "--plan", "plan.json"),
+    ("prepare-family-training", "--plan", "plan.json"),
+    ("prepare-release", "--workflow", "workflow.json"),
+])
+def test_prepare_commands_default_to_compact_report_and_support_verbose(
+        capsys, monkeypatch, spec_file, tmp_path, command, input_option, input_name):
+    full = {"status": "PREPARED_FOR_PLATFORM", "package_identity": SHA,
+            "full_owner_detail": {"release": "retained"}}
+    dispatch = Mock(return_value=(full, 0))
+    monkeypatch.setattr(cli, "_dispatch", dispatch)
+    common = [command, "--spec", spec_file, "--repo-root", tmp_path,
+              "--output", tmp_path / "prepared", input_option, tmp_path / input_name]
+
+    compact = invoke(capsys, common)
+    assert compact["status"] == "PREPARED_FOR_PLATFORM"
+    assert compact["package_identity"] == SHA
+    assert compact["report"] == str(tmp_path / "prepared" / "workflow_report.json")
+    assert "full_owner_detail" not in compact
+
+    assert invoke(capsys, common + ["--verbose"]) == full
+    assert dispatch.call_count == 2
+
+
 @pytest.mark.parametrize("mutation", ["newline", "duplicate", "unknown"])
 def test_plan_prospective_rejects_noncanonical_spec_before_dispatch(
         capsys, monkeypatch, tmp_path, v2_spec_file, mutation):

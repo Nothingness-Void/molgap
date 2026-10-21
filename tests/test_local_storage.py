@@ -130,3 +130,82 @@ def test_cli_profile_dry_run_and_discovery_bound(tmp_path, capsys):
     assert result["truncated"] and len(result["candidates"]) == 128
     assert main(["--profile", str(profile_path), "--repo-root", str(tmp_path / "code"), "--execute"]) == 1
     assert json.loads(capsys.readouterr().out)["status"] == "BLOCKED" and target.exists()
+
+
+# Reuse the source-only package fixture; no scientific payload or remote work.
+from test_experiment_package import repo, package
+from test_experiment_spec import payload
+
+
+@pytest.fixture
+def failed_preparation(tmp_path, package):
+    import shutil
+    from molgap.experiment_package import verify_experiment_source_package
+    run = tmp_path / "run"
+    prepared = run / "prepared"
+    prepared.mkdir(parents=True)
+    shutil.copytree(package, prepared / "package")
+    manifest = verify_experiment_source_package(prepared / "package")
+    (prepared / "workflow_report.json").write_text(json.dumps({
+        "status": "PREPARED_FOR_PLATFORM", "package_identity": manifest["package_identity"]}))
+    old = run / "local_preparation_failures" / ("prepared-" + "a" * 32)
+    old.mkdir(parents=True)
+    shutil.copytree(package, old / "package")
+    report = {"format": "molgap-workflow-preparation-v1", "spec_identity": manifest["spec_identity"],
+        "status": "ERROR_BEFORE_PUBLICATION", "submitted": False,
+        "prospective_published": False, "publication_intent": False, "error": "synthetic preflight error"}
+    (old / "workflow_report.json").write_text(json.dumps(report))
+    def retire():
+        from molgap.local_storage import retire_failed_preparations
+        return retire_failed_preparations(run, manifest["spec_identity"], manifest["package_identity"])
+    return SimpleNamespace(run=run, old=old, manifest=manifest, retire=retire, report=report)
+
+
+def test_failed_preparation_retirement_preserves_compact_original_receipts(failed_preparation):
+    case = failed_preparation
+    assert case.retire()[0]["status"] == "REMOVED"
+    assert not case.old.exists()
+    receipt = json.loads(case.old.with_name(case.old.name + ".json").read_bytes())
+    assert receipt["workflow_report"] == case.report
+    assert receipt["local_payload_retirement"]["status"] == "REMOVED"
+    assert (case.run / "prepared/package/source.tar.gz").is_file()
+
+
+@pytest.mark.parametrize("change", ["operations", "unknown", "published", "newbytes", "link"])
+def test_failed_preparation_uncertainty_and_unique_bytes_are_preserved(failed_preparation, change, monkeypatch):
+    case = failed_preparation
+    if change == "operations":
+        (case.run / "operations").mkdir()
+    elif change == "unknown":
+        (case.old / "unique_checkpoint.pt").write_bytes(b"unique")
+    elif change == "published":
+        record = dict(case.report, publication_intent=True)
+        (case.old / "workflow_report.json").write_text(json.dumps(record))
+    elif change == "newbytes":
+        (case.old / "package/source.tar.gz").write_bytes(b"unmatched source")
+    else:
+        original = Path.lstat
+        def reparse(path, *args, **kwargs):
+            if path == case.old / "package":
+                return SimpleNamespace(st_mode=stat.S_IFDIR, st_file_attributes=0x400)
+            return original(path, *args, **kwargs)
+        monkeypatch.setattr(Path, "lstat", reparse)
+    assert case.retire()[0]["status"] == "REPORT_ONLY"
+    assert (case.old / "package/source.tar.gz").exists()
+
+
+def test_failed_preparation_interrupted_unlink_recovers_from_receipt(failed_preparation, monkeypatch):
+    case = failed_preparation
+    original = Path.unlink
+    crashed = []
+    def unlink(path, *args, **kwargs):
+        result = original(path, *args, **kwargs)
+        if path.is_relative_to(case.old) and not crashed:
+            crashed.append(True)
+            raise OSError("synthetic power loss after unlink")
+        return result
+    monkeypatch.setattr(Path, "unlink", unlink)
+    assert case.retire()[0]["status"] == "REPORT_ONLY"
+    receipt = json.loads(case.old.with_name(case.old.name + ".json").read_bytes())
+    assert receipt["local_payload_retirement"]["status"] == "PENDING"
+    assert case.retire()[0]["status"] == "REMOVED" and not case.old.exists()

@@ -21,7 +21,7 @@ from .training_reproducibility import atomic_torch_save
 _COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt"}
 
 
-def _recover_commit(root, context):
+def _recover_commit(root, context, *, _published_hashes=None):
     """Recover only a hash-bound producer transaction, never truncate evidence."""
     companion = root / "canonical_trace.json.context.json"
     journal = root / "session_commit.json"
@@ -62,8 +62,16 @@ def _recover_commit(root, context):
                 raise ValueError("Session commit artifact is not a file")
     # Publication of the last checkpoint is the commit point. If absent/old,
     # restore the preceding selected/trace/checkpoint bundle using retained bytes.
-    observed_hashes = {entry["name"]: file_digest(root / entry["name"])
-        if (root / entry["name"]).is_file() else None for entry in entries}
+    if _published_hashes is not None:
+        # Only the synchronous writer may reuse digests of the bytes it just
+        # renamed. Independent startup/recovery always hashes visible files.
+        if _published_hashes != {entry["name"]: entry["next_sha256"] for entry in entries} or any(
+                not (root / entry["name"]).is_file() for entry in entries):
+            raise ValueError("Incomplete synchronous session publication")
+        observed_hashes = _published_hashes
+    else:
+        observed_hashes = {entry["name"]: file_digest(root / entry["name"])
+            if (root / entry["name"]).is_file() else None for entry in entries}
     committed = observed_hashes["last_checkpoint.pt"] == entries[-1]["next_sha256"]
     for entry in entries:
         visible = root / entry["name"]
@@ -117,6 +125,7 @@ class SessionOutputs:
         record, self.recipe = read_recipe(contract)
         from .family_training_policy import mode_policy
         self.policy = mode_policy(self.recipe.family, self.recipe.mode)
+        self.resume_keep_count = record.get("resume_keep_count", self.policy.chunk_keep_count)
         self.bounded_pair = self.policy.process_timing
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
@@ -187,6 +196,7 @@ class SessionOutputs:
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
             scheduler_state=state["scheduler"], ema_state=state["ema"])
+        checkpoint_sha256 = file_digest(destination / "last_checkpoint.pt") if changed or self.pending_pass is not None else None
         observed = None
         if self.pending_pass is not None:
             _, fields = self.pending_pass
@@ -198,9 +208,10 @@ class SessionOutputs:
             recorder.path = self.pending / "canonical_trace.json"
             recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
                 epoch_or_pass=progress.pass_index, **fields,
-                checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
-                wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
-                device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+                checkpoint_identity=checkpoint_sha256,
+                **({"wall_time_seconds": duration, "cumulative_wall_time_seconds": cumulative,
+                    "device_time_seconds": duration, "cumulative_device_time_seconds": cumulative}
+                    if self.bounded_pair else {}))
             if "canonical_trace.json" not in changed:
                 changed.append("canonical_trace.json")
         if changed:
@@ -208,7 +219,7 @@ class SessionOutputs:
             for name in names:
                 _safe_local((self.root / name).absolute())
             entries = [{"name": name, "previous_sha256": file_digest(self.root / name) if (self.root / name).is_file() else None,
-                        "next_sha256": file_digest(self.pending / name)} for name in names]
+                        "next_sha256": checkpoint_sha256 if name == "last_checkpoint.pt" else file_digest(self.pending / name)} for name in names]
             atomic_write(self.root / "session_commit.json", json_bytes({"format": "molgap-session-commit-v1",
                 "context": self.context.to_dict(), "entries": entries}))
             # Keep the preceding generation until checkpoint-last publication commits.
@@ -217,7 +228,8 @@ class SessionOutputs:
                     os.replace(self.root / name, self.pending / (name + ".previous"))
                 os.replace(self.pending / name, self.root / name)
             sync_directory(self.root)
-            _recover_commit(self.root, self.context)
+            _recover_commit(self.root, self.context,
+                _published_hashes={entry["name"]: entry["next_sha256"] for entry in entries})
             if "canonical_trace.json" in changed:
                 self.stage.recorder.record = validate_canonical_trace(_json(self.root / "canonical_trace.json"))
         if observed is not None:
@@ -227,24 +239,27 @@ class SessionOutputs:
             from .experiment_resume import create_resume_bundle
             destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
             create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
+            if self.resume_keep_count is not None:
+                from .experiment_resume import prune_duplicate_resume_bundles
+                prune_duplicate_resume_bundles(destination.parent, destination,
+                    keep_count=self.resume_keep_count, context=self.context)
         self.logger.checkpoint_finished(progress)
 
     def pass_finished(self, progress, metrics):
         self.logger.pass_finished(progress, metrics)
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
+        used = metrics.get("learning_rates_used")
+        if used is not None:
+            if len(used) != 1:
+                raise ValueError("Canonical family trace requires the frozen single LR group")
+            fields["learning_rate"] = used[0]
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
         if metrics.get("development_live") is not None:
             fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
         if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
-        if self.bounded_pair:
-            self.pending_pass = (progress, fields)
-            return
-        recorder = deepcopy(self.stage.recorder)
-        recorder.path = self.pending / "canonical_trace.json"
-        recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
-            epoch_or_pass=progress.pass_index, **fields)
+        self.pending_pass = (progress, fields)
 
     def retained_state(self):
         import torch

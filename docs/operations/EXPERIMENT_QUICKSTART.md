@@ -67,6 +67,19 @@ through existing owners. See the supported shape in
 [synthetic fixture](../../tests/test_scientific_input.py); fixture identities
 are examples, never real authorization or evidence.
 
+For an explicitly authorized baseline/candidate job, `shared` supplies common arm
+fields and each `arms` entry overrides whole fields. `same_run` binds
+`reference_arm_id` and `target_manifest_ref`; authority must name that reference
+arm in `same_run_reference_arm_id`. The reference keeps its frozen recipe and
+the candidate supplies the scientific delta. This uses the existing same-run
+acceptance owner; it does not require inventing a previously accepted reference.
+See the executable [pair fixture](../../tests/test_scientific_pair_input.py).
+
+A new `vN` attempt requires `retry_of` (logical run, predecessor attempt, Spec
+identity and decision pointer), matching authority and an explicit authorized
+terminal disposition. Submitted predecessors require an exact reconciled job
+observation. Unknown publication cannot be retried through this input.
+
 Already authored declarations can use this reference-only envelope:
 
 ```json
@@ -106,7 +119,13 @@ Both preparation entries resolve relative initialization paths against the selec
 `repo_root`, independent of the caller's working directory. Within one workflow
 preparation, identical package bytes reuse full validation; each stage still reads
 and hashes all six package files. Independent calls and transport boundaries retain
-their own checks. No verification result is persisted between preparations.
+their own checks. A byte-identical upload roundtrip may reuse expensive content
+checks inside that synchronous submission; remote identity, layout, entry and
+mount checks still run. No verification result is persisted between preparations.
+
+Preparation commands print compact status, identity, next action and report/journal
+pointers by default; `--verbose` exposes the existing complete report. Re-reading
+an already prepared run does not create another timing observation file.
 
 With existing submission authority, the platform's `--execute` path uses its
 original journaled submitter. Unknown publication outcomes require reconciliation.
@@ -139,6 +158,16 @@ still uses desktop's existing V5/RML pipeline. Mechanical acceptance, scientific
 comparison, Replay, cost/roles, native qualification and full admission remain
 separate. New configuration work needs focused tests, not a full historical audit
 or document line-count checks.
+
+New RML plans share an immutable decision-time knowledge/policy snapshot. Arm
+records bind its digest; legacy inline records remain readable. Multi-arm closure
+persists each independent terminal outcome and updates derived indexes once.
+If that update fails, use the RML CLI `terminal-rebuild --trajectory <path>` to
+recover from canonical receipts without repeating training or submission.
+
+Canonical pass curves record the actual last-update learning rate separately
+from the scheduler's next rate, and bind the published checkpoint. Historical
+unknown fields remain unknown. These fields alone do not establish strict replay.
 
 ## Test the changed flows once
 

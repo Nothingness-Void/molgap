@@ -175,12 +175,12 @@ def terminal_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     reference_path = resolve_repo_pointer(root, binding["reference_trajectory_ref"])
     assert reference_path is not None
     destination = reference_path.parent / "rml_finalized"
-    from .finalize import verified_receipt
+    from .finalize import verified_receipt, prospective_bytes, load_terminal_input
 
     if not (destination / "finalization.json").is_file():
         raise ValueError("same-run reference is not yet terminally accepted")
     verified_receipt(destination)
-    if (destination / "prospective_snapshot.json").read_bytes() != reference_path.read_bytes():
+    if prospective_bytes(destination) != reference_path.read_bytes():
         raise ValueError("same-run reference prospective snapshot changed")
     finalized = load_json_object(destination / "trajectory.json")
     if (finalized["trajectory_id"] != reference["trajectory_id"]
@@ -191,7 +191,7 @@ def terminal_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     evidence_id = finalized["result"]["evidence_ids"][0]
     if evidence["evidence_id"] != evidence_id or evidence["outcome"]["execution_status"] != "complete":
         raise ValueError("same-run reference evidence is incomplete")
-    observation = validate_pair_observation(load_json_object(destination / "terminal_input.json").get("same_run_observation"))
+    observation = validate_pair_observation(load_terminal_input(destination).get("same_run_observation"))
     if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
         binding["spec_identity"], binding["logical_run_id"], reference["state_at_start"]["source_commit"]
     ):

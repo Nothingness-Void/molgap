@@ -242,6 +242,7 @@ _TEST_SUPPORT_FILES = frozenset({
     "docs/operations/EXPERIMENT_ADDON_GUIDE.md",
     "docs/operations/EXPERIMENT_CLI.md",
 })
+_TEST_METADATA_PREFIXES = ("research_memory/schemas/", "research_memory/policies/")
 
 
 def testing_source_files(repo_root):
@@ -262,6 +263,8 @@ def testing_source_files(repo_root):
     names = {p for p in tracked if p.endswith(".py") and (
         p.startswith("tests/") or (p.startswith("src/molgap/") and
                                   not p.startswith("src/molgap/archive/")))}
+    names.update(p for p in tracked if p.endswith(".json") and
+                 p.startswith(_TEST_METADATA_PREFIXES))
     return _allowlist(sorted(names | _TEST_SUPPORT_FILES))
 
 

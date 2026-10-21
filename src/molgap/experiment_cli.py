@@ -152,6 +152,9 @@ def _parser() -> argparse.ArgumentParser:
     selected.add_argument("--spec", type=_local)
     selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))
     sandbox.add_argument("--arm")
+    for name in ("prepare-workflow", "prepare-family-training", "prepare-release"):
+        commands.choices[name].add_argument("--verbose", action="store_true",
+            help="Print the full owner report rather than its summary")
     return parser
 
 
@@ -394,6 +397,9 @@ def main(argv: list[str] | None = None) -> int:
         # Keep any library diagnostics off the machine-readable output channel.
         with redirect_stdout(sys.stderr):
             result, code = _dispatch(args)
+        if args.command in {"prepare-workflow", "prepare-family-training", "prepare-release"} and not args.verbose:
+            from .experiment_input import compact_operation_report
+            result = compact_operation_report(result, prepared=args.output)
         print(canonical_json(result))
         return code
     except Exception as exc:

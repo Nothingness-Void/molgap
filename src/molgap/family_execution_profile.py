@@ -50,13 +50,14 @@ class ProfileConfig:
     with_stack: bool = False
     row_limit: int = 50
     module_paths: tuple[str, ...] = ()
+    capture_off_training_spans: bool = False
 
     def __post_init__(self):
         for name, minimum in (("warmup_steps", 0), ("active_steps", 1), ("row_limit", 1)):
             value = getattr(self, name)
             if type(value) is not int or value < minimum:
                 raise ValueError("Invalid profile setting: " + name)
-        for name in ("record_shapes", "profile_memory", "with_stack"):
+        for name in ("record_shapes", "profile_memory", "with_stack", "capture_off_training_spans"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError("Expected profile boolean: " + name)
         if (type(self.module_paths) is not tuple or
@@ -84,7 +85,7 @@ class _ObservedBatches:
         return len(self.source)
 
     def __iter__(self):
-        capture_off = self.owner._finished
+        capture_off = self.owner._finished and self.owner.config.capture_off_training_spans
         if capture_off:
             self.owner._synchronize()
             self.owner._span = (self.owner._updates, len(self.source), time.perf_counter())
@@ -94,6 +95,11 @@ class _ObservedBatches:
         try:
             while True:
                 self.owner._begin_batch()
+                if self.owner._finished and not self.owner.config.capture_off_training_spans:
+                    # This iterator may predate hook removal. Drain its ordinary
+                    # source directly after capture without per-batch observers.
+                    yield from iterator
+                    return
                 try:
                     with self.owner.phase("loader_wait"):
                         batch = next(iterator)
@@ -181,7 +187,7 @@ class _ExecutionCapture:
             else:
                 setattr(obj, name, original)
         setattr(obj, name, replacement)
-        self._cleanup.callback(restore)
+        self._hooks.callback(restore)
 
     def _wrap(self, obj, name, label):
         original = getattr(obj, name)
@@ -204,8 +210,8 @@ class _ExecutionCapture:
             stack = getattr(scopes, "stack", ())
             if stack:
                 stack.pop().__exit__(None, None, None)
-        self._cleanup.callback(module.register_forward_pre_hook(before, prepend=True).remove)
-        self._cleanup.callback(module.register_forward_hook(after, always_call=True).remove)
+        self._hooks.callback(module.register_forward_pre_hook(before, prepend=True).remove)
+        self._hooks.callback(module.register_forward_hook(after, always_call=True).remove)
 
     def _install(self):
         import torch
@@ -232,7 +238,7 @@ class _ExecutionCapture:
             raise ValueError("Profiler requires an unobserved update owner")
         self._replace(kernel, "update_observer", UpdateObserver(scope=self.phase))
         from .training_reproducibility import observe_finite_validation
-        self._cleanup.enter_context(observe_finite_validation(self.phase))
+        self._hooks.enter_context(observe_finite_validation(self.phase))
         if kernel.recipe.family == "gptrans_t":
             self._wrap(kernel, "_gptrans_batch", "layout_and_transfer")
             if hasattr(kernel.model, "_shortest_path"):
@@ -286,6 +292,8 @@ class _ExecutionCapture:
             self._prof.__exit__(None, None, None)
         self._events = list(self._prof.events())
         self._prof.export_chrome_trace(str(self.output / "trace.json"))
+        if not self.config.capture_off_training_spans:
+            self._hooks.close()
 
     def __enter__(self):
         import torch
@@ -295,6 +303,8 @@ class _ExecutionCapture:
             raise RuntimeError("Only one shared-session profiler per process")
         self._cleanup = ExitStack()
         self._cleanup.callback(_OWNER.release)
+        self._hooks = ExitStack()
+        self._cleanup.callback(self._hooks.close)
         self._used, self._thread = True, threading.get_ident()
         try:
             device = self.session.kernel.device
@@ -340,7 +350,8 @@ class _ExecutionCapture:
             "error": None if error is None else {"type": type(error).__name__, "message": str(error)},
             "recipe_identity": self.session.recipe.identity, "family": self.session.recipe.family,
             "config": asdict(self.config), "starting_optimizer_step": self._start_step,
-            "observed_updates": self._updates, "captured_updates": self._captured,
+            "observed_updates": max(self._updates, self.session.progress.optimizer_step - self._start_step),
+            "captured_updates": self._captured,
             "capture_start_optimizer_step": self._start_step + self.config.warmup_steps if self._prof else None,
             "capture_wall_seconds": self._elapsed,
             "capture_off_training_spans": self._train_spans,
