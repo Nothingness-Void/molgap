@@ -17,6 +17,9 @@ The [independent CPU verification](cpu_verification.md) covers model mechanisms,
 update/resume/output inspection and compilation. Pinned Python3.12/torch2.7.1
 installation was observed on the three running jobs. Native qualification and
 formal training remain unobserved; there are no MAEs or Replay claims yet.
+The [startup interpretation](startup_interpretation.md) corrects the frozen
+protocol's PPGT warmup shorthand and explains why a literal training START line
+is not expected from the epoch-only logger. Actual compiled recipes are unchanged.
 
 The existing Luna B heartbeat has one active30-minute schedule for
 [Kaggle2](kaggle2_monitor.json) and [Kaggle3](kaggle3_monitor.json). Initial ticks
