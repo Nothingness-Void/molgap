@@ -1,5 +1,6 @@
 """Local path safety and immutable publication, without launch/controller imports."""
 import os
+import hashlib
 from pathlib import Path
 import stat
 import tempfile
@@ -68,7 +69,7 @@ def copy_immutable_file(source: Path, destination: Path, *, expected_sha256: str
     source, destination = Path(source).absolute(), Path(destination).absolute()
     _safe_local(source)
     _safe_local(destination)
-    if not stat.S_ISREG(source.stat().st_mode) or file_digest(source) != expected_sha256:
+    if not stat.S_ISREG(source.stat().st_mode):
         raise ValueError("Retained source identity mismatch")
     destination.parent.mkdir(parents=True, exist_ok=True)
     if destination.exists():
@@ -79,12 +80,14 @@ def copy_immutable_file(source: Path, destination: Path, *, expected_sha256: str
         try:
             with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".copy-", delete=False) as handle:
                 temporary = Path(handle.name)
+                copied_digest = hashlib.sha256()
                 with source.open("rb") as reader:
                     while block := reader.read(1024 * 1024):
                         handle.write(block)
+                        copied_digest.update(block)
                 handle.flush()
                 os.fsync(handle.fileno())
-            if file_digest(temporary) != expected_sha256:
+            if copied_digest.hexdigest() != expected_sha256:
                 raise ValueError("Copied artifact checksum mismatch; original retained")
             _safe_local(destination)
             try:

@@ -153,9 +153,23 @@ def test_existing_owner_receives_original_bindings_and_explicit_plan(frozen_run,
     before = snapshot(case.run)
     owner = Mock(return_value={"status": "OWNER_RESULT", "executed": False})
     if operation == "accept":
+        original_run = Mock(wraps=runs._original_run)
+
+        def resolve_acceptance(*args, supplied=None, locations=None, **kwargs):
+            spec, options, prepared = original_run(*args)
+            from molgap.experiment_family_workflow import RunContext
+            contexts = {arm["arm_id"]: RunContext.from_launch(spec, options["receipt_path"],
+                options["package_dir"], expected_package_identity=options["expected_package_identity"],
+                arm_id=arm["arm_id"]) for arm in spec.to_dict()["arms"]}
+            return {"spec": spec, "options": options, "outputs": supplied,
+                "locations": locations, "contexts": contexts, "target_identities": None,
+                "run_directory": prepared.parent}
+
+        monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", resolve_acceptance)
         monkeypatch.setattr("molgap.experiment_workflow.accept_workflow", owner)
         supplied, locations = {"original_outputs": True}, {"original_scientific_plan": True}
         result = runs.accept_run_workflow(*case.original, supplied=supplied, locations=locations)
+        original_run.assert_called_once_with(*case.original)
         assert owner.call_args.kwargs["supplied"] is supplied
         assert owner.call_args.kwargs["locations"] is locations
         assert owner.call_args.kwargs["execute"] is False
@@ -305,8 +319,26 @@ def test_cli_old_and_run_id_delegate_same_original_bindings(frozen_run, tmp_path
         args += ["--resume-plan", str(tmp_path / "resume_plan.json"), "--output", str(tmp_path / "recovery")]
     owner = Mock(return_value={"status": status})
     monkeypatch.setattr(owner_path, owner)
+    if identity == "run" and command == "accept-workflow":
+        original_run = Mock(wraps=runs._original_run)
+
+        def resolve_acceptance(profile, repo_root, run_id, attempt_id, *,
+                               retrieved_root=None, supplied=None, locations=None):
+            spec, options, prepared = original_run(profile, repo_root, run_id, attempt_id)
+            from molgap.experiment_family_workflow import RunContext
+            contexts = {arm["arm_id"]: RunContext.from_launch(spec, options["receipt_path"],
+                options["package_dir"], expected_package_identity=options["expected_package_identity"],
+                arm_id=arm["arm_id"]) for arm in spec.to_dict()["arms"]}
+            return {"spec": spec, "options": options, "outputs": supplied,
+                "locations": locations, "contexts": contexts, "target_identities": None,
+                "run_directory": prepared.parent}
+
+        monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", resolve_acceptance)
     assert cli.main(args) == 0
-    assert json.loads(capsys.readouterr().out) == {"status": status}
+    expected_result = {"status": status}
+    if identity == "run" and command == "accept-workflow":
+        expected_result.update(run_id="synthetic-run", attempt_id="v1", spec_identity=case.spec.identity)
+    assert json.loads(capsys.readouterr().out) == expected_result
     owner.assert_called_once()
     if command != "inspect-output":
         assert owner.call_args.kwargs["package_dir"] == case.package

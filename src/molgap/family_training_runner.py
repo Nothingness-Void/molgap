@@ -24,10 +24,12 @@ from .experiment_execution import shared_training_adapters
 INTERFACES = {name: adapter.family for name, adapter in shared_training_adapters().items()}
 PROFILES = {name: adapter.artifact_adapter for name, adapter in shared_training_adapters().items()}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
-OPTIONAL_METADATA = {"profiling", "logging"}
+OPTIONAL_METADATA = {"profiling", "logging", "resume_keep_count"}
 
 
 def _recipe_configuration(record):
+    if "resume_keep_count" in record and (type(record["resume_keep_count"]) is not int or record["resume_keep_count"] < 1):
+        raise ValueError("Expected a positive explicit resume_keep_count")
     if "logging" in record:
         from .training_logging import TrainingLogPolicy
         if record["logging"] is None:
@@ -71,7 +73,7 @@ def _requirements(recipe, source_idx_sha256, target_sha256):
 
 def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
                         target_sha256=None, train_role_identity=None, development_role_identity=None,
-                        logging=None):
+                        logging=None, resume_keep_count=None):
     from .training_logging import TrainingLogPolicy
     if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
         raise ValueError("Explicit matching shared family configuration is required")
@@ -82,9 +84,12 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
         _text(development_role_identity, "development_role_identity")
     elif development_role_identity is not None:
         raise ValueError("Final-only training has no development role")
+    if resume_keep_count is not None and (type(resume_keep_count) is not int or resume_keep_count < 1):
+        raise ValueError("Expected a positive explicit resume_keep_count")
     return {**configuration.to_dict(), "acceptance_requirements": _requirements(configuration, source_idx_sha256, target_sha256),
         "train_role_identity": train_role_identity, "development_role_identity": development_role_identity,
-        "logging": TrainingLogPolicy.from_dict(logging).to_dict()}
+        "logging": TrainingLogPolicy.from_dict(logging).to_dict(),
+        **({"resume_keep_count": resume_keep_count} if resume_keep_count is not None else {})}
 
 
 def read_recipe(path):

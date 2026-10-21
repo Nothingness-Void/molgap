@@ -49,7 +49,7 @@ def load_family_model(recipe, initial_state):
         model = apply_reviewed_addons(TRAINING_ADAPTERS[interface],
             {"addons": list(recipe.addons)}, model)
         substrate = getattr(model, "_molgap_substrate", None)
-        if substrate is None or not substrate.bindings:
+        if substrate is None or not (substrate.bindings or getattr(substrate, "mutations", ())):
             raise ValueError("Accelerated addons must attach to the reviewed substrate slots")
         substrate.seal()
     if recipe.clean_bn is not None:

@@ -8,13 +8,15 @@ from pathlib import Path
 SCOPES = {
     "runtime": ("test_reform_runtime", "test_local_testing", "test_local_storage", "test_machine_paths"),
     "package": ("test_experiment_package", "test_reform_package", "test_reform_distribution"),
-    "prepare": ("test_reform_input", "test_scientific_input", "test_reform_workflow",
-                "test_reform_catalog", "test_reform_review", "test_experiment_run"),
+    "prepare": ("test_reform_input", "test_scientific_input", "test_scientific_pair_input", "test_reform_workflow",
+                "test_reform_catalog", "test_reform_review", "test_experiment_run", "test_scientific_input_ergonomics"),
     "submit": ("test_reform_workflow", "test_kaggle_submission", "test_kaggle_bootstrap",
                "test_reform_daily_platform"),
     "accept": ("test_reform_retrieval", "test_experiment_family_workflow",
-               "test_kaggle_family_retrieval", "test_experiment_run", "test_reform_daily_platform"),
-    "resume": ("test_experiment_workflow_resume", "test_family_recovery_guards",
+               "test_kaggle_family_retrieval", "test_experiment_run", "test_reform_daily_platform",
+               "test_run_acceptance_resolution", "test_run_attribution", "test_experiment_attribution",
+               "test_experiment_terminal_staging", "test_run_acceptance_cli", "test_run_acceptance_integration"),
+    "resume": ("test_experiment_workflow_resume", "test_family_recovery_guards", "test_family_training_io",
                "test_experiment_run", "test_reform_daily_platform"),
 }
 

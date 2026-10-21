@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "molgap-decision-state-v2",
+  "type": "object",
+  "properties": {
+    "active_reference_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "available_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "role_snapshot_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "chosen_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "budget_snapshot_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state_timestamp": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_inputs_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "schema": {
+      "const": "molgap-decision-state-v2"
+    },
+    "snapshot_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "active_reference_ids",
+    "available_actions",
+    "role_snapshot_refs",
+    "chosen_action",
+    "policy_id",
+    "policy_version",
+    "budget_snapshot_ref",
+    "state_timestamp",
+    "schema",
+    "snapshot_ref",
+    "snapshot_sha256"
+  ],
+  "additionalProperties": false
+}

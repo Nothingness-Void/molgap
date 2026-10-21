@@ -1666,3 +1666,138 @@ def test_multi_trace_with_ambiguous_arm_identifier_fails_closed():
     ):
         inspect_trace_retention_evidence(ev, arm_identifier="arm_variant")
 
+
+
+def test_batch_rebuild_once_preserves_independent_terminal_outcomes(tmp_path, monkeypatch):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory import pipeline
+    arms = [create_candidate_arm(tmp_path, f"lean_{label}", f"T-lean-{label}", f"run-lean-{label}",
+                                 f"ev-lean-{label}", include_trace_artifact=False) for label in "ab"]
+    rebuild = pipeline.rebuild_research_memory
+    calls = []
+    def counted(root):
+        calls.append(root)
+        return rebuild(root)
+    monkeypatch.setattr(pipeline, "rebuild_research_memory", counted)
+    results = close_terminal_multi_arm(tmp_path, [
+        {"trajectory": arms[0]["traj_path"], "terminal": arms[0]["terminal_path"]},
+        {"trajectory": "experiments/missing/trajectory.json", "terminal": "missing.json"},
+        {"trajectory": arms[1]["traj_path"], "terminal": arms[1]["terminal_path"]},
+    ])
+    assert [item["pipeline_status"] for item in results] == ["COMPLETE", "FINALIZATION_FAILED", "COMPLETE"]
+    assert len(calls) == 1
+    payloads = compile_research_memory(tmp_path)
+    assert all((tmp_path / "research_memory/derived" / name).read_bytes() == raw for name, raw in payloads.items())
+    assert all(verified_receipt(arm["exp_dir"] / "rml_finalized")["outcome"] != "ACTIVE" for arm in arms)
+
+
+def test_derived_failure_recovers_from_receipts_without_finalizing_again(tmp_path, monkeypatch):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory import pipeline
+    arm = create_candidate_arm(tmp_path, "lean_recovery", "T-lean-recovery", "run-lean-recovery",
+                               "ev-lean-recovery", include_trace_artifact=False)
+    rebuild = pipeline.rebuild_research_memory
+    monkeypatch.setattr(pipeline, "rebuild_research_memory", lambda root: (_ for _ in ()).throw(OSError("synthetic disk failure")))
+    result = close_terminal_multi_arm(tmp_path, [{"trajectory": arm["traj_path"], "terminal": arm["terminal_path"]}])[0]
+    assert result["pipeline_status"] == "DERIVED_UPDATE_FAILED"
+    assert result["canonical_finalization_preserved"] is True
+    directory = arm["exp_dir"] / "rml_finalized"
+    before = {path.name: path.read_bytes() for path in directory.rglob("*") if path.is_file()}
+    monkeypatch.setattr(pipeline, "rebuild_research_memory", rebuild)
+    monkeypatch.setattr(pipeline, "finalize", lambda *args, **kwargs: pytest.fail("recovery must not re-finalize or submit"))
+    recovered = pipeline.recover_terminal_derived(tmp_path, [arm["traj_path"]])
+    assert recovered[0]["pipeline_status"] == "COMPLETE"
+    assert recovered[0]["finalization_status"] == "ALREADY_FINALIZED"
+    assert before == {path.name: path.read_bytes() for path in directory.rglob("*") if path.is_file()}
+
+
+@pytest.mark.parametrize("omitted", [(), ("costs",), ("roles",), ("costs", "roles")])
+def test_compact_terminal_inputs_reconstruct_exact_legacy_package(tmp_path, omitted):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory.finalize import load_terminal_input, prospective_bytes
+    arm = create_candidate_arm(tmp_path, "lean_package", "T-lean-package", "run-lean-package",
+                               "ev-lean-package", include_trace_artifact=False)
+    original = load_json_object(arm["terminal_path"])
+    for key in omitted:
+        original.pop(key)
+    arm["terminal_path"].write_bytes(json_bytes(original))
+    close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    directory = arm["exp_dir"] / "rml_finalized"
+    receipt = verified_receipt(directory)
+    assert receipt["format"] == "molgap-rml-finalization-v2"
+    assert not (directory / "prospective_snapshot.json").exists()
+    assert load_terminal_input(directory) == original
+    assert prospective_bytes(directory) == Path(arm["traj_path"]).read_bytes()
+    compact = load_json_object(directory / "terminal_input.json")
+    assert "evidence" not in compact and "decision" not in compact
+    for key in ("costs", "roles"):
+        assert (key in compact["published_components"]) == (key in original)
+        if key in original:
+            assert compact["published_components"][key] == []
+    expected_digest = sha256_bytes(json_bytes({
+        "trajectory_sha256": file_digest(arm["traj_path"]),
+        "terminal": original,
+        "trace_sha256": None,
+    }))
+    assert receipt["source_artifact_digest"] == expected_digest
+    from molgap.research_memory.finalize import finalize
+    assert finalize(tmp_path, arm["traj_path"], arm["terminal_path"])["status"] == "ALREADY_FINALIZED"
+    # The same immutable scientific records remain readable through v1 receipt semantics.
+    (directory / "prospective_snapshot.json").write_bytes(prospective_bytes(directory))
+    (directory / "terminal_input.json").write_bytes(json_bytes(original))
+    receipt["format"] = "molgap-rml-finalization-v1"
+    receipt["finalizer_version"] = "1"
+    receipt.pop("prospective_ref")
+    receipt.pop("prospective_sha256")
+    receipt["published_hashes"]["prospective_snapshot.json"] = file_digest(directory / "prospective_snapshot.json")
+    receipt["published_hashes"]["terminal_input.json"] = file_digest(directory / "terminal_input.json")
+    (directory / "finalization.json").write_bytes(json_bytes(receipt))
+    assert verified_receipt(directory)["source_artifact_digest"] == receipt["source_artifact_digest"]
+    assert load_terminal_input(directory) == original
+
+
+@pytest.mark.parametrize("malformed", ["missing_action_id", "nonhashable_action_id", "missing_trajectory"])
+@pytest.mark.parametrize("already_finalized", [False, True])
+def test_malformed_middle_arm_preserves_batch_publication_and_rebuild(
+    tmp_path, monkeypatch, malformed, already_finalized,
+):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory import pipeline
+    from molgap.research_memory.finalize import finalize
+    arms = [create_candidate_arm(
+        tmp_path, f"malformed_{label}", f"T-malformed-{label}", f"run-malformed-{label}",
+        f"ev-malformed-{label}", include_trace_artifact=False,
+    ) for label in "abc"]
+    if already_finalized:
+        finalize(tmp_path, arms[0]["traj_path"], arms[0]["terminal_path"])
+    inputs = [{"trajectory": arm["traj_path"], "terminal": arm["terminal_path"]} for arm in arms]
+    if malformed == "missing_trajectory":
+        inputs[1].pop("trajectory")
+    else:
+        terminal = load_json_object(arms[1]["terminal_path"])
+        if malformed == "missing_action_id":
+            terminal.pop("action_id")
+        else:
+            terminal["action_id"] = []
+        arms[1]["terminal_path"].write_bytes(json_bytes(terminal))
+    rebuild = pipeline.rebuild_research_memory
+    calls = []
+
+    def counted(root):
+        calls.append(root)
+        return rebuild(root)
+
+    monkeypatch.setattr(pipeline, "rebuild_research_memory", counted)
+    results = close_terminal_multi_arm(tmp_path, inputs)
+    assert [item["pipeline_status"] for item in results] == ["COMPLETE", "FINALIZATION_FAILED", "COMPLETE"]
+    assert results[0]["finalization_status"] == ("ALREADY_FINALIZED" if already_finalized else "FINALIZED")
+    assert results[2]["finalization_status"] == "FINALIZED"
+    assert results[1]["error"]
+    assert len(calls) == 1
+    assert not (arms[1]["exp_dir"] / "rml_finalized").exists()
+    for arm, result in ((arms[0], results[0]), (arms[2], results[2])):
+        receipt = verified_receipt(arm["exp_dir"] / "rml_finalized")
+        assert receipt["finalization_id"] == result["finalization_id"]
+        assert result["validation_status"] == "VALID"
+    payloads = compile_research_memory(tmp_path)
+    assert all((tmp_path / "research_memory/derived" / name).read_bytes() == raw for name, raw in payloads.items())

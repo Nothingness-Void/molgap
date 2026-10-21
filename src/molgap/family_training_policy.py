@@ -17,6 +17,7 @@ class FamilyModePolicy:
     process_timing: bool = False
     segment_passes: int | None = None
     chunk_passes: int = 10
+    chunk_keep_count: int | None = None
     qualify_resources: object = None
     refresh_resources: object = None
     objective_name: str | None = None
@@ -33,6 +34,8 @@ class FamilyModePolicy:
             raise ValueError("Invalid explicit durable segment")
         if type(self.chunk_passes) is not int or self.chunk_passes < 1:
             raise ValueError("Invalid retained chunk cadence")
+        if self.chunk_keep_count is not None and (type(self.chunk_keep_count) is not int or self.chunk_keep_count < 1):
+            raise ValueError("Invalid explicit retained chunk count")
 
 
 @lru_cache(maxsize=None)

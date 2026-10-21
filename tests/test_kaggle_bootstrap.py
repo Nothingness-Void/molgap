@@ -363,3 +363,151 @@ def test_publication_failure_preserves_bootstrap_error(entry, monkeypatch, capsy
     with pytest.raises(RuntimeError, match="Expected one frozen"):
         entry.main()
     assert "publication failed" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("scenario", ["success", "preflight_failure", "existing_output", "old_output_order"])
+def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_path, scenario):
+    """Only pip/NVIDIA/worker processes are replaced inside a fresh interpreter.
+
+    The archived launcher, extractor, package verifier, recipe/mount resolver,
+    pair scheduler, phase barrier and durable execution receipts all execute.
+    """
+    import shutil
+    from molgap.experiment_execution import build_family_recipe
+    from molgap.experiment_package import build_experiment_source_package, stage_source_inputs
+    from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap.family_training_data import DatasetSelection
+    from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
+    from test_experiment_package import git
+    from test_experiment_workflow import _arm, _spec_payload, _jobs
+
+    root = Path(__file__).resolve().parents[1]
+    repo = tmp_path / "frozen-repo"
+    repo.mkdir()
+    for name in SHARED_SOURCE_FILES:
+        target = repo / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(root / name, target)
+    if scenario == "old_output_order":
+        launcher = repo / "platforms/kaggle/run_experiment.py"
+        # Reproduce the historical fault using a separately frozen source
+        # fixture, rather than weakening/mocking the current runtime guard.
+        old = launcher.read_text(encoding="utf-8").replace(
+            '        state["input_resolution"] = resolution',
+            '        atomic_json(OUTPUT_ROOT / "input_resolution.json", resolution)')
+        launcher.write_text(old, encoding="utf-8")
+    mounted = tmp_path / "input"
+    graph = mounted / "datasets/release-owner/data/manifest.json"
+    graph.parent.mkdir(parents=True)
+    graph.write_text(json.dumps({"assets": {"topology": [{"role": "train", "file": "train.pt"}]}}))
+    (graph.parent / "train.pt").write_bytes(b"synthetic CPU boundary; never decoded")
+    dataset_sha = hashlib.sha256(graph.read_bytes()).hexdigest()
+    recipe = FamilyRecipe("neural_atom_k1", "reference", 42, "2" * 64,
+        DatasetSelection("data/manifest.json", dataset_sha, False), 256, 0, 4,
+        .001, .01, ScheduleSpec("cosine_step", 4), "final-live",
+        "python-epoch-shuffle", checkpoint_every=2, target_mean_eV=3., target_std_eV=2.)
+    record = build_family_recipe(("neural_atom_k1", "3"), configuration=recipe,
+        train_role_identity="3" * 64, development_role_identity=None)
+    recipes = repo / "recipes"
+    recipes.mkdir()
+    recipe_bytes = json.dumps(record, sort_keys=True, separators=(",", ":")).encode()
+    arms = []
+    for name in ("first", "second"):
+        (recipes / (name + ".json")).write_bytes(recipe_bytes)
+        arms.append(_arm("neural_atom_k1", "3", name,
+            recipe_sha256=hashlib.sha256(recipe_bytes).hexdigest()))
+    spec = ExperimentSpec(_spec_payload(arms, platform="kaggle"))
+    git(repo, "init")
+    git(repo, "config", "user.email", "fixture@example.invalid")
+    git(repo, "config", "user.name", "Fixture")
+    git(repo, "config", "core.autocrlf", "false")
+    git(repo, "add", ".")
+    git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Frozen CPU integration fixture")
+    package = tmp_path / "package"
+    manifest = build_experiment_source_package(spec, repo,
+        [*SHARED_SOURCE_FILES, "recipes/first.json", "recipes/second.json"], package)
+    source_mount = mounted / "source"
+    stage_source_inputs(package, source_mount, {})
+    launch = {"jobs": _jobs(spec), "expected_source_archive_sha256": manifest["archive_sha256"],
+        "expected_package_identity": manifest["package_identity"], "spec_identity": spec.identity,
+        "account": "fixture", "run_reference": "fixture/cpu-integration"}
+    launch_path = source_mount / "experiment_launch.json"
+    launch_path.write_text(json.dumps(launch))
+    launcher = tmp_path / "run.py"
+    launcher.write_text((repo / "platforms/kaggle/run_experiment.py").read_text(encoding="utf-8").replace(
+        "EXPECTED_LAUNCH_SHA256 = None", "EXPECTED_LAUNCH_SHA256 = " +
+        repr(hashlib.sha256(launch_path.read_bytes()).hexdigest())), encoding="utf-8")
+    output = tmp_path / "output"
+    if scenario == "existing_output":
+        output.mkdir()
+        (output / "last_checkpoint.pt").write_bytes(b"old checkpoint must survive")
+    driver = tmp_path / "cpu_driver.py"
+    driver.write_text(r'''
+import hashlib, importlib.util, json, pathlib, subprocess, sys
+launcher, mounted, work, output, scenario, boundary = sys.argv[1:]
+module_spec = importlib.util.spec_from_file_location("frozen_launcher", launcher)
+entry = importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(entry)
+entry.INPUT_ROOT, entry.WORK_ROOT, entry.OUTPUT_ROOT = map(pathlib.Path, (mounted, work, output))
+if not hasattr(hashlib, "file_digest"):
+    hashlib.file_digest = lambda stream, algorithm: hashlib.new(algorithm, stream.read())
+commands = []
+subprocess.check_output = lambda *a, **kw: "Tesla T4\nTesla T4\n"
+def pip(command, **kwargs):
+    assert command[1:4] == ["-m", "pip", "install"]
+    return subprocess.CompletedProcess(command, 0)
+subprocess.run = pip
+class Worker:
+    def __init__(self, command, **kwargs):
+        self.phase = command[command.index("--phase") + 1]
+        self.arm = command[command.index("--arm") + 1]
+        self.returncode = None
+        commands.append({"phase": self.phase, "arm": self.arm})
+        # The real scheduler must pass the all-arm barrier before formal train.
+        if self.phase == "train":
+            assert [row["arm"] for row in commands if row["phase"] == "preflight"] == ["first", "second"]
+    def poll(self):
+        if self.returncode is not None:
+            return self.returncode
+        if scenario == "preflight_failure" and self.phase == "preflight":
+            return 1 if self.arm == "first" else None
+        return 0
+    def terminate(self):
+        self.returncode = -15
+    def kill(self):
+        self.returncode = -9
+    def wait(self, **kwargs):
+        return self.returncode if self.returncode is not None else self.poll()
+subprocess.Popen = Worker
+error = None
+try:
+    entry.main()
+except BaseException as exc:
+    error = {"type": type(exc).__name__, "message": str(exc)}
+pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": error,
+    "runtime_module": getattr(sys.modules.get("molgap.kaggle_pair_runtime"), "__file__", None)}))
+''', encoding="utf-8")
+    boundary = tmp_path / "worker_boundary.json"
+    child = subprocess.run([sys.executable, "-I", str(driver), str(launcher), str(mounted),
+        str(tmp_path / "work"), str(output), scenario, str(boundary)], capture_output=True, text=True, timeout=60)
+    assert child.returncode == 0, child.stdout + child.stderr
+    observed = json.loads(boundary.read_bytes())
+    assert Path(observed["runtime_module"]).is_relative_to(tmp_path / "work/source")
+    if scenario == "success":
+        assert observed["error"] is None, observed
+        assert observed["commands"] == [{"phase": phase, "arm": arm}
+            for phase in ("preflight", "train") for arm in ("first", "second")]
+        assert json.loads((output / "execution_report.json").read_bytes())["status"] == "complete"
+    elif scenario == "preflight_failure":
+        assert "Arm failed during preflight" in observed["error"]["message"]
+        assert observed["commands"] == [{"phase": "preflight", "arm": arm} for arm in ("first", "second")]
+        execution = json.loads((output / "execution_report.json").read_bytes())
+        assert all(row["training_started"] is False for row in execution["arms"].values())
+    else:
+        assert "fresh output root" in observed["error"]["message"]
+        assert observed["commands"] == []
+    if scenario == "existing_output":
+        assert (output / "last_checkpoint.pt").read_bytes() == b"old checkpoint must survive"
+    if scenario != "old_output_order":
+        assert set(json.loads((output / "input_resolution.json").read_bytes())["arms"]) == {"first", "second"}

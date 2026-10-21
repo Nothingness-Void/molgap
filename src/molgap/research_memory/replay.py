@@ -230,7 +230,8 @@ def _action_replay(root: Path, trajectory: dict[str, Any]) -> dict[str, Any] | N
     for kind in ("inputs", "truth"):
         verify_bound_artifact(root, binding[kind + "_ref"], binding[kind + "_sha256"])
         result[kind] = load_json_object(resolve_repo_pointer(root, binding[kind + "_ref"]))
-    state = trajectory.get("decision_state")
+    from .plan import resolve_decision_state
+    state = resolve_decision_state(root, trajectory).get("decision_state")
     if state is None:
         raise ValueError("action replay requires a frozen decision state")
     for kind, document in result.items():

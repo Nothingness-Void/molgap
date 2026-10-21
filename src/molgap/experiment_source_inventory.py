@@ -38,6 +38,7 @@ COMMON_SOURCE_FILES = (
     "src/molgap/common/spec.py",
     "src/molgap/common/wire.py",
     "src/molgap/experiment_catalog.py",
+    "src/molgap/fast_sandbox.py",
     "src/molgap/family_training_policy.py",
     "src/molgap/family_model_ops.py",
     "src/molgap/substrate_scale_addon.py",
@@ -202,7 +203,8 @@ _HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transp
     "src/molgap/local_runtime.py", "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
     "src/molgap/artifact_inventory.py", "src/molgap/experiment_run.py", "src/molgap/experiment_timings.py",
     "src/molgap/kaggle_output_retrieval.py", "src/molgap/kaggle_submission.py",
-    "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py"})
+    "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py",
+    "src/molgap/experiment_attribution.py"})
 
 
 def runtime_source_files(repo_root, records=()):
@@ -234,6 +236,7 @@ def runtime_source_files(repo_root, records=()):
 _TEST_SUPPORT_FILES = frozenset({
     "pyproject.toml",
     "platforms/local/run.py",
+    "platforms/local/accept_run.py",
     "platforms/kaggle/run_experiment.py",
     "platforms/kaggle/submit_workflow.py",
     "platforms/kaggle/retrieve_family_outputs.py",
@@ -242,6 +245,7 @@ _TEST_SUPPORT_FILES = frozenset({
     "docs/operations/EXPERIMENT_ADDON_GUIDE.md",
     "docs/operations/EXPERIMENT_CLI.md",
 })
+_TEST_METADATA_PREFIXES = ("research_memory/schemas/", "research_memory/policies/")
 
 
 def testing_source_files(repo_root):
@@ -262,6 +266,8 @@ def testing_source_files(repo_root):
     names = {p for p in tracked if p.endswith(".py") and (
         p.startswith("tests/") or (p.startswith("src/molgap/") and
                                   not p.startswith("src/molgap/archive/")))}
+    names.update(p for p in tracked if p.endswith(".json") and
+                 p.startswith(_TEST_METADATA_PREFIXES))
     return _allowlist(sorted(names | _TEST_SUPPORT_FILES))
 
 

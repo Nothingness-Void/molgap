@@ -9,11 +9,25 @@ import tarfile
 from time import perf_counter
 
 from molgap.experiment_package import build_experiment_source_package,verify_experiment_source_package
-from molgap.experiment_source_inventory import runtime_source_files
+from molgap.experiment_source_inventory import runtime_source_files, testing_source_files as source_test_inventory
 from molgap.experiment_spec import ExperimentSpec
 from test_experiment_spec import payload
+from molgap.v4_bundle import _tracked_paths
 
 ROOT=Path(__file__).resolve().parents[1]
+
+
+def test_test_source_inventory_carries_tracked_rml_metadata_without_experiment_payloads():
+    tracked = _tracked_paths(ROOT)
+    names = set(source_test_inventory(ROOT))
+    rml_metadata = {name for name in tracked if name.endswith(".json") and
+                    name.startswith(("research_memory/schemas/", "research_memory/policies/"))}
+
+    assert rml_metadata
+    assert rml_metadata <= names
+    assert not any(name.startswith("research_memory/derived/") for name in names)
+    from molgap.experiment_source_inventory import _TEST_SUPPORT_FILES
+    assert not {name for name in names if name.startswith("experiments/")} - _TEST_SUPPORT_FILES
 
 
 def test_committed_distribution_imports_actual_families_and_resumes_without_host_source(tmp_path,payload,record_property):

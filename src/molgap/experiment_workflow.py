@@ -374,7 +374,7 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     from .experiment_package import _PackageVerification
 
@@ -432,7 +432,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
             input_root=staged, dataset_manifests=inputs["dataset_manifests"] or None,
-            _verification=verification)
+            _verification=verification, _content_verification=_content_verification)
         _atomic(output / "release_report.json", release)
         record("check_release", release)
         if release["errors"]:
@@ -475,9 +475,11 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
-                    expected_package_identity, locations, execute=False,
+                    expected_package_identity, locations=None, execute=False,
                     target_identities=None, execution_root=None):
-    """Inspect every arm, build the existing descriptor, then delegate closure."""
+    """Inspect every arm independently of optional scientific closure inputs."""
+    if execute and locations is None:
+        raise ValueError("Terminal execution requires explicit reviewed terminal locations")
     from .experiment_family_workflow import inspect_terminal_output
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
         package_dir=package_dir, expected_package_identity=expected_package_identity)
@@ -497,8 +499,16 @@ def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                for arm_id, item in outputs.items()}
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}
-    descriptor = build_verified_terminal_descriptor(repo_root, spec, outputs=outputs, locations=locations)
-    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute)
+    if locations is None:
+        result = {"status": "MECHANICALLY_VERIFIED", "arms": reports, "executed": False,
+                  "scientific_outcome": "NOT_EVALUATED"}
+        if retention is not None:
+            result["execution_retention"] = {"status": retention["status"], "manifest": retention["manifest"]}
+        return result
+    descriptor = build_verified_terminal_descriptor(repo_root, spec, outputs=outputs, locations=locations,
+                                                     _reports=reports)
+    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute,
+                                    _reports=reports)
     result = {**result, "descriptor": descriptor.to_dict()}
     if retention is not None:
         result["execution_retention"] = {"status": retention["status"], "manifest": retention["manifest"]}

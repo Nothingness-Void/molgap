@@ -1532,7 +1532,8 @@ def test_verified_outputs_close_two_independent_rml_trajectories(
         finalized = trajectory_path.parent / "rml_finalized"
         receipt = verified_receipt(finalized)
         assert receipt["trace_status"] == "available"
-        assert (finalized / "prospective_snapshot.json").read_bytes() == original_snapshots[arm_id]
+        from molgap.research_memory.finalize import prospective_bytes
+        assert prospective_bytes(finalized) == original_snapshots[arm_id]
         assert json.loads((finalized / "trajectory.json").read_bytes())["decision"]["final"] is True
         trace_manifest = json.loads((finalized / "trace_manifest.json").read_bytes())
         assert trace_manifest["backtest_eligibility"]["eligible"] is False

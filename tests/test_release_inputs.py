@@ -365,3 +365,71 @@ def test_staged_source_payload_is_bound_to_the_verified_archive(release, tmp_pat
     (inputs / "source_payload.bin").write_bytes(b"wrong uploaded archive")
     report = check_release_inputs(spec, package, **options, input_root=inputs)
     assert any(e["check"] == "input_layout" for e in report["errors"])
+
+
+@pytest.mark.parametrize("release", ["dataset_binding"], indirect=True)
+def test_transaction_content_reuse_still_checks_remote_layout_and_initialization_bytes(release, tmp_path, monkeypatch):
+    import shutil
+    from molgap import experiment_preflight as owner
+    from molgap.experiment_package import stage_source_inputs
+    spec, package, options = release
+    memo = owner._ReleaseContentVerification()
+    unpacks = []
+    original = owner._unpack
+    def unpack(*args, **kwargs):
+        unpacks.append(True)
+        return original(*args, **kwargs)
+    monkeypatch.setattr(owner, "_unpack", unpack)
+    first = owner.check_release_inputs(spec, package, **options, _content_verification=memo)
+    assert not first["errors"] and len(unpacks) == 1
+    remote = tmp_path / "remote"
+    stage_source_inputs(package, remote, options["initial_states"])
+    target_manifest = remote / "slug" / "manifest.json"
+    target_manifest.parent.mkdir(parents=True)
+    shutil.copyfile(next(iter(options["dataset_manifests"].values())), target_manifest)
+    changed = dict(options,
+        initial_states={arm: remote / "initial_states" / (arm + ".pt")
+                        for arm in options["initial_states"]},
+        dataset_manifests={arm: target_manifest for arm in options["dataset_manifests"]},
+        input_root=remote)
+    original_run = owner.subprocess.run
+    worker_requests = []
+    def track_worker(command, *args, **kwargs):
+        worker_requests.append(json.loads(Path(command[-2]).read_bytes()))
+        return original_run(command, *args, **kwargs)
+    monkeypatch.setattr(owner.subprocess, "run", track_worker)
+    second = owner.check_release_inputs(spec, package, **changed, _content_verification=memo)
+    assert not second["errors"] and len(unpacks) == 2
+    assert second["checks"]["input_layout:mount"] is True
+    assert second["inputs"]["input_root"] == str(remote)
+    assert worker_requests[-1]["modules"] == []
+    assert worker_requests[-1]["initializations"] == []
+    assert worker_requests[-1]["dataset_manifests"][0]["path"] == str(target_manifest)
+    # Local mtime/size never vouch for bytes at a transport boundary.
+    sidecar = remote / "SOURCE_COMMIT.txt"
+    sidecar.write_bytes(b"0" * 40 + b"\n")
+    failed = owner.check_release_inputs(spec, package, **changed, _content_verification=memo)
+    assert failed["errors"][0]["check"] == "input_layout" and len(unpacks) == 3
+    assert worker_requests[-1]["dataset_manifests"][0]["path"] == str(target_manifest)
+    assert worker_requests[-1]["initializations"] == []
+    shutil.copyfile(package / "SOURCE_COMMIT.txt", sidecar)
+    state = next(iter(changed["initial_states"].values()))
+    state.write_bytes(b"different serialized initialization")
+    failed = owner.check_release_inputs(spec, package, **changed, _content_verification=memo)
+    assert any(row["check"] == "initialization" for row in failed["errors"])
+    assert len(unpacks) == 4
+    # An independent transaction must execute its own full checks.
+    owner.check_release_inputs(spec, package, **options, _content_verification=owner._ReleaseContentVerification())
+    assert len(unpacks) == 5
+
+
+def test_transaction_content_reuse_does_not_allow_initialization_outside_mount(release, tmp_path):
+    from molgap import experiment_preflight as owner
+    from molgap.experiment_package import stage_source_inputs
+    spec, package, options = release
+    memo = owner._ReleaseContentVerification()
+    assert not owner.check_release_inputs(spec, package, **options, _content_verification=memo)["errors"]
+    remote = tmp_path / "remote"
+    stage_source_inputs(package, remote, options["initial_states"])
+    report = owner.check_release_inputs(spec, package, **options, input_root=remote, _content_verification=memo)
+    assert any(row["check"] == "initialization" and "outside" in row["message"] for row in report["errors"])

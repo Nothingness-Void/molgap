@@ -128,6 +128,7 @@ class ModelSubstrate:
             raise ValueError("Model already has an addon owner or reserved namespace")
         self.model, self.family = model, family
         self._entries, self._handles, self._root_handles = {}, {}, ()
+        self._mutations = {}
         self._sealed, self._active, self._graph_index = False, False, None
         self._calls = []
         object.__setattr__(model, "_molgap_substrate", self)
@@ -135,6 +136,10 @@ class ModelSubstrate:
     @property
     def bindings(self):
         return tuple(AttachedAddon(name, binding) for name, binding in self._entries.items())
+
+    @property
+    def mutations(self):
+        return tuple(self._mutations.items())
 
     @property
     def sealed(self):
@@ -270,7 +275,7 @@ class ModelSubstrate:
         self._mutable()
         if type(name) is not str or re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name) is None:
             raise ValueError("Addon namespace name must be a Python identifier")
-        if name in self._entries:
+        if name in self._entries or name in self._mutations:
             raise ValueError("Addon name is already attached")
         import torch
         if not isinstance(addon, torch.nn.Module) or any(addon is item for item in self.model.modules()):
@@ -320,11 +325,55 @@ class ModelSubstrate:
             self._root_handles = ()
         return addon
 
+    def replace_submodule(self, name: str, target_path: str, addon):
+        """Replace an existing backbone submodule in-place while tracking addon ownership."""
+        self._mutable()
+        if type(name) is not str or re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name) is None:
+            raise ValueError("Addon namespace name must be a Python identifier")
+        if name in self._entries or name in self._mutations:
+            raise ValueError("Addon name is already attached")
+        if type(target_path) is not str or not target_path or target_path.startswith("_"):
+            raise ValueError("Submodule replacement requires a non-empty public module path")
+        if any(existing == target_path or existing.startswith(target_path + ".") or target_path.startswith(existing + ".")
+               for existing in self._mutations.values()):
+            raise ValueError("Submodule replacement path overlaps an existing mutation")
+        import torch
+        if not isinstance(addon, torch.nn.Module) or any(addon is item for item in self.model.modules()):
+            raise ValueError("Addon must be a distinct torch.nn.Module")
+        parts = target_path.split(".")
+        parent = self.model
+        for part in parts[:-1]:
+            if not part or part.startswith("_") or not hasattr(parent, part):
+                raise ValueError("Substrate does not expose the declared submodule path: " + target_path)
+            parent = getattr(parent, part)
+            if not isinstance(parent, torch.nn.Module):
+                raise ValueError("Substrate path parent is not a torch.nn.Module: " + target_path)
+        leaf = parts[-1]
+        if not leaf or leaf.startswith("_") or not hasattr(parent, leaf):
+            raise ValueError("Substrate does not expose the declared target submodule: " + target_path)
+        current = getattr(parent, leaf)
+        if not isinstance(current, torch.nn.Module):
+            raise ValueError("Target attribute is not a torch.nn.Module: " + target_path)
+        reference = next(self.model.parameters(), None)
+        if reference is not None:
+            for tensor in (*addon.parameters(), *addon.buffers()):
+                if tensor.is_floating_point() and tensor.dtype != reference.dtype:
+                    raise ValueError("Addon floating dtype differs from substrate")
+            addon.to(device=reference.device)
+        addon.train(current.training)
+        setattr(parent, leaf, addon)
+        self._mutations[name] = target_path
+        return addon
+
     def named_addon_parameters(self):
         """Yield state_dict-compatible parameter names for sandbox connectivity."""
         if hasattr(self.model, self.namespace):
             for name, parameter in getattr(self.model, self.namespace).named_parameters():
                 yield self.namespace + "." + name, parameter
+        for _, target_path in self._mutations.items():
+            module = self.model.get_submodule(target_path)
+            for name, parameter in module.named_parameters():
+                yield (target_path + "." + name if name else target_path), parameter
 
 
 def bind_substrate(model, family: str, attachments=()):

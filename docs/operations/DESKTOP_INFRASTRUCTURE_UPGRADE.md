@@ -126,3 +126,49 @@ After removing permanent snapshot-lock assertions, the remaining four namespace,
 constant and catalog test files passed all 47 cases. Logs, JUnit, distribution
 observations and one-time comparison sources remain outside the checkout;
 synthetic test scratch is disposable.
+
+## Lifecycle slimming from 792d688d
+
+This revision keeps the shared trainers and frozen scientific contracts. New
+planning uses one immutable knowledge/policy snapshot across arms; compact terminal
+inputs reference canonical components. Legacy records remain readable and are not
+rewritten. Terminal arms finalize independently before one derived rebuild, with
+receipt-only index recovery. Same-job pairing and authorized versioned retries use
+the existing scientific-input, acceptance and identity owners.
+
+Default preparation output is compact; repeat inspection no longer leaves timing
+files. Bound upload copies and byte-identical failed preparations have journaled
+retirement. Recipe-controlled resume retention removes proven duplicates only.
+Complete shared caches and unique historical chunks remain retained: concurrent
+readers and unique recovery value cannot be inferred from age or file count.
+
+Canonical curves bind actual last-update LR and checkpoint identity. Synchronous
+publication reuses its new-checkpoint digest; independent recovery still hashes
+visible files. Resume copies stream, and completed profiler capture removes its
+hooks unless continuing spans were explicitly selected. Data loading and the
+broad runtime source boundary remain unchanged pending representative measurements.
+
+The four-arm synthetic planning fixture (201 known evidence entries) changed from
+16 files / 241,152 bytes to 9 files / 40,317 bytes. These are logical fixture bytes,
+not measured disk allocation or a production speedup. Source-level newly written
+checkpoint digest reads fall from three (timed pass) or two (ordinary pass) to one
+inside the publication transaction. CPU toy timings establish no accelerator
+throughput claim. Focused test logs live outside Git under
+`D:/molgap-review-reports/lean-research-lifecycle/`; unchanged passing selections
+are not mandatory reruns at commit or handoff.
+
+The submission/storage/bootstrap batch passed 157 cases, including an isolated
+frozen-package launcher reaching the real two-arm preflight barrier. The test
+distribution passed isolated extraction/collection/execution after adding compact
+RML schemas and policies; 35 source-path confinement cases also passed. Transport
+memo hits still unpack for the current packaged dataset resolver while avoiding
+repeated initialization work. Native execution and actual disk-allocation savings
+were not measured in this infrastructure change.
+
+The input/CLI batch had 143 passes and 11 failures from outdated retention
+assertions, fixture run reuse and an incomplete mocked owner result. After fixing
+those tests, the 15-case affected selection passed, including both family entry
+paths and explicit retry authorization. Five targeted transport/reentry cases
+passed after the mount and post-retirement read-only fixes. Existing checkpoint
+recovery/session checks passed 103 cases; the final IO/retention selection passed
+16. These batches overlap and are not summed into a unique-test count.

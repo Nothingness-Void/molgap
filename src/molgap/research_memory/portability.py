@@ -88,6 +88,14 @@ def _evidence_closure_paths(
             source = Path(path).resolve()
             required.add(source)
             pointer_documents.append(record)
+            if source.parent.name == "rml_finalized":
+                # Receipt dependencies are consumed by discovery, not trajectory fields.
+                from .finalize import verified_receipt
+                receipt = verified_receipt(source.parent)
+                required.add(source.parent / "finalization.json")
+                required.update(source.parent / name for name in receipt["published_hashes"])
+                if receipt.get("format") == "molgap-rml-finalization-v2":
+                    required.add(repo_local_path(root, receipt["prospective_ref"]))
             if kind == "traces":
                 sidecar = source.parent / "trace_migration.json"
                 if sidecar.is_file():

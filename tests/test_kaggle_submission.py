@@ -74,7 +74,7 @@ def release(tmp_path, monkeypatch):
     monkeypatch.setattr(owner, "verify_experiment_source_package", lambda _: manifest)
     monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps({"user_authorized": True,
         "allocated_t4_hours_ceiling": 14, "arms": ["original", "optimized"], "seeds": [42]}))
-    monkeypatch.setattr(owner, "_verify_release_report", lambda *_: {})
+    monkeypatch.setattr(owner, "_verify_release_report", lambda *_, **kw: {})
     import molgap.experiment_preflight as preflight
     monkeypatch.setattr(preflight, "check_release_inputs", lambda *a, **k: {"errors": []})
     monkeypatch.setattr(owner, "build_launch_receipt", lambda *a, **k: {"binding": {"synthetic": True}})
@@ -82,7 +82,8 @@ def release(tmp_path, monkeypatch):
         envelope = json.loads(raw)
         assert envelope["physical_runs"]["value"][0]["run_identity"] == "kernel77/version1"
         assert envelope["canonical_platform_reference"]["value"] == "owner/new-kernel"
-        return {"submission_state": "ACCEPTED", "canonical_platform_reference": envelope["canonical_platform_reference"],
+        return {"submission_state": "ACCEPTED", "binding": envelope["binding"],
+                "canonical_platform_reference": envelope["canonical_platform_reference"],
                 "platform_version": envelope["platform_version"], "physical_runs": envelope["physical_runs"]}
     monkeypatch.setattr(owner, "reconcile_platform_response", reconcile)
     import molgap.experiment_launch as launch
@@ -418,3 +419,69 @@ def test_packaged_authority_reader_requires_one_regular_member(tmp_path, copies)
     else:
         with pytest.raises(ValueError, match="one regular"):
             read_packaged_text(tmp_path, "experiments/synthetic/authority.json")
+
+
+def test_bound_upload_retires_only_transient_copies_and_retains_receipts(release):
+    result = release.run()
+    assert result["source_copy_retirement"]["status"] == "REMOVED"
+    assert not (release.output / "source_roundtrip").exists()
+    assert not (release.staged / "source_payload.bin").exists()
+    assert not (release.staged / "initial_states").exists()
+    assert (release.staged / "experiment_launch.json").is_file()
+    assert (release.output / "source_upload_verification.json").is_file()
+    assert (release.prepared / "package/experiment_spec.json").is_file()
+    assert release.run()["status"] == "SUBMISSION_BOUND"
+    assert release.run(execute=False)["status"] == "SUBMISSION_BOUND"
+    assert release.api.created == release.api.pushed == 1
+
+
+def test_bound_cleanup_dry_check_validates_receipt_without_resubmitting(release, monkeypatch):
+    submitted = release.run()
+    assert submitted["status"] == "SUBMISSION_BOUND"
+    assert not (release.staged / "source_payload.bin").exists()
+    assert not (release.staged / "initial_states").exists()
+    before = (release.api.created, release.api.pushed, len(release.http.downloads))
+    monkeypatch.setattr(owner, "_verify_release_report",
+                        lambda *a, **k: pytest.fail("retired release paths must not be re-read"))
+
+    observed = release.run(execute=False)
+
+    assert observed["status"] == "SUBMISSION_BOUND" and observed["submitted"] is True
+    assert observed["kernel"] == "owner/new-kernel" and observed["version"] == 1
+    assert observed["source_copy_retirement"]["status"] == "REMOVED"
+    assert (release.api.created, release.api.pushed, len(release.http.downloads)) == before
+
+    journal = release.output / "submission_state.json"
+    state = json.loads(journal.read_bytes())
+    state["kernel_response"]["version_number"] = 2
+    atomic_json(journal, state)
+    with pytest.raises(ValueError, match="launch receipt differs"):
+        release.run(execute=False)
+
+
+def test_uncertain_upload_or_kernel_keeps_all_recovery_copies(release, monkeypatch):
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", lambda **kw: {
+        "status": "submission_unknown", "reconciliation_required": True})
+    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
+    assert (release.staged / "source_payload.bin").is_file()
+    assert (release.output / "source_roundtrip/source_payload.bin").is_file()
+
+
+def test_crash_during_bound_source_retirement_recovers_without_reposting(release, monkeypatch):
+    from molgap import local_storage
+    remove = local_storage._remove_verified_files
+    crashed = []
+    def interrupted(root, expected, **kw):
+        if not crashed:
+            crashed.append(True)
+            first = next(iter(expected))
+            (root / first).unlink()
+            raise KeyboardInterrupt("synthetic power loss")
+        return remove(root, expected, **kw)
+    monkeypatch.setattr(local_storage, "_remove_verified_files", interrupted)
+    with pytest.raises(KeyboardInterrupt):
+        release.run()
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert state["phase"] == "BOUND" and state["source_copy_retirement"]["status"] == "PENDING"
+    assert release.run()["source_copy_retirement"]["status"] == "REMOVED"
+    assert release.api.created == release.api.pushed == 1

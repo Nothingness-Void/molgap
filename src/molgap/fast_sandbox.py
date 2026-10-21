@@ -84,9 +84,16 @@ def _groups(model, requested):
     parameters = dict(model.named_parameters())
     if requested is None:
         owner = getattr(model, "_molgap_substrate", None)
-        requested = {} if owner is None else {
-            entry.name: [name for name in parameters if name.startswith(owner.namespace + "." + entry.name + ".")]
-            for entry in owner.bindings}
+        if owner is None:
+            requested = {}
+        else:
+            requested = {
+                entry.name: [name for name in parameters if name.startswith(owner.namespace + "." + entry.name + ".")]
+                for entry in owner.bindings}
+            for mutation_name, target_path in getattr(owner, "mutations", ()):
+                prefix = target_path + "."
+                requested[mutation_name] = [
+                    name for name in parameters if name == target_path or name.startswith(prefix)]
     if type(requested) is not dict:
         raise ValueError("addon_parameters must map addon names to parameter-name sequences")
     groups, seen = {}, set()
@@ -326,4 +333,78 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
     return result
 
 
-__all__ = ["run_sandbox", "run_family_sandbox", "run_arm_sandbox", "synthetic_batch"]
+def verify_loaded_family_model(recipe, model, *, seed=42, threads=1):
+    """Probe a loaded CPU model, restoring its tensors, gradients and modes on exit."""
+    from copy import copy
+    import torch
+    from .shared_model_adapter import validate_model_output
+
+    def call(current_model, batch):
+        if recipe.family == "neural_atom_k1":
+            from .k1_execution_layout import cpu_layout_context
+            from .k1_execution_backend import execution_context
+            from .family_model_ops import k1_forward
+            borrowed = copy(batch)
+            with cpu_layout_context(current_model, borrowed, "cpu"), execution_context(
+                    current_model, borrowed, "cpu", getattr(recipe, "k1_execution", None)):
+                return k1_forward(current_model, borrowed)
+        from .gptrans_execution_backend import prepare_layout, prepared_forward
+        from .family_training_policy import mode_policy
+        prepared = prepare_layout(copy(batch))
+        prepare = mode_policy(recipe.family, recipe.mode).prepare_batch
+        if prepare is not None:
+            prepared = prepare(prepared, training=current_model.training)
+        return prepared_forward(current_model, prepared)
+
+    model = _module(model)
+    original_modes = _modes(model)
+    with _cpu_scope(seed, threads):
+        original_tensors = [(value, value.detach().clone()) for value in (*model.parameters(), *model.buffers())]
+        original_gradients = [(parameter, parameter.grad) for parameter in model.parameters()]
+        try:
+            batch = synthetic_batch()
+            target = batch.y.reshape(-1)
+            parameters, groups = _groups(model, None)
+            model.train()
+            model.zero_grad(set_to_none=True)
+            prediction = validate_model_output(call(model, batch), rows=target.numel(), device=target.device)
+            loss = torch.nn.functional.l1_loss(prediction, target)
+            if not bool(torch.isfinite(loss)):
+                raise ValueError("Pre-submission sandbox L1 loss is nonfinite")
+            loss.backward()
+            owned = {name for names in groups.values() for name in names}
+            backbone_report = _gradient_report(parameters, [name for name in parameters if name not in owned])
+            addon_reports = {
+                addon: _gradient_report(parameters, names, require_present=True)
+                for addon, names in groups.items()
+            }
+            if backbone_report["status"] == "FAILED" or any(
+                    item["status"] == "FAILED" for item in addon_reports.values()):
+                raise ValueError("Pre-submission sandbox detected disconnected or nonfinite backbone/addon gradients")
+            model.eval()
+            with torch.no_grad():
+                eval_pred = validate_model_output(call(model, batch), rows=target.numel(), device=target.device)
+                if not bool(torch.isfinite(eval_pred).all()):
+                    raise ValueError("Pre-submission sandbox eval predictions are nonfinite")
+            return {
+                "status": "PASSED",
+                "rows": int(target.numel()),
+                "backbone_gradients": backbone_report["status"],
+                "addons": {name: item["status"] for name, item in addon_reports.items()},
+            }
+        finally:
+            with torch.no_grad():
+                for value, snapshot in original_tensors:
+                    value.copy_(snapshot)
+            for parameter, gradient in original_gradients:
+                parameter.grad = gradient
+            _restore_modes(original_modes)
+
+
+__all__ = [
+    "run_sandbox",
+    "run_family_sandbox",
+    "run_arm_sandbox",
+    "synthetic_batch",
+    "verify_loaded_family_model",
+]

@@ -8,6 +8,7 @@ import pytest
 from molgap import experiment_package as package
 from molgap.experiment_input import freeze_experiment_input,prepare_experiment_input
 from molgap.experiment_spec import ExperimentSpec
+from molgap.local_storage import SOURCE_CACHE_NAMESPACE
 from test_reform_input import editable,platform_entry,write
 from test_experiment_package import repo,payload
 
@@ -23,7 +24,7 @@ def test_prepublication_io_failure_recovers_same_identity_without_losing_failed_
             (output/"failed-byte-evidence.txt").write_bytes(b"original failed attempt")
             raise OSError("injected local IO interruption")
         write(output/"workflow_report.json",{"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64})
-        return {"status":"PREPARED_FOR_PLATFORM"}
+        return {"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64}
     monkeypatch.setattr("molgap.experiment_workflow.prepare_workflow",owner)
     with pytest.raises(OSError):prepare_experiment_input(editable.path,editable.repo)
     result=prepare_experiment_input(editable.path,editable.repo)
@@ -52,15 +53,14 @@ def test_local_retry_never_crosses_published_or_platform_uncertainty(editable,mo
     owner.assert_not_called()
 
 
-def test_legacy_partial_cache_is_retained_then_automatically_rebuilt(repo,payload,tmp_path):
+def test_owned_partial_cache_is_rebuilt_then_automatically_retired(repo,payload,tmp_path):
     cache=tmp_path/"cache";spec=ExperimentSpec(payload)
     first=package.build_experiment_source_package(spec,repo,["README.md"],tmp_path/"first",source_cache=cache)
-    cached=next(cache.iterdir())
+    cached=next((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64))
     for name in ("SOURCE_COMMIT.txt","SOURCE_ARCHIVE_SHA256.txt","SOURCE_FILES.json"):(cached/name).unlink()
     second=package.build_experiment_source_package(spec,repo,["README.md"],tmp_path/"second",source_cache=cache)
     assert first==second
-    retained=list(cache.glob(".incomplete-*"));assert len(retained)==1
-    assert {p.name for p in retained[0].iterdir()}=={"source.tar.gz"}
+    assert not list((cache/SOURCE_CACHE_NAMESPACE).glob(".incomplete-*"))
     assert package.verify_experiment_source_package(tmp_path/"second",repo)==second
 
 
@@ -74,9 +74,9 @@ def test_interrupted_cache_build_never_publishes_a_partial_final_object(repo,pay
     monkeypatch.setattr(package,"build_v4_source_bundle",interrupted)
     with pytest.raises(OSError):
         package.build_experiment_source_package(ExperimentSpec(payload),repo,["README.md"],tmp_path/"failed",source_cache=cache)
-    assert not list(cache.iterdir())
+    assert not list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64))
     package.build_experiment_source_package(ExperimentSpec(payload),repo,["README.md"],tmp_path/"recovered",source_cache=cache)
-    assert len(calls)==2 and len(list(cache.iterdir()))==1
+    assert len(calls)==2 and len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==1
 
 
 def test_local_missing_initialization_is_actionable_and_exception_secrets_are_not_echoed(platform_entry,monkeypatch,capsys):

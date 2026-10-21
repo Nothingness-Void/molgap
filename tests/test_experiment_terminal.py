@@ -378,8 +378,12 @@ def test_existing_retained_trace_guard_still_fails_closed(tmp_path, case):
     raw.unlink()
     descriptor = TerminalDescriptor(*case)
     translate_terminal_descriptor(tmp_path, case[0], descriptor)
-    with pytest.raises(FileNotFoundError, match="FAIL CLOSED: declared retained trace file missing"):
-        execute_terminal_descriptor(tmp_path, case[0], descriptor)
+    results = execute_terminal_descriptor(tmp_path, case[0], descriptor)
+    assert len(results) == 2
+    failed = {result["trajectory"]: result for result in results}
+    trace_failure = failed["experiments/descriptor_0/trajectory.json"]
+    assert trace_failure["pipeline_status"] == "FINALIZATION_FAILED"
+    assert "FAIL CLOSED: declared retained trace file missing" in trace_failure["error"]
     assert not list(tmp_path.rglob("rml_finalized"))
 
 

@@ -193,8 +193,12 @@ with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config)
 result=json.loads(out.getvalue());assert code==0,result
 assert result["status"]=="PREPARED_FOR_PLATFORM" and result["submitted"] is False
 assert binding==(run/"inputs/input_binding.json").read_bytes()
-retained=list((run/"local_preparation_failures").glob("*/workflow_report.json"))
-assert len(retained)==1 and retained[0].read_bytes()==failed
+retained=list((run/"local_preparation_failures").glob("prepared-*.json"))
+assert len(retained)==1
+receipt=json.loads(retained[0].read_bytes())
+assert receipt["workflow_report"]==json.loads(failed)
+assert receipt["local_payload_retirement"]["status"]=="REMOVED"
+assert not (retained[0].parent/retained[0].stem).exists()
 out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
 assert code==0 and json.loads(out.getvalue())["reused_preparation"]

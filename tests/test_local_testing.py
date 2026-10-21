@@ -59,11 +59,15 @@ def test_test_inventory_keeps_worker_boundary_and_rejects_payloads(tmp_path, mon
     tracked = {*inventory._TEST_SUPPORT_FILES, "tests/conftest.py", "tests/test_data_namespace.py",
         "src/molgap/__init__.py", "src/molgap/data/loader.py", "src/molgap/local_runtime.py",
         "src/molgap/kaggle_credentials.py", "src/molgap/archive/old.py",
+        "research_memory/schemas/decision-state-v2.schema.json",
+        "research_memory/policies/fixture-policy.1.json",
         "tests/cache.npz", "tests/data/manifest.json", "credentials.json", "data/weights.pt"}
     monkeypatch.setattr("molgap.v4_bundle._tracked_paths", lambda root: tracked)
     names = set(inventory.testing_source_files(tmp_path))
     assert {"tests/conftest.py", "tests/test_data_namespace.py", "pyproject.toml",
-            "src/molgap/local_runtime.py", "src/molgap/kaggle_credentials.py"} <= names
+            "src/molgap/local_runtime.py", "src/molgap/kaggle_credentials.py",
+            "research_memory/schemas/decision-state-v2.schema.json",
+            "research_memory/policies/fixture-policy.1.json"} <= names
     assert not {"tests/cache.npz", "tests/data/manifest.json", "credentials.json",
                 "data/weights.pt", "src/molgap/archive/old.py"} & names
     runtime = set(inventory.runtime_source_files(tmp_path))
@@ -105,9 +109,11 @@ def test_extracted_test_package_collects_all_flows_and_executes_its_own_tests(tm
     # An extracted distribution has no Git metadata. Build the fixture from
     # its source/test files, then let the real packager inspect the fixture Git.
     names = set(_TEST_SUPPORT_FILES)
-    for directory in ("src/molgap", "tests"):
+    for directory, suffix in (("src/molgap", ".py"), ("tests", ".py"),
+                              ("research_memory/schemas", ".json"),
+                              ("research_memory/policies", ".json")):
         names.update(path.relative_to(root).as_posix()
-                     for path in (root / directory).rglob("*.py")
+                     for path in (root / directory).rglob("*" + suffix)
                      if "archive" not in path.relative_to(root).parts)
     for name in sorted(names):
         target = source / name
@@ -120,6 +126,9 @@ def test_extracted_test_package_collects_all_flows_and_executes_its_own_tests(tm
     for command in commands:
         subprocess.run(["git", *command], cwd=source, check=True, capture_output=True)
     package = tmp_path / "package"
+    metadata = {name for name in names if name.endswith(".json") and
+                name.startswith(("research_memory/schemas/", "research_memory/policies/"))}
+    assert metadata <= set(testing_source_files(source))
     report = build_testing_source_package(source, package)
     assert report["file_count"] == len(testing_source_files(source))
     assert not (package / "experiment_spec.json").exists()
@@ -130,6 +139,8 @@ def test_extracted_test_package_collects_all_flows_and_executes_its_own_tests(tm
     with tarfile.open(package / "source.tar.gz") as archive:
         # The bundle is generated from an already confined tracked inventory.
         archive.extractall(extracted)
+    packaged_paths = {path.relative_to(extracted).as_posix() for path in extracted.rglob("*") if path.is_file()}
+    assert metadata <= packaged_paths
     # Hide the original fixture entirely: children can use only extracted files
     # and the existing dependency interpreter. No checkout or .git is required.
     source.rename(tmp_path / "unavailable-source")
