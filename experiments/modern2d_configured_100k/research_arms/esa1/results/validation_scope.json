@@ -1,0 +1,49 @@
+{
+  "canonical_finalization": "BLOCKED_REFERENCE_NOT_FROZEN",
+  "derived_preservation": {
+    "changed_paths": [],
+    "content_unchanged": true,
+    "file_count_after": 12,
+    "file_count_before": 12,
+    "rebuild_or_check_frozen_invoked": false
+  },
+  "final_metadata_report": "final_metadata_validation.json",
+  "final_metadata_sha256": "e367bd660809135c10cb71976fd9aa96b4730ec41c4565088f48bdd2dfa953c7",
+  "format": "molgap-validation-scope-receipt-v1",
+  "global_rml_validation": {
+    "command": [
+      "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+      "-m",
+      "molgap.research_memory",
+      "validate"
+    ],
+    "concise_output_tail": [
+      "{",
+      "\"evidence\": 126,",
+      "\"trajectories\": 159,",
+      "\"costs\": 241,",
+      "\"roles\": 517,",
+      "\"traces\": 64,",
+      "\"ready\": 0,",
+      "\"comparison_prelaunch\": 62,",
+      "\"comparison_readiness\": 45,",
+      "\"reference_bundles\": 17,",
+      "\"target_transform_assets\": 3",
+      "}"
+    ],
+    "elapsed_seconds": 13.077999999979511,
+    "exit_code": 0,
+    "invocation_count": 1,
+    "last_observed_read_bytes": 92076,
+    "maximum_wall_seconds": 60,
+    "own_checker_pid": 37960,
+    "read_io_budget_bytes": 134217728,
+    "status": "PASSED",
+    "stderr_path": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa1_acceptance\\20261021T200132Z_d8be1683\\global_rml_validate_20261021T201032Z.stderr.txt",
+    "stdout_path": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa1_acceptance\\20261021T200132Z_d8be1683\\global_rml_validate_20261021T201032Z.stdout.txt",
+    "stop_reason": null
+  },
+  "model_execution_performed": false,
+  "new_evidence_index": "experiments/modern2d_configured_100k/research_arms/esa1/results/artifact_index.json",
+  "scope": "Global validator parsed existing canonical corpus; it did not finalize these two staged terminal packages or admit them into Replay. Final40file and terminalbindings verified separately."
+}

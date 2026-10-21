@@ -1,0 +1,33 @@
+{
+  "attempt_id": "v1",
+  "claimed_at": "2026-10-21T19:58:31Z",
+  "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "created_at": "2026-10-21T19:57:49Z",
+  "decision_ref": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+  "delivered_at": "2026-10-21T19:58:07Z",
+  "delivery_attempts": 1,
+  "event_id": "evt-164c7249e13f1876aa6e9317",
+  "event_status": "CLOSED",
+  "event_type": "COMPLETE",
+  "finalized_at": "2026-10-21T20:12:59Z",
+  "monitor_generation": 1,
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "execution_status": "complete",
+    "promotion_authorized": false,
+    "rml_finalization": "BLOCKED_REFERENCE_NOT_FROZEN",
+    "scientific_status": "INCONCLUSIVE",
+    "successor_submitted": false
+  },
+  "payload": {
+    "api_status": "COMPLETE",
+    "kernel": "kaseichou/molgap-esa-research-slot1-v1",
+    "resolved_latest_identity": {
+      "kernel": "kaseichou/molgap-esa-research-slot1-v1",
+      "kernel_id": 140049215,
+      "version": 1
+    },
+    "version": 1
+  },
+  "run_id": "kaseichou/molgap-esa-research-slot1-v1:v1"
+}

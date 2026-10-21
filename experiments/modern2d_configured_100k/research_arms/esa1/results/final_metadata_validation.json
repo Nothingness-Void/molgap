@@ -1,0 +1,511 @@
+{
+  "artifact_index": {
+    "expected_file_count": 40,
+    "file_count": 40,
+    "files": [
+      {
+        "actual_bytes": 31830,
+        "actual_sha256": "d840748972ebb35c02b5c963ebc2ffa75e1fe5ff0732b295005e841321509dc0",
+        "expected_bytes": 31830,
+        "expected_sha256": "d840748972ebb35c02b5c963ebc2ffa75e1fe5ff0732b295005e841321509dc0",
+        "path": "analysis_report.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 3471,
+        "actual_sha256": "c8d62aeebc7420a051222f26a566dfa6a2ee75f968454bced50f6e3eec6ef2be",
+        "expected_bytes": 3471,
+        "expected_sha256": "c8d62aeebc7420a051222f26a566dfa6a2ee75f968454bced50f6e3eec6ef2be",
+        "path": "decision.md",
+        "valid": true
+      },
+      {
+        "actual_bytes": 5798,
+        "actual_sha256": "f4687f1f9b52e962692c7fdbfc3d0e6af8d6115940580ec6b85e77dc54306f36",
+        "expected_bytes": 5798,
+        "expected_sha256": "f4687f1f9b52e962692c7fdbfc3d0e6af8d6115940580ec6b85e77dc54306f36",
+        "path": "interpretation.md",
+        "valid": true
+      },
+      {
+        "actual_bytes": 9637,
+        "actual_sha256": "704d498a9cc4815c0100cc40e84a8180a4b9286922ac5af3959f87145511196d",
+        "expected_bytes": 9637,
+        "expected_sha256": "704d498a9cc4815c0100cc40e84a8180a4b9286922ac5af3959f87145511196d",
+        "path": "mechanical_acceptance.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 13376,
+        "actual_sha256": "013ba0de58378c4a3e12e39a4c12036565f1ed5889a9537c2262dadcfdffa1fc",
+        "expected_bytes": 13376,
+        "expected_sha256": "013ba0de58378c4a3e12e39a4c12036565f1ed5889a9537c2262dadcfdffa1fc",
+        "path": "retained/family_outputs/esa_identity3/canonical_trace.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 925,
+        "actual_sha256": "374d7b12123ddfdcf0b0bdba3a58d3874384e875a4b07d101d3b2680edcb2689",
+        "expected_bytes": 925,
+        "expected_sha256": "374d7b12123ddfdcf0b0bdba3a58d3874384e875a4b07d101d3b2680edcb2689",
+        "path": "retained/family_outputs/esa_identity3/canonical_trace.json.context.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 2984,
+        "actual_sha256": "24c37df87f54f0847731cf7e44fbee868ac6b69b822442e23753fc002db50a75",
+        "expected_bytes": 2984,
+        "expected_sha256": "24c37df87f54f0847731cf7e44fbee868ac6b69b822442e23753fc002db50a75",
+        "path": "retained/family_outputs/esa_identity3/output_manifest.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 2761,
+        "actual_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+        "expected_bytes": 2761,
+        "expected_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+        "path": "retained/family_outputs/esa_identity3/training_contract.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 13339,
+        "actual_sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55",
+        "expected_bytes": 13339,
+        "expected_sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55",
+        "path": "retained/family_outputs/esa_lr3/canonical_trace.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 919,
+        "actual_sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281",
+        "expected_bytes": 919,
+        "expected_sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281",
+        "path": "retained/family_outputs/esa_lr3/canonical_trace.json.context.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 2978,
+        "actual_sha256": "f6b7bae520f1fedb6442091fbc902001564189c3b9690855bd6d88f7cff6a4aa",
+        "expected_bytes": 2978,
+        "expected_sha256": "f6b7bae520f1fedb6442091fbc902001564189c3b9690855bd6d88f7cff6a4aa",
+        "path": "retained/family_outputs/esa_lr3/output_manifest.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 2580,
+        "actual_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+        "expected_bytes": 2580,
+        "expected_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+        "path": "retained/family_outputs/esa_lr3/training_contract.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 3532,
+        "actual_sha256": "46ada591cc5f7d15ac4536b2a55b4326cf14f4ca6b6ab785c4c858b051ca6735",
+        "expected_bytes": 3532,
+        "expected_sha256": "46ada591cc5f7d15ac4536b2a55b4326cf14f4ca6b6ab785c4c858b051ca6735",
+        "path": "retained/operations/launch_receipt.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1289,
+        "actual_sha256": "d4019e05e2b6746c05760604a8da272bc393bb742598d2c0a56715cdc44be4d4",
+        "expected_bytes": 1289,
+        "expected_sha256": "d4019e05e2b6746c05760604a8da272bc393bb742598d2c0a56715cdc44be4d4",
+        "path": "retained/operations/platform_response.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 462,
+        "actual_sha256": "30b098120bf84f641880664b0a32a6507796305c8ee46384fe5b9e88562791ab",
+        "expected_bytes": 462,
+        "expected_sha256": "30b098120bf84f641880664b0a32a6507796305c8ee46384fe5b9e88562791ab",
+        "path": "retained/operations/source_verification.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 356,
+        "actual_sha256": "6cc864f3fd8184cc702f2e522a069868f0cfe64da6e7f8a9e08c5d01f9e9b4ba",
+        "expected_bytes": 356,
+        "expected_sha256": "6cc864f3fd8184cc702f2e522a069868f0cfe64da6e7f8a9e08c5d01f9e9b4ba",
+        "path": "retained/remote/bootstrap_allocation.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 765,
+        "actual_sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f",
+        "expected_bytes": 765,
+        "expected_sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f",
+        "path": "retained/remote/environment_qualification.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1038,
+        "actual_sha256": "4be7ff7069cc7e0326b353419e7f3bb85f4045d8ea8951228750a4fb771f71ca",
+        "expected_bytes": 1038,
+        "expected_sha256": "4be7ff7069cc7e0326b353419e7f3bb85f4045d8ea8951228750a4fb771f71ca",
+        "path": "retained/remote/experiment/allocation_ledger.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1072,
+        "actual_sha256": "4cf4796537df8a89f442d6236af11a4a088fcff031e602a8643e975348c67130",
+        "expected_bytes": 1072,
+        "expected_sha256": "4cf4796537df8a89f442d6236af11a4a088fcff031e602a8643e975348c67130",
+        "path": "retained/remote/experiment/esa_identity3/allocation_costs.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1171,
+        "actual_sha256": "1872857d3d33e2167dcd582282e81a3b47a46ebc559742762c6f6042a60d0f62",
+        "expected_bytes": 1171,
+        "expected_sha256": "1872857d3d33e2167dcd582282e81a3b47a46ebc559742762c6f6042a60d0f62",
+        "path": "retained/remote/experiment/esa_identity3/execution_profile_receipt.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1428,
+        "actual_sha256": "e8b9dfa999762775c97712dcc03498db36a13319a7ccdf654db7792f355ff62f",
+        "expected_bytes": 1428,
+        "expected_sha256": "e8b9dfa999762775c97712dcc03498db36a13319a7ccdf654db7792f355ff62f",
+        "path": "retained/remote/experiment/esa_identity3/preflight_costs.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 32464,
+        "actual_sha256": "476a5047e200ebd99fd73bdf559c9d7a1acbeb8472a1457d0da853388cd150a6",
+        "expected_bytes": 32464,
+        "expected_sha256": "476a5047e200ebd99fd73bdf559c9d7a1acbeb8472a1457d0da853388cd150a6",
+        "path": "retained/remote/experiment/esa_identity3/profiles/step_0_1792598074692436729/profile.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 5238,
+        "actual_sha256": "da5aebe9055bd75afd87bd60de1a836cfb273b67194ce0bf0ab139d4d31242b7",
+        "expected_bytes": 5238,
+        "expected_sha256": "da5aebe9055bd75afd87bd60de1a836cfb273b67194ce0bf0ab139d4d31242b7",
+        "path": "retained/remote/experiment/esa_identity3/profiles/step_0_1792598074692436729/training_spans.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1310,
+        "actual_sha256": "dd466683372ae624574e4527571805630fea07cdce9458e0c762bda8c95be5e5",
+        "expected_bytes": 1310,
+        "expected_sha256": "dd466683372ae624574e4527571805630fea07cdce9458e0c762bda8c95be5e5",
+        "path": "retained/remote/experiment/esa_identity3/runtime_certificate.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 4374,
+        "actual_sha256": "4e9f1c822aab80a71b557b1ec868aebd280dd42a5f0dcbd8abf83f4300d4ca57",
+        "expected_bytes": 4374,
+        "expected_sha256": "4e9f1c822aab80a71b557b1ec868aebd280dd42a5f0dcbd8abf83f4300d4ca57",
+        "path": "retained/remote/experiment/esa_identity3/runtime_provenance.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 779,
+        "actual_sha256": "af8521e7d02a712c5dfaa819584bab9c602ca60ef5c602d8945ab7791882fc92",
+        "expected_bytes": 779,
+        "expected_sha256": "af8521e7d02a712c5dfaa819584bab9c602ca60ef5c602d8945ab7791882fc92",
+        "path": "retained/remote/experiment/esa_identity3/training_progress.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1066,
+        "actual_sha256": "1fd1ca8045e419360334ff09a2c1758e5f1b42e24510544f5cbbe8853c5ff41b",
+        "expected_bytes": 1066,
+        "expected_sha256": "1fd1ca8045e419360334ff09a2c1758e5f1b42e24510544f5cbbe8853c5ff41b",
+        "path": "retained/remote/experiment/esa_lr3/allocation_costs.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1165,
+        "actual_sha256": "5126328f2160dbfb5d6393a453f0ffec84444e8fc10ee146df6e4184b3fce79b",
+        "expected_bytes": 1165,
+        "expected_sha256": "5126328f2160dbfb5d6393a453f0ffec84444e8fc10ee146df6e4184b3fce79b",
+        "path": "retained/remote/experiment/esa_lr3/execution_profile_receipt.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1422,
+        "actual_sha256": "73a1b2ef50836f52236e60ef6df976d181cc771ee20a416a37d6e254dd518e1f",
+        "expected_bytes": 1422,
+        "expected_sha256": "73a1b2ef50836f52236e60ef6df976d181cc771ee20a416a37d6e254dd518e1f",
+        "path": "retained/remote/experiment/esa_lr3/preflight_costs.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 32472,
+        "actual_sha256": "5c5996e50553e76c6d9c4ab66751bae14f7965662111f2940d63171d3cf845a3",
+        "expected_bytes": 32472,
+        "expected_sha256": "5c5996e50553e76c6d9c4ab66751bae14f7965662111f2940d63171d3cf845a3",
+        "path": "retained/remote/experiment/esa_lr3/profiles/step_0_1792598074699926240/profile.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 5251,
+        "actual_sha256": "8526e5c45f91adefbdb7582a3c44d2b2a345ee2f778238368fd61486a16b99ac",
+        "expected_bytes": 5251,
+        "expected_sha256": "8526e5c45f91adefbdb7582a3c44d2b2a345ee2f778238368fd61486a16b99ac",
+        "path": "retained/remote/experiment/esa_lr3/profiles/step_0_1792598074699926240/training_spans.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1310,
+        "actual_sha256": "64fffea4e5725487814b89341f0405a548a4bd37bdeb7c81296351c49e678631",
+        "expected_bytes": 1310,
+        "expected_sha256": "64fffea4e5725487814b89341f0405a548a4bd37bdeb7c81296351c49e678631",
+        "path": "retained/remote/experiment/esa_lr3/runtime_certificate.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 4362,
+        "actual_sha256": "16903e8f043d5a1b4f9f7c1b58a01c0c427ac03524545ff772fd0bc3d194b89c",
+        "expected_bytes": 4362,
+        "expected_sha256": "16903e8f043d5a1b4f9f7c1b58a01c0c427ac03524545ff772fd0bc3d194b89c",
+        "path": "retained/remote/experiment/esa_lr3/runtime_provenance.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 773,
+        "actual_sha256": "b86dd1bd6e633065e367e7d83b68194c81bf7ef285df43346fdebc2eddbeddfc",
+        "expected_bytes": 773,
+        "expected_sha256": "b86dd1bd6e633065e367e7d83b68194c81bf7ef285df43346fdebc2eddbeddfc",
+        "path": "retained/remote/experiment/esa_lr3/training_progress.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1857,
+        "actual_sha256": "759610af6523a35c26418bd9b7ac9d8550a0ac9be8cd5f6bc2589edfa48e0974",
+        "expected_bytes": 1857,
+        "expected_sha256": "759610af6523a35c26418bd9b7ac9d8550a0ac9be8cd5f6bc2589edfa48e0974",
+        "path": "retained/remote/experiment/execution_report.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 923,
+        "actual_sha256": "d1fe7f5c9bf42018e0ad6828e1cbe8db2865d54b0ed17a1f8104a6304ad26e0b",
+        "expected_bytes": 923,
+        "expected_sha256": "d1fe7f5c9bf42018e0ad6828e1cbe8db2865d54b0ed17a1f8104a6304ad26e0b",
+        "path": "retained/remote/experiment/execution_retention.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 1857,
+        "actual_sha256": "759610af6523a35c26418bd9b7ac9d8550a0ac9be8cd5f6bc2589edfa48e0974",
+        "expected_bytes": 1857,
+        "expected_sha256": "759610af6523a35c26418bd9b7ac9d8550a0ac9be8cd5f6bc2589edfa48e0974",
+        "path": "retained/remote/experiment/pair_state.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 6791,
+        "actual_sha256": "8becce06c2a26505819ee7e3ef9739cab660f52e3843ad886267e0431b978f3b",
+        "expected_bytes": 6791,
+        "expected_sha256": "8becce06c2a26505819ee7e3ef9739cab660f52e3843ad886267e0431b978f3b",
+        "path": "retained_manifest.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 2484,
+        "actual_sha256": "7f0466060ce5a94c9c35dcd1b6e13f8e1f636351eb74d0a109b4306eb456b953",
+        "expected_bytes": 2484,
+        "expected_sha256": "7f0466060ce5a94c9c35dcd1b6e13f8e1f636351eb74d0a109b4306eb456b953",
+        "path": "rml_closure.json",
+        "valid": true
+      },
+      {
+        "actual_bytes": 918,
+        "actual_sha256": "9b26370b8388ebd323a0ba5fb5b6aeff4367b7bbc35191b9b8862a96230e3dbd",
+        "expected_bytes": 918,
+        "expected_sha256": "9b26370b8388ebd323a0ba5fb5b6aeff4367b7bbc35191b9b8862a96230e3dbd",
+        "path": "rml_closure_verified.json",
+        "valid": true
+      }
+    ],
+    "mismatch_count": 0,
+    "path": "experiments/modern2d_configured_100k/research_arms/esa1/results/artifact_index.json",
+    "sha256": "45fba11fe12e63161db19e3dbf8719227865e14feea57e93cdfb7862678425de",
+    "verified_file_count": 40
+  },
+  "canonical_finalization": "BLOCKED_REFERENCE_NOT_FROZEN",
+  "decision": {
+    "bytes": 3471,
+    "indexed": true,
+    "sha256": "c8d62aeebc7420a051222f26a566dfa6a2ee75f968454bced50f6e3eec6ef2be"
+  },
+  "elapsed_seconds": 0.21899999998277053,
+  "format": "molgap-esa1-final-metadata-validation-v1",
+  "generated_at_utc": "2026-10-21T20:12:27.332014+00:00",
+  "global_validator_rerun": false,
+  "interpretation": {
+    "bytes": 5798,
+    "indexed": true,
+    "sha256": "f4687f1f9b52e962692c7fdbfc3d0e6af8d6115940580ec6b85e77dc54306f36"
+  },
+  "model_execution": false,
+  "prior_global_validation": {
+    "exit_code": 0,
+    "report": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa1_acceptance\\20261021T200132Z_d8be1683\\metadata_validation_20261021T201032Z.json"
+  },
+  "repository_writes": false,
+  "run_id": "modern2d-esa-research-slot1-s42-v1",
+  "scientific_replay_ready": false,
+  "scope": "40 indexed SHA256/size checks and all terminal artifact_hashes using verify_bound_artifact; sequential metadata/hash operations only.",
+  "status": "VERIFIED",
+  "tensor_loads": false,
+  "terminal_artifact_hashes": {
+    "esa_identity3": {
+      "binding_count": 12,
+      "bindings": [
+        {
+          "expected_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+          "locator": "experiments/modern2d_configured_100k/generated/ea85d8848dfb082476c8bb2b821fbc0c933acf27695d722aaf4f9c2cb9da37b0/esa_identity3/recipe.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "c8d62aeebc7420a051222f26a566dfa6a2ee75f968454bced50f6e3eec6ef2be",
+          "locator": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+          "valid": true
+        },
+        {
+          "expected_sha256": "1db74d7e43dd4f7a416a8d664d81edf45faeaedca9c72e6f9983310e5996a3e8",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/1942ee2b801b27fa/acceptance.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "aa561019900263f78238e2a5a6f1f782f684ae6f59248d40b5ba82499f948ae4",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/1942ee2b801b27fa/observed.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "415ace563320d54a15ed67c59e6c16f7253121cfb4d00aa97dab8fe93a7094af",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/role_audit-esa_identity3-0744b639d05750d9.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "013ba0de58378c4a3e12e39a4c12036565f1ed5889a9537c2262dadcfdffa1fc",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/canonical_trace.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "374d7b12123ddfdcf0b0bdba3a58d3874384e875a4b07d101d3b2680edcb2689",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/canonical_trace.json.context.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "ae4d867670570dfe0bdcf69eefcf33d685bfc4555c192a8c0bef639ab044efd9",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/development_predictions.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "ac062723187b44eb327af74120e52c7509df2cb4feee6af952479ce9901079d3",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/last_checkpoint.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "24c37df87f54f0847731cf7e44fbee868ac6b69b822442e23753fc002db50a75",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/output_manifest.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "97e0ec682c9e921e69357a3e2ba513e6165c280d5f4c0c5e515aef7468a442d9",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/selected_model.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "e1275a48540a67960eb245ab523755c9bf7d8aae7e3bcc6e0c8a7cf3f88096ee",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_identity3/training_contract.json",
+          "valid": true
+        }
+      ],
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+      "path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/terminal_staging/v1/1942ee2b801b27fa/terminal.json",
+      "scientific_outcome": "INCONCLUSIVE",
+      "terminal_package_count": 1,
+      "terminal_package_sha256": "5f37d56c1854e4d197986ef9770284c8997fe0239c9f7bb1f015cc894b8869cb",
+      "valid": true,
+      "verified_binding_count": 12
+    },
+    "esa_lr3": {
+      "binding_count": 12,
+      "bindings": [
+        {
+          "expected_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+          "locator": "experiments/modern2d_configured_100k/generated/ea85d8848dfb082476c8bb2b821fbc0c933acf27695d722aaf4f9c2cb9da37b0/esa_lr3/recipe.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "c8d62aeebc7420a051222f26a566dfa6a2ee75f968454bced50f6e3eec6ef2be",
+          "locator": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+          "valid": true
+        },
+        {
+          "expected_sha256": "39b6e4c8adc7b4367dcc6a1da27742f078ae797d391f8adc62da69591bdd8fdf",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_lr3/terminal_staging/v1/1fbbd0e15b8f7c20/acceptance.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "eafd1d807dedb9f44aa1e4e565d0486506ffc5f5f60958f056f53087963e48b9",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_lr3/terminal_staging/v1/1fbbd0e15b8f7c20/observed.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "587de279abb443be40fb91636e3fd0d4a88ee2453ea6cc1dbb52f0eb2b9bc9c9",
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_lr3/terminal_staging/v1/role_audit-esa_lr3-ff3ea887419b4ed3.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "9e3fbbc4ac00187d509bfe9a32c787ecedb10b033f4a80ea4ed0fe4721269e55",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/canonical_trace.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "7faa681d9b3d30fe62b3c13b2ceafbd188509675535e55f53f3add66cc53c281",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/canonical_trace.json.context.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "7b3ea479b0f1a45c846862ac3f2c6a5b5464dc4672072c0066f6e666d217031a",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/development_predictions.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "67dc9a851c436b09120df036f1881f4fc1f19a075aefa3f8191cd68b9153c6b7",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/last_checkpoint.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "f6b7bae520f1fedb6442091fbc902001564189c3b9690855bd6d88f7cff6a4aa",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/output_manifest.json",
+          "valid": true
+        },
+        {
+          "expected_sha256": "613a8b92939e65fc3d326812c9938b00c8022a11ef40452c7293705277fbf0af",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/selected_model.pt",
+          "valid": true
+        },
+        {
+          "expected_sha256": "15096b278eecdb41790a2e2f4738ce9b1635e3b974ab5d4346c744a50bd0588a",
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot1-s42-v1/v1/esa_lr3/training_contract.json",
+          "valid": true
+        }
+      ],
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md",
+      "path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_lr3/terminal_staging/v1/1fbbd0e15b8f7c20/terminal.json",
+      "scientific_outcome": "INCONCLUSIVE",
+      "terminal_package_count": 1,
+      "terminal_package_sha256": "be6df459f511b4cf40362edc9df7ef6fc2da70b857566d88fef5dcd55f734828",
+      "valid": true,
+      "verified_binding_count": 12
+    }
+  },
+  "thread_policy": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "operations": "single sequential worker"
+  }
+}
