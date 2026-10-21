@@ -354,6 +354,11 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
     from .common.io import _safe_local
     _safe_local(output)
     record, recipe, data, tuning, context, provenance, _ = prepared
+    repair = False
+    if recipe.formal_interface and not synthetic:
+        from .modern2d_execution_proof import execution_repair_requested
+        repair = execution_repair_requested(options['spec'], prepared[-1])
+    repair_wall = {}
     bounded = recipe.qualification is not None
     if bounded and (qualification is None) != synthetic:
         raise ValueError("Qualification requires a native admission or explicit synthetic CPU route")
@@ -386,6 +391,9 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         if formal_admission is not None:
             kernel_options["formal_training"] = formal_admission
         kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device=device, **kernel_options)
+        if repair:
+            from .modern2d_execution_proof import bind_candidate
+            bind_candidate(kernel.model, recipe.family)
         kernel._qualification_memory_fill = label == "fill-enabled"
         observations = []
         def observe_execution(boundary):
@@ -414,6 +422,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
             atomic_torch_save(output / "resumed-first.pt", retained)
             del session, kernel
             kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device=device, **kernel_options)
+            if repair:
+                bind_candidate(kernel.model, recipe.family)
             session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
                 checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
             session.load_state_dict(retained)
@@ -428,6 +438,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
                 "sha256": normalized_file_sha(output / "profile_qualification/profile.json")}
         else:
             session.run()
+        if repair:
+            repair_wall[label] = time.perf_counter() - path_began
         retained = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         state = retained["state"] if label == "fill-enabled" else retained
         proof = {"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
@@ -450,6 +462,12 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
     if memory_fill_proof is not None:
         _verify_memory_fill_proof(output, probe, memory_fill_proof, proofs[0]["state_fingerprint"], provenance)
     execution_proof = None
+    repair_proof = None
+    if repair:
+        from .modern2d_execution_proof import run_reference
+        repair_proof = run_reference(probe=probe, data=data, tuning=tuning, options=options,
+            output=output, formal_admission=formal_admission,
+            candidate_proof=proofs[1], candidate_wall_seconds=repair_wall['repeat-b'])
     if recipe.k1_execution is not None:
         # Keep the candidate recipe identity in the candidate state, but run a
         # shadow with the historical backend under the same data/init/RNG.  The
@@ -491,6 +509,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
     if profile_proof is not None:
         certificate["profile_proof"] = profile_proof
+    if repair_proof is not None:
+        certificate['execution_repair_proof'] = repair_proof
     if memory_fill_proof is not None:
         certificate["memory_fill_proof"] = memory_fill_proof
     if execution_proof is not None:
@@ -742,6 +762,9 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         required=recipe.k1_execution is not None,
         expected_candidate_sha256=proofs[1]["sha256"] if proofs else None)
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
+    if certificate.get('execution_repair_proof') is not None:
+        from .modern2d_execution_proof import verify_repair_proof
+        verify_repair_proof(root, certificate['execution_repair_proof'], probe)
     return certificate
 
 

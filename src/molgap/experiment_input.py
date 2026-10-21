@@ -415,7 +415,8 @@ def _compile_scientific_input(path, root, value):
             contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name],
             authority_ref=value["authority_ref"], role_ref=value["role_ref"], decision_ref=value["decision_ref"],
             timestamp=value["timestamp"], profile=profile,
-            action_type=("execution_diagnostic" if authority.get("purpose") == "CONFIGURED_EXECUTION_PROFILE" else "training"))
+            action_type=("execution_diagnostic" if authority.get("purpose") in {
+                "CONFIGURED_EXECUTION_PROFILE", "CONFIGURED_EXECUTION_REPAIR"} else "training"))
         proposal_pin = derive(prefix + "/" + arm_id + "/plan_input.json", proposal)
         prospective.append({"arm_id": arm_id, "trajectory_id": tid, "plan_spec_ref": proposal_pin["path"],
             "plan_spec_sha256": proposal_pin["sha256"],

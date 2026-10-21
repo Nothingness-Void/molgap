@@ -187,7 +187,7 @@ class Modern2DFormalTrainingContext:
         if self.configured:
             from .modern2d_training_release import validate_configured_authority
             validate_configured_authority(authority, declaration)
-            if authority.get("purpose") == "CONFIGURED_EXECUTION_PROFILE" and not training_only:
+            if authority.get("purpose") in {"CONFIGURED_EXECUTION_PROFILE", "CONFIGURED_EXECUTION_REPAIR"} and not training_only:
                 raise ValueError("Execution-profile authority cannot open development or release formal training")
             horizon = {"horizon_passes": recipe.formal_training.horizon_passes,
                        "horizon_steps": recipe.formal_training.horizon_steps}

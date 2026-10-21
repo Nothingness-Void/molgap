@@ -164,6 +164,9 @@ class ESANative(ESAInvariant):
                                  padding_value=-1)
         lengths = types.new_tensor([len(t.token_types) for t in tokens])
         valid = torch.arange(types.shape[1], device=types.device)[None] < lengths[:, None]
+        return self._forward_dense(features, types, endpoints, valid)
+
+    def _forward_dense(self, features, types, endpoints, valid):
         padding = ~valid[:, :, None]
         # Embedding backward allocates a dense gradient for both rows, including
         # a finite zero row when a batch contains only one token kind. All MLP
@@ -183,7 +186,7 @@ class ESANative(ESAInvariant):
             raise ValueError("ESA/3 topology safety cap exceeded; no member may be dropped")
         return self._forward_tokens([native_tokens(graph)]).reshape(())
 
-    def forward(self, batch):
+    def forward_reference(self, batch):
         views = validated_topology_views(batch, max_nodes=self.config.max_nodes,
                                          max_edges=self.config.max_edges,
                                          allowed_roles=ALLOWED_ROLES)
@@ -193,6 +196,57 @@ class ESANative(ESAInvariant):
         if device != self.head.weight.device:
             raise ValueError("ESA/3 model and topology must share a device; move the model explicitly")
         return self._forward_tokens([native_tokens(graph) for graph in views])
+
+    def forward(self, batch):
+        views = validated_topology_views(batch, max_nodes=self.config.max_nodes,
+            max_edges=self.config.max_edges, allowed_roles=ALLOWED_ROLES, packed=True)
+        device = views[0].x.device
+        if self.config.tensor_device != "cpu_or_cuda" and device.type != self.config.tensor_device:
+            raise ValueError("ESA/3 topology device differs from configured tensor_device capability")
+        if device != self.head.weight.device:
+            raise ValueError("ESA/3 model and topology must share a device; move the model explicitly")
+        features, types, endpoints, valid = packed_native_tokens(views)
+        return self._forward_dense(features, types, endpoints, valid)
+
+
+def packed_native_tokens(views):
+    """Build the identical directed-bond/isolated-atom padded ABI once per batch."""
+    device, b = views[0].x.device, len(views)
+    counts = torch.tensor([len(g.x) for g in views], device=device)
+    edge_counts = counts.new_tensor([g.edge_index.shape[1] for g in views])
+    node_starts = torch.cat((counts.new_zeros(1), counts.cumsum(0)[:-1]))
+    edge_starts = torch.cat((counts.new_zeros(1), edge_counts.cumsum(0)[:-1]))
+    graph_ids = torch.arange(b, device=device)
+    edge_graph = torch.repeat_interleave(graph_ids, edge_counts)
+    local_edges = torch.cat([g.edge_index for g in views], 1)
+    edges = local_edges + node_starts[edge_graph][None]
+    atoms = torch.cat([g.x for g in views])
+    attrs = torch.cat([g.edge_attr for g in views])
+    covered = torch.zeros(len(atoms), dtype=torch.bool, device=device)
+    covered[edges.reshape(-1)] = True
+    isolated = (~covered).nonzero().flatten()
+    node_graph = torch.repeat_interleave(graph_ids, counts)
+    isolated_graph = node_graph[isolated]
+    isolated_counts = torch.bincount(isolated_graph, minlength=b)
+    isolated_starts = torch.cat((counts.new_zeros(1), isolated_counts.cumsum(0)[:-1]))
+    lengths = edge_counts + isolated_counts
+    width = int(lengths.max())
+    one_hot = categorical_one_hot(atoms, ATOM_FEATURE_DIMS)
+    bond_hot = categorical_one_hot(attrs, BOND_FEATURE_DIMS)
+    features = one_hot.new_zeros((b, width, 2 * sum(ATOM_FEATURE_DIMS) + sum(BOND_FEATURE_DIMS)))
+    types = counts.new_zeros((b, width))
+    endpoints = counts.new_full((b, width, 2), -1)
+    edge_positions = torch.arange(len(attrs), device=device) - edge_starts[edge_graph]
+    features[edge_graph, edge_positions] = torch.cat((one_hot[edges[0]], one_hot[edges[1]], bond_hot), -1)
+    endpoints[edge_graph, edge_positions] = local_edges.t()
+    positions = torch.arange(len(isolated), device=device) - isolated_starts[isolated_graph] + edge_counts[isolated_graph]
+    atom_only = torch.cat((one_hot[isolated], one_hot.new_zeros((len(isolated), sum(ATOM_FEATURE_DIMS) + sum(BOND_FEATURE_DIMS)))), -1)
+    features[isolated_graph, positions] = atom_only
+    types[isolated_graph, positions] = 1
+    endpoints[isolated_graph, positions, 0] = isolated - node_starts[isolated_graph]
+    valid = torch.arange(width, device=device)[None] < lengths[:, None]
+    # Match pad_sequence's zero padding for the type channel; masks ignore it.
+    return features, types, endpoints, valid
 
 
 def make_model(arm):

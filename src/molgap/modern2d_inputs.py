@@ -67,7 +67,7 @@ def categorical_one_hot(values, dimensions):
     return torch.cat([F.one_hot(values[:, i], d) for i, d in enumerate(dimensions)], -1).float()
 
 
-def validated_topology_views(batch, *, max_nodes=1024, max_edges=4096,
+def validated_topology_views(batch, *, max_nodes=1024, max_edges=4096, packed=False,
                              allowed_roles=("CPU_SYNTHETIC_ONLY", "train", "development",
                                             "train_100k", "train_500k", "common_dev")):
     """Versioned integration input, not a data-role or accelerator release.
@@ -125,6 +125,25 @@ def validated_topology_views(batch, *, max_nodes=1024, max_edges=4096,
         if (not torch.equal(ptr.to(expected.device), expected) or not torch.equal(
                 groups, torch.repeat_interleave(torch.arange(count, device=x.device), counts))):
             raise ValueError("Graph boundaries disagree with membership")
+        if packed:
+            # One metadata transfer replaces per-graph CUDA nonzero/scalar reads.
+            # Stable grouping preserves duplicate-edge and original edge order.
+            edge_groups = groups[edges[0]]
+            edge_counts = torch.bincount(edge_groups, minlength=count)
+            sizes = torch.stack((counts, edge_counts)).cpu().tolist()
+            sources = source.cpu().tolist()
+            if max(sizes[0]) > max_nodes or max(sizes[1], default=0) > max_edges:
+                raise ValueError("Integration topology safety cap exceeded; no member may be dropped")
+            order = torch.argsort(edge_groups, stable=True)
+            sorted_edges, sorted_bonds = edges[:, order], bonds[order]
+            views, node_start, edge_start = [], 0, 0
+            for nodes, edge_count, source_id in zip(*sizes, sources):
+                node_end, edge_end = node_start + nodes, edge_start + edge_count
+                views.append(GraphView(x[node_start:node_end],
+                    sorted_edges[:, edge_start:edge_end] - node_start,
+                    sorted_bonds[edge_start:edge_end], source_id))
+                node_start, edge_start = node_end, edge_end
+            return views
     views = []
     for i in range(count):
         nodes = (groups == i).nonzero().flatten()

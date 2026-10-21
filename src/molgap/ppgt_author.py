@@ -160,6 +160,20 @@ class AuthorAttention(nn.Module):
         self.attn_dropout = nn.Dropout(config.attention_dropout)
 
     def forward(self, x, pair):
+        if x.ndim == 3:
+            b, n, _ = x.shape
+            h, d = self.heads, self.head_dim
+            q = self.Q(x).reshape(b, n, h, d).transpose(1, 2)
+            k, v = self.KV(x).reshape(b, n, 2, h, d).permute(2, 0, 3, 1, 4).unbind(0)
+            positional = self.P(pair).permute(0, 3, 1, 2)
+            logits = q @ k.transpose(-1, -2)
+            logits = logits + (positional[:, :h] -
+                0.5 * k.square().sum(-1).unsqueeze(-2) / math.sqrt(d))
+            weights = logits.softmax(-1)
+            if self.use_phi:
+                weights = weights * (positional[:, h:] + 1)
+            values = self.attn_dropout(weights) @ v
+            return self.O(values.transpose(1, 2).reshape(b, n, h * d))
         n, h, d = len(x), self.heads, self.head_dim
         q = self.Q(x).view(n, h, d).transpose(0, 1)
         k, v = self.KV(x).view(n, 2, h, d).permute(1, 2, 0, 3).unbind(0)
@@ -291,11 +305,64 @@ class PPGTAuthor(nn.Module):
         pooled = x.sum(0) if c.pooling == "sum" else x.mean(0)
         return self.head(pooled).reshape(())
 
-    def forward(self, batch):
+    def forward_reference(self, batch):
         c = self.config
         graphs = validated_topology_views(batch, max_nodes=c.max_nodes,
                                           max_edges=c.max_edges, allowed_roles=ALLOWED_ROLES)
         return torch.stack([self.graph_forward(graph) for graph in graphs])
+
+    def _same_size_forward(self, graphs):
+        """Batch equal-size graphs without padding or changing attention math."""
+        c = self.config
+        b, n = len(graphs), len(graphs[0].x)
+        features = [positional_inputs(g, c.rrwp_steps, sym_norm=c.sym_norm,
+            max_nodes=c.max_nodes, max_edges=c.max_edges) for g in graphs]
+        walk, positional, order = (torch.stack(items).to(dtype=self.node_pe.weight.dtype)
+                                  for items in zip(*features))
+        atoms = torch.stack([g.x for g in graphs])
+        x = sum(embedding(atoms[:, :, i]) for i, embedding in enumerate(self.atoms))
+        x = x + self.node_pe(walk.diagonal(dim1=1, dim2=2).transpose(1, 2)) + self.node_order(order)
+        encoded = sinusoidal_pe(positional, c.spe_bases)
+        pair = self.pe_mlp(encoded.reshape(b * n * n, -1)).reshape(b, n, n, c.pair_dim)
+        edge_counts = atoms.new_tensor([g.edge_index.shape[1] for g in graphs])
+        edge_graph = torch.repeat_interleave(torch.arange(b, device=atoms.device), edge_counts)
+        edges = torch.cat([g.edge_index for g in graphs], 1)
+        attrs = torch.cat([g.edge_attr for g in graphs])
+        bonds = sum(embedding(attrs[:, i]) for i, embedding in enumerate(self.bonds))
+        edge_values = torch.zeros_like(pair)
+        edge_values.index_put_((edge_graph, edges[1], edges[0]), bonds, accumulate=True)
+        pair = self.stem_pre_norm(pair + edge_values)
+        for stem_block in self.stem:
+            pair = stem_block(pair)
+        pair = self.stem_post_norm(pair)
+        x = self.pre_backbone_norm(x)
+        for block in self.blocks:
+            x = block(x, pair)
+        x = self.post_backbone_norm(x)
+        pooled = x.sum(1) if c.pooling == "sum" else x.mean(1)
+        return self.head(pooled).reshape(b)
+
+    def forward_bucketed(self, batch):
+        c = self.config
+        # Preserve graph-order RNG semantics for the published stochastic preset.
+        if c.attention_dropout or c.stochastic_depth:
+            return self.forward_reference(batch)
+        graphs = validated_topology_views(batch, max_nodes=c.max_nodes,
+            max_edges=c.max_edges, allowed_roles=ALLOWED_ROLES, packed=True)
+        buckets = {}
+        for index, graph in enumerate(graphs):
+            buckets.setdefault(len(graph.x), []).append((index, graph))
+        outputs = [None] * len(graphs)
+        for members in buckets.values():
+            predictions = self._same_size_forward([g for _, g in members])
+            for (index, _), prediction in zip(members, predictions.unbind(0)):
+                outputs[index] = prediction
+        return torch.stack(outputs)
+
+    def forward(self, batch):
+        # Bucketed FP32 reductions need an explicit update-drift qualification.
+        # Keep the frozen graphwise path as the scientific default until then.
+        return self.forward_reference(batch)
 
 
 def make_model(arm):
