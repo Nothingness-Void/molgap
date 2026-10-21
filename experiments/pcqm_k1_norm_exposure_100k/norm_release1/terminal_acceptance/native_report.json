@@ -1,0 +1,128 @@
+{
+  "bn_long": {
+    "status": "NATIVE_REPEAT_RESUME_VERIFIED",
+    "certificate": {
+      "format": "molgap-runtime-certificate-v1",
+      "status": "accepted",
+      "provenance_sha256": "9add429e51271c49cf4b9e5157777f7d2a0eba2f3155b40c5181695376bab0e2",
+      "probe_recipe_identity": "179dd24c7af5e6b561c6d9efd539bfe37e8882255afc9ad71a10ca95c16414a6",
+      "proofs": [
+        {
+          "path": "repeat-a.pt",
+          "sha256": "c66dcf1fda3c66dd76ba58dd0c49837ee5b5a7fc0e6eea504035651e6cf67312",
+          "state_fingerprint": "997884bf66abeaba7b5a77b7d25664870d68665e20e2077747bcf785e894de14"
+        },
+        {
+          "path": "repeat-b.pt",
+          "sha256": "83a1f7e020f4eff32701fca1997bdb9c1b5b5d15b267556ddc33aacf5ba15bba",
+          "state_fingerprint": "997884bf66abeaba7b5a77b7d25664870d68665e20e2077747bcf785e894de14"
+        },
+        {
+          "path": "resumed.pt",
+          "sha256": "8db1ac6f6577b0e99e00b449a031dd7da5dc4f1c43ab12bc1fa40f0120baf41a",
+          "state_fingerprint": "997884bf66abeaba7b5a77b7d25664870d68665e20e2077747bcf785e894de14"
+        }
+      ],
+      "resume_origin": {
+        "path": "resumed-first.pt",
+        "sha256": "edfab008fe87cae2b1ea0c13a1317c38c3e2250eddc1b20f031a9ac40b09df43"
+      },
+      "formal_training_exposure": 0,
+      "scientific_acceptance": "NOT_EVALUATED"
+    },
+    "provenance": {
+      "context": {
+        "experiment_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+        "logical_run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+        "arm_id": "bn_long",
+        "arm_identity": "612c3fa8cf9dfba162f8590aa493be9a89177d3fe5d86883458b51313738fbd8",
+        "spec_identity": "965ff813b52af17cf88ecb8653a73adab402e2ec72f1d2a8f7807609128a81d7",
+        "family_name": "neural_atom_k1",
+        "family_version": "3",
+        "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+        "source_archive_sha256": "7b63a7c2b6e5148ab50a5740bd3da32b6a3c0c8aa58f23363dde81831d8ad839",
+        "package_identity": "4cec8bf05cecc9e44aca73bfe309cd3846e814fe4114a004debbfc4bd2163f51",
+        "training_recipe_sha256": "d2af25be2c5db2560a832cd9100b1c48edf3d10982a7491760584267cfcd0e31",
+        "platform": "kaggle",
+        "account": "nothingnessvoid",
+        "run_reference": "nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42",
+        "platform_version": null
+      },
+      "recipe_identity": "f9ff02dc9e418b8fb0cc043430b709df02996946c93e52928de66280d655b120",
+      "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "initialization": {
+        "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+        "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+        "tensor_count": 367,
+        "device": "cpu"
+      },
+      "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+      "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+      "accelerator": "Tesla T4"
+    },
+    "recipe_identity_matches": true
+  },
+  "ln_long": {
+    "status": "NATIVE_REPEAT_RESUME_VERIFIED",
+    "certificate": {
+      "format": "molgap-runtime-certificate-v1",
+      "status": "accepted",
+      "provenance_sha256": "55d7657d05e3fbefec7167f9a4d113414d96d11d77f8185fcb43a1d21bc3fca6",
+      "probe_recipe_identity": "07d6d1d73e2d25e60cd7f8320d3842b98378bce29ec4f02b1023d02d8004e31a",
+      "proofs": [
+        {
+          "path": "repeat-a.pt",
+          "sha256": "1cfc888d104b163a403c9936954a8331d04125229baffee6ee634f723749fdca",
+          "state_fingerprint": "101a1561f3deac1e891825ab3c61ae94eaf6d7549d3fdc443212b57da41df94c"
+        },
+        {
+          "path": "repeat-b.pt",
+          "sha256": "11b924ad1db66144c6bd99fbaec1e7e484ac3befe653d7dd3c234207be9c6b09",
+          "state_fingerprint": "101a1561f3deac1e891825ab3c61ae94eaf6d7549d3fdc443212b57da41df94c"
+        },
+        {
+          "path": "resumed.pt",
+          "sha256": "cbc065b1b1f5fa264f71060ccd207c0419739e01843fb4085f15a9cd9182e357",
+          "state_fingerprint": "101a1561f3deac1e891825ab3c61ae94eaf6d7549d3fdc443212b57da41df94c"
+        }
+      ],
+      "resume_origin": {
+        "path": "resumed-first.pt",
+        "sha256": "453a781799325e5cb46642fba1b161ccfff45c065fa7459291748bf2a74bf826"
+      },
+      "formal_training_exposure": 0,
+      "scientific_acceptance": "NOT_EVALUATED"
+    },
+    "provenance": {
+      "context": {
+        "experiment_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+        "logical_run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+        "arm_id": "ln_long",
+        "arm_identity": "322d01f3615db77aa5d0d8651547c1a6430081f937bde3247eb2a0fbb5f202d8",
+        "spec_identity": "965ff813b52af17cf88ecb8653a73adab402e2ec72f1d2a8f7807609128a81d7",
+        "family_name": "neural_atom_k1",
+        "family_version": "3",
+        "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+        "source_archive_sha256": "7b63a7c2b6e5148ab50a5740bd3da32b6a3c0c8aa58f23363dde81831d8ad839",
+        "package_identity": "4cec8bf05cecc9e44aca73bfe309cd3846e814fe4114a004debbfc4bd2163f51",
+        "training_recipe_sha256": "842af54001523c2c90331fbf24131545977b6a0486a21d11bd9e0e535c3945ae",
+        "platform": "kaggle",
+        "account": "nothingnessvoid",
+        "run_reference": "nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42",
+        "platform_version": null
+      },
+      "recipe_identity": "18f970accf93329dc130748f7f4c8d198600edc65c635c51b3f9cb8e8e7ea83b",
+      "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "initialization": {
+        "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+        "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+        "tensor_count": 367,
+        "device": "cpu"
+      },
+      "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+      "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+      "accelerator": "Tesla T4"
+    },
+    "recipe_identity_matches": true
+  }
+}

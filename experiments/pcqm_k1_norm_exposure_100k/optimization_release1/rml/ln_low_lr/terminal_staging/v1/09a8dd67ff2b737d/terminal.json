@@ -1,0 +1,290 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/acceptance.json": "47386172fedc148f112f99974103052a2906ef67221b49b47a3c0fcf1c142043",
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/observed.json": "97b7eb6a501d160e2a5379f654174f9c39568c431c29e27952ddcf8a127e257b",
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json": "8758f4636c91dbfba849fe566ba6b925bef79efbb206fb9f5de7ce6287241eac",
+    "experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md": "4a14f2f9b40cc4c39b7704fe74dfbe7d1c5e69f544aba5cdfe8a6e148a4933d3",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/canonical_trace.json": "b3a819c6b58ed30db582e0527fd85157fc0fbecbab0b00d60db7f064ea88a943",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/development_predictions.pt": "602b5ebb6eb5106de76b929e69b47e2494312f087ca8a718053acfab71e586a9",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/last_checkpoint.pt": "b5f3785faa748d351df106ab24f88bbd1e98b4e8526c2c1d5261f6867dff376a",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/output_manifest.json": "4cfbeb87055cca8866c8aa92673d8a7e7cd99dad56932b67632cca2886e4d70c",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/selected_model.pt": "8e2d1f6613daab86c39cf3b231078905138a733f9af8e62c855fe58faf57d92b",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/training_contract.json": "ed005ec95d21ab69bcd45430f9de5b1ea717654dae7d36c8c285bc6fdaa1db35",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1/v1/reports/terminal_diagnostic_257aefb81ae024e9d0e94bcc8037bfff2ce76a168382def468b1c9a1629b2c4e.json": "aff411a9e456f5cf37403f67b41429dbf14ebcd10bb92909cd28292723263829"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-0",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 5.5815995588325
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/training_contract.json",
+        "name": "contract",
+        "sha256": "ed005ec95d21ab69bcd45430f9de5b1ea717654dae7d36c8c285bc6fdaa1db35"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "602b5ebb6eb5106de76b929e69b47e2494312f087ca8a718053acfab71e586a9"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "b5f3785faa748d351df106ab24f88bbd1e98b4e8526c2c1d5261f6867dff376a"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "8e2d1f6613daab86c39cf3b231078905138a733f9af8e62c855fe58faf57d92b"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "b3a819c6b58ed30db582e0527fd85157fc0fbecbab0b00d60db7f064ea88a943"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+    "metrics": {
+      "development_mae_eV": 0.1426170894998312,
+      "missing_reason": null,
+      "selected_optimizer_step": 119493,
+      "selected_weights": "live",
+      "source_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "CLOSED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "development": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "used"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-21T16:37:57.882217+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "development": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "used"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/terminal_acceptance/role_audit_ln_low_lr.json",
+      "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    }
+  ],
+  "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-v1",
+    "logical_run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+    "source_package_sha256": "2c9f67769c5371beeccd6a96f9020a191ae4832131ed491995238d28fa09f7db",
+    "spec_identity": "8230927a983f1a79b6a34190ef2360e136cd960ea8003dc7530e6fdcf66859f9"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_124960",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 124960,
+      "sample_presentations": 15994880
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+    "reference_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+    "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal_staging/v1/09a8dd67ff2b737d/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/optimization/raw/experiment/ln_low_lr/canonical_trace.json",
+    "trace_artifact_sha256": "b3a819c6b58ed30db582e0527fd85157fc0fbecbab0b00d60db7f064ea88a943",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+}

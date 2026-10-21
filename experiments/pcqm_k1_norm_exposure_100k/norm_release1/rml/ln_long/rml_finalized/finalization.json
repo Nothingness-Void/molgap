@@ -1,0 +1,44 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-d4bfe966c8d83c129e5b06d340e55097f4c11c37a0c8ba1dfe841d457b3888a7",
+  "finalized_at": "2026-10-21T16:37:22.842834+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/ln_long/terminal_staging/v1/3bdd7e65501512c7/acceptance.json": "090ef3631f5148ac89c0b62a084fabf13b1f9eb9867702534a2dc6a5a578137d",
+    "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/ln_long/terminal_staging/v1/3bdd7e65501512c7/observed.json": "e3808dcde5775de1b9eb0954111a076638d7e49eb7c722db7e8ca61b720c4243",
+    "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json": "3269e206a6ac2ac760e4accdb7b80519b990233fcc6759bf330e87d920c826ed",
+    "experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md": "4a14f2f9b40cc4c39b7704fe74dfbe7d1c5e69f544aba5cdfe8a6e148a4933d3",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/canonical_trace.json": "53a60a9aa944303824217dfb5863bf84b4abee913bd28efa0c1e60389e4005ab",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/development_predictions.pt": "d37e45b3b18d11550c0682a1dac8539dd4879c5c72e493199194c902e1541416",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/last_checkpoint.pt": "173b53f265542e3457fb07811296f14c6aac29fe9ff54f946d01cfec0e55e004",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/output_manifest.json": "7d1ce30b2fc0c3add9fa20e9c273120ffaa765b6309a0f794b766e7044f8847e",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/selected_model.pt": "7503d86f8c7042b2881b2d4b5d1641d116bd1fd54a30af508cafd26742ff2bc8",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/training_contract.json": "842af54001523c2c90331fbf24131545977b6a0486a21d11bd9e0e535c3945ae",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1/v1/reports/terminal_diagnostic_c152515c23f5d33dcac89fe46347ff997fade0aaecd06c7b2cb9c95368302d4e.json": "65f570bbe80e82545c7faebbd62ca66f6ad077f140eed7cb1d6f0ca7aed8a98b"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/ln_long/trajectory.json",
+  "prospective_sha256": "a6751b122b570e7f38344ea9e4171a17d5b4fad0af3b83b891d6cceb51a200b9",
+  "published_hashes": {
+    "costs/cost-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-0.json": "f7a7fca6728fec3bddc628400897f72c30df591035d2f9e36ac2d1d130e3f082",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-labels_read.json": "bddb4e01bcadfddfe5b6c27e700be7705297b5b479b7fc3c5340de4fa1b999d1",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-metric_computed.json": "43d5e1fcc957122633a3f6e62d939280025ad3fe25574801d7c51f69dbc034e5",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-prediction_input.json": "42233d2fbf54468ea4731e80ac5e0d9092178b96880b89d6724422dca728c649",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-selection_used.json": "72a03217d748b85ba661f584268648b6fcd0d161d3fce74eff3e7375d3601ac0",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-labels_read.json": "dc762e7ea35bb1ef5d08d9453e20c34ac2aee868854a9dfb326611cf67aab8c1",
+    "roles/role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-training_membership.json": "1fa1eac5bb2d3e32f96c9ea0454db80db004ddf496f544d51b59e77305b0434d",
+    "terminal_input.json": "dbd0c86cb54a08c36e4a95629d132fc373cc53d404708c84d9da4ecab3ff2314",
+    "trace.json": "53a60a9aa944303824217dfb5863bf84b4abee913bd28efa0c1e60389e4005ab",
+    "trace_manifest.json": "1c56450d316b025465fe8bd9de5e3689f2837aa04f9e0341989d0af3600e730c",
+    "trajectory.json": "8014200c4632c3d64720047f0e2a4d8a5b7e09d025c7e59380394916eb0a0e70",
+    "v5_evidence.json": "da7398a03594826051fa0ce51f03113336c858487b83dbf24b012ef528ff1ea2"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/ln_long/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "d4bfe966c8d83c129e5b06d340e55097f4c11c37a0c8ba1dfe841d457b3888a7",
+  "trace_status": "available",
+  "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+}

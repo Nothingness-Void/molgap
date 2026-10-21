@@ -1,0 +1,39 @@
+{
+  "context": {
+    "experiment_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+    "logical_run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+    "arm_id": "bn_long",
+    "arm_identity": "612c3fa8cf9dfba162f8590aa493be9a89177d3fe5d86883458b51313738fbd8",
+    "spec_identity": "965ff813b52af17cf88ecb8653a73adab402e2ec72f1d2a8f7807609128a81d7",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+    "source_archive_sha256": "7b63a7c2b6e5148ab50a5740bd3da32b6a3c0c8aa58f23363dde81831d8ad839",
+    "package_identity": "4cec8bf05cecc9e44aca73bfe309cd3846e814fe4114a004debbfc4bd2163f51",
+    "training_recipe_sha256": "d2af25be2c5db2560a832cd9100b1c48edf3d10982a7491760584267cfcd0e31",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42",
+    "platform_version": null
+  },
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 87.19066510199997,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "native qualification entry through proof publication"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": null,
+      "status": "missing",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "reason": "requires platform allocation accounting"
+    }
+  ]
+}

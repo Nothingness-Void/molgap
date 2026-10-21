@@ -1,0 +1,53 @@
+{
+  "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1",
+  "supplied": {
+    "ln_low_lr": {
+      "output_dir": "D:\\molgap-artifacts\\acceptance\\k1-norm-exposure-100k-20261022\\optimization\\raw\\experiment\\ln_low_lr",
+      "expected": {
+        "completed_passes": 160,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 124960,
+        "precision": "fp32",
+        "sample_presentations": 15994880,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      }
+    },
+    "ln_low_lr_warmup": {
+      "output_dir": "D:\\molgap-artifacts\\acceptance\\k1-norm-exposure-100k-20261022\\optimization\\raw\\experiment\\ln_low_lr_warmup",
+      "expected": {
+        "completed_passes": 160,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 124960,
+        "precision": "fp32",
+        "sample_presentations": 15994880,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      }
+    }
+  },
+  "locations": {
+    "ln_low_lr": {
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "trajectory": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/trajectory.json",
+      "terminal": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr/terminal.json",
+      "trace": "D:\\molgap-artifacts\\acceptance\\k1-norm-exposure-100k-20261022\\optimization\\raw\\experiment\\ln_low_lr\\canonical_trace.json"
+    },
+    "ln_low_lr_warmup": {
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr_warmup:downstream",
+      "trajectory": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr_warmup/trajectory.json",
+      "terminal": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr_warmup/terminal.json",
+      "trace": "D:\\molgap-artifacts\\acceptance\\k1-norm-exposure-100k-20261022\\optimization\\raw\\experiment\\ln_low_lr_warmup\\canonical_trace.json"
+    }
+  },
+  "target_plan": {
+    "plan_path": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/acceptance_plan.json",
+    "plan_sha256": "5e8794d110bbcfcff5fd7a99368450e3866aff56ea9380ea4f4c490cad6ff6a9"
+  },
+  "source": "69c91dbcd7df22804f977067e78982bad43a89a0",
+  "compatibility_route": "explicit existing Spec/plan API; archive does not embed staged acceptance plan"
+}

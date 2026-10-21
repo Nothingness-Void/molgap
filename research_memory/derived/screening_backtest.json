@@ -260,6 +260,42 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:bn_long:downstream",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr_warmup:downstream",
+      "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+    },
+    {
+      "reasons": [
         "canonical_checkpoint_identity_history_missing",
         "canonical_learning_rate_history_missing",
         "canonical_trace_marked_ineligible",
@@ -373,5 +409,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 41
+  "trace_count": 45
 }

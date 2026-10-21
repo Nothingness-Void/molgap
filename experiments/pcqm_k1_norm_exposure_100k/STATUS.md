@@ -1,40 +1,34 @@
 # Status
 
-Authorized on 2026-10-21 JST: two Kaggle1 T4x2 notebooks, four arms.
-Owner: `codex/exp/k1-norm-exposure-100k`, forked from desktop `66fbb13d`.
+Reconciled 2026-10-22 JST: Kaggle1 jobs139859525/version1 (norm) and
+139859934/version1 (optimization) are COMPLETE. Exact kernel source entries,
+package/source/data identities and native T4 repeat/resume proofs verified.
+All four arms pass mechanical inspection at160 epochs,124960 updates and
+15994880 presentations with50000 aligned finite development predictions.
 
-## Submitted jobs
+[Terminal decision and attribution](terminal_decision.md) owns endpoints,
+paired uncertainty, scientific dispositions and limits. Both references close
+CLOSED; both candidates close NEGATIVE_UNDER_CONTRACT. Warmup's2.972687meV
+gain is below the frozen3meV gate; it is not rounded upward into promotion.
 
-Observed at 2026-10-21 02:12 JST through the authenticated Kaggle1 API:
+Each release's `rml/<arm>/rml_finalized/` owns its independent terminal record.
+Strict replay remains excluded: the generic default manifest is not
+prelaunch-calibrated and strict V5 reference/comparison qualification is absent.
+Complete curves are retained without claiming replay-ready capability.
 
-| Pair | Physical kernel/version | Arms | Scheduler state | Receipts |
-|---|---|---|---|---|
-| norm | [139859525 / v1](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42) | `bn_long`, `ln_long` | QUEUED | [norm release](norm_release1/submission/) |
-| optimization | [139859934 / v1](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42) | `ln_low_lr`, `ln_low_lr_warmup` | RUNNING | [optimization release](optimization_release1/submission/) |
+Frozen worker commit remains69c91dbcd7df22804f977067e78982bad43a89a0.
+Host acceptance reuses reviewed desktop22dd2567 through owner11b8bfc8;
+no remote payload was modified or resubmitted. The new run-ID convenience
+resolver requires acceptance-plan text inside the source archive, absent from
+this older package whose plan is instead launch-hash-bound in `acceptance/`.
+Existing explicit Spec/receipt/target-plan APIs completed the same validation;
+no alternative RML framework or training loop was written.
 
-Both physical version1 source entries, private visibility, explicit T4 request,
-mounted source/data identities and uploaded source bytes were verified by the
-existing journaled submitter. RUNNING is a scheduler observation, not native
-qualification or proof of optimizer progress. Startup log sampling returned no
-events; native preflight and formal training remain unobserved locally.
+Custody: `D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/`.
+Necessary allowlists retained1244052607 bytes (~1.159GiB), all on D:.
+No whole-output download, epoch chunks, graph caches or C: payload. Original
+packages remain under `D:/molgap-artifacts/runs/<logical_id>/v1/prepared/`.
+Native allocation windows: norm12.872977 and optimization11.252557 T4-device
+hours; queue/provisioning outside the observed Python window remain unknown.
 
-## Frozen execution
-
-Source commit: `69c91dbcd7df22804f977067e78982bad43a89a0`.
-The subsequent host-only Kaggle discovery fix does not change either payload.
-
-| Pair | Spec identity | Package identity |
-|---|---|---|
-| norm | `965ff813b52af17cf88ecb8653a73adab402e2ec72f1d2a8f7807609128a81d7` | `4cec8bf05cecc9e44aca73bfe309cd3846e814fe4114a004debbfc4bd2163f51` |
-| optimization | `8230927a983f1a79b6a34190ef2360e136cd960ea8003dc7530e6fdcf66859f9` | `39b2d7edb51310e04dd57204a37ba80e959f936934c876da14c95727089b9194` |
-
-The [protocol](protocol.md) owns recipes, 160-pass exposure, curve endpoints,
-resource limits, roles and acceptance. Four prospective RML trajectories were
-published before submission and the derived state passed the frozen check.
-Terminal mechanical/scientific acceptance and strict replay qualification are
-pending independently for every arm.
-
-Prepared packages and full local operation records are retained under
-`D:/molgap-artifacts/runs/<logical_id>/v1/`; each release directory owns its
-logical ID and the small copied submission receipts. No training output was
-downloaded during submission. No automatic continuation or monitor was created.
+No adoption, retry, new training,500K/full, monitor or shutdown was executed.
