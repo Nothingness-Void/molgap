@@ -1,0 +1,229 @@
+{
+  "arms": {
+    "esa_identity1": {
+      "blockers": [],
+      "context": {
+        "account": "kaseichou",
+        "arm_id": "esa_identity1",
+        "arm_identity": "a730a701d9783d836d7463647992001894d41d6fc4155ece09d574dde46587a7",
+        "experiment_id": "modern2d_configured_100k",
+        "family_name": "esa_small",
+        "family_version": "4",
+        "logical_run_id": "modern2d-esa-research-slot2-s42-v1",
+        "package_identity": "bfa01e2b9fcb3b8fc925ae445add8d427c70320fb9fc613386f1afc436b7fd0a",
+        "platform": "kaggle",
+        "platform_version": "1",
+        "run_reference": "kaseichou/molgap-esa-research-slot2-v1",
+        "source_archive_sha256": "0fdfcf8b17e58af140ca400ce97d82393d9a3787a29b7b3ff1b22d582f719b21",
+        "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+        "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+        "training_recipe_sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d"
+      },
+      "observed": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "4fd4b679f848a223339c478c7f651c968ab2ff8c5c5caaba8ac712079ead0fac"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "61be4c6c9d9746452b38d7b797d7bc831fa16487f286ed3d36214bccfaa4a2ac"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "e5a9f36d98c97af7e37b030c601c868179f8608c6be25dbee369cfc61c850b46"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4"
+          }
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 13194.019052472
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "reason": "requires platform allocation accounting",
+            "semantics": "allocated_device",
+            "status": "missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "development_mae_eV": 0.22008470861673354,
+        "execution_scope": "CONFIGURED_SCREEN",
+        "producer_platform_version": null,
+        "progress": {
+          "completed_passes": 20,
+          "next_batch": 0,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "status": "complete"
+        },
+        "replay_readiness": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "selected_optimizer_step": 15620,
+        "selected_weights": "live",
+        "target_identity": {
+          "acceptance_plan_sha256": "d24d63379ef2a40ea515551098d4c05a4e38850391cedf58367636fb02f10d36",
+          "encoding": "little-endian-float64-contiguous-raw-bytes",
+          "manifest": {
+            "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+            "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+          }
+        }
+      },
+      "replay_readiness": "NOT_EVALUATED",
+      "runtime_qualification": "NOT_EVALUATED",
+      "scientific_acceptance": "NOT_EVALUATED",
+      "status": "MECHANICALLY_VERIFIED"
+    },
+    "esa_lr1": {
+      "blockers": [],
+      "context": {
+        "account": "kaseichou",
+        "arm_id": "esa_lr1",
+        "arm_identity": "b8d217a794b524c531147f448d75030eb6dff4da0821038c4571d63abccd148b",
+        "experiment_id": "modern2d_configured_100k",
+        "family_name": "esa_small",
+        "family_version": "4",
+        "logical_run_id": "modern2d-esa-research-slot2-s42-v1",
+        "package_identity": "bfa01e2b9fcb3b8fc925ae445add8d427c70320fb9fc613386f1afc436b7fd0a",
+        "platform": "kaggle",
+        "platform_version": "1",
+        "run_reference": "kaseichou/molgap-esa-research-slot2-v1",
+        "source_archive_sha256": "0fdfcf8b17e58af140ca400ce97d82393d9a3787a29b7b3ff1b22d582f719b21",
+        "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+        "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+        "training_recipe_sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f"
+      },
+      "observed": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "9380c1220c0262f2dbe8e20ac9675c1e1db97a5a6bba6d994654530b4b83408e"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "61d40ed79524e8dea67a51bb51cec84b2fc1e2ce802c2b7da6cdf71a20de5a53"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "12f80748ebde1414a9113d9151a160acfd54fbd3cbb99c140fe14bf924c6ea5a"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "a1fb6131f3e840400ddf0b618b68ee605e69918fe6719993ec3e89784f24d264"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "dbd73ee127c57838ef6c0c0cb7d48f2251281de4a673d4b3ceb42b241b0def53"
+          }
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 13195.539722778001
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "reason": "requires platform allocation accounting",
+            "semantics": "allocated_device",
+            "status": "missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "development_mae_eV": 0.2192775254511833,
+        "execution_scope": "CONFIGURED_SCREEN",
+        "producer_platform_version": null,
+        "progress": {
+          "completed_passes": 20,
+          "next_batch": 0,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "status": "complete"
+        },
+        "replay_readiness": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "selected_optimizer_step": 14839,
+        "selected_weights": "live",
+        "target_identity": {
+          "acceptance_plan_sha256": "d24d63379ef2a40ea515551098d4c05a4e38850391cedf58367636fb02f10d36",
+          "encoding": "little-endian-float64-contiguous-raw-bytes",
+          "manifest": {
+            "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+            "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+          }
+        }
+      },
+      "replay_readiness": "NOT_EVALUATED",
+      "runtime_qualification": "NOT_EVALUATED",
+      "scientific_acceptance": "NOT_EVALUATED",
+      "status": "MECHANICALLY_VERIFIED"
+    }
+  },
+  "attempt_id": "v1",
+  "executed": false,
+  "execution_retention": {
+    "manifest": {
+      "allocation_ledger": {
+        "arms": {
+          "esa_identity1": {
+            "path": "esa_identity1/allocation_ledger.json",
+            "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc"
+          },
+          "esa_lr1": {
+            "path": "esa_lr1/allocation_ledger.json",
+            "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc"
+          }
+        },
+        "root": {
+          "path": "allocation_ledger.json",
+          "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc"
+        }
+      },
+      "execution_report": {
+        "path": "execution_report.json",
+        "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4"
+      },
+      "format": "molgap-execution-retention-v1",
+      "package_identity": "bfa01e2b9fcb3b8fc925ae445add8d427c70320fb9fc613386f1afc436b7fd0a",
+      "source_archive_sha256": "0fdfcf8b17e58af140ca400ce97d82393d9a3787a29b7b3ff1b22d582f719b21",
+      "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+      "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+      "status": "SEALED"
+    },
+    "status": "EXECUTION_RETENTION_VERIFIED"
+  },
+  "run_id": "modern2d-esa-research-slot2-s42-v1",
+  "scientific_outcome": "NOT_EVALUATED",
+  "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+  "status": "MECHANICALLY_VERIFIED"
+}

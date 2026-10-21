@@ -1,0 +1,36 @@
+{
+  "format": "molgap-allocation-ledger-v1",
+  "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+  "started_at": "2026-10-21T16:32:02.747397+00:00",
+  "observed_at": "2026-10-21T20:14:31.824100+00:00",
+  "status": "complete",
+  "allocation_device_count": 2,
+  "wall_seconds": 13349.076695337,
+  "allocated_device_seconds": 26698.153390674,
+  "unassigned_device_seconds": 0.0,
+  "devices": [
+    {
+      "device": 0,
+      "hardware": "Tesla T4",
+      "arm_id": "esa_lr1",
+      "allocated_seconds": 13349.076695337
+    },
+    {
+      "device": 1,
+      "hardware": "Tesla T4",
+      "arm_id": "esa_identity1",
+      "allocated_seconds": 13349.076695337
+    }
+  ],
+  "scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+  "provisioning_before_python_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  },
+  "queue_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  },
+  "prior_segments": [],
+  "prior_unobserved_intervals": false
+}

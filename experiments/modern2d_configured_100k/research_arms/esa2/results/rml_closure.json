@@ -1,0 +1,24 @@
+{
+  "derived_rebuilt": false,
+  "forced_eligibility": false,
+  "format": "molgap-terminal-closure-readiness-v1",
+  "results": {
+    "esa_identity1": {
+      "error_type": "ValueError",
+      "prospective_unmodified": true,
+      "reason": "manifest reference not frozen",
+      "status": "CANONICAL_FINALIZATION_BLOCKED",
+      "trace_and_all_artifacts_retained": true
+    },
+    "esa_lr1": {
+      "error_type": "ValueError",
+      "prospective_unmodified": true,
+      "reason": "manifest reference not frozen",
+      "status": "CANONICAL_FINALIZATION_BLOCKED",
+      "trace_and_all_artifacts_retained": true
+    }
+  },
+  "run_id": "modern2d-esa-research-slot2-s42-v1",
+  "scientific_replay_ready": false,
+  "stage_status": "STAGED_CLOSURE_READY"
+}

@@ -1,0 +1,82 @@
+{
+  "adapter": "modern2d-formal-session-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "4fd4b679f848a223339c478c7f651c968ab2ff8c5c5caaba8ac712079ead0fac"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "61be4c6c9d9746452b38d7b797d7bc831fa16487f286ed3d36214bccfaa4a2ac"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "e5a9f36d98c97af7e37b030c601c868179f8608c6be25dbee369cfc61c850b46"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44"
+    },
+    "trace_context": {
+      "path": "canonical_trace.json.context.json",
+      "sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4"
+    }
+  },
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "esa_identity1",
+    "arm_identity": "a730a701d9783d836d7463647992001894d41d6fc4155ece09d574dde46587a7",
+    "experiment_id": "modern2d_configured_100k",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "logical_run_id": "modern2d-esa-research-slot2-s42-v1",
+    "package_identity": "bfa01e2b9fcb3b8fc925ae445add8d427c70320fb9fc613386f1afc436b7fd0a",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "kaseichou/molgap-esa-research-slot2-v1",
+    "source_archive_sha256": "0fdfcf8b17e58af140ca400ce97d82393d9a3787a29b7b3ff1b22d582f719b21",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815",
+    "spec_identity": "84176f01d1b088151ff581f8bebf59d0471a03a5862ea1050c62a8cf029504d6",
+    "training_recipe_sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 13194.019052472
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "completed_passes": 20,
+    "next_batch": 0,
+    "optimizer_steps": 15620,
+    "sample_presentations": 1999360,
+    "status": "complete"
+  },
+  "runtime": {
+    "account": "kaseichou",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "9d9d310841882405f1da451122452fb2e5110f70f1e92984a309b838b51d48da",
+    "source_archive_sha256": "0fdfcf8b17e58af140ca400ce97d82393d9a3787a29b7b3ff1b22d582f719b21",
+    "source_commit": "bbf3cbe9283eb08f7580088174a8e91eff12d815"
+  }
+}

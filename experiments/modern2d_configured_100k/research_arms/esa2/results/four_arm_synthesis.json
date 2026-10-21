@@ -1,0 +1,397 @@
+{
+  "best_selected_descriptive_factorial_effects": {
+    "interaction_residual_effect_lr1e4_minus_lr3e4_eV": 0.001795935025215134,
+    "lr_effect_1e4_minus_3e4_author_eV": 0.015602863960266111,
+    "lr_effect_1e4_minus_3e4_identity_eV": 0.017398798985481245,
+    "residual_effect_identity_minus_author_at_lr1e4_eV": 0.0008071831655502293,
+    "residual_effect_identity_minus_author_at_lr3e4_eV": -0.0009887518596649048
+  },
+  "canonical_curves_pass5_10_15_20": {
+    "esa_identity1": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 9.90488713799599e-05,
+          "live_development_mae_eV": 0.30241698026657104,
+          "live_train_mae_eV": 0.2645208765107885,
+          "live_train_mae_normalized_gap": 0.20745267683733135,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 6.944282990207195e-05,
+          "live_development_mae_eV": 0.24348421394824982,
+          "live_train_mae_eV": 0.19067820474158473,
+          "live_train_mae_normalized_gap": 0.14954095309965132,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 2.2999273465529706e-05,
+          "live_development_mae_eV": 0.22432507574558258,
+          "live_train_mae_eV": 0.15158695387721685,
+          "live_train_mae_normalized_gap": 0.11888331752962095,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.22008472681045532,
+          "live_train_mae_eV": 0.1343440353317558,
+          "live_train_mae_normalized_gap": 0.10536041659292278,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    },
+    "esa_identity3": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 0.00029712739942028293,
+          "live_development_mae_eV": 0.25766730308532715,
+          "live_train_mae_eV": 0.23091952939812438,
+          "live_train_mae_normalized_gap": 0.18110054351685143,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 0.00020771117313858088,
+          "live_development_mae_eV": 0.22348031401634216,
+          "live_train_mae_eV": 0.16620754325375062,
+          "live_train_mae_normalized_gap": 0.13034963520975942,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 6.744225016356949e-05,
+          "live_development_mae_eV": 0.2058018147945404,
+          "live_train_mae_eV": 0.11898591187181129,
+          "live_train_mae_normalized_gap": 0.0933156817311972,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.20268592238426208,
+          "live_train_mae_eV": 0.09215012539312438,
+          "live_train_mae_normalized_gap": 0.07226949508055072,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    },
+    "esa_lr1": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 9.90488713799599e-05,
+          "live_development_mae_eV": 0.31794309616088867,
+          "live_train_mae_eV": 0.2609425324172245,
+          "live_train_mae_normalized_gap": 0.2046463309993512,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 6.944282990207195e-05,
+          "live_development_mae_eV": 0.24226248264312744,
+          "live_train_mae_eV": 0.18498588766011229,
+          "live_train_mae_normalized_gap": 0.14507670652851098,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 2.2999273465529706e-05,
+          "live_development_mae_eV": 0.22334975004196167,
+          "live_train_mae_eV": 0.1474614373138128,
+          "live_train_mae_normalized_gap": 0.11564784717391914,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.2194480448961258,
+          "live_train_mae_eV": 0.13028515926890302,
+          "live_train_mae_normalized_gap": 0.10217720959884104,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    },
+    "esa_lr3": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 0.00029712739942028293,
+          "live_development_mae_eV": 0.26421383023262024,
+          "live_train_mae_eV": 0.22696958274416762,
+          "live_train_mae_normalized_gap": 0.17800276530918482,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 0.00020771117313858088,
+          "live_development_mae_eV": 0.2219582051038742,
+          "live_train_mae_eV": 0.16128404235621735,
+          "live_train_mae_normalized_gap": 0.12648833906528434,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 6.744225016356949e-05,
+          "live_development_mae_eV": 0.20796990394592285,
+          "live_train_mae_eV": 0.11475939057975233,
+          "live_train_mae_normalized_gap": 0.09000099758485215,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.20367467403411865,
+          "live_train_mae_eV": 0.08724946158432312,
+          "live_train_mae_normalized_gap": 0.06842610911107247,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    }
+  },
+  "comparison_scope": "same-family ESA fixed100K/Common-Dev seed42 discovery; descriptive selected-checkpoint and matched-exposure curves only",
+  "critical_prediction_scope": "esa_lr1 saved predictions are selected pass19; matched pass20 comparisons use canonical trace scalars only. No pass19 prediction payload is labeled pass20; paired pass20 row analysis requiring esa_lr1 pass20 predictions is unavailable.",
+  "exact_50000_row_label_alignment": {
+    "esa_identity1": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_y_exact": true
+    },
+    "esa_identity3": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_y_exact": true
+    },
+    "esa_lr1": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_y_exact": true
+    },
+    "esa_lr3": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_y_exact": true
+    }
+  },
+  "format": "molgap-esa-four-arm-descriptive-synthesis-v1",
+  "generated_at_utc": "2026-10-21T20:34:38.660406+00:00",
+  "limits": {
+    "k1_comparison": false,
+    "replay_claim": false,
+    "training_seed_uncertainty_established": false,
+    "universal_0_003_eV_gate_applied": false,
+    "winner_claim": false
+  },
+  "matched_pass20_trace_descriptive_factorial_effects": {
+    "interaction_residual_effect_lr1e4_minus_lr3e4_eV": 0.0016254335641860962,
+    "lr_effect_1e4_minus_3e4_author_eV": 0.01577337086200714,
+    "lr_effect_1e4_minus_3e4_identity_eV": 0.017398804426193237,
+    "residual_effect_identity_minus_author_at_lr1e4_eV": 0.0006366819143295288,
+    "residual_effect_identity_minus_author_at_lr3e4_eV": -0.0009887516498565674
+  },
+  "only_declared_recipe_interventions": true,
+  "primary_best_selected_2x2": [
+    {
+      "arm": "esa_lr3",
+      "independent_best_selected_mae_eV": 0.2036746614909172,
+      "matched_pass20_trace_mae_eV": 0.20367467403411865,
+      "peak_lr": 0.0003,
+      "residual_variant": "author_normalized_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.20367467403411865
+    },
+    {
+      "arm": "esa_identity3",
+      "independent_best_selected_mae_eV": 0.2026859096312523,
+      "matched_pass20_trace_mae_eV": 0.20268592238426208,
+      "peak_lr": 0.0003,
+      "residual_variant": "identity_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.20268592238426208
+    },
+    {
+      "arm": "esa_lr1",
+      "independent_best_selected_mae_eV": 0.2192775254511833,
+      "matched_pass20_trace_mae_eV": 0.2194480448961258,
+      "peak_lr": 0.0001,
+      "residual_variant": "author_normalized_stream",
+      "saved_predictions_are_pass20": false,
+      "selected_optimizer_step": 14839,
+      "selected_pass": 19,
+      "selected_trace_mae_eV": 0.2192775160074234
+    },
+    {
+      "arm": "esa_identity1",
+      "independent_best_selected_mae_eV": 0.22008470861673354,
+      "matched_pass20_trace_mae_eV": 0.22008472681045532,
+      "peak_lr": 0.0001,
+      "residual_variant": "identity_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.22008472681045532
+    }
+  ],
+  "recipe_interventions": {
+    "esa_identity1": {
+      "addons": [
+        {
+          "config": {
+            "variant": "identity_residual"
+          },
+          "name": "esa_identity_residual",
+          "source_sha256": "7565ded665b1e318009304ee34ee949c018b5ca991e3434f8efb82e5c8ad2885",
+          "version": "1"
+        }
+      ],
+      "learning_rate": 0.0001,
+      "learning_rate_expected": true,
+      "mode": "composed",
+      "residual_variant": "identity_stream"
+    },
+    "esa_identity3": {
+      "addons": [
+        {
+          "config": {
+            "variant": "identity_residual"
+          },
+          "name": "esa_identity_residual",
+          "source_sha256": "7565ded665b1e318009304ee34ee949c018b5ca991e3434f8efb82e5c8ad2885",
+          "version": "1"
+        }
+      ],
+      "learning_rate": 0.0003,
+      "learning_rate_expected": true,
+      "mode": "composed",
+      "residual_variant": "identity_stream"
+    },
+    "esa_lr1": {
+      "addons": [],
+      "learning_rate": 0.0001,
+      "learning_rate_expected": true,
+      "mode": "reference",
+      "residual_variant": "author_normalized_stream"
+    },
+    "esa_lr3": {
+      "addons": [],
+      "learning_rate": 0.0003,
+      "learning_rate_expected": true,
+      "mode": "reference",
+      "residual_variant": "author_normalized_stream"
+    }
+  },
+  "same_initialization_sha256": true,
+  "unexpected_recipe_differences_after_excluding_learning_rate_mode_addons": {
+    "esa_identity1": [],
+    "esa_identity3": [],
+    "esa_lr1": [],
+    "esa_lr3": []
+  }
+}

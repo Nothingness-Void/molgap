@@ -1,0 +1,186 @@
+{
+  "attempt_id": "v1",
+  "canonical_rml_finalization": "BLOCKED_REFERENCE_NOT_FROZEN",
+  "excluded": [
+    "artifact_index.json",
+    "final_metadata_validation.json",
+    "validation_scope.json"
+  ],
+  "files": {
+    "analysis_report.json": {
+      "bytes": 70171,
+      "sha256": "13c51e50efd3df149399abc69534e54f95a7e7438baa5ae41033590c032c9fb1"
+    },
+    "controller_closure.json": {
+      "bytes": 1094,
+      "sha256": "f6eda35297d82c7da3ad0a060ceba682c9b0d40241efc2cfd7ee38034219ba23"
+    },
+    "decision.md": {
+      "bytes": 1665,
+      "sha256": "01179b586b7a81ad00e43fa3fa8e2123230bf24bb98fa49485a490ec83047195"
+    },
+    "four_arm_synthesis.json": {
+      "bytes": 14469,
+      "sha256": "3667c0f83ef22ea75018b7769df77b88349cc1b580e5d03fb304320af4aae0d2"
+    },
+    "interpretation.md": {
+      "bytes": 6143,
+      "sha256": "b9a845875e8e945ea7ff6e0bd51c29175326af8d759beae98f6bb991b0fec1fe"
+    },
+    "mechanical_acceptance.json": {
+      "bytes": 9641,
+      "sha256": "2256f1556bb8819344be0851176f821c92b6fbc28a6abbd5315bd9af32ae1f71"
+    },
+    "profile_metadata_pins.json": {
+      "bytes": 985,
+      "sha256": "34874c3c2148a49e985a5cd618ddb507ce2a9e8936ad972d44fd6fddb0a19016"
+    },
+    "retained/family_outputs/esa_identity1/canonical_trace.json": {
+      "bytes": 13383,
+      "sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44"
+    },
+    "retained/family_outputs/esa_identity1/canonical_trace.json.context.json": {
+      "bytes": 925,
+      "sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4"
+    },
+    "retained/family_outputs/esa_identity1/output_manifest.json": {
+      "bytes": 2984,
+      "sha256": "dd28a7bdf953d06f2f81a6e3650d5609b47ba8d76a3a4f2954d3c72bb03f267c"
+    },
+    "retained/family_outputs/esa_identity1/training_contract.json": {
+      "bytes": 2761,
+      "sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d"
+    },
+    "retained/family_outputs/esa_lr1/canonical_trace.json": {
+      "bytes": 13351,
+      "sha256": "a1fb6131f3e840400ddf0b618b68ee605e69918fe6719993ec3e89784f24d264"
+    },
+    "retained/family_outputs/esa_lr1/canonical_trace.json.context.json": {
+      "bytes": 919,
+      "sha256": "dbd73ee127c57838ef6c0c0cb7d48f2251281de4a673d4b3ceb42b241b0def53"
+    },
+    "retained/family_outputs/esa_lr1/output_manifest.json": {
+      "bytes": 2981,
+      "sha256": "b6eca86b37d67e579a37b2e0d1c98b16aad1ae49a2af9a3b1107e6927773ed83"
+    },
+    "retained/family_outputs/esa_lr1/training_contract.json": {
+      "bytes": 2580,
+      "sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f"
+    },
+    "retained/operations/launch_receipt.json": {
+      "bytes": 3532,
+      "sha256": "66307eab2c49d8d541e342e3e9b63a6865fb8468417af5f9951b6ef283ef084c"
+    },
+    "retained/operations/platform_response.json": {
+      "bytes": 1289,
+      "sha256": "1c0fe36facafcf156b34689f70b948a4d271d6312beed716f7a4a328ff0f48e7"
+    },
+    "retained/operations/source_verification.json": {
+      "bytes": 462,
+      "sha256": "e7b6a0f273a74b1bb6482a146a88cf51041e3db5fa2f671e87f7355d69f9ba30"
+    },
+    "retained/remote/bootstrap_allocation.json": {
+      "bytes": 350,
+      "sha256": "e97bef63d062ae1805f919053de1d356764886491c71ba8e003812a0458bc997"
+    },
+    "retained/remote/environment_qualification.json": {
+      "bytes": 765,
+      "sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f"
+    },
+    "retained/remote/experiment/allocation_ledger.json": {
+      "bytes": 1038,
+      "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc"
+    },
+    "retained/remote/experiment/esa_identity1/allocation_costs.json": {
+      "bytes": 1072,
+      "sha256": "102719fe57d5c4ebbe9192369640815e92443f762f58a92b9986070c90af0b60"
+    },
+    "retained/remote/experiment/esa_identity1/execution_profile_receipt.json": {
+      "bytes": 1171,
+      "sha256": "5ab69871bcf26ebacf2eb82c8f45267684f04044d65c063808e5beae8a76df2c"
+    },
+    "retained/remote/experiment/esa_identity1/preflight_costs.json": {
+      "bytes": 1423,
+      "sha256": "2793d83939528ce6f870ab92b077500c522582b863c70e323352d80a1a2678ca"
+    },
+    "retained/remote/experiment/esa_identity1/profiles/step_0_1792600533034346359/profile.json": {
+      "bytes": 32504,
+      "sha256": "10ceb447d0ec411fec9d238cb3f867322545d91d74ef544b9ba100d53ebc68a6"
+    },
+    "retained/remote/experiment/esa_identity1/profiles/step_0_1792600533034346359/training_spans.json": {
+      "bytes": 5235,
+      "sha256": "a780747baa73bac9d9c777c96a4a4305e4a1ebdbaa0281c1313d9a731fbd030c"
+    },
+    "retained/remote/experiment/esa_identity1/runtime_certificate.json": {
+      "bytes": 1310,
+      "sha256": "975a173e5b808c998932cef6a478da9cf1b8d79375f5baf15fcabfdb639ec377"
+    },
+    "retained/remote/experiment/esa_identity1/runtime_provenance.json": {
+      "bytes": 4374,
+      "sha256": "8dfa25231e719003c89255519282f4224453c5083a584633f6ddf1ad332487f2"
+    },
+    "retained/remote/experiment/esa_identity1/training_progress.json": {
+      "bytes": 778,
+      "sha256": "33409bc428401f56dabced23d2eb169ee66111cf94e1a75734cca05413ccd718"
+    },
+    "retained/remote/experiment/esa_lr1/allocation_costs.json": {
+      "bytes": 1072,
+      "sha256": "002d67d703370d807cdcf511d109035eb3fe721cf73b0eba7e50ca3d4349fba8"
+    },
+    "retained/remote/experiment/esa_lr1/execution_profile_receipt.json": {
+      "bytes": 1165,
+      "sha256": "38bc31f499ee836551908bb3a56eaa6b5dae6cc426c02f601276ea220791fcf8"
+    },
+    "retained/remote/experiment/esa_lr1/preflight_costs.json": {
+      "bytes": 1422,
+      "sha256": "9cf006c5afd473a4bf16928fe8dde9581e9fc6e990830c8da91a1cfa82dcc82b"
+    },
+    "retained/remote/experiment/esa_lr1/profiles/step_0_1792600533044965783/profile.json": {
+      "bytes": 32439,
+      "sha256": "55a49f01deba238ee17de6863f116e98e62cbda1162880ba3dfcd1faa00009b3"
+    },
+    "retained/remote/experiment/esa_lr1/profiles/step_0_1792600533044965783/training_spans.json": {
+      "bytes": 5245,
+      "sha256": "bdcac8a0c4e7e7fe4c7b868ac626f6dde0e504979ae14bbb1ee5ef9b2b0a0a52"
+    },
+    "retained/remote/experiment/esa_lr1/runtime_certificate.json": {
+      "bytes": 1310,
+      "sha256": "09b182a83e7a7567ba23eaed3ef5dfbdd2f1123531654d2aa011eebb1c506244"
+    },
+    "retained/remote/experiment/esa_lr1/runtime_provenance.json": {
+      "bytes": 4362,
+      "sha256": "78e0dfffb1c9490660879b20e22d5770004f562047de97c96ea438ccdee367b3"
+    },
+    "retained/remote/experiment/esa_lr1/training_progress.json": {
+      "bytes": 770,
+      "sha256": "16ed29f494e6b22b90b3e400a1535b44e5993ba28ec4cc237b8b2431bee4752d"
+    },
+    "retained/remote/experiment/execution_report.json": {
+      "bytes": 1852,
+      "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4"
+    },
+    "retained/remote/experiment/execution_retention.json": {
+      "bytes": 923,
+      "sha256": "c13cc3d4bb46b07bf8bd185b31f1e398503ad090493535ded32c72f13b2a6191"
+    },
+    "retained/remote/experiment/pair_state.json": {
+      "bytes": 1852,
+      "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4"
+    },
+    "retained_manifest.json": {
+      "bytes": 5874,
+      "sha256": "1a885e7708b970ea15bf25500f4e286cc4742c4a325f5fcb420a431f5add5e73"
+    },
+    "rml_closure.json": {
+      "bytes": 751,
+      "sha256": "0dc0420b7398db468682d671af3d74794e6199047dc0a8c2ce17e9472d56ad11"
+    },
+    "terminal_input_validation.json": {
+      "bytes": 811,
+      "sha256": "9aa13a2d7d8f6c7d152e5641692393745f2737c5a0453596e8671dc761e33377"
+    }
+  },
+  "format": "molgap-retained-artifact-index-v1",
+  "run_id": "modern2d-esa-research-slot2-s42-v1",
+  "scientific_replay_ready": false
+}

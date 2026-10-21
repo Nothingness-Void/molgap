@@ -1,0 +1,2591 @@
+{
+  "artifact_integrity": {
+    "esa_identity1": {
+      "contract": {
+        "actual_sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d",
+        "expected_sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d",
+        "valid": true
+      },
+      "predictions": {
+        "actual_sha256": "4fd4b679f848a223339c478c7f651c968ab2ff8c5c5caaba8ac712079ead0fac",
+        "expected_sha256": "4fd4b679f848a223339c478c7f651c968ab2ff8c5c5caaba8ac712079ead0fac",
+        "valid": true
+      },
+      "resume": {
+        "actual_sha256": "61be4c6c9d9746452b38d7b797d7bc831fa16487f286ed3d36214bccfaa4a2ac",
+        "expected_sha256": "61be4c6c9d9746452b38d7b797d7bc831fa16487f286ed3d36214bccfaa4a2ac",
+        "valid": true
+      },
+      "selected_model": {
+        "actual_sha256": "e5a9f36d98c97af7e37b030c601c868179f8608c6be25dbee369cfc61c850b46",
+        "expected_sha256": "e5a9f36d98c97af7e37b030c601c868179f8608c6be25dbee369cfc61c850b46",
+        "valid": true
+      },
+      "trace": {
+        "actual_sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44",
+        "expected_sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44",
+        "valid": true
+      },
+      "trace_context": {
+        "actual_sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4",
+        "expected_sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4",
+        "valid": true
+      }
+    },
+    "esa_lr1": {
+      "contract": {
+        "actual_sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f",
+        "expected_sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f",
+        "valid": true
+      },
+      "predictions": {
+        "actual_sha256": "9380c1220c0262f2dbe8e20ac9675c1e1db97a5a6bba6d994654530b4b83408e",
+        "expected_sha256": "9380c1220c0262f2dbe8e20ac9675c1e1db97a5a6bba6d994654530b4b83408e",
+        "valid": true
+      },
+      "resume": {
+        "actual_sha256": "61d40ed79524e8dea67a51bb51cec84b2fc1e2ce802c2b7da6cdf71a20de5a53",
+        "expected_sha256": "61d40ed79524e8dea67a51bb51cec84b2fc1e2ce802c2b7da6cdf71a20de5a53",
+        "valid": true
+      },
+      "selected_model": {
+        "actual_sha256": "12f80748ebde1414a9113d9151a160acfd54fbd3cbb99c140fe14bf924c6ea5a",
+        "expected_sha256": "12f80748ebde1414a9113d9151a160acfd54fbd3cbb99c140fe14bf924c6ea5a",
+        "valid": true
+      },
+      "trace": {
+        "actual_sha256": "a1fb6131f3e840400ddf0b618b68ee605e69918fe6719993ec3e89784f24d264",
+        "expected_sha256": "a1fb6131f3e840400ddf0b618b68ee605e69918fe6719993ec3e89784f24d264",
+        "valid": true
+      },
+      "trace_context": {
+        "actual_sha256": "dbd73ee127c57838ef6c0c0cb7d48f2251281de4a673d4b3ceb42b241b0def53",
+        "expected_sha256": "dbd73ee127c57838ef6c0c0cb7d48f2251281de4a673d4b3ceb42b241b0def53",
+        "valid": true
+      }
+    }
+  },
+  "attempt_id": "v1",
+  "canonical_learning_curves": {
+    "esa_identity1": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 9.90488713799599e-05,
+          "live_development_mae_eV": 0.30241698026657104,
+          "live_train_mae_eV": 0.2645208765107885,
+          "live_train_mae_normalized_gap": 0.20745267683733135,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 6.944282990207195e-05,
+          "live_development_mae_eV": 0.24348421394824982,
+          "live_train_mae_eV": 0.19067820474158473,
+          "live_train_mae_normalized_gap": 0.14954095309965132,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 2.2999273465529706e-05,
+          "live_development_mae_eV": 0.22432507574558258,
+          "live_train_mae_eV": 0.15158695387721685,
+          "live_train_mae_normalized_gap": 0.11888331752962095,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.22008472681045532,
+          "live_train_mae_eV": 0.1343440353317558,
+          "live_train_mae_normalized_gap": 0.10536041659292278,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    },
+    "esa_lr1": {
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "points": [
+        {
+          "learning_rate": 9.90488713799599e-05,
+          "live_development_mae_eV": 0.31794309616088867,
+          "live_train_mae_eV": 0.2609425324172245,
+          "live_train_mae_normalized_gap": 0.2046463309993512,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840
+        },
+        {
+          "learning_rate": 6.944282990207195e-05,
+          "live_development_mae_eV": 0.24226248264312744,
+          "live_train_mae_eV": 0.18498588766011229,
+          "live_train_mae_normalized_gap": 0.14507670652851098,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680
+        },
+        {
+          "learning_rate": 2.2999273465529706e-05,
+          "live_development_mae_eV": 0.22334975004196167,
+          "live_train_mae_eV": 0.1474614373138128,
+          "live_train_mae_normalized_gap": 0.11564784717391914,
+          "optimizer_step": 11715,
+          "pass": 15,
+          "sample_presentations": 1499520
+        },
+        {
+          "learning_rate": 1e-06,
+          "live_development_mae_eV": 0.2194480448961258,
+          "live_train_mae_eV": 0.13028515926890302,
+          "live_train_mae_normalized_gap": 0.10217720959884104,
+          "optimizer_step": 15620,
+          "pass": 20,
+          "sample_presentations": 1999360
+        }
+      ],
+      "target_std_eV": 1.275090206323082,
+      "train_conversion": "normalized-Gap MAE * frozen target_std_eV; absolute-error mean offset cancels"
+    }
+  },
+  "certificate_profile_metadata_receipt_hashes": {
+    "metadata_retrieval.json": [
+      {
+        "path": "bootstrap_allocation.json",
+        "sha256": "e97bef63d062ae1805f919053de1d356764886491c71ba8e003812a0458bc997",
+        "valid": true
+      },
+      {
+        "path": "environment_qualification.json",
+        "sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f",
+        "valid": true
+      },
+      {
+        "path": "experiment/execution_report.json",
+        "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4",
+        "valid": true
+      },
+      {
+        "path": "experiment/execution_retention.json",
+        "sha256": "c13cc3d4bb46b07bf8bd185b31f1e398503ad090493535ded32c72f13b2a6191",
+        "valid": true
+      },
+      {
+        "path": "experiment/pair_state.json",
+        "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4",
+        "valid": true
+      },
+      {
+        "path": "experiment/allocation_ledger.json",
+        "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/output_manifest.json",
+        "sha256": "b6eca86b37d67e579a37b2e0d1c98b16aad1ae49a2af9a3b1107e6927773ed83",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/training_progress.json",
+        "sha256": "16ed29f494e6b22b90b3e400a1535b44e5993ba28ec4cc237b8b2431bee4752d",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/runtime_certificate.json",
+        "sha256": "09b182a83e7a7567ba23eaed3ef5dfbdd2f1123531654d2aa011eebb1c506244",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/runtime_provenance.json",
+        "sha256": "78e0dfffb1c9490660879b20e22d5770004f562047de97c96ea438ccdee367b3",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/allocation_costs.json",
+        "sha256": "002d67d703370d807cdcf511d109035eb3fe721cf73b0eba7e50ca3d4349fba8",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/execution_profile_receipt.json",
+        "sha256": "38bc31f499ee836551908bb3a56eaa6b5dae6cc426c02f601276ea220791fcf8",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/preflight_costs.json",
+        "sha256": "9cf006c5afd473a4bf16928fe8dde9581e9fc6e990830c8da91a1cfa82dcc82b",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/output_manifest.json",
+        "sha256": "dd28a7bdf953d06f2f81a6e3650d5609b47ba8d76a3a4f2954d3c72bb03f267c",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/training_progress.json",
+        "sha256": "33409bc428401f56dabced23d2eb169ee66111cf94e1a75734cca05413ccd718",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/runtime_certificate.json",
+        "sha256": "975a173e5b808c998932cef6a478da9cf1b8d79375f5baf15fcabfdb639ec377",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/runtime_provenance.json",
+        "sha256": "8dfa25231e719003c89255519282f4224453c5083a584633f6ddf1ad332487f2",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/allocation_costs.json",
+        "sha256": "102719fe57d5c4ebbe9192369640815e92443f762f58a92b9986070c90af0b60",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/execution_profile_receipt.json",
+        "sha256": "5ab69871bcf26ebacf2eb82c8f45267684f04044d65c063808e5beae8a76df2c",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/preflight_costs.json",
+        "sha256": "2793d83939528ce6f870ab92b077500c522582b863c70e323352d80a1a2678ca",
+        "valid": true
+      }
+    ],
+    "profile_metadata_retrieval.json": [
+      {
+        "path": "experiment/esa_lr1/profiles/step_0_1792600533044965783/profile.json",
+        "sha256": "55a49f01deba238ee17de6863f116e98e62cbda1162880ba3dfcd1faa00009b3",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/profiles/step_0_1792600533044965783/training_spans.json",
+        "sha256": "bdcac8a0c4e7e7fe4c7b868ac626f6dde0e504979ae14bbb1ee5ef9b2b0a0a52",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_lr1/profile_qualification/profile.json",
+        "sha256": "10b52a858e3731e96e9ae4ecaf113fde9e14bf02dca1c56634736fc3e4059877",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/profiles/step_0_1792600533034346359/profile.json",
+        "sha256": "10ceb447d0ec411fec9d238cb3f867322545d91d74ef544b9ba100d53ebc68a6",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/profiles/step_0_1792600533034346359/training_spans.json",
+        "sha256": "a780747baa73bac9d9c777c96a4a4305e4a1ebdbaa0281c1313d9a731fbd030c",
+        "valid": true
+      },
+      {
+        "path": "experiment/esa_identity1/profile_qualification/profile.json",
+        "sha256": "3e1a16f9c15cc21769d43d596a2987ac6567bc07885ce755c0d488bef1846550",
+        "valid": true
+      }
+    ]
+  },
+  "checkpoint_inspection": {
+    "esa_identity1": {
+      "last": {
+        "cursor": {
+          "next_batch": 0,
+          "pass_index": 20,
+          "status": "complete"
+        },
+        "finite_tensors": {
+          "all_finite": true,
+          "nonfinite_paths": [],
+          "tensor_count": 522
+        },
+        "model_tensor_count": 130,
+        "optimizer_step": 15620,
+        "parameter_count_from_model_state": 5015233,
+        "sample_presentations": 1999360,
+        "weights_only": true
+      },
+      "last_selected_model_schema_equal": true,
+      "model_state_schema": {
+        "encoder.0.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "graph_projection.bias": [
+          [
+            256
+          ],
+          "torch.float32"
+        ],
+        "graph_projection.weight": [
+          [
+            256,
+            192
+          ],
+          "torch.float32"
+        ],
+        "head.bias": [
+          [
+            1
+          ],
+          "torch.float32"
+        ],
+        "head.weight": [
+          [
+            1,
+            256
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.seeds": [
+          [
+            1,
+            32,
+            192
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.0.bias": [
+          [
+            128
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.0.weight": [
+          [
+            128,
+            361
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.2.weight": [
+          [
+            192,
+            128
+          ],
+          "torch.float32"
+        ],
+        "token_type_embedding.weight": [
+          [
+            2,
+            192
+          ],
+          "torch.float32"
+        ]
+      },
+      "selected": {
+        "development_mae_eV": 0.22008472681045532,
+        "epoch_or_pass": 20.0,
+        "finite_tensors": {
+          "all_finite": true,
+          "nonfinite_paths": [],
+          "tensor_count": 130
+        },
+        "model_tensor_count": 130,
+        "optimizer_step": 15620,
+        "parameter_count_from_model_state": 5015233,
+        "selection": "best-development-live",
+        "weights": "live",
+        "weights_only": true
+      }
+    },
+    "esa_lr1": {
+      "last": {
+        "cursor": {
+          "next_batch": 0,
+          "pass_index": 20,
+          "status": "complete"
+        },
+        "finite_tensors": {
+          "all_finite": true,
+          "nonfinite_paths": [],
+          "tensor_count": 522
+        },
+        "model_tensor_count": 130,
+        "optimizer_step": 15620,
+        "parameter_count_from_model_state": 5015233,
+        "sample_presentations": 1999360,
+        "weights_only": true
+      },
+      "last_selected_model_schema_equal": true,
+      "model_state_schema": {
+        "encoder.0.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.0.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.1.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.2.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.3.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "encoder.4.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "graph_projection.bias": [
+          [
+            256
+          ],
+          "torch.float32"
+        ],
+        "graph_projection.weight": [
+          [
+            256,
+            192
+          ],
+          "torch.float32"
+        ],
+        "head.bias": [
+          [
+            1
+          ],
+          "torch.float32"
+        ],
+        "head.weight": [
+          [
+            1,
+            256
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_k.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_k.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_o.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_o.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_q.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_q.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_v.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.attention.fc_v.weight": [
+          [
+            192,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc1.weight": [
+          [
+            768,
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc2.bias": [
+          [
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.0.fc2.weight": [
+          [
+            384,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc1.bias": [
+          [
+            768
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc1.weight": [
+          [
+            768,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.mlp.2.fc2.weight": [
+          [
+            192,
+            384
+          ],
+          "torch.float32"
+        ],
+        "pool.norm.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm_mlp.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.norm_mlp.weight": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "pool.seeds": [
+          [
+            1,
+            32,
+            192
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.0.bias": [
+          [
+            128
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.0.weight": [
+          [
+            128,
+            361
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.2.bias": [
+          [
+            192
+          ],
+          "torch.float32"
+        ],
+        "token_mlp.2.weight": [
+          [
+            192,
+            128
+          ],
+          "torch.float32"
+        ],
+        "token_type_embedding.weight": [
+          [
+            2,
+            192
+          ],
+          "torch.float32"
+        ]
+      },
+      "selected": {
+        "development_mae_eV": 0.2192775160074234,
+        "epoch_or_pass": 19.0,
+        "finite_tensors": {
+          "all_finite": true,
+          "nonfinite_paths": [],
+          "tensor_count": 130
+        },
+        "model_tensor_count": 130,
+        "optimizer_step": 14839,
+        "parameter_count_from_model_state": 5015233,
+        "selection": "best-development-live",
+        "weights": "live",
+        "weights_only": true
+      }
+    }
+  },
+  "checks": {
+    "all_endpoint_numerical_checks": true,
+    "all_esa2_artifact_hashes_verified": true,
+    "all_four_arm_exact_row_target_alignment": true,
+    "certificate_and_profile_metadata_receipt_hashes": true,
+    "four_arm_only_declared_recipe_interventions": true,
+    "mechanical_both_verified": true,
+    "profile_receipt_and_training_spans_checks": true
+  },
+  "elapsed_analysis_seconds": 2.422000000020489,
+  "endpoint_checks": {
+    "esa_identity1": {
+      "all_last_selected_tensors_finite": true,
+      "canonical_trace_exact_20_passes": true,
+      "contract_exact_endpoint": true,
+      "independent_prediction_mae_matches_selected_trace": true,
+      "last_20_passes_15620_steps_1999360_presentations": true,
+      "last_selected_model_schema_matches": true,
+      "prediction_schema_50k_finite": true,
+      "selected_is_trace_minimum": true,
+      "selected_metric_matches_bound_trace": true,
+      "selected_pass_matches_expected": true,
+      "selected_step_matches_bound_trace": true
+    },
+    "esa_lr1": {
+      "all_last_selected_tensors_finite": true,
+      "canonical_trace_exact_20_passes": true,
+      "contract_exact_endpoint": true,
+      "independent_prediction_mae_matches_selected_trace": true,
+      "last_20_passes_15620_steps_1999360_presentations": true,
+      "last_selected_model_schema_matches": true,
+      "prediction_schema_50k_finite": true,
+      "selected_is_trace_minimum": true,
+      "selected_metric_matches_bound_trace": true,
+      "selected_pass_matches_expected": true,
+      "selected_step_matches_bound_trace": true
+    }
+  },
+  "execution_profile_analysis": {
+    "esa_identity1": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 2.35274053400002,
+        "captured_updates": 4,
+        "observed_updates": 15620,
+        "starting_optimizer_step": 0
+      },
+      "capture_off_throughput": {
+        "optimizer_updates": 14839,
+        "presentations_per_second": 225.13206770363962,
+        "sample_presentations": 1899392,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "span_count": 19,
+        "updates_per_second": 1.7588442789346845,
+        "wall_seconds": 8436.790100024002
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": false,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "context_peak_allocated_bytes": 951378944,
+      "context_peak_reserved_bytes": 1105199104,
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 1.793617643999994,
+          "host_total_seconds": 1.793617643999994,
+          "name": "loader_wait"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.24929326399995944,
+          "host_total_seconds": 0.24929326399995944,
+          "name": "forward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.23596646100003227,
+          "host_total_seconds": 0.23596646100003227,
+          "name": "backward"
+        }
+      ],
+      "dominant_operators_by_self_cpu": [
+        {
+          "calls": 4,
+          "input_shapes": "",
+          "name": "enumerate(DataLoader)#_MultiProcessingDataLoaderIter.__next__",
+          "self_cpu_us": 1788848.8780000003,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 6141,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 78896.13199999084,
+          "self_device_us": 0
+        },
+        {
+          "calls": 416,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 72325.1659999991,
+          "self_device_us": 113538.86999999837
+        }
+      ],
+      "dominant_operators_by_self_device": [
+        {
+          "calls": 416,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 72325.1659999991,
+          "self_device_us": 113538.86999999837
+        },
+        {
+          "calls": 204,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 39404.3170000001,
+          "self_device_us": 61499.05500000133
+        },
+        {
+          "calls": 146,
+          "input_shapes": "",
+          "name": "volta_sgemm_128x64_nt",
+          "self_cpu_us": 0,
+          "self_device_us": 41959.829000000376
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "profile_hash_matches_execution_profile_receipt": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot2-s42-v1\\v1\\inspection\\experiment\\esa_identity1\\profiles\\step_0_1792600533034346359\\profile.json",
+      "profile_sha256": "10ceb447d0ec411fec9d238cb3f867322545d91d74ef544b9ba100d53ebc68a6",
+      "profile_status": "COMPLETE",
+      "runtime_certificate": {
+        "formal_training_exposure": 0,
+        "format": "molgap-runtime-certificate-v1",
+        "probe_recipe_identity": "b1ead7cfb25026b611f3fa1397e0ce4e5879df241670326d83ed23acc80a98e5",
+        "profile_proof": {
+          "report": "profile_qualification/profile.json",
+          "sha256": "3e1a16f9c15cc21769d43d596a2987ac6567bc07885ce755c0d488bef1846550"
+        },
+        "proofs": [
+          {
+            "path": "repeat-a.pt",
+            "sha256": "44400b21aea3f7a3f9035c5d16555920a5daba6e1c54d64c23c7f470a89dd8a2",
+            "state_fingerprint": "45efebfc7eae1447e795b3ac87f3b0e6cbb3e76f9da7cfcbf64751e8a7afd5b1"
+          },
+          {
+            "path": "repeat-b.pt",
+            "sha256": "c276130a0a6c762db11911d7e8a66774aee06eae8a966db9faa8c6dd6406d24d",
+            "state_fingerprint": "45efebfc7eae1447e795b3ac87f3b0e6cbb3e76f9da7cfcbf64751e8a7afd5b1"
+          },
+          {
+            "path": "resumed.pt",
+            "sha256": "7ee96e69a7d4c84e0c1706e2368c113bddae60845d47fd42ed226d30837e0c1e",
+            "state_fingerprint": "45efebfc7eae1447e795b3ac87f3b0e6cbb3e76f9da7cfcbf64751e8a7afd5b1"
+          }
+        ],
+        "provenance_sha256": "d3bbcdd11024027fbbcee3093e58b5d7f03b741dce13fc6514fd944bfe623498",
+        "resume_origin": {
+          "path": "resumed-first.pt",
+          "sha256": "b1570070ea20b11903587096d7b6e77218b9900f93dfb0c71fdcd81751a6f986"
+        },
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "accepted"
+      },
+      "runtime_certificate_sha256": "975a173e5b808c998932cef6a478da9cf1b8d79375f5baf15fcabfdb639ec377",
+      "trace_sha256_reference_matches_receipt": true,
+      "training_spans_equal_embedded_profile": true,
+      "training_spans_hash_matches_retrieval": true,
+      "training_spans_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot2-s42-v1\\v1\\inspection\\experiment\\esa_identity1\\profiles\\step_0_1792600533034346359\\training_spans.json"
+    },
+    "esa_lr1": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 2.34586335299997,
+        "captured_updates": 4,
+        "observed_updates": 15620,
+        "starting_optimizer_step": 0
+      },
+      "capture_off_throughput": {
+        "optimizer_updates": 14839,
+        "presentations_per_second": 225.01583597568217,
+        "sample_presentations": 1899392,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "span_count": 19,
+        "updates_per_second": 1.757936218560017,
+        "wall_seconds": 8441.148116371998
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": false,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "context_peak_allocated_bytes": 951378944,
+      "context_peak_reserved_bytes": 1105199104,
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 1.8223028269999304,
+          "host_total_seconds": 1.8223028269999304,
+          "name": "loader_wait"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.2362323709999714,
+          "host_total_seconds": 0.2362323709999714,
+          "name": "forward"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.2081592380000643,
+          "host_total_seconds": 0.2081592380000643,
+          "name": "backward"
+        }
+      ],
+      "dominant_operators_by_self_cpu": [
+        {
+          "calls": 4,
+          "input_shapes": "",
+          "name": "enumerate(DataLoader)#_MultiProcessingDataLoaderIter.__next__",
+          "self_cpu_us": 1817323.092000001,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 6141,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 71479.40800001903,
+          "self_device_us": 0
+        },
+        {
+          "calls": 416,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 66629.29699999478,
+          "self_device_us": 141100.24899999844
+        }
+      ],
+      "dominant_operators_by_self_device": [
+        {
+          "calls": 416,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 66629.29699999478,
+          "self_device_us": 141100.24899999844
+        },
+        {
+          "calls": 204,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 37452.1480000029,
+          "self_device_us": 74609.11599999922
+        },
+        {
+          "calls": 146,
+          "input_shapes": "",
+          "name": "volta_sgemm_128x64_nt",
+          "self_cpu_us": 0,
+          "self_device_us": 52218.37900000054
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "profile_hash_matches_execution_profile_receipt": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot2-s42-v1\\v1\\inspection\\experiment\\esa_lr1\\profiles\\step_0_1792600533044965783\\profile.json",
+      "profile_sha256": "55a49f01deba238ee17de6863f116e98e62cbda1162880ba3dfcd1faa00009b3",
+      "profile_status": "COMPLETE",
+      "runtime_certificate": {
+        "formal_training_exposure": 0,
+        "format": "molgap-runtime-certificate-v1",
+        "probe_recipe_identity": "b7146c998be192d3f8a9821fe4fb9432568cf40f10b5011619af8e82cd6fdef8",
+        "profile_proof": {
+          "report": "profile_qualification/profile.json",
+          "sha256": "10b52a858e3731e96e9ae4ecaf113fde9e14bf02dca1c56634736fc3e4059877"
+        },
+        "proofs": [
+          {
+            "path": "repeat-a.pt",
+            "sha256": "29db21f7fd4a9db35bbf0c88b1943b342c498aa6d4d9894c144a6dcab17ffa5d",
+            "state_fingerprint": "decbc5176ef199ba194fce5eedab81cc80a0d17bd20f8e70595420b62886c362"
+          },
+          {
+            "path": "repeat-b.pt",
+            "sha256": "7181be834a4946ccbfcf1e1d11a7ee6ee31bc1bca1699587df6b4ad9d6ac93c3",
+            "state_fingerprint": "decbc5176ef199ba194fce5eedab81cc80a0d17bd20f8e70595420b62886c362"
+          },
+          {
+            "path": "resumed.pt",
+            "sha256": "148fecbc852a45bb6989174ef0117bf82ba6b5191931af20f664f499c381d5c9",
+            "state_fingerprint": "decbc5176ef199ba194fce5eedab81cc80a0d17bd20f8e70595420b62886c362"
+          }
+        ],
+        "provenance_sha256": "9bb2cf3ffdb796e88e9e8b85757e524ec8750212898682aeb934559589a7743e",
+        "resume_origin": {
+          "path": "resumed-first.pt",
+          "sha256": "38e25a441545f03ca73d6219433db653f6215dba94168ccf10d4c052cc90db9c"
+        },
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "accepted"
+      },
+      "runtime_certificate_sha256": "09b182a83e7a7567ba23eaed3ef5dfbdd2f1123531654d2aa011eebb1c506244",
+      "trace_sha256_reference_matches_receipt": true,
+      "training_spans_equal_embedded_profile": true,
+      "training_spans_hash_matches_retrieval": true,
+      "training_spans_path": "E:\\MolGap\\artifacts\\runs\\modern2d-esa-research-slot2-s42-v1\\v1\\inspection\\experiment\\esa_lr1\\profiles\\step_0_1792600533044965783\\training_spans.json"
+    }
+  },
+  "execution_retention_status": "EXECUTION_RETENTION_VERIFIED",
+  "format": "molgap-esa2-independent-saved-artifact-acceptance-v1",
+  "four_arm_best_selected_effects": {
+    "interaction_residual_effect_lr1e4_minus_lr3e4_eV": 0.001795935025215134,
+    "lr_effect_1e4_minus_3e4_author_eV": 0.015602863960266111,
+    "lr_effect_1e4_minus_3e4_identity_eV": 0.017398798985481245,
+    "residual_effect_identity_minus_author_at_lr1e4_eV": 0.0008071831655502293,
+    "residual_effect_identity_minus_author_at_lr3e4_eV": -0.0009887518596649048
+  },
+  "four_arm_matched_pass20_effects": {
+    "interaction_residual_effect_lr1e4_minus_lr3e4_eV": 0.0016254335641860962,
+    "lr_effect_1e4_minus_3e4_author_eV": 0.01577337086200714,
+    "lr_effect_1e4_minus_3e4_identity_eV": 0.017398804426193237,
+    "residual_effect_identity_minus_author_at_lr1e4_eV": 0.0006366819143295288,
+    "residual_effect_identity_minus_author_at_lr3e4_eV": -0.0009887516498565674
+  },
+  "four_arm_primary": [
+    {
+      "arm": "esa_lr3",
+      "independent_best_selected_mae_eV": 0.2036746614909172,
+      "matched_pass20_trace_mae_eV": 0.20367467403411865,
+      "peak_lr": 0.0003,
+      "residual_variant": "author_normalized_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.20367467403411865
+    },
+    {
+      "arm": "esa_identity3",
+      "independent_best_selected_mae_eV": 0.2026859096312523,
+      "matched_pass20_trace_mae_eV": 0.20268592238426208,
+      "peak_lr": 0.0003,
+      "residual_variant": "identity_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.20268592238426208
+    },
+    {
+      "arm": "esa_lr1",
+      "independent_best_selected_mae_eV": 0.2192775254511833,
+      "matched_pass20_trace_mae_eV": 0.2194480448961258,
+      "peak_lr": 0.0001,
+      "residual_variant": "author_normalized_stream",
+      "saved_predictions_are_pass20": false,
+      "selected_optimizer_step": 14839,
+      "selected_pass": 19,
+      "selected_trace_mae_eV": 0.2192775160074234
+    },
+    {
+      "arm": "esa_identity1",
+      "independent_best_selected_mae_eV": 0.22008470861673354,
+      "matched_pass20_trace_mae_eV": 0.22008472681045532,
+      "peak_lr": 0.0001,
+      "residual_variant": "identity_stream",
+      "saved_predictions_are_pass20": true,
+      "selected_optimizer_step": 15620,
+      "selected_pass": 20,
+      "selected_trace_mae_eV": 0.22008472681045532
+    }
+  ],
+  "four_arm_synthesis_path": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa2_acceptance\\20261021T203102Z_c6443919\\four_arm_synthesis.json",
+  "generated_at_utc": "2026-10-21T20:34:38.675518+00:00",
+  "limits": {
+    "canonical_rml_finalization": "Main reports BLOCKED_REFERENCE_NOT_FROZEN for both; not attempted here",
+    "global_rml_validation_run": false,
+    "graph_data_accessed": false,
+    "model_instantiated": false,
+    "native_proof_comparison": "Not performed per focused bounded assignment",
+    "no_universal_0_003_gate": true,
+    "replay_claim": false,
+    "repository_edits": false,
+    "scientific_winner_claim": false,
+    "seed_uncertainty_established": false,
+    "tests_run": false,
+    "training_or_inference_executed": false
+  },
+  "mechanical_report": "E:\\MolGap\\artifacts\\modern2d-research-campaign-20261022\\esa2_acceptance\\20261021T203102Z_c6443919\\mechanical_acceptance.json",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "paired_fixed_row_analysis": {
+    "bootstrap": {
+      "max_chunk_cells": 2000000,
+      "max_index_matrix_bytes": 16000000,
+      "multiplicity_adjusted": false,
+      "resamples": 2000,
+      "resampling_rng_seed": 42,
+      "scope": "paired fixed-row bootstrap over the same 50,000 Common-Dev rows; not training-seed variance; bootstrap seed42 is a sampling RNG setting"
+    },
+    "candidate_arm": "esa_identity1",
+    "candidate_prediction_selected_pass": 20,
+    "comparison_semantics": "best-development selected checkpoints within the same 20-pass horizon; selected prediction passes differ, so this is not a matched-pass20 prediction comparison",
+    "identity1_strict_win_fraction": 0.49514,
+    "identity1_strict_win_fraction_bootstrap": {
+      "ci95": [
+        0.49086,
+        0.4994205
+      ],
+      "delta": 0.49514,
+      "n_bootstrap": 2000,
+      "probability_better": 0.0,
+      "seed": 42
+    },
+    "identity1_win_rows": 24757,
+    "lr1_win_rows": 25242,
+    "mean_signed_residual_delta_eV_identity_minus_lr1": -0.0028060428953170778,
+    "mean_signed_residual_eV": {
+      "esa_identity1": 0.009736591207981109,
+      "esa_lr1": 0.012542634103298186
+    },
+    "paired_absolute_error_delta_bootstrap": {
+      "ci95": [
+        -0.0005140181777477265,
+        0.002173069926738739
+      ],
+      "delta": 0.0008071831655502319,
+      "n_bootstrap": 2000,
+      "probability_better": 0.1375,
+      "seed": 42
+    },
+    "paired_mean_absolute_error_delta_eV_identity_minus_lr1": 0.0008071831655502319,
+    "reference_arm": "esa_lr1",
+    "reference_prediction_selected_pass": 19,
+    "residual_definition": "prediction_eV - target_eV",
+    "rows": 50000,
+    "ties": 1
+  },
+  "run_id": "modern2d-esa-research-slot2-s42-v1",
+  "selected_prediction_metrics": {
+    "esa_identity1": {
+      "folder": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot2-s42-v1\\v1\\esa_identity1",
+      "pass20_mae_eV": 0.22008472681045532,
+      "prediction_mae_eV": 0.22008470861673354,
+      "prediction_rows": 50000,
+      "prediction_shape": [
+        50000
+      ],
+      "prediction_vs_selected_mae_difference_eV": 1.819372177913614e-08,
+      "prediction_vs_selected_trace_mae_difference_eV": 1.819372177913614e-08,
+      "predictions_finite": true,
+      "selected": {
+        "development_mae_eV": 0.22008472681045532,
+        "epoch_or_pass": 20.0,
+        "optimizer_step": 15620,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_pass": 20
+    },
+    "esa_lr1": {
+      "folder": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-esa-research-slot2-s42-v1\\v1\\esa_lr1",
+      "pass20_mae_eV": 0.2194480448961258,
+      "prediction_mae_eV": 0.2192775254511833,
+      "prediction_rows": 50000,
+      "prediction_shape": [
+        50000
+      ],
+      "prediction_vs_selected_mae_difference_eV": 9.443759912963756e-09,
+      "prediction_vs_selected_trace_mae_difference_eV": 9.443759912963756e-09,
+      "predictions_finite": true,
+      "selected": {
+        "development_mae_eV": 0.2192775160074234,
+        "epoch_or_pass": 19.0,
+        "optimizer_step": 14839,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_pass": 19
+    }
+  },
+  "status": "VERIFIED",
+  "thread_limits": {
+    "MKL": "1",
+    "OMP": "1",
+    "OPENBLAS": "1",
+    "torch": 1,
+    "torch_interop": 1
+  }
+}
