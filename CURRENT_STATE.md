@@ -6,6 +6,15 @@
 
 ## Server execution status
 
+The human-authorized [four-slot/eight-arm PPGT/ESA research campaign](experiments/modern2d_configured_100k/research_arms/STATUS.md)
+has four accepted Kaggle2/3 version1 submissions. Three were observed RUNNING and
+one QUEUED; pinned Python3.12/torch2.7.1 startup was observed on three jobs.
+Native admission and scientific training progress remain to be observed; scheduler
+RUNNING is not that proof. Fresh20-pass contracts retain fixed100K/Common-Dev,
+FP32/BS128/seed42. The existing Luna B/30-minute heartbeat now owns the four exact
+receipt-bound jobs, silent while healthy. No automatic successor, extra seed,
+500K/full, protected role, scientific winner or Replay claim is released.
+
 The [PPGT/ESA execution-repair diagnostic](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md)
 is accepted and RML-finalized as NO_TRAIN/context_only. Both native repeat/resume
 proofs passed; repaired ESA matched the original saved state exactly, while
