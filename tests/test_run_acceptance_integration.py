@@ -2,14 +2,17 @@
 from __future__ import annotations
 
 import json
-
+import hashlib
 from molgap.experiment_attribution import ATTRIBUTION_FORMAT
+from molgap.experiment_allocation import AllocationLedger
 from molgap.experiment_family_workflow import RunContext
 from molgap.experiment_launch import canonical_json
 from molgap import experiment_cli
 from molgap.experiment_run import accept_run_workflow
 from molgap.experiment_run_acceptance import resolve_run_acceptance_inputs
+from molgap.experiment_retention import seal_execution_retention
 from molgap.research_memory.paths import artifact_locator
+from molgap.research_memory.validate import validate_repository_records
 from molgap.family_training_outputs import SessionOutputs
 from test_family_training_session import events, make_session
 from run_acceptance_fixtures import frozen_shared_acceptance_run
@@ -25,7 +28,7 @@ def _trajectory(binding, arm, context, recipe_path):
         "trajectory_id": binding["trajectory_id"],
         "record_mode": "prospective",
         "track": "B",
-        "owner": "desktop",
+        "owner": "server",
         "family_id": "family-" + context.arm_id,
         "question": "Verify frozen run-ID acceptance wiring with synthetic CPU outputs.",
         "hypothesis": {
@@ -102,21 +105,19 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     return context, directory
 
 
-def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp_path, repo, capsys):
-    case = frozen_shared_acceptance_run(tmp_path, repo)
+def _materialize_shared_case(case):
+    """Create the retained outputs and canonical locations once per test."""
     declaration = case.spec.to_dict()
-    # The frozen workflow pointer lives in the original run; use it to locate
-    # every packaged expectation, adapter, and recipe without mutable sources.
     workflow = json.loads((case.run / "inputs/workflow_plan.json").read_bytes())
     plan = json.loads(case.generated[workflow["acceptance_plan"]])
     entries = {item["arm_id"]: item for item in plan["arms"]}
     arms = {item["arm_id"]: item for item in declaration["arms"]}
-
     locations = {}
+    contexts = {}
     for arm_id, arm in arms.items():
         entry = entries[arm_id]
         binding = next(b for b in declaration["prospective"]["arms"] if b["arm_id"] == arm_id)
-        context, output_dir = _write_shared_output_for_arm(case, arm, binding, entry)
+        contexts[arm_id], output_dir = _write_shared_output_for_arm(case, arm, binding, entry)
         manifest = json.loads((output_dir / "output_manifest.json").read_bytes())
         trace_path = output_dir / manifest["artifacts"]["trace"]["path"]
         locations[arm_id] = {
@@ -126,6 +127,12 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
             "terminal": binding["output"] + "/terminal.json",
             "trace": artifact_locator(case.repo, trace_path),
         }
+    return declaration, arms, locations, contexts
+
+
+def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp_path, repo, capsys):
+    case = frozen_shared_acceptance_run(tmp_path, repo)
+    declaration, arms, locations, _ = _materialize_shared_case(case)
 
     explicit = resolve_run_acceptance_inputs(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         locations=locations)
@@ -157,3 +164,151 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert cli_result["terminal_staging"]["status"] == "STAGED_DRAFT", cli_result
     after = sorted(path.relative_to(case.run).as_posix() for path in case.run.rglob("*") if path.is_file())
     assert after == before
+
+
+def _seal_shared_retention(case, root):
+    arm_ids = [arm["arm_id"] for arm in case.spec.to_dict()["arms"]]
+    arm_roots = {arm_id: root / arm_id for arm_id in arm_ids}
+    clock = [0.0]
+    ledger = AllocationLedger(
+        spec_identity=case.spec.identity,
+        hardware=["Tesla T4", "Tesla T4"],
+        assignments={arm_id: index for index, arm_id in enumerate(arm_ids)},
+        started=0.0,
+        clock=lambda: clock[0],
+    )
+    clock[0] = 1.0
+    root.mkdir()
+    ledger.write(root, "complete", arm_roots=list(arm_roots.values()))
+    return seal_execution_retention(
+        root, case.spec, package_identity=case.manifest["package_identity"],
+        source_commit=case.manifest["source_commit"],
+        source_archive_sha256=case.manifest["archive_sha256"],
+        arm_roots=arm_roots,
+    )
+
+
+def _seed_reference_records(case):
+    """Provide the small frozen pointers needed by real RML validation."""
+    root = case.repo
+    directory = root / "experiments" / "synthetic"
+    directory.mkdir(parents=True, exist_ok=True)
+    decision = directory / "decision.md"
+    decision.write_text("Synthetic reference state.\n", encoding="utf-8")
+    acceptance = directory / "acceptance.json"
+    acceptance.write_bytes(canonical_json({"format": "synthetic-acceptance-v1", "status": "retained"}).encode())
+    (directory / "roles.json").write_bytes(canonical_json({"format": "synthetic-role-snapshot-v1"}).encode())
+    (directory / "budget.json").write_bytes(canonical_json({"format": "synthetic-budget-v1"}).encode())
+    decision_ref = decision.relative_to(root).as_posix()
+    acceptance_ref = acceptance.relative_to(root).as_posix()
+    digest = hashlib.sha256(decision.read_bytes()).hexdigest()
+    evidence = {
+        "format": "molgap-v5-evidence-envelope-v1",
+        "contract": "MOLGAP-COMMON-V5-FINAL",
+        "evidence_id": "ev-reference",
+        "track": "B", "scope": "synthetic", "legacy_contract": "synthetic-reference",
+        "outcome": {"execution_status": "complete", "artifact_status": "retained",
+            "comparison_status": "context_only", "scientific_status": "INCONCLUSIVE",
+            "transfer_status": "not_evaluated", "budget_decision": "retained",
+            "full_handoff_status": "not_applicable"},
+        "authority": {"pointers": [decision_ref]},
+        "artifacts": [{"name": "decision", "locator": decision_ref,
+            "availability": "durable_local_verified", "sha256": digest}],
+        "role_use": {"official_validation": "untouched", "test_dev": "untouched",
+            "test_challenge": "untouched"},
+        "migration": {"migrated_at": "2026-10-22", "verification_scope": "synthetic fixture",
+            "training_executed": False, "inference_executed": False,
+            "scientific_reinterpretation": False},
+    }
+    (directory / "v5_evidence.json").write_bytes(canonical_json(evidence).encode())
+    trajectory_id = case.spec.to_dict()["prospective"]["arms"][0]["trajectory_id"]
+    action_id = "action-" + case.spec.to_dict()["arms"][0]["arm_id"].replace("_", "-")
+    cost = {"schema": "molgap-cost-event-v1", "cost_event_id": "cost-synthetic",
+        "trajectory_id": trajectory_id, "action_id": action_id,
+        "run_id": "synthetic-run", "attempt_id": "v1", "platform": "synthetic",
+        "hardware": "synthetic-cpu", "category": "other", "evidence_ref": acceptance_ref,
+        "measurement": {field: {"value": None, "status": "measurement_missing"}
+            for field in ("device_hours", "cpu_hours", "wall_hours", "queue_hours")}}
+    costs = directory / "costs" / "cost-synthetic.json"
+    costs.parent.mkdir(parents=True, exist_ok=True)
+    costs.write_bytes(canonical_json(cost).encode())
+
+
+def test_acceptance_without_diagnosis_preserves_execution_retention(tmp_path, repo):
+    case = frozen_shared_acceptance_run(tmp_path, repo)
+    _materialize_shared_case(case)
+    retention_root = tmp_path / "execution-retention"
+    sealed = _seal_shared_retention(case, retention_root)
+
+    result = accept_run_workflow(*case.original,
+        retrieved_root=case.paths.artifact_root / "retrieved",
+        execution_root=retention_root)
+
+    assert result["status"] == "MECHANICALLY_VERIFIED", result
+    assert result.get("diagnosis") is None
+    assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert result["execution_retention"]["manifest"] == sealed["manifest"]
+
+
+def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
+    case = frozen_shared_acceptance_run(tmp_path, repo)
+    declaration, arms, locations, contexts = _materialize_shared_case(case)
+    _seed_reference_records(case)
+    decisions, audits = {}, {}
+    for arm_id, item in contexts.items():
+        decision = case.repo / (arm_id + "-decision.md")
+        decision.write_text("Infrastructure-only terminal disposition.", encoding="utf-8")
+        decisions[arm_id] = decision.relative_to(case.repo).as_posix()
+        audits[arm_id] = {
+            "context": item.to_dict(), "roles": [],
+            "role_use": {role: "untouched" for role in
+                          ("official_validation", "test_dev", "test_challenge")},
+        }
+
+    # The resolver reads frozen package members.  Remove every generated
+    # checkout file so terminal staging must restore only trajectory-pinned
+    # metadata before execution.
+    for name in case.generated:
+        (case.repo / name).unlink()
+
+    retention_root = tmp_path / "execution-retention"
+    sealed = _seal_shared_retention(case, retention_root)
+    import molgap.experiment_family_workflow as family_workflow
+    import molgap.experiment_package as experiment_package
+    counts = {"package_snapshot": 0, "capture": 0}
+    original_snapshot = experiment_package._verify_package_snapshot
+    original_capture = family_workflow.capture_output_inspection
+
+    def counted_snapshot(*args, **kwargs):
+        counts["package_snapshot"] += 1
+        return original_snapshot(*args, **kwargs)
+
+    def counted_capture(*args, **kwargs):
+        counts["capture"] += 1
+        return original_capture(*args, **kwargs)
+
+    monkeypatch.setattr(experiment_package, "_verify_package_snapshot", counted_snapshot)
+    monkeypatch.setattr(family_workflow, "capture_output_inspection", counted_capture)
+    result = accept_run_workflow(*case.original,
+        retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
+        execute=True, execution_root=retention_root, stage_terminal=True, outcome="INCONCLUSIVE",
+        decision_ref=decisions, role_audit=audits)
+
+    assert result["status"] == "COMPLETE", result
+    assert result["executed"] is True
+    assert result.get("diagnosis") is None
+    assert counts == {"package_snapshot": 1, "capture": len(arms)}, counts
+    assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert result["execution_retention"]["manifest"] == sealed["manifest"]
+    assert result["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
+    for arm_id, where in locations.items():
+        trajectory = json.loads((case.repo / where["trajectory"]).read_bytes())
+        recipe = trajectory["state_at_start"]["contract_refs"][0]
+        restored = case.repo / recipe
+        assert restored.is_file()
+        assert restored.read_bytes() == case.generated[recipe]
+        staged_terminal = result["terminal_staging"]["paths"][arm_id]["terminal"]
+        package = json.loads((case.repo / staged_terminal).read_bytes())
+        assert package["artifact_hashes"][recipe] == case.manifest["generated_records"][recipe]
+    validated = validate_repository_records(case.repo)
+    assert validated["root"] == case.repo.resolve()

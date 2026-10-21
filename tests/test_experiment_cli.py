@@ -447,7 +447,7 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {
-        "catalog", "freeze-input", "locate-run", "check-workflow", "validate-spec",
+        "catalog", "build-preset", "derive-input", "freeze-input", "locate-run", "check-workflow", "validate-spec",
         "package", "preflight", "run-diagnostic", "diagnose", "launch-receipt",
         "terminal", "plan-prospective", "check-release", "prepare-release",
         "check-preparation", "check-acceptance", "inspect-output", "accept-terminal",
@@ -465,3 +465,123 @@ def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, m
                              "--repo-root", tmp_path, "--output", tmp_path / "fresh"])
     assert result["submitted"] is False
     assert delegated.call_args.args[1:] == (tmp_path, "{}", tmp_path / "fresh")
+
+
+def test_stage_only_acceptance_summary_keeps_retention_without_diagnosis(
+        capsys, monkeypatch, tmp_path):
+    from molgap import experiment_run
+
+    accepted = Mock(return_value={
+        "status": "MECHANICALLY_VERIFIED",
+        "run_id": "synthetic-run",
+        "attempt_id": "v1",
+        "diagnosis": None,
+        "terminal_staging": {"status": "STAGED"},
+        "execution_retention": {"policy": "retained"},
+        "arms": {},
+    })
+    monkeypatch.setattr(experiment_run, "accept_run_workflow", accepted)
+    result = invoke(capsys, ["accept-workflow", "--run-id", "synthetic-run",
+                             "--attempt-id", "v1", "--profile", tmp_path / "machine.json",
+                             "--repo-root", tmp_path, "--stage-terminal"])
+    assert result["status"] == "MECHANICALLY_VERIFIED"
+    assert result["execution_retention"] == {"policy": "retained"}
+    accepted.assert_called_once()
+
+
+def test_build_preset_cli_passes_reference_components(capsys, monkeypatch, tmp_path):
+    from molgap import experiment_presets
+
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    recipe = repo / "recipe.json"
+    data_spec = repo / "data-spec.json"
+    target = repo / "target.json"
+    initial = repo / "initial.pt"
+    reference = repo / "reference-plan.json"
+    output = tmp_path / "preset.json"
+    built = {"format": "molgap-scientific-baseline-preset-v1"}
+    build = Mock(return_value=built)
+    export = Mock()
+    monkeypatch.setattr(experiment_presets, "build_baseline_preset", build)
+    monkeypatch.setattr(experiment_presets, "export_baseline_preset", export)
+
+    result = invoke(capsys, ["build-preset", "--repo-root", repo, "--name", "baseline",
+                             "--family", "neural_atom_k1", "--family-version", "3",
+                             "--version", "v2", "--recipe", recipe, "--data-spec", data_spec,
+                             "--data-arm", "reference", "--target-manifest", target,
+                             "--initial-state", initial, "--reference-plan", reference,
+                             "--reference-arm", "reference", "--output", output])
+    assert result == {"status": "PRESET_WRITTEN", "output": str(output)}
+    build.assert_called_once_with(
+        repo, name="baseline", version="v2", family=("neural_atom_k1", "3"),
+        recipe=recipe, data_spec=data_spec, data_arm_id="reference",
+        target_manifest=target, initial_state=initial, reference=reference,
+        reference_arm_id="reference")
+    export.assert_called_once_with(output, built)
+
+
+def test_derive_input_cli_passes_repo_and_fresh_run_facts(capsys, monkeypatch, tmp_path):
+    from molgap import experiment_presets
+
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    frozen_run = tmp_path / "frozen-run"
+    profile = tmp_path / "machine.json"
+    output = tmp_path / "input.json"
+    template = {"format": "molgap-scientific-experiment-v1"}
+    build = Mock(return_value=template)
+    export = Mock()
+    monkeypatch.setattr(experiment_presets, "build_scientific_input_template", build)
+    monkeypatch.setattr(experiment_presets, "export_scientific_input_template", export)
+
+    result = invoke(capsys, ["derive-input", "--from-run", frozen_run, "--repo-root", repo,
+                             "--experiment-id", "question", "--run-id", "run-2",
+                             "--attempt-id", "v1", "--profile", profile, "--output", output])
+    assert result == {"status": "EDITABLE_DRAFT_WRITTEN", "output": str(output),
+                      "authority": "REQUIRED_BEFORE_PREPARATION"}
+    build.assert_called_once_with(
+        frozen_run, repo, experiment_id="question", logical_run_id="run-2",
+        attempt_id="v1", machine_profile=profile)
+    export.assert_called_once_with(output, template, frozen_run=frozen_run)
+
+
+def test_accept_workflow_preserves_role_audit_input_boundaries(
+        capsys, monkeypatch, tmp_path):
+    from molgap import experiment_run
+
+    accepted = Mock(return_value={"status": "COMPLETE"})
+    monkeypatch.setattr(experiment_run, "accept_run_workflow", accepted)
+    base = ["accept-workflow", "--run-id", "run-1", "--attempt-id", "v1",
+            "--profile", tmp_path / "machine.json", "--repo-root", tmp_path]
+
+    single = tmp_path / "single.json"
+    single.write_bytes(canonical_json({"context": {"arm_id": "baseline"}}).encode())
+    invoke(capsys, [*base, "--role-audit", single])
+    assert accepted.call_args.kwargs["role_audit"] == single
+
+    mapped = tmp_path / "mapped.json"
+    mapped.write_bytes(canonical_json({"baseline": {"context": {}}}).encode())
+    accepted.reset_mock()
+    invoke(capsys, [*base, "--role-audit", mapped])
+    assert accepted.call_args.kwargs["role_audit"] == {"baseline": {"context": {}}}
+
+    accepted.reset_mock()
+    inline = '{"baseline":{"context":{}}}'
+    invoke(capsys, [*base, "--role-audit", inline])
+    assert accepted.call_args.kwargs["role_audit"] == {"baseline": {"context": {}}}
+
+
+def test_accept_workflow_keeps_terminal_package_as_path(capsys, monkeypatch, tmp_path):
+    from molgap import experiment_run
+
+    accepted = Mock(return_value={"status": "COMPLETE"})
+    monkeypatch.setattr(experiment_run, "accept_run_workflow", accepted)
+    terminal = tmp_path / "terminal.json"
+    terminal.write_bytes(canonical_json({
+        "format": "molgap-rml-terminal-package-v1",
+    }).encode())
+    invoke(capsys, ["accept-workflow", "--run-id", "run-1", "--attempt-id", "v1",
+                    "--profile", tmp_path / "machine.json", "--repo-root", tmp_path,
+                    "--scientific-acceptance", terminal])
+    assert accepted.call_args.kwargs["scientific_acceptance"] == terminal

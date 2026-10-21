@@ -9,7 +9,7 @@ from typing import Any
 from molgap.evidence_pointers import (
     load_json_object as load_json,
 )
-from .paths import resolve_repo_pointer, verify_bound_artifact
+from .paths import bound_artifact_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import pair_binding, reference_trajectory
 
 from molgap.v5_common import (
@@ -141,7 +141,10 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         if "trace_artifact_sha256" in record:
             from .trace import load_canonical_trace, validate_manifest_trace
             verify_bound_artifact(root, record["trace_artifact_ref"], record["trace_artifact_sha256"])
-            validate_manifest_trace(record, load_canonical_trace(resolve_repo_pointer(root, record["trace_artifact_ref"])))
+            validate_manifest_trace(
+                record,
+                load_canonical_trace(bound_artifact_path(root, record["trace_artifact_ref"])),
+            )
     for path in discovered.ready:
         record = validate_ready_package(load_json(path))
         unique("package_id", record["package_id"], path)

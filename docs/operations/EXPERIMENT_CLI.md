@@ -19,6 +19,15 @@ documents `check-acceptance`, `inspect-output` and `accept-terminal`.
 
 ## Editable inputs and frozen records
 
+`derive-input --from-run DIR --experiment-id ID --run-id NEW --profile PROFILE
+--output FILE` copies the frozen scientific declaration into a fresh editable
+draft, removes inherited authority and defaults to attempt `v1`. Review its
+scientific content before supplying fresh authority. The source run is unchanged.
+
+`build-preset` derives recipe/data/target/reference pins and initialization
+identity from retained files. Use `build-preset --help` for file arguments;
+the output uses the existing `molgap-scientific-baseline-preset-v1` format.
+
 `catalog` emits capabilities without a Spec. `freeze-input --experiment FILE
 --repo-root ROOT` freezes inputs only; platform `--experiment` preparation
 already includes this operation. Both scientific and reference-only inputs
@@ -85,6 +94,12 @@ the normal acceptance response contains statuses and report pointers.
 Terminal execution additionally requires reviewed `--locations`, or
 `--stage-terminal --outcome OUTCOME --decision-ref FILE --role-audit FILE`.
 Positive/ready outcomes retain their owning scientific acceptance gate.
+`--scientific-acceptance FILE` supplies an existing owning terminal package
+(or per-arm path map); it never substitutes a boolean pass flag for evidence.
+`--role-audit` accepts one audit file, an arm-to-path map file, or inline observed
+role facts. Inline facts are bound to the resolved run and retained as metadata;
+protected-role use is never inferred from permission. `--stage-terminal` alone
+stages evidence without running diagnosis; `--diagnose` is independent.
 Run diagnosis uses the frozen policy; bootstrap defaults to zero, leaving
 confidence intervals unknown. Directory-only `diagnose --control DIR
 --candidate DIR` remains available for descriptive comparisons.

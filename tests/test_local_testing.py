@@ -49,6 +49,11 @@ def test_scopes_cover_existing_lifecycle_regressions():
     assert "test_reform_catalog" in local_testing.SCOPES["prepare"]
     assert "test_reform_distribution" in local_testing.SCOPES["package"]
     assert "test_kaggle_family_retrieval" in local_testing.SCOPES["accept"]
+    assert "test_experiment_cli" in local_testing.SCOPES["accept"]
+    assert "test_modern2d_training_prepare" in local_testing.SCOPES["prepare"]
+    assert "test_modern2d_qualification_prepare" in local_testing.SCOPES["prepare"]
+    assert "test_modern2d_training_records" in local_testing.SCOPES["accept"]
+    assert "test_modern2d_qualification_records" in local_testing.SCOPES["accept"]
     for scope in ("submit", "accept", "resume"):
         assert "test_reform_daily_platform" in local_testing.SCOPES[scope]
 
@@ -83,7 +88,10 @@ def test_runtime_inventory_excludes_local_orchestration_but_test_inventory_keeps
         _HOST_ONLY, runtime_source_files, testing_source_files)
 
     root = Path(__file__).resolve().parents[1]
-    host_tools = {"src/molgap/local_testing.py", "src/molgap/local_storage.py"}
+    host_tools = {"src/molgap/local_testing.py", "src/molgap/local_storage.py",
+                  "src/molgap/modern2d_training_prepare.py",
+                  "src/molgap/modern2d_qualification_prepare.py",
+                  "src/molgap/modern2d_research_prepare.py"}
     if (root / ".git").exists():
         runtime = set(runtime_source_files(root))
         testing = set(testing_source_files(root))

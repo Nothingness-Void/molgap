@@ -177,18 +177,32 @@ def prepare_qualification_inputs(request, *, execute=False):
                 "output_root": str(output), "payloads_read": False, "remote_submission": False}
     _verify_export(root, request, permits)
     import torch
-    from .esa_native import ESANativeConfig
+    from importlib import import_module
+    from .experiment_catalog import FAMILIES
+    from .experiment_execution import MODERN2D_PREVIEW_PROFILE, MODERN2D_SCIENTIFIC_INPUT_ABI
     from .experiment_family_workflow import tensor_digest
     from .modern2d_feature_binding import build_indexed_feature_binding
-    from .ppgt_author import PPGTAuthorConfig
     from .v4_runtime import sample_std_compat
 
     binding = {"format": "molgap-indexed-training-input-v1", "data_root": "indexed_assets",
                "scope": "ACCEPTED_INDEXED_INPUT_V1"}
-    models = {"ppgt_author_v2": {"family": ["ppgt_small", "2"], "model_config": asdict(PPGTAuthorConfig()),
-                                "feature_bindings": {}, "feature_binding_sha256": {}},
-              "esa_native_v3": {"family": ["esa_small", "3"], "model_config": asdict(ESANativeConfig()),
-                                "feature_bindings": {}, "feature_binding_sha256": {}}}
+    models = {}
+    for family, contract in FAMILIES.items():
+        entry = contract.execution
+        if (entry is None or entry.artifact_adapter != MODERN2D_PREVIEW_PROFILE
+                or entry.scientific_input_abi != MODERN2D_SCIENTIFIC_INPUT_ABI):
+            continue
+        if entry.input_model_name is None:
+            raise ValueError("Modern2D preview family lacks an input model name")
+        module = import_module(contract.source_module)
+        config_type = getattr(module, "CONFIG_TYPE", None)
+        if config_type is None:
+            raise ValueError("Modern2D preview family lacks a CONFIG_TYPE")
+        if entry.input_model_name in models:
+            raise ValueError("Duplicate Modern2D input model name")
+        models[entry.input_model_name] = {
+            "family": list(family), "model_config": asdict(config_type()),
+            "feature_bindings": {}, "feature_binding_sha256": {}}
     roles, training_ids = {}, None
     for role, rows in ROLE_ROWS.items():
         record = request["roles"][role]

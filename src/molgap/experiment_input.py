@@ -158,8 +158,8 @@ def _read_scientific_recipe(path, family, authority):
     """Reissue only a repair probe's source pin; retained input bytes stay frozen."""
     from copy import deepcopy
     from .family_training_runner import read_recipe, _recipe_configuration
-    from .modern2d_training import INTERFACES
     from .modern2d_feature_binding import indexed_transform_identity
+    from .experiment_execution import MODERN2D_SCIENTIFIC_INPUT_ABI, scientific_input_abi
 
     try:
         return read_recipe(path)
@@ -170,7 +170,7 @@ def _read_scientific_recipe(path, family, authority):
                   and authority.get("scientific_training_authorized") is True
                   and authority.get("source_reissue_authorized") is True)
         if (not (repair or fresh_screen)
-                or family not in INTERFACES
+                or scientific_input_abi(family) != MODERN2D_SCIENTIFIC_INPUT_ABI
                 or str(error) != "Execution policy differs from the accelerated family default"):
             raise
         record = _read(path)
@@ -192,13 +192,15 @@ def _compile_scientific_input(path, root, value):
     Derived JSON is explicitly separate from committed executable source.
     """
     from copy import deepcopy
-    from .modern2d_training import INTERFACES as MODERN_INTERFACES, Modern2DFormalTrainingProfile
+    from .modern2d_training import Modern2DFormalTrainingProfile
     from dataclasses import replace
     import hashlib
     import math
     from .common.declarations import ExecutionQuestion, ExecutionProfile, build_execution_proposal
     from .comparison_readiness import assess_comparison_prelaunch, validate_reference_bundle, validate_target_transform_asset
-    from .experiment_execution import build_addon_declaration, build_family_recipe, training_adapter
+    from .experiment_execution import (MODERN2D_SCIENTIFIC_INPUT_ABI,
+        SUPPORTED_SCIENTIFIC_INPUT_ABIS, build_addon_declaration, build_family_recipe,
+        scientific_input_abi, training_adapter)
     from .experiment_launch import canonical_json
     from .experiment_source_inventory import runtime_source_files
     from .experiment_spec import FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
@@ -322,8 +324,10 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Same-run target differs from its frozen baseline preset")
     compiled, data_specs = [], set()
     modern_inputs = {}
-    modern = all((a["model"]["family"], a["model"]["version"]) in MODERN_INTERFACES for a in items)
-    if not modern and any((a["model"]["family"], a["model"]["version"]) in MODERN_INTERFACES for a in items):
+    input_abis = [scientific_input_abi((a["model"]["family"], a["model"]["version"]))
+                  for a in items]
+    modern = all(abi == MODERN2D_SCIENTIFIC_INPUT_ABI for abi in input_abis)
+    if not modern and any(abi == MODERN2D_SCIENTIFIC_INPUT_ABI for abi in input_abis):
         raise ValueError("Modern2D indexed inputs require a separate workflow from mature fixed inputs")
     for item in items:
         preset = presets.get(item["arm_id"])
@@ -332,8 +336,8 @@ def _compile_scientific_input(path, root, value):
         _identifier(item["arm_id"], "arm_id")
         _object(item["model"], "family version addons", "model")
         family = (item["model"]["family"], item["model"]["version"])
-        if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN_INTERFACES}:
-            raise ValueError("Scientific compiler requires a reviewed K1/3, GPTrans/2, PPGT/3 or ESA/4 interface")
+        if scientific_input_abi(family) not in SUPPORTED_SCIENTIFIC_INPUT_ABIS:
+            raise ValueError("Scientific compiler requires a reviewed catalog scientific_input_abi")
         record, baseline = _read_scientific_recipe(local(item["recipe_ref"]), family, authority)
         if preset is not None and baseline.initialization_sha256 != preset["initialization_state_sha256"]:
             raise ValueError("Preset initialization differs from its frozen recipe")
@@ -623,7 +627,7 @@ def freeze_experiment_input(path, repo_root):
     return _freeze(value,spec,plan,paths,repo_root=repo_root)
 
 
-def locate_run(profile, repo_root, run_id, attempt_id):
+def locate_run(profile, repo_root, run_id, attempt_id, *, _verification=None):
     """Read the original frozen run by ID; never create a run or infer artifacts."""
     from .experiment_launch import read_launch_receipt
     from .experiment_package import _PackageVerification, verify_experiment_source_package
@@ -652,7 +656,7 @@ def locate_run(profile, repo_root, run_id, attempt_id):
             or canonical_fingerprint(plan) != binding.get("workflow_identity")):
         raise ValueError("Original frozen run binding changed")
     package=run/"prepared/package"
-    verification=_PackageVerification()
+    verification=_verification if _verification is not None else _PackageVerification()
     manifest=(verify_experiment_source_package(package, _verification=verification)
               if package.exists() else None)
     if manifest and manifest["spec_identity"] != spec.identity:
@@ -809,7 +813,7 @@ def local_preparation_error(error,stage):
         "Frozen data declaration, initialization and reference recipe differ":("arms.data_ref","Frozen data, initialization and reference recipe must match"),
         "Scientific candidate has no change from the retained reference":("arms","No scientific change from the retained reference was declared"),
         "Scientific change is not a comparable declared intervention":("arms.purpose","Declared purpose does not isolate the scientific change"),
-        "Scientific compiler supports reviewed shared K1/3 and GPTrans/2 only":("arms.model","This compiler supports shared K1/3 and GPTrans/2; no new family is qualified"),
+        "Scientific compiler requires a reviewed catalog scientific_input_abi":("arms.model","Family execution must declare a supported scientific input ABI"),
         "Retained reference context is not bound to the selected baseline data declaration":("arms.data_ref","Select the baseline declaration bound by the retained reference context"),
         "Frozen scientific input changed; create an explicit new run instead of overwriting":("logical_run_id","Scientific input changed; create an explicit new run rather than overwrite this run"),
         "Original frozen inputs are incomplete; reconcile the original freeze":("run.inputs","Original freeze is incomplete; reconcile it without recompiling under a new HEAD"),

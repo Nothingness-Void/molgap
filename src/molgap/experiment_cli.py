@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from contextlib import redirect_stdout
 from pathlib import Path
 import sys
@@ -43,10 +44,44 @@ def _read(path: Path) -> str:
     return path.read_bytes().decode("utf-8")
 
 
+def _evidence_argument(value):
+    """Keep a single audit's custody path; decode only maps or inline objects."""
+    from .experiment_family_workflow import _json
+    from .experiment_spec import _unique_object
+    if value.lstrip().startswith("{"):
+        audit = json.loads(value, object_pairs_hook=_unique_object,
+            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
+    else:
+        path = _local(value)
+        audit = _json(path)
+        if ("context" in audit or "role_use" in audit
+                or audit.get("format") == "molgap-rml-terminal-package-v1"):
+            return path
+    if type(audit) is not dict:
+        raise ValueError("Evidence requires an object or per-arm path map")
+    return audit
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("catalog")
+    preset = commands.add_parser("build-preset")
+    preset.add_argument("--repo-root", type=_local, default=Path.cwd())
+    for name in ("name", "family", "family-version", "data-arm"):
+        preset.add_argument("--" + name, required=True)
+    preset.add_argument("--version", default="v1")
+    for name in ("recipe", "data-spec", "target-manifest", "initial-state", "output"):
+        preset.add_argument("--" + name, required=True, type=_local)
+    preset.add_argument("--reference-plan", type=_local)
+    preset.add_argument("--reference-arm")
+    draft = commands.add_parser("derive-input")
+    draft.add_argument("--repo-root", type=_local, default=Path.cwd())
+    for name in ("from-run", "profile", "output"):
+        draft.add_argument("--" + name, required=True, type=_local)
+    draft.add_argument("--experiment-id", required=True)
+    draft.add_argument("--run-id", required=True)
+    draft.add_argument("--attempt-id", default="v1")
     freeze=commands.add_parser("freeze-input")
     freeze.add_argument("--experiment",required=True,type=_local)
     freeze.add_argument("--repo-root",required=True,type=_local)
@@ -124,7 +159,10 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--stage-terminal", action="store_true")
             command.add_argument("--outcome")
             command.add_argument("--decision-ref", type=_local)
-            command.add_argument("--role-audit", type=_local)
+            command.add_argument("--role-audit", type=_evidence_argument,
+                help="Observed audit JSON file, per-arm path-map file, or inline JSON map")
+            command.add_argument("--scientific-acceptance", type=_evidence_argument,
+                help="Owning scientific terminal package, or per-arm path map")
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
             command.add_argument("--bootstrap-samples", type=int, default=0)
             command.add_argument("--seed", type=int, default=42)
@@ -181,6 +219,24 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "build-preset":
+        from .experiment_presets import build_baseline_preset, export_baseline_preset
+        if (args.reference_plan is None) != (args.reference_arm is None):
+            raise ValueError("Reference plan and arm must be supplied together")
+        preset = build_baseline_preset(args.repo_root, name=args.name, version=args.version,
+            family=(args.family, args.family_version), recipe=args.recipe, data_spec=args.data_spec,
+            data_arm_id=args.data_arm, target_manifest=args.target_manifest,
+            initial_state=args.initial_state, reference=args.reference_plan,
+            reference_arm_id=args.reference_arm)
+        export_baseline_preset(args.output, preset)
+        return {"status": "PRESET_WRITTEN", "output": str(args.output)}, 0
+    if args.command == "derive-input":
+        from .experiment_presets import build_scientific_input_template, export_scientific_input_template
+        template = build_scientific_input_template(args.from_run, args.repo_root, experiment_id=args.experiment_id,
+            logical_run_id=args.run_id, attempt_id=args.attempt_id, machine_profile=args.profile)
+        export_scientific_input_template(args.output, template, frozen_run=args.from_run)
+        return {"status": "EDITABLE_DRAFT_WRITTEN", "output": str(args.output),
+                "authority": "REQUIRED_BEFORE_PREPARATION"}, 0
     if args.command == "diagnose":
         from .experiment_attribution import analyze_family_pair
         if args.run_id is not None:
@@ -273,10 +329,11 @@ def _dispatch(args) -> tuple[dict, int]:
                             outcome=args.outcome, decision_ref=args.decision_ref,
                             diagnostic_output=args.output, n_bootstrap=args.bootstrap_samples, seed=args.seed)
                     elif args.output is not None or args.bootstrap_samples or args.seed != 42:
-                        raise ValueError("Diagnostic options require --diagnose or --stage-terminal")
+                        raise ValueError("Diagnostic options require --diagnose")
                     if args.role_audit is not None:
-                        audit = _json(args.role_audit)
-                        options["role_audit"] = args.role_audit if "context" in audit else audit
+                        options["role_audit"] = args.role_audit
+                    if args.scientific_acceptance is not None:
+                        options["scientific_acceptance"] = args.scientific_acceptance
                     result = accept_run_workflow(*original, **options)
                     return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
                 if args.command == "build-resume":
@@ -291,7 +348,7 @@ def _dispatch(args) -> tuple[dict, int]:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
-                    args.decision_ref, args.role_audit, args.output)):
+                    args.decision_ref, args.role_audit, args.scientific_acceptance, args.output)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:
                 raise ValueError("Explicit Spec acceptance requires --outputs")
@@ -470,7 +527,7 @@ def main(argv: list[str] | None = None) -> int:
             result, code = _dispatch(args)
         if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
                 and not args.verbose and ((args.command == "diagnose" and args.output is not None)
-                                         or "diagnosis" in result)):
+                                         or "diagnosis" in result or "terminal_staging" in result)):
             result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
@@ -484,10 +541,11 @@ def main(argv: list[str] | None = None) -> int:
 def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
-        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers") if key in result}
+        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
+        "execution_retention") if key in result}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
-    diagnostic = result.get("diagnosis", result)
+    diagnostic = result.get("diagnosis") or result
     if "comparisons" in diagnostic:
         summary["diagnosis"] = {"status": diagnostic["status"], "reports": diagnostic.get("written_files", {}),
             "comparisons": {arm: {"status": pair["status"], "blockers": pair.get("blockers", []),

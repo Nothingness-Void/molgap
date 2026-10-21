@@ -16,18 +16,33 @@ from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2
 
 MODERN2D_PREVIEW_PROFILE = "modern2d-session-preview-v1"
 MODERN2D_FORMAL_PROFILE = "modern2d-formal-session-v1"
-MODERN2D_FORMAL_INTERFACES = MappingProxyType({
-    ("ppgt_small", "3"): ("molgap.ppgt_author:make_model", "ogb-atom9-bond3-author-rrwp-spe-v2"),
-    ("esa_small", "4"): ("molgap.esa_native:make_model", "ogb-atom9-bond3-directed-edge-isolate-mask-v3"),
-})
-MODERN2D_FORMAL_MODEL_INTERFACES = MappingProxyType({
-    ("ppgt_small", "3"): ("ppgt_small", "2"),
-    ("esa_small", "4"): ("esa_small", "3"),
-})
-MODERN2D_PREVIEW_INTERFACES = MappingProxyType({
-    ("ppgt_small", "2"): ("molgap.ppgt_author:make_model", "ogb-atom9-bond3-author-rrwp-spe-v2"),
-    ("esa_small", "3"): ("molgap.esa_native:make_model", "ogb-atom9-bond3-directed-edge-isolate-mask-v3"),
-})
+SHARED_SCIENTIFIC_INPUT_ABI = "shared-family-v1"
+MODERN2D_SCIENTIFIC_INPUT_ABI = "modern2d-indexed-v1"
+SUPPORTED_SCIENTIFIC_INPUT_ABIS = frozenset({SHARED_SCIENTIFIC_INPUT_ABI,
+                                             MODERN2D_SCIENTIFIC_INPUT_ABI})
+
+
+def _catalog_modern2d_interfaces():
+    """Project compatibility views from FamilyExecution, never hand-edit them."""
+    formal, formal_model, preview = {}, {}, {}
+    for family, contract in FAMILIES.items():
+        entry = contract.execution
+        if entry is None or entry.scientific_input_abi != MODERN2D_SCIENTIFIC_INPUT_ABI:
+            continue
+        if entry.artifact_adapter == MODERN2D_FORMAL_PROFILE:
+            formal[family] = (entry.model_factory, contract.feature_schema)
+            if entry.model_interface is None:
+                raise ValueError("Formal Modern2D family lacks its input interface")
+            formal_model[family] = tuple(entry.model_interface)
+        elif entry.artifact_adapter == MODERN2D_PREVIEW_PROFILE:
+            preview[family] = (entry.model_factory, contract.feature_schema)
+    return MappingProxyType(formal), MappingProxyType(formal_model), MappingProxyType(preview)
+
+
+# Compatibility projections for callers that still import these names.  The
+# catalog is the only source of truth.
+MODERN2D_FORMAL_INTERFACES, MODERN2D_FORMAL_MODEL_INTERFACES, MODERN2D_PREVIEW_INTERFACES = (
+    _catalog_modern2d_interfaces())
 
 
 @dataclass(frozen=True)
@@ -77,6 +92,9 @@ class TrainingAddon:
     extra_source_files: tuple[str, ...] = ()
     apply_hook: str | None = None
     policy_hook: str | None = None
+    conditional_optimizer_prefixes: tuple[str, ...] = ()
+    conditional_optimizer_buffers: tuple[str, ...] = ()
+    legacy_conditional_optimizer_tail: bool = False
 
 
 @dataclass(frozen=True)
@@ -183,7 +201,10 @@ def catalog_addons(family):
             raise ValueError("Duplicate catalog execution family version")
         if family[1] in modes:
             result.append(TrainingAddon(name,version,modes[family[1]],contract.extra_source_files,
-                                        contract.apply_hook,contract.policy_hook))
+                                        contract.apply_hook,contract.policy_hook,
+                                        contract.conditional_optimizer_prefixes,
+                                        contract.conditional_optimizer_buffers,
+                                        contract.legacy_conditional_optimizer_tail))
     return tuple(result)
 
 
@@ -211,6 +232,63 @@ def _catalog_training_adapters():
 
 
 TRAINING_ADAPTERS = MappingProxyType(_catalog_training_adapters())
+
+
+def family_execution(family):
+    """Return the reviewed execution/input capability for one catalog family."""
+    key = tuple(family)
+    contract = FAMILIES.get(key)
+    if contract is None or contract.execution is None:
+        raise ValueError(f"Family {key} has no executable catalog contract")
+    return contract.execution
+
+
+def scientific_input_abi(family):
+    """Return the declared compiler ABI; ``None`` means declaration-only."""
+    return family_execution(family).scientific_input_abi
+
+
+def modern2d_preview_family(family):
+    """Resolve a formal family to the indexed input/model interface it consumes."""
+    key = tuple(family)
+    entry = family_execution(key)
+    if entry.scientific_input_abi != MODERN2D_SCIENTIFIC_INPUT_ABI:
+        raise ValueError("Family has no reviewed Modern2D indexed input ABI")
+    preview = tuple(entry.model_interface or key)
+    preview_entry = family_execution(preview)
+    if (preview_entry.scientific_input_abi != MODERN2D_SCIENTIFIC_INPUT_ABI or
+            preview_entry.artifact_adapter != MODERN2D_PREVIEW_PROFILE):
+        raise ValueError("Modern2D family lacks a reviewed preview input interface")
+    return preview
+
+
+def _recipe_training_addons(recipe):
+    adapter = TRAINING_ADAPTERS.get(recipe.interface)
+    if adapter is None:
+        raise ValueError("Recipe has no executable family adapter")
+    if recipe.mode == "composed":
+        return [adapter.addon(item["name"], item["version"]) for item in recipe.addons]
+    return [entry for entry in adapter.addons if entry.mode == recipe.mode]
+
+
+def conditional_optimizer_parameters(recipe, names):
+    """Select declared addon parameters that may lack optimizer moments."""
+    entries = _recipe_training_addons(recipe)
+    prefixes = tuple(dict.fromkeys(prefix for entry in entries
+                                   for prefix in entry.conditional_optimizer_prefixes))
+    buffers = {name for entry in entries for name in entry.conditional_optimizer_buffers}
+    return {name for name in names if name not in buffers and any(
+        name.startswith(prefix) for prefix in prefixes)}
+
+
+def legacy_conditional_optimizer_tail(recipe):
+    """Whether an old checkpoint may infer conditional IDs from a suffix."""
+    if recipe.mode == "composed":
+        return False
+    entries = [entry for entry in _recipe_training_addons(recipe)
+               if entry.conditional_optimizer_prefixes]
+    return bool(entries) and all(entry.legacy_conditional_optimizer_tail for entry in entries)
+
 
 def shared_training_adapters():
     """Project the shared recipe owners without guessing a family version."""
@@ -244,6 +322,7 @@ def validate_training_registry() -> None:
         if adapter.integration_preview or adapter.formal_training:
             contract = FAMILIES[family]
             factory, schema = (MODERN2D_FORMAL_INTERFACES if adapter.formal_training else MODERN2D_PREVIEW_INTERFACES)[family]
+            entry = contract.execution
             if (adapter.cpu_synthetic_only or adapter.module != "molgap.family_training_runner"
                     or (adapter.addons and not adapter.formal_training) or adapter.model_factory != factory
                     or contract.source_module != factory.split(":")[0]
@@ -254,6 +333,10 @@ def validate_training_registry() -> None:
                     or contract.transform != "frozen-train-mean-sample-std"
                     or adapter.profile_adapter != "molgap.family_execution_profile"
                     or (adapter.formal_training and not adapter.target_identity_in_completion)
+                    or entry is None or entry.scientific_input_abi != MODERN2D_SCIENTIFIC_INPUT_ABI
+                    or entry.feature_module is None or not entry.feature_config_fields
+                    or (adapter.formal_training and tuple(entry.model_interface or ()) not in MODERN2D_PREVIEW_INTERFACES)
+                    or ((not adapter.formal_training) and tuple(entry.model_interface or family) != family)
                     or _hook_source(factory) not in adapter.source_files):
                 raise ValueError("Unreviewed Modern2D integration preview registration")
             _validate_registered_addons(family, adapter)
@@ -306,6 +389,12 @@ def _validate_registered_addons(family, adapter):
             raise ValueError("Policy hooks require the reviewed family session")
         if addon.policy_hook is not None:
             _hook_source(addon.policy_hook)
+        if (any(type(prefix) is not str or not prefix for prefix in addon.conditional_optimizer_prefixes)
+                or any(type(name) is not str or not name for name in addon.conditional_optimizer_buffers)
+                or any(not any(name.startswith(prefix) for prefix in addon.conditional_optimizer_prefixes)
+                       for name in addon.conditional_optimizer_buffers)
+                or type(addon.legacy_conditional_optimizer_tail) is not bool):
+            raise ValueError("Conditional optimizer metadata is not a reviewed parameter prefix")
         if adapter.model_factory is not None or addon.apply_hook is not None:
             if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
                     or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):

@@ -67,19 +67,23 @@ def test_deleted_known_touched_moment_is_rejected_before_any_restore(family):
         fresh.close()
 
 
-def conditional_session(log, *, touched=False):
+def conditional_session(log, *, touched=False, post_addon=False):
     template = make_session("neural_atom_k1", development=False, schedule_kind="cosine_step", events=events())
     recipe, data = replace(template.recipe, mode="ssma"), template.loaders.data
     template.close()
     kernel = SyntheticKernel(recipe)
     base = kernel.model[:3]
     kernel.model.add_module("k1_joint_aggregation", torch.nn.Linear(1, 1))
+    if post_addon:
+        kernel.model.add_module("post_addon", torch.nn.Linear(1, 1))
     kernel.optimizer = make_family_optimizer(recipe, kernel.model.parameters())
     kernel.ema = BoundForeachEMA(kernel.model, recipe.ema_decay)
     def forward(batch):
         value = base(batch.source_idx.float().reshape(-1, 1) / 257.)
         if touched:
             value = value + kernel.model.k1_joint_aggregation(value) * 0.
+        if post_addon:
+            value = value + kernel.model.post_addon(value) * 0.
         return value.reshape(-1)
     kernel.forward = forward
     return FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0)),
@@ -99,6 +103,13 @@ def test_conditional_addon_keeps_legitimate_lazy_state_but_not_deleted_acknowled
         fresh.load_state_dict(state)
     finally:
         fresh.close()
+    legacy = deepcopy(state)
+    legacy["cursor"].pop("optimizer_parameter_names")
+    legacy_fresh = conditional_session([])
+    try:
+        legacy_fresh.load_state_dict(legacy)
+    finally:
+        legacy_fresh.close()
     log = []
     touched = conditional_session(log, touched=True)
     touched.run(should_pause=lambda: True)
@@ -106,6 +117,37 @@ def test_conditional_addon_keeps_legitimate_lazy_state_but_not_deleted_acknowled
     assert len(state["optimizer"]["state"]) == 6
     del state["optimizer"]["state"][4]
     fresh = conditional_session([], touched=True)
+    try:
+        with pytest.raises(ValueError, match="moments"):
+            fresh.load_state_dict(state)
+    finally:
+        fresh.close()
+
+
+def test_conditional_addon_can_precede_required_parameters_in_optimizer_order():
+    log = []
+    first = conditional_session(log, post_addon=True)
+    first.run(should_pause=lambda: True)
+    state = log[-1]
+    assert state["cursor"]["optimizer_parameter_names"][4].startswith("k1_joint_aggregation.")
+    assert state["cursor"]["optimizer_parameter_names"][6].startswith("post_addon.")
+    assert set(state["optimizer"]["state"]) == {0, 1, 2, 3, 6, 7}
+    fresh = conditional_session([], post_addon=True)
+    try:
+        fresh.load_state_dict(state)
+    finally:
+        fresh.close()
+    legacy = deepcopy(state)
+    legacy["cursor"].pop("optimizer_parameter_names")
+    legacy_fresh = conditional_session([], post_addon=True)
+    try:
+        with pytest.raises(ValueError, match="moments"):
+            legacy_fresh.load_state_dict(legacy)
+    finally:
+        legacy_fresh.close()
+    del state["optimizer"]["state"][6]
+    state["cursor"]["optimizer_state_ids"].remove(6)
+    fresh = conditional_session([], post_addon=True)
     try:
         with pytest.raises(ValueError, match="moments"):
             fresh.load_state_dict(state)

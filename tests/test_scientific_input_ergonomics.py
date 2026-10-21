@@ -8,6 +8,7 @@ import pytest
 
 from molgap.experiment_execution import build_addon_declaration
 from molgap.experiment_input import freeze_experiment_input, resolve_experiment_input
+from molgap.experiment_presets import build_baseline_preset, export_baseline_preset
 from molgap.family_training_runner import read_recipe
 from test_experiment_workflow import _git, _pointer, _write_json
 from test_scientific_input import scientific
@@ -154,6 +155,28 @@ def test_explicit_preset_expands_exact_baseline_without_machine_defaults(compact
     assert path.relative_to(case.repo).as_posix() in plan["source_records"]
     target = preset["target_manifest"]["path"]
     assert target in plan["source_records"]
+
+
+def test_build_baseline_preset_derives_all_pins_from_existing_fixture(compact, tmp_path):
+    case = compact
+    original_arm = deepcopy(case.value["arms"][0])
+    path, _, dependencies = install_preset(case)
+    commit(case, path.relative_to(case.repo).as_posix(), *dependencies)
+    target = json.loads((case.repo / dependencies[0]).read_bytes())
+    preset = build_baseline_preset(case.repo, name="derived-baseline", family=(
+        original_arm["model"]["family"], original_arm["model"]["version"]), version="v2",
+        recipe=original_arm["recipe_ref"], data_spec=original_arm["data_ref"]["spec_ref"],
+        data_arm_id=original_arm["data_ref"]["arm_id"], target_manifest=dependencies[0],
+        initial_state=original_arm["initial_state_ref"])
+    recipe_record = json.loads((case.repo / original_arm["recipe_ref"]).read_bytes())
+    assert preset["format"] == "molgap-scientific-baseline-preset-v1"
+    assert preset["version"] == "v2"
+    assert preset["initialization_state_sha256"] == recipe_record["initialization_sha256"]
+    assert preset["target_manifest"]["sha256"] == hashlib.sha256(
+        json.dumps(target, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    output = tmp_path / "derived-baseline.json"
+    assert export_baseline_preset(output, preset) == output
+    assert json.loads(output.read_bytes()) == preset
 
 
 def test_same_run_presets_supply_one_exact_target_without_changing_raw_input(compact):

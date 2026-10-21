@@ -6,11 +6,12 @@ keep their original custody and exact digests. Staging never finalizes RML.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from collections.abc import Mapping
 from pathlib import Path
 
 from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
-from .research_memory.paths import artifact_locator, repo_local_path, verify_bound_artifact
+from .research_memory.paths import artifact_locator, bound_artifact_path, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
 from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
 from .research_memory.trace import file_digest, json_bytes, load_canonical_trace
@@ -22,6 +23,62 @@ PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
 
 def _per_arm(value, arm_id):
     return value.get(arm_id) if isinstance(value, dict) else value
+
+
+def _role_input(value, arm_id):
+    """Select an arm role audit while preserving one inline audit object."""
+    if isinstance(value, dict) and arm_id in value:
+        return value[arm_id]
+    return value
+
+
+def _materialize_inline_role_audit(root: Path, value, context, trajectory_path: Path,
+                                   attempt_id: str, arm_id: str, where=None,
+                                   action_id=None):
+    """Persist an inline observed role audit before it enters terminal evidence."""
+    if value is None or isinstance(value, (str, Path)):
+        return value
+    if not isinstance(value, Mapping):
+        raise ValueError("role audit must be a repository path or mapping")
+    audit = dict(value)
+    if audit.get("context") is None:
+        # The caller supplies observed role facts; the resolved RunContext is
+        # the only authority for machine/run identity.  Fill that identity
+        # without deriving any role state from it.
+        audit["context"] = context.to_dict()
+    elif audit["context"] != context.to_dict():
+        raise ValueError("Observed role audit differs from the frozen run/source/attempt context")
+    if "roles" not in audit:
+        audit["roles"] = []
+    role_use = audit.get("role_use")
+    if not isinstance(role_use, Mapping):
+        raise ValueError("Role audit requires observed role_use and existing-schema roles")
+    for role in PROTECTED_ROLES:
+        if role_use.get(role) not in {"untouched", "consumed", "not_applicable", "unknown"}:
+            raise ValueError("Role audit lacks explicit protected-role truth: " + role)
+    identity = canonical_fingerprint(audit)
+    target = (trajectory_path.parent / "terminal_staging" / attempt_id /
+              ("role_audit-" + arm_id + "-" + identity[:16] + ".json"))
+    # Inline role events belong to this immutable audit object. Rebind only
+    # their evidence source pointer; preserve every observed role fact.
+    roles = audit.get("roles")
+    if not isinstance(roles, list):
+        raise ValueError("Role audit requires observed role_use and existing-schema roles")
+    if any(not isinstance(event, Mapping) for event in roles):
+        raise ValueError("role audit roles must be existing role-event objects")
+    for event in roles:
+        validate_role_event(event)
+        if where is not None and action_id is not None and (
+                event["trajectory_id"], event["run_id"], event["action_id"]) != (
+                where["trajectory_id"], where["run_id"], action_id):
+            raise ValueError("Observed role event differs from its bound run/action/source audit")
+    validate_observed_role_truth([audit.get("role_use", {})], roles)
+    audit["roles"] = [
+        {**event, "evidence_ref": target.relative_to(root).as_posix()}
+        for event in roles
+    ]
+    publish_immutable_bytes(target, json_bytes(audit))
+    return target.relative_to(root).as_posix()
 
 
 def _cost_events(native, context, where, action_id, source_ref):
@@ -75,6 +132,109 @@ def _roles(root, audit_ref, context, where, action_id):
     return role_use, events, blockers, audit_ref
 
 
+def _scientific_input(value, arm_id):
+    """Select a per-arm owner package without mistaking a package for a map."""
+    if isinstance(value, Mapping) and arm_id in value:
+        return value[arm_id]
+    return value
+
+
+def _validate_scientific_package(root: Path, value, *, where, action,
+                                 observed, output_root, outcome, decision_ref):
+    """Check an owner terminal package against this run's inspected bytes."""
+    if value is None:
+        return None
+    if not isinstance(value, (str, Path)):
+        raise ValueError("scientific acceptance must be a repository terminal package path or per-arm path map")
+    package_path = repo_local_path(root, value)
+    package = _json(package_path)
+    if package.get("format") != "molgap-rml-terminal-package-v1":
+        raise ValueError("scientific acceptance must use molgap-rml-terminal-package-v1")
+    if package.get("closure_blockers"):
+        raise ValueError("scientific acceptance package has unresolved closure blockers")
+    if (package.get("trajectory_id"), package.get("run_id"), package.get("action_id")) != (
+            where["trajectory_id"], where["run_id"], action["action_id"]):
+        raise ValueError("scientific acceptance package differs from the frozen trajectory/run/action")
+    decision = package.get("decision")
+    if not isinstance(decision, Mapping) or decision.get("final") is not True:
+        raise ValueError("scientific acceptance requires a final owner decision")
+    if decision.get("outcome") in (None, "ACTIVE") or decision.get("outcome") != outcome:
+        raise ValueError("scientific acceptance outcome differs from the requested terminal outcome")
+    if not isinstance(decision.get("decision_ref"), str) or not decision["decision_ref"]:
+        raise ValueError("scientific acceptance decision authority is missing")
+    decision_path = repo_local_path(root, decision["decision_ref"])
+    expected_decision = repo_local_path(root, decision_ref).relative_to(root).as_posix()
+    if decision_path.relative_to(root).as_posix() != expected_decision:
+        raise ValueError("scientific acceptance decision authority differs from the requested decision")
+    acceptance_ref = package.get("acceptance_ref")
+    if not isinstance(acceptance_ref, str):
+        raise ValueError("scientific acceptance package lacks acceptance_ref")
+    acceptance_path = repo_local_path(root, acceptance_ref)
+    acceptance = _json(acceptance_path)
+    evidence = package.get("evidence")
+    if not isinstance(evidence, Mapping):
+        raise ValueError("scientific acceptance package lacks V5 evidence")
+    from molgap.v5_common import validate_v5_evidence_envelope
+    validate_v5_evidence_envelope(evidence, repo_root=root)
+    if (acceptance.get("evidence_id") != evidence.get("evidence_id")
+            or acceptance.get("run_id") != package.get("run_id")
+            or acceptance.get("outcome") != evidence.get("outcome")
+            or acceptance.get("trajectory_decision") != decision):
+        raise ValueError("scientific acceptance metadata does not match its owner package")
+    if acceptance.get("trajectory_id") not in (None, package.get("trajectory_id")):
+        raise ValueError("scientific acceptance trajectory identity mismatch")
+    roles = package.get("roles", [])
+    role_use = package.get("role_use", {})
+    if not isinstance(roles, list) or not isinstance(role_use, Mapping):
+        raise ValueError("scientific acceptance package has invalid role observations")
+    from .research_memory.roles import validate_observed_role_truth
+    validate_observed_role_truth([role_use, evidence.get("role_use", {}), acceptance.get("role_use", {})], roles)
+    bindings = package.get("artifact_hashes")
+    if not isinstance(bindings, Mapping) or not bindings:
+        raise ValueError("scientific acceptance package lacks artifact_hashes")
+    for locator, digest in bindings.items():
+        if not isinstance(locator, str) or not locator:
+            raise ValueError("scientific acceptance artifact locator must be a nonempty string")
+        verify_bound_artifact(root, locator, digest)
+    if acceptance_ref not in bindings or file_digest(acceptance_path) != bindings[acceptance_ref]:
+        raise ValueError("scientific acceptance metadata is not hash bound")
+    if decision_path.relative_to(root).as_posix() not in bindings:
+        raise ValueError("scientific acceptance decision authority is not hash bound")
+
+    current = {
+        "predictions": observed["artifacts"]["predictions"],
+        "selected_model": observed["artifacts"]["selected_model"],
+        "trace": observed["artifacts"]["trace"],
+    }
+    for role, current_binding in current.items():
+        current_path = _artifact_path(output_root, current_binding["path"])
+        matches = []
+        for artifact in evidence.get("artifacts", []):
+            locator = artifact.get("locator")
+            if not isinstance(locator, str) or not locator:
+                continue
+            if (bound_artifact_path(root, locator) == current_path
+                    and artifact.get("sha256") == current_binding["sha256"]):
+                matches.append(artifact)
+        if not matches:
+            raise ValueError("scientific acceptance artifact differs from inspected " + role)
+        locator = matches[0]["locator"]
+        if bindings.get(locator) != current_binding["sha256"]:
+            raise ValueError("scientific acceptance " + role + " artifact is not hash bound")
+    manifest = package.get("trace_manifest")
+    if not isinstance(manifest, Mapping) or manifest.get("trace_artifact_ref") is None:
+        raise ValueError("scientific acceptance package lacks trace_manifest")
+    trace_locator = manifest["trace_artifact_ref"]
+    if not isinstance(trace_locator, str) or not trace_locator:
+        raise ValueError("scientific acceptance trace locator must be a nonempty string")
+    if bound_artifact_path(root, trace_locator) != _artifact_path(output_root, current["trace"]["path"]):
+        raise ValueError("scientific acceptance trace manifest differs from inspected trace")
+    if manifest.get("trace_artifact_sha256") != current["trace"]["sha256"]:
+        raise ValueError("scientific acceptance trace manifest hash differs from inspected trace")
+    return {"path": package_path, "package": package, "acceptance": acceptance,
+            "acceptance_path": acceptance_path}
+
+
 def _diagnostic_binding(root, resolved, report, attempt_id):
     if report is None:
         return None
@@ -113,13 +273,16 @@ def _diagnostic_binding(root, resolved, report, attempt_id):
 
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
-        diagnostic_report=None, role_audit=None, resolved=None, reports=None):
+        diagnostic_report=None, role_audit=None, resolved=None, reports=None,
+        package_dir=None, scientific_acceptance=None):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
     transaction. Independent callers resolve and inspect again. An optional
     repository-local role audit binds its exact ``context``, observed ``role_use``
     and existing-schema ``roles``; recipe authorization is never an audit.
+    An owner supplied ``molgap-rml-terminal-package-v1`` may be reused after
+    its decision, role, evidence, and current artifact bindings are checked.
     """
     if resolved is None:
         from .experiment_run import resolve_run_acceptance_inputs
@@ -133,6 +296,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
            if arm_id in resolved.get("target_identities", {}) else {})}
         for arm_id, item in resolved["outputs"].items()}
     locations = locations if locations is not None else resolved["locations"]
+    frozen_options = resolved.get("options", {})
+    frozen_package = package_dir or frozen_options.get("package_dir")
+    verification = frozen_options.get("_verification")
     arm_ids = {arm["arm_id"] for arm in spec.to_dict()["arms"]}
     if set(outputs) != arm_ids or set(locations) != arm_ids:
         raise ValueError("Terminal staging requires every independent frozen arm")
@@ -155,6 +321,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             raise ValueError("Mechanical report context differs from the frozen launch")
         trajectory_path = repo_local_path(root, where["trajectory"])
         trajectory = validate_trajectory(_json(trajectory_path))
+        # A frozen source package is the only authority allowed to restore
+        # missing generated contract metadata.  Restore exact pinned bytes
+        # before constructing the terminal package so finalization can bind
+        # them without reopening or overwriting generated files.
+        from .research_memory.terminal_wiring import _restore_frozen_generated_metadata
+        restored = _restore_frozen_generated_metadata(
+            root, trajectory, frozen_package, _verification=verification
+        )
         if trajectory["trajectory_id"] != where["trajectory_id"] or trajectory["record_mode"] != "prospective":
             raise ValueError("Terminal staging requires the owning prospective trajectory")
         actions = [action for action in trajectory["actions"] if where["run_id"] in action["run_ids"]]
@@ -175,12 +349,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], {}
+        hashes.update(restored)
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
             verify_bound_artifact(root, locator, binding["sha256"])
             hashes[locator] = binding["sha256"]
             artifacts.append({"name": "training_trace" if name == "trace" else name,
+                "role": "training_trace" if name == "trace" else name,
                 "locator": locator, "sha256": binding["sha256"],
                 "availability": "machine_local_verified" if locator.startswith("external://") else "durable_local_verified"})
             if name == "trace":
@@ -199,7 +375,32 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if explicit_decision is not None:
             explicit_decision = repo_local_path(root, explicit_decision).relative_to(root).as_posix()
             hashes[explicit_decision] = file_digest(root / explicit_decision)
-        role_use, roles, role_blockers, audit_ref = _roles(root, _per_arm(role_audit, arm_id), context, where, action["action_id"])
+        owner_input = _scientific_input(scientific_acceptance, arm_id)
+        if owner_input is not None:
+            if role_audit is not None:
+                raise ValueError("scientific acceptance already supplies the terminal role observations")
+            if explicit_outcome is None or explicit_decision is None:
+                raise ValueError("scientific acceptance requires explicit outcome and decision reference")
+            owner = _validate_scientific_package(
+                root, owner_input, where=where, action=action,
+                observed=observed, output_root=output_root, outcome=explicit_outcome,
+                decision_ref=explicit_decision,
+            )
+            owner_path = owner["path"]
+            owner_ref = owner_path.relative_to(root).as_posix()
+            staged[arm_id] = {**where, "terminal": owner_ref, "trace": trace_locator}
+            paths[arm_id] = {"terminal": str(owner_path),
+                "observed": None, "acceptance": str(owner["acceptance_path"]),
+                "closure_ready": True, "blockers": []}
+            continue
+        role_input = _role_input(role_audit, arm_id)
+        role_input = _materialize_inline_role_audit(
+            root, role_input, context, trajectory_path, attempt_id, arm_id,
+            where, action["action_id"]
+        )
+        role_use, roles, role_blockers, audit_ref = _roles(
+            root, role_input, context, where, action["action_id"]
+        )
         blockers.extend(role_blockers)
         if audit_ref is not None:
             hashes[audit_ref] = file_digest(root / audit_ref)

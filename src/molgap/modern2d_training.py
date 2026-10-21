@@ -10,11 +10,28 @@ from .screen_policy import canonical_fingerprint
 
 
 PROFILE = "modern2d-formal-session-v1"
-INTERFACES = (("ppgt_small", "3"), ("esa_small", "4"))
-MODEL_INTERFACES = (("ppgt_small", "2"), ("esa_small", "3"))
 AUTHORITY_FORMAT = "molgap-modern2d-formal-training-authority-v1"
 FORMAL_STEPS = 60 * (100000 // 128)
 _ISSUER = object()
+
+
+def _catalog_interfaces():
+    from .experiment_catalog import FAMILIES
+    formal = []
+    model = []
+    for family, contract in FAMILIES.items():
+        entry = contract.execution
+        if (entry is None or entry.artifact_adapter != PROFILE or
+                entry.scientific_input_abi != "modern2d-indexed-v1"):
+            continue
+        if entry.model_interface is None:
+            raise ValueError("Formal Modern2D family lacks its indexed model interface")
+        formal.append(family)
+        model.append(tuple(entry.model_interface))
+    return tuple(formal), tuple(model)
+
+
+INTERFACES, MODEL_INTERFACES = _catalog_interfaces()
 
 
 @dataclass(frozen=True)

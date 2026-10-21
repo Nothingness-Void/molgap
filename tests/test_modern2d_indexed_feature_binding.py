@@ -93,6 +93,26 @@ def test_feature_only_identity_still_pins_native_esa_tokenization(monkeypatch):
         transform_configuration(("unregistered", "1"), {})
 
 
+def test_frozen_binding_validation_does_not_recompute_source_pin(monkeypatch):
+    from molgap import modern2d_feature_binding
+    binding = {
+        "base_dataset_manifest_sha": "a" * 64,
+        "source_row_sha": "b" * 64,
+        "source_topology_sha": "c" * 64,
+        "feature_schema_version": MODERN2D_PREVIEW_INTERFACES[("ppgt_small", "2")][1],
+        "transform_code_sha": "d" * 64,
+        "transform_config_sha": "e" * 64,
+        "derived_feature_sha": None,
+        "role_history_sha": "f" * 64,
+        "role": "train_100k",
+        "scope": "ACCEPTED_INDEXED_INPUT_V1",
+    }
+    def recompute(*args, **kwargs):
+        raise AssertionError("recomputed")
+    monkeypatch.setattr(modern2d_feature_binding, "indexed_transform_identity", recompute)
+    assert validate_indexed_feature_binding(binding, deepcopy(binding)) == canonical_fingerprint(binding)
+
+
 def _dataset(tmp_path, role="train_100k"):
     root = tmp_path / role
     root.mkdir()

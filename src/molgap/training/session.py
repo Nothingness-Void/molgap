@@ -88,7 +88,8 @@ def validate_session_resume(recipe, state):
             "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
     if recipe.clean_bn is not None:
         keys.add("weight_state")
-    if (type(cursor) is not dict or set(cursor) != keys or cursor["recipe_identity"] != recipe.identity
+    accepted_keys = (keys, keys | {"optimizer_parameter_names"})
+    if (type(cursor) is not dict or set(cursor) not in accepted_keys or cursor["recipe_identity"] != recipe.identity
             or type(step) is not int or not 1 <= step <= plan.optimizer_steps):
         raise ValueError("Resume identity or step differs from the frozen recipe")
     pass_index, offset = divmod(step, plan.steps_per_pass)
@@ -138,22 +139,40 @@ def validate_session_resume(recipe, state):
             or any(type(index) is not int for index in optimizer["state"])
             or initialized != sorted(optimizer["state"])):
         raise ValueError("Resume lost acknowledged optimizer moments")
-    # SSMA can legitimately skip its conditional residual on an edgeless batch.
-    # Other registered modes update every parameter; do not permit lazy reset.
+    from ..experiment_execution import (conditional_optimizer_parameters,
+        legacy_conditional_optimizer_tail)
+    # A reviewed addon may legitimately skip its conditional parameters on a
+    # batch.  New checkpoints carry the exact optimizer parameter order so a
+    # conditional addon may occur between parameters from other addons.
     parameter_ids = optimizer["param_groups"][0].get("params", [])
-    required_ids = set(parameter_ids)
-    if recipe.mode == "ssma":
-        # The registered SSMA hook appends its module after the backbone. Its
-        # two fixed affine buffers are not optimizer parameters. Only this tail
-        # may stay uninitialized on edgeless batches; backbone moments are required.
-        conditional = [name for name in state["model"]
-            if name.startswith("k1_joint_aggregation.")
-            and name not in {"k1_joint_aggregation.affine_weight", "k1_joint_aggregation.affine_bias"}]
-        if len(conditional) > len(parameter_ids):
-            raise ValueError("Resume conditional optimizer schema differs")
-        required_ids = set(parameter_ids[:-len(conditional)] if conditional else parameter_ids)
-    if not required_ids <= set(initialized):
-        raise ValueError("Resume is missing required optimizer moments")
+    parameter_names = cursor.get("optimizer_parameter_names")
+    if parameter_names is not None:
+        if (type(parameter_names) is not list or len(parameter_names) != len(parameter_ids)
+                or any(type(name) is not str or not name for name in parameter_names)
+                or len(set(parameter_names)) != len(parameter_names)
+                or not set(parameter_names) <= set(state["model"])):
+            raise ValueError("Resume optimizer parameter mapping differs")
+        conditional = conditional_optimizer_parameters(recipe, parameter_names)
+        conditional_ids = {parameter_id for parameter_id, name in zip(parameter_ids, parameter_names)
+                           if name in conditional}
+        required_ids = set(parameter_ids) - conditional_ids
+        if not required_ids <= set(initialized):
+            raise ValueError("Resume is missing required optimizer moments")
+    else:
+        # Legacy checkpoints expose only initialized IDs, so their conditional
+        # IDs cannot be named.  Preserve the old suffix layout only for an
+        # addon that explicitly declares that compatibility; generic addons
+        # must carry moments for every optimizer ID.
+        conditional = conditional_optimizer_parameters(recipe, state["model"].keys())
+        missing_ids = set(parameter_ids) - set(initialized)
+        if legacy_conditional_optimizer_tail(recipe):
+            if len(conditional) > len(parameter_ids):
+                raise ValueError("Resume conditional optimizer schema differs")
+            required_ids = set(parameter_ids[:-len(conditional)] if conditional else parameter_ids)
+            if not required_ids <= set(initialized):
+                raise ValueError("Resume is missing required optimizer moments")
+        elif missing_ids:
+            raise ValueError("Resume is missing required optimizer moments")
     if any(not isinstance(value, torch.Tensor) for value in state["model"].values()):
         raise ValueError("Invalid resume model tensors")
     if state["ema"] is not None and (not isinstance(state["ema"], dict) or
@@ -219,11 +238,16 @@ class FamilyTrainingSession:
         import torch
         self._flush_metrics()
         values = list(torch.tensor(self._metric_host, dtype=self._metric_dtype).unbind()) if self._metric_host else []
+        names = {id(value): name for name, value in self.kernel.model.named_parameters()}
+        parameters = self.kernel.optimizer.param_groups[0]["params"]
+        if any(id(parameter) not in names for parameter in parameters):
+            raise ValueError("Optimizer parameter is not bound to the model")
         cursor = {"recipe_identity": self.recipe.identity, "pass_index": self.progress.pass_index,
             "next_batch": self.progress.next_batch, "status": self.progress.status,
             "pending_absolute": values, "pending_rows": self.pending_rows,
             "best_development_mae_eV": self.best, "selected_step": self.selected_step,
-            "optimizer_state_ids": sorted(optimizer_state["state"])}
+            "optimizer_state_ids": sorted(optimizer_state["state"]),
+            "optimizer_parameter_names": [names[id(parameter)] for parameter in parameters]}
         if self.recipe.clean_bn is not None:
             cursor["weight_state"] = self.kernel.training_state.calibration_state_dict()
         return cursor
@@ -249,7 +273,7 @@ class FamilyTrainingSession:
     def load_state_dict(self, state):
         """Restore same-recipe work, never resume a different budget or data identity."""
         import torch
-        from ..experiment_family_workflow import _finite_tree, _validate_rng_state
+        from ..experiment_execution import conditional_optimizer_parameters
         from ..training_reproducibility import restore_rng_state
         if self.closed or self.progress.optimizer_step:
             raise ValueError("Resume requires a fresh session")
@@ -268,16 +292,20 @@ class FamilyTrainingSession:
             if any(observed.get(key) != expected[key] for key in keys):
                 raise ValueError("Resume optimizer defaults or parameter ordering changed")
         names = {id(value): name for name, value in self.kernel.model.named_parameters()}
-        for parameter_id, parameter in enumerate(self.kernel.optimizer.param_groups[0]["params"]):
+        conditional = conditional_optimizer_parameters(self.recipe, names.values())
+        live_parameters = self.kernel.optimizer.param_groups[0]["params"]
+        recorded_names = cursor.get("optimizer_parameter_names")
+        if (recorded_names is not None and
+                recorded_names != [names[id(parameter)] for parameter in live_parameters]):
+            raise ValueError("Resume optimizer parameter mapping changed")
+        for parameter_id, parameter in enumerate(live_parameters):
             moments = state["optimizer"]["state"].get(parameter_id)
             if (moments is None and parameter.requires_grad and
-                    not (self.recipe.mode == "ssma" and names[id(parameter)].startswith("k1_joint_aggregation."))):
+                    names[id(parameter)] not in conditional):
                 raise ValueError("Resume lost required parameter moments")
             if moments is not None and any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
                     for key in ("exp_avg", "exp_avg_sq")):
                 raise ValueError("Resume optimizer moments do not match the live parameter schema")
-        _finite_tree(state, "family.resume")
-        _validate_rng_state(state["rng_state"])
         previous = deepcopy(self.state_dict())
         def install(value):
             if self.recipe.clean_bn is not None:

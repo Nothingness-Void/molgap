@@ -460,13 +460,15 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                     expected_package_identity, locations=None, execute=False,
-                    target_identities=None, execution_root=None):
+                    target_identities=None, execution_root=None, _verification=None,
+                    _inspections=None):
     """Inspect every arm independently of optional scientific closure inputs."""
     if execute and locations is None:
         raise ValueError("Terminal execution requires explicit reviewed terminal locations")
-    from .experiment_family_workflow import capture_output_inspection
+    from .experiment_family_workflow import capture_output_inspection, _inspection_report
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
-        package_dir=package_dir, expected_package_identity=expected_package_identity)
+        package_dir=package_dir, expected_package_identity=expected_package_identity,
+        **({"_verification": _verification} if _verification is not None else {}))
     if target_identities is not None:
         for arm_id, binding in target_identities.items():
             outputs[arm_id]["target_identity"] = binding
@@ -477,13 +479,18 @@ def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
         retention = validate_execution_retention(Path(execution_root), spec,
             package_identity=expected_package_identity, source_commit=context.source_commit,
             source_archive_sha256=context.source_archive_sha256)
-    inspections, reports = {}, {}
+    inspections, reports = {} if _inspections is None else _inspections, {}
+    if type(inspections) is not dict or set(inspections) - set(outputs):
+        raise ValueError("Inspection snapshots differ from the selected arms")
     for arm_id, item in outputs.items():
         try:
-            inspections[arm_id] = capture_output_inspection(item["output_dir"],
-                context=item["context"], expected=item["expected"],
-                **({"target_identity": item["target_identity"]} if item.get("target_identity") is not None else {}))
-            reports[arm_id] = inspections[arm_id].report
+            if arm_id in inspections:
+                reports[arm_id] = _inspection_report(item, arm_id, inspections)
+            else:
+                inspections[arm_id] = capture_output_inspection(item["output_dir"],
+                    context=item["context"], expected=item["expected"],
+                    **({"target_identity": item["target_identity"]} if item.get("target_identity") is not None else {}))
+                reports[arm_id] = inspections[arm_id].report
         except (ValueError, TypeError, OSError, RuntimeError) as exc:
             reports[arm_id] = {"status": "BLOCKED", "blockers": [str(exc)]}
     if any(r["status"] == "BLOCKED" for r in reports.values()):

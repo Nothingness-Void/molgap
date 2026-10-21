@@ -29,6 +29,15 @@ class FamilyExecution:
     target_identity_in_completion: bool = False
     profile_adapter: str | None = None
     cpu_synthetic_only: bool = False
+    # These fields are catalog-only capability declarations.  They do not
+    # change the serialized Spec/recipe wire and keep input admission beside
+    # the executable owner instead of duplicating it in a second registry.
+    scientific_input_abi: str | None = None
+    model_interface: tuple[str, str] | None = None
+    feature_module: str | None = None
+    feature_source_files: tuple[str, ...] = ()
+    feature_config_fields: tuple[str, ...] = ()
+    input_model_name: str | None = None
 
 
 @dataclass(frozen=True)
@@ -72,6 +81,14 @@ class AddonContract:
     apply_hook: str | None = None
     policy_hook: str | None = None
     extra_source_files: tuple[str, ...] = ()
+    # A conditional addon may legitimately have no optimizer moments on a
+    # freshly resumed batch.  The session reads this metadata instead of
+    # knowing an addon's model-specific parameter prefix.
+    conditional_optimizer_prefixes: tuple[str, ...] = ()
+    conditional_optimizer_buffers: tuple[str, ...] = ()
+    # Legacy checkpoints have no optimizer parameter-name map.  This opt-in
+    # preserves the historical suffix layout only for addons that declared it.
+    legacy_conditional_optimizer_tail: bool = False
 
 
 def validate_addon_config(contract: AddonContract, config: dict, *, name="addon",

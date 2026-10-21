@@ -194,6 +194,8 @@ SHARED_SOURCE_FILES = _all_registered_sources()
 _HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transport.py",
     "src/molgap/experiment_attribution.py", "src/molgap/experiment_run_acceptance.py",
     "src/molgap/experiment_terminal_staging.py", "src/molgap/experiment_presets.py",
+    "src/molgap/modern2d_training_prepare.py", "src/molgap/modern2d_qualification_prepare.py",
+    "src/molgap/modern2d_research_prepare.py",
     "src/molgap/kaggle_credentials.py",
     "src/molgap/local_runtime.py", "src/molgap/local_testing.py", "src/molgap/local_storage.py",
     "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",

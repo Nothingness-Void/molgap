@@ -72,6 +72,11 @@ new pure-2D PCQM families reuse the [graph extension API](GRAPH_SCREEN_EXTENSION
 where applicable. Objectives or input structures need their existing step/policy
 or input adapter. Legacy adapters retain their single-addon/mode restrictions.
 Static reviewed hooks are not arbitrary caller imports or runtime plugins.
+`FamilyExecution.scientific_input_abi` selects an existing compiler/input ABI;
+model-interface and feature metadata live in that contract and feed derived
+execution views. A different input ABI needs its owning adapter.
+Conditional optimizer parameters belong in the addon's catalog metadata;
+the shared Session must not add addon names or model-prefix branches.
 
 Platform submission, reconciliation and retrieval stay with the owning workload
 skill/adapter. The local CLI has no training or platform-submit command.

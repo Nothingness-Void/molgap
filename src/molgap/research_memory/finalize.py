@@ -123,6 +123,8 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
             relative = value[len(prefix):]
             if relative not in receipt["published_hashes"]:
                 raise ValueError("staged pointer does not name a published artifact")
+        elif value.startswith("external://"):
+            bound_artifact_path(root, value)
         else:
             resolve_repo_pointer(root, value)
 

@@ -5,7 +5,7 @@ here. A verified output is a mechanical result, never a replay-ready claim.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import hashlib
 import json
 import math
@@ -152,9 +152,10 @@ class RunContext:
                    run_reference, None)
     @classmethod
     def from_launch(cls, spec: ExperimentSpec, receipt_path: Path, package_dir: Path,
-                    *, expected_package_identity: str, arm_id: str) -> RunContext:
+                    *, expected_package_identity: str, arm_id: str, _verification=None) -> RunContext:
         receipt = read_launch_receipt(Path(receipt_path).absolute(), spec, Path(package_dir),
-                                      expected_package_identity=expected_package_identity)
+            expected_package_identity=expected_package_identity,
+            **({"_verification": _verification} if _verification is not None else {}))
         if receipt["submission_state"] not in {"ACCEPTED", "RECONCILED_EXISTING"}:
             raise ValueError("RunContext requires a reconciled observed launch")
         runs = receipt["physical_runs"]["value"]
@@ -963,7 +964,7 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
 
 def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: dict, *,
                              receipt_path: Path, package_dir: Path,
-                             expected_package_identity: str) -> dict:
+                             expected_package_identity: str, _verification=None) -> dict:
     """Confine CLI output inputs in the owning core, keeping CLI dispatch thin."""
     if type(supplied) is not dict or set(supplied) != {a["arm_id"] for a in spec.to_dict()["arms"]}:
         raise ValueError("Expected every independent Spec arm")
@@ -976,7 +977,8 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
         _safe_local(output_dir.absolute())
         outputs[arm_id] = {
             "context": RunContext.from_launch(spec, receipt_path, package_dir,
-                expected_package_identity=expected_package_identity, arm_id=arm_id),
+                expected_package_identity=expected_package_identity, arm_id=arm_id,
+                **({"_verification": _verification} if _verification is not None else {})),
             "expected": item["expected"], "output_dir": output_dir.absolute()}
     return outputs
 
@@ -1248,6 +1250,7 @@ class TargetIdentityBinding:
     plan_path: str
     plan_sha256: str
     package_dir: Path | None = None
+    _verification: object = field(default=None, repr=False, compare=False)
 
     @classmethod
     def from_acceptance_plan(cls, spec: ExperimentSpec, repo_root: Path,
@@ -1264,11 +1267,11 @@ class TargetIdentityBinding:
 
     @classmethod
     def from_frozen_package(cls, spec: ExperimentSpec, repo_root: Path,
-                            package_dir: Path, plan_path: str):
+                            package_dir: Path, plan_path: str, *, _verification=None):
         """Bind encoding metadata already verified by the original run resolver."""
         from .experiment_package import read_packaged_text
         from .experiment_spec import _unique_object, _canonical
-        raw = read_packaged_text(package_dir, plan_path)
+        raw = read_packaged_text(package_dir, plan_path, _verification=_verification)
         plan = json.loads(raw, object_pairs_hook=_unique_object)
         _canonical(plan)
         if (plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"}
@@ -1277,7 +1280,7 @@ class TargetIdentityBinding:
                    [arm["arm_id"] for arm in spec.to_dict()["arms"]]):
             raise ValueError("Frozen target identity plan/Spec mismatch")
         return cls(Path(repo_root).absolute(), plan_path,
-                   hashlib.sha256(raw.encode()).hexdigest(), Path(package_dir).absolute())
+                   hashlib.sha256(raw.encode()).hexdigest(), Path(package_dir).absolute(), _verification)
 
     def _pinned_json(self, name, digest, *, label="metadata"):
         _digest(digest, "target identity metadata digest")
@@ -1286,7 +1289,7 @@ class TargetIdentityBinding:
             from .experiment_spec import _unique_object, _canonical
             inventory = _json(self.package_dir / "package_manifest.json")
             if name in inventory["relative_allowlist"]:
-                raw = read_packaged_text(self.package_dir, name)
+                raw = read_packaged_text(self.package_dir, name, _verification=self._verification)
                 if hashlib.sha256(raw.encode()).hexdigest() != digest:
                     raise ValueError("Target identity " + label + " hash mismatch")
                 result = json.loads(raw, object_pairs_hook=_unique_object)

@@ -117,9 +117,18 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
-def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+def read_packaged_text(package_dir: Path, relative_path: str, *, _verification=None) -> str:
     """Read a reviewed source member from an already verified immutable package."""
     name = _name(relative_path)
+    if _verification is not None:
+        if type(_verification) is not _PackageVerification:
+            raise TypeError("Expected a scoped package verification memo")
+        if _verification._directory != Path(package_dir).absolute():
+            _read_verified_package(package_dir, _verification=_verification)
+        try:
+            return _verification._members[name].decode("utf-8")
+        except KeyError as exc:
+            raise ValueError("Expected one regular packaged text source") from exc
     with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
         members = [member for member in archive.getmembers() if member.name == name]
         if len(members) != 1 or not members[0].isfile() or members[0].linkname:
@@ -263,7 +272,9 @@ def build_experiment_source_package(
     try:
         with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name:
             stage = Path(stage_name)
-            if source_cache is None:
+            # Per-run generated names make these archives unique; the frozen
+            # prepared package already owns retry reuse without a second copy.
+            if source_cache is None or generated:
                 bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
                                                output_dir=stage, source_commit=commit,**bundle_options)
             else:
@@ -358,13 +369,17 @@ class _PackageVerification:
     def __init__(self):
         self._fingerprint = None
         self._manifest = None
+        self._directory = None
+        self._members = {}
 
     def verify(self, raw, repo_root=None):
         fingerprint = tuple((name, _sha(raw[name])) for name in sorted(SIDECARS))
         if repo_root is not None or fingerprint != self._fingerprint:
-            manifest = _verify_package_snapshot(raw, repo_root)
+            members = {}
+            manifest = _verify_package_snapshot(raw, repo_root, _members=members)
             self._fingerprint = fingerprint
             self._manifest = _json_bytes(manifest)
+            self._members = members
         return _load(self._manifest)
 
 
@@ -380,6 +395,7 @@ def _read_verified_package(package_dir, repo_root=None, *, _verification=None):
         if type(_verification) is not _PackageVerification:
             raise TypeError("Expected a scoped package verification memo")
         manifest = _verification.verify(raw, repo_root)
+        _verification._directory = directory
     else:
         manifest = _verify_package_snapshot(raw, repo_root)
     return raw, manifest
@@ -391,7 +407,7 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     return _read_verified_package(package_dir, repo_root, _verification=_verification)[1]
 
 
-def _verify_package_snapshot(raw, repo_root=None):
+def _verify_package_snapshot(raw, repo_root=None, *, _members=None):
     """Validate the exact bytes read by the package owner, never reopen the archive."""
     manifest = _load(raw["package_manifest.json"])
     if type(manifest) is not dict or raw["package_manifest.json"] != _json_bytes(manifest):
@@ -446,6 +462,8 @@ def _verify_package_snapshot(raw, repo_root=None):
             payload = None if stream is None else stream.read()
             if payload is None or _sha(payload) != entry["sha256"]:
                 raise ValueError("Archive member payload mismatch")
+            if _members is not None:
+                _members[name] = payload
             if name in manifest.get("generated_records", {}):
                 if len(payload) > 1024**2 or _json_bytes(_load(payload)) != payload:
                     raise ValueError("Derived JSON must be bounded and canonical")

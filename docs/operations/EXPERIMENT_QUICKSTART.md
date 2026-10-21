@@ -65,6 +65,16 @@ baseline or add seeds to fill an allocation.
 
 ## 3. Write one scientific input
 
+To start from a frozen scientific run, generate an editable draft:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- derive-input --from-run $sourceRunDirectory --experiment-id $experimentId --run-id $newRunId --profile $profilePath --output $inputPath
+```
+
+Review the copied question and delta; supply fresh authority before preparation.
+`build-preset --help` lists the retained files needed to export baseline pins
+without typing hashes. Both commands write ordinary existing input formats.
+
 PPGT/3 and ESA/4 also use this front door through the
 [configured Modern2D contract](MODERN2D_CONFIGURED_WORKFLOW.md), including
 ordinary readout addons, explicit pass horizons and accepted indexed roles.
@@ -169,6 +179,8 @@ scientific record references, not per-experiment Python lists. AST closure is
 an optional development diagnostic, not a default packaging prerequisite.
 Only source archives are cached; Specs, package identities, releases and receipts
 are never borrowed from another run.
+Packages containing generated run records reuse their prepared package directly
+instead of retaining a second cache copy.
 
 With existing applicable submission authority, append `--credentials ...
 --execute`. That calls the **original** journaled submitter. An uncertain outcome
@@ -182,7 +194,7 @@ canonical `--spec` operations remain compatible. IMS/SCNet do not acquire this
 new front door implicitly. See the [platform API](KAGGLE_WORKFLOW_SUBMISSION.md).
 
 Both preparation entries resolve relative initialization paths against the
-selected repository. One preparation or run lookup reuses full package validation
+selected repository. One preparation, run lookup or acceptance transaction reuses full package validation
 for identical bytes; each boundary still reads and hashes all six files.
 Repository comparisons remain fresh; no validation memo survives the invocation.
 

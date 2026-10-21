@@ -9,8 +9,9 @@ import pytest
 
 from molgap.experiment_family_workflow import build_verified_terminal_descriptor, close_verified_outputs, inspect_terminal_output
 from molgap.experiment_attribution import ATTRIBUTION_FORMAT
-from molgap.experiment_terminal_staging import _cost_events, stage_verified_terminal_packages
+from molgap.experiment_terminal_staging import PROTECTED_ROLES, _cost_events, stage_verified_terminal_packages
 from molgap.research_memory.paths import artifact_locator, bound_artifact_path, repo_local_path, verify_bound_artifact
+from molgap.research_memory.recovery import recover_trace
 from molgap.research_memory.trace import file_digest
 from test_experiment_family_workflow import _closure_descriptor, launch_contexts, payload, repo
 
@@ -80,6 +81,7 @@ def test_stage_draft_needs_no_existing_terminal_and_preserves_large_bytes(stagin
         assert package["format"] == "molgap-rml-terminal-package-v1"
         assert package["decision"]["outcome"] == "ACTIVE"
         assert set(package["role_use"].values()) == {"unknown"}
+        assert all("role" in artifact for artifact in package["evidence"]["artifacts"])
         assert package["trace_manifest"]["backtest_eligibility"]["eligible"] is False
         assert result["locations"][arm_id]["trace"].startswith("external:///")
         assert not (root / resolved["locations"][arm_id]["trajectory"]).parent.joinpath("rml_finalized").exists()
@@ -179,6 +181,122 @@ def test_diagnostic_is_published_once_and_shared_by_pointer(staging_case):
     assert bindings[0] == bindings[1]
     assert set(bindings[0]) == {"locator", "sha256", "spec_identity", "logical_run_id"}
     assert len(list(resolved["run_directory"].rglob("terminal_diagnostic_*.json"))) == 1
+
+
+def test_inline_role_audit_is_persisted_per_arm(staging_case):
+    root, resolved = staging_case
+    decision = root / "inline_decision.md"
+    decision.write_text("Inline role audit closure.", encoding="utf-8")
+    role_audit = {
+        arm_id: {
+            "context": item["context"].to_dict(), "roles": [],
+            "role_use": {role: "untouched" for role in PROTECTED_ROLES},
+        }
+        for arm_id, item in resolved["outputs"].items()
+    }
+    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref=decision.relative_to(root).as_posix(),
+                   role_audit=role_audit)
+    assert result["status"] == "STAGED_CLOSURE_READY", result
+    for paths in result["paths"].values():
+        package = json.loads(Path(paths["terminal"]).read_bytes())
+        assert set(package["role_use"].values()) == {"untouched"}
+        assert any("role_audit-" in pointer for pointer in package["artifact_hashes"])
+
+
+def test_single_inline_role_audit_fills_identity_and_empty_roles(staging_case):
+    root, resolved = staging_case
+    decision = root / "inline_identity_decision.md"
+    decision.write_text("Inline role identity closure.", encoding="utf-8")
+    item = next(iter(resolved["outputs"].values()))
+    audit = {"role_use": {role: "untouched" for role in PROTECTED_ROLES}}
+    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref=decision.relative_to(root).as_posix(),
+                   role_audit=audit)
+    assert result["status"] == "STAGED_CLOSURE_READY", result
+    package = json.loads(Path(result["paths"][item["context"].arm_id]["terminal"]).read_bytes())
+    audit_ref = next(pointer for pointer in package["artifact_hashes"] if "role_audit-" in pointer)
+    persisted = json.loads((root / audit_ref).read_bytes())
+    assert persisted["context"] == item["context"].to_dict()
+    assert persisted["roles"] == []
+
+
+def test_existing_scientific_terminal_package_is_reused_after_pin_check(staging_case):
+    root, resolved = staging_case
+    decision = root / "owner_package_decision.md"
+    decision.write_text("Owner package closure.", encoding="utf-8")
+    owner_audits = audit_files(staging_case)
+    owner = stage(staging_case, outcome="INCONCLUSIVE", decision_ref=decision.relative_to(root).as_posix(),
+                  role_audit=owner_audits)
+    package_paths = {arm_id: paths["terminal"] for arm_id, paths in owner["paths"].items()}
+    reused = stage(staging_case, outcome="INCONCLUSIVE", decision_ref=decision.relative_to(root).as_posix(),
+                   scientific_acceptance=package_paths)
+    assert reused["status"] == "STAGED_CLOSURE_READY", reused
+    for arm_id, package_path in package_paths.items():
+        assert reused["paths"][arm_id]["terminal"] == package_path
+        assert reused["locations"][arm_id]["terminal"] == Path(package_path).relative_to(root).as_posix()
+
+
+def test_inline_role_events_rebind_to_immutable_audit(staging_case):
+    root, resolved = staging_case
+    decision = root / "inline_event_decision.md"
+    decision.write_text("Inline role event closure.", encoding="utf-8")
+    role_audit = {}
+    for arm_id, item in resolved["outputs"].items():
+        where = resolved["locations"][arm_id]
+        trajectory = json.loads((root / where["trajectory"]).read_bytes())
+        action = next(action for action in trajectory["actions"] if where["run_id"] in action["run_ids"])
+        role_audit[arm_id] = {
+            "context": item["context"].to_dict(),
+            "roles": [{
+                "schema": "molgap-role-event-v1",
+                "role_event_id": "role-inline-" + arm_id,
+                "trajectory_id": where["trajectory_id"],
+                "action_id": action["action_id"],
+                "run_id": where["run_id"],
+                "dataset_identity": "dataset-synthetic",
+                "row_manifest_hash": "a" * 64,
+                "role_name": "train",
+                "evidence_ref": "caller-owned-audit.json",
+                "access_kind": "training_membership",
+                "selection_used": False,
+            }],
+            "role_use": {role: "untouched" for role in PROTECTED_ROLES},
+        }
+    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref=decision.relative_to(root).as_posix(),
+                   role_audit=role_audit)
+    assert result["status"] == "STAGED_CLOSURE_READY", result
+    for paths in result["paths"].values():
+        package = json.loads(Path(paths["terminal"]).read_bytes())
+        audit_refs = [pointer for pointer in package["artifact_hashes"] if "role_audit-" in pointer]
+        assert len(audit_refs) == 1
+        audit = json.loads((root / audit_refs[0]).read_bytes())
+        assert audit["roles"][0]["evidence_ref"] == audit_refs[0]
+        assert audit["roles"][0]["role_name"] == "train"
+
+
+def test_invalid_role_audit_input_fails_before_repo_path_resolution(staging_case):
+    with pytest.raises(ValueError, match="role audit must be a repository path or mapping"):
+        stage(staging_case, role_audit=object())
+
+
+def test_external_raw_trace_recovery_keeps_output_repo_local(tmp_path):
+    root = tmp_path / "repo"
+    root.mkdir()
+    external = tmp_path / "external" / "raw.json"
+    external.parent.mkdir()
+    external.write_text(json.dumps({"rows": [{"step": 1, "mae": 0.5}]}), encoding="utf-8")
+    output = root / "experiments" / "recovered.json"
+    semantics = {
+        "live_train_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
+            "role_identity": "train", "weights": "live", "direction": "minimize"},
+        "live_dev_metric": None, "ema_dev_metric": None,
+    }
+    spec = {"trajectory_id": "trajectory", "run_id": "run", "rows_key": "rows",
+            "metric_semantics": semantics, "field_mapping": {
+                "optimizer_step": "step", "live_train_metric": "mae"}}
+    result = recover_trace([artifact_locator(root, external)], spec, output, repo_root=root)
+    assert output.is_file()
+    assert result["provenance"][0]["source"] == str(external.resolve())
+    assert output.is_relative_to(root)
 
 
 def test_explicit_mutable_diagnostic_is_bound_through_immutable_copy(staging_case):

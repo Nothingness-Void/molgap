@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .trace import FIELDS, NUMBERS, atomic_write, canonicalize_trace, file_digest, json_bytes
-from .paths import repo_local_path
+from .paths import bound_artifact_path, repo_local_path
 
 
 def recover_trace(sources: list[str | Path], spec: dict[str, Any], output: str | Path,
@@ -18,7 +18,10 @@ def recover_trace(sources: list[str | Path], spec: dict[str, Any], output: str |
         from molgap.constants import REPO_ROOT
         repo_root = REPO_ROOT
     target = repo_local_path(repo_root, output)
-    sources = [repo_local_path(repo_root, source) for source in sources]
+    # Raw inputs may remain in an external custody location.  The recovered
+    # canonical trace is still forced into the repository-local output root;
+    # only the read side accepts the explicit external locator boundary.
+    sources = [bound_artifact_path(repo_root, source) for source in sources]
     mapping = spec["field_mapping"]
     if not isinstance(mapping, dict) or set(mapping) - set(FIELDS):
         raise ValueError("recovery mapping uses unknown canonical fields")
