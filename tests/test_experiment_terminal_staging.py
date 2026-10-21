@@ -226,3 +226,73 @@ def test_cost_conversion_requires_measured_native_hardware_and_exact_semantics()
     assert events[0]["hardware"] == "Tesla_T4"
     assert events[0]["measurement"]["device_hours"] == {"status": "measured", "value": 1}
     assert events[0]["measurement"]["wall_hours"] == {"status": "measurement_missing", "value": None}
+
+
+def trace_plan_fixture():
+    from molgap.research_memory.terminal_wiring import build_default_trace_manifest
+    from molgap.research_memory.schemas import TRACE_MANIFEST_PLAN_FIELDS
+
+    # Synthetic semantics only; no reference or prospective scientific evidence.
+    manifest = build_default_trace_manifest(Path("."),
+        {"trajectory_id": "T-plan", "state_at_start": {}}, {"run_id": "run"}, {"observations": []})
+    manifest["presentation_semantics_ref"] = "synthetic-presentation-contract"
+    return {key: manifest[key] for key in TRACE_MANIFEST_PLAN_FIELDS}
+
+
+def test_frozen_trace_plan_requires_exact_semantics_and_cannot_claim_eligibility():
+    from molgap.research_memory.schemas import validate_trace_manifest_plan
+
+    plan = trace_plan_fixture()
+    assert validate_trace_manifest_plan(plan) == plan
+    for field in ("reference_id", "backtest_eligibility", "trace_artifact_ref", "costs"):
+        with pytest.raises(ValueError, match="exactly"):
+            validate_trace_manifest_plan({**plan, field: None})
+    with pytest.raises(ValueError, match="trace_fields"):
+        validate_trace_manifest_plan({**plan, "trace_fields": {}})
+    with pytest.raises(ValueError, match="x_axis"):
+        validate_trace_manifest_plan({**plan, "x_axis": "wall_seconds"})
+
+
+def test_trace_plan_must_come_from_exact_frozen_recipe_bytes(tmp_path):
+    from types import SimpleNamespace
+    from molgap.experiment_terminal_staging import _frozen_trace_manifest_plan
+
+    contract = tmp_path / "contract.json"
+    plan = trace_plan_fixture()
+    contract.write_text(json.dumps({"trace_manifest_plan": plan}), encoding="utf-8")
+    digest = file_digest(contract)
+    artifacts = {"contract": {"path": contract.name, "sha256": digest}}
+    context = SimpleNamespace(training_recipe_sha256=digest)
+    assert _frozen_trace_manifest_plan(tmp_path, artifacts, context) == plan
+    contract.write_text(json.dumps({"trace_manifest_plan": {}}), encoding="utf-8")
+    with pytest.raises(ValueError, match="frozen recipe"):
+        _frozen_trace_manifest_plan(tmp_path, artifacts, context)
+
+
+def test_stager_consumes_plan_without_granting_replay(staging_case, monkeypatch):
+    from molgap.research_memory.schemas import validate_trace_manifest_plan
+
+    plan = trace_plan_fixture()
+    plan["model_identity"] = "synthetic-frozen-model"
+    plan["trace_fields"] = {key: False for key in plan["trace_fields"]}
+    validate_trace_manifest_plan(plan)
+    monkeypatch.setattr("molgap.experiment_terminal_staging._frozen_trace_manifest_plan",
+        lambda *args: json.loads(json.dumps(plan)))
+    result = stage(staging_case)
+    for paths in result["paths"].values():
+        terminal = json.loads(Path(paths["terminal"]).read_bytes())
+        manifest = terminal["trace_manifest"]
+        assert manifest["model_identity"] == "synthetic-frozen-model"
+        assert manifest["backtest_eligibility"]["eligible"] is False
+        assert "strict_comparison_readiness_not_established" in manifest["backtest_eligibility"]["exclusion_reasons"]
+        assert "closure_synthesized_manifest_not_prelaunch_calibrated" not in manifest["backtest_eligibility"]["exclusion_reasons"]
+
+
+def test_stager_rejects_a_promised_but_missing_trace_field(staging_case, monkeypatch):
+    plan = trace_plan_fixture()
+    plan["trace_fields"] = {key: False for key in plan["trace_fields"]}
+    plan["trace_fields"]["checkpoint_identity"] = True
+    monkeypatch.setattr("molgap.experiment_terminal_staging._frozen_trace_manifest_plan",
+        lambda *args: plan)
+    with pytest.raises(ValueError, match="Frozen trace plan field was not observed"):
+        stage(staging_case)

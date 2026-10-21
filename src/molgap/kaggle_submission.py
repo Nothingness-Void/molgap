@@ -309,6 +309,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     if (authority.get("user_authorized") is not True or type(budget) not in {int, float}
             or not math.isfinite(budget) or budget <= 0):
         raise ValueError("Packaged authority must authorize a positive allocated T4-hour ceiling")
+    if "allocation_wall_limit_seconds" in launch:
+        limit = launch["allocation_wall_limit_seconds"]
+        if (authority.get("allocation_wall_limit_seconds") != limit or
+                limit * spec.to_dict()["platform"]["device_count"] / 3600 > budget or
+                authority.get("cleanup_reserve_seconds", 60) != launch.get("cleanup_reserve_seconds", 60)):
+            raise ValueError("Frozen allocation window differs from its native-cost authority")
     arms = spec.to_dict()["arms"]
     if (authority.get("arms") != [arm["arm_id"] for arm in arms]
             or authority.get("seeds") != sorted({arm["initialization"]["seed"] for arm in arms})):

@@ -12,12 +12,24 @@ from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
 from .research_memory.paths import artifact_locator, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
-from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
+from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory, validate_trace_manifest_plan, validate_trace_manifest
 from .research_memory.trace import file_digest, json_bytes, load_canonical_trace
 from .screen_policy import canonical_fingerprint
 
 
 PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
+
+
+def _frozen_trace_manifest_plan(output_root, artifacts, context):
+    binding = artifacts.get("contract")
+    if binding is None:
+        return None
+    path = _artifact_path(output_root, binding["path"])
+    if binding["sha256"] != context.training_recipe_sha256 or file_digest(path) != context.training_recipe_sha256:
+        raise ValueError("Trace plan contract differs from the frozen recipe")
+    contract = _json(path)
+    return (validate_trace_manifest_plan(contract["trace_manifest_plan"])
+            if "trace_manifest_plan" in contract else None)
 
 
 def _per_arm(value, arm_id):
@@ -181,6 +193,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             if name == "trace":
                 trace_path, trace_locator = path, locator
         trace = load_canonical_trace(trace_path)
+        trace_plan = _frozen_trace_manifest_plan(output_root, observed["artifacts"], context)
         if (trace["trajectory_id"], trace["run_id"]) != (where["trajectory_id"], where["run_id"]):
             raise ValueError("Actual canonical trace differs from the prospective owner/run")
         explicit_outcome, explicit_decision = _per_arm(outcome, arm_id), _per_arm(decision_ref, arm_id)
@@ -247,10 +260,18 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
         from .research_memory.terminal_wiring import build_default_trace_manifest
         trace_manifest = build_default_trace_manifest(root, trajectory, {"run_id": where["run_id"]}, trace)
+        if trace_plan is not None:
+            trace_manifest.update(trace_plan)
+            trace_manifest["backtest_eligibility"] = {"eligible": False, "exclusion_reasons":
+                ["strict_comparison_readiness_not_established"]
+                + (["missing_frozen_reference"] if trace_manifest["reference_id"] is None else [])}
         trace_manifest.update(trace_artifact_ref=trace_locator, trace_artifact_sha256=hashes[trace_locator],
             terminal_evidence_ref=terminal_ref)
         for field in trace_manifest["trace_fields"]:
-            trace_manifest["trace_fields"][field] = any(row.get(field) is not None for row in trace["observations"])
+            observed_field = any(row.get(field) is not None for row in trace["observations"])
+            if trace_plan is not None and trace_plan["trace_fields"][field] and not observed_field:
+                raise ValueError("Frozen trace plan field was not observed: " + field)
+            trace_manifest["trace_fields"][field] = observed_field
         package = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": where["trajectory_id"],
             "run_id": where["run_id"], "action_id": action["action_id"], "acceptance_ref": acceptance_ref,
             "decision": final_decision, "evidence": evidence, "costs": costs, "roles": roles,
@@ -268,6 +289,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "attempt_id": observed_attempt, "source_commit": context.source_commit,
                 "source_package_sha256": context.source_archive_sha256}
         existing = directory / "terminal.json"
+        validate_trace_manifest(trace_manifest)
         package["finalized_at"] = (_json(existing)["finalized_at"] if existing.is_file()
             else datetime.now(timezone.utc).isoformat())
         publish_immutable_bytes(existing, json_bytes(package))

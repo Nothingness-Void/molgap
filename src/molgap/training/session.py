@@ -88,9 +88,17 @@ def validate_session_resume(recipe, state):
             "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
     if recipe.clean_bn is not None:
         keys.add("weight_state")
+    if type(cursor) is dict and "norm_diagnostics" in cursor:
+        keys.add("norm_diagnostics")
     if (type(cursor) is not dict or set(cursor) != keys or cursor["recipe_identity"] != recipe.identity
             or type(step) is not int or not 1 <= step <= plan.optimizer_steps):
         raise ValueError("Resume identity or step differs from the frozen recipe")
+    if "norm_diagnostics" in cursor:
+        diagnostic = cursor["norm_diagnostics"]
+        if (type(diagnostic) is not dict
+                or diagnostic.get("format") != "molgap-k1-norm-diagnostics-v1"
+                or diagnostic.get("completed_updates") != step):
+            raise ValueError("Normalization diagnostic history differs from resume step")
     pass_index, offset = divmod(step, plan.steps_per_pass)
     rows_per_pass = plan.steps_per_pass * plan.physical_batch_size if plan.drop_last else plan.train_rows
     pending_rows = min(offset * plan.physical_batch_size, rows_per_pass)
@@ -215,6 +223,9 @@ class FamilyTrainingSession:
             "optimizer_state_ids": sorted(optimizer_state["state"])}
         if self.recipe.clean_bn is not None:
             cursor["weight_state"] = self.kernel.training_state.calibration_state_dict()
+        diagnostics = getattr(self.kernel, "norm_diagnostics", None)
+        if diagnostics is not None:
+            cursor["norm_diagnostics"] = diagnostics.state_dict()
         return cursor
 
     def _checkpoint_state(self):
@@ -294,6 +305,10 @@ class FamilyTrainingSession:
         self.best, self.selected_step = cursor["best_development_mae_eV"], cursor["selected_step"]
         self.progress = progress
 
+        diagnostics = getattr(self.kernel, "norm_diagnostics", None)
+        if diagnostics is not None:
+            diagnostics.restore(cursor.get("norm_diagnostics"), optimizer_step=progress.optimizer_step)
+
     def _select(self, progress, evaluation=None):
         weights = self.recipe.selection_weights
         if weights == "clean-ema":
@@ -341,6 +356,11 @@ class FamilyTrainingSession:
         metrics["scheduler_next_learning_rates"] = [group["lr"] for group in self.kernel.optimizer.param_groups]
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
+        diagnostics = getattr(self.kernel, "norm_diagnostics", None)
+        if diagnostics is not None:
+            if (pass_index + 1) % 40 == 0:
+                diagnostics.probe(self.kernel, self.loaders, completed_pass=pass_index + 1)
+            metrics["norm_diagnostics"] = diagnostics.state_dict()
         self.pass_finished(progress, metrics)
 
     def _persist(self, progress):
@@ -364,10 +384,16 @@ class FamilyTrainingSession:
     def run(self, *, should_pause=None):
         if self.closed:
             raise RuntimeError("Family session is closed")
+        diagnostics = getattr(self.kernel, "norm_diagnostics", None)
+        # Only admitted session updates count; preflight calls kernel.step directly.
+        update_observer = (diagnostics.observer(self.recipe.gradient_clip, self.kernel.update_observer)
+                    if diagnostics is not None else None)
         def step(batch, *, check_finite):
             # before_step has applied warmup; after_step/after_pass may change LR.
             self._last_update_learning_rates = [group["lr"] for group in self.kernel.optimizer.param_groups]
-            return self.kernel.step(batch, check_finite=check_finite)
+            if update_observer is None:
+                return self.kernel.step(batch, check_finite=check_finite)
+            return self.kernel.step(batch, check_finite=check_finite, observer=update_observer)
         def observe(processed):
             _, absolute, rows = processed.value
             if rows != processed.rows:

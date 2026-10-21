@@ -404,6 +404,11 @@ def _compile_scientific_input(path, root, value):
             new_record["profiling"] = deepcopy(record["profiling"])
         if "resume_keep_count" in record:
             new_record["resume_keep_count"] = record["resume_keep_count"]
+        if "trace_manifest_plan" in record:
+            new_record["trace_manifest_plan"] = deepcopy(record["trace_manifest_plan"])
+            trace_model = canonical_fingerprint({"base": arm["base"], "addons": addons})
+            new_record["trace_manifest_plan"]["model_identity"] = trace_model
+            new_record["trace_manifest_plan"]["comparability_identity"]["architecture_identity"] = trace_model
         initial = Path(item["initial_state_ref"])
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())

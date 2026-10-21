@@ -310,6 +310,27 @@ def validate_role_event(record: Mapping[str, Any]) -> dict[str, Any]:
     return dict(record)
 
 
+TRACE_MANIFEST_PLAN_FIELDS = frozenset({
+    "model_identity", "presentation_semantics_ref", "weight_semantics", "metric_semantics",
+    "evaluation_role_identity", "selection_semantics", "x_axis", "comparability_identity", "trace_fields",
+})
+
+
+def validate_trace_manifest_plan(record: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate frozen trace semantics without promising future replay eligibility."""
+    record = _mapping(record, "trace manifest plan")
+    if set(record) != TRACE_MANIFEST_PLAN_FIELDS:
+        raise ValueError("trace manifest plan requires exactly the declared semantic fields")
+    if record["x_axis"] not in {"optimizer_steps", "presentations", "epochs"}:
+        raise ValueError("trace manifest plan has an unsupported x_axis")
+    validate_trace_manifest({**record, "schema": TRACE_SCHEMA, "trajectory_id": "T-plan",
+        "run_id": "planned-run", "reference_id": None, "comparison_role": "candidate",
+        "contract_ref": "planned-contract", "trace_artifact_ref": "pending",
+        "terminal_evidence_ref": "pending", "exposure": {"optimizer_steps": 1, "sample_presentations": 1},
+        "backtest_eligibility": {"eligible": False, "exclusion_reasons": ["prospective_plan_only"]}})
+    return dict(record)
+
+
 def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
     record = _mapping(record, "trace manifest")
     if "trace_artifact_sha256" in record and not SHA256_PATTERN.fullmatch(str(record["trace_artifact_sha256"])):

@@ -258,6 +258,8 @@ class SessionOutputs:
 
     def pass_finished(self, progress, metrics):
         self.logger.pass_finished(progress, metrics)
+        if "norm_diagnostics" in metrics:
+            atomic_write(self.root / "norm_diagnostics.json", json_bytes(metrics["norm_diagnostics"]))
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         used = metrics.get("learning_rates_used")
         if used is not None:

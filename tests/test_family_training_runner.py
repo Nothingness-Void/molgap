@@ -129,6 +129,27 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
         session.close()
 
 
+def test_contract_accepts_only_valid_frozen_trace_semantics(tmp_path):
+    from molgap.research_memory.schemas import TRACE_MANIFEST_PLAN_FIELDS
+    from molgap.research_memory.terminal_wiring import build_default_trace_manifest
+
+    session = make_session("neural_atom_k1", development=False, schedule_kind="cosine_step", events=events())
+    try:
+        path, record = contract_file(tmp_path, session)
+        manifest = build_default_trace_manifest(tmp_path,
+            {"trajectory_id": "T-plan", "state_at_start": {}}, {"run_id": "run"}, {"observations": []})
+        manifest["presentation_semantics_ref"] = "synthetic-presentation-contract"
+        record["trace_manifest_plan"] = {key: manifest[key] for key in TRACE_MANIFEST_PLAN_FIELDS}
+        path.write_text(json.dumps(record), encoding="utf-8")
+        assert read_recipe(path)[1] == session.recipe
+        record["trace_manifest_plan"]["reference_id"] = "invented-reference"
+        path.write_text(json.dumps(record), encoding="utf-8")
+        with pytest.raises(ValueError, match="exactly"):
+            read_recipe(path)
+    finally:
+        session.close()
+
+
 def test_reviewed_python_io_source_does_not_allow_artifact_directories():
     assert _name("src/molgap/family_training_outputs.py") == "src/molgap/family_training_outputs.py"
     assert _name("src/molgap/other_outputs.py") == "src/molgap/other_outputs.py"

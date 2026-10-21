@@ -30,7 +30,7 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "target_identity"}
+_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
@@ -188,6 +188,16 @@ def validate_launch_config(
         raise ValueError("Launch configuration has an unsupported or missing format")
     unknown = set(config) - (_LAUNCH_FIELDS | _OPTIONAL_FIELDS)
     missing = _LAUNCH_FIELDS - set(config)
+    if "allocation_wall_limit_seconds" in config:
+        limit = config["allocation_wall_limit_seconds"]
+        if type(limit) is not int or not 120 <= limit <= 43200:
+            raise ValueError("Invalid launch allocation wall ceiling")
+    if "cleanup_reserve_seconds" in config:
+        reserve = config["cleanup_reserve_seconds"]
+        if (type(reserve) is not int or reserve < 0 or
+                "allocation_wall_limit_seconds" not in config or
+                reserve >= config["allocation_wall_limit_seconds"]):
+            raise ValueError("Invalid launch cleanup reserve")
     if unknown or missing:
         raise ValueError("Launch v1 has missing or unknown fields")
     if any(type(config[field]) is not str for field in ("spec_identity", "expected_package_identity",

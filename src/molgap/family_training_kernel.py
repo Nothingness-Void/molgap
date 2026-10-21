@@ -86,6 +86,7 @@ class FamilyKernel:
         self._qualification_memory_fill = False
         self._qualification_execution_observer = None
         self.model, self.initialization = load_family_model(recipe, initial_state)
+        self.norm_diagnostics = getattr(self.model, "_k1_norm_diagnostics", None)
         self.model.to(self.device)
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
         self._clip_parameters = tuple(self.model.parameters())

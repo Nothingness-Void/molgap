@@ -12,8 +12,19 @@ from .experiment_package import read_packaged_text
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
-    if type(kaggle) is not dict or set(kaggle) != fields:
+    optional = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+    if type(kaggle) is not dict or not fields <= set(kaggle) or set(kaggle) - fields - optional:
         raise ValueError("Expected explicit Kaggle account/kernel/title/datasets/source_dataset/accelerator")
+    if "allocation_wall_limit_seconds" in kaggle:
+        limit = kaggle["allocation_wall_limit_seconds"]
+        if type(limit) is not int or not 120 <= limit <= 43200:
+            raise ValueError("Kaggle allocation wall ceiling must be 120..43200 seconds")
+    if "cleanup_reserve_seconds" in kaggle:
+        reserve = kaggle["cleanup_reserve_seconds"]
+        if (type(reserve) is not int or reserve < 0 or
+                "allocation_wall_limit_seconds" not in kaggle or
+                reserve >= kaggle["allocation_wall_limit_seconds"]):
+            raise ValueError("Cleanup reserve requires a larger explicit allocation ceiling")
     if not re.fullmatch(r"[a-z0-9-]+", kaggle["account"]):
         raise ValueError("Invalid Kaggle account")
     prefix = kaggle["account"] + "/"
@@ -68,6 +79,9 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
         "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
         "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
+    for key in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
+        if key in platform_plan:
+            launch[key] = platform_plan[key]
     if acceptance_binding is not None:
         launch["target_identity"] = acceptance_binding
     return {"input_root": staged, "kernel_dir": kernel, "entry_path": kernel / "run.py",
