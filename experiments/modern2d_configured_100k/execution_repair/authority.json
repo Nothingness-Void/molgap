@@ -1,0 +1,34 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_EXECUTION_REPAIR",
+  "user_authorized": true,
+  "scientific_training_authorized": false,
+  "logical_run_id": "modern2d-execution-repair-s42-v1",
+  "arms": ["ppgt", "esa"],
+  "interfaces": [["ppgt_small", "3"], ["esa_small", "4"]],
+  "seeds": [42],
+  "physical_batch_size": 128,
+  "roles": ["train_100k", "common_dev"],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "scratch_optimizer_updates_per_model": 8,
+  "execution_reference_required": true,
+  "allocated_t4_hours_ceiling": 1,
+  "recipes": {
+    "ppgt": {"horizon_passes": 60, "horizon_steps": 46860},
+    "esa": {"horizon_passes": 60, "horizon_steps": 46860}
+  },
+  "run_reference": "nvoid912/molgap-modern2d-execution-repair-v1",
+  "gpu": {
+    "owner": "nvoid912",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 1800,
+    "allocated_t4_hours_ceiling": 1
+  },
+  "authorization_basis": "Human2026-10-21: audit and repair both new model families then submit further experiments; retain earlier10h per-task ceiling. This first release is separately bounded30min/1 allocated T4h, train-only reference/candidate execution measurement, not scientific long training."
+}

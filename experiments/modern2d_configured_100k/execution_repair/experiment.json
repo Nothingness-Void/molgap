@@ -1,0 +1,53 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "modern2d-execution-repair-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/execution_repair/authority.json",
+  "monitor_paths": ["experiments/modern2d_configured_100k/execution_repair/STATUS.md"],
+  "timestamp": "2026-10-21T07:05:54Z",
+  "platform_ref": "experiments/modern2d_configured_100k/execution_repair/platform.json",
+  "role_ref": "experiments/modern2d_configured_100k/execution_repair/roles.json",
+  "decision_ref": "experiments/modern2d_configured_100k/execution_repair/protocol.md",
+  "seeds": [42],
+  "question": {
+    "policy_id": "modern2d-execution-repair",
+    "action": "MEASURE_REPAIR",
+    "question": "Can unchanged-data PPGT bucketing and ESA token batching reduce execution cost without hiding update drift?",
+    "deficiency": "PPGT graphwise whole-network dispatch produced989230 launches in two updates; ESA forward/token preparation dominated short profiles and prevented60passes within8h. Modern2D scientific reference/replay binding was not established.",
+    "changed_mechanism": "Execution-only batched preparation/dispatch, original forward preserved as reference; no mathematical feature/model-size/precision/batch change. PPGT fast path remains diagnostic-only after failed strict CPU update equivalence.",
+    "supporting_evidence": ["ppgt-execution-profile-s42-v2-accepted", "esa-lr-attribution-100k-s42-v1-lr3e4-partial"],
+    "alternatives": ["Batchwise FP32 reduction order can amplify near-zero gradient differences through AdamW.", "Cold setup/export overhead may obscure real training speed; no long-run forecast follows from two updates."],
+    "closed_families": ["modern2d-configured-100k-s42-v2-budget-stop"],
+    "positive_decision": "Review saved native update/profiler evidence before separate scientific/reference release; no automatic long training or scale.",
+    "negative_decision": "Keep negative equivalence/runtime evidence and stop this bounded run; do not weaken tolerances or retry automatically.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server", "track": "B", "platform": "kaggle", "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "Two independent train-only native probes, candidate repeat2+2 and serialized1+1 plus original-path reference2, profile two candidate updates;30min/1 allocated T4h total.",
+    "estimated_device_hours": 1, "estimated_wall_hours": 0.5
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt", "model": {"family": "ppgt_small", "version": "3", "addons": []},
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/contract.json",
+      "data_ref": {"spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json", "arm_id": "ppgt_author_v2"},
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/ppgt_author_v2.pt",
+      "training": {"horizon_passes": 60, "profiling": {"warmup_steps": 0, "active_steps": 2, "record_shapes": false, "profile_memory": false, "with_stack": false, "row_limit": 75, "module_paths": [], "ppgt_phases": true}},
+      "reference_ref": {"plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json", "arm_id": "ppgt_author_v2"},
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "esa", "model": {"family": "esa_small", "version": "4", "addons": []},
+      "recipe_ref": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/contract.json",
+      "data_ref": {"spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/experiment_spec.json", "arm_id": "esa_native_v3"},
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {"learning_rate": 0.0003, "horizon_passes": 60, "profiling": {"warmup_steps": 0, "active_steps": 2, "record_shapes": false, "profile_memory": false, "with_stack": false, "row_limit": 75, "module_paths": [], "ppgt_phases": false}},
+      "reference_ref": {"plan_ref": "experiments/modern2d_100k_formal_screen/retry_v2/acceptance_plan.json", "arm_id": "esa_native_v3"},
+      "purpose": "context_only"
+    }
+  ]
+}
