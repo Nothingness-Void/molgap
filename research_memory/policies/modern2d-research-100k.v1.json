@@ -1,0 +1,11 @@
+{
+  "schema": "molgap-policy-v1", "policy_id": "modern2d-research-100k", "version": "v1",
+  "policy_type": "research_action", "status": "candidate",
+  "created_from_source_digest": "70fb534e295a47e0ddbd8e18c762c9331a7adc8d5d40bce7e3a07799f9fb8b79",
+  "approval": {"activation": "Human2026-10-22 four-slot eight-arm bounded research request", "authority_ref": "experiments/modern2d_configured_100k/research_arms/campaign.json"},
+  "comparability_selector": {"scientific_contract": "modern2d-train100k-commondev50k-20pass-fp32-bs128-v1"},
+  "required_observable_fields": ["user_authorized_research_campaign"],
+  "action_rule": {"field": "user_authorized_research_campaign", "operator": "eq", "threshold": true, "action": "RUN_SCREEN20"},
+  "borderline_action": "DEFER", "promotion_rule": null, "early_stop_rule": null, "observation_point": null,
+  "cost_model": {"kind": "measured_only", "assumptions": ["Two ESA T4x2 slots at most4h each; two PPGT T4x2 slots at most5h each.", "No full-scale, protected roles, extra seed or automatic successor."]}
+}

@@ -1,0 +1,61 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "source_reissue_authorized": true,
+  "logical_run_id": "modern2d-esa-research-slot1-s42-v1",
+  "arms": [
+    "esa_lr3",
+    "esa_identity3"
+  ],
+  "interfaces": [
+    [
+      "esa_small",
+      "4"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 8,
+  "recipes": {
+    "esa_lr3": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    },
+    "esa_identity3": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    }
+  },
+  "run_reference": "kaseichou/molgap-esa-research-slot1-v1",
+  "gpu": {
+    "owner": "kaseichou",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 14400,
+    "allocated_t4_hours_ceiling": 8
+  },
+  "research_design": {
+    "campaign_ref": "experiments/modern2d_configured_100k/research_arms/campaign.json",
+    "reference_arm": "esa_lr3",
+    "claim": "New fixed20-pass research, no pre-existing accepted scientific reference or automatic Replay claim"
+  },
+  "authorization_basis": "Human2026-10-22: audit both model families then submit Kaggle2/3 four slots/eight arms, rapid bounded scientific experiments. No local real-data training/inference."
+}

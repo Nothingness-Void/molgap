@@ -1,0 +1,8 @@
+{
+  "roles": ["train_100k", "common_dev"],
+  "train_use": "100000 accepted rows, seed42, direct normalized Gap optimizer updates",
+  "development_use": "50000 accepted Common-Dev rows, live prediction and selection",
+  "audit": "untouched", "official_validation": "untouched",
+  "test_dev": "untouched", "test_challenge": "untouched",
+  "graph_rebuild_authorized": false, "geometry_authorized": false
+}

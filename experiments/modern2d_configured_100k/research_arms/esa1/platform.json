@@ -1,0 +1,22 @@
+{
+  "platform": {
+    "name": "kaggle",
+    "accelerator": "NvidiaTeslaT4",
+    "atomic_checkpoints": true,
+    "cpu_cores": 4,
+    "device_count": 2,
+    "memory_gib": 29,
+    "retrievable_chunks": true
+  },
+  "kaggle": {
+    "account": "kaseichou",
+    "accelerator": "NvidiaTeslaT4",
+    "kernel": "kaseichou/molgap-esa-research-slot1-v1",
+    "title": "MolGap ESA Research Slot1 V1",
+    "source_dataset": "kaseichou/molgap-esa-research-source1-v1",
+    "datasets": [
+      "kaseichou/molgap-esa-research-source1-v1",
+      "kaseichou/molgap-modern2d-100k-commondev-v1"
+    ]
+  }
+}

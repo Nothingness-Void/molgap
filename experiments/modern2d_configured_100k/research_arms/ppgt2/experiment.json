@@ -1,0 +1,138 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "modern2d-ppgt-research-slot2-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/research_arms/ppgt2/authority.json",
+  "monitor_paths": [
+    "experiments/modern2d_configured_100k/research_arms/ppgt2/STATUS.md"
+  ],
+  "timestamp": "2026-10-21T15:45:23Z",
+  "platform_ref": "experiments/modern2d_configured_100k/research_arms/ppgt2/platform.json",
+  "role_ref": "experiments/modern2d_configured_100k/research_arms/roles.json",
+  "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "modern2d-research-100k",
+    "action": "RUN_SCREEN20",
+    "question": "Can intensive readout and accessible residual updates improve the compact PPGT family's fixed-budget learning?",
+    "deficiency": "Prior oversized graphwise PPGT never produced an accepted complete screen; native batch repair passed but tiny residual initialization and sum readout remain testable budget hypotheses.",
+    "changed_mechanism": "Fresh shared compact PPGT substrate; factorial sum/mean pooling and LayerScale initialization1e-4/1e-2. Same data,20pass exposure,FP32BS128 and remaining initial tensors.",
+    "supporting_evidence": [
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-execution-repair-s42-v2-esa-accepted",
+      "esa-lr-attribution-100k-s42-v1-lr3e4-partial"
+    ],
+    "alternatives": [
+      "A20pass advantage may be convergence speed rather than final capacity.",
+      "A change can improve fit but worsen development generalization; no nomination from unmatched scalars."
+    ],
+    "closed_families": [
+      "modern2d-configured-100k-s42-v2-budget-stop"
+    ],
+    "positive_decision": "Retain complete matched endpoint/curve/residual evidence and assess prospective reference/replay eligibility; no automatic seed/scale.",
+    "negative_decision": "Preserve complete or partial evidence, attribute optimization/representation/budget; no automatic successor.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "C",
+    "platform": "kaggle",
+    "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "Full fixed20pass100K paired discovery,2x2mechanism design, fullCommonDev50K, native barrier before training",
+    "estimated_device_hours": 10,
+    "estimated_wall_hours": 5
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt_scale",
+      "model": {
+        "family": "ppgt_small",
+        "version": "3",
+        "addons": [
+          {
+            "name": "ppgt_research_residual_scale",
+            "version": "1",
+            "config": {
+              "variant": "residual_scale"
+            }
+          }
+        ]
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/experiment_spec.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.001,
+        "weight_decay": 0.00001,
+        "execution_mode": "batched-v1",
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": true
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/acceptance_plan.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "ppgt_both",
+      "model": {
+        "family": "ppgt_small",
+        "version": "3",
+        "addons": [
+          {
+            "name": "ppgt_research_both",
+            "version": "1",
+            "config": {
+              "variant": "both"
+            }
+          }
+        ]
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/experiment_spec.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.001,
+        "weight_decay": 0.00001,
+        "execution_mode": "batched-v1",
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": true
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/acceptance_plan.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "purpose": "context_only"
+    }
+  ]
+}

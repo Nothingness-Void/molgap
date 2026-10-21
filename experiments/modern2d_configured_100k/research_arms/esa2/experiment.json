@@ -1,0 +1,128 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "modern2d-esa-research-slot2-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/research_arms/esa2/authority.json",
+  "monitor_paths": [
+    "experiments/modern2d_configured_100k/research_arms/esa2/STATUS.md"
+  ],
+  "timestamp": "2026-10-21T15:45:23Z",
+  "platform_ref": "experiments/modern2d_configured_100k/research_arms/esa2/platform.json",
+  "role_ref": "experiments/modern2d_configured_100k/research_arms/roles.json",
+  "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "modern2d-research-100k",
+    "action": "RUN_SCREEN20",
+    "question": "Does preserving identity across ESA masked/self-attention blocks improve fit/generalization at evidenced lower learning rates?",
+    "deficiency": "All previous60pass ESA jobs stopped for budget; learning-rate sensitivity was observed and normalized-stream residuals repeatedly discard identity magnitude.",
+    "changed_mechanism": "Factorial canonical identity residual versus unchanged author residual at LR3e-4/1e-4; unchanged masks/features/PMA/state shapes.",
+    "supporting_evidence": [
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-execution-repair-s42-v2-esa-accepted",
+      "esa-lr-attribution-100k-s42-v1-lr3e4-partial"
+    ],
+    "alternatives": [
+      "A20pass advantage may be convergence speed rather than final capacity.",
+      "A change can improve fit but worsen development generalization; no nomination from unmatched scalars."
+    ],
+    "closed_families": [
+      "modern2d-configured-100k-s42-v2-budget-stop"
+    ],
+    "positive_decision": "Retain complete matched endpoint/curve/residual evidence and assess prospective reference/replay eligibility; no automatic seed/scale.",
+    "negative_decision": "Preserve complete or partial evidence, attribute optimization/representation/budget; no automatic successor.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "C",
+    "platform": "kaggle",
+    "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "Full fixed20pass100K paired discovery,2x2mechanism design, fullCommonDev50K, native barrier before training",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4
+  },
+  "arms": [
+    {
+      "arm_id": "esa_lr1",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": []
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.00001,
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": false
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "esa_identity1",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": [
+          {
+            "name": "esa_identity_residual",
+            "version": "1",
+            "config": {
+              "variant": "identity_residual"
+            }
+          }
+        ]
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.00001,
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": false
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    }
+  ]
+}

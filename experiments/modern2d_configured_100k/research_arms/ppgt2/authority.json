@@ -1,0 +1,66 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "source_reissue_authorized": true,
+  "logical_run_id": "modern2d-ppgt-research-slot2-s42-v1",
+  "arms": [
+    "ppgt_scale",
+    "ppgt_both"
+  ],
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "ppgt_small",
+      "3"
+    ]
+  ],
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 10,
+  "recipes": {
+    "ppgt_scale": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    },
+    "ppgt_both": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    }
+  },
+  "run_reference": "nvoid912/molgap-ppgt-research-slot2-v1",
+  "gpu": {
+    "owner": "nvoid912",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 18000,
+    "allocated_t4_hours_ceiling": 10
+  },
+  "research_design": {
+    "campaign_ref": "experiments/modern2d_configured_100k/research_arms/campaign.json",
+    "reference_arm": "ppgt_base",
+    "claim": "New fixed20-pass research, no pre-existing accepted scientific reference or automatic Replay claim"
+  },
+  "authorization_basis": "Human2026-10-22: audit both model families then submit Kaggle2/3 four slots/eight arms, rapid bounded scientific experiments. No local real-data training/inference.",
+  "execution_mode": "batched-v1",
+  "execution_qualification_ref": {
+    "path": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+    "sha256": "39bec22757b449a9463609136f3d66d051395fa8b4bc74c9ebdf85bf3ebed627"
+  }
+}

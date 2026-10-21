@@ -1,0 +1,16 @@
+{
+  "campaign_id": "modern2d-research-100k-s42-v1",
+  "owner": "server", "slots": 4, "independent_arms": 8,
+  "seed": 42, "physical_batch_size": 128, "precision": "fp32",
+  "horizon_passes": 20, "optimizer_steps_per_arm": 15620,
+  "sample_presentations_per_arm": 1999360,
+  "references": {"ppgt": "ppgt_base", "esa": "esa_lr3"},
+  "slots_plan": [
+    {"slot": "ppgt1", "account": "nvoid912", "arms": ["ppgt_base","ppgt_mean"], "wall_seconds": 18000, "allocated_t4_hours": 10},
+    {"slot": "ppgt2", "account": "nvoid912", "arms": ["ppgt_scale","ppgt_both"], "wall_seconds": 18000, "allocated_t4_hours": 10},
+    {"slot": "esa1", "account": "kaseichou", "arms": ["esa_lr3","esa_identity3"], "wall_seconds": 14400, "allocated_t4_hours": 8},
+    {"slot": "esa2", "account": "kaseichou", "arms": ["esa_lr1","esa_identity1"], "wall_seconds": 14400, "allocated_t4_hours": 8}
+  ],
+  "automatic_fifth_slot": false, "extra_seed_authorized": false,
+  "scale_500k_authorized": false, "full_training_authorized": false
+}
