@@ -133,3 +133,6 @@ experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualifi
 # This bounded workflow binds literal metadata bytes across host checkouts.
 experiments/family_workflow_trial_100k/** -text whitespace=cr-at-eol
 research_memory/policies/family-workflow-trial.v1.json text eol=lf
+# Native research evidence and staged terminal inputs bind literal bytes.
+experiments/modern2d_configured_100k/research_arms/*/results/** -text whitespace=cr-at-eol
+experiments/modern2d_configured_100k/runs/modern2d-*-research-*/prospective/*/terminal_staging/** -text whitespace=cr-at-eol
