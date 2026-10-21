@@ -1,0 +1,52 @@
+{
+  "kernel": "nvoid912/molgap-modern2d-execution-repair-v2",
+  "scope": "startup observation; not native qualification",
+  "transport": "bounded_observation",
+  "events": [
+    {
+      "stream_name": "stdout",
+      "time": 6.310515778,
+      "data": "   \u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081\u00e2\u0094\u0081 21.3/21.3 MB 76.3 MB/s eta 0:00:00\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 10.260511842,
+      "data": "warning: The `--system` flag has no effect, `uv venv` always ignores virtual environments when finding a Python interpreter; did you mean `--no-managed-python`?\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 10.596582489,
+      "data": "Downloading cpython-3.12.14-linux-x86_64-gnu (download) (32.6MiB)\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 11.936017239,
+      "data": " Downloaded cpython-3.12.14-linux-x86_64-gnu (download)\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 12.159815012,
+      "data": "Using CPython 3.12.14\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 12.159855839,
+      "data": "Creating virtual environment at: /kaggle/temp/molgap-workflow/runtime/venv\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 12.161196671,
+      "data": "Activate with: source /kaggle/temp/molgap-workflow/runtime/venv/bin/activate\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 12.491755954,
+      "data": "Using Python 3.12.14 environment at: /kaggle/temp/molgap-workflow/runtime/venv\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 13.321967121,
+      "data": "Resolved 57 packages in 829ms\n"
+    }
+  ]
+}

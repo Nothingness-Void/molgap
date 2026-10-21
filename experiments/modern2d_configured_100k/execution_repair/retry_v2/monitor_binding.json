@@ -1,0 +1,20 @@
+{
+  "owner": "server", "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "nvoid912",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle-nv912.json",
+  "jobs": [{
+    "slot": "modern2d-execution-repair",
+    "kernel": "nvoid912/molgap-modern2d-execution-repair-v2",
+    "kernel_id": 139975571, "version": 1, "closed": false,
+    "control_state": "E:/MolGap/artifacts/runs/modern2d-execution-repair-s42-v2/v1/monitor/control_state.json",
+    "output_directory": "E:/MolGap/artifacts/runs/modern2d-execution-repair-s42-v2/v1/inspection"
+  }],
+  "run_directory": "E:/MolGap/artifacts/runs/modern2d-execution-repair-s42-v2/v1",
+  "source_commit": "77e8c8762de396174e1b6b39af3c75b190f315ef",
+  "package_identity": "2c66842bdfa5484ffbd1f0918b57d265e2ed54384a52e0480e06861bd8435850",
+  "authority_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json",
+  "comparison_scope": "NO_TRAIN_EXECUTION_REPAIR_ONLY",
+  "successor_authorized": false, "automatic_retry_authorized": false
+}

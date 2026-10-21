@@ -11,3 +11,9 @@ Local preparation attempt v1 stopped before prospective publication or any
 platform operation because the new explicit policy had not been registered.
 The unchanged diagnostic uses attempt v2 with its registered policy; the
 unsubmitted v1 freeze and failure report remain retained outside the checkout.
+
+Remote kernel139974457/version1 then stopped before native dispatch on an
+unrecognized bootstrap purpose. Both failed-arm RML records were finalized as
+INFRASTRUCTURE_ONLY without training trace or fabricated role/cost evidence.
+The separately frozen [bootstrap retry](retry_v2/STATUS.md) carries the active
+job; this failed run is not being monitored or resumed.
