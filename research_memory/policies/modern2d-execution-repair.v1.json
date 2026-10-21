@@ -1,0 +1,11 @@
+{
+  "schema": "molgap-policy-v1", "policy_id": "modern2d-execution-repair", "version": "v1",
+  "policy_type": "research_action", "status": "candidate",
+  "created_from_source_digest": "8efbe2714d435708effca936854fc1e898ccffc7efc2b1ca89310c717ccecbe5",
+  "approval": {"activation": "One bounded two-family execution repair diagnostic, not scientific training", "authority_ref": "experiments/modern2d_configured_100k/execution_repair/authority.json"},
+  "comparability_selector": {"scientific_contract": "modern2d-train100k-eight-scratch-update-repair-only-v1"},
+  "required_observable_fields": ["user_authorized_modern2d_repair"],
+  "action_rule": {"field": "user_authorized_modern2d_repair", "operator": "eq", "threshold": true, "action": "MEASURE_REPAIR"},
+  "borderline_action": "DEFER", "promotion_rule": null, "early_stop_rule": null, "observation_point": null,
+  "cost_model": {"kind": "measured_only", "assumptions": ["Full T4x2 allocation at most1800 seconds/1 allocated T4-hour.", "Only train payload, eight scratch updates per family; no development payload, scientific endpoint, protected roles or automatic successor."]}
+}
