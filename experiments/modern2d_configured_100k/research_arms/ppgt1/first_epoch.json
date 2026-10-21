@@ -1,0 +1,65 @@
+{
+  "format": "molgap-startup-training-observation-v1",
+  "kernel": "nvoid912/molgap-ppgt-research-slot1-v1",
+  "kernel_id": 140049247,
+  "version": 1,
+  "scope": "Observed structured epoch telemetry; not terminal artifact acceptance or Replay",
+  "events": [
+    {
+      "arm_id": "ppgt_mean",
+      "best_development_mae_eV": 0.3801582157611847,
+      "best_metric_pass": 1,
+      "checkpoint_optimizer_steps": 781,
+      "completed_passes": 1,
+      "development_mae_eV": 0.3801582157611847,
+      "elapsed_seconds": 1662.957784145,
+      "eta_seconds": 31596.197898755,
+      "event": "epoch",
+      "family": "ppgt_small",
+      "format": "molgap-training-log-v1",
+      "learning_rates": [
+        0.00025
+      ],
+      "metric_pass": 1,
+      "next_batch": 0,
+      "optimizer_steps": 781,
+      "pass_timing_scope": "full_pass",
+      "pass_wall_seconds": 1662.957784145,
+      "planned_optimizer_steps": 15620,
+      "planned_passes": 20.0,
+      "sample_presentations": 99968,
+      "status": "running",
+      "train_live_mae_eV": 0.5106845876572754,
+      "updates_per_second": 0.46964511513534696,
+      "weight_state": "live"
+    },
+    {
+      "arm_id": "ppgt_base",
+      "best_development_mae_eV": 0.4096643626689911,
+      "best_metric_pass": 1,
+      "checkpoint_optimizer_steps": 781,
+      "completed_passes": 1,
+      "development_mae_eV": 0.4096643626689911,
+      "elapsed_seconds": 1680.903057147,
+      "eta_seconds": 31937.158085793002,
+      "event": "epoch",
+      "family": "ppgt_small",
+      "format": "molgap-training-log-v1",
+      "learning_rates": [
+        0.00025
+      ],
+      "metric_pass": 1,
+      "next_batch": 0,
+      "optimizer_steps": 781,
+      "pass_timing_scope": "full_pass",
+      "pass_wall_seconds": 1680.903057147,
+      "planned_optimizer_steps": 15620,
+      "planned_passes": 20.0,
+      "sample_presentations": 99968,
+      "status": "running",
+      "train_live_mae_eV": 0.5565100883782256,
+      "updates_per_second": 0.4646311973074716,
+      "weight_state": "live"
+    }
+  ]
+}

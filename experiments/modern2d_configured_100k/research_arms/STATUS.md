@@ -16,10 +16,20 @@ bind four private T4 version1 jobs, not an unsubmitted plan.
 The [independent CPU verification](cpu_verification.md) covers model mechanisms,
 update/resume/output inspection and compilation. Pinned Python3.12/torch2.7.1
 installation was observed on the three running jobs. Native qualification and
-formal training were initially unobserved. ESA1 now has
-[positive-step first-epoch telemetry](esa1/first_epoch.json) for both arms;
-the other three slots still lack a retrieved training witness. First-epoch
-metrics are not endpoint acceptance, superiority or Replay qualification.
+formal training were initially unobserved. Six arms now have positive-step
+first-epoch telemetry: [ESA1](esa1/first_epoch.json),
+[PPGT1](ppgt1/first_epoch.json) and [PPGT2](ppgt2/first_epoch.json).
+ESA2 was last observed QUEUED. Both families therefore have actual native
+training evidence, not just CPU fixtures or accepted scheduler submissions.
+First-epoch metrics are not endpoint acceptance, superiority or Replay eligibility.
+
+PPGT first passes including Common-Dev took1663–1730 seconds versus ESA's662.
+A naive first-pass extrapolation puts PPGT's20 passes at9.2–9.6h, above its5h
+allocation. This is a material feasibility risk, not permission to extend a run,
+change its horizon or call a partial prefix complete. The original hard budget
+and atomic checkpoint reserve remain binding. Terminal interpretation must keep
+STOP_FOR_COST/partial truth and separate warmed/capture-off timing from cold
+first-pass cost. No scientific winner follows from the first-pass differences.
 The [startup interpretation](startup_interpretation.md) corrects the frozen
 protocol's PPGT warmup shorthand and explains why a literal training START line
 is not expected from the epoch-only logger. Actual compiled recipes are unchanged.

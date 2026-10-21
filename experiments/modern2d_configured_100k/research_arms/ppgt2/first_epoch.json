@@ -1,0 +1,65 @@
+{
+  "format": "molgap-startup-training-observation-v1",
+  "kernel": "nvoid912/molgap-ppgt-research-slot2-v1",
+  "kernel_id": 140049200,
+  "version": 1,
+  "scope": "Observed structured epoch telemetry; not terminal artifact acceptance or Replay",
+  "events": [
+    {
+      "arm_id": "ppgt_scale",
+      "best_development_mae_eV": 0.4800010621547699,
+      "best_metric_pass": 1,
+      "checkpoint_optimizer_steps": 781,
+      "completed_passes": 1,
+      "development_mae_eV": 0.4800010621547699,
+      "elapsed_seconds": 1723.3796844849999,
+      "eta_seconds": 32744.214005215,
+      "event": "epoch",
+      "family": "ppgt_small",
+      "format": "molgap-training-log-v1",
+      "learning_rates": [
+        0.00025
+      ],
+      "metric_pass": 1,
+      "next_batch": 0,
+      "optimizer_steps": 781,
+      "pass_timing_scope": "full_pass",
+      "pass_wall_seconds": 1723.3796844849999,
+      "planned_optimizer_steps": 15620,
+      "planned_passes": 20.0,
+      "sample_presentations": 99968,
+      "status": "running",
+      "train_live_mae_eV": 0.5818012637683007,
+      "updates_per_second": 0.45317930055174543,
+      "weight_state": "live"
+    },
+    {
+      "arm_id": "ppgt_both",
+      "best_development_mae_eV": 0.38491788506507874,
+      "best_metric_pass": 1,
+      "checkpoint_optimizer_steps": 781,
+      "completed_passes": 1,
+      "development_mae_eV": 0.38491788506507874,
+      "elapsed_seconds": 1729.5281770530003,
+      "eta_seconds": 32861.035364007,
+      "event": "epoch",
+      "family": "ppgt_small",
+      "format": "molgap-training-log-v1",
+      "learning_rates": [
+        0.00025
+      ],
+      "metric_pass": 1,
+      "next_batch": 0,
+      "optimizer_steps": 781,
+      "pass_timing_scope": "full_pass",
+      "pass_wall_seconds": 1729.5281770530003,
+      "planned_optimizer_steps": 15620,
+      "planned_passes": 20.0,
+      "sample_presentations": 99968,
+      "status": "running",
+      "train_live_mae_eV": 0.4917783584028468,
+      "updates_per_second": 0.45156824292436304,
+      "weight_state": "live"
+    }
+  ]
+}
