@@ -8,7 +8,7 @@ bind four private T4 version1 jobs, not an unsubmitted plan.
 
 | Slot | Account | Kernel ID/version | Last scheduler observation |
 |---|---|---|---|
-|ESA1|Kaggle2|140049215/1|RUNNING|
+|ESA1|Kaggle2|140049215/1|COMPLETE; both20-pass endpoints mechanically accepted|
 |ESA2|Kaggle2|140049216/1|QUEUED|
 |PPGT1|Kaggle3|140049247/1|RUNNING|
 |PPGT2|Kaggle3|140049200/1|RUNNING|
@@ -41,3 +41,11 @@ Terminal events are delivered idempotently to the same A without overriding A's
 model/reasoning. One terminal job does not pause monitoring for the other three.
 Large outputs and operation journals remain outside Git. Original partial and
 failed histories are retained, not relabeled as this fresh20-pass benchmark.
+
+ESA1 has a [terminal decision](esa1/results/decision.md): the identity residual
+gave a small uncertain point improvement, with no nomination. Both models,
+predictions and full curves passed mechanical inspection. Standard RML terminal
+staging is retained, but canonical finalization fails closed because this initial
+context-only prospective input froze no reference/pair binding. No Replay claim,
+post-hoc prospective edit or rerun is used to hide that gap. Monitoring continues
+for ESA2/PPGT1/PPGT2; closing one slot does not pause the campaign heartbeat.

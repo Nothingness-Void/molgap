@@ -7,16 +7,15 @@
 ## Server execution status
 
 The human-authorized [four-slot/eight-arm PPGT/ESA research campaign](experiments/modern2d_configured_100k/research_arms/STATUS.md)
-has four accepted Kaggle2/3 version1 submissions. Three were observed RUNNING and
-one QUEUED; pinned Python3.12/torch2.7.1 startup was observed on three jobs.
-All four PPGT and both ESA1 arms have positive-step first-epoch telemetry,
-including reported checkpoint step781 and full Common-Dev metrics. ESA2 remains
-queued without a training witness. PPGT's first-pass rate risks missing its
-20-pass endpoint within5h; the frozen ceiling is not extended or relabeled.
-Fresh20-pass contracts retain fixed100K/Common-Dev,
-FP32/BS128/seed42. The existing Luna B/30-minute heartbeat now owns the four exact
-receipt-bound jobs, silent while healthy. No automatic successor, extra seed,
-500K/full, protected role, scientific winner or Replay claim is released.
+has four accepted Kaggle2/3 version1 submissions. ESA1 is COMPLETE:
+both20-pass endpoints passed independent saved-artifact
+acceptance. The [terminal interpretation](experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md)
+retains a small uncertain identity-residual advantage without nomination. Its
+RML terminal packages are staged, but canonical finalization is blocked by the
+absent prospectively frozen reference/pair binding; artifacts/curves are intact.
+The remaining three exact jobs stay under the existing Luna B/30-minute silent
+monitor. PPGT has real training witnesses but risks its frozen5h budget; no
+extension, new arm, extra seed,500K/full/protected role or Replay claim follows.
 
 The [PPGT/ESA execution-repair diagnostic](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md)
 is accepted and RML-finalized as NO_TRAIN/context_only. Both native repeat/resume
