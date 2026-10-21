@@ -239,3 +239,30 @@ def test_configured_two_independent_arms(configured):
     assert len(set(identities)) == 2
     plan = json.loads((c.repo / workflow["acceptance_plan"]).read_bytes())
     assert len(check_plan(spec, c.repo, plan)["arms"]) == 2
+
+
+def test_execution_repair_reissues_only_source_pin(configured):
+    from molgap.experiment_input import _read_scientific_recipe
+    c = configured
+    path = c.repo / c.value["arms"][0]["recipe_ref"]
+    original = json.loads(path.read_bytes())
+    family = (original["family"], original["family_version"])
+    original["execution_policy"]["feature_transform_source_sha256"] = "0" * 64
+    _write_json(path, original)
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="Execution policy differs"):
+        read_recipe(path)
+    authority = dict(purpose="CONFIGURED_EXECUTION_REPAIR", scientific_training_authorized=False)
+    retained, reissued = _read_scientific_recipe(path, family, authority)
+    assert retained == original and path.read_bytes() == before
+    assert reissued.execution_policy["feature_transform_source_sha256"] == indexed_transform_identity(family)
+    for denied in ({**authority, "purpose": "CONFIGURED_SCREEN"},
+                   {**authority, "scientific_training_authorized": True},
+                   {"purpose": "CONFIGURED_EXECUTION_REPAIR"}):
+        with pytest.raises(ValueError, match="Execution policy differs"):
+            _read_scientific_recipe(path, family, denied)
+    # Source reissuance must not repair a second, unrelated policy discrepancy.
+    original["execution_policy"]["unreviewed_policy"] = True
+    _write_json(path, original)
+    with pytest.raises(ValueError, match="Execution policy differs"):
+        _read_scientific_recipe(path, family, authority)

@@ -139,6 +139,31 @@ def _bound_source_commit(run, spec, root):
     return commits.pop()
 
 
+def _read_scientific_recipe(path, family, authority):
+    """Reissue only a repair probe's source pin; retained input bytes stay frozen."""
+    from copy import deepcopy
+    from .family_training_runner import read_recipe, _recipe_configuration
+    from .modern2d_training import INTERFACES
+    from .modern2d_feature_binding import indexed_transform_identity
+
+    try:
+        return read_recipe(path)
+    except ValueError as error:
+        if (authority.get("purpose") != "CONFIGURED_EXECUTION_REPAIR"
+                or authority.get("scientific_training_authorized") is not False
+                or family not in INTERFACES
+                or str(error) != "Execution policy differs from the accelerated family default"):
+            raise
+        record = _read(path)
+        rebound = deepcopy(record)
+        policy = rebound.get("execution_policy")
+        if not isinstance(policy, dict) or "feature_transform_source_sha256" not in policy:
+            raise ValueError("Execution repair requires a frozen source-transform pin")
+        policy["feature_transform_source_sha256"] = indexed_transform_identity(family,
+            feature_only=rebound.get("formal_training", {}).get("purpose") == "configured-screen")
+        return record, _recipe_configuration(rebound)
+
+
 def _compile_scientific_input(path, root, value):
     """Compile declarations, not permission, reference acceptance or trainer code.
 
@@ -227,7 +252,7 @@ def _compile_scientific_input(path, root, value):
         family = (item["model"]["family"], item["model"]["version"])
         if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN_INTERFACES}:
             raise ValueError("Scientific compiler requires a reviewed K1/3, GPTrans/2, PPGT/3 or ESA/4 interface")
-        record, baseline = read_recipe(local(item["recipe_ref"]))
+        record, baseline = _read_scientific_recipe(local(item["recipe_ref"]), family, authority)
         if baseline.interface != family or baseline.seed != 42 or not baseline.dataset.development:
             raise ValueError("Frozen screen recipe does not match model, seed or development contract")
         _object(item["data_ref"], "spec_ref arm_id", "data_ref")
