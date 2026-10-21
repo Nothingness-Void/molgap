@@ -202,12 +202,20 @@ reference through this plan by default. Add a reference training arm only when
 the owning contract explicitly justifies retraining; preparation never silently
 recreates a reference.
 
-`outputs` maps every arm to `{output_dir, expected}` under the selected repo.
+`outputs` maps every arm to `{output_dir, expected}`. Run mode resolves expected
+values from the original frozen source package; retrieved bytes may live in the
+configured external artifact root. Explicit paths cannot change expectations.
 `build_verified_terminal_descriptor` accepts those inputs and existing per-arm
 `locations`: `trajectory_id`, `run_id`, `trajectory`, `terminal`, `trace`.
 It translates repetitive observed bindings. Canonical scientific decision,
 acceptance, V5, role, cost and terminal records retain their existing owners.
 The closure trace must be exactly the inspected trace path and bytes.
+
+Mechanical inspection does not require a pre-existing terminal package.
+`stage_verified_terminal_packages` prepares compact metadata from inspected
+facts and explicit decisions. External payloads use SHA-bound `external:///`
+local-custody locators; they are not copied into Git and are not automatically
+available on another machine. Metadata and decisions remain repository-local.
 
 Every arm is inspected before a terminal write. Existing closure then uses
 independent durable arm transactions; it is not an all-or-nothing multi-arm

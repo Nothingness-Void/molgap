@@ -491,6 +491,7 @@ class TargetIdentityBinding:
     repo_root: Path
     plan_path: str
     plan_sha256: str
+    package_dir: Path | None = None
 
     @classmethod
     def from_acceptance_plan(cls, spec: ExperimentSpec, repo_root: Path,
@@ -505,14 +506,46 @@ class TargetIdentityBinding:
             raise ValueError("Target identity acceptance plan is blocked")
         return cls(root, plan_path, plan_sha256)
 
+    @classmethod
+    def from_frozen_package(cls, spec: ExperimentSpec, repo_root: Path,
+                            package_dir: Path, plan_path: str):
+        """Bind encoding metadata already verified by the original run resolver."""
+        from .experiment_package import read_packaged_text
+        from .experiment_spec import _unique_object, _canonical
+        raw = read_packaged_text(package_dir, plan_path)
+        plan = json.loads(raw, object_pairs_hook=_unique_object)
+        _canonical(plan)
+        if (plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"}
+                or plan.get("spec_identity") != spec.identity
+                or [entry.get("arm_id") for entry in plan.get("arms", [])] !=
+                   [arm["arm_id"] for arm in spec.to_dict()["arms"]]):
+            raise ValueError("Frozen target identity plan/Spec mismatch")
+        return cls(Path(repo_root).absolute(), plan_path,
+                   hashlib.sha256(raw.encode()).hexdigest(), Path(package_dir).absolute())
+
+    def _pinned_json(self, name, digest, *, label="metadata"):
+        _digest(digest, "target identity metadata digest")
+        if self.package_dir is not None:
+            from .experiment_package import read_packaged_text
+            from .experiment_spec import _unique_object, _canonical
+            inventory = _json(self.package_dir / "package_manifest.json")
+            if name in inventory["relative_allowlist"]:
+                raw = read_packaged_text(self.package_dir, name)
+                if hashlib.sha256(raw.encode()).hexdigest() != digest:
+                    raise ValueError("Target identity " + label + " hash mismatch")
+                result = json.loads(raw, object_pairs_hook=_unique_object)
+                _canonical(result)
+                return result
+        path = _artifact_path(self.repo_root, name)
+        if file_digest(path) != digest:
+            raise ValueError("Target identity " + label + " hash mismatch")
+        return _json(path)
+
     def digest(self, target, *, context: RunContext, expected: dict) -> tuple[str, dict]:
         import torch
 
         _digest(self.plan_sha256, "acceptance plan digest")
-        path = _artifact_path(self.repo_root, self.plan_path)
-        if file_digest(path) != self.plan_sha256:
-            raise ValueError("Target identity acceptance plan hash mismatch")
-        plan = _json(path)
+        plan = self._pinned_json(self.plan_path, self.plan_sha256, label="acceptance plan")
         if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
             raise ValueError("Target identity plan/Spec mismatch")
         entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
@@ -526,10 +559,7 @@ class TargetIdentityBinding:
         if set(pointer) != {"path", "sha256"}:
             raise ValueError("Target identity requires a pinned manifest")
         _digest(pointer["sha256"], "target manifest digest")
-        manifest_path = _artifact_path(self.repo_root, pointer["path"])
-        if file_digest(manifest_path) != pointer["sha256"]:
-            raise ValueError("Target identity manifest hash mismatch")
-        manifest = _json(manifest_path)
+        manifest = self._pinned_json(pointer["path"], pointer["sha256"], label="manifest")
         if manifest.get("development_target_sha256") != expected["target_sha256"]:
             raise ValueError("Target identity manifest/frozen target mismatch")
         encoding = manifest.get("target_encoding")
@@ -909,7 +939,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
 
 
 def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *, outputs: dict,
-                           execute: bool = False) -> dict:
+                           execute: bool = False, _reports: dict | None = None) -> dict:
     """Reinspect every arm, then delegate the unchanged terminal/RML transaction.
 
     outputs maps arm_id to {context, output_dir, expected}. Descriptor artifact
@@ -926,7 +956,7 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
     reports = {}
     for arm in descriptor.to_dict()["arms"]:
         item = outputs[arm["arm_id"]]
-        report = inspect_terminal_output(item)
+        report = inspect_terminal_output(item) if _reports is None else _reports[arm["arm_id"]]
         reports[arm["arm_id"]] = report
         if report["status"] == "BLOCKED":
             continue
@@ -946,9 +976,10 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
             if binding["sha256"] != checked["sha256"]:
                 raise ValueError("Descriptor/verified artifact mismatch: " + role)
             inspected_path = _artifact_path(Path(item["output_dir"]).absolute(), checked["path"])
-            if repo_local_path(repo_root, binding["locator"]) != inspected_path:
+            from .research_memory.paths import bound_artifact_path
+            if bound_artifact_path(repo_root, binding["locator"]) != inspected_path:
                 raise ValueError("Descriptor/verified artifact path mismatch: " + role)
-            if role == "trace" and ("trace" not in arm or repo_local_path(repo_root, arm["trace"]) != inspected_path):
+            if role == "trace" and ("trace" not in arm or bound_artifact_path(repo_root, arm["trace"]) != inspected_path):
                 raise ValueError("Descriptor closure trace differs from the inspected trace")
         pass_counter = "completed_passes" if "completed_passes" in report["observed"]["progress"] else "epochs"
         for field, counter in (("epoch", pass_counter), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
@@ -973,15 +1004,18 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
     for arm_id, item in supplied.items():
         if type(item) is not dict or set(item) != {"output_dir", "expected"}:
             raise ValueError("Expected per-arm output_dir/expected inputs")
+        output_dir = Path(item["output_dir"])
+        output_dir = output_dir if output_dir.is_absolute() else Path(repo_root) / output_dir
+        _safe_local(output_dir.absolute())
         outputs[arm_id] = {
             "context": RunContext.from_launch(spec, receipt_path, package_dir,
                 expected_package_identity=expected_package_identity, arm_id=arm_id),
-            "expected": item["expected"], "output_dir": repo_local_path(repo_root, item["output_dir"])}
+            "expected": item["expected"], "output_dir": output_dir.absolute()}
     return outputs
 
 
 def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *, outputs: dict,
-                                       locations: dict):
+                                       locations: dict, _reports: dict | None = None):
     """Translate mechanical observations without per-experiment evidence glue.
 
     locations supplies existing trajectory, terminal, canonical trace and run ID.
@@ -1003,7 +1037,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         ctx = item["context"]
         if ctx.spec_identity != spec.identity or ctx.arm_identity != canonical_fingerprint(arm):
             raise ValueError("Output/Spec arm binding mismatch")
-        report = inspect_terminal_output(item)
+        report = inspect_terminal_output(item) if _reports is None else _reports[arm_id]
         if report["status"] != "MECHANICALLY_VERIFIED":
             raise ValueError("Output inspection blocked: " + "; ".join(report["blockers"]))
         where = locations[arm_id]
@@ -1013,10 +1047,8 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         def binding(role):
             entry = observation["artifacts"][role]
             path = _artifact_path(Path(item["output_dir"]).absolute(), entry["path"])
-            try:
-                relative = path.relative_to(root).as_posix()
-            except ValueError as exc:
-                raise ValueError("RML closure artifacts must be retained below repository") from exc
+            from .research_memory.paths import artifact_locator
+            relative = artifact_locator(root, path)
             return {"status": "available", "locator": relative, "sha256": entry["sha256"], "missing_reason": None}
         progress = observation["progress"]
         identity = _terminal_identity(spec, ctx)
@@ -1040,7 +1072,8 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
                     "progress": {"epoch": fact(progress["completed_passes"] if "completed_passes" in progress else progress["epochs"]), "step": fact(progress["optimizer_steps"]),
                                  "samples": fact(progress["sample_presentations"])},
                     "costs": costs, "missing_evidence": missing}}
-        if repo_local_path(root, where["trace"]) != repo_local_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):
+        from .research_memory.paths import bound_artifact_path
+        if bound_artifact_path(root, where["trace"]) != bound_artifact_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):
             raise ValueError("Descriptor closure trace differs from the inspected trace")
         entries.append(entry)
     descriptor = TerminalDescriptor(spec, {"schema_version": TERMINAL_PROTOCOL,

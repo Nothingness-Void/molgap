@@ -1440,7 +1440,10 @@ def test_prepare_and_accept_workflow_cli_json_dispatch(tmp_path, capsys, monkeyp
         "prepare-workflow", "--spec", spec_path, "--repo-root", repo,
         "--plan", plan_path, "--output", tmp_path / "prepared",
     ], 0)
-    assert prepared == {"status": "PREPARED_FOR_PLATFORM", "submitted": False}
+    assert prepared["status"] == "PREPARED_FOR_PLATFORM"
+    assert prepared["submitted"] is False
+    assert prepared["report"] == str(tmp_path / "prepared" / "workflow_report.json")
+    assert prepared["next_action"] == "Submit only under the existing explicit authority"
     prepare.assert_called_once_with(spec, repo, {"synthetic": True}, tmp_path / "prepared")
 
     blocked = _cli_json(capsys, [

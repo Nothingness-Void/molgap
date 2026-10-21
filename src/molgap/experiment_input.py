@@ -97,7 +97,7 @@ def _check_frozen_binding(binding, value, spec, plan):
     if (binding.get("format") != value["format"] or binding.get("input_identity") != canonical_fingerprint(value)
             or binding.get("spec_identity") != spec.identity
             or binding.get("workflow_identity") != canonical_fingerprint(plan)
-            or binding.get("authority_ref") != value["authority_ref"]
+            or binding.get("authority_ref") != _authority_reference(value, plan)
             or binding.get("monitor_paths") != value["monitor_paths"]
             or plan.get("spec_identity") != spec.identity
             or (value["format"] == "molgap-scientific-experiment-v1" and (
@@ -106,6 +106,21 @@ def _check_frozen_binding(binding, value, spec, plan):
         raise ValueError("Original frozen run binding changed; refusing overwrite")
     if "source_commit" in binding:
         _commit(binding["source_commit"])
+
+
+def _authority_reference(value, plan):
+    """Resolve inline authority from frozen generated pins, never today's HEAD."""
+    if "authority_ref" in value:
+        return value["authority_ref"]
+    from .experiment_launch import canonical_json
+    import hashlib
+    digest = hashlib.sha256(canonical_json(value["authority"]).encode()).hexdigest()
+    matches = [name for name, pin in plan.get("generated_records", {}).items()
+               if name.endswith("/authority.json") and pin == digest]
+    if len(matches) != 1:
+        raise ValueError("Frozen inline authority binding is missing or ambiguous")
+    validate_relative_path(matches[0])
+    return matches[0]
 
 
 def _commit(value):
@@ -162,8 +177,15 @@ def _compile_scientific_input(path, root, value):
     from .research_memory.trace import file_digest
 
     optional = {"shared", "same_run", "retry_of"} & set(value)
-    _object(value, "format experiment_id logical_run_id attempt_id machine_profile authority_ref monitor_paths "
-            "timestamp question profile platform_ref role_ref decision_ref arms seeds " + " ".join(optional), "scientific input")
+    declaration_fields = []
+    for name in ("authority", "platform"):
+        selected = {name, name + "_ref"} & set(value)
+        if len(selected) != 1 or (name in selected and type(value[name]) is not dict):
+            raise ValueError("Supply exactly one explicit " + name + " or " + name + "_ref")
+        declaration_fields.extend(selected)
+    _object(value, "format experiment_id logical_run_id attempt_id machine_profile monitor_paths "
+            "timestamp question profile role_ref decision_ref arms seeds " +
+            " ".join([*optional, *declaration_fields]), "scientific input")
     from .common.declarations import run_version
     run_version(value["attempt_id"])
     for key in ("experiment_id", "logical_run_id", "attempt_id"):
@@ -198,9 +220,17 @@ def _compile_scientific_input(path, root, value):
     _safe_local(config_path)
     config_name = config_path.relative_to(root).as_posix()
     local(config_name)
-    authority = _read(local(value["authority_ref"]))
-    local(value["role_ref"]); local(value["decision_ref"])
-    platform = _read(local(value["platform_ref"]))
+    input_sha = hashlib.sha256(_payload(config_path)).hexdigest()
+    from .experiment_package import _git
+    initial_commit = _commit(_git(root, "rev-parse", "HEAD").decode().strip())
+    prefix = f"experiments/{value['experiment_id']}/generated/" + canonical_fingerprint({
+        "input": input_sha, "commit": initial_commit})
+    authority_ref = value.get("authority_ref", prefix + "/authority.json")
+    authority = _read(local(authority_ref)) if "authority_ref" in value else deepcopy(value["authority"])
+    for key in ("role_ref", "decision_ref"):
+        if not local(value[key]).read_bytes().strip():
+            raise ValueError("Scientific input requires retained role and decision content")
+    platform = _read(local(value["platform_ref"])) if "platform_ref" in value else deepcopy(value["platform"])
     _object(platform, "platform kaggle", "platform input")
     question = ExecutionQuestion(**value["question"])
     from .research_memory.policy import load_policy_registry
@@ -213,7 +243,7 @@ def _compile_scientific_input(path, root, value):
         raise ValueError("Scientific preparation requires the existing Kaggle workflow adapter")
     if type(value["arms"]) is not list or not 1 <= len(value["arms"]) <= 2:
         raise ValueError("One T4x2 slot supports one or two independent arms")
-    arm_override_fields = {"arm_id", "model", "recipe_ref", "data_ref", "initial_state_ref",
+    arm_override_fields = {"arm_id", "model", "recipe_ref", "data_ref", "initial_state_ref", "preset_ref",
                            "training", "reference_ref", "purpose"}
     for item in value["arms"]:
         if type(item) is not dict or "arm_id" not in item or set(item) - arm_override_fields:
@@ -221,7 +251,7 @@ def _compile_scientific_input(path, root, value):
         _identifier(item["arm_id"], "arm_id")
     shared = value.get("shared", {})
     if type(shared) is not dict or set(shared) - {
-            "model", "recipe_ref", "data_ref", "initial_state_ref", "training", "reference_ref", "purpose"}:
+            "model", "recipe_ref", "data_ref", "initial_state_ref", "training", "reference_ref", "purpose", "preset_ref"}:
         raise ValueError("Unsupported shared scientific arm fields")
     items = [{**deepcopy(shared), **item} for item in value["arms"]]
     arm_ids = [a["arm_id"] for a in items]
@@ -232,14 +262,29 @@ def _compile_scientific_input(path, root, value):
             or not math.isfinite(budget) or budget <= 0 or authority.get("arms") != arm_ids
             or authority.get("seeds") != [42]):
         raise ValueError("Existing authority does not cover exactly these arms, seed and positive ceiling")
+    presets = {}
+    for index, item in enumerate(items):
+        if "preset_ref" in item:
+            from .experiment_presets import expand_baseline_preset
+            items[index], presets[item["arm_id"]] = expand_baseline_preset(item, read_local=local)
     pair = value.get("same_run")
     if pair is not None:
+        pair = deepcopy(pair)
+        if type(pair) is not dict:
+            raise ValueError("Same-run declaration must be an object")
+        if "target_manifest_ref" not in pair:
+            targets = [presets[arm]["target_manifest"] for arm in arm_ids if arm in presets]
+            if len(targets) != len(items) or any(target != targets[0] for target in targets):
+                raise ValueError("Same-run target requires one explicit pin shared by every arm preset")
+            pair["target_manifest_ref"] = targets[0]["path"]
         _object(pair, "reference_arm_id target_manifest_ref", "same_run")
         if len(items) != 2 or pair["reference_arm_id"] not in arm_ids:
             raise ValueError("Same-run comparison requires one reference and one candidate")
         if authority.get("same_run_reference_arm_id") != pair["reference_arm_id"]:
             raise ValueError("Authority must explicitly release the same-run reference arm")
         target_pin = pin(pair["target_manifest_ref"])
+        if any(preset["target_manifest"] != target_pin for preset in presets.values()):
+            raise ValueError("Same-run target differs from its frozen baseline preset")
     retry = value.get("retry_of")
     if value["attempt_id"] != "v1":
         _object(retry, "logical_run_id attempt_id spec_identity decision_ref", "retry_of")
@@ -289,6 +334,7 @@ def _compile_scientific_input(path, root, value):
         raise ValueError("A retry must use a new attempt version")
     compiled, data_specs, dataset_manifests = [], set(), {}
     for item in items:
+        preset = presets.get(item["arm_id"])
         _object(item, "arm_id model recipe_ref data_ref initial_state_ref training purpose" +
                 ("" if pair is not None else " reference_ref"), "scientific arm")
         _identifier(item["arm_id"], "arm_id")
@@ -297,6 +343,8 @@ def _compile_scientific_input(path, root, value):
         if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
             raise ValueError("Scientific compiler supports reviewed shared K1/3 and GPTrans/2 only")
         record, baseline = read_recipe(local(item["recipe_ref"]))
+        if preset is not None and baseline.initialization_sha256 != preset["initialization_state_sha256"]:
+            raise ValueError("Preset initialization differs from its frozen recipe")
         from .family_training_data import resolve_training_manifest
         dataset_manifests[item["arm_id"]] = str(resolve_training_manifest(paths.data_root, baseline.dataset))
         if INTERFACES.get(baseline.family) != family or baseline.seed != 42 or not baseline.dataset.development:
@@ -324,9 +372,12 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Model addons must be an ordered declaration list")
         addons = []
         for addon in item["model"]["addons"]:
-            _object(addon, "name version config", "addon")
+            if type(addon) is str:
+                addon = {"name": addon}
+            if type(addon) is not dict or "name" not in addon or set(addon) - {"name", "version", "config"}:
+                raise ValueError("Addon requires a catalog name and optional version/config")
             addons.append(build_addon_declaration(family, addon["name"], repo_root=root,
-                version=addon["version"], config=addon["config"]))
+                version=addon.get("version", "1"), config=addon.get("config")))
         arm = deepcopy(previous)
         is_reference = pair is not None and item["arm_id"] == pair["reference_arm_id"]
         arm.update(arm_id=item["arm_id"], scientific_role="reference" if is_reference else "candidate", addons=addons,
@@ -339,6 +390,8 @@ def _compile_scientific_input(path, root, value):
         names = tuple(a["name"] for a in addons)
         selected = names if len(names) > 1 else (names[0] if names else None)
         requirements = record["acceptance_requirements"]
+        if preset is not None and preset["target"]["development_target_sha256"] != requirements["target_sha256"]:
+            raise ValueError("Preset target manifest differs from its frozen recipe")
         kwargs = dict(configuration=recipe, source_idx_sha256=requirements["source_idx_sha256"],
             target_sha256=requirements["target_sha256"], train_role_identity=record["train_role_identity"],
             development_role_identity=record["development_role_identity"], logging=record.get("logging"))
@@ -356,6 +409,8 @@ def _compile_scientific_input(path, root, value):
         _safe_local(initial.absolute())
         inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
         if pair is not None:
+            if preset is not None and target_pin != preset["target_manifest"]:
+                raise ValueError("Same-run target differs from its frozen baseline preset")
             if is_reference and (item["training"] or addons != previous["addons"]):
                 raise ValueError("Same-run reference must retain its frozen recipe and addons")
             if not is_reference and recipe == baseline:
@@ -373,6 +428,8 @@ def _compile_scientific_input(path, root, value):
         reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
         if reference is None:
             raise ValueError("Existing retained reference arm is missing; no baseline is trained")
+        if preset is not None and reference["reference_artifacts"]["target_manifest"] != preset["target_manifest"]:
+            raise ValueError("Retained target differs from its frozen baseline preset")
         if reference["contract"] != pin(item["recipe_ref"]):
             raise ValueError("Retained reference is not bound to the frozen baseline recipe")
         bundle = validate_reference_bundle(retained(reference["reference_bundle"]))
@@ -422,16 +479,18 @@ def _compile_scientific_input(path, root, value):
     # second package sidecar; preserve the existing reserved-name boundary.
     selected_sources = sorted(set(runtime_source_files(root, sorted(records - data_specs))) | data_specs)
     commit = _assert_clean_paths(root, selected_sources)
+    if commit != initial_commit:
+        raise ValueError("Scientific source HEAD changed during compilation")
     committed = committed_payloads(root, commit, selected_sources)
     if any(_payload(root / n) != committed[n] for n in selected_sources):
         raise ValueError("Scientific source differs from committed bytes")
-    input_sha = hashlib.sha256(_payload(config_path)).hexdigest()
-    prefix = f"experiments/{value['experiment_id']}/generated/" + canonical_fingerprint({"input": input_sha, "commit": commit})
     generated, arms, prospective, acceptance, jobs = {}, [], [], [], []
     def derive(name, payload):
         raw = canonical_json(payload).encode()
         generated[name] = raw
         return {"path": name, "sha256": hashlib.sha256(raw).hexdigest()}
+    if "authority" in value:
+        derive(authority_ref, authority)
     for device, (item, arm, recipe, reference, bundle, context, identity, changed, initial, evidence) in enumerate(compiled):
         arm_id = arm["arm_id"]
         recipe_pin = derive(prefix + "/" + arm_id + "/recipe.json", recipe)
@@ -451,7 +510,7 @@ def _compile_scientific_input(path, root, value):
         proposal = build_execution_proposal(question=question, arm=arm, trajectory_id=tid, source_commit=commit,
             run=value["logical_run_id"], version=value["attempt_id"], contract_ref=recipe_pin["path"],
             contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name],
-            authority_ref=value["authority_ref"], role_ref=value["role_ref"], decision_ref=value["decision_ref"],
+            authority_ref=authority_ref, role_ref=value["role_ref"], decision_ref=value["decision_ref"],
             timestamp=value["timestamp"], profile=profile, action_type="training")
         proposal["decision_state"]["policy_version"] = policy_version
         if pair is not None:
@@ -566,7 +625,7 @@ def _freeze(value,spec,plan,paths,*,repo_root=None):
     run = paths.run_directory(spec.to_dict()["logical_run_id"],value["attempt_id"])
     binding = {"format":value["format"],"input_identity":canonical_fingerprint(value),
                "spec_identity":spec.identity,"workflow_identity":canonical_fingerprint(plan),
-               "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"]}
+               "authority_ref":_authority_reference(value,plan),"monitor_paths":value["monitor_paths"]}
     frozen = run / "inputs"
     _safe_local(frozen / "input_binding.json")
     if (frozen / "input_binding.json").exists():
@@ -648,7 +707,7 @@ def prepare_experiment_input(path, repo_root, *, _content_verification=None):
                                 source_cache=paths.artifact_root/"source-packages/runtime-cache",
                                 **extra)
     result = {**result,"prepared":str(prepared),"operations":str(run/"operations"),
-              "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"],
+              "authority_ref":_authority_reference(value,plan),"monitor_paths":value["monitor_paths"],
               "local_call_seconds":perf_counter()-started,"submitted":False}
     if result["status"] == "PREPARED_FOR_PLATFORM":
         from .local_storage import retire_failed_preparations

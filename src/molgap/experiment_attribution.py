@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import pickle
 from pathlib import Path
 from typing import Any
 
@@ -91,7 +92,7 @@ def _compare_paired_errors(
     }
 
 
-def _normalize_trace_rows(trace: dict[str, Any], std_eV: float) -> list[dict[str, Any]]:
+def _normalize_trace_rows(trace: dict[str, Any], std_eV: float | None) -> list[dict[str, Any]]:
     """Normalize canonical RML trace observations or legacy evaluation rows."""
     if "observations" in trace:
         semantics = trace.get("metric_semantics") or {}
@@ -102,7 +103,7 @@ def _normalize_trace_rows(trace: dict[str, Any], std_eV: float) -> list[dict[str
                 continue
             raw_train = item.get("live_train_metric")
             train_eV = (
-                None if raw_train is None else
+                None if raw_train is None or (train_unit != "eV" and std_eV is None) else
                 float(raw_train) if train_unit == "eV" else float(raw_train) * std_eV
             )
             rows.append({
@@ -123,7 +124,7 @@ def _normalize_trace_rows(trace: dict[str, Any], std_eV: float) -> list[dict[str
             "pass_index": float(item["pass_index"]),
             "optimizer_steps": int(item["optimizer_steps"]),
             "sample_presentations": int(item.get("sample_presentations", 0)),
-            "online_train_mae_eV": float(raw_train) * std_eV if raw_train is not None else None,
+            "online_train_mae_eV": float(raw_train) * std_eV if raw_train is not None and std_eV is not None else None,
             "live_dev_metric": float(item["live_mae_eV"]) if item.get("live_mae_eV") is not None else None,
             "ema_dev_metric": (
                 float(item["ema_mae_eV"]) if item.get("ema_mae_eV") is not None else
@@ -135,10 +136,11 @@ def _normalize_trace_rows(trace: dict[str, Any], std_eV: float) -> list[dict[str
     return rows
 
 
-def _load_arm_artifacts(arm_dir: Path) -> dict[str, Any]:
+def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
+                        target_identity=None, _inspection=None) -> dict[str, Any]:
     import numpy as np
     import torch
-    from .experiment_family_workflow import RunContext, _artifact_path, _json, inspect_output
+    from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json, inspect_output
     from .family_training_runner import INTERFACES, read_recipe
 
     root = Path(arm_dir).absolute()
@@ -146,16 +148,19 @@ def _load_arm_artifacts(arm_dir: Path) -> dict[str, Any]:
     manifest_path = root / "output_manifest.json"
     manifest = _json(manifest_path)
     try:
-        context = RunContext(**manifest["context"])
+        context = context or RunContext(**manifest["context"])
         contract_path = _artifact_path(root, manifest["artifacts"]["contract"]["path"])
     except (KeyError, TypeError) as exc:
         raise ValueError("Family attribution requires a bound output manifest") from exc
     contract_raw, recipe = read_recipe(contract_path)
+    _check_context(manifest["context"], context)
     if INTERFACES.get(recipe.family) != (context.family_name, context.family_version):
         raise ValueError("Output family differs from its executable contract")
     if not recipe.dataset.development:
         raise ValueError("Attribution requires explicitly selected development outputs")
-    acceptance = inspect_output(root, context=context, expected=contract_raw["acceptance_requirements"])
+    acceptance = _inspection if _inspection is not None else inspect_output(root, context=context,
+        expected=expected if expected is not None else contract_raw["acceptance_requirements"],
+        target_identity=target_identity)
     if acceptance["status"] != "MECHANICALLY_VERIFIED":
         raise ValueError("Family output failed mechanical inspection: " + "; ".join(acceptance["blockers"]))
     # The existing owner verifies artifact/context/row/target/selection bindings.
@@ -280,9 +285,10 @@ def _strata_table(target, ctrl_abs, cand_abs) -> dict[str, list[dict[str, Any]]]
 def _trace_dynamics(ctrl: dict[str, Any], cand: dict[str, Any], metric_key: str) -> dict[str, Any]:
     import numpy as np
 
-    std_eV = float(ctrl["recipe"]["target_std_eV"])
-    ctrl_evals = _normalize_trace_rows(ctrl["trace"], std_eV)
-    cand_evals = _normalize_trace_rows(cand["trace"], std_eV)
+    ctrl_evals = (_normalize_trace_rows(ctrl["trace"], ctrl["recipe"].get("target_std_eV"))
+                  if ctrl["trace"] else [])
+    cand_evals = (_normalize_trace_rows(cand["trace"], cand["recipe"].get("target_std_eV"))
+                  if cand["trace"] else [])
 
     def arm_curve_summary(arm: dict[str, Any], evals: list[dict[str, Any]]) -> dict[str, Any]:
         if not evals:
@@ -607,15 +613,24 @@ def analyze_family_pair(
     seed: int = 42,
 ) -> dict[str, Any]:
     """Run full diagnostic & failure-mode attribution between two family training arms."""
-    import numpy as np
-
     ctrl = _load_arm_artifacts(Path(control_dir))
     cand = _load_arm_artifacts(Path(candidate_dir))
+    return _analyze_loaded_pair(ctrl, cand, output_dir=output_dir,
+        primary_metric=primary_metric, threshold_eV=threshold_eV,
+        noninferiority_margin_eV=noninferiority_margin_eV,
+        n_bootstrap=n_bootstrap, seed=seed)
+
+
+def _analyze_loaded_pair(ctrl, cand, *, output_dir=None, primary_metric=None,
+                         threshold_eV=0.003, noninferiority_margin_eV=0.0005,
+                         n_bootstrap=10000, seed=42, compare_recipes=True):
+    """Share the retained-artifact arithmetic without manufacturing family outputs."""
+    import numpy as np
 
     # 1. Verify contract & row alignment
     c_rec = ctrl["recipe"]
     x_rec = cand["recipe"]
-    for field in ("dataset", "seed", "target_mean_eV", "target_std_eV"):
+    for field in (("dataset", "seed", "target_mean_eV", "target_std_eV") if compare_recipes else ()):
         if c_rec.get(field) != x_rec.get(field):
             raise ValueError(f"Control and candidate recipe mismatch on frozen field '{field}'")
     if ctrl["contract"]["development_role_identity"] != cand["contract"]["development_role_identity"]:
@@ -792,4 +807,251 @@ def analyze_family_pair(
     return report
 
 
-__all__ = ["ATTRIBUTION_FORMAT", "analyze_family_pair"]
+def _retained_reference(entry, *, repo_root, candidate, inputs):
+    """Read only pinned numerical evidence; a bundle is not a family RunContext."""
+    import numpy as np
+    import torch
+    from .comparison_readiness import validate_reference_bundle
+    from .experiment_family_workflow import tensor_digest
+    from .research_memory.paths import repo_local_path
+
+    def pinned(pointer):
+        if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
+            raise ValueError("Retained reference requires a frozen path/hash pointer")
+        path = repo_local_path(repo_root, pointer["path"])
+        _safe_local(path)
+        if sha256_file(path) != pointer["sha256"]:
+            raise ValueError("Retained reference artifact hash mismatch: " + str(path))
+        return path
+
+    bundle_path = pinned(entry["reference_bundle"])
+    bundle = validate_reference_bundle(_read_json(bundle_path))
+    pointer = entry["reference_artifacts"]["predictions"]
+    path = pinned(pointer)
+    manifest = bundle["prediction_manifest"]
+    if pointer["sha256"] != manifest["prediction_sha256"]:
+        raise ValueError("Retained reference prediction/bundle hash mismatch")
+    expected = inputs["expected"]
+    for bundle_key, expected_key in (("source_idx_sha256", "source_idx_sha256"),
+                                      ("target_sha256", "target_sha256"),
+                                      ("row_count", "development_rows")):
+        if manifest[bundle_key] != expected[expected_key]:
+            raise ValueError("Retained reference/frozen development identity differs: " + bundle_key)
+    if manifest["evaluation_role_identity"] != candidate["contract"]["development_role_identity"]:
+        raise ValueError("Retained reference development role identity differs")
+    identity = bundle["comparison_identity"]
+    weights = identity["evaluation_weight_source"]
+    if weights != candidate["selection_weights"] or identity["seed"] != candidate["recipe"]["seed"]:
+        raise ValueError("Retained reference seed or selected prediction weights differ")
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if type(payload) is not dict or not {"source_idx", "target_eV", "prediction_eV"} <= payload.keys():
+        raise ValueError("Retained reference has no supported aligned tensor predictions")
+    tensors = [payload[key] for key in ("source_idx", "target_eV", "prediction_eV")]
+    if any(not isinstance(t, torch.Tensor) or t.ndim != 1 or len(t) != manifest["row_count"] for t in tensors):
+        raise ValueError("Retained reference prediction/target/row shape mismatch")
+    idx, target, prediction = tensors
+    if idx.dtype != torch.int64 or len(torch.unique(idx)) != len(idx):
+        raise ValueError("Retained reference has invalid or duplicate source rows")
+    if any(not t.is_floating_point() or not torch.isfinite(t).all() for t in (target, prediction)):
+        raise ValueError("Retained reference predictions and targets must be finite floating tensors")
+    if tensor_digest(idx, role="source_idx") != manifest["source_idx_sha256"]:
+        raise ValueError("Retained reference row identity mismatch")
+    binding = inputs.get("target_identity")
+    target_hash = (binding.digest(target, context=inputs["context"], expected=expected)[0]
+                   if binding is not None else tensor_digest(target, role="target"))
+    if target_hash != manifest["target_sha256"]:
+        raise ValueError("Retained reference target identity mismatch")
+    if any(payload.get(key) is True for key in ("official_validation_used", "test_dev_used", "test_challenge_used")):
+        raise ValueError("Retained reference declares protected role consumption")
+    reference = {
+        "arm_id": bundle["reference_id"], "context": None,
+        "contract": {"development_role_identity": manifest["evaluation_role_identity"]},
+        "recipe": {"seed": identity["seed"]}, "selection_weights": weights,
+        "source_idx": idx.detach().cpu().numpy().astype(np.int64, copy=False),
+        "target_eV": target.detach().cpu().numpy().astype(np.float64, copy=False),
+        "prediction_eV": prediction.detach().cpu().numpy().astype(np.float64, copy=False),
+        "trace": {}, "selected_checkpoint": None, "wall_seconds": None, "wall_cost": None,
+        "timings": None, "profile": None,
+        "hashes": {"reference_bundle_sha256": sha256_file(bundle_path),
+                   "development_predictions_sha256": sha256_file(path)},
+    }
+    trace_pointer = entry["reference_artifacts"].get("trace_manifest")
+    if trace_pointer is not None:
+        from .research_memory.schemas import validate_trace_manifest
+        from .research_memory.paths import bound_artifact_path, verify_bound_artifact
+        from .research_memory.trace import load_canonical_trace
+        trace_manifest = validate_trace_manifest(_read_json(pinned(trace_pointer)))
+        if (trace_manifest["reference_id"] != bundle["reference_id"]
+                or trace_manifest["evaluation_role_identity"] != manifest["evaluation_role_identity"]
+                or trace_manifest["weight_semantics"] != weights):
+            raise ValueError("Retained reference trace differs from its frozen reference/role/weights")
+        trace_ref = trace_manifest.get("trace_artifact_ref")
+        trace_sha = trace_manifest.get("trace_artifact_sha256")
+        trace_path = bound_artifact_path(repo_root, trace_ref) if trace_ref else None
+        if trace_path is not None and trace_path.is_file():
+            verify_bound_artifact(repo_root, trace_ref, trace_sha)
+            trace = load_canonical_trace(trace_path)
+            if (trace["trajectory_id"], trace["run_id"]) != (trace_manifest["trajectory_id"], trace_manifest["run_id"]):
+                raise ValueError("Retained reference curve differs from its trace manifest")
+            metric = trace["metric_semantics"].get(PRIMARY_METRICS[weights])
+            if (not isinstance(metric, dict) or metric.get("metric") != "MAE" or metric.get("unit") != "eV"
+                    or metric.get("role_identity") != manifest["evaluation_role_identity"]
+                    or metric.get("weights") != weights):
+                raise ValueError("Retained reference curve metric differs from development predictions")
+            reference["trace"] = trace
+            reference["hashes"]["canonical_trace_sha256"] = trace_sha
+    return reference
+
+
+def _posthoc_run_pair(report, *, retained_reference=False):
+    # Directory defaults are useful probes, never the frozen run's scientific gates.
+    comparison = report["primary_comparison"]
+    for key in ("threshold_eV", "noninferiority_margin_eV", "passes_material_gate", "passes_noninferiority_gate"):
+        comparison[key] = None
+    comparison["gate_status"] = "NOT_EVALUATED"
+    delta = comparison["mean_delta_eV"]
+    report["signals"]["direction"] = ("LOWER_POINT_MAE" if delta < 0 else
+                                        "HIGHER_POINT_MAE" if delta > 0 else "EQUAL_POINT_MAE")
+    report["signals"]["interpretation"] = "POSTHOC_DESCRIPTIVE_ONLY"
+    report["scientific_conclusion"] = "NOT_EVALUATED"
+    report["unknowns"] = ["training_stochasticity", "strict_comparison_readiness", "causal_failure_mode"]
+    if retained_reference:
+        report["mechanical_acceptance"] = "CANDIDATE_VERIFIED_REFERENCE_PREDICTIONS_VERIFIED"
+        report["unknowns"] += ["reference_run_context", "reference_selected_checkpoint", "reference_native_cost"]
+        if not report["trace_dynamics"]["control"].get("evaluations"):
+            report["unknowns"].append("reference_trace_dynamics")
+        report["limitations"].append("Retained reference predictions do not establish a complete family output or trace.")
+    return report
+
+
+def _write_run_diagnosis(report, output, resolved):
+    if output is None:
+        return report
+    destination = Path(output).absolute()
+    _safe_local(destination)
+    run = Path(resolved["run_directory"]).absolute()
+    protected = [run / name for name in ("inputs", "prepared", "operations")]
+    protected += [Path(item["output_dir"]).absolute() for item in resolved["outputs"].values()]
+    if any(destination.is_relative_to(path) or path.is_relative_to(destination) for path in protected):
+        raise ValueError("Diagnosis output must not overwrite frozen run records or inspected artifacts")
+    is_file = destination.suffix.lower() == ".json" and not destination.is_dir()
+    summary = destination if is_file else destination / "analysis_summary.json"
+    if summary.exists():
+        previous = _read_json(summary)
+        if (previous.get("format"), previous.get("spec_identity"), previous.get("run_id")) != (
+                report["format"], report["spec_identity"], report["run_id"]):
+            raise ValueError("Diagnosis output already belongs to another record or run")
+    elif not is_file and destination.exists() and any(destination.iterdir()):
+        raise ValueError("Diagnosis requires its own report directory")
+    summary.parent.mkdir(parents=True, exist_ok=True)
+    report["written_files"] = {"analysis_summary": str(summary)}
+    if not is_file:
+        markdown = destination / "attribution_report.md"
+        lines = ["# Retained run diagnosis", "", "Post-hoc descriptive analysis; scientific acceptance and replay readiness are not evaluated.",
+                 "", f"Status: `{report['status']}`", ""]
+        for candidate, pair in report["comparisons"].items():
+            lines.append(f"- `{candidate}`: `{pair['status']}`")
+            if pair["status"] == "DIAGNOSED":
+                point = pair["primary_comparison"]
+                lines.append(f"  Candidate minus reference MAE: {point['mean_delta_eV']:+.6f} eV on {point['n_molecules']} aligned rows.")
+            else:
+                lines.extend(f"  {blocker}" for blocker in pair["blockers"])
+        markdown.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        report["written_files"]["attribution_report"] = str(markdown)
+    from .screen_policy import canonical_fingerprint
+    identity = canonical_fingerprint({key: value for key, value in report.items() if key != "written_files"})
+    if summary.name == "diagnostic_" + identity + ".json":
+        from .common.io import publish_immutable_bytes
+        from .research_memory.trace import json_bytes
+        publish_immutable_bytes(summary, json_bytes(report))
+    else:
+        atomic_json(summary, report)
+    return report
+
+
+def diagnose_run(profile, repo_root, run_id, attempt_id, *, retrieved_root=None,
+                 n_bootstrap=0, seed=42, supplied=None, output=None,
+                 resolved=None, reports=None):
+    """Diagnose all frozen run pairs from retained artifacts without remote work.
+
+    ``resolved``/``reports`` are internal, same-call owner caches for workflow
+    orchestration; standalone calls always resolve and inspect independently.
+    Missing comparators remain insufficient evidence. This does not accept a
+    scientific result, close RML, fetch artifacts, or train a replacement reference.
+    """
+    from .experiment_run import resolve_run_acceptance_inputs
+    from .experiment_family_workflow import inspect_terminal_output
+
+    if type(n_bootstrap) is not int or n_bootstrap < 0:
+        raise ValueError("Bootstrap samples must be a nonnegative integer")
+    if resolved is None:
+        if reports is not None:
+            raise ValueError("Cached inspections require their independently resolved run inputs")
+        resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+            retrieved_root=retrieved_root, supplied=supplied)
+    spec = resolved["spec"]
+    declaration = spec.to_dict()
+    if declaration["logical_run_id"] != run_id:
+        raise ValueError("Diagnosis run identity differs from frozen inputs")
+    pair = declaration["prospective"].get("same_run_replay")
+    report = {"format": ATTRIBUTION_FORMAT, "status": "INSUFFICIENT_EVIDENCE",
+        "run_id": run_id, "attempt_id": attempt_id, "spec_identity": spec.identity,
+        "mechanical_acceptance": "NOT_EVALUATED", "scientific_acceptance": "NOT_EVALUATED",
+        "replay_readiness": "NOT_EVALUATED", "scientific_conclusion": "NOT_EVALUATED",
+        "interpretation": "POSTHOC_DESCRIPTIVE_ONLY", "arms": {}, "comparisons": {}, "blockers": [],
+        "limitations": ["Row bootstrap does not measure training stochasticity.",
+                        "Numerical diagnosis does not evaluate the frozen scientific gate or authorize promotion."]}
+    loaded, inputs = {}, {}
+    # Inspect against independently recovered launch and recipe identities first.
+    for arm_id, item in resolved["outputs"].items():
+        bound = {**item, "context": resolved["contexts"][arm_id]}
+        if arm_id in resolved.get("target_identities", {}):
+            bound["target_identity"] = resolved["target_identities"][arm_id]
+        inputs[arm_id] = bound
+        try:
+            inspected = reports[arm_id] if reports is not None else inspect_terminal_output(bound)
+            report["arms"][arm_id] = inspected
+            if inspected["status"] != "MECHANICALLY_VERIFIED":
+                continue
+            loaded[arm_id] = _load_arm_artifacts(Path(item["output_dir"]),
+                context=bound["context"], expected=bound["expected"],
+                target_identity=bound.get("target_identity"), _inspection=inspected)
+        except (ValueError, TypeError, KeyError, OSError, RuntimeError, EOFError, pickle.UnpicklingError) as exc:
+            if report["arms"].get(arm_id, {}).get("status") == "MECHANICALLY_VERIFIED":
+                report["arms"][arm_id] = {**report["arms"][arm_id], "analysis_blockers": [str(exc)]}
+            else:
+                report["arms"][arm_id] = {"status": "BLOCKED", "blockers": [str(exc)]}
+    entries = {entry["arm_id"]: entry for entry in resolved["acceptance_plan"]["arms"]}
+    candidate_ids = pair["candidate_arm_ids"] if pair else list(resolved["outputs"])
+    if pair:
+        report["reference_arm_id"] = pair["reference_arm_id"]
+    for candidate_id in candidate_ids:
+        blockers = []
+        reference_id = pair["reference_arm_id"] if pair else None
+        for arm_id in ([reference_id, candidate_id] if pair else [candidate_id]):
+            if arm_id not in loaded:
+                arm_report = report["arms"].get(arm_id, {})
+                blockers += [f"{arm_id}: " + reason for reason in
+                    (arm_report.get("analysis_blockers") or arm_report.get("blockers") or ["Missing verified family output"])]
+        if not blockers:
+            try:
+                reference = (loaded[reference_id] if pair else _retained_reference(entries[candidate_id],
+                    repo_root=Path(repo_root).absolute(), candidate=loaded[candidate_id], inputs=inputs[candidate_id]))
+                result = _analyze_loaded_pair(reference, loaded[candidate_id],
+                    n_bootstrap=n_bootstrap, seed=seed, compare_recipes=bool(pair))
+                report["comparisons"][candidate_id] = _posthoc_run_pair(result, retained_reference=not pair)
+            except (ValueError, TypeError, KeyError, OSError, RuntimeError, EOFError, pickle.UnpicklingError) as exc:
+                blockers = [str(exc)]
+        if blockers:
+            report["comparisons"][candidate_id] = {"status": "INSUFFICIENT_EVIDENCE",
+                "candidate_arm": candidate_id, "control_arm": reference_id, "blockers": blockers,
+                "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+            report["blockers"].extend(f"{candidate_id}: {reason}" for reason in blockers)
+    if report["comparisons"] and not report["blockers"]:
+        report["status"] = "DIAGNOSED"
+    if report["arms"] and all(row["status"] == "MECHANICALLY_VERIFIED" for row in report["arms"].values()):
+        report["mechanical_acceptance"] = "MECHANICALLY_VERIFIED"
+    return _write_run_diagnosis(report, output, resolved)
+
+
+__all__ = ["ATTRIBUTION_FORMAT", "analyze_family_pair", "diagnose_run"]

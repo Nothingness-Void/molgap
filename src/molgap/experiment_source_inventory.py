@@ -236,6 +236,7 @@ def runtime_source_files(repo_root, records=()):
 _TEST_SUPPORT_FILES = frozenset({
     "pyproject.toml",
     "platforms/local/run.py",
+    "platforms/local/accept_run.py",
     "platforms/kaggle/run_experiment.py",
     "platforms/kaggle/submit_workflow.py",
     "platforms/kaggle/retrieve_family_outputs.py",

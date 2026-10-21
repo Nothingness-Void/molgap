@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
-from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
+from .paths import bound_artifact_path, repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import (accepted_reference_evidence, pair_binding, reference_trajectory,
                      terminal_reference_evidence, validate_pair_observation,
                      validate_ineligible_continuation)
@@ -206,13 +206,15 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     package = load_json_object(source)
     if package.get("format") != "molgap-rml-terminal-package-v1":
         raise ValueError("unsupported terminal package")
+    if package.get("closure_blockers"):
+        raise ValueError("terminal package has unresolved closure blockers")
     if package.get("trajectory_id") != frozen["trajectory_id"]:
         raise ValueError("terminal trajectory identity mismatch")
     if not isinstance(package.get("finalized_at"), str) or not package["finalized_at"]:
         raise ValueError("explicit terminal finalization timestamp required")
     trace_bytes = None
     if trace is not None:
-        trace_path = repo_local_path(root, trace)
+        trace_path = bound_artifact_path(root, trace)
         canonical = load_canonical_trace(trace_path)
         trace_bytes = trace_path.read_bytes()
         if (canonical["trajectory_id"], canonical["run_id"]) != (

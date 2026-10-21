@@ -67,6 +67,22 @@ through existing owners. See the supported shape in
 [synthetic fixture](../../tests/test_scientific_input.py); fixture identities
 are examples, never real authorization or evidence.
 
+`authority` and `platform` may be inline objects instead of `authority_ref` and
+`platform_ref` (choose one form for each). Authority still names the exact arms,
+seed and budget. Role and decision references retain real content. Addons accept
+`"addon_name"` or `{"name":"addon_name"}` when the existing catalog supplies
+version 1 defaults; required parameters still need explicit values.
+
+An arm or `shared` may use `preset_ref: {"path":".../baseline-v1.json",
+"sha256":"<frozen hash>"}` to reuse a reviewed versioned baseline. Its existing
+compiler owner pins the recipe, data Spec/arm, target manifest and initialization
+identity. `initial_state_ref` remains the explicit machine location. See the
+[preset reader](../../src/molgap/experiment_presets.py) and
+[executable examples](../../tests/test_scientific_input_ergonomics.py).
+There is no mutable latest preset, implicit account/hardware template or automatic
+weight download. Existing historical runtimes are not silently relabeled as new
+K1/GPTrans presets.
+
 For an explicitly authorized baseline/candidate job, `shared` supplies common arm
 fields and each `arms` entry overrides whole fields. `same_run` binds
 `reference_arm_id` and `target_manifest_ref`; authority must name that reference
@@ -150,6 +166,30 @@ remains in the existing platform adapter; historical output protocols keep their
 own retrievers. `inspect-output`, `accept-workflow`, `build-resume` and
 `prepare-resume` can resolve the original Spec/package/receipt from the run ID.
 Supply the actual output/evidence inputs required by the existing owners.
+
+For a retrieved frozen run, the local acceptance script resolves every arm's
+expectations and prospective locations, inspects the artifacts, diagnoses the
+available pairs and stages terminal drafts:
+
+```powershell
+& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root D:/molgap-artifacts/retrieved/$runId
+```
+
+Omit `--retrieved-root` after the retriever has recorded verified per-arm
+destinations. Explicit `--outputs` remains available; its paths cannot override
+frozen expectations. Default diagnostic reports are shared once under
+`<run_dir>/reports/diagnostic_<content-identity>.json`; identical retries reuse
+the same path. Stdout is compact (`--verbose` for
+details). Neither this script nor diagnosis downloads data or trains a baseline.
+
+Drafts preserve unknown role/cost/scientific facts. Add an explicit `--outcome`
+and repository-local `--decision-ref` to stage a decision; `--execute` alone
+cannot infer one. Where the producer lacks observed role truth, `--role-audit`
+supplies a retained audit or an arm-to-audit-path JSON map. Audits bind the exact
+RunContext and existing role events, not merely the recipe's permissions. Closure
+uses the existing V5/RML validators and reports missing evidence; positive/READY
+claims still require their owning scientific acceptance. The CLI reference owns
+the advanced explicit-location path.
 
 The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) owns arguments;
 the [workflow reference](EXPERIMENT_WORKFLOW.md) retains legacy preparation and

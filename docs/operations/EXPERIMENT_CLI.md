@@ -97,7 +97,7 @@ The following commands can use these same four options instead of `--spec`:
 | Command | Additional inputs / behavior |
 |---|---|
 | `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
-| `accept-workflow` | `--outputs`, `--locations`; mechanically inspect by default, explicit `--execute` invokes existing terminal closure |
+| `accept-workflow` | `--retrieved-root` or retained retrieval maps; optional `--outputs`/`--locations` overrides; mechanically inspect without a terminal package |
 | `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
 | `prepare-resume` | `--resume-plan`, `--output`; use existing checkpoint/resume preparation |
 
@@ -124,6 +124,24 @@ analyzing retained predictions and curves. It needs no run-lookup arguments.
 Missing cost stays null; estimated cost is not a measured speed ratio.
 `--bootstrap-samples 0` disables CI/gate claims. Shift/oracle-blend results are
 post-hoc descriptions, not strict V5 acceptance, replay readiness or promotion.
+
+Alternatively, `diagnose --run-id <id> --attempt-id <vN> --profile <profile>
+--repo-root <checkout> [--retrieved-root <root>] [--output <report.json>]` resolves
+frozen launch contexts, expectations and target encoding before analysis. All
+declared same-run candidates are compared. Retained reference bundles provide
+only their verified available evidence; missing predictions/curves remain
+insufficient evidence. Run mode defaults to zero bootstrap samples and does not
+apply the directory mode's descriptive thresholds as frozen scientific gates.
+
+`accept-workflow` Run mode adds `--diagnose`, `--stage-terminal`, `--outcome`,
+`--decision-ref`, `--role-audit`, and `--output`. The thin
+`platforms/local/accept_run.py` selects diagnosis and staging automatically.
+Staging creates existing terminal-package metadata, not canonical finalization;
+explicit `--execute` delegates reviewed inputs to the existing terminal owner.
+`--role-audit` accepts an observed audit with exact `context`, protected
+`role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown
+role use blocks closure rather than becoming an untouched claim. No script
+promotes a numerical diagnosis to positive scientific acceptance.
 
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot

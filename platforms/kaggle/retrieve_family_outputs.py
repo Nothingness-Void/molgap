@@ -176,6 +176,11 @@ def main(argv=None):
                 result = retrieve_family_outputs(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
                     manifest_sha256=args.manifest_sha256, destination=destination)
+                stage = "retrieval_mapping"
+                from molgap.experiment_run_acceptance import record_run_retrieval
+                mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
+                    context=context, destination=destination, manifest_sha256=args.manifest_sha256)
+                result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)
     except Exception as error:

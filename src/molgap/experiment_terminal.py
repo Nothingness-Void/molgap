@@ -19,7 +19,7 @@ from .experiment_spec import (
     _text, _unique_object,
 )
 from .screen_policy import canonical_fingerprint
-from .research_memory.paths import repo_local_path, verify_bound_artifact
+from .research_memory.paths import bound_artifact_path, repo_local_path, verify_bound_artifact
 from .research_memory.schemas import validate_id, validate_trajectory
 from .research_memory.trace import FIELDS, validate_canonical_trace
 
@@ -108,9 +108,9 @@ def _observed(arm: dict, expected: dict, declaration: dict, spec_identity: str) 
         label = "observed.artifacts." + name
         _fields(artifact, frozenset({"status", "locator", "sha256", "missing_reason"}), frozenset(), label)
         if artifact["locator"] is not None:
-            _path(artifact["locator"])
+            _artifact_locator(artifact["locator"])
         if artifact["status"] == "available":
-            _path(artifact["locator"])
+            _artifact_locator(artifact["locator"])
             _digest(artifact["sha256"], label + ".sha256")
             if artifact["missing_reason"] is not None:
                 raise ValueError(f"{label}: available artifact cannot have missing_reason")
@@ -199,7 +199,7 @@ def _validate(spec: ExperimentSpec, payload: dict) -> dict:
             raise ValueError("duplicate trajectory identity; expected 1:1 mapping")
         trajectories.add(arm["trajectory_id"])
         for field in ("trajectory", "terminal", *sorted(_OPTIONAL & arm.keys())):
-            _path(arm[field])
+            (_artifact_locator if field in {"trace", "trace_source"} else _path)(arm[field])
         for field in ("trajectory", "terminal"):
             if arm[field] in inputs:
                 raise ValueError("duplicate trajectory/terminal path; expected 1:1 mapping")
@@ -236,6 +236,13 @@ def _read(path: Path) -> dict:
     # Reject non-standard NaN/Infinity even in fields owned by downstream RML.
     _canonical(value)
     return value
+
+
+def _artifact_locator(value: str) -> None:
+    if type(value) is str and value.startswith("external://"):
+        bound_artifact_path(Path.cwd(), value)
+    else:
+        _path(value)
 
 
 def _recovery(value: dict, arm: dict) -> dict:
@@ -296,7 +303,7 @@ def translate_terminal_descriptor(
     # Resolve every declared path before opening metadata, including outputs that
     # do not yet exist; aliases must not collapse independent RML transactions.
     for arm in payload["arms"]:
-        paths = {field: repo_local_path(root, arm[field])
+        paths = {field: (bound_artifact_path if field in {"trace", "trace_source"} else repo_local_path)(root, arm[field])
                  for field in ("trajectory", "terminal", *sorted(_OPTIONAL & arm.keys()))}
         for field, path in paths.items():
             if field == "canonical_trace_output":
@@ -317,7 +324,7 @@ def translate_terminal_descriptor(
         for artifact in arm["observed"]["artifacts"].values():
             # Even a known locator for missing evidence must stay inside the repo.
             if artifact["locator"] is not None:
-                artifact_path = repo_local_path(root, artifact["locator"])
+                artifact_path = bound_artifact_path(root, artifact["locator"])
                 inputs.add(artifact_path)
             if artifact["status"] == "available":
                 if not artifact_path.is_file():

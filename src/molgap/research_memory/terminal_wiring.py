@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
-from .paths import repo_local_path
+from .paths import artifact_locator, bound_artifact_path, repo_local_path
 from .pipeline import finalize_rebuild_backtest
 from .recovery import recover_trace
 from .trace import atomic_write, canonicalize_trace, file_digest, json_bytes, load_canonical_trace
@@ -293,7 +293,7 @@ def resolve_trace_for_terminal_arm(
 
     # Step 1: Caller directly provided canonical trace
     if canonical_trace is not None:
-        c_path = repo_local_path(root, canonical_trace)
+        c_path = bound_artifact_path(root, canonical_trace)
         if not c_path.is_file():
             raise FileNotFoundError(
                 f"FAIL CLOSED: declared canonical trace file does not exist: {c_path}"
@@ -314,7 +314,7 @@ def resolve_trace_for_terminal_arm(
         if declared_artifact is not None:
             decl_loc = str(declared_artifact.get("locator", "")).replace("\\", "/")
             decl_sha = str(declared_artifact.get("sha256", ""))
-            c_rel_posix = c_path.relative_to(root).as_posix()
+            c_rel_posix = artifact_locator(root, c_path)
 
             # Situation A: declared artifact IS the canonical trace itself
             is_declared_itself = (c_rel_posix == decl_loc) or (
@@ -367,9 +367,9 @@ def resolve_trace_for_terminal_arm(
 
     # Step 2: Resolve raw trace source
     if trace_source is not None:
-        source_path = repo_local_path(root, trace_source)
+        source_path = bound_artifact_path(root, trace_source)
     elif declared_artifact is not None:
-        source_path = repo_local_path(root, declared_artifact["locator"])
+        source_path = bound_artifact_path(root, declared_artifact["locator"])
     else:
         raise ValueError(
             "FAIL CLOSED: training trace is required by retention evidence, "
@@ -415,9 +415,9 @@ def resolve_trace_for_terminal_arm(
     if canonical_trace_output is not None:
         output_path = repo_local_path(root, canonical_trace_output)
     else:
-        output_path = repo_local_path(
-            root, source_path.parent / f"canonical_trace_{trajectory_id}.json"
-        )
+        if not source_path.is_relative_to(root):
+            raise ValueError("External raw trace recovery requires explicit repository-local canonical_trace_output")
+        output_path = repo_local_path(root, source_path.parent / f"canonical_trace_{trajectory_id}.json")
 
     if recovery_spec is not None and "field_mapping" in recovery_spec:
         full_spec = dict(recovery_spec)
@@ -473,7 +473,7 @@ def resolve_trace_for_terminal_arm(
                 "observations": observations,
                 "provenance": [
                     {
-                        "source": source_path.relative_to(root).as_posix(),
+                        "source": artifact_locator(root, source_path),
                         "sha256": file_digest(source_path),
                         "recovered_at_terminal_closure": True,
                     }
@@ -659,7 +659,7 @@ def close_terminal_arm(
     terminal_to_use = terminal
     if trace_required:
         # Strict guard: caller must not supply None or fail to resolve canonical trace
-        final_trace = trace or auto_trace
+        final_trace = trace or (artifact_locator(root, auto_trace) if auto_trace is not None else None)
         if final_trace is None:
             raise ValueError(
                 "FAIL CLOSED: retained training trace is required by evidence, "
@@ -667,7 +667,7 @@ def close_terminal_arm(
                 "Refusing silent finalization with trace_status=unavailable."
             )
         # Verify trace identity and validity before passing to pipeline
-        trace_rec = load_canonical_trace(repo_local_path(root, final_trace))
+        trace_rec = load_canonical_trace(bound_artifact_path(root, final_trace))
         traj_obj = load_json_object(repo_local_path(root, trajectory))
         if trace_rec.get("trajectory_id") != traj_obj.get("trajectory_id"):
             raise ValueError(
