@@ -459,11 +459,17 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
-                    expected_package_identity, locations, execute=False, execution_root=None):
-    """Inspect every arm, build the existing descriptor, then delegate closure."""
+                    expected_package_identity, locations=None, execute=False,
+                    target_identities=None, execution_root=None):
+    """Inspect every arm independently of optional scientific closure inputs."""
+    if execute and locations is None:
+        raise ValueError("Terminal execution requires explicit reviewed terminal locations")
     from .experiment_family_workflow import capture_output_inspection
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
         package_dir=package_dir, expected_package_identity=expected_package_identity)
+    if target_identities is not None:
+        for arm_id, binding in target_identities.items():
+            outputs[arm_id]["target_identity"] = binding
     retention = None
     if execution_root is not None:
         from .experiment_retention import validate_execution_retention
@@ -475,12 +481,19 @@ def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
     for arm_id, item in outputs.items():
         try:
             inspections[arm_id] = capture_output_inspection(item["output_dir"],
-                context=item["context"], expected=item["expected"])
+                context=item["context"], expected=item["expected"],
+                **({"target_identity": item["target_identity"]} if item.get("target_identity") is not None else {}))
             reports[arm_id] = inspections[arm_id].report
         except (ValueError, TypeError, OSError, RuntimeError) as exc:
             reports[arm_id] = {"status": "BLOCKED", "blockers": [str(exc)]}
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}
+    if locations is None:
+        result = {"status": "MECHANICALLY_VERIFIED", "arms": reports, "executed": False,
+                  "scientific_outcome": "NOT_EVALUATED"}
+        if retention is not None:
+            result["execution_retention"] = {"status": retention["status"], "manifest": retention["manifest"]}
+        return result
     descriptor = build_verified_terminal_descriptor(repo_root, spec, outputs=outputs, locations=locations,
                                                   inspections=inspections)
     result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs,

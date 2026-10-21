@@ -26,6 +26,8 @@ OUTPUT_FORMAT = "molgap-family-output-v1"
 ROLES = frozenset({"predictions", "selected_model", "resume", "trace", "contract"})
 EXPECTED = frozenset({"epochs", "optimizer_steps", "sample_presentations",
                       "development_rows", "source_idx_sha256", "target_sha256", "precision"})
+EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps", "sample_presentations",
+                            "development_rows", "source_idx_sha256", "target_sha256", "precision"})
 
 
 def _json(path: Path) -> dict:
@@ -630,7 +632,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict, tar
 
 
 def capture_output_inspection(output_dir: Path, *, context: RunContext,
-                              expected: dict) -> InspectionSnapshot:
+                              expected: dict, target_identity=None) -> InspectionSnapshot:
     """Inspect an output once and return a digest-bound immutable snapshot.
 
     The snapshot is the only accepted hand-off from the owning inspector to
@@ -645,10 +647,12 @@ def capture_output_inspection(output_dir: Path, *, context: RunContext,
         manifest_sha256 = file_digest(manifest_path)
         manifest = _json(manifest_path)
     except (OSError, ValueError, TypeError, KeyError) as exc:
-        report = inspect_output(output_dir, context=context, expected=expected)
+        report = inspect_terminal_output(dict(output_dir=output_dir, context=context,
+            expected=expected, target_identity=target_identity))
         blockers = report.get("blockers", [str(exc)])
         raise ValueError("Output inspection blocked: " + "; ".join(blockers)) from exc
-    report = inspect_output(output_dir, context=context, expected=expected)
+    report = inspect_terminal_output(dict(output_dir=output_dir, context=context,
+        expected=expected, target_identity=target_identity))
     if report["status"] != "MECHANICALLY_VERIFIED":
         raise ValueError("Output inspection blocked: " + "; ".join(report["blockers"]))
     _check_context(manifest["context"], context)
@@ -691,7 +695,7 @@ def _validate_snapshot_inputs(ids: set[str], inspection_snapshots):
 
 def _inspection_report(item: dict, arm_id: str, inspection_snapshots):
     if inspection_snapshots is None:
-        return inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
+        return inspect_terminal_output(item)
     snapshot = inspection_snapshots[arm_id]
     return validate_snapshot(
         snapshot,
@@ -702,6 +706,91 @@ def _inspection_report(item: dict, arm_id: str, inspection_snapshots):
         load_json=_json,
         safe_local=_safe_local,
     )
+
+
+def _development_role(contract: dict) -> str:
+    """The retained recipe owns the exact development-role identity."""
+    identity = contract.get("development_role_identity")
+    _text(identity, "contract.development_role_identity")
+    return identity
+
+
+def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
+    """Check frozen peer/target availability, never certify a future reference."""
+    declaration = spec.to_dict()
+    pair = declaration["prospective"].get("same_run_replay")
+    if pair is None:
+        raise ValueError("Same-run acceptance requires a prospective Spec pair")
+    arms = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    if type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms"} or plan["spec_identity"] != spec.identity:
+        raise ValueError("Acceptance plan/Spec mismatch")
+    entries = plan["arms"]
+    if type(entries) is not list or [entry.get("arm_id") for entry in entries] != list(arms):
+        raise ValueError("Acceptance plan requires exactly all Spec arms in order")
+    if set(arms) != {pair["reference_arm_id"], *pair["candidate_arm_ids"]}:
+        raise ValueError("Same-run acceptance cannot include unbound arms")
+    reference = arms[pair["reference_arm_id"]]
+    results, contracts, expectations = [], [], []
+    for entry in entries:
+        blockers = []
+        try:
+            if set(entry) != {"arm_id", "adapter", "expected", "contract", "target_manifest"}:
+                raise ValueError("Missing or unknown same-run acceptance fields")
+            arm = arms[entry["arm_id"]]
+            artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
+            for key in ("family", "base", "initialization", "data"):
+                if arm[key] != reference[key]:
+                    raise ValueError("Same-run peer identity differs: " + key)
+            for key in ("sampler", "transform", "overrides"):
+                if arm["training"][key] != reference["training"][key]:
+                    raise ValueError("Same-run peer training identity differs: " + key)
+            expected = entry["expected"]
+            if type(expected) is not dict or set(expected) not in (EXPECTED, EXPECTED_FAMILY):
+                raise ValueError("Incomplete terminal expectations")
+            for key in ("optimizer_steps", "sample_presentations", "development_rows"):
+                _positive(expected[key], key)
+            if "epochs" in expected:
+                _positive(expected["epochs"], "epochs")
+            else:
+                for key in ("completed_passes", "next_batch"):
+                    if type(expected[key]) is not int or expected[key] < 0:
+                        raise ValueError("Invalid shared terminal counter: " + key)
+            for key in ("source_idx_sha256", "target_sha256"):
+                _digest(expected[key], key)
+            if expected["precision"] not in {"fp32", "fp16", "bf16"}:
+                raise ValueError("Unsupported precision")
+            def pinned(pointer):
+                if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
+                    raise ValueError("Expected pinned repository artifact")
+                _digest(pointer["sha256"], "plan artifact digest")
+                path = _artifact_path(Path(repo_root).absolute(), pointer["path"])
+                if file_digest(path) != pointer["sha256"]:
+                    raise ValueError("Plan artifact hash mismatch")
+                return _json(path)
+            contract = pinned(entry["contract"])
+            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != expected:
+                raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
+            _development_role(contract)
+            target = pinned(entry["target_manifest"])
+            if target.get("development_target_sha256") != expected["target_sha256"] or target.get("target_encoding") not in {
+                "little-endian-float32-contiguous-raw-bytes", "little-endian-float64-contiguous-raw-bytes"
+            }:
+                raise ValueError("Target encoding/identity differs from frozen expectations")
+            contracts.append(contract)
+            expectations.append(expected)
+        except (ValueError, TypeError, KeyError, OSError) as exc:
+            blockers.append(str(exc))
+        results.append({"arm_id": entry["arm_id"], "status": "BLOCKED" if blockers else "AVAILABLE", "blockers": blockers})
+    if len(contracts) == len(entries) and (
+        any(expected != expectations[0] for expected in expectations)
+        or any(contract.get("training_recipe") != contracts[0].get("training_recipe") for contract in contracts)
+        or any(_development_role(contract) != _development_role(contracts[0]) for contract in contracts)
+    ):
+        for row in results:
+            row.update(status="BLOCKED", blockers=["Same-run peers differ in exposure, optimization or development identity"])
+    return {"status": "BLOCKED" if any(row["blockers"] for row in results) else "ACCEPTANCE_INPUTS_AVAILABLE",
+        "spec_identity": spec.identity, "arms": results, "trainer_execution": "NOT_VERIFIED",
+        "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}
 
 
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
@@ -726,8 +815,10 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
         from .gptrans_campaign_release import check_campaign
         return check_campaign(spec, repo_root, plan)
     if plan.get("format") == "molgap-family-same-run-acceptance-plan-v1":
-        from .family_pair_release import check_same_run_plan
-        return check_same_run_plan(spec, repo_root, plan)
+        if "cache_acceptance" in plan:
+            from .family_pair_release import check_same_run_plan
+            return check_same_run_plan(spec, repo_root, plan)
+        return _check_same_run_acceptance_plan(spec, repo_root, plan)
     from .comparison_readiness import validate_comparison_prelaunch, validate_reference_bundle, reference_bundle_digest
     declaration = spec.to_dict()
     expected_arms = {a["arm_id"]: a for a in declaration["arms"]}
@@ -745,9 +836,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
             arm = expected_arms[entry["arm_id"]]
             adapter = artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
             shared = adapter.protocol == "family-session"
-            expected_fields = ({"optimizer_steps", "sample_presentations", "completed_passes", "next_batch",
-                                "development_rows", "source_idx_sha256", "target_sha256", "precision"}
-                               if shared else EXPECTED)
+            expected_fields = EXPECTED_FAMILY if shared else EXPECTED
             if type(entry["expected"]) is not dict or set(entry["expected"]) != expected_fields:
                 raise ValueError("Incomplete terminal expectations")
             for key in (("optimizer_steps", "sample_presentations", "development_rows") if shared else
@@ -854,11 +943,13 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
             if binding["sha256"] != checked["sha256"]:
                 raise ValueError("Descriptor/verified artifact mismatch: " + role)
             inspected_path = _artifact_path(Path(item["output_dir"]).absolute(), checked["path"])
-            if repo_local_path(repo_root, binding["locator"]) != inspected_path:
+            from .research_memory.paths import bound_artifact_path
+            if bound_artifact_path(repo_root, binding["locator"]) != inspected_path:
                 raise ValueError("Descriptor/verified artifact path mismatch: " + role)
-            if role == "trace" and ("trace" not in arm or repo_local_path(repo_root, arm["trace"]) != inspected_path):
+            if role == "trace" and ("trace" not in arm or bound_artifact_path(repo_root, arm["trace"]) != inspected_path):
                 raise ValueError("Descriptor closure trace differs from the inspected trace")
-        for field, counter in (("epoch", "epochs"), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
+        pass_counter = "completed_passes" if "completed_passes" in report["observed"]["progress"] else "epochs"
+        for field, counter in (("epoch", pass_counter), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
             if arm["observed"]["progress"][field]["value"] != report["observed"]["progress"][counter]:
                 raise ValueError("Descriptor/verified progress mismatch")
     if any(r["status"] == "BLOCKED" for r in reports.values()):
@@ -880,10 +971,13 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
     for arm_id, item in supplied.items():
         if type(item) is not dict or set(item) != {"output_dir", "expected"}:
             raise ValueError("Expected per-arm output_dir/expected inputs")
+        output_dir = Path(item["output_dir"])
+        output_dir = output_dir if output_dir.is_absolute() else Path(repo_root) / output_dir
+        _safe_local(output_dir.absolute())
         outputs[arm_id] = {
             "context": RunContext.from_launch(spec, receipt_path, package_dir,
                 expected_package_identity=expected_package_identity, arm_id=arm_id),
-            "expected": item["expected"], "output_dir": repo_local_path(repo_root, item["output_dir"])}
+            "expected": item["expected"], "output_dir": output_dir.absolute()}
     return outputs
 
 
@@ -973,10 +1067,8 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         def binding(role):
             entry = observation["artifacts"][role]
             path = _artifact_path(Path(item["output_dir"]).absolute(), entry["path"])
-            try:
-                relative = path.relative_to(root).as_posix()
-            except ValueError as exc:
-                raise ValueError("RML closure artifacts must be retained below repository") from exc
+            from .research_memory.paths import artifact_locator
+            relative = artifact_locator(root, path)
             return {"status": "available", "locator": relative, "sha256": entry["sha256"], "missing_reason": None}
         progress = observation["progress"]
         identity = {
@@ -1009,10 +1101,11 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
                     "terminal": {"status": fact("complete"), "exit_reason": fact("verified_outputs_complete")},
                     "artifacts": {"metrics": metrics, "predictions": binding("predictions"),
                                   "checkpoint": binding("selected_model"), "trace": binding("trace")},
-                    "progress": {"epoch": fact(progress["epochs"]), "step": fact(progress["optimizer_steps"]),
+                    "progress": {"epoch": fact(progress["completed_passes"] if "completed_passes" in progress else progress["epochs"]), "step": fact(progress["optimizer_steps"]),
                                  "samples": fact(progress["sample_presentations"])},
                     "costs": costs, "missing_evidence": missing}}
-        if repo_local_path(root, where["trace"]) != repo_local_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):
+        from .research_memory.paths import bound_artifact_path
+        if bound_artifact_path(root, where["trace"]) != bound_artifact_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):
             raise ValueError("Descriptor closure trace differs from the inspected trace")
         entries.append(entry)
     descriptor = TerminalDescriptor(spec, {"schema_version": TERMINAL_PROTOCOL,
@@ -1020,6 +1113,14 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         "logical_run_id": declaration["logical_run_id"], "arms": entries})
     translate_terminal_descriptor(root, spec, descriptor)
     return descriptor
+
+
+def terminal_attempt_id(spec, arm_id, platform_version):
+    if not platform_version:
+        return None
+    declaration = spec.to_dict()
+    prefix = declaration["logical_run_id"] if declaration["prospective"].get("same_run_replay") else arm_id
+    return prefix + "-v" + platform_version
 
 
 def _terminal_identity(spec, context, *, attempt_id=None):
@@ -1146,6 +1247,7 @@ class TargetIdentityBinding:
     repo_root: Path
     plan_path: str
     plan_sha256: str
+    package_dir: Path | None = None
 
     @classmethod
     def from_acceptance_plan(cls, spec: ExperimentSpec, repo_root: Path,
@@ -1160,14 +1262,46 @@ class TargetIdentityBinding:
             raise ValueError("Target identity acceptance plan is blocked")
         return cls(root, plan_path, plan_sha256)
 
+    @classmethod
+    def from_frozen_package(cls, spec: ExperimentSpec, repo_root: Path,
+                            package_dir: Path, plan_path: str):
+        """Bind encoding metadata already verified by the original run resolver."""
+        from .experiment_package import read_packaged_text
+        from .experiment_spec import _unique_object, _canonical
+        raw = read_packaged_text(package_dir, plan_path)
+        plan = json.loads(raw, object_pairs_hook=_unique_object)
+        _canonical(plan)
+        if (plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"}
+                or plan.get("spec_identity") != spec.identity
+                or [entry.get("arm_id") for entry in plan.get("arms", [])] !=
+                   [arm["arm_id"] for arm in spec.to_dict()["arms"]]):
+            raise ValueError("Frozen target identity plan/Spec mismatch")
+        return cls(Path(repo_root).absolute(), plan_path,
+                   hashlib.sha256(raw.encode()).hexdigest(), Path(package_dir).absolute())
+
+    def _pinned_json(self, name, digest, *, label="metadata"):
+        _digest(digest, "target identity metadata digest")
+        if self.package_dir is not None:
+            from .experiment_package import read_packaged_text
+            from .experiment_spec import _unique_object, _canonical
+            inventory = _json(self.package_dir / "package_manifest.json")
+            if name in inventory["relative_allowlist"]:
+                raw = read_packaged_text(self.package_dir, name)
+                if hashlib.sha256(raw.encode()).hexdigest() != digest:
+                    raise ValueError("Target identity " + label + " hash mismatch")
+                result = json.loads(raw, object_pairs_hook=_unique_object)
+                _canonical(result)
+                return result
+        path = _artifact_path(self.repo_root, name)
+        if file_digest(path) != digest:
+            raise ValueError("Target identity " + label + " hash mismatch")
+        return _json(path)
+
     def digest(self, target, *, context: RunContext, expected: dict) -> tuple[str, dict]:
         import torch
 
         _digest(self.plan_sha256, "acceptance plan digest")
-        path = _artifact_path(self.repo_root, self.plan_path)
-        if file_digest(path) != self.plan_sha256:
-            raise ValueError("Target identity acceptance plan hash mismatch")
-        plan = _json(path)
+        plan = self._pinned_json(self.plan_path, self.plan_sha256, label="acceptance plan")
         if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1", "molgap-modern2d-formal-reference-plan-v1", "molgap-modern2d-configured-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
             raise ValueError("Target identity plan/Spec mismatch")
         entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
@@ -1181,10 +1315,7 @@ class TargetIdentityBinding:
         if set(pointer) != {"path", "sha256"}:
             raise ValueError("Target identity requires a pinned manifest")
         _digest(pointer["sha256"], "target manifest digest")
-        manifest_path = _artifact_path(self.repo_root, pointer["path"])
-        if file_digest(manifest_path) != pointer["sha256"]:
-            raise ValueError("Target identity manifest hash mismatch")
-        manifest = _json(manifest_path)
+        manifest = self._pinned_json(pointer["path"], pointer["sha256"], label="manifest")
         if manifest.get("development_target_sha256") != expected["target_sha256"]:
             raise ValueError("Target identity manifest/frozen target mismatch")
         encoding = manifest.get("target_encoding")
@@ -1200,6 +1331,11 @@ class TargetIdentityBinding:
             raise ValueError("Unsupported pinned target encoding")
         return digest, {"encoding": encoding, "manifest": pointer,
                         "acceptance_plan_sha256": self.plan_sha256}
+
+
+def inspect_terminal_output(item):
+    options = {"target_identity": item["target_identity"]} if item.get("target_identity") is not None else {}
+    return inspect_output(item["output_dir"], context=item["context"], expected=item["expected"], **options)
 
 
 def _inspect_predictions(path, *, context, expected, target_identity):

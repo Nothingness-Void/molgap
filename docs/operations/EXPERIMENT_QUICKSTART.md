@@ -129,6 +129,10 @@ addons use ordered `{name, version, config}` declarations; mixed/confounded
 interventions fail the existing purpose-scoped comparison check.
 For catalog addons with literal-only defaults, `config: null` selects those
 reviewed defaults; bounded/configurable addons still require explicit values.
+Addon names alone select version `1` and reviewed literal defaults. Inline
+`authority`/`platform` may replace their `_ref` fields. Repeated arm fields may
+live in `shared`; a pinned `preset_ref` supplies an existing baseline definition.
+These shorthands preserve the same recipe and authority checks.
 
 Commit human/source inputs before formal preparation. The tool generates only
 bounded canonical JSON under `experiments/<question>/generated/<input+commit>/`;
@@ -215,18 +219,19 @@ without authentication or creating the destination. Explicit credentials and
 `--execute` call the original exact-file transport; unsupported historical
 protocols still use their owning retriever. This is not scientific acceptance.
 
-After the owning platform retrieves the exact attempt, `inspect-output`,
-`accept-workflow`, `build-resume` and `prepare-resume` can resolve their frozen
-Spec/package/receipt from the same run ID. Supply the actual outputs and
-scientific/evidence inputs required by the existing owners:
+After retrieval, the local entry resolves frozen expectations and closure
+locations, inspects each arm, writes attribution and stages terminal drafts:
 
 ```powershell
-& $python platforms/local/run.py --profile $profilePath -- accept-workflow --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId --outputs $outputs --locations $locations
+& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root $retrievedRoot
 ```
 
-Acceptance is read-only by default; explicit `--execute` invokes existing
-terminal closure. Missing/uncertain receipt or journal bindings require original
-platform reconciliation. No remote retrieval or scientific verdict is inferred.
+`$retrievedRoot/<arm_id>` contains the already retained output files. Omit
+`--retrieved-root` when the retriever has recorded those locations. Files stay
+where they are; this command downloads and copies no training payloads. Drafts
+do not close RML. Closure requires an explicit outcome, decision reference,
+observed role evidence and `--execute` through the existing terminal owner.
+Missing/uncertain receipt or journal bindings require original reconciliation.
 The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) owns the remaining
 arguments and local path limits; the [recovery contract](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow)
 retains incomplete-checkpoint and native-runtime restrictions.

@@ -446,9 +446,14 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     parser = cli._parser()
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
-    assert set(commands) == {"catalog", "freeze-input", "locate-run", "check-workflow", "validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal", "plan-prospective", "check-release",
-                             "prepare-release", "check-preparation", "check-acceptance", "inspect-output", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "workflow-info", "build-resume", "prepare-resume", "sandbox", "source-dependencies"}
+    assert set(commands) == {
+        "catalog", "freeze-input", "locate-run", "check-workflow", "validate-spec",
+        "package", "preflight", "run-diagnostic", "diagnose", "launch-receipt",
+        "terminal", "plan-prospective", "check-release", "prepare-release",
+        "check-preparation", "check-acceptance", "inspect-output", "accept-terminal",
+        "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal",
+        "workflow-info", "build-resume", "prepare-resume", "sandbox", "source-dependencies",
+    }
 
 
 def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, monkeypatch):

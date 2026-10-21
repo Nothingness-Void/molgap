@@ -55,6 +55,21 @@ def _parser() -> argparse.ArgumentParser:
     locate.add_argument("--repo-root",required=True,type=_local)
     locate.add_argument("--run-id",required=True)
     locate.add_argument("--attempt-id",required=True)
+    diagnose=commands.add_parser("diagnose")
+    diagnose.add_argument("--control",type=_local)
+    diagnose.add_argument("--candidate",type=_local)
+    diagnose.add_argument("--run-id")
+    diagnose.add_argument("--attempt-id")
+    diagnose.add_argument("--profile",type=_local)
+    diagnose.add_argument("--repo-root",type=_local,default=Path.cwd())
+    diagnose.add_argument("--retrieved-root",type=_local)
+    diagnose.add_argument("--outputs",type=_local)
+    diagnose.add_argument("--output",type=_local)
+    diagnose.add_argument("--threshold-ev",type=float)
+    diagnose.add_argument("--noninferiority-margin-ev",type=float)
+    diagnose.add_argument("--bootstrap-samples",type=int)
+    diagnose.add_argument("--seed",type=int,default=42)
+    diagnose.add_argument("--verbose",action="store_true")
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
@@ -102,8 +117,17 @@ def _parser() -> argparse.ArgumentParser:
                 command.add_argument("--auto-dependencies", action="store_true")
         elif name == "accept-workflow":
             command.add_argument("--receipt", type=_local)
-            command.add_argument("--outputs", required=True, type=_local)
-            command.add_argument("--locations", required=True, type=_local)
+            command.add_argument("--outputs", type=_local)
+            command.add_argument("--locations", type=_local)
+            command.add_argument("--retrieved-root", type=_local)
+            command.add_argument("--diagnose", action="store_true")
+            command.add_argument("--stage-terminal", action="store_true")
+            command.add_argument("--outcome")
+            command.add_argument("--decision-ref", type=_local)
+            command.add_argument("--role-audit", type=_local)
+            command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
+            command.add_argument("--bootstrap-samples", type=int, default=0)
+            command.add_argument("--seed", type=int, default=42)
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
         elif name == "check-acceptance":
@@ -151,10 +175,42 @@ def _parser() -> argparse.ArgumentParser:
     selected.add_argument("--spec", type=_local)
     selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))
     sandbox.add_argument("--arm")
+    commands.choices["accept-workflow"].add_argument("--verbose", action="store_true",
+        help="Print the full owner report rather than its summary")
     return parser
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "diagnose":
+        from .experiment_attribution import analyze_family_pair
+        if args.run_id is not None:
+            if args.control is not None or args.candidate is not None:
+                raise ValueError("Choose run identity or control/candidate directories")
+            if args.profile is None or args.attempt_id is None:
+                raise ValueError("Run diagnosis requires --profile and --attempt-id")
+            if args.threshold_ev is not None or args.noninferiority_margin_ev is not None:
+                raise ValueError("Run diagnosis uses the frozen comparison policy")
+            from .experiment_attribution import diagnose_run
+            from .experiment_family_workflow import _json
+            result = diagnose_run(args.profile, args.repo_root, args.run_id, args.attempt_id,
+                retrieved_root=args.retrieved_root,
+                supplied=_json(args.outputs) if args.outputs is not None else None,
+                output=args.output, n_bootstrap=args.bootstrap_samples or 0, seed=args.seed)
+            return result, 1 if result.get("status") in {"BLOCKED", "INSUFFICIENT_EVIDENCE"} else 0
+        if not args.control or not args.candidate:
+            raise ValueError("Directory diagnosis requires --control and --candidate")
+        if any(value is not None for value in (args.profile, args.attempt_id, args.retrieved_root, args.outputs)):
+            raise ValueError("Run lookup options require --run-id")
+        result = analyze_family_pair(
+            args.control,
+            args.candidate,
+            output_dir=args.output,
+            threshold_eV=0.003 if args.threshold_ev is None else args.threshold_ev,
+            noninferiority_margin_eV=0.0005 if args.noninferiority_margin_ev is None else args.noninferiority_margin_ev,
+            n_bootstrap=10000 if args.bootstrap_samples is None else args.bootstrap_samples,
+            seed=args.seed,
+        )
+        return result, 0
     if args.command == "locate-run":
         from .experiment_input import locate_run
         return locate_run(args.profile,args.repo_root,args.run_id,args.attempt_id),0
@@ -207,9 +263,21 @@ def _dispatch(args) -> tuple[dict, int]:
                         artifact_root=args.artifact_root, expectations=_json(args.expectations))
                     return result, 1 if result["status"] == "BLOCKED" else 0
                 if args.command == "accept-workflow":
-                    result = accept_run_workflow(*original, supplied=_json(args.outputs),
-                        locations=_json(args.locations), execute=args.execute,
-                        execution_root=args.execution_root)
+                    options = dict(supplied=_json(args.outputs) if args.outputs is not None else None,
+                        locations=_json(args.locations) if args.locations is not None else None,
+                        execute=args.execute, execution_root=args.execution_root)
+                    if args.retrieved_root is not None:
+                        options["retrieved_root"] = args.retrieved_root
+                    if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
+                        options.update(diagnose=args.diagnose, stage_terminal=args.stage_terminal,
+                            outcome=args.outcome, decision_ref=args.decision_ref,
+                            diagnostic_output=args.output, n_bootstrap=args.bootstrap_samples, seed=args.seed)
+                    elif args.output is not None or args.bootstrap_samples or args.seed != 42:
+                        raise ValueError("Diagnostic options require --diagnose or --stage-terminal")
+                    if args.role_audit is not None:
+                        audit = _json(args.role_audit)
+                        options["role_audit"] = args.role_audit if "context" in audit else audit
+                    result = accept_run_workflow(*original, **options)
                     return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
@@ -221,6 +289,14 @@ def _dispatch(args) -> tuple[dict, int]:
                         "executed": False, "network_accessed": False}, 1
         if args.profile is not None or args.attempt_id is not None:
             raise ValueError("--profile and --attempt-id require --run-id")
+        if args.command == "accept-workflow":
+            if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
+                    args.decision_ref, args.role_audit, args.output)):
+                raise ValueError("Automatic acceptance requires --run-id")
+            if args.outputs is None:
+                raise ValueError("Explicit Spec acceptance requires --outputs")
+            if args.execute and args.locations is None:
+                raise ValueError("Terminal execution requires --locations")
         if any(value is None for value in frozen):
             raise ValueError("--spec requires --package, --expected-package-identity, --receipt and, for recovery, --prepared")
     raw = _read(args.spec)
@@ -285,7 +361,8 @@ def _dispatch(args) -> tuple[dict, int]:
         result = accept_workflow(spec, args.repo_root, _json(args.outputs),
             receipt_path=args.receipt, package_dir=args.package,
             expected_package_identity=args.expected_package_identity,
-            locations=_json(args.locations), execute=args.execute, execution_root=args.execution_root)
+            locations=_json(args.locations) if args.locations is not None else None, execute=args.execute,
+            execution_root=args.execution_root)
         return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
         from .experiment_family_workflow import (
@@ -391,6 +468,10 @@ def main(argv: list[str] | None = None) -> int:
         # Keep any library diagnostics off the machine-readable output channel.
         with redirect_stdout(sys.stderr):
             result, code = _dispatch(args)
+        if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
+                and not args.verbose and ((args.command == "diagnose" and args.output is not None)
+                                         or "diagnosis" in result)):
+            result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
     except Exception as exc:
@@ -398,6 +479,24 @@ def main(argv: list[str] | None = None) -> int:
             "type": type(exc).__name__, "message": str(exc),
         }}))
         return 2
+
+
+def _acceptance_summary(result):
+    """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
+    summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
+        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers") if key in result}
+    summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
+                       for arm, row in result.get("arms", {}).items()}
+    diagnostic = result.get("diagnosis", result)
+    if "comparisons" in diagnostic:
+        summary["diagnosis"] = {"status": diagnostic["status"], "reports": diagnostic.get("written_files", {}),
+            "comparisons": {arm: {"status": pair["status"], "blockers": pair.get("blockers", []),
+                "mean_delta_eV": pair.get("primary_comparison", {}).get("mean_delta_eV"),
+                "signals": pair.get("signals", {})} for arm, pair in diagnostic["comparisons"].items()}}
+    if "terminal_staging" in result:
+        staging = result["terminal_staging"]
+        summary["terminal_staging"] = {key: staging[key] for key in ("status", "paths", "blockers") if key in staging}
+    return summary
 
 
 if __name__ == "__main__":

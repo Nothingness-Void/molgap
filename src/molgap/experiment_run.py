@@ -18,6 +18,18 @@ class RunReconciliationRequired(ValueError):
     """The original operation journal or launch still needs its owning adapter."""
 
 
+def resolve_run_acceptance_inputs(*args, **kwargs):
+    """Resolve frozen expectations and retained all-arm acceptance locations."""
+    from .experiment_run_acceptance import resolve_run_acceptance_inputs as resolve
+    return resolve(*args, **kwargs)
+
+
+def stage_verified_terminal_packages(*args, **kwargs):
+    """Stage through the existing terminal owner without importing it at lookup."""
+    from .experiment_terminal_staging import stage_verified_terminal_packages as stage
+    return stage(*args, **kwargs)
+
+
 def _original_run(profile, repo_root, run_id, attempt_id):
     located = locate_run(profile, repo_root, run_id, attempt_id)
     run = Path(located["run_directory"])
@@ -83,13 +95,69 @@ def inspect_run_output(profile, repo_root, run_id, attempt_id, *, arm_id, artifa
     return inspect_output(root, context=context, expected=expectations)
 
 
-def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied, locations,
-                        execute=False, execution_root=None):
-    """Delegate an explicit original acceptance plan; no inferred verdicts."""
+def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None, locations=None,
+                        retrieved_root=None, execute=False, execution_root=None,
+                        diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
+                        diagnostic_output=None, n_bootstrap=0, seed=42, role_audit=None):
+    """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
+    from .experiment_run_acceptance import resolve_run_acceptance_inputs
     from .experiment_workflow import accept_workflow
-    spec, options, _ = _original_run(profile, repo_root, run_id, attempt_id)
-    return accept_workflow(spec, supplied=supplied, locations=locations, execute=execute,
-                           execution_root=execution_root, **options)
+    if (outcome is None) != (decision_ref is None):
+        raise ValueError("A scientific outcome and decision reference must be provided together")
+    if role_audit is not None and not (stage_terminal or outcome is not None):
+        raise ValueError("A role audit requires terminal staging")
+    automatic = diagnose or stage_terminal or outcome is not None
+    if supplied is not None and locations is not None and retrieved_root is None and not automatic:
+        # Preserve explicit legacy plans owned by Server-only acceptance adapters.
+        spec, options, _ = _original_run(profile, repo_root, run_id, attempt_id)
+        return accept_workflow(spec, supplied=supplied, locations=locations, execute=execute,
+                               execution_root=execution_root, **options)
+    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+        retrieved_root=retrieved_root, supplied=supplied, locations=locations)
+    spec, options = resolved["spec"], resolved["options"]
+    identity = {"run_id": run_id, "attempt_id": attempt_id, "spec_identity": spec.identity}
+    # Ordinary inspection does not depend on a future terminal input package.
+    result = accept_workflow(spec, supplied=resolved["outputs"],
+        locations=None if automatic or locations is None else resolved["locations"],
+        execute=False if automatic or locations is None else execute,
+        execution_root=execution_root, target_identities=resolved.get("target_identities"), **options)
+    result.update(identity)
+    if result["status"] == "BLOCKED":
+        return result
+    if automatic:
+        from .experiment_attribution import diagnose_run, _write_run_diagnosis
+        diagnostic = diagnose_run(profile, repo_root, run_id, attempt_id,
+            retrieved_root=retrieved_root, supplied=supplied, output=diagnostic_output,
+            n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"])
+        if diagnostic_output is None:
+            from .screen_policy import canonical_fingerprint
+            path = resolved["run_directory"] / "reports" / ("diagnostic_" + canonical_fingerprint(diagnostic) + ".json")
+            diagnostic = _write_run_diagnosis(diagnostic, path, resolved)
+        result["diagnosis"] = diagnostic
+        if diagnostic.get("status") == "BLOCKED":
+            return {**result, "status": "BLOCKED"}
+    if stage_terminal or outcome is not None:
+        from .experiment_terminal_staging import stage_verified_terminal_packages
+        staged = stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id,
+            retrieved_root=retrieved_root, supplied=supplied, locations=locations,
+            outcome=outcome, decision_ref=decision_ref, role_audit=role_audit,
+            diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"])
+        result["terminal_staging"] = staged
+        if execute:
+            if staged.get("blockers") or outcome is None:
+                return {**result, "status": "BLOCKED", "executed": False}
+            closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
+                execute=True, target_identities=resolved.get("target_identities"), **options)
+            return {**closed, **identity, "diagnosis": result.get("diagnosis"), "terminal_staging": staged}
+    elif execute and automatic:
+        if locations is None:
+            raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
+        closed = accept_workflow(spec, supplied=resolved["outputs"], locations=resolved["locations"],
+            execute=True, target_identities=resolved.get("target_identities"), **options)
+        return {**closed, **identity, "diagnosis": result.get("diagnosis")}
+    elif execute and locations is None:
+        raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
+    return result
 
 
 def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_output, output):

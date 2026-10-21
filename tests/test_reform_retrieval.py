@@ -117,7 +117,15 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
         case.auth.assert_not_called()
         case.retrieve.assert_not_called()
         assert case.http.urls == [] and not case.destination.exists()
-    assert case.local.read_bytes() == pinned and snapshot(case.run) == original
+    assert case.local.read_bytes() == pinned
+    retained_run = snapshot(case.run)
+    if execute:
+        mapping = "operations/retrieved_outputs/gptrans_t.json"
+        record = json.loads(retained_run.pop(mapping))
+        assert record["context"] == case.context.to_dict()
+        assert record["manifest_sha256"] == result["manifest_sha256"]
+        assert record["output_dir"] == str(case.destination)
+    assert retained_run == original
 
 
 @pytest.mark.parametrize("missing", ["physical", "all"])
@@ -228,7 +236,12 @@ def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(retriev
     retry = json.loads(capsys.readouterr().out)
     assert all(item["state"] == "ALREADY_RETAINED" for item in retry["files"])
     assert len(case.http.urls) == len(ROLES) + 1
-    assert snapshot(case.destination) == retained and snapshot(case.run) == before
+    assert snapshot(case.destination) == retained
+    retained_run = snapshot(case.run)
+    mapping = json.loads(retained_run.pop("operations/retrieved_outputs/gptrans_t.json"))
+    assert mapping["context"] == case.context.to_dict()
+    assert mapping["output_dir"] == str(case.destination)
+    assert retained_run == before
 
 
 def test_execute_without_credentials_fails_before_any_local_owner(retrieval, monkeypatch, capsys):

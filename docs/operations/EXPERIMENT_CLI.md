@@ -55,7 +55,7 @@ canonical `--spec` APIs remain available.
 
 ## Local lifecycle by run ID
 
-Four existing commands accept `--run-id RUN --attempt-id ATTEMPT --profile
+The lifecycle commands accept `--run-id RUN --attempt-id ATTEMPT --profile
 PROFILE --repo-root ROOT` in place of `--spec`, `--package`,
 `--expected-package-identity`, `--receipt` and, for recovery, `--prepared`.
 The adapter resolves and verifies the original frozen inputs/package/receipt;
@@ -64,7 +64,8 @@ explicit frozen-identity overrides reject. `locate-run` remains read-only.
 | Command | Caller-supplied local inputs |
 |---|---|
 | `inspect-output` | `--arm`, `--artifact-root`, `--expectations` |
-| `accept-workflow` | `--outputs`, `--locations`; optional `--execute`, `--execution-root` |
+| `accept-workflow` | Optional `--retrieved-root` or `--outputs`; `--diagnose`, `--stage-terminal` add local reports/drafts |
+| `diagnose` | Optional `--retrieved-root` or `--outputs`, `--output`, `--bootstrap-samples` |
 | `build-resume` | `--arm`, `--source-output`, fresh `--output` |
 | `prepare-resume` | `--resume-plan`, fresh `--output` |
 
@@ -74,9 +75,20 @@ an existing journal phase other than `BOUND` return `RECONCILIATION_REQUIRED`
 (exit 1) before calling an owner. Changed frozen/package/receipt/journal bindings
 reject. Reconcile the original platform attempt; changing run IDs is no retry.
 
-Inspection can read external local outputs. Acceptance retains the owning
-repository-confined output/evidence paths; the run shortcut does not relocate
-them. Recovery output must be fresh and outside the checkout and original
+Frozen acceptance supplies expectations and canonical closure locations;
+explicit maps must agree with those bindings. Retrieved artifacts can remain
+under the configured external artifact root, with exact hashes and local
+custody locators. Canonical RML metadata remains in the checkout. The
+[quickstart](EXPERIMENT_QUICKSTART.md#5-inspect-accept-and-recover-with-existing-owners)
+shows the one-command local report/draft entry. `--verbose` prints full reports;
+the normal acceptance response contains statuses and report pointers.
+Terminal execution additionally requires reviewed `--locations`, or
+`--stage-terminal --outcome OUTCOME --decision-ref FILE --role-audit FILE`.
+Positive/ready outcomes retain their owning scientific acceptance gate.
+Run diagnosis uses the frozen policy; bootstrap defaults to zero, leaving
+confidence intervals unknown. Directory-only `diagnose --control DIR
+--candidate DIR` remains available for descriptive comparisons.
+Recovery output must be fresh and outside the checkout and original
 inputs/prepared/operations. The existing owner validates checkpoint/native
 semantics and all acceptance gates; owner result/exit meanings are unchanged.
 
@@ -108,7 +120,8 @@ The existing launch local-path boundary rejects traversal, network paths and
 symlink/junction/reparse paths. Source allowlist entries must remain explicit
 repository-relative POSIX names; package core checks confinement and tracked
 source identity. Descriptor references remain confined to `--repo-root` by the
-terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
+terminal core; retained artifact locators may also bind explicit external local
+files by digest. No argument abbreviation, arbitrary worker, callback, dynamic
 import, training shortcut, platform submit command or authority override exists.
 
 ## Direct API commands

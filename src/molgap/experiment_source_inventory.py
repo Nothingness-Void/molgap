@@ -192,6 +192,8 @@ SHARED_SOURCE_FILES = _all_registered_sources()
 # This is a distribution boundary, not an experiment-specific dependency list.
 # Host credentials, controllers and retrieval never belong to worker payloads.
 _HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transport.py",
+    "src/molgap/experiment_attribution.py", "src/molgap/experiment_run_acceptance.py",
+    "src/molgap/experiment_terminal_staging.py", "src/molgap/experiment_presets.py",
     "src/molgap/kaggle_credentials.py",
     "src/molgap/local_runtime.py", "src/molgap/local_testing.py", "src/molgap/local_storage.py",
     "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
@@ -229,6 +231,7 @@ def runtime_source_files(repo_root, records=()):
 _TEST_SUPPORT_FILES = frozenset({
     "pyproject.toml",
     "platforms/local/run.py",
+    "platforms/local/accept_run.py",
     "platforms/kaggle/run_experiment.py",
     "platforms/kaggle/submit_workflow.py",
     "platforms/kaggle/retrieve_family_outputs.py",
