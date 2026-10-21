@@ -1,0 +1,137 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "3164655785e8dff046c5dce98b6c7b3b4db56fe1a96216962453b69251641ab2",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "ppgt",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 206.08423664099996
+        },
+        {
+          "arm_id": "esa",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 57.022130841000035
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "ppgt": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "preflight_complete",
+      "worker_wall_seconds": 206.08423664099996,
+      "exit_reason": "preflight_worker_exit_0"
+    },
+    "esa": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "preflight_complete",
+      "worker_wall_seconds": 57.022130841000035,
+      "exit_reason": "preflight_worker_exit_0"
+    }
+  },
+  "prior_allocation_budget_debit_wall_seconds": 0,
+  "budget_scope": "aggregate authorization; prior debit is not added to the current invocation's measured ledger",
+  "pair_process_wall_seconds": 206.11700547199996,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "profile_artifacts": {
+    "ppgt": [
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "808a25d165c5b60fb2598ae3a4f5d6df8c884921147ff5d4c162f524653f71f8"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "bd4a0074c35800106c94afc685c4f35dddad1b10caf01659388f915c626f1381"
+      },
+      {
+        "path": "repeat-a.pt",
+        "sha256": "24dab538442232fce54eb6dab709f6a4adad2fd38a9dbb93ccfb033e0550777f"
+      },
+      {
+        "path": "repeat-b.pt",
+        "sha256": "fceea65e362609571c801740a7816ea0e61744ba82d93ea041d5c712cf338969"
+      },
+      {
+        "path": "resumed-first.pt",
+        "sha256": "85700fa591681cc717ac37cd0c1e47fe49b163fafd9242425e07c98c99f46e8f"
+      },
+      {
+        "path": "resumed.pt",
+        "sha256": "918759c11d18dbe8870080cd11d751e20ecf02bdc32be544fa3b7b07a30acc85"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "56b1be52dc74ac2012e5f02f1ace5e38acff28d5f7b410ef7ce044822e14162d"
+      },
+      {
+        "path": "runtime_provenance.json",
+        "sha256": "37705c5930044614105012f919e4d4b0c5e74d943d37f9ffd9d5b3ba9be95349"
+      },
+      {
+        "path": "execution_repair.json",
+        "sha256": "6a985201f9aec6c4a83932b455934181eb09a62305c9682096ab4bdd3a9763c0"
+      },
+      {
+        "path": "execution-reference.pt",
+        "sha256": "f2d2ee0b04dd71fbb42227dbaf3e61f4ecbb105cdca2fbfc93b7926a2bdda70f"
+      }
+    ],
+    "esa": [
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "57347f5690f37cf4c23f9a5be81a009526229486b5ae6cf33fd0fad4e40b3ed6"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "a776caad485c86144477fa4c23f7651229049091d3100a0f7476544c14f10847"
+      },
+      {
+        "path": "repeat-a.pt",
+        "sha256": "64dbefa32c3e2f87ad8a8a37f6f1ad08d4892bf52dec0427189d2733821c45a2"
+      },
+      {
+        "path": "repeat-b.pt",
+        "sha256": "95cfffb868d004a60a49b32a6c134d54136fe01b74c407367ee1dfc6f9ecf28e"
+      },
+      {
+        "path": "resumed-first.pt",
+        "sha256": "51f2634591f1eca0863abccec8d956f887dc60e32d100ca3da74535d28b371c3"
+      },
+      {
+        "path": "resumed.pt",
+        "sha256": "1378fb00c950759a53e4f64cea9a309ab0f9bb9a73446e68e94b8d070555c0e1"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "9c3ad384825a27840bd8cdde90eba829d9fe63c0c4681d387012d75bed33fc6a"
+      },
+      {
+        "path": "runtime_provenance.json",
+        "sha256": "556fd6d0c0458c0d759d94f20d69adc2bd3586c33317185553003d8715821fe0"
+      },
+      {
+        "path": "execution_repair.json",
+        "sha256": "e6b1373f86d95a70093e81f16e67596837f791bda4e04642f4eb4f412888db2c"
+      },
+      {
+        "path": "execution-reference.pt",
+        "sha256": "09f0520a020aa3822d9f11503c09346ebf42d0d696524fab705cbf2a6443837b"
+      }
+    ]
+  }
+}

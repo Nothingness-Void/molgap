@@ -1,0 +1,129 @@
+{
+  "files": [
+    {
+      "path": "ppgt/profile_qualification/profile.json",
+      "sha256": "808a25d165c5b60fb2598ae3a4f5d6df8c884921147ff5d4c162f524653f71f8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/profile_qualification/trace.json",
+      "sha256": "bd4a0074c35800106c94afc685c4f35dddad1b10caf01659388f915c626f1381",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/repeat-a.pt",
+      "sha256": "24dab538442232fce54eb6dab709f6a4adad2fd38a9dbb93ccfb033e0550777f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/repeat-b.pt",
+      "sha256": "fceea65e362609571c801740a7816ea0e61744ba82d93ea041d5c712cf338969",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/resumed-first.pt",
+      "sha256": "85700fa591681cc717ac37cd0c1e47fe49b163fafd9242425e07c98c99f46e8f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/resumed.pt",
+      "sha256": "918759c11d18dbe8870080cd11d751e20ecf02bdc32be544fa3b7b07a30acc85",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/runtime_certificate.json",
+      "sha256": "56b1be52dc74ac2012e5f02f1ace5e38acff28d5f7b410ef7ce044822e14162d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/runtime_provenance.json",
+      "sha256": "37705c5930044614105012f919e4d4b0c5e74d943d37f9ffd9d5b3ba9be95349",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/execution_repair.json",
+      "sha256": "6a985201f9aec6c4a83932b455934181eb09a62305c9682096ab4bdd3a9763c0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/execution-reference.pt",
+      "sha256": "f2d2ee0b04dd71fbb42227dbaf3e61f4ecbb105cdca2fbfc93b7926a2bdda70f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/profile_qualification/profile.json",
+      "sha256": "57347f5690f37cf4c23f9a5be81a009526229486b5ae6cf33fd0fad4e40b3ed6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/profile_qualification/trace.json",
+      "sha256": "a776caad485c86144477fa4c23f7651229049091d3100a0f7476544c14f10847",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/repeat-a.pt",
+      "sha256": "64dbefa32c3e2f87ad8a8a37f6f1ad08d4892bf52dec0427189d2733821c45a2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/repeat-b.pt",
+      "sha256": "95cfffb868d004a60a49b32a6c134d54136fe01b74c407367ee1dfc6f9ecf28e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/resumed-first.pt",
+      "sha256": "51f2634591f1eca0863abccec8d956f887dc60e32d100ca3da74535d28b371c3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/resumed.pt",
+      "sha256": "1378fb00c950759a53e4f64cea9a309ab0f9bb9a73446e68e94b8d070555c0e1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/runtime_certificate.json",
+      "sha256": "9c3ad384825a27840bd8cdde90eba829d9fe63c0c4681d387012d75bed33fc6a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/runtime_provenance.json",
+      "sha256": "556fd6d0c0458c0d759d94f20d69adc2bd3586c33317185553003d8715821fe0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/execution_repair.json",
+      "sha256": "e6b1373f86d95a70093e81f16e67596837f791bda4e04642f4eb4f412888db2c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/execution-reference.pt",
+      "sha256": "09f0520a020aa3822d9f11503c09346ebf42d0d696524fab705cbf2a6443837b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "allocation_ledger.json",
+      "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "esa/allocation_ledger.json",
+      "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ppgt/allocation_ledger.json",
+      "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "execution_report.json",
+      "sha256": "f39cea8c8c390cbcb0dbff605f755ccc61157b7c44c5c8b0683b20fe050ed63f",
+      "state": "RETAINED"
+    }
+  ],
+  "kernel": "nvoid912/molgap-modern2d-execution-repair-v2",
+  "platform_version_verified_by_output_api": true,
+  "receipt_version": 1,
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false
+}

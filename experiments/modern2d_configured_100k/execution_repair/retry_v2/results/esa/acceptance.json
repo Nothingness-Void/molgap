@@ -1,0 +1,165 @@
+{
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+  "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa",
+  "run_id": "modern2d-execution-repair-s42-v2:esa:downstream",
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "measurement_missing",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately frozen warmed throughput/numerical qualification and scientific/reference release; no automatic successor"
+    ]
+  },
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-prediction_input",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa",
+      "action_id": "A001",
+      "run_id": "modern2d-execution-repair-s42-v2:esa:downstream",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/esa/acceptance.json",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "access_kind": "prediction_input",
+      "selection_used": false
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-labels_read",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa",
+      "action_id": "A001",
+      "run_id": "modern2d-execution-repair-s42-v2:esa:downstream",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/esa/acceptance.json",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "access_kind": "labels_read",
+      "selection_used": false
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-T-modern2d-execution-repair-s42-v2-esa-full-missing",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa",
+      "action_id": "A001",
+      "run_id": "modern2d-execution-repair-s42-v2:esa:downstream",
+      "attempt_id": "esa-v1",
+      "category": "preflight",
+      "platform": "kaggle3",
+      "hardware": "Tesla_T4x2",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/esa/acceptance.json",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "kernel": "nvoid912/molgap-modern2d-execution-repair-v2",
+  "kernel_id": 139975571,
+  "version": 1,
+  "source_commit": "77e8c8762de396174e1b6b39af3c75b190f315ef",
+  "package_identity": "2c66842bdfa5484ffbd1f0918b57d265e2ed54384a52e0480e06861bd8435850",
+  "native_certificate_status": "accepted",
+  "remote_scratch_optimizer_updates": 8,
+  "formal_training_updates": 0,
+  "formal_training_started": false,
+  "model_inference_executed_locally": false,
+  "scientific_training_released": false,
+  "noReplay": true,
+  "scientific_endpoint": null,
+  "execution_repair": {
+    "format": "molgap-modern2d-execution-repair-proof-v1",
+    "family": "esa_small",
+    "recipe_identity": "4452db1806c14cfdb06f865ef11ef5b4d426c13db8d5bd41523a2a7aad6be998",
+    "reference": {
+      "path": "execution-reference.pt",
+      "sha256": "09f0520a020aa3822d9f11503c09346ebf42d0d696524fab705cbf2a6443837b"
+    },
+    "candidate": {
+      "path": "repeat-b.pt",
+      "sha256": "95cfffb868d004a60a49b32a6c134d54136fe01b74c407367ee1dfc6f9ecf28e"
+    },
+    "model_update": {
+      "schema_equal": true,
+      "finite": true,
+      "update_equivalent": true,
+      "max_abs": 0,
+      "mismatches": [],
+      "atol": 0.000003,
+      "rtol": 0.00002
+    },
+    "optimizer_update": {
+      "schema_equal": true,
+      "finite": true,
+      "update_equivalent": true,
+      "max_abs": 0,
+      "mismatches": [],
+      "atol": 0.000003,
+      "rtol": 0.00002
+    },
+    "exact_components": {
+      "cursor": true,
+      "scheduler": true,
+      "rng_state": true,
+      "optimizer_metadata": true
+    },
+    "update_equivalent": true,
+    "exact_full_state": true,
+    "scientific_training_released": false,
+    "status": "UPDATE_PROBE_CLOSE",
+    "candidate_process_wall_seconds": 2.3281950070000335,
+    "reference_process_wall_seconds": 2.9223905919999993,
+    "scope": "Two cold scratch updates per path, including setup/checkpoint IO; not steady-state throughput or model quality",
+    "long_training_equivalence": "NOT_ESTABLISHED_BY_TWO_STEP_PROBE"
+  },
+  "profile_summary": {
+    "captured_updates": 2,
+    "capture_wall_seconds": 3.3110579429999802,
+    "context_peak_allocated_bytes": 863286784,
+    "cuda_launch_kernel_calls": 9937
+  },
+  "observed_python_window_lower_bound": {
+    "wall_seconds": 276.712098143,
+    "allocated_device_seconds": 553.424196286,
+    "full_billing_status": "measurement_missing",
+    "additive_with_other_allocation_windows": false,
+    "attribution": "Shared whole-job window, not independently chargeable per arm"
+  },
+  "independent_verification_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.json",
+  "independent_verification_status": "PASS"
+}

@@ -1,0 +1,310 @@
+{
+  "acceptance_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_configured_100k/execution_repair/protocol.md": "8efbe2714d435708effca936854fc1e898ccffc7efc2b1ca89310c717ccecbe5",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json": "4a7ed460cfea76e23484c0a16c6a919ad15b21bb321152057ec1e8ff3c9d053a",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/protocol.md": "7d560b9fac0020c05664d3561f5193c86e894022f87e071d732a282091be4008",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md": "62e7b25a92ac24d8dd21bf9ca95d211ae1b9ae4314c4ba2cc607640d801d5a48",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json": "39bec22757b449a9463609136f3d66d051395fa8b4bc74c9ebdf85bf3ebed627",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/bootstrap_allocation.json": "6695f3b8598795ff253367c34d04f3378d1d32cb7a5b5cd5bbcd00f904b083f0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/execution_repair.json": "e6b1373f86d95a70093e81f16e67596837f791bda4e04642f4eb4f412888db2c",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/preflight_costs.json": "f08c8826b3cf95891002318662e80c909a8cb3b4887268f3a006e0c961d83ca5",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/profile_qualification/profile.json": "57347f5690f37cf4c23f9a5be81a009526229486b5ae6cf33fd0fad4e40b3ed6",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_certificate.json": "9c3ad384825a27840bd8cdde90eba829d9fe63c0c4681d387012d75bed33fc6a",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_provenance.json": "556fd6d0c0458c0d759d94f20d69adc2bd3586c33317185553003d8715821fe0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_report.json": "f39cea8c8c390cbcb0dbff605f755ccc61157b7c44c5c8b0683b20fe050ed63f",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_retention.json": "c21eccca44f131806150fb0061505f8913043fffd3d0225d0226714b7cad6bc0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/execution_repair.json": "6a985201f9aec6c4a83932b455934181eb09a62305c9682096ab4bdd3a9763c0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/preflight_costs.json": "e60e2af81634e3f5bb3f316bd5e15e55cffe8856427483c89f6744a7c40b527c",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/profile_qualification/profile.json": "808a25d165c5b60fb2598ae3a4f5d6df8c884921147ff5d4c162f524653f71f8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_certificate.json": "56b1be52dc74ac2012e5f02f1ace5e38acff28d5f7b410ef7ce044822e14162d",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_provenance.json": "37705c5930044614105012f919e4d4b0c5e74d943d37f9ffd9d5b3ba9be95349",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.json": "fd07e82949d22ee6037267349579bebfe25883fee1b0ad8dbe3a2dc5be425d44",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.txt": "ae97a1d0fdc7656eb48165dba4a364cdd0b41a472e55e9ee9b53f1b8b9f03906",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/retrieval.json": "3e685a2a28cf265f57555e36c3525f7d4181ddc66a228c8eef31860bd7b3f2a7",
+    "experiments/modern2d_configured_100k/execution_repair/roles.json": "a6cc570ce9078177f3d46a1bf9738373254313311b322cd0c54b6054b94fd520",
+    "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/ppgt/trajectory.json": "6d61edcc3e1e9b6a4e949acfdd1ab62a879a3f394c4df776b597f70ea56c6f07"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt-v1",
+      "category": "preflight",
+      "cost_event_id": "cost-T-modern2d-execution-repair-s42-v2-ppgt-full-missing",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+      "hardware": "Tesla_T4x2",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "modern2d-execution-repair-s42-v2:ppgt:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately frozen warmed throughput/numerical qualification and scientific/reference release; no automatic successor"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/bootstrap_allocation.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/bootstrap_allocation.json",
+        "sha256": "6695f3b8598795ff253367c34d04f3378d1d32cb7a5b5cd5bbcd00f904b083f0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/retrieval.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/retrieval.json",
+        "sha256": "3e685a2a28cf265f57555e36c3525f7d4181ddc66a228c8eef31860bd7b3f2a7"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/allocation_ledger.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/allocation_ledger.json",
+        "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_report.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_report.json",
+        "sha256": "f39cea8c8c390cbcb0dbff605f755ccc61157b7c44c5c8b0683b20fe050ed63f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_retention.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_retention.json",
+        "sha256": "c21eccca44f131806150fb0061505f8913043fffd3d0225d0226714b7cad6bc0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/allocation_ledger.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/allocation_ledger.json",
+        "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/execution_repair.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/execution_repair.json",
+        "sha256": "e6b1373f86d95a70093e81f16e67596837f791bda4e04642f4eb4f412888db2c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/preflight_costs.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/preflight_costs.json",
+        "sha256": "f08c8826b3cf95891002318662e80c909a8cb3b4887268f3a006e0c961d83ca5"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_certificate.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_certificate.json",
+        "sha256": "9c3ad384825a27840bd8cdde90eba829d9fe63c0c4681d387012d75bed33fc6a"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_provenance.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_provenance.json",
+        "sha256": "556fd6d0c0458c0d759d94f20d69adc2bd3586c33317185553003d8715821fe0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/profile_qualification/profile.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/profile_qualification/profile.json",
+        "sha256": "57347f5690f37cf4c23f9a5be81a009526229486b5ae6cf33fd0fad4e40b3ed6"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/allocation_ledger.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/allocation_ledger.json",
+        "sha256": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/execution_repair.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/execution_repair.json",
+        "sha256": "6a985201f9aec6c4a83932b455934181eb09a62305c9682096ab4bdd3a9763c0"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/preflight_costs.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/preflight_costs.json",
+        "sha256": "e60e2af81634e3f5bb3f316bd5e15e55cffe8856427483c89f6744a7c40b527c"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_certificate.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_certificate.json",
+        "sha256": "56b1be52dc74ac2012e5f02f1ace5e38acff28d5f7b410ef7ce044822e14162d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_provenance.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_provenance.json",
+        "sha256": "37705c5930044614105012f919e4d4b0c5e74d943d37f9ffd9d5b3ba9be95349"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/profile_qualification/profile.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/profile_qualification/profile.json",
+        "sha256": "808a25d165c5b60fb2598ae3a4f5d6df8c884921147ff5d4c162f524653f71f8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.json",
+        "sha256": "fd07e82949d22ee6037267349579bebfe25883fee1b0ad8dbe3a2dc5be425d44"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.txt",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.txt",
+        "sha256": "ae97a1d0fdc7656eb48165dba4a364cdd0b41a472e55e9ee9b53f1b8b9f03906"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json",
+        "sha256": "4a7ed460cfea76e23484c0a16c6a919ad15b21bb321152057ec1e8ff3c9d053a"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/protocol.md",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/protocol.md",
+        "sha256": "7d560b9fac0020c05664d3561f5193c86e894022f87e071d732a282091be4008"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/protocol.md",
+        "name": "experiments/modern2d_configured_100k/execution_repair/protocol.md",
+        "sha256": "8efbe2714d435708effca936854fc1e898ccffc7efc2b1ca89310c717ccecbe5"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/roles.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/roles.json",
+        "sha256": "a6cc570ce9078177f3d46a1bf9738373254313311b322cd0c54b6054b94fd520"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+        "sha256": "62e7b25a92ac24d8dd21bf9ca95d211ae1b9ae4314c4ba2cc607640d801d5a48"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+        "name": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+        "sha256": "39bec22757b449a9463609136f3d66d051395fa8b4bc74c9ebdf85bf3ebed627"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/ppgt/trajectory.json",
+        "name": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/ppgt/trajectory.json",
+        "sha256": "6d61edcc3e1e9b6a4e949acfdd1ab62a879a3f394c4df776b597f70ea56c6f07"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/ppgt/trajectory.json",
+        "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json",
+        "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-21T08:13:42Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Saved CPU tensor/metadata/hash verification only; remote eight scratch updates per family explicitly retained with zero formal training."
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "measurement_missing",
+      "comparison_status": "context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "audit": "untouched",
+      "common_dev": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "consumed"
+    },
+    "scope": "EXECUTION_REPAIR_DIAGNOSTIC",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-21T08:13:42Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "audit": "untouched",
+    "common_dev": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+      "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-execution-repair-s42-v2:ppgt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/ppgt/acceptance.json",
+      "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "modern2d-execution-repair-s42-v2:ppgt:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+    }
+  ],
+  "run_id": "modern2d-execution-repair-s42-v2:ppgt:downstream",
+  "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+}

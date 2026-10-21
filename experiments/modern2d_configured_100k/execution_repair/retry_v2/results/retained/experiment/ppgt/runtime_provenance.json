@@ -1,0 +1,80 @@
+{
+  "context": {
+    "experiment_id": "modern2d_configured_100k",
+    "logical_run_id": "modern2d-execution-repair-s42-v2",
+    "arm_id": "ppgt",
+    "arm_identity": "9048d024ebd3228b418fb68b90f76f0fb0a876367806e3588801667f5824b66f",
+    "spec_identity": "3164655785e8dff046c5dce98b6c7b3b4db56fe1a96216962453b69251641ab2",
+    "family_name": "ppgt_small",
+    "family_version": "3",
+    "source_commit": "77e8c8762de396174e1b6b39af3c75b190f315ef",
+    "source_archive_sha256": "3b77204fcd955a95ceab5d5b57b4c1052d2198debe0837d1bce79eb319baad37",
+    "package_identity": "2c66842bdfa5484ffbd1f0918b57d265e2ed54384a52e0480e06861bd8435850",
+    "training_recipe_sha256": "889c3127425ba1553389d41f80fa8e7cbb6b4bed378c8dda8ce6fafe0aeb5e05",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-modern2d-execution-repair-v2",
+    "platform_version": null
+  },
+  "recipe_identity": "0b5acfe04b998d8812e3299ce3f9a732fa381c19eb3b55555a32349fe38975f6",
+  "dataset_manifest_sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+  "initialization": {
+    "file_sha256": "f772ebc41d426c11757a01c38da2ca5eda7a79dbc80e3a0680b0623d7c1293d4",
+    "state_sha256": "dd0b414662721b61e2183cedfd929cd09ddc4b7b3a79164165f2935452ede18e",
+    "tensor_count": 370,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "859f2e44aee6801bac4c1edce994ed035e1577ab336d3b22a80cfa7d10dc289a",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4",
+  "formal_training_context": {
+    "run_context": {
+      "experiment_id": "modern2d_configured_100k",
+      "logical_run_id": "modern2d-execution-repair-s42-v2",
+      "arm_id": "ppgt",
+      "arm_identity": "9048d024ebd3228b418fb68b90f76f0fb0a876367806e3588801667f5824b66f",
+      "spec_identity": "3164655785e8dff046c5dce98b6c7b3b4db56fe1a96216962453b69251641ab2",
+      "family_name": "ppgt_small",
+      "family_version": "3",
+      "source_commit": "77e8c8762de396174e1b6b39af3c75b190f315ef",
+      "source_archive_sha256": "3b77204fcd955a95ceab5d5b57b4c1052d2198debe0837d1bce79eb319baad37",
+      "package_identity": "2c66842bdfa5484ffbd1f0918b57d265e2ed54384a52e0480e06861bd8435850",
+      "training_recipe_sha256": "889c3127425ba1553389d41f80fa8e7cbb6b4bed378c8dda8ce6fafe0aeb5e05",
+      "platform": "kaggle",
+      "account": "nvoid912",
+      "run_reference": "nvoid912/molgap-modern2d-execution-repair-v2",
+      "platform_version": null
+    },
+    "recipe_identity": "0b5acfe04b998d8812e3299ce3f9a732fa381c19eb3b55555a32349fe38975f6",
+    "authority_sha256": "4a7ed460cfea76e23484c0a16c6a919ad15b21bb321152057ec1e8ff3c9d053a",
+    "train_permit": {
+      "role": "train_100k",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "6ff650abbbe9c49cd8c38b48894a466aed561ba1901836112ea4f6e6eee5d229",
+      "role_history_sha256": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "development_permit": {
+      "role": "common_dev",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "30bbaac38bd37d966bf94ba0758cd97707f842d76912e69bb5a2ea5c8de77d7a",
+      "role_history_sha256": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "train_feature_binding_sha256": "97f309c2a1a4b0000f052ddfb42bc67677b6cde8b6982039c47b6d0b0f88c7a1",
+    "development_feature_binding_sha256": "9f9c49558bc385066a6c2bbeb6f549643c9f0a6ceef9ad3c1a7c3a606d59ad6b",
+    "max_wall_seconds": 1800,
+    "allocated_accelerators": [
+      "NvidiaTeslaT4",
+      "NvidiaTeslaT4"
+    ],
+    "configured": true
+  },
+  "formal_training_context_identity": "0fb245921b6dec619da1968ce86ddc9ce9960e109e04b1ad3dbf448377c4546d"
+}

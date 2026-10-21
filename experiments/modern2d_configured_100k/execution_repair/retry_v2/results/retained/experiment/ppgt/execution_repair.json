@@ -1,0 +1,45 @@
+{
+  "format": "molgap-modern2d-execution-repair-proof-v1",
+  "family": "ppgt_small",
+  "recipe_identity": "83969ee2b7d0a549a5cfd0fa184b1a36538314334e8099c93b00b47ac047035d",
+  "reference": {
+    "path": "execution-reference.pt",
+    "sha256": "f2d2ee0b04dd71fbb42227dbaf3e61f4ecbb105cdca2fbfc93b7926a2bdda70f"
+  },
+  "candidate": {
+    "path": "repeat-b.pt",
+    "sha256": "fceea65e362609571c801740a7816ea0e61744ba82d93ea041d5c712cf338969"
+  },
+  "model_update": {
+    "schema_equal": true,
+    "finite": true,
+    "update_equivalent": true,
+    "max_abs": 1.6391277313232422e-07,
+    "mismatches": [],
+    "atol": 3e-06,
+    "rtol": 2e-05
+  },
+  "optimizer_update": {
+    "schema_equal": true,
+    "finite": true,
+    "update_equivalent": true,
+    "max_abs": 6.05359673500061e-09,
+    "mismatches": [],
+    "atol": 3e-06,
+    "rtol": 2e-05
+  },
+  "exact_components": {
+    "cursor": true,
+    "scheduler": true,
+    "rng_state": true,
+    "optimizer_metadata": true
+  },
+  "update_equivalent": true,
+  "exact_full_state": false,
+  "scientific_training_released": false,
+  "status": "UPDATE_PROBE_CLOSE",
+  "candidate_process_wall_seconds": 8.012679333999984,
+  "reference_process_wall_seconds": 40.49828680400003,
+  "scope": "Two cold scratch updates per path, including setup/checkpoint IO; not steady-state throughput or model quality",
+  "long_training_equivalence": "NOT_ESTABLISHED_BY_TWO_STEP_PROBE"
+}

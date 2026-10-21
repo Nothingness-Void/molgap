@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-68752e62141cd370b355e60118e062d7ce181cd3424cebd73c5637620749151c",
+  "finalized_at": "2026-10-21T08:13:42Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/modern2d_configured_100k/execution_repair/protocol.md": "8efbe2714d435708effca936854fc1e898ccffc7efc2b1ca89310c717ccecbe5",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/authority.json": "4a7ed460cfea76e23484c0a16c6a919ad15b21bb321152057ec1e8ff3c9d053a",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/protocol.md": "7d560b9fac0020c05664d3561f5193c86e894022f87e071d732a282091be4008",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md": "62e7b25a92ac24d8dd21bf9ca95d211ae1b9ae4314c4ba2cc607640d801d5a48",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/esa/acceptance.json": "b4596c1e0f2765d0f33b7d61176df066aabd01eb6c767aac157712aeda640e3e",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/bootstrap_allocation.json": "6695f3b8598795ff253367c34d04f3378d1d32cb7a5b5cd5bbcd00f904b083f0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/execution_repair.json": "e6b1373f86d95a70093e81f16e67596837f791bda4e04642f4eb4f412888db2c",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/preflight_costs.json": "f08c8826b3cf95891002318662e80c909a8cb3b4887268f3a006e0c961d83ca5",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/profile_qualification/profile.json": "57347f5690f37cf4c23f9a5be81a009526229486b5ae6cf33fd0fad4e40b3ed6",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_certificate.json": "9c3ad384825a27840bd8cdde90eba829d9fe63c0c4681d387012d75bed33fc6a",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/esa/runtime_provenance.json": "556fd6d0c0458c0d759d94f20d69adc2bd3586c33317185553003d8715821fe0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_report.json": "f39cea8c8c390cbcb0dbff605f755ccc61157b7c44c5c8b0683b20fe050ed63f",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/execution_retention.json": "c21eccca44f131806150fb0061505f8913043fffd3d0225d0226714b7cad6bc0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/allocation_ledger.json": "16d1450ea6e62a74f4e1f47054be4790ba62a04bf0790a936e75a97f93c3c2c8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/execution_repair.json": "6a985201f9aec6c4a83932b455934181eb09a62305c9682096ab4bdd3a9763c0",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/preflight_costs.json": "e60e2af81634e3f5bb3f316bd5e15e55cffe8856427483c89f6744a7c40b527c",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/profile_qualification/profile.json": "808a25d165c5b60fb2598ae3a4f5d6df8c884921147ff5d4c162f524653f71f8",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_certificate.json": "56b1be52dc74ac2012e5f02f1ace5e38acff28d5f7b410ef7ce044822e14162d",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/experiment/ppgt/runtime_provenance.json": "37705c5930044614105012f919e4d4b0c5e74d943d37f9ffd9d5b3ba9be95349",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.json": "fd07e82949d22ee6037267349579bebfe25883fee1b0ad8dbe3a2dc5be425d44",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/independent/saved-artifact-verification-4fe6a896cced4796bc055e8a81b458a4.txt": "ae97a1d0fdc7656eb48165dba4a364cdd0b41a472e55e9ee9b53f1b8b9f03906",
+    "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/retained/retrieval.json": "3e685a2a28cf265f57555e36c3525f7d4181ddc66a228c8eef31860bd7b3f2a7",
+    "experiments/modern2d_configured_100k/execution_repair/roles.json": "a6cc570ce9078177f3d46a1bf9738373254313311b322cd0c54b6054b94fd520",
+    "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/esa/trajectory.json": "08d5683cf8f5b75493ca71b37e875156dce6bb936bca64daa01579985866f5d0"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-T-modern2d-execution-repair-s42-v2-esa-full-missing.json": "dedade92fb9bf887b11bb8fd9c0ea8edd39f3d51b48cf0f9e1625ce188bd898f",
+    "prospective_snapshot.json": "08d5683cf8f5b75493ca71b37e875156dce6bb936bca64daa01579985866f5d0",
+    "roles/role-T-modern2d-execution-repair-s42-v2-esa-scratch-labels_read.json": "c214bb4fc2192444e6a380f1f972a4cebebb3f241d354ddbe850cbd5f3e699df",
+    "roles/role-T-modern2d-execution-repair-s42-v2-esa-scratch-prediction_input.json": "18f8d3fde155efe8c3153458007173ce098f565e5e9f98e2a72fbb9bb8570e51",
+    "terminal_input.json": "9e395b41e2be07322b5c4d0974ac91ecf9ef6b60268f196857ce8b71b5a1f064",
+    "trajectory.json": "f536fdf26b2e9dda91f674dbf123bf3014f4b87ca834e8150c121644e7252eb5",
+    "v5_evidence.json": "e1bc31edbeeb63e3f4b04c80d5affd3d4e19041b8c48eb8f56313e4e3ddaaad6"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/esa/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "68752e62141cd370b355e60118e062d7ce181cd3424cebd73c5637620749151c",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+}
