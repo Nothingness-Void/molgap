@@ -9,8 +9,10 @@
 The human-authorized [four-slot/eight-arm PPGT/ESA research campaign](experiments/modern2d_configured_100k/research_arms/STATUS.md)
 has four accepted Kaggle2/3 version1 submissions. Three were observed RUNNING and
 one QUEUED; pinned Python3.12/torch2.7.1 startup was observed on three jobs.
-Native admission and scientific training progress remain to be observed; scheduler
-RUNNING is not that proof. Fresh20-pass contracts retain fixed100K/Common-Dev,
+Both ESA1 arms have positive-step first-epoch telemetry, including reported
+checkpoint step781 and full Common-Dev metrics. The other slots' native admission
+and training progress remain to be observed; scheduler RUNNING is not that proof.
+Fresh20-pass contracts retain fixed100K/Common-Dev,
 FP32/BS128/seed42. The existing Luna B/30-minute heartbeat now owns the four exact
 receipt-bound jobs, silent while healthy. No automatic successor, extra seed,
 500K/full, protected role, scientific winner or Replay claim is released.

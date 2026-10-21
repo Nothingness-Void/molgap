@@ -16,7 +16,10 @@ bind four private T4 version1 jobs, not an unsubmitted plan.
 The [independent CPU verification](cpu_verification.md) covers model mechanisms,
 update/resume/output inspection and compilation. Pinned Python3.12/torch2.7.1
 installation was observed on the three running jobs. Native qualification and
-formal training remain unobserved; there are no MAEs or Replay claims yet.
+formal training were initially unobserved. ESA1 now has
+[positive-step first-epoch telemetry](esa1/first_epoch.json) for both arms;
+the other three slots still lack a retrieved training witness. First-epoch
+metrics are not endpoint acceptance, superiority or Replay qualification.
 The [startup interpretation](startup_interpretation.md) corrects the frozen
 protocol's PPGT warmup shorthand and explains why a literal training START line
 is not expected from the epoch-only logger. Actual compiled recipes are unchanged.
