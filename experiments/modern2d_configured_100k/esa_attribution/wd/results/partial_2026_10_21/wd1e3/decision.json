@@ -1,0 +1,157 @@
+{
+  "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/wd/results/partial_2026_10_21/wd1e3/decision.json",
+  "facts": {
+    "arm": "wd1e3",
+    "best_scalar_is_not_accepted_endpoint": true,
+    "canonical_replay_manifest_admitted": false,
+    "canonical_trace_gate": "No frozen accepted reference, interrupted scientific horizon; original trace preserved unchanged as evidence artifact",
+    "complete_billing": "measurement_missing",
+    "kernel_id": 139862322,
+    "observed": {
+      "best_observed_dev_mae_eV": 0.2248750776052475,
+      "best_observed_pass": 29,
+      "capture_off_train_graphs_per_second": 167.60222557943908,
+      "capture_off_train_spans": 28,
+      "durable_updates": 22702,
+      "full_passes_observed": 29,
+      "horizon_updates": 46860,
+      "last5": [
+        {
+          "epoch_or_pass": 25,
+          "learning_rate": 0.0006916503744663625,
+          "live_dev_metric": 0.23645086586475372,
+          "live_train_metric": 0.1358312752560525,
+          "optimizer_step": 19525
+        },
+        {
+          "epoch_or_pass": 26,
+          "learning_rate": 0.0006654743914466061,
+          "live_dev_metric": 0.2334110587835312,
+          "live_train_metric": 0.1336758821802011,
+          "optimizer_step": 20306
+        },
+        {
+          "epoch_or_pass": 27,
+          "learning_rate": 0.0006387793379567123,
+          "live_dev_metric": 0.23014718294143677,
+          "live_train_metric": 0.13036431542928026,
+          "optimizer_step": 21087
+        },
+        {
+          "epoch_or_pass": 28,
+          "learning_rate": 0.0006116492065111791,
+          "live_dev_metric": 0.22489291429519653,
+          "live_train_metric": 0.12724422096786364,
+          "optimizer_step": 21868
+        },
+        {
+          "epoch_or_pass": 29,
+          "learning_rate": 0.0005841693585407159,
+          "live_dev_metric": 0.2248750776052475,
+          "live_train_metric": 0.12403294375397637,
+          "optimizer_step": 22649
+        }
+      ],
+      "last_dev_mae_eV": 0.2248750776052475,
+      "last_train_normalized_gap_mae": 0.12403294375397637,
+      "pass_wall_seconds_median": 936.5369335985006,
+      "presentations": 2905856,
+      "profile_capture_seconds": 8.502261188000148,
+      "profile_captured_updates": 8,
+      "profile_keys": [
+        "format",
+        "status",
+        "error",
+        "finalization_error",
+        "recipe_identity",
+        "family",
+        "config",
+        "starting_optimizer_step",
+        "observed_updates",
+        "captured_updates",
+        "capture_start_optimizer_step",
+        "capture_wall_seconds",
+        "capture_off_training_spans",
+        "runtime",
+        "device_events_observed",
+        "context_peak_allocated_bytes",
+        "context_peak_reserved_bytes",
+        "phases_by_host_self_time",
+        "operators_by_self_cpu",
+        "operators_by_self_device",
+        "trace_sha256",
+        "limitations"
+      ],
+      "profile_peak_allocated_bytes": 949921792,
+      "profile_phases": [
+        {
+          "calls": 8,
+          "host_self_seconds": 7.690547420999792,
+          "host_total_seconds": 7.690547420999792,
+          "name": "forward"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.42525256800013267,
+          "host_total_seconds": 0.42525256800013267,
+          "name": "backward"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.17659527900013927,
+          "host_total_seconds": 0.17659527900013927,
+          "name": "loader_wait"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.08692442300002767,
+          "host_total_seconds": 0.08692442300002767,
+          "name": "optimizer"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.06621700400000918,
+          "host_total_seconds": 0.06621700400000918,
+          "name": "gradient_clip"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.0441703740000321,
+          "host_total_seconds": 8.317994688000454,
+          "name": "train_update"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.004882898000460045,
+          "host_total_seconds": 0.004882898000460045,
+          "name": "zero_grad"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.0008636810002826678,
+          "host_total_seconds": 0.0008636810002826678,
+          "name": "schedule_before"
+        },
+        {
+          "calls": 8,
+          "host_self_seconds": 0.0007239920000756683,
+          "host_total_seconds": 0.0007239920000756683,
+          "name": "schedule_after"
+        }
+      ]
+    },
+    "observed_shared_allocation_t4_hours": 15.688987944916668,
+    "observed_shared_allocation_wall_seconds": 28240.178300850002,
+    "raw_partial_trace_retained": true,
+    "replay_ready": false,
+    "shared_cost_not_additive_per_arm": true,
+    "successor_submitted": false,
+    "version": 1
+  },
+  "final": true,
+  "next_allowed_actions": [],
+  "outcome": "STOP_FOR_COST",
+  "reopen_conditions": [
+    "Separate authority after execution/budget feasibility and reference review"
+  ]
+}

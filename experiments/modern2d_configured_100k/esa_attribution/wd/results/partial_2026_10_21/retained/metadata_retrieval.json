@@ -1,0 +1,25 @@
+{
+  "kernel": "nvoid912/molgap-esa-wd-attribution-100k-v1",
+  "version": 1,
+  "files": [
+    {
+      "path": "bootstrap_allocation.json",
+      "sha256": "267203c6c660684612884da767cad15f79333bfe8efcf8feffb1636facdb4bef"
+    },
+    {
+      "path": "experiment/execution_report.json",
+      "sha256": "1f07b0ffaa35c154865a6f4684a3613183b41e86b50730ff684085395ac686cd"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "88d799274f67ff1a322a324ac978130e4b61e6535a140252e2d1c58b730b9ee7"
+    },
+    {
+      "path": "experiment/allocation_ledger.json",
+      "sha256": "28ae90092f7900d44d1d154f1ba6e64607551b55beee2adfa0f908be7409b2ad"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

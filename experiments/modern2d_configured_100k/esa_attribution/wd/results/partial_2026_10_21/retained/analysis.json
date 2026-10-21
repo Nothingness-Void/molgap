@@ -1,0 +1,420 @@
+{
+  "scope": "PARTIAL_CONTEXT_ONLY",
+  "scientific_endpoint_complete": false,
+  "arms": {
+    "reference": {
+      "durable_updates": 22676,
+      "presentations": 2902528,
+      "horizon_updates": 46860,
+      "full_passes_observed": 29,
+      "best_observed_dev_mae_eV": 0.22727267444133759,
+      "best_observed_pass": 28,
+      "last_dev_mae_eV": 0.2280629724264145,
+      "last_train_normalized_gap_mae": 0.1276246875276486,
+      "pass_wall_seconds_median": 937.6412553465007,
+      "capture_off_train_graphs_per_second": 167.27607066781687,
+      "capture_off_train_spans": 28,
+      "profile_capture_seconds": 8.556248398000207,
+      "profile_captured_updates": 8,
+      "profile_peak_allocated_bytes": 949921792,
+      "profile_phases": [
+        {
+          "name": "forward",
+          "calls": 8,
+          "host_total_seconds": 7.835401499000227,
+          "host_self_seconds": 7.835401499000227
+        },
+        {
+          "name": "backward",
+          "calls": 8,
+          "host_total_seconds": 0.373345339000025,
+          "host_self_seconds": 0.373345339000025
+        },
+        {
+          "name": "loader_wait",
+          "calls": 8,
+          "host_total_seconds": 0.1730242540004383,
+          "host_self_seconds": 0.1730242540004383
+        },
+        {
+          "name": "optimizer",
+          "calls": 8,
+          "host_total_seconds": 0.06212294499982818,
+          "host_self_seconds": 0.06212294499982818
+        },
+        {
+          "name": "gradient_clip",
+          "calls": 8,
+          "host_total_seconds": 0.05128361899983247,
+          "host_self_seconds": 0.05128361899983247
+        },
+        {
+          "name": "train_update",
+          "calls": 8,
+          "host_total_seconds": 8.376256164000324,
+          "host_self_seconds": 0.04985014800081444
+        },
+        {
+          "name": "zero_grad",
+          "calls": 8,
+          "host_total_seconds": 0.004252613999597088,
+          "host_self_seconds": 0.004252613999597088
+        },
+        {
+          "name": "schedule_before",
+          "calls": 8,
+          "host_total_seconds": 0.0008564810000279977,
+          "host_self_seconds": 0.0008564810000279977
+        },
+        {
+          "name": "schedule_after",
+          "calls": 8,
+          "host_total_seconds": 0.00048549400003139453,
+          "host_self_seconds": 0.00048549400003139453
+        }
+      ],
+      "profile_keys": [
+        "format",
+        "status",
+        "error",
+        "finalization_error",
+        "recipe_identity",
+        "family",
+        "config",
+        "starting_optimizer_step",
+        "observed_updates",
+        "captured_updates",
+        "capture_start_optimizer_step",
+        "capture_wall_seconds",
+        "capture_off_training_spans",
+        "runtime",
+        "device_events_observed",
+        "context_peak_allocated_bytes",
+        "context_peak_reserved_bytes",
+        "phases_by_host_self_time",
+        "operators_by_self_cpu",
+        "operators_by_self_device",
+        "trace_sha256",
+        "limitations"
+      ],
+      "last5": [
+        {
+          "epoch_or_pass": 25,
+          "optimizer_step": 19525,
+          "live_dev_metric": 0.2359943389892578,
+          "live_train_metric": 0.1444176219394204,
+          "learning_rate": 0.0006916503744663625
+        },
+        {
+          "epoch_or_pass": 26,
+          "optimizer_step": 20306,
+          "live_dev_metric": 0.23194627463817596,
+          "live_train_metric": 0.13757859625485125,
+          "learning_rate": 0.0006654743914466061
+        },
+        {
+          "epoch_or_pass": 27,
+          "optimizer_step": 21087,
+          "live_dev_metric": 0.22971709072589874,
+          "live_train_metric": 0.13301661185128436,
+          "learning_rate": 0.0006387793379567123
+        },
+        {
+          "epoch_or_pass": 28,
+          "optimizer_step": 21868,
+          "live_dev_metric": 0.22727267444133759,
+          "live_train_metric": 0.1310139932740055,
+          "learning_rate": 0.0006116492065111791
+        },
+        {
+          "epoch_or_pass": 29,
+          "optimizer_step": 22649,
+          "live_dev_metric": 0.2280629724264145,
+          "live_train_metric": 0.1276246875276486,
+          "learning_rate": 0.0005841693585407159
+        }
+      ]
+    },
+    "wd1e3": {
+      "durable_updates": 22702,
+      "presentations": 2905856,
+      "horizon_updates": 46860,
+      "full_passes_observed": 29,
+      "best_observed_dev_mae_eV": 0.2248750776052475,
+      "best_observed_pass": 29,
+      "last_dev_mae_eV": 0.2248750776052475,
+      "last_train_normalized_gap_mae": 0.12403294375397637,
+      "pass_wall_seconds_median": 936.5369335985006,
+      "capture_off_train_graphs_per_second": 167.60222557943908,
+      "capture_off_train_spans": 28,
+      "profile_capture_seconds": 8.502261188000148,
+      "profile_captured_updates": 8,
+      "profile_peak_allocated_bytes": 949921792,
+      "profile_phases": [
+        {
+          "name": "forward",
+          "calls": 8,
+          "host_total_seconds": 7.690547420999792,
+          "host_self_seconds": 7.690547420999792
+        },
+        {
+          "name": "backward",
+          "calls": 8,
+          "host_total_seconds": 0.42525256800013267,
+          "host_self_seconds": 0.42525256800013267
+        },
+        {
+          "name": "loader_wait",
+          "calls": 8,
+          "host_total_seconds": 0.17659527900013927,
+          "host_self_seconds": 0.17659527900013927
+        },
+        {
+          "name": "optimizer",
+          "calls": 8,
+          "host_total_seconds": 0.08692442300002767,
+          "host_self_seconds": 0.08692442300002767
+        },
+        {
+          "name": "gradient_clip",
+          "calls": 8,
+          "host_total_seconds": 0.06621700400000918,
+          "host_self_seconds": 0.06621700400000918
+        },
+        {
+          "name": "train_update",
+          "calls": 8,
+          "host_total_seconds": 8.317994688000454,
+          "host_self_seconds": 0.0441703740000321
+        },
+        {
+          "name": "zero_grad",
+          "calls": 8,
+          "host_total_seconds": 0.004882898000460045,
+          "host_self_seconds": 0.004882898000460045
+        },
+        {
+          "name": "schedule_before",
+          "calls": 8,
+          "host_total_seconds": 0.0008636810002826678,
+          "host_self_seconds": 0.0008636810002826678
+        },
+        {
+          "name": "schedule_after",
+          "calls": 8,
+          "host_total_seconds": 0.0007239920000756683,
+          "host_self_seconds": 0.0007239920000756683
+        }
+      ],
+      "profile_keys": [
+        "format",
+        "status",
+        "error",
+        "finalization_error",
+        "recipe_identity",
+        "family",
+        "config",
+        "starting_optimizer_step",
+        "observed_updates",
+        "captured_updates",
+        "capture_start_optimizer_step",
+        "capture_wall_seconds",
+        "capture_off_training_spans",
+        "runtime",
+        "device_events_observed",
+        "context_peak_allocated_bytes",
+        "context_peak_reserved_bytes",
+        "phases_by_host_self_time",
+        "operators_by_self_cpu",
+        "operators_by_self_device",
+        "trace_sha256",
+        "limitations"
+      ],
+      "last5": [
+        {
+          "epoch_or_pass": 25,
+          "optimizer_step": 19525,
+          "live_dev_metric": 0.23645086586475372,
+          "live_train_metric": 0.1358312752560525,
+          "learning_rate": 0.0006916503744663625
+        },
+        {
+          "epoch_or_pass": 26,
+          "optimizer_step": 20306,
+          "live_dev_metric": 0.2334110587835312,
+          "live_train_metric": 0.1336758821802011,
+          "learning_rate": 0.0006654743914466061
+        },
+        {
+          "epoch_or_pass": 27,
+          "optimizer_step": 21087,
+          "live_dev_metric": 0.23014718294143677,
+          "live_train_metric": 0.13036431542928026,
+          "learning_rate": 0.0006387793379567123
+        },
+        {
+          "epoch_or_pass": 28,
+          "optimizer_step": 21868,
+          "live_dev_metric": 0.22489291429519653,
+          "live_train_metric": 0.12724422096786364,
+          "learning_rate": 0.0006116492065111791
+        },
+        {
+          "epoch_or_pass": 29,
+          "optimizer_step": 22649,
+          "live_dev_metric": 0.2248750776052475,
+          "live_train_metric": 0.12403294375397637,
+          "learning_rate": 0.0005841693585407159
+        }
+      ]
+    }
+  },
+  "matched_pass_differences": [
+    {
+      "step": 781,
+      "pass_index": 1,
+      "wd_minus_reference_eV": 0.0021433234214782715
+    },
+    {
+      "step": 1562,
+      "pass_index": 2,
+      "wd_minus_reference_eV": 0.0028475821018218994
+    },
+    {
+      "step": 2343,
+      "pass_index": 3,
+      "wd_minus_reference_eV": 0.04192802309989929
+    },
+    {
+      "step": 3124,
+      "pass_index": 4,
+      "wd_minus_reference_eV": 0.016266047954559326
+    },
+    {
+      "step": 3905,
+      "pass_index": 5,
+      "wd_minus_reference_eV": -0.011040598154067993
+    },
+    {
+      "step": 4686,
+      "pass_index": 6,
+      "wd_minus_reference_eV": -0.007679492235183716
+    },
+    {
+      "step": 5467,
+      "pass_index": 7,
+      "wd_minus_reference_eV": -0.023341119289398193
+    },
+    {
+      "step": 6248,
+      "pass_index": 8,
+      "wd_minus_reference_eV": 0.012652486562728882
+    },
+    {
+      "step": 7029,
+      "pass_index": 9,
+      "wd_minus_reference_eV": -0.023223966360092163
+    },
+    {
+      "step": 7810,
+      "pass_index": 10,
+      "wd_minus_reference_eV": 0.0013923048973083496
+    },
+    {
+      "step": 8591,
+      "pass_index": 11,
+      "wd_minus_reference_eV": 0.005603820085525513
+    },
+    {
+      "step": 9372,
+      "pass_index": 12,
+      "wd_minus_reference_eV": 0.004957050085067749
+    },
+    {
+      "step": 10153,
+      "pass_index": 13,
+      "wd_minus_reference_eV": -0.0039976537227630615
+    },
+    {
+      "step": 10934,
+      "pass_index": 14,
+      "wd_minus_reference_eV": 0.007772862911224365
+    },
+    {
+      "step": 11715,
+      "pass_index": 15,
+      "wd_minus_reference_eV": -0.0006598830223083496
+    },
+    {
+      "step": 12496,
+      "pass_index": 16,
+      "wd_minus_reference_eV": -0.008050292730331421
+    },
+    {
+      "step": 13277,
+      "pass_index": 17,
+      "wd_minus_reference_eV": -0.008078977465629578
+    },
+    {
+      "step": 14058,
+      "pass_index": 18,
+      "wd_minus_reference_eV": -0.020473569631576538
+    },
+    {
+      "step": 14839,
+      "pass_index": 19,
+      "wd_minus_reference_eV": 0.004463821649551392
+    },
+    {
+      "step": 15620,
+      "pass_index": 20,
+      "wd_minus_reference_eV": -0.0028800368309020996
+    },
+    {
+      "step": 16401,
+      "pass_index": 21,
+      "wd_minus_reference_eV": -0.005968272686004639
+    },
+    {
+      "step": 17182,
+      "pass_index": 22,
+      "wd_minus_reference_eV": -0.005723893642425537
+    },
+    {
+      "step": 17963,
+      "pass_index": 23,
+      "wd_minus_reference_eV": -0.002766817808151245
+    },
+    {
+      "step": 18744,
+      "pass_index": 24,
+      "wd_minus_reference_eV": 0.0013268887996673584
+    },
+    {
+      "step": 19525,
+      "pass_index": 25,
+      "wd_minus_reference_eV": 0.00045652687549591064
+    },
+    {
+      "step": 20306,
+      "pass_index": 26,
+      "wd_minus_reference_eV": 0.0014647841453552246
+    },
+    {
+      "step": 21087,
+      "pass_index": 27,
+      "wd_minus_reference_eV": 0.0004300922155380249
+    },
+    {
+      "step": 21868,
+      "pass_index": 28,
+      "wd_minus_reference_eV": -0.0023797601461410522
+    },
+    {
+      "step": 22649,
+      "pass_index": 29,
+      "wd_minus_reference_eV": -0.003187894821166992
+    }
+  ],
+  "paired_molecule_analysis": "not_available_at_terminal_selected_endpoint; no completed output manifest"
+}

@@ -9,7 +9,11 @@
 The human authorized a three-slot Modern2D attribution campaign including the
 separately bound PPGT short profile. Two [ESA notebooks](experiments/modern2d_configured_100k/esa_attribution/protocol.md)
 were submitted once: Kaggle2 LR kernel139862234/version1 and Kaggle3 WD
-kernel139862322/version1, both observed QUEUED. Four independent seed42/BS128/
+kernel139862322/version1. The WD slot ended scheduler COMPLETE but producer
+[STOP_FOR_COST with29 observed passes](experiments/modern2d_configured_100k/esa_attribution/wd/results/decision_2026_10_21.md),
+not a60-pass endpoint or winner. Its original partial traces/checkpoints/profile
+are retained; the LR slot remains under its separate Luna binding.
+Four independent seed42/BS128/
 FP32 arms retain60 passes and accepted identical100K/Common-Dev inputs; each
 notebook is bounded8h/16 allocated T4-hours. Native repeat/resume and short
 in-training profiler windows are required. The same Luna B/30-minute heartbeat
