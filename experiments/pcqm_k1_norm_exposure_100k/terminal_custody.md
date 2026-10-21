@@ -17,7 +17,8 @@ at `D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/`.
 Original source packages remain at `D:/molgap-artifacts/runs/` under each
 logical release1 ID and v1. Small metadata is committed; weights/predictions
 and native proof states remain external. No C: payload or inherited-catalog
-hydration was performed. Physical checkout retirement is recorded separately.
+hydration was performed. The [retirement receipt](worktree_retirement.json) verifies removal of both
+completed D: worktrees and the temporary owner refs after archive reachability.
 
 The host-only compatibility route used existing explicit Spec, receipt and
 launch-hash-bound acceptance-plan APIs for this older package. The newest
