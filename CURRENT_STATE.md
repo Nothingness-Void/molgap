@@ -6,19 +6,14 @@
 
 ## Server execution status
 
-The human authorized audit, repair and further bounded PPGT/ESA experiments.
-The [execution-repair diagnostic](experiments/modern2d_configured_100k/execution_repair/STATUS.md)
-has a [reviewed bootstrap retry](experiments/modern2d_configured_100k/execution_repair/retry_v2/STATUS.md)
-submitted as Kaggle3 kernel139975571/version1 and observed RUNNING past startup
-admission, one T4x2 slot, at most30min/1 allocated T4-hour,
-train-only candidate/reference scratch updates. PPGT bucketing failed a strict
-CPU post-AdamW equality gate despite forward/gradient closeness; its scientific
-default remains graphwise. ESA token batching retains the original math.
-No new formal training, scientific Replay,500K or successor is released by
-this diagnostic; native proof remains pending. The first kernel139974457/v1
-failed before environment/model dispatch on a missing bootstrap purpose branch;
-both arm records are RML-finalized as INFRASTRUCTURE_ONLY. The existing Luna B
-owns the retry's silent healthy-state monitoring and terminal/error handoff.
+The [PPGT/ESA execution-repair diagnostic](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md)
+is accepted and RML-finalized as NO_TRAIN/context_only. Both native repeat/resume
+proofs passed; repaired ESA matched the original saved state exactly, while
+PPGT passed the native tolerance gate but not bitwise equality. Its earlier CPU
+failure remains binding and its scientific default stays graphwise. No active
+job or automatic successor remains on this chain; the existing Luna heartbeat
+is paused. Warmed throughput/budget and scientific/reference release remain
+unqualified; no MAE, training Replay or500K promotion follows from this probe.
 
 The human-authorized three-slot Modern2D campaign is terminal. Both ESA
 notebooks (Kaggle2 kernel139862234/version1, Kaggle3 kernel139862322/version1)
