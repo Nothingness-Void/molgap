@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_124960",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 124960,
+    "sample_presentations": 15994880
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+  "reference_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+  "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr_warmup:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr_warmup/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/rml/ln_low_lr_warmup/rml_finalized/trace.json",
+  "trace_artifact_sha256": "6a38d171cefdcfe9e6e3c95ccb9a3c15b051d5397f89bbc8f1b35cc83bd02f69",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

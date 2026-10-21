@@ -1,0 +1,165 @@
+{
+  "pair": "norm",
+  "kernel": "nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42",
+  "version": 1,
+  "files": {
+    "experiment/bn_long/training_contract.json": [
+      "experiment/bn_long/training_contract.json",
+      "d2af25be2c5db2560a832cd9100b1c48edf3d10982a7491760584267cfcd0e31"
+    ],
+    "experiment/bn_long/development_predictions.pt": [
+      "experiment/bn_long/development_predictions.pt",
+      "362e60a6ab545c7d45ab48b89aaa539c747ab84b2849c453c7f87a131904fa11"
+    ],
+    "experiment/bn_long/last_checkpoint.pt": [
+      "experiment/bn_long/last_checkpoint.pt",
+      "49ab904c8cfaa743067657c3c1d86066b10874472cc40a614561623904c9d5a3"
+    ],
+    "experiment/bn_long/selected_model.pt": [
+      "experiment/bn_long/selected_model.pt",
+      "57509f2a43192d20342b5c5e3464f354913b39ff9e9d97bfbc274a56b1934606"
+    ],
+    "experiment/bn_long/canonical_trace.json": [
+      "experiment/bn_long/canonical_trace.json",
+      "4e8b0d18fa946cf941ef6334a3f07e40b3b5f53c31a7dd83dc8b2f238d03ad34"
+    ],
+    "experiment/bn_long/output_manifest.json": [
+      "experiment/bn_long/output_manifest.json",
+      "b5620582c0ef871ef61bd8df82c990ddf6c8563f137c40e3c2921bd51c788eb9"
+    ],
+    "experiment/bn_long/repeat-a.pt": [
+      "experiment/bn_long/repeat-a.pt",
+      "c66dcf1fda3c66dd76ba58dd0c49837ee5b5a7fc0e6eea504035651e6cf67312"
+    ],
+    "experiment/bn_long/repeat-b.pt": [
+      "experiment/bn_long/repeat-b.pt",
+      "83a1f7e020f4eff32701fca1997bdb9c1b5b5d15b267556ddc33aacf5ba15bba"
+    ],
+    "experiment/bn_long/resumed.pt": [
+      "experiment/bn_long/resumed.pt",
+      "8db1ac6f6577b0e99e00b449a031dd7da5dc4f1c43ab12bc1fa40f0120baf41a"
+    ],
+    "experiment/bn_long/resumed-first.pt": [
+      "experiment/bn_long/resumed-first.pt",
+      "edfab008fe87cae2b1ea0c13a1317c38c3e2250eddc1b20f031a9ac40b09df43"
+    ],
+    "experiment/ln_long/training_contract.json": [
+      "experiment/ln_long/training_contract.json",
+      "842af54001523c2c90331fbf24131545977b6a0486a21d11bd9e0e535c3945ae"
+    ],
+    "experiment/ln_long/development_predictions.pt": [
+      "experiment/ln_long/development_predictions.pt",
+      "d37e45b3b18d11550c0682a1dac8539dd4879c5c72e493199194c902e1541416"
+    ],
+    "experiment/ln_long/last_checkpoint.pt": [
+      "experiment/ln_long/last_checkpoint.pt",
+      "173b53f265542e3457fb07811296f14c6aac29fe9ff54f946d01cfec0e55e004"
+    ],
+    "experiment/ln_long/selected_model.pt": [
+      "experiment/ln_long/selected_model.pt",
+      "7503d86f8c7042b2881b2d4b5d1641d116bd1fd54a30af508cafd26742ff2bc8"
+    ],
+    "experiment/ln_long/canonical_trace.json": [
+      "experiment/ln_long/canonical_trace.json",
+      "53a60a9aa944303824217dfb5863bf84b4abee913bd28efa0c1e60389e4005ab"
+    ],
+    "experiment/ln_long/output_manifest.json": [
+      "experiment/ln_long/output_manifest.json",
+      "7d1ce30b2fc0c3add9fa20e9c273120ffaa765b6309a0f794b766e7044f8847e"
+    ],
+    "experiment/ln_long/repeat-a.pt": [
+      "experiment/ln_long/repeat-a.pt",
+      "1cfc888d104b163a403c9936954a8331d04125229baffee6ee634f723749fdca"
+    ],
+    "experiment/ln_long/repeat-b.pt": [
+      "experiment/ln_long/repeat-b.pt",
+      "11b924ad1db66144c6bd99fbaec1e7e484ac3befe653d7dd3c234207be9c6b09"
+    ],
+    "experiment/ln_long/resumed.pt": [
+      "experiment/ln_long/resumed.pt",
+      "cbc065b1b1f5fa264f71060ccd207c0419739e01843fb4085f15a9cd9182e357"
+    ],
+    "experiment/ln_long/resumed-first.pt": [
+      "experiment/ln_long/resumed-first.pt",
+      "453a781799325e5cb46642fba1b161ccfff45c065fa7459291748bf2a74bf826"
+    ],
+    "experiment/allocation_ledger.json": [
+      "experiment/allocation_ledger.json",
+      "59f4ab07c2a68c748fa4cbadb3a25e22e36580102299d9572d370b8583553765"
+    ],
+    "experiment/bn_long/allocation_ledger.json": [
+      "experiment/bn_long/allocation_ledger.json",
+      "59f4ab07c2a68c748fa4cbadb3a25e22e36580102299d9572d370b8583553765"
+    ],
+    "experiment/ln_long/allocation_ledger.json": [
+      "experiment/ln_long/allocation_ledger.json",
+      "59f4ab07c2a68c748fa4cbadb3a25e22e36580102299d9572d370b8583553765"
+    ],
+    "experiment/execution_report.json": [
+      "experiment/execution_report.json",
+      "dbd835112e8d0673793f4977036af25b1aa5f8a80c4b206fbb1ccf37529a6b3e"
+    ],
+    "experiment/execution_retention.json": [
+      "experiment/execution_retention.json",
+      "3cf09fba0f194002439fc06721d6f66fa008a3db3497eb386504bfdf8bc16d2e"
+    ],
+    "experiment/pair_state.json": [
+      "experiment/pair_state.json",
+      "dbd835112e8d0673793f4977036af25b1aa5f8a80c4b206fbb1ccf37529a6b3e"
+    ],
+    "experiment/bn_long/allocation_costs.json": [
+      "experiment/bn_long/allocation_costs.json",
+      "0cb57d5f7682546dab250053aec266259e05b60469b7dbd63ec638707774bedf"
+    ],
+    "experiment/bn_long/canonical_trace.json.context.json": [
+      "experiment/bn_long/canonical_trace.json.context.json",
+      "eb39a5d0675db029d81b59e8f127eaa505460f21af0e5b52da312a7ebadc8749"
+    ],
+    "experiment/bn_long/invocation_cost_state.json": [
+      "experiment/bn_long/invocation_cost_state.json",
+      "651ebc424cd870a0896f1b8a5a0c0e7a0f0abc2b1b635e588aaac861e73d89fb"
+    ],
+    "experiment/bn_long/preflight_costs.json": [
+      "experiment/bn_long/preflight_costs.json",
+      "2c308a2ff2b2d8477cf984548d0a01e80a69a10a351fdb7f9aa2fae63ffad802"
+    ],
+    "experiment/bn_long/runtime_certificate.json": [
+      "experiment/bn_long/runtime_certificate.json",
+      "486111e94bc99f455ff7b2bd3e3a746e2773996ae343b8f85724e3f62d694ffd"
+    ],
+    "experiment/bn_long/runtime_provenance.json": [
+      "experiment/bn_long/runtime_provenance.json",
+      "9a529326a1d97c3610f56d1fb77f5101c1472091009927239eb867ff7331d23f"
+    ],
+    "experiment/ln_long/allocation_costs.json": [
+      "experiment/ln_long/allocation_costs.json",
+      "6ffc530c1e715e2c0b41d86ed2c17bc75b1a5c2e5c589792a20be24274f915d2"
+    ],
+    "experiment/ln_long/canonical_trace.json.context.json": [
+      "experiment/ln_long/canonical_trace.json.context.json",
+      "d5367f4424c6eb13d8021e061d111547b9e0768c9e9f4ef2e3d5c6f96ec4b347"
+    ],
+    "experiment/ln_long/invocation_cost_state.json": [
+      "experiment/ln_long/invocation_cost_state.json",
+      "985dda9c6e1a516551c26073dc0e9bc424e9076bb63985e75b6c168d96e3d0af"
+    ],
+    "experiment/ln_long/preflight_costs.json": [
+      "experiment/ln_long/preflight_costs.json",
+      "138a2b7811ca27f1ea75a64a5165141ed36f622f952e2be48b5dd06aa9de849f"
+    ],
+    "experiment/ln_long/runtime_certificate.json": [
+      "experiment/ln_long/runtime_certificate.json",
+      "41690fd2556e18793676c786f79a33c262cfc511ae80afe55b29ac60bb5319ba"
+    ],
+    "experiment/ln_long/runtime_provenance.json": [
+      "experiment/ln_long/runtime_provenance.json",
+      "9dcdb86d43ee7ba6be5e1832ff51225aff788cf190b2d198a20fbf5f75115e13"
+    ]
+  },
+  "excluded": [
+    "epoch checkpoint chunks",
+    "graph caches",
+    "environment files",
+    "unrequested logs"
+  ]
+}

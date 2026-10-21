@@ -40,16 +40,13 @@ Delete a temporary ref only after durable destination reachability. Archive merg
 may preserve ancestry without changing the tree or making old work live.
 Desktop-to-master promotion remains separate.
 
-## Active desktop owner
+## Closed K1 normalization exposure custody
 
-`codex/exp/k1-norm-exposure-100k` owns the four-arm extended-exposure K1
-normalization question, forked from desktop `66fbb13d` in
-`D:/molgap-worktrees/k1-norm-exposure-100k`. Keep active recipes, worker changes,
-prospective RML and submission/acceptance on that branch. Its
-[status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-exposure-100k/experiments/pcqm_k1_norm_exposure_100k/STATUS.md)
-owns the exact two-job identities and timestamped remote observations.
-Only the reviewed host-only Kaggle owner-search fix was selected independently
-from commit `282b2ba5`; no model adoption is implied.
+Full history of `codex/exp/k1-norm-exposure-100k` through `0567e679` is
+reachable from pushed archive commit `c6f0ee4b935069c2299f0a24200f4a525c96e9fa`.
+Desktop retains accepted canonical evidence; no rejected normalization model
+implementation is integrated. [Terminal custody](experiments/pcqm_k1_norm_exposure_100k/terminal_custody.md)
+owns source/evidence/artifact navigation and physical retirement status.
 
 ## Retained Checkout Map
 

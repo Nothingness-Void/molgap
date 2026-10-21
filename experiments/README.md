@@ -13,7 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
-| Does K1 Post-LN catch up under a160-pass schedule, lower LR or warmup? | Two Kaggle1 version1 jobs submitted; four prospective arms, native qualification and terminal acceptance pending; owner `codex/exp/k1-norm-exposure-100k` | [Owner status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-exposure-100k/experiments/pcqm_k1_norm_exposure_100k/STATUS.md) |
+| Does K1 Post-LN catch up under a160-pass schedule, lower LR or warmup? | Four arms accepted and RML finalized; original-LR LN worse5.771meV, warmup gain2.973meV below3meV; negative candidates, strict replay excluded; history archived | [Decision and custody](pcqm_k1_norm_exposure_100k/terminal_custody.md) |
 | Do K1 Post-LN or GPTrans resistance improve matched100K controls? | Four trained arms accepted; both candidates NEGATIVE_UNDER_CONTRACT, controls CLOSED; four original bootstrap records NO_TRAIN. Complete history archived; strict replay excluded | [Decision and custody](pcqm_structural_bias_norm_100k/terminal_custody.md) |
 | Does Pre-Norm AdaRMSNorm improve K1 against matched Pre-Norm BN? | Accepted40/40-pass pair; Ada is2.182meV worse and closes NEGATIVE_UNDER_CONTRACT, control CLOSED. Complete history archived; terminal RML evidence retained with strict replay exclusions; no model adoption | [Decision and custody](pcqm_k1_prenorm_norm_100k/terminal_custody_decision.md) |
 | Do recovery-safe shared K1/GPTrans sessions improve local execution? | Synthetic NO_TRAIN diagnostic; exact update endpoints match, no stable compute speedup and short-session publication overhead rises; no full-epoch/quality/model promotion claim | [Session speed decision](family_session_execution_speed/terminal_decision.md) |

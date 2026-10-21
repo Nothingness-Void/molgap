@@ -1,0 +1,43 @@
+{
+  "acceptance_plan": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/acceptance_plan.json",
+  "arms": [
+    {
+      "arm_id": "ln_low_lr",
+      "device": 0,
+      "initial_state": "D:\\molgap-artifacts\\initializations\\structural-bias-norm-100k\\k1.pt",
+      "recipe": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr.json"
+    },
+    {
+      "arm_id": "ln_low_lr_warmup",
+      "device": 1,
+      "initial_state": "D:\\molgap-artifacts\\initializations\\structural-bias-norm-100k\\k1.pt",
+      "recipe": "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr_warmup.json"
+    }
+  ],
+  "dataset_manifests": {
+    "ln_low_lr": "D:\\molgap-data\\pcqm_fixed_100k_v1\\manifest.json",
+    "ln_low_lr_warmup": "D:\\molgap-data\\pcqm_fixed_100k_v1\\manifest.json"
+  },
+  "format": "molgap-experiment-workflow-v1",
+  "kaggle": {
+    "accelerator": "NvidiaTeslaT4",
+    "account": "nothingnessvoid",
+    "datasets": [
+      "nothingnessvoid/k1-ln-optimization-160ep-src-20261021",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "kernel": "nothingnessvoid/molgap-k1-ln-optim-160ep-100k-s42",
+    "source_dataset": "nothingnessvoid/k1-ln-optimization-160ep-src-20261021",
+    "title": "MolGap K1 LN Optim 160ep 100K S42"
+  },
+  "spec_identity": "8230927a983f1a79b6a34190ef2360e136cd960ea8003dc7530e6fdcf66859f9",
+  "source_profile": "runtime-v1",
+  "source_records": [
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/authority.json",
+    "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+    "experiments/pcqm_k1_norm_exposure_100k/evidence_review.md",
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/role_plan.json",
+    "experiments/pcqm_k1_norm_exposure_100k/optimization_release1/decision.md",
+    "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/k1-ln-optimization-160ep-src-20261021",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "12c3072df96a18ca6198129856a501601f87b7ec04e12bdb5719cd2a65a6ffb9",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "a2eae3a7bf416072f2b707274f0bbd596573356bb04562547522da34d744a87f",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "bbd7c2a31908b03a48bfb18d4c38eca92249a86f9b44b5a568b10cab5a72da09",
+      "bytes": 46427
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_exposure_100k/optimization_release1/acceptance_plan.json",
+      "sha256": "5e8794d110bbcfcff5fd7a99368450e3866aff56ea9380ea4f4c490cad6ff6a9",
+      "bytes": 2035
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr.json",
+      "sha256": "ed005ec95d21ab69bcd45430f9de5b1ea717654dae7d36c8c285bc6fdaa1db35",
+      "bytes": 2223
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_exposure_100k/optimization_release1/training_recipe_ln_low_lr_warmup.json",
+      "sha256": "6c902b2269ea56c3bfcd656513ccaf775c63142f4281c2866d9a4ba9d119f547",
+      "bytes": 2230
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "7e04f1e580c42b923e1ce73cad66f5b000fdeeba76c13744fa7d1bc96223fb53",
+      "bytes": 1545
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "8230927a983f1a79b6a34190ef2360e136cd960ea8003dc7530e6fdcf66859f9",
+      "bytes": 5734
+    },
+    {
+      "path": "initial_states/ln_low_lr.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "initial_states/ln_low_lr_warmup.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "e5a9dbaf47524c014f75c35a586316c723c216d4ba7efbfa56da9cc2611c2f45",
+      "bytes": 10842
+    },
+    {
+      "path": "prospective/ln_low_lr/trajectory.json",
+      "sha256": "43bd7ce78719e2dfbd44be0508cf576991b0f81183e5f58087903fd143edb046",
+      "bytes": 60720
+    },
+    {
+      "path": "prospective/ln_low_lr_warmup/trajectory.json",
+      "sha256": "6647c6b50a55d4b14c934959552febf8ea48e1acccb5b8c5ebeefe80fedb1f40",
+      "bytes": 60776
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "2c9f67769c5371beeccd6a96f9020a191ae4832131ed491995238d28fa09f7db",
+      "bytes": 853388
+    }
+  ]
+}

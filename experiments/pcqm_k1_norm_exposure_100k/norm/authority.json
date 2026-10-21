@@ -1,0 +1,19 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "authorized_at": "2026-10-20T16:49:39.901225+00:00",
+  "account": "nothingnessvoid",
+  "platform": "kaggle",
+  "arms": [
+    "bn_long",
+    "ln_long"
+  ],
+  "seeds": [
+    42
+  ],
+  "allocated_t4_hours_ceiling": 24.0,
+  "allocation_wall_limit_seconds": null,
+  "scope": "One of two authorized Kaggle1 T4x2 notebooks; fixed100K,160 passes, no protected roles or automatic successor",
+  "user_authorization": "More exposure with complete curves; Kaggle1 two slots/four arms; agent selects bounded routes",
+  "quota_semantics": "Native ceiling24 T4-device hours per pair; platform quota reservation is a separate account unit"
+}

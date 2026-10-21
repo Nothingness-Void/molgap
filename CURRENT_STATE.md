@@ -65,15 +65,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
-Kaggle1 extended-exposure K1 normalization is submitted on owner branch
-`codex/exp/k1-norm-exposure-100k`: two version1 jobs, four fixed100K arms,
-160 passes each. The owning
-[status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-exposure-100k/experiments/pcqm_k1_norm_exposure_100k/STATUS.md)
-record exact identities and timestamped scheduler observations; its
-[protocol](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-exposure-100k/experiments/pcqm_k1_norm_exposure_100k/protocol.md)
-owns the BN/LN, low-LR and warmup comparisons. Native training qualification and
-terminal acceptance are pending. Four prospective RML records live on that
-owner branch until closure; this is a navigation pointer, not model promotion.
+Kaggle1 extended-exposure K1 normalization is terminally accepted: four complete
+160-pass arms and independent RML closure. Both references are CLOSED; both
+candidates are NEGATIVE_UNDER_CONTRACT. [Decision and attribution](experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md)
+records original-LR LN's5.771meV loss and warmup's2.973meV gain, below3meV.
+Strict replay remains excluded. [Custody](experiments/pcqm_k1_norm_exposure_100k/terminal_custody.md)
+binds archived history and accepted desktop evidence. No adoption/scale-up.
 
 Kaggle2 K1 pre-norm BN/Ada100K, kernel138980611/version1, is COMPLETE and
 accepted at40/40 passes. BN closes CLOSED; Ada closes NEGATIVE_UNDER_CONTRACT.

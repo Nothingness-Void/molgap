@@ -1,0 +1,115 @@
+{
+  "context": {
+    "experiment_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+    "logical_run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1",
+    "arm_id": "ln_long",
+    "arm_identity": "322d01f3615db77aa5d0d8651547c1a6430081f937bde3247eb2a0fbb5f202d8",
+    "spec_identity": "965ff813b52af17cf88ecb8653a73adab402e2ec72f1d2a8f7807609128a81d7",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+    "source_archive_sha256": "7b63a7c2b6e5148ab50a5740bd3da32b6a3c0c8aa58f23363dde81831d8ad839",
+    "package_identity": "4cec8bf05cecc9e44aca73bfe309cd3846e814fe4114a004debbfc4bd2163f51",
+    "training_recipe_sha256": "842af54001523c2c90331fbf24131545977b6a0486a21d11bd9e0e535c3945ae",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-ln-norm-160ep-100k-s42",
+    "platform_version": "1"
+  },
+  "role_use": {
+    "train": "used",
+    "development": "used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-training_membership",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-labels_read",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-prediction_input",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-labels_read",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-metric_computed",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-selection_used",
+      "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/terminal_acceptance/role_audit_ln_long.json"
+    }
+  ],
+  "verification_scope": "Retained completion/predictions/selection, verified source bootstrap role membership checks and fixed-data loader; no protected role execution path",
+  "source_commit": "69c91dbcd7df22804f977067e78982bad43a89a0",
+  "evidence_bindings": {
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/output_manifest.json": "7d1ce30b2fc0c3add9fa20e9c273120ffaa765b6309a0f794b766e7044f8847e",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/runtime_provenance.json": "9dcdb86d43ee7ba6be5e1832ff51225aff788cf190b2d198a20fbf5f75115e13",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/canonical_trace.json": "53a60a9aa944303824217dfb5863bf84b4abee913bd28efa0c1e60389e4005ab",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/development_predictions.pt": "d37e45b3b18d11550c0682a1dac8539dd4879c5c72e493199194c902e1541416",
+    "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/ln_long/training_contract.json": "842af54001523c2c90331fbf24131545977b6a0486a21d11bd9e0e535c3945ae"
+  }
+}

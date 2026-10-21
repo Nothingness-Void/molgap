@@ -1,0 +1,20 @@
+{
+  "roles": [
+    {
+      "membership_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role": "train",
+      "row_order_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "usage_sha256": "0312c27c212b78de42c6525191cb988ae023b31b345c29fefcadcc88b6570e7b"
+    },
+    {
+      "membership_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role": "development",
+      "row_order_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "usage_sha256": "538f36c07a4e3c25a6e4103b3136a3aa472c2feabb1b16ea409d6af9869f9f37"
+    }
+  ],
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "source": "official-train prefix only"
+}

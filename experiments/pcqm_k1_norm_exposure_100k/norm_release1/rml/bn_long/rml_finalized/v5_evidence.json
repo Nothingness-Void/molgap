@@ -1,0 +1,76 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/bn_long/training_contract.json",
+      "name": "contract",
+      "sha256": "d2af25be2c5db2560a832cd9100b1c48edf3d10982a7491760584267cfcd0e31"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/bn_long/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "362e60a6ab545c7d45ab48b89aaa539c747ab84b2849c453c7f87a131904fa11"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/bn_long/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "49ab904c8cfaa743067657c3c1d86066b10874472cc40a614561623904c9d5a3"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/bn_long/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "57509f2a43192d20342b5c5e3464f354913b39ff9e9d97bfbc274a56b1934606"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/acceptance/k1-norm-exposure-100k-20261022/norm/raw/experiment/bn_long/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "4e8b0d18fa946cf941ef6334a3f07e40b3b5f53c31a7dd83dc8b2f238d03ad34"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_norm_exposure_100k/protocol.md",
+  "metrics": {
+    "development_mae_eV": 0.13978704878747464,
+    "missing_reason": null,
+    "selected_optimizer_step": 108559,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_norm_exposure_100k/norm_release1/rml/bn_long/terminal_staging/v1/80c9c17ea78cd5b1/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "used"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

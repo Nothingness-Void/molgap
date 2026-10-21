@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 562,
+  "ambiguous_historical_role_record_count": 582,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -490,6 +490,146 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
     },
     {
       "evidence_id": "family-checkpoint-efficiency-20261013",
@@ -3936,7 +4076,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 337,
+  "explicit_role_event_count": 361,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4076,6 +4216,118 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
       },
       {
         "access_kind": "labels_read",
@@ -4520,6 +4772,62 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
       },
       {
         "access_kind": "labels_read",
@@ -6444,6 +6752,10 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
@@ -6562,6 +6874,10 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
@@ -6779,6 +7095,118 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
       },
       {
         "access_kind": "labels_read",
@@ -8270,6 +8698,118 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-development-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -8681,6 +9221,62 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup"
       },
       {
         "access_kind": "labels_read",
