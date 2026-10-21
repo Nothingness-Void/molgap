@@ -65,6 +65,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+New user-authorized K1 normalization-mechanism work belongs to
+`codex/exp/k1-norm-mechanisms-100k`; resolve its checkout through BRANCHES.
+The [owning status and submission bindings](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-mechanisms-100k/experiments/pcqm_k1_norm_mechanisms_100k/STATUS.md)
+own the exact Kaggle1 jobs and reconciliation boundary. This pointer does not
+integrate an active model, establish replay qualification or release a successor.
+
 Kaggle1 extended-exposure K1 normalization is terminally accepted: four complete
 160-pass arms and independent RML closure. Both references are CLOSED; both
 candidates are NEGATIVE_UNDER_CONTRACT. [Decision and attribution](experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md)

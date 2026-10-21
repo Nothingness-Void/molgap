@@ -12,6 +12,13 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+The active K1 normalization-mechanism question is owned by
+`codex/exp/k1-norm-mechanisms-100k`, checkout
+`D:/molgap-worktrees/k1-norm-mechanisms-100k`. Its
+[status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-mechanisms-100k/experiments/pcqm_k1_norm_mechanisms_100k/STATUS.md)
+owns remote reconciliation and its source/receipt pointers. Keep this unresolved
+question on its owner; no model adoption or wholesale integration is implied.
+
 Accepted local K1 execution-speed custody belongs to
 `codex/exp/k1-fused-layout-speed-100k`; its
 [decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md) owns
