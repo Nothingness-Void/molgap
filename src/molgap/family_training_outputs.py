@@ -117,6 +117,8 @@ class SessionOutputs:
         from .family_training_runner import read_recipe
         self.root, self.context, self.adapter = Path(root).absolute(), context, adapter
         self.resume_trajectory = resume_trajectory
+        self._previous_resume_bundle = None
+        self.resume_retention_report = None
         self.bounded_pair = False
         self.pending_pass = None
         _safe_local(self.root)
@@ -238,11 +240,20 @@ class SessionOutputs:
                 progress.pass_index > 0 and progress.pass_index % self.policy.chunk_passes == 0 and progress.status != "complete"):
             from .experiment_resume import create_resume_bundle
             destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
-            create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
+            previous = self._previous_resume_bundle
+            create_resume_bundle(self.root, self.context, self.resume_trajectory, destination,
+                reuse_bundle=previous if previous != destination else None)
+            self._previous_resume_bundle = destination
             if self.resume_keep_count is not None:
                 from .experiment_resume import prune_duplicate_resume_bundles
-                prune_duplicate_resume_bundles(destination.parent, destination,
-                    keep_count=self.resume_keep_count, context=self.context)
+                # Retention is optional after durable checkpoint and bundle
+                # publication. Recovery/journal/sync failures above still fail.
+                try:
+                    self.resume_retention_report = prune_duplicate_resume_bundles(destination.parent, destination,
+                        keep_count=self.resume_keep_count, context=self.context)
+                except Exception as exc:
+                    self.resume_retention_report = {"retention_target_met": False,
+                        "retained_unverified": [{"chunk": destination.name, "reason": str(exc)}]}
         self.logger.checkpoint_finished(progress)
 
     def pass_finished(self, progress, metrics):

@@ -14,6 +14,7 @@ Public transport API:
 from __future__ import annotations
 
 import hashlib
+import errno
 import json
 import os
 import re
@@ -312,7 +313,8 @@ def _reject_completed(source: Path) -> None:
 def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
                          output: Path | str, *, run_id: str | None = None,
                          action_id: str | None = None,
-                         attempt_id: str | None = None) -> dict:
+                         attempt_id: str | None = None,
+                         reuse_bundle: Path | str | None = None) -> dict:
     """Freeze an incomplete native output into a portable per-arm bundle.
 
     The destination may be retried only with byte-identical content.  Source
@@ -320,6 +322,10 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     active prospective trajectory; this function never creates a replacement
     prospective action or attempt.
     JSON bytes preserve an already verified snapshot without rereading a path.
+    Optional sharing uses only a verified immutable bundle of this same owner
+    and attempt; mutable trainer outputs are always copied. A hardlink retains
+    independent file names, not independent backup bytes. Unsupported volumes
+    fall back to the normal verified copy.
     """
     source = _path(source_dir, "source output")
     if not source.is_dir():
@@ -393,6 +399,15 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
         "cost_segments": sidecar_pointers["cost_segments"],
     }
     manifest_bytes = _json_bytes(manifest)
+    shared = {}
+    if reuse_bundle is not None:
+        previous = validate_resume_bundle(reuse_bundle, context=context_value,
+                                          trajectory=trajectory_bytes)
+        if previous["root"] == bundle or any(previous["manifest"][key] != manifest[key]
+                                               for key in ("source", "spec", "arm", "run")):
+            raise ValueError("Resume sharing requires a distinct bundle of the same owner and attempt")
+        for pointer in _bundle_pointers(previous["manifest"]):
+            shared[pointer["sha256"]] = previous["root"] / pointer["path"]
     # Validate every destination before publishing any byte, so one conflict
     # cannot leave a partially overwritten recovery package.
     metadata = [(bundle / RESUME_BUNDLE_FILE, manifest_bytes),
@@ -417,11 +432,46 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
         if path.exists() and (not path.is_file() or sha256_file(path) != digest):
             raise ValueError("Resume bundle publication conflict; refusing overwrite")
     for path, source_path, digest in copies:
-        copy_immutable_file(source_path, path, expected_sha256=digest)
+        retained = shared.get(digest)
+        if retained is None:
+            copy_immutable_file(source_path, path, expected_sha256=digest)
+        else:
+            _share_bundle_file(retained, path, digest)
     # Manifest publication is last: an interrupted copy is never a complete bundle.
     for path, payload in reversed(metadata):
         publish_immutable_bytes(path, payload)
     return manifest
+
+
+def _bundle_pointers(manifest):
+    return [pointer for pointer in manifest["artifacts"].values() if pointer is not None] + [
+        pointer for group in ("runtime", "provenance", "context", "cost_segments") for pointer in manifest[group]]
+
+
+def _share_bundle_file(source, destination, digest):
+    """Link only previously verified bundle bytes, never the mutable producer."""
+    _safe_local(source.absolute())
+    _safe_local(destination.absolute())
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        if sha256_file(destination) != digest:
+            raise ValueError("Resume bundle sharing conflict")
+        return
+    try:
+        os.link(source, destination)
+    except FileExistsError:
+        if sha256_file(destination) != digest:
+            raise ValueError("Concurrent resume bundle sharing conflict")
+        return
+    except OSError as exc:
+        if exc.errno not in {errno.EXDEV, errno.EPERM, errno.EACCES, errno.ENOTSUP,
+                             errno.ENOSYS, errno.EINVAL}:
+            raise
+        copy_immutable_file(source, destination, expected_sha256=digest)
+        return
+    if sha256_file(destination) != digest:
+        destination.unlink()
+        raise ValueError("Resume sharing source changed during publication")
 
 
 def prune_duplicate_resume_bundles(parent, newest, *, keep_count, context):
@@ -437,43 +487,79 @@ def prune_duplicate_resume_bundles(parent, newest, *, keep_count, context):
     if newest.parent != parent or not re.fullmatch(r"pass_[0-9]+", newest.name):
         raise ValueError("Newest chunk must be a direct pass child")
     latest = validate_resume_bundle(newest, context=context)
-    candidates = []
+    candidates, unverified = [], []
     for folder in parent.iterdir():
-        _safe_local(folder.absolute())
-        if not folder.is_dir() or not re.fullmatch(r"pass_[0-9]+", folder.name):
+        if not re.fullmatch(r"pass_[0-9]+", folder.name):
             continue
-        checked = validate_resume_bundle(folder, context=context)
-        if checked["manifest"]["trajectory"]["sha256"] != latest["manifest"]["trajectory"]["sha256"]:
-            raise ValueError("Chunk trajectory identity differs")
-        candidates.append((folder, checked))
+        try:
+            _safe_local(folder.absolute())
+            if not folder.is_dir():
+                raise ValueError("Chunk is not a regular directory")
+            manifest = _strict_json(folder / RESUME_BUNDLE_FILE)
+            for key in ("format", "status", "source", "spec", "arm", "trajectory", "run"):
+                if manifest[key] != latest["manifest"][key]:
+                    raise ValueError("Chunk owner/attempt identity differs")
+            pointers = _bundle_pointers(manifest)
+            for pointer in pointers:
+                _relative(pointer["path"])
+                _relative(pointer["restore_path"], "retained restore path")
+                _digest(pointer["sha256"], "retained artifact")
+                if type(pointer["required"]) is not bool:
+                    raise ValueError("Invalid retained artifact requirement")
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            unverified.append({"chunk": folder.name, "reason": str(exc)})
+            continue
+        candidates.append((folder, manifest))
     candidates.sort(key=lambda item: int(item[0].name[5:]), reverse=True)
     if not candidates or candidates[0][0] != newest:
         raise ValueError("Retention requires the newest published pass")
-    def files(checked):
-        manifest = checked["manifest"]
-        return [pointer for pointer in manifest["artifacts"].values() if pointer is not None] + [
-            pointer for group in ("runtime", "provenance", "context", "cost_segments") for pointer in manifest[group]]
-    retained = candidates[:keep_count]
-    retained_digests = {pointer["sha256"] for _, checked in retained for pointer in files(checked)}
+    retained, retained_artifacts = [], set()
     removed, unique = [], []
-    for folder, checked in candidates[keep_count:]:
-        pointers = files(checked)
-        expected = {RESUME_BUNDLE_FILE, *(pointer["path"] for pointer in pointers)}
-        actual = set()
-        for path in folder.rglob("*"):
-            _safe_local(path.absolute())
-            if path.is_file():
-                actual.add(path.relative_to(folder).as_posix())
-        if actual != expected or not all(pointer["sha256"] in retained_digests for pointer in pointers):
+    for folder, manifest in candidates:
+        pointers = _bundle_pointers(manifest)
+        # A unique digest already rules out deletion. Do not repeatedly load
+        # every historical checkpoint merely to decide to leave it untouched.
+        identities = {(pointer["path"], pointer.get("restore_path"), pointer["sha256"], pointer.get("required"))
+                      for pointer in pointers}
+        if len(retained) >= keep_count and not identities.issubset(retained_artifacts):
             unique.append(folder.name)
-            retained_digests.update(pointer["sha256"] for pointer in pointers)
             continue
-        # Resolved containment is checked immediately before recursive removal.
-        if folder.resolve().parent != parent.resolve():
-            raise ValueError("Chunk retention escaped its parent")
-        shutil.rmtree(folder)
-        removed.append(folder.name)
-    return {"removed_duplicates": removed, "retained_unique": unique}
+        try:
+            checked = latest if folder == newest else validate_resume_bundle(folder, context=context)
+            if len(retained) < keep_count:
+                retained.append(folder.name)
+                retained_artifacts.update(identities)
+                continue
+            expected = {RESUME_BUNDLE_FILE, *(pointer["path"] for pointer in pointers)}
+            expected_directories = {parent.as_posix() for name in expected for parent in Path(name).parents
+                                    if parent != Path(".")}
+            actual, directories = set(), set()
+            pending = [folder]
+            while pending:
+                for path in pending.pop().iterdir():
+                    # Check links/reparse points before descending, including
+                    # unlisted directories that may contain unique evidence.
+                    _safe_local(path.absolute())
+                    if path.is_dir():
+                        directories.add(path.relative_to(folder).as_posix())
+                        pending.append(path)
+                    elif path.is_file():
+                        actual.add(path.relative_to(folder).as_posix())
+                    else:
+                        raise ValueError("Chunk contains a non-regular entry; preserving it")
+            if actual != expected or directories != expected_directories:
+                raise ValueError("Chunk contains unlisted evidence; preserving it")
+            # A failed recursive removal may leave a partial package. Subsequent
+            # calls preserve/report it, rather than failing the next checkpoint.
+            if folder.resolve().parent != parent.resolve():
+                raise ValueError("Chunk retention escaped its parent")
+            shutil.rmtree(folder)
+            removed.append(folder.name)
+        except (OSError, ValueError, TypeError, KeyError, RuntimeError, EOFError) as exc:
+            unverified.append({"chunk": folder.name, "reason": str(exc)})
+    return {"removed_duplicates": removed, "retained_unique": unique,
+            "retained_unverified": unverified, "retained_recovery_points": retained,
+            "retention_target_met": not unique and not unverified}
 
 
 def _bundle_root(path: Path | str) -> tuple[Path, Path, dict]:

@@ -1,14 +1,16 @@
 """Bounded local disposable-cache cleanup; default inspection never removes files.
 
-Only atomically retired partial source caches have a disposable disposition.
-Scratch, package locks/stages, complete caches and run records have no reliable
-local liveness proof here and remain report-only, regardless of their age.
+The inspection command retires only explicitly selected partial source caches.
+Builders separately bound their owned cache namespace under an OS lock. Legacy
+caches, scratch, package stages and run records remain report-only here.
 """
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from itertools import islice
 import json
+import os
 from pathlib import Path
 import re
 import stat
@@ -19,8 +21,101 @@ from .common.paths import MachinePaths
 
 _CACHE_FILES = frozenset({"source.tar.gz", "SOURCE_COMMIT.txt",
                           "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"})
+_CACHE_TEMP_FILES = frozenset(f".{name}.tmp" for name in _CACHE_FILES)
 _RETIRED = re.compile(r"\.incomplete-[0-9a-f]{64}-[0-9a-f]{32}\Z")
+_PARTIAL = re.compile(r"\.partial-[0-9a-f]{64}-[a-z0-9_]{8}\Z")
 _MAX_CANDIDATES = 128
+SOURCE_CACHE_NAMESPACE = "bounded-v1"
+
+
+@contextmanager
+def source_cache_session(root):
+    """Nonblocking, crash-released lock for the owned cache namespace only.
+
+    Old builders never use this namespace. Busy/unavailable caches fall back to
+    direct packaging; no age, PID or lock-file deletion establishes liveness.
+    """
+    keep = int(os.environ.get("MOLGAP_SOURCE_CACHE_MAX_ENTRIES", "8"))
+    if not 0 <= keep <= _MAX_CANDIDATES:
+        raise ValueError("MOLGAP_SOURCE_CACHE_MAX_ENTRIES must be between 0 and 128")
+    if keep == 0:
+        yield None
+        return
+    cache = Path(root).absolute() / SOURCE_CACHE_NAMESPACE
+    _safe_local(cache)
+    handle, acquired = None, False
+    try:
+        cache.mkdir(parents=True, exist_ok=True)
+        lock = cache / ".lock"
+        _safe_local(lock)
+        handle = lock.open("a+b")
+        if os.name == "nt":
+            import msvcrt
+            # Windows permits locking a region beyond EOF. Never initialize or
+            # append to this byte: another process may already have locked it.
+            handle.seek(0)
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        acquired = True
+    except OSError:
+        pass
+    try:
+        yield cache if acquired else None
+    finally:
+        if acquired:
+            # The caller has copied its archive independently before returning.
+            # Cleanup failures must never invalidate a successfully built package.
+            try:
+                _trim_source_cache(cache, keep)
+            except (OSError, ValueError):
+                pass
+        if handle is not None:
+            handle.close()  # Closing releases the OS lock even after exceptions.
+
+
+def _trim_source_cache(cache, keep):
+    """Evict generated cache bytes while every cooperating reader is excluded."""
+    children = list(islice(cache.iterdir(), 4097))
+    if len(children) > 4096:
+        return
+    complete, partial = [], []
+    for path in children:
+        if not (re.fullmatch(r"[0-9a-f]{64}", path.name)
+                or _RETIRED.fullmatch(path.name) or _PARTIAL.fullmatch(path.name)):
+            continue
+        try:
+            _safe_local(path)
+            if not stat.S_ISDIR(path.lstat().st_mode):
+                continue
+            # v4_bundle may die before renaming its fixed intermediate files.
+            # Only an unpublished .partial directory owns these names.
+            allowed = _CACHE_FILES | _CACHE_TEMP_FILES if _PARTIAL.fullmatch(path.name) else _CACHE_FILES
+            files = list(islice(path.iterdir(), len(allowed) + 1))
+            if any(p.name not in allowed for p in files):
+                continue
+            for child in files:
+                _safe_local(child)
+                if not stat.S_ISREG(child.lstat().st_mode):
+                    raise ValueError("Cache contains nonregular bytes")
+            item = (path, files)
+            if re.fullmatch(r"[0-9a-f]{64}", path.name) and {p.name for p in files} == _CACHE_FILES:
+                complete.append(item)
+            else:
+                partial.append(item)
+        except (OSError, ValueError):
+            continue
+    complete.sort(key=lambda item: item[0].stat().st_mtime_ns, reverse=True)
+    for path, files in partial + complete[keep:]:
+        try:
+            _safe_local(path)
+            for child in files:
+                _safe_local(child)
+                child.unlink()
+            path.rmdir()
+        except (OSError, ValueError):
+            continue
 
 
 def _identity(path):
@@ -146,23 +241,38 @@ def retire_failed_preparations(run, spec_identity, package_identity):
     run = Path(run).absolute()
     _safe_local(run)
     prepared, failures = run / "prepared", run / "local_preparation_failures"
+    _safe_local(failures)
+    if not failures.exists():
+        return []
+    children = list(islice(failures.iterdir(), _MAX_CANDIDATES + 1))
+    if len(children) > _MAX_CANDIDATES:
+        return [{"path": str(failures), "status": "REPORT_ONLY", "reason": "Candidate bound exceeded"}]
+    names = {child.name.removesuffix(".json") for child in children
+             if re.fullmatch(r"prepared-[0-9a-f]{32}(?:\.json)?", child.name)}
+    pending = []
+    for name in names:
+        old, receipt = failures / name, failures / (name + ".json")
+        _safe_local(old)
+        _safe_local(receipt)
+        if not old.exists() and receipt.exists():
+            try:
+                retained = json.loads(receipt.read_bytes())
+                if retained["local_payload_retirement"]["status"] == "REMOVED":
+                    continue
+            except (OSError, ValueError, KeyError, TypeError):
+                pass
+        pending.append(name)
+    if not pending:
+        return []  # Completed receipts need no replacement-package rehash.
     manifest = verify_experiment_source_package(prepared / "package")
     report = json.loads((prepared / "workflow_report.json").read_bytes())
     if (manifest["spec_identity"] != spec_identity or manifest["package_identity"] != package_identity
             or report.get("status") != "PREPARED_FOR_PLATFORM"
             or report.get("package_identity") != package_identity):
         raise ValueError("Failed preparation retirement requires its verified replacement")
-    _safe_local(failures)
-    if not failures.exists():
-        return []
     replacement, _ = _tree_files(prepared)
     results = []
-    children = list(islice(failures.iterdir(), _MAX_CANDIDATES + 1))
-    if len(children) > _MAX_CANDIDATES:
-        return [{"path": str(failures), "status": "REPORT_ONLY", "reason": "Candidate bound exceeded"}]
-    names = {child.name.removesuffix(".json") for child in children
-             if re.fullmatch(r"prepared-[0-9a-f]{32}(?:\.json)?", child.name)}
-    for name in sorted(names):
+    for name in sorted(pending):
         old = failures / name
         result = {"path": str(old), "status": "REPORT_ONLY"}
         try:
@@ -183,11 +293,6 @@ def retire_failed_preparations(run, spec_identity, package_identity):
                 if set(old_path.split("/", 1)[0] for old_path in files) - {
                         "package", "source_dataset", "kernel", "workflow_report.json", "release_report.json"}:
                     raise ValueError("Failed preparation contains unknown payload")
-                # Every non-report byte must remain in the replacement. This
-                # deliberately keeps unmatched or potentially unique payloads.
-                for name, identity in files.items():
-                    if name not in {"workflow_report.json", "release_report.json"} and replacement.get(name) != identity:
-                        raise ValueError("Failed preparation contains unmatched bytes")
                 expected = files
                 retained = {"workflow_report": prior,
                     "local_payload_retirement": {"replacement_package_identity": package_identity,
@@ -195,6 +300,11 @@ def retire_failed_preparations(run, spec_identity, package_identity):
                         "files": expected, "status": "PENDING"}}
                 if "release_report.json" in files:
                     retained["release_report"] = json.loads((old / "release_report.json").read_bytes())
+            # Recheck surviving bytes even on receipt retries: replacement files
+            # may have disappeared since an interrupted retirement was approved.
+            for name, identity in files.items():
+                if name not in {"workflow_report.json", "release_report.json"} and replacement.get(name) != identity:
+                    raise ValueError("Failed preparation contains unmatched bytes")
             _safe_local(run / "operations")
             if (prior.get("format") != "molgap-workflow-preparation-v1"
                     or prior.get("spec_identity") != spec_identity

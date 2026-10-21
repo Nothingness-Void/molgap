@@ -1,5 +1,6 @@
 """Synthetic CPU checks for observed curves, checkpoint IO and capture teardown."""
 from copy import deepcopy
+from dataclasses import replace
 import json
 import hashlib
 from pathlib import Path
@@ -150,6 +151,85 @@ def test_chunk_retention_deletes_only_proven_duplicate_bundles(bundle_case, tmp_
     report = transport.prune_duplicate_resume_bundles(parent, parent / "pass_03", keep_count=1, context=ctx)
     assert report["retained_unique"] == ["pass_02"]
     assert (parent / "pass_02/files/last_checkpoint.pt").is_file()
+
+
+def _chunk_session(tmp_path):
+    session = make_session("neural_atom_k1", development=False, schedule_kind="cosine_step", events=events())
+    contract, record = contract_file(tmp_path, session)
+    record["resume_keep_count"] = 1
+    contract.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
+    ctx = context(session.recipe.family, contract)
+    trajectory = {"trajectory_id": "synthetic-trajectory", "record_mode": "prospective",
+        "state_at_start": {"source_commit": ctx.source_commit, "source_config_identity": ctx.arm_identity},
+        "actions": [{"action_id": "A1", "run_ids": ["synthetic-run:reference"], "attempt_ids": ["attempt1"]}],
+        "decision": {"outcome": "ACTIVE"}}
+    outputs = output_owner.SessionOutputs(tmp_path / "output", ctx, contract=contract,
+        adapter=PROFILES[session.recipe.family], trajectory_id="synthetic-trajectory",
+        train_role_identity=record["train_role_identity"], resume_trajectory=trajectory)
+    outputs.policy = replace(outputs.policy, chunk_passes=1)
+    session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
+    return session, outputs
+
+
+@pytest.mark.parametrize("prune_fails", [False, True])
+def test_normal_chunk_checkpoint_reuses_previous_bundle_and_isolates_prune(tmp_path, monkeypatch, prune_fails):
+    from molgap import experiment_resume as transport
+    session, outputs = _chunk_session(tmp_path)
+    original_create, calls = transport.create_resume_bundle, []
+    def create(source, ctx, trajectory, destination, **options):
+        calls.append((destination, options.get("reuse_bundle")))
+        return original_create(source, ctx, trajectory, destination, **options)
+    monkeypatch.setattr(transport, "create_resume_bundle", create)
+    if prune_fails:
+        def fail(*args, **kwargs):
+            raise PermissionError("synthetic optional cleanup failure")
+        monkeypatch.setattr(transport, "prune_duplicate_resume_bundles", fail)
+    result = session.run()
+    assert result.status == "complete"
+    assert [(path.name, previous.name if previous else None) for path, previous in calls] == [
+        ("pass_01", None), ("pass_02", "pass_01")]
+    first, second = [path for path, _ in calls]
+    assert (first / "files/training_contract.json").samefile(second / "files/training_contract.json")
+    assert not (outputs.root / "training_contract.json").samefile(second / "files/training_contract.json")
+    assert transport.validate_resume_bundle(second, context=outputs.context)["status"] == "TRANSPORT_VERIFIED"
+    assert outputs._previous_resume_bundle == second
+    if prune_fails:
+        assert outputs.resume_retention_report["retention_target_met"] is False
+        assert "cleanup failure" in outputs.resume_retention_report["retained_unverified"][0]["reason"]
+    else:
+        assert outputs.resume_retention_report["retained_unique"] == ["pass_01"]
+
+
+@pytest.mark.parametrize("operation", ["atomic_write", "sync_directory"])
+def test_chunk_cleanup_isolation_does_not_hide_checkpoint_commit_failure(tmp_path, monkeypatch, operation):
+    session, outputs = _chunk_session(tmp_path)
+    def fail(*args, **kwargs):
+        raise OSError("synthetic durable commit failure")
+    monkeypatch.setattr(output_owner, operation, fail)
+    with pytest.raises(OSError, match="durable commit failure"):
+        session.run()
+    assert outputs._previous_resume_bundle is None
+
+
+def test_prune_skips_loading_unique_historical_checkpoints(bundle_case, tmp_path, monkeypatch):
+    from molgap import experiment_resume as transport
+    source, _, ctx, trajectory, _ = bundle_case
+    parent = tmp_path / "chunks"
+    for index in (1, 2, 3):
+        torch.save({"context": ctx, "model": {"weight": torch.tensor([index])},
+                    "cursor": {"epoch": index, "next_batch": 0}, "optimizer_step": index,
+                    "sample_presentations": index * 2}, source / "last_checkpoint.pt")
+        (source / "canonical_trace.json").write_text(json.dumps({"observations": [
+            {"event": "observation", "optimizer_step": index, "sample_presentations": index * 2}]}))
+        transport.create_resume_bundle(source, ctx, trajectory, parent / f"pass_{index:02d}")
+    loaded, original = [], transport.safe_cpu_torch_load
+    def load(path):
+        loaded.append(Path(path))
+        return original(path)
+    monkeypatch.setattr(transport, "safe_cpu_torch_load", load)
+    report = transport.prune_duplicate_resume_bundles(parent, parent / "pass_03", keep_count=1, context=ctx)
+    assert report["retained_unique"] == ["pass_02", "pass_01"]
+    assert [path.parent.parent.name for path in loaded] == ["pass_03"]
 
 
 def test_synthetic_cpu_data_phase_measurements(pinned_data, monkeypatch):

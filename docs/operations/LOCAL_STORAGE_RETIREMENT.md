@@ -50,7 +50,22 @@ retirement receipt; failed or unknown publication keeps its recovery inputs.
 Recipe metadata may set `resume_keep_count` to retire older resume packages that
 are exact duplicates of retained packages. Omission retains existing behavior.
 The count never authorizes deleting a unique resumable state or evidence file.
-These paths do not sweep complete caches, historical evidence or active worktrees.
+These paths do not sweep legacy complete caches, historical evidence or active worktrees.
+
+New source packaging uses `runtime-cache/bounded-v1`, isolated from legacy
+builders. A nonblocking operating-system lock covers cache reads, publication and
+eviction; busy caches fall back to direct packaging. Each run keeps an independent
+source package. The cache normally retains eight recognized completed entries;
+`MOLGAP_SOURCE_CACHE_MAX_ENTRIES` selects 0 through 128 (0 bypasses caching).
+Only recognized generated cache entries are eligible, and cleanup failure cannot
+invalidate the run's package. Old cache roots remain report-only.
+
+New resume chunks may share unchanged payload files with the preceding verified
+immutable bundle of the same owner and attempt. Mutable training outputs are
+always copied. Unsupported hardlinks fall back to verified copies; shared names
+are not independent backups. Unique checkpoints and complete curve history remain
+retained. Partial or unknown old chunks are reported and preserved, and optional
+retention cleanup cannot fail an already committed checkpoint transaction.
 
 ## Retire physical checkouts
 

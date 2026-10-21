@@ -15,9 +15,11 @@ import pytest
 from molgap.experiment_package import build_experiment_source_package,verify_experiment_source_package,_name
 from molgap.experiment_source_inventory import runtime_source_files
 from molgap.experiment_spec import ExperimentSpec
+from molgap.local_storage import SOURCE_CACHE_NAMESPACE
 from molgap import experiment_spec as spec_module
 from molgap.screen_policy import canonical_fingerprint
 from test_experiment_package import repo,payload,git
+from test_local_storage import cache_holder
 
 
 def test_python_data_namespace_is_source_but_payloads_and_credentials_are_not():
@@ -57,9 +59,54 @@ def test_cache_reuses_archive_but_never_other_spec_package_or_receipt(repo,paylo
         b=build_experiment_source_package(ExperimentSpec(other),repo,["README.md"],second,source_cache=cache)
     assert a["archive_sha256"]==b["archive_sha256"]
     assert a["package_identity"]!=b["package_identity"] and a["spec_identity"]!=b["spec_identity"]
-    assert len(list(cache.iterdir()))==1
+    assert len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==1
     assert verify_experiment_source_package(second,repo)==b
     assert not (second/"launch_receipt.json").exists()
+
+
+def test_uncached_package_never_imports_local_storage(repo, payload, tmp_path, monkeypatch):
+    original = builtins.__import__
+    def import_without_cache(name, *args, **kwargs):
+        if name == "local_storage" or name == "molgap.local_storage":
+            raise ImportError("legacy source bundle excludes host cache management")
+        return original(name, *args, **kwargs)
+    monkeypatch.setattr(builtins, "__import__", import_without_cache)
+    output = tmp_path / "uncached"
+    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, ["README.md"], output)
+    assert verify_experiment_source_package(output, repo) == manifest
+
+
+def test_busy_cache_builds_independent_package_without_waiting(repo, payload, tmp_path, cache_holder):
+    cache, process, connection = cache_holder
+    output = tmp_path / "busy-cache-package"
+    manifest = build_experiment_source_package(
+        ExperimentSpec(payload), repo, ["README.md"], output, source_cache=cache)
+    assert process.is_alive()  # Holder remains blocked until fixture teardown.
+    assert verify_experiment_source_package(output, repo) == manifest
+    assert {p.name for p in (cache / SOURCE_CACHE_NAMESPACE).iterdir()} == {".lock"}
+
+
+def test_normal_packaging_automatically_bounds_cache_to_eight(repo, payload, tmp_path, monkeypatch):
+    monkeypatch.delenv("MOLGAP_SOURCE_CACHE_MAX_ENTRIES", raising=False)
+    cache = tmp_path / "bounded-cache"
+    legacy = cache / ("f" * 64)
+    legacy.mkdir(parents=True)
+    (legacy / "source.tar.gz").write_bytes(b"legacy builder cache")
+    packages = []
+    for index in range(10):
+        (repo / "README.md").write_text(f"Synthetic source variant {index}\n")
+        git(repo, "add", "README.md")
+        git(repo, "-c", "commit.gpgsign=false", "commit", "-m", f"Variant {index}")
+        output = tmp_path / f"package-{index}"
+        manifest = build_experiment_source_package(
+            ExperimentSpec(payload), repo, ["README.md"], output, source_cache=cache)
+        packages.append((output, manifest))
+    entries = list((cache / SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]" * 64))
+    assert len(entries) == 8
+    assert (legacy / "source.tar.gz").read_bytes() == b"legacy builder cache"
+    # Eviction does not invalidate independent packages retained by their runs.
+    for output, manifest in packages:
+        assert verify_experiment_source_package(output) == manifest
 
 
 def test_git_verification_process_count_is_constant_not_per_file(repo,payload,tmp_path):
@@ -123,7 +170,7 @@ def test_clean_filter_or_index_flag_cannot_hide_changed_source_on_cache_hit(repo
 def test_cache_corruption_never_publishes_complete_package(repo,payload,tmp_path):
     cache=tmp_path/"cache"
     build_experiment_source_package(ExperimentSpec(payload),repo,["README.md"],tmp_path/"before",source_cache=cache)
-    next(cache.glob("*/source.tar.gz")).write_bytes(b'corrupt')
+    next((cache/SOURCE_CACHE_NAMESPACE).glob("*/source.tar.gz")).write_bytes(b'corrupt')
     with pytest.raises(ValueError):
         build_experiment_source_package(ExperimentSpec(payload),repo,["README.md"],tmp_path/"after",source_cache=cache)
     assert not (tmp_path/"after/package_manifest.json").exists()
@@ -140,7 +187,7 @@ def test_identical_full_payload_reuses_archive_across_commits_with_fresh_sidecar
     cache=tmp_path/"cache";first=tmp_path/"first";second=tmp_path/"second"
     names=["README.md","src/example.py"];spec=ExperimentSpec(payload)
     a=build_experiment_source_package(spec,repo,names,first,source_cache=cache)
-    cached=next(cache.iterdir())
+    cached=next((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64))
     retained={p.name:p.read_bytes() for p in cached.iterdir()}
     commit=unrelated_commit(repo)
     with patch("molgap.experiment_package.build_v4_source_bundle",side_effect=AssertionError("archive rebuilt")):
@@ -154,7 +201,7 @@ def test_identical_full_payload_reuses_archive_across_commits_with_fresh_sidecar
     assert json.loads((second/"SOURCE_FILES.json").read_bytes())["source_commit"]==commit
     assert (first/"source.tar.gz").read_bytes()==(second/"source.tar.gz").read_bytes()
     assert {p.name:p.read_bytes() for p in cached.iterdir()}==retained
-    assert len(list(cache.iterdir()))==1
+    assert len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==1
     assert verify_experiment_source_package(first,repo)==a
     assert verify_experiment_source_package(second,repo)==b
     # A cold build at the new HEAD must produce exactly the same six files.
@@ -175,7 +222,7 @@ def test_seed_only_synthetic_spec_reuses_code_archive_with_distinct_identity(rep
     assert a["archive_sha256"]==b["archive_sha256"]
     assert a["spec_identity"]!=b["spec_identity"] and a["package_identity"]!=b["package_identity"]
     assert verify_experiment_source_package(tmp_path/"second",repo)==b
-    assert len(list(cache.iterdir()))==1
+    assert len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==1
 
 
 @pytest.mark.parametrize("fault",["dirty","hidden_dirty","source.tar.gz","SOURCE_COMMIT.txt",
@@ -188,7 +235,7 @@ def test_cross_commit_cache_rejects_dirty_payloads_and_corrupt_objects(repo,payl
         if fault=="hidden_dirty":git(repo,"update-index","--assume-unchanged","src/example.py")
         (repo/"src/example.py").write_bytes(b"Changed actual file bytes\n")
     else:
-        (next(cache.iterdir())/fault).write_bytes(b"corrupt")
+        (next((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64))/fault).write_bytes(b"corrupt")
     with patch("molgap.experiment_package.build_v4_source_bundle",side_effect=AssertionError("unsafe rebuild")):
         with pytest.raises((ValueError,RuntimeError)):
             build_experiment_source_package(spec,repo,names,tmp_path/"second",source_cache=cache)
@@ -206,7 +253,7 @@ def test_real_committed_recipe_change_changes_full_archive_at_same_paths(repo,pa
     git(repo,"-c","commit.gpgsign=false","commit","-m","Change synthetic recipe bytes")
     b=build_experiment_source_package(spec,repo,names,tmp_path/"second",source_cache=cache)
     assert a["archive_sha256"]!=b["archive_sha256"] and a["package_identity"]!=b["package_identity"]
-    assert len(list(cache.iterdir()))==2
+    assert len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==2
     assert verify_experiment_source_package(tmp_path/"second",repo)==b
 
 

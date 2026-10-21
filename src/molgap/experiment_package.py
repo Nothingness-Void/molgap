@@ -1,6 +1,7 @@
 """Immutable source receipts bound to ExperimentSpec, with no execution authority."""
 from __future__ import annotations
 
+from contextlib import nullcontext
 import hashlib
 import io
 import json
@@ -264,9 +265,13 @@ def build_experiment_source_package(
     with lock.open("xb"):
         pass
     try:
-        with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name:
+        cache_session = nullcontext(None)
+        if source_cache is not None:
+            from .local_storage import source_cache_session
+            cache_session = source_cache_session(source_cache)
+        with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name, cache_session as cache_root:
             stage = Path(stage_name)
-            if source_cache is None:
+            if cache_root is None:
                 bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
                                                output_dir=stage, source_commit=commit,**bundle_options)
             else:
@@ -280,11 +285,11 @@ def build_experiment_source_package(
                 # Commit provenance belongs to each package, not to reusable tar bytes.
                 key = canonical_fingerprint({"builder":"v4-source-content-v1",
                     "files":{n:_sha(committed[n]) for n in sorted(names)}})
-                cached = Path(source_cache).absolute() / key
+                cached = cache_root / key
                 _no_links(cached)
                 cache_names={"source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"}
                 if cached.exists() and {p.name for p in cached.iterdir()} != cache_names:
-                    # Legacy partial cache objects are reproducible, not evidence.
+                    # Only this locked namespace owns these reproducible objects.
                     # Retain them, then rebuild from the already verified commit.
                     retained=cached.with_name(".incomplete-"+key+"-"+uuid4().hex)
                     _no_links(retained)
@@ -293,19 +298,13 @@ def build_experiment_source_package(
                     cached.rename(retained)
                 if not cached.exists():
                     cached.parent.mkdir(parents=True, exist_ok=True)
-                    with tempfile.TemporaryDirectory(dir=cached.parent, prefix=".source-cache-") as temporary_root:
-                        temporary = Path(temporary_root)/"complete"
+                    with tempfile.TemporaryDirectory(dir=cached.parent, prefix=".partial-"+key+"-") as temporary_root:
+                        temporary = Path(temporary_root)
                         built=build_v4_source_bundle(repo_root=root, relative_paths=names,
                             output_dir=temporary, source_commit=commit,**bundle_options)
                         from .v4_runtime import validate_standard_source_bundle
                         validate_standard_source_bundle(temporary/"source.tar.gz",built["archive_sha256"],commit)
-                        try:
-                            temporary.rename(cached)  # One atomic directory publication, never four exposed writes.
-                        except OSError:
-                            if not cached.is_dir() or {p.name for p in cached.iterdir()} != cache_names:
-                                raise
-                            # A concurrent complete publisher won. Every byte is
-                            # checked again below and by the package verifier.
+                        temporary.rename(cached)  # All readers/publishers share the OS lock.
                 for name in ("source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
                     _source(cached, name)
                 cached_commit = (cached / "SOURCE_COMMIT.txt").read_bytes()
@@ -331,6 +330,10 @@ def build_experiment_source_package(
                     ("SOURCE_FILES.json", (json.dumps(inventory, indent=2)+"\n").encode()),
                 ):
                     publish_immutable_bytes(stage / name, contents)
+                try:
+                    os.utime(cached, None)
+                except OSError:
+                    pass  # Access-time bookkeeping cannot invalidate the independent copy.
                 bundle = {"archive_sha256":archive_hash}
             manifest = _manifest(spec, names, commit, bundle["archive_sha256"],
                 _sha((stage / "SOURCE_FILES.json").read_bytes()),

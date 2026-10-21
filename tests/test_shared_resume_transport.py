@@ -1,5 +1,7 @@
 """Synthetic transport checks; no native execution or historical role access."""
 import json
+import errno
+import os
 from types import SimpleNamespace
 
 import pytest
@@ -96,6 +98,93 @@ def test_spec_validation_uses_registered_family_hook(bundle_case, monkeypatch):
 def test_safe_loader_has_one_owner():
     from molgap.training_reproducibility import safe_cpu_torch_load
     assert transport.safe_cpu_torch_load is safe_cpu_torch_load
+
+
+@pytest.mark.parametrize("cross_volume", [False, True])
+def test_bundle_reuses_only_immutable_verified_payload(bundle_case, tmp_path, monkeypatch, cross_volume):
+    source, previous, ctx, trajectory, _ = bundle_case
+    destination = tmp_path / "shared"
+    links, real_link = [], transport.os.link
+    def link(origin, target):
+        if origin.is_relative_to(previous):
+            links.append((origin, target))
+            if cross_volume:
+                raise OSError(errno.EXDEV, "synthetic cross-volume boundary")
+        return real_link(origin, target)
+    monkeypatch.setattr(transport.os, "link", link)
+    transport.create_resume_bundle(source, ctx, trajectory, destination, reuse_bundle=previous)
+    assert links and all(origin.is_relative_to(previous) for origin, _ in links)
+    retained = destination / "files/last_checkpoint.pt"
+    assert os.path.samefile(previous / "files/last_checkpoint.pt", retained) is not cross_volume
+    assert not os.path.samefile(source / "last_checkpoint.pt", retained)
+    before = retained.read_bytes()
+    (source / "last_checkpoint.pt").write_bytes(b"mutable producer changed")
+    assert retained.read_bytes() == before
+    assert transport.validate_resume_bundle(destination, context=ctx)["status"] == "TRANSPORT_VERIFIED"
+
+
+def test_reuse_rejects_changed_payload_and_different_attempt(bundle_case, tmp_path):
+    source, previous, ctx, trajectory, _ = bundle_case
+    changed = dict(trajectory, actions=[{"action_id": "A1", "run_ids": ["synthetic-run:reference"],
+                                       "attempt_ids": ["attempt2"]}])
+    with pytest.raises(ValueError, match="trajectory"):
+        transport.create_resume_bundle(source, ctx, changed, tmp_path / "different", reuse_bundle=previous)
+    assert not (tmp_path / "different").exists()
+    (previous / "files/last_checkpoint.pt").write_bytes(b"changed frozen payload")
+    with pytest.raises(ValueError):
+        transport.create_resume_bundle(source, ctx, trajectory, tmp_path / "unsafe", reuse_bundle=previous)
+    assert not (tmp_path / "unsafe").exists()
+
+
+@pytest.mark.parametrize("extra", ["partial", "unknown_file", "unknown_directory"])
+def test_prune_preserves_partial_and_unlisted_chunk_evidence(bundle_case, tmp_path, extra):
+    source, _, ctx, trajectory, _ = bundle_case
+    parent = tmp_path / "chunks"
+    older, newest = parent / "pass_01", parent / "pass_02"
+    for folder in (older, newest):
+        transport.create_resume_bundle(source, ctx, trajectory, folder)
+    if extra == "partial":
+        (older / "files/last_checkpoint.pt").unlink()
+    elif extra == "unknown_file":
+        (older / "unique_contract.json").write_text("unique evidence")
+    else:
+        (older / "unique_evidence").mkdir()
+    report = transport.prune_duplicate_resume_bundles(parent, newest, keep_count=1, context=ctx)
+    assert report["retained_unverified"][0]["chunk"] == "pass_01"
+    assert not report["removed_duplicates"] and older.exists()
+
+
+def test_prune_reports_interrupted_removal_and_preserves_partial_on_retry(bundle_case, tmp_path, monkeypatch):
+    source, _, ctx, trajectory, _ = bundle_case
+    parent = tmp_path / "chunks"
+    older, newest = parent / "pass_01", parent / "pass_02"
+    for folder in (older, newest):
+        transport.create_resume_bundle(source, ctx, trajectory, folder)
+    def interrupted(folder):
+        (folder / "files/last_checkpoint.pt").unlink()
+        raise PermissionError("synthetic interrupted removal")
+    monkeypatch.setattr(transport.shutil, "rmtree", interrupted)
+    for _ in range(2):
+        report = transport.prune_duplicate_resume_bundles(parent, newest, keep_count=1, context=ctx)
+        assert report["retained_unverified"][0]["chunk"] == "pass_01"
+        assert not report["removed_duplicates"]
+        assert older.exists()
+    assert transport.validate_resume_bundle(newest, context=ctx)["status"] == "TRANSPORT_VERIFIED"
+
+
+def test_prune_validates_new_bundle_before_any_deletion(bundle_case, tmp_path, monkeypatch):
+    source, _, ctx, trajectory, _ = bundle_case
+    parent = tmp_path / "chunks"
+    older, newest = parent / "pass_01", parent / "pass_02"
+    for folder in (older, newest):
+        transport.create_resume_bundle(source, ctx, trajectory, folder)
+    (newest / "files/last_checkpoint.pt").write_bytes(b"incomplete new publication")
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Unsafe new bundle must not release deletion")
+    monkeypatch.setattr(transport.shutil, "rmtree", forbidden)
+    with pytest.raises(ValueError):
+        transport.prune_duplicate_resume_bundles(parent, newest, keep_count=1, context=ctx)
+    assert transport.validate_resume_bundle(older, context=ctx)["status"] == "TRANSPORT_VERIFIED"
 
 
 @pytest.fixture
