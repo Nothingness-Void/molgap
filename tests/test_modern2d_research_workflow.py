@@ -23,12 +23,12 @@ def test_batched_execution_is_explicit_ppgt_only(case):
     base = case.recipe
     profile = Modern2DFormalTrainingProfile(purpose="configured-screen",
         horizon_passes=60, horizon_steps=base.optimizer_steps, execution_mode="batched-v1")
-    base = replace(base, schedule=replace(base.schedule, total_units=base.optimizer_steps))
+    schedule = replace(base.schedule, total_units=base.optimizer_steps)
     if base.family != "ppgt_small":
         with pytest.raises(ValueError, match="unrelated family"):
-            replace(base, formal_training=profile)
+            replace(base, formal_training=profile, schedule=schedule)
     else:
-        recipe = replace(base, formal_training=profile)
+        recipe = replace(base, formal_training=profile, schedule=schedule)
         assert recipe.to_dict()["formal_training"]["execution_mode"] == "batched-v1"
         assert FamilyRecipe.from_dict(recipe.to_dict()).identity == recipe.identity
     with pytest.raises(ValueError, match="explicit new configured"):
