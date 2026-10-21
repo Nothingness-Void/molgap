@@ -118,6 +118,13 @@ local/journal timings; it does not invent upload, queue or native training speed
 
 ## Commands
 
+`diagnose --control <arm-output> --candidate <arm-output> [--output <directory>]`
+reuses the shared-session output inspector and typed recipe reader before
+analyzing retained predictions and curves. It needs no run-lookup arguments.
+Missing cost stays null; estimated cost is not a measured speed ratio.
+`--bootstrap-samples 0` disables CI/gate claims. Shift/oracle-blend results are
+post-hoc descriptions, not strict V5 acceptance, replay readiness or promotion.
+
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot
 --plan $plan`; it reports independent recipe/profiler and RML-policy gaps without

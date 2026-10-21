@@ -244,7 +244,8 @@ def _startup(http, ref):
 
 
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
-                             monitor_paths, execute=False, api=None, http_session=None):
+                             monitor_paths, execute=False, api=None, http_session=None,
+                             _content_verification=None):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
@@ -327,8 +328,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             return already_bound
         _verify_release_report(prepared / "release_report.json", kernel / "run.py")
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
-    from .experiment_preflight import _ReleaseContentVerification
-    content_verification = _ReleaseContentVerification()
+    from .experiment_preflight import _ACTIVE_CONTENT_VERIFICATION, _ReleaseContentVerification
+    content_verification = (
+        _content_verification
+        or _ACTIVE_CONTENT_VERIFICATION.get()
+        or _ReleaseContentVerification()
+    )
     output.mkdir(parents=True, exist_ok=True)
     with _exclusive(output):
         journal = output / "submission_state.json"

@@ -79,7 +79,7 @@ def load_terminal_input(directory: Path) -> dict[str, Any]:
         if key in {"evidence", "decision"} and len(values) != 1:
             raise ValueError("terminal input requires one evidence and decision")
         package[key] = values[0] if key in {"evidence", "decision"} else values
-    if not {"evidence", "decision", "costs", "roles"} <= package.keys():
+    if not {"evidence", "decision"} <= package.keys():
         raise ValueError("incomplete terminal components")
     return package
 
@@ -414,9 +414,11 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     files["trajectory.json"] = json_bytes(updated)
     compact = copy.deepcopy(package)
     compact["format"] = "molgap-rml-terminal-input-v2"
-    components = {"evidence": ["v5_evidence.json"], "decision": ["trajectory.json"],
-        "costs": [f"costs/{event['cost_event_id']}.json" for event in package.get("costs", [])],
-        "roles": [f"roles/{event['role_event_id']}.json" for event in package.get("roles", [])]}
+    components = {"evidence": ["v5_evidence.json"], "decision": ["trajectory.json"]}
+    # Absence differs from an explicit empty array in the bound source digest.
+    for kind, id_field in (("costs", "cost_event_id"), ("roles", "role_event_id")):
+        if kind in package:
+            components[kind] = [f"{kind}/{event[id_field]}.json" for event in package[kind]]
     compact["published_components"] = {key: [{"ref": name, "sha256": hashlib.sha256(files[name]).hexdigest()}
         for name in names] for key, names in components.items()}
     for key in components:

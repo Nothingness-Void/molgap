@@ -738,9 +738,10 @@ def close_terminal_multi_arm(
                 canonical_trace_output=arm.get("canonical_trace_output"),
                 recovery_spec=arm.get("recovery_spec"), _defer_derived=True,
             )
-        except (ValueError, OSError, RuntimeError) as exc:
+        except (ValueError, OSError, RuntimeError, KeyError, TypeError) as exc:
             # One invalid arm cannot erase another arm's durable terminal result.
-            result = {"pipeline_status": "FINALIZATION_FAILED", "trajectory": str(arm["trajectory"]),
+            trajectory = arm.get("trajectory") if isinstance(arm, Mapping) else None
+            result = {"pipeline_status": "FINALIZATION_FAILED", "trajectory": str(trajectory),
                       "error": str(exc), "next_decision": "SOL_REQUIRED"}
         results.append(result)
     from .pipeline import rebuild_terminal_handoffs

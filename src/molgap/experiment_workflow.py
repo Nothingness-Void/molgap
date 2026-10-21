@@ -374,7 +374,7 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     from .experiment_package import _PackageVerification
 
@@ -432,7 +432,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
             input_root=staged, dataset_manifests=inputs["dataset_manifests"] or None,
-            _verification=verification)
+            _verification=verification, _content_verification=_content_verification)
         _atomic(output / "release_report.json", release)
         record("check_release", release)
         if release["errors"]:

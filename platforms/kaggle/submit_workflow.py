@@ -25,24 +25,28 @@ def main(argv=None):
     try:
         if args.execute and not args.credentials:
             raise ValueError("--execute requires explicit credentials before preparation")
-        if args.experiment:
-            from molgap.experiment_input import prepare_experiment_input
-            if args.output or args.authority or args.monitor_path:
-                raise ValueError("Editable input already owns the immutable run/authority/monitor bindings")
-            stage="local_preparation"
-            with redirect_stdout(sys.stderr):
-                prepared=prepare_experiment_input(args.experiment,args.repo_root)
-            if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
-                from molgap.experiment_input import compact_operation_report
-                print(canonical_json(prepared if args.verbose else compact_operation_report(prepared)))
-                return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
-            args.prepared=Path(prepared["prepared"]);args.output=Path(prepared["operations"])
-            args.authority=prepared["authority_ref"];args.monitor_path=prepared["monitor_paths"]
-        if not args.credentials or not args.output or not args.authority or not args.monitor_path:
-            raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
-        stage="platform_operations"
-        result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
-            authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute)
+        from contextlib import nullcontext
+        from molgap.experiment_preflight import _shared_release_verification
+        scope = _shared_release_verification() if (args.experiment and args.execute) else nullcontext()
+        with scope:
+            if args.experiment:
+                from molgap.experiment_input import prepare_experiment_input
+                if args.output or args.authority or args.monitor_path:
+                    raise ValueError("Editable input already owns the immutable run/authority/monitor bindings")
+                stage="local_preparation"
+                with redirect_stdout(sys.stderr):
+                    prepared=prepare_experiment_input(args.experiment,args.repo_root)
+                if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
+                    from molgap.experiment_input import compact_operation_report
+                    print(canonical_json(prepared if args.verbose else compact_operation_report(prepared)))
+                    return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
+                args.prepared=Path(prepared["prepared"]);args.output=Path(prepared["operations"])
+                args.authority=prepared["authority_ref"];args.monitor_path=prepared["monitor_paths"]
+            if not args.credentials or not args.output or not args.authority or not args.monitor_path:
+                raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
+            stage="platform_operations"
+            result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
+                authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute)
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.
         if stage != "platform_operations":

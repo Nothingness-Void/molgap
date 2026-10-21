@@ -769,6 +769,9 @@ def _release_imports(request):
                 _, recipe = trainer.read_recipe(Path(item["recipe_path"]))
                 factory = importlib.import_module("molgap.family_training_kernel")
                 model, initialization = factory.load_family_model(recipe, Path(item["path"]))
+                if (root / "src/molgap/fast_sandbox.py").is_file():
+                    sandbox = importlib.import_module("molgap.fast_sandbox")
+                    sandbox.verify_loaded_family_model(recipe, model, seed=recipe.seed, threads=1)
             initialization_checks[item["arm_id"]] = (
                 {"state_sha256": runtime.state_dict_sha256(state), "tensor_count": len(state), "device": "cpu"}
                 if item["family"] == ["neural_atom_k1", "2"] else
@@ -858,11 +861,28 @@ def _recheck_cached_dataset_mounts(package_bytes, recipe_files, dataset_manifest
                               "message": str(exc)} for arm_id in arm_ids]
 
 
+from contextlib import contextmanager
+from contextvars import ContextVar
+
+_ACTIVE_CONTENT_VERIFICATION: ContextVar["_ReleaseContentVerification | None"] = ContextVar(
+    "_ACTIVE_CONTENT_VERIFICATION", default=None
+)
+
+
 class _ReleaseContentVerification:
     """One caller-owned transaction; persisted reports never seed this cache."""
 
     def __init__(self):
         self.results = {}
+
+
+@contextmanager
+def _shared_release_verification():
+    token = _ACTIVE_CONTENT_VERIFICATION.set(_ReleaseContentVerification())
+    try:
+        yield _ACTIVE_CONTENT_VERIFICATION.get()
+    finally:
+        _ACTIVE_CONTENT_VERIFICATION.reset(token)
 
 
 def _release_content_key(package_bytes, recipe_files, initial_states,
@@ -877,7 +897,8 @@ def _release_content_key(package_bytes, recipe_files, initial_states,
         "recipe_files": dict(recipe_files), "initial_states": hashes(initial_states),
         "required_modules": sorted(required_modules),
         "pickle_inputs": [_file_sha(_regular(Path(path).absolute())) for path in pickle_inputs],
-        "dataset_manifests": hashes(dataset_manifests or {}), "final_release": final_release,
+        "dataset_manifests": hashes(dataset_manifests or {}),
+        "final_release": bool(final_release and set(dataset_manifests or {}) != set(recipe_files)),
     }))
 
 
@@ -886,11 +907,14 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                          pickle_inputs=(), entry_script=None, input_root=None,
                          launch_config=None, kernel_metadata=None, dataset_manifests=None,
                          _verification=None, _content_verification=None):
+    if _content_verification is None:
+        _content_verification = _ACTIVE_CONTENT_VERIFICATION.get()
     """Collect source/recipe/serialization/init defects before platform publication.
 
     Only caller-selected trusted training shards are inspected. Pickle opcodes
-    are read, never executed. Selected modules are imported in the existing
-    package-only CPU bootstrap; no model is constructed or run.
+    are read, never executed. The package-only CPU bootstrap checks selected
+    imports and frozen initialization, including a synthetic model probe when
+    the packaged family exposes it. No real data or accelerator is consumed.
     """
     import ast
     import pickletools
@@ -1091,7 +1115,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
             "source_commit": manifest["source_commit"], "source_archive_sha256": manifest["archive_sha256"],
             "inputs": inputs, "checks": checked, "errors": errors,
             "limitations": ["Selected imports and trusted pickle GLOBAL dependencies only; dynamic paths are not proven.",
-                "No model execution, GPU qualification, scientific acceptance or submission authority."]}
+                "Synthetic CPU checks only; no native GPU qualification, scientific acceptance or submission authority."]}
 
 
 def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script,

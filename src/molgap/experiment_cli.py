@@ -55,6 +55,14 @@ def _parser() -> argparse.ArgumentParser:
     locate.add_argument("--repo-root",required=True,type=_local)
     locate.add_argument("--run-id",required=True)
     locate.add_argument("--attempt-id",required=True)
+    diagnose=commands.add_parser("diagnose")
+    diagnose.add_argument("--control",required=True,type=_local)
+    diagnose.add_argument("--candidate",required=True,type=_local)
+    diagnose.add_argument("--output",type=_local)
+    diagnose.add_argument("--threshold-ev",type=float,default=0.003)
+    diagnose.add_argument("--noninferiority-margin-ev",type=float,default=0.0005)
+    diagnose.add_argument("--bootstrap-samples",type=int,default=10000)
+    diagnose.add_argument("--seed",type=int,default=42)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
@@ -159,6 +167,18 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "diagnose":
+        from .experiment_attribution import analyze_family_pair
+        result = analyze_family_pair(
+            args.control,
+            args.candidate,
+            output_dir=args.output,
+            threshold_eV=args.threshold_ev,
+            noninferiority_margin_eV=args.noninferiority_margin_ev,
+            n_bootstrap=args.bootstrap_samples,
+            seed=args.seed,
+        )
+        return result, 0
     if args.command == "locate-run":
         from .experiment_input import locate_run
         return locate_run(args.profile,args.repo_root,args.run_id,args.attempt_id),0

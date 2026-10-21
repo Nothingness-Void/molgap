@@ -590,7 +590,7 @@ def _freeze(value,spec,plan,paths,*,repo_root=None):
             "submitted":False,"scientific_acceptance":"NOT_EVALUATED"}
 
 
-def prepare_experiment_input(path, repo_root):
+def prepare_experiment_input(path, repo_root, *, _content_verification=None):
     """Recover regenerable pre-publication staging; never retry ambiguous effects."""
     from .experiment_package import verify_experiment_source_package
     from .experiment_workflow import prepare_workflow
@@ -643,8 +643,10 @@ def prepare_experiment_input(path, repo_root):
         if retained is not None:
             retained.parent.mkdir(parents=True,exist_ok=True)
             prepared.rename(retained)  # Preserve every byte; only regenerable staging is replaced.
+        extra = {"_content_verification": _content_verification} if _content_verification is not None else {}
         result=prepare_workflow(spec,Path(repo_root).absolute(),plan,prepared,
-                                source_cache=paths.artifact_root/"source-packages/runtime-cache")
+                                source_cache=paths.artifact_root/"source-packages/runtime-cache",
+                                **extra)
     result = {**result,"prepared":str(prepared),"operations":str(run/"operations"),
               "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"],
               "local_call_seconds":perf_counter()-started,"submitted":False}

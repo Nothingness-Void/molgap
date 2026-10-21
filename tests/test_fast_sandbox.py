@@ -9,7 +9,7 @@ import pytest
 import torch
 from torch import nn
 
-from molgap.fast_sandbox import run_arm_sandbox, run_family_sandbox, run_sandbox, synthetic_batch
+from molgap.fast_sandbox import run_arm_sandbox, run_family_sandbox, run_sandbox, synthetic_batch, verify_loaded_family_model
 from molgap.model_substrate import ModelSubstrate, SlotBinding, SlotName
 
 
@@ -196,6 +196,45 @@ def test_factory_must_construct_independent_models():
     model = TinyGraph()
     report = run_sandbox(lambda: model)
     assert report["status"] == "FAILED" and "independent" in report["error"]["message"]
+
+
+@pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
+@pytest.mark.parametrize("failure", [False, True])
+def test_loaded_model_probe_restores_tensors_gradients_modes_and_rng(family, failure):
+    if family == "neural_atom_k1":
+        from molgap.qm9_neural_atom import make_encoder
+        model = make_encoder("neural_atom_k1")
+    else:
+        from molgap.family_model_ops import make_gptrans_backbone
+        from molgap.gptrans_execution_backend import bind_model_layout
+        model = bind_model_layout(make_gptrans_backbone(variant="reference"))
+    model.eval()
+    next(module for module in model.modules() if isinstance(module, nn.Linear)).train()
+    parameters = list(model.parameters())
+    parameters[0].grad = torch.ones_like(parameters[0])
+    gradients = [parameter.grad for parameter in parameters]
+    tensors = {name: value.clone() for name, value in model.state_dict().items()}
+    modes = [module.training for module in model.modules()]
+    rng = torch.get_rng_state().clone()
+    handle = None
+    if failure:
+        def fail_after_forward(*args):
+            raise RuntimeError("synthetic loaded-model probe failure")
+        handle = model.register_forward_hook(fail_after_forward)
+    try:
+        recipe = SimpleNamespace(family=family, mode="reference", k1_execution=None)
+        if failure:
+            with pytest.raises(RuntimeError, match="synthetic loaded-model probe failure"):
+                verify_loaded_family_model(recipe, model)
+        else:
+            assert verify_loaded_family_model(recipe, model)["status"] == "PASSED"
+        assert all(torch.equal(value, tensors[name]) for name, value in model.state_dict().items())
+        assert all(parameter.grad is gradient for parameter, gradient in zip(parameters, gradients))
+        assert [module.training for module in model.modules()] == modes
+        assert torch.equal(torch.get_rng_state(), rng)
+    finally:
+        if handle is not None:
+            handle.remove()
 
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])

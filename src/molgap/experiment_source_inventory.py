@@ -38,6 +38,7 @@ COMMON_SOURCE_FILES = (
     "src/molgap/common/spec.py",
     "src/molgap/common/wire.py",
     "src/molgap/experiment_catalog.py",
+    "src/molgap/fast_sandbox.py",
     "src/molgap/family_training_policy.py",
     "src/molgap/family_model_ops.py",
     "src/molgap/substrate_scale_addon.py",
@@ -202,7 +203,8 @@ _HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transp
     "src/molgap/local_runtime.py", "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
     "src/molgap/artifact_inventory.py", "src/molgap/experiment_run.py", "src/molgap/experiment_timings.py",
     "src/molgap/kaggle_output_retrieval.py", "src/molgap/kaggle_submission.py",
-    "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py"})
+    "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py",
+    "src/molgap/experiment_attribution.py"})
 
 
 def runtime_source_files(repo_root, records=()):
