@@ -9,17 +9,17 @@ bind four private T4 version1 jobs, not an unsubmitted plan.
 | Slot | Account | Kernel ID/version | Last scheduler observation |
 |---|---|---|---|
 |ESA1|Kaggle2|140049215/1|COMPLETE; both20-pass endpoints mechanically accepted|
-|ESA2|Kaggle2|140049216/1|QUEUED|
+|ESA2|Kaggle2|140049216/1|COMPLETE; both20-pass endpoints mechanically accepted|
 |PPGT1|Kaggle3|140049247/1|RUNNING|
 |PPGT2|Kaggle3|140049200/1|RUNNING|
 
 The [independent CPU verification](cpu_verification.md) covers model mechanisms,
 update/resume/output inspection and compilation. Pinned Python3.12/torch2.7.1
 installation was observed on the three running jobs. Native qualification and
-formal training were initially unobserved. Six arms now have positive-step
+formal training were initially unobserved. Six arms subsequently had positive-step
 first-epoch telemetry: [ESA1](esa1/first_epoch.json),
 [PPGT1](ppgt1/first_epoch.json) and [PPGT2](ppgt2/first_epoch.json).
-ESA2 was last observed QUEUED. Both families therefore have actual native
+ESA2 subsequently completed both20-pass endpoints. Both families therefore have actual native
 training evidence, not just CPU fixtures or accepted scheduler submissions.
 First-epoch metrics are not endpoint acceptance, superiority or Replay eligibility.
 
@@ -38,7 +38,7 @@ The existing Luna B heartbeat has one active30-minute schedule for
 [Kaggle2](kaggle2_monitor.json) and [Kaggle3](kaggle3_monitor.json). Initial ticks
 authenticated both actual owners and returned only SILENT healthy observations.
 Terminal events are delivered idempotently to the same A without overriding A's
-model/reasoning. One terminal job does not pause monitoring for the other three.
+model/reasoning. Terminal ESA jobs do not pause monitoring for the remaining PPGT jobs.
 Large outputs and operation journals remain outside Git. Original partial and
 failed histories are retained, not relabeled as this fresh20-pass benchmark.
 
@@ -47,5 +47,12 @@ gave a small uncertain point improvement, with no nomination. Both models,
 predictions and full curves passed mechanical inspection. Standard RML terminal
 staging is retained, but canonical finalization fails closed because this initial
 context-only prospective input froze no reference/pair binding. No Replay claim,
-post-hoc prospective edit or rerun is used to hide that gap. Monitoring continues
-for ESA2/PPGT1/PPGT2; closing one slot does not pause the campaign heartbeat.
+post-hoc prospective edit or rerun is used to hide that gap.
+
+ESA2 has a [terminal decision](esa2/results/decision.md) and
+[four-arm interpretation](esa2/results/interpretation.md). All four ESA endpoints
+passed saved-artifact inspection; identity residual direction reversed between
+the two learning rates, without nomination. The second slot's canonical RML
+finalization has the same unmodified prospective-reference blocker. Both ESA
+monitor bindings are closed. Monitoring continues for PPGT1/PPGT2; closing ESA
+does not pause the campaign heartbeat or authorize successors.

@@ -7,13 +7,13 @@
 ## Server execution status
 
 The human-authorized [four-slot/eight-arm PPGT/ESA research campaign](experiments/modern2d_configured_100k/research_arms/STATUS.md)
-has four accepted Kaggle2/3 version1 submissions. ESA1 is COMPLETE:
-both20-pass endpoints passed independent saved-artifact
-acceptance. The [terminal interpretation](experiments/modern2d_configured_100k/research_arms/esa1/results/decision.md)
-retains a small uncertain identity-residual advantage without nomination. Its
-RML terminal packages are staged, but canonical finalization is blocked by the
-absent prospectively frozen reference/pair binding; artifacts/curves are intact.
-The remaining three exact jobs stay under the existing Luna B/30-minute silent
+has four accepted Kaggle2/3 version1 submissions. Both ESA slots are COMPLETE:
+all four20-pass endpoints passed independent saved-artifact acceptance. The
+[four-arm interpretation](experiments/modern2d_configured_100k/research_arms/esa2/results/interpretation.md)
+finds no consistent identity-residual gain across the two learning rates; no
+nomination follows. RML terminal packages are staged, but canonical finalization
+is blocked by absent prospectively frozen reference/pair bindings; artifacts
+and curves are intact. The remaining two PPGT jobs stay under existing Luna B/30-minute silent
 monitor. PPGT has real training witnesses but risks its frozen5h budget; no
 extension, new arm, extra seed,500K/full/protected role or Replay claim follows.
 
