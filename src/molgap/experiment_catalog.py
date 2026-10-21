@@ -113,6 +113,17 @@ FAMILIES = MappingProxyType({
 
 
 ADDONS = MappingProxyType({
+    **{("ppgt_research_" + variant, "1"): AddonContract("ppgt_small",
+        "ppgt-research-mechanism", "molgap.ppgt_research_addons",
+        (AddonConfigField("variant", value=variant),), ("3",),
+        execution_modes=(("3", "composed"),),
+        apply_hook="molgap.ppgt_research_addons:apply_addon")
+       for variant in ("mean_readout", "residual_scale", "both")},
+    ("esa_identity_residual", "1"): AddonContract("esa_small",
+        "esa-research-residual", "molgap.esa_research_addons",
+        (AddonConfigField("variant", value="identity_residual"),), ("4",),
+        execution_modes=(("4", "composed"),),
+        apply_hook="molgap.esa_research_addons:apply_addon"),
     **{(prefix + "_readout_scale", "1"): AddonContract(family,
         "slot-readout", "molgap.substrate_scale_addon",
         tuple(AddonConfigField(key, value=value) for key, value in (
