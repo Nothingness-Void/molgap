@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "f98e549fe5445ba332b8b6b4c95e4f3e816a9bf7b6d107087bee8f7ea1fcc7ac",
+      "state": "RETAINED"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "bfd64a5e2e196caeba06f7b300a7e331721f79419b5d652409b820b275a27412",
+      "state": "RETAINED"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "7a4219366ae0d6549a1520c2477a7b204e967ad9e0830752b0a31d554bd00b87",
+      "state": "RETAINED"
+    },
+    {
+      "path": "resumed-first.pt",
+      "sha256": "61824b10379d042f3581be1cb650d61521af4d3cbbe91d2366c878bcf1efeb41",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "7696caf6f54d81d03c86cc537f4cf2654d967e1e4ad86963ee8d6cc941a30a19",
+      "state": "RETAINED"
+    }
+  ],
+  "kernel": "nvoid912/molgap-ppgt-research-slot1-v1",
+  "platform_version_verified_by_output_api": true,
+  "receipt_version": 1,
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false
+}

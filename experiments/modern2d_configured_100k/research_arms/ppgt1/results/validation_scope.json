@@ -1,0 +1,29 @@
+{
+  "arms": {
+    "ppgt_base": {
+      "artifact_bindings_verified": 21,
+      "full_20_pass_endpoint": "NOT_MET",
+      "role_events_verified": 7,
+      "scientific_replay_ready": false,
+      "strict_saved_state_resume": "RESUME_VERIFIED",
+      "v5_envelope_valid": true
+    },
+    "ppgt_mean": {
+      "artifact_bindings_verified": 21,
+      "full_20_pass_endpoint": "NOT_MET",
+      "role_events_verified": 7,
+      "scientific_replay_ready": false,
+      "strict_saved_state_resume": "RESUME_VERIFIED",
+      "v5_envelope_valid": true
+    }
+  },
+  "global_rml_validate_or_rebuild": false,
+  "new_remote_compute": false,
+  "prior_blocked_report_preserved": true,
+  "production_training_or_inference_executed_locally": false,
+  "protected_roles_accessed": false,
+  "real_saved_state_resume_bundles": 4,
+  "repair_report_ref": "experiments/modern2d_configured_100k/research_arms/ppgt1/results/resume_ema_fix_verification.json",
+  "repair_report_sha256": "68aa7001df6c2d7ffd8383c17bc3e087351b9a97829f9eadc9e72e42de518119",
+  "synthetic_cpu_regression_tests": 5
+}

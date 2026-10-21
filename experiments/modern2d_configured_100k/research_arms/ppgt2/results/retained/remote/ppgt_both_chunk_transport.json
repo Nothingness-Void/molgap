@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "path": "resume_bundle.json",
+      "sha256": "b9491e6aba4f8c3f10c33da511e9c39bf613eb826879bafd6591903bdfaffcb7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/last_checkpoint.pt",
+      "sha256": "aff0567c6932af6ea3f2d96b9f9073f6a576b9b680d6f48e83763c7551d45000",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/development_predictions.pt",
+      "sha256": "d03033e2694a694f311ce3a7271711a294b5ebca39d382af022ac75d0715100f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/selected_model.pt",
+      "sha256": "85a2b223893ed7fa03c275ffddf73cff89a05cb188112b0b588360c02d8d505b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/canonical_trace.json",
+      "sha256": "1fc47ad6aca565b9ce6c8c2ddf97e5594fe80f70c2c24dd8534032a0065aac75",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/trajectory.json",
+      "sha256": "de95fe2755332ce68a81f2e87c8427fd36d83a884a607069252838bf1574dac2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/runtime_certificate.json",
+      "sha256": "a14a525ea99b02f770186b6f43b7b300a344a491469b66e270dc1deddad44694",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/runtime_provenance.json",
+      "sha256": "ac2c5d518bc6a1e44a6c1718c302a5d17fe9466b57e552678536ee25c49e54da",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/training_contract.json",
+      "sha256": "62f4801a9a217eb4ef734dee226621d52920e16b66d649ed123118a04fec5fa7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/canonical_trace.json.context.json",
+      "sha256": "bb28f5b90772e42dbeba961267a61626234cfc7fea05c17dd3328881689f66bf",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/allocation_ledger.json",
+      "sha256": "94f23dafa0e3e5c96e4cdf80a04c91ea8cdc12c9dd6039b4bc9b2a98e6ac31de",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/invocation_cost_state.json",
+      "sha256": "302bbc5f6e5c457609bece59f8852f9350da032059be57914b0265fb8e351027",
+      "state": "RETAINED"
+    },
+    {
+      "path": "files/preflight_costs.json",
+      "sha256": "2b1564114e5da88807b8f5d5cdee939896d2f460852392b56ac4aee6a5d26fc8",
+      "state": "RETAINED"
+    }
+  ],
+  "kernel": "nvoid912/molgap-ppgt-research-slot2-v1",
+  "platform_version_verified_by_output_api": true,
+  "receipt_version": 1,
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false
+}

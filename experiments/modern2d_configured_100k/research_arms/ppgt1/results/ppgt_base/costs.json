@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_base-v1",
+      "category": "training",
+      "cost_event_id": "cost-T-modern2d-ppgt-research-slot1-s42-v1-ppgt_base-observed-allocation",
+      "evidence_ref": "experiments/modern2d_configured_100k/research_arms/ppgt1/results/retained/remote/bootstrap_allocation.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 4.841857258140277
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "modern2d-ppgt-research-slot1-s42-v1:ppgt_base:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-modern2d-ppgt-research-slot1-s42-v1-ppgt_base"
+    }
+  ],
+  "scope": "One assigned T4 for the shared Python-observed allocation; sum device hours across both arms once. Bootstrap/root/worker ledgers overlap and must not be added. Queue and pre-Python provisioning missing."
+}

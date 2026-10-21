@@ -1,0 +1,28 @@
+{
+  "format": "molgap-training-log-v1",
+  "event": "terminal",
+  "arm_id": "ppgt_both",
+  "family": "ppgt_small",
+  "weight_state": "live",
+  "status": "paused",
+  "completed_passes": 10,
+  "planned_passes": 20.0,
+  "next_batch": 316,
+  "optimizer_steps": 8126,
+  "planned_optimizer_steps": 15620,
+  "sample_presentations": 1040128,
+  "train_live_mae_eV": 0.18823900590836173,
+  "development_mae_eV": 0.2334533929824829,
+  "best_development_mae_eV": 0.2334533929824829,
+  "metric_pass": 10,
+  "best_metric_pass": 10,
+  "learning_rates": [
+    0.000654423970360015
+  ],
+  "elapsed_seconds": 17192.253537801,
+  "updates_per_second": 0.4726547326755727,
+  "eta_seconds": 15855.125278400283,
+  "pass_wall_seconds": null,
+  "pass_timing_scope": null,
+  "checkpoint_optimizer_steps": 8126
+}

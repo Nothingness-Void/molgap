@@ -1,0 +1,41 @@
+{
+  "arms": {
+    "ppgt_both": {
+      "actual_progress": {
+        "completed_passes": 10,
+        "next_batch": 316,
+        "optimizer_steps": 8126,
+        "sample_presentations": 1040128
+      },
+      "bound_artifact_count": 21,
+      "canonical_rml_finalization": "NOT_ATTEMPTED_NO_FROZEN_REFERENCE_BINDING",
+      "canonical_terminal_staging": "NOT_RUN_MISSING_COMPLETED_OUTPUT_MANIFEST",
+      "full_20_pass_endpoint": false,
+      "prospective_unmodified": true,
+      "raw_trace_retained": true,
+      "role_events": 7,
+      "scientific_replay_ready": false,
+      "v5_envelope_valid": true
+    },
+    "ppgt_scale": {
+      "actual_progress": {
+        "completed_passes": 10,
+        "next_batch": 402,
+        "optimizer_steps": 8212,
+        "sample_presentations": 1051136
+      },
+      "bound_artifact_count": 21,
+      "canonical_rml_finalization": "NOT_ATTEMPTED_NO_FROZEN_REFERENCE_BINDING",
+      "canonical_terminal_staging": "NOT_RUN_MISSING_COMPLETED_OUTPUT_MANIFEST",
+      "full_20_pass_endpoint": false,
+      "prospective_unmodified": true,
+      "raw_trace_retained": true,
+      "role_events": 7,
+      "scientific_replay_ready": false,
+      "v5_envelope_valid": true
+    }
+  },
+  "derived_rebuilt": false,
+  "forced_eligibility": false,
+  "scope": "Validated V5/role/cost/retained-artifact records; not canonical finalization or Replay admission. Full-output terminal stager not applicable to paused outputs."
+}

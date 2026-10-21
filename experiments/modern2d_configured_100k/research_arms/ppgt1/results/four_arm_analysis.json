@@ -1,0 +1,1468 @@
+{
+  "all_four_row_alignment": {
+    "ppgt_base": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_exact": true
+    },
+    "ppgt_both": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_exact": true
+    },
+    "ppgt_mean": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_exact": true
+    },
+    "ppgt_scale": {
+      "rows": 50000,
+      "source_idx_exact": true,
+      "target_exact": true
+    }
+  },
+  "allocation_costs": {
+    "1": {
+      "allocated_T4_hours": 9.683714516280554,
+      "allocated_device_seconds": 34861.37225861,
+      "allocation_device_count": 2,
+      "cost_status": "measured",
+      "hardware": [
+        "Tesla T4",
+        "Tesla T4"
+      ],
+      "inner_ledger_cost_added": false,
+      "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+      "provisioning_before_python_seconds": null,
+      "queue_seconds": null,
+      "sha256": "c42b65c971e09a8ea640b97901734575ad884493de3945adbdfae5fdb0b20dd4",
+      "status": "complete",
+      "wall_seconds": 17430.686129305
+    },
+    "2": {
+      "allocated_T4_hours": 9.685901405703333,
+      "allocated_device_seconds": 34869.245060532,
+      "allocation_device_count": 2,
+      "cost_status": "measured",
+      "hardware": [
+        "Tesla T4",
+        "Tesla T4"
+      ],
+      "inner_ledger_cost_added": false,
+      "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+      "provisioning_before_python_seconds": null,
+      "queue_seconds": null,
+      "sha256": "b7adf1661845be9970f4224c3116e620314dd1ae97afb4d7b4e2571a26ac3b5a",
+      "status": "complete",
+      "wall_seconds": 17434.622530266
+    }
+  },
+  "arms": {
+    "ppgt_base": {
+      "all_state_schemas_match": true,
+      "bundle_path": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-ppgt-research-slot1-s42-v1\\v1\\ppgt_base\\pass_10",
+      "bundle_presentations": 999680,
+      "bundle_steps": 7810,
+      "checkpoints": {
+        "latest_paused": {
+          "cursor": {
+            "best_development_mae_eV": 0.2779392600059509,
+            "next_batch": 629,
+            "pass_index": 10,
+            "recipe_identity": "b2c82f2a8591546ab9d5981ef0f997c5fb9588ade6fbea7379d897981ac990fa",
+            "selected_step": 7810,
+            "status": "paused"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 1391
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 8439,
+          "sample_presentations": 1080192,
+          "weights_only": true
+        },
+        "pass10_last": {
+          "cursor": {
+            "best_development_mae_eV": 0.2779392600059509,
+            "next_batch": 0,
+            "pass_index": 10,
+            "recipe_identity": "b2c82f2a8591546ab9d5981ef0f997c5fb9588ade6fbea7379d897981ac990fa",
+            "selected_step": 7810,
+            "status": "running"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 762
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "weights_only": true
+        },
+        "selected": {
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 190
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "selection": {
+            "development_mae_eV": 0.2779392600059509,
+            "epoch_or_pass": 10.0,
+            "optimizer_step": 7810,
+            "selection": "best-development-live",
+            "weights": "live"
+          },
+          "weights_only": true
+        }
+      },
+      "completed_passes": 10,
+      "curves_pass5_10": [
+        {
+          "development_mae_eV": 0.344171941280365,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840,
+          "train_mae_eV": 0.2868999611264814,
+          "train_metric_original": 0.225003658332379
+        },
+        {
+          "development_mae_eV": 0.2779392600059509,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680,
+          "train_mae_eV": 0.22752668666669915,
+          "train_metric_original": 0.17843967865050678
+        }
+      ],
+      "frozen_endpoint_requirements": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "full_endpoint_met": false,
+      "independent_selected_mae_eV": 0.27793926957368853,
+      "latest_checkpoint_matches_pause_hash": true,
+      "latest_checkpoint_sha256": "7696caf6f54d81d03c86cc537f4cf2654d967e1e4ad86963ee8d6cc941a30a19",
+      "latest_cursor": {
+        "best_development_mae_eV": 0.2779392600059509,
+        "next_batch": 629,
+        "pass_index": 10,
+        "recipe_identity": "b2c82f2a8591546ab9d5981ef0f997c5fb9588ade6fbea7379d897981ac990fa",
+        "selected_step": 7810,
+        "status": "paused"
+      },
+      "latest_optimizer_step": 8439,
+      "latest_sample_presentations": 1080192,
+      "latest_selected_metric_unchanged": true,
+      "latest_selected_step_unchanged": true,
+      "latest_trace_matches_pass10_trace": true,
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "parameter_count_expected_2577729": true,
+      "pass10_trace_mae_eV": 0.2779392600059509,
+      "pause_receipt": {
+        "checkpoint_sha256": "7696caf6f54d81d03c86cc537f4cf2654d967e1e4ad86963ee8d6cc941a30a19",
+        "completed_steps": 8439,
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "ppgt_base",
+          "arm_identity": "c171877c3b61ee3a59e5f4591b1e8b0f90511e38b294b9b3a7a06c6a53a7bbe4",
+          "experiment_id": "modern2d_configured_100k",
+          "family_name": "ppgt_small",
+          "family_version": "3",
+          "logical_run_id": "modern2d-ppgt-research-slot1-s42-v1",
+          "package_identity": "b353600e7b3cf64b20c285f3b8cf98e98d545032ed925c235ce5ca1f1e758b64",
+          "platform": "kaggle",
+          "platform_version": null,
+          "run_reference": "nvoid912/molgap-ppgt-research-slot1-v1",
+          "source_archive_sha256": "e437f750a9edbf192da9f361bae80440f18948559ebe771791acbb9a3dc08dc7",
+          "source_commit": "af1723cd7e69567ab343f90343e608a7d69b95de",
+          "spec_identity": "cd040b9f67c06e974c50a77716cce5d2e590a7b1c2ee62d9bf5bbd6702c6c58e",
+          "training_recipe_sha256": "5142d61bcf07193c2939b03c0eeb7b8797c539c0e0094deda44af08326b9d7b9"
+        },
+        "horizon_steps": 15620,
+        "optimizer_steps": 8439,
+        "reason": "STOP_FOR_COST",
+        "sample_presentations": 1080192,
+        "scientific_acceptance": "INCONCLUSIVE",
+        "status": "PAUSED"
+      },
+      "prediction_vs_selected_trace_abs_delta_eV": 9.567737602189652e-09,
+      "predictions_finite": true,
+      "producer_selected_mae_eV": 0.2779392600059509,
+      "rows": 50000,
+      "selected": {
+        "development_mae_eV": 0.2779392600059509,
+        "epoch_or_pass": 10.0,
+        "optimizer_step": 7810,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_matches_trace_minimum": true,
+      "selected_pass": 10,
+      "selected_step_from_bundle": 7810,
+      "selected_trace_mae_eV": 0.2779392600059509,
+      "target_std_eV": 1.275090206323082
+    },
+    "ppgt_both": {
+      "all_state_schemas_match": true,
+      "bundle_path": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-ppgt-research-slot2-s42-v1\\v1\\ppgt_both\\pass_10",
+      "bundle_presentations": 999680,
+      "bundle_steps": 7810,
+      "checkpoints": {
+        "latest_paused": {
+          "cursor": {
+            "best_development_mae_eV": 0.2334533929824829,
+            "next_batch": 316,
+            "pass_index": 10,
+            "recipe_identity": "f962602d354f88abe039dcb8cd9a6145327ac0fbb170ad8c070f18505485aa45",
+            "selected_step": 7810,
+            "status": "paused"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 1078
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 8126,
+          "sample_presentations": 1040128,
+          "weights_only": true
+        },
+        "pass10_last": {
+          "cursor": {
+            "best_development_mae_eV": 0.2334533929824829,
+            "next_batch": 0,
+            "pass_index": 10,
+            "recipe_identity": "f962602d354f88abe039dcb8cd9a6145327ac0fbb170ad8c070f18505485aa45",
+            "selected_step": 7810,
+            "status": "running"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 762
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "weights_only": true
+        },
+        "selected": {
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 190
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "selection": {
+            "development_mae_eV": 0.2334533929824829,
+            "epoch_or_pass": 10.0,
+            "optimizer_step": 7810,
+            "selection": "best-development-live",
+            "weights": "live"
+          },
+          "weights_only": true
+        }
+      },
+      "completed_passes": 10,
+      "curves_pass5_10": [
+        {
+          "development_mae_eV": 0.27418485283851624,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840,
+          "train_mae_eV": 0.24668818112336496,
+          "train_metric_original": 0.19346723855304962
+        },
+        {
+          "development_mae_eV": 0.2334533929824829,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680,
+          "train_mae_eV": 0.18823900590836173,
+          "train_metric_original": 0.14762799131771057
+        }
+      ],
+      "frozen_endpoint_requirements": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "full_endpoint_met": false,
+      "independent_selected_mae_eV": 0.23345340409040452,
+      "latest_checkpoint_matches_pause_hash": true,
+      "latest_checkpoint_sha256": "daa034938f895d24e78ca55bf8211b67158c05cb4e70bf56d1fc3fe726ef10fc",
+      "latest_cursor": {
+        "best_development_mae_eV": 0.2334533929824829,
+        "next_batch": 316,
+        "pass_index": 10,
+        "recipe_identity": "f962602d354f88abe039dcb8cd9a6145327ac0fbb170ad8c070f18505485aa45",
+        "selected_step": 7810,
+        "status": "paused"
+      },
+      "latest_optimizer_step": 8126,
+      "latest_sample_presentations": 1040128,
+      "latest_selected_metric_unchanged": true,
+      "latest_selected_step_unchanged": true,
+      "latest_trace_matches_pass10_trace": true,
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "parameter_count_expected_2577729": true,
+      "pass10_trace_mae_eV": 0.2334533929824829,
+      "pause_receipt": {
+        "checkpoint_sha256": "daa034938f895d24e78ca55bf8211b67158c05cb4e70bf56d1fc3fe726ef10fc",
+        "completed_steps": 8126,
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "ppgt_both",
+          "arm_identity": "69c6feb3d6e53aba74d4335ac0c179e5d613dbd918d2a94ec821dffaf63c9376",
+          "experiment_id": "modern2d_configured_100k",
+          "family_name": "ppgt_small",
+          "family_version": "3",
+          "logical_run_id": "modern2d-ppgt-research-slot2-s42-v1",
+          "package_identity": "88f9cec34018a95f779d31185dc653cd67ef9fda3329c18c5043c92f93eb53c0",
+          "platform": "kaggle",
+          "platform_version": null,
+          "run_reference": "nvoid912/molgap-ppgt-research-slot2-v1",
+          "source_archive_sha256": "5c3462af028ddab843386d82f55050172820326b858d9f471ed04b0f9ad30ed2",
+          "source_commit": "af1723cd7e69567ab343f90343e608a7d69b95de",
+          "spec_identity": "777dc6459e842b8c88d5da6c39cda2bdfdbaf077744df660866cfabde131f27e",
+          "training_recipe_sha256": "62f4801a9a217eb4ef734dee226621d52920e16b66d649ed123118a04fec5fa7"
+        },
+        "horizon_steps": 15620,
+        "optimizer_steps": 8126,
+        "reason": "STOP_FOR_COST",
+        "sample_presentations": 1040128,
+        "scientific_acceptance": "INCONCLUSIVE",
+        "status": "PAUSED"
+      },
+      "prediction_vs_selected_trace_abs_delta_eV": 1.1107921610298277e-08,
+      "predictions_finite": true,
+      "producer_selected_mae_eV": 0.2334533929824829,
+      "rows": 50000,
+      "selected": {
+        "development_mae_eV": 0.2334533929824829,
+        "epoch_or_pass": 10.0,
+        "optimizer_step": 7810,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_matches_trace_minimum": true,
+      "selected_pass": 10,
+      "selected_step_from_bundle": 7810,
+      "selected_trace_mae_eV": 0.2334533929824829,
+      "target_std_eV": 1.275090206323082
+    },
+    "ppgt_mean": {
+      "all_state_schemas_match": true,
+      "bundle_path": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-ppgt-research-slot1-s42-v1\\v1\\ppgt_mean\\pass_10",
+      "bundle_presentations": 999680,
+      "bundle_steps": 7810,
+      "checkpoints": {
+        "latest_paused": {
+          "cursor": {
+            "best_development_mae_eV": 0.23928327858448029,
+            "next_batch": 753,
+            "pass_index": 10,
+            "recipe_identity": "045db1fd59ce9dc67baa5b1fead7bcedbd619c7f97966cee908be77bf0391f9e",
+            "selected_step": 7029,
+            "status": "paused"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 1515
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 8563,
+          "sample_presentations": 1096064,
+          "weights_only": true
+        },
+        "pass10_last": {
+          "cursor": {
+            "best_development_mae_eV": 0.23928327858448029,
+            "next_batch": 0,
+            "pass_index": 10,
+            "recipe_identity": "045db1fd59ce9dc67baa5b1fead7bcedbd619c7f97966cee908be77bf0391f9e",
+            "selected_step": 7029,
+            "status": "running"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 762
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "weights_only": true
+        },
+        "selected": {
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 190
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7029,
+          "selection": {
+            "development_mae_eV": 0.23928327858448029,
+            "epoch_or_pass": 9.0,
+            "optimizer_step": 7029,
+            "selection": "best-development-live",
+            "weights": "live"
+          },
+          "weights_only": true
+        }
+      },
+      "completed_passes": 10,
+      "curves_pass5_10": [
+        {
+          "development_mae_eV": 0.2840432822704315,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840,
+          "train_mae_eV": 0.25292152400881607,
+          "train_metric_original": 0.1983557890685664
+        },
+        {
+          "development_mae_eV": 0.2404640018939972,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680,
+          "train_mae_eV": 0.19216742306571455,
+          "train_metric_original": 0.15070888484028025
+        }
+      ],
+      "frozen_endpoint_requirements": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "full_endpoint_met": false,
+      "independent_selected_mae_eV": 0.23928327372789382,
+      "latest_checkpoint_matches_pause_hash": true,
+      "latest_checkpoint_sha256": "c3158ba295b13fc1a66a962c910a513a64ef3fd112f0016ce55cf8292382a906",
+      "latest_cursor": {
+        "best_development_mae_eV": 0.23928327858448029,
+        "next_batch": 753,
+        "pass_index": 10,
+        "recipe_identity": "045db1fd59ce9dc67baa5b1fead7bcedbd619c7f97966cee908be77bf0391f9e",
+        "selected_step": 7029,
+        "status": "paused"
+      },
+      "latest_optimizer_step": 8563,
+      "latest_sample_presentations": 1096064,
+      "latest_selected_metric_unchanged": true,
+      "latest_selected_step_unchanged": true,
+      "latest_trace_matches_pass10_trace": true,
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "parameter_count_expected_2577729": true,
+      "pass10_trace_mae_eV": 0.2404640018939972,
+      "pause_receipt": {
+        "checkpoint_sha256": "c3158ba295b13fc1a66a962c910a513a64ef3fd112f0016ce55cf8292382a906",
+        "completed_steps": 8563,
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "ppgt_mean",
+          "arm_identity": "f0c9e6e838cb0b86e06684cb9493298d1f8d5f497a505d6373e9c86363eb31f6",
+          "experiment_id": "modern2d_configured_100k",
+          "family_name": "ppgt_small",
+          "family_version": "3",
+          "logical_run_id": "modern2d-ppgt-research-slot1-s42-v1",
+          "package_identity": "b353600e7b3cf64b20c285f3b8cf98e98d545032ed925c235ce5ca1f1e758b64",
+          "platform": "kaggle",
+          "platform_version": null,
+          "run_reference": "nvoid912/molgap-ppgt-research-slot1-v1",
+          "source_archive_sha256": "e437f750a9edbf192da9f361bae80440f18948559ebe771791acbb9a3dc08dc7",
+          "source_commit": "af1723cd7e69567ab343f90343e608a7d69b95de",
+          "spec_identity": "cd040b9f67c06e974c50a77716cce5d2e590a7b1c2ee62d9bf5bbd6702c6c58e",
+          "training_recipe_sha256": "b039494d31e67c0f6a69b16d7e8b4d95f94c5fc250f7f7f0bb8bb00dbe5d44e7"
+        },
+        "horizon_steps": 15620,
+        "optimizer_steps": 8563,
+        "reason": "STOP_FOR_COST",
+        "sample_presentations": 1096064,
+        "scientific_acceptance": "INCONCLUSIVE",
+        "status": "PAUSED"
+      },
+      "prediction_vs_selected_trace_abs_delta_eV": 4.856586466317481e-09,
+      "predictions_finite": true,
+      "producer_selected_mae_eV": 0.23928327858448029,
+      "rows": 50000,
+      "selected": {
+        "development_mae_eV": 0.23928327858448029,
+        "epoch_or_pass": 9.0,
+        "optimizer_step": 7029,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_matches_trace_minimum": true,
+      "selected_pass": 9,
+      "selected_step_from_bundle": 7029,
+      "selected_trace_mae_eV": 0.23928327858448029,
+      "target_std_eV": 1.275090206323082
+    },
+    "ppgt_scale": {
+      "all_state_schemas_match": true,
+      "bundle_path": "E:\\MolGap\\artifacts\\accepted_outputs\\modern2d-ppgt-research-slot2-s42-v1\\v1\\ppgt_scale\\pass_10",
+      "bundle_presentations": 999680,
+      "bundle_steps": 7810,
+      "checkpoints": {
+        "latest_paused": {
+          "cursor": {
+            "best_development_mae_eV": 0.2828370928764343,
+            "next_batch": 402,
+            "pass_index": 10,
+            "recipe_identity": "81cea9fab82fbef5eeb834e74efdc147efc393bdd6009bb030b2c69e51f6c6d1",
+            "selected_step": 6248,
+            "status": "paused"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 1164
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 8212,
+          "sample_presentations": 1051136,
+          "weights_only": true
+        },
+        "pass10_last": {
+          "cursor": {
+            "best_development_mae_eV": 0.2828370928764343,
+            "next_batch": 0,
+            "pass_index": 10,
+            "recipe_identity": "81cea9fab82fbef5eeb834e74efdc147efc393bdd6009bb030b2c69e51f6c6d1",
+            "selected_step": 6248,
+            "status": "running"
+          },
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 762
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "weights_only": true
+        },
+        "selected": {
+          "finite": {
+            "all_finite": true,
+            "nonfinite_paths": [],
+            "tensor_count": 190
+          },
+          "model_state_elements": 2577729,
+          "model_tensor_count": 190,
+          "optimizer_step": 6248,
+          "selection": {
+            "development_mae_eV": 0.2828370928764343,
+            "epoch_or_pass": 8.0,
+            "optimizer_step": 6248,
+            "selection": "best-development-live",
+            "weights": "live"
+          },
+          "weights_only": true
+        }
+      },
+      "completed_passes": 10,
+      "curves_pass5_10": [
+        {
+          "development_mae_eV": 0.3230672776699066,
+          "optimizer_step": 3905,
+          "pass": 5,
+          "sample_presentations": 499840,
+          "train_mae_eV": 0.28814705952935493,
+          "train_metric_original": 0.22598170552989433
+        },
+        {
+          "development_mae_eV": 0.28524672985076904,
+          "optimizer_step": 7810,
+          "pass": 10,
+          "sample_presentations": 999680,
+          "train_mae_eV": 0.23928268818499288,
+          "train_metric_original": 0.18765941970098035
+        }
+      ],
+      "frozen_endpoint_requirements": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "full_endpoint_met": false,
+      "independent_selected_mae_eV": 0.2828370863699913,
+      "latest_checkpoint_matches_pause_hash": true,
+      "latest_checkpoint_sha256": "fdb667d0bf23d03bc190b3cceedb4be7fb61b080d55d0dcb3d3bf4826c1a8af5",
+      "latest_cursor": {
+        "best_development_mae_eV": 0.2828370928764343,
+        "next_batch": 402,
+        "pass_index": 10,
+        "recipe_identity": "81cea9fab82fbef5eeb834e74efdc147efc393bdd6009bb030b2c69e51f6c6d1",
+        "selected_step": 6248,
+        "status": "paused"
+      },
+      "latest_optimizer_step": 8212,
+      "latest_sample_presentations": 1051136,
+      "latest_selected_metric_unchanged": true,
+      "latest_selected_step_unchanged": true,
+      "latest_trace_matches_pass10_trace": true,
+      "metric_semantics": {
+        "ema_dev_metric": null,
+        "live_dev_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+          "target": "Gap",
+          "unit": "eV",
+          "weights": "live"
+        },
+        "live_train_metric": {
+          "direction": "minimize",
+          "metric": "MAE",
+          "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+          "target": "Gap",
+          "unit": "normalized-Gap",
+          "weights": "live"
+        }
+      },
+      "parameter_count_expected_2577729": true,
+      "pass10_trace_mae_eV": 0.28524672985076904,
+      "pause_receipt": {
+        "checkpoint_sha256": "fdb667d0bf23d03bc190b3cceedb4be7fb61b080d55d0dcb3d3bf4826c1a8af5",
+        "completed_steps": 8212,
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "ppgt_scale",
+          "arm_identity": "f38e0b2685040d3abe5f528a8ff148c8697542340df90fa0a83bdfbc4aae8c76",
+          "experiment_id": "modern2d_configured_100k",
+          "family_name": "ppgt_small",
+          "family_version": "3",
+          "logical_run_id": "modern2d-ppgt-research-slot2-s42-v1",
+          "package_identity": "88f9cec34018a95f779d31185dc653cd67ef9fda3329c18c5043c92f93eb53c0",
+          "platform": "kaggle",
+          "platform_version": null,
+          "run_reference": "nvoid912/molgap-ppgt-research-slot2-v1",
+          "source_archive_sha256": "5c3462af028ddab843386d82f55050172820326b858d9f471ed04b0f9ad30ed2",
+          "source_commit": "af1723cd7e69567ab343f90343e608a7d69b95de",
+          "spec_identity": "777dc6459e842b8c88d5da6c39cda2bdfdbaf077744df660866cfabde131f27e",
+          "training_recipe_sha256": "2066c52ac7965883c7c0512b35dcab07f92552e9b9107563be764ad7b557938f"
+        },
+        "horizon_steps": 15620,
+        "optimizer_steps": 8212,
+        "reason": "STOP_FOR_COST",
+        "sample_presentations": 1051136,
+        "scientific_acceptance": "INCONCLUSIVE",
+        "status": "PAUSED"
+      },
+      "prediction_vs_selected_trace_abs_delta_eV": 6.506443051002009e-09,
+      "predictions_finite": true,
+      "producer_selected_mae_eV": 0.2828370928764343,
+      "rows": 50000,
+      "selected": {
+        "development_mae_eV": 0.2828370928764343,
+        "epoch_or_pass": 8.0,
+        "optimizer_step": 6248,
+        "selection": "best-development-live",
+        "weights": "live"
+      },
+      "selected_matches_trace_minimum": true,
+      "selected_pass": 8,
+      "selected_step_from_bundle": 6248,
+      "selected_trace_mae_eV": 0.2828370928764343,
+      "target_std_eV": 1.275090206323082
+    }
+  },
+  "bootstrap_scope": {
+    "interaction_definition": "(both-scale)-(mean-base), using paired absolute errors on fixed rows",
+    "max_chunk_cells": 2000000,
+    "multiplicity_adjustment": false,
+    "not_training_seed_variance": true,
+    "resamples": 2000,
+    "resampling_rng_seed": 42
+  },
+  "checks": {
+    "all_latest_checkpoint_pause_hashes_match": true,
+    "all_latest_selected_and_traces_unchanged_since_pass10": true,
+    "all_model_states_2577729_elements": true,
+    "all_model_states_finite": true,
+    "all_resume_bundles_verified": false,
+    "all_selected_mae_matches_bound_trace": true,
+    "exact_50k_row_target_alignment": true,
+    "latest_cursors_match_declared_observations": true,
+    "only_declared_recipe_interventions": true,
+    "profile_receipt_transport_hashes_and_spans": true
+  },
+  "elapsed_seconds": 11.14100000000326,
+  "errors": [
+    {
+      "arm": "ppgt_base",
+      "error": "Incomplete family resume state",
+      "stage": "validate_resume_bundle"
+    },
+    {
+      "arm": "ppgt_mean",
+      "error": "Incomplete family resume state",
+      "stage": "validate_resume_bundle"
+    },
+    {
+      "arm": "ppgt_scale",
+      "error": "Incomplete family resume state",
+      "stage": "validate_resume_bundle"
+    },
+    {
+      "arm": "ppgt_both",
+      "error": "Incomplete family resume state",
+      "stage": "validate_resume_bundle"
+    }
+  ],
+  "format": "molgap-ppgt-partial-numerical-acceptance-v1",
+  "full_20_pass_endpoint": "NOT_MET",
+  "limits": {
+    "cache_or_graph_access": false,
+    "full_endpoint_20_pass_acceptance": false,
+    "global_rml_or_rebuild": false,
+    "model_or_inference_execution": false,
+    "native_proof_repeat": false,
+    "new_training_seed": false,
+    "protected_role_access": false,
+    "reference_qualification": false,
+    "replay_ready": false,
+    "repository_edits": false,
+    "resume_validation_is_full_endpoint_acceptance": false,
+    "scientific_winner_claim": false,
+    "tests": false
+  },
+  "matched_pass10_trace_factorial_effects": {
+    "interaction_eV": -0.014318078756332397,
+    "pooling_mean_minus_sum_high_scale_eV": -0.05179333686828613,
+    "pooling_mean_minus_sum_low_scale_eV": -0.037475258111953735,
+    "scale_high_minus_low_mean_eV": -0.007010608911514282,
+    "scale_high_minus_low_sum_eV": 0.007307469844818115
+  },
+  "no_unexpected_recipe_differences": true,
+  "paired_selected_checkpoint_analysis": {
+    "both_minus_scale": {
+      "bootstrap": {
+        "ci95": [
+          -0.05119351898443699,
+          -0.047615162791490556
+        ],
+        "delta": -0.04938368227958679,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "seed": 42
+      },
+      "mean_delta_eV": -0.04938368227958679,
+      "negative_row_fraction": 0.59302
+    },
+    "mean_minus_base": {
+      "bootstrap": {
+        "ci95": [
+          -0.040366008216023444,
+          -0.03690345853435993
+        ],
+        "delta": -0.038655995845794676,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "seed": 42
+      },
+      "mean_delta_eV": -0.038655995845794676,
+      "negative_row_fraction": 0.57702
+    },
+    "pooling_scale_interaction": {
+      "bootstrap": {
+        "ci95": [
+          -0.013118088363409042,
+          -0.008472611234903338
+        ],
+        "delta": -0.010727686433792114,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "seed": 42
+      },
+      "mean_delta_eV": -0.010727686433792114,
+      "negative_row_fraction": 0.50988
+    }
+  },
+  "prediction_scope": "Paired row contrasts compare best-selected checkpoints: preserve each selected pass. Matched pass10 effects use trace scalars only; mean/scale selected payloads must not be relabeled pass10. No pass15/20 curve or prediction is present.",
+  "producer_status": "STOP_FOR_COST",
+  "profiles": {
+    "ppgt_base": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 7.749692233000019,
+        "captured_updates": 4,
+        "observed_updates": 8439,
+        "starting_optimizer_step": 0
+      },
+      "capture_off": {
+        "presentations_per_second": 83.52179877318771,
+        "sample_presentations": 899712,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "spans": 9,
+        "updates": 7029,
+        "updates_per_second": 0.652514052915529,
+        "wall_seconds": 10772.181792244
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": true,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 3.0246194899999637,
+          "host_total_seconds": 3.0246194899999637,
+          "name": "backward"
+        },
+        {
+          "calls": 512,
+          "host_self_seconds": 1.8069850780011052,
+          "host_total_seconds": 1.8069850780011052,
+          "name": "ppgt/rrwp"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 1.025650668000253,
+          "host_total_seconds": 1.025650668000253,
+          "name": "ppgt/attention"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 0.5790436629997089,
+          "host_total_seconds": 1.882541549999928,
+          "name": "ppgt/backbone"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.4290697899998577,
+          "host_total_seconds": 4.592384605999996,
+          "name": "forward"
+        }
+      ],
+      "dominant_operators_self_cpu": [
+        {
+          "calls": 130250,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 1253438.5140000004,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1034902.9990000024,
+          "self_device_us": 153986.14299992815
+        },
+        {
+          "calls": 2726,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 452097.1959999426,
+          "self_device_us": 80656.5889999934
+        }
+      ],
+      "dominant_operators_self_device": [
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1034902.9990000024,
+          "self_device_us": 153986.14299992815
+        },
+        {
+          "calls": 8972,
+          "input_shapes": "",
+          "name": "aten::sum",
+          "self_cpu_us": 156096.7020000469,
+          "self_device_us": 125430.13099998396
+        },
+        {
+          "calls": 24107,
+          "input_shapes": "",
+          "name": "aten::mul",
+          "self_cpu_us": 379699.1569999133,
+          "self_device_us": 102547.11799999134
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "peak_allocated_bytes": 611147264,
+      "peak_reserved_bytes": 822083584,
+      "profile_hash_matches_execution_receipt": true,
+      "profile_hash_matches_transport": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-ppgt-research-slot1-s42-v1\\v1\\inspection\\experiment\\ppgt_base\\profiles\\step_0_1792598082719407566\\profile.json",
+      "profile_sha256": "1be8a4abd9f484d4442b33eafbef641d32e11e32f66ac44d3b100aec781282b5",
+      "training_spans_hash_matches_transport": true,
+      "training_spans_match_profile": true,
+      "training_spans_sha256": "1b3f18f557ed049f5eac4c9ab548ddeaccbfd6251452f53a2d9cdfaa1613e2a0"
+    },
+    "ppgt_both": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 7.891608233999989,
+        "captured_updates": 4,
+        "observed_updates": 8126,
+        "starting_optimizer_step": 0
+      },
+      "capture_off": {
+        "presentations_per_second": 81.63629490976045,
+        "sample_presentations": 899712,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "spans": 9,
+        "updates": 7029,
+        "updates_per_second": 0.6377835539825035,
+        "wall_seconds": 11020.980324922
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": true,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 3.003098098999999,
+          "host_total_seconds": 3.003098098999999,
+          "name": "backward"
+        },
+        {
+          "calls": 512,
+          "host_self_seconds": 1.887552378000862,
+          "host_total_seconds": 1.887552378000862,
+          "name": "ppgt/rrwp"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 1.0701626590001752,
+          "host_total_seconds": 1.0701626590001752,
+          "name": "ppgt/attention"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 0.5789803459995255,
+          "host_total_seconds": 1.9306718859997432,
+          "name": "ppgt/backbone"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.4560953269997867,
+          "host_total_seconds": 4.778005022999935,
+          "name": "forward"
+        }
+      ],
+      "dominant_operators_self_cpu": [
+        {
+          "calls": 130297,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 1257666.6600000362,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1061005.8879999584,
+          "self_device_us": 154108.3029999948
+        },
+        {
+          "calls": 2726,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 468099.85900003754,
+          "self_device_us": 80758.2920000024
+        }
+      ],
+      "dominant_operators_self_device": [
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1061005.8879999584,
+          "self_device_us": 154108.3029999948
+        },
+        {
+          "calls": 8925,
+          "input_shapes": "",
+          "name": "aten::sum",
+          "self_cpu_us": 159486.00900005453,
+          "self_device_us": 125813.43299998774
+        },
+        {
+          "calls": 24107,
+          "input_shapes": "",
+          "name": "aten::mul",
+          "self_cpu_us": 389935.540999957,
+          "self_device_us": 102922.78900004298
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "peak_allocated_bytes": 609460736,
+      "peak_reserved_bytes": 822083584,
+      "profile_hash_matches_execution_receipt": true,
+      "profile_hash_matches_transport": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-ppgt-research-slot2-s42-v1\\v1\\inspection\\experiment\\ppgt_both\\profiles\\step_0_1792598078745183709\\profile.json",
+      "profile_sha256": "954fbe58d7f0d610349de9a09b23d32270a4ed2481c53792928f07718d8e3dde",
+      "training_spans_hash_matches_transport": true,
+      "training_spans_match_profile": true,
+      "training_spans_sha256": "09b4da9fe98be2f88b60098b00a6e6ac39a06bdaf901d290b54106d485df3780"
+    },
+    "ppgt_mean": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 7.665960296000037,
+        "captured_updates": 4,
+        "observed_updates": 8563,
+        "starting_optimizer_step": 0
+      },
+      "capture_off": {
+        "presentations_per_second": 84.58520905310905,
+        "sample_presentations": 899712,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "spans": 9,
+        "updates": 7029,
+        "updates_per_second": 0.6608219457274145,
+        "wall_seconds": 10636.753281949
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": true,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 2.944017788999986,
+          "host_total_seconds": 2.944017788999986,
+          "name": "backward"
+        },
+        {
+          "calls": 512,
+          "host_self_seconds": 1.865252802000441,
+          "host_total_seconds": 1.865252802000441,
+          "name": "ppgt/rrwp"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 1.021946325000897,
+          "host_total_seconds": 1.021946325000897,
+          "name": "ppgt/attention"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 0.547088057998451,
+          "host_total_seconds": 1.8389785530001745,
+          "name": "ppgt/backbone"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.4313075899987098,
+          "host_total_seconds": 4.629194502999951,
+          "name": "forward"
+        }
+      ],
+      "dominant_operators_self_cpu": [
+        {
+          "calls": 130297,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 1247016.7730000282,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1058357.613999995,
+          "self_device_us": 153909.42699997965
+        },
+        {
+          "calls": 2726,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 449177.56699995644,
+          "self_device_us": 80682.39399996525
+        }
+      ],
+      "dominant_operators_self_device": [
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1058357.613999995,
+          "self_device_us": 153909.42699997965
+        },
+        {
+          "calls": 8925,
+          "input_shapes": "",
+          "name": "aten::sum",
+          "self_cpu_us": 153266.26600006336,
+          "self_device_us": 125833.25600000005
+        },
+        {
+          "calls": 24107,
+          "input_shapes": "",
+          "name": "aten::mul",
+          "self_cpu_us": 368715.5799999791,
+          "self_device_us": 102812.53499995734
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "peak_allocated_bytes": 611147264,
+      "peak_reserved_bytes": 822083584,
+      "profile_hash_matches_execution_receipt": true,
+      "profile_hash_matches_transport": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-ppgt-research-slot1-s42-v1\\v1\\inspection\\experiment\\ppgt_mean\\profiles\\step_0_1792598082705951542\\profile.json",
+      "profile_sha256": "2e4169ee84340f975d47fa38db4d317fab8603868f7d36a3803a9eabbe2cd0e5",
+      "training_spans_hash_matches_transport": true,
+      "training_spans_match_profile": true,
+      "training_spans_sha256": "aa02de2545f6b13206e33f0b1d95eb2a477776274028f370b5fee4fb97d1efbf"
+    },
+    "ppgt_scale": {
+      "capture": {
+        "capture_start_optimizer_step": 8,
+        "capture_wall_seconds": 7.9768270460000394,
+        "captured_updates": 4,
+        "observed_updates": 8212,
+        "starting_optimizer_step": 0
+      },
+      "capture_off": {
+        "presentations_per_second": 82.30749823161342,
+        "sample_presentations": 899712,
+        "scope": "first loader request through last update return; capture off; observer wrappers installed",
+        "spans": 9,
+        "updates": 7029,
+        "updates_per_second": 0.6430273299344799,
+        "wall_seconds": 10931.106148654999
+      },
+      "chrome_trace_loaded": false,
+      "config": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": true,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      },
+      "dominant_host_phases": [
+        {
+          "calls": 4,
+          "host_self_seconds": 3.1486886850000246,
+          "host_total_seconds": 3.1486886850000246,
+          "name": "backward"
+        },
+        {
+          "calls": 512,
+          "host_self_seconds": 1.8682682370009616,
+          "host_total_seconds": 1.8682682370009616,
+          "name": "ppgt/rrwp"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 1.04829100500001,
+          "host_total_seconds": 1.04829100500001,
+          "name": "ppgt/attention"
+        },
+        {
+          "calls": 376,
+          "host_self_seconds": 0.5714448570005288,
+          "host_total_seconds": 1.902326631000733,
+          "name": "ppgt/backbone"
+        },
+        {
+          "calls": 4,
+          "host_self_seconds": 0.43192376399906607,
+          "host_total_seconds": 4.704283447999956,
+          "name": "forward"
+        }
+      ],
+      "dominant_operators_self_cpu": [
+        {
+          "calls": 130250,
+          "input_shapes": "",
+          "name": "cudaLaunchKernel",
+          "self_cpu_us": 1268499.207000082,
+          "self_device_us": 0.0
+        },
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1105377.2359999763,
+          "self_device_us": 153934.6370000176
+        },
+        {
+          "calls": 2726,
+          "input_shapes": "",
+          "name": "aten::addmm",
+          "self_cpu_us": 468003.54300001066,
+          "self_device_us": 80658.15799997837
+        }
+      ],
+      "dominant_operators_self_device": [
+        {
+          "calls": 9036,
+          "input_shapes": "",
+          "name": "aten::mm",
+          "self_cpu_us": 1105377.2359999763,
+          "self_device_us": 153934.6370000176
+        },
+        {
+          "calls": 8972,
+          "input_shapes": "",
+          "name": "aten::sum",
+          "self_cpu_us": 158299.36799997126,
+          "self_device_us": 125458.4100000025
+        },
+        {
+          "calls": 24107,
+          "input_shapes": "",
+          "name": "aten::mul",
+          "self_cpu_us": 382281.37999999,
+          "self_device_us": 102545.22999997603
+        }
+      ],
+      "limitations": [
+        "Instrumented timings are not unprofiled throughput or billed GPU time.",
+        "Host phases include Python and waits; GPU kernels run asynchronously.",
+        "Nested inclusive phase times must not be added; host self time excludes observed children.",
+        "Device kernel durations may overlap; their sum is not GPU busy wall time.",
+        "Unvisited phases have no measurement; missing device events are unknown, not zero.",
+        "Update counts are successful kernel returns; a failing update may have partially changed state.",
+        "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
+        "The caller owns real-input authority, provenance, stop budget and terminal evidence."
+      ],
+      "peak_allocated_bytes": 609460736,
+      "peak_reserved_bytes": 822083584,
+      "profile_hash_matches_execution_receipt": true,
+      "profile_hash_matches_transport": true,
+      "profile_path": "E:\\MolGap\\artifacts\\runs\\modern2d-ppgt-research-slot2-s42-v1\\v1\\inspection\\experiment\\ppgt_scale\\profiles\\step_0_1792598078716979340\\profile.json",
+      "profile_sha256": "d970f4546fa8a06a6a36065136f00c6d3b3b2708f7b2589909c14bed52aff2a7",
+      "training_spans_hash_matches_transport": true,
+      "training_spans_match_profile": true,
+      "training_spans_sha256": "d402dd7af304d71171c474d929577bdbb784da062d4c57162b1b034562abc15e"
+    }
+  },
+  "recipe_factor_settings": {
+    "ppgt_base": {
+      "addons": [],
+      "initialization_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "mode": "reference"
+    },
+    "ppgt_both": {
+      "addons": [
+        {
+          "config": {
+            "variant": "both"
+          },
+          "name": "ppgt_research_both",
+          "source_sha256": "c0cfc186f3fda14be82080e0e478909f48975013cb13d532aeff9e2ba9c52813",
+          "version": "1"
+        }
+      ],
+      "initialization_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "mode": "composed"
+    },
+    "ppgt_mean": {
+      "addons": [
+        {
+          "config": {
+            "variant": "mean_readout"
+          },
+          "name": "ppgt_research_mean_readout",
+          "source_sha256": "c0cfc186f3fda14be82080e0e478909f48975013cb13d532aeff9e2ba9c52813",
+          "version": "1"
+        }
+      ],
+      "initialization_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "mode": "composed"
+    },
+    "ppgt_scale": {
+      "addons": [
+        {
+          "config": {
+            "variant": "residual_scale"
+          },
+          "name": "ppgt_research_residual_scale",
+          "source_sha256": "c0cfc186f3fda14be82080e0e478909f48975013cb13d532aeff9e2ba9c52813",
+          "version": "1"
+        }
+      ],
+      "initialization_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "mode": "composed"
+    }
+  },
+  "replay_claim": false,
+  "resume_validation": {
+    "ppgt_base": {
+      "error": "Incomplete family resume state",
+      "error_type": "ValueError",
+      "status": "BLOCKED"
+    },
+    "ppgt_both": {
+      "error": "Incomplete family resume state",
+      "error_type": "ValueError",
+      "status": "BLOCKED"
+    },
+    "ppgt_mean": {
+      "error": "Incomplete family resume state",
+      "error_type": "ValueError",
+      "status": "BLOCKED"
+    },
+    "ppgt_scale": {
+      "error": "Incomplete family resume state",
+      "error_type": "ValueError",
+      "status": "BLOCKED"
+    }
+  },
+  "selected_checkpoint_factorial_effects": {
+    "interaction_eV": -0.010727686433792072,
+    "pooling_mean_minus_sum_high_scale_eV": -0.049383682279586755,
+    "pooling_mean_minus_sum_low_scale_eV": -0.03865599584579471,
+    "scale_high_minus_low_mean_eV": -0.005829869637489299,
+    "scale_high_minus_low_sum_eV": 0.004897816796302745
+  },
+  "started_at_utc": "2026-10-21T21:08:31.122315+00:00",
+  "status": "PARTIAL_WITH_BLOCKERS",
+  "total_observed_allocated_T4_hours": 19.369615921983886
+}

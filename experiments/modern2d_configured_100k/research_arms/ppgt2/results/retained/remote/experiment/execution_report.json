@@ -1,0 +1,71 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "777dc6459e842b8c88d5da6c39cda2bdfdbaf077744df660866cfabde131f27e",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "ppgt_scale",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 109.546265317
+        },
+        {
+          "arm_id": "ppgt_both",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 108.54444925499999
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "ppgt_scale",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 17263.29605343
+        },
+        {
+          "arm_id": "ppgt_both",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 17260.792995909
+        }
+      ],
+      "status": "paused_for_cost"
+    }
+  ],
+  "status": "STOP_FOR_COST",
+  "arms": {
+    "ppgt_scale": {
+      "device": 0,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "interrupted",
+      "worker_wall_seconds": 17372.842318747,
+      "exit_reason": "STOP_FOR_COST"
+    },
+    "ppgt_both": {
+      "device": 1,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "interrupted",
+      "worker_wall_seconds": 17369.337445164,
+      "exit_reason": "STOP_FOR_COST"
+    }
+  },
+  "prior_allocation_budget_debit_wall_seconds": 0,
+  "budget_scope": "aggregate authorization; prior debit is not added to the current invocation's measured ledger",
+  "pair_process_wall_seconds": 17372.876311518,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "exit_reason": "STOP_FOR_COST",
+  "scientific_acceptance": "INCONCLUSIVE"
+}

@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "path": "experiment/checkpoint_chunks/ppgt_base/pass_10/resume_bundle.json",
+      "sha256": "9a347fe0e32a536db8464f6698dcf147085df1a8ebda01ce561f36a7da249a28"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/ppgt_mean/pass_10/resume_bundle.json",
+      "sha256": "e2de30b75e4d06726fe9083f61a9d84f035ec623f856c3195b024533e9e7198c"
+    },
+    {
+      "path": "experiment/ppgt_base/allocation_costs.json",
+      "sha256": "26c540b92550d0e9beccb25efc57ed88eb43355cc85e8a2f73660e51ac6d0ac5"
+    },
+    {
+      "path": "experiment/ppgt_mean/allocation_costs.json",
+      "sha256": "2c58cde108af767dde65e7921288271cb8c05b4ad2007120a88d4cd052210a3f"
+    }
+  ],
+  "kernel": "nvoid912/molgap-ppgt-research-slot1-v1",
+  "scientific_acceptance": false,
+  "transport": "version_specific_exact_file",
+  "unselected_outputs_downloaded": false,
+  "version": 1
+}
