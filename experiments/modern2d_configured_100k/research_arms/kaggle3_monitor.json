@@ -1,6 +1,6 @@
 {
   "format": "molgap-server-multi-job-monitor-v1",
-  "owner": "server", "closed": false,
+  "owner": "server", "closed": true,
   "credential_owner": "nvoid912",
   "credential_file": "C:/Users/Adminn/Downloads/key/kaggle-nv912.json",
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
@@ -8,13 +8,13 @@
   "jobs": [
     {
       "slot": "ppgt1", "kernel": "nvoid912/molgap-ppgt-research-slot1-v1",
-      "kernel_id": 140049247, "version": 1, "closed": false,
+      "kernel_id": 140049247, "version": 1, "closed": true,
       "control_state": "E:/MolGap/artifacts/runs/modern2d-ppgt-research-slot1-s42-v1/v1/monitor/control_state.json",
       "output_directory": "E:/MolGap/artifacts/runs/modern2d-ppgt-research-slot1-s42-v1/v1/inspection"
     },
     {
       "slot": "ppgt2", "kernel": "nvoid912/molgap-ppgt-research-slot2-v1",
-      "kernel_id": 140049200, "version": 1, "closed": false,
+      "kernel_id": 140049200, "version": 1, "closed": true,
       "control_state": "E:/MolGap/artifacts/runs/modern2d-ppgt-research-slot2-s42-v1/v1/monitor/control_state.json",
       "output_directory": "E:/MolGap/artifacts/runs/modern2d-ppgt-research-slot2-s42-v1/v1/inspection"
     }

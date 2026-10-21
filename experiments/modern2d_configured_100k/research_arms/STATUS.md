@@ -10,8 +10,8 @@ bind four private T4 version1 jobs, not an unsubmitted plan.
 |---|---|---|---|
 |ESA1|Kaggle2|140049215/1|COMPLETE; both20-pass endpoints mechanically accepted|
 |ESA2|Kaggle2|140049216/1|COMPLETE; both20-pass endpoints mechanically accepted|
-|PPGT1|Kaggle3|140049247/1|RUNNING|
-|PPGT2|Kaggle3|140049200/1|RUNNING|
+|PPGT1|Kaggle3|140049247/1|COMPLETE scheduler; STOP_FOR_COST,10 passes plus partial11|
+|PPGT2|Kaggle3|140049200/1|COMPLETE scheduler; STOP_FOR_COST,10 passes plus partial11|
 
 The [independent CPU verification](cpu_verification.md) covers model mechanisms,
 update/resume/output inspection and compilation. Pinned Python3.12/torch2.7.1
@@ -23,22 +23,29 @@ ESA2 subsequently completed both20-pass endpoints. Both families therefore have 
 training evidence, not just CPU fixtures or accepted scheduler submissions.
 First-epoch metrics are not endpoint acceptance, superiority or Replay eligibility.
 
-PPGT first passes including Common-Dev took1663–1730 seconds versus ESA's662.
-A naive first-pass extrapolation puts PPGT's20 passes at9.2–9.6h, above its5h
-allocation. This is a material feasibility risk, not permission to extend a run,
-change its horizon or call a partial prefix complete. The original hard budget
-and atomic checkpoint reserve remain binding. Terminal interpretation must keep
-STOP_FOR_COST/partial truth and separate warmed/capture-off timing from cold
-first-pass cost. No scientific winner follows from the first-pass differences.
+PPGT's two slots stopped under their frozen5h allocation budgets. All four arms
+retained10 complete passes and part ofpass11; no20-pass endpoint completed. Their
+[slot1 decision](ppgt1/results/decision.md) and [slot2 decision](ppgt2/results/decision.md)
+preserve original10-pass snapshots, latest paused states, full observed curves,
+profiles and V5 role/cost records. These are partial evidence, not complete
+family-output manifests, scientific winners, scale approval or Replay-Ready.
+The [four-arm analysis](ppgt1/results/interpretation.md) retains mean pooling as
+a partial optimization lead and identifies the shared small-operation/RRWP
+bottleneck. A disabled-EMA portable-resume inspection defect was repaired;
+five regressions and all four unchanged snapshot bundles passed verification.
+The earlier first-pass feasibility warning was realized; the horizon and
+checkpoint reserve were not changed retrospectively.
 The [startup interpretation](startup_interpretation.md) corrects the frozen
 protocol's PPGT warmup shorthand and explains why a literal training START line
 is not expected from the epoch-only logger. Actual compiled recipes are unchanged.
 
-The existing Luna B heartbeat has one active30-minute schedule for
+The existing Luna B used one30-minute schedule for
 [Kaggle2](kaggle2_monitor.json) and [Kaggle3](kaggle3_monitor.json). Initial ticks
 authenticated both actual owners and returned only SILENT healthy observations.
 Terminal events are delivered idempotently to the same A without overriding A's
-model/reasoning. Terminal ESA jobs do not pause monitoring for the remaining PPGT jobs.
+model/reasoning. All four bound terminal events are closed; both account bindings
+are closed and this campaign's existing heartbeat may pause. No new monitor,
+automatic successor or cross-machine custody is created.
 Large outputs and operation journals remain outside Git. Original partial and
 failed histories are retained, not relabeled as this fresh20-pass benchmark.
 
@@ -54,5 +61,6 @@ ESA2 has a [terminal decision](esa2/results/decision.md) and
 passed saved-artifact inspection; identity residual direction reversed between
 the two learning rates, without nomination. The second slot's canonical RML
 finalization has the same unmodified prospective-reference blocker. Both ESA
-monitor bindings are closed. Monitoring continues for PPGT1/PPGT2; closing ESA
-does not pause the campaign heartbeat or authorize successors.
+monitor bindings are closed. The PPGT partial decisions close the two remaining
+bindings without continuation or successors. Validated retained evidence and
+canonical RML/Replay admission remain explicitly separate.

@@ -1,11 +1,15 @@
 # PPGT research slot1
 
 Part of the [frozen eight-arm campaign](../protocol.md). Submitted private T4x2
-`nvoid912/molgap-ppgt-research-slot1-v1`, kernel140049247/version1; observed RUNNING.
+`nvoid912/molgap-ppgt-research-slot1-v1`, kernel140049247/version1; scheduler COMPLETE,
+producer STOP_FOR_COST. Both arms completed10 passes and part ofpass11, not20.
 Two independent train100K arms,20 passes, Common-Dev50K, FP32/BS128/seed42.
-Both arms emitted [first-epoch telemetry](first_epoch.json):781 optimizer steps,
-99,968 sample presentations and reported checkpoint step781. This proves guarded
-training beyond native admission, not terminal artifact acceptance. The first
-pass including Common-Dev took1663–1681 seconds;20 passes may exceed the frozen
-five-hour ceiling. No extension or endpoint relabeling is authorized. Exact
-release identities live in [launch bindings](../launch_bindings.json).
+The [partial decision](results/decision.md) retains original10-pass checkpoint
+chunks, latest paused states, curves and V5 role/cost evidence. No complete
+output manifest or Replay claim was substituted. This binding is closed;
+no extension, resubmission or scale job follows. Exact release identities live
+in [launch bindings](../launch_bindings.json).
+
+[Four-arm interpretation](results/interpretation.md) separates the positive
+pooling prefix from uncompleted scientific endpoints and execution bottlenecks.
+Portable snapshot resume validation passed after the scoped disabled-EMA repair.

@@ -13,9 +13,13 @@ all four20-pass endpoints passed independent saved-artifact acceptance. The
 finds no consistent identity-residual gain across the two learning rates; no
 nomination follows. RML terminal packages are staged, but canonical finalization
 is blocked by absent prospectively frozen reference/pair bindings; artifacts
-and curves are intact. The remaining two PPGT jobs stay under existing Luna B/30-minute silent
-monitor. PPGT has real training witnesses but risks its frozen5h budget; no
-extension, new arm, extra seed,500K/full/protected role or Replay claim follows.
+and curves are intact. Both PPGT slots are terminal scheduler COMPLETE but
+producer STOP_FOR_COST after10 complete passes and part ofpass11, not their
+frozen20-pass endpoints. Their [partial decisions](experiments/modern2d_configured_100k/research_arms/ppgt1/results/decision.md)
+retain original chunks/latest paused states and honest V5 role/cost evidence,
+without a winner or Replay claim. No campaign job or automatic successor remains;
+the existing Luna heartbeat may pause after its terminal handoffs close. No
+extension, new arm, extra seed,500K/full or protected-role evaluation follows.
 
 The [PPGT/ESA execution-repair diagnostic](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md)
 is accepted and RML-finalized as NO_TRAIN/context_only. Both native repeat/resume
