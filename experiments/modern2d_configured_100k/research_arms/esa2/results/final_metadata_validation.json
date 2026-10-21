@@ -1,0 +1,576 @@
+{
+  "artifact_index": {
+    "count": 43,
+    "files": [
+      {
+        "bytes": 70171,
+        "path": "analysis_report.json",
+        "sha256": "13c51e50efd3df149399abc69534e54f95a7e7438baa5ae41033590c032c9fb1",
+        "valid": true
+      },
+      {
+        "bytes": 1094,
+        "path": "controller_closure.json",
+        "sha256": "f6eda35297d82c7da3ad0a060ceba682c9b0d40241efc2cfd7ee38034219ba23",
+        "valid": true
+      },
+      {
+        "bytes": 1665,
+        "path": "decision.md",
+        "sha256": "01179b586b7a81ad00e43fa3fa8e2123230bf24bb98fa49485a490ec83047195",
+        "valid": true
+      },
+      {
+        "bytes": 14469,
+        "path": "four_arm_synthesis.json",
+        "sha256": "3667c0f83ef22ea75018b7769df77b88349cc1b580e5d03fb304320af4aae0d2",
+        "valid": true
+      },
+      {
+        "bytes": 6143,
+        "path": "interpretation.md",
+        "sha256": "b9a845875e8e945ea7ff6e0bd51c29175326af8d759beae98f6bb991b0fec1fe",
+        "valid": true
+      },
+      {
+        "bytes": 9641,
+        "path": "mechanical_acceptance.json",
+        "sha256": "2256f1556bb8819344be0851176f821c92b6fbc28a6abbd5315bd9af32ae1f71",
+        "valid": true
+      },
+      {
+        "bytes": 985,
+        "path": "profile_metadata_pins.json",
+        "sha256": "34874c3c2148a49e985a5cd618ddb507ce2a9e8936ad972d44fd6fddb0a19016",
+        "valid": true
+      },
+      {
+        "bytes": 13383,
+        "path": "retained/family_outputs/esa_identity1/canonical_trace.json",
+        "sha256": "91aea6828ff38ba6f7e408b587b0b97a9d05ccc63f7d36643e8cf7a87079fd44",
+        "valid": true
+      },
+      {
+        "bytes": 925,
+        "path": "retained/family_outputs/esa_identity1/canonical_trace.json.context.json",
+        "sha256": "16da34170036839cb1627a9823c9f21fd80b330e9b5163b2ebf69ed0f666c1a4",
+        "valid": true
+      },
+      {
+        "bytes": 2984,
+        "path": "retained/family_outputs/esa_identity1/output_manifest.json",
+        "sha256": "dd28a7bdf953d06f2f81a6e3650d5609b47ba8d76a3a4f2954d3c72bb03f267c",
+        "valid": true
+      },
+      {
+        "bytes": 2761,
+        "path": "retained/family_outputs/esa_identity1/training_contract.json",
+        "sha256": "e02bb02ecc94efc81f0d09c8766daa2082f98165936e933511591734c6d7761d",
+        "valid": true
+      },
+      {
+        "bytes": 13351,
+        "path": "retained/family_outputs/esa_lr1/canonical_trace.json",
+        "sha256": "a1fb6131f3e840400ddf0b618b68ee605e69918fe6719993ec3e89784f24d264",
+        "valid": true
+      },
+      {
+        "bytes": 919,
+        "path": "retained/family_outputs/esa_lr1/canonical_trace.json.context.json",
+        "sha256": "dbd73ee127c57838ef6c0c0cb7d48f2251281de4a673d4b3ceb42b241b0def53",
+        "valid": true
+      },
+      {
+        "bytes": 2981,
+        "path": "retained/family_outputs/esa_lr1/output_manifest.json",
+        "sha256": "b6eca86b37d67e579a37b2e0d1c98b16aad1ae49a2af9a3b1107e6927773ed83",
+        "valid": true
+      },
+      {
+        "bytes": 2580,
+        "path": "retained/family_outputs/esa_lr1/training_contract.json",
+        "sha256": "07a5427c7b9f003a229f0aee2498d7d73f12455737f2e03ac8304d310f3c803f",
+        "valid": true
+      },
+      {
+        "bytes": 3532,
+        "path": "retained/operations/launch_receipt.json",
+        "sha256": "66307eab2c49d8d541e342e3e9b63a6865fb8468417af5f9951b6ef283ef084c",
+        "valid": true
+      },
+      {
+        "bytes": 1289,
+        "path": "retained/operations/platform_response.json",
+        "sha256": "1c0fe36facafcf156b34689f70b948a4d271d6312beed716f7a4a328ff0f48e7",
+        "valid": true
+      },
+      {
+        "bytes": 462,
+        "path": "retained/operations/source_verification.json",
+        "sha256": "e7b6a0f273a74b1bb6482a146a88cf51041e3db5fa2f671e87f7355d69f9ba30",
+        "valid": true
+      },
+      {
+        "bytes": 350,
+        "path": "retained/remote/bootstrap_allocation.json",
+        "sha256": "e97bef63d062ae1805f919053de1d356764886491c71ba8e003812a0458bc997",
+        "valid": true
+      },
+      {
+        "bytes": 765,
+        "path": "retained/remote/environment_qualification.json",
+        "sha256": "c1f98bdf5207aad487fd3c31318467f42024cdc9352e55b5f5d892a121eea82f",
+        "valid": true
+      },
+      {
+        "bytes": 1038,
+        "path": "retained/remote/experiment/allocation_ledger.json",
+        "sha256": "63a5215c67e72a6208485b82bb621d81554b7c0c4a54d92ba7ba8872614e76dc",
+        "valid": true
+      },
+      {
+        "bytes": 1072,
+        "path": "retained/remote/experiment/esa_identity1/allocation_costs.json",
+        "sha256": "102719fe57d5c4ebbe9192369640815e92443f762f58a92b9986070c90af0b60",
+        "valid": true
+      },
+      {
+        "bytes": 1171,
+        "path": "retained/remote/experiment/esa_identity1/execution_profile_receipt.json",
+        "sha256": "5ab69871bcf26ebacf2eb82c8f45267684f04044d65c063808e5beae8a76df2c",
+        "valid": true
+      },
+      {
+        "bytes": 1423,
+        "path": "retained/remote/experiment/esa_identity1/preflight_costs.json",
+        "sha256": "2793d83939528ce6f870ab92b077500c522582b863c70e323352d80a1a2678ca",
+        "valid": true
+      },
+      {
+        "bytes": 32504,
+        "path": "retained/remote/experiment/esa_identity1/profiles/step_0_1792600533034346359/profile.json",
+        "sha256": "10ceb447d0ec411fec9d238cb3f867322545d91d74ef544b9ba100d53ebc68a6",
+        "valid": true
+      },
+      {
+        "bytes": 5235,
+        "path": "retained/remote/experiment/esa_identity1/profiles/step_0_1792600533034346359/training_spans.json",
+        "sha256": "a780747baa73bac9d9c777c96a4a4305e4a1ebdbaa0281c1313d9a731fbd030c",
+        "valid": true
+      },
+      {
+        "bytes": 1310,
+        "path": "retained/remote/experiment/esa_identity1/runtime_certificate.json",
+        "sha256": "975a173e5b808c998932cef6a478da9cf1b8d79375f5baf15fcabfdb639ec377",
+        "valid": true
+      },
+      {
+        "bytes": 4374,
+        "path": "retained/remote/experiment/esa_identity1/runtime_provenance.json",
+        "sha256": "8dfa25231e719003c89255519282f4224453c5083a584633f6ddf1ad332487f2",
+        "valid": true
+      },
+      {
+        "bytes": 778,
+        "path": "retained/remote/experiment/esa_identity1/training_progress.json",
+        "sha256": "33409bc428401f56dabced23d2eb169ee66111cf94e1a75734cca05413ccd718",
+        "valid": true
+      },
+      {
+        "bytes": 1072,
+        "path": "retained/remote/experiment/esa_lr1/allocation_costs.json",
+        "sha256": "002d67d703370d807cdcf511d109035eb3fe721cf73b0eba7e50ca3d4349fba8",
+        "valid": true
+      },
+      {
+        "bytes": 1165,
+        "path": "retained/remote/experiment/esa_lr1/execution_profile_receipt.json",
+        "sha256": "38bc31f499ee836551908bb3a56eaa6b5dae6cc426c02f601276ea220791fcf8",
+        "valid": true
+      },
+      {
+        "bytes": 1422,
+        "path": "retained/remote/experiment/esa_lr1/preflight_costs.json",
+        "sha256": "9cf006c5afd473a4bf16928fe8dde9581e9fc6e990830c8da91a1cfa82dcc82b",
+        "valid": true
+      },
+      {
+        "bytes": 32439,
+        "path": "retained/remote/experiment/esa_lr1/profiles/step_0_1792600533044965783/profile.json",
+        "sha256": "55a49f01deba238ee17de6863f116e98e62cbda1162880ba3dfcd1faa00009b3",
+        "valid": true
+      },
+      {
+        "bytes": 5245,
+        "path": "retained/remote/experiment/esa_lr1/profiles/step_0_1792600533044965783/training_spans.json",
+        "sha256": "bdcac8a0c4e7e7fe4c7b868ac626f6dde0e504979ae14bbb1ee5ef9b2b0a0a52",
+        "valid": true
+      },
+      {
+        "bytes": 1310,
+        "path": "retained/remote/experiment/esa_lr1/runtime_certificate.json",
+        "sha256": "09b182a83e7a7567ba23eaed3ef5dfbdd2f1123531654d2aa011eebb1c506244",
+        "valid": true
+      },
+      {
+        "bytes": 4362,
+        "path": "retained/remote/experiment/esa_lr1/runtime_provenance.json",
+        "sha256": "78e0dfffb1c9490660879b20e22d5770004f562047de97c96ea438ccdee367b3",
+        "valid": true
+      },
+      {
+        "bytes": 770,
+        "path": "retained/remote/experiment/esa_lr1/training_progress.json",
+        "sha256": "16ed29f494e6b22b90b3e400a1535b44e5993ba28ec4cc237b8b2431bee4752d",
+        "valid": true
+      },
+      {
+        "bytes": 1852,
+        "path": "retained/remote/experiment/execution_report.json",
+        "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4",
+        "valid": true
+      },
+      {
+        "bytes": 923,
+        "path": "retained/remote/experiment/execution_retention.json",
+        "sha256": "c13cc3d4bb46b07bf8bd185b31f1e398503ad090493535ded32c72f13b2a6191",
+        "valid": true
+      },
+      {
+        "bytes": 1852,
+        "path": "retained/remote/experiment/pair_state.json",
+        "sha256": "df97063be11d0773c767c7069335f55df3eec9aaf9eb7e92bba313cae749f8b4",
+        "valid": true
+      },
+      {
+        "bytes": 5874,
+        "path": "retained_manifest.json",
+        "sha256": "1a885e7708b970ea15bf25500f4e286cc4742c4a325f5fcb420a431f5add5e73",
+        "valid": true
+      },
+      {
+        "bytes": 751,
+        "path": "rml_closure.json",
+        "sha256": "0dc0420b7398db468682d671af3d74794e6199047dc0a8c2ce17e9472d56ad11",
+        "valid": true
+      },
+      {
+        "bytes": 811,
+        "path": "terminal_input_validation.json",
+        "sha256": "9aa13a2d7d8f6c7d152e5641692393745f2737c5a0453596e8671dc761e33377",
+        "valid": true
+      }
+    ],
+    "mismatches": [],
+    "verified": 43
+  },
+  "canonical_finalization": "BLOCKED_REFERENCE_NOT_FROZEN",
+  "checks": {
+    "all_indexed_sha_and_bytes": true,
+    "both_terminal_packages": true,
+    "controller_closed": true,
+    "frozen_decision_sha": true,
+    "interpretation_key_numbers_and_pass_identity": true,
+    "kaggle2_both_bindings_closed": true,
+    "ppgt_bound_job_identities_preserved": true
+  },
+  "closure": {
+    "both_kaggle2_bindings_closed": true,
+    "esa2_controller_closed": true,
+    "esa2_controller_status": "CLOSED",
+    "kaggle2_bindings": [
+      {
+        "controller_event_status": "CLOSED",
+        "identity_matches_launch": true,
+        "monitor_binding_closed": true,
+        "slot": "esa1"
+      },
+      {
+        "controller_event_status": "CLOSED",
+        "identity_matches_launch": true,
+        "monitor_binding_closed": true,
+        "slot": "esa2"
+      }
+    ],
+    "kaggle2_monitor_closed": true,
+    "ppgt_bindings": [
+      {
+        "closed": false,
+        "identity_matches_frozen_launch": true,
+        "slot": "ppgt1"
+      },
+      {
+        "closed": false,
+        "identity_matches_frozen_launch": true,
+        "slot": "ppgt2"
+      }
+    ],
+    "ppgt_entire_file_temporal_hash_comparison": "UNCHECKED: no earlier whole-file hash provided; exact bound job identities compared with frozen launch records",
+    "ppgt_exact_launch_bindings_preserved": true
+  },
+  "corrected_retry_count": 1,
+  "decision": {
+    "expected_sha256": "01179b586b7a81ad00e43fa3fa8e2123230bf24bb98fa49485a490ec83047195",
+    "sha256": "01179b586b7a81ad00e43fa3fa8e2123230bf24bb98fa49485a490ec83047195",
+    "valid": true
+  },
+  "elapsed_seconds": 0.34399999998277053,
+  "format": "molgap-esa2-final-scoped-metadata-validation-v1",
+  "generated_at_utc": "2026-10-21T20:42:00.597780+00:00",
+  "global_rml_validator_or_rebuild_run": false,
+  "interpretation": {
+    "curve_rows": [
+      {
+        "pass": 5,
+        "valid": true
+      },
+      {
+        "pass": 10,
+        "valid": true
+      },
+      {
+        "pass": 15,
+        "valid": true
+      },
+      {
+        "pass": 20,
+        "valid": true
+      }
+    ],
+    "original_lr1_explicit_pass19_step14839": true,
+    "paired_and_factorial_numbers": [
+      {
+        "expected_rounded": "0.0008071832",
+        "valid": true
+      },
+      {
+        "expected_rounded": "-0.0005140182",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0021730699",
+        "valid": true
+      },
+      {
+        "expected_rounded": "-0.0009887519",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0156028640",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0173987990",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0157733709",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0173988044",
+        "valid": true
+      },
+      {
+        "expected_rounded": "0.0006366819",
+        "valid": true
+      },
+      {
+        "expected_rounded": "-0.0009887516",
+        "valid": true
+      }
+    ],
+    "primary_rows": [
+      {
+        "arm": "esa_lr3",
+        "selected_pass": 20,
+        "valid": true
+      },
+      {
+        "arm": "esa_identity3",
+        "selected_pass": 20,
+        "valid": true
+      },
+      {
+        "arm": "esa_lr1",
+        "selected_pass": 19,
+        "valid": true
+      },
+      {
+        "arm": "esa_identity1",
+        "selected_pass": 20,
+        "valid": true
+      }
+    ],
+    "selected_predictions_not_mislabeled_pass20": true,
+    "valid": true,
+    "win_percentage_match": true,
+    "win_rows_match": true
+  },
+  "report_excluded_from_index": true,
+  "repository_files_written": false,
+  "runtime_budget_seconds": 30,
+  "status": "VERIFIED",
+  "tensor_loads": false,
+  "terminals": {
+    "esa_identity1": {
+      "binding_count": 12,
+      "bindings": [
+        {
+          "locator": "experiments/modern2d_configured_100k/generated/cdb646dffc66c2e76f1d3763f2fd4c5937ffe39888c291be9619fe41c34f4d9d/esa_identity1/recipe.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/research_arms/esa2/results/decision.md",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/terminal_staging/v1/b2753c4390fdf344/acceptance.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/terminal_staging/v1/b2753c4390fdf344/observed.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/terminal_staging/v1/role_audit-esa_identity1-9adddc1e84ca8e7f.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/canonical_trace.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/canonical_trace.json.context.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/development_predictions.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/last_checkpoint.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/output_manifest.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/selected_model.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_identity1/training_contract.json",
+          "valid": true
+        }
+      ],
+      "events_match_source": true,
+      "observed_role_truth_valid": true,
+      "path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/terminal_staging/v1/b2753c4390fdf344/terminal.json",
+      "role_event_count": 7,
+      "source_role_audits": [
+        "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/terminal_staging/v1/role_audit-esa_identity1-9adddc1e84ca8e7f.json"
+      ],
+      "source_role_event_count": 7,
+      "v5_envelope": {
+        "artifact_count": 6,
+        "authority_pointer_count": 1,
+        "evidence_id": "ev-terminal-T-modern2d-esa-research-slot2-s42-v1-esa_identity1",
+        "format": "molgap-v5-evidence-envelope-v1",
+        "outcome": {
+          "artifact_status": "mechanically_verified",
+          "budget_decision": "NOT_EVALUATED",
+          "comparison_status": "NOT_EVALUATED",
+          "execution_status": "complete",
+          "full_handoff_status": "NOT_EVALUATED",
+          "scientific_status": "INCONCLUSIVE",
+          "transfer_status": "NOT_EVALUATED"
+        },
+        "valid": true
+      },
+      "valid": true,
+      "verified_bindings": 12
+    },
+    "esa_lr1": {
+      "binding_count": 12,
+      "bindings": [
+        {
+          "locator": "experiments/modern2d_configured_100k/generated/cdb646dffc66c2e76f1d3763f2fd4c5937ffe39888c291be9619fe41c34f4d9d/esa_lr1/recipe.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/research_arms/esa2/results/decision.md",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/terminal_staging/v1/27878ca73ca525fb/acceptance.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/terminal_staging/v1/27878ca73ca525fb/observed.json",
+          "valid": true
+        },
+        {
+          "locator": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/terminal_staging/v1/role_audit-esa_lr1-3ba6e47ca7936080.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/canonical_trace.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/canonical_trace.json.context.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/development_predictions.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/last_checkpoint.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/output_manifest.json",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/selected_model.pt",
+          "valid": true
+        },
+        {
+          "locator": "external:///E:/MolGap/artifacts/accepted_outputs/modern2d-esa-research-slot2-s42-v1/v1/esa_lr1/training_contract.json",
+          "valid": true
+        }
+      ],
+      "events_match_source": true,
+      "observed_role_truth_valid": true,
+      "path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/terminal_staging/v1/27878ca73ca525fb/terminal.json",
+      "role_event_count": 7,
+      "source_role_audits": [
+        "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/terminal_staging/v1/role_audit-esa_lr1-3ba6e47ca7936080.json"
+      ],
+      "source_role_event_count": 7,
+      "v5_envelope": {
+        "artifact_count": 6,
+        "authority_pointer_count": 1,
+        "evidence_id": "ev-terminal-T-modern2d-esa-research-slot2-s42-v1-esa_lr1",
+        "format": "molgap-v5-evidence-envelope-v1",
+        "outcome": {
+          "artifact_status": "mechanically_verified",
+          "budget_decision": "NOT_EVALUATED",
+          "comparison_status": "NOT_EVALUATED",
+          "execution_status": "complete",
+          "full_handoff_status": "NOT_EVALUATED",
+          "scientific_status": "INCONCLUSIVE",
+          "transfer_status": "NOT_EVALUATED"
+        },
+        "valid": true
+      },
+      "valid": true,
+      "verified_bindings": 12
+    }
+  },
+  "tests_run": false
+}
