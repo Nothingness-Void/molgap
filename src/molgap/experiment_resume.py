@@ -224,13 +224,13 @@ def _artifact_pointer(bundle_root: Path, pointer: dict, label: str, *, required=
         raise ValueError(f"Invalid required flag: {label}")
     resolved = _path(bundle_root / path, label, regular=True)
     if sha256_file(resolved) != pointer["sha256"]:
-        raise ValueError(f"Resume artifact hash mismatch: {label}")
+        raise ValueError(f"Resume artifact hash mismatch: {label}: {resolved}")
     return resolved
 
 
-def _pointer(bundle_root: Path, source: Path, restore_path: str, *, required: bool) -> dict:
+def _pointer(source: Path, restore_path: str, *, payload: bytes, required: bool) -> dict:
     _relative(restore_path, "restore path")
-    return {"path": "files/" + source.name, "sha256": sha256_file(source),
+    return {"path": "files/" + source.name, "sha256": hashlib.sha256(payload).hexdigest(),
             "restore_path": restore_path, "required": bool(required)}
 
 
@@ -440,16 +440,22 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
             pointers[role] = {"path": "files/trajectory.json", "sha256": digest,
                               "restore_path": "trajectory.json", "required": True}
         else:
-            pointers[role] = {"path": "files/" + item.name, "sha256": sha256_file(item),
-                              "restore_path": restore_name, "required": required}
+            pointers[role] = _pointer(item, restore_name, payload=source_bytes[item], required=required)
+            if sha256_file(item) != pointers[role]["sha256"]:
+                raise ValueError(f"Resume source artifact changed during packaging: {item}")
     for role in _OPTIONAL_ARTIFACTS:
         pointers.setdefault(role, None)
     sidecar_pointers = {}
     for group, paths in sidecars.items():
         sidecar_pointers[group] = []
         for item in paths:
-            sidecar_pointers[group].append(_pointer(bundle, item, item.name, required=True))
+            _path(item, "source sidecar", regular=True)
+            # Allocation accounting is atomically refreshed by the parent while
+            # a worker exports a chunk. Bind the bytes we captured, not a later
+            # read of the same path (which may already name another generation).
             source_bytes[item] = item.read_bytes()
+            sidecar_pointers[group].append(_pointer(
+                item, item.name, payload=source_bytes[item], required=True))
     manifest = {
         "format": RESUME_BUNDLE_FORMAT,
         "status": "incomplete",
@@ -492,7 +498,7 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
         seen.add(path.as_posix().casefold())
         if path.exists():
             if not path.is_file() or path.read_bytes() != payload:
-                raise ValueError("Resume bundle publication conflict; refusing overwrite")
+                raise ValueError(f"Resume bundle publication conflict; refusing overwrite: {path}")
     for path, payload in destinations:
         publish_immutable_bytes(path, payload)
     return manifest
@@ -748,7 +754,7 @@ def restore_resume_bundle(path: Path | str, output: Path | str, spec=None, *,
         try:
             shutil.copyfile(source, temporary)
             if sha256_file(temporary) != digest:
-                raise ValueError("Resume bundle bytes changed during restoration")
+                raise ValueError(f"Resume bundle bytes changed during restoration: {source} -> {target}")
             try:
                 os.link(temporary, target)
             except FileExistsError as exc:

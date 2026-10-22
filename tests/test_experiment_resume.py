@@ -1,7 +1,9 @@
 """Transport-only tests for incomplete per-arm resume bundles."""
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -117,6 +119,83 @@ def test_restore_rechecks_hash_after_copy_and_cleans_temporary_file(tmp_path, mo
     assert (bundle / "resume_bundle.json").read_bytes() == manifest_bytes
     assert not (restored / "last_checkpoint.pt").exists()
     assert not any(restored.rglob("*"))
+
+
+def test_create_bundle_binds_one_allocation_ledger_snapshot(tmp_path, monkeypatch):
+    import molgap.experiment_resume as transport
+
+    context = _context()
+    source = _source(tmp_path, context)
+    ledger = source / "allocation_ledger.json"
+    old_payload = json.dumps({"generation": 1}, sort_keys=True).encode()
+    new_payload = json.dumps({"generation": 2}, sort_keys=True).encode()
+    ledger.write_bytes(old_payload)
+    bundle = tmp_path / "bundle-ledger-race"
+    original_read_bytes = Path.read_bytes
+    original_sha256_file = transport.sha256_file
+    read_replaced = False
+    hash_replaced = False
+
+    def capture_then_replace(path):
+        nonlocal read_replaced
+        payload = original_read_bytes(path)
+        if path.resolve() == ledger.resolve() and not read_replaced:
+            read_replaced = True
+            replacement = ledger.with_name(".allocation_ledger.next.json")
+            replacement.write_bytes(new_payload)
+            os.replace(replacement, ledger)
+            return payload
+        return payload
+
+    def capture_digest_then_replace(path):
+        nonlocal hash_replaced
+        digest = original_sha256_file(path)
+        if Path(path).resolve() == ledger.resolve() and not hash_replaced:
+            hash_replaced = True
+            replacement = ledger.with_name(".allocation_ledger.next.json")
+            replacement.write_bytes(new_payload)
+            os.replace(replacement, ledger)
+        return digest
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(Path, "read_bytes", capture_then_replace)
+        scoped.setattr(transport, "sha256_file", capture_digest_then_replace)
+        manifest = create_resume_bundle(source, context, _trajectory(context), bundle)
+
+    assert read_replaced is True
+    assert hash_replaced is False
+    assert ledger.read_bytes() == new_payload
+    pointer = manifest["cost_segments"][0]
+    assert pointer["sha256"] == hashlib.sha256(old_payload).hexdigest()
+    assert (bundle / "files/allocation_ledger.json").read_bytes() == old_payload
+    assert validate_resume_bundle(bundle)["status"] == "TRANSPORT_VERIFIED"
+
+
+def test_create_bundle_rejects_changed_immutable_checkpoint_with_path(tmp_path, monkeypatch):
+    import molgap.experiment_resume as transport
+
+    context = _context()
+    source = _source(tmp_path, context)
+    checkpoint = source / "last_checkpoint.pt"
+    replacement_payload = checkpoint.read_bytes() + b"changed-after-capture"
+    bundle = tmp_path / "bundle-checkpoint-race"
+    original_sha256_file = transport.sha256_file
+    replaced = False
+
+    def replace_before_checkpoint_hash(path):
+        nonlocal replaced
+        if Path(path).resolve() == checkpoint.resolve() and not replaced:
+            replaced = True
+            replacement = checkpoint.with_name(".last_checkpoint.next.pt")
+            replacement.write_bytes(replacement_payload)
+            os.replace(replacement, checkpoint)
+        return original_sha256_file(path)
+
+    monkeypatch.setattr(transport, "sha256_file", replace_before_checkpoint_hash)
+    with pytest.raises(ValueError, match=r"Resume source artifact changed during packaging: .*last_checkpoint\.pt"):
+        create_resume_bundle(source, context, _trajectory(context), bundle)
+    assert replaced is True
+    assert not bundle.exists()
 
 
 def test_restore_rejects_concurrent_target_publication_without_overwrite(tmp_path, monkeypatch):

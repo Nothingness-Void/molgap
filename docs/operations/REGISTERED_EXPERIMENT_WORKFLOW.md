@@ -193,8 +193,11 @@ manifest digest into the launch. The final release gate and frozen bootstrap
 repeat resume validation before any arm starts. Runtime restores fresh arm
 outputs before the all-arm preflight barrier and retains prior cost segments.
 Recovery uses a captured prospective byte snapshot and rejects canonical
-changes during preparation. Restoration verifies the copied bytes against the
-manifest before atomic publication and rejects concurrent destination conflicts.
+changes during preparation. Mutable JSON sidecars, including allocation
+ledgers, bind the hash and retained copy to one captured byte snapshot; later
+atomic accounting refreshes do not change that bundle. Restoration verifies
+the copied bytes against the manifest before atomic publication and rejects
+concurrent destination conflicts.
 
 Supported recovery requires all arms to be incomplete and checkpoint-bearing.
 Completed arms, missing checkpoints, mixed completed/incomplete sets, changed
