@@ -592,11 +592,15 @@ def _compile_scientific_input(path, root, value):
         if (authority["run_reference"] != platform["kaggle"]["kernel"]
                 or authority["gpu"]["owner"] != platform["kaggle"]["account"]):
             raise ValueError("Configured platform differs from human authority")
-        if len({item[1] for item in modern_inputs.values()}) != 1:
+        # Family anchors may retain identical accepted manifest bytes at
+        # different repository paths. Data identity is content, not that alias.
+        shared_fields = ("format", "scientific_training_authorized", "target_mean_eV", "target_std_eV")
+        if (len({pin(item[1])["sha256"] for item in modern_inputs.values()}) != 1
+                or len({canonical_fingerprint({key: item[0][key] for key in shared_fields})
+                        for item in modern_inputs.values()}) != 1):
             raise ValueError("Modern2D arms must share one accepted indexed input binding")
         metadata, input_ref, _, _ = next(iter(modern_inputs.values()))
-        metadata = {key: deepcopy(metadata[key]) for key in (
-            "format", "scientific_training_authorized", "target_mean_eV", "target_std_eV")}
+        metadata = {key: deepcopy(metadata[key]) for key in shared_fields}
         # An accepted input is retained source, not compiler-generated JSON.
         # Pin its original bytes so pretty-printed accepted manifests need not
         # be canonicalized or admitted through a weaker package validator.
