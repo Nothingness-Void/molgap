@@ -1,0 +1,94 @@
+{
+  "observed_at": "2026-10-22T06:22:30.659611+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+  "kernel_id": 140063114,
+  "version": 2,
+  "scheduler_status": "ERROR",
+  "phase": "native_actual_resume_preflight",
+  "source_verification": {
+    "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+    "kernel_id": 140063114,
+    "version": 2,
+    "entry_sha256": "1310a9de1a1ba80baadcbbd12480e0cf932b31d87df816e75f62deb623aeeb0a",
+    "entry_bytes_equal": true,
+    "private": true,
+    "machine_shape": "NvidiaTeslaT4",
+    "dataset_sources": [
+      "nothingnessvoid/k1-rms-scope-gain-src-20261022",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "observed_at": "2026-10-22T06:03:50.518211+00:00"
+  },
+  "formal_training_started_this_attempt": false,
+  "formal_optimizer_updates_this_attempt": 0,
+  "historical_training_started_flag": "The execution report inherits true from existing checkpoints; it is not new-attempt training.",
+  "error": "Optimizer update exposure is outside acknowledged work",
+  "diagnosis": "Two scratch probes restore the same loaded mapping. CPU AdamW step tensors can alias that mapping and mutate it after the first probe.",
+  "local_repair": "Deep-copy the retained state before each scratch restore; not yet natively qualified.",
+  "native_cost": {
+    "hardware": "Tesla T4",
+    "devices": 2,
+    "entry_wall_seconds": 422.64242950500005,
+    "allocated_device_seconds": 845.2848590100001,
+    "allocated_T4_hours": 0.23480134972500002,
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "queue_seconds": null
+  },
+  "retained_evidence": [
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\allocation_entry_observation_retrieval.json",
+      "sha256": "f469f03f36365c860c189dd0fe2ca8acaefa06224b87abbdd12e0c40dcba7ab6",
+      "bytes": 400
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\execution_report_retrieval.json",
+      "sha256": "9e3137025fe841ea535daa8152e155dcf6d7b71211716e410da68745fb203089",
+      "bytes": 388
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\allocation_entry_observation.json",
+      "sha256": "b38353b990e9db664aa4e9243994d071efa59e40be42cf1ba18edec5be7e6561",
+      "bytes": 806
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\execution_report.json",
+      "sha256": "8911e62afbb9e7d4b3e676a5416c25b020544035325984f9d32e5584d2d9d696",
+      "bytes": 1613
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\post_graph_rms\\preflight.log",
+      "sha256": "6aab9918b90abbe43c6c4ced6ba7d9591a3e72359d38139882f559a4204a98de",
+      "bytes": 2475
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\post_node_ada\\preflight.log",
+      "sha256": "6aab9918b90abbe43c6c4ced6ba7d9591a3e72359d38139882f559a4204a98de",
+      "bytes": 2475
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\recovery_repair_provenance.json",
+      "sha256": "c4605f9e6253d878dac64ea097d1e90467382d0ac617211150c11ad9acad437d",
+      "bytes": 1078
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\preflight_log_retrieval.json",
+      "sha256": "6336f36808281947cb1d80f86044a0d90cc40d7f97b81d5187eed7ecae97ce59",
+      "bytes": 470
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\recovery_repair_provenance_retrieval.json",
+      "sha256": "4ecad6289b5f2cd9639b9f51acb05bb50fd0d07af97ef13963fc7505977405be",
+      "bytes": 398
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\source_verification.json",
+      "sha256": "9268d143e33db7967390c6d451fa8716a20339cf701937e4e944bf238b68dc02",
+      "bytes": 484
+    }
+  ],
+  "unselected_outputs_downloaded": false,
+  "v3_submitted": false,
+  "scientific_terminal_decision": "pending",
+  "test_audit": "test_audit_20261022.md",
+  "historical_latest_observation_caveat": "The older recovery record pins then-current startup_observation_latest.json; that mutable locator was superseded by later queries. Immutable terminal logs and source verification are retained here."
+}

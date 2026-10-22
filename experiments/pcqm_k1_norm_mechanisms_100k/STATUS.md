@@ -1,19 +1,31 @@
 # Status
 
-Kaggle1 scope/gain continuation **140063114/version2** is submitted, bound and
-observed RUNNING on2026-10-22. [Recovery record](recovery_20261022.json) owns
-the actual receipt, exact source verification, repair pins and checkpoint
-qualification. [Continuation authority](recovery_authority_20261022.md) bounds
-this attempt. Original model/recipe/data identity and160-pass target remain.
+Kaggle1 scope/gain continuation **140063114/version2** is terminal ERROR.
+It failed native actual-resume preflight before formal training; both worker
+logs report optimizer update exposure outside acknowledged work. The loaded
+optimizer state was reused across scratch probes; the first can mutate shared
+CPU AdamW step tensors before the second restore. [Terminal diagnostic](recovery_v2_terminal_20261022.json)
+owns exact source, log and native-cost observations. The original on-disk
+version1 checkpoints remain retained. Version3 has not been submitted.
 
-Graph-RMS resumes from30 completed passes/23430 updates; AdaRMS resumes from20
-completed passes/15620 updates. Immutable sidecar snapshotting repairs the
+The [124-case audit](test_audit_20261022.md) explains why the passing local
+component/orchestration suite did not cover populated native optimizer restore.
+An additional regression batch was canceled at the user's request. Only one
+small causal AdamW isolation check was executed afterward; it passed, and
+native continuation remains unqualified.
+
+[Recovery record](recovery_20261022.json) owns the historical accepted response
+and initial RUNNING observation; it does not assert native training admission.
+[Continuation authority](recovery_authority_20261022.md) bounded version2.
+Original model/recipe/data identity and160-pass target remain.
+
+The retained Graph-RMS checkpoint has30 completed passes/23430 updates;
+AdaRMS has20 completed passes/15620 updates. Immutable sidecar snapshotting repairs the
 resume-publication race. The one focused regression batch passed124 tests.
 The original scientific package is preserved; three committed infrastructure
 repair files are separately pinned and verified by the bootstrap/workers.
 
-Startup logs show dependency setup. Formal resumed training and native
-qualification are not yet observed; scheduler RUNNING is not that evidence.
+Version2 failed before formal resumed training and native qualification.
 Terminal acceptance and per-arm RML/replay readiness remain pending. Position
 version1 remains complete and was not resubmitted. No monitor/server handoff
 or additional retry was released.
