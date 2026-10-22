@@ -1,4 +1,4 @@
-"""Tiny local fixtures only; main delegates execution with E-drive basetemp."""
+"""Tiny local fixtures only; use the profile launcher's temporary workspace."""
 import json
 import os
 from pathlib import Path

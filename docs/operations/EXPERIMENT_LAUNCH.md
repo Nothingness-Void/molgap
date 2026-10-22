@@ -195,17 +195,12 @@ here, and no historical platform script is modified.
 
 ## Local Verification
 
-Run this local-only suite from the selected checkout with its project virtualenv.
-The server's executed scope is in the
-[integration review](shared_experiment_verification.md):
-
-```powershell
-$env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest --noconftest tests/test_experiment_launch.py -q
-```
+Use the selected checkout, its existing dependency environment and the
+[verification contract](INFRASTRUCTURE_VERIFICATION.md). Launch/receipt
+changes select the affected submission or acceptance journey; lower-level
+receipt invariants use their existing nodes in `test_experiment_launch.py`.
 
 Fixtures create a tiny synthetic local Git repository/package in pytest's
 temporary directory; they neither access remote platforms nor consume molecular
 data. The no-external-call test blocks network/process calls after fixture setup.
-Synthetic test success does not establish actual submission, training results
-or platform compatibility.
+Local fixtures do not establish an actual submission or native compatibility.

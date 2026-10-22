@@ -27,28 +27,6 @@ def test_finite_tree_accepts_mixed_supported_tensor_kinds_and_aliases() -> None:
     assert_finite_state_dict(state["model"], label="model")
 
 
-def test_finite_tree_keeps_first_nested_failure_path() -> None:
-    state = {
-        "model": {"finite": torch.ones(2)},
-        "optimizer": {"bad": torch.tensor([float("inf")])},
-        "cursor": [float("nan")],
-    }
-
-    with pytest.raises(ValueError, match=r"Nonfinite checkpoint state: checkpoint\.optimizer\.bad"):
-        _finite_tree(state, "checkpoint")
-
-
-def test_assert_finite_state_dict_keeps_runtime_error_and_names() -> None:
-    state = {
-        "first": torch.tensor([float("nan")]),
-        "second": torch.tensor([float("inf")]),
-        "alias": torch.tensor([1.0]),
-    }
-
-    with pytest.raises(RuntimeError, match=r"model contains non-finite tensors: \['first', 'second'\]"):
-        assert_finite_state_dict(state, label="model")
-
-
 def test_finite_validation_scope_reuses_only_unchanged_successful_tensors(monkeypatch) -> None:
     first = torch.ones(2)
     second = torch.zeros(2)

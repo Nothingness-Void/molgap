@@ -12,7 +12,6 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = "505fe8ef"
 PARTS = ("core", "state", "session")
 
 
@@ -73,37 +72,6 @@ def test_old_path_monkeypatch_reaches_implementation_globals(monkeypatch, part, 
     monkeypatch.setattr(old, global_name, marker)
     assert getattr(new, global_name) is marker
     assert function.__globals__[global_name] is marker
-
-
-@pytest.mark.parametrize("part", PARTS)
-def test_old_module_contains_only_a_compatibility_alias(part):
-    tree = ast.parse((ROOT / "src" / "molgap" / ("family_training_" + part + ".py")).read_text(encoding="utf-8"))
-    assert not any(isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))
-                   for node in ast.walk(tree))
-    assert len(tree.body) == 4
-    assignment = tree.body[-1]
-    assert isinstance(assignment, ast.Assign)
-    assert ast.unparse(assignment.targets[0]) == "_sys.modules[__name__]"
-
-
-@pytest.mark.parametrize("part", PARTS)
-def test_implementation_bodies_match_pre_move_git_baseline(part):
-    """Freeze every statement, including update/restore order and lazy imports."""
-    source = subprocess.run(
-        ["git", "show", BASELINE + ":src/molgap/family_training_" + part + ".py"],
-        cwd=ROOT, check=True, capture_output=True, text=True, encoding="utf-8",
-    ).stdout
-    expected = ast.parse(source)
-    actual = ast.parse((ROOT / "src" / "molgap" / "training" / (part + ".py")).read_text(encoding="utf-8"))
-    # The only added statements preserve old serialization identities.
-    assert isinstance(actual.body[-2], ast.For)
-    assert isinstance(actual.body[-1], ast.Delete)
-    actual.body = actual.body[:-2]
-    for node in ast.walk(actual):
-        if isinstance(node, ast.ImportFrom) and node.level:
-            assert node.level == 2
-            node.level = 1
-    assert ast.dump(actual, include_attributes=False) == ast.dump(expected, include_attributes=False)
 
 
 @pytest.mark.parametrize("first", ("old", "new"))

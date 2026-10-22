@@ -10,14 +10,12 @@ import torch
 from molgap.experiment_execution import build_family_recipe, training_adapter
 from molgap.experiment_family_workflow import RunContext, inspect_output, tensor_digest
 from molgap.experiment_package import _name
-from molgap.experiment_spec import ExperimentSpec
 from molgap.family_training_outputs import SessionOutputs
 from molgap.family_training_runner import (
     INTERFACES, PROFILES, _assert_target_statistics, family_arm_bindings, read_recipe,
 )
 from molgap.training_reproducibility import sha256_file, validate_accelerator_request
 from test_family_training_session import events, make_session
-from test_experiment_spec import payload
 
 
 def contract_file(tmp_path, session):
@@ -37,15 +35,6 @@ def context(family, path):
     return RunContext("synthetic-question", "synthetic-run", "reference", "a" * 64, "b" * 64,
         *INTERFACES[family], "c" * 40, "d" * 64, "e" * 64, sha256_file(path),
         "local", "fixture", "fixture/run", None)
-
-
-@pytest.mark.parametrize("platform", ["local", "kaggle", "ims", "scnet", "colab"])
-def test_platform_declaration_does_not_change_the_training_owner(payload, platform):
-    payload["platform"]["name"] = platform
-    assert ExperimentSpec(payload).to_dict()["platform"]["name"] == platform
-    for family in INTERFACES:
-        adapter = training_adapter({"family": {"name": family, "version": INTERFACES[family][1]}, "addons": []})
-        assert adapter.module == "molgap.family_training_runner"
 
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])

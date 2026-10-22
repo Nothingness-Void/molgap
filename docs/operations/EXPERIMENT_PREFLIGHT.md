@@ -144,20 +144,15 @@ two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
 the first arm's real loader result. It is parameterized over both modes; only the explicitly selected smoke case constructs a model.
 
-Use the selected checkout's project virtualenv with torch, NumPy, PyG and the
-frozen source package's dependencies installed. The default local check excludes
-real data and model execution:
+For ordinary infrastructure changes, select the affected existing nodes under
+the [verification contract](INFRASTRUCTURE_VERIFICATION.md). Reuse the selected
+checkout's existing dependency interpreter through `platforms/local/run.py`;
+do not install a separate environment in each worktree.
 
-```powershell
-$env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest --noconftest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
-```
-
-The `.venv` must be provisioned in this worktree before these commands are used.
 The real integration cases require explicit authorization and
 `MOLGAP_PREFLIGHT_REAL_INPUTS`; do not run them against protected roles. Both arms
 must declare random initialization with the correct model state digest. The
-real integration selection (`-k real_dual_arm`) runs the real CPU model smoke
+explicit `test_real_dual_arm_independent_success_failure` node runs CPU model smoke
 as well as loader inspection, so it requires separate execution authorization
 and enough time/RAM for GPTrans-T. It was not part of the server integration
 review; do not interpret synthetic success as a GPU/DCU runtime certificate.

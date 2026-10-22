@@ -123,17 +123,7 @@ success does not satisfy them.
 The synthetic tests in `tests/test_experiment_runner.py` use temporary directories,
 real spawn for metadata probes, patched lightweight factories for construction,
 and fake processes for deterministic crashes/timeouts. They use no datasets or
-protected evaluation roles and do not construct real models. Executed server
-scope is retained in the [integration review](shared_experiment_verification.md).
-Run from the selected checkout with its project virtual environment and `src`
-on PYTHONPATH:
-
-```powershell
-$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
-& .\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_runner.py -q
-```
-
-`--noconftest` deliberately bypasses the repository's unrelated CLI-import
-conftest so probe checks do not depend on its ML imports. If this worktree lacks
-a virtual environment, have the verification owner provision/select an approved
-project environment first; do not silently substitute system Python.
+protected evaluation roles and do not construct real models. Select only the
+affected runner nodes using the existing checkout launcher and
+[verification contract](INFRASTRUCTURE_VERIFICATION.md). CLI fixtures load
+lazily; no special `--noconftest` bypass or per-worktree environment is needed.

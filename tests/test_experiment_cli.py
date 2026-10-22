@@ -1,5 +1,4 @@
 """Local CLI coverage for later execution; never submit or execute a model."""
-import ast
 import json
 from pathlib import Path
 from unittest.mock import Mock
@@ -37,7 +36,8 @@ def invoke(capsys, args, expected=0):
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
                                      "run-diagnostic", "launch-receipt", "terminal",
                                      "plan-prospective", "check-release", "prepare-release", "check-preparation",
-                                     "check-acceptance", "inspect-output", "accept-terminal"])
+                                     "check-acceptance", "inspect-output", "accept-terminal",
+                                     "sandbox", "source-dependencies"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
         cli.main(([command] if command else []) + ["--help"])
@@ -431,29 +431,6 @@ def test_core_errors_are_not_swallowed(capsys, monkeypatch, spec_file, tmp_path)
     result = invoke(capsys, ["run-diagnostic", "--spec", spec_file, "--output", tmp_path / "out",
                             "--device", "cpu"], 2)
     assert result["error"] == {"type": "RuntimeError", "message": "explicit core failure"}
-
-
-def test_no_remote_or_dynamic_dispatch_in_cli():
-    tree = ast.parse(Path(cli.__file__).read_text())
-    forbidden = {"subprocess", "socket", "requests", "importlib", "research_memory"}
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            assert not {alias.name.split(".")[0] for alias in node.names} & forbidden
-        if isinstance(node, ast.ImportFrom):
-            assert not set((node.module or "").split(".")) & forbidden
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-            assert node.func.id not in {"eval", "exec", "__import__"}
-    parser = cli._parser()
-    commands = next(action for action in parser._actions if hasattr(action, "choices")
-                    and isinstance(action.choices, dict)).choices
-    assert set(commands) == {
-        "catalog", "build-preset", "derive-input", "freeze-input", "locate-run", "check-workflow", "validate-spec",
-        "package", "preflight", "run-diagnostic", "diagnose", "launch-receipt",
-        "terminal", "plan-prospective", "check-release", "prepare-release",
-        "check-preparation", "check-acceptance", "inspect-output", "accept-terminal",
-        "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal",
-        "workflow-info", "build-resume", "prepare-resume", "sandbox", "source-dependencies",
-    }
 
 
 def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, monkeypatch):

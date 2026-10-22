@@ -306,16 +306,23 @@ def test_changed_canonical_trajectory_rejects_resume_export(resume_case):
     binding = next(item for item in case["spec"].to_dict()["prospective"]["arms"]
                    if item["arm_id"] == arm_id)
     trajectory_path = case["repo"] / binding["output"] / "trajectory.json"
-    changed = json.loads(trajectory_path.read_bytes())
-    changed["question"] = "changed after original release"
-    trajectory_path.write_bytes(json_bytes(changed))
-
-    with pytest.raises(ValueError, match="exact original ACTIVE canonical prospective trajectory"):
-        build_workflow_resume(
-            case["spec"], case["repo"], case["prepared"], case["package"],
-            case["package_identity"], case["receipt"], case["repo"] / "changed-bundle",
-            arm_id=arm_id, source_output=case["sources"][arm_id],
-        )
+    original = trajectory_path.read_bytes()
+    for disposition in ("changed", "completed"):
+        changed = json.loads(original)
+        if disposition == "changed":
+            changed["question"] = "changed after original release"
+        else:
+            changed["decision"]["outcome"] = "COMPLETE"
+        try:
+            trajectory_path.write_bytes(json_bytes(changed))
+            with pytest.raises(ValueError, match="exact original ACTIVE canonical prospective trajectory"):
+                build_workflow_resume(
+                    case["spec"], case["repo"], case["prepared"], case["package"],
+                    case["package_identity"], case["receipt"], case["repo"] / (disposition + "-bundle"),
+                    arm_id=arm_id, source_output=case["sources"][arm_id],
+                )
+        finally:
+            trajectory_path.write_bytes(original)
 
 
 def test_build_resume_rejects_active_trajectory_replaced_before_bundle_export(
@@ -343,24 +350,6 @@ def test_build_resume_rejects_active_trajectory_replaced_before_bundle_export(
     assert trajectory_path.read_bytes() != case["prepared"].joinpath(
         "source_dataset", "prospective", arm_id, "trajectory.json"
     ).read_bytes()
-
-
-def test_completed_canonical_arm_rejects_resume_export(resume_case):
-    case = resume_case
-    arm_id = next(iter(case["bundles"]))
-    binding = next(item for item in case["spec"].to_dict()["prospective"]["arms"]
-                   if item["arm_id"] == arm_id)
-    trajectory_path = case["repo"] / binding["output"] / "trajectory.json"
-    completed = json.loads(trajectory_path.read_bytes())
-    completed["decision"]["outcome"] = "COMPLETE"
-    trajectory_path.write_bytes(json_bytes(completed))
-
-    with pytest.raises(ValueError, match="exact original ACTIVE canonical prospective trajectory"):
-        build_workflow_resume(
-            case["spec"], case["repo"], case["prepared"], case["package"],
-            case["package_identity"], case["receipt"], case["repo"] / "completed-bundle",
-            arm_id=arm_id, source_output=case["sources"][arm_id],
-        )
 
 
 def test_prepare_resume_requires_all_spec_arms(resume_case, tmp_path):

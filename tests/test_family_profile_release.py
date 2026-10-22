@@ -2,7 +2,6 @@
 from dataclasses import asdict
 import json
 import pytest
-import torch
 from molgap.family_execution_profile import ProfileConfig
 from molgap.family_training_runner import _recipe_configuration
 from test_family_training_session import make_session, events

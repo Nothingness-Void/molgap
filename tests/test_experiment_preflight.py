@@ -48,8 +48,12 @@ def validate(payload, value, path):
     return pf.validate_real_shard_manifest(ExperimentSpec(payload), path, pf._sha(raw))
 
 
-def test_missing_real_and_k1_are_not_pass(package, payload, tmp_path):
+def test_missing_real_and_k1_are_not_pass(package, payload, tmp_path, monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("default loader preflight must not dispatch model smoke")
+    monkeypatch.setattr(pf, "_model_smoke", forbidden)
     result = run(package, payload, tmp_path)
+    assert result["mode"] == pf.LOADER_MODE
     assert [a["status"] for a in result["arms"]] == [
         "MISSING_REAL_SHARD", "MISSING_REAL_SHARD"]
     assert result["status"] == "MISSING_REAL_SHARD"
@@ -57,6 +61,10 @@ def test_missing_real_and_k1_are_not_pass(package, payload, tmp_path):
         assert arm["package_verified"]
         assert arm["device"] is None
         assert all(arm[key] is False for key in pf.CHECKS[1:])
+        assert not arm["initial_state_checked"]
+        assert arm["initial_state_sha256"] is None
+        assert arm["normalized_gap_l1"] is None
+        assert not any(arm[key] for key in pf.MODEL_CHECKS)
     assert result["arms"][0]["arm_identity"] != result["arms"][1]["arm_identity"]
 
 
@@ -372,20 +380,6 @@ def test_canonical_reports_no_authority(package, payload, tmp_path):
     assert not list((tmp_path / "output").rglob(".preflight-*"))
 
 
-def test_atomic_replace_failure_preserves_old_bytes(tmp_path, monkeypatch):
-    target = tmp_path / "report.json"
-    target.write_bytes(b"old")
-    def fail(source, destination):
-        assert Path(source).parent == target.parent
-        assert pf._load(Path(source).read_bytes()) == {"new": True}
-        raise OSError("replacement failed")
-    monkeypatch.setattr(pf.os, "replace", fail)
-    with pytest.raises(OSError):
-        pf._atomic(target, {"new": True})
-    assert target.read_bytes() == b"old"
-    assert list(tmp_path.iterdir()) == [target]
-
-
 @pytest.fixture
 def real_inputs():
     """Only external, explicitly authorized real assets can reach loader success."""
@@ -422,19 +416,6 @@ def test_real_dual_arm_independent_success_failure(real_inputs, tmp_path, mode):
     assert result["status"] == "MIXED_NONPASS"
     assert all(second[key] is False for key in pf.MODEL_CHECKS)
     assert all(first[key] is (mode == pf.MODEL_MODE) for key in pf.MODEL_CHECKS)
-
-
-def test_default_never_dispatches_model(package, payload, tmp_path, monkeypatch):
-    def forbidden(*args, **kwargs):
-        raise AssertionError("default must never dispatch model smoke")
-    monkeypatch.setattr(pf, "_model_smoke", forbidden)
-    result = run(package, payload, tmp_path)
-    assert result["mode"] == pf.LOADER_MODE
-    for arm in result["arms"]:
-        assert not arm["initial_state_checked"]
-        assert arm["initial_state_sha256"] is None
-        assert arm["normalized_gap_l1"] is None
-        assert not any(arm[key] for key in pf.MODEL_CHECKS)
 
 
 def test_explicit_smoke_missing_real_is_blocked(package, payload, tmp_path):

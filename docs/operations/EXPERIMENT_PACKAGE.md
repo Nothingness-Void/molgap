@@ -114,10 +114,7 @@ cover deterministic rebuilding, sidecar/declaration/source tampering, tracked
 source boundaries, unsafe tar members, identity consistency and lack of runtime
 authority. Symlink creation tests skip on hosts without that capability.
 
-Executed server scope is in the
-[integration review](shared_experiment_verification.md). From the selected
-checkout and its project virtualenv:
-
-```powershell
-.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_package.py tests/test_experiment_spec.py
-```
+For changes, select the affected package journey under the
+[verification contract](INFRASTRUCTURE_VERIFICATION.md). Run a specific
+lower-level node only when that journey does not cover the changed invariant;
+this API reference does not add a whole-file test requirement.

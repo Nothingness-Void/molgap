@@ -2,35 +2,9 @@
 from unittest.mock import Mock
 import json
 
-import pytest
-
 from molgap import experiment_cli as cli
-from molgap.experiment_launch import canonical_json
-from molgap.experiment_spec import ExperimentSpec
+from test_experiment_cli import invoke as _invoke, spec_file
 from test_experiment_spec import payload
-
-
-@pytest.fixture
-def spec_file(tmp_path, payload):
-    path = tmp_path / "spec.json"
-    path.write_text(ExperimentSpec(payload).to_json(), encoding="utf-8")
-    return path
-
-
-def _invoke(capsys, args):
-    assert cli.main([str(item) for item in args]) == 0
-    raw = capsys.readouterr().out
-    report = json.loads(raw)
-    assert raw == canonical_json(report) + "\n"
-    return report
-
-
-@pytest.mark.parametrize("command", ("sandbox", "source-dependencies"))
-def test_new_local_command_help(capsys, command):
-    with pytest.raises(SystemExit) as result:
-        cli.main([command, "--help"])
-    assert result.value.code == 0
-    assert "usage:" in json.loads(capsys.readouterr().out)["help"]
 
 
 def test_dependency_command_is_read_only(capsys, spec_file, tmp_path, monkeypatch):

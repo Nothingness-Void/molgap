@@ -9,7 +9,7 @@ import tarfile
 import pytest
 
 from molgap.experiment_package import (
-    PACKAGE_FORMAT, SIDECARS, build_experiment_source_package,
+    PACKAGE_FORMAT, SIDECARS, _name, build_experiment_source_package,
     inspect_experiment_source_package, verify_experiment_source_package,
 )
 from molgap.experiment_spec import ExperimentSpec
@@ -69,12 +69,20 @@ def resign(package):
 
 
 def test_binding_and_reproducibility(package, repo, payload, tmp_path):
+    for accepted in ("src/molgap/family_training_outputs.py", "src/molgap/other_outputs.py"):
+        assert _name(accepted) == accepted
+    for denied in ("experiments/example/outputs/model.py", "data/family_training_outputs.py"):
+        with pytest.raises(ValueError):
+            _name(denied)
     manifest = inspect_experiment_source_package(package, repo)
     other = tmp_path / "another-location"
     rebuilt = build_experiment_source_package(ExperimentSpec(payload), repo,
                                              ["src/example.py", "README.md"], other)
     assert manifest == rebuilt == verify_experiment_source_package(other)
     assert manifest["format"] == PACKAGE_FORMAT
+    assert manifest["package_status"] == "source_packaged"
+    assert not ({"ready", "replay_ready", "training_success", "cost_measured", "rml_closed"}
+                & manifest.keys())
     assert manifest["spec_identity"] == ExperimentSpec(payload).identity
     assert manifest["spec_sha256"] == sha(ExperimentSpec(payload).to_json().encode())
     assert manifest["relative_allowlist"] == ["src/example.py", "README.md"]
@@ -307,13 +315,6 @@ def test_failure_never_publishes_complete_manifest(repo, payload, tmp_path, monk
     with pytest.raises(OSError, match="interruption"):
         build_experiment_source_package(ExperimentSpec(payload), repo, ["README.md"], output)
     assert not (output / "package_manifest.json").exists()
-
-
-def test_no_runtime_or_evidence_authority(package):
-    manifest = verify_experiment_source_package(package)
-    assert manifest["package_status"] == "source_packaged"
-    assert not ({"ready", "replay_ready", "training_success", "cost_measured", "rml_closed"}
-                & manifest.keys())
 
 
 def test_scoped_verification_reuses_exact_bytes_and_defends_cached_result(package, monkeypatch):

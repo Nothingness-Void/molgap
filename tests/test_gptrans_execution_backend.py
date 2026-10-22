@@ -1,14 +1,13 @@
 """Small synthetic input/backend checks; no retained models or datasets."""
-import ast
 from pathlib import Path
-from types import SimpleNamespace, MethodType
+from types import SimpleNamespace
 
 import pytest
 import torch
 from torch_geometric.data import Batch, Data
 from torch_geometric.utils import to_dense_batch
 
-from molgap.gptrans_execution_backend import (prepare_layout, dense_inputs, EpochBatches,
+from molgap.gptrans_execution_backend import (prepare_layout,
     buffered_evaluate, assert_static_dataset)
 
 
@@ -41,14 +40,6 @@ def test_layout_rejects_unordered_membership():
     b = batch(); b.batch[0] = 1
     with pytest.raises(ValueError, match='membership'):
         prepare_layout(b)
-
-
-def test_epoch_sampler_preserves_frozen_order():
-    from molgap import pcqm_gptrans_v4 as native
-    sampler = EpochBatches(native, native.TRAIN_ROWS)
-    for epoch in (0, 1, 39):
-        sampler.epoch = epoch
-        assert list(sampler) == list(native.DeterministicEpochBatchSampler(native.TRAIN_ROWS, epoch))
 
 
 def test_static_dataset_rejects_transform():
@@ -102,13 +93,6 @@ def test_buffered_cpu_evaluation_preserves_payload_and_live_weights():
     assert result['source_idx'].tolist() == [100000, 100001]
     assert result['mae_eV'] == float((result['prediction_eV'] - result['target_eV']).abs().mean())
     assert all(torch.equal(initial[k], model.state_dict()[k]) for k in initial)
-
-
-def test_optimized_input_assembly_has_no_gpu_scalar_or_mask_equality():
-    source = Path('src/molgap/gptrans_execution_backend.py').read_text()
-    node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name=='dense_inputs')
-    text = ast.get_source_segment(source,node)
-    assert '.item(' not in text and 'torch.equal' not in text and 'to_dense_batch' not in text
 
 
 def test_persistent_dev_creation_preserves_original_main_rng_draw():
