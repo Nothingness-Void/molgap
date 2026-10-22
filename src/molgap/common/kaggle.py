@@ -82,6 +82,25 @@ def dataset_details(api, ref):
     return details
 
 
+def dataset_file_url(api, ref, name, version):
+    """Resolve one raw, version-pinned file through the authenticated SDK."""
+    from urllib.parse import urlsplit
+    from kagglesdk.datasets.types.dataset_api_service import ApiDownloadDatasetRequest
+    request = ApiDownloadDatasetRequest()
+    request.owner_slug, request.dataset_slug = ref.split("/")
+    request.file_name, request.dataset_version_number, request.raw = name, version, True
+    with api.build_kaggle_client() as client:
+        response = client.datasets.dataset_api_client.download_dataset(request)
+        try:
+            url = response.url
+            parsed = urlsplit(url)
+            if response.status_code != 200 or parsed.scheme != "https" or not parsed.hostname:
+                raise RuntimeError("Pinned source file redirect is unavailable")
+            return url
+        finally:
+            response.close()
+
+
 def kernel_source(api, ref):
     from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelRequest
     request = ApiGetKernelRequest()

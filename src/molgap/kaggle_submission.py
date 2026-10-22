@@ -132,9 +132,18 @@ def _roundtrip_source(api, http, staged, remote, ref):
         destination.parent.mkdir(parents=True, exist_ok=True)
     def download(item):
         name = item["path"]
-        url = "https://www.kaggle.com/api/v1/datasets/download/" + ref + "/" + quote(name, safe="") + "?datasetVersionNumber=1"
-        _download_selected(urls={name: url}, required={name: (name, item["sha256"])},
-                           destination=remote, http_session=http)
+        if callable(getattr(api, "build_kaggle_client", None)):
+            from .common.kaggle import dataset_file_url
+            import requests
+            url = dataset_file_url(api, ref, name, 1)
+            # Never forward account Basic auth to a signed storage URL.
+            with requests.Session() as anonymous:
+                _download_selected(urls={name: url}, required={name: (name, item["sha256"])},
+                                   destination=remote, http_session=anonymous)
+        else:
+            url = "https://www.kaggle.com/api/v1/datasets/download/" + ref + "/" + quote(name, safe="") + "?datasetVersionNumber=1"
+            _download_selected(urls={name: url}, required={name: (name, item["sha256"])},
+                               destination=remote, http_session=http)
     with ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(download, records))
     return {"status": "REMOTE_SOURCE_BYTES_VERIFIED", "dataset": ref, "version": 1, "files": records}
