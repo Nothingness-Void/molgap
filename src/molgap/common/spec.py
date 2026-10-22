@@ -92,6 +92,9 @@ def validate_addon_config(contract: AddonContract, config: dict, *, name="addon"
             _integer(value, "addon.config." + field.name, field.minimum or 0)
             if (field.maximum is not None and value > field.maximum) or value in field.excluded:
                 raise ValueError(f"{name} requires {field.name} in [{field.minimum}, {field.maximum}] except {field.excluded}")
+        elif field.kind == "probability":
+            if type(value) not in (int, float) or not 0 <= value < 1:
+                raise ValueError(f"{name} requires {field.name} to satisfy 0 <= p < 1")
         else:
             raise ValueError("Unsupported reviewed addon configuration field kind")
 

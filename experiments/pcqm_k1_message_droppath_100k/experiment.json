@@ -1,0 +1,63 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_message_droppath_100k",
+  "logical_run_id": "pcqm-k1-message-droppath-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "monitor_paths": ["experiments/pcqm_k1_message_droppath_100k/STATUS.md"],
+  "timestamp": "2026-10-22T16:05:02Z",
+  "question": {
+    "policy_id": "pcqm-k1-message-droppath-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does graph-wise DropPath of neighbor-aggregate branches improve the unchanged post-BN K1 at fixed100K?",
+    "deficiency": "Historical two-forward consistency has only subthreshold gain; no single-forward graph-wise aggregate-mask endpoint is retained.",
+    "changed_mechanism": "graph-wise-neighbor-aggregate-droppath",
+    "supporting_evidence": ["pcqm-k1-complete-module-audit-20261008", "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal", "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal"],
+    "alternatives": ["Existing unit dropout is sufficient", "Masking removes useful chemistry", "BN statistics are adversely affected", "Single-seed variation rather than transferable gain"],
+    "closed_families": ["K1-dropout-consistency100K", "K1-post-LN100K", "K1-normalization-exposure160pass"],
+    "positive_decision": "Nominate only for independently authorized replication or transfer after complete paired acceptance",
+    "negative_decision": "Close without adoption, retry or scale-up",
+    "reference_ids": [],
+    "prior_trajectories": ["TB-k1-complete-module-audit-20261008", "TB-k1-dropout-mean2-kaggle3-100k-s42-v1", "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2"]
+  },
+  "profile": {
+    "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "One same-job40pass100K pair; same transported tensors/data/recipe, only graph-wise aggregate DropPath=.05",
+    "estimated_device_hours": 1.8, "estimated_wall_hours": 1.8
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1", "user_authorized": true,
+    "account": "nothingnessvoid", "arms": ["baseline", "message_droppath"], "seeds": [42],
+    "same_run_reference_arm_id": "baseline", "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400, "cleanup_reserve_seconds": 180,
+    "authority": "Explicit user reply: adopt K1 baseline vs graph-wise DropPath=.05, fixed100K/40epochs, Kaggle1 T4x2 same-job, maximum4hours.",
+    "scope": "One paired Notebook only; train/development; no automatic retry/continuation/monitor/protected roles/500K/full/adoption"
+  },
+  "platform": {
+    "platform": {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2, "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": true, "retrievable_chunks": true},
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "title": "MolGap K1 Message DropPath 100K S42",
+      "datasets": ["nothingnessvoid/k1-message-droppath-100k-src", "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"],
+      "source_dataset": "nothingnessvoid/k1-message-droppath-100k-src",
+      "accelerator": "NvidiaTeslaT4", "allocation_wall_limit_seconds": 14400, "cleanup_reserve_seconds": 180
+    }
+  },
+  "role_ref": "experiments/pcqm_k1_message_droppath_100k/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_message_droppath_100k/decision.md",
+  "seeds": [42],
+  "shared": {
+    "model": {"family": "neural_atom_k1", "version": "3", "addons": []},
+    "recipe_ref": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+    "data_ref": {"spec_ref": "experiments/pcqm_k1_message_droppath_100k/baseline_data_declaration.json", "arm_id": "post_bn"},
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {}, "purpose": "single_module_ablation"
+  },
+  "arms": [
+    {"arm_id": "baseline"},
+    {"arm_id": "message_droppath", "model": {"family": "neural_atom_k1", "version": "3", "addons": [{"name": "k1_message_droppath", "config": {"probability": 0.05}}]}}
+  ],
+  "same_run": {"reference_arm_id": "baseline", "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"}
+}

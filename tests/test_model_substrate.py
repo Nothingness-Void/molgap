@@ -291,3 +291,157 @@ def test_reserved_module_name_rejects_before_namespace_mutation():
 def test_slot_descriptors_fail_closed(binding, error):
     with pytest.raises(error):
         SlotBinding(*binding)
+
+
+def test_message_droppath_grouped_mask_identity_and_missing_layout():
+    from molgap.k1_message_droppath import MessageDropPath
+    model = TinyK1()
+    graph_index = torch.arange(64).repeat_interleave(3)
+    payload = K1AggregationOutput(torch.ones(192, 4, requires_grad=True), None, graph_index)
+    with torch.random.fork_rng(devices=[]):
+        addon = MessageDropPath(model, .5)
+        rng = torch.get_rng_state()
+        with pytest.raises(ValueError, match="accelerated graph count"):
+            addon(payload)
+        assert torch.equal(rng, torch.get_rng_state())
+        addon.eval()
+        assert addon(payload) is payload
+        assert torch.equal(rng, torch.get_rng_state())
+        assert MessageDropPath(model, 0)(payload) is payload
+        assert torch.equal(rng, torch.get_rng_state())
+        model._execution_graph_count = 64
+        addon.train()
+        torch.manual_seed(42)
+        expected = torch.empty(64, 1).bernoulli_(.5).div_(.5)
+        expected_rng = torch.get_rng_state()
+        torch.manual_seed(42)
+        actual = addon(payload)
+        assert torch.equal(actual.aggregated, expected[graph_index].expand(-1, 4))
+        assert torch.equal(expected_rng, torch.get_rng_state())
+        assert set(actual.aggregated.unique().tolist()) == {0., 2.}
+        assert actual.graph_index is graph_index and actual.target_index is payload.target_index
+        actual.aggregated.sum().backward()
+        assert torch.equal(payload.aggregated.grad, expected[graph_index].expand(-1, 4))
+        assert not list(addon.parameters()) and not list(addon.buffers())
+        assert not list(addon.children())
+
+
+@pytest.mark.parametrize("probability", [True, False, None, "0.05", -.01, 1, float("nan"), float("inf")])
+def test_message_droppath_probability_contract_fails_closed(probability):
+    from pathlib import Path
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.k1_message_droppath import MessageDropPath
+    with pytest.raises(ValueError, match="0 <= p < 1"):
+        build_addon_declaration(("neural_atom_k1", "3"), "k1_message_droppath",
+            repo_root=Path(__file__).resolve().parents[1], config={"probability": probability})
+    with pytest.raises(ValueError, match="0 <= p < 1"):
+        MessageDropPath(TinyK1(), probability)
+
+
+def test_message_droppath_real_k1_accelerated_optimizer_rng_roundtrip(tmp_path):
+    from copy import deepcopy
+    from pathlib import Path
+    from torch_geometric.data import Data
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.fast_sandbox import _cpu_scope
+    from molgap.family_training_data import DatasetSelection, TrainingData
+    from molgap.family_training_kernel import FamilyKernel
+    from molgap.family_training_loaders import FamilyLoaders
+    from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
+    from molgap.gptrans_execution_tuning import ExecutionTuning
+    from molgap.k1_execution_backend import K1ExecutionConfig, execution_context
+    from molgap.k1_execution_layout import cpu_layout_context
+    from molgap.qm9_neural_atom import make_encoder
+    from molgap.v4_runtime import state_dict_sha256
+
+    def same(actual, expected):
+        if torch.is_tensor(actual):
+            assert torch.equal(actual, expected)
+        elif isinstance(actual, dict):
+            assert actual.keys() == expected.keys()
+            for key in actual:
+                same(actual[key], expected[key])
+        elif isinstance(actual, (list, tuple)):
+            assert len(actual) == len(expected)
+            for left, right in zip(actual, expected):
+                same(left, right)
+        else:
+            assert actual == expected
+
+    kernels, pool = [], None
+    try:
+        with _cpu_scope(42, 1):
+            base = make_encoder("neural_atom_k1")
+            initial = deepcopy(base.state_dict())
+            path = tmp_path / "synthetic-initial.pt"
+            torch.save(initial, path)
+            addon = build_addon_declaration(("neural_atom_k1", "3"), "k1_message_droppath",
+                repo_root=Path(__file__).resolve().parents[1], config={"probability": .05})
+            selection = DatasetSelection("synthetic.json", "2" * 64, False)
+            recipe = FamilyRecipe("neural_atom_k1", "composed", 42, state_dict_sha256(initial),
+                selection, 128, 0, 2, .001, .01, ScheduleSpec("cosine_step", 2),
+                "final-live", "torch-pass-randperm", 1, target_mean_eV=0., target_std_eV=1.,
+                k1_execution=K1ExecutionConfig(), addons=(addon,),
+                torch_version=str(torch.__version__).split("+", 1)[0])
+            assert FamilyRecipe.from_dict(recipe.to_dict()) == recipe
+            graphs = [Data(x=torch.zeros(2, 9, dtype=torch.long),
+                edge_index=torch.tensor([[0, 1], [1, 0]]), edge_attr=torch.zeros(2, 3, dtype=torch.long),
+                random_walk_pe=torch.zeros(2, 16), y=torch.tensor([float(i % 3)]),
+                source_idx=torch.tensor([i])) for i in range(128)]
+            data = TrainingData(graphs, None, selection.manifest_sha256, 128, 0, 0, None, 0., 1.)
+            pool = FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0))
+            batch = next(iter(pool.train(0, 0)))
+            kernel = FamilyKernel(recipe, path, device="cpu")
+            kernels.append(kernel)
+            same(kernel.model.state_dict(), initial)
+            assert not list(kernel.model._molgap_substrate.named_addon_parameters())
+            assert [entry.binding.layer for entry in kernel.model._molgap_substrate.bindings] == list(range(1, 10))
+            base.eval()
+            kernel.model.eval()
+            rng = torch.get_rng_state()
+            with torch.no_grad(), cpu_layout_context(base, batch, "cpu"), execution_context(
+                    base, batch, "cpu", recipe.k1_execution):
+                expected = base(batch.x, batch.edge_index, batch.edge_attr, batch.batch, batch.random_walk_pe).view(-1)
+            with torch.no_grad():
+                assert torch.equal(kernel.forward(batch), expected)
+            assert torch.equal(rng, torch.get_rng_state())
+            calls = []
+            def observed(module, args, output):
+                assert kernel.model._execution_graph_count == 128
+                assert kernel.model._k1_execution_active
+                calls.append(module)
+            for module in kernel.model._molgap_addons.values():
+                module.register_forward_hook(observed)
+            kernel.model.train()
+            loss, _, rows = kernel.step(batch, check_finite=True)
+            assert torch.isfinite(loss) and rows == 128
+            assert calls == list(kernel.model._molgap_addons.values())
+            assert all(any(p.grad is not None and torch.count_nonzero(p.grad) for p in block.conv.parameters())
+                       for block in kernel.model.local_blocks)
+            assert any(not torch.equal(initial[key], value) for key, value in kernel.model.state_dict().items())
+            assert not hasattr(kernel.model, "_execution_graph_count")
+            checkpoint = BytesIO()
+            torch.save({"model": kernel.model.state_dict(), "optimizer": kernel.optimizer.state_dict(),
+                "rng": torch.get_rng_state()}, checkpoint)
+            kernel.step(batch, check_finite=True)
+            expected_model = deepcopy(kernel.model.state_dict())
+            expected_optimizer = deepcopy(kernel.optimizer.state_dict())
+            expected_rng = torch.get_rng_state()
+            restored = FamilyKernel(recipe, path, device="cpu")
+            kernels.append(restored)
+            checkpoint.seek(0)
+            saved = torch.load(checkpoint, weights_only=True)
+            restored.model.load_state_dict(saved["model"], strict=True)
+            restored.optimizer.load_state_dict(saved["optimizer"])
+            restored.model.train()
+            torch.set_rng_state(saved["rng"])
+            restored.step(batch, check_finite=True)
+            same(restored.model.state_dict(), expected_model)
+            same(restored.optimizer.state_dict(), expected_optimizer)
+            assert torch.equal(torch.get_rng_state(), expected_rng)
+            assert not hasattr(restored.model, "_execution_graph_count")
+    finally:
+        for kernel in kernels:
+            kernel.close()
+        if pool is not None:
+            pool.close()
