@@ -131,6 +131,14 @@ FAMILIES = MappingProxyType({
 
 
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract(family,
+        "modern2d-structural-falsifier", "molgap.modern2d_structure_addons",
+        (AddonConfigField("variant", value=variant),), (version,),
+        execution_modes=((version, "composed"),),
+        apply_hook="molgap.modern2d_structure_addons:apply_addon")
+       for name, family, version, variant in (
+           ("ppgt_content_pair", "ppgt_small", "3", "content_pair"),
+           ("esa_count_readout", "esa_small", "4", "count_readout"))},
     **{("ppgt_research_" + variant, "1"): AddonContract("ppgt_small",
         "ppgt-research-mechanism", "molgap.ppgt_research_addons",
         (AddonConfigField("variant", value=variant),), ("3",),
