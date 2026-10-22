@@ -78,7 +78,12 @@ def release(tmp_path, monkeypatch, staged_source=None):
     else:
         staged.mkdir()
         atomic_json(staged / "dataset-metadata.json", {"id": "owner/new-source"})
-        atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4"})
+        atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4",
+            "jobs": [{"arm_id": binding["arm_id"], "device": device,
+                      "recipe": f"recipes/{binding['arm_id']}.json",
+                      "initial_state": f"initial_states/{binding['arm_id']}.pt",
+                      "trajectory_id": binding["trajectory_id"]}
+                     for device, binding in enumerate(spec.to_dict()["prospective"]["arms"])]})
         from molgap.experiment_package import SIDECARS
         for name in SIDECARS:
             (staged / ("source_payload.bin" if name == "source.tar.gz" else name)).write_bytes(b"synthetic")
@@ -651,6 +656,16 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
     assert case.tampered_roundtrip() is not None
     assert not (case.output / "launch_receipt.json").exists()
     assert case.transport().api.created == 1 and case.transport().api.pushed == 0
+    source = case.prepared / "source_dataset"
+    launch = json.loads((source / "experiment_launch.json").read_bytes())
+    assert launch["allocation_wall_limit_seconds"] == 32400
+    assert launch["cleanup_reserve_seconds"] == 180
+    assert len(launch["jobs"]) == 2
+    initial_paths = {job["initial_state"] for job in launch["jobs"]}
+    assert len(initial_paths) == 1
+    assert len(list((source / "initial_states").glob("*.pt"))) == 1
+    shared_path = initial_paths.pop()
+    assert (case.output / "source_roundtrip" / shared_path).read_bytes() == (source / shared_path).read_bytes()
     verifications.clear()
     case.restore_roundtrip()
     case.lose_next_post()
@@ -713,6 +728,24 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
 
 def test_real_package_release_post_receipt_reuses_only_exact_content(scientific, tmp_path):
     case = scientific
+    from copy import deepcopy
+    from test_scientific_input import _git
+    value = deepcopy(case.value)
+    second = deepcopy(value["arms"][0])
+    second["arm_id"] = "candidate_two"
+    value["arms"].append(second)
+    atomic_json(case.path, value)
+    authority_path = case.repo / value["authority_ref"]
+    authority = json.loads(authority_path.read_bytes())
+    authority["arms"].append("candidate_two")
+    atomic_json(authority_path, authority)
+    platform_path = case.repo / value["platform_ref"]
+    platform = json.loads(platform_path.read_bytes())
+    platform["kaggle"].update(allocation_wall_limit_seconds=32400, cleanup_reserve_seconds=180)
+    atomic_json(platform_path, platform)
+    _git(case.repo, "add", "--", case.path.relative_to(case.repo).as_posix(),
+         value["authority_ref"], value["platform_ref"])
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Explicit paired fixture with shared initial state and launch budget")
     child = r'''
 import json, pathlib, sys
 from types import SimpleNamespace as NS

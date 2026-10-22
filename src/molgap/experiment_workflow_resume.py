@@ -264,7 +264,8 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
             _unchanged_prospectives(spec, repo_root, trajectories)
             result = check_release_inputs(spec, Path(package_dir), expected_package_identity=expected_package_identity,
                 recipe_files=frozen_inputs["recipe_files"],
-                initial_states={a: stage["input_root"] / "initial_states" / (a + ".pt") for a in contexts},
+                initial_states={job["arm_id"]: stage["input_root"] / job["initial_state"]
+                                for job in stage["launch"]["jobs"]},
                 required_modules=release["inputs"]["required_modules"], input_root=stage["input_root"],
                 entry_script=stage["entry_path"], launch_config=stage["launch_path"],
                 kernel_metadata=stage["metadata_path"],

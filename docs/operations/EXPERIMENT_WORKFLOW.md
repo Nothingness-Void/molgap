@@ -119,11 +119,20 @@ one shared `logical_run_id-vN` attempt, with N later verified from the launch
 response. It never rewrites old plans to fit observed execution.
 
 A recipe may additionally pin `allocation_wall_limit_seconds` (120--14400).
-Every arm must agree. The Kaggle bootstrap subtracts installation/setup time
-and reserves 60 seconds for cleanup before passing the remaining budget to the
+Every arm must agree. The platform plan's `kaggle` block also accepts explicit
+`allocation_wall_limit_seconds` and `cleanup_reserve_seconds`; these freeze into
+the launch unchanged and cannot override a conflicting recipe ceiling. This
+shared plumbing reuses `codex/exp/gptrans-bondlocal-pairnorm-100k@32b96f61`.
+The Kaggle bootstrap subtracts installation/setup time and the cleanup reserve
+(60 seconds when omitted) before passing the remaining budget to the
 shared pair runner. Timeout records `STOP_FOR_COST`, retains the last atomic
 complete-epoch checkpoint, and cannot claim the planned endpoint. Historical
 recipes without this optional field keep their existing execution behavior.
+
+Byte-identical initializations share one staged/uploaded file. Each arm retains
+its own recipe, state identity and prospective trajectory; frozen launch jobs
+bind the shared path. Distinct bytes remain distinct, and older per-arm layouts
+remain readable during release checks, submission reconciliation and resume.
 
 Build the family's fixed recipe before freezing the Spec. This helper uses the
 registered family builder; do not copy an old recipe JSON and edit constants.

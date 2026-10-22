@@ -218,6 +218,10 @@ def _arm_inputs(repo_root, arms, bindings):
         jobs.append({"arm_id": arm_id, "device": arm["device"], "recipe": arm["recipe"],
                      "initial_state": f"initial_states/{arm_id}.pt",
                      "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    from .experiment_package import initial_state_paths
+    paths = initial_state_paths(initial_states)
+    for job in jobs:
+        job["initial_state"] = paths[job["arm_id"]]
     return jobs, recipes, initial_states
 
 
@@ -251,9 +255,10 @@ def prepare_family_training(spec, repo_root, plan, output):
     output.mkdir(parents=True)
     package = output / "package"
     manifest = build_experiment_source_package(spec, repo_root, source_files, package)
-    staged = stage_source_inputs(package, output / "inputs", initial_states)
+    staged = stage_source_inputs(package, output / "inputs", initial_states,
+        initial_paths={job["arm_id"]: job["initial_state"] for job in jobs})
     release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
-        recipe_files=recipes, initial_states={arm: staged / "initial_states" / (arm + ".pt") for arm in initial_states},
+        recipe_files=recipes, initial_states={job["arm_id"]: staged / job["initial_state"] for job in jobs},
         required_modules=sorted({module for job in validated for module in job["required_modules"]}
             | {"molgap.experiment_training_worker", "molgap.family_training_outputs"}), input_root=staged)
     _atomic(output / "release_report.json", release)
@@ -428,7 +433,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         staged, kernel = stage["input_root"], stage["kernel_dir"]
         release = check_release_inputs(spec, package,
             expected_package_identity=manifest["package_identity"], recipe_files=recipes,
-            initial_states={a: staged / "initial_states" / (a + ".pt") for a in initial_states},
+            initial_states={job["arm_id"]: staged / job["initial_state"] for job in stage["launch"]["jobs"]},
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
             input_root=staged, dataset_manifests=inputs["dataset_manifests"] or None,

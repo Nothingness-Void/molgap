@@ -208,7 +208,10 @@ separate. New configuration work needs focused tests, not a full historical audi
 or document line-count checks.
 
 New RML plans share an immutable decision-time knowledge/policy snapshot. Arm
-records bind its digest; legacy inline records remain readable. Multi-arm closure
+records bind its digest; legacy inline records remain readable. Preparation validates
+the question's references and publishes canonical plans without rebuilding the
+whole repository's indexes or requiring unrelated historical weights. Use the
+existing RML `rebuild` at handoff/accepted milestones. Multi-arm closure
 persists each independent terminal outcome and updates derived indexes once.
 If that update fails, use the RML CLI `terminal-rebuild --trajectory <path>` to
 recover from canonical receipts without repeating training or submission.

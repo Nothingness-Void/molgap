@@ -9,11 +9,62 @@ import stat
 from .experiment_launch import _safe_local
 from .common.identity import validate_execution_identity
 from .experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, _canonical, _unique_object
-from .research_memory.compiler import rebuild_research_memory
-from .research_memory.paths import repo_local_path
+from .evidence_pointers import load_json_object
+from .research_memory.discovery import discover_records
+from .research_memory.paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .research_memory.plan import PlanBatchError, plan_many
 from .research_memory.paired import PAIR_SCHEMA
 from .screen_policy import canonical_fingerprint
+from .v5_common import validate_comparison_readiness, validate_v5_evidence_envelope
+
+
+def _check_referenced_evidence(repo_root: Path, plans: list[dict]) -> None:
+    """Validate this question's evidence without hydrating unrelated history."""
+    referenced = set()
+    pointers = set()
+    for item in plans:
+        plan = item["spec"]
+        trajectory = plan["trajectory"]
+        state = trajectory["state_at_start"]
+        for values in (state.get("reference_ids", []), state.get("prior_evidence_ids", []),
+                       trajectory.get("hypothesis", {}).get("supporting_evidence_ids", [])):
+            referenced.update(values)
+        pointers.update(state.get("contract_refs", []))
+        if trajectory.get("comparison_readiness_ref"):
+            pointer = trajectory["comparison_readiness_ref"]
+            resolve_repo_pointer(repo_root, pointer)
+            pointers.add(pointer)
+        for action in trajectory.get("actions", []):
+            for pointer in action.get("evidence_refs", []):
+                resolve_repo_pointer(repo_root, pointer)
+                pointers.add(pointer)
+        for pointer in trajectory.get("result", {}).get("evidence_refs", []):
+            resolve_repo_pointer(repo_root, pointer)
+            pointers.add(pointer)
+        if plan.get("action_inputs_ref") is not None:
+            path = resolve_repo_pointer(repo_root, plan["action_inputs_ref"])
+            referenced.update(load_json_object(path)["evidence_ids"])
+    if not referenced and not pointers:
+        return
+    discovered = discover_records(repo_root)
+    found = set()
+    for path in discovered.evidence:
+        record = load_json_object(path)
+        evidence_id = record["evidence_id"]
+        if evidence_id in referenced:
+            if evidence_id in found:
+                raise ValueError(f"duplicate referenced evidence ID: {evidence_id}")
+            validate_v5_evidence_envelope(record, repo_root=repo_root)
+            pointers.update(record["authority"]["pointers"])
+            pointers.update(artifact["locator"] for artifact in record["artifacts"])
+            found.add(evidence_id)
+    if referenced - found:
+        raise ValueError(f"plan references unknown evidence: {sorted(referenced - found)}")
+    for path in discovered.comparison_readiness:
+        relative = path.relative_to(repo_root.resolve()).as_posix()
+        if relative in pointers or "repo://" + relative in pointers:
+            validate_comparison_readiness(load_json_object(path),
+                evidence_verifier=lambda pointer, digest: verify_bound_artifact(repo_root, pointer, digest))
 
 
 def _prospective_inputs(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None):
@@ -85,6 +136,7 @@ def _prospective_inputs(spec: ExperimentSpec, repo_root: Path, *, execution_sour
                 "reference_trajectory_ref": reference_ref,
             }
 
+    _check_referenced_evidence(repo_root, plans)
     return plans, bindings
 
 
@@ -131,22 +183,13 @@ def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_
             "rml_rebuilt": False,
             "submission_authorized": False,
         }, 1
-    try:
-        derived = rebuild_research_memory(repo_root)
-    except Exception as exc:
-        return {
-            "status": "PROSPECTIVE_PLANNED_RML_REBUILD_FAILED",
-            "completed_records": records,
-            "error": {"type": type(exc).__name__, "message": str(exc)},
-            "rml_rebuilt": False,
-            "submission_authorized": False,
-        }, 1
     return {
-        "status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT",
+        "status": "PROSPECTIVE_PLANNED_RML_PENDING",
         "completed_records": records,
         "batch": result["batch"],
-        "rml_derived_files": sorted(derived),
-        "rml_rebuilt": True,
+        "rml_rebuilt": False,
+        "rml_rebuild_pending": True,
+        "next_action": "Derived indexes are deferred to accepted milestones or handoff; use the existing RML rebuild CLI then.",
         "scope": "prospective_planning_only",
         "submission_authorized": False,
         "training_authorized": False,

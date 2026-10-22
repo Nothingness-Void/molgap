@@ -8,12 +8,15 @@ import shutil
 
 from .experiment_family_workflow import _artifact_path
 from .experiment_launch import canonical_json, publish_immutable_bytes
+from .experiment_launch_config import validate_allocation_budget
 from .experiment_package import read_packaged_text
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
-    if type(kaggle) is not dict or set(kaggle) != fields:
+    optional = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+    if type(kaggle) is not dict or not fields <= set(kaggle) or set(kaggle) - (fields | optional):
         raise ValueError("Expected explicit Kaggle account/kernel/title/datasets/source_dataset/accelerator")
+    validate_allocation_budget(kaggle)
     if not re.fullmatch(r"[a-z0-9-]+", kaggle["account"]):
         raise ValueError("Invalid Kaggle account")
     prefix = kaggle["account"] + "/"
@@ -45,9 +48,11 @@ def validate_plan(spec, plan):
 
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
                  metadata, initial_states, jobs, acceptance_plan_path=None, _verification=None):
+    validate_allocation_budget(platform_plan)
     staged = output / "source_dataset"
     from .experiment_package import stage_source_inputs
     stage_source_inputs(package, staged, initial_states,
+        initial_paths={job["arm_id"]: job["initial_state"] for job in jobs},
         **({"_verification": _verification} if _verification is not None else {}))
     acceptance_binding = None
     if acceptance_plan_path is not None:
@@ -68,6 +73,9 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
         "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
         "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
+    for field in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
+        if field in platform_plan:
+            launch[field] = platform_plan[field]
     if acceptance_binding is not None:
         launch["target_identity"] = acceptance_binding
     return {"input_root": staged, "kernel_dir": kernel, "entry_path": kernel / "run.py",

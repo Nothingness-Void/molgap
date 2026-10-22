@@ -150,7 +150,7 @@ def v2_spec_file(tmp_path, payload):
 
 
 @pytest.mark.parametrize("status,code", [
-    ("PROSPECTIVE_PLANNED_AND_RML_REBUILT", 0),
+    ("PROSPECTIVE_PLANNED_RML_PENDING", 0),
     ("PARTIAL_PROSPECTIVE_PLAN_REQUIRES_RECONCILIATION", 1),
 ])
 def test_plan_prospective_passthrough(capsys, monkeypatch, tmp_path, v2_spec_file,
@@ -172,14 +172,14 @@ def test_plan_prospective_keeps_library_output_off_stdout(
 
     def noisy_plan(*_):
         print("planning diagnostic")
-        return {"status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT"}, 0
+        return {"status": "PROSPECTIVE_PLANNED_RML_PENDING"}, 0
 
     monkeypatch.setattr(cli, "plan_prospective", noisy_plan)
     assert cli.main(["plan-prospective", "--spec", str(path),
                      "--repo-root", str(tmp_path)]) == 0
     output = capsys.readouterr()
     assert output.out == canonical_json({
-        "status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT",
+        "status": "PROSPECTIVE_PLANNED_RML_PENDING",
     }) + "\n"
     assert output.err == "planning diagnostic\n"
 

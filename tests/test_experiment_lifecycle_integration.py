@@ -288,11 +288,11 @@ def _launch_receipt(spec, package_dir: Path, package_identity: str, repo: Path) 
         "conflict_kind": None,
         "binding": binding,
         "canonical_platform_reference": {"value": reference, "missing_reason": None},
-        "platform_version": {"value": "synthetic-platform-v1", "missing_reason": None},
+        "platform_version": {"value": "1", "missing_reason": None},
         "physical_runs": {"value": [{
             "run_identity": "synthetic-physical-run",
             "canonical_reference": reference,
-            "platform_version": {"value": "synthetic-platform-v1", "missing_reason": None},
+            "platform_version": {"value": "1", "missing_reason": None},
             "arm_ids": [arm["arm_id"] for arm in spec.to_dict()["arms"]],
         }], "missing_reason": None},
         "timestamp": {"value": None, "missing_reason": "not_observed"},
@@ -434,11 +434,12 @@ def test_registered_workflow_prepares_stages_rechecks_and_accepts_synthetic_outp
     # Repeat the same release check a platform adapter uses immediately before
     # POST, proving the frozen staged launch remains independently verifiable.
     from molgap.experiment_preflight import check_release_inputs
+    frozen_launch = json.loads((source_dataset / "experiment_launch.json").read_bytes())
     recheck = check_release_inputs(
         spec, package_dir, expected_package_identity=result["package_identity"],
         recipe_files=recipes,
-        initial_states={arm_id: source_dataset / "initial_states" / f"{arm_id}.pt"
-                        for arm_id in recipes},
+        initial_states={job["arm_id"]: source_dataset / job["initial_state"]
+                        for job in frozen_launch["jobs"]},
         required_modules=["molgap.synthetic_trainer", "molgap.experiment_training_worker"],
         input_root=source_dataset,
         entry_script=kernel_dir / "run.py",

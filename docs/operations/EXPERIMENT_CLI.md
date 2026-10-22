@@ -271,8 +271,8 @@ $incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
 - `validate-spec` returns the canonical declaration and its identity. This is
   structural validation, not verification of declared source/data/state bytes.
 - `plan-prospective` is available only for Spec v2. It publishes one canonical
-  RML trajectory per arm from frozen per-arm plan inputs, then rebuilds derived
-  indexes. A nonzero partial result can retain published trajectories; reconcile
+  RML trajectory per arm from frozen per-arm plan inputs, leaving derived
+  index rebuilding to the existing RML CLI. A nonzero partial result can retain published trajectories; reconcile
   them before retrying. It is not a submission or training authorization. See
   the [planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
 - `package` calls `build_experiment_source_package` with exactly the supplied

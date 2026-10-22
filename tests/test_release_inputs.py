@@ -492,8 +492,10 @@ def test_staged_source_payload_is_bound_to_the_verified_archive(release, tmp_pat
 def test_transaction_content_reuse_still_checks_remote_layout_and_initialization_bytes(release, tmp_path, monkeypatch):
     import shutil
     from molgap import experiment_preflight as owner
-    from molgap.experiment_package import stage_source_inputs
+    from molgap.experiment_package import stage_source_inputs, initial_state_paths
     spec, package, options = release
+    states = list(options["initial_states"].values())
+    shutil.copyfile(states[0], states[1])
     memo = owner._ReleaseContentVerification()
     unpacks = []
     original = owner._unpack
@@ -505,12 +507,13 @@ def test_transaction_content_reuse_still_checks_remote_layout_and_initialization
     assert not first["errors"] and len(unpacks) == 1
     remote = tmp_path / "remote"
     stage_source_inputs(package, remote, options["initial_states"])
+    assert len(list((remote / "initial_states").iterdir())) == 1
     target_manifest = remote / "slug" / "manifest.json"
     target_manifest.parent.mkdir(parents=True)
     shutil.copyfile(next(iter(options["dataset_manifests"].values())), target_manifest)
     changed = dict(options,
-        initial_states={arm: remote / "initial_states" / (arm + ".pt")
-                        for arm in options["initial_states"]},
+        initial_states={arm: remote / relative
+                        for arm, relative in initial_state_paths(options["initial_states"]).items()},
         dataset_manifests={arm: target_manifest for arm in options["dataset_manifests"]},
         input_root=remote)
     original_run = owner.subprocess.run

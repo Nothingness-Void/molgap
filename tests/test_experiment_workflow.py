@@ -807,8 +807,6 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
         return {"status": "PLANNED", "results": records, "batch": {"size": len(records)}}
 
     monkeypatch.setattr(prospective, "plan_many", plan_many)
-    monkeypatch.setattr(prospective, "rebuild_research_memory",
-        lambda _root: events.append("rebuild") or {"index.json": b"{}"})
 
     result = workflow.prepare_workflow(spec, repo, plan, output)
 
@@ -817,7 +815,9 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
     # Builder, input staging, release and receipt share one exact-byte validation.
     assert full_verifications.call_count == 1
     assert events.index("package") < events.index("release") < events.index("prospective")
-    assert events.index("prospective") < events.index("rebuild") < events.index("final_binding")
+    assert events.index("prospective") < events.index("final_binding")
+    planned = next(row["result"] for row in result["stages"] if row["stage"] == "prospective")
+    assert planned["rml_rebuild_pending"] is True and planned["rml_rebuilt"] is False
     assert "src/molgap/pcqm_wedge.py" in package_manifest["relative_allowlist"]
     assert (Path(result["source_dataset_dir"]) / "experiment_launch.json").is_file()
     assert (Path(result["kernel_dir"]) / "run.py").is_file()

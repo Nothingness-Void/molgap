@@ -330,7 +330,7 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
     """
     import shutil
     from molgap.experiment_execution import build_family_recipe
-    from molgap.experiment_package import build_experiment_source_package, stage_source_inputs
+    from molgap.experiment_package import build_experiment_source_package, stage_source_inputs, initial_state_paths
     from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
     from molgap.experiment_spec import ExperimentSpec
     from molgap.family_training_data import DatasetSelection
@@ -384,8 +384,16 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
     manifest = build_experiment_source_package(spec, repo,
         [*SHARED_SOURCE_FILES, "recipes/first.json", "recipes/second.json"], package)
     source_mount = mounted / "source"
-    stage_source_inputs(package, source_mount, {})
-    launch = {"jobs": _jobs(spec), "expected_source_archive_sha256": manifest["archive_sha256"],
+    initials = {arm: tmp_path / (arm + ".pt") for arm in ("first", "second")}
+    for path in initials.values():
+        path.write_bytes(b"same frozen initialization; worker process boundary is replaced")
+    # The failure journey also retains the historical per-arm layout.
+    paths = ({arm: f"initial_states/{arm}.pt" for arm in initials}
+             if scenario == "preflight_failure" else initial_state_paths(initials))
+    stage_source_inputs(package, source_mount, initials, initial_paths=paths)
+    jobs = [{**job, "initial_state": paths[job["arm_id"]]} for job in _jobs(spec)]
+    assert len(list((source_mount / "initial_states").iterdir())) == (2 if scenario == "preflight_failure" else 1)
+    launch = {"jobs": jobs, "expected_source_archive_sha256": manifest["archive_sha256"],
         "expected_package_identity": manifest["package_identity"], "spec_identity": spec.identity,
         "account": "fixture", "run_reference": "fixture/cpu-integration"}
     launch_path = source_mount / "experiment_launch.json"
@@ -409,6 +417,7 @@ entry.INPUT_ROOT, entry.WORK_ROOT, entry.OUTPUT_ROOT = map(pathlib.Path, (mounte
 if not hasattr(hashlib, "file_digest"):
     hashlib.file_digest = lambda stream, algorithm: hashlib.new(algorithm, stream.read())
 commands = []
+initial_paths = []
 package_checks = []
 def observe_package_check(frame, event, arg):
     if (event == "call" and frame.f_code.co_name == "verify_experiment_source_package"
@@ -425,6 +434,11 @@ class Worker:
         self.arm = command[command.index("--arm") + 1]
         self.returncode = None
         commands.append({"phase": self.phase, "arm": self.arm})
+        launch = json.loads(pathlib.Path(command[command.index("--launch") + 1]).read_bytes())
+        job = next(job for job in launch["jobs"] if job["arm_id"] == self.arm)
+        initial = pathlib.Path(command[command.index("--launch") + 1]).parent / job["initial_state"]
+        assert initial.read_bytes() == b"same frozen initialization; worker process boundary is replaced"
+        initial_paths.append(job["initial_state"])
         # The real scheduler must pass the all-arm barrier before formal train.
         if self.phase == "train":
             assert [row["arm"] for row in commands if row["phase"] == "preflight"] == ["first", "second"]
@@ -450,6 +464,7 @@ except BaseException as exc:
 finally:
     sys.setprofile(None)
 pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": error,
+    "initial_paths": initial_paths,
     "package_checks": package_checks,
     "runtime_module": getattr(sys.modules.get("molgap.kaggle_pair_runtime"), "__file__", None)}))
 ''', encoding="utf-8")
@@ -461,11 +476,13 @@ pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": err
     assert observed["package_checks"] == [str(tmp_path / "work/package")]
     assert Path(observed["runtime_module"]).is_relative_to(tmp_path / "work/source")
     if scenario == "success":
+        assert set(observed["initial_paths"]) == {"initial_states/first.pt"}
         assert observed["error"] is None, observed
         assert observed["commands"] == [{"phase": phase, "arm": arm}
             for phase in ("preflight", "train") for arm in ("first", "second")]
         assert json.loads((output / "execution_report.json").read_bytes())["status"] == "complete"
     elif scenario == "preflight_failure":
+        assert set(observed["initial_paths"]) == {"initial_states/first.pt", "initial_states/second.pt"}
         assert "Arm failed during preflight" in observed["error"]["message"]
         assert observed["commands"] == [{"phase": "preflight", "arm": arm} for arm in ("first", "second")]
         execution = json.loads((output / "execution_report.json").read_bytes())

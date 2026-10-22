@@ -141,10 +141,28 @@ def read_packaged_text(package_dir: Path, relative_path: str, *, _verification=N
             raise ValueError("Missing packaged text source")
         with stream:
             return stream.read().decode("utf-8")
+
+
+def initial_state_paths(initial_states: dict) -> dict[str, str]:
+    """Bind byte-identical initializations to one deterministic staged file."""
+    from .experiment_launch import _safe_local
+    from .experiment_spec import _identifier
+    from .training_reproducibility import sha256_file
+    representatives, result = {}, {}
+    for arm_id in sorted(initial_states):
+        _identifier(arm_id, "arm_id")
+        path = Path(initial_states[arm_id]).absolute()
+        _safe_local(path)
+        digest = sha256_file(path)
+        result[arm_id] = representatives.setdefault(digest, f"initial_states/{arm_id}.pt")
+    return result
+
+
 def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict, *,
-                        _verification=None) -> Path:
+                        initial_paths=None, _verification=None) -> Path:
     """Common immutable worker inputs; no platform metadata or submission."""
     from .experiment_launch import _safe_local, publish_immutable_bytes
+    from .experiment_launch_config import _relative
     from .experiment_spec import _identifier
     package_dir, destination = Path(package_dir).absolute(), Path(destination).absolute()
     raw, _ = _read_verified_package(package_dir, _verification=_verification)
@@ -153,11 +171,18 @@ def stage_source_inputs(package_dir: Path, destination: Path, initial_states: di
     for name in sorted(SIDECARS):
         target = "source_payload.bin" if name == "source.tar.gz" else name
         publish_immutable_bytes(destination / target, raw[name])
+    paths = initial_state_paths(initial_states) if initial_paths is None else initial_paths
+    if set(paths) != set(initial_states):
+        raise ValueError("Staged initialization paths must cover exactly the supplied arms")
     for arm_id, path in initial_states.items():
         _identifier(arm_id, "arm_id")
         path = Path(path).absolute()
         _safe_local(path)
-        publish_immutable_bytes(destination / "initial_states" / (arm_id + ".pt"), path.read_bytes())
+        relative = _relative(paths[arm_id], f"initial_paths[{arm_id}]")
+        if not relative.startswith("initial_states/"):
+            raise ValueError("Staged initialization must stay in initial_states")
+        # Publishing a shared path again also rejects conflicting arm bytes.
+        publish_immutable_bytes(destination / relative, path.read_bytes())
     return destination
 
 

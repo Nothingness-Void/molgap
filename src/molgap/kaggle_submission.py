@@ -287,6 +287,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     source_metadata = _json(staged / "dataset-metadata.json")
     account, ref, dataset = values["username"], metadata["id"], source_metadata["id"]
     launch = _json(staged / "experiment_launch.json")
+    from .experiment_execution import validate_execution_plan
+    initial_paths = {job["arm_id"]: job["initial_state"]
+                     for job in validate_execution_plan(spec, launch["jobs"])}
     if (ref.split("/")[0] != account or dataset.split("/")[0] != account
             or launch["account"] != account or launch["run_reference"] != ref
             or launch["accelerator"] != "NvidiaTeslaT4" or dataset not in metadata["dataset_sources"]
@@ -295,9 +298,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     from .experiment_package import SIDECARS
     allowed = {"source_payload.bin" if name == "source.tar.gz" else name for name in SIDECARS}
     allowed.update({"dataset-metadata.json", "experiment_launch.json"})
+    allowed.update(initial_paths.values())
     for arm in spec.to_dict()["arms"]:
-        allowed.update({"initial_states/" + arm["arm_id"] + ".pt",
-                        "prospective/" + arm["arm_id"] + "/trajectory.json"})
+        allowed.add("prospective/" + arm["arm_id"] + "/trajectory.json")
     if "target_identity" in launch:
         from .kaggle_workflow import acceptance_input_pins
         from .experiment_family_workflow import _artifact_path
@@ -315,8 +318,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     retained_state = _json(journal_path) if journal_path.exists() else {}
     retired = (retained_state.get("source_copy_retirement", {}).get("uploaded", {})
                if retained_state.get("phase") == "BOUND" else {})
-    if set(retired) - {"source_payload.bin", *("initial_states/" + arm["arm_id"] + ".pt"
-                                            for arm in spec.to_dict()["arms"])}:
+    if set(retired) - {"source_payload.bin", *initial_paths.values()}:
         raise ValueError("Retired upload names differ from the prepared allowlist")
     observed = set()
     for path in staged.rglob("*"):
@@ -447,7 +449,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
                     pickle_inputs=prior["inputs"].get("pickle_inputs", ()),
                     dataset_manifests=prior["inputs"].get("dataset_manifests"),
-                    initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
+                    initial_states={arm: remote_root / relative for arm, relative in initial_paths.items()},
                     input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
                     kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification,
                     _verification=verification)
