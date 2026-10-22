@@ -570,14 +570,20 @@ def prune_duplicate_resume_bundles(parent, newest, *, keep_count, context):
             "retention_target_met": not unique and not unverified}
 
 
-def _bundle_root(path: Path | str) -> tuple[Path, Path, dict]:
+def _bundle_root(path: Path | str, *, expected_manifest_sha256=None) -> tuple[Path, Path, dict, str]:
     candidate = _path(path, "resume bundle")
     root = candidate if candidate.is_dir() else candidate.parent
     manifest_path = candidate / RESUME_BUNDLE_FILE if candidate.is_dir() else candidate
     if not manifest_path.is_file():
         raise ValueError("Resume bundle manifest is missing")
-    manifest = _strict_json(manifest_path)
-    return root, manifest_path, manifest
+    raw = manifest_path.read_bytes()
+    manifest_sha256 = hashlib.sha256(raw).hexdigest()
+    if expected_manifest_sha256 is not None:
+        _digest(expected_manifest_sha256, "resume manifest digest")
+        if manifest_sha256 != expected_manifest_sha256:
+            raise ValueError("Resume manifest bytes differ from the frozen launch")
+    manifest = _strict_json_bytes(raw)
+    return root, manifest_path, manifest, manifest_sha256
 
 
 def _validate_manifest(root: Path, manifest: dict) -> dict[str, Any]:
@@ -675,9 +681,11 @@ def _same_context(expected: dict, observed: dict) -> None:
 
 
 def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = None,
-                           context: Any | None = None, trajectory: Any | None = None) -> dict:
+                           context: Any | None = None, trajectory: Any | None = None,
+                           expected_manifest_sha256: str | None = None) -> dict:
     """Validate transport and dispatch the family-specific resume gate."""
-    root, manifest_path, manifest = _bundle_root(path)
+    root, manifest_path, manifest, manifest_sha256 = _bundle_root(
+        path, expected_manifest_sha256=expected_manifest_sha256)
     checked = _validate_manifest(root, manifest)
     context_value = _context_dict(context) if context is not None else None
     arm_name = arm_id or manifest["arm"]["id"]
@@ -722,7 +730,7 @@ def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = 
                 raise ValueError("Resume prior cost segment/Spec identity mismatch")
     if spec is None:
         return {"status": "TRANSPORT_VERIFIED", "manifest": manifest,
-                "manifest_path": manifest_path,
+                "manifest_path": manifest_path, "manifest_sha256": manifest_sha256,
                 "root": root, "artifacts": checked["artifacts"],
                 "sidecars": checked["sidecars"], "trajectory": checked["trajectory"]}
     from .experiment_execution import training_adapter
@@ -764,17 +772,30 @@ def validate_resume_bundle(path: Path | str, spec=None, *, arm_id: str | None = 
     if type(owner_report) is not dict:
         raise ValueError("Family resume validator must return a mapping")
     return {"status": "RESUME_VERIFIED", "manifest": manifest,
-            "manifest_path": manifest_path, "root": root,
+            "manifest_path": manifest_path, "manifest_sha256": manifest_sha256, "root": root,
             "artifacts": checked["artifacts"], "sidecars": checked["sidecars"],
             "trajectory": checked["trajectory"], "owner": owner_report}
 
 
 def restore_resume_bundle(path: Path | str, output: Path | str, spec=None, *,
                           arm_id: str | None = None, context: Any | None = None,
-                          trajectory: Any | None = None) -> dict:
+                          trajectory: Any | None = None,
+                          expected_manifest_sha256: str | None = None) -> dict:
     """Restore a verified bundle into a fresh output namespace atomically."""
     checked = validate_resume_bundle(path, spec, arm_id=arm_id, context=context,
-                                     trajectory=trajectory)
+                                     trajectory=trajectory, expected_manifest_sha256=expected_manifest_sha256)
+    return _restore_verified_bundle(checked, output,
+                                    expected_manifest_sha256=checked["manifest_sha256"])
+
+
+def _restore_verified_bundle(checked, output, *, expected_manifest_sha256):
+    """Reuse same-call validation while checking each copied byte before publication."""
+    if expected_manifest_sha256 != checked["manifest_sha256"]:
+        raise ValueError("Resume manifest differs from the verified bundle")
+    _, _, manifest, _ = _bundle_root(checked["manifest_path"],
+        expected_manifest_sha256=expected_manifest_sha256)
+    if manifest != checked["manifest"]:
+        raise ValueError("Resume manifest changed after validation")
     destination = _path(output, "resume output")
     bundle_root = checked["root"]
     if destination == bundle_root or destination.resolve().is_relative_to(bundle_root.resolve()):

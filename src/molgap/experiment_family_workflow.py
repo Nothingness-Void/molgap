@@ -30,6 +30,10 @@ EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps"
 
 
 def _json(path: Path) -> dict:
+    return _json_bytes(path.read_bytes())
+
+
+def _json_bytes(raw: bytes) -> dict:
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -37,7 +41,7 @@ def _json(path: Path) -> dict:
                 raise ValueError(f"Duplicate JSON key: {key}")
             result[key] = value
         return result
-    value = json.loads(path.read_bytes(), object_pairs_hook=unique,
+    value = json.loads(raw, object_pairs_hook=unique,
                        parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
     if type(value) is not dict:
         raise ValueError("Expected JSON object")
@@ -954,8 +958,10 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
     arms = spec.to_dict()["arms"]
     if set(outputs) != {a["arm_id"] for a in arms}:
         raise ValueError("Closure requires independent output inputs for every arm")
-    # Existing translator verifies prospective, evidence, terminal, path and SHA.
-    translate_terminal_descriptor(repo_root, spec, descriptor)
+    # Execution translates immediately before the RML transaction. A dry run
+    # needs the same binding checks here, without a second full artifact scan.
+    if not execute:
+        translate_terminal_descriptor(repo_root, spec, descriptor)
     reports = {}
     for arm in descriptor.to_dict()["arms"]:
         item = outputs[arm["arm_id"]]

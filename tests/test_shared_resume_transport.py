@@ -45,7 +45,7 @@ def bundle_case(tmp_path):
     return source, bundle, context, trajectory, arm
 
 
-def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_path):
+def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_path, monkeypatch):
     source, bundle, context, trajectory, _ = bundle_case
     before = {path.name: path.read_bytes() for path in source.iterdir()}
     report = transport.validate_resume_bundle(bundle, context=context, trajectory=trajectory)
@@ -56,6 +56,25 @@ def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_p
     assert {path.name: path.read_bytes() for path in source.iterdir()} == before
     with pytest.raises(ValueError, match="fresh output"):
         transport.restore_resume_bundle(bundle, destination)
+
+    copyfile = transport.shutil.copyfile
+    corrupted = []
+
+    def corrupt_after_copy(source, target):
+        result = copyfile(source, target)
+        with Path(target).open("ab") as stream:
+            stream.write(b"changed during copy")
+        corrupted.append(Path(target))
+        return result
+
+    failed_output = tmp_path / "failed-copy"
+    with monkeypatch.context() as patch:
+        patch.setattr(transport.shutil, "copyfile", corrupt_after_copy)
+        with pytest.raises(ValueError, match="bytes changed during restoration"):
+            transport.restore_resume_bundle(bundle, failed_output)
+    assert len(corrupted) == 1
+    assert not any(path.is_file() for path in failed_output.rglob("*"))
+    assert {path.name: path.read_bytes() for path in source.iterdir()} == before
 
 
 def test_bundle_binds_captured_allocation_sidecar_during_atomic_refresh(bundle_case, tmp_path, monkeypatch):

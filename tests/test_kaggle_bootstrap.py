@@ -453,6 +453,11 @@ entry.INPUT_ROOT, entry.WORK_ROOT, entry.OUTPUT_ROOT = map(pathlib.Path, (mounte
 if not hasattr(hashlib, "file_digest"):
     hashlib.file_digest = lambda stream, algorithm: hashlib.new(algorithm, stream.read())
 commands = []
+package_checks = []
+def observe_package_check(frame, event, arg):
+    if (event == "call" and frame.f_code.co_name == "verify_experiment_source_package"
+            and frame.f_globals.get("__name__") == "molgap.experiment_package"):
+        package_checks.append(str(frame.f_locals["package_dir"]))
 subprocess.check_output = lambda *a, **kw: "Tesla T4\nTesla T4\n"
 def pip(command, **kwargs):
     assert command[1:4] == ["-m", "pip", "install"]
@@ -481,11 +486,15 @@ class Worker:
         return self.returncode if self.returncode is not None else self.poll()
 subprocess.Popen = Worker
 error = None
+sys.setprofile(observe_package_check)
 try:
     entry.main()
 except BaseException as exc:
     error = {"type": type(exc).__name__, "message": str(exc)}
+finally:
+    sys.setprofile(None)
 pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": error,
+    "package_checks": package_checks,
     "runtime_module": getattr(sys.modules.get("molgap.kaggle_pair_runtime"), "__file__", None)}))
 ''', encoding="utf-8")
     boundary = tmp_path / "worker_boundary.json"
@@ -493,6 +502,7 @@ pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": err
         str(tmp_path / "work"), str(output), scenario, str(boundary)], capture_output=True, text=True, timeout=60)
     assert child.returncode == 0, child.stdout + child.stderr
     observed = json.loads(boundary.read_bytes())
+    assert observed["package_checks"] == [str(tmp_path / "work/package")]
     assert Path(observed["runtime_module"]).is_relative_to(tmp_path / "work/source")
     if scenario == "success":
         assert observed["error"] is None, observed

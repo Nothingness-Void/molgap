@@ -50,18 +50,21 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     prior_segments = []
     if "resume" in config:
         from .experiment_family_workflow import RunContext
-        from .experiment_resume import validate_resume_bundle, restore_resume_bundle
+        from .experiment_launch_config import _validate_resume
+        from .experiment_resume import validate_resume_bundle, _restore_verified_bundle
         from .screen_policy import canonical_fingerprint
+        resume = _validate_resume(config, {job["arm_id"] for job in jobs}, Path(launch_path).parent)
         checked, seen_segments = {}, set()
         for job in jobs:
             arm_id = job["arm_id"]
             context = RunContext.for_training(spec, package_dir,
                 expected_package_identity=config["expected_package_identity"], arm_id=arm_id,
                 account=config["account"], run_reference=config["run_reference"])
-            bundle = Path(launch_path).parent / config["resume"][arm_id]["manifest"]
+            bundle = Path(launch_path).parent / resume[arm_id]["manifest"]
             trajectory = Path(launch_path).parent / "prospective" / arm_id / "trajectory.json"
-            checked[arm_id] = (bundle, context, trajectory)
-            item = validate_resume_bundle(bundle, spec, arm_id=arm_id, context=context, trajectory=trajectory)
+            item = validate_resume_bundle(bundle, spec, arm_id=arm_id, context=context, trajectory=trajectory,
+                expected_manifest_sha256=resume[arm_id]["sha256"])
+            checked[arm_id] = item
             for path in item["sidecars"]["cost_segments"]:
                 segment = _json(path)
                 if segment.get("format") == "molgap-allocation-ledger-v1":
@@ -69,9 +72,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     if identity not in seen_segments:
                         prior_segments.append(segment)
                         seen_segments.add(identity)
-        for arm_id, (bundle, context, trajectory) in checked.items():
-            restore_resume_bundle(bundle, output / arm_id, spec, arm_id=arm_id,
-                                  context=context, trajectory=trajectory)
+        for arm_id, item in checked.items():
+            _restore_verified_bundle(item, output / arm_id,
+                                     expected_manifest_sha256=resume[arm_id]["sha256"])
     report = {"format": "molgap-kaggle-two-phase-pair-v2", "spec_identity": spec.identity,
               "hardware": names, "phases": [], "status": "running",
               "arms": {j["arm_id"]: {"device": j["device"], "training_started": "resume" in config,

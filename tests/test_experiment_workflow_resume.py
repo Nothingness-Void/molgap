@@ -166,7 +166,9 @@ def resume_case(tmp_path, workflow_case, monkeypatch):
     from molgap.experiment_workflow import prepare_workflow
 
     original = prepare_workflow(spec, repo, plan, tmp_path / "prepared")
-    assert original["status"] == "PREPARED_FOR_PLATFORM", original
+    if original["status"] != "PREPARED_FOR_PLATFORM":
+        pytest.fail(json.dumps({"status": original["status"], "stage": original.get("stage"),
+            "last_stage": original.get("stages", [None])[-1]}, ensure_ascii=False, indent=2))
     prepared = tmp_path / "prepared"
     package_dir = prepared / "package"
     receipt = _launch_receipt(spec, package_dir, original["package_identity"], repo)
@@ -480,16 +482,76 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
     commands: list[list[str]] = []
     _patch_pair_runtime(monkeypatch, commands)
     manifest = verify_experiment_source_package(case["package"])
+    from molgap import experiment_resume as transport
+    launch_path = resumed_root / "source_dataset" / "experiment_launch.json"
+    launch_bytes = launch_path.read_bytes()
+    config = json.loads(launch_bytes)
+    validation_arms = []
+    validate = transport.validate_resume_bundle
+
+    def count_validation(*args, **kwargs):
+        validation_arms.append(kwargs["arm_id"])
+        return validate(*args, **kwargs)
+
+    monkeypatch.setattr(transport, "validate_resume_bundle", count_validation)
+
+    def change_manifest(arm_id):
+        path = launch_path.parent / config["resume"][arm_id]["manifest"]
+        raw = path.read_bytes()
+        # Equivalent JSON with the same size is still a different frozen input.
+        changed = raw.replace(b"  ", b" \t", 1)
+        assert changed != raw and len(changed) == len(raw)
+        assert json.loads(changed) == json.loads(raw)
+        path.write_bytes(changed)
+        return path, raw
+
+    for manifest_change in ("before_runtime", "before_restore"):
+        failed_output = tmp_path / manifest_change
+        changed_files, restore_calls = [], []
+        validation_arms.clear()
+        try:
+            with monkeypatch.context() as mutation_patch:
+                if manifest_change == "before_runtime":
+                    # A later arm must fail before the earlier valid arm is restored.
+                    changed_files.append(change_manifest(list(config["resume"])[-1]))
+                else:
+                    restore = transport._restore_verified_bundle
+
+                    def change_then_restore(checked, output, **kwargs):
+                        assert sorted(validation_arms) == sorted(config["resume"])
+                        restore_calls.append(output)
+                        changed_files.append(change_manifest(checked["manifest"]["arm"]["id"]))
+                        return restore(checked, output, **kwargs)
+
+                    mutation_patch.setattr(transport, "_restore_verified_bundle", change_then_restore)
+
+                with pytest.raises(ValueError, match="Resume manifest bytes differ"):
+                    kaggle_pair_runtime.run_two_phase_pair(
+                        source_root=case["repo"], package_dir=case["package"],
+                        input_root=launch_path.parent, launch_path=launch_path,
+                        output=failed_output, manifest=manifest,
+                    )
+        finally:
+            for path, raw in changed_files:
+                path.write_bytes(raw)
+        assert launch_path.read_bytes() == launch_bytes
+        assert not commands
+        assert not any((failed_output / arm_id).exists() for arm_id in config["resume"])
+        assert len(restore_calls) == (1 if manifest_change == "before_restore" else 0)
+        assert sorted(validation_arms) == (sorted(config["resume"]) if manifest_change == "before_restore" else [])
+
+    validation_arms.clear()
     report = kaggle_pair_runtime.run_two_phase_pair(
         source_root=case["repo"],
         package_dir=case["package"],
         input_root=resumed_root / "source_dataset",
-        launch_path=resumed_root / "source_dataset" / "experiment_launch.json",
+        launch_path=launch_path,
         output=runtime_root,
         manifest=manifest,
     )
 
     assert report["status"] == "complete"
+    assert sorted(validation_arms) == sorted(config["resume"])
     assert len(commands) == len(case["spec"].to_dict()["arms"]) * 2
     for arm_id in case["bundles"]:
         restored = runtime_root / arm_id

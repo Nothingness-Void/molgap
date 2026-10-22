@@ -133,7 +133,7 @@ def _materialize_shared_case(case):
     return declaration, arms, locations, contexts
 
 
-def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp_path, repo, capsys):
+def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp_path, repo, capsys, monkeypatch):
     case = frozen_shared_acceptance_run(tmp_path, repo)
     declaration, arms, locations, _ = _materialize_shared_case(case)
 
@@ -167,6 +167,88 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert cli_result["terminal_staging"]["status"] == "STAGED_DRAFT", cli_result
     after = sorted(path.relative_to(case.run).as_posix() for path in case.run.rglob("*") if path.is_file())
     assert after == before
+
+    # Same-call reports cannot authenticate bytes replaced before diagnosis.
+    import torch
+    from molgap import experiment_attribution as attribution
+    candidate = declaration["prospective"]["same_run_replay"]["candidate_arm_ids"][0]
+    candidate_root = case.paths.artifact_root / "retrieved" / candidate
+    manifest = json.loads((candidate_root / "output_manifest.json").read_bytes())
+    load = attribution._load_arm_artifacts
+    for role in ("predictions", "trace", "manifest"):
+        path = (candidate_root / "output_manifest.json" if role == "manifest" else
+                candidate_root / manifest["artifacts"][role]["path"])
+        retained = path.read_bytes()
+        changed = []
+
+        def replace_before_loading(arm_dir, **kwargs):
+            if arm_dir == candidate_root and not changed:
+                if role == "predictions":
+                    payload = torch.load(path, map_location="cpu", weights_only=True)
+                    payload["prediction_eV"] = payload["prediction_eV"] + 0.125
+                    torch.save(payload, path)
+                elif role == "trace":
+                    trace = json.loads(retained)
+                    trace["observations"][0]["learning_rate"] = 0.125
+                    path.write_bytes(canonical_json(trace).encode())
+                else:
+                    replaced_manifest = json.loads(retained)
+                    replaced_manifest["costs"][0]["value"] += 0.125
+                    path.write_bytes(canonical_json(replaced_manifest).encode())
+                changed.append(True)
+            return load(arm_dir, **kwargs)
+
+        with monkeypatch.context() as patch:
+            patch.setattr(attribution, "_load_arm_artifacts", replace_before_loading)
+            try:
+                replaced = accept_run_workflow(*case.original,
+                    retrieved_root=case.paths.artifact_root / "retrieved", diagnose=True)
+            finally:
+                path.write_bytes(retained)
+        assert changed
+        diagnosis = replaced["diagnosis"]
+        assert diagnosis["status"] == "INSUFFICIENT_EVIDENCE", diagnosis
+        assert diagnosis["comparisons"][candidate]["status"] == "INSUFFICIENT_EVIDENCE"
+        blocker = ("Family output manifest changed after mechanical inspection" if role == "manifest" else
+                   "Family output changed after mechanical inspection: " + role)
+        assert diagnosis["arms"][candidate]["analysis_blockers"] == [blocker]
+
+    # Replacement after a read must not change the already verified snapshot.
+    from pathlib import Path
+    predictions = candidate_root / manifest["artifacts"]["predictions"]["path"]
+    retained = predictions.read_bytes()
+    read_bytes = Path.read_bytes
+    loading, replaced_paths = [], []
+
+    def replace_after_read(path):
+        raw = read_bytes(path)
+        if loading and path == predictions and not replaced_paths:
+            payload = torch.load(predictions, map_location="cpu", weights_only=True)
+            payload["prediction_eV"] = payload["prediction_eV"] + 0.125
+            torch.save(payload, predictions)
+            replaced_paths.append(path)
+        return raw
+
+    def load_snapshot(arm_dir, **kwargs):
+        if arm_dir != candidate_root:
+            return load(arm_dir, **kwargs)
+        loading.append(True)
+        try:
+            return load(arm_dir, **kwargs)
+        finally:
+            loading.clear()
+
+    with monkeypatch.context() as patch:
+        patch.setattr(attribution, "_load_arm_artifacts", load_snapshot)
+        patch.setattr(Path, "read_bytes", replace_after_read)
+        try:
+            snapshot = accept_run_workflow(*case.original,
+                retrieved_root=case.paths.artifact_root / "retrieved", diagnose=True)
+        finally:
+            predictions.write_bytes(retained)
+    assert replaced_paths == [predictions]
+    assert snapshot["diagnosis"]["status"] == "DIAGNOSED", snapshot
+    assert snapshot["diagnosis"]["comparisons"] == result["diagnosis"]["comparisons"]
 
 
 def _seal_shared_retention(case, root):
@@ -268,6 +350,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         return inspect(item)
 
     monkeypatch.setattr(family, "inspect_terminal_output", count_inspection)
+    from molgap import experiment_terminal as terminal
+    translations = []
+    translate = terminal.translate_terminal_descriptor
+
+    def count_translation(*args, **kwargs):
+        translations.append(True)
+        return translate(*args, **kwargs)
+
+    monkeypatch.setattr(terminal, "translate_terminal_descriptor", count_translation)
     options = dict(retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root,
         stage_terminal=True, outcome="INCONCLUSIVE", decision_ref=decisions, role_audit=audits)
@@ -277,6 +368,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert result["executed"] is True
     assert result.get("diagnosis") is None
     assert inspected == Counter({arm_id: 1 for arm_id in arms})
+    assert len(translations) == 2
     assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
     assert result["execution_retention"]["manifest"] == sealed["manifest"]
     assert result["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
@@ -305,6 +397,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert repeated["terminal_staging"] == result["terminal_staging"]
     assert all(item["finalization_status"] == "ALREADY_FINALIZED" for item in repeated["results"])
     assert inspected == Counter({arm_id: 2 for arm_id in arms})
+    assert len(translations) == 4
 
     # Same-call reuse must still reject bytes changed after terminal staging.
     from molgap import experiment_terminal_staging as staging

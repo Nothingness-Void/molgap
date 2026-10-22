@@ -14,6 +14,8 @@ analyzer over retained ``molgap-family-output-v1`` artifacts:
 """
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 import math
 import pickle
@@ -140,19 +142,22 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
                         target_identity=None, _inspection=None) -> dict[str, Any]:
     import numpy as np
     import torch
-    from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json, inspect_output
-    from .family_training_runner import INTERFACES, read_recipe
+    from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json_bytes, _runtime, inspect_output
+    from .family_training_runner import INTERFACES, _recipe_configuration
 
     root = Path(arm_dir).absolute()
     _safe_local(root)
     manifest_path = root / "output_manifest.json"
-    manifest = _json(manifest_path)
+    manifest_bytes = manifest_path.read_bytes()
+    manifest = _json_bytes(manifest_bytes)
     try:
         context = context or RunContext(**manifest["context"])
         contract_path = _artifact_path(root, manifest["artifacts"]["contract"]["path"])
     except (KeyError, TypeError) as exc:
         raise ValueError("Family attribution requires a bound output manifest") from exc
-    contract_raw, recipe = read_recipe(contract_path)
+    contract_bytes = contract_path.read_bytes()
+    contract_raw = _json_bytes(contract_bytes)
+    recipe = _recipe_configuration(contract_raw)
     _check_context(manifest["context"], context)
     if INTERFACES.get(recipe.family) != (context.family_name, context.family_version):
         raise ValueError("Output family differs from its executable contract")
@@ -163,13 +168,30 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         target_identity=target_identity)
     if acceptance["status"] != "MECHANICALLY_VERIFIED":
         raise ValueError("Family output failed mechanical inspection: " + "; ".join(acceptance["blockers"]))
-    # The existing owner verifies artifact/context/row/target/selection bindings.
-    paths = {role: _artifact_path(root, entry["path"]) for role, entry in manifest["artifacts"].items()}
-    trace_path, predictions_path = paths["trace"], paths["predictions"]
-    trace = _json(trace_path)
-    payload = torch.load(predictions_path, map_location="cpu", weights_only=True)
-    source_idx, target, pred = (payload[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV"))
     observed = acceptance["observed"]
+    if (acceptance.get("context") != context.to_dict()
+            or manifest["artifacts"] != observed["artifacts"]
+            or manifest["costs"] != observed["costs"]
+            or manifest["progress"] != observed["progress"]
+            or manifest["context"]["platform_version"] != observed.get("producer_platform_version")):
+        raise ValueError("Family output manifest changed after mechanical inspection")
+    _runtime(manifest["runtime"], context, contract_raw["acceptance_requirements"]["precision"])
+
+    def inspected_bytes(role, raw=None):
+        binding = observed["artifacts"][role]
+        if raw is None:
+            raw = _artifact_path(root, binding["path"]).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != binding["sha256"]:
+            raise ValueError("Family output changed after mechanical inspection: " + role)
+        return raw
+
+    # Decode the bytes we verified; reopening the paths would race another writer.
+    inspected_bytes("contract", contract_bytes)
+    trace_bytes = inspected_bytes("trace")
+    predictions_bytes = inspected_bytes("predictions")
+    trace = _json_bytes(trace_bytes)
+    payload = torch.load(io.BytesIO(predictions_bytes), map_location="cpu", weights_only=True)
+    source_idx, target, pred = (payload[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV"))
     selected_step = observed["selected_optimizer_step"]
     selected_info = {
         "pass_index": selected_step / recipe.loop_plan.steps_per_pass,
@@ -183,7 +205,7 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
     profile_path = root / "profile_summary.json"
     profile = _read_json(profile_path) if profile_path.is_file() else None
 
-    wall_cost = next((item for item in manifest["costs"]
+    wall_cost = next((item for item in observed["costs"]
                       if item["metric"] == "wall_seconds" and item["semantics"] == "process_wall"), None)
     wall_seconds = wall_cost["value"] if wall_cost is not None else None
 
@@ -206,10 +228,10 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         "timings": timings,
         "profile": profile,
         "hashes": {
-            "output_manifest_sha256": sha256_file(manifest_path),
-            "training_contract_sha256": sha256_file(contract_path),
-            "canonical_trace_sha256": sha256_file(trace_path),
-            "development_predictions_sha256": sha256_file(predictions_path),
+            "output_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+            "training_contract_sha256": hashlib.sha256(contract_bytes).hexdigest(),
+            "canonical_trace_sha256": hashlib.sha256(trace_bytes).hexdigest(),
+            "development_predictions_sha256": hashlib.sha256(predictions_bytes).hexdigest(),
         },
     }
 
