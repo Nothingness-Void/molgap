@@ -42,6 +42,15 @@ directory must be separate from immutable prepared inputs, preferably beside
 them in ignored platform storage. Monitor pointers identify the existing owner;
 this adapter creates no monitor, thread or automatic successor.
 
+Kaggle quota hours are session wall hours, not the sum of physical devices
+([official T4x2 announcement](https://www.kaggle.com/product-feedback/361104)).
+For an explicit T4x2 wall-bound authority, `kaggle_quota_hours_ceiling` equals
+`gpu.wall_ceiling_seconds / 3600`; `allocated_t4_hours_ceiling` still covers both
+physical devices. These are separate quantities. The adapter checks available
+session quota through the official SDK, preserving total duration seconds;
+uncertain quota is not permission to submit. Historical declarations without
+the explicit quota field retain their conservative budget check.
+
 ```powershell
 .venv\Scripts\python.exe platforms/kaggle/submit_workflow.py --prepared $prepared --credentials $credentials --output $operations --authority $authorityRelativePath --monitor-path $statusRelativePath
 ```

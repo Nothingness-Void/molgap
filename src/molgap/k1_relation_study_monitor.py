@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 from dataclasses import asdict
 import json
-import os
 from pathlib import Path
 
 from .server_control import LocalServerControlStore
@@ -31,11 +30,8 @@ def tick(binding_path):
     if credential.get("username") != owner or any(
         not job["kernel"].startswith(owner + "/") for job in binding["jobs"] if not job.get("closed")):
         raise RuntimeError("Bound Kaggle credential owner mismatch")
-    os.environ["KAGGLE_USERNAME"] = credential["username"]
-    os.environ["KAGGLE_KEY"] = credential["key"]
-    from kaggle.api.kaggle_api_extended import KaggleApi
-    api = KaggleApi()
-    api.authenticate()
+    from .common.kaggle import api_for_credentials
+    api = api_for_credentials(Path(binding["credential_file"]))
     events, observations = [], []
     for job in binding["jobs"]:
         if job.get("closed") is True:

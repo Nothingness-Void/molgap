@@ -48,10 +48,27 @@ def connect_kaggle(credentials):
     return api_for_credentials(credentials)
 
 
-def _quota(http, budget):
-    response = http.get("https://www.kaggle.com/api/v1/kernels/quota", timeout=(10, 30))
-    response.raise_for_status()
-    raw = response.json()
+def _quota(http, budget, *, api=None):
+    if callable(getattr(api, "quota_view", None)):
+        observed = api.quota_view()
+        # SDK duration serialization can discard whole days. Preserve total
+        # seconds explicitly, and never fall back after an uncertain SDK call.
+        quota = observed.gpu_quota
+        def duration(value):
+            total = value.total_seconds()
+            if not math.isfinite(total) or total < 0:
+                raise ValueError("Malformed Kaggle quota")
+            seconds = int(total)
+            return {"seconds": seconds, "nanos": round((total - seconds) * 1e9)}
+        raw = {"quotaRefreshTime": str(observed.quota_refresh_time), "gpuQuota": {
+            "totalTimeAllowed": duration(quota.total_time_allowed),
+            "timeUsed": duration(quota.time_used), "timeReserved": duration(quota.time_reserved)}}
+        provider = "KaggleSdk.GetAcceleratorQuotaStatistics"
+    else:
+        response = http.get("https://www.kaggle.com/api/v1/kernels/quota", timeout=(10, 30))
+        response.raise_for_status()
+        raw = response.json()
+        provider = "legacy-rest"
     quota = raw["gpuQuota"]
     def seconds(item):
         value = item["seconds"] + item.get("nanos", 0) / 1e9
@@ -62,6 +79,7 @@ def _quota(http, budget):
     if remaining < budget * 3600:
         raise ValueError("Available Kaggle GPU quota is below the frozen allocation ceiling")
     return {"observed_at": datetime.now(timezone.utc).isoformat(), "quota": raw,
+            "provider": provider, "quota_semantics": "platform_session_hours",
             "available_gpu_hours": remaining / 3600, "authorized_ceiling_gpu_hours": budget}
 
 
@@ -213,6 +231,15 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     if (authority.get("user_authorized") is not True or type(budget) not in {int, float}
             or not math.isfinite(budget) or budget <= 0):
         raise ValueError("Packaged authority must authorize a positive allocated T4-hour ceiling")
+    quota_budget = authority.get("kaggle_quota_hours_ceiling", budget)
+    if "kaggle_quota_hours_ceiling" in authority:
+        gpu = authority.get("gpu", {})
+        wall, devices = gpu.get("wall_ceiling_seconds"), gpu.get("allocated_devices")
+        if (type(quota_budget) not in (int, float) or not math.isfinite(quota_budget) or quota_budget <= 0
+                or type(wall) is not int or wall <= 0 or devices != 2
+                or gpu.get("accelerator") != "NvidiaTeslaT4"
+                or quota_budget != wall / 3600 or budget < devices * quota_budget):
+            raise ValueError("Kaggle session quota must bind the wall ceiling separately from physical device cost")
     arms = spec.to_dict()["arms"]
     if (authority.get("arms") != [arm["arm_id"] for arm in arms]
             or authority.get("seeds") != sorted({arm["initialization"]["seed"] for arm in arms})):
@@ -262,7 +289,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
             _verify_release_report(prepared / "release_report.json", kernel / "run.py")
-            atomic_json(output / "quota_before_publication.json", _quota(http_session, budget))
+            atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_budget, api=api))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel already exists; reconcile its owning journal")
             source_status = _dataset_status(api, dataset)
@@ -302,7 +329,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             if release["errors"]:
                 raise ValueError("Remote source failed existing release checks")
             atomic_json(output / "remote_release_report.json", release)
-            atomic_json(output / "quota_before_submit.json", _quota(http_session, budget))
+            atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_budget, api=api))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel appeared before POST; reconcile")
             save("KERNEL_SUBMITTING")
