@@ -20,14 +20,26 @@ it is not K1 or GPTrans execution evidence.
 
 ## Select an affected workflow
 
-Use the selected checkout and dependency interpreter. No machine profile is
-needed for CPU tests when that interpreter is already selected:
+Use the selected checkout and dependency interpreter. For routine execution,
+pass the existing machine profile so the launcher owns and retires this call's
+temporary files:
 
 ```powershell
 $python = '.\.venv\Scripts\python.exe'
 & $python platforms/local/run.py --module molgap.local_testing -- --list
-& $python platforms/local/run.py --module molgap.local_testing -- --scope train --scope resume -- -q
+$profilePath = 'D:/molgap-machine-profile.json' # Use this host's existing profile.
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope train --scope resume -- -q
 ```
+
+The existing launcher sets `TMP`, `TEMP` and `TMPDIR` to an invocation-owned
+directory and removes it after normal success or failure. Leave pytest
+`--basetemp` unset for routine checks. An external `--basetemp` deliberately
+retains the fixture tree outside that lifecycle; use it only when preserving a
+specific failure for investigation. Retain a compact log separately when needed.
+Abrupt host/process termination can still leave scratch; its existing recovery
+rules remain in the [storage lifecycle](LOCAL_STORAGE_RETIREMENT.md).
+Without a profile, interpreter isolation still works, but launcher-owned scratch
+retirement is not enabled.
 
 [local_testing.py](../../src/molgap/local_testing.py) owns the fixed pytest
 nodeids. New files and unrelated tests in the same file do not enter a scope.
