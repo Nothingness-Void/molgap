@@ -1,0 +1,60 @@
+{
+  "scope": "FROZEN_CONTEXTUAL_REFERENCE_NOT_REPLAY_QUALIFICATION",
+  "source_commit": "8c16b36e1ef446b75996fff052aa55197ad409e2",
+  "kernel": "nvoid912/molgap-modern2d-prepared-pair-100k-v1",
+  "kernel_id": 140182981,
+  "version": 1,
+  "original_local_attempt": "v2",
+  "independent_acceptance_ref": "experiments/modern2d_configured_100k/prepared_pair/results/decision.md",
+  "replay_ready": false,
+  "mae_eV": {
+    "ppgt_mean": 0.20045661712408067,
+    "esa_native": 0.2036746614909172
+  },
+  "artifacts": {
+    "ppgt_mean": [
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/ppgt_mean/training_contract.json",
+        "sha256": "5a4de5d9a78a8b21f31154b63d6660b55d8bf8289a357a526647c746a107134a"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/ppgt_mean/development_predictions.pt",
+        "sha256": "b17c385903580ded95939198ae52c440ed1f4a6ba6abd8660e1a33f3e7914bff"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/ppgt_mean/canonical_trace.json",
+        "sha256": "02f5ee734890b808102aed58421d814b37a5c582681c70b9df33f625cd82bf9a"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/ppgt_mean/selected_model.pt",
+        "sha256": "c3b18147a2bbb85768d33f95ba8152f28ef6f53deb94fb1485925dd269fd1b91"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/ppgt_mean/output_manifest.json",
+        "sha256": "e5f961b0503baccbdf4469a79f10769026952f46a6ac32696760050965e7259d"
+      }
+    ],
+    "esa_native": [
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/esa_native/training_contract.json",
+        "sha256": "af0baa24a53c2e4a0e6581b2a35f72792c6c6c54e9a5c6a130e78900f3056cd6"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/esa_native/development_predictions.pt",
+        "sha256": "8812d1e43cef2247a70e10924db661fcd56f6c6f1cec05209e167089c02e4c61"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/esa_native/canonical_trace.json",
+        "sha256": "b4543c0658275200c58831bd576cdd0cd311e0d69990c98bdca0af26c998f74d"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/esa_native/selected_model.pt",
+        "sha256": "aa26611f166e268b926c3742266a86ba5e2df1441ab4665a363a5565b6878cf0"
+      },
+      {
+        "path": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2/experiment/esa_native/output_manifest.json",
+        "sha256": "0350210bac515b1456616e9617aa8c1c6981bb493bd3881eeb0e94e92d56eca1"
+      }
+    ]
+  }
+}

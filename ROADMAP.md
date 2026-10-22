@@ -11,6 +11,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
+The separately authorized [Modern2D structural falsifier](experiments/modern2d_structure_100k/protocol.md)
+tests one content-conditioning and one count-conditioning hypothesis through
+the existing configured workflow; exact execution status is in CURRENT_STATE.
+
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 |— | C-MODERN2D-EXECUTION | Closed: the [prepared pair](experiments/modern2d_configured_100k/prepared_pair/results/decision.md) passed native and complete20-pass output checks within9h. | Preserve execution/curve/profile evidence; no scientific nomination or automatic successor |

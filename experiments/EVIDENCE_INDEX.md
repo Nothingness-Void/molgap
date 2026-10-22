@@ -12,6 +12,7 @@ One directory may answer more than one question when its decision records keep
 those claims distinct.
 
 | Question | Verdict | Directory |
+| Can content-conditioned PPGT pairs or count-conditioned ESA readout address weak20-pass development behavior? | Prospective bounded context-only screen; no result or Replay claim | [Modern2D structural falsifiers](modern2d_structure_100k/protocol.md) |
 |---|---|---|
 | Does the new front door submit and accept a bounded mature-family train-only pair? | [Authorized prelaunch](family_workflow_trial_100k/decision_prelaunch.md); no runtime verdict | [family_workflow_trial_100k](family_workflow_trial_100k/) |
 | Can independent PPGT/ESA families reuse Server CPU lifecycle without training release? | CPU-only integration; scientific/fidelity limitations are separate from mechanics | `modern2d_model_integration/` |
