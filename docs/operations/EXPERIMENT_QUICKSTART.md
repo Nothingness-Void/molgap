@@ -182,6 +182,11 @@ are never borrowed from another run.
 Packages containing generated run records reuse their prepared package directly
 instead of retaining a second cache copy.
 
+Preparation validates this question's references and freezes its knowledge
+snapshot without rebuilding the global RML index. Index maintenance follows
+the existing milestone/handoff boundary in the
+[planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
+
 With existing applicable submission authority, append `--credentials ...
 --execute`. That calls the **original** journaled submitter. An uncertain outcome
 requires reconciliation, never a fresh slug or blind retry. Completed preparation

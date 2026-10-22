@@ -144,7 +144,6 @@ def test_execution_commit_is_bound_only_at_publication(planning_case, monkeypatc
             {"trajectory_id": p["spec"]["trajectory"]["trajectory_id"], "path": p["output"], "status": "PLANNED"}
             for p in plans]}
     monkeypatch.setattr(prospective, "plan_many", publish)
-    monkeypatch.setattr(prospective, "rebuild_research_memory", lambda *args: {})
     assert prospective.plan_prospective(spec, root, execution_source_commit=commit)[1] == 0
     assert all(p["spec"]["trajectory"]["state_at_start"]["source_commit"] == commit
                and p["spec"]["decision_state"]["source_commit"] == commit for p in captured)
@@ -178,12 +177,9 @@ def test_cli_prevalidates_all_arms_before_planning(
     else:
         (root / second["output"]).mkdir(parents=True)
     planner = Mock()
-    rebuild = Mock()
     monkeypatch.setattr(prospective, "plan_many", planner)
-    monkeypatch.setattr(prospective, "rebuild_research_memory", rebuild)
     assert _invoke(capsys, root, spec_path, 2)["status"] == "ERROR"
     planner.assert_not_called()
-    rebuild.assert_not_called()
 
 
 def test_cli_rejects_ref_symlink_even_inside_repo(capsys, monkeypatch, planning_case):
@@ -216,14 +212,12 @@ def _planned(spec):
     }
 
 
-def test_cli_calls_one_batch_then_rebuilds(capsys, monkeypatch, planning_case):
+def test_cli_calls_one_batch_and_leaves_derived_pending(capsys, monkeypatch, planning_case):
     root, spec_path, spec = planning_case
     planner = Mock(return_value=_planned(spec))
-    rebuild = Mock(return_value={"index.json": b"{}"})
     monkeypatch.setattr(prospective, "plan_many", planner)
-    monkeypatch.setattr(prospective, "rebuild_research_memory", rebuild)
     result = _invoke(capsys, root, spec_path, 0)
-    assert result["status"] == "PROSPECTIVE_PLANNED_AND_RML_REBUILT"
+    assert result["status"] == "PROSPECTIVE_PLANNED_RML_PENDING"
     assert result["scope"] == "prospective_planning_only"
     assert result["submission_authorized"] is False
     assert result["training_authorized"] is False
@@ -234,7 +228,8 @@ def test_cli_calls_one_batch_then_rebuilds(capsys, monkeypatch, planning_case):
     assert [item["output"] for item in args[1]] == [
         item["output"] for item in spec.to_dict()["prospective"]["arms"]
     ]
-    rebuild.assert_called_once_with(root)
+    assert result["rml_rebuilt"] is False
+    assert result["rml_rebuild_pending"] is True
 
 
 def test_reference_candidate_spec_freezes_same_run_pair(monkeypatch, planning_case):
@@ -256,9 +251,8 @@ def test_reference_candidate_spec_freezes_same_run_pair(monkeypatch, planning_ca
     spec = ExperimentSpec(declaration)
     planner = Mock(return_value=_planned(spec))
     monkeypatch.setattr(prospective, "plan_many", planner)
-    monkeypatch.setattr(prospective, "rebuild_research_memory", Mock(return_value={}))
     result, code = prospective.plan_prospective(spec, root)
-    assert code == 0 and result["rml_rebuilt"]
+    assert code == 0 and result["rml_rebuild_pending"] and not result["rml_rebuilt"]
     plans = planner.call_args.args[1]
     reference_pair = plans[0]["spec"]["trajectory"]["state_at_start"]["same_run_replay"]
     candidate_pair = plans[1]["spec"]["trajectory"]["state_at_start"]["same_run_replay"]
@@ -273,38 +267,81 @@ def test_cli_partial_batch_does_not_rebuild(capsys, monkeypatch, planning_case):
     root, spec_path, spec = planning_case
     first = _planned(spec)["results"][0]
     planner = Mock(side_effect=PlanBatchError(1, 2, [first], ValueError("second failed")))
-    rebuild = Mock()
     monkeypatch.setattr(prospective, "plan_many", planner)
-    monkeypatch.setattr(prospective, "rebuild_research_memory", rebuild)
     result = _invoke(capsys, root, spec_path, 1)
     assert result["status"] == "PARTIAL_PROSPECTIVE_PLAN_REQUIRES_RECONCILIATION"
     assert result["completed_records"] == [first]
     assert result["failed_index"] == 1
     assert result["submission_authorized"] is False
-    rebuild.assert_not_called()
 
 
-def test_cli_rebuild_failure_retains_plans_but_not_success(capsys, monkeypatch, planning_case):
+@pytest.mark.parametrize("fault", [None, "authority", "unknown", "duplicate", "readiness"])
+def test_cli_checks_only_referenced_evidence_before_publication(capsys, monkeypatch, planning_case, fault):
+    from test_comparison_readiness import _assess
+    from test_v5_common import _envelope
     root, spec_path, spec = planning_case
-    monkeypatch.setattr(prospective, "plan_many", Mock(return_value=_planned(spec)))
-    monkeypatch.setattr(prospective, "rebuild_research_memory", Mock(side_effect=RuntimeError("derived failure")))
-    result = _invoke(capsys, root, spec_path, 1)
-    assert result["status"] == "PROSPECTIVE_PLANNED_RML_REBUILD_FAILED"
-    assert result["completed_records"] == _planned(spec)["results"]
-    assert result["rml_rebuilt"] is False
-    assert result["submission_authorized"] is False
+    authority = root / "authority.json"
+    authority.write_bytes(b"{}")
+    referenced = _envelope(authority.name)
+    readiness_ref = "experiments/reference/comparison_readiness.json"
+    referenced["authority"]["pointers"].append(readiness_ref)
+    readiness = _assess()
+    for side in ("candidate_artifact_bindings", "reference_artifact_bindings"):
+        for name, binding in readiness[side].items():
+            artifact = root / binding["ref"]
+            artifact.parent.mkdir(parents=True, exist_ok=True)
+            artifact.write_bytes((side + ":" + name).encode())
+            binding["sha256"] = hashlib.sha256(artifact.read_bytes()).hexdigest()
+    checkpoint = root / readiness["reference_artifact_bindings"]["checkpoint"]["ref"]
+    path = root / "experiments/reference/v5_evidence.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(referenced), encoding="utf-8")
+    (root / readiness_ref).write_text(json.dumps(readiness), encoding="utf-8")
+    # Unrelated historical authority is unavailable; it is only knowledge metadata.
+    history = _envelope("missing-history-authority.json")
+    history["evidence_id"] = "evidence-unrelated-history"
+    historical_path = root / "experiments/history/v5_evidence.json"
+    historical_path.parent.mkdir(parents=True)
+    historical_path.write_text(json.dumps(history), encoding="utf-8")
+    declaration = spec.to_dict()
+    for binding in declaration["prospective"]["arms"]:
+        plan_path = root / binding["plan_spec_ref"]
+        plan = json.loads(plan_path.read_bytes())
+        plan["trajectory"]["state_at_start"]["reference_ids"] = [referenced["evidence_id"]]
+        if fault == "unknown":
+            plan["trajectory"]["state_at_start"]["reference_ids"] = ["evidence-unknown"]
+        raw = json.dumps(plan).encode()
+        plan_path.write_bytes(raw)
+        binding["plan_spec_sha256"] = hashlib.sha256(raw).hexdigest()
+    spec = ExperimentSpec(declaration)
+    spec_path.write_text(spec.to_json(), encoding="utf-8")
+    if fault == "authority":
+        authority.unlink()
+    elif fault == "duplicate":
+        historical_path.write_text(json.dumps(referenced), encoding="utf-8")
+    elif fault == "readiness":
+        checkpoint.write_bytes(checkpoint.read_bytes() + b"tampered")
+    planner = Mock(return_value=_planned(spec))
+    monkeypatch.setattr(prospective, "plan_many", planner)
+    result = _invoke(capsys, root, spec_path, 2 if fault else 0)
+    if fault:
+        assert result["status"] == "ERROR"
+        if fault == "readiness":
+            assert "bound artifact SHA mismatch" in result["error"]["message"]
+        planner.assert_not_called()
+    else:
+        assert result["status"] == "PROSPECTIVE_PLANNED_RML_PENDING"
+        assert result["completed_records"] == _planned(spec)["results"]
+        planner.assert_called_once()
 
 
 def test_cli_batch_return_mismatch_never_rebuilds(capsys, monkeypatch, planning_case):
     root, spec_path, spec = planning_case
     wrong = _planned(spec)
     wrong["results"].reverse()
-    rebuild = Mock()
     monkeypatch.setattr(prospective, "plan_many", Mock(return_value=wrong))
-    monkeypatch.setattr(prospective, "rebuild_research_memory", rebuild)
     result = _invoke(capsys, root, spec_path, 1)
     assert result["status"] == "PROSPECTIVE_PLAN_RESULT_MISMATCH_REQUIRES_RECONCILIATION"
-    rebuild.assert_not_called()
 
 
 def test_plan_cli_rejects_v1(capsys, monkeypatch, tmp_path, payload):

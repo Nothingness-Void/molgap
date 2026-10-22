@@ -20,7 +20,7 @@ from molgap.family_training_runner import build_screen_recipe, family_arm_bindin
 from molgap.v4_runtime import state_dict_sha256
 from test_experiment_workflow import (_arm, _spec_payload, _write_strict_retained_reference_plan,
                                       _write_json, _git, _pointer)
-from test_comparison_readiness import _prelaunch, _target_transform_asset
+from test_comparison_readiness import _assess, _prelaunch, _target_transform_asset
 from test_v5_common import _envelope
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -95,6 +95,24 @@ def scientific(tmp_path_factory, request):
     _write_json(repo / authority_name, {"user_authorized": True, "allocated_t4_hours_ceiling": 1,
                                       "arms": ["candidate"], "seeds": [42], "fixture_only": True})
     _write_json(repo / "experiments/support/v5_evidence.json", _envelope(authority_name))
+    # A global rebuild would require this unrelated historical checkpoint.
+    # Preparation retains its canonical metadata without hydrating its weights.
+    historical = _assess()
+    for side in ("candidate_artifact_bindings", "reference_artifact_bindings"):
+        for name, binding in historical[side].items():
+            binding["ref"] = f"experiments/history/{side}/{name}.bin"
+            artifact = repo / binding["ref"]
+            artifact.parent.mkdir(parents=True, exist_ok=True)
+            artifact.write_bytes((side + ":" + name).encode())
+            binding["sha256"] = hashlib.sha256(artifact.read_bytes()).hexdigest()
+    historical["reference_artifact_bindings"]["checkpoint"] = {
+        "ref": "experiments/history/unavailable-checkpoint.pt", "sha256": "a" * 64}
+    from molgap.comparison_readiness import validate_comparison_readiness
+    from molgap.research_memory.paths import verify_bound_artifact
+    with pytest.raises(ValueError, match="required repository pointer is missing.*unavailable-checkpoint"):
+        validate_comparison_readiness(historical,
+            evidence_verifier=lambda ref, sha: verify_bound_artifact(repo, ref, sha))
+    _write_json(repo / "experiments/history/comparison_readiness.json", historical)
     platform_name = "experiments/question/platform.json"
     _write_json(repo / platform_name, {"platform": spec.to_dict()["platform"], "kaggle": {
         "account": "synthetic-account", "kernel": "synthetic-account/scientific-fixture",
@@ -187,6 +205,18 @@ out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
 result=json.loads(out.getvalue());assert code==0,result
 assert result["status"]=="PREPARED_FOR_PLATFORM" and result["submitted"] is False
+workflow_report=json.loads((run/"prepared/workflow_report.json").read_bytes())
+planned=next(row["result"] for row in workflow_report["stages"] if row["stage"]=="prospective")
+assert planned["rml_rebuild_pending"] is True and planned["rml_rebuilt"] is False
+assert not (repo/"research_memory/derived").exists()
+assert not (repo/"experiments/history/unavailable-checkpoint.pt").exists()
+trajectory_path=next(repo.glob("experiments/scientific-fixture/runs/*/prospective/*/trajectory.json"))
+trajectory=json.loads(trajectory_path.read_bytes())
+decision_state=json.loads((trajectory_path.parent/"decision_state.json").read_bytes())
+policy_snapshot=json.loads((trajectory_path.parent/"policy_snapshot.json").read_bytes())
+assert trajectory["decision_state"]==decision_state
+assert "evidence-common-test" in decision_state["known_evidence_ids"]
+assert policy_snapshot["schema"]=="molgap-policy-v1"
 assert binding==(run/"inputs/input_binding.json").read_bytes()
 retained=list((run/"local_preparation_failures").glob("*/workflow_report.json"))
 assert len(retained)==1 and retained[0].read_bytes()==failed
@@ -240,13 +270,15 @@ print(json.dumps({"status":"CPU_SCENARIO_ACCEPTED","spec_identity":spec.identity
     record_property("scientific_input_observation", json.dumps(observation))
 
 
-@pytest.mark.parametrize("fault", ["seed", "batch", "missing_reference", "wrong_contract", "uncommitted", "data_context"])
+@pytest.mark.parametrize("fault", ["seed", "batch", "missing_reference", "wrong_contract", "uncommitted", "data_context", "reference_checkpoint"])
 def test_scientific_input_does_not_infer_authority_or_reference(scientific, fault):
     from copy import deepcopy
     case = scientific
     original = case.path.read_bytes()
     data_path = case.repo / case.value["arms"][0]["data_ref"]["spec_ref"]
     data_original = data_path.read_bytes()
+    checkpoint = case.repo / "experiments/reference/checkpoint.pt"
+    checkpoint_original = checkpoint.read_bytes()
     files = {str(p): p.stat().st_size for root in (case.tmp / "artifact_root", case.repo / "experiments/scientific-fixture")
              if root.exists() for p in root.rglob("*") if p.is_file()}
     value = deepcopy(case.value)
@@ -254,6 +286,9 @@ def test_scientific_input_does_not_infer_authority_or_reference(scientific, faul
     elif fault == "batch":value["arms"][0]["training"]["batch_size"] = 256
     elif fault == "missing_reference":value["arms"][0]["reference_ref"]["plan_ref"] = "missing.json"
     elif fault == "wrong_contract":value["arms"][0]["recipe_ref"] = "experiments/reference/roles.json"
+    elif fault == "reference_checkpoint":
+        value["logical_run_id"] = "fresh-reference-checkpoint-run"
+        checkpoint.write_bytes(checkpoint_original + b"tampered")
     elif fault == "data_context":
         value["logical_run_id"] = "fresh-data-context-run"
         data = json.loads(data_original)
@@ -262,12 +297,14 @@ def test_scientific_input_does_not_infer_authority_or_reference(scientific, faul
     else:value["arms"][0]["training"]["learning_rate"] = .0004
     _write_json(case.path, value)
     try:
-        with pytest.raises((ValueError, KeyError, FileNotFoundError, RuntimeError),
-                           match="Retained reference context" if fault == "data_context" else None):
+        expected = ("Retained reference context" if fault == "data_context" else
+                    "Retained reference artifact bytes changed" if fault == "reference_checkpoint" else None)
+        with pytest.raises((ValueError, KeyError, FileNotFoundError, RuntimeError), match=expected):
             resolve_experiment_input(case.path, case.repo)
     finally:
         case.path.write_bytes(original)
         data_path.write_bytes(data_original)
+        checkpoint.write_bytes(checkpoint_original)
     after = {str(p): p.stat().st_size for root in (case.tmp / "artifact_root", case.repo / "experiments/scientific-fixture")
              if root.exists() for p in root.rglob("*") if p.is_file()}
     assert after == files

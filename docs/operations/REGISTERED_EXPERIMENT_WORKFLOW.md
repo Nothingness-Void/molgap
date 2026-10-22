@@ -74,11 +74,20 @@ the repository root. Field contracts remain in [Spec](EXPERIMENT_SPEC.md),
 [prospective planning](EXPERIMENT_PROSPECTIVE_PLANNING.md) and
 [family acceptance](EXPERIMENT_FAMILY_WORKFLOW.md).
 
-The `kaggle` object has exactly `account`, `kernel`, `title`, `datasets`,
+The `kaggle` object requires `account`, `kernel`, `title`, `datasets`,
 `source_dataset`, and `accelerator`. The kernel must equal the account plus the
 title-derived slug; title length is 5–50 characters. Dataset slugs must be
 unique and include the account-owned source dataset. This workflow supports
-the explicit `NvidiaTeslaT4` allocation only.
+the explicit `NvidiaTeslaT4` allocation only. Optional
+`allocation_wall_limit_seconds` and `cleanup_reserve_seconds` freeze into the
+launch unchanged. A non-null allocation limit is positive integer seconds and must
+exceed the nonnegative cleanup reserve (60 seconds when omitted); recipe and
+runtime ceilings retain their owning checks. These fields grant no compute.
+
+Byte-identical initialization files share one staged/uploaded path, recorded
+in each frozen launch job. Recipes, tensor identities and trajectories remain
+per arm. Release checks, remote readback and resume use
+those job paths; existing per-arm layouts remain readable.
 
 ```json
 {

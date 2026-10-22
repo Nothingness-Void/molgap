@@ -382,7 +382,13 @@ def test_source_staging_publishes_verified_snapshot_when_package_changes(package
         return result
 
     monkeypatch.setattr(launch, "publish_immutable_bytes", mutate_after_publish)
-    staged = owner.stage_source_inputs(package, tmp_path / "staged", {})
+    initial_states = {arm: tmp_path / (arm + ".pt") for arm in ("second", "first", "different")}
+    for arm, path in initial_states.items():
+        path.write_bytes(b"different state" if arm == "different" else b"identical state")
+    staged = owner.stage_source_inputs(package, tmp_path / "staged", initial_states)
     for name, raw in expected.items():
         target = "source_payload.bin" if name == "source.tar.gz" else name
         assert (staged / target).read_bytes() == raw
+    assert {path.name for path in (staged / "initial_states").iterdir()} == {"first.pt", "different.pt"}
+    assert (staged / "initial_states/first.pt").read_bytes() == b"identical state"
+    assert (staged / "initial_states/different.pt").read_bytes() == b"different state"

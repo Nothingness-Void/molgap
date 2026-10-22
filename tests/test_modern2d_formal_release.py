@@ -12,7 +12,6 @@ import importlib.util
 import io
 import json
 from pathlib import Path
-import subprocess
 from types import SimpleNamespace
 import tarfile
 
@@ -543,61 +542,3 @@ def test_formal_bootstrap_uses_family_shared_for_namespaced_mount(tmp_path, monk
     command = runs[0][0]
     assert command[command.index("--input-root") + 1] == str(input_root)
     assert command[command.index("--launch") + 1] == str(launch)
-
-
-@pytest.mark.parametrize("dirty", [True, False], ids=["defer-dirty-derived", "rebuild-clean"])
-def test_prospective_plan_defers_dirty_derived_but_rebuilds_clean(
-    tmp_path, monkeypatch, dirty,
-):
-    """Canonical publication succeeds while only a clean derived tree is rebuilt."""
-    from unittest.mock import Mock
-
-    from molgap import experiment_prospective as prospective
-
-    root = tmp_path / "repo"
-    root.mkdir()
-    if dirty:
-        (root / ".git").mkdir()
-    plans = [{"spec": {"trajectory": {"trajectory_id": "T-ppgt"}},
-              "output": "experiments/planned-ppgt"}]
-    bindings = [{"arm_id": "ppgt", "trajectory_id": "T-ppgt",
-                 "output": "experiments/planned-ppgt"}]
-    canonical_records = [{"trajectory_id": "T-ppgt",
-                          "path": "experiments/planned-ppgt", "status": "PLANNED"}]
-    canonical_batch = {"size": 1, "batch_id": "canonical-batch"}
-    plan_result = {"status": "PLANNED", "batch": canonical_batch,
-                   "results": canonical_records}
-    monkeypatch.setattr(prospective, "_prospective_inputs",
-                        lambda spec, repo: (plans, bindings))
-    monkeypatch.setattr(prospective, "plan_many", Mock(return_value=plan_result))
-    rebuild = Mock(return_value={"index.json": b"canonical-derived"})
-    monkeypatch.setattr(prospective, "rebuild_research_memory", rebuild)
-    status = (" M research_memory/derived/index.json\n"
-              + "\n".join(
-                  f" M research_memory/derived/user-pin-{index:02d}.json"
-                  for index in range(14)
-              )) if dirty else ""
-    git_status = Mock(return_value=SimpleNamespace(returncode=0, stdout=status))
-    monkeypatch.setattr(subprocess, "run", git_status)
-
-    result, code = prospective.plan_prospective(object(), root)
-
-    assert code == 0
-    assert result["completed_records"] == canonical_records
-    assert result["batch"] == canonical_batch
-    if dirty:
-        git_status.assert_called_once_with(
-            ["git", "status", "--porcelain", "--untracked-files=all", "--",
-             "research_memory/derived"],
-            cwd=root, text=True, capture_output=True,
-        )
-        assert result["status"] == "PROSPECTIVE_PLANNED_DERIVED_DEFERRED_USER_CHANGES"
-        assert result["rml_rebuilt"] is False
-        assert result["rml_derived_files"] == []
-        rebuild.assert_not_called()
-    else:
-        git_status.assert_not_called()
-        assert result["status"] == "PROSPECTIVE_PLANNED_AND_RML_REBUILT"
-        assert result["rml_rebuilt"] is True
-        assert result["rml_derived_files"] == ["index.json"]
-        rebuild.assert_called_once_with(root)

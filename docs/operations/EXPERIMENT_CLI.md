@@ -156,8 +156,8 @@ the fixed runtime distribution; manual source selection is a compatibility API.
 - `validate-spec` returns the canonical declaration and its identity. This is
   structural validation, not verification of declared source/data/state bytes.
 - `plan-prospective` is available only for Spec v2. It publishes one canonical
-  RML trajectory per arm from frozen per-arm plan inputs, then rebuilds derived
-  indexes. A nonzero partial result can retain published trajectories; reconcile
+  RML trajectory per arm from frozen per-arm plan inputs; derived index rebuilding
+  is deferred to the existing RML CLI. A nonzero partial result can retain published trajectories; reconcile
   them before retrying. On `molgap-server`, the existing RML owner gate remains
   server-only; desktop-owned records must be planned on the independent desktop
   checkout. It is not a submission or training authorization. See

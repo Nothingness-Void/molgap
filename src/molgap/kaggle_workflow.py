@@ -8,12 +8,15 @@ import shutil
 
 from .experiment_family_workflow import _artifact_path
 from .experiment_launch import canonical_json, publish_immutable_bytes
+from .experiment_launch_config import validate_allocation_budget
 from .experiment_package import read_packaged_text
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
-    if type(kaggle) is not dict or set(kaggle) != fields:
+    optional = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+    if type(kaggle) is not dict or not fields <= set(kaggle) or set(kaggle) - (fields | optional):
         raise ValueError("Expected explicit Kaggle account/kernel/title/datasets/source_dataset/accelerator")
+    validate_allocation_budget(kaggle)
     if not re.fullmatch(r"[a-z0-9-]+", kaggle["account"]):
         raise ValueError("Invalid Kaggle account")
     prefix = kaggle["account"] + "/"
@@ -45,9 +48,11 @@ def validate_plan(spec, plan):
 
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
                  metadata, initial_states, jobs, _verification=None):
+    validate_allocation_budget(platform_plan)
     staged = output / "source_dataset"
     from .experiment_package import stage_source_inputs
     stage_source_inputs(package, staged, initial_states,
+        initial_paths={job["arm_id"]: job["initial_state"] for job in jobs},
         **({"_verification": _verification} if _verification is not None else {}))
     publish_immutable_bytes(staged / "dataset-metadata.json", canonical_json({
         "id": platform_plan["source_dataset"], "title": platform_plan["source_dataset"].split("/")[1],
@@ -59,15 +64,19 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
     if entry_text.count(marker) != 1:
         raise ValueError("Expected one reviewed launch digest marker in the platform entry")
     publish_immutable_bytes(kernel / "kernel-metadata.json", canonical_json(metadata).encode())
+    launch = {"format": "molgap-execution-launch-v1", "spec_identity": spec.identity,
+        "expected_package_identity": manifest["package_identity"],
+        "expected_source_archive_sha256": manifest["archive_sha256"],
+        "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
+        "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
+        "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
+    for field in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
+        if field in platform_plan:
+            launch[field] = platform_plan[field]
     return {"input_root": staged, "kernel_dir": kernel, "entry_path": kernel / "run.py",
         "metadata_path": kernel / "kernel-metadata.json", "launch_path": staged / "experiment_launch.json",
         "entry_text": entry_text, "accelerator": platform_plan["accelerator"],
-        "launch": {"format": "molgap-execution-launch-v1", "spec_identity": spec.identity,
-            "expected_package_identity": manifest["package_identity"],
-            "expected_source_archive_sha256": manifest["archive_sha256"],
-            "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
-            "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
-            "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}}
+        "launch": launch}
 
 
 def freeze_inputs(stage, trajectories):

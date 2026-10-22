@@ -34,8 +34,12 @@ rejected. Use a canonical no-newline ExperimentSpec JSON file:
 
 The command reads and checks every plan input before publishing anything. It
 calls RML `plan_many()` once, giving each arm the same pre-publication evidence
-snapshot, verifies the returned order and identities, then rebuilds RML derived
-indexes. Success means only that prospective planning and rebuild finished. It
+snapshot and verifies the returned order and identities. It checks this question's
+referenced evidence; unrelated historical binaries are not preparation inputs.
+Success is `PROSPECTIVE_PLANNED_RML_PENDING`: canonical planning is complete,
+while derived indexes remain pending. Rebuild them separately with
+`.venv\Scripts\python.exe platforms/local/run.py --module molgap.research_memory -- rebuild` at the existing
+handoff/accepted-milestone boundary. Index maintenance does not repeat preparation. It
 does not submit a job, authorize training, create evidence, use an evaluation
 role, or create READY_FOR_DESKTOP.
 
@@ -50,10 +54,10 @@ independent.
 
 If `plan_many()` stops after publishing some arms, the nonzero result lists
 `completed_records` and requires reconciliation; it neither deletes them nor
-rebuilds RML. A rebuild failure also returns nonzero while retaining all
-published canonical plans. Do not rerun with the same output paths or treat
-either result as submission-ready. Resolve the canonical records and rebuild
-state explicitly before any subsequent submission decision.
+rebuilds RML. Do not rerun a partial publication with the same output paths;
+reconcile the canonical records before the subsequent submission decision.
+An independent index rebuild failure retains canonical plans and is repaired
+through the existing RML CLI without republishing or resubmitting.
 
 For v2 terminal translation, each descriptor arm's trajectory ID must equal
 its prospective mapping, and the retained prospective trajectory must still

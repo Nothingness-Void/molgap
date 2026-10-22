@@ -97,9 +97,15 @@ def daily_case(tmp_path, workflow_case, monkeypatch):
     transport_root.mkdir()
     # Extract the existing fake transport, without inheriting that fixture's
     # package/release/receipt stubs. All those owners below remain real.
+    import requests
     with monkeypatch.context() as stubs:
         transport = fake_release.__wrapped__(transport_root, stubs)
         fake_push = submission.push_kernel_with_accelerator
+        anonymous_session = requests.Session
+    # The real source roundtrip creates its anonymous session after the
+    # extraction scope closes. Keep only that transport factory alive for the
+    # daily case; the requests-level offline guard remains active.
+    monkeypatch.setattr(requests, "Session", anonymous_session)
     transport.staged.rename(transport_root / "unused-fixture-source")
     shutil.copytree(prepared / "source_dataset", transport.staged)
     shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")

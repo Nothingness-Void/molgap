@@ -257,6 +257,12 @@ def test_strict_launch_binds_manifest_jobs_and_prospective_bytes(launch_case):
     assert {job["arm_id"] for job in checked["jobs"]} == {
         arm["arm_id"] for arm in launch_case[0].to_dict()["arms"]
     }
+    # Legacy launch files omit the optional budget fields; an explicit shared
+    # allocation still passes the same frozen launch boundary.
+    budgeted = copy.deepcopy(launch_case[3])
+    budgeted.update(allocation_wall_limit_seconds=32400, cleanup_reserve_seconds=180)
+    _write(launch_case[2], budgeted)
+    assert _check(launch_case)["source_commit"] == "c" * 40
 
 
 @pytest.mark.parametrize("field", [

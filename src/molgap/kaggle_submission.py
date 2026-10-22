@@ -216,6 +216,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     launch = _json(staged / "experiment_launch.json")
     if "resume" in launch:
         raise ValueError("Resumed workflow staging is local-only here; use the owning platform continuation adapter after reconciling the original run")
+    from .experiment_execution import validate_execution_plan
+    initial_paths = {job["arm_id"]: job["initial_state"]
+                     for job in validate_execution_plan(spec, launch["jobs"])}
     if (ref.split("/")[0] != account or dataset.split("/")[0] != account
             or launch["account"] != account or launch["run_reference"] != ref
             or launch["accelerator"] != "NvidiaTeslaT4" or dataset not in metadata["dataset_sources"]
@@ -224,9 +227,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     from .experiment_package import SIDECARS
     allowed = {"source_payload.bin" if name == "source.tar.gz" else name for name in SIDECARS}
     allowed.update({"dataset-metadata.json", "experiment_launch.json"})
+    allowed.update(initial_paths.values())
     for arm in spec.to_dict()["arms"]:
-        allowed.update({"initial_states/" + arm["arm_id"] + ".pt",
-                        "prospective/" + arm["arm_id"] + "/trajectory.json"})
+        allowed.add("prospective/" + arm["arm_id"] + "/trajectory.json")
     observed = set()
     for path in staged.rglob("*"):
         _safe_local(path)
@@ -358,7 +361,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             remote_root = output / "source_roundtrip"
             release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
                 recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
-                initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
+                initial_states={arm: remote_root / relative for arm, relative in initial_paths.items()},
                 input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
                 kernel_metadata=kernel / "kernel-metadata.json")
             if release["errors"]:

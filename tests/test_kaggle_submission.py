@@ -71,7 +71,12 @@ def release(tmp_path, monkeypatch):
     atomic_json(kernel / "kernel-metadata.json", metadata)
     (kernel / "run.py").write_bytes(b"print('synthetic')\n")
     atomic_json(staged / "dataset-metadata.json", {"id": "owner/new-source"})
-    atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4"})
+    atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4",
+        "jobs": [{"arm_id": binding["arm_id"], "device": device,
+                  "recipe": f"recipes/{binding['arm_id']}.json",
+                  "initial_state": f"initial_states/{binding['arm_id']}.pt",
+                  "trajectory_id": binding["trajectory_id"]}
+                 for device, binding in enumerate(spec.to_dict()["prospective"]["arms"])]})
     from molgap.experiment_package import SIDECARS
     for name in SIDECARS:
         (staged / ("source_payload.bin" if name == "source.tar.gz" else name)).write_bytes(b"synthetic")
