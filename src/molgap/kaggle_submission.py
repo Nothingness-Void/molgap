@@ -194,7 +194,8 @@ def _startup(http, ref):
 
 
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
-                             monitor_paths, execute=False, api=None, http_session=None):
+                             monitor_paths, execute=False, api=None, http_session=None,
+                             reconcile_retired_push=False):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
@@ -289,13 +290,33 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         if state["phase"] in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
             remote = _kernel_source(api, ref)
             if remote is None:
-                return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": "UNKNOWN"}
-            response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
-                        "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
-            if response["version_number"] != 1:
-                raise ValueError("Lost-response reconciliation requires the first physical version")
-            _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
-            save("KERNEL_ACCEPTED", kernel_response=response)
+                if not reconcile_retired_push:
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": "UNKNOWN"}
+                from .common.kaggle import owned_reference_absent
+                prior = {key: state.get(key) for key in ("phase", "error_type", "observed_at")}
+                age = (datetime.now(timezone.utc) - datetime.fromisoformat(state["observed_at"])).total_seconds()
+                legacy = "https://www.kaggle.com/api/v1/kernels/push"
+                if (state.get("error_type") != "HTTPError" or age < 60
+                        or state.get("submission_endpoint") not in (None, legacy)
+                        or "retired_route_reconciliation" in state):
+                    raise ValueError("Retired-route reconciliation cannot resolve a timeout or recent unknown submission")
+                probe = http_session.head(legacy, timeout=(10, 30))
+                if probe.status_code != 404 or not owned_reference_absent(api, ref, "kernel"):
+                    raise ValueError("Retired-route rejection/owned target absence is not confirmed")
+                reconciliation = {"prior": prior, "original_http_status": "not_retained",
+                    "legacy_route_probe_status": probe.status_code,
+                    "exact_target_lookup": "ABSENT", "complete_owned_listing": "ABSENT",
+                    "controller_requested": True, "observed_at": datetime.now(timezone.utc).isoformat(),
+                    "binding": binding, "scope": "One explicit retired-HTTP-route recovery; never a timeout retry"}
+                atomic_json(output / "retired_route_reconciliation.json", reconciliation)
+                save("SOURCE_PENDING", retired_route_reconciliation=reconciliation)
+            else:
+                response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
+                            "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
+                if response["version_number"] != 1:
+                    raise ValueError("Lost-response reconciliation requires the first physical version")
+                _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
+                save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
             _verify_release_report(prepared / "release_report.json", kernel / "run.py")
             atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_budget, api=api))
@@ -341,7 +362,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_budget, api=api))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel appeared before POST; reconcile")
-            save("KERNEL_SUBMITTING")
+            from .kaggle_accelerator_push import KAGGLE_KERNEL_PUSH_URL
+            save("KERNEL_SUBMITTING", error_type=None, submission_endpoint=KAGGLE_KERNEL_PUSH_URL)
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
                     accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json")
@@ -353,7 +375,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
             atomic_json(output / "platform_response.json", response)
             if response["status"] != "submitted" or response.get("reconciliation_required"):
-                save("SUBMIT_UNKNOWN")
+                save("SUBMIT_UNKNOWN", error_type=response.get("error_type", "unconfirmed_response"))
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
             save("KERNEL_ACCEPTED", kernel_response=response)
         response = state["kernel_response"]

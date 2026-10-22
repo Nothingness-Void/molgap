@@ -19,6 +19,8 @@ def main(argv=None):
     parser.add_argument("--authority",help="Authority path inside the immutable source package")
     parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--reconcile-retired-push", action="store_true",
+        help="Explicitly qualify an absent target after a retired-route HTTP rejection; never retries timeouts")
     args = parser.parse_args(argv)
     stage="arguments"
     try:
@@ -40,7 +42,8 @@ def main(argv=None):
             raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
         stage="platform_operations"
         result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
-            authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute)
+            authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute,
+            **({"reconcile_retired_push": True} if args.reconcile_retired_push else {}))
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.
         if stage != "platform_operations":

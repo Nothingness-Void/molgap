@@ -41,6 +41,14 @@ def owned_absence(api, ref, kind, error):
     owner = api.get_config_value(api.CONFIG_NAME_USER)
     if status != 403 or ref.split("/")[0] != owner:
         return False
+    return owned_reference_absent(api, ref, kind)
+
+
+def owned_reference_absent(api, ref, kind):
+    """A complete authenticated listing, not a private-page 404 assumption."""
+    owner = api.get_config_value(api.CONFIG_NAME_USER)
+    if ref.split("/")[0] != owner or kind not in {"kernel", "dataset"}:
+        raise ValueError("Absence qualification requires the exact authenticated owner")
     seen = set()
     for page in range(1, 51):
         rows = (api.kernels_list(mine=True, user=owner, page=page, page_size=20)

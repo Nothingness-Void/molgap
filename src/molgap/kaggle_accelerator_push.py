@@ -9,7 +9,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 
-KAGGLE_KERNEL_PUSH_URL = "https://www.kaggle.com/api/v1/kernels/push"
+KAGGLE_KERNEL_PUSH_URL = "https://api.kaggle.com/v1/kernels.KernelsApiService/SaveKernel"
 ALLOWED_ACCELERATORS = {"NvidiaTeslaT4", "CPU-only"}
 UNSUPPORTED_BATCH_ACCELERATORS = {"TpuV5E8"}
 
