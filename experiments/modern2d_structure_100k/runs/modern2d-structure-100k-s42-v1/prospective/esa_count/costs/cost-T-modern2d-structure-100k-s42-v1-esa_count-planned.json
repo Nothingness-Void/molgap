@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "esa_count-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-modern2d-structure-100k-s42-v1-esa_count-planned",
+  "evidence_ref": "experiments/modern2d_structure_100k/authority.json",
+  "hardware": "NvidiaTeslaT4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 14
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 7
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "modern2d-structure-100k-s42-v1:esa_count:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-modern2d-structure-100k-s42-v1-esa_count"
+}
