@@ -1,0 +1,19 @@
+{
+  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1",
+  "local_attempt_id": "v2", "physical_kernel_id": 140182981, "physical_version": 1,
+  "mechanical_output_status": "MECHANICALLY_VERIFIED",
+  "native_proof_status": {"ppgt_mean": "PASS", "esa_native": "PASS"},
+  "canonical_terminal_staging_status": "BLOCKED",
+  "blocking_owner": "molgap.experiment_terminal_staging.stage_verified_terminal_packages",
+  "error": "Terminal source/attempt differs from the frozen prospective action",
+  "source_commit_matches": true,
+  "planned_attempt_ids": {"ppgt_mean": "ppgt_mean-v2", "esa_native": "esa_native-v2"},
+  "physical_version_derived_attempt_ids": {"ppgt_mean": "ppgt_mean-v1", "esa_native": "esa_native-v1"},
+  "cause": "The compiler froze local preparation attempt v2; the terminal translator derives labels from actual platform version1. These namespaces were not reconciled by the frozen binding.",
+  "canonical_finalization_executed": false,
+  "prospective_records_modified": false,
+  "replay_ready": false,
+  "additional_known_limits": ["No prospectively frozen canonical candidate/reference comparison pair", "Observed protected-role audit was not supplied; its staging gate was not reached"],
+  "disposition": "Preserve all original plans and accepted output evidence; do not relabel physical version1 or force Replay-Ready. No retraining or successor.",
+  "external_staging_observation": "E:/MolGap/artifacts/runs/modern2d-prepared-pair-100k-s42-v1/v2/reports/rml_staging_result.json"
+}

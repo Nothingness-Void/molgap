@@ -1,0 +1,34 @@
+{
+  "kernel": "nvoid912/molgap-modern2d-prepared-pair-100k-v1",
+  "kernel_id": 140182981, "version": 1,
+  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1", "attempt_id": "v2",
+  "outcome": {
+    "execution_status": "COMPLETE",
+    "artifact_status": "MECHANICALLY_VERIFIED",
+    "comparison_status": "CONTEXT_ONLY",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_TESTED",
+    "budget_decision": "WITHIN_AUTHORIZED_CEILING_NO_SUCCESSOR",
+    "full_handoff_status": "NOT_READY"
+  },
+  "execution_goal_met": true, "scientific_nomination": false,
+  "replay_ready": false,
+  "rml_canonical_closure_status": "BLOCKED",
+  "rml_closure_record": "experiments/modern2d_configured_100k/prepared_pair/results/rml_status.json",
+  "native_preflight_recomputed_from_saved_states": true,
+  "source_commit": "8c16b36e1ef446b75996fff052aa55197ad409e2",
+  "spec_identity": "853f6e389e418330fc800e77d5ec7b68c063f3df469b02340ff57ef882dc5a70",
+  "package_identity": "b48f6a5159744696238058fc38037bac4b7861d58c186407037437c6a9aaa14b",
+  "frozen_endpoint_per_arm": {"completed_passes": 20, "optimizer_steps": 15620, "sample_presentations": 1999360, "development_rows": 50000, "physical_batch": 128, "seed": 42, "precision": "fp32", "tf32": false},
+  "allocation": {"devices": ["Tesla T4", "Tesla T4"], "measured_python_wall_seconds": 17019.865707651, "measured_physical_device_seconds": 34039.731415302, "authorized_wall_seconds": 32400, "authorized_session_quota_hours": 9, "authorized_physical_t4_hours": 18, "billing_and_provisioning_before_python": "NOT_OBSERVED"},
+  "arms": {
+    "ppgt_mean": {"recomputed_common_dev_mae_eV": 0.20045661712408067, "producer_common_dev_mae_eV": 0.2004566192626953, "best_pass": 20, "selected_optimizer_step": 15620, "final_online_train_mae_eV": 0.13116318463604557, "training_elapsed_seconds": 16756.00810562, "capture_off_training_graphs_per_second": 144.51156898267283, "steady_full_pass_median_seconds": 807.5369505185008, "profile_window_peak_allocated_MiB": 582.5419921875, "native_update_equivalent": true, "native_exact_full_state": false, "long_run_bitwise_equivalence": "NOT_ESTABLISHED"},
+    "esa_native": {"recomputed_common_dev_mae_eV": 0.2036746614909172, "producer_common_dev_mae_eV": 0.20367467403411865, "best_pass": 20, "selected_optimizer_step": 15620, "final_online_train_mae_eV": 0.08724946158432312, "training_elapsed_seconds": 2071.887027824, "capture_off_training_graphs_per_second": 1210.3771399735458, "steady_full_pass_median_seconds": 97.48128766100001, "profile_window_peak_allocated_MiB": 905.63525390625, "native_update_equivalent": true, "native_exact_full_state": true, "historical_four_point_dev_max_abs_difference_eV": 0.0}
+  },
+  "retained_outputs": "E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2",
+  "operations_and_reports": "E:/MolGap/artifacts/runs/modern2d-prepared-pair-100k-s42-v1/v2",
+  "independent_acceptance_sha256": "1a0f245ca285a6635ab4af00bf455b7f101dbb84b785c8e18cce4e65f5591a6c",
+  "curve_profile_analysis_sha256": "dc8be78a4d6d049ebf35d21f41d6ac3fbcbc67e4cad65537832a7da513bfb542",
+  "local_training_executed": false, "local_inference_executed": false,
+  "new_remote_training_submitted": false
+}

@@ -6,13 +6,13 @@
 
 ## Server execution status
 
-The authorized [prepared PPGT/ESA100K pair](experiments/modern2d_configured_100k/prepared_pair/STATUS.md)
-is Kaggle3 kernel140182981/version1, confirmed RUNNING at launch. T4x2 isolates
-one arm per device; the full allocation is bounded to9 wall/session quota hours
-(18 physical T4-hours). Fresh all-arm native update/resume gating precedes
-training; no native or scientific acceptance is inferred from scheduler state.
-The [existing Luna binding](experiments/modern2d_configured_100k/prepared_pair/monitor.json)
-owns30-minute silent healthy polling; there is no automatic successor.
+The [prepared PPGT/ESA100K pair](experiments/modern2d_configured_100k/prepared_pair/results/decision.md)
+completed20 passes per arm; independent output/native/retention checks passed
+within the authorized wall budget. This establishes working execution, not a
+new scientific winner or500K release. Canonical RML closure is
+[blocked by local-attempt/physical-version identity](experiments/modern2d_configured_100k/prepared_pair/results/rml_status.json);
+no original plan was rewritten or Replay-Ready forced. Its existing Luna
+heartbeat is paused; no compute or automatic successor remains on this chain.
 
 PPGT/ESA [execution optimizations](docs/operations/MODERN2D_EXECUTION_OPTIMIZATION.md)
 passed the [affected CPU checks](experiments/modern2d_model_integration/execution_optimization_2026-10-22.md), including disk-resumed Session state. Prepared execution is opt-in, with fresh native qualification required by each new recipe; shared snapshot blockers are recorded separately. The patch itself grants no compute authority.

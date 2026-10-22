@@ -1,5 +1,18 @@
 # Execution status
 
+2026-10-22 22:35 JST: the exact version1 job completed both20-pass endpoints
+within4h43m40s of measured Python allocation wall time. Independent output,
+native saved-state and execution-retention checks passed. See the
+[decision](results/decision.md) and [compact metrics](results/summary.json).
+The existing Luna event was delivered and its heartbeat paused. No new compute
+or automatic successor was submitted.
+
+Canonical RML terminal staging failed closed on local attempt v2 versus physical
+version1 labels; no old plan was rewritten and no Replay-Ready claim was made.
+See [the exact closure blocker](results/rml_status.json).
+
+## Launch observation
+
 2026-10-22 17:51 JST: Kaggle3 confirmed RUNNING, kernel140182981/version1:
 [exact job](https://www.kaggle.com/code/nvoid912/molgap-modern2d-prepared-pair-100k-v1).
 One PPGT mean-readout and one native ESA arm, isolated T4 devices,20 planned

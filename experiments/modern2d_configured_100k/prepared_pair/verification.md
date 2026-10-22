@@ -77,3 +77,34 @@ The final bounded Luna worker directly ran `test_kaggle_submission.py` and
 (empty arrays may be omitted), explicit reconciliation fences and timeout
 blocking. An earlier reused scratch directory had PermissionError and was not
 counted as a successful run. The worker and its descendants were closed.
+
+## Terminal acceptance
+
+On2026-10-22 JST, one configured Luna worker independently reloaded native
+scratch/reference states and inspected both actual20-pass outputs. Both native
+gates, output inspection and the execution-retention ledger passed. It ran no
+model forward or inference. The report and its retained earlier blocked path
+attempt are pinned by [the result summary](results/summary.json).
+
+The exact-file retriever initially rejected the receipt's canonical text
+version `"1"` although the SDK requires integer1. The owning boundary was
+repaired to normalize only canonical positive ASCII versions, rejecting
+aliases/leading zeros. The existing exact-file suite (the actual file is
+`tests/test_kaggle_pinned_exact_files.py`) passed14 focused cases in the Luna
+worker, without remote calls. No frozen producer source was changed.
+
+The local acceptance owner also correctly rejected outputs inside the frozen
+run directory. Only this run's downloaded `inspection/` directory was moved,
+after absolute source/target validation, to
+`E:/MolGap/artifacts/retained/modern2d-prepared-pair-100k-s42-v1-v2`.
+No old logs/checkpoints were deleted, bytes were unchanged, and the original
+package, receipts and report history stayed in their original locations.
+The same acceptance owner then returned MECHANICALLY_VERIFIED for both arms.
+
+The existing terminal-staging owner was invoked with an explicit INCONCLUSIVE
+decision. It failed closed on the frozen local-attempt/physical-version
+namespace mismatch, recorded in [RML status](results/rml_status.json).
+No canonical RML finalization, plan rewrite, derived rebuild, inference,
+protected-role access or successor submission occurred. The worker was closed,
+the existing heartbeat paused, and controller custody was retained through the
+durable event's terminal decision.
