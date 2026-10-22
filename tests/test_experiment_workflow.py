@@ -858,7 +858,19 @@ def test_partial_prospective_plan_returns_without_platform_handoff(
     })
     partial = {"status": "PARTIAL_PROSPECTIVE_PLAN_REQUIRES_RECONCILIATION",
                "completed_records": [], "rml_rebuilt": False}
-    monkeypatch.setattr(workflow, "plan_prospective", Mock(return_value=(partial, 1)))
+    writes = []
+    atomic = workflow._atomic
+    def observed_write(path, value):
+        if path.name == "workflow_report.json":
+            writes.append(value["status"])
+        return atomic(path, value)
+    monkeypatch.setattr(workflow, "_atomic", observed_write)
+    def interrupted_plan(*args, **kwargs):
+        persisted = json.loads((tmp_path / "partial/workflow_report.json").read_bytes())
+        assert persisted["publication_intent"] is True
+        assert persisted["prospective_published"] == "inspect_plan_result"
+        return partial, 1
+    monkeypatch.setattr(workflow, "plan_prospective", interrupted_plan)
     handoff = Mock()
     monkeypatch.setattr(workflow, "build_launch_receipt", handoff)
 
@@ -869,6 +881,39 @@ def test_partial_prospective_plan_returns_without_platform_handoff(
     assert result["prospective_published"] == "inspect_plan_result"
     assert result["submitted"] is False
     handoff.assert_not_called()
+    assert writes == ["PREPARING", "RECONCILIATION_REQUIRED"]
+
+    # A failed terminal report must preserve the original publication error.
+    # The durable intent remains unknown; no implicit re-publication is allowed.
+    primary = ValueError("original prospective failure")
+    def failed_plan(*args, **kwargs):
+        raise primary
+    def failed_terminal_report(path, value):
+        if path.name == "workflow_report.json" and value["status"] == "ERROR_REQUIRES_RECONCILIATION":
+            raise PermissionError(13, "injected terminal report denial", str(path))
+        return atomic(path, value)
+    monkeypatch.setattr(workflow, "plan_prospective", failed_plan)
+    monkeypatch.setattr(workflow, "_atomic", failed_terminal_report)
+    failed = tmp_path / "report-denied"
+    with pytest.raises(ValueError) as caught:
+        workflow.prepare_workflow(spec, repo, plan, failed)
+    assert caught.value is primary
+    assert isinstance(primary.workflow_report_error, PermissionError)
+    persisted = json.loads((failed / "workflow_report.json").read_bytes())
+    assert persisted["status"] == "PREPARING" and persisted["publication_intent"] is True
+    handoff.assert_not_called()
+
+    # With no primary exception, a failed terminal write itself must propagate.
+    monkeypatch.setattr(workflow, "plan_prospective", lambda *a, **k: (partial, 1))
+    storage_error = PermissionError(13, "terminal report unavailable")
+    def denied_final_report(path, value):
+        if path.name == "workflow_report.json" and value["status"] == "RECONCILIATION_REQUIRED":
+            raise storage_error
+        return atomic(path, value)
+    monkeypatch.setattr(workflow, "_atomic", denied_final_report)
+    with pytest.raises(PermissionError) as denied:
+        workflow.prepare_workflow(spec, repo, plan, tmp_path / "final-report-denied")
+    assert denied.value is storage_error
 
 
 def test_accept_workflow_blocks_all_arm_closure_when_one_output_is_missing(

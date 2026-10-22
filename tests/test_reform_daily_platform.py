@@ -98,10 +98,9 @@ def daily_case(tmp_path, workflow_case, monkeypatch):
     # Extract the existing fake transport, without inheriting that fixture's
     # package/release/receipt stubs. All those owners below remain real.
     with monkeypatch.context() as stubs:
-        transport = fake_release.__wrapped__(transport_root, stubs)
+        transport = fake_release.__wrapped__(transport_root, stubs,
+            staged_source=prepared / "source_dataset")
         fake_push = submission.push_kernel_with_accelerator
-    transport.staged.rename(transport_root / "unused-fixture-source")
-    shutil.copytree(prepared / "source_dataset", transport.staged)
     shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")
     monkeypatch.setattr(submission, "_kernel_source", lambda *_: transport.api.remote)
     monkeypatch.setattr(submission, "_dataset_details", lambda *_: NS(current_version_number=1))
@@ -345,6 +344,7 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
 def test_unobserved_lost_response_stays_reconcile_only(daily_case, monkeypatch, tmp_path):
     case = daily_case
     def lost(**kwargs):
+        kwargs["_before_post"]()
         case.transport.api.pushed += 1
         raise TimeoutError("synthetic lost response")
     monkeypatch.setattr(submission, "push_kernel_with_accelerator", lost)

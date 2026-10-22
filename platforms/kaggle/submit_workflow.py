@@ -27,6 +27,8 @@ def main(argv=None):
             raise ValueError("--execute requires explicit credentials before preparation")
         from contextlib import nullcontext
         from molgap.experiment_preflight import _shared_release_verification
+        from molgap.experiment_package import _PackageVerification
+        verification = _PackageVerification()
         scope = _shared_release_verification() if (args.experiment and args.execute) else nullcontext()
         with scope:
             if args.experiment:
@@ -35,7 +37,7 @@ def main(argv=None):
                     raise ValueError("Editable input already owns the immutable run/authority/monitor bindings")
                 stage="local_preparation"
                 with redirect_stdout(sys.stderr):
-                    prepared=prepare_experiment_input(args.experiment,args.repo_root)
+                    prepared=prepare_experiment_input(args.experiment,args.repo_root, _verification=verification)
                 if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
                     from molgap.experiment_input import compact_operation_report
                     print(canonical_json(prepared if args.verbose else compact_operation_report(prepared)))
@@ -46,7 +48,8 @@ def main(argv=None):
                 raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
             stage="platform_operations"
             result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
-                authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute)
+                authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute,
+                _verification=verification)
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.
         if stage != "platform_operations":
@@ -59,6 +62,14 @@ def main(argv=None):
                      "next_action":"Inspect the submission journal and reconcile before retrying"}
             if args.output:
                 payload["journal"]=str(args.output / "submission_state.json")
+            if getattr(error,"release_recheck",None) is not None:
+                payload["release_recheck"]=error.release_recheck
+                payload["field"]="release.inputs"
+                payload["next_action"]="Inspect the failed release check; no automatic retry"
+            persistence_error=getattr(error,"journal_error",None)
+            if persistence_error is not None:
+                payload["journal_persistence_error"]={"error_type":type(persistence_error).__name__,
+                    "errno":persistence_error.errno,"winerror":getattr(persistence_error,"winerror",None)}
         print(canonical_json(payload))
         return 2
     from molgap.experiment_input import compact_operation_report

@@ -40,8 +40,9 @@ checks and the small common compatibility follow-up to the
 remains separate.
 
 
-Before fresh legacy multi-arm preparation, use `check-workflow` to aggregate
+For an unfinished legacy declaration, optional `check-workflow` aggregates
 recipe/profiler and prospective-policy gaps without staging or RML writes.
+Preparation already performs these checks; do not run both as a mandatory sequence.
 The [prepared Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md) then
 composes platform publication, byte verification, quota and receipt owners
 under the workload skill; neither this local workflow nor the CLI submits.

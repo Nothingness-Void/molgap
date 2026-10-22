@@ -649,7 +649,7 @@ def _freeze(value,spec,plan,paths,*,repo_root=None):
             "submitted":False,"scientific_acceptance":"NOT_EVALUATED"}
 
 
-def prepare_experiment_input(path, repo_root, *, _content_verification=None):
+def prepare_experiment_input(path, repo_root, *, _content_verification=None, _verification=None):
     """Recover regenerable pre-publication staging; never retry ambiguous effects."""
     from .experiment_package import verify_experiment_source_package
     from .experiment_workflow import prepare_workflow
@@ -677,7 +677,7 @@ def prepare_experiment_input(path, repo_root, *, _content_verification=None):
             if prepared.resolve().parent != run.resolve() or not retained.resolve().is_relative_to(run.resolve()):
                 raise ValueError("Local preparation retention escaped its bound run")
         else:
-            manifest=verify_experiment_source_package(prepared/"package")
+            manifest=verify_experiment_source_package(prepared/"package", _verification=_verification)
             if manifest["spec_identity"] != spec.identity or manifest["package_identity"] != report.get("package_identity"):
                 raise ValueError("Existing prepared package/input binding changed")
             binding=_read(run/"inputs/input_binding.json")
@@ -703,6 +703,8 @@ def prepare_experiment_input(path, repo_root, *, _content_verification=None):
             retained.parent.mkdir(parents=True,exist_ok=True)
             prepared.rename(retained)  # Preserve every byte; only regenerable staging is replaced.
         extra = {"_content_verification": _content_verification} if _content_verification is not None else {}
+        if _verification is not None:
+            extra["_verification"] = _verification
         result=prepare_workflow(spec,Path(repo_root).absolute(),plan,prepared,
                                 source_cache=paths.artifact_root/"source-packages/runtime-cache",
                                 **extra)
@@ -769,28 +771,44 @@ def local_preparation_error(error,stage):
     field,reason=known.get(str(error),("configuration","Local validation failed; check configuration fields and referenced files"))
     if isinstance(error,FileNotFoundError):
         field,reason="referenced_file","A required local file is missing"
-    return {"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,"field":field,"reason":reason,
+    elif isinstance(error,PermissionError):
+        field,reason="local_storage","Local file access was denied; inspect the failing operation before retrying"
+    result = {"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,"field":field,"reason":reason,
             "error_code":stage.upper() + "_" + type(error).__name__.upper(),
             "next_action":"Inspect the indicated field and retained report; do not resubmit unknown work"}
+    if isinstance(error, OSError):
+        result.update(errno=error.errno, winerror=getattr(error,"winerror",None))
+    report_error=getattr(error,"workflow_report_error",None)
+    if report_error is not None:
+        result["report_persistence_error"]={"error_type":type(report_error).__name__,
+            "errno":report_error.errno,"winerror":getattr(report_error,"winerror",None)}
+    return result
 
 
 def compact_operation_report(result, *, prepared=None, operations=None):
     """Human-facing summary; full library reports remain at their existing owners."""
-    keys = ("status", "stage", "field", "error_type", "error_code", "reason", "submitted",
+    keys = ("status", "stage", "field", "error_type", "error_code", "errno", "winerror", "reason", "submitted",
             "run_directory", "spec_identity", "package_identity", "source_commit",
             "kernel", "kernel_id", "version", "scheduler_status", "reused_preparation",
-            "prepared", "operations", "release_report", "local_call_seconds")
+            "prepared", "operations", "release_report", "release_recheck", "local_call_seconds")
     summary = {key: result[key] for key in keys if key in result}
+    if result.get("stage") == "workflow_readiness" and result.get("blockers"):
+        # Admission can fail before a report directory exists. Keep the actual
+        # local cause in stdout rather than requiring another preparation run.
+        summary["blockers"] = [{key: str(item[key])[:500]
+            for key in ("check", "error_type", "message") if key in item}
+            for item in result["blockers"][:8]]
     prepared = result.get("prepared", prepared)
     operations = result.get("operations", operations)
-    if prepared is not None:
+    if prepared is not None and result.get("stage") not in {"workflow_readiness", "acceptance_plan"}:
         summary["report"] = str(Path(prepared) / "workflow_report.json")
     if operations is not None:
         summary["journal"] = str(Path(operations) / "submission_state.json")
     status = result.get("status", "")
-    summary["next_action"] = result.get("next_action") or {
+    summary["next_action"] = result.get("next_action") or ("Resolve the listed admission blockers before preparing"
+        if summary.get("blockers") else {
         "PREPARED_FOR_PLATFORM": "Submit only under the existing explicit authority",
         "READY_FOR_PLATFORM_OPERATIONS": "Use --execute only under the existing explicit authority",
         "SUBMISSION_BOUND": "Reconcile this exact job; do not submit a duplicate",
-    }.get(status, "Inspect the retained report and resolve this stage before continuing")
+    }.get(status, "Inspect the retained report and resolve this stage before continuing"))
     return summary

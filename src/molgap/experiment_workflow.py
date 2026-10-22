@@ -374,11 +374,11 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None, _verification=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     from .experiment_package import _PackageVerification
 
-    verification = _PackageVerification()
+    verification = _verification if _verification is not None else _PackageVerification()
     started = perf_counter()
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
     _safe_local(output)
@@ -403,12 +403,12 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
               "prospective_published": False, "publication_intent": False,
               "timings": {"input_validation_seconds": perf_counter() - started}}
     phase_started = perf_counter()
+    failure = None
     def record(stage, result):
         nonlocal phase_started
         report["timings"][stage + "_seconds"] = perf_counter() - phase_started
         phase_started = perf_counter()
         report["stages"].append({"stage": stage, "result": result})
-        _atomic(output / "workflow_report.json", report)
     try:
         record("family_recipes", observations["family_recipes"])
         record("prospective_check", observations["prospective"])
@@ -466,12 +466,25 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
                                    "Remote all-arm runtime qualification is still mandatory."])
         return report
     except Exception as exc:
+        failure = exc
         status = "ERROR_BEFORE_PUBLICATION" if report["prospective_published"] is False else "ERROR_REQUIRES_RECONCILIATION"
         report.update(status=status, error=str(exc))
         raise
+    except BaseException as exc:
+        failure = exc
+        raise
     finally:
         report["timings"]["total_local_preparation_seconds"] = perf_counter() - started
-        _atomic(output / "workflow_report.json", report)
+        try:
+            # Only the pre-publication intent and terminal state are recovery
+            # boundaries. Intermediate stages stay in this one final report.
+            _atomic(output / "workflow_report.json", report)
+        except OSError as report_error:
+            if failure is None:
+                raise
+            # A secondary storage fault must not replace the causal failure.
+            # The last durable intent (or missing report) still blocks retry.
+            failure.workflow_report_error = report_error
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,

@@ -118,11 +118,16 @@ compact metadata, not weights or training data. Do not hand-edit them.
 ## Prepare through the owning platform
 
 Use the Kaggle workload skill for its platform operations. This existing adapter
-now accepts the editable input and prepares locally without an API call:
+accepts the editable input. With existing submission authority, one invocation
+prepares and advances the original journal:
 
 ```powershell
-& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/submit_workflow.py -- --experiment $experiment --repo-root .
+& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/submit_workflow.py -- --experiment $experiment --repo-root . --credentials $credentials --execute
 ```
+
+Omit `--execute` and `--credentials` for local preparation when a separate review
+is useful. A dry pass is optional; preparation already performs its admission
+checks. Do not chain every diagnostic command before the same submission.
 
 Run files live at `<artifact_root>/runs/<logical_run_id>/<attempt_id>/`; `inputs`,
 `prepared` and `operations` retain their distinct roles. `runtime-v1` packages
@@ -132,10 +137,10 @@ still has its own Spec, package identity, release and receipts. No data or weigh
 download is implied by preparing a source package.
 
 Both preparation entries resolve relative initialization paths against the selected
-`repo_root`, independent of the caller's working directory. Within one workflow
-preparation, identical package bytes reuse full validation; each stage still reads
-and hashes all six package files. Independent calls and transport boundaries retain
-their own checks. A byte-identical upload roundtrip may reuse expensive content
+`repo_root`, independent of the caller's working directory. Within one invocation
+from preparation through submission, identical package bytes reuse full validation;
+each boundary still reads and hashes all six package files. Independent calls
+start fresh. A byte-identical upload roundtrip may reuse expensive content
 checks inside that synchronous submission; remote identity, layout, entry and
 mount checks still run. No verification result is persisted between preparations.
 

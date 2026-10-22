@@ -7,12 +7,23 @@ Use it under the `kaggle-molgap-workloads` skill after an owning authorization.
 
 ## Local admission
 
-For a fresh declaration, run `check-workflow` before preparation. It checks
-family recipes, registered profiler support, acceptance inputs and prospective
-RML policy without writing staging or RML records. Independent recipe/profiler
-and policy failures are reported together. `prepare-workflow` repeats these
-cheap checks before creating its output directory; native accelerator
-qualification remains mandatory on the worker.
+For normal work, use the existing human input and one platform entry:
+
+```powershell
+.venv\Scripts\python.exe platforms/kaggle/submit_workflow.py --experiment $experiment --repo-root . --credentials $credentials --execute
+```
+
+Run this only under the existing explicit submission authority. Preparation
+checks family recipes, registered profiler support, acceptance inputs and
+prospective RML policy before staging. It reuses the frozen run and journal on
+re-entry. Omitting `--execute` prepares locally when a separate review is useful;
+it is not a mandatory extra pass. Native qualification stays on the worker.
+Within one invocation, preparation and submission share exact-content package
+and release checks; each boundary still reads its current binding bytes.
+
+`check-workflow` is an optional read-only diagnostic for an unfinished low-level
+declaration. It aggregates independent gaps without staging or RML writes;
+normal preparation already performs these checks.
 
 For shared K1/GPTrans sessions, supply workflow-plan `dataset_manifests` as
 `{arm_id: local_frozen_manifest_path}` for every shared arm. Paths may be
@@ -22,7 +33,6 @@ before prospective publication and retains the bindings through remote-byte
 revalidation. These are caller-supplied data identities, not launcher defaults.
 
 ```powershell
-.venv\Scripts\python.exe -m molgap.experiment_cli check-workflow --spec $spec --repo-root . --plan $plan
 .venv\Scripts\python.exe -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root . --plan $plan --output $prepared
 ```
 
@@ -50,7 +60,8 @@ authorization, append `--execute` to advance the same operation journal:
    absence of the target kernel/source dataset.
 2. Create the private source dataset once; require immutable ready version1.
 3. Download only the declared source/init/prospective files, verify every SHA,
-   and run the existing release gate against those remote bytes.
+   and verify transport bindings. Identical content reuses the release checks
+   already completed in this invocation.
 4. Recheck quota and target absence, then use the existing explicit T4 push
    adapter, including its immediate before-POST release check.
 5. Pull actual API source, verify kernel ID/version, private/T4/mounts/bytes,
@@ -64,6 +75,14 @@ Fresh scheduler observations remain a separate reconciliation action.
 An uncertain create/POST is recorded before any reconciliation. A matching
 first-version source can resolve a lost kernel response; an unobserved or
 conflicting outcome stays `RECONCILIATION_REQUIRED` and never triggers a retry.
+A release failure before POST is `BLOCKED`, with its failed check and available
+OS error codes. It retains source publication and the failed observation in the
+existing journal; it does not claim an uncertain kernel submission. Check
+execution failures and changed bindings are distinct diagnostics. A secondary
+report-write failure preserves the original error instead of replacing it.
+The dispatch intent is saved immediately before the HTTP call. Request text and
+metadata use the same byte snapshots bound by the release check, rather than
+rereading mutable files after verification.
 Do not remove the journal or change the slug to bypass uncertainty. A leftover
 `.submission.lock` requires confirming that its owning process is no longer
 active before cleanup; locks never expire into permission for another POST.

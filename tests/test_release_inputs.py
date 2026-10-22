@@ -164,7 +164,7 @@ def test_generic_inspector_pass_cannot_hide_broken_packaged_k1_loader(release):
     assert report["status"] == "RELEASE_INPUTS_FAILED"
     assert report["checks"]["initialization:" + arm_id]["state_sha256"] == digest
     assert report["errors"] == [{"check": "family_initialization", "item": arm_id,
-                                  "message": "packaged broken K1 loader"}]
+                                  "message": "packaged broken K1 loader", "error_type": "ValueError"}]
     assert "family_initialization:" + arm_id not in report["checks"]
     assert report["checks"]["clean_import:package"]["molgap.k1_screen_training"] == "src/molgap/k1_screen_training.py"
 
@@ -326,28 +326,149 @@ def test_missing_pickled_class_is_detected_without_unpickling(release, tmp_path)
                for e in report["errors"])
 
 
-def test_stale_release_report_blocks_push_before_network(release, tmp_path, monkeypatch):
+@pytest.mark.parametrize("failure", ["binding", "read_sharing"])
+def test_stale_release_report_blocks_push_before_network(release, tmp_path, monkeypatch, failure):
     import json
     from molgap import kaggle_accelerator_push
     spec, package, options = release
     kernel = tmp_path / "kernel"
     kernel.mkdir()
     script = kernel / "script.py"
-    script.write_bytes(b"print('fixture')\n")
+    original_script = b"print('fixture')\n"
+    script.write_bytes(original_script)
     (kernel / "kernel-metadata.json").write_text(json.dumps({"code_file": "script.py"}))
     report = check_release_inputs(spec, package, **options, entry_script=script)
     report_path = tmp_path / "release.json"
     report_path.write_text(json.dumps(report))
     assert kaggle_accelerator_push._verify_release_report(report_path, script)["spec_identity"] == spec.identity
-    script.write_bytes(b"print('changed after check')\n")
+    if failure == "read_sharing":
+        import sys
+        if sys.platform != "win32":
+            pytest.skip("Native Windows file-sharing failure")
+        import ctypes
+        from ctypes import wintypes
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.CreateFileW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, wintypes.DWORD,
+            wintypes.LPVOID, wintypes.DWORD, wintypes.DWORD, wintypes.HANDLE]
+        kernel32.CreateFileW.restype = wintypes.HANDLE
+        kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+        initial = Path(next(iter(options["initial_states"].values())))
+        initial_bytes = initial.read_bytes()
+        # A real external IO boundary: the frozen bytes remain unchanged, but
+        # this native handle refuses the release owner's next read.
+        handle = kernel32.CreateFileW(str(initial), 0x80000000, 0, None, 3, 0x80, None)
+        if handle == ctypes.c_void_p(-1).value:
+            raise ctypes.WinError(ctypes.get_last_error())
+    else:
+        script.write_bytes(b"print('changed after check')\n")
     from unittest.mock import Mock
     post = Mock()
     monkeypatch.setattr(kaggle_accelerator_push.requests, "post", post)
-    with pytest.raises(ValueError, match="changed after verification"):
-        kaggle_accelerator_push.push_kernel_with_accelerator(package_dir=kernel,
-            credential_path=tmp_path / "not-needed.json", accelerator="NvidiaTeslaT4",
-            release_report_path=report_path)
+    from molgap.experiment_preflight import _ReleaseContentVerification
+    try:
+        message = "checks failed during recheck" if failure == "read_sharing" else "changed after verification"
+        with pytest.raises(ValueError, match=message) as caught:
+            kaggle_accelerator_push.push_kernel_with_accelerator(package_dir=kernel,
+                credential_path=tmp_path / "not-needed.json", accelerator="NvidiaTeslaT4",
+                release_report_path=report_path,
+                _content_verification=_ReleaseContentVerification() if failure == "read_sharing" else None)
+    finally:
+        if failure == "read_sharing":
+            kernel32.CloseHandle(handle)
     post.assert_not_called()
+    error = caught.value
+    assert isinstance(error, kaggle_accelerator_push.ReleaseRecheckError)
+    assert error.expected_report == report
+    if failure == "read_sharing":
+        assert initial.read_bytes() == initial_bytes
+        assert error.recheck_kind == "check_failed"
+        assert error.observed_report is None
+        assert isinstance(error.__cause__, PermissionError)
+        assert error.release_recheck["failures"] == [{"check": "release_input_read",
+            "error_type": "PermissionError", "errno": 13}]
+        assert error.release_recheck["changed_checks"] == []
+        assert error.release_recheck["changed_fields"] == []
+    else:
+        assert error.recheck_kind == "binding_mismatch"
+        assert error.changed_checks == ["entry_script:kernel"]
+        assert error.observed_report["errors"] == []
+        assert error.release_recheck == {"category": "binding_mismatch",
+            "changed_checks": ["entry_script"], "changed_fields": [], "failures": []}
+
+        # Reuse this release fixture to check the bytes sent at the final edge:
+        # a write after a successful recheck must not replace its verified body.
+        metadata_path = kernel / "kernel-metadata.json"
+        metadata = {"id": "owner/kernel", "title": "Fixture Kernel", "code_file": "script.py",
+                    "language": "python", "kernel_type": "script", "is_private": True,
+                    "enable_gpu": True, "enable_tpu": False, "dataset_sources": ["owner/data"]}
+        metadata_bytes = json.dumps(metadata, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        metadata_path.write_bytes(metadata_bytes)
+        launch_path = tmp_path / "launch.json"
+        prospective_hashes = {}
+        for arm in spec.to_dict()["arms"]:
+            arm_id = arm["arm_id"]
+            trajectory = launch_path.parent / "prospective" / arm_id / "trajectory.json"
+            trajectory.parent.mkdir(parents=True, exist_ok=True)
+            trajectory.write_bytes(b"{}")
+            prospective_hashes[arm_id] = hashlib.sha256(b"{}").hexdigest()
+        launch = {"spec_identity": spec.identity, "run_reference": metadata["id"],
+                  "account": "owner", "dataset_sources": metadata["dataset_sources"],
+                  "accelerator": "NvidiaTeslaT4", "device_count": spec.to_dict()["platform"]["device_count"],
+                  "prospective_sha256": prospective_hashes}
+        launch_bytes = json.dumps(launch, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        launch_path.write_bytes(launch_bytes)
+        original_script = (f'EXPECTED_LAUNCH_SHA256 = "{hashlib.sha256(launch_bytes).hexdigest()}"\n'
+                           'print("fixture")\n').encode("utf-8")
+        script.write_bytes(original_script)
+        report = check_release_inputs(spec, package, **options, entry_script=script,
+            launch_config=launch_path, kernel_metadata=metadata_path)
+        assert report["status"] == "LOCAL_RELEASE_INPUTS_VERIFIED", report["errors"]
+        report_path.write_text(json.dumps(report), encoding="utf-8")
+        credentials = tmp_path / "credentials.json"
+        credentials.write_text(json.dumps({"username": "owner", "key": "fixture-key"}), encoding="utf-8")
+        response = Mock()
+        response.json.return_value = {"error": None, "ref": "owner/kernel", "versionNumber": 1}
+        post.reset_mock()
+        post.return_value = response
+        real_verify = kaggle_accelerator_push._verify_release_report
+
+        def verify_then_mutate(*args, **kwargs):
+            result = real_verify(*args, **kwargs)
+            script.write_bytes(b"changed after the successful recheck\n")
+            metadata_path.write_bytes(json.dumps({**metadata, "title": "Changed after recheck"}).encode("utf-8"))
+            return result
+
+        monkeypatch.setattr(kaggle_accelerator_push, "_verify_release_report", verify_then_mutate)
+        submitted = kaggle_accelerator_push.push_kernel_with_accelerator(
+            package_dir=kernel, credential_path=credentials, accelerator="NvidiaTeslaT4",
+            release_report_path=report_path)
+        assert submitted["status"] == "submitted"
+        request = post.call_args.kwargs["json"]
+        assert request["text"].encode("utf-8") == original_script
+        assert request["slug"] == metadata["id"] and request["newTitle"] == metadata["title"]
+        assert script.read_bytes() != original_script
+
+        # A captured metadata snapshot that disagrees with the report must be
+        # rejected even if the file is restored before the real verifier reads it.
+        script.write_bytes(original_script)
+        metadata_path.write_bytes(metadata_bytes)
+        captured_bad_metadata = json.dumps({**metadata, "title": "Unverified snapshot"},
+                                           sort_keys=True).encode("utf-8")
+        metadata_path.write_bytes(captured_bad_metadata)
+        post.reset_mock()
+
+        def restore_then_verify(*args, **kwargs):
+            metadata_path.write_bytes(metadata_bytes)
+            return real_verify(*args, **kwargs)
+
+        monkeypatch.setattr(kaggle_accelerator_push, "_verify_release_report", restore_then_verify)
+        with pytest.raises(kaggle_accelerator_push.ReleaseRecheckError) as captured_error:
+            kaggle_accelerator_push.push_kernel_with_accelerator(
+                package_dir=kernel, credential_path=credentials, accelerator="NvidiaTeslaT4",
+                release_report_path=report_path)
+        assert captured_error.value.release_recheck["category"] == "binding_mismatch"
+        assert "workflow" in captured_error.value.release_recheck["changed_checks"]
+        post.assert_not_called()
 
 
 def test_staged_source_payload_is_bound_to_the_verified_archive(release, tmp_path):

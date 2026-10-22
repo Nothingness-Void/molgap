@@ -131,6 +131,7 @@ def _under(root, name):
 
 def _atomic(path, value):
     temporary = None
+    failure = None
     try:
         with tempfile.NamedTemporaryFile(dir=path.parent, prefix=".preflight-", delete=False) as handle:
             temporary = Path(handle.name)
@@ -138,9 +139,19 @@ def _atomic(path, value):
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)
+    except BaseException as error:
+        failure = error
+        raise
     finally:
         if temporary is not None:
-            temporary.unlink(missing_ok=True)
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as cleanup:
+                if failure is None:
+                    raise
+                failure.cleanup_error = cleanup
+                if hasattr(failure, "add_note"):
+                    failure.add_note("Temporary preflight cleanup failed: " + type(cleanup).__name__)
 
 
 def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
@@ -710,6 +721,20 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
     return summary
 
 
+def _release_error(check, item, error):
+    record = {"check": check, "item": item, "message": str(error), "error_type": type(error).__name__}
+    for name in ("errno", "winerror"):
+        value = getattr(error, name, None)
+        if isinstance(value, int):
+            record[name] = value
+    cleanup = getattr(error, "cleanup_error", None)
+    if isinstance(cleanup, OSError):
+        record["cleanup_error"] = {"error_type": type(cleanup).__name__,
+            **{name: getattr(cleanup, name) for name in ("errno", "winerror")
+               if isinstance(getattr(cleanup, name, None), int)}}
+    return record
+
+
 def _release_imports(request):
     root = Path(request["source_root"])
     sys.path[:] = [str(root / "src"), *request["dependency_paths"], *sys.path]
@@ -719,14 +744,14 @@ def _release_imports(request):
         try:
             importlib.import_module(name)
         except Exception as exc:
-            errors.append({"check": "import", "item": name, "message": str(exc)})
+            errors.append(_release_error("import", name, exc))
     for module, symbol in request["pickle_globals"]:
         try:
             value = importlib.import_module(module)
             for part in symbol.split("."):
                 value = getattr(value, part)
         except Exception as exc:
-            errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
+            errors.append(_release_error("pickle_symbol", f"{module}.{symbol}", exc))
     dataset_checks = {}
     for item in request.get("dataset_manifests", []):
         try:
@@ -752,8 +777,7 @@ def _release_imports(request):
                 "declared_path": selection.manifest,
                 "layouts": list(layouts), "scope": "metadata_only_no_shard_decode"}
         except Exception as exc:
-            errors.append({"check": "dataset_mount_resolution", "item": item["arm_id"],
-                           "message": str(exc)})
+            errors.append(_release_error("dataset_mount_resolution", item["arm_id"], exc))
     initialization_checks, output_io_checks = {}, {}
     for item in request.get("initializations", []):
         try:
@@ -777,8 +801,7 @@ def _release_imports(request):
                 if item["family"] == ["neural_atom_k1", "2"] else
                 {"state_sha256": initialization["state_sha256"], "tensor_count": initialization["tensor_count"], "device": "cpu"})
         except Exception as exc:
-            errors.append({"check": "family_initialization", "item": item["arm_id"],
-                           "message": str(exc)})
+            errors.append(_release_error("family_initialization", item["arm_id"], exc))
             continue
         try:
             # Exercise the actual packaged trainer's writer, not the bootstrap's
@@ -797,8 +820,7 @@ def _release_imports(request):
             output_io_checks[item["arm_id"]] = {
                 "object_roundtrip": True, "timing_array_roundtrip": True, "device": "cpu"}
         except Exception as exc:
-            errors.append({"check": "family_output_io", "item": item["arm_id"],
-                           "message": str(exc)})
+            errors.append(_release_error("family_output_io", item["arm_id"], exc))
     return {"errors": errors, "import_origins": _origins(root), "dataset_checks": dataset_checks,
             "initialization_checks": initialization_checks, "output_io_checks": output_io_checks}
 
@@ -842,8 +864,7 @@ def _recheck_cached_dataset_mounts(package_bytes, recipe_files, dataset_manifest
                         "path": str(_regular(Path(dataset_manifests[arm_id]).absolute())),
                         "recipe_path": str(recipe_path)})
                 except Exception as exc:
-                    errors.append({"check": "dataset_mount_resolution", "item": arm_id,
-                                   "message": str(exc)})
+                    errors.append(_release_error("dataset_mount_resolution", arm_id, exc))
             checks = {}
             if bindings:
                 result = _run_release_import_worker(workspace, {
@@ -857,8 +878,7 @@ def _recheck_cached_dataset_mounts(package_bytes, recipe_files, dataset_manifest
                 errors.extend(result["errors"])
             return checks, errors
     except Exception as exc:
-        return {}, errors + [{"check": "dataset_mount_resolution", "item": arm_id,
-                              "message": str(exc)} for arm_id in arm_ids]
+        return {}, errors + [_release_error("dataset_mount_resolution", arm_id, exc) for arm_id in arm_ids]
 
 
 from contextlib import contextmanager
@@ -945,7 +965,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
         try:
             checked[f"{kind}:{item}"] = operation()
         except Exception as exc:
-            errors.append({"check": kind, "item": item, "message": str(exc)})
+            errors.append(_release_error(kind, item, exc))
 
     modules = set(required_modules)
     family_initializations = []

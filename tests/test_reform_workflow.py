@@ -42,6 +42,7 @@ def test_editable_platform_entry_uses_same_journal_without_duplicate_post(
         lambda *a,**kw:original(*a,**kw,api=release.api,http_session=release.http))
     if lost_response:
         def lost(**kwargs):
+            kwargs["_before_post"]()
             release.api.pushed+=1;release.accepted()
             return {"status":"submission_unknown","reconciliation_required":True}
         monkeypatch.setattr(owner,"push_kernel_with_accelerator",lost)

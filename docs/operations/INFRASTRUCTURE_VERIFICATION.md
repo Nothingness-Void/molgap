@@ -41,7 +41,7 @@ invariant; full-suite maintenance is an explicit separate operation.
 | `package` | Package binding plus isolated test distribution, node collection and registered family sandbox from extracted source |
 | `prepare` | K1/3 and GPTrans/2 scientific-input compilation, interrupted preparation and frozen-input reuse |
 | `train` | Real K1/GPTrans kernels, loaders, SessionOutputs, serialized continuation and scratch optimizer-state isolation on generated CPU graphs |
-| `submit` | Real local package/release/HTTP push/receipt owners, lost-response reconciliation and content tamper rejection; fake network and a synthetic trainer |
+| `submit` | K1/3 and GPTrans/2 scientific input through real preparation, initialization/release checks, HTTP push and receipt owners; pre-POST mutation, lost-response reconciliation and exact-content reuse with fake network |
 | `accept` | Existing finalizer with frozen generated metadata removed and external traces; submission cleanup, retrieval and resume preparation with fake network and synthetic outputs |
 | `resume` | The same real-model continuation journey plus concurrent accounting-sidecar snapshot during real bundle creation |
 

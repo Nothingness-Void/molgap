@@ -243,6 +243,15 @@ def test_new_platform_entry_has_no_post_without_execute(platform_entry,monkeypat
     assert platform_entry.main(["--experiment","experiment.json","--verbose"])==0
     assert json.loads(capsys.readouterr().out)==prep.return_value
     backend.assert_not_called();assert prep.call_count==2
+    blocker={"check":"family_recipes","error_type":"ValueError",
+             "message":"Family validator was imported from another checkout"}
+    prep.return_value={"status":"BLOCKED","stage":"workflow_readiness","blockers":[blocker],
+                       "prepared":"uncreated-preparation","submitted":False}
+    assert platform_entry.main(["--experiment","experiment.json"])==1
+    blocked=json.loads(capsys.readouterr().out)
+    assert blocked["blockers"]==[blocker]
+    assert "report" not in blocked
+    backend.assert_not_called()
 
 
 def test_execute_requires_credentials_before_any_preparation(platform_entry,monkeypatch):
@@ -253,11 +262,17 @@ def test_execute_requires_credentials_before_any_preparation(platform_entry,monk
 
 
 def test_execute_delegates_exact_frozen_bindings_to_original_journal(platform_entry,monkeypatch):
+    from molgap.experiment_package import _PackageVerification
+    verification = _PackageVerification()
+    monkeypatch.setattr("molgap.experiment_package._PackageVerification", lambda: verification)
     values={"status":"PREPARED_FOR_PLATFORM","prepared":"prepared","operations":"operations",
         "authority_ref":"authority.json","monitor_paths":["STATUS.md"]}
-    monkeypatch.setattr("molgap.experiment_input.prepare_experiment_input",Mock(return_value=values))
+    prepare=Mock(return_value=values)
+    monkeypatch.setattr("molgap.experiment_input.prepare_experiment_input",prepare)
     backend=Mock(return_value={"status":"SUBMISSION_BOUND"})
     monkeypatch.setattr(platform_entry,"submit_prepared_workflow",backend)
     assert platform_entry.main(["--experiment","experiment.json","--credentials","private.json","--execute"])==0
+    prepare.assert_called_once_with(Path("experiment.json"),Path.cwd(),_verification=verification)
     backend.assert_called_once_with(Path("prepared"),Path("private.json"),Path("operations"),
-        authority_ref="authority.json",monitor_paths=["STATUS.md"],execute=True)
+        authority_ref="authority.json",monitor_paths=["STATUS.md"],execute=True,
+        _verification=verification)

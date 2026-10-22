@@ -26,7 +26,8 @@ from .common.kaggle import (
     dataset_status as _dataset_status, dataset_details as _dataset_details,
     kernel_source as _kernel_source,
 )
-from .kaggle_accelerator_push import _verify_release_report, push_kernel_with_accelerator
+from .kaggle_accelerator_push import (ReleaseRecheckError, _verify_release_report,
+                                     push_kernel_with_accelerator)
 from .research_memory.trace import atomic_write
 from .training_reproducibility import atomic_json, sha256_file
 
@@ -260,7 +261,7 @@ def _startup(http, ref):
 
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              monitor_paths, execute=False, api=None, http_session=None,
-                             _content_verification=None):
+                             _content_verification=None, _verification=None):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
@@ -277,7 +278,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                  staged / "experiment_launch.json", prepared / "workflow_report.json"):
         _safe_local(path)
     from .experiment_package import _PackageVerification
-    verification = _PackageVerification()
+    verification = _verification if _verification is not None else _PackageVerification()
     manifest = verify_experiment_source_package(package, _verification=verification)
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
     if report.get("status") != "PREPARED_FOR_PLATFORM" or report.get("package_identity") != manifest["package_identity"]:
@@ -380,6 +381,13 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             phase_start = perf_counter()
             state.update(phase=phase, observed_at=datetime.now(timezone.utc).isoformat(), **fields)
             atomic_json(journal, state)
+        def retain_release_failure(error, phase):
+            try:
+                save(phase, release_recheck=error.release_recheck,
+                     release_observation=error.observed_report)
+            except OSError as persistence_error:
+                error.journal_error = persistence_error
+                raise error
         api = api or connect_kaggle(credentials)
         if api.get_config_value(api.CONFIG_NAME_USER) != account:
             raise ValueError("Authenticated SDK account differs from prepared owner")
@@ -399,8 +407,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
             save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
-            _verify_release_report(prepared / "release_report.json", kernel / "run.py",
-                                   _content_verification=content_verification, _verification=verification)
+            try:
+                _verify_release_report(prepared / "release_report.json", kernel / "run.py",
+                                       _content_verification=content_verification, _verification=verification)
+            except ReleaseRecheckError as error:
+                retain_release_failure(error, state["phase"])
+                raise
             atomic_json(output / "quota_before_publication.json", _quota(http_session, budget))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel already exists; reconcile its owning journal")
@@ -430,26 +442,54 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             from .experiment_preflight import check_release_inputs
             prior = _json(prepared / "release_report.json")
             remote_root = output / "source_roundtrip"
-            release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
-                recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
-                pickle_inputs=prior["inputs"].get("pickle_inputs", ()),
-                dataset_manifests=prior["inputs"].get("dataset_manifests"),
-                initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
-                input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
-                kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification,
-                _verification=verification)
+            try:
+                release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
+                    recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
+                    pickle_inputs=prior["inputs"].get("pickle_inputs", ()),
+                    dataset_manifests=prior["inputs"].get("dataset_manifests"),
+                    initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
+                    input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
+                    kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification,
+                    _verification=verification)
+            except OSError as cause:
+                error = ReleaseRecheckError.from_io(cause, expected_report=prior)
+                error.__cause__ = cause
+                retain_release_failure(error, state["phase"])
+                raise error from cause
             if release["errors"]:
-                raise ValueError("Remote source failed existing release checks")
+                error = ReleaseRecheckError.from_report(None, release)
+                retain_release_failure(error, state["phase"])
+                raise error
             atomic_json(output / "remote_release_report.json", release)
             atomic_json(output / "quota_before_submit.json", _quota(http_session, budget))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel appeared before POST; reconcile")
-            save("KERNEL_SUBMITTING")
+            dispatch_started = False
+            def before_post():
+                nonlocal dispatch_started
+                save("KERNEL_SUBMITTING")
+                dispatch_started = True
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
                     accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json",
-                    _content_verification=content_verification, _verification=verification)
+                    _content_verification=content_verification, _verification=verification,
+                    _before_post=before_post)
+            except ReleaseRecheckError as error:
+                # This typed failure originates before POST. Source publication
+                # is durable, but this invocation has not submitted a kernel.
+                retain_release_failure(error, "SOURCE_PUBLISHED")
+                return {"status": "BLOCKED", "stage": "release_recheck", "submitted": False,
+                        "release_recheck": error.release_recheck,
+                        "next_action": "Inspect the retained release observation before continuing"}
             except Exception as error:
+                if not dispatch_started:
+                    detail = {"error_type": type(error).__name__}
+                    if isinstance(error, OSError):
+                        detail.update(errno=error.errno, winerror=getattr(error, "winerror", None))
+                    save("SOURCE_PUBLISHED", **detail)
+                    return {"status": "BLOCKED", "stage": "kernel_preparation", "submitted": False,
+                            **detail,
+                            "next_action": "Resolve the local preparation error before continuing"}
                 save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
             atomic_json(output / "platform_response.json", response)

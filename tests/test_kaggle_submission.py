@@ -1,7 +1,10 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
+import importlib.util
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 from types import SimpleNamespace as NS
 
 import pytest
@@ -10,7 +13,7 @@ from molgap import kaggle_submission as owner
 from molgap.experiment_launch import canonical_json
 from molgap.experiment_spec import ExperimentSpec
 from molgap.training_reproducibility import atomic_json
-from test_experiment_workflow import workflow_case
+from test_scientific_input import scientific
 
 
 class Missing(Exception):
@@ -42,6 +45,13 @@ class Response:
         pass
 
 
+def _dispatch_before_post(kwargs):
+    callback = kwargs.get("_before_post")
+    if not callable(callback):
+        raise AssertionError("Fake transport must mark the durable POST boundary")
+    callback()
+
+
 @pytest.fixture
 def release(tmp_path, monkeypatch, staged_source=None):
     prepared, output = tmp_path / "prepared", tmp_path / "operations"
@@ -54,7 +64,13 @@ def release(tmp_path, monkeypatch, staged_source=None):
     (prepared / "package/experiment_spec.json").write_text(spec.to_json())
     manifest = {"package_identity": "a" * 64}
     atomic_json(prepared / "workflow_report.json", {"status": "PREPARED_FOR_PLATFORM", **manifest})
-    metadata = {"id": "owner/new-kernel", "is_private": True, "dataset_sources": ["owner/new-source", "owner/fixed-data"]}
+    if staged_source is None:
+        metadata = {"id": "owner/new-kernel", "is_private": True,
+                    "dataset_sources": ["owner/new-source", "owner/fixed-data"]}
+        dataset_ref = "owner/new-source"
+    else:
+        metadata = json.loads((Path(staged_source).parent / "kernel/kernel-metadata.json").read_bytes())
+        dataset_ref = json.loads((Path(staged_source) / "dataset-metadata.json").read_bytes())["id"]
     atomic_json(kernel / "kernel-metadata.json", metadata)
     (kernel / "run.py").write_bytes(b"print('synthetic')\n")
     if staged_source is not None:
@@ -103,7 +119,7 @@ def release(tmp_path, monkeypatch, staged_source=None):
         remote = None
 
         def get_config_value(self, _name):
-            return "owner"
+            return metadata["id"].split("/", 1)[0]
 
         def dataset_status(self, ref):
             if not self.dataset:
@@ -114,14 +130,14 @@ def release(tmp_path, monkeypatch, staged_source=None):
             assert kwargs == dict(public=False, quiet=True, convert_to_csv=False, dir_mode="zip")
             self.created += 1
             self.dataset = True
-            return NS(ref="/datasets/owner/new-source", error="")
+            return NS(ref="/datasets/" + dataset_ref, error="")
 
         def dataset_list_files(self, ref, page_size):
             return NS(files=[NS(name=p.relative_to(staged).as_posix(), total_bytes=p.stat().st_size)
                              for p in staged.rglob("*") if p.is_file() and p.name != "dataset-metadata.json"])
 
         def kernels_status(self, ref):
-            assert ref == "owner/new-kernel/1"
+            assert ref == metadata["id"] + "/1"
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
@@ -135,6 +151,7 @@ def release(tmp_path, monkeypatch, staged_source=None):
         return {"status": "submitted", "kernel": metadata["id"], "kernel_id": 77,
                 "version_number": 1, "reconciliation_required": False}
     def push(**kwargs):
+        _dispatch_before_post(kwargs)
         api.pushed += 1
         return accepted()
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", push)
@@ -153,7 +170,8 @@ def release(tmp_path, monkeypatch, staged_source=None):
                 return Response()
             from urllib.parse import unquote
             assert "datasetVersionNumber=1" in url
-            name = unquote(url.split("/new-source/", 1)[1].split("?", 1)[0])
+            dataset_path = "/datasets/download/" + dataset_ref + "/"
+            name = unquote(url.split(dataset_path, 1)[1].split("?", 1)[0])
             self.downloads.append(name)
             return Response(content=(staged / name).read_bytes())
     http = Http()
@@ -193,6 +211,7 @@ def test_source_processing_resumes_without_second_create(release):
 
 def test_lost_kernel_response_reconciles_matching_source_without_repost(release, monkeypatch):
     def lost(**kwargs):
+        _dispatch_before_post(kwargs)
         release.api.pushed += 1
         release.accepted()
         return {"status": "submission_unknown", "reconciliation_required": True}
@@ -203,13 +222,28 @@ def test_lost_kernel_response_reconciles_matching_source_without_repost(release,
 
 
 def test_unobserved_kernel_timeout_never_retries_post(release, monkeypatch):
+    def local_failure(**kwargs):
+        raise OSError("synthetic local failure before POST dispatch")
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", local_failure)
+    blocked = release.run()
+    assert blocked["status"] == "BLOCKED"
+    assert blocked["stage"] == "kernel_preparation" and blocked["submitted"] is False
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert state["phase"] == "SOURCE_PUBLISHED"
+    assert release.api.created == 1 and release.api.pushed == 0
+
     def lost(**kwargs):
+        _dispatch_before_post(kwargs)
         release.api.pushed += 1
         raise TimeoutError("secret-bearing transport error")
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", lost)
+    unknown = release.run()
+    assert unknown["status"] == "RECONCILIATION_REQUIRED"
+    assert unknown["submitted"] == "UNKNOWN"
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert state["phase"] == "SUBMIT_UNKNOWN"
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
-    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
-    assert release.api.pushed == 1
+    assert release.api.created == 1 and release.api.pushed == 1
 
 
 def test_unobserved_dataset_timeout_never_retries_create(release, monkeypatch):
@@ -465,8 +499,10 @@ def test_bound_cleanup_dry_check_validates_receipt_without_resubmitting(release,
 
 
 def test_uncertain_upload_or_kernel_keeps_all_recovery_copies(release, monkeypatch):
-    monkeypatch.setattr(owner, "push_kernel_with_accelerator", lambda **kw: {
-        "status": "submission_unknown", "reconciliation_required": True})
+    def unknown(**kwargs):
+        _dispatch_before_post(kwargs)
+        return {"status": "submission_unknown", "reconciliation_required": True}
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", unknown)
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
     assert (release.staged / "source_payload.bin").is_file()
     assert (release.output / "source_roundtrip/source_payload.bin").is_file()
@@ -492,112 +528,221 @@ def test_crash_during_bound_source_retirement_recovers_without_reposting(release
     assert release.api.created == release.api.pushed == 1
 
 
-@pytest.fixture
-def packaged_release(tmp_path, workflow_case, monkeypatch):
-    """Reuse the server's daily journey with real local owners and HTTP-only POST."""
-    from molgap import experiment_workflow as workflow
-    from molgap.experiment_package import verify_experiment_source_package
-    from test_experiment_lifecycle_integration import (
-        _install_synthetic_owner, _prepare_reference_inputs, _rewrite_case,
-    )
-    from test_experiment_workflow import _git
+def _packaged_release(case, tmp_path, monkeypatch):
+    """Run the compiled editable input through the platform entry with HTTP-only transport."""
+    import requests
+    from molgap.common.paths import MachinePaths
+
+    paths = MachinePaths.from_file(case.value["machine_profile"])
+    run = paths.run_directory(case.value["logical_run_id"], case.value["attempt_id"])
+    prepared, output = run / "prepared", run / "operations"
+    platform = json.loads((case.repo / case.value["platform_ref"]).read_bytes())
+    account = platform["kaggle"]["account"]
+    credentials = tmp_path / "outside-key.json"
+    atomic_json(credentials, {"username": account, "key": "fixture-key"})
+
+    entry_path = case.repo / "platforms/kaggle/submit_workflow.py"
+    entry_spec = importlib.util.spec_from_file_location("joined_kaggle_entry", entry_path)
+    entry = importlib.util.module_from_spec(entry_spec)
+    entry_spec.loader.exec_module(entry)
+    transport_root = tmp_path / "fake-platform"
+    transport_root.mkdir()
+    transport_state = {"transport": None, "tamper_before_push": True,
+                       "tampered_roundtrip": None, "lose_next_post": False}
+
+    def transport():
+        if transport_state["transport"] is None:
+            # Preparation has produced its genuine staged source before
+            # submit_prepared_workflow asks for the first platform client.
+            with monkeypatch.context() as stubs:
+                transport_state["transport"] = release.__wrapped__(
+                    transport_root, stubs, staged_source=prepared / "source_dataset")
+            shutil.copyfile(prepared / "kernel/run.py", transport_state["transport"].kernel / "run.py")
+        return transport_state["transport"]
 
     def offline(*args, **kwargs):
         raise AssertionError("This regression has no network authority")
-    monkeypatch.setattr("requests.sessions.Session.request", offline)
-    monkeypatch.setattr(owner, "connect_kaggle", offline)
-    repo = workflow_case["repo"]
-    _prepare_reference_inputs(repo)
-    module = _install_synthetic_owner(repo, monkeypatch)
-    atomic_json(repo / "authority.json", {"user_authorized": True,
-        "allocated_t4_hours_ceiling": 14, "arms": ["k1_candidate", "gptrans_candidate"],
-        "seeds": [42]})
-    _git(repo, "add", "--", "authority.json")
-    spec, plan, _, _ = _rewrite_case(workflow_case, repo, module)
-    plan["source_files"].append("authority.json")
-    plan["kaggle"].update(account="owner", kernel="owner/new-kernel", title="New Kernel",
-        source_dataset="owner/new-source", datasets=["owner/new-source", "owner/fixed-data"])
-    prepared = tmp_path / "real-prepared"
-    report = workflow.prepare_workflow(spec, repo, plan, prepared)
-    assert report["status"] == "PREPARED_FOR_PLATFORM", report
-    manifest = verify_experiment_source_package(prepared / "package")
 
-    # Reuse only the fake transport from the state-machine unit fixture. Its
-    # package/release/receipt stubs are restored before the actual journey.
-    transport_root = tmp_path / "fake-platform"
-    transport_root.mkdir()
-    with monkeypatch.context() as stubs:
-        transport = release.__wrapped__(transport_root, stubs, staged_source=prepared / "source_dataset")
-    shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")
-    monkeypatch.setattr(owner, "_kernel_source", lambda *_: transport.api.remote)
-    monkeypatch.setattr(owner, "_dataset_details", lambda *_: NS(current_version_number=1))
-    output = tmp_path / "real-operations"
+    monkeypatch.setattr("requests.sessions.Session.request", offline)
+    monkeypatch.setattr(owner, "connect_kaggle", lambda *_: transport().api)
+    monkeypatch.setattr(owner, "_kernel_source", lambda *_: transport().api.remote)
+    monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
+                        NS(ref=ref, is_private=True, current_version_number=1))
+    monkeypatch.setattr(requests, "Session", lambda: transport().http)
+
+    real_push = owner.push_kernel_with_accelerator
+
+    def mutate_roundtrip_before_recheck(**kwargs):
+        if transport_state["tamper_before_push"]:
+            path = output / "source_roundtrip/experiment_launch.json"
+            original = path.read_bytes()
+            value = json.loads(original)
+            value["run_reference"] = "changed/after-roundtrip"
+            path.write_bytes(canonical_json(value).encode())
+            transport_state["tampered_roundtrip"] = (path, original)
+            transport_state["tamper_before_push"] = False
+        return real_push(**kwargs)
+
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", mutate_roundtrip_before_recheck)
+
     def post(url, *, auth, json, timeout):
+        current = transport()
+        metadata = json_module.loads((prepared / "kernel/kernel-metadata.json").read_bytes())
         assert url == "https://www.kaggle.com/api/v1/kernels/push"
-        assert json["slug"] == "owner/new-kernel"
+        assert json["slug"] == metadata["id"]
         assert json["machineShape"] == "NvidiaTeslaT4"
         assert json["text"].encode() == (prepared / "kernel/run.py").read_bytes()
-        transport.api.pushed += 1
-        transport.accepted()
-        return Response({"ref": "owner/new-kernel", "kernelId": 77, "versionNumber": 1})
+        current.api.pushed += 1
+        current.accepted()
+        if transport_state["lose_next_post"]:
+            transport_state["lose_next_post"] = False
+            raise requests.Timeout("synthetic response loss after accepted POST")
+        return Response({"ref": metadata["id"], "kernelId": 77, "versionNumber": 1})
+
+    import json as json_module
     monkeypatch.setattr("requests.post", post)
-    def run(execute=True, operation_dir=output):
-        return owner.submit_prepared_workflow(prepared, transport.credentials, operation_dir,
-            authority_ref="authority.json", monitor_paths=["experiments/example/STATUS.md"],
-            execute=execute, api=transport.api, http_session=transport.http)
-    return NS(run=run, spec=spec, manifest=manifest, prepared=prepared, output=output,
-              transport=transport, post=post)
+
+    def run():
+        from contextlib import redirect_stdout
+        from io import StringIO
+        captured = StringIO()
+        with redirect_stdout(captured):
+            code = entry.main(["--experiment", str(case.path), "--repo-root", str(case.repo),
+                "--credentials", str(credentials), "--execute", "--verbose"])
+        return code, json.loads(captured.getvalue())
+
+    def restore_roundtrip():
+        path, original = transport_state["tampered_roundtrip"]
+        path.write_bytes(original)
+
+    def lose_next_post():
+        transport_state["lose_next_post"] = True
+
+    return NS(run=run, repo=case.repo, value=case.value, input_path=case.path, prepared=prepared,
+              output=output, credentials=credentials, transport=transport,
+              tampered_roundtrip=lambda: transport_state["tampered_roundtrip"],
+              restore_roundtrip=restore_roundtrip, lose_next_post=lose_next_post)
 
 
-@pytest.mark.parametrize("lost_response", [False, True], ids=["observed", "lost-response"])
-def test_real_package_release_post_receipt_reuses_only_exact_content(packaged_release, monkeypatch, lost_response):
+def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, monkeypatch):
     from molgap import experiment_package as package_owner
     from molgap.experiment_launch import read_launch_receipt
-    case = packaged_release
+    from molgap.experiment_spec import ExperimentSpec
     verifications = []
     verify = package_owner._verify_package_snapshot
     def counted(*args, **kwargs):
         verifications.append(True)
         return verify(*args, **kwargs)
     monkeypatch.setattr(package_owner, "_verify_package_snapshot", counted)
-    if lost_response:
-        import requests
-        def lost(*args, **kwargs):
-            case.post(*args, **kwargs)
-            raise requests.Timeout("synthetic response loss")
-        monkeypatch.setattr("requests.post", lost)
-        assert case.run()["status"] == "RECONCILIATION_REQUIRED"
-        assert not (case.output / "launch_receipt.json").exists()
-        assert len(verifications) == 1
-        verifications.clear()
-    result = case.run()
+    verification_counts = []
+    code, first = case.run()
+    assert code == 1
+    assert first["status"] == "BLOCKED", first
+    assert first["stage"] == "release_recheck", json.dumps(first, indent=2)
+    assert len(verifications) == 1
+    verification_counts.append(len(verifications))
+    assert first["submitted"] is False
+    assert first["release_recheck"]["category"] in {"binding_mismatch", "check_failed"}
+    assert "workflow" in first["release_recheck"]["changed_checks"]
+    state = json.loads((case.output / "submission_state.json").read_bytes())
+    assert state["phase"] == "SOURCE_PUBLISHED"
+    recheck = state["release_recheck"]
+    assert recheck == first["release_recheck"]
+    assert case.tampered_roundtrip() is not None
+    assert not (case.output / "launch_receipt.json").exists()
+    assert case.transport().api.created == 1 and case.transport().api.pushed == 0
+    verifications.clear()
+    case.restore_roundtrip()
+    case.lose_next_post()
+    code, lost = case.run()
+    assert code == 1
+    assert lost["status"] == "RECONCILIATION_REQUIRED", lost
+    assert lost["submitted"] == "UNKNOWN"
+    assert not (case.output / "launch_receipt.json").exists()
+    assert len(verifications) == 1
+    verification_counts.append(len(verifications))
+    assert case.transport().api.created == case.transport().api.pushed == 1
+    verifications.clear()
+    code, result = case.run()
+    assert code == 0
     assert result["status"] == "SUBMISSION_BOUND", result
     assert len(verifications) == 1
+    verification_counts.append(len(verifications))
+    assert case.transport().api.created == case.transport().api.pushed == 1
+    verifications.clear()
     receipt_path = case.output / "launch_receipt.json"
-    receipt = read_launch_receipt(receipt_path, case.spec, case.prepared / "package",
-        expected_package_identity=case.manifest["package_identity"])
+    manifest = json.loads((case.prepared / "package/package_manifest.json").read_bytes())
+    spec = ExperimentSpec.from_json((case.prepared / "package/experiment_spec.json").read_text())
+    receipt = read_launch_receipt(receipt_path, spec, case.prepared / "package",
+        expected_package_identity=manifest["package_identity"])
     assert receipt["submission_state"] == "ACCEPTED"
     assert receipt["physical_runs"]["value"][0]["run_identity"] == "kernel77/version1"
-    assert receipt["binding"]["source_archive_sha256"] == case.manifest["archive_sha256"]
-    assert result["native_qualification"] == "NOT_EVALUATED"
+    assert receipt["binding"]["source_archive_sha256"] == manifest["archive_sha256"]
+    assert manifest["configuration_source"]["path"] == case.input_path.relative_to(case.repo).as_posix()
+    assert (case.output / "submission_state.json").is_file()
     retained = receipt_path.read_bytes()
-    assert case.run(execute=False)["status"] == "SUBMISSION_BOUND"
+    verifications.clear()
+    code, repeated = case.run()
+    assert code == 0
+    assert repeated["status"] == "SUBMISSION_BOUND"
+    assert len(verifications) == 1
+    verification_counts.append(len(verifications))
+    verifications.clear()
     with monkeypatch.context() as settled:
         settled.setattr(owner, "_kernel_source", lambda *a, **k:
             pytest.fail("a bound submission must not query the latest remote version"))
-        assert case.run()["status"] == "SUBMISSION_BOUND"
+        code, settled_result = case.run()
+        assert code == 0
+        assert settled_result["status"] == "SUBMISSION_BOUND"
+        assert len(verifications) == 1
+        verification_counts.append(len(verifications))
     assert receipt_path.read_bytes() == retained
-    assert case.transport.api.created == case.transport.api.pushed == 1
+    assert case.transport().api.created == case.transport().api.pushed == 1
     # An independent call must fully validate again, even if only one sidecar
     # changed after this transaction's successful content checks.
     (case.prepared / "package/SOURCE_COMMIT.txt").write_text("0" * 40 + "\n")
     with pytest.raises(ValueError):
-        case.run(execute=False)
-    assert case.transport.api.created == case.transport.api.pushed == 1
+        owner.submit_prepared_workflow(case.prepared, case.credentials, case.output,
+            authority_ref=case.value["authority_ref"],
+            monitor_paths=case.value["monitor_paths"], execute=False)
+    assert case.transport().api.created == case.transport().api.pushed == 1
+    return {"status": result["status"], "family": case.value["arms"][0]["model"]["family"],
+            "verification_counts": verification_counts, "api_created": case.transport().api.created,
+            "api_pushed": case.transport().api.pushed}
+
+
+def test_real_package_release_post_receipt_reuses_only_exact_content(scientific, tmp_path):
+    case = scientific
+    child = r'''
+import json, pathlib, sys
+from types import SimpleNamespace as NS
+repo, experiment, temp, tests = map(pathlib.Path, sys.argv[1:])
+sys.path.insert(0, str(repo / "src"))
+sys.path.insert(1, str(tests))
+import pytest
+import test_kaggle_submission as journey
+case = NS(repo=repo, path=experiment, value=json.loads(experiment.read_bytes()), tmp=experiment.parents[3])
+patch = pytest.MonkeyPatch()
+try:
+    release = journey._packaged_release(case, temp, patch)
+    summary = journey._assert_real_package_release_post_receipt_reuses_only_exact_content(release, patch)
+finally:
+    patch.undo()
+print(json.dumps(summary))
+'''
+    completed = subprocess.run([sys.executable, "-I", "-c", child,
+        str(case.repo), str(case.path), str(tmp_path), str(Path(__file__).resolve().parent)],
+        cwd=case.repo, text=True, capture_output=True, timeout=180)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    observation = json.loads(completed.stdout.splitlines()[-1])
+    assert observation["status"] == "SUBMISSION_BOUND"
+    assert observation["verification_counts"] == [1, 1, 1, 1, 1]
+    assert observation["api_created"] == observation["api_pushed"] == 1
 
 
 def test_same_prepared_release_cannot_switch_journals_after_unknown(release, monkeypatch, tmp_path):
     def lost(**kwargs):
+        _dispatch_before_post(kwargs)
         release.api.pushed += 1
         raise TimeoutError()
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", lost)
