@@ -1,0 +1,120 @@
+{
+  "observed_at": "2026-10-22T05:39:00.107016+00:00",
+  "question": "pcqm_k1_norm_mechanisms_100k",
+  "original_version": 1,
+  "continuation": {
+    "status": "submitted",
+    "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+    "kernel_id": 140063114,
+    "version_number": 2,
+    "reconciliation_required": false
+  },
+  "scheduler": {
+    "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+    "version": 2,
+    "status": "KernelWorkerStatus.RUNNING",
+    "failure_message": "",
+    "observed_at": "2026-10-22T05:38:27.072960+00:00"
+  },
+  "source_verification": {
+    "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+    "kernel_id": 140063114,
+    "version": 2,
+    "entry_sha256": "1310a9de1a1ba80baadcbbd12480e0cf932b31d87df816e75f62deb623aeeb0a",
+    "entry_bytes_equal": true,
+    "private": true,
+    "machine_shape": "NvidiaTeslaT4",
+    "dataset_sources": [
+      "nothingnessvoid/k1-rms-scope-gain-src-20261022",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "observed_at": "2026-10-22T05:37:18.467447+00:00"
+  },
+  "repair": {
+    "archive_sha256": "93e3555c7c19a9750bf2baba0caff83979a051c7f11fd6b4a29f095328739821",
+    "commit": "9bda07165cffc4687965ed815837d8bf5b3a0829",
+    "files": {
+      "src/molgap/common/io.py": {
+        "original_sha256": "de57eedc5f8c6947f3a8f2c922791395dd2f7b4fc951088a098ecaa044b6fe84",
+        "repaired_sha256": "cf838cc8e338b22d76eba5ba4813b260174f03f3b35f6e71092832cd86bd5cbb"
+      },
+      "src/molgap/experiment_resume.py": {
+        "original_sha256": "b4b85fc747a76122265eb8ea171e6b82a5a6bd641028a0805cff9e64f7382f9e",
+        "repaired_sha256": "cd6892d786867608002713e3db839ca535fd381dde6b773bd64faf7e7ded8fc7"
+      },
+      "src/molgap/family_training_runner.py": {
+        "original_sha256": "3880e6ea01ccc4d0fd1ff791c26df42c17bfad6662bf33f5c0ed117d87206aab",
+        "repaired_sha256": "eecc4f9880c7b21ca081e98166d4fb1984904d3c4eda1c2f5b3c4d6c55e1314f"
+      }
+    },
+    "format": "molgap-recovery-repair-v1",
+    "manifest_sha256": "7befb5132bf7cb7204eedb3aef9261897c4a747a36d2c78a6514d6b3a2f3ab0e",
+    "package_identity": "881a59b417c0c45693adb4f480829375ca879995824334dac2b69c2992f7f92a",
+    "spec_identity": "6bf67d644ec94a2b393dd0e3accd211989071a13fe8d14d38449c3d279f31379"
+  },
+  "tests": {
+    "passed": 124,
+    "failed": 0,
+    "elapsed_seconds": 303.18,
+    "batches": 1,
+    "log": {
+      "path": "D:\\molgap-scratch\\resume-snapshot-final-6cd7da438153465688c4a127af6f6794\\pytest-output.txt",
+      "sha256": "fe7aaf9a2c0b960c15c0ca36f4c6de641a97472774466f7044e2ecc34933a36f"
+    }
+  },
+  "resume": {
+    "post_graph_rms": {
+      "checkpoint_sha256": "246aecf3fc5c01f701ac344cedf55df565f8e47cdac97129704c5a2d80ad7704",
+      "pass_index": 30,
+      "optimizer_steps": 23430,
+      "sample_presentations": 2999040,
+      "bundle_sha256": "5c4d07b5f06c562db41eda55843bc1b4f909e2cefde20b283ea8875d5bae9ec2",
+      "status": "RESUME_VERIFIED"
+    },
+    "post_node_ada": {
+      "checkpoint_sha256": "41122cf57047890a9756e6cc9ee0d3690ed07a35d7b7c81f1e92a3ecb28a0886",
+      "pass_index": 20,
+      "optimizer_steps": 15620,
+      "sample_presentations": 1999360,
+      "bundle_sha256": "337665e6c1168b473edfcaf4b90adaa9a91e68c9924c43fbee055a012b1b28cf",
+      "status": "RESUME_VERIFIED"
+    }
+  },
+  "evidence": [
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\resume_plan.json",
+      "sha256": "47f081c812266bd6f59d419c31361a79840734f0bd2f727b2eead8446f581a93"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\recovery_validation.json",
+      "sha256": "b5924504908eb3d7c91ac89874a7974bd1757a62f9ac94f71b5177b69034e0c8"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\operations\\source_upload_verification.json",
+      "sha256": "68c6f90bf876101abdfec40c6faa6c50ca227902af6a818618ae4347df19a78b"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\operations\\launch_receipt.json",
+      "sha256": "95a954f242c2c00ebe190d430336e1a026e7bf74a8b364c20f301c239b44b970"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\operations\\platform_response.json",
+      "sha256": "30ca33b5f3ad8d87b6edaeb98bc1b15ab140c9ff9b5427c5cb3a7b186358971a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\operations\\startup_observation_latest.json",
+      "sha256": "267ece09d1a3ffd606d708bd247b596e51523c169eaa025c72718bf9ad425359"
+    }
+  ],
+  "allocation": {
+    "entry_wall_limit_seconds": 23500,
+    "cleanup_reserve_seconds": 180,
+    "device_count": 2,
+    "prior_measured_T4_device_seconds": 10435.946233888,
+    "cumulative_max_T4_hours": 15.954429509413332
+  },
+  "training_started_log_observed": false,
+  "native_qualification": "not_yet_observed",
+  "terminal_acceptance": "pending",
+  "replay_ready": false
+}

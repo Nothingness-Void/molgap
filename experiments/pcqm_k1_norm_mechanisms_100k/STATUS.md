@@ -1,5 +1,25 @@
 # Status
 
+Kaggle1 scope/gain continuation **140063114/version2** is submitted, bound and
+observed RUNNING on2026-10-22. [Recovery record](recovery_20261022.json) owns
+the actual receipt, exact source verification, repair pins and checkpoint
+qualification. [Continuation authority](recovery_authority_20261022.md) bounds
+this attempt. Original model/recipe/data identity and160-pass target remain.
+
+Graph-RMS resumes from30 completed passes/23430 updates; AdaRMS resumes from20
+completed passes/15620 updates. Immutable sidecar snapshotting repairs the
+resume-publication race. The one focused regression batch passed124 tests.
+The original scientific package is preserved; three committed infrastructure
+repair files are separately pinned and verified by the bootstrap/workers.
+
+Startup logs show dependency setup. Formal resumed training and native
+qualification are not yet observed; scheduler RUNNING is not that evidence.
+Terminal acceptance and per-arm RML/replay readiness remain pending. Position
+version1 remains complete and was not resubmitted. No monitor/server handoff
+or additional retry was released.
+
+## Version1 reconciliation (historical, before repair)
+
 Reconciled exact Kaggle1 version1 jobs on2026-10-22JST: position COMPLETE,
 scope/gain ERROR. Both stopped. The
 [check report](reconciliation_20261022.json) retains observations and hashes;
