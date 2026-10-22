@@ -1,0 +1,146 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_structure_100k",
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_structure_100k/kaggle2/authority.json",
+  "monitor_paths": [
+    "experiments/modern2d_structure_100k/STATUS.md"
+  ],
+  "timestamp": "2026-10-22T16:42:45Z",
+  "platform_ref": "experiments/modern2d_structure_100k/kaggle2/platform.json",
+  "role_ref": "experiments/modern2d_configured_100k/research_arms/roles.json",
+  "decision_ref": "experiments/modern2d_structure_100k/kaggle2/release.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "modern2d-structure-k2-100k",
+    "action": "RUN_STRUCTURE20",
+    "question": "Do content-conditioned structural pairs in PPGT and count-conditioned invariant readout in ESA improve their frozen 20-pass Common-Dev endpoints?",
+    "deficiency": "The retained complete screens show weak development performance; PPGT uses shared static positional pairs, while ESA normalized attention/pooling cannot count identical repeated tokens. The latter is a code-derived limitation, not an established molecule-level attribution.",
+    "changed_mechanism": "PPGT: one shared rank16 bounded zero-start conditioner on structural pairs; ESA: one zero-start log-atom-count FiLM at readout. Separate within-family hypotheses; no causal cross-family rank.",
+    "supporting_evidence": [
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-execution-repair-s42-v2-esa-accepted"
+    ],
+    "alternatives": [
+      "A new cohort or optimization recipe, rather than either mechanism, may explain weak absolute MAE.",
+      "The new branches may improve fitting but worsen generalization.",
+      "PPGT two-step execution tolerance does not establish identical long-run trajectories."
+    ],
+    "closed_families": [
+      "esa-identity-residual-four-arm-no-consistent-gain",
+      "ppgt-sum-readout-partial-inferior"
+    ],
+    "positive_decision": "Inspect saved aligned predictions, complete curves, subgroup behavior, native proofs and full allocation cost; retain only a useful within-family lead, with no automatic seed or scale release.",
+    "negative_decision": "Close the tested mechanism, preserve full evidence and diagnose fit versus generalization; no automatic successor.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "C",
+    "platform": "kaggle",
+    "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "One fresh seed42 candidate per family; reuse the frozen accepted20-pass endpoints as contextual references rather than retraining controls.",
+    "estimated_device_hours": 14,
+    "estimated_wall_hours": 7
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt_content",
+      "model": {
+        "family": "ppgt_small",
+        "version": "3",
+        "addons": [
+          {
+            "name": "ppgt_research_mean_readout",
+            "version": "1",
+            "config": {
+              "variant": "mean_readout"
+            }
+          },
+          {
+            "name": "ppgt_content_pair",
+            "version": "1",
+            "config": {
+              "variant": "content_pair"
+            }
+          }
+        ]
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/experiment_spec.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.001,
+        "weight_decay": 0.00001,
+        "execution_mode": "prepared-v2",
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": true
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/acceptance_plan.json",
+        "arm_id": "ppgt_author_v2"
+      },
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "esa_count",
+      "model": {
+        "family": "esa_small",
+        "version": "4",
+        "addons": [
+          {
+            "name": "esa_count_readout",
+            "version": "1",
+            "config": {
+              "variant": "count_readout"
+            }
+          }
+        ]
+      },
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/contract.json",
+      "data_ref": {
+        "spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/experiment_spec.json",
+        "arm_id": "esa_native_v3"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 20,
+        "learning_rate": 0.0003,
+        "weight_decay": 0.00001,
+        "execution_mode": "prepared-v2",
+        "profiling": {
+          "warmup_steps": 8,
+          "active_steps": 4,
+          "record_shapes": false,
+          "profile_memory": false,
+          "with_stack": false,
+          "row_limit": 50,
+          "module_paths": [],
+          "ppgt_phases": false
+        }
+      },
+      "reference_ref": {
+        "plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/acceptance_plan.json",
+        "arm_id": "esa_native_v3"
+      },
+      "purpose": "context_only"
+    }
+  ]
+}

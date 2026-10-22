@@ -9,8 +9,9 @@
 The human authorized new PPGT/ESA research. One bounded
 [structural-falsifier screen](experiments/modern2d_structure_100k/STATUS.md)
 is in local preparation: content-conditioned PPGT pairs and count-conditioned
-ESA readout,20-pass100K, one Kaggle3 T4x2 notebook within7h. No submission or
-Replay claim yet; the owning protocol preserves context-only reference limits.
+ESA readout,20-pass100K, one T4x2 notebook within7h. Kaggle3 quota refused
+publication before compute; the unchanged science is being released on Kaggle2.
+No submission or Replay claim yet; the owning protocol preserves context limits.
 
 The [prepared PPGT/ESA100K pair](experiments/modern2d_configured_100k/prepared_pair/results/decision.md)
 completed20 passes per arm; independent output/native/retention checks passed

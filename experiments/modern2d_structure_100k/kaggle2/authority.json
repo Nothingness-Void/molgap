@@ -1,0 +1,63 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "source_reissue_authorized": true,
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1",
+  "arms": [
+    "ppgt_content",
+    "esa_count"
+  ],
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 14,
+  "kaggle_quota_hours_ceiling": 7,
+  "recipes": {
+    "ppgt_content": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    },
+    "esa_count": {
+      "horizon_passes": 20,
+      "horizon_steps": 15620
+    }
+  },
+  "run_reference": "kaseichou/molgap-modern2d-structure-100k-v1",
+  "gpu": {
+    "owner": "kaseichou",
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "wall_ceiling_seconds": 25200,
+    "allocated_t4_hours_ceiling": 14
+  },
+  "execution_mode": "prepared-v2",
+  "fresh_native_execution_gate": true,
+  "authorization_basis": "Human2026-10-23 JST: conduct research on both models and freely submit attempts. Coordinator bounds this release to one two-candidate20-pass100K notebook within7 session-quota hours, no automatic successor. Account3 was blocked by quota before any remote POST; this separately frozen account2 release preserves the exact scientific recipe and7h ceiling.",
+  "research_design": {
+    "campaign_ref": "experiments/modern2d_structure_100k/kaggle2/release.md",
+    "reference_status": "Frozen mechanically accepted endpoints; contextual reference, not a fabricated strict reference bundle or Replay admission."
+  }
+}
