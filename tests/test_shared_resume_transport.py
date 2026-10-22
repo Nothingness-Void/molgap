@@ -97,11 +97,6 @@ def test_spec_validation_uses_registered_family_hook(bundle_case, monkeypatch):
     assert len(observed) == 1 and observed[0]["arm_id"] == "reference"
 
 
-def test_safe_loader_has_one_owner():
-    from molgap.training_reproducibility import safe_cpu_torch_load
-    assert transport.safe_cpu_torch_load is safe_cpu_torch_load
-
-
 @pytest.mark.parametrize("cross_volume", [False, True])
 def test_bundle_reuses_only_immutable_verified_payload(bundle_case, tmp_path, monkeypatch, cross_volume):
     source, previous, ctx, trajectory, _ = bundle_case

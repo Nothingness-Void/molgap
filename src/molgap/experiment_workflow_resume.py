@@ -21,6 +21,25 @@ from .experiment_workflow import _platform_adapter, _path
 RESUME_PLAN_FORMAT = "molgap-workflow-resume-v1"
 
 
+def _runner_repair_ast(raw, *, original=False):
+    """Allow the verifier and one exact scratch-probe isolation repair only."""
+    tree = ast.parse(raw)
+    owners = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+    if "_loaded_source" not in owners or "run_screen_resume_preflight" not in owners:
+        raise ValueError("Expected frozen verifier and resume-preflight owners")
+    owners["_loaded_source"].body = [ast.Pass()]
+    if original:
+        probe = owners["run_screen_resume_preflight"]
+        probe.body.insert(1, ast.Import(names=[ast.alias(name="copy")]))
+        calls = [node for node in ast.walk(probe) if isinstance(node, ast.Call)
+            and ast.dump(node, include_attributes=False) == ast.dump(ast.parse(
+                "session.load_state_dict(retained)", mode="eval").body, include_attributes=False)]
+        if len(calls) != 1:
+            raise ValueError("Expected exactly one retained-state scratch-probe restore")
+        calls[0].args = [ast.parse("copy.deepcopy(retained)", mode="eval").body]
+    return ast.dump(tree, include_attributes=False)
+
+
 def _repair_payloads(spec, root, package, manifest, declaration):
     if declaration is None:
         return None, {}
@@ -42,15 +61,9 @@ def _repair_payloads(spec, root, package, manifest, declaration):
             raise ValueError("Local recovery validator differs from the committed repair")
         compile(payload, name, "exec")
         if name.endswith("family_training_runner.py"):
-            def without_verifier(raw):
-                tree = ast.parse(raw)
-                nodes = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "_loaded_source"]
-                if len(nodes) != 1:
-                    raise ValueError("Expected exactly one frozen source verifier")
-                nodes[0].body = [ast.Pass()]
-                return ast.dump(tree, include_attributes=False)
-            if without_verifier(original) != without_verifier(payload):
-                raise ValueError("Runner repair may change only _loaded_source")
+            if (_runner_repair_ast(original) != _runner_repair_ast(payload)
+                    and _runner_repair_ast(original, original=True) != _runner_repair_ast(payload)):
+                raise ValueError("Runner repair permits only the verifier and exact resume-probe deepcopy")
         payloads[name] = payload
     return {"format": "molgap-recovery-repair-v1", "spec_identity": spec.identity,
             "package_identity": manifest["package_identity"], "archive_sha256": manifest["archive_sha256"],

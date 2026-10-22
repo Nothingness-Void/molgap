@@ -473,6 +473,7 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
 
 def run_screen_resume_preflight(*, resume_output, **options):
     """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
+    import copy
     import torch
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
@@ -501,7 +502,8 @@ def run_screen_resume_preflight(*, resume_output, **options):
         session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
             checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
             selected=lambda *args: None, pass_finished=lambda *args: None)
-        session.load_state_dict(retained)
+        # AdamW may retain CPU step tensors by reference during restore.
+        session.load_state_dict(copy.deepcopy(retained))
         endpoint = session.run(should_pause=lambda: True)
         observed = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         if endpoint.optimizer_step != progress.optimizer_step + 1:

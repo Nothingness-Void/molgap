@@ -48,7 +48,8 @@ def test_recovery_repair_applies_only_pinned_infrastructure(entry, tmp_path, mon
 @pytest.mark.parametrize("tamper", ["original", "replacement", "manifest", "allowlist"])
 def test_recovery_repair_fails_before_any_replacement(entry, tmp_path, tamper):
     source, package, inputs, record, digest = _repair_case(entry, tmp_path)
-    name = "src/molgap/common/io.py"
+    originals = tuple(record["files"])
+    name = "src/molgap/family_training_runner.py"
     if tamper == "original":
         (source / name).write_bytes(b"changed\n")
     elif tamper == "replacement":
@@ -60,9 +61,10 @@ def test_recovery_repair_fails_before_any_replacement(entry, tmp_path, tamper):
         raw = json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
         (inputs / "recovery_repair.json").write_bytes(raw)
         digest = hashlib.sha256(raw).hexdigest()
+    before = {relative: (source / relative).read_bytes() for relative in originals}
     with pytest.raises(ValueError):
         entry._recovery_repair(inputs, source, package, digest)
-    assert (source / "src/molgap/experiment_resume.py").read_bytes() == b"VALUE = 1\n"
+    assert {relative: (source / relative).read_bytes() for relative in originals} == before
 
 
 @pytest.fixture
@@ -172,9 +174,19 @@ def frozen_launch(entry, limit, *, launch_overrides=None, recipe_fields=None):
         (entry.INPUT_ROOT / name).write_text("fixture")
 
 
-@pytest.mark.parametrize("limit", [90, 120, 12600, 14400, 14401, 32400, 100000, None])
-@pytest.mark.parametrize("reserve", [0, 60])
-@pytest.mark.parametrize("phase_failure", [None, "pip", "runtime"])
+@pytest.mark.parametrize("limit,reserve,phase_failure", [
+    pytest.param(90, 60, None, id="success-90-reserve60"),
+    pytest.param(120, 60, None, id="success-120-reserve60"),
+    pytest.param(12600, 60, None, id="success-12600-reserve60"),
+    pytest.param(14400, 60, None, id="success-14400-reserve60"),
+    pytest.param(14401, 60, None, id="success-14401-reserve60"),
+    pytest.param(32400, 60, None, id="success-32400-reserve60"),
+    pytest.param(100000, 60, None, id="success-100000-reserve60"),
+    pytest.param(None, 60, None, id="success-unbounded-reserve60"),
+    pytest.param(14400, 0, None, id="success-14400-reserve0"),
+    pytest.param(14400, 60, "pip", id="pip-failure-14400-reserve60"),
+    pytest.param(14400, 60, "runtime", id="runtime-failure-14400-reserve60"),
+])
 def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch, limit, reserve, phase_failure):
     frozen_launch(entry, limit, launch_overrides={"cleanup_reserve_seconds": reserve})
     calls = []

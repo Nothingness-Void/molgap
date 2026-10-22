@@ -50,7 +50,10 @@ Registered all-arm recovery may supply `recovery_repair` in its resume plan:
 The exact three paths are `src/molgap/experiment_resume.py`,
 `src/molgap/common/io.py`, and `src/molgap/family_training_runner.py`.
 Preparation checks original archive bytes and committed replacement bytes;
-the runner may change only `_loaded_source`. Its original model/training logic,
+the runner may change `_loaded_source` plus the exact resume-preflight repair
+that deep-copies retained state before each scratch probe. AdamW restores may
+alias CPU step tensors; isolating the two probes preserves acknowledged work.
+The AST gate rejects other probe/training changes. Its original model/training logic,
 recipes, package, checkpoints and producer contexts remain frozen.
 `build_workflow_resume(..., recovery_repair=...)` accepts the same declaration
 when the local source verifier is repaired. This advanced option currently uses
