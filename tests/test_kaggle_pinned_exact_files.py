@@ -40,23 +40,27 @@ def context(version=3):
     return SimpleNamespace(account="owner",run_reference="owner/kernel",platform_version=version)
 
 
-def test_exact_binary_version_hash_and_idempotency(tmp_path):
+@pytest.mark.parametrize(("version", "expected_version"), [(3, 3), ("1", 1)])
+def test_exact_binary_version_hash_and_idempotency(tmp_path, version, expected_version):
     api = Api()
     pin = hashlib.sha256(b"retained prediction bytes").hexdigest()
     files = {"run/predictions.pt": ("run/predictions.pt",pin)}
-    args = dict(context=context(),remote_manifest_path="run/manifest.json",files=files,
+    args = dict(context=context(version),remote_manifest_path="run/manifest.json",files=files,
                 destination=tmp_path,http_session=Http())
     result = retrieve_pinned_exact_files(api,**args)
-    assert api.request.version_number == 3
+    assert api.request.version_number == expected_version
     assert api.request.file_path == "run/predictions.pt"
     assert result["files"][0]["sha256"] == pin
+    assert result["receipt_version"] == expected_version
     assert result["platform_version_verified_by_output_api"] is True
     assert "secret" not in str(result)
     api.download_kernel_output = lambda _: pytest.fail("Retained file must not be requested again")
     assert retrieve_pinned_exact_files(api,**args)["files"][0]["state"] == "ALREADY_RETAINED"
 
 
-@pytest.mark.parametrize("version",[0,"3",True])
+@pytest.mark.parametrize("version", [
+    0, True, "0", "01", "001", "+1", " 1", "1 ", "1.0", "１", "١",
+])
 def test_physical_version_required(tmp_path,version):
     with pytest.raises(ValueError,match="physical version"):
         retrieve_pinned_exact_files(Api(),context=context(version),remote_manifest_path="manifest.json",

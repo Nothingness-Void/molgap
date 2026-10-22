@@ -183,6 +183,10 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
     _path(remote_manifest_path)
     owner, slug, _ = _kernel_reference(api, context)
     version = context.platform_version
+    # Launch receipts canonically retain versions as text; the SDK download
+    # request requires an integer. Reject aliases rather than guessing a label.
+    if type(version) is str and version.isascii() and version.isdecimal() and not version.startswith("0"):
+        version = int(version)
     if type(version) is not int or version < 1:
         raise ValueError("Exact artifact retrieval requires a physical version number")
     required = _selected_files(files)
