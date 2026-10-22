@@ -41,3 +41,16 @@ archive5b41b2095f5ad6e94c31f5e89f8a8877326fe01f646fa9aaefc8813c7789a919.
 This establishes local admission, not native parity, complete training, model
 quality or Replay-Ready. The remote all-arm native gate remains mandatory.
 Operation receipts live outside Git; only compact observations are integrated.
+
+## Source transport compatibility
+
+Legacy REST quota and dataset-file endpoints returned404. The owning host
+adapter was repaired to use the SDK for quota and version1 raw-file resolution;
+signed storage downloads use a separate anonymous HTTP session, never account
+Basic auth. One additional bounded Luna worker strengthened the existing
+submission fixture:21 passed in2.82s (`--noconftest`, `C:/t/m2source`), including
+exact raw/version/name requests, response closure, anonymous transport and
+SHA-mismatch rejection before POST. The worker was closed. These were mocked
+network checks, separate from the live11-file SHA-verified remote roundtrip.
+The same original source dataset/version and operation journal were retained;
+no replacement dataset or duplicate kernel was created by this repair.

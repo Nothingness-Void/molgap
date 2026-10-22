@@ -132,6 +132,39 @@ def release(tmp_path, monkeypatch):
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
+    sdk = NS(requests=[], responses=[], client_exits=[])
+    signed_payloads = {}
+
+    class SDKResponse:
+        status_code = 200
+
+        def __init__(self, url):
+            self.url = url
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    class DatasetAPI:
+        def download_dataset(self, request):
+            from urllib.parse import quote
+            sdk.requests.append(request)
+            url = "https://storage.example/" + quote(request.file_name, safe="")
+            signed_payloads[url] = (staged / request.file_name).read_bytes()
+            response = SDKResponse(url)
+            sdk.responses.append(response)
+            return response
+
+    class SDKClient:
+        datasets = NS(dataset_api_client=DatasetAPI())
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            sdk.client_exits.append(True)
+
+    api.build_kaggle_client = lambda: SDKClient()
     monkeypatch.setattr(owner, "_dataset_details", lambda api, ref: NS(current_version_number=1))
     monkeypatch.setattr(owner, "_kernel_source", lambda _api, _ref: api.remote)
     def accepted():
@@ -163,11 +196,40 @@ def release(tmp_path, monkeypatch):
             self.downloads.append(name)
             return Response(content=(staged / name).read_bytes())
     http = Http()
+    anonymous = NS(sessions=[], gets=[], corrupt=False)
+
+    class AnonymousSession:
+        def __init__(self):
+            self.auth = None
+            self.closed = False
+            anonymous.sessions.append(self)
+
+        def get(self, url, **kwargs):
+            anonymous.gets.append({"url": url, "session": self, "auth": self.auth,
+                "request_auth": kwargs.get("auth"), "request_auth_supplied": "auth" in kwargs})
+            content = signed_payloads[url]
+            if anonymous.corrupt:
+                content = b"corrupt"
+            return Response(content=content)
+
+        def close(self):
+            self.closed = True
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            self.close()
+
+    import requests
+    monkeypatch.setattr(requests, "Session", AnonymousSession)
+
     def run(execute=True):
         return owner.submit_prepared_workflow(prepared, credentials, output, authority_ref="authority.json",
             monitor_paths=["experiments/example/STATUS.md"], execute=execute, api=api, http_session=http)
     return NS(run=run, api=api, http=http, output=output, staged=staged, kernel=kernel,
-              prepared=prepared, accepted=accepted, credentials=credentials)
+              prepared=prepared, accepted=accepted, credentials=credentials, sdk=sdk,
+              anonymous=anonymous)
 
 
 def test_check_has_no_network_or_filesystem_publication(release):
@@ -181,7 +243,21 @@ def test_full_submission_and_repeated_call_never_duplicate(release):
     assert result["status"] == "SUBMISSION_BOUND" and result["version"] == 1
     receipt = (release.output / "launch_receipt.json").read_bytes()
     assert release.api.created == release.api.pushed == 1
-    assert len(release.http.downloads) == 11
+    expected_names = {p.relative_to(release.staged).as_posix() for p in release.staged.rglob("*")
+                      if p.is_file() and p.name != "dataset-metadata.json"}
+    assert len(release.sdk.requests) == len(expected_names)
+    assert {(r.owner_slug, r.dataset_slug, r.dataset_version_number, r.file_name, r.raw)
+            for r in release.sdk.requests} == {
+                ("owner", "new-source", 1, name, True) for name in expected_names}
+    assert len(release.sdk.responses) == len(expected_names)
+    assert all(response.closed for response in release.sdk.responses)
+    assert len(release.sdk.client_exits) == len(expected_names)
+    assert len(release.anonymous.gets) == len(expected_names)
+    assert all(call["session"].auth is None and call["auth"] is None
+               and call["request_auth"] is None and not call["request_auth_supplied"]
+               for call in release.anonymous.gets)
+    assert all(session.closed for session in release.anonymous.sessions)
+    assert release.http.auth == ("owner", "do-not-print")
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
     assert (release.output / "launch_receipt.json").read_bytes() == receipt
@@ -310,16 +386,14 @@ def test_extra_upload_file_is_rejected_before_publication(release):
     assert release.api.created == 0
 
 
-def test_remote_source_corruption_blocks_kernel_post(release, monkeypatch):
-    real_get = release.http.get
-    def corrupt(url, **kwargs):
-        response = real_get(url, **kwargs)
-        if "/datasets/download/" in url:
-            response.content = b"corrupt"
-        return response
-    monkeypatch.setattr(release.http, "get", corrupt)
+def test_remote_source_corruption_blocks_kernel_post(release):
+    release.anonymous.corrupt = True
     with pytest.raises(ValueError, match="hash"):
         release.run()
+    assert release.sdk.requests
+    assert all(response.closed for response in release.sdk.responses)
+    assert all(call["session"].auth is None and not call["request_auth_supplied"]
+               for call in release.anonymous.gets)
     assert release.api.pushed == 0
 
 
