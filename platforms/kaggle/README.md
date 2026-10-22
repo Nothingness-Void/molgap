@@ -47,6 +47,9 @@ supplies its authorized continuation declaration and source-dataset preparation.
 
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
+Numeric receipt versions use exact-version downloads without listing newer
+sessions. The manifest is retained first, so interrupted downloads can reuse
+verified files on reentry; legacy opaque session references retain pinned listing.
 Source/job/version reconciliation and obtaining the small manifest belong to
 the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
 

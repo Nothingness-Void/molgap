@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import json
 import hashlib
+from collections import Counter
+
+import pytest
 
 from molgap.experiment_allocation import AllocationLedger
 from molgap.experiment_attribution import ATTRIBUTION_FORMAT
@@ -233,7 +236,7 @@ def _seed_reference_records(case):
     costs.write_bytes(canonical_json(cost).encode())
 
 
-def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo):
+def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
     case = frozen_shared_acceptance_run(tmp_path, repo)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
     _seed_reference_records(case)
@@ -256,15 +259,24 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo):
 
     retention_root = tmp_path / "execution-retention"
     sealed = _seal_shared_retention(case, retention_root)
-    result = accept_run_workflow(*case.original,
-        retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
+    from molgap import experiment_family_workflow as family
+    inspected = Counter()
+    inspect = family.inspect_terminal_output
+
+    def count_inspection(item):
+        inspected[item["context"].arm_id] += 1
+        return inspect(item)
+
+    monkeypatch.setattr(family, "inspect_terminal_output", count_inspection)
+    options = dict(retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root,
-        stage_terminal=True, outcome="INCONCLUSIVE", decision_ref=decisions,
-        role_audit=audits)
+        stage_terminal=True, outcome="INCONCLUSIVE", decision_ref=decisions, role_audit=audits)
+    result = accept_run_workflow(*case.original, **options)
 
     assert result["status"] == "COMPLETE", result
     assert result["executed"] is True
     assert result.get("diagnosis") is None
+    assert inspected == Counter({arm_id: 1 for arm_id in arms})
     assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
     assert result["execution_retention"]["manifest"] == sealed["manifest"]
     assert result["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
@@ -285,5 +297,35 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo):
 
     assert len(trajectory_contracts) == len(arms)
     assert all(not (case.repo / name).exists() for name in set(case.generated) - trajectory_contracts)
+    receipts = {arm_id: (case.repo / where["trajectory"]).parent / "rml_finalized/finalization.json"
+                for arm_id, where in locations.items()}
+    retained = {arm_id: path.read_bytes() for arm_id, path in receipts.items()}
+    repeated = accept_run_workflow(*case.original, **options)
+    assert repeated["status"] == "COMPLETE", repeated
+    assert repeated["terminal_staging"] == result["terminal_staging"]
+    assert all(item["finalization_status"] == "ALREADY_FINALIZED" for item in repeated["results"])
+    assert inspected == Counter({arm_id: 2 for arm_id in arms})
+
+    # Same-call reuse must still reject bytes changed after terminal staging.
+    from molgap import experiment_terminal_staging as staging
+    stage = staging.stage_verified_terminal_packages
+    output = case.paths.artifact_root / "retrieved" / next(iter(arms))
+    manifest = json.loads((output / "output_manifest.json").read_bytes())
+    checkpoint = output / manifest["artifacts"]["selected_model"]["path"]
+    checkpoint_bytes = checkpoint.read_bytes()
+
+    def change_after_staging(*args, **kwargs):
+        staged = stage(*args, **kwargs)
+        checkpoint.write_bytes(b"changed after staging")
+        return staged
+
+    monkeypatch.setattr(staging, "stage_verified_terminal_packages", change_after_staging)
+    try:
+        with pytest.raises(ValueError, match="bound artifact SHA mismatch"):
+            accept_run_workflow(*case.original, **options)
+    finally:
+        checkpoint.write_bytes(checkpoint_bytes)
+    assert inspected == Counter({arm_id: 3 for arm_id in arms})
+    assert {arm_id: path.read_bytes() for arm_id, path in receipts.items()} == retained
     validated = validate_repository_records(case.repo)
     assert validated["root"] == case.repo.resolve()

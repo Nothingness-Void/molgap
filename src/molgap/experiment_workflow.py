@@ -476,7 +476,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                     expected_package_identity, locations=None, execute=False,
-                    target_identities=None, execution_root=None, _verification=None):
+                    target_identities=None, execution_root=None, _verification=None,
+                    _reports=None):
     """Inspect every arm independently of optional scientific closure inputs."""
     if execute and locations is None:
         raise ValueError("Terminal execution requires explicit reviewed terminal locations")
@@ -496,8 +497,10 @@ def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
         retention = validate_execution_retention(Path(execution_root), spec,
             package_identity=expected_package_identity, source_commit=context.source_commit,
             source_archive_sha256=context.source_archive_sha256)
-    reports = {arm_id: inspect_terminal_output(item)
-               for arm_id, item in outputs.items()}
+    # The run adapter can share its inspection inside one synchronous closure.
+    # Descriptor translation and finalization still verify the retained bytes.
+    reports = (_reports if _reports is not None else
+               {arm_id: inspect_terminal_output(item) for arm_id, item in outputs.items()})
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}
     if locations is None:

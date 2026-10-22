@@ -292,7 +292,7 @@ def test_resume_destination_cannot_change_checkout_or_frozen_records(frozen_run,
     ("inspect-output", "MECHANICALLY_VERIFIED", "molgap.experiment_family_workflow.inspect_output"),
     ("accept-workflow", "MECHANICALLY_VERIFIED", "molgap.experiment_workflow.accept_workflow"),
     ("build-resume", "RESUME_VERIFIED", "molgap.experiment_workflow_resume.build_workflow_resume"),
-    ("prepare-resume", "PREPARED_FOR_PLATFORM", "molgap.experiment_workflow_resume.prepare_resumed_workflow"),
+    ("prepare-resume", "RESUME_INPUTS_PREPARED", "molgap.experiment_workflow_resume.prepare_resumed_workflow"),
 ])
 @pytest.mark.parametrize("identity", ["spec", "run"])
 def test_cli_old_and_run_id_delegate_same_original_bindings(frozen_run, tmp_path, monkeypatch, capsys, command, status, owner_path, identity):

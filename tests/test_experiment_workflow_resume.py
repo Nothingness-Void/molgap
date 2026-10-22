@@ -244,6 +244,10 @@ def test_build_then_prepare_resume_reuses_original_release_without_planning(
     tmp_path, resume_case, monkeypatch,
 ):
     case = resume_case
+    from molgap import experiment_package
+    from unittest.mock import Mock
+    verification = Mock(wraps=experiment_package._verify_package_snapshot)
+    monkeypatch.setattr(experiment_package, "_verify_package_snapshot", verification)
     original_trajectories = {
         arm["arm_id"]: (
             case["prepared"] / "source_dataset" / "prospective" / arm["arm_id"] / "trajectory.json"
@@ -266,7 +270,9 @@ def test_build_then_prepare_resume_reuses_original_release_without_planning(
         plan=_recovery_plan(case),
     )
 
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
+    assert "owning continuation adapter" in resumed["next_action"]
+    assert verification.call_count == 1
     assert resumed["prospective_published"] is False
     assert resumed["submitted"] is False
     for arm_id, expected in original_trajectories.items():
@@ -468,7 +474,7 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
         case["package_identity"], case["receipt"], resumed_root,
         plan=_recovery_plan(case),
     )
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
 
     runtime_root = tmp_path / "execution-root"
     commands: list[list[str]] = []
@@ -544,7 +550,7 @@ def test_failed_resumed_preflight_retains_training_started_and_unknown_progress(
         case["package_identity"], case["receipt"], resumed_root,
         plan=_recovery_plan(case),
     )
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
 
     commands: list[list[str]] = []
     _patch_pair_runtime(monkeypatch, commands, failed_phase="preflight")

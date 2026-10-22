@@ -54,12 +54,14 @@ def _mapping_path(run, arm_id):
 
 
 def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
-                         destination, manifest_sha256):
+                         destination, manifest_sha256, _verification=None):
     """Record only successfully retained manifest-bound bytes; never copy outputs."""
     from .experiment_run import _original_run
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=_verification)
     expected = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
-        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id)
+        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id,
+        _verification=_verification)
     if context != expected:
         raise ValueError("Retrieval mapping differs from the original launch context")
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)

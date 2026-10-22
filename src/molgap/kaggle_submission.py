@@ -265,6 +265,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
     _safe_local(output)
+    report_path = prepared / "workflow_report.json"
+    _safe_local(report_path)
+    report = _json(report_path)
+    if report.get("format") == "molgap-workflow-recovery-preparation-v1":
+        raise ValueError("Resume inputs require the owning continuation adapter to bind a physical successor; "
+                         "the fresh-release submitter cannot publish them")
     values = _credentials(credentials)
     package, kernel, staged = prepared / "package", prepared / "kernel", prepared / "source_dataset"
     for path in (kernel / "kernel-metadata.json", kernel / "run.py", staged / "dataset-metadata.json",
@@ -274,7 +280,6 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     verification = _PackageVerification()
     manifest = verify_experiment_source_package(package, _verification=verification)
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
-    report = _json(prepared / "workflow_report.json")
     if report.get("status") != "PREPARED_FOR_PLATFORM" or report.get("package_identity") != manifest["package_identity"]:
         raise ValueError("Use the completed prepared workflow and its exact package")
     metadata = _json(kernel / "kernel-metadata.json")
@@ -321,7 +326,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         raise ValueError("Source upload contains missing or unbound files")
     if output.is_relative_to(prepared) or prepared.is_relative_to(output):
         raise ValueError("Keep operation records separate from immutable prepared inputs")
-    authority = json.loads(read_packaged_text(package, authority_ref))
+    authority = json.loads(read_packaged_text(package, authority_ref, _verification=verification))
     budget = authority.get("allocated_t4_hours_ceiling")
     if (authority.get("user_authorized") is not True or type(budget) not in {int, float}
             or not math.isfinite(budget) or budget <= 0):
@@ -360,6 +365,14 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         state = _json(journal) if journal.exists() else {"binding": binding, "phase": "NEW", "timings": {}}
         if state["binding"] != binding:
             raise ValueError("Preserve the journal; submission inputs or authority changed")
+        if state["phase"] == "BOUND":
+            # A completed publication is immutable. Reentry may finish local
+            # cleanup; a newer remote version must not rebind this receipt.
+            result = _bound_submission_status(output, spec, package, manifest["package_identity"],
+                                              binding, _verification=verification)
+            if state.get("source_copy_retirement", {}).get("status") != "REMOVED":
+                result["source_copy_retirement"] = _retire_source_copies(prepared, output, state, journal)
+            return result
         phase_start = perf_counter()
         def save(phase, **fields):
             nonlocal phase_start

@@ -43,11 +43,10 @@ class Response:
 
 
 @pytest.fixture
-def release(tmp_path, monkeypatch):
+def release(tmp_path, monkeypatch, staged_source=None):
     prepared, output = tmp_path / "prepared", tmp_path / "operations"
     kernel, staged = prepared / "kernel", prepared / "source_dataset"
     kernel.mkdir(parents=True)
-    staged.mkdir()
     (prepared / "package").mkdir()
     from test_experiment_workflow import _arm, _spec_payload
     spec = ExperimentSpec(_spec_payload([_arm("neural_atom_k1", "2", name)
@@ -58,23 +57,27 @@ def release(tmp_path, monkeypatch):
     metadata = {"id": "owner/new-kernel", "is_private": True, "dataset_sources": ["owner/new-source", "owner/fixed-data"]}
     atomic_json(kernel / "kernel-metadata.json", metadata)
     (kernel / "run.py").write_bytes(b"print('synthetic')\n")
-    atomic_json(staged / "dataset-metadata.json", {"id": "owner/new-source"})
-    atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4"})
-    from molgap.experiment_package import SIDECARS
-    for name in SIDECARS:
-        (staged / ("source_payload.bin" if name == "source.tar.gz" else name)).write_bytes(b"synthetic")
-    for arm in ("original", "optimized"):
-        (staged / "initial_states").mkdir(exist_ok=True)
-        (staged / "initial_states" / (arm + ".pt")).write_bytes(b"synthetic tensor bytes")
-        path = staged / "prospective" / arm
-        path.mkdir(parents=True)
-        (path / "trajectory.json").write_bytes(b"{}")
+    if staged_source is not None:
+        shutil.copytree(staged_source, staged)
+    else:
+        staged.mkdir()
+        atomic_json(staged / "dataset-metadata.json", {"id": "owner/new-source"})
+        atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4"})
+        from molgap.experiment_package import SIDECARS
+        for name in SIDECARS:
+            (staged / ("source_payload.bin" if name == "source.tar.gz" else name)).write_bytes(b"synthetic")
+        for arm in ("original", "optimized"):
+            (staged / "initial_states").mkdir(exist_ok=True)
+            (staged / "initial_states" / (arm + ".pt")).write_bytes(b"synthetic tensor bytes")
+            path = staged / "prospective" / arm
+            path.mkdir(parents=True)
+            (path / "trajectory.json").write_bytes(b"{}")
     atomic_json(prepared / "release_report.json", {"inputs": {"recipe_files": {}, "required_modules": [],
         "initial_states": {"original": "a", "optimized": "b"}}})
     credentials = tmp_path / "outside-key.json"
     atomic_json(credentials, {"username": "owner", "key": "do-not-print"})
     monkeypatch.setattr(owner, "verify_experiment_source_package", lambda _, **kw: manifest)
-    monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps({"user_authorized": True,
+    monkeypatch.setattr(owner, "read_packaged_text", lambda *_, **kw: json.dumps({"user_authorized": True,
         "allocated_t4_hours_ceiling": 14, "arms": ["original", "optimized"], "seeds": [42]}))
     monkeypatch.setattr(owner, "_verify_release_report", lambda *_, **kw: {})
     import molgap.experiment_preflight as preflight
@@ -524,9 +527,7 @@ def packaged_release(tmp_path, workflow_case, monkeypatch):
     transport_root = tmp_path / "fake-platform"
     transport_root.mkdir()
     with monkeypatch.context() as stubs:
-        transport = release.__wrapped__(transport_root, stubs)
-    transport.staged.rename(transport_root / "unused-source")
-    shutil.copytree(prepared / "source_dataset", transport.staged)
+        transport = release.__wrapped__(transport_root, stubs, staged_source=prepared / "source_dataset")
     shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")
     monkeypatch.setattr(owner, "_kernel_source", lambda *_: transport.api.remote)
     monkeypatch.setattr(owner, "_dataset_details", lambda *_: NS(current_version_number=1))
@@ -581,6 +582,10 @@ def test_real_package_release_post_receipt_reuses_only_exact_content(packaged_re
     assert result["native_qualification"] == "NOT_EVALUATED"
     retained = receipt_path.read_bytes()
     assert case.run(execute=False)["status"] == "SUBMISSION_BOUND"
+    with monkeypatch.context() as settled:
+        settled.setattr(owner, "_kernel_source", lambda *a, **k:
+            pytest.fail("a bound submission must not query the latest remote version"))
+        assert case.run()["status"] == "SUBMISSION_BOUND"
     assert receipt_path.read_bytes() == retained
     assert case.transport.api.created == case.transport.api.pushed == 1
     # An independent call must fully validate again, even if only one sidecar

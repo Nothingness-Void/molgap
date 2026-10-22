@@ -99,12 +99,18 @@ The following commands can use these same four options instead of `--spec`:
 | `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
 | `accept-workflow` | `--retrieved-root` or retained retrieval maps; optional `--outputs`/`--locations` overrides; mechanically inspect without a terminal package |
 | `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
-| `prepare-resume` | `--resume-plan`, `--output`; use existing checkpoint/resume preparation |
+| `prepare-resume` | `--resume-plan`, `--output`; prepare local continuation inputs only |
 
 Run lookup resolves the original package, identity, receipt and preparation;
 do not override them with explicit package/receipt arguments. Output paths and
 descriptors retain their existing local safety and evidence boundaries. Missing
 or uncertain journal/receipt identity requires platform reconciliation.
+
+Successful resume staging reports `RESUME_INPUTS_PREPARED`. It retains the original
+source, configuration, prospective records and producer context; it does not
+register a new attempt or produce a fresh-release submission. The owning
+continuation adapter must bind the physical successor identity. The fresh-release
+Kaggle submitter rejects these inputs before authentication or publication.
 
 The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
 can reuse the original journal when separately authorized to execute. The

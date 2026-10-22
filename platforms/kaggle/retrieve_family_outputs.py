@@ -2,9 +2,9 @@
 
 The platform skill reconciles the exact kernel/version and retrieves/pins its
 small manifest first. This adapter downloads only manifest-bound required files.
-Kaggle's output-list API addresses the latest session, so every downloaded byte
-is rechecked against that independently pinned manifest rather than trusting a
-slug to identify an attempt. Signed URLs never appear in returned receipts.
+Numeric receipt versions use the existing exact-version transport. Legacy opaque
+session references retain the manifest-pinned listing path. Every downloaded byte
+is checked against the pinned manifest; signed URLs never appear in receipts.
 """
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
 from molgap.kaggle_output_retrieval import (
     retrieve_execution_retention as _retrieve_execution_retention,
+    retrieve_pinned_exact_files,
     retrieve_selected_kaggle_files,
 )
 from molgap.research_memory.trace import file_digest
@@ -32,7 +33,10 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     """
     manifest, required = _family_files(context, remote_manifest_path, local_manifest,
                                        manifest_sha256)
-    result = retrieve_selected_kaggle_files(
+    version = context.platform_version
+    transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
+                 and version.isdecimal() else retrieve_selected_kaggle_files)
+    result = transport(
         api, context=context, remote_manifest_path=remote_manifest_path,
         files=required, destination=destination, http_session=http_session,
     )
@@ -63,7 +67,8 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
     if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent
-    required = {}
+    # A failed payload download must leave its pinned manifest for safe reentry.
+    required = {remote_manifest_path: ("output_manifest.json", manifest_sha256)}
     for role, item in manifest["artifacts"].items():
         _path(item["path"])
         from molgap.experiment_spec import _digest
@@ -72,7 +77,6 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         if remote in required:
             raise ValueError("Aliased retention roles")
         required[remote] = (item["path"], item["sha256"])
-    required[remote_manifest_path] = ("output_manifest.json", manifest_sha256)
     return manifest, required
 
 
@@ -100,6 +104,7 @@ def main(argv=None):
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
+    from molgap.experiment_package import _PackageVerification
     from molgap.kaggle_output_retrieval import _selected_files
 
     class Parser(argparse.ArgumentParser):
@@ -124,11 +129,13 @@ def main(argv=None):
         # adapter's finite JSON receipt is allowed on either output stream.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             stage = "original_run"
+            verification = _PackageVerification()
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
             spec, options, prepared = _original_run(
-                args.profile, args.repo_root, args.run_id, args.attempt_id)
+                args.profile, args.repo_root, args.run_id, args.attempt_id, _verification=verification)
             context = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
-                expected_package_identity=options["expected_package_identity"], arm_id=args.arm)
+                expected_package_identity=options["expected_package_identity"], arm_id=args.arm,
+                _verification=verification)
             if context.platform != "kaggle":
                 raise ValueError("Expected an original Kaggle run")
             stage = "manifest"
@@ -179,7 +186,8 @@ def main(argv=None):
                 stage = "retrieval_mapping"
                 from molgap.experiment_run_acceptance import record_run_retrieval
                 mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
-                    context=context, destination=destination, manifest_sha256=args.manifest_sha256)
+                    context=context, destination=destination, manifest_sha256=args.manifest_sha256,
+                    _verification=verification)
                 result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)

@@ -310,7 +310,17 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     attempt2 = case.paths.run_directory(case.original[2], "v2") / "prepared"
     recovery = runs.prepare_run_resume(*case.original, output=attempt2, plan={
         "format": RESUME_PLAN_FORMAT, "spec_identity": case.spec.identity, "arms": bundles})
-    assert recovery["status"] == "PREPARED_FOR_PLATFORM", recovery
+    assert recovery["status"] == "RESUME_INPUTS_PREPARED", recovery
+    assert "owning continuation adapter" in recovery["next_action"]
+    # This payload retains the original producer identity. A physical successor
+    # is a separate owning-platform operation, not another fresh-release POST.
+    for execute in (False, True):
+        with pytest.raises(ValueError, match="owning continuation adapter"):
+            submission.submit_prepared_workflow(attempt2, tmp_path / "absent-credentials.json",
+                attempt2.parent / "unsupported-operations", authority_ref="authority.json",
+                monitor_paths=MONITORS, execute=execute,
+                api=case.transport.api, http_session=case.transport.http)
+    assert not (attempt2.parent / "unsupported-operations").exists()
     assert recovery["prospective_published"] is recovery["submitted"] is False
     assert recovery["spec_identity"] == case.spec.identity
     assert recovery["package_identity"] == case.manifest["package_identity"]
@@ -327,6 +337,7 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     # v2 is local recovery staging, not an observed second physical job or a
     # newly published run. Original prospective attempt IDs remain provenance.
     assert not (attempt2.parent / "operations").exists()
+    assert not (attempt2.parent / "inputs").exists()
     assert snapshot(case.run) == frozen
     assert case.transport.api.created == case.transport.api.pushed == 1
 
@@ -403,7 +414,7 @@ def test_completed_family_retrieval_is_separate_synthetic_evidence(daily_case, t
         manifest_sha256=_sha(local_manifest.read_bytes()), destination=destination,
         http_session=remote.http)
     assert result["producer_version"] == result["receipt_version"] == "1"
-    assert result["platform_version_verified_by_output_api"] is False
+    assert result["platform_version_verified_by_output_api"] is True
     assert result["unselected_outputs_downloaded"] is False
     assert remote.extra not in remote.http.urls
     assert snapshot(destination) == {relative: (source / relative).read_bytes()

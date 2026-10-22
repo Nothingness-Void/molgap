@@ -285,7 +285,7 @@ def _dispatch(args) -> tuple[dict, int]:
                     return build_run_resume(*original, arm_id=args.arm,
                         source_output=args.source_output, output=args.output), 0
                 result = prepare_run_resume(*original, plan=_json(args.resume_plan), output=args.output)
-                return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
+                return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
             except RunReconciliationRequired as exc:
                 return {"status": "RECONCILIATION_REQUIRED", "reason": str(exc),
                         "executed": False, "network_accessed": False}, 1
@@ -330,7 +330,7 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.command == "build-resume":
             return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output), 0
         result = prepare_resumed_workflow(**options, plan=_json(args.resume_plan))
-        return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
+        return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
     if args.command == "prepare-family-training":
         from .experiment_workflow import prepare_family_training
         from .experiment_family_workflow import _json

@@ -100,13 +100,14 @@ class RunContext:
     @classmethod
     def for_training(cls, spec: ExperimentSpec, package_dir: Path, *,
                      expected_package_identity: str, arm_id: str,
-                     account: str, run_reference: str) -> RunContext:
+                     account: str, run_reference: str, _verification=None) -> RunContext:
         """Producer context before a submitter returns a version.
 
         The account/slug are frozen declarations, not a platform observation.
         Unknown version remains null; acceptance binds the real receipt later.
         """
-        receipt = build_launch_receipt(spec, Path(package_dir), expected_package_identity=expected_package_identity)
+        receipt = build_launch_receipt(spec, Path(package_dir), expected_package_identity=expected_package_identity,
+            **({"_verification": _verification} if _verification is not None else {}))
         declaration = spec.to_dict()
         arm = next((a for a in declaration["arms"] if a["arm_id"] == arm_id), None)
         if arm is None:

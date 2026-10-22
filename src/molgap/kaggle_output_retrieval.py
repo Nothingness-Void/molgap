@@ -183,6 +183,8 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
     _path(remote_manifest_path)
     owner, slug, _ = _kernel_reference(api, context)
     version = context.platform_version
+    if isinstance(version, str) and version.isascii() and version.isdecimal():
+        version = int(version)
     if type(version) is not int or version < 1:
         raise ValueError("Exact artifact retrieval requires a physical version number")
     required = _selected_files(files)
@@ -207,7 +209,7 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                 raise RuntimeError("Exact artifact redirect failed; no list/bulk fallback") from None
             retained.extend(_download_selected(urls={remote: redirect.url},
                 required={remote: (local, pin)}, destination=destination, http_session=http_session))
-    return dict(kernel=context.run_reference, receipt_version=version, files=retained,
+    return dict(kernel=context.run_reference, receipt_version=context.platform_version, files=retained,
         transport="version_specific_manifest_pinned_files", unselected_outputs_downloaded=False,
         platform_version_verified_by_output_api=True)
 

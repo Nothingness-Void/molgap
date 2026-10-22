@@ -58,7 +58,9 @@ authorization, append `--execute` to advance the same operation journal:
 
 `WAIT_SOURCE_READY` means rerun the identical command with the same operations
 directory after processing. The journal resumes without another dataset create.
-A repeated completed invocation observes the same run and preserves its receipt.
+A repeated completed invocation verifies the bound local receipt and finishes
+pending local cleanup without querying the latest kernel or submitting again.
+Fresh scheduler observations remain a separate reconciliation action.
 An uncertain create/POST is recorded before any reconciliation. A matching
 first-version source can resolve a lost kernel response; an unobserved or
 conflicting outcome stays `RECONCILIATION_REQUIRED` and never triggers a retry.

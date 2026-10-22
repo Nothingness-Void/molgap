@@ -145,14 +145,14 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                 return {**result, "status": "BLOCKED", "executed": False}
             closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
                 execute=True, execution_root=execution_root,
-                target_identities=resolved.get("target_identities"), **options)
+                target_identities=resolved.get("target_identities"), _reports=result["arms"], **options)
             return {**closed, **identity, "diagnosis": result.get("diagnosis"), "terminal_staging": staged}
     elif execute and automatic:
         if locations is None:
             raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
         closed = accept_workflow(spec, supplied=resolved["outputs"], locations=resolved["locations"],
             execute=True, execution_root=execution_root,
-            target_identities=resolved.get("target_identities"), **options)
+            target_identities=resolved.get("target_identities"), _reports=result["arms"], **options)
         return {**closed, **identity, "diagnosis": result.get("diagnosis")}
     elif execute and locations is None:
         raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
@@ -162,7 +162,9 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
 def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_output, output):
     """Export one already retrieved prefix through the original recovery owner."""
     from .experiment_workflow_resume import build_workflow_resume
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    from .experiment_package import _PackageVerification
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=_PackageVerification())
     output = _resume_output(repo_root, prepared.parent, output)
     return build_workflow_resume(spec, prepared=prepared, arm_id=arm_id,
                                  source_output=source_output, output=output, **options)
@@ -171,7 +173,9 @@ def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_o
 def prepare_run_resume(profile, repo_root, run_id, attempt_id, *, plan, output):
     """Stage explicit validated bundles without publishing or submitting."""
     from .experiment_workflow_resume import prepare_resumed_workflow
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    from .experiment_package import _PackageVerification
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=_PackageVerification())
     output = _resume_output(repo_root, prepared.parent, output)
     return prepare_resumed_workflow(spec, prepared=prepared, plan=plan, output=output, **options)
 

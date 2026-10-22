@@ -105,7 +105,7 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
     assert result["scientific_acceptance"] is False
     if execute:
         assert result["status"] == "RETRIEVED" and result["receipt_version"] == "7"
-        assert result["platform_version_verified_by_output_api"] is False
+        assert result["platform_version_verified_by_output_api"] is True
         assert result["unselected_outputs_downloaded"] is False
         assert case.retrieve.call_args.kwargs["context"] == case.context
         retained = (case.destination / "output_manifest.json").read_bytes()
@@ -215,27 +215,80 @@ def test_local_platform_is_rejected_before_manifest_auth_or_writes(retrieval, mo
     assert not case.destination.exists() and snapshot(case.run) == before
 
 
-def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(retrieval, capsys):
+def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(
+    retrieval, monkeypatch, capsys
+):
     case = retrieval
     before = snapshot(case.run)
+    _, _, kernel_slug = case.context.run_reference.partition("/")
+    from molgap import experiment_package as packages
+    verified = Mock(wraps=packages._verify_package_snapshot)
+    monkeypatch.setattr(packages, "_verify_package_snapshot", verified)
+    failed_role = sorted(ROLES)[-1]
+    failed_relative = case.output["artifacts"][failed_role]["path"]
+    failed_remote = "runs/version7/gptrans/" + failed_relative
+    failed_url = next(item.url for item in case.remote_files
+                      if item.file_name == failed_remote)
+    case.http.fail_once[failed_url] = RuntimeError("one interrupted artifact stream")
+
+    # The first attempt must publish the pinned manifest before payloads, so a
+    # partially retained destination remains safely retryable by this CLI.
+    assert case.adapter.main(arguments(case, execute=True)) == 2
+    assert verified.call_count == 1
+    interrupted = json.loads(capsys.readouterr().out)
+    assert interrupted["status"] == "BLOCKED"
+    assert interrupted["stage"] == "platform_retrieval"
+    assert (case.destination / "output_manifest.json").read_bytes() == case.local.read_bytes()
+    partial = snapshot(case.destination)
+    assert failed_relative not in partial
+    assert len(partial) > 1
+    assert case.api.client.kernels.requests == []
+    assert case.api.client.kernels.exact_requests
+    assert all(request.version_number == 7
+               for request in case.api.client.kernels.exact_requests)
+    assert all(request.owner_slug == case.context.account
+               and request.kernel_slug == kernel_slug
+               for request in case.api.client.kernels.exact_requests)
+
+    retained_before_retry = len(case.http.urls)
     assert case.adapter.main(arguments(case, execute=True)) == 0
+    assert verified.call_count == 2
     result = json.loads(capsys.readouterr().out)
     assert result["status"] == "RETRIEVED" and result["executed"] is True
     assert result["producer_version"] == result["receipt_version"] == "7"
     assert result["scientific_acceptance"] is False
-    assert result["platform_version_verified_by_output_api"] is False
+    assert result["platform_version_verified_by_output_api"] is True
     assert result["unselected_outputs_downloaded"] is False
-    case.auth.assert_called_once_with(case.profile.parent / "unread-credentials.json")
-    case.retrieve.assert_called_once()
+    credentials = case.profile.parent / "unread-credentials.json"
+    assert case.auth.call_count == 2
+    assert [call.args for call in case.auth.call_args_list] == [
+        (credentials,), (credentials,)
+    ]
+    assert case.retrieve.call_count == 2
     assert case.retrieve.call_args.kwargs["context"] == case.context
-    assert len(case.http.urls) == len(ROLES) + 1
+    assert len(case.http.urls) == retained_before_retry + 1
+    assert snapshot(case.destination)["output_manifest.json"] == case.local.read_bytes()
+    assert failed_relative in snapshot(case.destination)
+    assert all(case.http.urls.count(item.url) == (2 if item.url == failed_url else 1)
+               for item in case.remote_files if item.file_name != case.remote)
+    exact_requests = case.api.client.kernels.exact_requests
+    assert case.api.client.kernels.requests == []
+    assert len(exact_requests) == len(ROLES) + 2
+    assert all(request.version_number == 7 for request in exact_requests)
+    assert all(request.owner_slug == case.context.account
+               and request.kernel_slug == kernel_slug
+               for request in exact_requests)
+    requested_paths = [request.file_path for request in exact_requests]
+    assert requested_paths.count(failed_remote) == 2
+    assert case.remote in requested_paths
+    assert set(requested_paths) <= {item.file_name for item in case.remote_files}
     retained = snapshot(case.destination)
     assert retained["output_manifest.json"] == case.local.read_bytes()
-    case.api.client.kernels.pages.append(_ResponsePage(case.remote_files))
     assert case.adapter.main(arguments(case, execute=True)) == 0
+    assert verified.call_count == 3
     retry = json.loads(capsys.readouterr().out)
     assert all(item["state"] == "ALREADY_RETAINED" for item in retry["files"])
-    assert len(case.http.urls) == len(ROLES) + 1
+    assert len(case.http.urls) == retained_before_retry + 1
     assert snapshot(case.destination) == retained
     retained_run = snapshot(case.run)
     mapping = json.loads(retained_run.pop("operations/retrieved_outputs/gptrans_t.json"))

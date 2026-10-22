@@ -57,7 +57,11 @@ def _module(monkeypatch):
     class ApiListKernelSessionOutputRequest:
         pass
 
+    class ApiDownloadKernelOutputRequest:
+        pass
+
     service.ApiListKernelSessionOutputRequest = ApiListKernelSessionOutputRequest
+    service.ApiDownloadKernelOutputRequest = ApiDownloadKernelOutputRequest
     monkeypatch.setitem(sys.modules, names[-1], service)
 
     module_name = "_molgap_test_retrieve_family_outputs"
@@ -75,6 +79,11 @@ class _ResponsePage:
         self.next_page_token = next_page_token
 
 
+class _Redirect:
+    def __init__(self, url):
+        self.url = url
+
+
 class _File:
     def __init__(self, file_name, url):
         self.file_name = file_name
@@ -85,11 +94,21 @@ class _KernelsClient:
     def __init__(self, pages):
         self.pages = list(pages)
         self.requests = []
+        self.exact_requests = []
+        self.exact_files = {
+            item.file_name: item
+            for page in self.pages
+            for item in page.files
+        }
         self.kernels_api_client = self
 
     def list_kernel_session_output(self, request):
         self.requests.append(request)
         return self.pages[len(self.requests) - 1]
+
+    def download_kernel_output(self, request):
+        self.exact_requests.append(request)
+        return _Redirect(self.exact_files[request.file_path].url)
 
 
 class _Client:
@@ -139,14 +158,17 @@ class _HttpResponse:
 
 
 class _Http:
-    def __init__(self, payloads):
+    def __init__(self, payloads, *, fail_once=None):
         self.payloads = payloads
+        self.fail_once = dict(fail_once or {})
         self.urls = []
 
     def get(self, url, *, stream, timeout):
         assert stream is True
         assert timeout == (30, 60)
         self.urls.append(url)
+        if url in self.fail_once:
+            raise self.fail_once.pop(url)
         payload = self.payloads[url]
         if isinstance(payload, Exception):
             raise payload

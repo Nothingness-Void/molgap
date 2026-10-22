@@ -12,7 +12,7 @@ from tempfile import TemporaryDirectory
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json
 from .experiment_launch import _safe_local
 from .experiment_launch_config import validate_launch_config
-from .experiment_package import verify_experiment_source_package, read_packaged_text
+from .experiment_package import _PackageVerification, verify_experiment_source_package, read_packaged_text
 from .experiment_preflight import check_release_inputs, _atomic
 from .experiment_resume import RESUME_BUNDLE_FILE, create_resume_bundle, validate_resume_bundle
 from .experiment_workflow import _platform_adapter, _path
@@ -32,7 +32,7 @@ def _rebase_paths(value, source, destination):
 
 
 @contextmanager
-def _original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path):
+def _original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path, *, _verification):
     """Keep retired release copies in a private view only for this operation."""
     root, prepared, package = (Path(path).absolute() for path in (repo_root, prepared, package_dir))
     for path in (root, prepared, package, Path(receipt_path).absolute()):
@@ -45,7 +45,8 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
     missing.update(Path(path).relative_to(staged).as_posix() for path in inputs["initial_states"].values()
                    if not Path(path).is_file())
     if not missing:
-        yield _check_original(spec, root, prepared, package, expected_package_identity, receipt_path)
+        yield _check_original(spec, root, prepared, package, expected_package_identity, receipt_path,
+                              _verification=_verification)
         return
     if staged != prepared / "source_dataset":
         raise ValueError("Retired recovery inputs must belong to the original source stage")
@@ -54,7 +55,7 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
     operations = Path(receipt_path).absolute().parent
     state = _json(operations / "submission_state.json")
     retirement = state.get("source_copy_retirement", {})
-    manifest = verify_experiment_source_package(package)
+    manifest = verify_experiment_source_package(package, _verification=_verification)
     launch = _json(Path(inputs["launch_config"]))
     proof = _json(operations / "source_upload_verification.json")
     uploaded = retirement.get("uploaded", {})
@@ -98,11 +99,11 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
             copy_immutable_file(source, view / relative, expected_sha256=record["sha256"])
         restored_release = _rebase_paths(release, staged, view)
         yield _check_original(spec, root, prepared, package, expected_package_identity, receipt_path,
-                              release=restored_release, original_staged=staged)
+                              release=restored_release, original_staged=staged, _verification=_verification)
 
 
 def _check_original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path,
-                    *, release=None, original_staged=None):
+                    *, release=None, original_staged=None, _verification):
     root, prepared, package = map(lambda p: Path(p).absolute(), (repo_root, prepared, package_dir))
     for path in (root, prepared, package):
         _safe_local(path)
@@ -110,7 +111,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
     if (report.get("status") != "PREPARED_FOR_PLATFORM" or report.get("spec_identity") != spec.identity
             or report.get("package_identity") != expected_package_identity):
         raise ValueError("Recovery requires the original prepared workflow and package")
-    manifest = verify_experiment_source_package(package)
+    manifest = verify_experiment_source_package(package, _verification=_verification)
     if manifest["package_identity"] != expected_package_identity or manifest["spec_identity"] != spec.identity:
         raise ValueError("Recovery package identity mismatch")
     if "src/molgap/experiment_resume.py" not in manifest["relative_allowlist"]:
@@ -127,7 +128,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
         entry_script=inputs["entry_script"], input_root=inputs["input_root"],
         launch_config=inputs["launch_config"], kernel_metadata=inputs["kernel_metadata"],
-        dataset_manifests=inputs.get("dataset_manifests"))
+        dataset_manifests=inputs.get("dataset_manifests"), _verification=_verification)
     compared = (_rebase_paths(observed, Path(inputs["input_root"]), original_staged)
                 if original_staged is not None else observed)
     if compared != frozen_release or observed["errors"] or observed["status"] != "LOCAL_RELEASE_INPUTS_VERIFIED":
@@ -146,14 +147,15 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         from .v4_runtime import normalized_source_sha256
         owner_name = training_adapter(arm).module
         owner = import_module(owner_name)
-        packaged_owner = read_packaged_text(package, "src/" + owner_name.replace(".", "/") + ".py")
+        packaged_owner = read_packaged_text(package, "src/" + owner_name.replace(".", "/") + ".py",
+                                           _verification=_verification)
         if normalized_source_sha256(Path(owner.__file__)) != hashlib.sha256(packaged_owner.encode()).hexdigest():
             raise ValueError("Local resume validator differs from the frozen family owner")
         arm_id = arm["arm_id"]
         observed_context = RunContext.from_launch(spec, Path(receipt_path), package,
-            expected_package_identity=expected_package_identity, arm_id=arm_id)
+            expected_package_identity=expected_package_identity, arm_id=arm_id, _verification=_verification)
         producer = RunContext.for_training(spec, package, expected_package_identity=expected_package_identity,
-            arm_id=arm_id, account=launch["account"], run_reference=launch["run_reference"])
+            arm_id=arm_id, account=launch["account"], run_reference=launch["run_reference"], _verification=_verification)
         _check_context(producer.to_dict(), observed_context)
         binding = next(b for b in spec.to_dict()["prospective"]["arms"] if b["arm_id"] == arm_id)
         trajectory = _artifact_path(root, binding["output"] + "/trajectory.json")
@@ -175,10 +177,11 @@ def _unchanged_prospectives(spec, repo_root, trajectories):
 
 
 def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_package_identity,
-                          receipt_path, output, *, arm_id, source_output):
+                          receipt_path, output, *, arm_id, source_output, _verification=None):
     """Export one incomplete owner-validated arm; never publish a new attempt."""
+    verification = _verification or _PackageVerification()
     with _original(spec, repo_root, prepared, package_dir,
-                   expected_package_identity, receipt_path) as original:
+                   expected_package_identity, receipt_path, _verification=verification) as original:
         manifest, _, _, contexts, trajectories = original
         if arm_id not in contexts:
             raise ValueError("Unknown recovery arm")
@@ -198,10 +201,11 @@ def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_packa
 
 
 def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_package_identity,
-                             receipt_path, output, *, plan):
+                             receipt_path, output, *, plan, _verification=None):
     """Stage all incomplete arms using the original source and prospective bytes."""
+    verification = _verification or _PackageVerification()
     with _original(spec, repo_root, prepared, package_dir,
-                   expected_package_identity, receipt_path) as original:
+                   expected_package_identity, receipt_path, _verification=verification) as original:
         manifest, release, launch, contexts, trajectories = original
         if (type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
@@ -233,7 +237,8 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         try:
             stage = backend.stage_inputs(repo_root=Path(repo_root), output=output, package=Path(package_dir),
                 manifest=manifest, spec=spec, platform_plan=platform_plan, metadata=metadata,
-                initial_states={k: Path(v) for k, v in release["inputs"]["initial_states"].items()}, jobs=launch["jobs"])
+                initial_states={k: Path(v) for k, v in release["inputs"]["initial_states"].items()}, jobs=launch["jobs"],
+                _verification=verification)
             if "target_identity" in launch:
                 # Retain the original acceptance-input copy and binding on recovery.
                 source = staged_original / "acceptance"
@@ -263,12 +268,13 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 required_modules=release["inputs"]["required_modules"], input_root=stage["input_root"],
                 entry_script=stage["entry_path"], launch_config=stage["launch_path"],
                 kernel_metadata=stage["metadata_path"],
-                dataset_manifests=frozen_inputs.get("dataset_manifests"))
+                dataset_manifests=frozen_inputs.get("dataset_manifests"), _verification=verification)
             _atomic(output / "release_report.json", result)
-            report.update(status="BLOCKED" if result["errors"] else "PREPARED_FOR_PLATFORM",
+            report.update(status="BLOCKED" if result["errors"] else "RESUME_INPUTS_PREPARED",
                 source_commit=manifest["source_commit"], release_report=str(output / "release_report.json"),
                 kernel_dir=str(stage["kernel_dir"]), source_dataset_dir=str(stage["input_root"]),
                 accelerator=stage["accelerator"], errors=result["errors"],
+                next_action="The owning continuation adapter must bind a physical successor identity; retain the original source, configuration and prospective records.",
                 limitations=["All arms must have incomplete owner-validated checkpoints.",
                              "Workload skill must reconcile the prior launch before submitting a successor."])
             return report

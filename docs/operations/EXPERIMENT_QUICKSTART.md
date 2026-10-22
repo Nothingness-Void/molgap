@@ -166,6 +166,9 @@ remains in the existing platform adapter; historical output protocols keep their
 own retrievers. `inspect-output`, `accept-workflow`, `build-resume` and
 `prepare-resume` can resolve the original Spec/package/receipt from the run ID.
 Supply the actual output/evidence inputs required by the existing owners.
+`prepare-resume` returns `RESUME_INPUTS_PREPARED` for local continuation inputs.
+The owning continuation adapter must bind a physical successor; this result is
+not a registered new attempt or a fresh-release Kaggle submission.
 
 For a retrieved frozen run, the local acceptance script resolves every arm's
 expectations and prospective locations, inspects the artifacts, diagnoses the
