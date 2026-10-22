@@ -46,6 +46,10 @@ an inventory receipt survive; interrupted deletion resumes against that receipt.
 After a Kaggle submission reaches `BOUND`, its journaled cleanup removes verified
 upload payload copies and `source_roundtrip`. Reentry uses the bound identity and
 retirement receipt; failed or unknown publication keeps its recovery inputs.
+Explicit resume preparation uses a temporary input view from the retained frozen
+source package and original initialization pointers, checked against the upload
+receipt. The view is removed on success or failure. Missing or changed originals
+stop recovery; cleanup does not authorize downloads or regenerated initialization.
 
 Recipe metadata may set `resume_keep_count` to retire older resume packages that
 are exact duplicates of retained packages. Omission retains existing behavior.

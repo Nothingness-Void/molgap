@@ -229,12 +229,6 @@ def _artifact_pointer(bundle_root: Path, pointer: dict, label: str, *, required=
     return resolved
 
 
-def _pointer(bundle_root: Path, source: Path, restore_path: str, *, required: bool) -> dict:
-    _relative(restore_path, "restore path")
-    return {"path": "files/" + source.name, "sha256": sha256_file(source),
-            "restore_path": restore_path, "required": bool(required)}
-
-
 def _sidecar_paths(source: Path) -> dict[str, list[Path]]:
     groups = {"runtime": [], "provenance": [], "context": [], "cost_segments": []}
     for item in sorted(source.iterdir(), key=lambda p: p.name.casefold()):
@@ -373,10 +367,20 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     for role in _OPTIONAL_ARTIFACTS:
         pointers.setdefault(role, None)
     sidecar_pointers = {}
+    sidecar_snapshots = {}
     for group, paths in sidecars.items():
         sidecar_pointers[group] = []
         for item in paths:
-            sidecar_pointers[group].append(_pointer(bundle, item, item.name, required=True))
+            # Allocation accounting is atomically refreshed by the parent while
+            # this worker exports a chunk. Bind one captured generation.
+            _path(item, "source sidecar", regular=True)
+            payload = item.read_bytes()
+            _strict_json_bytes(payload)
+            sidecar_snapshots[item] = payload
+            sidecar_pointers[group].append({
+                "path": "files/" + item.name,
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "restore_path": item.name, "required": True})
     manifest = {
         "format": RESUME_BUNDLE_FORMAT,
         "status": "incomplete",
@@ -412,6 +416,8 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     # cannot leave a partially overwritten recovery package.
     metadata = [(bundle / RESUME_BUNDLE_FILE, manifest_bytes),
                 (bundle / "files/trajectory.json", trajectory_bytes)]
+    metadata.extend((bundle / "files" / item.name, payload)
+                    for item, payload in sidecar_snapshots.items())
     sources = {item.name: item for role, (item, _, _) in artifact_sources.items() if role != "trajectory"}
     for paths in sidecars.values():
         for item in paths:
@@ -421,7 +427,9 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     copies = []
     for pointer in [*pointers.values(), *(item for group in sidecar_pointers.values() for item in group)]:
         if pointer is not None and pointer["path"] != "files/trajectory.json":
-            copies.append((bundle / pointer["path"], sources[Path(pointer["restore_path"]).name], pointer["sha256"]))
+            source_path = sources[Path(pointer["restore_path"]).name]
+            if source_path not in sidecar_snapshots:
+                copies.append((bundle / pointer["path"], source_path, pointer["sha256"]))
     seen = set()
     for path, digest in [(path, hashlib.sha256(payload).hexdigest()) for path, payload in metadata] + [
             (path, digest) for path, _, digest in copies]:

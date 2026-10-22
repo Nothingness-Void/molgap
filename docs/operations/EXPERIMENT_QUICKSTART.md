@@ -218,13 +218,13 @@ affected flows; overlapping selections are deduplicated before pytest starts.
 & $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope package --scope prepare -- -q
 ```
 
-Available scopes: `runtime` (checkout and scratch isolation), `package` (source
-identity/cache/tampering), `prepare` (compile, reuse and preparation), `submit`
-(bootstrap and journal reconciliation), `accept` (retrieval and terminal output),
-and `resume` (continuation and interrupted state). `--list` shows their existing
-test files without execution. Pass pytest filters such as `-k` after `--`; use
-ordinary pytest for tests outside these infrastructure flows. These selections
-are conveniences, not a mandatory release gate or native platform qualification.
+Available scopes: `runtime`, `package`, `prepare`, `train`, `submit`, `accept`
+and `resume`. The [verification conventions](INFRASTRUCTURE_VERIFICATION.md)
+own their real execution boundaries and supported claims. `--list` shows fixed
+pytest node IDs; adding a test to the same file cannot expand the selection.
+Combine affected scopes in one invocation. Direct pytest remains available for
+affected lower-level invariants. Selection filters/skips mean partial coverage;
+these journeys are not a mandatory release gate or native qualification.
 
 Run relevant tests after the final code changes. Re-run a failing or affected
 selection after a fix; do not repeat successful unchanged selections at every

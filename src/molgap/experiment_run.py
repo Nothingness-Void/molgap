@@ -30,8 +30,9 @@ def stage_verified_terminal_packages(*args, **kwargs):
     return stage(*args, **kwargs)
 
 
-def _original_run(profile, repo_root, run_id, attempt_id):
-    located = locate_run(profile, repo_root, run_id, attempt_id)
+def _original_run(profile, repo_root, run_id, attempt_id, *, _verification=None):
+    located = locate_run(profile, repo_root, run_id, attempt_id,
+        **({"_verification": _verification} if _verification is not None else {}))
     run = Path(located["run_directory"])
 
     def original(name):
@@ -81,7 +82,8 @@ def _original_run(profile, repo_root, run_id, attempt_id):
             raise ValueError("Original journal differs from the frozen run/receipt")
     return spec, dict(repo_root=Path(repo_root).absolute(), package_dir=run / "prepared/package",
                       expected_package_identity=identity,
-                      receipt_path=original("operations/launch_receipt.json")), run / "prepared"
+                      receipt_path=original("operations/launch_receipt.json"),
+                      **({"_verification": _verification} if _verification is not None else {})), run / "prepared"
 
 
 def inspect_run_output(profile, repo_root, run_id, attempt_id, *, arm_id, artifact_root, expectations):
@@ -119,7 +121,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     result.update(identity)
     if result["status"] == "BLOCKED":
         return result
-    if automatic:
+    if diagnose:
         from .experiment_attribution import diagnose_run, _write_run_diagnosis
         diagnostic = diagnose_run(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, output=diagnostic_output,
@@ -142,13 +144,15 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             if staged.get("blockers") or outcome is None:
                 return {**result, "status": "BLOCKED", "executed": False}
             closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
-                execute=True, target_identities=resolved.get("target_identities"), **options)
+                execute=True, execution_root=execution_root,
+                target_identities=resolved.get("target_identities"), **options)
             return {**closed, **identity, "diagnosis": result.get("diagnosis"), "terminal_staging": staged}
     elif execute and automatic:
         if locations is None:
             raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
         closed = accept_workflow(spec, supplied=resolved["outputs"], locations=resolved["locations"],
-            execute=True, target_identities=resolved.get("target_identities"), **options)
+            execute=True, execution_root=execution_root,
+            target_identities=resolved.get("target_identities"), **options)
         return {**closed, **identity, "diagnosis": result.get("diagnosis")}
     elif execute and locations is None:
         raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")

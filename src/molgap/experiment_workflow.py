@@ -476,13 +476,14 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                     expected_package_identity, locations=None, execute=False,
-                    target_identities=None, execution_root=None):
+                    target_identities=None, execution_root=None, _verification=None):
     """Inspect every arm independently of optional scientific closure inputs."""
     if execute and locations is None:
         raise ValueError("Terminal execution requires explicit reviewed terminal locations")
     from .experiment_family_workflow import inspect_terminal_output
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
-        package_dir=package_dir, expected_package_identity=expected_package_identity)
+        package_dir=package_dir, expected_package_identity=expected_package_identity,
+        **({"_verification": _verification} if _verification is not None else {}))
     if target_identities is not None:
         if type(target_identities) is not dict or set(target_identities) - set(outputs):
             raise ValueError("Target identity bindings name unknown workflow arms")

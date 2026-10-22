@@ -153,7 +153,10 @@ def test_safe_extract_rejects_path_escape(tmp_path):
         launcher.safe_extract(archive, tmp_path / "code")
 
 
-def test_windows_packager_fills_source_and_contract_hashes(tmp_path):
+@pytest.mark.parametrize("lost_stage,failure", [(None, None), ("preflight", "timeout"),
+    ("training", "timeout"), ("preflight", "parse"), ("training", "parse")],
+    ids=["observed", "preflight-unknown", "training-unknown", "preflight-unparseable", "training-unparseable"])
+def test_windows_packager_fills_source_and_contract_hashes(tmp_path, monkeypatch, lost_stage, failure):
     repo = tmp_path / "repo"
     repo.mkdir()
     (repo / "experiments/model").mkdir(parents=True)
@@ -168,7 +171,9 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path):
     run_spec = valid_spec()
     template = tmp_path / "spec.json"
     template.write_text(json.dumps(run_spec), encoding="utf-8")
-    output = tmp_path / "payload"
+    boundary = tmp_path / "boundary"
+    infrastructure = boundary / "infrastructure"
+    output = infrastructure / "inbox/fixture"
     packaged = submit.package(repo, template, output)
     assert packaged["source"]["commit"] == subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=repo, text=True
@@ -180,6 +185,69 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path):
         contract.read_bytes()
     ).hexdigest()
     assert (output / "source_files.json").is_file()
+    # Extend the same committed payload through the real registry, inventory,
+    # extraction, contract and PBS owners. Only scheduler/clock/platform paths
+    # are substituted; no worker, data or accelerator is invoked.
+    fixed = boundary / "fixed"
+    acceptance, manifest = fixed / "acceptance.json", fixed / "manifest.json"
+    launcher.atomic_json(acceptance, {"status": "accepted", "verify_content": True})
+    launcher.atomic_json(manifest, {"status": "complete", "identity": {"name": "ogb-train-100k"},
+        "official_validation_role_read": False, "test_dev_role_read": False,
+        "test_challenge_role_read": False})
+    launcher.atomic_json(infrastructure / "dataset_registry.json", {
+        "boundary": str(boundary), "fixed_root": str(fixed),
+        "acceptance": {"path": "acceptance.json", "sha256": launcher.sha256_file(acceptance)},
+        "datasets": {"ogb-train-100k": {"manifest": "manifest.json", "manifest_sha256": launcher.sha256_file(manifest)}}})
+    launcher.atomic_json(infrastructure / "runtime_registry.json", {"runtimes": {
+        "ims-a100-torch271-v1": {"queue": "H", "python": "synthetic-python"}}})
+    monkeypatch.setattr(launcher, "BOUNDARY", boundary)
+    guard = launcher.maintenance_guard
+    monkeypatch.setattr(launcher, "maintenance_guard", lambda seconds: guard(seconds,
+        now=datetime(2026, 10, 22, 12, tzinfo=ZoneInfo("Asia/Tokyo"))))
+    run_root = infrastructure / "runs" / run_spec["run_id"]
+    journal = run_root / "submission.json"
+    calls = []
+    def scheduler(command, **kwargs):
+        stage = "preflight" if command[-1].endswith("preflight.pbs") else "training"
+        state = launcher.load_json(journal)
+        assert state["status"] == stage + "_submitting"
+        assert command[0] == "jsub" and kwargs == dict(check=True, capture_output=True, text=True)
+        calls.append(stage)
+        if stage == "training":
+            assert state["preflight_job"] == "100.ccpbs1"
+            assert "depend=afterok:100.ccpbs1" in command
+        if stage == lost_stage and failure == "timeout":
+            raise subprocess.TimeoutExpired(command, 10)
+        result = "100.ccpbs1" if stage == "preflight" else "101.ccpbs1"
+        if stage == lost_stage and failure == "parse":
+            result = "unparseable synthetic response"
+        return subprocess.CompletedProcess(command, 0, stdout=result, stderr="")
+    monkeypatch.setattr(launcher.subprocess, "run", scheduler)
+    if lost_stage:
+        expected_error = subprocess.TimeoutExpired if failure == "timeout" else RuntimeError
+        with pytest.raises(expected_error):
+            launcher.submit_run(output, infrastructure)
+        state = launcher.load_json(journal)
+        assert state["status"] == lost_stage + "_unknown"
+        assert state["error_type"] == expected_error.__name__
+        assert "training_job" not in state
+        if lost_stage == "preflight":
+            assert "preflight_job" not in state
+        else:
+            assert state["preflight_job"] == "100.ccpbs1"
+    else:
+        state = launcher.submit_run(output, infrastructure)
+        assert state["status"] == "submitted"
+        assert state["preflight_job"] == "100.ccpbs1" and state["training_job"] == "101.ccpbs1"
+        assert state["dependency"] == "afterok:100.ccpbs1"
+    retained = journal.read_bytes()
+    previous_calls = list(calls)
+    with pytest.raises(FileExistsError, match="Run identity already exists"):
+        launcher.submit_run(output, infrastructure)
+    assert calls == previous_calls
+    assert journal.read_bytes() == retained
+    assert (run_root / "source.tar.gz").read_bytes() == (output / "source.tar.gz").read_bytes()
+    assert launcher.load_json(run_root / "staging_manifest.json")["status"] == "complete"
 
 
 @pytest.mark.parametrize("assigned,index,selected", [("4,7", 1, "7"), ("GPU-fixture", 0, "GPU-fixture")])

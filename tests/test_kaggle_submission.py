@@ -1,6 +1,7 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
 import json
 from pathlib import Path
+import shutil
 from types import SimpleNamespace as NS
 
 import pytest
@@ -9,6 +10,7 @@ from molgap import kaggle_submission as owner
 from molgap.experiment_launch import canonical_json
 from molgap.experiment_spec import ExperimentSpec
 from molgap.training_reproducibility import atomic_json
+from test_experiment_workflow import workflow_case
 
 
 class Missing(Exception):
@@ -71,7 +73,7 @@ def release(tmp_path, monkeypatch):
         "initial_states": {"original": "a", "optimized": "b"}}})
     credentials = tmp_path / "outside-key.json"
     atomic_json(credentials, {"username": "owner", "key": "do-not-print"})
-    monkeypatch.setattr(owner, "verify_experiment_source_package", lambda _: manifest)
+    monkeypatch.setattr(owner, "verify_experiment_source_package", lambda _, **kw: manifest)
     monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps({"user_authorized": True,
         "allocated_t4_hours_ceiling": 14, "arms": ["original", "optimized"], "seeds": [42]}))
     monkeypatch.setattr(owner, "_verify_release_report", lambda *_, **kw: {})
@@ -484,4 +486,139 @@ def test_crash_during_bound_source_retirement_recovers_without_reposting(release
     state = json.loads((release.output / "submission_state.json").read_bytes())
     assert state["phase"] == "BOUND" and state["source_copy_retirement"]["status"] == "PENDING"
     assert release.run()["source_copy_retirement"]["status"] == "REMOVED"
+    assert release.api.created == release.api.pushed == 1
+
+
+@pytest.fixture
+def packaged_release(tmp_path, workflow_case, monkeypatch):
+    """Reuse the server's daily journey with real local owners and HTTP-only POST."""
+    from molgap import experiment_workflow as workflow
+    from molgap.experiment_package import verify_experiment_source_package
+    from test_experiment_lifecycle_integration import (
+        _install_synthetic_owner, _prepare_reference_inputs, _rewrite_case,
+    )
+    from test_experiment_workflow import _git
+
+    def offline(*args, **kwargs):
+        raise AssertionError("This regression has no network authority")
+    monkeypatch.setattr("requests.sessions.Session.request", offline)
+    monkeypatch.setattr(owner, "connect_kaggle", offline)
+    repo = workflow_case["repo"]
+    _prepare_reference_inputs(repo)
+    module = _install_synthetic_owner(repo, monkeypatch)
+    atomic_json(repo / "authority.json", {"user_authorized": True,
+        "allocated_t4_hours_ceiling": 14, "arms": ["k1_candidate", "gptrans_candidate"],
+        "seeds": [42]})
+    _git(repo, "add", "--", "authority.json")
+    spec, plan, _, _ = _rewrite_case(workflow_case, repo, module)
+    plan["source_files"].append("authority.json")
+    plan["kaggle"].update(account="owner", kernel="owner/new-kernel", title="New Kernel",
+        source_dataset="owner/new-source", datasets=["owner/new-source", "owner/fixed-data"])
+    prepared = tmp_path / "real-prepared"
+    report = workflow.prepare_workflow(spec, repo, plan, prepared)
+    assert report["status"] == "PREPARED_FOR_PLATFORM", report
+    manifest = verify_experiment_source_package(prepared / "package")
+
+    # Reuse only the fake transport from the state-machine unit fixture. Its
+    # package/release/receipt stubs are restored before the actual journey.
+    transport_root = tmp_path / "fake-platform"
+    transport_root.mkdir()
+    with monkeypatch.context() as stubs:
+        transport = release.__wrapped__(transport_root, stubs)
+    transport.staged.rename(transport_root / "unused-source")
+    shutil.copytree(prepared / "source_dataset", transport.staged)
+    shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")
+    monkeypatch.setattr(owner, "_kernel_source", lambda *_: transport.api.remote)
+    monkeypatch.setattr(owner, "_dataset_details", lambda *_: NS(current_version_number=1))
+    output = tmp_path / "real-operations"
+    def post(url, *, auth, json, timeout):
+        assert url == "https://www.kaggle.com/api/v1/kernels/push"
+        assert json["slug"] == "owner/new-kernel"
+        assert json["machineShape"] == "NvidiaTeslaT4"
+        assert json["text"].encode() == (prepared / "kernel/run.py").read_bytes()
+        transport.api.pushed += 1
+        transport.accepted()
+        return Response({"ref": "owner/new-kernel", "kernelId": 77, "versionNumber": 1})
+    monkeypatch.setattr("requests.post", post)
+    def run(execute=True, operation_dir=output):
+        return owner.submit_prepared_workflow(prepared, transport.credentials, operation_dir,
+            authority_ref="authority.json", monitor_paths=["experiments/example/STATUS.md"],
+            execute=execute, api=transport.api, http_session=transport.http)
+    return NS(run=run, spec=spec, manifest=manifest, prepared=prepared, output=output,
+              transport=transport, post=post)
+
+
+@pytest.mark.parametrize("lost_response", [False, True], ids=["observed", "lost-response"])
+def test_real_package_release_post_receipt_reuses_only_exact_content(packaged_release, monkeypatch, lost_response):
+    from molgap import experiment_package as package_owner
+    from molgap.experiment_launch import read_launch_receipt
+    case = packaged_release
+    verifications = []
+    verify = package_owner._verify_package_snapshot
+    def counted(*args, **kwargs):
+        verifications.append(True)
+        return verify(*args, **kwargs)
+    monkeypatch.setattr(package_owner, "_verify_package_snapshot", counted)
+    if lost_response:
+        import requests
+        def lost(*args, **kwargs):
+            case.post(*args, **kwargs)
+            raise requests.Timeout("synthetic response loss")
+        monkeypatch.setattr("requests.post", lost)
+        assert case.run()["status"] == "RECONCILIATION_REQUIRED"
+        assert not (case.output / "launch_receipt.json").exists()
+        assert len(verifications) == 1
+        verifications.clear()
+    result = case.run()
+    assert result["status"] == "SUBMISSION_BOUND", result
+    assert len(verifications) == 1
+    receipt_path = case.output / "launch_receipt.json"
+    receipt = read_launch_receipt(receipt_path, case.spec, case.prepared / "package",
+        expected_package_identity=case.manifest["package_identity"])
+    assert receipt["submission_state"] == "ACCEPTED"
+    assert receipt["physical_runs"]["value"][0]["run_identity"] == "kernel77/version1"
+    assert receipt["binding"]["source_archive_sha256"] == case.manifest["archive_sha256"]
+    assert result["native_qualification"] == "NOT_EVALUATED"
+    retained = receipt_path.read_bytes()
+    assert case.run(execute=False)["status"] == "SUBMISSION_BOUND"
+    assert receipt_path.read_bytes() == retained
+    assert case.transport.api.created == case.transport.api.pushed == 1
+    # An independent call must fully validate again, even if only one sidecar
+    # changed after this transaction's successful content checks.
+    (case.prepared / "package/SOURCE_COMMIT.txt").write_text("0" * 40 + "\n")
+    with pytest.raises(ValueError):
+        case.run(execute=False)
+    assert case.transport.api.created == case.transport.api.pushed == 1
+
+
+def test_same_prepared_release_cannot_switch_journals_after_unknown(release, monkeypatch, tmp_path):
+    def lost(**kwargs):
+        release.api.pushed += 1
+        raise TimeoutError()
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", lost)
+    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
+    # Windows spelling changes do not create another journal identity.
+    import os
+    if os.name == "nt":
+        state = json.loads((release.output / "submission_state.json").read_bytes())
+        owner._bind_operation_directory(Path(str(release.prepared).swapcase()),
+            Path(str(release.output).swapcase()), state["binding"])
+    for execute in (False, True):
+        with pytest.raises(ValueError, match="owns another submission journal"):
+            owner.submit_prepared_workflow(release.prepared, release.credentials, tmp_path / "other-journal",
+                authority_ref="authority.json", monitor_paths=["experiments/example/STATUS.md"],
+                execute=execute, api=release.api, http_session=release.http)
+    assert release.api.created == release.api.pushed == 1
+
+
+def test_concurrent_other_journal_is_blocked_before_first_publication(release, monkeypatch, tmp_path):
+    create = release.api.dataset_create_new
+    def interleaved(*args, **kwargs):
+        with pytest.raises(ValueError, match="owns another submission journal"):
+            owner.submit_prepared_workflow(release.prepared, release.credentials, tmp_path / "other-journal",
+                authority_ref="authority.json", monitor_paths=["experiments/example/STATUS.md"],
+                execute=True, api=release.api, http_session=release.http)
+        return create(*args, **kwargs)
+    monkeypatch.setattr(release.api, "dataset_create_new", interleaved)
+    assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1

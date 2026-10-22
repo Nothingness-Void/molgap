@@ -110,6 +110,11 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   wrappers, not duplicate model classes. Public inference is
   `src/molgap/inference.py`, lazily exported by `src/molgap/__init__.py`.
 - **Tests:** test locally before delivery; claim execution only if it occurred.
+  Follow [verification conventions](docs/operations/INFRASTRUCTURE_VERIFICATION.md).
+  Reproduce incidents in the nearest existing real workflow before adding tests;
+  routine experiment configuration adds none. Select affected fixed nodes once,
+  strengthen or consolidate existing coverage, and report the executed path and
+  substitutes. Passing counts never establish submission readiness.
 - **Durability:** remote training/inference must retain immutable source/config,
   input/cache identity, atomic checkpoints or resumable state, independently
   retrievable durable artifacts, exact job identity and provenance. A transient

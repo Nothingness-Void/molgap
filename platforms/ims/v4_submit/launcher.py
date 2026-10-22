@@ -317,39 +317,42 @@ def submit_run(inbox: Path, infrastructure: Path) -> dict:
     maintenance_guard(walltime_seconds(spec["resources"]["train_walltime"]))
     queue = spec["resources"]["queue"]
     name = spec["run_id"][:15]
-    preflight = subprocess.run(
-        ["jsub", "-q", queue, "-N", f"{name}-pre", str(run_root / "preflight.pbs")],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    preflight_job = parse_job_id(preflight.stdout + preflight.stderr)
     submission = {
         "format": "molgap-ims-v4-submission-v1",
-        "status": "preflight_submitted",
+        "status": "preflight_submitting",
         "run_id": spec["run_id"],
-        "preflight_job": preflight_job,
     }
+    # Retain intent before dispatch: a lost or unparseable response does not
+    # establish scheduler absence. Existing immutable runs remain retry-blocked.
     atomic_json(run_root / "submission.json", submission)
-    training = subprocess.run(
-        [
-            "jsub",
-            "-q",
-            queue,
-            "-N",
-            name,
-            "-W",
-            f"depend=afterok:{preflight_job}",
-            str(run_root / "train.pbs"),
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+    try:
+        preflight = subprocess.run(
+            ["jsub", "-q", queue, "-N", f"{name}-pre", str(run_root / "preflight.pbs")],
+            check=True, capture_output=True, text=True,
+        )
+        preflight_job = parse_job_id(preflight.stdout + preflight.stderr)
+    except BaseException as error:
+        submission.update(status="preflight_unknown", error_type=type(error).__name__)
+        atomic_json(run_root / "submission.json", submission)
+        raise
+    submission.update(status="preflight_submitted", preflight_job=preflight_job)
+    atomic_json(run_root / "submission.json", submission)
+    submission.update(status="training_submitting", dependency=f"afterok:{preflight_job}")
+    atomic_json(run_root / "submission.json", submission)
+    try:
+        training = subprocess.run(
+            ["jsub", "-q", queue, "-N", name, "-W", f"depend=afterok:{preflight_job}",
+             str(run_root / "train.pbs")],
+            check=True, capture_output=True, text=True,
+        )
+        training_job = parse_job_id(training.stdout + training.stderr)
+    except BaseException as error:
+        submission.update(status="training_unknown", error_type=type(error).__name__)
+        atomic_json(run_root / "submission.json", submission)
+        raise
     submission.update(
         status="submitted",
-        training_job=parse_job_id(training.stdout + training.stderr),
-        dependency=f"afterok:{preflight_job}",
+        training_job=training_job,
     )
     atomic_json(run_root / "submission.json", submission)
     return submission

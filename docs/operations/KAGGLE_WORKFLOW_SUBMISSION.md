@@ -65,6 +65,9 @@ conflicting outcome stays `RECONCILIATION_REQUIRED` and never triggers a retry.
 Do not remove the journal or change the slug to bypass uncertainty. A leftover
 `.submission.lock` requires confirming that its owning process is no longer
 active before cleanup; locks never expire into permission for another POST.
+The prepared release binds its operations directory in the sibling
+`<prepared-name>.submission_owner.json` before publication. Choosing another
+output directory cannot bypass that binding; reconcile the recorded journal.
 
 The journal retains phase timings. `RUNNING`, `SUBMISSION_BOUND` and startup
 messages do not imply native, scientific or terminal acceptance. Existing

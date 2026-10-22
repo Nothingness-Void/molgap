@@ -215,15 +215,28 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     _bound(case)
     assert case.receipt.read_bytes() == retained_receipt
     assert case.transport.api.created == case.transport.api.pushed == 1
-    assert snapshot(case.prepared) == immutable
     upload = json.loads((case.run / "operations/source_upload_verification.json").read_bytes())
     assert upload["status"] == "REMOTE_SOURCE_BYTES_VERIFIED" and upload["version"] == 1
-    assert all((case.run / "operations/source_roundtrip" / item["path"]).read_bytes()
-        == (case.prepared / "source_dataset" / item["path"]).read_bytes() for item in upload["files"])
+    state = json.loads((case.run / "operations/submission_state.json").read_bytes())
+    retirement = state["source_copy_retirement"]
+    assert retirement["status"] == "REMOVED"
+    roundtrip = {item["path"]: {key: item[key] for key in ("sha256", "bytes")}
+        for item in upload["files"]}
+    assert retirement["roundtrip"] == roundtrip
+    retired_uploads = {path: record for path, record in roundtrip.items()
+        if path == "source_payload.bin" or path.startswith("initial_states/")}
+    assert retirement["uploaded"] == retired_uploads
+    retired_prepared_paths = {"source_dataset/" + path for path in retired_uploads}
+    prepared_after = snapshot(case.prepared)
+    assert set(immutable) - set(prepared_after) == retired_prepared_paths
+    assert prepared_after == {path: payload for path, payload in immutable.items()
+        if path not in retired_prepared_paths}
+    assert not (case.run / "operations/source_roundtrip").exists()
     frozen = snapshot(case.run)
     _module(monkeypatch)  # Existing offline SDK request type only.
 
     bundles = {}
+    missing_owner_checked = False
     for arm in case.spec.to_dict()["arms"]:
         arm_id = arm["arm_id"]
         remote = _resume_remote(case, arm_id, tmp_path)
@@ -246,6 +259,35 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
         restored_report = restore_resume_bundle(retained, restored, case.spec,
             arm_id=arm_id, context=remote.producer, trajectory=remote.trajectory)
         assert restored_report["owner"]["owner"] == "synthetic"
+        if not missing_owner_checked:
+            frozen_plan = json.loads((case.run / "inputs/workflow_plan.json").read_bytes())
+            initial_pointer = next(entry["initial_state"] for entry in frozen_plan["arms"]
+                if entry["arm_id"] == arm_id)
+            initial_owner = Path(initial_pointer)
+            if not initial_owner.is_absolute():
+                initial_owner = case.repo / initial_owner
+            initial_owner = initial_owner.absolute()
+            owner_bytes = initial_owner.read_bytes()
+            moved_owner = initial_owner.with_name(initial_owner.name + ".missing-owner-control")
+            assert not moved_owner.exists()
+            missing_output = tmp_path / "missing-owner-recovery" / arm_id
+            assert not missing_output.exists()
+            before_run = snapshot(case.run)
+            before_prepared = snapshot(case.prepared)
+            assert not list(case.run.glob(".resume-inputs-*"))
+            initial_owner.rename(moved_owner)
+            try:
+                with pytest.raises(ValueError, match="Original frozen recovery input is missing or changed"):
+                    runs.build_run_resume(*case.original, arm_id=arm_id,
+                        source_output=restored, output=missing_output)
+                assert not missing_output.exists()
+                assert snapshot(case.run) == before_run
+                assert snapshot(case.prepared) == before_prepared
+                assert not list(case.run.glob(".resume-inputs-*"))
+            finally:
+                moved_owner.rename(initial_owner)
+            assert initial_owner.read_bytes() == owner_bytes
+            missing_owner_checked = True
         exported = runs.build_run_resume(*case.original, arm_id=arm_id,
             source_output=restored, output=tmp_path / "validated-bundles" / arm_id)
         assert exported["status"] == "RESUME_VERIFIED"
@@ -259,6 +301,9 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
             "attempt_id": action["attempt_ids"][0]}
         bundles[arm_id] = exported["manifest"]
 
+    assert missing_owner_checked
+    assert not list(case.run.glob(".resume-inputs-*"))
+
     def no_new_scientific_plan(*args, **kwargs):
         raise AssertionError("Recovery must reuse the original prospective action")
     monkeypatch.setattr(workflow, "plan_prospective", no_new_scientific_plan)
@@ -269,6 +314,9 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     assert recovery["prospective_published"] is recovery["submitted"] is False
     assert recovery["spec_identity"] == case.spec.identity
     assert recovery["package_identity"] == case.manifest["package_identity"]
+    for name in ("release_report.json", "workflow_report.json"):
+        persisted_report = (attempt2 / name).read_bytes()
+        assert b".resume-inputs-" not in persisted_report, name
     recovered_launch = json.loads((attempt2 / "source_dataset/experiment_launch.json").read_bytes())
     assert set(recovered_launch["resume"]) == set(bundles)
     original_launch = json.loads((case.prepared / "source_dataset/experiment_launch.json").read_bytes())

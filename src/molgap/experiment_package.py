@@ -121,9 +121,17 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
-def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+def read_packaged_text(package_dir: Path, relative_path: str, *, _verification=None) -> str:
     """Read a reviewed source member from an already verified immutable package."""
     name = _name(relative_path)
+    if _verification is not None:
+        # Re-read all six files before using the exact-content memo. A path or
+        # unchanged stat record is never authority for cached archive members.
+        _read_verified_package(package_dir, _verification=_verification)
+        try:
+            return _verification._members[name].decode("utf-8")
+        except KeyError as exc:
+            raise ValueError("Missing verified packaged text source") from exc
     with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
         members = [member for member in archive.getmembers() if member.name == name]
         if len(members) != 1 or not members[0].isfile() or members[0].linkname:
@@ -364,13 +372,16 @@ class _PackageVerification:
     def __init__(self):
         self._fingerprint = None
         self._manifest = None
+        self._members = {}
 
     def verify(self, raw, repo_root=None):
         fingerprint = tuple((name, _sha(raw[name])) for name in sorted(SIDECARS))
         if repo_root is not None or fingerprint != self._fingerprint:
-            manifest = _verify_package_snapshot(raw, repo_root)
+            members = {}
+            manifest = _verify_package_snapshot(raw, repo_root, _members=members)
             self._fingerprint = fingerprint
             self._manifest = _json_bytes(manifest)
+            self._members = members
         return _load(self._manifest)
 
 
@@ -397,7 +408,7 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     return _read_verified_package(package_dir, repo_root, _verification=_verification)[1]
 
 
-def _verify_package_snapshot(raw, repo_root=None):
+def _verify_package_snapshot(raw, repo_root=None, *, _members=None):
     """Validate the exact bytes read by the package owner, never reopen the archive."""
     manifest = _load(raw["package_manifest.json"])
     if type(manifest) is not dict or raw["package_manifest.json"] != _json_bytes(manifest):
@@ -457,6 +468,8 @@ def _verify_package_snapshot(raw, repo_root=None):
                     raise ValueError("Derived JSON must be bounded and canonical")
             if name == config_name:
                 config_payload = payload
+            if _members is not None:
+                _members[name] = payload
             seen.add(name)
     if seen != set(entries):
         raise ValueError("Archive member set differs from inventory")

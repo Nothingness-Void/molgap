@@ -562,7 +562,7 @@ def freeze_experiment_input(path, repo_root):
     return _freeze(value,spec,plan,paths,repo_root=repo_root)
 
 
-def locate_run(profile, repo_root, run_id, attempt_id):
+def locate_run(profile, repo_root, run_id, attempt_id, *, _verification=None):
     """Read the original frozen run by ID; never create a run or infer artifacts."""
     from .experiment_launch import read_launch_receipt
     from .experiment_package import _PackageVerification, verify_experiment_source_package
@@ -591,7 +591,7 @@ def locate_run(profile, repo_root, run_id, attempt_id):
             or canonical_fingerprint(plan) != binding.get("workflow_identity")):
         raise ValueError("Original frozen run binding changed")
     package=run/"prepared/package"
-    verification=_PackageVerification()
+    verification=_verification or _PackageVerification()
     manifest=(verify_experiment_source_package(package, _verification=verification)
               if package.exists() else None)
     if manifest and manifest["spec_identity"] != spec.identity:

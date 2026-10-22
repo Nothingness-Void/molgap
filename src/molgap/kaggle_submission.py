@@ -19,7 +19,7 @@ from urllib.parse import quote
 
 from .experiment_family_workflow import _json
 from .experiment_launch import (_safe_local, build_launch_receipt, canonical_json,
-                                reconcile_platform_response)
+                                publish_immutable_bytes, reconcile_platform_response)
 from .experiment_package import read_packaged_text, verify_experiment_source_package
 from .experiment_spec import ExperimentSpec
 from .common.kaggle import (
@@ -78,6 +78,21 @@ def _exclusive(output):
         yield
     finally:
         lock.unlink()
+
+
+def _bind_operation_directory(prepared, output, binding, *, publish=False):
+    """One immutable prepared release owns one recovery journal location."""
+    pointer = prepared.with_name(prepared.name + ".submission_owner.json")
+    _safe_local(pointer)
+    payload = canonical_json({"prepared": os.path.normcase(str(prepared.resolve())),
+                              "operations": os.path.normcase(str(output.resolve())),
+                              "binding": binding}).encode("utf-8")
+    # An output-local lock alone permits concurrent callers to choose two fresh
+    # journals, both observe platform absence, and both dispatch a mutation.
+    if pointer.exists() and pointer.read_bytes() != payload:
+        raise ValueError("Prepared release owns another submission journal; reconcile its operation directory")
+    if publish:
+        publish_immutable_bytes(pointer, payload)
 
 
 def _roundtrip_source(api, http, staged, remote, ref):
@@ -173,7 +188,7 @@ def _verify_remote_kernel(remote, response, metadata, entry):
             "dataset_sources": list(m.dataset_data_sources), "observed_at": datetime.now(timezone.utc).isoformat()}
 
 
-def _bound_submission_status(output, spec, package, package_identity, binding):
+def _bound_submission_status(output, spec, package, package_identity, binding, *, _verification=None):
     """Return a locally verified bound receipt without consulting or mutating Kaggle."""
     journal = output / "submission_state.json"
     _safe_local(journal)
@@ -194,9 +209,9 @@ def _bound_submission_status(output, spec, package, package_identity, binding):
 
     from .experiment_launch import read_launch_receipt
     receipt = read_launch_receipt(output / "launch_receipt.json", spec, package,
-                                  expected_package_identity=package_identity)
+                                  expected_package_identity=package_identity, _verification=_verification)
     expected = build_launch_receipt(spec, package,
-                                   expected_package_identity=package_identity)
+                                   expected_package_identity=package_identity, _verification=_verification)
     fact = lambda value: {"value": value, "missing_reason": None}
     arms = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
     expected_runs = fact([{"arm_ids": arms, "canonical_reference": response["kernel"],
@@ -255,7 +270,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     for path in (kernel / "kernel-metadata.json", kernel / "run.py", staged / "dataset-metadata.json",
                  staged / "experiment_launch.json", prepared / "workflow_report.json"):
         _safe_local(path)
-    manifest = verify_experiment_source_package(package)
+    from .experiment_package import _PackageVerification
+    verification = _PackageVerification()
+    manifest = verify_experiment_source_package(package, _verification=verification)
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
     report = _json(prepared / "workflow_report.json")
     if report.get("status") != "PREPARED_FOR_PLATFORM" or report.get("package_identity") != manifest["package_identity"]:
@@ -321,12 +338,13 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     binding = {"package_identity": manifest["package_identity"], "kernel": ref, "dataset": dataset,
                "authority_ref": authority_ref, "authority_sha256": hashlib.sha256(canonical_json(authority).encode()).hexdigest(),
                "monitor_paths": list(monitor_paths)}
+    _bind_operation_directory(prepared, output, binding)
     if not execute:
         already_bound = _bound_submission_status(
-            output, spec, package, manifest["package_identity"], binding)
+            output, spec, package, manifest["package_identity"], binding, _verification=verification)
         if already_bound is not None:
             return already_bound
-        _verify_release_report(prepared / "release_report.json", kernel / "run.py")
+        _verify_release_report(prepared / "release_report.json", kernel / "run.py", _verification=verification)
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
     from .experiment_preflight import _ACTIVE_CONTENT_VERIFICATION, _ReleaseContentVerification
     content_verification = (
@@ -336,6 +354,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     )
     output.mkdir(parents=True, exist_ok=True)
     with _exclusive(output):
+        _bind_operation_directory(prepared, output, binding, publish=True)
         journal = output / "submission_state.json"
         _safe_local(journal)
         state = _json(journal) if journal.exists() else {"binding": binding, "phase": "NEW", "timings": {}}
@@ -368,7 +387,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
             _verify_release_report(prepared / "release_report.json", kernel / "run.py",
-                                   _content_verification=content_verification)
+                                   _content_verification=content_verification, _verification=verification)
             atomic_json(output / "quota_before_publication.json", _quota(http_session, budget))
             if _kernel_source(api, ref) is not None:
                 raise ValueError("Target kernel already exists; reconcile its owning journal")
@@ -404,7 +423,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 dataset_manifests=prior["inputs"].get("dataset_manifests"),
                 initial_states={a: remote_root / "initial_states" / (a + ".pt") for a in prior["inputs"]["initial_states"]},
                 input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
-                kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification)
+                kernel_metadata=kernel / "kernel-metadata.json", _content_verification=content_verification,
+                _verification=verification)
             if release["errors"]:
                 raise ValueError("Remote source failed existing release checks")
             atomic_json(output / "remote_release_report.json", release)
@@ -415,7 +435,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
                     accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json",
-                    _content_verification=content_verification)
+                    _content_verification=content_verification, _verification=verification)
             except Exception as error:
                 save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
@@ -427,7 +447,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         response = state["kernel_response"]
         verified = _verify_remote_kernel(_kernel_source(api, response["kernel"]), response, metadata, (kernel / "run.py").read_bytes())
         atomic_json(output / "source_verification.json", verified)
-        unsubmitted = build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"])
+        unsubmitted = build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"],
+                                          _verification=verification)
         fact = lambda v: {"value": v, "missing_reason": None}
         envelope = {"format": "molgap-platform-response", "version": 1, "mode": "observed", "outcome": "accepted",
             "binding": unsubmitted["binding"], "conflict_kind": None,
@@ -436,7 +457,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 "canonical_reference": response["kernel"], "platform_version": fact(str(response["version_number"])),
                 "run_identity": f"kernel{response['kernel_id']}/version{response['version_number']}"}]),
             "timestamp": fact(state["observed_at"]), "monitor_paths": fact(list(monitor_paths))}
-        receipt = reconcile_platform_response(spec, package, canonical_json(envelope), expected_package_identity=manifest["package_identity"])
+        receipt = reconcile_platform_response(spec, package, canonical_json(envelope),
+            expected_package_identity=manifest["package_identity"], _verification=verification)
         if receipt["submission_state"] != "ACCEPTED":
             raise ValueError("Observed physical run was not accepted by the receipt owner")
         receipt_path = output / "launch_receipt.json"
@@ -444,7 +466,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             atomic_write(receipt_path, canonical_json(receipt).encode())
         else:
             from .experiment_launch import read_launch_receipt
-            retained = read_launch_receipt(receipt_path, spec, package, expected_package_identity=manifest["package_identity"])
+            retained = read_launch_receipt(receipt_path, spec, package,
+                expected_package_identity=manifest["package_identity"], _verification=verification)
             if (retained["canonical_platform_reference"] != fact(response["kernel"])
                     or retained["platform_version"] != fact(str(response["version_number"]))
                     or retained["physical_runs"] != envelope["physical_runs"]):

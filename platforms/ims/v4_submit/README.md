@@ -48,6 +48,12 @@ completion files in the run spec so infrastructure failures are fail-closed.
 Failed staging directories are retained with an atomic error record; the
 launcher never recursively deletes remote content.
 
+`submission.json` retains `preflight_submitting` or `training_submitting` before
+each scheduler request. A lost or unparseable response records the corresponding
+`*_unknown` status and preserves any known preflight job ID. These states require
+authoritative scheduler reconciliation; the immutable run still blocks another
+submission. Do not change the run ID to bypass an uncertain outcome.
+
 The first Sunday of each month and any run whose 25%-margined walltime reaches
 the first Monday maintenance window are rejected. An explicit maintenance
 override is intentionally not implemented; check the RCCS notice and update

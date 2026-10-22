@@ -364,17 +364,14 @@ cannot release any of those operations.
 
 ## Local Verification
 
-Use the configured project virtual environment with this checkout's `src` on
-`PYTHONPATH`, not system Python. CLI tests mock construction/preflight workers;
-local package fixtures use temporary local Git repositories. They do not submit
-remotely or train models.
+Use the selected checkout and its project environment. The
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md) own fixed workflow
+selection, test-growth limits and the distinction between fixtures, actual
+candidate packages and native qualification. Select affected scopes together:
 
 ```powershell
-$env:PYTHONPATH = (Resolve-Path src).Path
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
+.\.venv\Scripts\python.exe platforms/local/run.py --module molgap.local_testing -- --scope prepare --scope accept -- -q
 ```
 
-Workflow and training-adapter fixtures are synthetic; they establish schema and
-mechanical behavior only. No GPU training qualification is claimed. Local tests
-do not confer formal training authorization.
+Use direct pytest only for affected lower-level invariants outside those journeys.
+Successful local checks confer no training or submission authority.

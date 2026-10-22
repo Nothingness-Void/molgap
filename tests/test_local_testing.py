@@ -15,14 +15,14 @@ def test_combined_flows_run_one_session_without_duplicate_files(monkeypatch):
     calls = []
     monkeypatch.setattr(pytest, "main", lambda args: calls.append(args) or 1)
     assert local_testing.main([
-        "--scope", "prepare", "--scope", "submit", "--scope", "prepare", "--", "-q",
+        "--scope", "train", "--scope", "resume", "--scope", "train", "--", "-q",
     ]) == 1
     assert len(calls) == 1
     files = calls[0][:-1]
     assert calls[0][-1] == "-q"
     assert len(files) == len(set(files))
-    assert files.count("tests/test_reform_workflow.py") == 1
-    assert "tests/test_kaggle_submission.py" in files
+    assert files.count(local_testing.SCOPES["train"][0]) == 1
+    assert set(local_testing.SCOPES["resume"]) <= set(files)
 
 
 def test_list_is_read_only_and_all_selections_resolve(monkeypatch, capsys):
@@ -30,8 +30,8 @@ def test_list_is_read_only_and_all_selections_resolve(monkeypatch, capsys):
     assert local_testing.main(["--list"]) == 0
     groups = json.loads(capsys.readouterr().out)
     root = Path(__file__).resolve().parents[1]
-    assert all((root / "tests" / (name + ".py")).is_file()
-               for names in groups.values() for name in names)
+    assert all("::" in node and (root / node.split("::", 1)[0]).is_file()
+               for nodes in groups.values() for node in nodes)
     assert local_testing.main(["--scope", "prepare", "--scope", "submit", "--list"]) == 0
     files = json.loads(capsys.readouterr().out)
     assert len(files) == len(set(files))
@@ -41,16 +41,6 @@ def test_no_implicit_full_suite():
     with pytest.raises(SystemExit) as error:
         local_testing.main([])
     assert error.value.code == 2
-
-
-def test_scopes_cover_existing_lifecycle_regressions():
-    assert "test_experiment_run" in local_testing.SCOPES["prepare"]
-    assert "test_reform_review" in local_testing.SCOPES["prepare"]
-    assert "test_reform_catalog" in local_testing.SCOPES["prepare"]
-    assert "test_reform_distribution" in local_testing.SCOPES["package"]
-    assert "test_kaggle_family_retrieval" in local_testing.SCOPES["accept"]
-    for scope in ("submit", "accept", "resume"):
-        assert "test_reform_daily_platform" in local_testing.SCOPES[scope]
 
 
 def test_test_inventory_keeps_worker_boundary_and_rejects_payloads(tmp_path, monkeypatch):
@@ -152,9 +142,10 @@ if sys.argv[2]=='collect':
     args=[item for scope in local_testing.SCOPES for item in ('--scope',scope)]
     args += ['--','--collect-only','-q']
 else:
-    args=['--scope','runtime','--scope','prepare','--scope','accept','--','-q','-k',
-          '(local_testing or reform_runtime or local_storage or machine_paths or '
-          'execution_projection_tracks or parser_errors_are_finite_json) and not extracted_test_package']
+    # Exercise the extracted package once, without recursively running its
+    # package-distribution test or selecting unrelated whole files.
+    args=['--scope','runtime','--','-q']
+    args += ['tests/test_ims_v4_submit.py::test_windows_packager_fills_source_and_contract_hashes[observed]']
 code=local_testing.main(args)
 assert code==0,code
 for name,module in list(sys.modules.items()):

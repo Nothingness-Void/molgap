@@ -426,6 +426,9 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
         _check_context(saved.pop("context"), RunContext(**context))
     else:
         saved.pop("context")
+    # The wire writer omits disabled EMA, as SessionOutputs.retained_state handles.
+    # The session validator still rejects a missing EMA state for EMA-enabled recipes.
+    saved.setdefault("ema", None)
     progress = validate_session_resume(recipe, saved)
     if progress.status == "complete" or progress.optimizer_step >= recipe.optimizer_steps:
         raise ValueError("Completed shared session cannot be resumed")
@@ -442,16 +445,14 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
 def run_screen_resume_preflight(*, resume_output, **options):
     """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
     import torch
-    from .family_training_kernel import FamilyKernel
-    from .family_training_loaders import FamilyLoaders
-    from .family_training_session import FamilyTrainingSession, validate_session_resume
-    from .training_reproducibility import configure_fp32_determinism
+    from .family_training_session import validate_session_resume
     result = run_screen_preflight(**options)
     output = Path(options["output"])
     bootstrap_options = {k: v for k, v in options.items() if k != "output"}
     _, recipe, data, tuning, context, _, _ = _bootstrap(**bootstrap_options)
     retained = torch.load(Path(resume_output) / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     _check_context(retained.pop("context"), context)
+    retained.setdefault("ema", None)
     progress = validate_session_resume(recipe, retained)
     if progress.status == "complete":
         raise ValueError("Cannot resume a completed shared session")
@@ -462,14 +463,32 @@ def run_screen_resume_preflight(*, resume_output, **options):
         cert = _json(output / "runtime_certificate.json")
         cert["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
         atomic_json(output / "runtime_certificate.json", cert)
+    proofs = _actual_resume_proofs(recipe, data, tuning, Path(options["initial_state_path"]),
+                                  retained, output, device="cuda")
+    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
+        "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
+        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
+    return result
+
+
+def _actual_resume_proofs(recipe, data, tuning, initial_state, retained, output, *, device):
+    """Repeat one scratch update without lending the retained optimizer tensors."""
+    import copy
+    import torch
+    from .family_training_kernel import FamilyKernel
+    from .family_training_loaders import FamilyLoaders
+    from .family_training_session import FamilyTrainingSession, validate_session_resume
+    from .training_reproducibility import configure_fp32_determinism
+    progress = validate_session_resume(recipe, retained)
     proofs = []
     for label in ("actual-resume-a", "actual-resume-b"):
         configure_fp32_determinism(recipe.seed)
-        kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
+        kernel = FamilyKernel(recipe, initial_state, device=device)
         session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
             checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
             selected=lambda *args: None, pass_finished=lambda *args: None)
-        session.load_state_dict(retained)
+        # AdamW may retain CPU step tensors by reference during restore.
+        session.load_state_dict(copy.deepcopy(retained))
         endpoint = session.run(should_pause=lambda: True)
         observed = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         if endpoint.optimizer_step != progress.optimizer_step + 1:
@@ -478,10 +497,7 @@ def run_screen_resume_preflight(*, resume_output, **options):
                        "state_fingerprint": _state_fingerprint(observed)})
     if proofs[0]["state_fingerprint"] != proofs[1]["state_fingerprint"]:
         raise ValueError("Actual resume next-step repeats differ")
-    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
-        "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
-        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
-    return result
+    return proofs
 
 
 def _verify_profile_proof(root, probe, profile_proof, *, required):

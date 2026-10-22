@@ -121,6 +121,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     root = Path(repo_root).resolve()
     spec = resolved["spec"]
+    frozen_options = resolved.get("options", {})
+    frozen_package = frozen_options.get("package_dir")
+    verification = frozen_options.get("_verification")
     outputs = {arm_id: {**item,
         **({"context": resolved["contexts"][arm_id]} if "context" not in item else {}),
         **({"target_identity": resolved["target_identities"][arm_id]}
@@ -150,6 +153,10 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         from .research_memory.plan import resolve_decision_state
         trajectory_path = repo_local_path(root, where["trajectory"])
         trajectory = validate_trajectory(resolve_decision_state(root, _json(trajectory_path)))
+        # Restore only exact metadata pins from the original source package.
+        from .research_memory.terminal_wiring import _restore_frozen_generated_metadata
+        restored = _restore_frozen_generated_metadata(
+            root, trajectory, frozen_package, _verification=verification)
         if trajectory["trajectory_id"] != where["trajectory_id"] or trajectory["record_mode"] != "prospective":
             raise ValueError("Terminal staging requires the owning prospective trajectory")
         actions = [action for action in trajectory["actions"] if where["run_id"] in action["run_ids"]]
@@ -169,7 +176,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if (manifest.get("artifacts") != observed["artifacts"] or manifest.get("costs") != observed["costs"]
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
-        artifacts, hashes = [], {}
+        artifacts, hashes = [], dict(restored)
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
@@ -200,8 +207,6 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             hashes[audit_ref] = file_digest(root / audit_ref)
         manifest_locator = artifact_locator(root, manifest_path)
         hashes[manifest_locator] = file_digest(manifest_path)
-        if diagnostic_binding is not None:
-            hashes[diagnostic_binding["locator"]] = diagnostic_binding["sha256"]
         if diagnostic_binding is not None:
             hashes[diagnostic_binding["locator"]] = diagnostic_binding["sha256"]
         # Input-addressed metadata avoids overwriting a draft when a later audit

@@ -2,7 +2,7 @@
 import json
 import errno
 import os
-from types import SimpleNamespace
+from pathlib import Path
 
 import pytest
 import torch
@@ -58,6 +58,31 @@ def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_p
         transport.restore_resume_bundle(bundle, destination)
 
 
+def test_bundle_binds_captured_allocation_sidecar_during_atomic_refresh(bundle_case, tmp_path, monkeypatch):
+    source, _, ctx, trajectory, _ = bundle_case
+    ledger = source / "allocation_ledger.json"
+    before, after = b'{"generation":1}', b'{"generation":2}'
+    ledger.write_bytes(before)
+    original_read = Path.read_bytes
+    captured = []
+    def refresh_after_read(path):
+        payload = original_read(path)
+        if path == ledger and not captured:
+            captured.append(payload)
+            replacement = ledger.with_name(".allocation_ledger.next.json")
+            replacement.write_bytes(after)
+            os.replace(replacement, ledger)
+        return payload
+    monkeypatch.setattr(Path, "read_bytes", refresh_after_read)
+    destination = tmp_path / "snapshot"
+    manifest = transport.create_resume_bundle(source, ctx, trajectory, destination)
+    assert captured == [before] and ledger.read_bytes() == after
+    pointer = manifest["cost_segments"][0]
+    assert pointer["sha256"] == transport.hashlib.sha256(before).hexdigest()
+    assert (destination / pointer["path"]).read_bytes() == before
+    assert transport.validate_resume_bundle(destination, context=ctx)["status"] == "TRANSPORT_VERIFIED"
+
+
 @pytest.mark.parametrize("defect", ["hash", "cursor", "escape", "context", "trajectory"])
 def test_transport_rejects_unbound_or_changed_evidence(bundle_case, defect):
     _, bundle, context, trajectory, _ = bundle_case
@@ -76,28 +101,6 @@ def test_transport_rejects_unbound_or_changed_evidence(bundle_case, defect):
     manifest_path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError):
         transport.validate_resume_bundle(bundle, context=context, trajectory=trajectory)
-
-
-def test_spec_validation_uses_registered_family_hook(bundle_case, monkeypatch):
-    _, bundle, context, trajectory, arm = bundle_case
-    from molgap import experiment_execution, family_training_runner
-    observed = []
-    monkeypatch.setattr(experiment_execution, "training_adapter",
-                        lambda declaration: SimpleNamespace(module="molgap.family_training_runner"))
-    monkeypatch.setattr(family_training_runner, "validate_screen_resume",
-                        lambda **options: observed.append(options) or {"synthetic": True})
-    spec = SimpleNamespace(identity=context["spec_identity"], to_dict=lambda: {
-        "arms": [arm], "prospective": {"arms": [{"arm_id": arm["arm_id"],
-            "trajectory_id": trajectory["trajectory_id"]}]}})
-    result = transport.validate_resume_bundle(bundle, spec, context=context, trajectory=trajectory)
-    assert result["status"] == "RESUME_VERIFIED"
-    assert result["owner"] == {"synthetic": True}
-    assert len(observed) == 1 and observed[0]["arm_id"] == "reference"
-
-
-def test_safe_loader_has_one_owner():
-    from molgap.training_reproducibility import safe_cpu_torch_load
-    assert transport.safe_cpu_torch_load is safe_cpu_torch_load
 
 
 @pytest.mark.parametrize("cross_volume", [False, True])

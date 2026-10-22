@@ -8,16 +8,104 @@ finalize with trace_status=unavailable.  Maintains RML core 1:1 finalization mod
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
+from molgap.common.io import publish_immutable_bytes
 from .paths import artifact_locator, bound_artifact_path, repo_local_path
 from .pipeline import finalize_rebuild_backtest
 from .recovery import recover_trace
 from .trace import atomic_write, canonicalize_trace, file_digest, json_bytes, load_canonical_trace
+
+
+def _generated_metadata_refs(trajectory: Mapping[str, Any]) -> list[str]:
+    """Return only generated JSON pointers already frozen by the trajectory."""
+    state = trajectory.get("state_at_start", {})
+    values = [*state.get("contract_refs", []), *state.get("role_snapshot_refs", [])]
+    budget = state.get("budget_snapshot_ref")
+    if budget:
+        values.append(budget)
+    for action in trajectory.get("actions", []):
+        values.extend(action.get("evidence_refs", []))
+    values.extend(trajectory.get("result", {}).get("evidence_refs", []))
+    decision = trajectory.get("decision", {}).get("decision_ref")
+    if decision:
+        values.append(decision)
+    readiness = trajectory.get("readiness")
+    if isinstance(readiness, Mapping):
+        comparison = readiness.get("paired_comparison_ref")
+        if comparison:
+            values.append(comparison)
+        values.extend(readiness.get("role_history_refs", []))
+    comparison_readiness = trajectory.get("comparison_readiness_ref")
+    if comparison_readiness:
+        values.append(comparison_readiness)
+    result = []
+    seen = set()
+    for value in values:
+        if not isinstance(value, str) or value in seen:
+            continue
+        seen.add(value)
+        parts = value.replace("\\", "/").split("/")
+        if "generated" in parts and value.lower().endswith(".json"):
+            result.append(value)
+    return result
+
+
+def _restore_frozen_generated_metadata(root: Path, trajectory: Mapping[str, Any],
+                                      package_dir: str | Path | None, *,
+                                      _verification=None) -> dict[str, str]:
+    """Restore missing generated JSON pins without replacing existing bytes."""
+    if package_dir is None:
+        return {}
+    from molgap.experiment_package import (
+        _PackageVerification,
+        read_packaged_text,
+        verify_experiment_source_package,
+    )
+
+    package = Path(package_dir).absolute()
+    verification = _verification or _PackageVerification()
+    manifest = verify_experiment_source_package(
+        package, _verification=verification
+    )
+    source_commit = trajectory.get("state_at_start", {}).get("source_commit")
+    if manifest.get("source_commit") != source_commit:
+        raise ValueError("Frozen source package differs from trajectory source commit")
+    generated = manifest.get("generated_records") or {}
+    # V2 packages carry immutable generated-record pins in the verified
+    # manifest.  Keep the V1 fallback for older frozen packages; it reads only
+    # the small sidecar and never reparses the source archive.
+    pins = dict(generated)
+    if not pins:
+        inventory = json.loads((package / "SOURCE_FILES.json").read_text(encoding="utf-8"))
+        pins = {entry["path"]: entry["sha256"] for entry in inventory.get("files", [])}
+    allowlist = set(manifest.get("relative_allowlist", []))
+    restored = {}
+    for relative in _generated_metadata_refs(trajectory):
+        if relative not in allowlist:
+            raise ValueError("Frozen package does not contain generated metadata: " + relative)
+        expected = pins.get(relative)
+        if not isinstance(expected, str):
+            raise ValueError("Generated metadata is not pinned by the frozen package: " + relative)
+        raw = read_packaged_text(
+            package, relative, _verification=verification
+        ).encode("utf-8")
+        if hashlib.sha256(raw).hexdigest() != expected:
+            raise ValueError("Frozen generated metadata hash mismatch: " + relative)
+        target = repo_local_path(root, relative)
+        if target.exists():
+            if target.read_bytes() != raw:
+                raise ValueError("Existing generated metadata differs from its frozen pin: " + relative)
+            restored[relative] = expected
+            continue
+        publish_immutable_bytes(target, raw)
+        restored[relative] = expected
+    return restored
 
 
 def is_trace_artifact(artifact: Mapping[str, Any]) -> bool:

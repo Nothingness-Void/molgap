@@ -84,7 +84,10 @@ for family,prefix,version in (("neural_atom_k1","k1","3"),("gptrans_t","gptrans"
     assert result["status"]=="PASSED",result
     assert not result["frozen_initialization_loaded"]
     results.append({"family":family,"status":result["status"],"timing":result["timing"]})
-code=pytest.main(["-q","--confcutdir",str(driver),str(driver),"--basetemp",str(driver/"scratch"),
+nodes=["test_family_training_core.py::test_kernel_preserves_original_optimizer_weights_gradients_and_rng",
+       "test_family_training_session.py::test_exact_midpass_resume_including_partial_metric_schedule_and_ema",
+       "test_family_training_state.py::test_native_calibration_changes_only_clean_bn_and_persists_across_return_save_load"]
+code=pytest.main(["-q","--confcutdir",str(driver),*[str(driver/node) for node in nodes],"--basetemp",str(driver/"scratch"),
                   "--junitxml",str(driver/"cpu-state.xml"),"--tb=short"])
 assert code==0,code
 for name,module in list(sys.modules.items()):
