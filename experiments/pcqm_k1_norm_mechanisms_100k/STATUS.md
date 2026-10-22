@@ -1,5 +1,25 @@
 # Status
 
+Kaggle1 continuation **140063114/version3** was accepted and source-bound on
+2026-10-22. Last scheduler observation: **QUEUED**, 07:10:33 UTC. The user
+requested ending the wait; native preflight and formal resumed progress have
+not been observed. Do not treat submission as successful training.
+
+[Version3 authority](recovery_authority_v3_20261022.md) preserves the original
+30-pass Graph-RMS and 20-pass AdaRMS checkpoints and 160-pass total target.
+Repair commit `e2038d8b` isolates optimizer state between scratch probes.
+[Test cleanup](test_cleanup_20261022.md): 38 redundant/identity cases removed,
+one causal regression added, 87 cases collected; the selected21 passed once
+in55.63seconds. Scientific acceptance and replay readiness remain pending.
+
+Exact receipt, source verification, remote file hashes and timestamped scheduler
+observations are retained at
+`D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/`.
+Kernel: `nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42`, version3.
+No recurring monitor was created. Reconcile this exact version before any retry.
+
+## Version2 terminal diagnosis (historical)
+
 Kaggle1 scope/gain continuation **140063114/version2** is terminal ERROR.
 It failed native actual-resume preflight before formal training; both worker
 logs report optimizer update exposure outside acknowledged work. The loaded
