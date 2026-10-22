@@ -1,10 +1,11 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
 import json
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace as NS
 
 import pytest
+from requests import HTTPError, Timeout
 
 from molgap import kaggle_submission as owner
 from molgap.experiment_launch import canonical_json
@@ -108,6 +109,8 @@ def release(tmp_path, monkeypatch):
         dataset = False
         ready = True
         remote = None
+        owned_kernels = []
+        kernel_list_calls = 0
 
         def get_config_value(self, _name):
             return "owner"
@@ -130,6 +133,11 @@ def release(tmp_path, monkeypatch):
         def kernels_status(self, ref):
             assert ref == "owner/new-kernel/1"
             return NS(status="RUNNING", failure_message="")
+
+        def kernels_list(self, *, mine, user, page, page_size):
+            assert (mine, user, page, page_size) == (True, "owner", 1, 20)
+            self.kernel_list_calls += 1
+            return self.owned_kernels
 
     api = Api()
     sdk = NS(requests=[], responses=[], client_exits=[])
@@ -181,7 +189,15 @@ def release(tmp_path, monkeypatch):
     class Http:
         auth = None
         downloads = []
+        heads = []
+        head_status = 404
         quota_hours = 30
+
+        def head(self, url, **kwargs):
+            self.heads.append({"url": url, **kwargs})
+            response = Response()
+            response.status_code = self.head_status
+            return response
 
         def get(self, url, **kwargs):
             if url.endswith("/quota"):
@@ -224,9 +240,10 @@ def release(tmp_path, monkeypatch):
     import requests
     monkeypatch.setattr(requests, "Session", AnonymousSession)
 
-    def run(execute=True):
+    def run(execute=True, *, reconcile_retired_push=False):
         return owner.submit_prepared_workflow(prepared, credentials, output, authority_ref="authority.json",
-            monitor_paths=["experiments/example/STATUS.md"], execute=execute, api=api, http_session=http)
+            monitor_paths=["experiments/example/STATUS.md"], execute=execute, api=api, http_session=http,
+            reconcile_retired_push=reconcile_retired_push)
     return NS(run=run, api=api, http=http, output=output, staged=staged, kernel=kernel,
               prepared=prepared, accepted=accepted, credentials=credentials, sdk=sdk,
               anonymous=anonymous)
@@ -284,10 +301,91 @@ def test_lost_kernel_response_reconciles_matching_source_without_repost(release,
     assert release.api.pushed == 1
 
 
+def test_retired_route_http_error_recovers_once_only_after_confirmed_absence(release, monkeypatch):
+    legacy_url = "https://www.kaggle.com/api/v1/kernels/push"
+    rpc_url = "https://api.kaggle.com/v1/kernels.KernelsApiService/SaveKernel"
+    pushes = []
+
+    def retired_route(**kwargs):
+        pushes.append("legacy")
+        raise HTTPError("retired route")
+
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", retired_route)
+    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
+    state_path = release.output / "submission_state.json"
+    prior = json.loads(state_path.read_text())
+    assert prior["error_type"] == "HTTPError"
+    assert prior["submission_endpoint"] == rpc_url
+    prior["submission_endpoint"] = legacy_url  # Journal written by the pre-RPC submitter.
+    prior["observed_at"] = (datetime.now(timezone.utc) - timedelta(seconds=61)).isoformat()
+    atomic_json(state_path, prior)
+
+    def assert_gate_rejects(fields, error, *, unknown_listing=False):
+        candidate = {**prior, **fields}
+        atomic_json(state_path, candidate)
+        if unknown_listing:
+            release.api.owned_kernels = None
+        with pytest.raises(error):
+            release.run(reconcile_retired_push=True)
+        assert len(pushes) == 1
+        atomic_json(state_path, prior)
+        release.api.owned_kernels = []
+
+    assert_gate_rejects({"error_type": "Timeout"}, ValueError)
+    assert_gate_rejects({"observed_at": datetime.now(timezone.utc).isoformat()}, ValueError)
+    assert_gate_rejects({"submission_endpoint": rpc_url}, ValueError)
+    assert_gate_rejects({"error_type": "HTTPError"}, RuntimeError, unknown_listing=True)
+    assert release.http.heads == [{"url": legacy_url, "timeout": (10, 30)}]
+    assert release.api.kernel_list_calls == 1
+    assert not (release.output / "retired_route_reconciliation.json").exists()
+
+    def rpc_loses_response(**kwargs):
+        pushes.append("rpc")
+        submitting = json.loads(state_path.read_text())
+        assert submitting["phase"] == "KERNEL_SUBMITTING"
+        assert submitting["submission_endpoint"] == rpc_url
+        assert submitting["error_type"] is None
+        assert "retired_route_reconciliation" in submitting
+        return {"status": "submission_unknown", "error_type": "Timeout", "reconciliation_required": True}
+
+    monkeypatch.setattr(owner, "push_kernel_with_accelerator", rpc_loses_response)
+    assert release.run(reconcile_retired_push=True)["status"] == "RECONCILIATION_REQUIRED"
+    after_rpc = json.loads(state_path.read_text())
+    assert after_rpc["phase"] == "SUBMIT_UNKNOWN"
+    assert after_rpc["error_type"] == "Timeout"
+    assert after_rpc["submission_endpoint"] == rpc_url
+    reconciliation = json.loads((release.output / "retired_route_reconciliation.json").read_text())
+    assert reconciliation["prior"]["error_type"] == "HTTPError"
+    assert reconciliation["legacy_route_probe_status"] == 404
+    assert reconciliation["exact_target_lookup"] == "ABSENT"
+    assert reconciliation["complete_owned_listing"] == "ABSENT"
+    assert release.api.created == 1
+    assert len(pushes) == 2
+    assert len(release.http.heads) == 2
+    assert release.api.kernel_list_calls == 2
+
+    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
+    with pytest.raises(ValueError):
+        release.run(reconcile_retired_push=True)
+    assert len(pushes) == 2
+    assert len(release.http.heads) == 2
+    assert release.api.kernel_list_calls == 2
+
+    # Even stale legacy fields cannot authorize a second recovery after evidence was recorded.
+    stale = {**after_rpc, "error_type": "HTTPError", "submission_endpoint": legacy_url,
+             "observed_at": (datetime.now(timezone.utc) - timedelta(seconds=61)).isoformat()}
+    atomic_json(state_path, stale)
+    with pytest.raises(ValueError):
+        release.run(reconcile_retired_push=True)
+    assert len(pushes) == 2
+    assert len(release.http.heads) == 2
+    assert release.api.created == 1
+
+
 def test_unobserved_kernel_timeout_never_retries_post(release, monkeypatch):
     def lost(**kwargs):
         release.api.pushed += 1
-        raise TimeoutError("secret-bearing transport error")
+        raise Timeout("secret-bearing transport error")
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", lost)
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"

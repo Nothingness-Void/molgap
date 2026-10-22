@@ -70,3 +70,10 @@ The existing B heartbeat was updated, not recreated. A real mechanical tick
 resolved that exact ID/version and returned RUNNING/SILENT with no event.
 Bounded startup-log attempts returned HTTPError/UNKNOWN; no native proof,
 epoch progress or training equivalence was inferred from those log failures.
+
+The final bounded Luna worker directly ran `test_kaggle_submission.py` and
+`test_kaggle_accelerator_push.py` with `--noconftest` and a fresh scratch path:
+33 passed in3.66s. It extended existing fixtures to check SDK request semantics
+(empty arrays may be omitted), explicit reconciliation fences and timeout
+blocking. An earlier reused scratch directory had PermissionError and was not
+counted as a successful run. The worker and its descendants were closed.

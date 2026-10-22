@@ -63,6 +63,7 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     )
 
     assert result["status"] == "submitted"
+    assert captured["url"] == "https://api.kaggle.com/v1/kernels.KernelsApiService/SaveKernel"
     if accelerator == "CPU-only":
         assert "machineShape" not in captured["json"]
     else:
@@ -73,6 +74,70 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     assert result["kernel"] == response_payload.get("ref")
     assert result["requested_kernel"] == "owner/kernel"
     assert result["reconciliation_required"] is ("ref" not in response_payload)
+
+    sdk_requests = []
+    owner_queries = []
+
+    class SDKSaveResponse:
+        def to_dict(self):
+            return response_payload
+
+    class KernelService:
+        def save_kernel(self, request):
+            sdk_requests.append(request.to_dict())
+            return SDKSaveResponse()
+
+    class SDKClient:
+        def __init__(self):
+            self.kernels = type("Kernels", (), {"kernels_api_client": KernelService()})()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return None
+
+    class AuthenticatedApi:
+        CONFIG_NAME_USER = "user"
+
+        def __init__(self):
+            self.username = "owner"
+
+        def get_config_value(self, name):
+            owner_queries.append(name)
+            return self.username
+
+        def build_kaggle_client(self):
+            return SDKClient()
+
+    api = AuthenticatedApi()
+    sdk_result = kaggle_accelerator_push.push_kernel_with_accelerator(
+        package_dir=package, credential_path=credentials, accelerator=accelerator, api=api
+    )
+    assert sdk_result["status"] == "submitted"
+    assert owner_queries == ["user"]
+    sdk_payload = sdk_requests[0]
+    meaningful_fields = ("slug", "newTitle", "text", "language", "kernelType",
+                         "isPrivate", "enableGpu", "enableTpu", "enableInternet",
+                         "datasetDataSources")
+    assert {field: sdk_payload[field] for field in meaningful_fields} == {
+        field: captured["json"][field] for field in meaningful_fields}
+    for field in ("competitionDataSources", "kernelDataSources",
+                  "modelDataSources", "categoryIds"):
+        assert sdk_payload.get(field, []) == captured["json"][field] == []
+    if accelerator == "CPU-only":
+        assert "machineShape" not in sdk_payload
+    else:
+        assert sdk_payload["machineShape"] == captured["json"]["machineShape"] == "NvidiaTeslaT4"
+        assert sdk_payload["enableGpu"] is True
+        assert sdk_payload["enableTpu"] is False
+
+    api.username = "different-owner"
+    with pytest.raises(ValueError, match="SDK owner"):
+        kaggle_accelerator_push.push_kernel_with_accelerator(
+            package_dir=package, credential_path=credentials, accelerator=accelerator, api=api
+        )
+    assert len(sdk_requests) == 1
 
     def timeout(*args, **kwargs):
         raise kaggle_accelerator_push.requests.Timeout("response lost")
