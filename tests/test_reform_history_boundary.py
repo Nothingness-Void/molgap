@@ -60,13 +60,6 @@ def history_repo(repo):
     return repo
 
 
-def test_default_runtime_excludes_only_explicit_archive_subtree(history_repo):
-    names = runtime_source_files(history_repo)
-    assert names == sorted(ACTIVE)
-    assert not set(ARCHIVED) & set(names)
-    assert not set(HOST_ONLY) & set(names)
-
-
 def test_real_checkout_archive_sources_are_outside_default_distribution():
     from molgap.v4_bundle import _tracked_paths
 
@@ -84,6 +77,9 @@ def test_real_checkout_archive_sources_are_outside_default_distribution():
 def test_new_default_package_physically_omits_archived_sources(history_repo, payload, tmp_path):
     target = tmp_path / "new-package"
     names = runtime_source_files(history_repo)
+    assert names == sorted(ACTIVE)
+    assert not set(ARCHIVED) & set(names)
+    assert not set(HOST_ONLY) & set(names)
     manifest = build_experiment_source_package(ExperimentSpec(payload), history_repo, names, target)
     assert verify_experiment_source_package(target, history_repo) == manifest
     with tarfile.open(target / "source.tar.gz", "r:gz") as archive:

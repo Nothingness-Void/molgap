@@ -77,21 +77,15 @@ with RWSE16. Tests use synthetic unequal-size graphs and placeholder digests;
 they require no real data or remote credentials. Callers set the RNG seed;
 the adapter never seeds or changes global registries.
 
-## Tests for the reviewing agent
+## Local verification
 
-Tests were authored but not executed in this implementation task. From the
-worktree, using its configured project environment, run:
-
-```powershell
-.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_k1_adapter.py tests/test_gptrans_adapter.py
-```
-
-This worktree had no `.venv\Scripts\python.exe` at handoff. The reviewer must
-provide the project virtual environment before running that command; do not
-substitute system Python.
+Select affected adapter invariants under the
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md), reusing the selected
+checkout's existing dependency environment. A K1 change does not automatically
+require every Spec and GPTrans adapter test.
 
 Coverage includes baseline state/RNG/parameter/forward equivalence, real addon
 dispatch, identity/zero initialization, coupled-value equivalence, pair masking
 and mass invariants, source-wrapper integration, strict rejection boundaries,
-canonical round trips, and unchanged GPTrans regression tests. Runtime and
-numerical behavior remain unverified until the reviewer runs these tests.
+canonical round trips, and GPTrans regression tests. Report only the paths
+actually exercised; fixture success does not qualify a native candidate run.

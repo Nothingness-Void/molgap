@@ -376,7 +376,8 @@ selection, test-growth limits and the distinction between fixtures, actual
 candidate packages and native qualification. Select affected scopes together:
 
 ```powershell
-.\.venv\Scripts\python.exe platforms/local/run.py --module molgap.local_testing -- --scope prepare --scope accept -- -q
+$profilePath = 'D:/molgap-machine-profile.json' # Use this host's profile.
+.\.venv\Scripts\python.exe platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope prepare --scope accept -- -q
 ```
 
 Use direct pytest only for affected lower-level invariants outside those journeys.

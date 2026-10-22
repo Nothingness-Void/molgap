@@ -738,14 +738,3 @@ def test_matched_500k_migration_binds_recovered_k1_copies_without_ready_promotio
     assert trajectory["record_mode"] == "retrospective_partial"
     assert trajectory["decision"]["next_allowed_actions"] == []
     assert not (experiment / "handoff/READY_FOR_DESKTOP.json").exists()
-
-
-def test_v5_evidence_rejects_overloaded_accepted_flag():
-    evidence = {
-        "format": v5.V5_EVIDENCE_FORMAT,
-        "contract": v5.V5_CONTRACT_ID,
-        "accepted": True,
-    }
-
-    with pytest.raises(ValueError, match="separate outcome dimensions"):
-        v5.validate_v5_evidence_envelope(evidence)

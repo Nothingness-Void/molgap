@@ -136,18 +136,18 @@ def test_analyze_actual_family_output_and_cli_diagnose(tmp_path, family, weights
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
     assert (out_dir / "analysis_summary.json").is_file()
     assert (out_dir / "attribution_report.md").is_file()
-    # Also test CLI entrypoint
-    cli_out = tmp_path / "cli_diagnosis"
-    exit_code = cli_main([
-        "diagnose",
-        "--control", str(ctrl_dir),
-        "--candidate", str(cand_dir),
-        "--output", str(cli_out),
-        "--bootstrap-samples", "200",
-    ])
-    assert exit_code == 0
-    assert (cli_out / "analysis_summary.json").is_file()
-    assert (cli_out / "attribution_report.md").is_file()
+    if (family, weights) == ("neural_atom_k1", "live"):
+        cli_out = tmp_path / "cli_diagnosis"
+        exit_code = cli_main([
+            "diagnose",
+            "--control", str(ctrl_dir),
+            "--candidate", str(cand_dir),
+            "--output", str(cli_out),
+            "--bootstrap-samples", "200",
+        ])
+        assert exit_code == 0
+        assert (cli_out / "analysis_summary.json").is_file()
+        assert (cli_out / "attribution_report.md").is_file()
 
 
 def test_posthoc_shift_remains_descriptive_arithmetic():

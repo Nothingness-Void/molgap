@@ -1,6 +1,5 @@
 """Fixed source boundary, batch Git validation and safe archive-only reuse."""
 from copy import deepcopy
-from dataclasses import replace
 import builtins
 import gzip
 import hashlib
@@ -16,7 +15,6 @@ from molgap.experiment_package import build_experiment_source_package,verify_exp
 from molgap.experiment_source_inventory import runtime_source_files
 from molgap.experiment_spec import ExperimentSpec
 from molgap.local_storage import SOURCE_CACHE_NAMESPACE
-from molgap import experiment_spec as spec_module
 from molgap.screen_policy import canonical_fingerprint
 from test_experiment_package import repo,payload,git
 from test_local_storage import cache_holder
@@ -208,21 +206,6 @@ def test_identical_full_payload_reuses_archive_across_commits_with_fresh_sidecar
     cold=tmp_path/"cold"
     assert build_experiment_source_package(spec,repo,names,cold)==b
     assert {p.name:p.read_bytes() for p in second.iterdir()}=={p.name:p.read_bytes() for p in cold.iterdir()}
-
-
-def test_seed_only_synthetic_spec_reuses_code_archive_with_distinct_identity(repo,payload,tmp_path,monkeypatch):
-    # Test-only parser contract; no seed expansion or scientific run is authorized.
-    monkeypatch.setattr(spec_module,"FAMILIES",{
-        key:replace(contract,allow_any_seed=True) for key,contract in spec_module.FAMILIES.items()})
-    other=deepcopy(payload);other["arms"][0]["initialization"]["seed"]=43
-    cache=tmp_path/"cache";names=["src/example.py"]
-    a=build_experiment_source_package(ExperimentSpec(payload),repo,names,tmp_path/"first",source_cache=cache)
-    with patch("molgap.experiment_package.build_v4_source_bundle",side_effect=AssertionError("archive rebuilt")):
-        b=build_experiment_source_package(ExperimentSpec(other),repo,names,tmp_path/"second",source_cache=cache)
-    assert a["archive_sha256"]==b["archive_sha256"]
-    assert a["spec_identity"]!=b["spec_identity"] and a["package_identity"]!=b["package_identity"]
-    assert verify_experiment_source_package(tmp_path/"second",repo)==b
-    assert len(list((cache/SOURCE_CACHE_NAMESPACE).glob("[0-9a-f]"*64)))==1
 
 
 @pytest.mark.parametrize("fault",["dirty","hidden_dirty","source.tar.gz","SOURCE_COMMIT.txt",

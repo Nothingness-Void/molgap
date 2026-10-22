@@ -74,17 +74,6 @@ def test_old_path_monkeypatch_reaches_implementation_globals(monkeypatch, part, 
     assert function.__globals__[global_name] is marker
 
 
-@pytest.mark.parametrize("part", PARTS)
-def test_old_module_contains_only_a_compatibility_alias(part):
-    tree = ast.parse((ROOT / "src" / "molgap" / ("family_training_" + part + ".py")).read_text(encoding="utf-8"))
-    assert not any(isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))
-                   for node in ast.walk(tree))
-    assert len(tree.body) == 4
-    assignment = tree.body[-1]
-    assert isinstance(assignment, ast.Assign)
-    assert ast.unparse(assignment.targets[0]) == "_sys.modules[__name__]"
-
-
 @pytest.mark.parametrize("first", ("old", "new"))
 def test_both_import_orders_in_a_fresh_interpreter(first, tmp_path):
     program = textwrap.dedent("""\

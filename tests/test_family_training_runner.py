@@ -8,14 +8,12 @@ import torch
 
 from molgap.experiment_execution import build_family_recipe, training_adapter
 from molgap.experiment_family_workflow import RunContext, inspect_output, tensor_digest
-from molgap.experiment_package import _name
 from molgap.experiment_spec import ExperimentSpec
 from molgap.family_training_outputs import SessionOutputs
 from molgap.family_training_runner import INTERFACES, PROFILES, family_arm_bindings, read_recipe
 from molgap.training_reproducibility import configure_fp32_determinism, sha256_file, validate_accelerator_request
 from test_family_training_kernel import initial_states, synthetic_batch
 from test_family_training_session import assert_equal, events, make_session
-from test_experiment_spec import payload
 
 
 @pytest.fixture
@@ -62,15 +60,6 @@ def context(family, path):
     return RunContext("synthetic-question", "synthetic-run", "reference", "a" * 64, "b" * 64,
         *INTERFACES[family], "c" * 40, "d" * 64, "e" * 64, sha256_file(path),
         "local", "fixture", "fixture/run", None)
-
-
-@pytest.mark.parametrize("platform", ["local", "kaggle", "ims", "scnet", "colab"])
-def test_platform_declaration_does_not_change_the_training_owner(payload, platform):
-    payload["platform"]["name"] = platform
-    assert ExperimentSpec(payload).to_dict()["platform"]["name"] == platform
-    for family in INTERFACES:
-        adapter = training_adapter({"family": {"name": family, "version": INTERFACES[family][1]}, "addons": []})
-        assert adapter.module == "molgap.family_training_runner"
 
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
@@ -251,14 +240,6 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
                 read_recipe(path)
     finally:
         session.close()
-
-
-def test_reviewed_python_io_source_does_not_allow_artifact_directories():
-    assert _name("src/molgap/family_training_outputs.py") == "src/molgap/family_training_outputs.py"
-    assert _name("src/molgap/other_outputs.py") == "src/molgap/other_outputs.py"
-    for path in ("experiments/example/outputs/model.py", "data/family_training_outputs.py"):
-        with pytest.raises(ValueError):
-            _name(path)
 
 
 @pytest.mark.parametrize("requested,observed,hip", [

@@ -1483,7 +1483,7 @@ def test_one_blocked_arm_prevents_any_terminal_closure(
     )
     monkeypatch.setattr(terminal, "execute_terminal_descriptor", close)
 
-    result = close_verified_outputs(repo, spec, descriptor, outputs=outputs)
+    result = close_verified_outputs(repo, spec, descriptor, outputs=outputs, execute=True)
 
     assert result["status"] == "BLOCKED"
     assert result["executed"] is False
@@ -1502,7 +1502,7 @@ def test_verified_outputs_close_two_independent_rml_trajectories(
         for arm_id in outputs
     }
 
-    dry_run = close_verified_outputs(repo, spec, descriptor, outputs=outputs, execute=False)
+    dry_run = close_verified_outputs(repo, spec, descriptor, outputs=outputs)
 
     assert dry_run["status"] == "MECHANICALLY_VERIFIED", dry_run
     assert dry_run["executed"] is False
@@ -1539,18 +1539,6 @@ def test_verified_outputs_close_two_independent_rml_trajectories(
         assert trace_manifest["backtest_eligibility"]["eligible"] is False
         assert (repo / "research_memory/derived").is_dir()
     assert frozen_differences(repo) == []
-
-
-def test_verified_outputs_are_read_only_by_default(tmp_path, repo, launch_contexts):
-    spec, descriptor, outputs = _closure_descriptor(tmp_path, repo, launch_contexts)
-
-    result = close_verified_outputs(repo, spec, descriptor, outputs=outputs)
-
-    assert result["status"] == "MECHANICALLY_VERIFIED", result
-    assert result["executed"] is False
-    for arm in descriptor.to_dict()["arms"]:
-        finalized = (repo / arm["trajectory"]).parent / "rml_finalized"
-        assert not finalized.exists()
 
 
 def test_cli_inspect_output_emits_one_blocked_json_object_and_exit_one(

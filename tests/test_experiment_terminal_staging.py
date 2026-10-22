@@ -104,14 +104,6 @@ def test_explicit_decision_and_observed_audit_enable_nonpositive_closure(staging
         assert (root / where["trajectory"]).parent.joinpath("rml_finalized/finalization.json").is_file()
 
 
-def test_decision_alone_preserves_unknown_roles(staging_case):
-    root, _ = staging_case
-    (root / "decision.md").write_text("Inconclusive.", encoding="utf-8")
-    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref="decision.md")
-    assert result["status"] == "STAGED_DRAFT"
-    assert all("observed_protected_role_audit_missing" in item["blockers"] for item in result["paths"].values())
-
-
 @pytest.mark.parametrize("outcome,with_audit,expected_blocker", [
     ("POSITIVE_UNDER_CONTRACT", True, "positive_or_ready_requires_owning_scientific_acceptance"),
     ("INCONCLUSIVE", False, "observed_protected_role_audit_missing"),

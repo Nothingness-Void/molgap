@@ -13,6 +13,12 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| K1 single-forward True EMA 100K screen? | Follow the retained decision and its evidence limits | [Decision](pcqm_k1_single_true_ema_100k/decision.md) |
+| Shared 100K operator profile? | Follow the owning protocol and retained evidence | [Entry](family_100k_operator_profile/README.md) |
+| Shared checkpoint efficiency? | Follow the bounded execution diagnostic | [Entry](family_checkpoint_efficiency/README.md) |
+| T4 topology reuse comparison? | Follow the execution comparison and attribution | [Entry](family_topology_t4_100k/README.md) |
+| K1 clean second training view at 100K? | Follow the owning decision and evidence | [Entry](pcqm_k1_clean_second_100k/README.md) |
+| K1 T4 cost-quality comparison? | Follow canonical custody and retained attempt evidence | [Entry](pcqm_k1_t4_cost_quality/README.md) |
 | Does K1 Post-LN catch up under a160-pass schedule, lower LR or warmup? | Four arms accepted and RML finalized; original-LR LN worse5.771meV, warmup gain2.973meV below3meV; negative candidates, strict replay excluded; history archived | [Decision and custody](pcqm_k1_norm_exposure_100k/terminal_custody.md) |
 | Do K1 Post-LN or GPTrans resistance improve matched100K controls? | Four trained arms accepted; both candidates NEGATIVE_UNDER_CONTRACT, controls CLOSED; four original bootstrap records NO_TRAIN. Complete history archived; strict replay excluded | [Decision and custody](pcqm_structural_bias_norm_100k/terminal_custody.md) |
 | Does Pre-Norm AdaRMSNorm improve K1 against matched Pre-Norm BN? | Accepted40/40-pass pair; Ada is2.182meV worse and closes NEGATIVE_UNDER_CONTRACT, control CLOSED. Complete history archived; terminal RML evidence retained with strict replay exclusions; no model adoption | [Decision and custody](pcqm_k1_prenorm_norm_100k/terminal_custody_decision.md) |

@@ -1,6 +1,6 @@
 """CPU-only relocation parity against the frozen pre-move Git implementations.
 
-Run with pytest's basetemp/cache and Python bytecode redirected to E:.
+Use the local profile launcher for invocation-owned temporary files.
 No retained checkpoints, datasets, platform access or accelerators are used.
 """
 import ast

@@ -5,6 +5,7 @@ import hashlib
 import json
 import subprocess
 from pathlib import Path
+from types import MappingProxyType
 
 import pytest
 
@@ -25,6 +26,11 @@ from molgap.research_memory.validate import validate_repository_records
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def compiled_payloads():
+    return MappingProxyType(compile_research_memory(REPO_ROOT))
 
 
 def test_k1_reference_raw_source_is_losslessly_restored():
@@ -464,8 +470,8 @@ def test_edge_state_gpu_cost_preserves_unknown_cpu_accounting():
     }
 
 
-def test_real_cost_completeness_separates_absent_and_incomplete_events():
-    payloads = compile_research_memory(REPO_ROOT)
+def test_real_cost_completeness_separates_absent_and_incomplete_events(compiled_payloads):
+    payloads = compiled_payloads
     report = json.loads(payloads["completeness_report.json"])
     trajectories = json.loads(payloads["trajectory_index.json"])["trajectories"]
     assert {record["trajectory_id"] for record in trajectories} >= {
@@ -501,8 +507,8 @@ def test_real_cost_completeness_separates_absent_and_incomplete_events():
     assert "missing_native_cost" not in issues
 
 
-def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
-    payloads = compile_research_memory(REPO_ROOT)
+def test_local_desktop_records_have_v5_evidence_and_explicit_roles(compiled_payloads):
+    payloads = compiled_payloads
     report = json.loads(payloads["completeness_report.json"])
     summary = json.loads(payloads["research_summary.json"])
     trajectories = {
@@ -696,8 +702,8 @@ def test_markdown_renders_real_measured_zero():
     assert "measured=0.000000 (1 measured record)" in markdown
 
 
-def test_all_derived_json_schemas_match_generated_top_level_contracts():
-    payloads = compile_research_memory(REPO_ROOT)
+def test_all_derived_json_schemas_match_generated_top_level_contracts(compiled_payloads):
+    payloads = compiled_payloads
     for output_name in EXPECTED_FORMATS:
         output = json.loads(payloads[output_name])
         schema_name = output_name.replace("_", "-").replace(
@@ -776,8 +782,8 @@ def test_incompatible_traces_remain_insufficient():
     assert result["policy_activated"] is False
 
 
-def test_invalid_derived_output_is_rejected():
-    payloads = compile_research_memory(REPO_ROOT)
+def test_invalid_derived_output_is_rejected(compiled_payloads):
+    payloads = compiled_payloads
     outputs = {
         name: json.loads(payload)
         for name, payload in payloads.items()

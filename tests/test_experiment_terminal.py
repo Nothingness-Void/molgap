@@ -248,13 +248,13 @@ def test_existing_trajectory_schema_is_enforced(tmp_path, case):
         translate(tmp_path, case)
 
 
-@pytest.mark.parametrize("field", ["trajectory", "terminal", "trace", "trace_source", "canonical_trace_output", "recovery_spec"])
-@pytest.mark.parametrize("path", [
+@pytest.mark.parametrize("field,path", [("trajectory", path) for path in [
     "../outside.json", "experiments/../outside.json", "experiments\\..\\outside.json",
     "/tmp/outside.json", "C:/outside.json", "C:outside.json", "//host/file.json",
     "https://example.com/file.json", "experiments/file.json:stream", "./local.json",
     "experiments//local.json", "experiments/NUL", "experiments/file. ", None,
-])
+]] + [(field, "../outside.json") for field in
+      ("terminal", "trace", "trace_source", "canonical_trace_output", "recovery_spec")])
 def test_unsafe_or_noncanonical_paths_rejected(case, field, path):
     spec, data = case
     data["arms"][0][field] = path

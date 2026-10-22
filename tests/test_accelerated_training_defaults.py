@@ -85,8 +85,10 @@ def synthetic_batch():
         for n in (1, 2, 4)]))
 
 
-def test_fast_input_assembly_preserves_outputs_gradients_and_rng():
+def test_fast_input_assembly_preserves_outputs_gradients_and_rng(monkeypatch):
+    from molgap import gptrans
     from molgap.gptrans import OGBGPTransTiny
+    from torch_geometric import utils
     from molgap.training_reproducibility import configure_fp32_determinism
     configure_fp32_determinism(42)
     model = OGBGPTransTiny(node_channels=16, pair_channels=8, num_layers=2,
@@ -99,7 +101,26 @@ def test_fast_input_assembly_preserves_outputs_gradients_and_rng():
         torch.set_rng_state(initial_rng)
         if accelerated:
             bind_model_layout(model)
+            assembly = model._dense_inputs
+            assembly_calls = []
+
+            def forbidden(*args, **kwargs):
+                pytest.fail("Prepared input assembly synchronized or rebuilt categorical dense inputs")
+
+            def observed_assembly(*args, **kwargs):
+                assembly_calls.append(True)
+                # Keep the observation inside input assembly; later model blocks
+                # and the parity assertions retain their ordinary tensor APIs.
+                with monkeypatch.context() as scoped:
+                    scoped.setattr(torch.Tensor, "item", forbidden)
+                    scoped.setattr(torch, "equal", forbidden)
+                    scoped.setattr(utils, "to_dense_batch", forbidden)
+                    scoped.setattr(gptrans, "to_dense_batch", forbidden)
+                    return assembly(*args, **kwargs)
+
+            model._dense_inputs = observed_assembly
             prediction = prepared_forward(model, batch)
+            assert assembly_calls == [True]
         else:
             prediction = model(batch.x, batch.edge_index, batch.edge_attr, batch.batch).view(-1)
         prediction.sum().backward()

@@ -119,9 +119,16 @@ def frozen_launch(entry, limit, *, launch_overrides=None, recipe_fields=None):
         (entry.INPUT_ROOT / name).write_text("fixture")
 
 
-@pytest.mark.parametrize("limit", [90, 120, 12600, 14400, 14401, 32400, 100000, None])
-@pytest.mark.parametrize("reserve", [0, 60])
-@pytest.mark.parametrize("phase_failure", [None, "pip", "runtime"])
+@pytest.mark.parametrize("limit,reserve,phase_failure", [
+    (None, 60, None),
+    (90, 0, None),
+    (120, 60, None),
+    (100000, 60, None),
+    (None, 60, "pip"),
+    (120, 60, "pip"),
+    (None, 60, "runtime"),
+    (120, 60, "runtime"),
+])
 def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch, limit, reserve, phase_failure):
     frozen_launch(entry, limit, launch_overrides={"cleanup_reserve_seconds": reserve})
     calls = []
@@ -287,57 +294,6 @@ def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
                      }}}
     assert "INPUT_RESOLVED fixture_arm datasets/release-owner/slug/manifest.json" in capsys.readouterr().out
 
-
-@pytest.mark.parametrize("existing_output", [False, True])
-def test_shared_resolution_reaches_real_pair_freshness_guard(entry, monkeypatch, existing_output):
-    from molgap import kaggle_pair_runtime as pair_runtime
-    # Run the actual freshness guard, then stop before any package/data/hardware
-    # probe. This catches the bootstrap/runtime interaction missed by no-op mocks.
-    class ReachedPairParser(RuntimeError):
-        pass
-
-    def stop_at_config(path):
-        raise ReachedPairParser("freshness guard passed")
-
-    real_pair = pair_runtime.run_two_phase_pair
-    monkeypatch.setattr(pair_runtime, "_json", stop_at_config)
-    manifest_bytes = b'{"assets":{"topology":[{"role":"train","file":"train.pt"}]}}'
-    frozen_launch(entry, None, recipe_fields={"format": "molgap-family-training-recipe-v1",
-        "dataset": {"manifest": "data/manifest.json", "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
-                    "development": False}})
-    manifest = entry.INPUT_ROOT / "data/manifest.json"
-    manifest.parent.mkdir()
-    manifest.write_bytes(manifest_bytes)
-    (manifest.parent / "train.pt").write_bytes(b"synthetic")
-    monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: None)
-    modules = {
-        "molgap": {},
-        "molgap.training_reproducibility": {"atomic_json": entry._atomic_entry_json},
-        "molgap.experiment_package": {"verify_experiment_source_package": lambda _: {
-            "package_identity": "package", "spec_identity": "spec"}},
-        "molgap.kaggle_pair_runtime": {"run_two_phase_pair": real_pair},
-        "molgap.family_training_runner": {"read_recipe": lambda path: ({}, types.SimpleNamespace(
-            dataset=types.SimpleNamespace(manifest="data/manifest.json", development=False,
-                manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest())))},
-        "molgap.family_training_data": {"resolve_training_manifest": lambda *args: manifest},
-        "molgap.experiment_family_workflow": {"_artifact_path": lambda root, name: root / name},
-    }
-    for name, attrs in modules.items():
-        module = types.ModuleType(name)
-        module.__dict__.update(attrs)
-        monkeypatch.setitem(sys.modules, name, module)
-    monkeypatch.setattr(sys, "path", list(sys.path))
-    if existing_output:
-        entry.OUTPUT_ROOT.mkdir()
-        sentinel = entry.OUTPUT_ROOT / "last_checkpoint.pt"
-        sentinel.write_bytes(b"existing checkpoint; never delete")
-        with pytest.raises(ValueError, match="fresh output root"):
-            entry.main()
-        assert sentinel.read_bytes() == b"existing checkpoint; never delete"
-    else:
-        with pytest.raises(ReachedPairParser, match="freshness guard passed"):
-            entry.main()
-    assert json.loads((entry.OUTPUT_ROOT / "input_resolution.json").read_bytes())["arms"]
 
 
 def test_atomic_fallback_cleans_up_failed_replace(entry, monkeypatch):

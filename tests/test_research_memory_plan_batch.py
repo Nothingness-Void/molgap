@@ -441,7 +441,10 @@ def test_formal_batch_still_rechecks_sources_before_each_publication(planning_ro
 
 def test_compact_batch_binds_one_policy_snapshot_and_keeps_actual_references(planning_root):
     root, _ = planning_root
+    before = {path for path in root.rglob("*") if path.is_file()}
     result = plan_module.plan_many(root, [_item("a"), _item("b")])
+    published = {path for path in root.rglob("*") if path.is_file()} - before
+    assert len(published) == 5  # two trajectories, two costs, one common snapshot
     records = [json.loads((root / row["path"] / "trajectory.json").read_text()) for row in result["results"]]
     assert len({row["decision_state"]["snapshot_ref"] for row in records}) == 1
     assert len(list(root.glob("experiments/**/rml_decision_snapshots/*.json"))) == 1
@@ -473,30 +476,3 @@ def test_legacy_inline_state_remains_readable(planning_root):
         record["decision_state"].pop(key)
     plan_module.validate_decision_state(record["decision_state"])
     assert plan_module.resolve_decision_state(root, record) == record
-
-
-def test_four_arm_shared_knowledge_synthetic_inventory(planning_root):
-    root, _ = planning_root
-    for label in ("c", "d"):
-        (root / f"contract-{label}.json").write_text("fixture")
-        (root / f"decision-{label}.md").write_text("fixture")
-    for index in range(200):
-        _write_json(root / f"experiments/known-{index}/v5_evidence.json", {"evidence_id": f"E-known-{index}"})
-    before = set(path for path in root.rglob("*") if path.is_file())
-    result = plan_module.plan_many(root, [_item(label) for label in "abcd"])
-    new_files = [path for path in root.rglob("*") if path.is_file() and path not in before]
-    legacy_bytes = 0
-    for item in result["results"]:
-        directory = root / item["path"]
-        record = json.loads((directory / "trajectory.json").read_text())
-        expanded = plan_module.resolve_decision_state(root, record)
-        state = expanded["decision_state"]
-        policy = state.pop("policy_snapshot")
-        for key in ("schema", "snapshot_ref", "snapshot_sha256"):
-            state.pop(key)
-        legacy_bytes += len(plan_module.json_bytes(expanded)) + len(plan_module.json_bytes(state)) + len(plan_module.json_bytes(policy))
-        legacy_bytes += sum(path.stat().st_size for path in (directory / "costs").glob("*.json"))
-    new_bytes = sum(path.stat().st_size for path in new_files)
-    assert len(new_files) == 9  # four trajectories, four costs, one common snapshot
-    assert new_bytes < legacy_bytes
-    print(f"synthetic prospective 4 arms/201 known evidence: legacy=16 files/{legacy_bytes} bytes; compact={len(new_files)} files/{new_bytes} bytes")

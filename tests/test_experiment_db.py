@@ -39,20 +39,14 @@ def test_build_database_preserves_protocol_boundaries(tmp_path: Path) -> None:
             WHERE model_id = 'M26'
             """
         ).fetchone()[0]
-
-    assert external == (0.1000743234815492,)
-    assert internal == (0.10243107626835506,)
-    assert comparable_a == 0
-
-
-def test_reuse_metadata_is_explicit(tmp_path: Path) -> None:
-    database = tmp_path / "experiments.sqlite"
-    build_database(REPO, database)
-    with sqlite3.connect(database) as connection:
-        row = connection.execute(
+        reuse = connection.execute(
             """
             SELECT approximate_encoder_passes, reuse_mode
             FROM models WHERE model_id = 'M07'
             """
         ).fetchone()
-    assert row == (4.0, "teacher")
+
+    assert external == (0.1000743234815492,)
+    assert internal == (0.10243107626835506,)
+    assert comparable_a == 0
+    assert reuse == (4.0, "teacher")

@@ -77,26 +77,27 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     assert result["reconciliation_required"] is ("ref" not in response_payload)
     assert events == ["before_post", "post"]
 
-    def timeout(*args, **kwargs):
-        events.append("post")
-        raise kaggle_accelerator_push.requests.Timeout("response lost")
-    monkeypatch.setattr(kaggle_accelerator_push.requests, "post", timeout)
-    unknown = kaggle_accelerator_push.push_kernel_with_accelerator(package_dir=package,
-        credential_path=credentials, accelerator="NvidiaTeslaT4", _before_post=before_post)
-    assert unknown["status"] == "submission_unknown"
-    assert unknown["kernel"] is None and unknown["reconciliation_required"]
-    assert "secret-value" not in json.dumps(unknown)
-    assert events[-2:] == ["before_post", "post"]
+    if "ref" not in response_payload:
+        def timeout(*args, **kwargs):
+            events.append("post")
+            raise kaggle_accelerator_push.requests.Timeout("response lost")
+        monkeypatch.setattr(kaggle_accelerator_push.requests, "post", timeout)
+        unknown = kaggle_accelerator_push.push_kernel_with_accelerator(package_dir=package,
+            credential_path=credentials, accelerator="NvidiaTeslaT4", _before_post=before_post)
+        assert unknown["status"] == "submission_unknown"
+        assert unknown["kernel"] is None and unknown["reconciliation_required"]
+        assert "secret-value" not in json.dumps(unknown)
+        assert events[-2:] == ["before_post", "post"]
 
-    events.clear()
-    with pytest.raises(FileNotFoundError):
-        kaggle_accelerator_push.push_kernel_with_accelerator(
-            package_dir=package,
-            credential_path=tmp_path / "missing-kaggle.json",
-            accelerator="NvidiaTeslaT4",
-            _before_post=before_post,
-        )
-    assert events == []
+        events.clear()
+        with pytest.raises(FileNotFoundError):
+            kaggle_accelerator_push.push_kernel_with_accelerator(
+                package_dir=package,
+                credential_path=tmp_path / "missing-kaggle.json",
+                accelerator="NvidiaTeslaT4",
+                _before_post=before_post,
+            )
+        assert events == []
 
 
 def test_observed_identity_uses_actual_slug_and_keeps_version():

@@ -111,16 +111,7 @@ wiring remain separate, unimplemented follow-up work.
 The synthetic tests in `tests/test_experiment_runner.py` use temporary directories,
 real spawn for metadata probes, patched lightweight factories for construction,
 and fake processes for deterministic crashes/timeouts. They use no datasets or
-protected evaluation roles and do not construct real models. They were authored
-without execution in this implementation pass. Suggested follow-up from this
-worktree with its configured project virtual environment and `src` on PYTHONPATH:
-
-```powershell
-$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
-& .\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_runner.py -q
-```
-
-`--noconftest` deliberately bypasses the repository's unrelated CLI-import
-conftest so probe checks do not depend on its ML imports. If this worktree lacks
-a virtual environment, have the verification owner provision/select an approved
-project environment first; do not silently substitute system Python.
+protected evaluation roles and do not construct real models. Select only the
+affected runner nodes using the existing profile launcher and
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md). CLI fixtures now
+load lazily; no special `--noconftest` bypass or per-worktree environment is needed.

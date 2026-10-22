@@ -143,20 +143,22 @@ two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
 the first arm's real loader result. It is parameterized over both modes; only the explicitly selected smoke case constructs a model.
 
-Suggested local commands from the desktop checkout, with torch, NumPy, PyG and
-the frozen source package's dependencies installed:
+For ordinary infrastructure changes, select the affected existing nodes under
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md). Real-input tests
+are opt-in; after obtaining the required authorization and configuration, run
+the explicit integration node through the local profile launcher:
 
 ```powershell
-$env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
+$profilePath = 'D:/molgap-machine-profile.json' # Use this host's profile.
+& '.\.venv\Scripts\python.exe' platforms/local/run.py --profile $profilePath --module pytest -- tests/test_experiment_preflight.py::test_real_dual_arm_independent_success_failure -q
 ```
 
-Use the project `.venv` or another environment with the same dependencies.
+Use the primary checkout's `.venv` with torch, NumPy, PyG and the frozen source
+package's dependencies installed.
 The real integration cases require explicit authorization and
 `MOLGAP_PREFLIGHT_REAL_INPUTS`; do not run them against protected roles. Both arms
 must declare random initialization with the correct model state digest. The
-second command runs the real CPU model smoke as well as loader inspection, so
+command runs the real CPU model smoke as well as loader inspection, so
 it requires separate execution authorization and enough time/RAM for GPTrans-T.
 K1/EdgeState real-input loader execution requires their authorized packed files;
 the repository contains manifests but not those `.pt` assets.

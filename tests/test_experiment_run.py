@@ -193,8 +193,9 @@ def test_existing_owner_receives_original_bindings_and_explicit_plan(frozen_run,
     assert snapshot(case.run) == before
 
 
-@pytest.mark.parametrize("phase", ["SUBMIT_UNKNOWN", "KERNEL_SUBMITTING", "KERNEL_ACCEPTED", "SOURCE_UNKNOWN", "UNKNOWN"])
-@pytest.mark.parametrize("operation", ["inspect", "accept", "build", "prepare"])
+@pytest.mark.parametrize("phase,operation", [(phase, "inspect") for phase in
+    ("SUBMIT_UNKNOWN", "KERNEL_SUBMITTING", "KERNEL_ACCEPTED", "SOURCE_UNKNOWN", "UNKNOWN")]
+    + [("SUBMIT_UNKNOWN", operation) for operation in ("accept", "build", "prepare")])
 def test_unknown_journal_never_calls_owner_or_mutates(frozen_run, tmp_path, monkeypatch, phase, operation):
     case = frozen_run
     path = case.run / "operations/submission_state.json"

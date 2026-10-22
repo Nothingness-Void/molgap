@@ -114,8 +114,7 @@ cover deterministic rebuilding, sidecar/declaration/source tampering, tracked
 source boundaries, unsafe tar members, identity consistency and lack of runtime
 authority. Symlink creation tests skip on hosts without that capability.
 
-Suggested reviewer command (not executed during implementation):
-
-```powershell
-.venv\Scripts\python.exe -m pytest tests/test_experiment_package.py tests/test_experiment_spec.py
-```
+For changes, select the affected package journey under the
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md). Run a specific
+lower-level node only when that journey does not cover the changed invariant;
+this API reference does not add a whole-file test requirement.

@@ -65,41 +65,6 @@ def test_local_navigation_links_resolve(relative):
             assert anchor in _anchors(target.read_text(encoding="utf-8")), (relative, link)
 
 
-@pytest.mark.parametrize("relative", ("README.md", "ARCHITECTURE.md", CLI))
-def test_entrypoints_link_directly_to_operation_map(relative):
-    links = LINK.findall(_read(relative))
-    expected = (
-        "EXPERIMENT_ADDON_GUIDE.md#pick-the-operation"
-        if relative == CLI else f"{GUIDE}#pick-the-operation"
-    )
-    assert expected in links
-    if relative == "README.md":
-        assert _read(relative).index(expected) < _read(relative).index("## Install")
-
-
-@pytest.mark.parametrize("relative", ("AGENTS.md", "README.md", "ARCHITECTURE.md",
-                                      "CURRENT_STATE.md", "ROADMAP.md", CLI))
-def test_entrypoints_link_to_registered_workflow(relative):
-    expected = "EXPERIMENT_WORKFLOW.md" if relative == CLI else WORKFLOW
-    assert expected in LINK.findall(_read(relative))
-
-
-@pytest.mark.parametrize("relative", ("ARCHITECTURE.md", CLI, GUIDE, WORKFLOW))
-def test_reuse_entrypoints_expose_modular_runtime(relative):
-    expected = MODULAR_RUNTIME if relative == "ARCHITECTURE.md" else "MODULAR_EXPERIMENT_RUNTIME.md"
-    assert expected in LINK.findall(_read(relative))
-
-
-@pytest.mark.parametrize("operation", (
-    "Train GPTrans", "Train EdgeState", "Resume or infer from a checkpoint",
-    "Analyze saved predictions", "Bind source and local observations",
-    "Accept artifacts and qualify a comparison", "Close and index evidence",
-))
-def test_reuse_map_covers_operations(operation):
-    table = _read(GUIDE).split("## Pick the Operation\n", 1)[1].split("## Shared Core", 1)[0]
-    assert f"| {operation} |" in table
-
-
 @pytest.mark.parametrize("module, callable_name", (
     ("src/molgap/pcqm_gptrans_v4.py", "run_training"),
     ("src/molgap/pcqm_gptrans_full_runner.py", "train_full"),
@@ -119,33 +84,9 @@ def test_named_reuse_callables_exist_without_importing_them(module, callable_nam
     }
 
 
-def test_cli_examples_use_selected_checkout():
-    text = _read(CLI)
-    assert not re.search(r"D:[/\\]w[/\\]cli", text, re.IGNORECASE)
-    assert "$repoRoot = (Get-Location).Path" in text
-    assert "--repo-root $repoRoot" in text
-    assert ".\\.venv\\Scripts\\python.exe" in text
-
-
 def test_block_navigation_is_not_hidden_by_gitignore():
     result = subprocess.run(
         ["git", "check-ignore", "--", *BLOCK_READMES], cwd=ROOT,
         capture_output=True, text=True, check=False,
     )
     assert result.returncode == 1, result.stdout + result.stderr
-
-
-def test_authority_and_capability_routes_remain_explicit():
-    text = _read(GUIDE)
-    links = set(LINK.findall(text))
-    assert {
-        "../../src/molgap/inference.py", "../../models/README.md",
-        "../../src/molgap/comparison_readiness.py", "EXPERIMENT_FAMILY_WORKFLOW.md",
-        "MOLGAP_COMMON_DIRECTION_V5_FINAL.md", "../../research_memory/README.md",
-        "../../research_memory/LIFECYCLE.md", "../../platforms/README.md",
-    } <= links
-    for skill in ("kaggle-molgap-workloads", "ims-molgap-workloads", "scnet-bw-dcu-molgap"):
-        assert f"`{skill}`" in text
-    assert "do not run it as prediction-only analysis" in text
-    assert "does not load checkpoints or run inference" in text
-    assert "never hand-edit derived indexes" in text

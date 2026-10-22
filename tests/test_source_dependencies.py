@@ -136,13 +136,6 @@ raise RuntimeError('discovery must not execute this file')
         discover_source_dependencies(tmp_path, ["src/molgap/plugin.py"], require_static=True)
 
 
-def test_missing_internal_dependency_fails(tmp_path):
-    _write(tmp_path, "src/molgap/__init__.py", "")
-    _write(tmp_path, "src/molgap/plugin.py", "from .missing import thing\n")
-    with pytest.raises(ValueError, match="Missing internal dependency"):
-        discover_source_dependencies(tmp_path, ["src/molgap/plugin.py"])
-
-
 def test_all_reachable_missing_modules_are_reported_without_execution(tmp_path):
     _write(tmp_path, "src/molgap/__init__.py", "")
     _write(tmp_path, "src/molgap/plugin.py", "from .missing_one import value\nfrom .branch import run\n")

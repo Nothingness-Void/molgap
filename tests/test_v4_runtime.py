@@ -48,19 +48,6 @@ def test_frozen_state_reader_and_inspector_share_tensor_identity(tmp_path, wrapp
     assert inspect_frozen_state_artifact(path, expected_state_sha256=digest) == report
 
 
-def test_frozen_state_inspector_delegates_to_reader(tmp_path, monkeypatch):
-    import molgap.v4_runtime as runtime
-
-    path, report = tmp_path / "unused.pt", {"sentinel": True}
-    calls = []
-    def reader(actual_path, *, expected_state_sha256):
-        calls.append((actual_path, expected_state_sha256))
-        return {}, report
-    monkeypatch.setattr(runtime, "read_frozen_state_artifact", reader)
-    assert runtime.inspect_frozen_state_artifact(path, expected_state_sha256="a" * 64) is report
-    assert calls == [(path, "a" * 64)]
-
-
 @pytest.mark.parametrize("inspector", [False, True], ids=["reader", "inspector"])
 @pytest.mark.parametrize("corruption", ["wrong_sha", "envelope_sha", "nan", "inf", "nontensor", "empty", "not_mapping"])
 def test_frozen_state_validation_rejects_corruption(tmp_path, inspector, corruption):

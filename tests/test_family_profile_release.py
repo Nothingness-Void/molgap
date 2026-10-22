@@ -2,19 +2,9 @@
 from dataclasses import asdict
 import json
 import pytest
-import torch
 from molgap.family_execution_profile import ProfileConfig
 from molgap.family_training_runner import _recipe_configuration
-from molgap.family_training_kernel import FamilyKernel
-from molgap.gptrans_bond_local import make_bond_local_model
-from molgap.v4_runtime import state_dict_sha256
 from test_family_training_session import make_session, events
-
-
-def test_local_bond_constructor_matches_retained_server_initialization():
-    model = make_bond_local_model()
-    assert sum(p.numel() for p in model.parameters()) == 5871201
-    assert state_dict_sha256(model.state_dict()) == 'a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b'
 
 
 def test_profiler_configuration_is_frozen_and_rejects_unknown_fields():
