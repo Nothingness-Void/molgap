@@ -1,5 +1,6 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
 import json
+from datetime import timedelta
 from pathlib import Path
 from types import SimpleNamespace as NS
 
@@ -38,6 +39,19 @@ class Response:
 
     def __exit__(self, *args):
         pass
+
+
+def _sdk_quota_observation():
+    return NS(quota_refresh_time="2030-01-01T00:00:00Z", gpu_quota=NS(
+        total_time_allowed=timedelta(hours=48), time_used=timedelta(hours=30),
+        time_reserved=timedelta(hours=5.6165)))
+
+
+def _session_quota_authority(quota_hours=9):
+    return {"user_authorized": True, "arms": ["original", "optimized"], "seeds": [42],
+        "allocated_t4_hours_ceiling": 18, "kaggle_quota_hours_ceiling": quota_hours,
+        "gpu": {"accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
+            "wall_ceiling_seconds": 32400}}
 
 
 @pytest.fixture
@@ -230,6 +244,63 @@ def test_quota_shortfall_stops_before_publication(release):
     with pytest.raises(ValueError, match="quota"):
         release.run()
     assert release.api.created == release.api.pushed == 0
+
+
+def test_sdk_quota_uses_total_duration_and_subtracts_reservations():
+    http = NS(get=lambda *args, **kwargs: pytest.fail("SDK quota uncertainty must not use REST fallback"))
+    result = owner._quota(http, 9, api=NS(quota_view=_sdk_quota_observation))
+    quota = result["quota"]["gpuQuota"]
+    assert result["provider"] == "KaggleSdk.GetAcceleratorQuotaStatistics"
+    assert result["quota_semantics"] == "platform_session_hours"
+    assert quota["totalTimeAllowed"]["seconds"] == 48 * 3600
+    assert quota["timeReserved"] == {"seconds": 20219, "nanos": 400_000_000}
+    assert result["available_gpu_hours"] == pytest.approx(12.3835)
+    assert result["authorized_ceiling_gpu_hours"] == 9
+
+
+def test_sdk_quota_unknown_fails_closed_without_rest_fallback():
+    calls = []
+
+    def unknown():
+        raise RuntimeError("quota observation unavailable")
+
+    http = NS(get=lambda *args, **kwargs: calls.append((args, kwargs)))
+    with pytest.raises(RuntimeError, match="quota observation unavailable"):
+        owner._quota(http, 9, api=NS(quota_view=unknown))
+    assert calls == []
+
+
+def test_explicit_session_quota_binds_nine_wall_hours_and_eighteen_physical(release, monkeypatch):
+    authority = _session_quota_authority()
+    monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps(authority))
+    observations = []
+    release.api.quota_view = lambda: (observations.append(True) or _sdk_quota_observation())
+    # A REST response with no remaining quota proves that the SDK view is preferred.
+    release.http.quota_hours = 0
+
+    result = release.run()
+
+    assert result["status"] == "SUBMISSION_BOUND"
+    assert authority["allocated_t4_hours_ceiling"] == 18
+    assert authority["kaggle_quota_hours_ceiling"] == 9
+    assert authority["gpu"] == {"accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
+        "wall_ceiling_seconds": 32400}
+    assert len(observations) == 2 and release.api.pushed == 1
+    for name in ("quota_before_publication.json", "quota_before_submit.json"):
+        receipt = json.loads((release.output / name).read_bytes())
+        assert receipt["authorized_ceiling_gpu_hours"] == 9
+        assert receipt["available_gpu_hours"] == pytest.approx(12.3835)
+
+
+def test_forged_session_quota_authority_fails_before_post(release, monkeypatch):
+    authority = _session_quota_authority(quota_hours=10)
+    monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps(authority))
+
+    with pytest.raises(ValueError, match="session quota must bind"):
+        release.run()
+
+    assert release.api.created == release.api.pushed == 0
+    assert not release.output.exists()
 
 
 def test_extra_upload_file_is_rejected_before_publication(release):

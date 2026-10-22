@@ -89,6 +89,73 @@ def test_prepared_v2_configured_authority_requires_fresh_native_gate(configured)
             validate_configured_authority(rejected, spec.to_dict(), {"candidate": recipe})
 
 
+@pytest.mark.parametrize("with_repair_proof,repair_report", [
+    (False, None),
+    (True, {"reference_mode": "graphwise", "update_equivalent": True}),
+], ids=["missing-reference-proof", "wrong-reference-proof"])
+def test_prepared_preflight_requires_fresh_accepted_native_reference(
+        case, tmp_path, monkeypatch, with_repair_proof, repair_report):
+    import torch
+    from types import SimpleNamespace
+
+    from molgap import family_training_runner as runner
+    from molgap import family_training_session as session_owner
+    from molgap import k1_execution_qualification as qualification
+    from molgap import modern2d_execution_proof as execution_proof
+    from molgap.research_memory.trace import file_digest
+    from molgap.screen_policy import canonical_fingerprint
+
+    steps = case.recipe.optimizer_steps
+    recipe = replace(case.recipe,
+        formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
+            horizon_passes=60, horizon_steps=steps, execution_mode="prepared-v2"),
+        schedule=replace(case.recipe.schedule, total_units=steps))
+    probe = runner._probe_recipe(recipe)
+    provenance = {"source": "synthetic-preflight-fixture"}
+    (tmp_path / "runtime_provenance.json").write_text(json.dumps(provenance), encoding="utf-8")
+
+    def write_state(name, kind):
+        path = tmp_path / name
+        torch.save({"kind": kind, "rng_state": {"cuda": [0]}}, path)
+        return {"path": name, "sha256": file_digest(path),
+            "state_fingerprint": "synthetic-complete-state"}
+
+    proofs = [write_state(name, "complete") for name in
+        ("repeat-a.pt", "repeat-b.pt", "resumed.pt")]
+    origin_path = tmp_path / "resumed-first.pt"
+    torch.save({"kind": "origin", "rng_state": {"cuda": [0]}}, origin_path)
+    certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
+        "provenance_sha256": canonical_fingerprint(provenance),
+        "probe_recipe_identity": probe.identity, "formal_training_exposure": 0,
+        "proofs": proofs, "resume_origin": {"path": origin_path.name,
+            "sha256": file_digest(origin_path)}, "execution_proof": None, "profile_proof": None}
+    if with_repair_proof:
+        report_path = tmp_path / "execution_repair.json"
+        report_path.write_text(json.dumps({"fixture": True}), encoding="utf-8")
+        certificate["execution_repair_proof"] = {"path": report_path.name,
+            "sha256": file_digest(report_path)}
+    (tmp_path / "runtime_certificate.json").write_text(json.dumps(certificate), encoding="utf-8")
+
+    monkeypatch.setattr(session_owner, "validate_session_resume", lambda _probe, state:
+        SimpleNamespace(optimizer_step=1 if state["kind"] == "origin" else 2,
+            status="paused" if state["kind"] == "origin" else "complete"))
+    monkeypatch.setattr(runner, "_state_fingerprint", lambda _state: "synthetic-complete-state")
+    monkeypatch.setattr(qualification, "_verify_execution_proof", lambda *args, **kwargs: None)
+    monkeypatch.setattr(runner, "_verify_profile_proof", lambda *args, **kwargs: None)
+    verified = []
+
+    def verify_repair(_root, proof, observed_probe):
+        verified.append(proof)
+        assert proof == certificate["execution_repair_proof"]
+        assert observed_probe.identity == probe.identity
+        return repair_report
+
+    monkeypatch.setattr(execution_proof, "verify_repair_proof", verify_repair)
+    with pytest.raises(ValueError, match="fresh accepted-native update equivalence"):
+        runner._verify_preflight(tmp_path, recipe, provenance)
+    assert bool(verified) is with_repair_proof
+
+
 def test_batched_scientific_input_preserves_mode(configured):
     c = configured
     if c.value["arms"][0]["model"]["family"] != "ppgt_small":

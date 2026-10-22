@@ -13,10 +13,15 @@ from molgap.server_control import BoundRun, LocalServerControlStore
 def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch):
     statuses = {"dual": "RUNNING", "rrwp": "QUEUED"}
     calls = []
+    api_instances = []
 
     class FakeAPI:
+        def __init__(self):
+            self.authenticate_calls = 0
+            api_instances.append(self)
+
         def authenticate(self):
-            return None
+            self.authenticate_calls += 1
 
         def kernels_status(self, kernel):
             calls.append(kernel)
@@ -43,6 +48,8 @@ def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch
     binding = tmp_path / "binding.json"
     binding.write_text(json.dumps({"owner": "server", "credential_file": str(credential), "jobs": jobs}))
     assert not tick(binding)["events"]
+    assert api_instances[-1].config_values == {"username": "kaseichou", "key": "not-a-real-credential"}
+    assert api_instances[-1].authenticate_calls == 0
     statuses["dual"] = "COMPLETE"
     first = tick(binding)["events"]
     assert len(first) == 1 and first[0]["event_type"] == "COMPLETE"
@@ -50,6 +57,8 @@ def test_two_runs_stay_silent_then_emit_one_terminal_event(tmp_path, monkeypatch
     LocalServerControlStore(Path(jobs[0]["control_state"])).deliver_to_a(first[0]["event_id"])
     assert not tick(binding)["events"]
     assert calls[-1] == "kaseichou/rrwp/1"
+    assert all(api.config_values["username"] == "kaseichou" and api.authenticate_calls == 0
+               for api in api_instances)
 
     # An unrelated newer version must never inherit this job's terminal status.
     monkeypatch.setattr("molgap.k1_relation_study_monitor._latest_identity",
@@ -71,9 +80,15 @@ def test_closed_binding_does_not_read_credentials(tmp_path):
                                           ("CANCELED", "CANCELLED"),
                                           ("CANCEL_REQUESTED", "UNKNOWN")])
 def test_cancellation_is_terminal_only_after_acknowledgment(tmp_path, monkeypatch, raw, expected):
+    api_instances = []
+
     class FakeAPI:
+        def __init__(self):
+            self.authenticate_calls = 0
+            api_instances.append(self)
+
         def authenticate(self):
-            pass
+            self.authenticate_calls += 1
 
         def kernels_status(self, kernel):
             return types.SimpleNamespace(status=raw)
@@ -97,6 +112,8 @@ def test_cancellation_is_terminal_only_after_acknowledgment(tmp_path, monkeypatc
         "jobs": [{"slot": "dual", "kernel": "kaseichou/dual", "kernel_id": 123,
                   "version": 2, "control_state": str(control)}]}))
     result = tick(binding)
+    assert api_instances[-1].config_values == {"username": "kaseichou", "key": "not-a-real-credential"}
+    assert api_instances[-1].authenticate_calls == 0
     assert result["observations"][0]["status"] == expected
     assert LocalServerControlStore(control).load()["last_observation"]["detail"]["api_status"] == raw
     if expected == "CANCELLED":
