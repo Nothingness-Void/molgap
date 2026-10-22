@@ -1,0 +1,67 @@
+{
+  "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+  "kernel_id": 140243455, "version": 1,
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1", "attempt_id": "v1",
+  "source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+  "spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+  "package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+  "outcome": {
+    "execution_status": "COMPLETE", "artifact_status": "MECHANICALLY_VERIFIED",
+    "comparison_status": "CONTEXT_ONLY", "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_TESTED", "budget_decision": "WITHIN_AUTHORIZED_CEILING_NO_SUCCESSOR",
+    "full_handoff_status": "NOT_READY"
+  },
+  "exploratory_triage_threshold_eV": 0.003,
+  "exploratory_lead": "esa_count", "scientific_nomination": false,
+  "replay_ready": false, "canonical_rml_finalization_executed": false,
+  "rml_status_ref": "experiments/modern2d_structure_100k/results/rml_status.json",
+  "endpoint_per_arm": {
+    "completed_passes": 20, "optimizer_steps": 15620,
+    "sample_presentations": 1999360, "development_rows": 50000,
+    "physical_batch": 128, "seed": 42, "precision": "fp32", "tf32": false
+  },
+  "allocation": {
+    "devices": ["Tesla T4", "Tesla T4"],
+    "measured_python_wall_seconds": 19482.729496158,
+    "overlapping_bootstrap_final_wall_seconds": 19483.08486654,
+    "measured_physical_device_seconds": 38965.458992316,
+    "authorized_wall_seconds": 25200, "authorized_session_quota_hours": 7,
+    "authorized_physical_t4_hours": 14,
+    "billing_provisioning_and_queue": "NOT_OBSERVED",
+    "bootstrap_and_allocation_ledgers_additive": false
+  },
+  "arms": {
+    "ppgt_content": {
+      "reference_mae_eV": 0.20045661712408067,
+      "recomputed_selected_mae_eV": 0.19913895336389542,
+      "improvement_eV": 0.0013176637601852417,
+      "selected_pass": 20, "selected_optimizer_step": 15620,
+      "parameters": 2584897, "added_parameters": 7168,
+      "capture_off_training_graphs_per_second": 125.17899395507361,
+      "native_saved_state_update_equivalent": true, "native_exact_full_state": false,
+      "exploratory_material_gate_passed": false,
+      "disposition": "CLOSE_THIS_CONDITIONER_WITHOUT_NOMINATION"
+    },
+    "esa_count": {
+      "reference_mae_eV": 0.2036746614909172,
+      "recomputed_selected_mae_eV": 0.19931078360319138,
+      "improvement_eV": 0.00436387788772583,
+      "selected_pass": 19, "selected_optimizer_step": 14839,
+      "parameters": 5015745, "added_parameters": 512,
+      "capture_off_training_graphs_per_second": 1199.3785782672896,
+      "native_saved_state_update_equivalent": true, "native_exact_full_state": true,
+      "exploratory_material_gate_passed": true,
+      "disposition": "RETAIN_CONTEXTUAL_LEAD_NOT_SCALE_OR_CAUSAL_QUALIFICATION"
+    }
+  },
+  "independent_acceptance_sha256": "66840de561ad4c1c0047ec3e0a4de001d4ebbea34cc4b32508f5aff2352f91f9",
+  "independent_acceptance_source": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/reports/independent_acceptance.json",
+  "repository_acceptance_lf_sha256": "600793a2cb41362bbaa00e5081da32e969b552619e90aef9f5f69a659205e31d",
+  "acceptance_serialization": "External generated report uses CRLF; repository copy uses LF, JSON semantically identical",
+  "external_attribution_sha256": "f61ad6393250c43f8d85247d4aa31fad15ec150bc9b1aa123719c53cbe9c316c",
+  "retained_outputs": "E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1",
+  "operations_and_reports": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1",
+  "new_remote_training_submitted": false,
+  "local_training_executed": false, "local_inference_executed": false,
+  "prospective_records_modified": false, "global_rml_derived_rebuilt": false
+}

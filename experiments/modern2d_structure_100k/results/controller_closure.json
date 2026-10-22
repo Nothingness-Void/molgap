@@ -1,0 +1,35 @@
+{
+  "attempt_id": "v1",
+  "claimed_at": "2026-10-22T22:50:01Z",
+  "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "created_at": "2026-10-22T22:48:41Z",
+  "decision_ref": "experiments/modern2d_structure_100k/results/decision.md",
+  "delivered_at": "2026-10-22T22:48:54Z",
+  "delivery_attempts": 1,
+  "event_id": "evt-63763e0b0eae1fe2c9261ca3",
+  "event_status": "CLOSED",
+  "event_type": "COMPLETE",
+  "finalized_at": "2026-10-22T22:57:04Z",
+  "monitor_generation": 1,
+  "outcome": {
+    "artifacts": "MECHANICALLY_VERIFIED",
+    "comparison": "CONTEXT_ONLY",
+    "esa_count": "RETAIN_EXPLORATORY_LEAD",
+    "execution": "COMPLETE",
+    "ppgt_content": "CLOSE_WITHOUT_NOMINATION",
+    "replay_ready": false,
+    "rml_finalization": "BLOCKED_MISSING_OBSERVED_ROLE_AUDIT",
+    "successor_submitted": false
+  },
+  "payload": {
+    "api_status": "COMPLETE",
+    "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+    "resolved_latest_identity": {
+      "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+      "kernel_id": 140243455,
+      "version": 1
+    },
+    "version": 1
+  },
+  "run_id": "kaseichou/molgap-modern2d-structure-100k-v1:v1"
+}

@@ -1,0 +1,26 @@
+{
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1", "local_attempt_id": "v1",
+  "physical_kernel_id": 140243455, "physical_version": 1,
+  "mechanical_output_status": "MECHANICALLY_VERIFIED",
+  "native_saved_state_proof_status": {"ppgt_content": "PASS", "esa_count": "PASS"},
+  "terminal_source_and_attempt_gate": "PASSED_UNCHANGED_V1_BINDING",
+  "canonical_terminal_staging_status": "STAGED_DRAFT",
+  "blockers": [
+    "esa_count: observed_protected_role_audit_missing",
+    "ppgt_content: observed_protected_role_audit_missing"
+  ],
+  "blocking_owner": "molgap.experiment_terminal_staging.stage_verified_terminal_packages",
+  "additional_canonical_blockers": [
+    "Both generated draft trace manifests have reference_id=empty_string and fail validate_trace_manifest; no canonical reference is enrolled",
+    "Protected-role truth remains unknown and therefore the draft evidence envelope does not pass V5 validation"
+  ],
+  "native_draft_schema_validation_status": "BLOCKED_AS_EXPECTED_NOT_CLOSURE_READY",
+  "record_validation_ref": "experiments/modern2d_structure_100k/results/record_validation.json",
+  "post_review_clarification": "This status and live routing docs were clarified after record validation to name both role-audit and empty-reference blockers. The decision and immutable drafts were unchanged.",
+  "role_truth_not_inferred_from_authorization": true,
+  "canonical_finalization_executed": false, "replay_ready": false,
+  "reference_qualification": "CONTEXT_ONLY_NOT_PROSPECTIVELY_ENROLLED_STRICT_REFERENCE",
+  "prospective_records_modified": false, "global_derived_rebuilt": false,
+  "disposition": "Preserve original plans and staged drafts. Do not infer role events, force Replay, retrain or release a successor. Review observed-role/reference capability before scientific confirmation.",
+  "external_staging_observation": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/reports/rml_staging_result.json"
+}

@@ -1,0 +1,158 @@
+{
+  "esa_count": {
+    "files": [
+      {
+        "path": "training_contract.json",
+        "sha256": "b49c0a8c6d0179cfc1f9cd3236421e2d957780a3e0d87a7580aa94dd9a84c46f",
+        "state": "RETAINED"
+      },
+      {
+        "path": "development_predictions.pt",
+        "sha256": "11bb523ad14452102859f28b5a32df5d0aac5849474a97b2bded2fd786ef41ab",
+        "state": "RETAINED"
+      },
+      {
+        "path": "last_checkpoint.pt",
+        "sha256": "23fd0585c04b2ec2ca913994656259ae7e07540794915ea4cea954c13b92263b",
+        "state": "RETAINED"
+      },
+      {
+        "path": "selected_model.pt",
+        "sha256": "8e7898c0ac120f50109f2f45dd06da3913b2d3dcd13c1e42e0af622db34ff3a2",
+        "state": "RETAINED"
+      },
+      {
+        "path": "canonical_trace.json",
+        "sha256": "4e016351ca39cbedcb7f3b5f5e02c1024e643196667acfcfa03c1f105f8cfaf2",
+        "state": "RETAINED"
+      },
+      {
+        "path": "canonical_trace.json.context.json",
+        "sha256": "c27ab3c89804e76dbcf50fb214c0f5b67d7ccd9791f34ccf7e29ef1be184d899",
+        "state": "RETAINED"
+      },
+      {
+        "path": "output_manifest.json",
+        "sha256": "29c4caa2ed6fde106e486150a61d06998094c4d8fd0033c288a7fb8bc37224bc",
+        "state": "RETAINED"
+      }
+    ],
+    "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+    "manifest_sha256": "29c4caa2ed6fde106e486150a61d06998094c4d8fd0033c288a7fb8bc37224bc",
+    "platform_version_verified_by_output_api": false,
+    "producer_version": null,
+    "receipt_version": "1",
+    "unselected_outputs_downloaded": false
+  },
+  "execution_retention": {
+    "execution_retention": {
+      "manifest": {
+        "allocation_ledger": {
+          "arms": {
+            "esa_count": {
+              "path": "esa_count/allocation_ledger.json",
+              "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+            },
+            "ppgt_content": {
+              "path": "ppgt_content/allocation_ledger.json",
+              "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+            }
+          },
+          "root": {
+            "path": "allocation_ledger.json",
+            "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+          }
+        },
+        "execution_report": {
+          "path": "execution_report.json",
+          "sha256": "321977342b05c3ab959361b86d7312508c2050bb23493a2ac9f324ec1da85676"
+        },
+        "format": "molgap-execution-retention-v1",
+        "package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+        "source_archive_sha256": "897a0ec6f69281760b5f39473c48adce7f458af66b90202a5a54a02ec087178d",
+        "source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+        "spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+        "status": "SEALED"
+      },
+      "status": "EXECUTION_RETENTION_VERIFIED"
+    },
+    "files": [
+      {
+        "path": "execution_retention.json",
+        "sha256": "27881d762f5bc7559adde331831b43d1d36d394a9627fe1503b260f578b27fc5",
+        "state": "RETAINED"
+      },
+      {
+        "path": "allocation_ledger.json",
+        "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298",
+        "state": "RETAINED"
+      },
+      {
+        "path": "esa_count/allocation_ledger.json",
+        "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298",
+        "state": "RETAINED"
+      },
+      {
+        "path": "ppgt_content/allocation_ledger.json",
+        "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298",
+        "state": "RETAINED"
+      },
+      {
+        "path": "execution_report.json",
+        "sha256": "321977342b05c3ab959361b86d7312508c2050bb23493a2ac9f324ec1da85676",
+        "state": "RETAINED"
+      }
+    ],
+    "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+    "manifest_sha256": "27881d762f5bc7559adde331831b43d1d36d394a9627fe1503b260f578b27fc5",
+    "platform_version_verified_by_output_api": false,
+    "receipt_version": "1",
+    "status": "EXECUTION_RETENTION_RETRIEVED",
+    "unselected_outputs_downloaded": false
+  },
+  "ppgt_content": {
+    "files": [
+      {
+        "path": "training_contract.json",
+        "sha256": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "development_predictions.pt",
+        "sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "last_checkpoint.pt",
+        "sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "selected_model.pt",
+        "sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "canonical_trace.json",
+        "sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "canonical_trace.json.context.json",
+        "sha256": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690",
+        "state": "ALREADY_RETAINED"
+      },
+      {
+        "path": "output_manifest.json",
+        "sha256": "d61bc1df3b932dff75f4245ee1b9b7f062ff6a5c49694b1a260ca587e9d349da",
+        "state": "ALREADY_RETAINED"
+      }
+    ],
+    "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+    "manifest_sha256": "d61bc1df3b932dff75f4245ee1b9b7f062ff6a5c49694b1a260ca587e9d349da",
+    "platform_version_verified_by_output_api": false,
+    "producer_version": null,
+    "receipt_version": "1",
+    "unselected_outputs_downloaded": false
+  }
+}

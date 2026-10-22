@@ -1,0 +1,30 @@
+{
+  "format": "molgap-bounded-record-validation-summary-v1",
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1",
+  "attempt_id": "v1",
+  "status": "BOUNDED_RECORD_CHECK_COMPLETE_CLOSURE_BLOCKED",
+  "source_report": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/reports/record_validation.json",
+  "source_report_sha256": "71a1c414d93b4927cf75d47355439fb06816adb0c3d29f9bdcb894f3798e07b1",
+  "validated_decision_sha256": "ad4f80bef8195eec1e43caa85e73fdcee98ba063667dea4e0f7d4b77497380b8",
+  "scope": "Owned JSON, prior accepted saved-artifact reports, immutable drafts, controller and existing local automation; no global corpus validation or model execution",
+  "checks": {
+    "metrics_match_accepted_payloads": "PASS",
+    "allocation_and_budget_consistency": "PASS",
+    "acceptance_crlf_lf_semantic_equality": "PASS",
+    "source_attempt_and_draft_artifact_hash_bindings": "PASS",
+    "original_trajectory_schemas": "PASS",
+    "cost_event_schemas": "PASS",
+    "observed_role_events": "UNAVAILABLE_EMPTY_ARRAY_NOT_AUDIT_EVIDENCE",
+    "draft_v5_envelopes": "FAIL_UNKNOWN_PROTECTED_ROLE_TRUTH",
+    "draft_trace_manifest_schemas": "FAIL_EMPTY_REFERENCE_ID",
+    "monitor": "CLOSED_EVENT_SINGLE_DELIVERY_AUTOMATION_PAUSED"
+  },
+  "finding": "The staging owner emitted the missing observed-role-audit blocker. Downstream trace-manifest validation also rejected reference_id=empty_string for both arms. Removing the role-audit blocker alone cannot establish closure readiness.",
+  "clarification_after_review": "Only live routing and rml_status documentation were clarified to name the additional reference blocker. The accepted output reports, scientific decision, prospective plans, artifacts and immutable drafts were not changed. The external source report retains the earlier documentation snapshot hashes, not claims about later prose.",
+  "canonical_finalization_invoked": false,
+  "replay_ready": false,
+  "new_tests_created": false,
+  "global_derived_rebuilt": false,
+  "local_training_executed": false,
+  "local_inference_executed": false
+}

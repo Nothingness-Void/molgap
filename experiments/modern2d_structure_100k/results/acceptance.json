@@ -1,0 +1,737 @@
+{
+  "allocation": {
+    "allocated_device_budget_seconds": 50400.0,
+    "allocated_device_seconds": 38965.458992316,
+    "allocation_device_count": 2,
+    "execution_report_sha256": "321977342b05c3ab959361b86d7312508c2050bb23493a2ac9f324ec1da85676",
+    "execution_report_status": "complete",
+    "phase_statuses": {
+      "preflight": "complete",
+      "train": "complete"
+    },
+    "prior_unobserved_intervals": false,
+    "root_ledger_sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298",
+    "status": "complete",
+    "wall_budget_seconds": 25200.0,
+    "wall_seconds": 19482.729496158,
+    "within_authorized_budget": true,
+    "worker_returncodes": {
+      "preflight": {
+        "esa_count": 0,
+        "ppgt_content": 0
+      },
+      "train": {
+        "esa_count": 0,
+        "ppgt_content": 0
+      }
+    }
+  },
+  "arms": {
+    "esa_count": {
+      "checks": {
+        "aligned_finite_50000_rows": true,
+        "manifest_artifact_sha256": true,
+        "manifest_context_identity": true,
+        "owner_mechanical_acceptance": true,
+        "recomputed_mae_finite": true,
+        "selected_last_identity_and_cursor": true,
+        "target_scaling_and_trace_exposure": true
+      },
+      "frozen_expected": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "manifest": {
+        "artifact_hashes": {
+          "contract": {
+            "actual_sha256": "b49c0a8c6d0179cfc1f9cd3236421e2d957780a3e0d87a7580aa94dd9a84c46f",
+            "expected_sha256": "b49c0a8c6d0179cfc1f9cd3236421e2d957780a3e0d87a7580aa94dd9a84c46f",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\training_contract.json"
+          },
+          "predictions": {
+            "actual_sha256": "11bb523ad14452102859f28b5a32df5d0aac5849474a97b2bded2fd786ef41ab",
+            "expected_sha256": "11bb523ad14452102859f28b5a32df5d0aac5849474a97b2bded2fd786ef41ab",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\development_predictions.pt"
+          },
+          "resume": {
+            "actual_sha256": "23fd0585c04b2ec2ca913994656259ae7e07540794915ea4cea954c13b92263b",
+            "expected_sha256": "23fd0585c04b2ec2ca913994656259ae7e07540794915ea4cea954c13b92263b",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\last_checkpoint.pt"
+          },
+          "selected_model": {
+            "actual_sha256": "8e7898c0ac120f50109f2f45dd06da3913b2d3dcd13c1e42e0af622db34ff3a2",
+            "expected_sha256": "8e7898c0ac120f50109f2f45dd06da3913b2d3dcd13c1e42e0af622db34ff3a2",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\selected_model.pt"
+          },
+          "trace": {
+            "actual_sha256": "4e016351ca39cbedcb7f3b5f5e02c1024e643196667acfcfa03c1f105f8cfaf2",
+            "expected_sha256": "4e016351ca39cbedcb7f3b5f5e02c1024e643196667acfcfa03c1f105f8cfaf2",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\canonical_trace.json"
+          },
+          "trace_context": {
+            "actual_sha256": "c27ab3c89804e76dbcf50fb214c0f5b67d7ccd9791f34ccf7e29ef1be184d899",
+            "expected_sha256": "c27ab3c89804e76dbcf50fb214c0f5b67d7ccd9791f34ccf7e29ef1be184d899",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\canonical_trace.json.context.json"
+          }
+        },
+        "artifact_sha256_all_match": true,
+        "context_mismatches": {},
+        "format": "molgap-family-output-v1",
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\output_manifest.json",
+        "sha256": "29c4caa2ed6fde106e486150a61d06998094c4d8fd0033c288a7fb8bc37224bc"
+      },
+      "output_root": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count",
+      "owner_blockers": [],
+      "owner_status": "MECHANICALLY_VERIFIED",
+      "prediction_alignment": {
+        "aligned_finite_50000_rows": true,
+        "artifact_sha256": "11bb523ad14452102859f28b5a32df5d0aac5849474a97b2bded2fd786ef41ab",
+        "expected_source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "expected_target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701",
+        "keys": [
+          "context",
+          "prediction_eV",
+          "source_idx",
+          "target_eV"
+        ],
+        "owner_recomputed_mae_eV": 0.19931078360319138,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\development_predictions.pt",
+        "prediction_dtype": "torch.float32",
+        "prediction_finite": true,
+        "recomputed_mae_eV_float64": 0.19931078360319138,
+        "recomputed_vs_owner_match": true,
+        "rows": 50000,
+        "source_idx_dtype": "torch.int64",
+        "source_idx_finite": true,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_dtype": "torch.float32",
+        "target_finite": true,
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "progress_metadata": {
+        "best_development_mae_eV": 0.1993107944726944,
+        "best_metric_pass": 19,
+        "completed_passes": 20,
+        "development_mae_eV": 0.19945478439331055,
+        "matches_frozen_exposure": true,
+        "metric_pass": 20,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "planned_optimizer_steps": 15620,
+        "planned_passes": 20.0,
+        "sample_presentations": 1999360,
+        "status": "complete"
+      },
+      "saved_output_acceptance": true,
+      "selected_and_last": {
+        "last_arm_identity": "44ffa0a37f5fe0061635d5c44dd629e27aba86fd2fcc28828581244406629480",
+        "last_checkpoint_sha256": "23fd0585c04b2ec2ca913994656259ae7e07540794915ea4cea954c13b92263b",
+        "last_context_match": true,
+        "last_cursor": {
+          "best_development_mae_eV": 0.1993107944726944,
+          "next_batch": 0,
+          "pass_index": 20,
+          "pending_absolute_empty": true,
+          "pending_rows": 0,
+          "recipe_identity": "72da5b3c872c28aee4be8e28b23922f592ea12ddd29bdf1b5abea759ba00c2c9",
+          "selected_step": 14839,
+          "status": "complete"
+        },
+        "last_model_finite": true,
+        "last_optimizer_step": 15620,
+        "last_sample_presentations": 1999360,
+        "selected_arm_identity": "44ffa0a37f5fe0061635d5c44dd629e27aba86fd2fcc28828581244406629480",
+        "selected_context_match": true,
+        "selected_mae_eV": 0.1993107944726944,
+        "selected_mae_matches_recomputed": true,
+        "selected_model_finite": true,
+        "selected_model_sha256": "8e7898c0ac120f50109f2f45dd06da3913b2d3dcd13c1e42e0af622db34ff3a2",
+        "selected_optimizer_step": 14839,
+        "selected_pass": 19.0,
+        "selected_selection": "best-development-live",
+        "selected_trace_row": {
+          "checkpoint_identity": "30cd45e93cf92df252f81f4d7c795f0e4d2f95a7042b7e1cf08488923ee4b279",
+          "cumulative_device_time_seconds": 2000.526749264,
+          "cumulative_wall_time_seconds": 2000.526749264,
+          "device_time_seconds": 96.54674393799996,
+          "ema_dev_metric": null,
+          "epoch_or_pass": 19,
+          "event": "observation",
+          "learning_rate": 3.87260057971705e-06,
+          "live_dev_metric": 0.1993107944726944,
+          "live_train_metric": 0.06946985127831239,
+          "optimizer_step": 14839,
+          "sample_presentations": 1899392,
+          "sequence": 18,
+          "wall_time_seconds": 96.54674393799996
+        },
+        "selected_weights": "live"
+      },
+      "target_scaling": {
+        "development_metric_unit": "eV",
+        "development_role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+        "target": "Gap",
+        "target_mean_eV": 5.338300266634226,
+        "target_scaling_finite_positive_std": true,
+        "target_std_eV": 1.275090206323082,
+        "train_metric_unit": "normalized-Gap",
+        "train_role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f"
+      },
+      "trace_exposure": {
+        "contiguous_20_passes": true,
+        "exact_15620_steps": true,
+        "exact_1999360_presentations": true,
+        "exact_20_passes": true,
+        "last_optimizer_step": 15620,
+        "last_pass": 20,
+        "last_sample_presentations": 1999360,
+        "metric_semantics": {
+          "ema_dev_metric": null,
+          "live_dev_metric": {
+            "direction": "minimize",
+            "metric": "MAE",
+            "role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+            "target": "Gap",
+            "unit": "eV",
+            "weights": "live"
+          },
+          "live_train_metric": {
+            "direction": "minimize",
+            "metric": "MAE",
+            "role_identity": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f",
+            "target": "Gap",
+            "unit": "normalized-Gap",
+            "weights": "live"
+          }
+        },
+        "metric_values_finite": true,
+        "observation_count": 20,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\canonical_trace.json",
+        "sha256": "4e016351ca39cbedcb7f3b5f5e02c1024e643196667acfcfa03c1f105f8cfaf2"
+      }
+    },
+    "ppgt_content": {
+      "checks": {
+        "aligned_finite_50000_rows": true,
+        "manifest_artifact_sha256": true,
+        "manifest_context_identity": true,
+        "owner_mechanical_acceptance": true,
+        "recomputed_mae_finite": true,
+        "selected_last_identity_and_cursor": true,
+        "target_scaling_and_trace_exposure": true
+      },
+      "frozen_expected": {
+        "completed_passes": 20,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "manifest": {
+        "artifact_hashes": {
+          "contract": {
+            "actual_sha256": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba",
+            "expected_sha256": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\training_contract.json"
+          },
+          "predictions": {
+            "actual_sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d",
+            "expected_sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\development_predictions.pt"
+          },
+          "resume": {
+            "actual_sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+            "expected_sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\last_checkpoint.pt"
+          },
+          "selected_model": {
+            "actual_sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a",
+            "expected_sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\selected_model.pt"
+          },
+          "trace": {
+            "actual_sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4",
+            "expected_sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\canonical_trace.json"
+          },
+          "trace_context": {
+            "actual_sha256": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690",
+            "expected_sha256": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690",
+            "match": true,
+            "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\canonical_trace.json.context.json"
+          }
+        },
+        "artifact_sha256_all_match": true,
+        "context_mismatches": {},
+        "format": "molgap-family-output-v1",
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\output_manifest.json",
+        "sha256": "d61bc1df3b932dff75f4245ee1b9b7f062ff6a5c49694b1a260ca587e9d349da"
+      },
+      "output_root": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content",
+      "owner_blockers": [],
+      "owner_status": "MECHANICALLY_VERIFIED",
+      "prediction_alignment": {
+        "aligned_finite_50000_rows": true,
+        "artifact_sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d",
+        "expected_source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "expected_target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701",
+        "keys": [
+          "context",
+          "prediction_eV",
+          "source_idx",
+          "target_eV"
+        ],
+        "owner_recomputed_mae_eV": 0.19913895336389542,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\development_predictions.pt",
+        "prediction_dtype": "torch.float32",
+        "prediction_finite": true,
+        "recomputed_mae_eV_float64": 0.19913895336389542,
+        "recomputed_vs_owner_match": true,
+        "rows": 50000,
+        "source_idx_dtype": "torch.int64",
+        "source_idx_finite": true,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_dtype": "torch.float32",
+        "target_finite": true,
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "progress_metadata": {
+        "best_development_mae_eV": 0.19913896918296814,
+        "best_metric_pass": 20,
+        "completed_passes": 20,
+        "development_mae_eV": 0.19913896918296814,
+        "matches_frozen_exposure": true,
+        "metric_pass": 20,
+        "next_batch": 0,
+        "optimizer_steps": 15620,
+        "planned_optimizer_steps": 15620,
+        "planned_passes": 20.0,
+        "sample_presentations": 1999360,
+        "status": "complete"
+      },
+      "saved_output_acceptance": true,
+      "selected_and_last": {
+        "last_arm_identity": "edbabb6985c84bcf33bfd89dec99bb29c9f65b28fab69a1877e3442b404dafef",
+        "last_checkpoint_sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+        "last_context_match": true,
+        "last_cursor": {
+          "best_development_mae_eV": 0.19913896918296814,
+          "next_batch": 0,
+          "pass_index": 20,
+          "pending_absolute_empty": true,
+          "pending_rows": 0,
+          "recipe_identity": "cc777d2f93480359acabeb068e7ea22385031044b89def7c1cbb62462f897daa",
+          "selected_step": 15620,
+          "status": "complete"
+        },
+        "last_model_finite": true,
+        "last_optimizer_step": 15620,
+        "last_sample_presentations": 1999360,
+        "selected_arm_identity": "edbabb6985c84bcf33bfd89dec99bb29c9f65b28fab69a1877e3442b404dafef",
+        "selected_context_match": true,
+        "selected_mae_eV": 0.19913896918296814,
+        "selected_mae_matches_recomputed": true,
+        "selected_model_finite": true,
+        "selected_model_sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a",
+        "selected_optimizer_step": 15620,
+        "selected_pass": 20.0,
+        "selected_selection": "best-development-live",
+        "selected_trace_row": {
+          "checkpoint_identity": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+          "cumulative_device_time_seconds": 19194.978540309,
+          "cumulative_wall_time_seconds": 19194.978540309,
+          "device_time_seconds": 922.8778518290019,
+          "ema_dev_metric": null,
+          "epoch_or_pass": 20,
+          "event": "observation",
+          "learning_rate": 1e-06,
+          "live_dev_metric": 0.19913896918296814,
+          "live_train_metric": 0.10014626090909699,
+          "optimizer_step": 15620,
+          "sample_presentations": 1999360,
+          "sequence": 19,
+          "wall_time_seconds": 922.8778518290019
+        },
+        "selected_weights": "live"
+      },
+      "target_scaling": {
+        "development_metric_unit": "eV",
+        "development_role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+        "target": "Gap",
+        "target_mean_eV": 5.338300266634226,
+        "target_scaling_finite_positive_std": true,
+        "target_std_eV": 1.275090206323082,
+        "train_metric_unit": "normalized-Gap",
+        "train_role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6"
+      },
+      "trace_exposure": {
+        "contiguous_20_passes": true,
+        "exact_15620_steps": true,
+        "exact_1999360_presentations": true,
+        "exact_20_passes": true,
+        "last_optimizer_step": 15620,
+        "last_pass": 20,
+        "last_sample_presentations": 1999360,
+        "metric_semantics": {
+          "ema_dev_metric": null,
+          "live_dev_metric": {
+            "direction": "minimize",
+            "metric": "MAE",
+            "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+            "target": "Gap",
+            "unit": "eV",
+            "weights": "live"
+          },
+          "live_train_metric": {
+            "direction": "minimize",
+            "metric": "MAE",
+            "role_identity": "2726defc60c66cec842f7de10b30b4ad98210e99219447fafc8d03b99bc114f6",
+            "target": "Gap",
+            "unit": "normalized-Gap",
+            "weights": "live"
+          }
+        },
+        "metric_values_finite": true,
+        "observation_count": 20,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\canonical_trace.json",
+        "sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4"
+      }
+    }
+  },
+  "blockers": [],
+  "claims": {
+    "canonical_rml_mutated": false,
+    "comparison_scope": "CONTEXT_ONLY",
+    "global_derived_rebuilt": false,
+    "replay_ready": false,
+    "scientific_acceptance": "NOT_EVALUATED"
+  },
+  "execution_retention": {
+    "manifest": {
+      "allocation_ledger": {
+        "arms": {
+          "esa_count": {
+            "path": "esa_count/allocation_ledger.json",
+            "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+          },
+          "ppgt_content": {
+            "path": "ppgt_content/allocation_ledger.json",
+            "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+          }
+        },
+        "root": {
+          "path": "allocation_ledger.json",
+          "sha256": "540a3beed9f188223e9936121ee87b35dab7313068d7a53c4b5eeec2f6945298"
+        }
+      },
+      "execution_report": {
+        "path": "execution_report.json",
+        "sha256": "321977342b05c3ab959361b86d7312508c2050bb23493a2ac9f324ec1da85676"
+      },
+      "format": "molgap-execution-retention-v1",
+      "package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+      "source_archive_sha256": "897a0ec6f69281760b5f39473c48adce7f458af66b90202a5a54a02ec087178d",
+      "source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+      "spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+      "status": "SEALED"
+    },
+    "manifest_sha256": "27881d762f5bc7559adde331831b43d1d36d394a9627fe1503b260f578b27fc5",
+    "status": "EXECUTION_RETENTION_VERIFIED"
+  },
+  "format": "molgap-independent-saved-artifact-acceptance-v1",
+  "frozen_binding": {
+    "expected_package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+    "expected_source_archive_sha256": "897a0ec6f69281760b5f39473c48adce7f458af66b90202a5a54a02ec087178d",
+    "expected_source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+    "expected_spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+    "identity_pass": true,
+    "package_dir": "E:\\MolGap\\artifacts\\runs\\modern2d-structure-k2-100k-s42-v1\\v1\\prepared\\package",
+    "receipt_path": "E:\\MolGap\\artifacts\\runs\\modern2d-structure-k2-100k-s42-v1\\v1\\operations\\launch_receipt.json",
+    "receipt_sha256": "a0a3a5ccd611600a9a81d5a7b583789ba8e989cc4a1cbb74a0d540794fd62af1",
+    "resolved_package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+    "resolved_source_archive_sha256": "897a0ec6f69281760b5f39473c48adce7f458af66b90202a5a54a02ec087178d",
+    "resolved_source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+    "resolved_spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+    "submission_identity_checks": {
+      "kernel": true,
+      "kernel_id": true,
+      "local_attempt": true,
+      "logical_run_id": true,
+      "package_identity": true,
+      "spec_identity": true,
+      "version": true
+    },
+    "submission_record": "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_structure_100k\\submission_kaggle2_v1.json"
+  },
+  "native_saved_state_proofs": {
+    "esa_count": {
+      "acceptance_basis": "family_training_runner._verify_preflight plus modern2d_execution_proof.verify_repair_proof on saved states",
+      "arm_root": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count",
+      "certificate_boolean_fields_used_for_acceptance": false,
+      "certificate_sha256": "5d5033722b6ebb1db4c3c1153acb165bdb2e318d958284501ac196f5c69ff0ea",
+      "certificate_status_observed_only": "accepted",
+      "execution_repair_sha256": "158ff00b5f65a314f0b2fa26bf791aa4ebcfd92745fc0d2dc23f22427ac0d512",
+      "missing_native_paths": [],
+      "missing_repair_recompute_paths": [],
+      "packaged_recipe_identity": "72da5b3c872c28aee4be8e28b23922f592ea12ddd29bdf1b5abea759ba00c2c9",
+      "pass": true,
+      "preflight_return_status": "accepted",
+      "preflight_status": "VERIFIED_SAVED_STATES",
+      "provenance_sha256": "ff4818e6bb70db669a01f97d078bcab1408b3192d7da4140b74fbbc02747003a",
+      "recomputed_repair": {
+        "exact_components": {
+          "cursor": true,
+          "optimizer_metadata": true,
+          "rng_state": true,
+          "scheduler": true
+        },
+        "exact_full_state": true,
+        "long_training_equivalence": "NOT_ESTABLISHED_BY_TWO_STEP_PROBE",
+        "model_update": {
+          "atol": 3e-06,
+          "finite": true,
+          "max_abs": 0.0,
+          "mismatches": [],
+          "rtol": 2e-05,
+          "schema_equal": true,
+          "update_equivalent": true
+        },
+        "optimizer_update": {
+          "atol": 3e-06,
+          "finite": true,
+          "max_abs": 0.0,
+          "mismatches": [],
+          "rtol": 2e-05,
+          "schema_equal": true,
+          "update_equivalent": true
+        },
+        "reference_mode": "accepted-native",
+        "scientific_training_released": false,
+        "status": "UPDATE_PROBE_CLOSE",
+        "update_equivalent": true
+      },
+      "required_native_paths": [
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\execution_repair.json",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\execution-reference.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\repeat-b.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\repeat-a.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\resumed.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\resumed-first.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\profile_qualification\\profile.json",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\profile_qualification\\trace.json"
+      ],
+      "required_native_sha256": {
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\execution-reference.pt": "faa1d95eea4ce797a8e0193eaf9dae9ace834024a7ec5fac72817b691e8ac1f3",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\execution_repair.json": "158ff00b5f65a314f0b2fa26bf791aa4ebcfd92745fc0d2dc23f22427ac0d512",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\profile_qualification\\profile.json": "dfb901788d9a8413a6ac056c21ae21c9fcc7ca82a61e260d60ab192a0e384a2b",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\profile_qualification\\trace.json": "035718c7efac0c401ad84e8ade687664780ce010d0433eeb532bff0a3a16c8fb",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\repeat-a.pt": "df02a2229eea46f4f7a4b743d8c5170fb7b078bd681f1337b0a68dea8a2ec832",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\repeat-b.pt": "877bc5b4bd9f41bdb23352e6497f6eddc5c6efe66d74cbfb6278cf3a195f2805",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\resumed-first.pt": "1524bf92f57c57ad20c0c1bd44d8046c2471e9de81b19f0344895907faea4372",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\resumed.pt": "c7b8acac2f448fb2d0b74ebf7316871a9072e5f5301ab4a9248cdad09a7b77d3"
+      },
+      "required_repair_recompute_paths": [
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\execution-reference.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\esa_count\\repeat-b.pt"
+      ],
+      "verify_repair_proof_status": "RECOMPUTED_FROM_SAVED_STATES"
+    },
+    "ppgt_content": {
+      "acceptance_basis": "family_training_runner._verify_preflight plus modern2d_execution_proof.verify_repair_proof on saved states",
+      "arm_root": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content",
+      "certificate_boolean_fields_used_for_acceptance": false,
+      "certificate_sha256": "f1e1c4c8e4d3644846baf7a944298b3e163888a5d4900b41b28aebea0ebe105b",
+      "certificate_status_observed_only": "accepted",
+      "execution_repair_sha256": "2e57fd726ee7ca7048e126e4075b7fa2740a076c997b3e028adcf9cebdbf2949",
+      "missing_native_paths": [],
+      "missing_repair_recompute_paths": [],
+      "packaged_recipe_identity": "cc777d2f93480359acabeb068e7ea22385031044b89def7c1cbb62462f897daa",
+      "pass": true,
+      "preflight_return_status": "accepted",
+      "preflight_status": "VERIFIED_SAVED_STATES",
+      "provenance_sha256": "53276f46845eb8ec334ab61333c36c9e8a1ef305b94757c24149045d2ab551e8",
+      "recomputed_repair": {
+        "exact_components": {
+          "cursor": true,
+          "optimizer_metadata": true,
+          "rng_state": true,
+          "scheduler": true
+        },
+        "exact_full_state": false,
+        "long_training_equivalence": "NOT_ESTABLISHED_BY_TWO_STEP_PROBE",
+        "model_update": {
+          "atol": 3e-06,
+          "finite": true,
+          "max_abs": 9.406358003616333e-08,
+          "mismatches": [],
+          "rtol": 2e-05,
+          "schema_equal": true,
+          "update_equivalent": true
+        },
+        "optimizer_update": {
+          "atol": 3e-06,
+          "finite": true,
+          "max_abs": 1.8735590856522322e-10,
+          "mismatches": [],
+          "rtol": 2e-05,
+          "schema_equal": true,
+          "update_equivalent": true
+        },
+        "reference_mode": "accepted-native",
+        "scientific_training_released": false,
+        "status": "UPDATE_PROBE_CLOSE",
+        "update_equivalent": true
+      },
+      "required_native_paths": [
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\execution_repair.json",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\execution-reference.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\repeat-b.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\repeat-a.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\resumed.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\resumed-first.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\profile_qualification\\profile.json",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\profile_qualification\\trace.json"
+      ],
+      "required_native_sha256": {
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\execution-reference.pt": "125c394be8d82ac1550677ef2b4203afa7da846425381f2870566cce06727dd7",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\execution_repair.json": "2e57fd726ee7ca7048e126e4075b7fa2740a076c997b3e028adcf9cebdbf2949",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\profile_qualification\\profile.json": "2a8c2bc37a280b996ceac790ab55225ddcda8e2527c4fbb42197879bf1c4aafc",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\profile_qualification\\trace.json": "85e61738ef9ad4ed5bb7dc2033293453d35a1f1c301b8fb2022dc4d326311dda",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\repeat-a.pt": "fb652342cd8e9571fc1649f3730cd946e80f88a9bc225bb819083992bcd7ca52",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\repeat-b.pt": "d5e30e512920ef6d0391ba9c80118ee92c5e2c9ce374b3540563fb1fea63af15",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\resumed-first.pt": "7be67442cc4ae4b895282f1fda44e8d2b8e3ff789ddd72f60f3e917022f74360",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\resumed.pt": "7acf056777f72d2055f25ef87afdef43563dc777211463d62aebd2485d0fb1c9"
+      },
+      "required_repair_recompute_paths": [
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\execution-reference.pt",
+        "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment\\ppgt_content\\repeat-b.pt"
+      ],
+      "verify_repair_proof_status": "RECOMPUTED_FROM_SAVED_STATES"
+    }
+  },
+  "ordinary_acceptance": {
+    "arms": {
+      "esa_count": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "b49c0a8c6d0179cfc1f9cd3236421e2d957780a3e0d87a7580aa94dd9a84c46f"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "11bb523ad14452102859f28b5a32df5d0aac5849474a97b2bded2fd786ef41ab"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "23fd0585c04b2ec2ca913994656259ae7e07540794915ea4cea954c13b92263b"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "8e7898c0ac120f50109f2f45dd06da3913b2d3dcd13c1e42e0af622db34ff3a2"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "4e016351ca39cbedcb7f3b5f5e02c1024e643196667acfcfa03c1f105f8cfaf2"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "c27ab3c89804e76dbcf50fb214c0f5b67d7ccd9791f34ccf7e29ef1be184d899"
+          }
+        },
+        "blockers": [],
+        "development_mae_eV": 0.19931078360319138,
+        "progress": {
+          "completed_passes": 20,
+          "next_batch": 0,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "status": "complete"
+        },
+        "selected_optimizer_step": 14839,
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "ppgt_content": {
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690"
+          }
+        },
+        "blockers": [],
+        "development_mae_eV": 0.19913895336389542,
+        "progress": {
+          "completed_passes": 20,
+          "next_batch": 0,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "status": "complete"
+        },
+        "selected_optimizer_step": 15620,
+        "status": "MECHANICALLY_VERIFIED"
+      }
+    },
+    "execute": false,
+    "execution_retention_status": "EXECUTION_RETENTION_VERIFIED",
+    "scientific_outcome": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "scope": {
+    "attempt_id": "v1",
+    "execution": "saved-state/metadata reads only; no model construction, forward, training or inference",
+    "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+    "kernel_id": 140243455,
+    "logical_run_id": "modern2d-structure-k2-100k-s42-v1",
+    "physical_version": 1,
+    "retrieved_root": "E:\\MolGap\\artifacts\\retained\\modern2d-structure-k2-100k-s42-v1-v1\\experiment",
+    "scientific_comparison": "not performed; main owns frozen-reference comparison and disposition"
+  },
+  "status": "PASS_SAVED_ARTIFACT_ACCEPTANCE",
+  "summary": {
+    "allocation_budget_pass": true,
+    "blocker_count": 0,
+    "execution_retention_pass": true,
+    "native_saved_state_pass": true,
+    "ordinary_acceptance_pass": true,
+    "saved_output_pass": true
+  }
+}

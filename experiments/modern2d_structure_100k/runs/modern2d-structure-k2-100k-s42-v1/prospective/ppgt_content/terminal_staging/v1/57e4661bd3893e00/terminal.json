@@ -1,0 +1,210 @@
+{
+  "acceptance_ref": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_structure_100k/generated/35f08923cb093420a59e402d3fe3232102264ac7578885bd5e3fa34eb3bc228e/ppgt_content/recipe.json": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba",
+    "experiments/modern2d_structure_100k/results/decision.md": "ad4f80bef8195eec1e43caa85e73fdcee98ba063667dea4e0f7d4b77497380b8",
+    "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/acceptance.json": "0125952f6ca09349dc66b500ab13ea8943b5a0e08a1892e748170140070269e7",
+    "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/observed.json": "eea0e1fe624e96414241a9421d39ca570087eeaab3803496613f6e79dbfcb2c5",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/canonical_trace.json": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/canonical_trace.json.context.json": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/development_predictions.pt": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/last_checkpoint.pt": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/output_manifest.json": "d61bc1df3b932dff75f4245ee1b9b7f062ff6a5c49694b1a260ca587e9d349da",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/selected_model.pt": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a",
+    "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/training_contract.json": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba"
+  },
+  "closure_blockers": [
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_content-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-modern2d-structure-k2-100k-s42-v1-ppgt_content-0",
+      "evidence_ref": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 5.354715182248611
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "modern2d-structure-k2-100k-s42-v1:ppgt_content:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-modern2d-structure-k2-100k-s42-v1-ppgt_content"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_structure_100k/results/decision.md",
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/training_contract.json",
+        "name": "contract",
+        "role": "contract",
+        "sha256": "3d642babc6760929f1197a705ae3536921e561fac43401ae7883677cc8bb44ba"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/development_predictions.pt",
+        "name": "predictions",
+        "role": "predictions",
+        "sha256": "04d6e80f5f1235ff6abacaa7b86af5b80cd809d98bb2a193a019da364f8ce31d"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/last_checkpoint.pt",
+        "name": "resume",
+        "role": "resume",
+        "sha256": "9306f6c108c6076ec469a2d5a76bf057c90d75c9cffcb40b90d9e219511fa037"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/selected_model.pt",
+        "name": "selected_model",
+        "role": "selected_model",
+        "sha256": "c1d1997a3d4d5783945184e8c012b10bec178bf215e115735aac7594f360797a"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/canonical_trace.json",
+        "name": "training_trace",
+        "role": "training_trace",
+        "sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "role": "trace_context",
+        "sha256": "3c3940e0f8850478fd6aa9900223e6c88b1c9e03c01db3113049b97096d0e690"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_structure_100k/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-modern2d-structure-k2-100k-s42-v1-ppgt_content",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/modern2d_structure_100k/generated/35f08923cb093420a59e402d3fe3232102264ac7578885bd5e3fa34eb3bc228e/ppgt_content/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.19913895336389542,
+      "missing_reason": null,
+      "selected_optimizer_step": 15620,
+      "selected_weights": "live",
+      "source_ref": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-22T22:55:46.759670+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "INCONCLUSIVE",
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "modern2d-structure-k2-100k-s42-v1:ppgt_content:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_15620",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/modern2d_structure_100k/generated/35f08923cb093420a59e402d3fe3232102264ac7578885bd5e3fa34eb3bc228e/ppgt_content/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 15620,
+      "sample_presentations": 1999360
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/modern2d_structure_100k/generated/35f08923cb093420a59e402d3fe3232102264ac7578885bd5e3fa34eb3bc228e/ppgt_content/recipe.json",
+    "reference_id": "",
+    "run_id": "modern2d-structure-k2-100k-s42-v1:ppgt_content:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/terminal_staging/v1/57e4661bd3893e00/terminal.json",
+    "trace_artifact_ref": "external:///E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1/experiment/ppgt_content/canonical_trace.json",
+    "trace_artifact_sha256": "605a50b2c65cd1787252ee19fe58c46269bf3765e15b6749e5ee4590632587f4",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-modern2d-structure-k2-100k-s42-v1-ppgt_content",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-modern2d-structure-k2-100k-s42-v1-ppgt_content"
+}
