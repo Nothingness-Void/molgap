@@ -1,103 +1,100 @@
 # Infrastructure verification
 
-This bounded record describes the reusable local infrastructure and its
-verification scope. Update this record after infrastructure changes; keep
-experiment outcomes in their owning decisions and route them through the
-[experiment indexes](../../experiments/README.md).
+This page owns test selection, the claims evidence supports, and test growth.
+It is not a per-fix test log. Experiment evidence stays with the named run;
+past failure audits remain in the [historical audit](INFRASTRUCTURE_AUDIT_20261020.md).
 
-The [2026-10-20 failure-path audit](INFRASTRUCTURE_AUDIT_20261020.md) records
-reproduced packaging, terminal-state and recovery defects, their repairs and
-the first-submission adapter's explicit continuation limit.
+## What a successful check means
 
-## Reusable lifecycle
+| Evidence | Establishes | Does not establish |
+|---|---|---|
+| Focused unit check | One algorithm or interface invariant | A complete training or submission flow |
+| Local workflow journey | The real owners exercised by that fixture, with its stated substitutes | Execution of the new candidate's frozen package or native environment |
+| Actual package release check | Identity, dependencies and inputs checked by the selected release mode | Unexecuted model/trainer paths, GPU behaviour or training completion |
+| Exact native preflight | Its retained source/recipe/data/runtime and observed updates | Later pass/chunk boundaries it never reached, or scientific quality |
 
-The [quickstart](EXPERIMENT_QUICKSTART.md) is the entry for a new agent. The
-registered workflow reuses typed Spec validation, explicit source packaging,
-prospective binding, immutable launch preparation, platform receipts, native
-training/output inspection, portable incomplete-run recovery, acceptance, and
-terminal/RML closure. [Platform adapters](../../platforms/README.md) own remote
-submission, reconciliation, and retrieval; the shared CLI has no submitter.
+A fake API is appropriate for offline submission tests. Replacing package
+verification, the training kernel, serialization or the output sink means those
+parts were not tested. A Linear/Dropout kernel is useful for Session mechanics;
+it is not K1, GPTrans, PPGT or ESA execution evidence.
 
-For a new pure-2D PCQM direct-Gap family, implement one small model factory and
-add one catalog contract including execution metadata. A compatible addon implements
-one small model hook, typed configuration, and one catalog entry. Accepted
-input loading, optimizer/schedule, selection, trace/checkpoint persistence,
-recovery transport, output inspection, and terminal closure remain shared.
-The exact model, addon, recipe, and source interfaces are in the
-[graph extension contract](GRAPH_SCREEN_EXTENSION.md).
-The [four-layer runtime guide](MODULAR_EXPERIMENT_RUNTIME.md) owns standard
-K1/GPTrans addon slots, native Live/Raw/Clean actions, the memory sandbox and
-AST source closure. New hooks compose before optimizer construction; retained
-scientific recipes are not rewritten to enable a new hook or calibration policy.
+## Select an affected workflow
 
-Changing targets, geometry, data identity, precision, optimizer, selection, or
-platform requires the owning contract/adapter and its qualification gates.
-Static registration does not grant scientific comparability or compute
-authority. The [screening policy](../../experiments/SCREENING_POLICY.md) owns
-comparison and seed budgets.
-
-## Local evidence
-
-The 2026-10-14 audit exercised substrate composition, addon ownership/gradients,
-native Clean-BN persistence and stale-state rejection, source closure/immutable
-publication, shared training, recovery and incomplete campaign acceptance.
-The final focused regression passed **472 tests, 1 skipped**.
-Documentation/layout coverage passed all 35 checks, including the repaired
-entrypoint/CLI guards. Active navigation and entrypoint budgets had zero issues.
-Source tests publish a discovered closure and execute its function-local addon
-dependencies in an isolated Python process, including package startup and
-Python's package-over-module resolution. Unresolved dynamic/wildcard imports
-remain explicit review obligations.
-The subsequent [topology port review](TOPOLOGY_REUSE_SERVER_REVIEW.md) owns
-the expanded operation-equivalence and frozen-source compatibility results.
-
-The new-family lifecycle fixture uses a small previously unregistered model,
-a simple addon, and synthetic immutable PCQM topology/role assets. It performs
-actual CPU optimization through the shared trainer, prepares a source package,
-checks release binding, interrupts after an epoch, transports/restores the
-checkpoint, completes training, inspects outputs, accepts the retained run,
-and completes terminal/RML closure in an isolated temporary repository.
-Continuous and resumed model, optimizer, scheduler, RNG, and progress states
-must match exactly. Fixtures do not submit jobs or reopen completed experiments.
-
-CPU fixtures establish local executable behavior. Actual accepted-data scale,
-GPU/runtime calibration, remote resource allocation, scientific acceptance,
-and production promotion retain their separate owning gates.
-Both actual family sandbox CLI commands passed finite forward, backward and
-exact tensor/evaluation roundtrip checks. Cold process times were 6.92 seconds
-(K1) and 6.72 seconds (GPTrans); warm API times were about 0.35–0.37 seconds.
-These two-graph CPU checks do not certify BS128 VRAM or permanent gradient flow.
-
-## Repeatable checks
-
-Run from the repository root using its virtual environment:
+Use the selected checkout and dependency interpreter. No machine profile is
+needed for CPU tests when that interpreter is already selected:
 
 ```powershell
 $python = '.\.venv\Scripts\python.exe'
-& $python -m pytest -q --noconftest tests/test_shared_family_registration.py tests/test_graph_screen_training.py tests/test_shared_graph_lifecycle.py
-& $python -m pytest -q --noconftest tests/test_model_substrate.py tests/test_family_training_state.py tests/test_fast_sandbox.py tests/test_source_dependencies.py tests/test_modular_experiment_cli.py tests/test_modular_training_integration.py tests/test_gptrans_campaign_segments.py tests/test_family_pair_acceptance.py
-& $python -m pytest -q tests/test_documentation_check.py tests/test_repository_layout.py
-& $python -m molgap.documentation_check --repo-root .
-& $python -m molgap.research_memory --repo-root . validate
-& $python -m molgap.research_memory --repo-root . check --frozen
+& $python platforms/local/run.py --module molgap.local_testing -- --list
+& $python platforms/local/run.py --module molgap.local_testing -- --scope train --scope resume -- -q
 ```
 
-The documentation command audits tracked active Markdown: local file pointers,
-anchors and code pointers, not document length. Optional legacy budget checks
-are not a repository acceptance gate. During development,
-add repeatable `--document` arguments to audit newly created files explicitly;
-when supplied, they select the documents rather than extend the tracked set.
-Frozen/generated trees are excluded by default; use `--include-frozen` only
-for an intentional historical audit. This is a read-only navigation check.
+[local_testing.py](../../src/molgap/local_testing.py) owns the fixed pytest
+nodeids. New files and unrelated tests in the same file do not enter a scope.
+Several scopes can share a journey; one invocation deduplicates it. There is
+no implicit full-suite run. Use direct pytest for an affected lower-level
+invariant; full-suite maintenance is an explicit separate operation.
 
-The extended historical audit found 98 old checkout paths in frozen archive,
-closed-experiment, and platform snapshots. These are not valid current paths.
-Read their recorded source commit or [archive routing](../archive/README.md)
-when reproducing history; retain the snapshot bytes and do not treat them as
-active infrastructure instructions.
+| Scope | Local behaviour selected |
+|---|---|
+| `runtime` | Checkout isolation and registered K1/GPTrans one-batch sandbox |
+| `package` | Package binding and imports from extracted source |
+| `prepare` | K1/3 and GPTrans/2 scientific-input compilation and frozen recovery |
+| `train` | Real K1/GPTrans addons and PPGT/3/ESA/4 kernels, loaders, output publication and saved-state continuation on generated CPU graphs |
+| `submit` | Real local package/release/receipt/retrieval owners with fake network and a synthetic trainer |
+| `accept` | Existing finalizer with frozen generated metadata removed and externally retained traces |
+| `resume` | Real-model continuation plus the ten-pass chunk transport and concurrent accounting snapshot |
 
-The [module index](ARCHITECTURE_MODULE_INDEX.md) routes implementation ownership.
-Frequently read entries stay bounded; conditional history/directory indexes
-hold growing navigation, while experiment decisions retain evidence.
-Update links and focused checks when adding a module. Do not copy metrics,
-job logs, or per-experiment lifecycle reports into this document.
+These fixtures use bounded synthetic data and model configurations. They do
+not execute the cloud bootstrap, decode a complete real shard, or qualify a
+new candidate archive. Source-closure import checks also do not execute the
+worker's training entry. `-k`, skips or other selection overrides must be
+reported as partial execution, not a completed workflow check.
+
+## Keep the suite bounded
+
+1. Reproduce a failure through the nearest existing workflow first. Check
+   whether it was omitted from selection or replaced by a stub before adding
+   anything. Fix the production owner and strengthen that workflow.
+2. Reuse one canonical fixture and parameter table for a behaviour. Merge or
+   remove superseded local checks when the workflow covers the same fact.
+   An incident does not automatically justify a new test function or file.
+3. Add a separate test only for a distinct supported behaviour, numerical
+   invariant or external IO boundary. Arbitrary wrong types/private-call
+   permutations and assertions of source strings are not substitutes for
+   exercising the supported agent workflow. Do not expand default scopes for them.
+   Routine experiment configuration changes add no tests. A new model or addon
+   extends its existing model/ABI journey; do not copy the submission or
+   acceptance suite for each experiment.
+4. Replace only external boundaries when claiming integration: network,
+   accelerator observation, clock, or an injected IO interruption. Keep the
+   actual loader/kernel/optimizer/callback/checkpoint owners in a training journey.
+5. Assert observable outcomes with an independent expectation: exact updates
+   and samples, pass/chunk boundaries, selected artifact/trace alignment, and
+   continuous versus serialized-resumed state. Calling the same helper to
+   produce and verify a counter is not independent evidence.
+
+Runtime validation still protects actual data, artifact identity and external
+authority. Keep those owning checks; do not add another certificate, registry,
+mandatory audit document, or a validator solely to satisfy a new test.
+
+## Report the exercised path
+
+Lead with the behaviour observed, not the number of passing cases. State:
+
+- Which model/interface and source were executed: checkout, extracted fixture,
+  or the actual candidate's frozen package.
+- Which updates, pass-end, selection, chunk and disk-restore events occurred.
+- Which components were substituted and which real-data/native paths remain unrun.
+
+Passing unit or fixture counts never imply "ready to submit" or "will not fail".
+Before an authorized submission, use the actual prepared package with the
+existing [release/platform owner](KAGGLE_WORKFLOW_SUBMISSION.md). Native admission
+uses the existing worker/preflight, under the run's authority. Do not create
+extra cloud experiments just to replace a missing local integration check.
+The legacy [CPU preflight modes](EXPERIMENT_PREFLIGHT.md) have explicit family
+and version limits; they are not a universal current-family rehearsal.
+
+Navigation changes use the existing `documentation_check --document PATH`
+selection. Evidence changes use their existing RML validators. Do not rerun
+unaffected successful checks or append another test-count report here.

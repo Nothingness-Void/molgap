@@ -31,3 +31,7 @@ The [configured workflow verification](configured_workflow_verification.md)
 records the later scientific-input, addon, budget and saved-artifact integration.
 The [workflow guide](../../docs/operations/MODERN2D_CONFIGURED_WORKFLOW.md)
 owns the reusable configuration interface.
+
+The [execution optimization verification](execution_optimization_2026-10-22.md)
+records CPU-prepared model execution, indexed batch/cache reuse and profiler
+cleanup. Native speed, equivalence and scientific release remain separate.

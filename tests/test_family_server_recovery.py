@@ -1,6 +1,8 @@
 """Server-only shared-session hooks under synthetic CPU fault injection."""
 from dataclasses import replace
+import hashlib
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -106,20 +108,89 @@ def test_bounded_pair_recovers_selected_trace_and_checkpoint_together(tmp_path, 
 
 @pytest.mark.parametrize("mode", MODES)
 def test_ten_pass_transport_hook_only_sees_committed_bundle(tmp_path, monkeypatch, mode):
-    import molgap.experiment_resume as owner
     session, out, _, _ = prepared(tmp_path, mode, passes=11)
-    out.resume_trajectory = b"synthetic-prospective"
-    chunks = []
-    def retain(root, ctx, trajectory, destination):
-        assert not (root / "session_commit.json").exists()
-        trace = json.loads((root / "canonical_trace.json").read_text())
-        assert trace["observations"][-1]["optimizer_step"] == 20
-        assert trace["observations"][-1]["checkpoint_identity"] == sha256_file(root / "last_checkpoint.pt")
-        assert trajectory == b"synthetic-prospective"
-        chunks.append(destination)
-    monkeypatch.setattr(owner, "create_resume_bundle", retain)
-    session.run()
-    assert chunks == [out.root.parent / "checkpoint_chunks" / out.context.arm_id / "pass_10"]
+    trajectory = {
+        "trajectory_id": "synthetic-trajectory",
+        "record_mode": "prospective",
+        "state_at_start": {
+            "source_commit": out.context.source_commit,
+            "source_config_identity": out.context.arm_identity,
+        },
+        "actions": [{"action_id": "A001", "run_ids": [out.context.run_reference],
+                      "attempt_ids": ["v1"]}],
+        "decision": {"outcome": "ACTIVE"},
+    }
+    out.resume_trajectory = json.dumps(trajectory, sort_keys=True).encode()
+
+    # A parent-side ledger tick may atomically publish a newer generation after
+    # the worker has captured the bytes for this transport chunk.  The resume
+    # bundle must retain the generation it actually captured, including its
+    # manifest digest, without rereading the live source path.
+    import molgap.experiment_resume as owner
+    from molgap.experiment_allocation import AllocationLedger
+    ledger = out.root / "allocation_ledger.json"
+    elapsed = [0.]
+    allocation = AllocationLedger(spec_identity=out.context.spec_identity,
+        hardware=("synthetic-cpu",), assignments={out.context.arm_id: 0}, clock=lambda: elapsed[0])
+    elapsed[0] = 10.
+    old_payload = json.dumps(allocation.snapshot("running"), sort_keys=True).encode()
+    elapsed[0] = 20.
+    new_payload = json.dumps(allocation.snapshot("running"), sort_keys=True).encode()
+    ledger.write_bytes(old_payload)
+    original_read_bytes = owner.Path.read_bytes
+    original_sha256_file = owner.sha256_file
+    read_replaced = False
+    hash_replaced = False
+
+    def capture_then_replace(path):
+        nonlocal read_replaced
+        payload = original_read_bytes(path)
+        if Path(path).resolve() == ledger.resolve() and not read_replaced:
+            read_replaced = True
+            replacement = ledger.with_name(".allocation_ledger.next.json")
+            replacement.write_bytes(new_payload)
+            os.replace(replacement, ledger)
+            return payload
+        return payload
+
+    def capture_digest_then_replace(path):
+        nonlocal hash_replaced
+        digest = original_sha256_file(path)
+        if Path(path).resolve() == ledger.resolve() and not hash_replaced:
+            hash_replaced = True
+            replacement = ledger.with_name(".allocation_ledger.next.json")
+            replacement.write_bytes(new_payload)
+            os.replace(replacement, ledger)
+        return digest
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(owner.Path, "read_bytes", capture_then_replace)
+        scoped.setattr(owner, "sha256_file", capture_digest_then_replace)
+        native_bundle = owner.create_resume_bundle
+        def export_committed(root, context, trajectory, destination):
+            assert not (root / "session_commit.json").exists()
+            trace = json.loads((root / "canonical_trace.json").read_bytes())
+            row = trace["observations"][-1]
+            assert row["optimizer_step"] == 20
+            assert row["checkpoint_identity"] == sha256_file(root / "last_checkpoint.pt")
+            return native_bundle(root, context, trajectory, destination)
+        scoped.setattr(owner, "create_resume_bundle", export_committed)
+        session.run()
+
+    assert read_replaced is True
+    assert hash_replaced is False
+    chunk_root = out.root.parent / "checkpoint_chunks" / out.context.arm_id
+    assert sorted(path.name for path in chunk_root.iterdir() if path.is_dir()) == ["pass_10"]
+    bundle = chunk_root / "pass_10"
+    checked = owner.validate_resume_bundle(bundle)
+    assert checked["status"] == "TRANSPORT_VERIFIED"
+    manifest = checked["manifest"]
+    assert manifest["cursor"]["optimizer_step"] == 20
+    assert manifest["cursor"]["sample_presentations"] == 2560
+    ledger_pointer = manifest["cost_segments"][0]
+    assert ledger_pointer["sha256"] == hashlib.sha256(old_payload).hexdigest()
+    assert (bundle / ledger_pointer["path"]).read_bytes() == old_payload
+    assert ledger.read_bytes() == new_payload
 
 
 def test_distance_override_is_not_silently_replaced(monkeypatch):

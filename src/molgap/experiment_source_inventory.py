@@ -240,6 +240,7 @@ _TEST_SUPPORT_FILES = frozenset({
     "platforms/kaggle/submit_workflow.py",
     "platforms/kaggle/retrieve_family_outputs.py",
     "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+    "research_memory/policies/k1-relation-resolution-bounded-research.v1.json",
     "docs/operations/EXPERIMENT_ADDON_GUIDE.md",
     "docs/operations/EXPERIMENT_CLI.md",
 })

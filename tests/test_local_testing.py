@@ -15,14 +15,17 @@ def test_combined_flows_run_one_session_without_duplicate_files(monkeypatch):
     calls = []
     monkeypatch.setattr(pytest, "main", lambda args: calls.append(args) or 1)
     assert local_testing.main([
-        "--scope", "prepare", "--scope", "submit", "--scope", "prepare", "--", "-q",
+        "--scope", "prepare", "--scope", "train", "--scope", "resume",
+        "--scope", "prepare", "--", "-q",
     ]) == 1
     assert len(calls) == 1
-    files = calls[0][:-1]
+    nodes = calls[0][:-1]
     assert calls[0][-1] == "-q"
-    assert len(files) == len(set(files))
-    assert files.count("tests/test_reform_workflow.py") == 1
-    assert "tests/test_kaggle_submission.py" in files
+    assert len(nodes) == len(set(nodes))
+    assert all("::" in node for node in nodes)
+    recovery = "tests/test_scientific_addon_recovery.py::test_scientific_addon_recovery_uses_its_own_frozen_checkout"
+    assert nodes.count(recovery) == 1
+    assert "tests/test_modern2d_formal_training.py::test_formal_actual_session_resume_full_state_and_readonly_dev" in nodes
 
 
 def test_list_is_read_only_and_all_selections_resolve(monkeypatch, capsys):
@@ -30,32 +33,21 @@ def test_list_is_read_only_and_all_selections_resolve(monkeypatch, capsys):
     assert local_testing.main(["--list"]) == 0
     groups = json.loads(capsys.readouterr().out)
     root = Path(__file__).resolve().parents[1]
-    assert all((root / "tests" / (name + ".py")).is_file()
-               for names in groups.values() for name in names)
+    assert set(groups) == set(local_testing.SCOPES)
+    assert all(
+        "::" in node and (root / node.split("::", 1)[0]).is_file()
+        for nodes in groups.values() for node in nodes
+    )
     assert local_testing.main(["--scope", "prepare", "--scope", "submit", "--list"]) == 0
-    files = json.loads(capsys.readouterr().out)
-    assert len(files) == len(set(files))
+    nodes = json.loads(capsys.readouterr().out)
+    assert len(nodes) == len(set(nodes))
+    assert all("::" in node for node in nodes)
 
 
 def test_no_implicit_full_suite():
     with pytest.raises(SystemExit) as error:
         local_testing.main([])
     assert error.value.code == 2
-
-
-def test_scopes_cover_existing_lifecycle_regressions():
-    assert "test_experiment_run" in local_testing.SCOPES["prepare"]
-    assert "test_reform_review" in local_testing.SCOPES["prepare"]
-    assert "test_reform_catalog" in local_testing.SCOPES["prepare"]
-    assert "test_reform_distribution" in local_testing.SCOPES["package"]
-    assert "test_kaggle_family_retrieval" in local_testing.SCOPES["accept"]
-    assert "test_experiment_cli" in local_testing.SCOPES["accept"]
-    assert "test_modern2d_training_prepare" in local_testing.SCOPES["prepare"]
-    assert "test_modern2d_qualification_prepare" in local_testing.SCOPES["prepare"]
-    assert "test_modern2d_training_records" in local_testing.SCOPES["accept"]
-    assert "test_modern2d_qualification_records" in local_testing.SCOPES["accept"]
-    for scope in ("submit", "accept", "resume"):
-        assert "test_reform_daily_platform" in local_testing.SCOPES[scope]
 
 
 def test_test_inventory_keeps_worker_boundary_and_rejects_payloads(tmp_path, monkeypatch):
@@ -122,7 +114,7 @@ def test_package_cli_uses_existing_bundle_and_lists_without_writing(tmp_path, mo
         local_testing.main(["--package", str(target), "--scope", "runtime"])
 
 
-def test_extracted_test_package_collects_all_flows_and_executes_its_own_tests(tmp_path):
+def test_extracted_test_package_collects_fixed_journeys_and_executes_runtime(tmp_path):
     from molgap.experiment_source_inventory import (
         testing_source_files, build_testing_source_package, _TEST_SUPPORT_FILES)
     root = Path(__file__).resolve().parents[1]
@@ -168,9 +160,7 @@ if sys.argv[2]=='collect':
     args=[item for scope in local_testing.SCOPES for item in ('--scope',scope)]
     args += ['--','--collect-only','-q']
 else:
-    args=['--scope','runtime','--scope','prepare','--scope','accept','--','-q','-k',
-          '(local_testing or reform_runtime or local_storage or machine_paths or '
-          'execution_projection_tracks or parser_errors_are_finite_json) and not extracted_test_package']
+    args=['--scope','runtime','--','-vv']
 code=local_testing.main(args)
 assert code==0,code
 for name,module in list(sys.modules.items()):
@@ -185,3 +175,4 @@ for name,module in list(sys.modules.items()):
             cwd=extracted, env=environment, capture_output=True, text=True, timeout=90)
         assert child.returncode == 0, child.stdout + child.stderr
         assert ("collected" if operation == "collect" else "passed") in child.stdout
+        assert "test_registered_slots_use_accelerated_sandbox_and_roundtrip" in child.stdout

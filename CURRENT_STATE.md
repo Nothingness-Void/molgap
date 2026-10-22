@@ -6,6 +6,9 @@
 
 ## Server execution status
 
+PPGT/ESA [execution optimizations](docs/operations/MODERN2D_EXECUTION_OPTIMIZATION.md)
+passed the [affected CPU checks](experiments/modern2d_model_integration/execution_optimization_2026-10-22.md), including disk-resumed Session state. Prepared model execution remains opt-in/native-unqualified; shared snapshot blockers are recorded separately. No new job is authorized by the patch.
+
 The human-authorized [four-slot/eight-arm PPGT/ESA research campaign](experiments/modern2d_configured_100k/research_arms/STATUS.md)
 has four accepted Kaggle2/3 version1 submissions. Both ESA slots are COMPLETE:
 all four20-pass endpoints passed independent saved-artifact acceptance. The

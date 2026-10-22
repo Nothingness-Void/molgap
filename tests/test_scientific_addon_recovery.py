@@ -1,8 +1,9 @@
 """CPU addon recovery through scientific declarations and real family owners.
 
-These synthetic graphs prove state transport/replay, not accepted dataset bytes,
-native preflight, selected prediction artifacts, scientific acceptance or Replay.
-Run with an E-drive --basetemp; no platform operation or training entry is used.
+These synthetic graphs exercise the CPU owner/session/recovery output path, not
+accepted dataset bytes, native preflight, scientific acceptance or Replay. The
+test writes selected outputs and traces through SessionOutputs; no platform
+operation, cloud bootstrap, real dataset ingestion or training entry is used.
 """
 from copy import deepcopy
 from dataclasses import replace
@@ -17,7 +18,7 @@ import pytest
 import torch
 
 from molgap import experiment_input
-from molgap.experiment_family_workflow import RunContext, StageRecorder
+from molgap.experiment_family_workflow import RunContext, tensor_digest
 from molgap.experiment_package import read_packaged_text, verify_experiment_source_package
 from molgap.experiment_resume import (
     RESUME_BUNDLE_FILE, restore_resume_bundle, validate_resume_bundle,
@@ -28,7 +29,8 @@ from molgap.experiment_workflow_resume import (
 from molgap.family_training_data import TrainingData
 from molgap.family_training_kernel import FamilyKernel
 from molgap.family_training_loaders import FamilyLoaders
-from molgap.family_training_runner import _verify_preflight, read_recipe
+from molgap.family_training_outputs import SessionOutputs
+from molgap.family_training_runner import PROFILES, _verify_preflight, read_recipe
 from molgap.family_training_session import FamilyTrainingSession
 from molgap.gptrans_execution_tuning import ExecutionTuning
 from molgap.research_memory.trace import atomic_write, file_digest
@@ -43,11 +45,7 @@ from test_scientific_input import scientific  # Reuse the actual human-input fix
 
 
 @pytest.fixture(scope="module", autouse=True)
-def cpu_on_e_only(tmp_path_factory):
-    # Fail before the imported scientific fixture creates its independent checkout.
-    assert tmp_path_factory.getbasetemp().drive.upper() == "E:", (
-        "This integration fixture requires --basetemp on E:"
-    )
+def cpu_only():
     assert not torch.cuda.is_initialized(), "Use a fresh CPU-only test worker"
     with pytest.MonkeyPatch.context() as patch:
         patch.setenv("CUDA_VISIBLE_DEVICES", "-1")
@@ -100,31 +98,20 @@ def _session(case, output=None):
     pool = FamilyLoaders(case.recipe, case.data, ExecutionTuning(training_workers=0))
     checkpoint = pass_finished = lambda *args: None
     if output is not None:
-        output.mkdir()
-        atomic_write(output / "training_contract.json", case.contract)
-        stage = StageRecorder(output / "canonical_trace.json", case.context, "downstream",
-            {"live_train_metric": {"metric": "MAE", "unit": "normalized-Gap",
-                "target": "Gap", "role_identity": case.record["train_role_identity"],
-                "weights": "live", "direction": "minimize"},
-             "live_dev_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
-                "role_identity": case.record["development_role_identity"],
-                "weights": "live", "direction": "minimize"},
-             "ema_dev_metric": None},
-            trajectory_id=case.trajectory["trajectory_id"])
-
-        def checkpoint(progress, state):
-            # Session owns all state, including explicit absent EMA. The same
-            # atomic owner is used by the family's scratch resume proofs.
-            atomic_torch_save(output / "last_checkpoint.pt",
-                {"context": case.context.to_dict(), **state})
-
-        def pass_finished(progress, metrics):
-            stage.observe(optimizer_step=progress.optimizer_step,
-                sample_presentations=progress.sample_presentations,
-                epoch_or_pass=progress.pass_index,
-                live_train_metric=metrics["normalized_train_gap_mae"],
-                live_dev_metric=metrics["development"]["mae_eV"])
-
+        output = Path(output)
+        output.mkdir(parents=True, exist_ok=True)
+        contract = case.tmp / (output.name + "-training-contract.json")
+        atomic_write(contract, case.contract)
+        outputs = SessionOutputs(output, case.context, contract=contract,
+            adapter=PROFILES[case.recipe.family], trajectory_id=case.trajectory["trajectory_id"],
+            train_role_identity=case.record["train_role_identity"])
+        session = FamilyTrainingSession(kernel, pool,
+            checkpoint=checkpoint,
+            checkpoint_builder=outputs.checkpoint_from_builder,
+            selected=outputs.selected, pass_finished=outputs.pass_finished,
+            batch_finished=outputs.batch_finished)
+        session._test_outputs = outputs
+        return session
     return FamilyTrainingSession(kernel, pool, checkpoint=checkpoint,
         selected=lambda *args: None, pass_finished=pass_finished)
 
@@ -148,7 +135,58 @@ def _recovery_case(scientific):
     platform["kaggle"]["kernel"] = "synthetic-account/synthetic-pair-run"
     platform["kaggle"]["title"] = "Synthetic Pair Run"
     _write_json(platform_path, platform)
-    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix(), value["platform_ref"])
+    contract_path = case.repo / "experiments/reference/contract.json"
+    contract_record, contract_recipe = read_recipe(contract_path)
+    synthetic = _synthetic_data(contract_recipe)
+    source_idx = torch.cat([item.source_idx for item in synthetic.development])
+    target = torch.cat([item.y for item in synthetic.development])
+    contract_record["acceptance_requirements"].update(
+        source_idx_sha256=tensor_digest(source_idx, role="source_idx"),
+        target_sha256=tensor_digest(target, role="target"))
+    _write_json(contract_path, contract_record)
+    contract_sha256 = file_digest(contract_path)
+    source_spec_path = case.repo / "experiments/reference/experiment_spec.json"
+    source_spec = json.loads(source_spec_path.read_bytes())
+    source_spec["arms"][0]["training"]["recipe"]["sha256"] = contract_sha256
+    _write_json(source_spec_path, source_spec)
+    from molgap.experiment_spec import ExperimentSpec
+    source_spec_identity = ExperimentSpec(source_spec).identity
+    plan_path = case.repo / value["arms"][0]["reference_ref"]["plan_ref"]
+    plan_value = json.loads(plan_path.read_bytes())
+    plan_value["spec_identity"] = source_spec_identity
+    plan_value["arms"][0]["contract"] = {
+        "path": contract_path.relative_to(case.repo).as_posix(), "sha256": contract_sha256}
+    plan_value["arms"][0]["expected"] = contract_record["acceptance_requirements"]
+    from test_comparison_readiness import _prelaunch
+    from molgap.comparison_readiness import reference_bundle_digest
+    bundle_path = case.repo / plan_value["arms"][0]["reference_bundle"]["path"]
+    bundle = json.loads(bundle_path.read_bytes())
+    prediction_manifest_path = case.repo / "experiments/reference/prediction_manifest.json"
+    prediction_manifest = json.loads(prediction_manifest_path.read_bytes())
+    prediction_manifest.update(source_idx_sha256=contract_record["acceptance_requirements"]["source_idx_sha256"],
+                               target_sha256=contract_record["acceptance_requirements"]["target_sha256"])
+    predictions_path = case.repo / "experiments/reference/predictions.json"
+    predictions = json.loads(predictions_path.read_bytes())
+    predictions.update(source_idx_sha256=prediction_manifest["source_idx_sha256"],
+                       target_sha256=prediction_manifest["target_sha256"])
+    _write_json(predictions_path, predictions)
+    prediction_manifest["prediction_sha256"] = file_digest(predictions_path)
+    _write_json(prediction_manifest_path, prediction_manifest)
+    bundle["prediction_manifest"] = prediction_manifest
+    _write_json(bundle_path, bundle)
+    prelaunch_path = case.repo / plan_value["arms"][0]["comparison_prelaunch"]["path"]
+    _write_json(prelaunch_path, _prelaunch(bundle))
+    plan_value["arms"][0]["reference_bundle"]["sha256"] = file_digest(bundle_path)
+    plan_value["arms"][0]["comparison_prelaunch"]["sha256"] = file_digest(prelaunch_path)
+    plan_value["arms"][0]["reference_artifacts"]["prediction_manifest"] = {
+        "path": prediction_manifest_path.relative_to(case.repo).as_posix(),
+        "sha256": file_digest(prediction_manifest_path)}
+    plan_value["arms"][0]["reference_artifacts"]["predictions"] = {
+        "path": predictions_path.relative_to(case.repo).as_posix(),
+        "sha256": file_digest(predictions_path)}
+    assert reference_bundle_digest(bundle) == json.loads(prelaunch_path.read_bytes())["reference_bundle_sha256"]
+    _write_json(plan_path, plan_value)
+    _git(case.repo, "add", ".")
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic addon recovery input")
 
     prepared_report = experiment_input.prepare_experiment_input(path, case.repo)
@@ -179,6 +217,7 @@ def _recovery_case(scientific):
         trajectory=json.loads(trajectory_path.read_bytes()), trajectory_raw=trajectory_path.read_bytes(),
         tmp=case.tmp, data=_synthetic_data(recipe), source=case.tmp / "synthetic-session")
     session = _session(result, result.source)
+    result.outputs = session._test_outputs
     addon_parameters = dict(session.kernel.model._molgap_substrate.named_addon_parameters())
     assert addon_parameters
     named = dict(session.kernel.model.named_parameters())
@@ -188,10 +227,12 @@ def _recovery_case(scientific):
                         if any(param is p for p in addon_parameters.values())]
     initial_gains = {key: named[key].detach().clone() for key in result.addon_keys}
     pauses = iter([False, True])
+    result.outputs.logger.start(session.progress)
     progress = session.run(should_pause=lambda: next(pauses))
     assert progress.status == "paused" and progress.optimizer_step == 2
-    result.saved = torch.load(result.source / "last_checkpoint.pt", map_location="cpu", weights_only=True)
-    assert result.saved.pop("context") == context.to_dict()
+    raw_saved = torch.load(result.source / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+    assert raw_saved.pop("context") == context.to_dict()
+    result.saved = result.outputs.retained_state()
     assert result.saved["rng_state"]["cuda"] == []
     assert result.saved["cursor"]["pass_index"] == 1
     assert result.saved["cursor"]["next_batch"] == 0
@@ -201,6 +242,11 @@ def _recovery_case(scientific):
         moments = result.saved["optimizer"]["state"][parameter_id]
         assert int(moments["step"]) == 2
         assert torch.count_nonzero(moments["exp_avg"])
+    trace = json.loads((result.source / "canonical_trace.json").read_bytes())
+    rows = [row for row in trace["observations"] if row["event"] == "observation"]
+    assert [(row["optimizer_step"], row["sample_presentations"]) for row in rows] == [(2, 256)]
+    selected = torch.load(result.source / "selected_model.pt", map_location="cpu", weights_only=True)
+    assert selected["optimizer_step"] == 2 and selected["weights"] == "live"
     result.bundle = case.tmp / "resume-bundle"
     result.export = build_workflow_resume(spec, case.repo, prepared, package,
         manifest["package_identity"], receipt, result.bundle,
@@ -231,16 +277,38 @@ def _assert_real_family_addon_bundle_restores_exact_session_and_next_updates(rec
     assert file_digest(restored / "last_checkpoint.pt") == file_digest(case.source / "last_checkpoint.pt")
     saved = torch.load(restored / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     assert saved.pop("context") == case.context.to_dict()
-    resumed = _session(case)
+    resumed = _session(case, restored)
+    resumed_outputs = resumed._test_outputs
+    saved = resumed_outputs.retained_state()
     resumed.load_state_dict(saved)
+    resumed_outputs.logger.start(resumed.progress)
     assert_equal(case.saved, resumed.state_dict())
     progress = resumed.run()
     final = deepcopy(resumed.state_dict())
-    control = _session(case)
+    runtime = {"platform": case.context.platform, "account": case.context.account,
+        "precision": "fp32", "source_commit": case.context.source_commit,
+        "source_archive_sha256": case.context.source_archive_sha256}
+    costs = [{"metric": "wall_seconds", "unit": "seconds", "value": 1.,
+        "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"},
+        {"metric": "device_seconds", "unit": "seconds", "value": None,
+        "status": "missing", "semantics": "allocated_device", "hardware": "synthetic-cpu"}]
+    resumed_report = resumed_outputs.complete(progress,
+        runtime=runtime, costs=costs)
+    assert resumed_report["status"] == "MECHANICALLY_VERIFIED"
+    trace = json.loads((restored / "canonical_trace.json").read_bytes())
+    rows = [row for row in trace["observations"] if row["event"] == "observation"]
+    assert [(row["optimizer_step"], row["sample_presentations"]) for row in rows] == [(2, 256), (4, 512)]
+    control = _session(case, case.tmp / "control-session")
+    control_outputs = control._test_outputs
+    control_outputs.logger.start(control.progress)
     assert control.run() == progress
+    control_report = control_outputs.complete(progress,
+        runtime=runtime, costs=costs)
+    assert control_report["status"] == "MECHANICALLY_VERIFIED"
     assert progress.optimizer_step == 4 and progress.sample_presentations == 512
     assert_equal(final, control.state_dict())
-    assert not (case.source / "output_manifest.json").exists()
+    assert (restored / "output_manifest.json").is_file()
+    assert (case.tmp / "control-session/output_manifest.json").is_file()
     assert not (case.run / "operations").exists()
     record_property("addon_recovery", json.dumps({
         "family": case.context.family_name, "addon_keys": case.addon_keys,

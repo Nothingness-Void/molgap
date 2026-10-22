@@ -39,7 +39,11 @@ handoff rules; this root file stays a short navigation and safety protocol.
   the skill picker, read that file directly; do not recreate an existing wheel.
 - **Don't re-run completed experiments** — cite the experiment's own decision
   record under `experiments/`.
-- **Test scripts locally before delivering.**
+- **Test the affected behaviour locally before delivering.** Follow the
+  [verification contract](docs/operations/INFRASTRUCTURE_VERIFICATION.md) for
+  test selection, permitted claims and test growth. Passing-test counts never
+  establish submission readiness. Extend an existing real workflow before
+  adding another regression file.
 - **Delegate test execution**: the main agent coordinates, implements, and
   integrates; it must not run tests itself. Use up to five concurrent configured
   Luna subagents, with independent module scopes and separate scratch/report

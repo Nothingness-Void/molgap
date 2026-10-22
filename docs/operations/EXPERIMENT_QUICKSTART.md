@@ -266,16 +266,20 @@ and training queue time remain unmeasured without their required observations.
 
 ## 6. Check affected flows and manage temporary storage
 
-Select the affected flows in one pytest session; overlapping files are deduplicated:
+Select the affected workflow journeys in one pytest session; shared cases are deduplicated:
 
 ```powershell
-& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope package --scope prepare -- -q
+& $python platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope train --scope resume -- -q
 ```
 
-Scopes are `runtime`, `package`, `prepare`, `submit`, `accept`, and `resume`.
-`--list` previews selections. Use ordinary pytest for other tests. These scopes
-are conveniences, not additional release gates. Recheck affected failures after
-a fix; do not repeat unchanged successful suites at every handoff.
+Scopes are `runtime`, `package`, `prepare`, `train`, `submit`, `accept`, and `resume`.
+`--list` previews fixed pytest nodeids, rather than every test in growing files.
+Use ordinary pytest for an affected lower-level invariant. Follow the
+[verification contract](INFRASTRUCTURE_VERIFICATION.md) for evidence limits and
+test growth: strengthen one existing workflow instead of adding a file per
+incident. Report the actual model, state transitions and substitutes exercised;
+passing counts do not qualify the candidate's frozen package or native runtime.
+Recheck affected failures after a fix; do not repeat unaffected successful suites.
 
 The profile wrapper gives each invocation its own scratch and removes it on exit.
 Save reports explicitly under `artifact_root`. To distribute tests after committing

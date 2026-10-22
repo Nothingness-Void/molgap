@@ -1,0 +1,64 @@
+{
+  "scope": "EXECUTION_INFRASTRUCTURE_GENERATED_CPU_ONLY",
+  "implementation_commit": "909f16a4c3076bc595c11586fde88298376874b7",
+  "packaging_pin_correction_commit": "9da8e118a77cfde65d977c4b0a742508940d4759",
+  "affected_behaviour": "ACCEPTED_ON_GENERATED_CPU_FIXTURES",
+  "native_qualification": "NOT_RUN",
+  "speedup_measured": false,
+  "scientific_training_released": false,
+  "replay_ready_claim": false,
+  "real_dataset_access": false,
+  "protected_role_access": false,
+  "remote_jobs_submitted": 0,
+  "rml_rebuilt": false,
+  "model_checks": {
+    "passed_unique": 145,
+    "failed": 0,
+    "skipped": 0,
+    "session_cases_superseded": 3,
+    "corrected_session_cases_passed": 3,
+    "session_optimizer_steps_per_endpoint": 4,
+    "session_sample_presentations_per_endpoint": 512,
+    "checkpoint_restore": "ATOMIC_DISK_SAVE_READ_AND_SHARED_SESSION_CONTINUATION",
+    "ppgt_reference": "EXISTING_BUCKETED_PATH_WITH_UNCHANGED_TOLERANCES",
+    "ppgt_stochastic_fallback": "GRAPHWISE_OUTPUT_AND_RNG_PRESERVED",
+    "esa_cpu_comparison": "BYTE_EXACT_OUTPUT_GRADIENT_ADAM_STATE_RNG",
+    "complete_scientific_output_manifest_tested": false
+  },
+  "io_profile_checks": {
+    "passed": 107,
+    "failed": 1,
+    "skipped": 2,
+    "setup_errors_after_retry": 0,
+    "failed_check": "test_shared_mechanism_snapshot_matches_reviewed_inventory",
+    "scope_qualification": "AFFECTED_IO_PROFILE_CHECKS_PASSED_NOT_FULL_REPOSITORY_PASS",
+    "snapshot_reasons": [
+      "family_training_runner.py pin predates the committed disabled-EMA fix 3cdffb798",
+      "Concurrent unrelated experiment_source_inventory.py test-support edit remained unstaged"
+    ],
+    "two_case_profile_setup_retry": {"passed": 1, "skipped": 1, "failed": 0},
+    "git_longpaths": "SUBPROCESS_SCOPED_ONLY"
+  },
+  "reports": [
+    {
+      "path": "platforms/_records/local/modern2d_execution_optimization/final_models/reports/d04fd2fe111949388fd5aece2abf80c8/pytest.junit.xml",
+      "sha256": "e0c13ec58d7db8c1f1b1d34a2f8da34c395f525114cdf2b06023337ca5155e7a"
+    },
+    {
+      "path": "platforms/_records/local/modern2d_execution_optimization/final_models/reports/d04fd2fe111949388fd5aece2abf80c8/session-correction/pytest.junit.xml",
+      "sha256": "882a15eaffd445a47116b11b3deefbb817803b873423a8fc3e966af9924639e8"
+    },
+    {
+      "path": "platforms/_records/local/modern2d_execution_optimization/final_models/reports/d04fd2fe111949388fd5aece2abf80c8/source-closure.log",
+      "sha256": "8ba41909120245a9de8a4bdf29d613e24eba35dcc8ec101598f46465b6f77d53"
+    },
+    {
+      "path": "platforms/_records/local/modern2d_execution_optimization/final_io/run_ee690bcd262146e492ce30fbd26e8dc5/junit/targeted.xml",
+      "sha256": "d8d04680470a98e9fa9e61ef19d724d6ef5dc77f8b7a6eab13facd91ed881657"
+    },
+    {
+      "path": "platforms/_records/local/modern2d_execution_optimization/final_io/profile_setup_1dfd966b4bb24516b16abef090255c40/junit/profile_setup.xml",
+      "sha256": "6c4fdfa9529c766fc1691e822df7233de70dd6f838ab7e4dc16ca086087b14dc"
+    }
+  ]
+}

@@ -130,16 +130,19 @@ def test_clean_endpoint_uses_existing_publication_and_inspector(tmp_path, develo
 
 
 def test_shared_package_imports_in_isolation_without_host_training_paths(tmp_path, payload):
-    from molgap.source_dependencies import discover_source_dependencies
+    from molgap.experiment_source_inventory import runtime_source_files
     root = Path(__file__).resolve().parents[1]
-    closure = discover_source_dependencies(root, ["src/molgap/family_training_runner.py",
-        "src/molgap/common/runtime.py", "src/molgap/common/kaggle.py", "src/molgap/common/transport.py",
-        "src/molgap/substrate_scale_addon.py"])
     source_root = tmp_path / "repo"
-    for name in closure.source_files:
+    # The distributed test bundle has no Git metadata. Build the independent
+    # fixture first, then select the production inventory from that Git tree.
+    sources = [path for path in (root / "src/molgap").rglob("*.py")
+               if "archive" not in path.relative_to(root).parts]
+    sources.append(root / "platforms/kaggle/run_experiment.py")
+    for source in sources:
+        name = source.relative_to(root)
         destination = source_root / name
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes((root / name).read_bytes())
+        destination.write_bytes(source.read_bytes())
     from molgap.experiment_spec import ExperimentSpec
     from molgap.experiment_package import build_experiment_source_package, verify_experiment_source_package
     for arguments in (("init",), ("config", "core.autocrlf", "false"),
@@ -147,21 +150,26 @@ def test_shared_package_imports_in_isolation_without_host_training_paths(tmp_pat
                       ("config", "user.email", "synthetic@example.invalid"), ("add", "."),
                       ("-c", "commit.gpgsign=false", "commit", "-m", "Synthetic shared source")):
         subprocess.run(["git", *arguments], cwd=source_root, check=True, capture_output=True)
+    names = runtime_source_files(source_root)
+    assert "src/molgap/training/__init__.py" in names
+    assert "src/molgap/training/state.py" in names
     package = tmp_path / "package"
-    manifest = build_experiment_source_package(ExperimentSpec(payload), source_root, closure.source_files, package)
+    manifest = build_experiment_source_package(ExperimentSpec(payload), source_root, names, package)
     assert verify_experiment_source_package(package) == manifest
     with tarfile.open(package / "source.tar.gz") as archive:
         for member in archive.getmembers():
-            assert member.isfile() and member.name in closure.source_files
+            assert member.isfile() and member.name in names
             destination = tmp_path / "isolated" / member.name
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(archive.extractfile(member).read())
     result = subprocess.run([sys.executable, "-I", "-c",
         "import sys; sys.path.insert(0, sys.argv[1]); "
         "from molgap.family_training_runner import read_recipe; "
-        "from molgap.common import runtime, kaggle, transport; "
+        "from molgap.common import runtime; "
         "from molgap.substrate_scale_addon import SlotScale; "
-        "assert runtime.FamilyTrainingState.__module__ == 'molgap.family_training_state'; "
+        "from molgap.family_training_state import FamilyTrainingState as LegacyState; "
+        "from molgap.training.state import FamilyTrainingState as CanonicalState; "
+        "assert LegacyState is CanonicalState is runtime.FamilyTrainingState; "
         "from pathlib import Path; "
         "assert all(Path(module.__file__).resolve().is_relative_to(Path(sys.argv[1]).resolve()) "
         "for name, module in sys.modules.items() if name == 'molgap' or name.startswith('molgap.')); "

@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+|1 | C-MODERN2D-EXECUTION | Qualify the [prepared execution candidate](docs/operations/MODERN2D_EXECUTION_OPTIMIZATION.md) before any new scientific screen. | Local regressions first; separately authorized native update/resume and warmed timing gate; no automatic job or forced Replay |
 |— | C-MODERN2D-RESEARCH8 | Four-slot/eight-arm campaign terminal: ESA completed20 passes; PPGT stopped for cost after10 plus partialpass11. | Preserve [decisions and saved-output analysis](experiments/modern2d_configured_100k/research_arms/STATUS.md); no nomination, forced Replay, extension or automatic successor |
 |2 | C-MODERN2D-PROSPECTIVE-PAIR | Before any separately authorized Modern2D scientific release, qualify the existing prospective reference/same-run pair route. | Reject missing frozen binding before compute; preserve completed campaign records unchanged; no retrospective Replay repair or automatic retraining |
 |— | C-MODERN2D-REPAIR | Closed: [native execution repair evidence](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md) accepted for both families. | Preserve PPGT CPU/native discrepancy and ESA exact two-step state; any warmed throughput or scientific training needs separate frozen release; no automatic successor or training Replay |

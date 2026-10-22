@@ -1,31 +1,35 @@
-"""Run the existing tests for selected infrastructure flows in one pytest session."""
+"""Run fixed local regression journeys; these do not qualify a cloud submission."""
 import argparse
 import json
 from pathlib import Path
+import sys
 
 
-# These are entry points into existing tests, not another acceptance policy.
+# Select behaviours, not whole files: unrelated tests must not expand a journey.
+_ADDON_RECOVERY = "tests/test_scientific_addon_recovery.py::test_scientific_addon_recovery_uses_its_own_frozen_checkout"
+_PLATFORM_ROUNDTRIP = "tests/test_reform_daily_platform.py::test_offline_daily_roundtrip_preserves_original_run[observed]"
 SCOPES = {
-    "runtime": ("test_reform_runtime", "test_local_testing", "test_local_storage", "test_machine_paths"),
-    "package": ("test_experiment_package", "test_reform_package", "test_reform_distribution",
-                "test_infra_package_audit"),
-    "prepare": ("test_reform_input", "test_scientific_input", "test_reform_workflow",
-                "test_reform_catalog", "test_reform_review", "test_experiment_run",
-                "test_infra_failure_publication", "test_modern2d_role_discovery",
-                "test_modern2d_training_prepare", "test_modern2d_qualification_prepare",
-                "test_scientific_input_ergonomics", "test_scientific_input_templates",
-                "test_scientific_pair_input"),
-    "submit": ("test_reform_workflow", "test_kaggle_submission",
-               "test_reform_daily_platform", "test_kaggle_bootstrap_server", "test_infra_launch_audit"),
-    "accept": ("test_reform_retrieval", "test_experiment_family_workflow",
-               "test_kaggle_family_retrieval", "test_experiment_run", "test_reform_daily_platform",
-               "test_run_acceptance_resolution", "test_run_acceptance_cli", "test_run_acceptance_integration",
-               "test_experiment_terminal_staging", "test_experiment_attribution", "test_run_attribution",
-               "test_experiment_cli", "test_modern2d_training_records",
-               "test_modern2d_qualification_records", "test_modern2d_configured_outputs"),
-    "resume": ("test_experiment_workflow_resume", "test_family_recovery_guards",
-               "test_experiment_run", "test_reform_daily_platform", "test_experiment_resume",
-               "test_infra_recovery_audit"),
+    "runtime": (
+        "tests/test_reform_runtime.py::test_two_workspaces_select_their_own_sources_not_inherited_editable",
+        "tests/test_fast_sandbox.py::test_registered_slots_use_accelerated_sandbox_and_roundtrip",
+    ),
+    "package": (
+        "tests/test_experiment_package.py::test_binding_and_reproducibility",
+        "tests/test_family_full_lifecycle.py::test_shared_package_imports_in_isolation_without_host_training_paths",
+    ),
+    "prepare": (_ADDON_RECOVERY,),
+    "train": (
+        _ADDON_RECOVERY,
+        "tests/test_modern2d_formal_training.py::test_formal_actual_session_resume_full_state_and_readonly_dev",
+    ),
+    "submit": (_PLATFORM_ROUNDTRIP,),
+    "accept": (
+        "tests/test_run_acceptance_integration.py::test_top_level_execute_restores_frozen_generated_metadata",
+    ),
+    "resume": (
+        _ADDON_RECOVERY,
+        "tests/test_family_server_recovery.py::test_ten_pass_transport_hook_only_sees_committed_bundle",
+    ),
 }
 
 
@@ -52,14 +56,15 @@ def main(argv=None):
             print(json.dumps(SCOPES, indent=2))
             return 0
         parser.error("select affected --scope values; no full-suite default")
-    files = list(dict.fromkeys(
-        f"tests/{name}.py" for scope in args.scope for name in SCOPES[scope]))
+    nodes = list(dict.fromkeys(node for scope in args.scope for node in SCOPES[scope]))
     if args.list:
-        print(json.dumps(files, indent=2))
+        print(json.dumps(nodes, indent=2))
         return 0
     flags = args.pytest_args[1:] if args.pytest_args[:1] == ["--"] else args.pytest_args
     import pytest
-    return int(pytest.main([*files, *flags]))
+    print("Local fixture journeys only; candidate-package execution and native runtime remain unverified.",
+          file=sys.stderr)
+    return int(pytest.main([*nodes, *flags]))
 
 
 if __name__ == "__main__":

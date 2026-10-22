@@ -1,4 +1,8 @@
-"""Formal admission is additive; all execution below uses bounded CPU fixtures."""
+"""Formal admission is additive; execution uses bounded CPU fixtures.
+
+The journeys exercise actual FamilyTrainingSession state and output recovery;
+cloud bootstrap, real data and native runtime remain untested here.
+"""
 from copy import deepcopy
 from dataclasses import replace
 import json
@@ -17,14 +21,15 @@ from molgap.experiment_family_artifacts import artifact_adapter
 from molgap.experiment_family_workflow import RunContext
 from molgap.family_training_kernel import FamilyKernel
 from molgap.family_training_loaders import FamilyLoaders
+from molgap.family_training_outputs import SessionOutputs
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
 from molgap.family_training_session import FamilyTrainingSession, validate_session_resume
 from molgap.gptrans_execution_tuning import ExecutionTuning
 from molgap.modern2d_feature_binding import indexed_transform_identity
-from molgap.training_reproducibility import atomic_torch_save, configure_fp32_determinism, sha256_file
+from molgap.training_reproducibility import configure_fp32_determinism, sha256_file
 from molgap.v4_runtime import normalized_source_sha256
 from test_family_training_session import assert_equal
-from test_modern2d_integration_session import make_preview_session
+from test_modern2d_integration_session import contract_file, make_preview_session
 from test_modern2d_qualification import permit_record
 
 
@@ -56,6 +61,22 @@ def actual_session(case, checkpoints):
         selected=lambda *args: None, pass_finished=lambda *args: None)
 
 
+def bind_formal_outputs(tmp_path, case, session, name):
+    contract, record = contract_file(tmp_path, session)
+    context = RunContext("synthetic-question", "synthetic-run", case.recipe.family,
+        "a" * 64, "b" * 64, case.recipe.family, case.recipe.family_version,
+        "c" * 40, "d" * 64, "e" * 64, sha256_file(contract),
+        "local", "fixture", "fixture/run", None)
+    outputs = SessionOutputs(tmp_path / name, context, contract=contract,
+        adapter=MODERN2D_FORMAL_PROFILE, trajectory_id="synthetic-formal-trajectory",
+        train_role_identity=record["train_role_identity"])
+    session.checkpoint_builder = outputs.checkpoint_from_builder
+    session.selected = outputs.selected
+    session.pass_finished = outputs.pass_finished
+    session.batch_finished = outputs.batch_finished
+    return outputs, context
+
+
 def test_formal_interfaces_reuse_exact_factories_transform_and_distinct_artifacts(case):
     validate_training_registry()
     recipe, preview = case.recipe, case.preview
@@ -73,23 +94,36 @@ def test_formal_interfaces_reuse_exact_factories_transform_and_distinct_artifact
     assert "formal_training" not in preview.to_dict()
 
 
-def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path, monkeypatch):
+def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path):
     full = actual_session(case, [])
+    full_outputs, context = bind_formal_outputs(tmp_path, case, full, "formal-full")
+    runtime = {"platform": context.platform, "account": context.account, "precision": "fp32",
+        "source_commit": context.source_commit, "source_archive_sha256": context.source_archive_sha256}
+    costs = [{"metric": "wall_seconds", "unit": "seconds", "value": 1.,
+        "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"},
+        {"metric": "device_seconds", "unit": "seconds", "value": None,
+        "status": "missing", "semantics": "allocated_device", "hardware": "synthetic-cpu"}]
+    full_outputs.logger.start(full.progress)
     endpoint = full.run()
+    full_report = full_outputs.complete(endpoint, runtime=runtime, costs=costs)
+    assert full_report["status"] == "MECHANICALLY_VERIFIED"
     expected = deepcopy(full.state_dict())
     checkpoints = []
     first = actual_session(case, checkpoints)
-    monkeypatch.setenv("MOLGAP_ALLOCATION_PAUSE_AT", "1")
-    deadline = runner._formal_pause_deadline()
-    assert first.run(should_pause=lambda: runner.time.perf_counter() >= deadline).optimizer_step == 1
-    path = tmp_path / "formal-paused.pt"
-    atomic_torch_save(path, checkpoints[-1])
-    retained = torch.load(path, map_location="cpu", weights_only=True)
+    split_outputs, split_context = bind_formal_outputs(tmp_path, case, first, "formal-split")
+    split_outputs.logger.start(first.progress)
+    assert first.run(should_pause=lambda: first.progress.optimizer_step >= 2).optimizer_step == 2
+    retained = split_outputs.retained_state()
+    assert retained["cursor"]["next_batch"] == 0
+    split_trace = json.loads((split_outputs.root / "canonical_trace.json").read_bytes())
+    split_rows = [row for row in split_trace["observations"] if row["event"] == "observation"]
+    assert [(row["optimizer_step"], row["sample_presentations"]) for row in split_rows] == [(2, 256)]
     retained_before_resume = deepcopy(retained)
     resumed = actual_session(case, [])
-    # AdamW retains tensor references from the input state; keep the serialized
-    # evidence immutable so its pre-resume exposure can be validated below.
+    resumed_outputs, resumed_context = bind_formal_outputs(tmp_path, case, resumed, "formal-split")
+    retained = resumed_outputs.retained_state()
     resumed.load_state_dict(deepcopy(retained))
+    resumed_outputs.logger.start(resumed.progress)
     assert resumed.run() == endpoint
     assert_equal(expected, resumed.state_dict())
     assert_equal(retained_before_resume, retained)
@@ -101,7 +135,14 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
         assert expected["scheduler"]["completed_units"] == 4
     assert expected["ema"] is None and expected["optimizer"]["state"]
     assert expected["rng_state"]["cuda"] == []
-    assert validate_session_resume(case.recipe, retained).next_batch == 1
+    assert validate_session_resume(case.recipe, retained).next_batch == 0
+    resumed_report = resumed_outputs.complete(resumed.progress, runtime=runtime, costs=costs)
+    assert resumed_report["status"] == "MECHANICALLY_VERIFIED"
+    assert resumed_report["observed"]["selected_weights"] == "live"
+    trace = json.loads((resumed_outputs.root / "canonical_trace.json").read_bytes())
+    rows = [row for row in trace["observations"] if row["event"] == "observation"]
+    assert [(row["optimizer_step"], row["sample_presentations"]) for row in rows] == [(2, 256), (4, 512)]
+    assert resumed_context == split_context
     readonly = actual_session(case, [])
     readonly.load_state_dict(expected)
     before = deepcopy(readonly.state_dict())
