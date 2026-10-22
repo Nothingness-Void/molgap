@@ -358,6 +358,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
     if recipe.formal_interface and not synthetic:
         from .modern2d_execution_proof import execution_repair_requested
         repair = execution_repair_requested(options['spec'], prepared[-1])
+    prepared_execution = bool(recipe.formal_interface and
+        recipe.formal_training.execution_mode == "prepared-v2")
     repair_wall = {}
     bounded = recipe.qualification is not None
     if bounded and (qualification is None) != synthetic:
@@ -417,7 +419,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
             checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
         if label == "resumed":
-            session.run(should_pause=lambda: True)
+            with _modern2d_execution_scope(kernel):
+                session.run(should_pause=lambda: True)
             retained = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
             atomic_torch_save(output / "resumed-first.pt", retained)
             del session, kernel
@@ -427,18 +430,19 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
             session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
                 checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
             session.load_state_dict(retained)
-        if label == "repeat-a" and "profiling" in record:
-            from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
-            profile_config = replace(ProfileConfig.from_dict(record["profiling"]), warmup_steps=0, active_steps=2)
-            with FamilyExecutionProfiler(session, output / "profile_qualification", profile_config) as observed:
+        with _modern2d_execution_scope(kernel):
+            if label == "repeat-a" and "profiling" in record:
+                from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
+                profile_config = replace(ProfileConfig.from_dict(record["profiling"]), warmup_steps=0, active_steps=2)
+                with FamilyExecutionProfiler(session, output / "profile_qualification", profile_config) as observed:
+                    session.run()
+                if observed.report["status"] != "COMPLETE" or not observed.report["device_events_observed"]:
+                    raise ValueError("Native profiler did not capture the requested CUDA events")
+                profile_proof = {"report": "profile_qualification/profile.json",
+                    "sha256": normalized_file_sha(output / "profile_qualification/profile.json")}
+            else:
                 session.run()
-            if observed.report["status"] != "COMPLETE" or not observed.report["device_events_observed"]:
-                raise ValueError("Native profiler did not capture the requested CUDA events")
-            profile_proof = {"report": "profile_qualification/profile.json",
-                "sha256": normalized_file_sha(output / "profile_qualification/profile.json")}
-        else:
-            session.run()
-        if repair:
+        if repair or prepared_execution:
             repair_wall[label] = time.perf_counter() - path_began
         retained = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         state = retained["state"] if label == "fill-enabled" else retained
@@ -463,11 +467,17 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         _verify_memory_fill_proof(output, probe, memory_fill_proof, proofs[0]["state_fingerprint"], provenance)
     execution_proof = None
     repair_proof = None
-    if repair:
+    if repair or prepared_execution:
         from .modern2d_execution_proof import run_reference
         repair_proof = run_reference(probe=probe, data=data, tuning=tuning, options=options,
             output=output, formal_admission=formal_admission,
-            candidate_proof=proofs[1], candidate_wall_seconds=repair_wall['repeat-b'])
+            candidate_proof=proofs[1], candidate_wall_seconds=repair_wall['repeat-b'],
+            reference_mode="accepted-native" if prepared_execution else "graphwise")
+        if prepared_execution:
+            from .modern2d_execution_proof import verify_repair_proof
+            report = verify_repair_proof(output, repair_proof, probe)
+            if not report['update_equivalent']:
+                raise ValueError("Prepared native update equivalence failed; formal training blocked")
     if recipe.k1_execution is not None:
         # Keep the candidate recipe identity in the candidate state, but run a
         # shadow with the historical backend under the same data/init/RNG.  The
@@ -556,6 +566,15 @@ def normalized_file_sha(path):
     # Artifact bytes are exact; only source text uses normalized line endings.
     from .training_reproducibility import sha256_file
     return sha256_file(Path(path))
+
+
+def _modern2d_execution_scope(kernel, certificate=None):
+    from contextlib import nullcontext
+    if (kernel.recipe.formal_interface and
+            kernel.recipe.formal_training.execution_mode == "prepared-v2"):
+        from .modern2d_execution import prepared_kernel_execution
+        return prepared_kernel_execution(kernel, certificate=certificate)
+    return nullcontext()
 
 
 def _probe_recipe(recipe):
@@ -767,7 +786,15 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
     if certificate.get('execution_repair_proof') is not None:
         from .modern2d_execution_proof import verify_repair_proof
-        verify_repair_proof(root, certificate['execution_repair_proof'], probe)
+        report = verify_repair_proof(root, certificate['execution_repair_proof'], probe)
+    else:
+        report = None
+    if recipe.formal_interface and recipe.formal_training.execution_mode == "prepared-v2":
+        if (report is None or report.get('reference_mode') != 'accepted-native'
+                or report.get('update_equivalent') is not True):
+            raise ValueError("Prepared training requires fresh accepted-native update equivalence")
+        from .modern2d_execution import _verified_prepared_certificate
+        return _verified_prepared_certificate(certificate, recipe)
     return certificate
 
 
@@ -895,17 +922,18 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         cost_exhausted = lambda: pause_deadline is not None and time.perf_counter() >= pause_deadline
         should_pause = lambda: pause[0] or cost_exhausted() or (
             bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
-        if "profiling" in record:
-            from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
-            profile_root = root / "profiles" / f"step_{session.progress.optimizer_step}_{time.time_ns()}"
-            with FamilyExecutionProfiler(session, profile_root, ProfileConfig.from_dict(record["profiling"])) as observed:
+        with _modern2d_execution_scope(kernel, certificate):
+            if "profiling" in record:
+                from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
+                profile_root = root / "profiles" / f"step_{session.progress.optimizer_step}_{time.time_ns()}"
+                with FamilyExecutionProfiler(session, profile_root, ProfileConfig.from_dict(record["profiling"])) as observed:
+                    progress = session.run(should_pause=should_pause)
+                atomic_json(root / "execution_profile_receipt.json", {"context": context.to_dict(),
+                    "report_path": (profile_root / "profile.json").relative_to(root).as_posix(),
+                    "report_sha256": normalized_file_sha(profile_root / "profile.json"),
+                    "trace_sha256": observed.report["trace_sha256"], "capture_status": observed.report["status"]})
+            else:
                 progress = session.run(should_pause=should_pause)
-            atomic_json(root / "execution_profile_receipt.json", {"context": context.to_dict(),
-                "report_path": (profile_root / "profile.json").relative_to(root).as_posix(),
-                "report_sha256": normalized_file_sha(profile_root / "profile.json"),
-                "trace_sha256": observed.report["trace_sha256"], "capture_status": observed.report["status"]})
-        else:
-            progress = session.run(should_pause=should_pause)
     finally:
         signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began

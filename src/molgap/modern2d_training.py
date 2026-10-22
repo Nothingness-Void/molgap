@@ -43,7 +43,7 @@ class Modern2DFormalTrainingProfile:
     execution_mode: str = "original"
 
     def __post_init__(self):
-        if self.execution_mode not in {"original", "batched-v1"} or (
+        if self.execution_mode not in {"original", "batched-v1", "prepared-v2"} or (
                 self.execution_mode != "original" and not self.configured):
             raise ValueError("Batched execution requires an explicit new configured recipe")
         if self.configured:

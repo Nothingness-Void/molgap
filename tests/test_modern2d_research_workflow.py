@@ -8,6 +8,7 @@ import pytest
 from molgap.family_training_recipe import FamilyRecipe
 from molgap.modern2d_training import Modern2DFormalTrainingProfile
 from molgap.experiment_input import _read_scientific_recipe, resolve_experiment_input
+from molgap.family_training_runner import read_recipe
 from test_modern2d_formal_training import case
 from test_modern2d_scientific_input import configured
 from test_experiment_workflow import _write_json, _git
@@ -35,6 +36,20 @@ def test_batched_execution_is_explicit_ppgt_only(case):
         Modern2DFormalTrainingProfile(execution_mode="batched-v1")
 
 
+def test_prepared_v2_execution_is_explicit_for_both_families(case):
+    base = case.recipe
+    profile = Modern2DFormalTrainingProfile(purpose="configured-screen",
+        horizon_passes=60, horizon_steps=base.optimizer_steps, execution_mode="prepared-v2")
+    schedule = replace(base.schedule, total_units=base.optimizer_steps)
+    recipe = replace(base, formal_training=profile, schedule=schedule)
+
+    wire = recipe.to_dict()
+    assert wire["formal_training"]["execution_mode"] == "prepared-v2"
+    assert FamilyRecipe.from_dict(wire).identity == recipe.identity
+    with pytest.raises(ValueError, match="explicit new configured"):
+        Modern2DFormalTrainingProfile(execution_mode="prepared-v2")
+
+
 def test_scientific_source_reissue_needs_new_authority(configured):
     c = configured
     path = c.repo / c.value["arms"][0]["recipe_ref"]
@@ -50,6 +65,28 @@ def test_scientific_source_reissue_needs_new_authority(configured):
     for delta in (dict(source_reissue_authorized=False), dict(scientific_training_authorized=False)):
         with pytest.raises(ValueError, match="Execution policy differs"):
             _read_scientific_recipe(path, family, {**authority, **delta})
+
+
+def test_prepared_v2_configured_authority_requires_fresh_native_gate(configured):
+    from molgap.modern2d_training_release import validate_configured_authority
+
+    c = configured
+    _, spec, workflow, _ = resolve_experiment_input(c.path, c.repo)
+    recipe = read_recipe(c.repo / workflow["arms"][0]["recipe"])[1]
+    recipe = replace(recipe, formal_training=replace(
+        recipe.formal_training, execution_mode="prepared-v2"))
+    authority = {**c.authority, "execution_mode": "prepared-v2",
+        "fresh_native_execution_gate": True}
+
+    assert validate_configured_authority(authority, spec.to_dict(),
+        {"candidate": recipe}) == 1800
+    missing_gate = {key: value for key, value in authority.items()
+        if key != "fresh_native_execution_gate"}
+    for rejected in (missing_gate,
+            {**authority, "fresh_native_execution_gate": False},
+            {**authority, "execution_mode": "original"}):
+        with pytest.raises(ValueError, match="Prepared execution requires fresh native"):
+            validate_configured_authority(rejected, spec.to_dict(), {"candidate": recipe})
 
 
 def test_batched_scientific_input_preserves_mode(configured):

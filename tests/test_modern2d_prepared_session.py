@@ -4,6 +4,7 @@ from copy import deepcopy
 import pytest
 import torch
 
+import molgap.modern2d_execution as execution_owner
 from molgap.modern2d_execution import prepared_kernel_execution
 import test_modern2d_integration_session as preview_owner
 from test_modern2d_integration_session import make_preview_session
@@ -69,4 +70,41 @@ def test_prepared_kernel_does_not_admit_real_cpu_or_scientific_cuda_training(tmp
             with prepared_kernel_execution(kernel): pass
     finally:
         kernel.recipe, kernel.device = original, torch.device("cpu")
+        session.close()
+
+
+@pytest.mark.parametrize("certificate_kind", ["forged", "plain", "mutated", "wrong-recipe"])
+def test_prepared_scientific_execution_rejects_untrusted_certificates(tmp_path, certificate_kind):
+    from types import SimpleNamespace
+
+    session, _, _, _ = make_preview_session(tmp_path, "esa_small", "3", [])
+    kernel = session.kernel
+    original_recipe, original_device = kernel.recipe, kernel.device
+    recipe = SimpleNamespace(identity="prepared-recipe", formal_interface=True,
+        formal_training=SimpleNamespace(execution_mode="prepared-v2", phase="train"),
+        optimizer_steps=46860, dataset=SimpleNamespace(development=True,
+            manifest="roles/train100k.json"), development_rows=50000,
+        selection="best-development-live")
+    payload = {"format": "molgap-runtime-certificate-v1", "status": "accepted"}
+    try:
+        # Admission is exercised without allocating or using a CUDA device.
+        kernel.device = torch.device("cuda")
+        kernel.recipe = recipe
+        if certificate_kind == "forged":
+            with pytest.raises(ValueError, match="verified native certificate"):
+                execution_owner._PreparedCertificate(payload, recipe, issuer=object())
+            return
+        if certificate_kind == "plain":
+            certificate = payload
+        elif certificate_kind == "mutated":
+            certificate = execution_owner._verified_prepared_certificate(payload, recipe)
+            certificate["status"] = "mutated"
+        else:
+            other_recipe = SimpleNamespace(identity="different-recipe")
+            certificate = execution_owner._verified_prepared_certificate(payload, other_recipe)
+        with pytest.raises(ValueError, match="unqualified"):
+            with prepared_kernel_execution(kernel, certificate=certificate):
+                pass
+    finally:
+        kernel.recipe, kernel.device = original_recipe, original_device
         session.close()

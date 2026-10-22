@@ -117,6 +117,10 @@ def validate_configured_authority(authority, declaration, recipes=None):
         if authority.get("recipes") != expected:
             raise ValueError("Configured authority recipe/horizon binding changed")
         for recipe in recipes.values():
+            if recipe.formal_training.execution_mode == "prepared-v2" and (
+                    authority.get("execution_mode") != "prepared-v2"
+                    or authority.get("fresh_native_execution_gate") is not True):
+                raise ValueError("Prepared execution requires fresh native repeat/resume and reference gating")
             if recipe.formal_training.execution_mode == "batched-v1" and (
                     authority.get("execution_mode") != "batched-v1"
                     or not authority.get("execution_qualification_ref")):

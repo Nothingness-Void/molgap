@@ -10,6 +10,24 @@ from copy import copy
 
 import torch
 
+_CERTIFICATE_ISSUER = object()
+
+
+class _PreparedCertificate(dict):
+    """Process-local result of the owning saved-artifact verifier, not JSON authority."""
+
+    def __init__(self, certificate, recipe, *, issuer):
+        from .screen_policy import canonical_fingerprint
+        if issuer is not _CERTIFICATE_ISSUER:
+            raise ValueError("Prepared execution needs a verified native certificate")
+        super().__init__(certificate)
+        self._binding = (recipe.identity, canonical_fingerprint(certificate), issuer)
+
+
+def _verified_prepared_certificate(certificate, recipe):
+    # Only the owning verifier calls this after rereading all saved native states.
+    return _PreparedCertificate(certificate, recipe, issuer=_CERTIFICATE_ISSUER)
+
 from .modern2d_execution_context import (
     PreparedTopology, prepare_topology, current_prepared, _PREPARED_CALL,
 )
@@ -44,12 +62,12 @@ def prepared_forward(model, cpu_batch, *, device):
 
 
 @contextmanager
-def prepared_kernel_execution(kernel):
+def prepared_kernel_execution(kernel, *, certificate=None):
     """Reuse the actual FamilyKernel/Session for a bounded execution probe.
 
-    Only generated CPU fixtures or already admitted train-only native scratch
-    preflights may select this unqualified candidate. Formal scientific training
-    is deliberately blocked, even with a valid historical native certificate.
+    Generated CPU fixtures and admitted native scratch probes need no formal
+    certificate. Training additionally requires a freshly verified, recipe-bound
+    native certificate. JSON booleans and historical certificates cannot admit it.
     Enter before the existing profiler and exit after it; never wrap a live run.
     """
     from .family_training_kernel import FamilyKernel
@@ -64,7 +82,14 @@ def prepared_kernel_execution(kernel):
         not recipe.dataset.development and recipe.development_rows == 0 and
         recipe.selection == "final-live" and (kernel._qualification_admission is not None or
             (recipe.formal_interface and recipe.formal_training.phase == "native-preflight")))
-    if not (synthetic or scratch):
+    qualified = False
+    if (type(certificate) is _PreparedCertificate and recipe.formal_interface
+            and recipe.formal_training.execution_mode == "prepared-v2"
+            and recipe.formal_training.phase == "train" and kernel.device.type == "cuda"):
+        from .screen_policy import canonical_fingerprint
+        qualified = certificate._binding == (
+            recipe.identity, canonical_fingerprint(dict(certificate)), _CERTIFICATE_ISSUER)
+    if not (synthetic or scratch or qualified):
         raise ValueError("Prepared execution is unqualified for scientific training; scratch admission required")
     if getattr(kernel, "_prepared_execution_active", False):
         raise RuntimeError("Prepared kernel execution cannot be nested")
@@ -85,7 +110,7 @@ def prepared_kernel_execution(kernel):
     kernel._model_batch, kernel._model_forward = stage, forward
     kernel._prepared_execution_active = True
     try:
-        yield {"execution_path": "modern2d-prepared-v2-candidate", "native_qualified": False}
+        yield {"execution_path": "modern2d-prepared-v2-candidate", "native_qualified": qualified}
     finally:
         for name, value in saved.items():
             if value is sentinel:

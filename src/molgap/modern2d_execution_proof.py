@@ -73,7 +73,7 @@ def compare_states(candidate, reference):
 
 
 def run_reference(*, probe, data, tuning, options, output, formal_admission,
-                  candidate_proof, candidate_wall_seconds):
+                  candidate_proof, candidate_wall_seconds, reference_mode="graphwise"):
     import torch
     from .family_training_kernel import FamilyKernel
     from .family_training_session import FamilyTrainingSession
@@ -84,7 +84,14 @@ def run_reference(*, probe, data, tuning, options, output, formal_admission,
     configure_fp32_determinism(probe.seed)
     kernel = FamilyKernel(probe, Path(options['initial_state_path']), device='cuda',
                           formal_training=formal_admission)
-    kernel.model.forward = kernel.model.forward_reference
+    if reference_mode == "graphwise":
+        kernel.model.forward = kernel.model.forward_reference
+    elif reference_mode == "accepted-native":
+        # Compare only the new preparation path: retain the accepted PPGT
+        # bucketed mathematics and ESA's historical dense attention backend.
+        bind_candidate(kernel.model, probe.family)
+    else:
+        raise ValueError("Unknown execution reference backend")
     reference_path = Path(output) / 'execution-reference.pt'
     def save(progress, state):
         atomic_torch_save(reference_path, state)
@@ -100,7 +107,7 @@ def run_reference(*, probe, data, tuning, options, output, formal_admission,
     if not model['schema_equal'] or not model['finite']:
         raise ValueError('Execution reference/candidate model state schema or finite gate failed')
     report = dict(format='molgap-modern2d-execution-repair-proof-v1',
-        family=probe.family, recipe_identity=probe.identity,
+        family=probe.family, recipe_identity=probe.identity, reference_mode=reference_mode,
         reference=dict(path=reference_path.name, sha256=file_digest(reference_path)),
         candidate=dict(path=candidate_proof['path'], sha256=candidate_proof['sha256']),
         **compared, scientific_training_released=False,
