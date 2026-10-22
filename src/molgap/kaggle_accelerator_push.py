@@ -86,6 +86,7 @@ def push_kernel_with_accelerator(
     accelerator: str,
     timeout_seconds: int = 120,
     release_report_path: Path | None = None,
+    api=None,
 ) -> dict[str, Any]:
     if accelerator in UNSUPPORTED_BATCH_ACCELERATORS:
         raise ValueError(
@@ -145,20 +146,27 @@ def push_kernel_with_accelerator(
     if accelerator != "CPU-only":
         request["machineShape"] = accelerator
     try:
-        response = requests.post(
-            KAGGLE_KERNEL_PUSH_URL,
-            auth=HTTPBasicAuth(username, key),
-            json=request,
-            timeout=timeout_seconds,
-        )
+        if api is not None:
+            from kagglesdk.kernels.types.kernels_api_service import ApiSaveKernelRequest
+            if api.get_config_value(api.CONFIG_NAME_USER) != username:
+                raise ValueError("SaveKernel SDK owner differs from credential owner")
+            with api.build_kaggle_client() as client:
+                result = client.kernels.kernels_api_client.save_kernel(ApiSaveKernelRequest.from_dict(request)).to_dict()
+        else:
+            response = requests.post(
+                KAGGLE_KERNEL_PUSH_URL,
+                auth=HTTPBasicAuth(username, key),
+                json=request,
+                timeout=timeout_seconds,
+            )
+            response.raise_for_status()
+            result = response.json()
     except (requests.Timeout, requests.ConnectionError) as exc:
         # A lost response does not tell us whether the platform created a run.
         return {"status": "submission_unknown", "requested_kernel": metadata["id"],
                 "kernel": None, "accelerator": accelerator, "release_binding": release_binding,
                 "reconciliation_required": True, "error_type": type(exc).__name__,
                 "next_action": "Reconcile authoritative account state before any retry"}
-    response.raise_for_status()
-    result = response.json()
     if result.get("error"):
         raise RuntimeError(f"Kaggle kernel push failed: {result['error']}")
     identity = _observed_identity(result, username)

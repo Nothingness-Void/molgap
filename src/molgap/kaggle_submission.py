@@ -195,7 +195,7 @@ def _startup(http, ref):
 
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              monitor_paths, execute=False, api=None, http_session=None,
-                             reconcile_retired_push=False):
+                             reconcile_retired_push=False, reconcile_sdk_transport=False):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
@@ -290,26 +290,31 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         if state["phase"] in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
             remote = _kernel_source(api, ref)
             if remote is None:
-                if not reconcile_retired_push:
+                if not (reconcile_retired_push or reconcile_sdk_transport):
                     return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": "UNKNOWN"}
                 from .common.kaggle import owned_reference_absent
                 prior = {key: state.get(key) for key in ("phase", "error_type", "observed_at")}
                 age = (datetime.now(timezone.utc) - datetime.fromisoformat(state["observed_at"])).total_seconds()
                 legacy = "https://www.kaggle.com/api/v1/kernels/push"
-                if (state.get("error_type") != "HTTPError" or age < 60
-                        or state.get("submission_endpoint") not in (None, legacy)
-                        or "retired_route_reconciliation" in state):
+                from .kaggle_accelerator_push import KAGGLE_KERNEL_PUSH_URL
+                eligible = (state.get("submission_endpoint") == KAGGLE_KERNEL_PUSH_URL
+                    and "sdk_transport_reconciliation" not in state) if reconcile_sdk_transport else (
+                    state.get("submission_endpoint") in (None, legacy)
+                    and "retired_route_reconciliation" not in state)
+                if state.get("error_type") != "HTTPError" or age < 60 or not eligible:
                     raise ValueError("Retired-route reconciliation cannot resolve a timeout or recent unknown submission")
-                probe = http_session.head(legacy, timeout=(10, 30))
-                if probe.status_code != 404 or not owned_reference_absent(api, ref, "kernel"):
+                probe_status = None if reconcile_sdk_transport else http_session.head(legacy, timeout=(10, 30)).status_code
+                if ((not reconcile_sdk_transport and probe_status != 404)
+                        or not owned_reference_absent(api, ref, "kernel")):
                     raise ValueError("Retired-route rejection/owned target absence is not confirmed")
                 reconciliation = {"prior": prior, "original_http_status": "not_retained",
-                    "legacy_route_probe_status": probe.status_code,
+                    "legacy_route_probe_status": probe_status,
                     "exact_target_lookup": "ABSENT", "complete_owned_listing": "ABSENT",
                     "controller_requested": True, "observed_at": datetime.now(timezone.utc).isoformat(),
-                    "binding": binding, "scope": "One explicit retired-HTTP-route recovery; never a timeout retry"}
-                atomic_json(output / "retired_route_reconciliation.json", reconciliation)
-                save("SOURCE_PENDING", retired_route_reconciliation=reconciliation)
+                    "binding": binding, "scope": "Explicit HTTP-error/owned-absence recovery with corrected transport; never a timeout retry"}
+                name = "sdk_transport_reconciliation" if reconcile_sdk_transport else "retired_route_reconciliation"
+                atomic_json(output / (name + ".json"), reconciliation)
+                save("SOURCE_PENDING", **{name: reconciliation})
             else:
                 response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
                             "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
@@ -366,10 +371,17 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             save("KERNEL_SUBMITTING", error_type=None, submission_endpoint=KAGGLE_KERNEL_PUSH_URL)
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
-                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json")
+                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json", api=api)
             except Exception as error:
                 try:
-                    save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
+                    received = getattr(error, "response", None)
+                    try:
+                        detail = received.json().get("message") if received is not None else None
+                    except (ValueError, AttributeError):
+                        detail = None
+                    detail = str(detail).replace(values["key"], "[REDACTED]")[:1000] if detail else None
+                    save("SUBMIT_UNKNOWN", error_type=type(error).__name__,
+                        http_status=getattr(received, "status_code", None), api_error_message=detail)
                 except Exception as publication_error:
                     raise error from publication_error
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}

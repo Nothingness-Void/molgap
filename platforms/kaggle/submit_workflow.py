@@ -21,6 +21,8 @@ def main(argv=None):
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--reconcile-retired-push", action="store_true",
         help="Explicitly qualify an absent target after a retired-route HTTP rejection; never retries timeouts")
+    parser.add_argument("--reconcile-sdk-transport", action="store_true",
+        help="Explicitly qualify owned target absence after a received HTTP error before one SDK transport recovery")
     args = parser.parse_args(argv)
     stage="arguments"
     try:
@@ -43,7 +45,8 @@ def main(argv=None):
         stage="platform_operations"
         result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
             authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute,
-            **({"reconcile_retired_push": True} if args.reconcile_retired_push else {}))
+            **({"reconcile_retired_push": True} if args.reconcile_retired_push else {}),
+            **({"reconcile_sdk_transport": True} if args.reconcile_sdk_transport else {}))
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.
         if stage != "platform_operations":
