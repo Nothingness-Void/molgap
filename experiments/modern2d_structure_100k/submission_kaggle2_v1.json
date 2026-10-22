@@ -1,0 +1,79 @@
+{
+  "status": "SUBMISSION_BOUND",
+  "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
+  "kernel_id": 140243455,
+  "version": 1,
+  "initial_scheduler_status": "QUEUED",
+  "logical_run_id": "modern2d-structure-k2-100k-s42-v1",
+  "local_attempt": "v1",
+  "source_commit": "9b874350fce2413cf59ed2ec09bcd6e16e2d81bc",
+  "spec_identity": "7ceac231d3a95e73b4f6004410be544101870b2cf3e0cddccee910f4e7d22bb9",
+  "package_identity": "fd9f429cdb951fd8b87391f5b6501b96694cd430a07d5d570ae8a5ed401c0c4a",
+  "receipt_identity": "a363da7392494be7865cc877eadba916a16a7a003c76ae4eb2a99b19157ed820",
+  "remote_verification": {
+    "entry_bytes_equal": true,
+    "private": true,
+    "machine_shape": "NvidiaTeslaT4",
+    "dataset_sources": [
+      "kaseichou/molgap-modern2d-100k-commondev-v1",
+      "kaseichou/molgap-modern2d-structure-source-v1"
+    ],
+    "source_byte_roundtrip": "VERIFIED",
+    "release_inputs": "VERIFIED"
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt_content",
+      "new_mechanism": "shared16-channel bounded content conditioner on structural pairs",
+      "added_parameters": 7168
+    },
+    {
+      "arm_id": "esa_count",
+      "new_mechanism": "zero-start log-atom-count FiLM at invariant readout",
+      "added_parameters": 512
+    }
+  ],
+  "bounds": {
+    "horizon_passes": 20,
+    "physical_batch": 128,
+    "seed": 42,
+    "precision": "fp32-no-tf32",
+    "wall_seconds": 25200,
+    "kaggle_session_quota_hours": 7,
+    "physical_t4_hours": 14
+  },
+  "native_qualification": "NOT_EVALUATED_AT_SUBMISSION",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_ready": false,
+  "monitor": {
+    "binding_ref": "experiments/modern2d_structure_100k/monitor.json",
+    "thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
+    "existing_automation_updated": true,
+    "new_conversations_created": 0,
+    "normal_status_action": "SILENT",
+    "terminal_handoff_to_A": true
+  },
+  "retained_operational_evidence": [
+    {
+      "path": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/operations/launch_receipt.json",
+      "sha256": "a0a3a5ccd611600a9a81d5a7b583789ba8e989cc4a1cbb74a0d540794fd62af1"
+    },
+    {
+      "path": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/operations/source_verification.json",
+      "sha256": "b6d1b4ec5b3489d5c6c56e1c96ffeeb1302bbab1bd1fb51d29acdb4964bf3722"
+    },
+    {
+      "path": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/operations/source_upload_verification.json",
+      "sha256": "1cde46ae9645bafd5f30b24082dd4328e3f84c37bdf9075bf4aaa5d1267374b6"
+    },
+    {
+      "path": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/operations/remote_release_report.json",
+      "sha256": "6009a6a6092900213f61be3953083b10edf95b978760d14b6a5d92ca849dc885"
+    },
+    {
+      "path": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/operations/submission_state.json",
+      "sha256": "d5448e1508bd8cef0fbd68b00fb7107e96d9b85be9cc0e5a883ce1d0e06c3a29"
+    }
+  ]
+}
