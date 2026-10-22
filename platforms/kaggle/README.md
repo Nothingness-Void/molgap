@@ -45,6 +45,37 @@ Completed peer arms are reused. Incremental recovery allocation is a separate
 cost observation; an absent prior ledger stays missing. The owning question
 supplies its authorized continuation declaration and source-dataset preparation.
 
+Registered all-arm recovery may supply `recovery_repair` in its resume plan:
+`{"commit":"<40-hex committed repair>","files":{"<path>":{"original_sha256":"<sha256>","repaired_sha256":"<sha256>"}}}`.
+The exact three paths are `src/molgap/experiment_resume.py`,
+`src/molgap/common/io.py`, and `src/molgap/family_training_runner.py`.
+Preparation checks original archive bytes and committed replacement bytes;
+the runner may change only `_loaded_source`. Its original model/training logic,
+recipes, package, checkpoints and producer contexts remain frozen.
+`build_workflow_resume(..., recovery_repair=...)` accepts the same declaration
+when the local source verifier is repaired. This advanced option currently uses
+the Python API; it is not an implicit CLI source upgrade.
+
+The replacement bootstrap comes from that commit and separately pins canonical
+`recovery_repair.json`; the original launch schema is unchanged. The source
+dataset must retain that manifest and `recovery_repair/<path>` payloads.
+Before publication, call `validate_recovery_repair` with the prepared report's
+manifest digest, verified original package manifest and `package_dir`, then
+repeat the existing release gate and verify the entry's repair pin. Bootstrap
+verifies all original and replacement bytes before applying any replacement.
+Workers accept only the declared repair against the original source inventory.
+`recovery_repair_provenance.json` retains the executed infrastructure identity
+in the durable output. These are explicit repaired execution bytes; they do not
+replace or relabel the original scientific source identity.
+
+Recovery preserves the original launch allocation limits. A resume plan can
+explicitly narrow `allocation_wall_limit_seconds` and select
+`cleanup_reserve_seconds` under the owning continuation authority. Account for
+retained prior allocation separately. The fresh-release submitter does not
+support an existing source dataset/kernel slug; the workload skill must use
+the existing versioned dataset and accelerator push adapters with reconciled
+continuation authority and separate publication receipts.
+
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
 Source/job/version reconciliation and obtaining the small manifest belong to

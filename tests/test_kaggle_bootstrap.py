@@ -12,6 +12,59 @@ import types
 import pytest
 
 
+def _repair_case(entry, tmp_path):
+    source, package, inputs = (tmp_path / name for name in ("source", "package", "inputs"))
+    package.mkdir()
+    inputs.mkdir()
+    identity = {"spec_identity": "a" * 64, "package_identity": "b" * 64, "archive_sha256": "c" * 64}
+    record = {"format": "molgap-recovery-repair-v1", **identity, "commit": "d" * 40, "files": {}}
+    inventory = []
+    for name in ("src/molgap/experiment_resume.py", "src/molgap/common/io.py", "src/molgap/family_training_runner.py"):
+        original, repaired = b"VALUE = 1\n", b"VALUE = 2\n"
+        for base, raw in ((source, original), (inputs / "recovery_repair", repaired)):
+            target = base / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(raw)
+        original_sha = hashlib.sha256(original).hexdigest()
+        inventory.append({"path": name, "sha256": original_sha})
+        record["files"][name] = {"original_sha256": original_sha,
+                                "repaired_sha256": hashlib.sha256(repaired).hexdigest()}
+    (package / "package_manifest.json").write_text(json.dumps(identity))
+    (package / "SOURCE_FILES.json").write_text(json.dumps({"files": inventory}))
+    raw = json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+    (inputs / "recovery_repair.json").write_bytes(raw)
+    return source, package, inputs, record, hashlib.sha256(raw).hexdigest()
+
+
+def test_recovery_repair_applies_only_pinned_infrastructure(entry, tmp_path, monkeypatch):
+    monkeypatch.setenv("MOLGAP_RECOVERY_REPAIR_MANIFEST", "before")
+    monkeypatch.setenv("MOLGAP_RECOVERY_REPAIR_SHA256", "before")
+    source, package, inputs, record, digest = _repair_case(entry, tmp_path)
+    assert entry._recovery_repair(inputs, source, package, digest) == record
+    assert all((source / name).read_bytes() == b"VALUE = 2\n" for name in record["files"])
+    assert entry.os.environ["MOLGAP_RECOVERY_REPAIR_SHA256"] == digest
+
+
+@pytest.mark.parametrize("tamper", ["original", "replacement", "manifest", "allowlist"])
+def test_recovery_repair_fails_before_any_replacement(entry, tmp_path, tamper):
+    source, package, inputs, record, digest = _repair_case(entry, tmp_path)
+    name = "src/molgap/common/io.py"
+    if tamper == "original":
+        (source / name).write_bytes(b"changed\n")
+    elif tamper == "replacement":
+        (inputs / "recovery_repair" / name).write_bytes(b"changed\n")
+    elif tamper == "manifest":
+        digest = "f" * 64
+    else:
+        record["files"]["src/molgap/gps.py"] = record["files"].pop(name)
+        raw = json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+        (inputs / "recovery_repair.json").write_bytes(raw)
+        digest = hashlib.sha256(raw).hexdigest()
+    with pytest.raises(ValueError):
+        entry._recovery_repair(inputs, source, package, digest)
+    assert (source / "src/molgap/experiment_resume.py").read_bytes() == b"VALUE = 1\n"
+
+
 @pytest.fixture
 def entry(tmp_path, monkeypatch):
     path = Path(__file__).resolve().parents[1] / "platforms/kaggle/run_experiment.py"

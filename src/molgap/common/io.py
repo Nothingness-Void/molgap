@@ -88,7 +88,9 @@ def copy_immutable_file(source: Path, destination: Path, *, expected_sha256: str
                 handle.flush()
                 os.fsync(handle.fileno())
             if copied_digest.hexdigest() != expected_sha256:
-                raise ValueError("Copied artifact checksum mismatch; original retained")
+                raise ValueError(
+                    f"Copied artifact checksum mismatch; original retained: {source.name}; "
+                    f"expected={expected_sha256}; observed={copied_digest.hexdigest()}")
             _safe_local(destination)
             try:
                 os.link(temporary, destination)

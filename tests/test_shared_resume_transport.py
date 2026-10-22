@@ -1,7 +1,9 @@
 """Synthetic transport checks; no native execution or historical role access."""
 import json
 import errno
+import hashlib
 import os
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -134,6 +136,109 @@ def test_reuse_rejects_changed_payload_and_different_attempt(bundle_case, tmp_pa
     with pytest.raises(ValueError):
         transport.create_resume_bundle(source, ctx, trajectory, tmp_path / "unsafe", reuse_bundle=previous)
     assert not (tmp_path / "unsafe").exists()
+
+
+@pytest.mark.parametrize("reuse_existing", [False, True], ids=["without-reuse", "with-reuse"])
+def test_sidecar_snapshot_survives_atomic_replacement_during_checkpoint_copy(
+        bundle_case, tmp_path, monkeypatch, reuse_existing):
+    source, previous, ctx, trajectory, _ = bundle_case
+    checkpoint = source / "last_checkpoint.pt"
+    checkpoint_payload = transport.safe_cpu_torch_load(checkpoint)
+    checkpoint_payload["model"]["weight"] = torch.full_like(
+        checkpoint_payload["model"]["weight"], 2.0)
+    torch.save(checkpoint_payload, checkpoint)
+    sidecar = source / "allocation_ledger.json"
+    captured_bytes = b'{"generation":"captured"}\n'
+    producer_bytes = b'{"generation":"producer"}\n'
+    sidecar.write_bytes(captured_bytes)
+    original_open = Path.open
+    replaced = [False]
+    copy_active = [False]
+
+    def replace_sidecar():
+        replacement = sidecar.with_name(sidecar.name + ".replacement")
+        replacement.write_bytes(producer_bytes)
+        os.replace(replacement, sidecar)
+        replaced[0] = True
+
+    class ReplaceDuringRead:
+        def __init__(self, reader):
+            self.reader = reader
+
+        def __enter__(self):
+            self.reader.__enter__()
+            return self
+
+        def __exit__(self, *args):
+            return self.reader.__exit__(*args)
+
+        def read(self, size=-1):
+            block = self.reader.read(size)
+            if not replaced[0]:
+                replace_sidecar()
+            return block
+
+    def monitored_open(path, mode="r", *args, **kwargs):
+        reader = original_open(path, mode, *args, **kwargs)
+        if copy_active[0] and path == checkpoint and mode == "rb":
+            return ReplaceDuringRead(reader)
+        return reader
+
+    real_copy = transport.copy_immutable_file
+
+    def copy_with_interleaved_replacement(source_path, destination, *, expected_sha256):
+        if source_path == checkpoint:
+            copy_active[0] = True
+            try:
+                return real_copy(source_path, destination, expected_sha256=expected_sha256)
+            finally:
+                copy_active[0] = False
+        return real_copy(source_path, destination, expected_sha256=expected_sha256)
+
+    monkeypatch.setattr(Path, "open", monitored_open)
+    monkeypatch.setattr(transport, "copy_immutable_file", copy_with_interleaved_replacement)
+    destination = tmp_path / ("snapshot-with-reuse" if reuse_existing else "snapshot-without-reuse")
+    options = {"reuse_bundle": previous} if reuse_existing else {}
+
+    manifest = transport.create_resume_bundle(source, ctx, trajectory, destination, **options)
+
+    assert replaced[0]
+    assert sidecar.read_bytes() == producer_bytes
+    assert len(manifest["cost_segments"]) == 1
+    pointer = manifest["cost_segments"][0]
+    assert pointer["sha256"] == hashlib.sha256(captured_bytes).hexdigest()
+    assert (destination / pointer["path"]).read_bytes() == captured_bytes
+    assert transport.validate_resume_bundle(destination, context=ctx,
+                                            trajectory=trajectory)["status"] == "TRANSPORT_VERIFIED"
+
+
+def test_mutated_checkpoint_fails_checksum_before_manifest_publication(bundle_case, tmp_path, monkeypatch):
+    source, _, ctx, trajectory, _ = bundle_case
+    checkpoint = source / "last_checkpoint.pt"
+    original_bytes = checkpoint.read_bytes()
+    mutated_bytes = original_bytes + b"mutated after snapshot"
+    expected = hashlib.sha256(original_bytes).hexdigest()
+    observed = hashlib.sha256(mutated_bytes).hexdigest()
+    destination = tmp_path / "mutated-checkpoint"
+    real_copy = transport.copy_immutable_file
+
+    def mutate_before_checkpoint_copy(source_path, target_path, *, expected_sha256):
+        if source_path == checkpoint:
+            replacement = checkpoint.with_name(checkpoint.name + ".replacement")
+            replacement.write_bytes(mutated_bytes)
+            os.replace(replacement, checkpoint)
+        return real_copy(source_path, target_path, expected_sha256=expected_sha256)
+
+    monkeypatch.setattr(transport, "copy_immutable_file", mutate_before_checkpoint_copy)
+    with pytest.raises(ValueError) as error:
+        transport.create_resume_bundle(source, ctx, trajectory, destination)
+
+    message = str(error.value)
+    assert "last_checkpoint.pt" in message
+    assert f"expected={expected}" in message
+    assert f"observed={observed}" in message
+    assert checkpoint.is_file() and checkpoint.read_bytes() == mutated_bytes
+    assert not (destination / transport.RESUME_BUNDLE_FILE).exists()
 
 
 @pytest.mark.parametrize("extra", ["partial", "unknown_file", "unknown_directory"])

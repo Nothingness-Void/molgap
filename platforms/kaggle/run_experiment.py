@@ -16,9 +16,51 @@ import tempfile
 
 # Local preparation replaces this marker and binds the resulting entry bytes.
 EXPECTED_LAUNCH_SHA256 = None
+EXPECTED_RECOVERY_REPAIR_SHA256 = None
 INPUT_ROOT = Path("/kaggle/input")
 WORK_ROOT = Path("/kaggle/temp/molgap-workflow")
 OUTPUT_ROOT = Path("/kaggle/working/experiment")
+
+
+def _recovery_repair(input_root, source, package, expected_sha256):
+    """Verify every overlay byte before replacing any original source file."""
+    import re
+    allowed = {"src/molgap/experiment_resume.py", "src/molgap/common/io.py",
+               "src/molgap/family_training_runner.py"}
+    path = input_root / "recovery_repair.json"
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+        raise ValueError("Recovery repair manifest hash mismatch")
+    record = json.loads(raw)
+    if raw != json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode():
+        raise ValueError("Recovery repair manifest must use canonical JSON")
+    manifest = json.loads((package / "package_manifest.json").read_bytes())
+    inventory = {row["path"]: row["sha256"] for row in json.loads((package / "SOURCE_FILES.json").read_bytes())["files"]}
+    if (set(record) != {"format", "spec_identity", "package_identity", "archive_sha256", "commit", "files"}
+            or record["format"] != "molgap-recovery-repair-v1"
+            or any(record[key] != manifest[key] for key in ("spec_identity", "package_identity", "archive_sha256"))
+            or type(record["commit"]) is not str or re.fullmatch(r"[0-9a-f]{40}", record["commit"]) is None
+            or type(record["files"]) is not dict or set(record["files"]) != allowed):
+        raise ValueError("Invalid recovery repair binding or allowlist")
+    payloads = {}
+    for name, binding in record["files"].items():
+        if (type(binding) is not dict or set(binding) != {"original_sha256", "repaired_sha256"}
+                or any(type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None for value in binding.values())):
+            raise ValueError("Invalid recovery repair hashes")
+        original, replacement = source / name, input_root / "recovery_repair" / name
+        if (original.is_symlink() or replacement.is_symlink()
+                or inventory.get(name) != binding["original_sha256"]
+                or hashlib.sha256(original.read_bytes()).hexdigest() != binding["original_sha256"]):
+            raise ValueError("Recovery repair original source mismatch")
+        payloads[name] = replacement.read_bytes()
+        if hashlib.sha256(payloads[name]).hexdigest() != binding["repaired_sha256"]:
+            raise ValueError("Recovery repair replacement mismatch")
+        compile(payloads[name], name, "exec")
+    for name, payload in payloads.items():
+        (source / name).write_bytes(payload)
+    os.environ["MOLGAP_RECOVERY_REPAIR_MANIFEST"] = str(path)
+    os.environ["MOLGAP_RECOVERY_REPAIR_SHA256"] = expected_sha256
+    return record
 
 
 def _atomic_entry_json(path, value):
@@ -75,6 +117,8 @@ def main():
             state["writer"](OUTPUT_ROOT / "allocation_entry_observation.json", observation)
             if "input_resolution" in state:
                 state["writer"](OUTPUT_ROOT / "input_resolution.json", state["input_resolution"])
+            if "recovery_repair" in state:
+                state["writer"](OUTPUT_ROOT / "recovery_repair_provenance.json", state["recovery_repair"])
         except Exception as exc:
             if observation["error"] is None:
                 raise
@@ -148,6 +192,9 @@ def _bootstrap(allocation_started, state):
     bootstrap.__file__ = str(archive) + ":experiment_preflight.py"
     exec(compile(code, bootstrap.__file__, "exec"), bootstrap.__dict__)
     bootstrap._unpack(package, source)
+    if EXPECTED_RECOVERY_REPAIR_SHA256 is not None:
+        state["recovery_repair"] = _recovery_repair(launch.parent, source, package,
+                                                   EXPECTED_RECOVERY_REPAIR_SHA256)
     sys.path.insert(0, str(source / "src"))
     from molgap.training_reproducibility import atomic_json
     state["writer"] = atomic_json
