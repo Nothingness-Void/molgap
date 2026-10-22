@@ -65,6 +65,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+User-authorized K1 graph-wise message DropPath100K belongs to
+`codex/exp/k1-message-droppath-100k`; resolve its checkout through BRANCHES.
+[Status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-message-droppath-100k/experiments/pcqm_k1_message_droppath_100k/STATUS.md)
+own the one-slot Kaggle1 pair, separately from existing normalization work.
+No adoption, automatic continuation or scale-up follows.
+
 User-authorized BondLocal/pair-update-normalization100K belongs to
 `codex/exp/gptrans-bondlocal-pairnorm-100k`; BRANCHES owns checkout routing.
 Its [status and submission bindings](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-bondlocal-pairnorm-100k/experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md)

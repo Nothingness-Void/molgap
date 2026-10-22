@@ -12,6 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+K1 graph-wise message DropPath100K is owned by
+`codex/exp/k1-message-droppath-100k`, checkout
+`D:/molgap-worktrees/k1-message-droppath-100k`.
+[Owning status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-message-droppath-100k/experiments/pcqm_k1_message_droppath_100k/STATUS.md)
+retains its Kaggle1 comparison; no active implementation is adopted here.
+
 BondLocal plus pair-update-normalization100K is owned by
 `codex/exp/gptrans-bondlocal-pairnorm-100k`, checkout
 `D:/molgap-worktrees/gptrans-bondlocal-pairnorm-100k`. Its
