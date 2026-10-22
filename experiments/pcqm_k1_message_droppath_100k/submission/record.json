@@ -1,0 +1,291 @@
+{
+  "archive_sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3",
+  "attempt_id": "v1",
+  "local_reports": {
+    "release_report.json": {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-droppath-100k-s42\\v1\\prepared\\release_report.json",
+      "sha256": "b6fbcfdcbc156b15aef6968229662576ebbfcc6ac83fe01310fa7ccfd452d417"
+    },
+    "workflow_report.json": {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-droppath-100k-s42\\v1\\prepared\\workflow_report.json",
+      "sha256": "fdeaa5a27fadeb7c06d9affcd7f2bccbfe6a40671e62a70db4a2f6109a203599"
+    }
+  },
+  "local_run_directory": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-droppath-100k-s42\\v1",
+  "logical_run_id": "pcqm-k1-message-droppath-100k-s42",
+  "native_qualification": "NOT_EVALUATED",
+  "observations": {
+    "platform_response": {
+      "accelerator": "NvidiaTeslaT4",
+      "identity_conflicts": [],
+      "invalid_competition_sources": [],
+      "invalid_dataset_sources": [],
+      "invalid_kernel_sources": [],
+      "invalid_model_sources": [],
+      "kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "kernel_id": 140239597,
+      "platform_response": {
+        "invalidCompetitionSources": [],
+        "invalidDatasetSources": [],
+        "invalidKernelSources": [],
+        "invalidModelSources": [],
+        "kernelId": 140239597,
+        "ref": "/code/nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+        "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+        "versionNumber": 1
+      },
+      "reconciliation_required": false,
+      "release_binding": {
+        "package_identity": "addb327609a4a8faf62329cb990e2a5b015ca9e66644935331fbd0ce68313b8d",
+        "source_archive_sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3",
+        "source_commit": "927783bab325dab85f311790c96b630011c21e21",
+        "spec_identity": "e3b4c7959089c2a09a7cc0bae94006ae76d34f41d3bc4ba472ca70fde10d65d2"
+      },
+      "requested_kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "script_version_id": null,
+      "status": "submitted",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "version_number": 1
+    },
+    "quota_before_submit": {
+      "authorized_ceiling_gpu_hours": 8,
+      "available_gpu_hours": 15.226563055555554,
+      "observed_at": "2026-10-22T16:14:32.007858+00:00",
+      "quota": {
+        "gpuQuota": {
+          "hasEverRun": true,
+          "isPayToScaleEnabled": true,
+          "minimumTimeAllowed": {
+            "nanos": 0,
+            "seconds": 108000
+          },
+          "timeReserved": {
+            "nanos": 0,
+            "seconds": 0
+          },
+          "timeUsed": {
+            "nanos": 373000000,
+            "seconds": 107184
+          },
+          "totalTimeAllowed": {
+            "nanos": 0,
+            "seconds": 162000
+          }
+        },
+        "quotaRefreshTime": "2026-10-24T00:00:00Z",
+        "tpuQuota": {
+          "hasEverRun": false,
+          "isPayToScaleEnabled": false,
+          "minimumTimeAllowed": {
+            "nanos": 0,
+            "seconds": 72000
+          },
+          "timeReserved": {
+            "nanos": 0,
+            "seconds": 0
+          },
+          "timeUsed": {
+            "nanos": 0,
+            "seconds": 0
+          },
+          "totalTimeAllowed": {
+            "nanos": 0,
+            "seconds": 72000
+          }
+        }
+      }
+    },
+    "scheduler_observation": {
+      "failure_message": "",
+      "kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "observed_at": "2026-10-22T16:14:40.072927+00:00",
+      "status": "KernelWorkerStatus.QUEUED",
+      "version": 1
+    },
+    "source_upload_verification": {
+      "dataset": "nothingnessvoid/k1-message-droppath-100k-src",
+      "files": [
+        {
+          "bytes": 65,
+          "path": "SOURCE_ARCHIVE_SHA256.txt",
+          "sha256": "00cb15634033007062f82a49d2694ad4af97f2b7eb919b7ea7efa5910d1cd406"
+        },
+        {
+          "bytes": 41,
+          "path": "SOURCE_COMMIT.txt",
+          "sha256": "59d674d4e8b252e994476c18d626952c9442fcea479aad0e3e2b0c426a91d79c"
+        },
+        {
+          "bytes": 47914,
+          "path": "SOURCE_FILES.json",
+          "sha256": "8659d833a6c33f4d9200c3645b892647302ea2c74f98a61431c96b9c8962e92b"
+        },
+        {
+          "bytes": 1722,
+          "path": "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/acceptance_plan.json",
+          "sha256": "a88ee1af06f79d9755de29eaaacbe7849d245007dd1dd963b768b4a72f0aea5b"
+        },
+        {
+          "bytes": 1876,
+          "path": "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
+          "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+        },
+        {
+          "bytes": 2044,
+          "path": "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json",
+          "sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea"
+        },
+        {
+          "bytes": 408,
+          "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        },
+        {
+          "bytes": 1703,
+          "path": "experiment_launch.json",
+          "sha256": "4f93b1df3bf6afa3890009078994d406e65306dc6d67a3a953df317b69079540"
+        },
+        {
+          "bytes": 5694,
+          "path": "experiment_spec.json",
+          "sha256": "e3b4c7959089c2a09a7cc0bae94006ae76d34f41d3bc4ba472ca70fde10d65d2"
+        },
+        {
+          "bytes": 14779763,
+          "path": "initial_states/baseline.pt",
+          "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+        },
+        {
+          "bytes": 14779763,
+          "path": "initial_states/message_droppath.pt",
+          "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+        },
+        {
+          "bytes": 12977,
+          "path": "package_manifest.json",
+          "sha256": "8576fa5b19990be05375b3888fe58729b941fd5a899762f51b0a9c1086cba7cb"
+        },
+        {
+          "bytes": 5365,
+          "path": "prospective/baseline/trajectory.json",
+          "sha256": "74fc84432f69233f14f7889174139f8ddcbb2f1332df609f26b530a5bafd6caa"
+        },
+        {
+          "bytes": 5429,
+          "path": "prospective/message_droppath/trajectory.json",
+          "sha256": "47a14114b48f648124897ff82484bf5542d0059ffe63f01bcaab22ed95d82cee"
+        },
+        {
+          "bytes": 880269,
+          "path": "source_payload.bin",
+          "sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3"
+        }
+      ],
+      "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+      "version": 1
+    },
+    "source_verification": {
+      "dataset_sources": [
+        "nothingnessvoid/k1-message-droppath-100k-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "entry_bytes_equal": true,
+      "entry_sha256": "4fd34ffb8bb20bbf3fba1969d4e687e7695ad039a0c32911975b4650241f36aa",
+      "kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "kernel_id": 140239597,
+      "machine_shape": "NvidiaTeslaT4",
+      "observed_at": "2026-10-22T16:14:39.790092+00:00",
+      "private": true,
+      "version": 1
+    },
+    "startup_observation": {
+      "events": [],
+      "kernel": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+      "scope": "startup observation; not native qualification",
+      "transport": "ReadTimeout"
+    }
+  },
+  "package_identity": "addb327609a4a8faf62329cb990e2a5b015ca9e66644935331fbd0ce68313b8d",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "source_commit": "927783bab325dab85f311790c96b630011c21e21",
+  "source_copy_retirement": {
+    "roundtrip": {
+      "SOURCE_ARCHIVE_SHA256.txt": {
+        "bytes": 65,
+        "sha256": "00cb15634033007062f82a49d2694ad4af97f2b7eb919b7ea7efa5910d1cd406"
+      },
+      "SOURCE_COMMIT.txt": {
+        "bytes": 41,
+        "sha256": "59d674d4e8b252e994476c18d626952c9442fcea479aad0e3e2b0c426a91d79c"
+      },
+      "SOURCE_FILES.json": {
+        "bytes": 47914,
+        "sha256": "8659d833a6c33f4d9200c3645b892647302ea2c74f98a61431c96b9c8962e92b"
+      },
+      "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/acceptance_plan.json": {
+        "bytes": 1722,
+        "sha256": "a88ee1af06f79d9755de29eaaacbe7849d245007dd1dd963b768b4a72f0aea5b"
+      },
+      "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json": {
+        "bytes": 1876,
+        "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+      },
+      "acceptance/experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json": {
+        "bytes": 2044,
+        "sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea"
+      },
+      "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json": {
+        "bytes": 408,
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      },
+      "experiment_launch.json": {
+        "bytes": 1703,
+        "sha256": "4f93b1df3bf6afa3890009078994d406e65306dc6d67a3a953df317b69079540"
+      },
+      "experiment_spec.json": {
+        "bytes": 5694,
+        "sha256": "e3b4c7959089c2a09a7cc0bae94006ae76d34f41d3bc4ba472ca70fde10d65d2"
+      },
+      "initial_states/baseline.pt": {
+        "bytes": 14779763,
+        "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+      },
+      "initial_states/message_droppath.pt": {
+        "bytes": 14779763,
+        "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+      },
+      "package_manifest.json": {
+        "bytes": 12977,
+        "sha256": "8576fa5b19990be05375b3888fe58729b941fd5a899762f51b0a9c1086cba7cb"
+      },
+      "prospective/baseline/trajectory.json": {
+        "bytes": 5365,
+        "sha256": "74fc84432f69233f14f7889174139f8ddcbb2f1332df609f26b530a5bafd6caa"
+      },
+      "prospective/message_droppath/trajectory.json": {
+        "bytes": 5429,
+        "sha256": "47a14114b48f648124897ff82484bf5542d0059ffe63f01bcaab22ed95d82cee"
+      },
+      "source_payload.bin": {
+        "bytes": 880269,
+        "sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3"
+      }
+    },
+    "status": "REMOVED",
+    "uploaded": {
+      "initial_states/baseline.pt": {
+        "bytes": 14779763,
+        "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+      },
+      "initial_states/message_droppath.pt": {
+        "bytes": 14779763,
+        "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+      },
+      "source_payload.bin": {
+        "bytes": 880269,
+        "sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3"
+      }
+    }
+  },
+  "spec_identity": "e3b4c7959089c2a09a7cc0bae94006ae76d34f41d3bc4ba472ca70fde10d65d2"
+}

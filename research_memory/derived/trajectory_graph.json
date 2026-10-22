@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-k1-message-droppath-100k-s42-baseline:A001",
+      "target": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-message-droppath-100k-s42-message_droppath:A001",
+      "target": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-distance-angle-triangle-500k-20260911:A000",
       "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
       "type": "action_produced_evidence"
@@ -1231,6 +1241,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "type": "prior_evidence"
+    },
+    {
       "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
       "target": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "type": "prior_evidence"
@@ -1937,6 +1957,16 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-saved-bn-rows-20261008",
       "type": "prior_evidence"
     },
@@ -1993,6 +2023,16 @@
     {
       "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-residual-screen-20261004",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "type": "prior_evidence"
     },
     {
@@ -3094,6 +3134,14 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "type": "trajectory"
     },
     {

@@ -1,9 +1,22 @@
 # Status
 
-Local preparation pending. No source publication or remote job yet.
-Owner: `codex/exp/k1-message-droppath-100k`.
-The [protocol](protocol.md) owns the authorized scope and resource ceiling.
-Do not duplicate the independent RMS or normalization-regularization questions.
+## Submission observation: 2026-10-23 JST
+
+Kaggle1 accepted kernel `140239597/version1`:
+[exact job](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-message-droppath-100k-s42).
+Last submission-time scheduler observation: QUEUED. Native qualification,
+formal training and scientific acceptance are not yet observed.
+
+Owner: `codex/exp/k1-message-droppath-100k`. The [protocol](protocol.md) owns
+the 100K/40-pass pair and four-hour allocation ceiling. No local trigger,
+monitor, automatic continuation or duplicate normalization job.
+[Submission record](submission/record.json) retains the exact source/package
+and remote observations; [launch receipt](submission/launch_receipt.json)
+binds both arms. Canonical prospective records are under
+`runs/pcqm-k1-message-droppath-100k-s42/prospective/`.
+Local run custody: `D:/molgap-artifacts/runs/pcqm-k1-message-droppath-100k-s42/v1/`.
+Preparation/release inputs and RML `check --frozen` passed; this is not
+portable qualification, strict replay, a completed result or model adoption.
 
 ## Local verification
 
