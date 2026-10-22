@@ -311,21 +311,24 @@ class PPGTAuthor(nn.Module):
                                           max_edges=c.max_edges, allowed_roles=ALLOWED_ROLES)
         return torch.stack([self.graph_forward(graph) for graph in graphs])
 
-    def _same_size_forward(self, graphs):
+    def _same_size_forward(self, graphs, *, prepared_features=None):
         """Batch equal-size graphs without padding or changing attention math."""
         c = self.config
         b, n = len(graphs), len(graphs[0].x)
-        features = [positional_inputs(g, c.rrwp_steps, sym_norm=c.sym_norm,
-            max_nodes=c.max_nodes, max_edges=c.max_edges) for g in graphs]
-        walk, positional, order = (torch.stack(items).to(dtype=self.node_pe.weight.dtype)
-                                  for items in zip(*features))
+        if prepared_features is None:
+            features = [positional_inputs(g, c.rrwp_steps, sym_norm=c.sym_norm,
+                max_nodes=c.max_nodes, max_edges=c.max_edges) for g in graphs]
+            prepared_features = tuple(torch.stack(items) for items in zip(*features))
+        walk, positional, order = (value.to(dtype=self.node_pe.weight.dtype)
+                                  for value in prepared_features)
         atoms = torch.stack([g.x for g in graphs])
         x = sum(embedding(atoms[:, :, i]) for i, embedding in enumerate(self.atoms))
         x = x + self.node_pe(walk.diagonal(dim1=1, dim2=2).transpose(1, 2)) + self.node_order(order)
         encoded = sinusoidal_pe(positional, c.spe_bases)
         pair = self.pe_mlp(encoded.reshape(b * n * n, -1)).reshape(b, n, n, c.pair_dim)
         edge_counts = atoms.new_tensor([g.edge_index.shape[1] for g in graphs])
-        edge_graph = torch.repeat_interleave(torch.arange(b, device=atoms.device), edge_counts)
+        edge_graph = torch.repeat_interleave(torch.arange(b, device=atoms.device), edge_counts,
+            output_size=sum(g.edge_index.shape[1] for g in graphs))
         edges = torch.cat([g.edge_index for g in graphs], 1)
         attrs = torch.cat([g.edge_attr for g in graphs])
         bonds = sum(embedding(attrs[:, i]) for i, embedding in enumerate(self.bonds))
@@ -342,7 +345,39 @@ class PPGTAuthor(nn.Module):
         pooled = x.sum(1) if c.pooling == "sum" else x.mean(1)
         return self.head(pooled).reshape(b)
 
+    def forward_prepared(self, prepared):
+        """Opt-in CPU-validated layout and batched walks; historical ABI stays.
+
+        No learned projection is cached and no graph leaves its minibatch.
+        Stochastic presets retain graphwise RNG/forward order.
+        """
+        from .modern2d_execution_context import PreparedTopology
+        from .ppgt_author_features import batched_positional_inputs
+        if type(prepared) is not PreparedTopology:
+            raise TypeError("CPU-validated PreparedTopology required")
+        prepared.validate_for(self.config, self.node_pe.weight.device)
+        graphs = prepared.device_views
+        if self.config.attention_dropout or self.config.stochastic_depth:
+            return torch.stack([self.graph_forward(graph) for graph in graphs])
+        buckets = {}
+        for index, graph in enumerate(graphs):
+            buckets.setdefault(len(graph.x), []).append((index, graph))
+        outputs = [None] * len(graphs)
+        for members in buckets.values():
+            selected = [graph for _, graph in members]
+            features = batched_positional_inputs(selected, self.config.rrwp_steps,
+                sym_norm=self.config.sym_norm, max_nodes=self.config.max_nodes,
+                max_edges=self.config.max_edges)
+            predictions = self._same_size_forward(selected, prepared_features=features)
+            for (index, _), prediction in zip(members, predictions.unbind(0)):
+                outputs[index] = prediction
+        return torch.stack(outputs)
+
     def forward_bucketed(self, batch):
+        from .modern2d_execution_context import current_prepared
+        prepared = current_prepared(self, batch)
+        if prepared is not None:
+            return self.forward_prepared(prepared)
         c = self.config
         # Preserve graph-order RNG semantics for the published stochastic preset.
         if c.attention_dropout or c.stochastic_depth:
@@ -360,6 +395,10 @@ class PPGTAuthor(nn.Module):
         return torch.stack(outputs)
 
     def forward(self, batch):
+        from .modern2d_execution_context import current_prepared
+        prepared = current_prepared(self, batch)
+        if prepared is not None:
+            return self.forward_prepared(prepared)
         # Bucketed FP32 reductions need an explicit update-drift qualification.
         # Keep the frozen graphwise path as the scientific default until then.
         return self.forward_reference(batch)

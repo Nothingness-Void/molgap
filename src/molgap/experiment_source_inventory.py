@@ -5,6 +5,8 @@ This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
 COMMON_SOURCE_FILES = (
+    "src/molgap/modern2d_execution.py",
+    "src/molgap/modern2d_execution_context.py",
     "src/molgap/training/__init__.py",
     "src/molgap/training/core.py",
     "src/molgap/training/state.py",

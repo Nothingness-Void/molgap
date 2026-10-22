@@ -46,6 +46,7 @@ SOFTWARE.
 """
 from copy import deepcopy
 from dataclasses import dataclass, fields
+from typing import TYPE_CHECKING
 
 import torch
 from torch import nn
@@ -55,8 +56,11 @@ from torch.nn.utils.rnn import pad_sequence
 from .esa_features import edge_tokens
 from .esa_invariant import ESAInvariant, ESAInvariantConfig
 from .esa_model import ESAConfig, ESABlock
-from .modern2d_inputs import categorical_one_hot, validated_topology_views
+from .modern2d_inputs import GraphView, categorical_one_hot, validated_topology_views
 from .ogb_features import ATOM_FEATURE_DIMS, BOND_FEATURE_DIMS
+
+if TYPE_CHECKING:
+    from .modern2d_execution_context import PreparedTopology
 
 
 BOND_TOKEN = 0
@@ -198,6 +202,10 @@ class ESANative(ESAInvariant):
         return self._forward_tokens([native_tokens(graph) for graph in views])
 
     def forward(self, batch):
+        from .modern2d_execution_context import current_prepared
+        prepared = current_prepared(self, batch)
+        if prepared is not None:
+            return self.forward_prepared(prepared)
         views = validated_topology_views(batch, max_nodes=self.config.max_nodes,
             max_edges=self.config.max_edges, allowed_roles=ALLOWED_ROLES, packed=True)
         device = views[0].x.device
@@ -207,6 +215,26 @@ class ESANative(ESAInvariant):
             raise ValueError("ESA/3 model and topology must share a device; move the model explicitly")
         features, types, endpoints, valid = packed_native_tokens(views)
         return self._forward_dense(features, types, endpoints, valid)
+
+    def forward_prepared(self, prepared: "PreparedTopology"):
+        """Opt-in execution of a CPU-validated, bounded topology snapshot.
+
+        Prepare invariant categorical tokens before transferring them. Learned
+        projections, attention masks and every model operation still run through
+        the historical dense path on the model device, without cached activations.
+        Use ``modern2d_execution.prepared_forward`` with substrate addons so the
+        model's ``__call__`` hook frame is retained. Outside that explicit context,
+        ``forward`` follows its historical path. No native qualification follows.
+        """
+        from .modern2d_execution_context import PreparedTopology
+
+        if type(prepared) is not PreparedTopology:
+            raise TypeError("ESA prepared execution requires exact PreparedTopology")
+        device = self.head.weight.device
+        prepared.validate_for(self.config, torch.device("cpu"))
+        if self.config.tensor_device != "cpu_or_cuda" and device.type != self.config.tensor_device:
+            raise ValueError("ESA/3 topology device differs from configured tensor_device capability")
+        return self._forward_dense(*prepare_native_tokens(prepared.cpu_views, device))
 
 
 def packed_native_tokens(views):
@@ -247,6 +275,27 @@ def packed_native_tokens(views):
     valid = torch.arange(width, device=device)[None] < lengths[:, None]
     # Match pad_sequence's zero padding for the type channel; masks ignore it.
     return features, types, endpoints, valid
+
+
+def prepare_native_tokens(cpu_views, device):
+    """Pack validated CPU GraphViews, then transfer the four invariant tensors.
+
+    Returns ``(features, types, endpoints, valid)`` with the exact padded ABI of
+    ``packed_native_tokens``. Role, identity, category and model-cap validation
+    belongs to the CPU topology owner before this low-level helper is called.
+    There is no model/RNG access, dtype conversion or learned projection cache.
+    """
+    if (not isinstance(cpu_views, (tuple, list)) or not cpu_views or
+            any(type(graph) is not GraphView for graph in cpu_views)):
+        raise TypeError("ESA token preparation requires nonempty validated CPU GraphViews")
+    if any(tensor.device.type != "cpu" for graph in cpu_views
+           for tensor in (graph.x, graph.edge_index, graph.edge_attr)):
+        raise ValueError("ESA token preparation requires CPU topology before device transfer")
+    device = torch.device(device)
+    if device.type not in {"cpu", "cuda"}:
+        raise ValueError("ESA token preparation supports CPU/CUDA devices only")
+    tokens = packed_native_tokens(cpu_views)
+    return tuple(tensor.to(device, non_blocking=True) for tensor in tokens)
 
 
 def make_model(arm):

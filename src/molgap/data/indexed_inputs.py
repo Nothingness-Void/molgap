@@ -170,7 +170,7 @@ class IndexedRoleDataset:
                     raise ValueError("Decoded indexed targets are nonfinite")
                 values = values.tolist()
             else:
-                graphs=[shard.get(i) for i in offsets]
+                graphs=[self._clone_graph(shard,i) for i in offsets]
                 if any(set(g.keys())-GRAPH_FIELDS-{"num_nodes"} for g in graphs):
                     raise ValueError("Unknown/3D indexed graph field")
                 ids=[int(g.source_idx.item()) for g in graphs]
@@ -203,14 +203,18 @@ class IndexedRoleDataset:
             if self._verified_files.get(index) != identity:
                 path=_pin(self.root,item)
                 self._open_shards.pop(index, None)
-            from .packed_graph import PackedGraphDataset
-            cached = self._open_shards.pop(index, None)
-            loaded = cached[1] if cached is not None and cached[0] == identity else PackedGraphDataset(path,mmap=True)
-            after=path.stat()
-            if (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns,item["sha256"]) != identity:
-                raise ValueError("Indexed shard changed while opening")
-            self._verified_files[index] = identity
-            self._open_shards[index] = (identity, loaded)
+            cached = self._open_shards.get(index)
+            if cached is not None and cached[0] == identity:
+                loaded = cached[1]
+                self._open_shards.move_to_end(index)
+            else:
+                from .packed_graph import PackedGraphDataset
+                loaded = PackedGraphDataset(path,mmap=True)
+                after=path.stat()
+                if (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns,item["sha256"]) != identity:
+                    raise ValueError("Indexed shard changed while opening")
+                self._verified_files[index] = identity
+                self._open_shards[index] = (identity, loaded)
             while len(self._open_shards) > 2:
                 self._open_shards.popitem(last=False)
             self._loaded,self._loaded_index=loaded,index
@@ -220,18 +224,50 @@ class IndexedRoleDataset:
     def __len__(self):
         return len(self.source_indices)
 
-    def __getitem__(self,index):
+    def _row_location(self,index):
         if type(index) is not int or not 0 <= index < len(self):
             raise IndexError("Indexed role row out of range")
         chunk=bisect_right(self._ends,index)
         local=index-(self._ends[chunk-1] if chunk else 0)
-        graph = self._load(chunk).get(self._maps[chunk][local]).clone()
+        return chunk,self._maps[chunk][local]
+
+    @staticmethod
+    def _clone_graph(shard,offset):
+        # InMemoryDataset.get allocates a shard-sized memo table, even when it
+        # is cleared after every row. Reuse its separation semantics directly.
+        from torch_geometric.data.separate import separate
+        shard._data_list = None
+        graph = shard._data if len(shard) == 1 else separate(
+            cls=shard._data.__class__, batch=shard._data, idx=offset,
+            slice_dict=shard.slices, decrement=False)
+        return graph.clone()
+
+    def _read_graph(self,shard,offset,index):
+        graph = self._clone_graph(shard,offset)
         if int(graph.source_idx.item()) != self.source_indices[index]:
             raise ValueError("Decoded row identity changed during indexed access")
-        # Do not retain per-graph copies inside the bounded mmap handle cache.
-        self._loaded._data_list = None
         graph.role_name = "CPU_SYNTHETIC_ONLY" if type(self.permit) is IndexedInputPermit else self.permit.role
         return graph
+
+    def __getitem__(self,index):
+        chunk,offset = self._row_location(index)
+        return self._read_graph(self._load(chunk),offset,index)
+
+    def __getitems__(self,indices):
+        # Group only this request's offsets, not handles or decoded shard data.
+        # Each shard is checked once per batch; clones return in sampler order.
+        grouped = {}
+        count = 0
+        for position,index in enumerate(indices):
+            chunk,offset = self._row_location(index)
+            grouped.setdefault(chunk,[]).append((position,index,offset))
+            count += 1
+        graphs = [None] * count
+        for chunk,rows in grouped.items():
+            shard = self._load(chunk)
+            for position,index,offset in rows:
+                graphs[position] = self._read_graph(shard,offset,index)
+        return graphs
 
     def selected_targets(self):
         """Train-only statistics callers need labels, not cloned graph lists."""

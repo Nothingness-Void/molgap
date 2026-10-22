@@ -88,10 +88,17 @@ class FamilyLoaders:
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
                 **training_loader_options(tuning.development_workers))
             source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
-            self.development_cache = None if recipe.modern2d_model or data.indexed else PreparedDevelopmentCache(source, rows=data.development_rows,
-                batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
-                source_start=data.development_source_start, retain_model_inputs=True,
-                retain_random_walk_pe=recipe.family == "neural_atom_k1")
+            if data.indexed and tuning.cache_development:
+                # Keep topology roles and all admitted fields; the old trimmed
+                # GPTrans view deliberately has no Modern2D role metadata.
+                self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
+                    batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
+                    source_start=None, source_indices=data.development_source_indices)
+            elif not recipe.modern2d_model and not data.indexed:
+                self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
+                    batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
+                    source_start=data.development_source_start, retain_model_inputs=True,
+                    retain_random_walk_pe=recipe.family == "neural_atom_k1")
 
     def train(self, pass_index, start_batch):
         if self.closed:
@@ -105,6 +112,8 @@ class FamilyLoaders:
         return self.training
 
     def dev(self):
+        if not self.closed and self.data.indexed and self.development_cache is not None:
+            return self.development_cache
         if not self.closed and (self.recipe.cpu_synthetic_only or self.data.indexed or
                 self.recipe.integration_preview or self.recipe.formal_interface) and self.development is not None:
             return self.development

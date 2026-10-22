@@ -81,6 +81,51 @@ def positional_inputs(graph, steps, *, sym_norm=True, max_nodes=256, max_edges=1
     return walk, torch.cat((walk, inv_order), -1), log_order
 
 
+@torch.no_grad()
+def batched_positional_inputs(graphs, steps, *, sym_norm=True, max_nodes=256, max_edges=1024):
+    """Equal-size FP32 walks without per-molecule host reads or tiny GEMMs.
+
+    This opt-in execution candidate retains parallel-edge counts and the
+    author's per-graph asymmetric union. It is not a native parity certificate:
+    batched GEMM may round differently from the historical per-graph GEMM.
+    """
+    if (type(steps) is not int or steps < 1 or type(sym_norm) is not bool or
+            any(type(v) is not int or v < 1 for v in (max_nodes, max_edges)) or
+            max_nodes > 1024 or max_edges > 4096 or not graphs):
+        raise ValueError("Positive bounded author walk configuration required")
+    n, device = len(graphs[0].x), graphs[0].x.device
+    if not 0 < n <= max_nodes or any(len(g.x) != n or g.x.device != device or
+            g.edge_index.device != device or g.edge_attr.device != device or
+            g.edge_index.shape[1] > max_edges for g in graphs):
+        raise ValueError("Equal-size device-local bounded graphs required")
+    b = len(graphs)
+    with torch.autocast(device_type=device.type, enabled=False):
+        adjacency = torch.zeros((b, n, n), dtype=torch.float32, device=device)
+        sizes = [g.edge_index.shape[1] for g in graphs]
+        total = sum(sizes)
+        membership = torch.repeat_interleave(torch.arange(b, device=device),
+            torch.tensor(sizes, device=device), output_size=total)
+        edges = torch.cat([g.edge_index for g in graphs], 1)
+        adjacency.index_put_((membership, edges[0], edges[1]),
+            torch.ones(total, dtype=torch.float32, device=device), accumulate=True)
+        transpose = adjacency.transpose(1, 2)
+        asymmetric = (adjacency != transpose).any(dim=(1, 2), keepdim=True)
+        adjacency = torch.where(asymmetric, ((adjacency + transpose) > 0).float(), adjacency)
+        degree = adjacency.sum(-1)
+        inverse = torch.where(degree > 0, degree.clamp_min(1).reciprocal(), 0)
+        if sym_norm:
+            inverse = inverse.sqrt()
+            transition = adjacency * inverse[:, :, None] * inverse[:, None, :]
+        else:
+            transition = adjacency * inverse[:, :, None]
+        powers = [torch.eye(n, device=device).expand(b, n, n), transition]
+        for _ in range(1, steps):
+            powers.append(torch.bmm(powers[-1], transition))
+        walk = torch.stack(powers, -1)
+        pair = torch.cat((walk, walk.new_full((b, n, n, 1), 1 / n)), -1)
+        return walk, pair, walk.new_full((b, n, 1), math.log1p(n))
+
+
 def feature_cost(nodes, *, steps=24, bases=10):
     """Formula only: transient FP32 feature tensors for one bounded graph."""
     if any(type(v) is not int or v < 1 for v in (nodes, steps)) or type(bases) is not int or bases < 0:

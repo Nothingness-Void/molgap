@@ -294,6 +294,7 @@ class ModelSubstrate:
         created = not hasattr(self.model, self.namespace)
         if created:
             self.model.add_module(self.namespace, torch.nn.ModuleDict())
+            getattr(self.model, self.namespace).train(self.model.training)
         getattr(self.model, self.namespace)[name] = addon
         handle = None
         try:

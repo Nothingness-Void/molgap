@@ -85,15 +85,22 @@ def _cpu_storage_bytes(batch):
 class PreparedDevelopmentCache:
     """Publish only an exhausted, row-validated pass; overflow streams normally."""
     def __init__(self, source, *, rows, batch_size, max_bytes, source_start=100000,
-                 retain_model_inputs=False, retain_random_walk_pe=False):
+                 retain_model_inputs=False, retain_random_walk_pe=False, source_indices=None):
         if (type(rows) is not int or rows < 1 or type(max_bytes) is not int or max_bytes < 1
-                or batch_size != 128 or type(source_start) is not int or source_start < 0
+                or batch_size != 128 or (source_indices is None and
+                    (type(source_start) is not int or source_start < 0))
                 or type(retain_model_inputs) is not bool or type(retain_random_walk_pe) is not bool
                 or (retain_random_walk_pe and not retain_model_inputs)):
             raise ValueError("Invalid cache rows, budget or physical batch")
+        if source_indices is not None and (source_start is not None or
+                type(source_indices) is not tuple or len(source_indices) != rows or
+                any(type(i) is not int or i < 0 for i in source_indices) or
+                any(a >= b for a, b in zip(source_indices, source_indices[1:]))):
+            raise ValueError("Indexed cache requires its exact ordered immutable member tuple")
         self.source = source
         self.rows, self.batch_size, self.max_bytes = rows, batch_size, max_bytes
         self.source_start = source_start
+        self.source_indices = source_indices
         self.retain_model_inputs = retain_model_inputs
         self.retain_random_walk_pe = retain_random_walk_pe
         self.batches = None
@@ -118,9 +125,11 @@ class PreparedDevelopmentCache:
                     batch = development_cpu_view(batch, retain_random_walk_pe=self.retain_random_walk_pe)
                 count = min(self.batch_size, self.rows - cursor)
                 index = getattr(batch, "source_idx", getattr(batch, "row_index", None))
+                expected = (torch.tensor(self.source_indices[cursor:cursor+count], dtype=torch.int64)
+                    if self.source_indices is not None else torch.arange(
+                        self.source_start + cursor, self.source_start + cursor + count))
                 if (count <= 0 or int(batch.num_graphs) != count or index is None
-                        or not torch.equal(index.view(-1), torch.arange(
-                            self.source_start + cursor, self.source_start + cursor + count))):
+                        or not torch.equal(index.view(-1), expected)):
                     raise ValueError("Development cache row count/order changed")
                 if self.disabled_reason is None:
                     measured = _cpu_storage_bytes(batch)

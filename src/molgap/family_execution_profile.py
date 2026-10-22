@@ -176,7 +176,9 @@ class _ExecutionCapture:
             row["host_total_seconds"] += elapsed
             row["host_self_seconds"] += max(0.0, elapsed - frame[1])
 
-    def _replace(self, obj, name, replacement):
+    def _replace(self, obj, name, replacement, *, capture_only=False):
+        # Legacy adapters layer persistent callbacks over wraps; keep their
+        # original context lifetime unless the shared installer opts in.
         original = vars(obj).get(name, _MISSING)
         def restore():
             if original is _MISSING:
@@ -184,17 +186,18 @@ class _ExecutionCapture:
             else:
                 setattr(obj, name, original)
         setattr(obj, name, replacement)
-        self._cleanup.callback(restore)
+        cleanup = self._capture_cleanup if capture_only else self._cleanup
+        cleanup.callback(restore)
 
-    def _wrap(self, obj, name, label):
+    def _wrap(self, obj, name, label, *, capture_only=False):
         original = getattr(obj, name)
         @wraps(original)
         def observed(*args, **kwargs):
             with self.phase(label):
                 return original(*args, **kwargs)
-        self._replace(obj, name, observed)
+        self._replace(obj, name, observed, capture_only=capture_only)
 
-    def _observe_module(self, module, label):
+    def _observe_module(self, module, label, *, capture_only=False):
         # Keep the forward ABI intact: native cache dispatch inspects it.
         scopes = threading.local()
         def before(*args):
@@ -207,8 +210,9 @@ class _ExecutionCapture:
             stack = getattr(scopes, "stack", ())
             if stack:
                 stack.pop().__exit__(None, None, None)
-        self._cleanup.callback(module.register_forward_pre_hook(before, prepend=True).remove)
-        self._cleanup.callback(module.register_forward_hook(after, always_call=True).remove)
+        cleanup = self._capture_cleanup if capture_only else self._cleanup
+        cleanup.callback(module.register_forward_pre_hook(before, prepend=True).remove)
+        cleanup.callback(module.register_forward_hook(after, always_call=True).remove)
 
     def _install(self):
         import torch
@@ -223,27 +227,27 @@ class _ExecutionCapture:
             (session.schedule, "before_step", "schedule_before"),
             (session.schedule, "after_step", "schedule_after"),
         ):
-            self._wrap(obj, name, label)
+            self._wrap(obj, name, label, capture_only=True)
         if getattr(session, "checkpoint_builder", None) is None:
-            self._wrap(session, "state_dict", "checkpoint_state")
-            self._wrap(session, "checkpoint", "checkpoint_publish")
+            self._wrap(session, "state_dict", "checkpoint_state", capture_only=True)
+            self._wrap(session, "checkpoint", "checkpoint_publish", capture_only=True)
         else:
-            self._wrap(session, "_checkpoint_state", "checkpoint_state")
-            self._wrap(session, "checkpoint_builder", "checkpoint_publish")
+            self._wrap(session, "_checkpoint_state", "checkpoint_state", capture_only=True)
+            self._wrap(session, "checkpoint_builder", "checkpoint_publish", capture_only=True)
         from .family_training_core import UpdateObserver
         if getattr(kernel, "update_observer", None) is not None:
             raise ValueError("Profiler requires an unobserved update owner")
-        self._replace(kernel, "update_observer", UpdateObserver(scope=self.phase))
+        self._replace(kernel, "update_observer", UpdateObserver(scope=self.phase), capture_only=True)
         from .training_reproducibility import observe_finite_validation
-        self._cleanup.enter_context(observe_finite_validation(self.phase))
+        self._capture_cleanup.enter_context(observe_finite_validation(self.phase))
         if kernel.recipe.family == "gptrans_t":
-            self._wrap(kernel, "_gptrans_batch", "layout_and_transfer")
+            self._wrap(kernel, "_gptrans_batch", "layout_and_transfer", capture_only=True)
             if hasattr(kernel.model, "_shortest_path"):
-                self._wrap(kernel.model, "_shortest_path", "shortest_path")
+                self._wrap(kernel.model, "_shortest_path", "shortest_path", capture_only=True)
         if getattr(kernel.recipe, "integration_preview", False):
-            self._wrap(kernel, "_model_batch", "topology_transfer")
+            self._wrap(kernel, "_model_batch", "topology_transfer", capture_only=True)
         for path in self.config.module_paths:
-            self._observe_module(kernel.model.get_submodule(path), "module/" + path)
+            self._observe_module(kernel.model.get_submodule(path), "module/" + path, capture_only=True)
         if self.config.ppgt_phases:
             self._install_ppgt_phases(kernel.model)
         original_step, original_loader = kernel.step, session.loaders.train
@@ -264,7 +268,7 @@ class _ExecutionCapture:
     def _install_ppgt_phases(self, model):
         # Only the exclusive profiler owns these temporary module-level wraps.
         # Observe the existing implementation, never substitute a faster formula.
-        from . import ppgt_author, ppgt_author_features
+        from . import ppgt_author, ppgt_author_features, modern2d_execution
         if type(model) is not ppgt_author.PPGTAuthor:
             raise ValueError("PPGT phase capture requires the unchanged PPGTAuthor model")
         for obj, name, label in (
@@ -272,17 +276,19 @@ class _ExecutionCapture:
             (model, "graph_forward", "ppgt/graph_forward"),
             (ppgt_author, "positional_inputs", "ppgt/positional_inputs"),
             (ppgt_author_features, "rrwp", "ppgt/rrwp"),
+            (ppgt_author_features, "batched_positional_inputs", "ppgt/batched_rrwp"),
+            (modern2d_execution, "prepare_topology", "ppgt/cpu_topology_prepare"),
             (ppgt_author, "sinusoidal_pe", "ppgt/sinusoidal_pe"),
         ):
-            self._wrap(obj, name, label)
-        self._observe_module(model.pe_mlp, "ppgt/pe_mlp")
+            self._wrap(obj, name, label, capture_only=True)
+        self._observe_module(model.pe_mlp, "ppgt/pe_mlp", capture_only=True)
         for block in model.stem:
-            self._observe_module(block, "ppgt/pair_stem")
+            self._observe_module(block, "ppgt/pair_stem", capture_only=True)
         for block in model.blocks:
-            self._observe_module(block, "ppgt/backbone")
-            self._observe_module(block.attention, "ppgt/attention")
-            self._observe_module(block.FFN, "ppgt/ffn")
-        self._observe_module(model.head, "ppgt/readout")
+            self._observe_module(block, "ppgt/backbone", capture_only=True)
+            self._observe_module(block.attention, "ppgt/attention", capture_only=True)
+            self._observe_module(block.FFN, "ppgt/ffn", capture_only=True)
+        self._observe_module(model.head, "ppgt/readout", capture_only=True)
 
     def _synchronize(self):
         if self.session.kernel.device.type == "cuda":
@@ -310,10 +316,16 @@ class _ExecutionCapture:
         self._active = False
         self._finished = True
         try:
-            self._synchronize()
-            self._elapsed = time.perf_counter() - self._stamp
+            try:
+                self._synchronize()
+                self._elapsed = time.perf_counter() - self._stamp
+            finally:
+                self._prof.__exit__(None, None, None)
         finally:
-            self._prof.__exit__(None, None, None)
+            # The next batch must not pay for capture-only Python calls/hooks,
+            # even if stopping or exporting the profiler fails. Step/loader
+            # observers and the process lock live until the full context exits.
+            self._capture_cleanup.close()
         self._events = list(self._prof.events())
         destination = self.output / "trace.json"
         temporary = destination.with_suffix(".json.tmp")
@@ -336,6 +348,8 @@ class _ExecutionCapture:
             raise RuntimeError("Only one shared-session profiler per process")
         self._cleanup = ExitStack()
         self._cleanup.callback(_OWNER.release)
+        self._capture_cleanup = ExitStack()
+        self._cleanup.callback(self._capture_cleanup.close)
         self._used, self._thread = True, threading.get_ident()
         try:
             device = self.session.kernel.device
