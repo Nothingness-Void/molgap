@@ -54,3 +54,19 @@ SHA-mismatch rejection before POST. The worker was closed. These were mocked
 network checks, separate from the live11-file SHA-verified remote roundtrip.
 The same original source dataset/version and operation journal were retained;
 no replacement dataset or duplicate kernel was created by this repair.
+
+The old kernel push route also returned a received HTTP error. The controller
+retained the unknown record, confirmed exact-target and complete authenticated
+owned-listing absence, and qualified the retired route via a non-mutating404
+probe. A direct SaveKernel HTTP recovery also failed before an object existed;
+the second explicit absence reconciliation switched to the validated SDK client,
+without changing the frozen source or declaring a transport error scientific.
+Each recovery was fenced and retained in the original operation journal;
+timeouts never qualify for these explicit controller paths. The SDK submission
+then returned the actual kernel140182981/version1 and passed source/receipt
+reconciliation. See [compact launch observation](submission_v1.json).
+
+The existing B heartbeat was updated, not recreated. A real mechanical tick
+resolved that exact ID/version and returned RUNNING/SILENT with no event.
+Bounded startup-log attempts returned HTTPError/UNKNOWN; no native proof,
+epoch progress or training equivalence was inferred from those log failures.

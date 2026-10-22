@@ -1,0 +1,19 @@
+{
+  "format": "molgap-server-multi-job-monitor-v1", "owner": "server", "closed": false,
+  "credential_owner": "nvoid912",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle-nv912.json",
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "jobs": [{
+    "slot": "prepared_pair", "kernel": "nvoid912/molgap-modern2d-prepared-pair-100k-v1",
+    "kernel_id": 140182981, "version": 1, "closed": false,
+    "control_state": "E:/MolGap/artifacts/runs/modern2d-prepared-pair-100k-s42-v1/v2/monitor/control_state.json",
+    "output_directory": "E:/MolGap/artifacts/runs/modern2d-prepared-pair-100k-s42-v1/v2/inspection"
+  }],
+  "healthy_action": "SILENT", "automatic_training_retry": false,
+  "automatic_training_successor_authorized": false,
+  "terminal_action": "One durable idempotent event and handoff to existing A, no model/thinking override",
+  "wall_ceiling_seconds": 32400, "kaggle_session_quota_hours_ceiling": 9,
+  "physical_t4_hours_ceiling": 18,
+  "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor"
+}
