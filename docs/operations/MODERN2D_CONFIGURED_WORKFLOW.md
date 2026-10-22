@@ -107,3 +107,18 @@ endpoints; report timing overhead rather than treating it as native throughput.
 The [owning protocol](../../experiments/modern2d_configured_100k/ppgt_profile/protocol.md)
 defines outputs, roles, bounds and interpretation. Profiling is not a scientific
 screen,500K release or training Replay claim.
+
+## Prepared execution qualification
+
+New explicit configured recipes may select `execution_mode: prepared-v2`
+for PPGT/3 or ESA/4. Their authority must select the same mode and set
+`fresh_native_execution_gate: true`. Historical native reports cannot release
+this implementation. The ordinary all-arm preflight barrier runs repeat and
+serialized-resume scratch updates plus an accepted-backend shadow. Saved model
+and Adam updates must satisfy the existing tolerance; cursor/schedule/RNG and
+optimizer metadata must agree exactly. The training entry rereads hash-bound
+proof states before issuing an in-process, recipe-bound execution certificate.
+Plain JSON or a changed recipe/certificate cannot activate prepared training.
+The existing Session, profiler, output owners and budget guard remain intact.
+The [bounded two-family protocol](../../experiments/modern2d_configured_100k/prepared_pair/protocol.md)
+defines the authorized run, not this capability description.

@@ -1,0 +1,59 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "modern2d_configured_100k",
+  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1", "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/modern2d_configured_100k/prepared_pair/authority.json",
+  "monitor_paths": ["experiments/modern2d_configured_100k/prepared_pair/STATUS.md"],
+  "timestamp": "2026-10-22T08:14:21Z",
+  "platform_ref": "experiments/modern2d_configured_100k/prepared_pair/platform.json",
+  "role_ref": "experiments/modern2d_configured_100k/research_arms/roles.json",
+  "decision_ref": "experiments/modern2d_configured_100k/prepared_pair/protocol.md",
+  "seeds": [42],
+  "question": {
+    "policy_id": "modern2d-research-100k", "action": "RUN_SCREEN20",
+    "question": "Can prepared PPGT and ESA pass native execution equivalence and complete useful100K training within9h?",
+    "deficiency": "Prior PPGT was dominated by small operations and stopped before20 passes; prepared topology/batched RRWP/ESA token staging were only CPU-qualified.",
+    "changed_mechanism": "Execution preparation only; existing PPGT mean-readout and unmodified ESA scientific configurations, fresh native comparison before formal training.",
+    "supporting_evidence": ["modern2d-execution-repair-s42-v2-ppgt-accepted", "modern2d-execution-repair-s42-v2-esa-accepted"],
+    "alternatives": ["Native updates may differ despite CPU verification; stop without fallback.", "A completed budget endpoint does not establish a superior architecture or scale transfer."],
+    "closed_families": [],
+    "positive_decision": "Retain complete native/profile/curve/prediction/role/cost evidence and evaluate usefulness without automatic scaling.",
+    "negative_decision": "Preserve qualification failures or partial training; separate execution, cost and scientific outcomes; no successor.",
+    "reference_ids": [], "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server", "track": "C", "platform": "kaggle", "hardware": "NvidiaTeslaT4x2",
+    "cheapest_falsifier": "One isolated family per T4, fresh train-only gate then20-pass100K screen; complete CommonDev50K",
+    "estimated_device_hours": 18, "estimated_wall_hours": 9
+  },
+  "arms": [
+    {
+      "arm_id": "ppgt_mean",
+      "model": {"family": "ppgt_small", "version": "3", "addons": [
+        {"name": "ppgt_research_mean_readout", "version": "1", "config": {"variant": "mean_readout"}}
+      ]},
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/contract.json",
+      "data_ref": {"spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/experiment_spec.json", "arm_id": "ppgt_author_v2"},
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "training": {
+        "horizon_passes": 20, "learning_rate": 0.001, "weight_decay": 0.00001, "execution_mode": "prepared-v2",
+        "profiling": {"warmup_steps": 8, "active_steps": 4, "record_shapes": false, "profile_memory": false, "with_stack": false, "row_limit": 50, "module_paths": [], "ppgt_phases": true}
+      },
+      "reference_ref": {"plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/ppgt/acceptance_plan.json", "arm_id": "ppgt_author_v2"},
+      "purpose": "context_only"
+    },
+    {
+      "arm_id": "esa_native", "model": {"family": "esa_small", "version": "4", "addons": []},
+      "recipe_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/contract.json",
+      "data_ref": {"spec_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/experiment_spec.json", "arm_id": "esa_native_v3"},
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "training": {
+        "horizon_passes": 20, "learning_rate": 0.0003, "weight_decay": 0.00001, "execution_mode": "prepared-v2",
+        "profiling": {"warmup_steps": 8, "active_steps": 4, "record_shapes": false, "profile_memory": false, "with_stack": false, "row_limit": 50, "module_paths": [], "ppgt_phases": false}
+      },
+      "reference_ref": {"plan_ref": "experiments/modern2d_configured_100k/research_arms/anchors/esa/acceptance_plan.json", "arm_id": "esa_native_v3"},
+      "purpose": "context_only"
+    }
+  ]
+}

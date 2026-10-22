@@ -1,0 +1,33 @@
+{
+  "format": "molgap-modern2d-configured-authority-v1",
+  "owner": "server",
+  "purpose": "CONFIGURED_SCREEN",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "source_reissue_authorized": true,
+  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1",
+  "arms": ["ppgt_mean", "esa_native"],
+  "interfaces": [["ppgt_small", "3"], ["esa_small", "4"]],
+  "seeds": [42],
+  "physical_batch_size": 128,
+  "roles": ["train_100k", "common_dev"],
+  "scale_500k_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false,
+  "full_training_authorized": false,
+  "allocated_t4_hours_ceiling": 18,
+  "kaggle_quota_hours_ceiling": 9,
+  "recipes": {
+    "ppgt_mean": {"horizon_passes": 20, "horizon_steps": 15620},
+    "esa_native": {"horizon_passes": 20, "horizon_steps": 15620}
+  },
+  "run_reference": "nvoid912/molgap-modern2d-prepared-pair-100k-v1",
+  "gpu": {
+    "owner": "nvoid912", "accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
+    "wall_ceiling_seconds": 32400, "allocated_t4_hours_ceiling": 18
+  },
+  "execution_mode": "prepared-v2",
+  "fresh_native_execution_gate": true,
+  "authorization_basis": "Human: resubmit PPGT and ESA100K dual-arm training to Kaggle3;9h maximum. Fresh qualification before training; no successor."
+}
