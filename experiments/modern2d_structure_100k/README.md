@@ -6,7 +6,11 @@ Question: can two small, independently motivated changes address the weak
 The [frozen protocol](protocol.md) owns hypotheses, contextual references,
 selection limits and stopping conditions. [STATUS](STATUS.md) owns this job's
 execution observations; root live state only routes here. This is Track C.
-There is no completed scientific decision yet.
+The [terminal interpretation](results/decision.md) retained ESA count conditioning
+as a contextual exploratory lead and closed the PPGT conditioner. Independent
+saved-artifact/native checks passed; canonical RML closure remained blocked by
+missing observed-role audit and canonical reference binding, without Replay or
+scale release.
 
 Reuse: configured scientific input, catalog addons, existing indexed inputs,
 FamilyRecipe/Kernel/Session, prepared execution, profiler, native proofs,

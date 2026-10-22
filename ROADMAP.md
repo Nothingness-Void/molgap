@@ -11,9 +11,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
-The separately authorized [Modern2D structural falsifier](experiments/modern2d_structure_100k/protocol.md)
-tests one content-conditioning and one count-conditioning hypothesis through
-the existing configured workflow; exact execution status is in CURRENT_STATE.
+The [Modern2D structural decision](experiments/modern2d_structure_100k/results/decision.md)
+retains ESA count conditioning as an exploratory lead, not a scale release.
+Review observed-role/reference closure before a separately authorized scientific
+confirmation; do not reopen the below-gate PPGT conditioner or force Replay.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|

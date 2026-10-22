@@ -1,5 +1,17 @@
 # Modern2D structural falsifiers status
 
+2026-10-23 JST terminal: exact Kaggle2 kernel140243455/version1 is COMPLETE.
+Both20-pass endpoints passed independent saved-output/native/retention checks
+within7h. The [decision](results/decision.md) retains the ESA exploratory lead
+and closes the PPGT conditioner, without causal comparison,500K or Replay claim.
+[RML staging](results/rml_status.json) passed unchanged source/attempt binding
+but remains draft: observed-role audit and valid canonical reference binding
+are absent. Independent draft-schema checks rejected empty reference IDs and
+unknown protected-role truth. No successor was
+submitted. The existing Luna heartbeat is PAUSED after one terminal handoff.
+
+## Submission observation
+
 2026-10-23 JST: new addons passed generated-CPU Session/prepared-v2 checks;
 the original Kaggle3 package passed local release checks but actual quota
 refused publication before any GPU task. Original frozen records are retained.

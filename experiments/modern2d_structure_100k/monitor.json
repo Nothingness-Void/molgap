@@ -1,12 +1,12 @@
 {
-  "format": "molgap-server-multi-job-monitor-v1", "owner": "server", "closed": false,
+  "format": "molgap-server-multi-job-monitor-v1", "owner": "server", "closed": true,
   "credential_owner": "kaseichou",
   "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "jobs": [{
     "slot": "structure_pair", "kernel": "kaseichou/molgap-modern2d-structure-100k-v1",
-    "kernel_id": 140243455, "version": 1, "closed": false,
+    "kernel_id": 140243455, "version": 1, "closed": true,
     "control_state": "E:/MolGap/artifacts/runs/modern2d-structure-k2-100k-s42-v1/v1/monitor/control_state.json",
     "output_directory": "E:/MolGap/artifacts/retained/modern2d-structure-k2-100k-s42-v1-v1"
   }],
