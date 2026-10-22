@@ -1,7 +1,7 @@
 {
   "format": "molgap-scientific-experiment-v1",
   "experiment_id": "modern2d_configured_100k",
-  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1", "attempt_id": "v1",
+  "logical_run_id": "modern2d-prepared-pair-100k-s42-v1", "attempt_id": "v2",
   "machine_profile": "E:/MolGap/machine-profile.json",
   "authority_ref": "experiments/modern2d_configured_100k/prepared_pair/authority.json",
   "monitor_paths": ["experiments/modern2d_configured_100k/prepared_pair/STATUS.md"],
@@ -11,13 +11,13 @@
   "decision_ref": "experiments/modern2d_configured_100k/prepared_pair/protocol.md",
   "seeds": [42],
   "question": {
-    "policy_id": "modern2d-research-100k", "action": "RUN_SCREEN20",
+    "policy_id": "modern2d-prepared-execution-100k", "action": "RUN_SCREEN20",
     "question": "Can prepared PPGT and ESA pass native execution equivalence and complete useful100K training within9h?",
     "deficiency": "Prior PPGT was dominated by small operations and stopped before20 passes; prepared topology/batched RRWP/ESA token staging were only CPU-qualified.",
     "changed_mechanism": "Execution preparation only; existing PPGT mean-readout and unmodified ESA scientific configurations, fresh native comparison before formal training.",
     "supporting_evidence": ["modern2d-execution-repair-s42-v2-ppgt-accepted", "modern2d-execution-repair-s42-v2-esa-accepted"],
     "alternatives": ["Native updates may differ despite CPU verification; stop without fallback.", "A completed budget endpoint does not establish a superior architecture or scale transfer."],
-    "closed_families": [],
+    "closed_families": ["modern2d-configured-100k-s42-v2-budget-stop"],
     "positive_decision": "Retain complete native/profile/curve/prediction/role/cost evidence and evaluate usefulness without automatic scaling.",
     "negative_decision": "Preserve qualification failures or partial training; separate execution, cost and scientific outcomes; no successor.",
     "reference_ids": [], "prior_trajectories": []

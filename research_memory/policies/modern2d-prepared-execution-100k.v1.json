@@ -1,0 +1,11 @@
+{
+  "schema": "molgap-policy-v1", "policy_id": "modern2d-prepared-execution-100k", "version": "v1",
+  "policy_type": "research_action", "status": "candidate",
+  "created_from_source_digest": "7d784c7a9e65ef19ce9fc6ccd21ec8a0d7482293db3fe06b6865f36ba70cd381",
+  "approval": {"activation": "Human2026-10-22 resubmit both families to Kaggle3 within9h", "authority_ref": "experiments/modern2d_configured_100k/prepared_pair/authority.json"},
+  "comparability_selector": {"scientific_contract": "modern2d-train100k-commondev50k-20pass-fp32-bs128-v1"},
+  "required_observable_fields": ["user_authorized_research_campaign"],
+  "action_rule": {"field": "user_authorized_research_campaign", "operator": "eq", "threshold": true, "action": "RUN_SCREEN20"},
+  "borderline_action": "DEFER", "promotion_rule": null, "early_stop_rule": null, "observation_point": null,
+  "cost_model": {"kind": "measured_only", "assumptions": ["One T4x2 notebook at most9 wall/session quota hours;18 physical T4-hours.", "Fresh repeat/resume and accepted-native shadow gate before training.", "No full-scale, protected roles, extra seed or automatic successor."]}
+}
