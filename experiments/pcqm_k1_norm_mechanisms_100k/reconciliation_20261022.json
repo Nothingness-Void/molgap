@@ -1,0 +1,422 @@
+{
+  "checked_at": "2026-10-22T04:00:30.498487+00:00",
+  "scope": "Read-only remote reconciliation and retained-artifact mechanical inspection; no new inference, training or submission",
+  "owner_branch": "codex/exp/k1-norm-mechanisms-100k",
+  "frozen_source_commit": "040f7192ad6ef01fedccbdf17752cca8f7658ddb",
+  "jobs": {
+    "position": {
+      "scheduler": {
+        "kernel": "nothingnessvoid/molgap-k1-rms-position-160ep-100k-s42",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "observed_at": "2026-10-22T03:54:40.355012+00:00",
+        "failure_message": ""
+      },
+      "source_verification": {
+        "kernel": "nothingnessvoid/molgap-k1-rms-position-160ep-100k-s42",
+        "kernel_id": 140062850,
+        "version": 1,
+        "entry_sha256": "e694a97fe07bd2a8c81b78508e1777415bf377a14915ea0bcdadeb9642cf5627",
+        "entry_bytes_equal": true,
+        "private": true,
+        "machine_shape": "NvidiaTeslaT4",
+        "dataset_sources": [
+          "nothingnessvoid/k1-rms-position-src-20261022",
+          "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+        ],
+        "observed_at": "2026-10-22T03:55:31.412399+00:00"
+      },
+      "arms": {
+        "post_node_rms": {
+          "execution": {
+            "device": 0,
+            "training_started": true,
+            "resumed_from_checkpoint": false,
+            "started": true,
+            "terminal_status": "complete",
+            "exit_reason": "train_worker_exit_0",
+            "worker_wall_seconds": 21350.348722995
+          },
+          "retained_pass_observations": 160,
+          "last_optimizer_steps": 124960,
+          "last_sample_presentations": 15994880,
+          "trace_best_mae_eV": 0.14015348255634308,
+          "trace_best_pass": 147,
+          "mechanical_status": "MECHANICALLY_VERIFIED"
+        },
+        "pre_node_rms": {
+          "execution": {
+            "device": 1,
+            "training_started": true,
+            "resumed_from_checkpoint": false,
+            "started": true,
+            "terminal_status": "complete",
+            "exit_reason": "train_worker_exit_0",
+            "worker_wall_seconds": 21520.454980928
+          },
+          "retained_pass_observations": 160,
+          "last_optimizer_steps": 124960,
+          "last_sample_presentations": 15994880,
+          "trace_best_mae_eV": 0.14569123089313507,
+          "trace_best_pass": 135,
+          "mechanical_status": "MECHANICALLY_VERIFIED"
+        }
+      }
+    },
+    "scope_gain": {
+      "scheduler": {
+        "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+        "version": 1,
+        "status": "KernelWorkerStatus.ERROR",
+        "observed_at": "2026-10-22T03:54:45.287784+00:00",
+        "failure_message": ""
+      },
+      "source_verification": {
+        "kernel": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+        "kernel_id": 140063114,
+        "version": 1,
+        "entry_sha256": "53f89db719341743e1b9d3710c61d4d3eb9d5a86424d6e58463bd8a9aee6760d",
+        "entry_bytes_equal": true,
+        "private": true,
+        "machine_shape": "NvidiaTeslaT4",
+        "dataset_sources": [
+          "nothingnessvoid/k1-rms-scope-gain-src-20261022",
+          "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+        ],
+        "observed_at": "2026-10-22T03:55:44.440935+00:00"
+      },
+      "arms": {
+        "post_graph_rms": {
+          "execution": {
+            "device": 0,
+            "training_started": true,
+            "resumed_from_checkpoint": false,
+            "started": true,
+            "terminal_status": "failed",
+            "exit_reason": "train_worker_exit_1",
+            "worker_wall_seconds": 4970.591299255
+          },
+          "retained_pass_observations": 30,
+          "last_optimizer_steps": 23430,
+          "last_sample_presentations": 2999040,
+          "trace_best_mae_eV": 0.1539975255727768,
+          "trace_best_pass": 30
+        },
+        "post_node_ada": {
+          "execution": {
+            "device": 1,
+            "training_started": true,
+            "resumed_from_checkpoint": false,
+            "started": true,
+            "terminal_status": "failed",
+            "exit_reason": "train_worker_exit_1",
+            "worker_wall_seconds": 3349.384083339
+          },
+          "retained_pass_observations": 20,
+          "last_optimizer_steps": 15620,
+          "last_sample_presentations": 1999360,
+          "trace_best_mae_eV": 0.1662428379058838,
+          "trace_best_pass": 20
+        }
+      }
+    }
+  },
+  "terminal_rml_closed": false,
+  "replay_readiness": "NOT_ESTABLISHED",
+  "artifacts": [
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\acceptance_check.json",
+      "bytes": 79040,
+      "sha256": "95e11037249192798a2d1ba723c6224bf9f99ac58f06d932fd009f0176e3f348"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\diagnosis.json",
+      "bytes": 66456,
+      "sha256": "6b439d8bf812abd16d8d97fcbf28d0b502cb07647c881a321982bc4f82ac9951"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\allocation_entry_observation.json",
+      "bytes": 693,
+      "sha256": "9e7bf7a8f54de5524eca84b6f04bf3095edac86428adc57ab89d6da237773c0c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\allocation_ledger.json",
+      "bytes": 1055,
+      "sha256": "6610f311d25d85d4ed4e341fa1ff844849dfc91e850e7cfbfb8d6c09694c734a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\execution_report.json",
+      "bytes": 2284,
+      "sha256": "3f170c0148b2b271a38a1d80d25580d4a1fd486dfb249a13072f6fb3ec833fe1"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\execution_retention.json",
+      "bytes": 933,
+      "sha256": "659663c46b208d0cbaa1c3667b5b19abb624435f7500017849b7e24131cbc236"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\input_resolution.json",
+      "bytes": 716,
+      "sha256": "ea20fa9da78ee6f19fb35d55accb17d0ae6d3437d08eb375aaba2ee900b8f487"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pair_state.json",
+      "bytes": 2284,
+      "sha256": "3f170c0148b2b271a38a1d80d25580d4a1fd486dfb249a13072f6fb3ec833fe1"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\allocation_ledger.json",
+      "bytes": 1055,
+      "sha256": "6610f311d25d85d4ed4e341fa1ff844849dfc91e850e7cfbfb8d6c09694c734a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\canonical_trace.json",
+      "bytes": 94667,
+      "sha256": "e5e9d6dfb86cb6ff805a9843e8fd19a6164291afa937f60eb01ad7c329f4ffa8"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\canonical_trace.json.context.json",
+      "bytes": 965,
+      "sha256": "06565ecb5ea0232c7eeb029fe899fa02fcdbec601711d9a33f8e1bf17c3040b2"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\development_predictions.pt",
+      "bytes": 803349,
+      "sha256": "25ed71c8da719c44ca71835ba387ef5b6152dba9a76e00f705396812e70e7a28"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\last_checkpoint.pt",
+      "bytes": 59062004,
+      "sha256": "80730b8bca2b74621141e84242d1c2eff580207d76c6d5c1964c13122aa3b3c8"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\norm_diagnostics.json",
+      "bytes": 11829,
+      "sha256": "3bc945fa6a3053b0cc09f4d5454e127e1cc06b604a855cf9324e541415b28f8c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\output_manifest.json",
+      "bytes": 2856,
+      "sha256": "f0d3d03981e1a4e08e0ddd8f66a9ab4c674c9b90b64f436c0cde2bc6b553b860"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\runtime_certificate.json",
+      "bytes": 1151,
+      "sha256": "c2a99062503431d2433b70764ae6ac1f11efa48b02e344b9ba1d99359fc30ed6"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\runtime_provenance.json",
+      "bytes": 1581,
+      "sha256": "2f6e83586da7efaa95a2e6646dcf54b7299c1a7b4372886c6a6126bd6663c94d"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\selected_model.pt",
+      "bytes": 14755266,
+      "sha256": "c8e3b37207b5a8d2a8e7b416c48e8131d09f502193afce343f3004e11f15fb86"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\post_node_rms\\training_contract.json",
+      "bytes": 3563,
+      "sha256": "4caab69df2266f63ec59a85f4b2e5eb2139c82d81d6ee71e25fb6934e5e7268f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\allocation_ledger.json",
+      "bytes": 1055,
+      "sha256": "6610f311d25d85d4ed4e341fa1ff844849dfc91e850e7cfbfb8d6c09694c734a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\canonical_trace.json",
+      "bytes": 94646,
+      "sha256": "72d621c2fd7bed3d1bb9215d3ba3fd116834dc0273afc03e45819af1d81496fb"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\canonical_trace.json.context.json",
+      "bytes": 964,
+      "sha256": "6a936401e7ec08fbe9415ffce501e522483347413476c49c769d3ade66c0ac0c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\development_predictions.pt",
+      "bytes": 803349,
+      "sha256": "6efdabc0e7f625cdf2bf0af2389ab61c832adbeab05062639953b71631e04480"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\last_checkpoint.pt",
+      "bytes": 59062004,
+      "sha256": "00168f2e207d9f85117c73cff66f9f40886b459a695735057ca8f1a2813b6ac2"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\norm_diagnostics.json",
+      "bytes": 11822,
+      "sha256": "9a15bf1d1f3442ed443b55647f505a6992b27d3ff9348a9af837cdfa0c4b290e"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\output_manifest.json",
+      "bytes": 2858,
+      "sha256": "800b17656f5bae17cb0191a926a19e3b6f9d767b6e2a08f46308768242dcb8ce"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\runtime_certificate.json",
+      "bytes": 1151,
+      "sha256": "a942304115e24ddbd4017c8fbde1ed7928bd1259afadf1bc12b1cb5ed4e3e0e8"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\runtime_provenance.json",
+      "bytes": 1580,
+      "sha256": "dd5b652431597ee064a6433d721c058a18d4acbb4c96d14a215e6b329a329b21"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\selected_model.pt",
+      "bytes": 14755266,
+      "sha256": "e78131f22be2214fe6448c5b9cdf7d73d47c77f2bb4e6867815e86ca5472d48c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\pre_node_rms\\training_contract.json",
+      "bytes": 3561,
+      "sha256": "fa0ea3fee43664539d1db5a3a57cb98809e2d51dfe8ac7dbf7e7e778e8d387d7"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\scheduler.json",
+      "bytes": 214,
+      "sha256": "2900fef6dad679f4dd8ec6ae7ccc2bcc8956008fa4a125aabd25d58e699fc1f6"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\source_verification.json",
+      "bytes": 478,
+      "sha256": "b720bce24268a6b1cba0ad7a4ced129cf8d15d0114cb06b08993a7699714082b"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\allocation_entry_observation.json",
+      "bytes": 796,
+      "sha256": "73d462e14f892552e5a9d5d8baa309fd2a4d8adb88272579f6a1bb9d680033c8"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\allocation_ledger.json",
+      "bytes": 1039,
+      "sha256": "5b1552264de3c70b6d4f8e865e4c0630835c4e636318bf7aa3108e31baf6753c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\execution_report.json",
+      "bytes": 2269,
+      "sha256": "9bdc36201db6e9f7b1d55f7d595f230928f75edde73f8a20ac09208719ad2057"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\execution_retention.json",
+      "bytes": 937,
+      "sha256": "96fcbad90fd26b5deb5d07609cdb7fdadad0d46d11c2e29eded77e18110019c4"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\input_resolution.json",
+      "bytes": 718,
+      "sha256": "f5a16017fd354b4e125a5cf96a462ff012639c3a5edfaa09ee9ba4aaaa955871"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\pair_state.json",
+      "bytes": 2269,
+      "sha256": "9bdc36201db6e9f7b1d55f7d595f230928f75edde73f8a20ac09208719ad2057"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\allocation_ledger.json",
+      "bytes": 1039,
+      "sha256": "5b1552264de3c70b6d4f8e865e4c0630835c4e636318bf7aa3108e31baf6753c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\canonical_trace.json",
+      "bytes": 18255,
+      "sha256": "3cac1e8d831886d41f4bdf3db74ea4a5af27a26348375ad193409053eaa71aeb"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\canonical_trace.json.context.json",
+      "bytes": 970,
+      "sha256": "54ac75c20a1940454b04cf6c493662dde3d9c7b66010391cb1181111844666b9"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\norm_diagnostics.json",
+      "bytes": 2588,
+      "sha256": "cb9b719a03325fb512349da376fdbd6963083c5ecec22868a7820e24bfc29bb6"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\runtime_certificate.json",
+      "bytes": 1151,
+      "sha256": "1bc24b0ab50e038a121f1fe4db5fc1be3c1fd3add17659bafe04619a2c7ef947"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\runtime_provenance.json",
+      "bytes": 1586,
+      "sha256": "b860db33a5d64c6dccc2558dd0d1e35b0bf4a23f10a5805ec1708d1e6b0361e5"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_graph_rms\\train.log",
+      "bytes": 24331,
+      "sha256": "f7707b3d22a7d43fd2efc9208b5f268b68b85f90bf6f94f299fc356dc2e69a1e"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\allocation_ledger.json",
+      "bytes": 1039,
+      "sha256": "5b1552264de3c70b6d4f8e865e4c0630835c4e636318bf7aa3108e31baf6753c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\canonical_trace.json",
+      "bytes": 12394,
+      "sha256": "655ca11b4c0736abb58f6ea4f5c4bfa2e95555a923916331694121203d5e4395"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\canonical_trace.json.context.json",
+      "bytes": 969,
+      "sha256": "6f0ac35b5bdb89b1003e32343cdb4ae5c10bb50110ce0c707628e50715917f52"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\norm_diagnostics.json",
+      "bytes": 2592,
+      "sha256": "ac54af03828e2e0e3eb693993da4f8ada7ba5c2ba06e425276e1e5470c8de287"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\runtime_certificate.json",
+      "bytes": 1151,
+      "sha256": "2676bc0135235fcaa0eabcf906d1618d1e71d1516e7d61d96959d874abc613c5"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\runtime_provenance.json",
+      "bytes": 1585,
+      "sha256": "dd791bc9f31739b160fbdb106ed0a7e47889917f3d2f9d46c88faa4a6749e7a9"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\post_node_ada\\train.log",
+      "bytes": 17096,
+      "sha256": "6e7b71c65a00811201b710bd960aff67ccc6fb7706f1ef839af440fb5694772f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\scheduler.json",
+      "bytes": 213,
+      "sha256": "3b3e8d1a9213989f1d43989ff58e976e3f0fbe5b8e328aed62b47c0835c0bc5f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\source_verification.json",
+      "bytes": 482,
+      "sha256": "0324963f51a4ae60eb51f5e6b4575d8f56457ee62f69191b25be162d90167993"
+    }
+  ],
+  "position_comparison": {
+    "n_molecules": 50000,
+    "baseline_mae_eV": 0.1401534744399786,
+    "candidate_mae_eV": 0.1456912256425619,
+    "mean_delta_eV": 0.005537751202583313,
+    "lower_95_eV": 0.004534686738610268,
+    "upper_95_eV": 0.006516362264871597,
+    "probability_candidate_better": 0.0,
+    "threshold_eV": null,
+    "noninferiority_margin_eV": null,
+    "passes_material_gate": null,
+    "passes_noninferiority_gate": null,
+    "n_bootstrap": 2000,
+    "seed": 42,
+    "gate_status": "NOT_EVALUATED"
+  },
+  "retained_total_bytes": 149726164,
+  "failure": {
+    "confirmed": "Both scope/gain workers failed in create_resume_bundle -> copy_immutable_file with Copied artifact checksum mismatch; original retained",
+    "suspected": "Mutable allocation_ledger.json is hashed then copied while parent atomically refreshes it every 30 seconds",
+    "limitation": "Exception does not name the failing file or hashes; exact sidecar remains unconfirmed",
+    "scientific_outcome": "INCOMPLETE; no 160-pass comparison for graph scope or adaptive gain",
+    "next_required_work": "Repair immutable snapshot handling for mutable JSON sidecars; verify retained resume state before any separately authorized continuation"
+  }
+}
