@@ -65,6 +65,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+User-authorized BondLocal/pair-update-normalization100K belongs to
+`codex/exp/gptrans-bondlocal-pairnorm-100k`; BRANCHES owns checkout routing.
+Its [status and submission bindings](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-bondlocal-pairnorm-100k/experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md)
+own the same-job Kaggle3 comparison. No K1 duplication, monitor,500K/full
+release or model adoption follows from this submission.
+
 New user-authorized K1 normalization-mechanism work belongs to
 `codex/exp/k1-norm-mechanisms-100k`; resolve its checkout through BRANCHES.
 The [owning status and submission bindings](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-mechanisms-100k/experiments/pcqm_k1_norm_mechanisms_100k/STATUS.md)

@@ -12,6 +12,13 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+BondLocal plus pair-update-normalization100K is owned by
+`codex/exp/gptrans-bondlocal-pairnorm-100k`, checkout
+`D:/molgap-worktrees/gptrans-bondlocal-pairnorm-100k`. Its
+[status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-bondlocal-pairnorm-100k/experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md)
+owns Kaggle3 identity, receipts and reconciliation. Keep the unresolved question
+on its owner; no active model or implementation adoption is implied.
+
 The active K1 normalization-mechanism question is owned by
 `codex/exp/k1-norm-mechanisms-100k`, checkout
 `D:/molgap-worktrees/k1-norm-mechanisms-100k`. Its
