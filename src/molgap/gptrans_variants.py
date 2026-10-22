@@ -79,6 +79,23 @@ class PairStateNormalizationBlock(GPTransBlock):
         return node, pair
 
 
+def normalized_pair_block(block, variant: str):
+    """Reuse the existing normalization at either a bare or wrapped core seam."""
+    with torch.random.fork_rng(devices=[]):
+        replacement = PairStateNormalizationBlock(
+            block.attention.qkv.in_features,
+            block.attention.pair_to_attention.in_channels,
+            block.attention.num_heads,
+            block.attention.attention_dropout.p,
+            block.drop_path.probability,
+            float(block.attention_scale.detach()[0]),
+            variant=variant,
+        )
+        replacement.load_state_dict(block.state_dict(), strict=True)
+    replacement.train(block.training)
+    return replacement
+
+
 def apply_variant(model, variant: str):
     if variant == "reference":
         return model
@@ -88,17 +105,7 @@ def apply_variant(model, variant: str):
     with torch.random.fork_rng(devices=[]):
         for index, block in enumerate(model.blocks):
             if variant in {"pair_update_norm", "pair_post_norm"}:
-                replacement = PairStateNormalizationBlock(
-                    256,
-                    32,
-                    8,
-                    block.attention.attention_dropout.p,
-                    block.drop_path.probability,
-                    float(block.attention_scale.detach()[0]),
-                    variant=variant,
-                )
-                replacement.load_state_dict(block.state_dict(), strict=True)
-                model.blocks[index] = replacement
+                model.blocks[index] = normalized_pair_block(block, variant)
                 continue
             original = block.attention
             replacement = RelationFlowAttention(256, 32, 8, 0.1, variant=variant)

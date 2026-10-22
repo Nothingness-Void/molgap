@@ -64,6 +64,12 @@ Retrieved outputs and acceptance evidence belong in
 
 ## Runtime Budget Configuration
 
+Scientific inputs may declare these optional fields in `platform.kaggle` (or
+the referenced platform record's `kaggle` object). Preparation validates and
+copies only explicitly supplied fields into the frozen launch; omitted fields
+do not change legacy launch bytes. Booleans and fractional seconds are rejected;
+an explicit non-null ceiling must exceed the cleanup reserve.
+
 The frozen `experiment_launch.json` may set `allocation_wall_limit_seconds`
 (positive integer seconds, or null for no local watchdog) and
 `cleanup_reserve_seconds` (nonnegative integer seconds, default60 for legacy

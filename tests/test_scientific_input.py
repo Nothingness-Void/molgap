@@ -192,6 +192,8 @@ out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
 result=json.loads(out.getvalue());assert code==0,result
 assert result["status"]=="PREPARED_FOR_PLATFORM" and result["submitted"] is False
+launch=json.loads((pathlib.Path(result["prepared"])/"source_dataset/experiment_launch.json").read_bytes())
+assert "allocation_wall_limit_seconds" not in launch and "cleanup_reserve_seconds" not in launch
 assert binding==(run/"inputs/input_binding.json").read_bytes()
 retained=list((run/"local_preparation_failures").glob("prepared-*.json"))
 assert len(retained)==1
@@ -311,6 +313,10 @@ def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_proper
     case = scientific
     value = deepcopy(case.value)
     value.update(experiment_id="addon-fixture", logical_run_id="addon-fixture-run")
+    platform = json.loads((case.repo / value["platform_ref"]).read_bytes())
+    platform["kaggle"].update(allocation_wall_limit_seconds=3600, cleanup_reserve_seconds=120)
+    value.pop("platform_ref")
+    value["platform"] = platform
     arm = value["arms"][0]
     name = "k1_readout_scale" if arm["model"]["family"] == "neural_atom_k1" else "gptrans_readout_scale"
     arm.update(training={}, purpose="architecture_comparison")
@@ -347,6 +353,8 @@ assert comparison["prelaunch_ready"] and comparison["experiment_purpose"]=="arch
 assert comparison["declared_intervention_fields"]==["architecture_config_identity"]
 release=json.loads((pathlib.Path(result["prepared"])/"release_report.json").read_bytes())
 assert release["errors"]==[],release
+launch=json.loads((pathlib.Path(result["prepared"])/"source_dataset/experiment_launch.json").read_bytes())
+assert launch["allocation_wall_limit_seconds"]==3600 and launch["cleanup_reserve_seconds"]==120
 assert not (paths.run_directory(value["logical_run_id"],value["attempt_id"])/"operations").exists()
 print(json.dumps({"status":"CPU_ADDON_ENTRY_ACCEPTED","family":arm["family"],"addon":expected,
  "package_identity":manifest["package_identity"],"spec_identity":spec.identity,

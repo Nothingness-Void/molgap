@@ -1,0 +1,132 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_bondlocal_pairnorm_100k",
+  "logical_run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md"
+  ],
+  "timestamp": "2026-10-22T15:00:06Z",
+  "question": {
+    "policy_id": "pcqm-gptrans-bondlocal-pairnorm-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does parameter-free pair-update normalization improve the retained degree-scaled BondLocal GPTrans at fixed100K?",
+    "deficiency": "Standalone pair-update norm has a weak500K benefit; no matched BondLocal plus update-norm endpoint is retained.",
+    "changed_mechanism": "pair-update-channel-normalization",
+    "supporting_evidence": [
+      "pcqm-gptrans-pair-norm-500k-s42",
+      "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal"
+    ],
+    "alternatives": [
+      "BondLocal already regulates the useful relation scale",
+      "Update normalization removes informative magnitudes",
+      "Small single-seed numerical variation rather than transferable gain"
+    ],
+    "closed_families": [
+      "pair_post_norm100K",
+      "gptrans-resistance100K",
+      "noisy-pair-norm500K"
+    ],
+    "positive_decision": "Nominate for independently authorized scale validation only after complete paired acceptance",
+    "negative_decision": "Close without adoption, retry or scale-up",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "TB-gptrans-pair-norm-500k-s42",
+      "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "One same-job60pass100K pair; matched tensors, data, schedule and EMA; parameter-free update-norm only",
+    "estimated_device_hours": 3.1,
+    "estimated_wall_hours": 3.1
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "bond_local",
+      "pair_update_norm"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "bond_local",
+    "allocated_t4_hours_ceiling": 7.5,
+    "user_notebook_wall_ceiling_seconds": 14400,
+    "allocation_wall_limit_seconds": 13500,
+    "cleanup_reserve_seconds": 180,
+    "authority": "Explicit user reply: Kaggle3,T4x2 same-job two arms,60epochs,max4hours; internal cap tightened to3.75hours for availablequota.",
+    "scope": "This pair only, train/development, no retry/monitor/automatic continuation/protected roles/500K/full/adoption"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nvoid912",
+      "kernel": "nvoid912/molgap-gptrans-bondlocal-pairnorm-100k-s42",
+      "title": "MolGap GPTrans BondLocal PairNorm 100K S42",
+      "datasets": [
+        "nvoid912/gptrans-bondlocal-pairnorm-100k-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "nvoid912/gptrans-bondlocal-pairnorm-100k-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 13500,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "role_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/decision.md",
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_structural_bias_norm_100k/gptrans/training_recipe_bond_local.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/baseline_data_declaration.json",
+      "arm_id": "bond_local"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "single_module_ablation"
+  },
+  "arms": [
+    {
+      "arm_id": "bond_local"
+    },
+    {
+      "arm_id": "pair_update_norm",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_degree_bond_local_pair_update_norm"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "bond_local",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

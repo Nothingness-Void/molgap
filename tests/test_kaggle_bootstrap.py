@@ -191,22 +191,47 @@ def test_bootstrap_rejects_invalid_ceiling_without_pip(entry, monkeypatch, limit
 
 
 @pytest.mark.parametrize("changes", [
-    {"allocation_wall_limit_seconds": 0}, {"allocation_wall_limit_seconds": True},
+    {"allocation_wall_limit_seconds": 0}, {"allocation_wall_limit_seconds": -1},
+    {"allocation_wall_limit_seconds": True},
     {"allocation_wall_limit_seconds": 32400.0}, {"allocation_wall_limit_seconds": None},
+    {"allocation_wall_limit_seconds": "32400"},
     {"allocation_wall_limit_seconds": 32400}, {"cleanup_reserve_seconds": -1},
     {"cleanup_reserve_seconds": True}, {"cleanup_reserve_seconds": 14400},
+    {"cleanup_reserve_seconds": None}, {"cleanup_reserve_seconds": 1.5},
+    {"cleanup_reserve_seconds": "60"},
 ])
 def test_launch_rejects_invalid_or_conflicting_budget_before_pip(entry, monkeypatch, changes):
+    from molgap.experiment_launch_config import validate_allocation_budget
+    from molgap.kaggle_workflow import _metadata
+    # Null/different valid ceilings fail only against the frozen recipe below.
+    limit = changes.get("allocation_wall_limit_seconds")
+    recipe_conflict_only = "allocation_wall_limit_seconds" in changes and (
+        limit is None or (type(limit) is int and limit == 32400))
+    if not recipe_conflict_only:
+        with pytest.raises(ValueError):
+            validate_allocation_budget({"allocation_wall_limit_seconds": 14400, **changes})
+        with pytest.raises(ValueError):
+            _metadata({"account": "fixture", "kernel": "fixture/budget-fixture", "title": "Budget Fixture",
+                "datasets": ["fixture/source"], "source_dataset": "fixture/source",
+                "accelerator": "NvidiaTeslaT4", "allocation_wall_limit_seconds": 14400, **changes})
     frozen_launch(entry, 14400, launch_overrides=changes)
     monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: pytest.fail("pip must not execute"))
     with pytest.raises(ValueError):
         entry.main()
 
 
-def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch):
-    frozen_launch(entry, None, launch_overrides={
-        "allocation_wall_limit_seconds": 32400, "cleanup_reserve_seconds": 180,
-    })
+@pytest.mark.parametrize("limit,reserve", [(32400, 180), (None, 0), (90, 0)])
+def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch, limit, reserve):
+    from molgap.experiment_launch_config import validate_allocation_budget
+    from molgap.kaggle_workflow import _metadata
+    budget = {"allocation_wall_limit_seconds": limit, "cleanup_reserve_seconds": reserve}
+    plan = {"account": "fixture", "kernel": "fixture/budget-fixture", "title": "Budget Fixture",
+        "datasets": ["fixture/source"], "source_dataset": "fixture/source", "accelerator": "NvidiaTeslaT4"}
+    legacy = _metadata(plan)
+    validate_allocation_budget(budget)
+    assert _metadata({**plan, **budget}) == legacy
+    assert "allocation_wall_limit_seconds" not in plan and "cleanup_reserve_seconds" not in plan
+    frozen_launch(entry, None, launch_overrides=budget)
     calls = []
     monkeypatch.setattr(entry.time, "perf_counter", lambda: 100.0)
     def stop_after_observing_budget(command, **kwargs):
@@ -215,7 +240,7 @@ def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch
     monkeypatch.setattr(entry.subprocess, "run", stop_after_observing_budget)
     with pytest.raises(RuntimeError, match="synthetic stop"):
         entry.main()
-    assert calls == [32220]
+    assert calls == [None if limit is None else limit - reserve]
 
 
 @pytest.mark.parametrize("runtime_failure", [False, True])

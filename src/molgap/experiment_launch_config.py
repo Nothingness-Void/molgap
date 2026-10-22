@@ -30,10 +30,22 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "target_identity"}
+_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
+
+
+def validate_allocation_budget(config: dict) -> None:
+    """Check explicit launch fields without materializing legacy defaults."""
+    limit = config.get("allocation_wall_limit_seconds")
+    reserve = config.get("cleanup_reserve_seconds", 60)
+    if limit is not None and (type(limit) is not int or limit <= 0):
+        raise ValueError("Allocation ceiling must be positive integer seconds or null")
+    if type(reserve) is not int or reserve < 0:
+        raise ValueError("Cleanup reserve must be nonnegative integer seconds")
+    if limit is not None and limit <= reserve:
+        raise ValueError("Allocation ceiling must exceed cleanup reserve")
 
 
 def _sha(payload: bytes) -> str:
@@ -190,6 +202,7 @@ def validate_launch_config(
     missing = _LAUNCH_FIELDS - set(config)
     if unknown or missing:
         raise ValueError("Launch v1 has missing or unknown fields")
+    validate_allocation_budget(config)
     if any(type(config[field]) is not str for field in ("spec_identity", "expected_package_identity",
                                                         "expected_source_archive_sha256", "account",
                                                         "run_reference", "accelerator")):
