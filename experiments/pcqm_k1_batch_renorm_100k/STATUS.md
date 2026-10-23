@@ -22,3 +22,9 @@ Local preparation took88.117s; stage times are in the submission record.
 User-directed Luna max monitor uses the existing local conversation, every30min
 while desktop is online, silent while healthy; terminal wakes the parent.
 No server takeover, automatic retry/continuation or model adoption.
+
+Monitor confirmed: `k1-batch-renorm-100k-desktop-monitor`, same existing Luna6
+max conversation,30minute heartbeat. Exact-version scheduler observation at
+2026-10-24 02:53:25JST was RUNNING with no failure message. No output download.
+Global RML frozen check has an inherited historical-artifact custody blocker;
+[verification](verification.md) records it without claiming a pass.
