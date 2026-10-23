@@ -62,6 +62,39 @@ again; unknown CPU, queue and per-arm wall cost remain unknown. The exact
 remain the cost source. This qualification does not change the original
 scientific cost/benefit decision.
 
+## Automatic-entry repetition on retained real artifacts
+
+Desktop `4e69ab25`, integrated with this owner's catalog and repair support at
+`2dbe6084`, was exercised against the four real retained arms. No mock, new
+training, inference or scientific decision was used. The first ordinary call
+exposed unwanted draft generation despite existing canonical closure; the
+shared entry now discovers and verifies the accepted tips automatically.
+Native metadata retrieval also reuses manifest-bound retained bytes.
+
+Both pairs were then checked twice through `platforms/local/accept_run.py
+--strict --execute --verbose --profile D:/molgap-machine-profile.json --run-id
+<original-run-id> --attempt-id v1`, with only the exact continued receipt added
+for scope/gain. Verified retrieval maps supplied the output paths. No outputs,
+locations, terminal, outcome or role-audit file was manually assembled. This is
+revalidation of accepted history, not fabrication of missing historical facts.
+
+Every call returned `CANONICAL_READ_ONLY`, `executed=false`, native qualification
+and replay `VERIFIED`, with no exclusions. Both candidate comparisons remained
+`STRICT_CAUSAL`. Scope/gain verified the retained v1 checkpoint and trace prefix,
+v3 receipt, infrastructure repair and actual-resume proof. Position calls took
+9.42/9.35 seconds; scope/gain took17.90/17.73 seconds. All242 experiment files,
+including original and qualification finalizations, remained byte-identical.
+[Actual CLI reports and repetition summary](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261023/repetition_summary.json)
+retain the observations; no new finalization or RML index rebuild was needed.
+
+The exact-version retrieval entry was also executed twice for each arm with the
+real account and retained artifacts. All eight calls reused every selected
+payload and native dependency: zero downloaded files and zero output-transfer
+network access. Scheduler reconciliation was a separate real API operation.
+[Retrieval observations](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261023/retrieval_repetition_summary.json)
+and the adjacent per-call logs retain the results. Scientific conclusions and
+the earlier native allocation accounting are unchanged.
+
 ## Ordinary read-only verification
 
 After integrating the reviewed shared acceptance infrastructure on this owner,
@@ -71,6 +104,14 @@ frozen source packages are not rewritten. These commands select the existing
 canonical qualification tips. They do not stage or republish terminal records,
 train, infer, or launch a remote operation. Explicit diagnosis or staging flags
 remain separate user requests.
+
+The completed checkout was retired after source/evidence preservation. Restore
+only when needed with `git worktree add --detach D:/molgap-worktrees/k1-norm-mechanisms-100k 2dbe6084`.
+The original source `710b8834` is reachable from archive `0e98722b`; the newer
+verification source retains that ancestry. Unique ignored files
+and unpublished previews were hash-verified in external custody before removal:
+[custody manifest](D:/molgap-artifacts/retirement/k1-norm-mechanisms-100k/custody.json).
+Native proof dependencies remain in the existing D: artifact directories.
 
 ```powershell
 $qualificationPython = 'D:/文档/molgap/.venv/Scripts/python.exe'
