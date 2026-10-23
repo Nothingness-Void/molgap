@@ -61,3 +61,34 @@ again; unknown CPU, queue and per-arm wall cost remain unknown. The exact
 [four-window inputs](D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/physical_runs_20261023.json)
 remain the cost source. This qualification does not change the original
 scientific cost/benefit decision.
+
+## Ordinary read-only verification
+
+After integrating the reviewed shared acceptance infrastructure on this owner,
+run these commands from the owner checkout with the primary environment. The
+owner retains its normalization catalog and scientific/repair modules; original
+frozen source packages are not rewritten. These commands select the existing
+canonical qualification tips. They do not stage or republish terminal records,
+train, infer, or launch a remote operation. Explicit diagnosis or staging flags
+remain separate user requests.
+
+```powershell
+$qualificationPython = 'D:/文档/molgap/.venv/Scripts/python.exe'
+Set-Location 'D:/molgap-worktrees/k1-norm-mechanisms-100k'
+& $qualificationPython platforms/local/accept_run.py --strict --profile D:/molgap-machine-profile.json --run-id pcqm-k1-rms-position-160ep-100k-s42-20261022 --attempt-id v1 --retrieved-root D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/position/experiment --locations experiments/pcqm_k1_norm_mechanisms_100k/qualification_position_locations.json
+& $qualificationPython platforms/local/accept_run.py --strict --profile D:/molgap-machine-profile.json --run-id pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022 --attempt-id v1 --retrieved-root D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment --locations experiments/pcqm_k1_norm_mechanisms_100k/qualification_scope_gain_locations.json --continuation-receipt D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/launch_receipt.canonical.json
+```
+
+The two locations files use the existing acceptance-location map. They pin the
+original prospective identities, reviewed terminal inputs and retained canonical
+traces. Success reports `strict_mode=CANONICAL_READ_ONLY`, native verification
+and canonical replay membership. It confers no READY or promotion authority.
+
+Both commands were executed on2026-10-23 through the ordinary owner entry.
+Each returned `CANONICAL_READ_ONLY` with strict verification and both arms'
+replay membership `VERIFIED`. Logs are retained beside the finalization report
+as `ordinary_cli_position.log` and `ordinary_cli_scope_gain.log`.
+Acceptance source `5dbda7de` integrates desktop `1711dd8a` and `a20cc64a`, plus
+the earlier shared package/receipt/input/workflow transaction prerequisites.
+Normalization catalog, recipe, policy, kernel and recovery attestation remain
+owner-specific; the historical training packages remain unchanged.
