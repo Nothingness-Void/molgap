@@ -166,6 +166,12 @@ qualification stays pending under `platforms/_records/kaggle/preflight/`.
 
 ## Closed Evidence Navigation
 
+Kaggle1 MsgNorm100K kernel140391249/version1 is strictly accepted: fixed CLOSED,
+learned NEGATIVE_UNDER_CONTRACT. Both independent replay entries are complete
+without exclusions; learned improves1.364meV, below the3meV gate. The
+[decision, attribution and qualification](experiments/pcqm_k1_message_norm_100k/qualification_20261024.md)
+retain the result and asset-reuse repair. No adoption, scale-up or retry follows.
+
 Kaggle1 structural-bias/normalization100K retries 139648081/1 and139648367/1
 are COMPLETE and terminally accepted. K1 Post-LN closes negative against Post-BN;
 GPTrans resistance has a favorable signal below its material gate and also

@@ -1,0 +1,29 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-msgnorm-100k-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "experiment/msgnorm_fixed/output_manifest.json",
+      "sha256": "363623402cb91d6fc54c36f30c62dbf7c16caf001258e54bf54f42f7df74c6e1"
+    },
+    {
+      "path": "experiment/msgnorm_learned/output_manifest.json",
+      "sha256": "0ef20f6656fe8df9764e6312777436fc8cf0a34faebc079fa45ec06a189b4596"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "249d3d5ee85575301851bc4f007f0844633d1b9555af88abbff24d407a1d5596"
+    },
+    {
+      "path": "experiment/allocation_entry_observation.json",
+      "sha256": "a26bf8b4341d41032abe3a0b557971549452ff99050ab1eb91f338202ec94359"
+    },
+    {
+      "path": "experiment/input_resolution.json",
+      "sha256": "8aaac5e0827310fcfbe04aac200356080042bd4cdd7ec623330034686e6957b4"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

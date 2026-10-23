@@ -1,0 +1,100 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "249d3d5ee85575301851bc4f007f0844633d1b9555af88abbff24d407a1d5596"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "c8a26c2342f3c98a38eaf94f494fc421f50b27c82da1b3f72de9200d6ebfff3f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/msgnorm_fixed/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "c8a26c2342f3c98a38eaf94f494fc421f50b27c82da1b3f72de9200d6ebfff3f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/training_contract.json",
+      "name": "contract",
+      "sha256": "0e2cdae73fde557442cdd4fdf8138d257ee2607421eae2d55b98e0fcc1ea05fd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "c232cacb2fa812a1d06201ce2fd8daec299fca4a3d4e1b3a76fc5622c15e30f4"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "b79b7e7e2f1161c3c7fcb826ebc14920bf2e8fbb49acd112e56c1bdfb2645229"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "9e7054247bee788848c67b55a5eb33b77164b41db8a3340b69969ad2d2054458"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "75083d80f9d4c53c60755d4346d69178b4c524ccb92a800a912711eca519dd97"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_fixed/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "ceac2d343ff8914f92fc591042e4d7a22fbce2988ebff4f5ba502e439d9de0ac"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_message_norm_100k/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_fixed/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14613317214906216,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/msgnorm_fixed/terminal_staging/v1/a87e48c78ce414b9/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "training_membership"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

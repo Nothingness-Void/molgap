@@ -1,0 +1,100 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "249d3d5ee85575301851bc4f007f0844633d1b9555af88abbff24d407a1d5596"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "c8a26c2342f3c98a38eaf94f494fc421f50b27c82da1b3f72de9200d6ebfff3f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/execution/msgnorm_learned/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "c8a26c2342f3c98a38eaf94f494fc421f50b27c82da1b3f72de9200d6ebfff3f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/training_contract.json",
+      "name": "contract",
+      "sha256": "842a67e8e60b08c7af2e33bc042f4fac8c564d2e57ae2a9fc4115c076be6a9d2"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "af32cd5fbe48e3781ed7eddedaa34da6b3bdf2442b09db5c5dfcefa3e41e0242"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "7922b115408921aa322c79bef6b25d21bb11c6989134f3337b845156ade03cb3"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "ca913db4f91c59409f4a6db56a1543ead6e1f75ab700a5533e57856198dc2f6d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "5838b08c4ec95ac07dd487e59da2e5cf3c57177a6ef151d64ce9291c079f25b5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-norm-100k/outputs/msgnorm_learned/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "bc8137f2039117bf256d869d3790b615105d0a7d8074fbbe0473397991a346cc"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_message_norm_100k/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_learned/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14476912823140622,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/msgnorm_learned/terminal_staging/v1/066769ac599cdbce/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "training_membership"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

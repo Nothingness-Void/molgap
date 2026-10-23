@@ -12,6 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+K1 fixed-versus-learned MsgNorm100K is terminally accepted without adoption.
+Owner history through `4105cd3d` is reachable from pushed archive merge
+`548082d8`. Desktop retains the [decision and strict replay evidence](experiments/pcqm_k1_message_norm_100k/qualification_20261024.md).
+Its [custody record](experiments/pcqm_k1_message_norm_100k/terminal_custody.md)
+owns artifact locations and restoration; no MsgNorm implementation is adopted.
+
 K1 graph-wise message DropPath100K is owned by
 `codex/exp/k1-message-droppath-100k`, checkout
 `D:/molgap-worktrees/k1-message-droppath-100k`.
