@@ -1,0 +1,35 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-message-norm-100k",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-message-norm-100k"
+  },
+  "action_rule": {
+    "action": "RUN_PAIRED_100K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": [
+      "8 native T4 device-hour ceiling; unknown queue and CPU costs remain missing."
+    ]
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "452c0de62a1b2506cc23b04e70f0bcbcba930901ee34136ce7b96a6dabd4ed4e"
+}

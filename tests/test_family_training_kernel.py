@@ -193,3 +193,85 @@ def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initi
         torch.set_num_threads(threads)
         torch.use_deterministic_algorithms(deterministic, warn_only=warn_only)
         torch.utils.deterministic.fill_uninitialized_memory = fill
+
+
+@pytest.mark.parametrize("learn_scale", [0, 1])
+def test_message_norm_accelerated_initialization_gradients_and_checkpoint_resume(initial_states, learn_scale):
+    from io import BytesIO
+    from pathlib import Path
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.family_training_kernel import load_family_model
+    from molgap.k1_execution_backend import K1ExecutionConfig
+    from molgap.training_reproducibility import capture_rng_state, restore_rng_state
+    from test_family_training_session import assert_equal
+    path, digest = initial_states["neural_atom_k1"]
+    root = Path(__file__).resolve().parents[1]
+    def recipe_for(value):
+        declaration = build_addon_declaration(("neural_atom_k1", "3"), "k1_message_norm",
+            repo_root=root, config={"learn_scale": value})
+        return FamilyRecipe("neural_atom_k1", "composed", 42, digest,
+            DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 2,
+            .001, .01, ScheduleSpec("cosine_step", 2), "final-live", "torch-pass-randperm", 1,
+            target_mean_eV=0., target_std_eV=1., addons=(declaration,),
+            k1_execution=K1ExecutionConfig(), ema_decay=.999,
+            torch_version=str(torch.__version__).split("+", 1)[0])
+    for invalid in (True, False, -1, 2, 1.0):
+        with pytest.raises(ValueError):
+            recipe_for(invalid)
+    recipe = recipe_for(learn_scale)
+    assert FamilyRecipe.from_dict(recipe.to_dict()) == recipe
+    threads = torch.get_num_threads()
+    deterministic = torch.are_deterministic_algorithms_enabled()
+    warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
+    fill = torch.utils.deterministic.fill_uninitialized_memory
+    try:
+        torch.set_num_threads(1)
+        torch.use_deterministic_algorithms(True, warn_only=False)
+        with torch.random.fork_rng(devices=[]):
+            kernel = FamilyKernel(recipe, path, device="cpu")
+            counterpart, _ = load_family_model(recipe_for(1 - learn_scale), path)
+            assert_equal(kernel.model.state_dict(), counterpart.state_dict())
+            assert sum(p.numel() for p in kernel.model.parameters()) - sum(
+                p.numel() for p in counterpart.parameters()) == (9 if learn_scale else -9)
+            kernel.model.eval()
+            counterpart.eval()
+            batch = synthetic_batch()
+            with torch.no_grad():
+                assert torch.equal(kernel.forward(batch), kernel.forward(batch, model=counterpart))
+            del counterpart
+            owner = kernel.model._molgap_substrate
+            assert owner.sealed and len(owner.bindings) == 9
+            calls = []
+            for name, module in kernel.model._molgap_addons.items():
+                module.register_forward_hook(lambda module, args, output, name=name: calls.append(name))
+            kernel.model.train()
+            kernel.step(batch, check_finite=True)
+            assert calls == ["message_norm_" + str(i) for i in range(1, 10)]
+            assert not owner._k1_nodes
+            parameters = list(owner.named_addon_parameters())
+            assert len(parameters) == 9 * learn_scale
+            for name, parameter in parameters:
+                assert parameter.grad is not None and torch.isfinite(parameter.grad)
+                assert torch.count_nonzero(parameter.grad), name
+                assert parameter in kernel.optimizer.state
+            buffer = BytesIO()
+            torch.save({"model": kernel.model.state_dict(), "optimizer": kernel.optimizer.state_dict(),
+                        "ema": kernel.ema.state_dict(), "rng": capture_rng_state()}, buffer)
+            kernel.step(batch, check_finite=True)
+            expected = deepcopy((kernel.model.state_dict(), kernel.optimizer.state_dict(), kernel.ema.state_dict()))
+            restored = FamilyKernel(recipe, path, device="cpu")
+            buffer.seek(0)
+            saved = torch.load(buffer, weights_only=False)
+            restored.model.load_state_dict(saved["model"], strict=True)
+            restored.optimizer.load_state_dict(saved["optimizer"])
+            restored.ema.load_state_dict(saved["ema"])
+            restore_rng_state(saved["rng"])
+            restored.model.train()
+            restored.step(batch, check_finite=True)
+            assert_equal(expected, (restored.model.state_dict(), restored.optimizer.state_dict(), restored.ema.state_dict()))
+            restored.close()
+            kernel.close()
+    finally:
+        torch.set_num_threads(threads)
+        torch.use_deterministic_algorithms(deterministic, warn_only=warn_only)
+        torch.utils.deterministic.fill_uninitialized_memory = fill

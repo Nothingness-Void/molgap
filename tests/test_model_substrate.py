@@ -141,10 +141,62 @@ def test_k1_payload_location_shape_and_connected_addon(slot, field, payload):
     assert type(addon.observed) is payload
     if slot is not SlotName.PRE_READOUT:
         assert addon.observed.graph_index is arguments[3]
+    if slot is SlotName.POST_AGGREGATION:
+        assert addon.observed.node is arguments[0]
     actual.square().sum().backward()
     assert addon.shift.grad is not None and addon.shift.grad > 0
     assert model.local_blocks[0].conv.weight.grad.abs().sum() > 0
-    assert owner._graph_index is None and not owner._active
+    assert owner._graph_index is None and not owner._active and not owner._k1_nodes
+
+
+@pytest.mark.parametrize("learn_scale", [False, True])
+def test_message_norm_formula_zero_messages_and_input_gradient(learn_scale):
+    from molgap.k1_message_norm import MessageNorm
+    addon = MessageNorm(learn_scale)
+    node = torch.tensor([[3., 4.], [2., -1.], [0., 0.]], requires_grad=True)
+    message = torch.tensor([[0., 2.], [0., 0.], [2., 3.]], requires_grad=True)
+    payload = K1AggregationOutput(message, None, None, node)
+    result = addon(payload)
+    assert torch.equal(result.aggregated, torch.tensor([[0., 5.], [0., 0.], [0., 0.]]))
+    assert result.node is node
+    result.aggregated.sum().backward()
+    assert torch.allclose(node.grad[0], torch.tensor([.6, .8]))
+    assert torch.isfinite(node.grad).all() and torch.isfinite(message.grad).all()
+    assert len(list(addon.parameters())) == int(learn_scale)
+    if learn_scale:
+        assert addon.scale.grad.item() == 5.
+    with pytest.raises(ValueError, match="receiving node"):
+        addon(K1AggregationOutput(message, None, None))
+
+
+@pytest.mark.parametrize("aggregate_first", [False, True])
+def test_message_norm_uses_final_node_input_and_clears_failed_forward(aggregate_first):
+    from molgap.k1_message_norm import MessageNorm
+    model = TinyK1()
+    owner = ModelSubstrate(model, "neural_atom_k1")
+    capture = []
+    addon = MessageNorm()
+    addon.register_forward_pre_hook(lambda module, args: capture.append(args[0].node))
+    attachments = [("normalize", addon, SlotName.POST_AGGREGATION),
+                   ("shift", Shift("node", 2.), SlotName.PRE_MESSAGE)]
+    if not aggregate_first:
+        attachments.reverse()
+    for name, module, slot in attachments:
+        owner.attach(name, module, SlotBinding("neural_atom_k1", slot, 1))
+    args = k1_input()
+    output = model(*args)
+    assert torch.equal(capture[-1], args[0] + 2.)
+    assert not owner._k1_nodes
+    def fail(module, args):
+        raise RuntimeError("aggregate failure")
+    handle = addon.register_forward_pre_hook(fail)
+    with pytest.raises(RuntimeError, match="aggregate failure"):
+        model(*args)
+    assert not owner._k1_nodes and not owner._active
+    handle.remove()
+    assert torch.equal(model(*args), output)
+    owner.detach("normalize")
+    assert not model.local_blocks[0].conv._aggregate_hooks
 
 
 @pytest.mark.parametrize("slot,field,payload", [

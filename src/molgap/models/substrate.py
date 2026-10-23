@@ -49,6 +49,7 @@ class K1AggregationOutput:
     aggregated: object
     target_index: object
     graph_index: object
+    node: object = None
 
 
 @dataclass(frozen=True)
@@ -131,6 +132,7 @@ class ModelSubstrate:
         self._mutations = {}
         self._sealed, self._active, self._graph_index = False, False, None
         self._calls = []
+        self._k1_nodes = {}
         object.__setattr__(model, "_molgap_substrate", self)
 
     @property
@@ -192,6 +194,7 @@ class ModelSubstrate:
         def finish(module, args, kwargs, output):
             if self._calls and self._calls.pop():
                 self._active, self._graph_index = False, None
+                self._k1_nodes.clear()
         before = self.model.register_forward_pre_hook(begin, with_kwargs=True)
         try:
             after = self.model.register_forward_hook(finish, with_kwargs=True, always_call=True)
@@ -232,6 +235,8 @@ class ModelSubstrate:
                     else:
                         _same_tensor_shape(result.edge_attr, attr, "K1 edge attribute")
                     args, kwargs = _replace_argument(args, kwargs, 0, "x", result.node)
+                    if module in self._k1_nodes:
+                        self._k1_nodes[module] = result.node
                     if attr is not None:
                         args, kwargs = _replace_argument(args, kwargs, 2, "edge_attr", result.edge_attr)
                     return args, kwargs
@@ -239,12 +244,25 @@ class ModelSubstrate:
             def after(module, inputs, output):
                 if len(inputs) != 1 or not isinstance(inputs[0], dict) or "index" not in inputs[0]:
                     raise ValueError("Unexpected K1 aggregate hook ABI")
-                payload = K1AggregationOutput(output, inputs[0]["index"], self._graph_index)
+                payload = K1AggregationOutput(output, inputs[0]["index"], self._graph_index,
+                                              self._k1_nodes[module])
                 result = self._apply(name, payload)
-                _same_context(result, payload, ("target_index", "graph_index"))
+                _same_context(result, payload, ("target_index", "graph_index", "node"))
                 _same_tensor_shape(result.aggregated, output, "K1 aggregate")
                 return result.aggregated
-            return target.register_aggregate_forward_hook(after)
+            def capture(module, args, kwargs):
+                # PRE_MESSAGE hooks also update this frame, so attachment order
+                # cannot make the aggregate context refer to an earlier input.
+                if not self._active:
+                    raise RuntimeError("Slot must run inside its owning substrate forward")
+                self._k1_nodes[module] = _argument(args, kwargs, 0, "x")
+            before = target.register_forward_pre_hook(capture, with_kwargs=True)
+            try:
+                aggregate = target.register_aggregate_forward_hook(after)
+            except BaseException:
+                before.remove()
+                raise
+            return (before, aggregate)
         if binding.slot is SlotName.PRE_MESSAGE:
             def before(module, args, kwargs):
                 node = _argument(args, kwargs, 0, "node")
@@ -300,7 +318,8 @@ class ModelSubstrate:
             self._install_root()
         except BaseException:
             if handle is not None:
-                handle.remove()
+                for item in handle if isinstance(handle, tuple) else (handle,):
+                    item.remove()
             del getattr(self.model, self.namespace)[name]
             if created:
                 delattr(self.model, self.namespace)
@@ -313,7 +332,9 @@ class ModelSubstrate:
         self._mutable()
         if name not in self._entries:
             raise ValueError("Addon is not attached")
-        self._handles.pop(name).remove()
+        handle = self._handles.pop(name)
+        for item in handle if isinstance(handle, tuple) else (handle,):
+            item.remove()
         self._entries.pop(name)
         modules = getattr(self.model, self.namespace)
         addon = modules[name]
