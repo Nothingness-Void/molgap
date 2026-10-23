@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from collections import defaultdict
 from typing import Any
 
@@ -32,7 +33,19 @@ def _comparison_key(trace: dict[str, Any]) -> str:
         "reference_id": trace["reference_id"],
         "identity": {field: identity[field] for field in fields},
     }
+    if "strict_identity" in identity:
+        strict = {k: v for k, v in identity["strict_identity"].items()
+            if k != "architecture_config_identity" or identity["matched_architecture_required"]}
+        key["identity"]["strict_identity_sha256"] = hashlib.sha256(
+            json.dumps(strict, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     return json.dumps(key, sort_keys=True, separators=(",", ":"))
+
+
+def _missing_comparability(identity: dict[str, Any]) -> list[str]:
+    fields = (*BASE_COMPARABILITY_FIELDS, *(
+        ("architecture_identity",) if identity.get("matched_architecture_required") else ()))
+    return [field for field in fields if identity.get(field) in
+            (None, "", "unknown", "unspecified_in_contract")]
 
 
 def build_screening_backtest(traces: list[dict[str, Any]]) -> dict[str, Any]:
@@ -40,6 +53,8 @@ def build_screening_backtest(traces: list[dict[str, Any]]) -> dict[str, Any]:
     candidates = []
     for trace in traces:
         reasons = list(trace["backtest_eligibility"]["exclusion_reasons"])
+        reasons.extend("missing_comparability_identity:" + field
+                       for field in _missing_comparability(trace["comparability_identity"]))
         if trace["reference_id"] is None:
             reasons.append("missing_frozen_reference")
         if not trace["backtest_eligibility"]["eligible"]:
@@ -128,6 +143,9 @@ def replay_policy(policy: dict[str, Any], pool: dict[str, Any]) -> dict[str, Any
         if entry["comparison_role"] != "candidate":
             continue
         identity = {"trajectory_id": entry["trajectory_id"], "run_id": entry["run_id"]}
+        if _missing_comparability(entry["comparability_identity"]):
+            exclusions.append({**identity, "reason": "incomplete_comparability_identity"})
+            continue
         selected = {**entry["comparability_identity"], "reference_id": entry["reference_id"]}
         if any(selected.get(k) != v for k, v in policy["comparability_selector"].items()):
             exclusions.append({**identity, "reason": "policy_contract_mismatch"})

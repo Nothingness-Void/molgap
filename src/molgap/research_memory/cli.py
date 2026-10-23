@@ -182,7 +182,8 @@ def main(argv: list[str] | None = None) -> None:
         print(json.dumps(result, indent=2, sort_keys=True))
         return
     if args.command == "backtest-screening":
-        result = build_screening_backtest([record for _, record in records["traces"]])
+        from .replay import replay_manifests
+        result = build_screening_backtest(replay_manifests(root, records))
         print(json.dumps(result, indent=2, sort_keys=True))
         return
     trajectories = {

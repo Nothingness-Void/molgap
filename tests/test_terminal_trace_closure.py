@@ -1098,6 +1098,7 @@ def test_build_default_trace_manifest_derives_from_contract_without_guessing(tmp
     assert comp["architecture_identity"] == "custom_gptrans_model"
     assert comp["precision_identity"] == "bf16"
     assert comp["optimizer_identity"] == "adamw_custom"
+    assert comp["ema_semantics"] == "unknown"
     assert manifest["backtest_eligibility"]["eligible"] is False
     assert manifest["reference_id"] == "ev-ref-1"
 

@@ -12,7 +12,7 @@ from typing import Any
 from .backtest import build_screening_backtest
 from .backtest import build_policy_backtests
 from .policy import load_policy_registry
-from .replay import build_replay_pool
+from .replay import build_replay_pool, replay_manifests
 from .cost import build_cost_ledger
 from .derived import validate_derived_outputs
 from .references import build_reference_reuse_index
@@ -73,7 +73,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
         trajectories.append({**record, "_path": _relative(root, path)})
     costs = [record for _, record in records["costs"]]
     roles = [record for _, record in records["roles"]]
-    traces = [record for _, record in records["traces"]]
+    traces = replay_manifests(root, records)
     ready = []
     for path, record in records["ready"]:
         ready.append({**record, "_path": _relative(root, path)})
@@ -168,7 +168,7 @@ def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifact
         "blocked": [],
     }
     backtest = build_screening_backtest(traces)
-    replay_pool = build_replay_pool(root, records)
+    replay_pool = build_replay_pool(root, records, manifests=traces)
     policy_backtest = build_policy_backtests(load_policy_registry(root), replay_pool)
 
     trajectory_evidence_ids = {

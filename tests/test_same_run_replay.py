@@ -154,6 +154,27 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     entries = [entry for entry in replay["entries"] if entry["trajectory_id"] in {reference["traj_id"], candidate["traj_id"]}]
     assert {entry["comparison_role"] for entry in entries} == {"reference", "candidate"}
     assert {entry["reference_id"] for entry in entries} == {reference["ev_id"]}
+    # Derive identities from the actually finalized comparison, not the generic
+    # manifest's missing top-level recipe fields; frozen records stay unchanged.
+    original = (candidate["exp_dir"] / "rml_finalized/trace_manifest.json").read_bytes()
+    comparison = json.loads((tmp_path / comparison_ref).read_bytes())
+    for entry in entries:
+        identity = entry["comparability_identity"]
+        assert identity["dataset_identity"] == comparison["matched_fields"]["dataset_identity"]
+        assert json.loads(identity["ema_semantics"])["ema_decay"] == comparison["matched_fields"]["ema_decay"]
+        assert "unspecified_in_contract" not in entry["comparability_key"]
+    assert compile_research_memory(tmp_path)["replay_pool.json"] == pool
+    assert (candidate["exp_dir"] / "rml_finalized/trace_manifest.json").read_bytes() == original
+    from molgap.research_memory.backtest import build_screening_backtest
+    from molgap.research_memory.replay import replay_manifests
+    from molgap.research_memory.validate import validate_repository_records
+    manifests = replay_manifests(tmp_path, validate_repository_records(tmp_path)["records"])
+    # Batch/EMA/runtime differences in strict identities must survive projection,
+    # even when the older coarse labels and reference ID happen to match.
+    for manifest in manifests:
+        if manifest["comparison_role"] == "candidate":
+            manifest["comparability_identity"]["strict_identity"]["physical_batch_per_device"] += 1
+    assert build_screening_backtest(manifests)["included_comparable_groups"] == []
 
 
 def test_eligible_continuation_must_match_current_pair_attempt(tmp_path, monkeypatch):

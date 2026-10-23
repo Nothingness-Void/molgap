@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from pathlib import Path
 from typing import Any
 
@@ -87,10 +88,73 @@ def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, An
     return migrated
 
 
-def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
+def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any]]:
+    """Project accepted strict identities into derived views, never frozen bytes.
+
+    Records have already passed repository validation. Only a comparison pinned
+    by a canonical terminal input can supply candidate/reference identities;
+    an unrelated comparison file or a mutable current recipe cannot repair them.
+    """
+    from .finalize import load_terminal_input
+
+    manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
+    evidence = {p.resolve(): e for p, e in records["evidence"]}
+    comparisons = {p.resolve(): c for p, c in records["comparison_readiness"]}
+    identities = {}
+    for path, manifest in records["traces"]:
+        if manifest["comparison_role"] != "candidate" or not (path.parent / "finalization.json").is_file():
+            continue
+        terminal = load_terminal_input(path.parent)
+        pointer = terminal.get("comparison_readiness_ref")
+        if pointer is None:
+            continue
+        comparison = comparisons.get(resolve_repo_pointer(root, pointer))
+        if comparison is None or not comparison["strict_ready"]:
+            continue
+        verify_bound_artifact(root, pointer, terminal["artifact_hashes"][pointer])
+        accepted = evidence[resolve_repo_pointer(root, manifest["terminal_evidence_ref"])]
+        if (comparison["candidate_id"] != accepted["evidence_id"]
+                or comparison["reference_id"] != manifest["reference_id"]):
+            raise ValueError("Replay comparison differs from accepted evidence identity")
+        for side in ("candidate", "reference"):
+            identity = {**comparison["matched_fields"], **{
+                key: values[side] for key, values in comparison["mismatched_fields"].items()}}
+            eid = comparison[side + "_id"]
+            if eid in identities and identities[eid] != identity:
+                raise ValueError("Conflicting strict replay identities for accepted evidence")
+            identities[eid] = identity
+
+    result = []
+    for manifest in manifests:
+        accepted = evidence.get(resolve_repo_pointer(root, manifest["terminal_evidence_ref"]))
+        strict = identities.get(accepted["evidence_id"]) if accepted else None
+        if strict is not None:
+            def fields(*names):
+                return json.dumps({name: strict[name] for name in names}, sort_keys=True, separators=(",", ":"))
+
+            identity = {**manifest["comparability_identity"],
+                "dataset_identity": strict["dataset_identity"],
+                "row_split_identity": fields("data_role_identity", "row_membership_identity", "row_order_identity"),
+                "architecture_identity": strict["architecture_config_identity"],
+                "optimizer_identity": strict["optimizer_identity"],
+                "lr_schedule_identity": strict["schedule_identity"],
+                "target_transform_identity": fields("target_transform_identity", "target_transform_asset_sha256"),
+                "precision_identity": fields("precision", "tf32_enabled", "deterministic_algorithms"),
+                "ema_semantics": fields("ema_enabled", "ema_decay", "ema_update_frequency", "weight_semantics", "evaluation_weight_source"),
+                "evaluation_role_identity": strict["evaluation_role_identity"],
+                "selection_role_identity": fields("selection_role_identity", "checkpoint_selection_identity"),
+                "terminal_endpoint_identity": fields("optimizer_steps", "sample_presentations"),
+                "strict_identity": strict}
+            manifest = {**manifest, "comparability_identity": identity}
+        result.append(manifest)
+    return result
+
+
+def build_replay_pool(root: Path, records: dict[str, list], *, manifests=None) -> dict[str, Any]:
     trajectories = {t["trajectory_id"]: t for _, t in records["trajectories"]}
     evidence_by_path = {p.resolve(): e for p, e in records["evidence"]}
-    manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
+    if manifests is None:
+        manifests = replay_manifests(root, records)
     grouping = build_screening_backtest(manifests)
     keys = {g["comparability_key"] for g in grouping["included_comparable_groups"]}
     excluded = list(grouping["excluded_traces"])

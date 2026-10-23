@@ -22,6 +22,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
@@ -31,6 +37,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "family-topology-t4-100k-s42:k1_mean2:downstream",
@@ -222,6 +234,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
@@ -271,6 +289,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:bn_long:downstream",
@@ -280,6 +304,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
@@ -289,6 +319,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
@@ -298,6 +334,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr_warmup:downstream",
@@ -359,7 +401,18 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
-      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"track0999-select-live\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"9a4534bf4f851adc742d8629a4f36e3b7aa474788bfd7a24d51f2cd9480d195d\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"target_transform_identity\":\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\",\"terminal_endpoint_identity\":\"124960updates-15994880presentations\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms\"}",
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"5ab27082e81c376703ff93ac824ab8b8a65009c9035ffd4d6fb69cac60683e82\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed\"}",
+      "run_ids": [
+        "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+        "pcqm-k1-message-norm-100k-s42:msgnorm_learned:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+        "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"70cc42c3e5e69c973c80f9bec6f134851f8073ae89c6d8018b9766f052591738\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\\\"}\",\"strict_identity_sha256\":\"b9b9ce16ad452df4cc943e4d2a7825da040f74055c8af99fa381b850615fc7d9\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":124960,\\\"sample_presentations\\\":15994880}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms\"}",
       "run_ids": [
         "pcqm-k1-rms-position-160ep-100k-s42-20261022:post_node_rms:downstream",
         "pcqm-k1-rms-position-160ep-100k-s42-20261022:pre_node_rms:downstream"
@@ -370,7 +423,7 @@
       ]
     },
     {
-      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"track0999-select-live\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"9a4534bf4f851adc742d8629a4f36e3b7aa474788bfd7a24d51f2cd9480d195d\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"target_transform_identity\":\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\",\"terminal_endpoint_identity\":\"124960updates-15994880presentations\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms\"}",
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"70cc42c3e5e69c973c80f9bec6f134851f8073ae89c6d8018b9766f052591738\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\\\"}\",\"strict_identity_sha256\":\"b9b9ce16ad452df4cc943e4d2a7825da040f74055c8af99fa381b850615fc7d9\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":124960,\\\"sample_presentations\\\":15994880}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms\"}",
       "run_ids": [
         "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_graph_rms:downstream",
         "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream"
@@ -378,6 +431,17 @@
       "trajectory_ids": [
         "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
         "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.9999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":\\\"per-optimizer-step\\\",\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema-decay-0.9999\\\"}\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\\\",\\\"row_membership_identity\\\":\\\"5fcf7589d020f94420fdad3d619e2c94510289c0757564bc508caff7543b0eb6\\\",\\\"row_order_identity\\\":\\\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\\\"}\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema9999-60epochs\\\",\\\"selection_role_identity\\\":\\\"best-development-ema9999-60epochs\\\"}\",\"strict_identity_sha256\":\"9234056be8ac8e36994be9953f10a6cfbaf94aa56870464c1842d0e08466a112\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"f92865c6a63393a03604d7e232cba5fbdda00f4d0fb9d888e8c5781b4e307feb\\\",\\\"target_transform_identity\\\":\\\"pcqm-local-bias-100k-a2-train-gap-transform\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-local-bias-rwse16-100k-s42-a2\"}",
+      "run_ids": [
+        "kaggle1-local-bias-rwse16-100k-s42-v2",
+        "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2"
+      ],
+      "trajectory_ids": [
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       ]
     },
     {
@@ -396,17 +460,6 @@
       ]
     },
     {
-      "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-local-bias-rwse16-100k-s42-a2\"}",
-      "run_ids": [
-        "kaggle1-local-bias-rwse16-100k-s42-v2",
-        "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2"
-      ],
-      "trajectory_ids": [
-        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
-        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
-      ]
-    },
-    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-t-100k-v4-reference\"}",
       "run_ids": [
         "kaggle2-gptrans-t-100k-v4-seed42",
@@ -419,17 +472,6 @@
         "TB-gptrans-noisy-pair-norm-100k-s42",
         "TB-gptrans-t-100k-v4-reference",
         "TC-gptrans-flow-ablation-100k-s42"
-      ]
-    },
-    {
-      "comparability_key": "{\"identity\":{\"dataset_identity\":\"unspecified_in_contract\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development\",\"lr_schedule_identity\":\"unspecified_in_contract\",\"optimizer_identity\":\"unspecified_in_contract\",\"precision_identity\":\"unspecified_in_contract\",\"row_split_identity\":\"unspecified_in_contract\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"best_development_metric\",\"target_transform_identity\":\"unspecified_in_contract\",\"terminal_endpoint_identity\":\"endpoint_31240\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed\"}",
-      "run_ids": [
-        "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
-        "pcqm-k1-message-norm-100k-s42:msgnorm_learned:downstream"
-      ],
-      "trajectory_ids": [
-        "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
-        "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
       ]
     }
   ],

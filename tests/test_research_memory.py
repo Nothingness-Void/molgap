@@ -782,6 +782,14 @@ def test_incompatible_traces_remain_insufficient():
     assert result["false_stop_count"] is None
     assert result["native_cost_saved"] is None
     assert result["policy_activated"] is False
+    # Equal missing values never establish a comparison, even with one reference.
+    traces = [_trace("candidate", "candidate", "adamw"), _trace("reference", "reference", "adamw")]
+    for trace in traces:
+        trace["comparability_identity"]["dataset_identity"] = "unspecified_in_contract"
+    result = build_screening_backtest(traces)
+    assert result["included_comparable_groups"] == []
+    assert all("missing_comparability_identity:dataset_identity" in row["reasons"]
+               for row in result["excluded_traces"])
 
 
 def test_invalid_derived_output_is_rejected(compiled_payloads):

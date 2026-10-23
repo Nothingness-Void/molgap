@@ -691,7 +691,9 @@ def build_default_trace_manifest(
             "lr_schedule_identity": str(lr_schedule_identity),
             "target_transform_identity": str(target_transform_identity),
             "precision_identity": str(precision_identity),
-            "ema_semantics": "ema" if has_ema else "none",
+            # Missing EMA metrics do not mean EMA tracking was disabled. Strict
+            # replay derives configuration and selected weights from bound V5.
+            "ema_semantics": str(contract_obj.get("ema_semantics", "unknown")),
             "evaluation_role_identity": "internal_development",
             "selection_role_identity": "best_development_metric",
             "terminal_endpoint_identity": f"endpoint_{max_steps or len(observations)}",
