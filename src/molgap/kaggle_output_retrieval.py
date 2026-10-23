@@ -209,9 +209,11 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                 raise RuntimeError("Exact artifact redirect failed; no list/bulk fallback") from None
             retained.extend(_download_selected(urls={remote: redirect.url},
                 required={remote: (local, pin)}, destination=destination, http_session=http_session))
+    downloaded = sum(item["state"] != "ALREADY_RETAINED" for item in retained)
     return dict(kernel=context.run_reference, receipt_version=context.platform_version, files=retained,
         transport="version_specific_manifest_pinned_files", unselected_outputs_downloaded=False,
-        platform_version_verified_by_output_api=True)
+        downloaded_files=downloaded, network_accessed=bool(downloaded),
+        platform_version_verified_by_output_api=bool(downloaded))
 
 
 def retrieve_execution_retention(

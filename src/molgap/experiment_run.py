@@ -146,8 +146,37 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         return result
     read_only_strict = (strict_inputs is not None and locations is not None
                         and not execute and not stage_terminal and outcome is None)
+    canonical_inputs = False
+    if strict_inputs is not None and outcome is None and decision_ref is None and role_audit is None:
+        from .research_memory.finalize import current_finalized_directory, verified_receipt, load_terminal_input
+        canonical = {}
+        canonical_eligible = True
+        for arm_id, where in resolved["locations"].items():
+            current = current_finalized_directory(repo_root, where["trajectory"])
+            if not current.is_dir():
+                break
+            verified_receipt(current)
+            terminal = load_terminal_input(current)
+            canonical_eligible = canonical_eligible and terminal["trace_manifest"]["backtest_eligibility"]["eligible"]
+            canonical[arm_id] = {**where,
+                "terminal": (current / "terminal_input.json").relative_to(Path(repo_root).resolve()).as_posix(),
+                "trace": terminal["trace_manifest"]["trace_artifact_ref"]}
+        if len(canonical) == len(resolved["outputs"]):
+            resolved["locations"] = canonical
+            canonical_inputs = True
+            read_only_strict = read_only_strict or canonical_eligible
+    resolved["mechanical_reports"] = result["arms"]
     native, native_cache = None, None
-    if strict_inputs is not None and not read_only_strict:
+    if canonical_inputs and not read_only_strict:
+        # Existing terminal evidence already owns continuation proof locations.
+        # Reuse its native inspector before adding qualification metadata.
+        inspected = inspect_run_strict_evidence(repo_root, resolved, strict_inputs)
+        native = {arm: row["native_qualification"] for arm, row in inspected["arms"].items()}
+        if any(value["status"] != "VERIFIED" for value in native.values()):
+            return {**result, "status": "BLOCKED", "executed": False,
+                "strict_validation": inspected, "blockers": ["native_proof_dependencies_missing"]}
+        native_cache = {arm: (value, resolved["contexts"][arm].to_dict()) for arm, value in native.items()}
+    if strict_inputs is not None and not read_only_strict and native_cache is None:
         from .family_training_runner import inspect_retained_native_qualification
         from .experiment_family_workflow import _artifact_path, _json_bytes
         if type(strict_inputs) is not dict or set(strict_inputs) - set(resolved["outputs"]):
@@ -210,7 +239,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             "strict_validation": strict, "strict_mode": "CANONICAL_READ_ONLY", "executed": False,
             "replay_readiness": "VERIFIED" if strict["status"] == "VERIFIED" else "BLOCKED",
             "blockers": strict["blockers"]}
-    if stage_terminal or outcome is not None:
+    if (stage_terminal or outcome is not None) and not canonical_inputs:
         from .experiment_terminal_staging import stage_verified_terminal_packages
         staged = stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, locations=locations,
@@ -360,6 +389,10 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
             if metadata_error is not None:
                 raise metadata_error
             _bindings(root, terminal.get("artifact_hashes"))
+            if require_finalized and "mechanical_reports" in resolved:
+                from .experiment_family_workflow import _verify_canonical_output
+                _verify_canonical_output(root, resolved["spec"], context, terminal,
+                    resolved["mechanical_reports"][arm_id]["observed"], output)
             if terminal.get("continuation_ref") is not None:
                 from .research_memory.paired import validate_terminal_continuation
                 cached = ((row["native_qualification"],

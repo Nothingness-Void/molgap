@@ -150,6 +150,15 @@ publishing new comparison/terminal records. This mode also skips default
 diagnosis; an explicitly supplied `--diagnose` still runs the saved-artifact
 analysis. The original mechanical reports are reused inside the invocation.
 
+Already finalized runs need no hand-written locations or repeated outcome/role
+inputs: `accept_run.py --strict --execute --profile <profile> --run-id <run>
+--attempt-id <attempt>` discovers their canonical tips and verified retrieval
+maps. A continuation still selects its exact `--continuation-receipt`. Accepted
+artifact locators/hashes and observations must match the retrieved run. Fully
+qualified tips are rechecked read-only even with `--execute`; mechanical-only
+tips reuse their accepted facts for qualification. Explicit `--diagnose` remains
+available; strict rechecks do not run it by default.
+
 Run-ID acceptance also accepts `--strict`. It inventories and rechecks retained
 native proof tensors on CPU, then translates the frozen same-run pair into the
 existing target-transform asset, reference bundle and comparison-readiness
@@ -177,6 +186,9 @@ and `--strict --resume-prepared`. It retains a separate version-specific output
 mapping and selectively downloads only manifest/native-certificate dependencies.
 Download verifies exact-version bytes, not tensor semantics; strict acceptance
 performs native qualification. No all-output or all-checkpoint download occurs.
+Retained certificate/provenance metadata is checked against the output manifest
+before reuse. Complete retained dependencies cause zero downloads; the retrieval
+report distinguishes retained files from actual network transfers.
 
 With reviewed `--locations`, or explicit decision/role inputs for staging,
 strict acceptance validates native/comparison evidence before invoking the

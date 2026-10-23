@@ -37,6 +37,12 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
     resumed = resume_checkpoint_sha256 is not None
     native = destination.parent / "_resume_preflight" / context.arm_id if resumed else destination
     remote_native = prefix.parent / "_resume_preflight" / context.arm_id if resumed else prefix
+    actual_resume = native
+    remote_resume = remote_native
+    # Older retrievals retained the original native proof beside the output,
+    # with actual-resume proof in its separate runtime directory.
+    if resumed and (destination / "runtime_certificate.json").is_file():
+        native = destination
     _safe_local(native)
     version = context.platform_version
     if not isinstance(version, str) or not version.isascii() or not version.isdecimal():
@@ -45,13 +51,27 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
     from molgap.experiment_spec import _digest
     _digest(certificate_id, "runtime_certificate_id")
 
-    def metadata(names, *, remote_root=remote_native):
+    transfers = []
+    def metadata(names, *, remote_root=remote_native, local_root=None):
+        local_root = native if local_root is None else local_root
+        retained, missing = {}, []
+        for name in names:
+            path = repo_local_path(local_root, name)
+            _safe_local(path)
+            if path.is_file():
+                retained[name] = path.read_bytes()
+            else:
+                missing.append(name)
+        if not missing:
+            return retained
         with TemporaryDirectory(prefix=".native-metadata-", dir=destination.parent) as temporary:
-            paths = [(remote_root / name).as_posix() for name in names]
+            paths = [(remote_root / name).as_posix() for name in missing]
             retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
                 version=int(version), paths=paths, destination=Path(temporary), http_session=http_session)
-            return {name: repo_local_path(Path(temporary), remote).read_bytes()
-                    for name, remote in zip(names, paths)}
+            transfers.extend(paths)
+            retained.update({name: repo_local_path(Path(temporary), remote).read_bytes()
+                    for name, remote in zip(missing, paths)})
+        return retained
 
     # The output manifest authenticates the certificate; the certificate binds
     # provenance. Keep unvalidated metadata outside the retained arm directory.
@@ -66,22 +86,25 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
     for name, payload in payloads.items():
         publish_immutable_bytes(native / name, payload)
     if resumed:
-        output_provenance = metadata(["runtime_provenance.json"], remote_root=prefix)["runtime_provenance.json"]
+        output_provenance = metadata(["runtime_provenance.json"], remote_root=prefix,
+            local_root=destination)["runtime_provenance.json"]
         if canonical_fingerprint(_json_bytes(output_provenance)) != certificate["provenance_sha256"]:
             raise ValueError("Continued output provenance differs from its native certificate")
         publish_immutable_bytes(destination / "runtime_provenance.json", output_provenance)
-    if resumed and not (native / "actual_resume_certificate.json").is_file():
-        payload = metadata(["actual_resume_certificate.json"])["actual_resume_certificate.json"]
-        publish_immutable_bytes(native / "actual_resume_certificate.json", payload)
+    if resumed and not (actual_resume / "actual_resume_certificate.json").is_file():
+        payload = metadata(["actual_resume_certificate.json"], remote_root=remote_resume,
+            local_root=actual_resume)["actual_resume_certificate.json"]
+        publish_immutable_bytes(actual_resume / "actual_resume_certificate.json", payload)
 
     recipe = repo_local_path(destination, manifest["artifacts"]["contract"]["path"])
     for _ in range(4):
         inventory = inspect_retained_native_qualification(native, recipe_path=recipe,
             provenance=provenance, context=context, resume_checkpoint_sha256=resume_checkpoint_sha256,
-            resume_directory=native, inventory_only=True)
+            resume_directory=actual_resume, inventory_only=True)
         if inventory["status"] == "DEPENDENCIES_VERIFIED":
             return {"status": "DEPENDENCIES_VERIFIED", "native_root": str(native),
                 "known_local_bytes": inventory["known_local_bytes"],
+                "downloaded_files": transfers, "network_accessed": bool(transfers),
                 "scientific_acceptance": "NOT_EVALUATED", "native_qualification": "NOT_EVALUATED"}
         missing = [item for item in inventory["dependencies"] if not item["present"] and item["sha256"] is not None]
         # Profile JSON can disclose a further pinned trace. Fetch its frontier
@@ -89,12 +112,17 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
         selected = [item for item in missing if Path(item["path"]).suffix == ".json"] or missing
         if not selected:
             raise ValueError("Native dependency has no retained hash binding")
-        files = {}
+        groups = {}
         for item in selected:
-            relative = Path(item["local_path"]).relative_to(native).as_posix()
-            files[(remote_native / relative).as_posix()] = (relative, item["sha256"])
-        retrieve_pinned_exact_files(api, context=context, remote_manifest_path=remote_manifest_path,
-            files=files, destination=native, http_session=http_session)
+            path = Path(item["local_path"])
+            local_root, remote_root = ((actual_resume, remote_resume)
+                if resumed and path.is_relative_to(actual_resume) else (native, remote_native))
+            relative = path.relative_to(local_root).as_posix()
+            groups.setdefault(local_root, {})[(remote_root / relative).as_posix()] = (relative, item["sha256"])
+        for local_root, files in groups.items():
+            result = retrieve_pinned_exact_files(api, context=context, remote_manifest_path=remote_manifest_path,
+                files=files, destination=local_root, http_session=http_session)
+            transfers.extend(item["path"] for item in result["files"] if item["state"] != "ALREADY_RETAINED")
     raise ValueError("Native dependency inventory did not resolve within its bounded frontiers")
 
 
@@ -286,6 +314,8 @@ def main(argv=None):
                     result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
                         manifest=manifest, remote_manifest_path=args.remote_manifest_path,
                         destination=destination, resume_checkpoint_sha256=resume_checkpoint)
+                    result["network_accessed"] = (result.get("network_accessed", False)
+                        or result["native_dependencies"]["network_accessed"])
                 stage = "retrieval_mapping"
                 from molgap.experiment_run_acceptance import record_run_retrieval
                 mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
