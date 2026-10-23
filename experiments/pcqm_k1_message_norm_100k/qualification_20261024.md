@@ -58,10 +58,15 @@ no full output download, historical resume chunks or dependency environment.
 ## General replay grouping boundary
 
 The strict same-run comparison binds full recipe/data/runtime/weight identities.
-An additional review found that generic derived replay comparability fields
-still use several `unspecified_in_contract` values and `ema_semantics=none`.
-That generic grouping is not used here to claim cross-experiment equivalence.
+At first closure an additional review found that generic derived replay
+comparability fields used several `unspecified_in_contract` values and
+`ema_semantics=none`. That grouping was not used to claim cross-experiment equivalence.
 The compact `replay_identity_review.json` in the external reconciliation root
 and the full strict comparison were handed to the authorized infrastructure
-conversation for a separate shared-generator audit. The complete per-arm
-retention qualification is not blanket permission to pool unrelated experiments.
+conversation. Shared repair f6ebecbd now projects the accepted strict identities
+into derived grouping, correctly distinguishes tracked EMA0.999 from selected
+Live weights, and rejects unknown-field equivalence. Desktop rebuild and frozen
+check passed with all16 existing replay entries retained and policy results
+unchanged. Historical terminal bytes were not rewritten. Other checkouts migrate
+through the ordinary rebuild/check commands after updating the shared code.
+Complete per-arm retention is not blanket permission to pool unrelated experiments.
