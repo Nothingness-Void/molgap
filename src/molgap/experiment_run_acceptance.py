@@ -84,6 +84,53 @@ def _continuation_options(spec, options, receipt, repo_root, verification=None):
     return {**options, "receipt_path": successor.absolute()}
 
 
+def _accepted_continuation_receipt(spec, options, repo_root):
+    """Discover only the common successor pinned by accepted canonical arms."""
+    from .research_memory.finalize import current_finalized_directory, load_terminal_input
+    from .research_memory.paths import verify_bound_artifact
+
+    root = Path(repo_root).resolve()
+    successors, canonical = [], {}
+    declaration = spec.to_dict()
+    bindings = declaration["prospective"]["arms"]
+    for binding in bindings:
+        current = current_finalized_directory(root, binding["output"] + "/trajectory.json")
+        if not current.is_dir():
+            continue
+        terminal = load_terminal_input(current)
+        canonical[binding["arm_id"]] = (current, terminal)
+        pointer = terminal.get("continuation_ref")
+        if pointer is None:
+            continue
+        if (terminal.get("trajectory_id") != binding["trajectory_id"]
+                or terminal.get("run_id") != declaration["logical_run_id"] + ":" + binding["arm_id"] + ":downstream"):
+            raise ValueError("Accepted continuation differs from the original prospective identity")
+        hashes = terminal.get("artifact_hashes", {})
+        if not isinstance(pointer, str) or pointer not in hashes:
+            raise ValueError("Accepted continuation record is not bound")
+        verify_bound_artifact(root, pointer, hashes[pointer])
+        record = _json(bound_artifact_path(root, pointer))
+        if (record.get("format") != "molgap-terminal-continuation-v1"
+                or record.get("continued") != terminal.get("same_run_observation")):
+            raise ValueError("Accepted continuation differs from the terminal observation")
+        retained = {}
+        for key in ("origin_receipt", "continued_receipt"):
+            item = record.get(key)
+            if (type(item) is not dict or set(item) != {"path", "sha256"}
+                    or hashes.get(item["path"]) != item["sha256"]):
+                raise ValueError("Accepted continuation receipt is not bound")
+            verify_bound_artifact(root, item["path"], item["sha256"])
+            retained[key] = bound_artifact_path(root, item["path"])
+        if file_digest(retained["origin_receipt"]) != file_digest(options["receipt_path"]):
+            raise ValueError("Accepted continuation does not start at the original receipt")
+        successors.append((retained["continued_receipt"].resolve(), record["continued_receipt"]["sha256"]))
+    if not successors:
+        return None, canonical
+    if len(successors) != len(bindings) or len({digest for _, digest in successors}) != 1:
+        raise ValueError("Accepted arms require one common continuation receipt")
+    return successors[0][0], canonical
+
+
 def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
                          destination, manifest_sha256, continuation_receipt=None, _verification=None):
     """Record only successfully retained manifest-bound bytes; never copy outputs."""
@@ -131,6 +178,9 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
                                            _verification=verification)
     run, package = prepared.parent, options["package_dir"]
     original_receipt = options["receipt_path"]
+    canonical = {}
+    if continuation_receipt is None:
+        continuation_receipt, canonical = _accepted_continuation_receipt(spec, options, repo_root)
     options = _continuation_options(spec, options, continuation_receipt, repo_root, verification)
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
     workflow = _json(run / "inputs/workflow_plan.json")
@@ -231,6 +281,7 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
     target_identity = TargetIdentityBinding.from_frozen_package(
         spec, Path(repo_root), package, workflow["acceptance_plan"], _verification=verification)
     return {"spec": spec, "options": options, "prepared": prepared,
+            "_canonical_finalizations": canonical,
             "original_receipt": original_receipt,
             "outputs": outputs, "locations": resolved_locations, "contexts": contexts,
             "acceptance_plan": acceptance, "run_directory": run, "raw_traces": raw_traces,

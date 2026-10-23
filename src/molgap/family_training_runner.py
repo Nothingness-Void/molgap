@@ -24,10 +24,13 @@ from .experiment_execution import shared_training_adapters
 INTERFACES = {name: adapter.family for name, adapter in shared_training_adapters().items()}
 PROFILES = {name: adapter.artifact_adapter for name, adapter in shared_training_adapters().items()}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
-OPTIONAL_METADATA = {"profiling", "logging", "resume_keep_count"}
+OPTIONAL_METADATA = {"profiling", "logging", "resume_keep_count", "trace_manifest_plan"}
 
 
 def _recipe_configuration(record):
+    if "trace_manifest_plan" in record:
+        from .research_memory.schemas import validate_trace_manifest_plan
+        validate_trace_manifest_plan(record["trace_manifest_plan"])
     if "resume_keep_count" in record and (type(record["resume_keep_count"]) is not int or record["resume_keep_count"] < 1):
         raise ValueError("Expected a positive explicit resume_keep_count")
     if "logging" in record:

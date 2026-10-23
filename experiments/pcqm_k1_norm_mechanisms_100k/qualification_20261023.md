@@ -133,3 +133,41 @@ Acceptance source `5dbda7de` integrates desktop `1711dd8a` and `a20cc64a`, plus
 the earlier shared package/receipt/input/workflow transaction prerequisites.
 Normalization catalog, recipe, policy, kernel and recovery attestation remain
 owner-specific; the historical training packages remain unchanged.
+
+## Shared-entry verification, 2026-10-24
+
+The four original arms were exercised again with the reviewed desktop shared
+source and only the archived `48e4c6a5` normalization catalog/modules restored
+in a temporary source overlay. No model adoption, training, inference, simulated
+artifact or hand-built terminal input was used. The source inventory is in the
+[verification directory](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261024/source.json).
+
+This exposed and repaired historical recipe/cursor readers that had lost
+`trace_manifest_plan` and `norm_diagnostics` support, and a strict replay caller
+that omitted already validated comparison records. The original validators were
+reused; frozen source packages, curves and scientific decisions were not changed.
+Automatic acceptance now resolves the common successor from every arm's verified
+canonical continuation record. Unclosed continuations still require an explicit
+receipt; no latest-version guessing is introduced. The same invocation reuses
+its canonical selection before the independent strict artifact check.
+
+Both pairs were then run twice with only `--strict --execute --verbose --profile
+D:/molgap-machine-profile.json --run-id <original-run-id> --attempt-id v1`.
+No outputs, locations, outcome, role audit or continuation receipt was supplied.
+Position resolved version1; scope/gain resolved version3. All four native and
+replay checks were VERIFIED, with no exclusions; both candidate comparisons were
+STRICT_CAUSAL. Reports were identical between repetitions, CANONICAL_READ_ONLY,
+and `executed=false`. Position took15.10/14.62 seconds; scope/gain28.12/26.89.
+All236 experiment files present before this documentation update were unchanged.
+See the [acceptance summary](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261024/final_acceptance_summary.json).
+
+Exact-version retrieval was repeated twice per arm with the actual retained
+manifests, account adapter and native dependencies. Every call reused the files,
+with zero downloads and no output-transfer network access. The retriever retained
+its explicit version/manifest and prepared-resume arguments; it did not construct
+scientific evidence. [Retrieval summary](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261024/final_retrieval_summary.json).
+Two obsolete physical-cost receipt locators were repaired to byte-identical
+desktop copies; their original input list was preserved in the same directory.
+All four physical windows still total26.04814252059333 T4-device hours, including
+failed version2. Supplying all four windows twice produced the identical ledger
+and ignored four duplicates. No cost event or terminal record was republished.

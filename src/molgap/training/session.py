@@ -88,9 +88,17 @@ def validate_session_resume(recipe, state):
             "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
     if recipe.clean_bn is not None:
         keys.add("weight_state")
+    if type(cursor) is dict and "norm_diagnostics" in cursor:
+        keys.add("norm_diagnostics")
     if (type(cursor) is not dict or set(cursor) != keys or cursor["recipe_identity"] != recipe.identity
             or type(step) is not int or not 1 <= step <= plan.optimizer_steps):
         raise ValueError("Resume identity or step differs from the frozen recipe")
+    if "norm_diagnostics" in cursor:
+        diagnostic = cursor["norm_diagnostics"]
+        if (type(diagnostic) is not dict
+                or diagnostic.get("format") != "molgap-k1-norm-diagnostics-v1"
+                or diagnostic.get("completed_updates") != step):
+            raise ValueError("Normalization diagnostic history differs from resume step")
     pass_index, offset = divmod(step, plan.steps_per_pass)
     rows_per_pass = plan.steps_per_pass * plan.physical_batch_size if plan.drop_last else plan.train_rows
     pending_rows = min(offset * plan.physical_batch_size, rows_per_pass)

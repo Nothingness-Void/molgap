@@ -152,11 +152,17 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         canonical = {}
         canonical_eligible = True
         for arm_id, where in resolved["locations"].items():
-            current = current_finalized_directory(repo_root, where["trajectory"])
-            if not current.is_dir():
-                break
-            verified_receipt(current)
-            terminal = load_terminal_input(current)
+            retained = resolved.get("_canonical_finalizations", {}).get(arm_id)
+            if retained is None:
+                current = current_finalized_directory(repo_root, where["trajectory"])
+                if not current.is_dir():
+                    break
+                verified_receipt(current)
+                terminal = load_terminal_input(current)
+            else:
+                # Discovery already verified this chain in this invocation;
+                # strict inspection below independently checks its bound bytes.
+                current, terminal = retained
             canonical_eligible = canonical_eligible and terminal["trace_manifest"]["backtest_eligibility"]["eligible"]
             canonical[arm_id] = {**where,
                 "terminal": (current / "terminal_input.json").relative_to(Path(repo_root).resolve()).as_posix(),
@@ -318,7 +324,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
         raise ValueError("Strict inputs must name only frozen run arms")
     root = Path(repo_root).resolve()
     arms, blockers = {}, []
-    records = {kind: [] for kind in ("trajectories", "evidence", "traces", "costs")}
+    records = {kind: [] for kind in ("trajectories", "evidence", "traces", "costs", "comparison_readiness")}
     for arm_id, item in sorted(resolved["outputs"].items()):
         supplied = inputs.get(arm_id, {})
         if type(supplied) is not dict or set(supplied) - {
@@ -422,6 +428,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
                 verify_bound_artifact(root, comparison_ref, digest)
                 comparison = validate_comparison_readiness(_json(bound_artifact_path(root, comparison_ref)),
                     evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha))
+                records["comparison_readiness"].append((bound_artifact_path(root, comparison_ref), comparison))
                 if comparison["candidate_id"] != terminal["evidence"]["evidence_id"]:
                     raise ValueError("Strict comparison candidate differs from the accepted terminal result")
                 row["comparison"] = {"status": "VERIFIED" if comparison["strict_ready"] else "BLOCKED",

@@ -210,6 +210,13 @@ frozen expectations. Default diagnostic reports are shared once under
 the same path. Stdout is compact (`--verbose` for
 details). Neither this script nor diagnosis downloads data or trains a baseline.
 
+For already closed continuation runs, `--strict` resolves the common successor
+receipt from all arms' hash-bound canonical continuation records and selects
+that version's retained outputs. It never guesses the newest version. Explicit
+`--continuation-receipt` remains available for an unclosed continuation. Repeating
+strict acceptance of eligible canonical results is read-only even with `--execute`;
+it does not regenerate terminal drafts or close the same run again.
+
 Drafts preserve unknown role/cost/scientific facts. Add an explicit `--outcome`
 and repository-local `--decision-ref` to stage a decision; `--execute` alone
 cannot infer one. Where the producer lacks observed role truth, `--role-audit`

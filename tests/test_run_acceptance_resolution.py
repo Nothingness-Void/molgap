@@ -120,6 +120,62 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, co
     assert {arm: item["output_dir"] for arm, item in result["outputs"].items()} == {
         arm: str(path) for arm, path in destinations.items()}
     assert result["raw_traces"] == {arm: str(path / "trace.json") for arm, path in destinations.items()}
+    if continuation:
+        from molgap.research_memory.paths import artifact_locator
+        from molgap.research_memory.trace import file_digest, json_bytes
+
+        # Retrieval maps alone never choose a successor. Only all arms' sealed
+        # canonical terminal pointers may select that exact retained receipt.
+        declaration = case.spec.to_dict()
+        continuation_paths = []
+        for index, binding in enumerate(declaration["prospective"]["arms"]):
+            owner = case.repo / binding["output"]
+            trajectory = {"trajectory_id": binding["trajectory_id"]}
+            write(owner / "trajectory.json", trajectory)
+            continued = {"attempt_id": binding["arm_id"] + "-v8"}
+            pointer = owner / "continuation.json"
+            origin_receipt = case.run / "operations/launch_receipt.json"
+            record = {"format": "molgap-terminal-continuation-v1", "continued": continued,
+                **{key: {"path": artifact_locator(case.repo, path), "sha256": file_digest(path)}
+                   for key, path in (("origin_receipt", origin_receipt), ("continued_receipt", receipt))}}
+            write(pointer, record)
+            hashes = {item["path"]: item["sha256"] for item in
+                      (record["origin_receipt"], record["continued_receipt"])}
+            hashes[artifact_locator(case.repo, pointer)] = file_digest(pointer)
+            terminal = {"trajectory_id": binding["trajectory_id"],
+                "run_id": declaration["logical_run_id"] + ":" + binding["arm_id"] + ":downstream",
+                "continuation_ref": artifact_locator(case.repo, pointer), "artifact_hashes": hashes,
+                "same_run_observation": continued}
+            finalized = owner / "rml_finalized"
+            # This is a minimal byte-integrity fixture, not scientific closure.
+            for name, value in (("trajectory.json", trajectory), ("prospective_snapshot.json", trajectory),
+                                ("v5_evidence.json", {"synthetic": True}), ("terminal_input.json", terminal)):
+                write(finalized / name, value)
+            published = {path.name: file_digest(path) for path in finalized.iterdir()}
+            write(finalized / "finalization.json", {"format": "molgap-rml-finalization-v1",
+                "trajectory_id": binding["trajectory_id"], "published_hashes": published, "replacements": {},
+                "source_artifact_digest": hashlib.sha256(json_bytes({
+                    "trajectory_sha256": file_digest(finalized / "prospective_snapshot.json"),
+                    "terminal": terminal, "trace_sha256": None})).hexdigest()})
+            continuation_paths.append(pointer)
+            if index == 0:
+                with pytest.raises(ValueError, match="one common continuation"):
+                    resolve_run_acceptance_inputs(*case.original)
+        automatic = resolve_run_acceptance_inputs(*case.original)
+        assert automatic["outputs"] == result["outputs"]
+        assert automatic["options"]["receipt_path"] == receipt
+        assert {value.platform_version for value in automatic["contexts"].values()} == {"8"}
+        assert resolve_run_acceptance_inputs(*case.original)["outputs"] == automatic["outputs"]
+        retained_receipt = receipt.read_bytes()
+        receipt.write_bytes(b"changed accepted receipt")
+        with pytest.raises(ValueError, match="SHA mismatch"):
+            resolve_run_acceptance_inputs(*case.original)
+        receipt.write_bytes(retained_receipt)
+        retained_continuation = continuation_paths[0].read_bytes()
+        continuation_paths[0].write_bytes(b"changed continuation")
+        with pytest.raises(ValueError, match="SHA mismatch"):
+            resolve_run_acceptance_inputs(*case.original)
+        continuation_paths[0].write_bytes(retained_continuation)
     first = next(iter(destinations))
     (destinations[first] / "output_manifest.json").write_bytes(b"changed")
     with pytest.raises(ValueError, match="manifest changed"):
