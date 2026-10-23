@@ -33,6 +33,163 @@ def _json(path: Path) -> dict:
     return _json_bytes(path.read_bytes())
 
 
+def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports):
+    """Translate verified family artifacts into the existing V5 comparison forms.
+
+    Publishes new metadata and terminal inputs. Original terminal packages and
+    scientific decisions are retained byte-for-byte; finalization is separate.
+    """
+    import copy
+    import numpy as np
+    from .comparison_readiness import (CAUSAL_REQUIRED_ROLE_KINDS, ROLE_EVENT_KINDS,
+        assess_comparison_readiness, reference_bundle_digest, target_transform_asset_digest,
+        validate_comparison_readiness, validate_reference_bundle, validate_target_transform_asset)
+    from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
+    from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
+    from .research_memory.roles import validate_observed_role_truth
+    from .family_training_runner import read_recipe
+    root = Path(repo_root).resolve()
+    declaration = resolved["spec"].to_dict()
+    pair = declaration["prospective"].get("same_run_replay")
+    if pair is None:
+        raise ValueError("Automatic strict comparison requires the frozen same-run declaration")
+    reference_id = pair["reference_arm_id"]
+    if any(native_reports[arm]["status"] != "VERIFIED" for arm in locations):
+        raise ValueError("Every same-run arm requires independently reverified native proof")
+    packages = {arm: _json(repo_local_path(root, loc["terminal"])) for arm, loc in locations.items()}
+    adapter_sha256 = file_digest(Path(__file__))
+    identity = canonical_fingerprint({"packages": packages, "native": native_reports,
+        "qualification_adapter_sha256": adapter_sha256})
+    directory = repo_local_path(root, Path(locations[reference_id]["trajectory"]).parent.parent
+        / "strict_qualification" / identity[:20])
+
+    def publish(arm, name, value):
+        path = directory / arm / name
+        publish_immutable_bytes(path, json_bytes(value))
+        return path.relative_to(root).as_posix()
+
+    def binding(pointer):
+        path = bound_artifact_path(root, pointer)
+        return {"ref": pointer, "sha256": file_digest(path)}
+
+    loaded, sides, bundles = {}, {}, {}
+    for arm_id, item in sorted(resolved["outputs"].items()):
+        arm = next(arm for arm in declaration["arms"] if arm["arm_id"] == arm_id)
+        package, ctx = packages[arm_id], resolved["contexts"][arm_id]
+        for pointer, sha in package["artifact_hashes"].items():
+            verify_bound_artifact(root, pointer, sha)
+        validate_observed_role_truth([package["role_use"]], package["roles"])
+        if not any(event["measurement"]["device_hours"]["status"] == "measured"
+                   for event in package["costs"]):
+            raise ValueError("Strict family comparison requires observed native device cost")
+        data = _load_arm_artifacts(Path(item["output_dir"]), context=ctx, expected=item["expected"],
+            target_identity=resolved.get("target_identities", {}).get(arm_id), _inspection=reports[arm_id])
+        loaded[arm_id] = data
+        contract, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+        role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
+        target_binding = resolved["target_identities"][arm_id]
+        target_plan = target_binding._pinned_json(target_binding.plan_path, target_binding.plan_sha256)
+        target_entry = next(entry for entry in target_plan["arms"] if entry["arm_id"] == arm_id)
+        target_pin = target_entry["target_manifest"]
+        targets = target_binding._pinned_json(target_pin["path"], target_pin["sha256"])
+        transform = {"format": "molgap-target-transform-asset-v1", "asset_id": arm["training"]["transform"]["sha256"],
+            "target_identity": arm["data"]["target"], "mean": recipe.target_mean_eV, "std": recipe.target_std_eV,
+            "ddof": 1, "variance_convention": "sample", "source_row_manifest_sha256": role_by_name["train"]["membership_sha256"],
+            "target_sha256": targets["training_float32_target_sha256"]}
+        transform["asset_sha256"] = target_transform_asset_digest(transform)
+        validate_target_transform_asset(transform)
+        transform_ref = publish(arm_id, "target_transform.json", transform)
+        policy = contract["execution_policy"]
+        provenance = _json(Path(item["output_dir"]) / "runtime_provenance.json")
+        comparison_identity = {
+            "benchmark_identity": arm["data"]["dataset"]["name"], "dataset_identity": arm["data"]["dataset"]["sha256"],
+            "data_role_identity": canonical_fingerprint({"roles": arm["data"]["roles"]}),
+            "row_membership_identity": canonical_fingerprint({k: v["membership_sha256"] for k, v in role_by_name.items()}),
+            "row_order_identity": canonical_fingerprint({k: v["row_order_sha256"] for k, v in role_by_name.items()}),
+            "feature_identity": arm["data"]["feature_sha256"], "target_identity": arm["data"]["target"], "seed": recipe.seed,
+            "precision": policy["precision"], "tf32_enabled": policy["tf32"], "deterministic_algorithms": True,
+            "physical_batch_per_device": recipe.batch_size, "gradient_accumulation_steps": 1,
+            "tail_batch_policy": "drop_last" if recipe.drop_last else "keep_last",
+            "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
+                "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
+            "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
+            "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": arm["training"]["objective"]["sha256"],
+            "target_transform_identity": arm["training"]["transform"]["sha256"], "target_transform_asset_sha256": transform["asset_sha256"],
+            "sample_presentations": data["manifest"]["progress"]["sample_presentations"],
+            "optimizer_steps": data["manifest"]["progress"]["optimizer_steps"], "checkpoint_selection_identity": recipe.selection,
+            "evaluation_role_identity": contract["development_role_identity"], "selection_role_identity": contract["development_role_identity"],
+            "architecture_config_identity": canonical_fingerprint({k: arm[k] for k in ("base", "addons")}),
+            "runtime_certificate_scope": provenance["runtime_fingerprint"], "weight_semantics": data["selection_weights"],
+            "ema_enabled": recipe.ema_decay is not None, "ema_decay": recipe.ema_decay,
+            "ema_update_frequency": 1 if recipe.ema_decay is not None else None,
+            "evaluation_weight_source": data["selection_weights"]}
+        bindings = {"checkpoint": binding(artifact_locator(root, Path(item["output_dir"]) / "selected_model.pt")),
+            "runtime_certificate": binding(artifact_locator(root, Path(item["output_dir"]) / "runtime_certificate.json")),
+            "prediction_manifest": binding(publish(arm_id, "prediction_manifest.json", {"prediction_sha256": data["hashes"]["development_predictions_sha256"],
+                "source_idx_sha256": item["expected"]["source_idx_sha256"], "target_sha256": item["expected"]["target_sha256"],
+                "ordering_semantics": "frozen source_idx order", "evaluation_role_identity": contract["development_role_identity"],
+                "row_count": len(data["source_idx"]), "unique_source_idx": int(np.unique(data["source_idx"]).size)})),
+            "row_manifest": binding(publish(arm_id, "row_manifest.json", {"roles": arm["data"]["roles"]})),
+            "target_manifest": binding(publish(arm_id, "target_manifest.json", targets)),
+            "trace_manifest": binding(publish(arm_id, "trace_manifest.json", package["trace_manifest"])),
+            "role_history": binding(publish(arm_id, "role_history.json", {"roles": package["roles"], "role_use": package["role_use"]})),
+            "cost_records": binding(publish(arm_id, "cost_records.json", {"costs": package["costs"]})),
+            "target_transform_asset": binding(transform_ref), "acceptance": binding(package["acceptance_ref"]),
+            "decision": binding(package["decision"]["decision_ref"]),
+            "source_config": binding(artifact_locator(root, Path(item["output_dir"]) / "training_contract.json"))}
+        bundle = {"format": "molgap-reference-bundle-v1", "reference_bundle_id": "ref-" + package["evidence"]["evidence_id"],
+            "reference_id": package["evidence"]["evidence_id"], "contract_ref": bindings["source_config"]["ref"],
+            "architecture_config_identity": comparison_identity["architecture_config_identity"], "source_commit_or_archive": ctx.source_archive_sha256,
+            "checkpoint_identity": bindings["checkpoint"]["sha256"], "prediction_manifest": _json(root / bindings["prediction_manifest"]["ref"]),
+            "comparison_identity": comparison_identity, "stochasticity": {"row_bootstrap_uncertainty": {"status": "not_requested"},
+                "training_stochasticity": {"status": "unavailable", "estimation_method": "unavailable", "source": "unavailable",
+                    "same_contract_repeat_ids": [], "n_repeats": 0, "stochasticity_floor_eV": None}}}
+        for name in ("runtime_certificate", "row_manifest", "target_manifest", "trace_manifest", "role_history", "target_transform_asset", "cost_records", "acceptance", "decision"):
+            bundle[name + "_ref"] = bindings[name]["ref"]
+        validate_reference_bundle(bundle)
+        bundles[arm_id] = bundle
+        sides[arm_id] = {"comparison_identity": comparison_identity, "artifacts": {k: "complete" for k in bindings if k != "source_config"},
+            "prediction_status": "complete", "row_alignment_status": "aligned", "runtime_certificate_status": "accepted",
+            "role_status": "complete", "role_applicability_plan": {kind: "applicable" if kind in CAUSAL_REQUIRED_ROLE_KINDS else "not_applicable" for kind in ROLE_EVENT_KINDS},
+            "observed_role_event_kinds": sorted({event["access_kind"] for event in package["roles"]}),
+            "trace_status": "complete", "trace_field_availability": package["trace_manifest"]["trace_fields"],
+            "stochasticity_status": "unavailable", "terminal_complete": data["manifest"]["progress"]["status"] == "complete", "artifact_bindings": bindings}
+    reference_bundle = bundles[reference_id]
+    bundle_ref = publish(reference_id, "reference_bundle.json", reference_bundle)
+    sides[reference_id].update(reference_bundle_id=reference_bundle["reference_bundle_id"], reference_bundle_sha256=reference_bundle_digest(reference_bundle))
+    comparisons, qualified = {}, {}
+    for arm_id, package in packages.items():
+        if arm_id != reference_id:
+            left, right = loaded[reference_id], loaded[arm_id]
+            if not np.array_equal(left["source_idx"], right["source_idx"]) or not np.array_equal(left["target_eV"], right["target_eV"]):
+                raise ValueError("Strict comparison predictions/targets are not aligned")
+            paired = _compare_paired_errors(np.abs(left["prediction_eV"] - left["target_eV"]),
+                np.abs(right["prediction_eV"] - right["target_eV"]), n_bootstrap=2000, seed=42)
+            paired_ref = publish(arm_id, "paired_analysis.json", paired)
+            sides[arm_id]["artifacts"]["paired_analysis"] = "complete"
+            sides[arm_id]["artifact_bindings"]["paired_analysis"] = binding(paired_ref)
+            comparison = assess_comparison_readiness(candidate_id=package["evidence"]["evidence_id"], candidate=sides[arm_id],
+                reference_id=packages[reference_id]["evidence"]["evidence_id"], reference=sides[reference_id],
+                declared_intervention_fields=["architecture_config_identity"])
+            validate_comparison_readiness(comparison, evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha))
+            comparisons[arm_id] = comparison
+            comparison_ref = publish(arm_id, "comparison_readiness.json", comparison)
+            if not comparison["strict_ready"]:
+                raise ValueError("Strict comparison remains blocked: " + repr(comparison["blocker_codes"]))
+            package = copy.deepcopy(package)
+            package["comparison_readiness_ref"] = comparison_ref
+            package["artifact_hashes"][comparison_ref] = file_digest(root / comparison_ref)
+        else:
+            package = copy.deepcopy(package)
+        package["artifact_hashes"][bundle_ref] = file_digest(root / bundle_ref)
+        package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+        terminal_ref = publish(arm_id, "qualified_terminal.json", package)
+        qualified[arm_id] = {**locations[arm_id], "terminal": terminal_ref,
+            "trace": package["trace_manifest"]["trace_artifact_ref"]}
+    return {"locations": qualified, "comparisons": comparisons, "reference_bundle_ref": bundle_ref,
+        "directory": str(directory), "qualification_adapter_sha256": adapter_sha256}
+
+
 def _json_bytes(raw: bytes) -> dict:
     def unique(pairs):
         result = {}
@@ -357,12 +514,14 @@ class FamilyOutputSession:
     def __init__(self, output_dir: Path, context: RunContext, *, adapter: str,
                  contract: Path, trajectory_id: str, metric_semantics: dict):
         import time
+        from .v4_bundle import _payload
+        from .v4_runtime import normalized_source_sha256
         self.started = time.perf_counter()
         self.root, self.context, self.adapter = Path(output_dir).absolute(), context, adapter
         _safe_local(self.root)
         _safe_local(Path(contract).absolute())
         artifact_adapter(adapter, (context.family_name, context.family_version))
-        if file_digest(contract) != context.training_recipe_sha256:
+        if normalized_source_sha256(Path(contract)) != context.training_recipe_sha256:
             raise ValueError("Session contract/Spec recipe mismatch")
         contract_record = _json(Path(contract))
         self.expected = contract_record.get("acceptance_requirements")
@@ -370,7 +529,7 @@ class FamilyOutputSession:
             raise ValueError("Owning recipe lacks frozen acceptance_requirements")
         _validate_development_semantics(contract_record, metric_semantics)
         self.root.mkdir(parents=True, exist_ok=True)
-        publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
+        publish_immutable_bytes(self.root / "training_contract.json", _payload(Path(contract)))
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
                                    metric_semantics, trajectory_id=trajectory_id)
 

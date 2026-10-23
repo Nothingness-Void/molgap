@@ -627,7 +627,7 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
     _safe_local(root)
     record, recipe = read_owned_recipe(recipe_path)
     _check_context(provenance.get("context"), context)
-    if (normalized_file_sha(Path(recipe_path)) != context.training_recipe_sha256
+    if (normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256
             or provenance.get("recipe_identity") != recipe.identity):
         raise ValueError("Native qualification recipe differs from the frozen run")
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
