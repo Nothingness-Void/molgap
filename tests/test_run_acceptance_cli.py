@@ -87,7 +87,8 @@ def test_workflow_inspection_does_not_build_a_terminal_package(tmp_path, monkeyp
 
 def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_path, monkeypatch, capsys):
     owner = Mock(return_value={"status": "BLOCKED", "arms": {}, "executed": False,
-        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"]}})
+        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"],
+            "arms": {"arm": {"native_qualification": {"status": "VERIFIED", "dependencies": ["large inventory"]}}}}})
     monkeypatch.setattr(runs, "accept_run_workflow", owner)
     physical = tmp_path / "physical.json"
     physical.write_text(json.dumps([{"physical_run": "bound-by-owner"}]), encoding="utf-8")
@@ -98,7 +99,9 @@ def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_
     assert owner.call_args.kwargs["strict_inputs"] == {}
     assert owner.call_args.kwargs["continuation_receipt"] == receipt
     assert owner.call_args.kwargs["physical_runs"] == [{"physical_run": "bound-by-owner"}]
-    assert json.loads(capsys.readouterr().out)["strict_validation"]["status"] == "BLOCKED"
+    visible = json.loads(capsys.readouterr().out)["strict_validation"]
+    assert visible["status"] == "BLOCKED"
+    assert visible["arms"]["arm"]["native_qualification"] == {"status": "VERIFIED"}
 
 
 @pytest.mark.parametrize("read_only", [False, True])

@@ -493,7 +493,7 @@ def main(argv: list[str] | None = None) -> int:
             result = compact_operation_report(result, prepared=args.output)
         if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
                 and not args.verbose and ((args.command == "diagnose" and args.output is not None)
-                                         or "diagnosis" in result)):
+                                         or "diagnosis" in result or "strict_validation" in result)):
             result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
@@ -508,7 +508,16 @@ def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
         "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
-        "strict_validation", "physical_allocation_costs") if key in result}
+        "strict_mode", "physical_allocation_costs") if key in result}
+    if "strict_validation" in result:
+        strict = result["strict_validation"]
+        summary["strict_validation"] = {key: strict[key] for key in
+            ("status", "blockers", "replay_readiness", "ready_for_desktop") if key in strict}
+        summary["strict_validation"]["arms"] = {
+            arm: {**{key: row[key] for key in ("comparison", "replay", "blockers") if key in row},
+                "native_qualification": {key: row.get("native_qualification", {})[key]
+                    for key in ("status", "blockers", "missing") if key in row.get("native_qualification", {})}}
+            for arm, row in strict.get("arms", {}).items()}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
     diagnostic = result.get("diagnosis", result)
