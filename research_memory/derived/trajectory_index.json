@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "97e510aa4ee5f9129a2072399eaabf89ca64e6c8aef41c7bb9a78e49f6682200",
+  "source_digest": "b9a0f6b2f4e447299a2a79f9da90c74d0c7cd51c2db00816f2e59bcd097c0bdf",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -20,29 +20,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md",
       "family_id": "pcqm-k1-batch-renorm-100k",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md",
       "family_id": "pcqm-k1-batch-renorm-100k",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_scale/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_scale/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
     },
