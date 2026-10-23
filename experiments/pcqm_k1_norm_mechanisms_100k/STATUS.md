@@ -17,6 +17,9 @@ comparison readiness is not established, native scratch tensor proofs were
 not independently reverified locally, and large artifacts have explicit
 machine-local custody. [Acceptance method](terminal_acceptance_20261023/method.md)
 and [records](terminal_acceptance_20261023/locations.json) retain the details.
+The subsequent portable repository check failed on inherited historical local
+payload claims absent from this checkout; no missing artifact from this
+experiment was reported. No historical catalog was downloaded to clear it.
 
 Total observed physical entry allocation is26.048143 native T4-device hours,
 including failed scope/gain versions1/2; no inherited ledger double-counting.

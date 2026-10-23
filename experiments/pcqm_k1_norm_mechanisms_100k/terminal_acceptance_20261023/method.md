@@ -38,3 +38,11 @@ Physical entry windows are the cost authority. Versions1,2,3 are counted once,
 including the failed v2 preflight; nested partial-ledger ancestry is not added
 again. The per-arm event records its dedicated device share and leaves unknown
 CPU, queue and per-arm wall measurements missing.
+
+Four independent terminal pipelines returned COMPLETE and `check --frozen`
+passed. After commit `ab142a71`, `check --frozen --portable` exited1 because
+inherited historical evidence claims local payloads absent from this temporary
+checkout. Its diagnostics contain no path under this experiment. No old catalog
+was hydrated. Log: `D:/molgap-scratch/norm_acceptance_portable_20261023.log`,
+SHA256 `ba0be3261d5485b6a976d243df9891d071b3c9f68b2a4cffc93cbac7440d5b75`.
+The portable repository check is therefore not claimed as passed.
