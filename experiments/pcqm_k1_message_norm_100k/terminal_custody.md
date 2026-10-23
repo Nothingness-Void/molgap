@@ -26,5 +26,8 @@ The owner checkout contains no unique required training payload: its two ignored
 historical model aliases are hash-verified hardlinks to the retained primary
 checkout copies. The remaining ignored files are caches and failed-finalization
 staging; original failure/success reports are preserved outside the checkout.
-Physical retirement is recorded in the desktop Git custody update after verification.
+Physical checkout retirement was verified on2026-10-24 JST. The external
+[custody receipt](D:/molgap-artifacts/retirement/k1-message-norm-100k/custody.json)
+records archive ancestry, exact canonical preservation and ignored payload keepers.
+Receipt SHA256: `231f0c9cb88c3b2809918b48e14a0c72f7c577eaf2c7d6a613d697fa210c4094`.
 Deleting the temporary checkout never deletes the external retained source/results.
