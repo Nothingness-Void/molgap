@@ -302,6 +302,7 @@ def validate_trace_plan(
     *,
     experiment_purpose: str | None = None,
     ema_enabled: bool | None = None,
+    evaluation_weight_source: str | None = None,
 ) -> dict[str, bool]:
     plan = _mapping(value, "trace plan")
     if set(plan) != set(TRACE_FIELD_DECLARATIONS):
@@ -310,7 +311,10 @@ def validate_trace_plan(
         raise ValueError("trace plan declarations must be boolean")
     if experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE:
         required = set(CAUSAL_REQUIRED_TRACE_FIELDS)
-        if ema_enabled is True:
+        # Tracked EMA is training identity even when the frozen endpoint uses
+        # Live weights exclusively. Unknown evaluation sources retain the
+        # conservative historical requirement.
+        if ema_enabled is True and evaluation_weight_source != "live":
             required.add("ema_dev_metric")
         missing_required = sorted(field for field in required if plan[field] is not True)
         if missing_required:
@@ -525,6 +529,7 @@ def _observed_trace_status(
         availability,
         experiment_purpose=experiment_purpose,
         ema_enabled=identity.get("ema_enabled"),
+        evaluation_weight_source=identity.get("evaluation_weight_source"),
     )
     return "complete" if side.get("trace_status") == "complete" else "incomplete"
 
@@ -839,8 +844,16 @@ def validate_comparison_readiness(
     record: Mapping[str, Any],
     *,
     evidence_verifier: Callable[[str, str], None] | None = None,
+    metadata_only: bool = False,
 ) -> dict[str, Any]:
-    """Validate observed post-run readiness and its fail-closed invariant."""
+    """Validate post-run metadata; the default also verifies retained payloads.
+
+    Catalog transactions may explicitly use metadata_only without granting new
+    comparison qualification. Runtime/strict acceptance keeps the default.
+    """
+
+    if type(metadata_only) is not bool:
+        raise ValueError("metadata_only must be an explicit boolean")
 
     record = _mapping(record, "comparison readiness")
     if record.get("format") != COMPARISON_READINESS_FORMAT:
@@ -949,11 +962,13 @@ def validate_comparison_readiness(
             record.get("candidate_trace_field_availability"),
             experiment_purpose=record["experiment_purpose"],
             ema_enabled=candidate_identity.get("ema_enabled"),
+            evaluation_weight_source=candidate_identity.get("evaluation_weight_source"),
         )
         validate_trace_plan(
             record.get("reference_trace_field_availability"),
             experiment_purpose=record["experiment_purpose"],
             ema_enabled=reference_identity.get("ema_enabled"),
+            evaluation_weight_source=reference_identity.get("evaluation_weight_source"),
         )
         candidate_bindings = validate_artifact_bindings(
             record.get("candidate_artifact_bindings"),
@@ -965,13 +980,14 @@ def validate_comparison_readiness(
             required=REQUIRED_OBSERVED_BINDINGS,
             label="reference artifact bindings",
         )
-        if evidence_verifier is None:
+        if evidence_verifier is None and not metadata_only:
             raise ValueError(
                 "strict observed readiness requires an artifact evidence verifier"
             )
-        for bindings in (candidate_bindings, reference_bindings):
-            for binding in bindings.values():
-                evidence_verifier(binding["ref"], binding["sha256"])
+        if not metadata_only:
+            for bindings in (candidate_bindings, reference_bindings):
+                for binding in bindings.values():
+                    evidence_verifier(binding["ref"], binding["sha256"])
     elif comparison_class == "STRICT_CAUSAL":
         raise ValueError("STRICT_CAUSAL must be strict_ready")
     return dict(record)
@@ -1012,6 +1028,7 @@ def assess_comparison_prelaunch(
         trace_plan,
         experiment_purpose=experiment_purpose,
         ema_enabled=candidate_identity.get("ema_enabled"),
+        evaluation_weight_source=candidate_identity.get("evaluation_weight_source"),
     )
     runtime = validate_runtime_qualification_plan(runtime_qualification_plan)
     source_status = str(candidate_plan.get("source_config_status", "unknown"))
@@ -1140,6 +1157,7 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
         record.get("trace_plan"),
         experiment_purpose=record.get("experiment_purpose"),
         ema_enabled=planned_identity.get("ema_enabled"),
+        evaluation_weight_source=planned_identity.get("evaluation_weight_source"),
     )
     validate_runtime_qualification_plan(record.get("runtime_qualification_plan"))
     _text(record.get("candidate_source_config_status"), "candidate source/config status")

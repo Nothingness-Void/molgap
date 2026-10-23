@@ -151,6 +151,31 @@ def test_same_run_terminal_closes_reference_first_and_preserves_result_order(tmp
     assert [arm["arm_identifier"] for arm in close.call_args.args[1]] == [reference["arm_id"], data["arms"][0]["arm_id"]]
     assert result == [{"arm": "candidate"}, {"arm": "reference"}]
 
+    # Eligible continuation evidence must compare current attempts across arms;
+    # matching v1 origins cannot make a v3 candidate a same-run pair with v1.
+    candidate_arm = next(arm for arm in data["arms"] if arm["arm_id"] != reference["arm_id"])
+    candidate_arm["observed"]["identity"]["attempt_id"] = fact("att-3")
+    candidate_terminal_path = tmp_path / candidate_arm["terminal"]
+    candidate_terminal = json.loads(candidate_terminal_path.read_text(encoding="utf-8"))
+    candidate_terminal["same_run_observation"]["attempt_id"] = "att-3"
+    continuation_ref = candidate_arm["terminal"].rsplit("/", 1)[0] + "/continuation.json"
+    continuation_path = tmp_path / continuation_ref
+    continuation_path.write_bytes(b"synthetic continuation boundary")
+    candidate_terminal["continuation_ref"] = continuation_ref
+    candidate_terminal["artifact_hashes"][continuation_ref] = hashlib.sha256(
+        continuation_path.read_bytes()).hexdigest()
+    candidate_terminal_path.write_text(json.dumps(candidate_terminal), encoding="utf-8")
+
+    import importlib
+    paired_module = importlib.import_module("molgap.research_memory.paired")
+    origin = json.loads((tmp_path / reference["terminal"]).read_text(encoding="utf-8"))["same_run_observation"]
+    monkeypatch.setattr(paired_module, "validate_terminal_continuation",
+        lambda _root, _terminal, **_kwargs: origin)
+    close.reset_mock()
+    with pytest.raises(ValueError, match="same-run arms have inconsistent observed platform jobs"):
+        execute_terminal_descriptor(tmp_path, spec, TerminalDescriptor(spec, data))
+    close.assert_not_called()
+
 
 def test_canonical_roundtrip_and_detachment(case):
     spec, data = case

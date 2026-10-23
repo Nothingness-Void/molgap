@@ -29,7 +29,7 @@ from molgap.research_memory.finalize import verified_receipt
 from molgap.research_memory.compiler import compile_research_memory
 from molgap.research_memory.backtest import build_screening_backtest
 from molgap.research_memory.schemas import validate_trace_manifest
-from molgap.research_memory.paired import validate_ineligible_continuation
+from molgap.research_memory.paired import validate_ineligible_continuation, validate_terminal_continuation
 from molgap.research_memory.terminal_wiring import (
     build_default_trace_manifest,
     close_terminal_arm,
@@ -192,6 +192,10 @@ def test_ineligible_cross_job_continuation_requires_prefix_context_and_checkpoin
 
     assert validate_ineligible_continuation(tmp_path, terminal) == origin
     assert origin["platform_run_reference"] != terminal["same_run_observation"]["platform_run_reference"]
+    # Legacy prefix/authority evidence can preserve custody, but cannot pass
+    # the stronger bundle/receipt/native gates of replay admission.
+    with pytest.raises(ValueError, match="strict continuation requires"):
+        validate_terminal_continuation(tmp_path, terminal, require_strict=True)
 
 
 @pytest.mark.parametrize(
@@ -681,6 +685,40 @@ def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
     assert trace_obj["run_id"] == "run-auto-1"
     assert len(trace_obj["observations"]) == 2
     assert trace_obj["observations"][0]["optimizer_step"] == 100
+    from molgap.research_memory.finalize import current_finalized_directory, finalize, load_terminal_input
+    amended = load_terminal_input(finalized_dir)
+    pointer = (finalized_dir / "finalization.json").relative_to(tmp_path).as_posix()
+    amended["supersedes_finalization_ref"] = pointer
+    amended["artifact_hashes"][pointer] = file_digest(finalized_dir / "finalization.json")
+    amended_path = arm["exp_dir"] / "qualified_terminal.json"
+    amended_path.write_bytes(json_bytes(amended))
+    original_bytes = (finalized_dir / "trace.json").read_bytes()
+    lock = arm["exp_dir"] / "qualification_revisions/.publication.lock"
+    lock.mkdir(parents=True)
+    with pytest.raises(FileExistsError):
+        finalize(tmp_path, arm["traj_path"], amended_path, trace=finalized_dir / "trace.json")
+    assert lock.is_dir()
+    assert current_finalized_directory(tmp_path, arm["traj_path"]) == finalized_dir
+    lock.rmdir()
+    amended_result = close_terminal_arm(tmp_path, arm["traj_path"], amended_path,
+        trace=finalized_dir / "trace.json")
+    assert amended_result["pipeline_status"] == "COMPLETE", amended_result
+    current = current_finalized_directory(tmp_path, arm["traj_path"])
+    assert current != finalized_dir
+    assert (current / "trace.json").read_bytes() == original_bytes
+    assert (finalized_dir / "trace.json").read_bytes() == original_bytes
+    next_pointer = (current / "finalization.json").relative_to(tmp_path).as_posix()
+    amended["supersedes_finalization_ref"] = next_pointer
+    amended["artifact_hashes"][next_pointer] = file_digest(current / "finalization.json")
+    amended_path.write_bytes(json_bytes(amended))
+    changed_trace = arm["exp_dir"] / "changed_trace.json"
+    changed_trace.write_bytes(original_bytes + b"\n")
+    with pytest.raises(ValueError, match="changed accepted trace bytes"):
+        finalize(tmp_path, arm["traj_path"], amended_path, trace=changed_trace)
+    amended["trace_manifest"]["comparison_role"] = "reference"
+    amended_path.write_bytes(json_bytes(amended))
+    with pytest.raises(ValueError, match="changed accepted trace semantics"):
+        finalize(tmp_path, arm["traj_path"], amended_path, trace=current / "trace.json")
 
 
 # =========================================================================
@@ -1754,6 +1792,55 @@ def test_compact_terminal_inputs_reconstruct_exact_legacy_package(tmp_path, omit
     (directory / "finalization.json").write_bytes(json_bytes(receipt))
     assert verified_receipt(directory)["source_artifact_digest"] == receipt["source_artifact_digest"]
     assert load_terminal_input(directory) == original
+    if not omitted:
+        from molgap.research_memory.finalize import current_finalized_directory
+        from molgap.research_memory.discovery import discover_records
+        before = {p.relative_to(directory).as_posix():p.read_bytes()
+                  for p in directory.rglob("*") if p.is_file()}
+        amended = copy.deepcopy(original)
+        old_ref = (directory / "finalization.json").relative_to(tmp_path).as_posix()
+        amended["supersedes_finalization_ref"] = old_ref
+        amended["artifact_hashes"][old_ref] = file_digest(directory / "finalization.json")
+        amended["qualification_note"] = "Additional retained qualification review; science is unchanged."
+        amended_path = arm["exp_dir"] / "qualification_terminal.json"
+        amended_path.write_bytes(json_bytes(amended))
+        result = close_terminal_arm(tmp_path, arm["traj_path"], amended_path)
+        assert result["pipeline_status"] == "COMPLETE", result
+        current = current_finalized_directory(tmp_path, arm["traj_path"])
+        assert current.parent.parent == arm["exp_dir"] / "qualification_revisions"
+        assert current != directory
+        assert before == {p.relative_to(directory).as_posix():p.read_bytes()
+                          for p in directory.rglob("*") if p.is_file()}
+        discovered = discover_records(tmp_path)
+        assert current / "trajectory.json" in discovered.trajectories
+        assert directory / "trajectory.json" not in discovered.trajectories
+        assert directory / "v5_evidence.json" not in discovered.evidence
+        assert finalize(tmp_path, arm["traj_path"], amended_path)["status"] == "ALREADY_FINALIZED"
+        stale = copy.deepcopy(amended)
+        stale["qualification_note"] = "A second writer used the old receipt."
+        amended_path.write_bytes(json_bytes(stale))
+        with pytest.raises(ValueError, match="unique current finalization"):
+            finalize(tmp_path, arm["traj_path"], amended_path)
+        for field in ("decision", "metrics", "outcome", "authority", "role_use", "costs", "roles", "acceptance_ref"):
+            changed = copy.deepcopy(amended)
+            pointer = (current / "finalization.json").relative_to(tmp_path).as_posix()
+            changed["supersedes_finalization_ref"] = pointer
+            changed["artifact_hashes"][pointer] = file_digest(current / "finalization.json")
+            if field == "decision":
+                changed["decision"]["next_allowed_actions"] = ["ALTERED"]
+            elif field in {"costs", "roles", "acceptance_ref"}:
+                changed[field] = {"changed": True}
+            else:
+                changed["evidence"][field] = {"changed": True}
+            amended_path.write_bytes(json_bytes(changed))
+            with pytest.raises(ValueError, match="changed accepted"):
+                finalize(tmp_path, arm["traj_path"], amended_path)
+        fork = current.parent.parent / "competing_writer" / "rml_finalized"
+        shutil.copytree(current, fork)
+        with pytest.raises(ValueError, match="fork"):
+            current_finalized_directory(tmp_path, arm["traj_path"])
+        with pytest.raises(ValueError, match="fork"):
+            discover_records(tmp_path)
 
 
 @pytest.mark.parametrize("malformed", ["missing_action_id", "nonhashable_action_id", "missing_trajectory"])

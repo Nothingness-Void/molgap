@@ -1,7 +1,7 @@
 """Inspect, diagnose and draft RML inputs for an already retrieved frozen run.
 
-This entry performs local saved-artifact analysis only. Closing canonical RML
-requires an explicit outcome, decision reference and --execute.
+This entry reads local saved artifacts. Closing canonical RML requires explicit
+--execute plus reviewed terminal inputs, or explicit outcome/decision inputs.
 """
 from pathlib import Path
 import sys
@@ -15,7 +15,18 @@ def main(argv=None):
     arguments = list(sys.argv[1:] if argv is None else argv)
     if "--repo-root" not in arguments and not any(a.startswith("--repo-root=") for a in arguments):
         arguments += ["--repo-root", str(root)]
-    return experiment_main(["accept-workflow", "--diagnose", "--stage-terminal", *arguments])
+    reviewed_locations = any(a == "--locations" or a.startswith("--locations=") for a in arguments)
+    strict = "--strict" in arguments or any(a == "--strict-inputs" or a.startswith("--strict-inputs=") for a in arguments)
+    read_only = reviewed_locations and strict and not any(
+        a in {"--execute", "--stage-terminal", "--outcome"} or a.startswith("--outcome=") for a in arguments)
+    defaults = ["accept-workflow"]
+    if not read_only:
+        defaults.append("--diagnose")
+    # Reviewed packages already carry continuation and qualification bindings.
+    # An explicitly requested --stage-terminal still reaches the owning stager.
+    if not reviewed_locations:
+        defaults.append("--stage-terminal")
+    return experiment_main([*defaults, *arguments])
 
 
 if __name__ == "__main__":

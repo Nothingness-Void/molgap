@@ -1590,7 +1590,7 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     context = launch_contexts[4][arm_id]
     root = tmp_path / f"session-{arm_id}"
     contract = tmp_path / f"contract-{arm_id}.json"
-    contract.write_bytes(json_bytes(_recipe(context.family_name)))
+    contract.write_bytes(json_bytes(_recipe(context.family_name)).replace(b"\n", b"\r\n"))
     session = FamilyOutputSession(
         root,
         context,
@@ -1599,6 +1599,8 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
         trajectory_id=f"{context.experiment_id}-{arm_id}",
         metric_semantics=METRIC_SEMANTICS,
     )
+    assert b"\r" not in (root / "training_contract.json").read_bytes()
+    assert file_digest(root / "training_contract.json") == context.training_recipe_sha256
     session.epoch_finished(
         epoch=1,
         optimizer_step=2,

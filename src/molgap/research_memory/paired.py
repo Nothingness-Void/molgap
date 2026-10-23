@@ -70,9 +70,10 @@ def validate_pair_observation(value: Any) -> dict[str, str]:
     return observation
 
 
-def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) -> dict[str, str]:
-    """Verify a retained control continuation without granting replay eligibility."""
-    from .paths import verify_bound_artifact
+def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
+                                   require_strict: bool = False) -> dict[str, str]:
+    """Bind a physical successor to retained state; eligibility stays with V5."""
+    from .paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .trace import load_canonical_trace
 
     pointer = terminal.get("continuation_ref")
@@ -80,10 +81,17 @@ def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) ->
     if not isinstance(pointer, str) or pointer not in bindings:
         raise ValueError("different platform jobs require a bound continuation record")
     verify_bound_artifact(root, pointer, bindings[pointer])
-    path = resolve_repo_pointer(root, pointer)
+    path = bound_artifact_path(root, pointer)
     record = load_json_object(path)
-    if set(record) != {"format", "origin", "continued", "source_trace", "continued_trace",
-                       "source_context", "resume_binding", "continued_manifest", "checkpoint", "authority"} or record["format"] != "molgap-terminal-continuation-v1":
+    common = {"format", "origin", "continued", "source_trace", "continued_trace",
+              "source_context", "continued_manifest", "checkpoint", "authority"}
+    strict_fields = {"source_package", "origin_receipt", "continued_receipt", "native_certificate",
+                     "actual_resume_certificate"}
+    optional = strict_fields | {"recovery_repair"}
+    resume_key = "resume_bundle" if "resume_bundle" in record else "resume_binding"
+    if (not common | {resume_key} <= record.keys()
+            or record.keys() - common - {resume_key} - optional
+            or record["format"] != "molgap-terminal-continuation-v1"):
         raise ValueError("invalid terminal continuation record")
     origin = validate_pair_observation(record["origin"])
     continued = validate_pair_observation(record["continued"])
@@ -93,12 +101,13 @@ def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) ->
         if origin[key] != continued[key]:
             raise ValueError("continuation changed frozen training identity")
     retained = {}
-    for key in ("source_trace", "continued_trace", "source_context", "resume_binding", "continued_manifest", "checkpoint", "authority"):
+    for key in ("source_trace", "continued_trace", "source_context", resume_key,
+                "continued_manifest", "checkpoint", "authority", *sorted(optional & record.keys())):
         item = record[key]
         if not isinstance(item, Mapping) or set(item) != {"path", "sha256"} or bindings.get(item["path"]) != item["sha256"]:
             raise ValueError("continuation artifact is not bound")
         verify_bound_artifact(root, item["path"], item["sha256"])
-        retained[key] = resolve_repo_pointer(root, item["path"])
+        retained[key] = bound_artifact_path(root, item["path"])
     source = load_canonical_trace(retained["source_trace"])
     final = load_canonical_trace(retained["continued_trace"])
     for key in ("trajectory_id", "run_id", "metric_semantics"):
@@ -125,22 +134,179 @@ def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) ->
     for observation in (origin, continued):
         if observation["platform_run_reference"].partition("@")[0] != context["run_reference"]:
             raise ValueError("continuation observation/output run mismatch")
-    resume = load_json_object(retained["resume_binding"])
-    if (resume["spec_identity"], resume["package_identity"], resume["arm_id"],
+    if resume_key == "resume_bundle":
+        from molgap.experiment_resume import validate_resume_bundle
+        checked = validate_resume_bundle(retained[resume_key], context=context)
+        bundle = checked["manifest"]
+        if (bundle["artifacts"]["checkpoint"]["sha256"] != record["checkpoint"]["sha256"]
+                or bundle["artifacts"]["trace"]["sha256"] != record["source_trace"]["sha256"]
+                or bundle["trajectory"]["id"] != terminal["trajectory_id"]
+                or bundle["run"]["run_id"] != terminal["run_id"]
+                or bundle["run"]["attempt_id"] != origin["attempt_id"]):
+            raise ValueError("continuation bundle is not the retained source endpoint")
+    else:
+        resume = load_json_object(retained[resume_key])
+        if (resume["spec_identity"], resume["package_identity"], resume["arm_id"],
             resume["start_epoch"], resume["end_epoch"]) != (
             context["spec_identity"], context["package_identity"], context["arm_id"],
             before[-1]["epoch_or_pass"], after[-1]["epoch_or_pass"]):
-        raise ValueError("continuation resume identity/progress mismatch")
-    if (resume["files"].get(retained["checkpoint"].name) != record["checkpoint"]["sha256"]
+            raise ValueError("continuation resume identity/progress mismatch")
+        if (resume["files"].get(retained["checkpoint"].name) != record["checkpoint"]["sha256"]
             or resume["files"].get(retained["source_trace"].name) != record["source_trace"]["sha256"]):
-        raise ValueError("continuation checkpoint is not the retained source endpoint")
+            raise ValueError("continuation checkpoint is not the retained source endpoint")
     if not any(a.get("locator") == record["continued_trace"]["path"]
                and a.get("sha256") == record["continued_trace"]["sha256"]
                for a in terminal["evidence"]["artifacts"]):
         raise ValueError("continuation trace is absent from accepted evidence")
     if terminal["trace_manifest"]["trace_artifact_ref"] != record["continued_trace"]["path"]:
         raise ValueError("continuation manifest selects a different trace")
+    if require_strict:
+        if resume_key != "resume_bundle" or not strict_fields <= retained.keys():
+            raise ValueError("strict continuation requires a verified bundle, receipts, package and native qualification")
+        from molgap.experiment_spec import ExperimentSpec
+        from molgap.experiment_family_workflow import RunContext, _check_context, terminal_attempt_id
+        from molgap.experiment_package import read_packaged_text, verify_experiment_source_package
+        from molgap.family_training_runner import inspect_retained_native_qualification
+        package_dir = retained["source_package"].parent
+        if retained["source_package"].name != "package_manifest.json":
+            raise ValueError("strict continuation source package must bind its manifest")
+        package = verify_experiment_source_package(package_dir)
+        spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
+        receipt_contexts = []
+        for key, observation in (("origin_receipt", origin), ("continued_receipt", continued)):
+            observed_context = RunContext.from_launch(spec, retained[key], package_dir,
+                expected_package_identity=package["package_identity"], arm_id=context["arm_id"])
+            _check_context(context, observed_context)
+            if (terminal_attempt_id(spec, context["arm_id"], observed_context.platform_version) != observation["attempt_id"]
+                    or observed_context.run_reference != observation["platform_run_reference"]):
+                raise ValueError("strict continuation receipt/attempt identity mismatch")
+            receipt_contexts.append(observed_context)
+        versions = [item.platform_version for item in receipt_contexts]
+        if (not all(value.isdecimal() for value in versions) or int(versions[1]) <= int(versions[0])):
+            raise ValueError("strict continuation successor must follow its origin")
+        prospective = next(item for item in spec.to_dict()["prospective"]["arms"]
+                           if item["arm_id"] == context["arm_id"])
+        validate_resume_bundle(retained[resume_key], spec, arm_id=context["arm_id"], context=context,
+            trajectory=root / prospective["output"] / "trajectory.json")
+        recipe = manifest["artifacts"]["contract"]
+        recipe_path = retained["continued_manifest"].parent / recipe["path"]
+        verify_bound_artifact(root, artifact_locator(root, recipe_path), recipe["sha256"])
+        native_root = retained["native_certificate"].parent
+        if (retained["native_certificate"].name != "runtime_certificate.json"
+                or retained["actual_resume_certificate"].name != "actual_resume_certificate.json"):
+            raise ValueError("strict continuation must bind the native certificate files")
+        from molgap.screen_policy import canonical_fingerprint
+        if manifest.get("runtime", {}).get("runtime_certificate_id") != canonical_fingerprint(
+                load_json_object(retained["native_certificate"])):
+            raise ValueError("strict continuation output/native certificate mismatch")
+        original_provenance = [path for path in checked["sidecars"]["provenance"]
+                               if path.name == "runtime_provenance.json"]
+        provenance = load_json_object(native_root / "runtime_provenance.json")
+        if (len(original_provenance) != 1
+                or load_json_object(original_provenance[0]) != provenance):
+            raise ValueError("strict continuation changed the original runtime/data/initialization identity")
+        native = inspect_retained_native_qualification(native_root, recipe_path=recipe_path,
+            provenance=provenance, context=RunContext(**context),
+            resume_checkpoint_sha256=bundle["artifacts"]["checkpoint"]["sha256"],
+            resume_directory=retained["actual_resume_certificate"].parent)
+        if native["status"] != "VERIFIED":
+            raise ValueError("strict continuation native qualification is incomplete: " + str(native))
+        if "recovery_repair" in retained:
+            import hashlib
+            repair = load_json_object(retained["recovery_repair"])
+            if (repair.get("format") != "molgap-recovery-repair-v1"
+                    or repair.get("spec_identity") != spec.identity
+                    or repair.get("package_identity") != package["package_identity"]
+                    or repair.get("archive_sha256") != context["source_archive_sha256"]
+                    or not _COMMIT.fullmatch(repair.get("commit", ""))):
+                raise ValueError("strict continuation repair identity mismatch")
+            reviewed = {"src/molgap/common/io.py", "src/molgap/experiment_resume.py",
+                        "src/molgap/family_training_runner.py"}
+            if not repair.get("files") or repair["files"].keys() - reviewed:
+                raise ValueError("strict continuation repair exceeds the reviewed infrastructure scope")
+            for name, pins in repair["files"].items():
+                original = read_packaged_text(package_dir, name).encode("utf-8")
+                if hashlib.sha256(original).hexdigest() != pins["original_sha256"]:
+                    raise ValueError("strict continuation repair original source mismatch")
+                matches = [pointer for pointer, digest in bindings.items()
+                           if pointer.endswith("/" + name) and digest == pins["repaired_sha256"]]
+                if len(matches) != 1:
+                    raise ValueError("strict continuation repaired source is not independently bound")
+                verify_bound_artifact(root, matches[0], pins["repaired_sha256"])
     return origin
+
+
+def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) -> dict[str, str]:
+    """Compatibility route for retained continuations without replay admission."""
+    return validate_terminal_continuation(root, terminal)
+
+
+def build_terminal_continuation(root: Path, *, package_dir: Path, origin_receipt: Path,
+                                continued_receipt: Path, resume_bundle: Path,
+                                continued_output: Path, authority: Path, output: Path,
+                                native_root: Path, actual_resume_root: Path,
+                                recovery_repair: Path | None = None,
+                                repair_source_root: Path | None = None) -> dict:
+    """Stage existing continuation evidence without changing a prospective plan."""
+    from molgap.experiment_family_workflow import RunContext, terminal_attempt_id
+    from molgap.experiment_launch import publish_immutable_bytes
+    from molgap.experiment_package import verify_experiment_source_package
+    from molgap.experiment_resume import validate_resume_bundle
+    from molgap.experiment_spec import ExperimentSpec
+    from .paths import artifact_locator, repo_local_path
+    from .trace import file_digest, json_bytes
+
+    package = verify_experiment_source_package(package_dir)
+    spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
+    checked = validate_resume_bundle(resume_bundle, spec)
+    bundle, arm_id = checked["manifest"], checked["manifest"]["arm"]["id"]
+    manifest = load_json_object(continued_output / "output_manifest.json")
+    hashes = {}
+
+    def pin(path):
+        pointer = artifact_locator(root, path)
+        digest = file_digest(path)
+        hashes[pointer] = digest
+        return {"path": pointer, "sha256": digest}
+
+    def observation(receipt):
+        context = RunContext.from_launch(spec, receipt, package_dir,
+            expected_package_identity=package["package_identity"], arm_id=arm_id)
+        return {"schema": PAIR_OBSERVATION_SCHEMA, "spec_identity": spec.identity,
+            "logical_run_id": context.logical_run_id, "platform_name": context.platform,
+            "platform_run_reference": context.run_reference,
+            "attempt_id": terminal_attempt_id(spec, arm_id, context.platform_version),
+            "source_commit": context.source_commit,
+            "source_package_sha256": context.source_archive_sha256}
+
+    context_entries = [path for path in checked["sidecars"]["context"]
+                       if "context" in load_json_object(path)]
+    if len(context_entries) != 1:
+        raise ValueError("Continuation requires a unique retained source context")
+    record = {"format": "molgap-terminal-continuation-v1",
+        "origin": observation(origin_receipt), "continued": observation(continued_receipt),
+        "source_trace": pin(checked["artifacts"]["trace"]),
+        "continued_trace": pin(repo_local_path(continued_output, manifest["artifacts"]["trace"]["path"])),
+        "source_context": pin(context_entries[0]),
+        "resume_bundle": pin(checked["manifest_path"]),
+        "continued_manifest": pin(continued_output / "output_manifest.json"),
+        "checkpoint": pin(checked["artifacts"]["checkpoint"]), "authority": pin(authority),
+        "source_package": pin(package_dir / "package_manifest.json"),
+        "origin_receipt": pin(origin_receipt), "continued_receipt": pin(continued_receipt),
+        "native_certificate": pin(native_root / "runtime_certificate.json"),
+        "actual_resume_certificate": pin(actual_resume_root / "actual_resume_certificate.json")}
+    if recovery_repair is not None:
+        if repair_source_root is None:
+            raise ValueError("Repair evidence requires its retained source root")
+        record["recovery_repair"] = pin(recovery_repair)
+        for name in load_json_object(recovery_repair)["files"]:
+            pin(repair_source_root / name)
+    publish_immutable_bytes(output.absolute(), json_bytes(record))
+    record_pin = pin(output)
+    # This envelope is independently reviewable; callers merge its bindings into
+    # their accepted terminal package, retaining its original scientific facts.
+    return {"continuation_ref": record_pin["path"], "artifact_hashes": hashes,
+            "same_run_observation": record["continued"], "origin": record["origin"]}
 
 
 def reference_trajectory(root: Path, trajectory: Mapping[str, Any]) -> dict[str, Any]:
@@ -174,8 +340,9 @@ def terminal_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     reference = reference_trajectory(root, trajectory)
     reference_path = resolve_repo_pointer(root, binding["reference_trajectory_ref"])
     assert reference_path is not None
-    destination = reference_path.parent / "rml_finalized"
-    from .finalize import verified_receipt, prospective_bytes, load_terminal_input
+    from .finalize import (current_finalized_directory, verified_receipt,
+                           prospective_bytes, load_terminal_input)
+    destination = current_finalized_directory(root, reference_path)
 
     if not (destination / "finalization.json").is_file():
         raise ValueError("same-run reference is not yet terminally accepted")
@@ -206,7 +373,8 @@ def accepted_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     assert binding is not None
     reference_path = resolve_repo_pointer(root, binding["reference_trajectory_ref"])
     assert reference_path is not None
-    destination = reference_path.parent / "rml_finalized"
+    from .finalize import current_finalized_directory
+    destination = current_finalized_directory(root, reference_path)
     manifest_path = destination / "trace_manifest.json"
     if not manifest_path.is_file():
         raise ValueError("same-run reference has no canonical trace manifest")

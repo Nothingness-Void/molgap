@@ -16,6 +16,50 @@ from test_family_training_kernel import initial_states, synthetic_batch
 from test_family_training_session import assert_equal, events, make_session
 
 
+@pytest.mark.parametrize("damage", ["missing", "changed", "complete"])
+def test_retained_native_dependency_inventory_fails_closed(tmp_path, monkeypatch, damage):
+    """Synthetic bytes test admission to the real verifier, never native truth."""
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from molgap import family_training_runner as owner
+    from molgap.v4_runtime import normalized_source_sha256
+    contract = tmp_path / "training_contract.json"
+    contract.write_bytes(b"{}\r\n")
+    ctx = replace(context("neural_atom_k1", contract), training_recipe_sha256=normalized_source_sha256(contract))
+    provenance = {"context": ctx.to_dict(), "recipe_identity": "frozen-recipe"}
+    (tmp_path / "runtime_provenance.json").write_text(json.dumps(provenance), encoding="utf-8")
+    proof = tmp_path / "repeat-a.pt"
+    proof.write_bytes(b"synthetic dependency, not a tensor qualification")
+    digest = sha256_file(proof)
+    (tmp_path / "runtime_certificate.json").write_text(json.dumps({"proofs": [
+        {"path": proof.name, "sha256": digest}]}), encoding="utf-8")
+    monkeypatch.setattr(owner, "read_recipe", lambda _: ({}, SimpleNamespace(identity="frozen-recipe")))
+    verifier = Mock()
+    monkeypatch.setattr(owner, "_verify_preflight", verifier)
+    if damage == "missing":
+        proof.unlink()
+    elif damage == "changed":
+        proof.write_bytes(b"changed")
+    if damage == "changed":
+        with pytest.raises(ValueError, match="hash mismatch"):
+            owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
+                provenance=provenance, context=ctx)
+        verifier.assert_not_called()
+        return
+    result = owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
+        provenance=provenance, context=ctx)
+    if damage == "missing":
+        assert result["status"] == "BLOCKED"
+        assert result["missing"] == ["repeat-a.pt"]
+        assert result["missing_size_bytes"] is None
+        verifier.assert_not_called()
+    else:
+        assert result["status"] == "VERIFIED"
+        assert result["missing"] == []
+        verifier.assert_called_once()
+    assert result["scientific_acceptance"] == result["replay_readiness"] == "NOT_EVALUATED"
+
+
 @pytest.fixture
 def cpu_replay(monkeypatch):
     from molgap.training_reproducibility import capture_rng_state, restore_rng_state
@@ -126,7 +170,12 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     expected_state = deepcopy(baseline.state_dict())
     session = actual_session()
     path, record = contract_file(tmp_path, session)
-    arm = _arm(family, INTERFACES[family][1], "reference", recipe_sha256=sha256_file(path), state_sha256=digest)
+    from molgap.v4_runtime import normalized_source_sha256
+    # Source contracts use the package's LF identity even on Windows. The
+    # retained contract is a normalized artifact with its own exact byte hash.
+    path.write_bytes(path.read_bytes() + b"\r\n")
+    recipe_source_sha = normalized_source_sha256(path)
+    arm = _arm(family, INTERFACES[family][1], "reference", recipe_sha256=recipe_source_sha, state_sha256=digest)
     bindings = family_arm_bindings(recipe)
     arm["base"] = bindings["base"]
     arm["training"].update({key: bindings[key] for key in ("sampler", "transform", "objective")})
@@ -139,9 +188,11 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     spec = ExperimentSpec(declaration)
     ctx = replace(context(family, path), experiment_id=declaration["experiment_id"],
         logical_run_id=declaration["logical_run_id"], spec_identity=spec.identity,
-        arm_identity=canonical_fingerprint(arm))
+        arm_identity=canonical_fingerprint(arm), training_recipe_sha256=recipe_source_sha)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
         trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
+    assert b"\r" not in (outputs.root / "training_contract.json").read_bytes()
+    assert sha256_file(outputs.root / "training_contract.json") == recipe_source_sha
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
     outputs.logger.start(session.progress)

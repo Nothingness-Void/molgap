@@ -794,7 +794,8 @@ def close_terminal_arm(
             )
         # Verify durable receipt has trace_status = available
         traj_path = repo_local_path(root, trajectory)
-        receipt_path = traj_path.parent / "rml_finalized/finalization.json"
+        from .finalize import current_finalized_directory
+        receipt_path = current_finalized_directory(root, traj_path) / "finalization.json"
         if receipt_path.is_file():
             receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
             if receipt.get("trace_status") != "available":

@@ -130,6 +130,13 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--seed", type=int, default=42)
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
+            command.add_argument("--continuation-receipt", type=_local)
+            command.add_argument("--strict", action="store_true",
+                help="Recheck retained native, strict comparison and canonical replay evidence")
+            command.add_argument("--strict-inputs", type=_local,
+                help="Per-arm local proof/comparison locations; recheck existing strict owners")
+            command.add_argument("--physical-runs", type=_local,
+                help="Hash-bound physical allocation records; count each job/version once")
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
@@ -268,6 +275,15 @@ def _dispatch(args) -> tuple[dict, int]:
                     options = dict(supplied=_json(args.outputs) if args.outputs is not None else None,
                         locations=_json(args.locations) if args.locations is not None else None,
                         execute=args.execute, execution_root=args.execution_root)
+                    if args.continuation_receipt is not None:
+                        options["continuation_receipt"] = args.continuation_receipt
+                    if args.strict_inputs is not None:
+                        options["strict_inputs"] = _json(args.strict_inputs)
+                    elif args.strict:
+                        options["strict_inputs"] = {}
+                    if args.physical_runs is not None:
+                        import json
+                        options["physical_runs"] = json.loads(args.physical_runs.read_text(encoding="utf-8"))
                     if args.retrieved_root is not None:
                         options["retrieved_root"] = args.retrieved_root
                     if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
@@ -293,7 +309,8 @@ def _dispatch(args) -> tuple[dict, int]:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
-                    args.decision_ref, args.role_audit, args.output)):
+                    args.decision_ref, args.role_audit, args.output, args.strict_inputs,
+                    args.strict, args.continuation_receipt, args.physical_runs)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:
                 raise ValueError("Explicit Spec acceptance requires --outputs")
@@ -490,7 +507,8 @@ def main(argv: list[str] | None = None) -> int:
 def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
-        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers") if key in result}
+        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
+        "strict_validation", "physical_allocation_costs") if key in result}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
     diagnostic = result.get("diagnosis", result)
@@ -502,6 +520,9 @@ def _acceptance_summary(result):
     if "terminal_staging" in result:
         staging = result["terminal_staging"]
         summary["terminal_staging"] = {key: staging[key] for key in ("status", "paths", "blockers") if key in staging}
+    if "strict_comparison" in result:
+        summary["strict_comparison"] = {key: result["strict_comparison"][key]
+            for key in ("directory", "locations", "reference_bundle_ref")}
     return summary
 
 

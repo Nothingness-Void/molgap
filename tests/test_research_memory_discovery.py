@@ -124,6 +124,7 @@ def test_discovery_applies_only_verified_finalized_replacements(tmp_path, monkey
         return {"replacements": {"trajectory.json": "experiments/q/trajectory.json"}}
 
     monkeypatch.setattr(finalize_module, "verified_receipt", receipt)
+    monkeypatch.setattr(finalize_module, "current_finalized_directory", lambda root, owner: final.parent)
     assert discover_records(tmp_path).trajectories == tuple(sorted((final, other)))
     assert calls == [final.parent]
     assert original.exists()

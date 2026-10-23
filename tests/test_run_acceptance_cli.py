@@ -23,16 +23,24 @@ def test_run_acceptance_cli_needs_no_outputs_or_locations(tmp_path, monkeypatch,
     assert owner.call_args.kwargs["execute"] is False
 
 
-def test_acceptance_script_selects_checkout_and_analysis_defaults(monkeypatch):
+@pytest.mark.parametrize("extra,stage,diagnose", [([], True, True), (["--locations", "reviewed.json"], False, True),
+    (["--locations=reviewed.json"], False, True), (["--locations", "reviewed.json", "--stage-terminal"], True, True),
+    (["--locations", "reviewed.json", "--strict"], False, False),
+    (["--locations", "reviewed.json", "--strict-inputs=proofs.json"], False, False),
+    (["--locations", "reviewed.json", "--strict", "--diagnose"], False, True),
+    (["--locations", "reviewed.json", "--strict", "--stage-terminal"], True, True)])
+def test_acceptance_script_selects_checkout_and_analysis_defaults(monkeypatch, extra, stage, diagnose):
     root = Path(__file__).resolve().parents[1]
     module_spec = importlib.util.spec_from_file_location("local_accept_run", root / "platforms/local/accept_run.py")
     entry = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(entry)
     owner = Mock(return_value=0)
     monkeypatch.setattr(cli, "main", owner)
-    assert entry.main(["--run-id", "test", "--attempt-id", "v1"]) == 0
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", *extra]) == 0
     arguments = owner.call_args.args[0]
-    assert arguments[:3] == ["accept-workflow", "--diagnose", "--stage-terminal"]
+    assert arguments[0] == "accept-workflow"
+    assert ("--diagnose" in arguments) is diagnose
+    assert ("--stage-terminal" in arguments) is stage
     assert arguments[arguments.index("--repo-root") + 1] == str(root)
     assert "--execute" not in arguments
 
@@ -75,3 +83,77 @@ def test_workflow_inspection_does_not_build_a_terminal_package(tmp_path, monkeyp
     assert result["status"] == "MECHANICALLY_VERIFIED"
     assert result["scientific_outcome"] == "NOT_EVALUATED"
     descriptor.assert_not_called()
+
+
+def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_path, monkeypatch, capsys):
+    owner = Mock(return_value={"status": "BLOCKED", "arms": {}, "executed": False,
+        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"]}})
+    monkeypatch.setattr(runs, "accept_run_workflow", owner)
+    physical = tmp_path / "physical.json"
+    physical.write_text(json.dumps([{"physical_run": "bound-by-owner"}]), encoding="utf-8")
+    receipt = tmp_path / "v3.json"
+    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
+        "--strict", "--continuation-receipt", str(receipt), "--physical-runs", str(physical)]) == 1
+    assert owner.call_args.kwargs["strict_inputs"] == {}
+    assert owner.call_args.kwargs["continuation_receipt"] == receipt
+    assert owner.call_args.kwargs["physical_runs"] == [{"physical_run": "bound-by-owner"}]
+    assert json.loads(capsys.readouterr().out)["strict_validation"]["status"] == "BLOCKED"
+
+
+@pytest.mark.parametrize("read_only", [False, True])
+def test_missing_strict_evidence_cannot_execute_terminal_closure(tmp_path, monkeypatch, read_only):
+    from molgap import experiment_workflow as workflow
+    from molgap import experiment_family_workflow as family
+    spec = Mock(identity="f" * 64)
+    resolved = {"spec": spec, "options": {}, "outputs": {}, "contexts": {}, "locations": {}}
+    monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", Mock(return_value=resolved))
+    mechanical = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}})
+    monkeypatch.setattr(workflow, "accept_workflow", mechanical)
+    monkeypatch.setattr(runs, "inspect_run_strict_evidence", Mock(return_value={
+        "status": "BLOCKED", "blockers": ["native_proof_dependencies_missing"]}))
+    qualify = Mock(return_value={"locations": {}})
+    monkeypatch.setattr(family, "qualify_same_run_terminal_packages", qualify)
+    stage = Mock(return_value={"locations": {}, "blockers": []})
+    monkeypatch.setattr("molgap.experiment_terminal_staging.stage_verified_terminal_packages",
+        stage)
+    result = runs.accept_run_workflow(None, tmp_path, "test", "v1", strict_inputs={},
+        execute=not read_only, stage_terminal=not read_only, locations={} if read_only else None)
+    assert result["status"] == "BLOCKED"
+    assert result["executed"] is False
+    assert mechanical.call_count == 1
+    assert mechanical.call_args.kwargs["execute"] is False
+    if read_only:
+        qualify.assert_not_called()
+        stage.assert_not_called()
+        assert result["strict_mode"] == "CANONICAL_READ_ONLY"
+        assert not list(tmp_path.iterdir())
+
+
+def test_synchronous_native_cache_rechecks_bytes_without_reloading_proofs(tmp_path, monkeypatch):
+    import hashlib
+    from types import SimpleNamespace
+    from molgap import family_training_runner as native
+    from molgap.v4_runtime import normalized_source_sha256
+    output = tmp_path / "output"
+    output.mkdir()
+    contract = output / "training_contract.json"
+    contract.write_bytes(b"{\r\n  \"synthetic\": \"recipe identity\"\r\n}\r\n")
+    proof = output / "proof.bin"
+    proof.write_bytes(b"previously checked synthetic proof")
+    context = SimpleNamespace(training_recipe_sha256=normalized_source_sha256(contract),
+        to_dict=lambda: {"synthetic": "bound-context"})
+    cached = {"status": "VERIFIED", "blockers": [], "dependencies": [{"local_path": str(proof),
+        "verified_sha256": hashlib.sha256(proof.read_bytes()).hexdigest()}]}
+    resolved = {"outputs": {"arm": {"output_dir": str(output)}}, "contexts": {"arm": context},
+        "locations": {"arm": {"trajectory": "experiments/missing/trajectory.json", "trajectory_id": "T-missing"}}}
+    verifier = Mock(side_effect=AssertionError("CPU tensor verification must be reused within the transaction"))
+    monkeypatch.setattr(native, "inspect_retained_native_qualification", verifier)
+    kwargs = {"_native_reports": {"arm": (cached, context.to_dict())}, "require_finalized": False}
+    first = runs.inspect_run_strict_evidence(tmp_path, resolved, {}, **kwargs)
+    assert first["arms"]["arm"]["native_qualification"]["status"] == "VERIFIED"
+    proof.write_bytes(b"changed after verification")
+    changed = runs.inspect_run_strict_evidence(tmp_path, resolved, {}, **kwargs)
+    assert "native_qualification_invalid" in changed["arms"]["arm"]["blockers"]
+    assert "dependency changed" in changed["arms"]["arm"]["native_qualification"]["error"]
+    verifier.assert_not_called()

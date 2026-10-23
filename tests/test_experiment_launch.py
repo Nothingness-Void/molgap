@@ -72,6 +72,60 @@ def test_exact_binding_and_source_unchanged(context, tmp_path):
     assert {p.name: p.read_bytes() for p in directory.iterdir()} == before
 
 
+def test_local_process_receipt_and_resume_reuse_real_launch_validation(repo, tmp_path, monkeypatch):
+    """Only the native phase is substituted; package and receipt IO are real."""
+    from molgap import experiment_execution as execution
+    from molgap.experiment_family_workflow import RunContext, prepare_terminal_outputs
+    from molgap.experiment_package import build_experiment_source_package
+    from molgap.local_training import run_local_training
+    from test_experiment_workflow import _arm, _spec_payload
+
+    declaration = _spec_payload([_arm("neural_atom_k1", "3", "candidate")])
+    declaration["platform"].update(name="local", device_count=1)
+    spec = ExperimentSpec(declaration)
+    prepared = tmp_path / "prepared"
+    prepared.mkdir()
+    manifest = build_experiment_source_package(spec, repo, ["src/example.py", "README.md"], prepared / "package")
+    job = {"arm_id": "candidate", "device": 0, "recipe": "recipe.json",
+        "initial_state": "initial.pt", "trajectory_id": declaration["prospective"]["arms"][0]["trajectory_id"]}
+    (prepared / "prepared_training.json").write_text(json.dumps({"status": "SOURCE_INPUTS_PREPARED",
+        "spec_identity": spec.identity, "expected_package_identity": manifest["package_identity"],
+        "jobs": [job], "prospective_sha256": {"candidate": "c" * 64}}))
+    calls = []
+    def native_phase(**options):
+        calls.append(options)
+        if options["phase"] == "preflight":
+            return {"status": "accepted"}
+        options["output"].mkdir(exist_ok=True)
+        (options["output"] / "last_checkpoint.pt").write_bytes(b"synthetic checkpoint, not native proof")
+        return {"status": "PAUSED"}
+    monkeypatch.setattr(execution, "execute_training_phase", native_phase)
+    output = tmp_path / "output"
+    first = run_local_training(prepared, repo, tmp_path, output, pause_after_step=3)
+    assert first["status"] == "PAUSED" and first["resumed"] is False
+    receipt_path = output / "launch_receipt.json"
+    original = receipt_path.read_bytes()
+    second = run_local_training(prepared, repo, tmp_path, output)
+    assert second["status"] == "PAUSED" and second["resumed"] is True
+    assert receipt_path.read_bytes() == original
+    assert calls[1]["pause_after_step"] == 3
+    assert calls[2]["resume_output"] == output / "candidate"
+    pin = manifest["package_identity"]
+    ctx = RunContext.from_launch(spec, receipt_path, prepared / "package",
+        expected_package_identity=pin, arm_id="candidate")
+    host = socket.gethostname().encode("idna").decode("ascii")
+    assert ctx.platform == "local" and ctx.account == host
+    assert ctx.run_reference == host + "/" + declaration["logical_run_id"]
+    bound = prepare_terminal_outputs(spec, repo, {"candidate": {"output_dir": str(output / "candidate"),
+        "expected": {"explicit": "frozen expectations"}}}, receipt_path=receipt_path,
+        package_dir=prepared / "package", expected_package_identity=pin)
+    assert bound["candidate"]["context"] == ctx
+    invocations = [json.loads(path.read_bytes()) for path in (output / "invocations").glob("*.json")]
+    assert len(invocations) == 2 and all(item["platform"] == "local" for item in invocations)
+    assert sum(item["resume_checkpoint_sha256"] is not None for item in invocations) == 1
+    assert not (output / "active_process.json").exists()
+
+
 @pytest.mark.parametrize("outcome,state", [
     ("accepted", "ACCEPTED"), ("queued", "PENDING_RECONCILIATION"),
     ("pending", "PENDING_RECONCILIATION"), ("client_unknown_after_submit", "PENDING_RECONCILIATION"),

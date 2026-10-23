@@ -161,6 +161,26 @@ only from its bound source commit; uncertain effects or journals remain
 
 ## Retrieve, accept and recover
 
+For an explicitly authorized single-model local GPU exercise, use the existing
+`prepare-family-training` entry with a local Spec, then run its frozen output:
+
+```powershell
+& $python platforms/local/train.py --prepared $prepared --repo-root . --data-root D:/molgap-data --output $output --pause-after-step 80
+& $python platforms/local/train.py --prepared $prepared --repo-root . --data-root D:/molgap-data --output $output
+```
+
+The first process pauses after the specified absolute update; the next process
+qualifies and restores that checkpoint under the original training horizon.
+This adapter records the actual host/process, uses the registered native
+preflight and trainer, and supports one arm on one device. It does not submit a
+remote job. After completion, the same entry with `--accept-only --outcome
+INFRASTRUCTURE_ONLY --decision-ref <decision.md> --role-audit <audit.json>
+--execute` uses mechanical inspection, terminal staging and the existing RML
+finalizer. The decision and role audit must describe observed facts; this route
+does not establish scientific comparison or replay eligibility. Durable outputs
+stay outside the checkout. Default output points to the report; `--verbose`
+expands it.
+
 ```powershell
 & $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
 ```

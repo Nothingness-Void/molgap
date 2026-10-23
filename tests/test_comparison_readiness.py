@@ -308,6 +308,23 @@ def test_ema_and_live_weights_are_not_strictly_equal():
     assert "weight_semantics" in result["mismatched_fields"]
 
 
+@pytest.mark.parametrize("source", ["live", "EMA", None])
+def test_tracked_ema_requires_only_the_frozen_evaluation_weight_curve(source):
+    candidate, reference = _side("candidate-arch"), _reference_side()
+    for side in (candidate, reference):
+        side["comparison_identity"].update(ema_enabled=True, ema_decay=.999,
+            ema_update_frequency=1, evaluation_weight_source=source)
+        assert side["trace_field_availability"]["ema_dev_metric"] is False
+    if source == "live":
+        result = _assess(candidate=candidate, reference=reference)
+        assert result["strict_ready"] is True
+        assert result["matched_fields"]["ema_enabled"] is True
+        validate_comparison_readiness(result, evidence_verifier=lambda *_: None)
+    else:
+        with pytest.raises(ValueError, match="ema_dev_metric"):
+            _assess(candidate=candidate, reference=reference)
+
+
 def test_missing_predictions_leave_strict_pending():
     reference = _side("reference-arch")
     reference["prediction_status"] = "unavailable"
@@ -484,3 +501,8 @@ def test_strict_postrun_requires_external_artifact_verification():
     result = _assess()
     with pytest.raises(ValueError, match="artifact evidence verifier"):
         validate_comparison_readiness(result)
+    assert validate_comparison_readiness(result, metadata_only=True) == result
+    changed = copy.deepcopy(result)
+    changed["candidate_artifact_bindings"].pop("checkpoint")
+    with pytest.raises(ValueError, match="artifact bindings"):
+        validate_comparison_readiness(changed, metadata_only=True)

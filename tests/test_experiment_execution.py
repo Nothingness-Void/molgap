@@ -8,15 +8,19 @@ import torch
 from molgap import experiment_execution as execution
 from molgap import experiment_family_workflow as family
 from molgap.training_reproducibility import sha256_file
-from molgap.v4_runtime import state_dict_sha256
+from molgap.v4_runtime import state_dict_sha256, normalized_source_sha256
 
 
-@pytest.mark.parametrize("family_id,version", [("neural_atom_k1", "2"), ("gptrans_t", "1")])
+@pytest.mark.parametrize("family_id,version", [("neural_atom_k1", "2"), ("gptrans_t", "1"), ("neural_atom_k1", "3")])
 @pytest.mark.parametrize("phase", ["train", "preflight"])
 @pytest.mark.parametrize("separate_roots", [False, True])
-def test_registered_completion_binding_is_used_once(tmp_path, monkeypatch, family_id, version, phase, separate_roots):
+@pytest.mark.parametrize("newline", [b"\n", b"\r\n"])
+def test_registered_completion_binding_is_used_once(tmp_path, monkeypatch, family_id, version, phase, separate_roots, newline):
     recipe = tmp_path / "recipe.json"
-    recipe.write_text(json.dumps({"acceptance_requirements": {"synthetic": True}}))
+    source = json.dumps({"acceptance_requirements": {"synthetic": True}}, indent=2).encode() + b"\n"
+    recipe.write_bytes(source.replace(b"\n", newline))
+    if newline == b"\r\n":
+        assert sha256_file(recipe) != normalized_source_sha256(recipe)
     staged = tmp_path / "staged" if separate_roots else tmp_path
     staged.mkdir(exist_ok=True)
     initial = staged / "initial.pt"
@@ -25,7 +29,7 @@ def test_registered_completion_binding_is_used_once(tmp_path, monkeypatch, famil
     arm = {"arm_id": "reference", "family": {"name": family_id, "version": version},
            "addons": [], "initialization": {"state_sha256": state_dict_sha256(state)}}
     spec = SimpleNamespace(to_dict=lambda: {"arms": [arm]})
-    context = SimpleNamespace(source_commit="a" * 40, training_recipe_sha256=sha256_file(recipe))
+    context = SimpleNamespace(source_commit="a" * 40, training_recipe_sha256=normalized_source_sha256(recipe))
     monkeypatch.setattr(family.RunContext, "for_training", lambda *args, **kwargs: context)
     monkeypatch.setattr(execution, "validate_staged_trajectory", lambda *args, **kwargs:
                         {"state_at_start": {"source_commit": context.source_commit}})
@@ -51,6 +55,8 @@ def test_registered_completion_binding_is_used_once(tmp_path, monkeypatch, famil
         package_dir=tmp_path, expected_package_identity="b" * 64, input_root=tmp_path,
         output=output, account="synthetic", run_reference="synthetic/kernel",
         staged_root=staged, prospective_sha256="c" * 64, target_identity=binding)
+    if version == "3" and phase == "train":
+        options["pause_after_step"] = 3
     if separate_roots and family_id == "gptrans_t":
         with pytest.raises(ValueError, match="Separate prospective/data roots"):
             execution.execute_training_phase(**options)
@@ -58,6 +64,8 @@ def test_registered_completion_binding_is_used_once(tmp_path, monkeypatch, famil
         return
     observed = execution.execute_training_phase(**options)
     assert observed is result and len(calls) == 1
+    if version == "3" and phase == "train":
+        assert calls[0]["pause_after_step"] == 3
     if separate_roots:
         assert calls[0]["prospective_root"] == staged
     if phase == "preflight":

@@ -47,7 +47,7 @@ def test_test_inventory_keeps_worker_boundary_and_rejects_payloads(tmp_path, mon
     from molgap import experiment_source_inventory as inventory
     from molgap.experiment_package import _name
     tracked = {*inventory._TEST_SUPPORT_FILES, "tests/conftest.py", "tests/test_data_namespace.py",
-        "src/molgap/__init__.py", "src/molgap/data/loader.py", "src/molgap/local_runtime.py",
+        "src/molgap/__init__.py", "src/molgap/data/loader.py", "src/molgap/local_runtime.py", "src/molgap/local_training.py",
         "src/molgap/kaggle_credentials.py", "src/molgap/archive/old.py",
         "research_memory/schemas/decision-state-v2.schema.json",
         "research_memory/policies/fixture-policy.1.json",
@@ -55,13 +55,13 @@ def test_test_inventory_keeps_worker_boundary_and_rejects_payloads(tmp_path, mon
     monkeypatch.setattr("molgap.v4_bundle._tracked_paths", lambda root: tracked)
     names = set(inventory.testing_source_files(tmp_path))
     assert {"tests/conftest.py", "tests/test_data_namespace.py", "pyproject.toml",
-            "src/molgap/local_runtime.py", "src/molgap/kaggle_credentials.py",
+            "src/molgap/local_runtime.py", "src/molgap/local_training.py", "src/molgap/kaggle_credentials.py",
             "research_memory/schemas/decision-state-v2.schema.json",
             "research_memory/policies/fixture-policy.1.json"} <= names
     assert not {"tests/cache.npz", "tests/data/manifest.json", "credentials.json",
                 "data/weights.pt", "src/molgap/archive/old.py"} & names
     runtime = set(inventory.runtime_source_files(tmp_path))
-    assert not {"src/molgap/local_runtime.py", "src/molgap/kaggle_credentials.py"} & runtime
+    assert not {"src/molgap/local_runtime.py", "src/molgap/local_training.py", "src/molgap/kaggle_credentials.py"} & runtime
     assert not any(path.startswith("tests/") for path in runtime)
     for unsafe in ("tests/secret.py", "tests/credentials/helper.py", "tests/auth_token.py",
                    "tests/checkpoint.pt", "tests/data/manifest.json", "src/molgap/other_credentials.py"):

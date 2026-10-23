@@ -422,15 +422,19 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
                            account, run_reference, staged_root=None, prospective_sha256=None,
-                           target_identity=None, preflight_dir=None, resume_output=None):
+                           target_identity=None, preflight_dir=None, resume_output=None,
+                           pause_after_step=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
-    from .research_memory.trace import file_digest
-    from .v4_runtime import inspect_frozen_state_artifact
+    from .v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
     if phase not in {"preflight", "train"}:
         raise ValueError("Unsupported execution phase")
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == job["arm_id"])
     adapter = training_adapter(arm)
+    if pause_after_step is not None:
+        if (phase != "train" or adapter.module != "molgap.family_training_runner"
+                or type(pause_after_step) is not int or pause_after_step < 1):
+            raise ValueError("Explicit step pause requires a shared training arm and a positive step")
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
         account=account, run_reference=run_reference)
@@ -441,7 +445,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     if trajectory["state_at_start"].get("source_commit") != context.source_commit:
         raise ValueError("Published trajectory/source commit mismatch")
     recipe = _artifact_path(source_root, job["recipe"])
-    if file_digest(recipe) != context.training_recipe_sha256:
+    if normalized_source_sha256(recipe) != context.training_recipe_sha256:
         raise ValueError("Executable recipe/Spec hash mismatch")
     initial = _artifact_path(staged_root, job["initial_state"])
     if arm["initialization"]["state_sha256"] is None:
@@ -452,6 +456,8 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
+    if pause_after_step is not None:
+        options["pause_after_step"] = pause_after_step
     if phase == "preflight" and resume_output is not None:
         runner = getattr(owner, "run_screen_resume_preflight", None)
         if not callable(runner):

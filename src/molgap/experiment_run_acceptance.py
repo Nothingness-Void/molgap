@@ -89,13 +89,37 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
 
 
 def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
-                                  retrieved_root=None, supplied=None, locations=None):
+                                  retrieved_root=None, supplied=None, locations=None,
+                                  continuation_receipt=None):
     """Resolve all arms from frozen plans, explicit paths or verified retrieval maps."""
     from .experiment_run import _original_run
     verification = _PackageVerification()
     spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
                                            _verification=verification)
     run, package = prepared.parent, options["package_dir"]
+    if continuation_receipt is not None:
+        from .experiment_launch import read_launch_receipt
+        original_receipt = options["receipt_path"]
+        successor = Path(continuation_receipt)
+        successor = successor if successor.is_absolute() else Path(repo_root) / successor
+        _safe_local(successor.absolute())
+        # A successor may change only the physical attempt. Package verification
+        # and both reconciled receipts retain the original scientific identity.
+        read_launch_receipt(successor.absolute(), spec, package,
+            expected_package_identity=options["expected_package_identity"], _verification=verification)
+        for arm in spec.to_dict()["arms"]:
+            before = RunContext.from_launch(spec, original_receipt, package,
+                expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+                _verification=verification)
+            after = RunContext.from_launch(spec, successor, package,
+                expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+                _verification=verification)
+            if ({k: v for k, v in before.to_dict().items() if k != "platform_version"}
+                    != {k: v for k, v in after.to_dict().items() if k != "platform_version"}
+                    or not after.platform_version.isdecimal() or not before.platform_version.isdecimal()
+                    or int(after.platform_version) <= int(before.platform_version)):
+                raise ValueError("Continuation receipt must bind a later attempt of the original frozen run")
+        options["receipt_path"] = successor.absolute()
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
     workflow = _json(run / "inputs/workflow_plan.json")
     acceptance = _packaged_json(package, workflow["acceptance_plan"], _verification=verification)
