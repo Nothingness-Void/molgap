@@ -65,6 +65,14 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+User-authorized K1 Batch Renorm100K pair belongs to
+`codex/exp/k1-batch-renorm-100k`; BRANCHES owns its checkout routing.
+[Status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-batch-renorm-100k/experiments/pcqm_k1_batch_renorm_100k/STATUS.md)
+retain scale-only versus scale-plus-mean correction, each40passes, Kaggle1
+kernel140432543/version1 (observed RUNNING2026-10-24JST). Strict terminal replay
+and predeclared local calibration attribution are pending. The explicit local
+Luna30minute monitor is scoped to this job; no server handoff or automatic retry.
+
 User-authorized K1 graph-wise message DropPath100K belongs to
 `codex/exp/k1-message-droppath-100k`; resolve its checkout through BRANCHES.
 [Status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-message-droppath-100k/experiments/pcqm_k1_message_droppath_100k/STATUS.md)
