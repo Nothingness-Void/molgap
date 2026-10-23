@@ -128,6 +128,7 @@ def _install_family(repo, monkeypatch):
     _git(repo, "config", "user.email", "synthetic@example.invalid")
     _git(repo, "config", "user.name", "Shared graph fixture")
     _git(repo, "config", "core.autocrlf", "false")
+    (repo / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
     return arm, owner, model_module, sources
 
 
@@ -177,7 +178,7 @@ def test_new_model_and_tiny_addon_reuse_release_training_and_acceptance(tmp_path
     initial_state = repo / "initial.pt"
     torch.save(initial_model.state_dict(), initial_state)
     arm["initialization"]["state_sha256"] = model_state_sha256(initial_model)
-    _git(repo, "add", "--", *sources, "recipes/new_graph.json")
+    _git(repo, "add", "--", ".gitattributes", *sources, "recipes/new_graph.json")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic model and shared release sources")
     payload = _spec_payload([arm], platform="kaggle")
     binding = payload["prospective"]["arms"][0]

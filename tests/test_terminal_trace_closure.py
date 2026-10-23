@@ -218,6 +218,14 @@ def test_ineligible_cross_job_continuation_rejects_unbound_or_changed_state(
 
 def setup_mock_repo(temp_dir: Path) -> dict[str, Path]:
     """Create minimal mock repository with valid schemas and reference experiment."""
+    subprocess.run(["git", "init", "-q", str(temp_dir)], check=True)
+    for relative in ("experiments/.gitattributes", "research_memory/policies/.gitattributes"):
+        target = temp_dir / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO_ROOT_PATH / relative).read_bytes())
+    subprocess.run(["git", "add", "experiments/.gitattributes", "research_memory/policies/.gitattributes"], cwd=temp_dir, check=True)
+    subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        "commit", "-qm", "Preserve evidence bytes"], cwd=temp_dir, check=True)
     schemas_dst = temp_dir / "research_memory/schemas"
     schemas_dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(REPO_ROOT_PATH / "research_memory/schemas", schemas_dst)
@@ -660,6 +668,32 @@ def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
         include_trace_artifact=True,
     )
 
+    def git(*args, input=None):
+        return subprocess.run(["git", *args], cwd=tmp_path, input=input,
+            check=True, capture_output=True).stdout
+
+    git("config", "core.autocrlf", "true")
+    decision = arm["exp_dir"] / "decision.md"
+    relative = decision.relative_to(tmp_path).as_posix()
+    overrides = arm["exp_dir"] / ".gitattributes"
+    overrides.write_bytes(b"decision.md text eol=crlf\n")
+    oid = git("hash-object", "-w", "--path=" + relative, "--stdin", input=decision.read_bytes()).decode().strip()
+    assert git("cat-file", "--filters", "--path=" + relative, oid) != decision.read_bytes()
+    with pytest.raises(ValueError, match="Git may transform hash-bound bytes"):
+        close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    assert not (arm["exp_dir"] / "rml_finalized").exists()
+    info = tmp_path / ".git/info/attributes"
+    info.write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    with pytest.raises(ValueError, match="Git info/attributes masks hash-bound path"):
+        close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    info.unlink()
+    overrides.unlink()
+    diagnostic = arm["exp_dir"] / "diagnostic.py"
+    diagnostic.write_bytes(b"# Exact retained diagnostic source\r\n")
+    package = load_json_object(arm["terminal_path"])
+    package["artifact_hashes"][diagnostic.relative_to(tmp_path).as_posix()] = file_digest(diagnostic)
+    arm["terminal_path"].write_bytes(json_bytes(package))
+
     # Caller omits trace entirely
     result = close_terminal_arm(
         repo_root=tmp_path,
@@ -678,6 +712,18 @@ def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
     assert receipt["trace_status"] == "available"
     assert (finalized_dir / "trace.json").is_file()
     assert (finalized_dir / "trace_manifest.json").is_file()
+
+    retained = {p.relative_to(tmp_path).as_posix(): p.read_bytes()
+        for p in (tmp_path / "experiments").rglob("*") if p.is_file()}
+    git("add", "experiments")
+    git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "Accepted evidence")
+    for autocrlf in ("true", "false"):
+        with tempfile.TemporaryDirectory(prefix="git-restore-", dir=tmp_path.parent) as restored:
+            git("-c", "core.autocrlf=" + autocrlf, "checkout-index", "--all", "--prefix=" + Path(restored).as_posix() + "/")
+            for name, raw in retained.items():
+                assert git("cat-file", "blob", "HEAD:" + name) == raw
+                assert (Path(restored) / name).read_bytes() == raw
+            assert verified_receipt(Path(restored) / finalized_dir.relative_to(tmp_path)) == receipt
 
     # Verify canonical trace content
     trace_obj = load_canonical_trace(finalized_dir / "trace.json")

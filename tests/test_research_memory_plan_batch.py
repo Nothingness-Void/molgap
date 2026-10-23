@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from collections import Counter
 from importlib import import_module
 from pathlib import Path
@@ -22,6 +23,11 @@ def _write_json(path: Path, value: dict) -> None:
 @pytest.fixture
 def planning_root(tmp_path, monkeypatch):
     root = tmp_path
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    subprocess.run(["git", "add", ".gitattributes"], cwd=root, check=True)
+    subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        "commit", "-qm", "Preserve fixture bytes"], cwd=root, check=True)
     seed = root / "experiments/seed"
     _write_json(seed / "trajectory.json", {
         "trajectory_id": "T-existing",
@@ -184,6 +190,15 @@ def test_batch_rejects_existing_ids_before_writing(planning_root, identity):
 
 def test_batch_shares_frozen_snapshot_and_preserves_input_order(planning_root):
     root, discovery_calls = planning_root
+    # Override only the future destination: rejection must precede any publish.
+    with (root / ".gitattributes").open("ab") as handle:
+        handle.write(b"experiments/arm-a/trajectory.json text\n")
+    with pytest.raises(ValueError, match="Git may transform hash-bound bytes"):
+        plan_module.plan_many(root, [_item("b"), _item("a")])
+    assert not (root / "experiments/arm-b").exists()
+    assert not (root / "experiments/rml_decision_snapshots").exists()
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    discovery_calls.clear()
     result = plan_module.plan_many(root, [_item("b"), _item("a")])
     assert len(discovery_calls) == 1
     assert result["status"] == "PLANNED"

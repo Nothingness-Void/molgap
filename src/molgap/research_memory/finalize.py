@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
-from .paths import bound_artifact_path, repo_local_path, resolve_repo_pointer, verify_bound_artifact
+from .paths import artifact_locator, bound_artifact_path, repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import (accepted_reference_evidence, pair_binding, reference_trajectory,
                      terminal_reference_evidence, validate_pair_observation,
                      validate_terminal_continuation)
@@ -556,6 +556,12 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         "cost_status": "observed_records" if package.get("costs") else "measurement_missing",
         "role_status": "observed_records" if package.get("roles") else "unavailable",
     }
+    from .portability import require_byte_preserving_git_paths
+    require_byte_preserving_git_paths(root, [*package["artifact_hashes"], trajectory_path,
+        *([frozen_raw["decision_state"]["snapshot_ref"]]
+          if frozen_raw.get("decision_state", {}).get("schema") == "molgap-decision-state-v2" else []),
+        *([artifact_locator(root, trace_path)] if trace_bytes is not None else []),
+        *(destination / name for name in files), destination / "finalization.json"])
     # Staging lives outside discovery's experiments glob and on the same volume.
     staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)

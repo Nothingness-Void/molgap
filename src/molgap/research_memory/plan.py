@@ -421,6 +421,9 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
             if validate_only:
                 raise PlanBatchError(index, len(prepared), [], exc) from exc
             raise
+    from .portability import require_byte_preserving_git_paths
+    require_byte_preserving_git_paths(root, [*bindings, shared_path,
+        *(item["destination"] / name for item in validated for name in item["files"])])
     results = []
     if validate_only:
         # Each arm carries the same union from this snapshot. Recheck it once

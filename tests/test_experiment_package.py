@@ -39,6 +39,7 @@ def repo(tmp_path):
     git(root, "config", "user.email", "synthetic@example.invalid")
     git(root, "config", "user.name", "Synthetic fixture")
     git(root, "config", "core.autocrlf", "false")
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
     (root / "src").mkdir()
     (root / "src" / "example.py").write_bytes(b"VALUE = 1\r\n")
     (root / "src" / "molgap").mkdir()

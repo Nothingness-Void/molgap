@@ -32,6 +32,7 @@ def scientific(tmp_path_factory, request):
     family, version = request.param
     repo = tmp_path / "checkout"
     repo.mkdir()
+    (repo / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
     # Copy active code, then commit the independent fixture repository. This
     # tests genuine isolated imports without locking live files to old history.
     for source in (ROOT / "src/molgap").rglob("*.py"):

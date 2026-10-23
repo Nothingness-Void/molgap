@@ -235,6 +235,8 @@ def runtime_source_files(repo_root, records=()):
 # molecular data, model states and Git repositories under temporary directories.
 # Retain all test Python so shared fixtures do not need a second import catalog.
 _TEST_SUPPORT_FILES = frozenset({
+    "experiments/.gitattributes",
+    "research_memory/policies/.gitattributes",
     "pyproject.toml",
     "platforms/local/run.py",
     "platforms/local/accept_run.py",
