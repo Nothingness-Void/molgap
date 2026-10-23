@@ -2949,6 +2949,28 @@
         "source_ref": "molgap-desktop"
       },
       "artifact_restore_limits": "Exact required outputs and native proofs retained under external D: paths; restore archived source/catalog for strict runtime reinspection."
+    },
+    {
+      "owner_id": "codex/exp/k1-batch-renorm-100k",
+      "original_path": "D:\\molgap-worktrees\\k1-batch-renorm-100k",
+      "original_head": "c677aa45f4211f530f5ad961d42e9686b4861649",
+      "scientific_status": "reference CLOSED; candidate NEGATIVE_UNDER_CONTRACT; both complete replay; local attribution NO_TRAIN completed",
+      "physical_disposition": "PHYSICALLY_RETIRED",
+      "recovery_ref": "c677aa45f4211f530f5ad961d42e9686b4861649",
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "f92e4694b99522ec276b61eeed7f0d1980740daa",
+        "original_head_is_ancestor": true
+      },
+      "custody_manifest": {
+        "path": "D:\\molgap-artifacts\\retirement\\k1-batch-renorm-100k\\custody.json",
+        "sha256": "b9fd3c7fb1a8138250c271a36e20a93eb719fd37711b31be5b876e3c37b0c260"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_batch_renorm_100k/terminal_custody.md",
+        "source_ref": "molgap-desktop"
+      },
+      "artifact_restore_limits": "Required native outputs/proofs and selected-LIVE diagnostic artifacts retained under external D: paths. Exact diagnostic source bundles preserve source bytes; restore archived model/catalog for strict run reinspection."
     }
   ]
 }

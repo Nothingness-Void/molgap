@@ -13,7 +13,7 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 ## New desktop experiment lifecycle
 
 K1 Batch Renorm scale-versus-affine100K is terminally accepted without adoption.
-Full history through `aa057687` is reachable from pushed archive `7c71b9dd`.
+Full history through `c677aa45` is reachable from pushed archive `f92e4694`.
 Desktop retains [strict replay and final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md)
 for both arms and the completed local Clean-BN diagnostic. The
 [custody record](experiments/pcqm_k1_batch_renorm_100k/terminal_custody.md) owns restoration and artifact locations;
