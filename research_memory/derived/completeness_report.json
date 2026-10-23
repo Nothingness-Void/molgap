@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 142,
+    "trajectories_total": 144,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 131,
-    "with_incomplete_native_measurement": 107,
+    "with_cost_event": 133,
+    "with_incomplete_native_measurement": 109,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,9 +15,11 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 90,
+      "count": 92,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -139,9 +141,11 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 107,
+      "count": 109,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -271,9 +275,11 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 47,
+      "count": 49,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -325,8 +331,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 14,
       "items": [
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

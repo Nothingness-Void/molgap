@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
+      "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale:A001",
+      "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_scale/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed:A001",
       "target": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_fixed/recipe.json",
       "type": "action_produced_evidence"
@@ -2012,6 +2022,16 @@
     },
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-k1-complete-module-audit-20261008",
       "type": "prior_evidence"
     },
@@ -3290,6 +3310,14 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "type": "trajectory"
     },
     {

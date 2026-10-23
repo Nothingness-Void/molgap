@@ -1,0 +1,26 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-batch-renorm-100k-s42",
+  "kernel_id": 140432543,
+  "local_prepare_seconds": 88.11694219999481,
+  "observed_at": "2026-10-23T17:51:28.091750+00:00",
+  "package_identity": "6b56369539f267c25bf93ba6fa47c11c3e4281c6d9e9f1e11ff1a97a37f2c1ab",
+  "phase": "BOUND",
+  "platform_phase_seconds": {
+    "KERNEL_ACCEPTED": 11.308243200001016,
+    "KERNEL_SUBMITTING": 2.316317099997832,
+    "NEW": 8.349806700003683,
+    "SOURCE_PUBLISHED": 47.99571830000059,
+    "SOURCE_SUBMITTING": 19.921361600005184
+  },
+  "run_directory": "D:\\molgap-artifacts\\runs\\pcqm-k1-batch-renorm-100k-s42\\v1",
+  "scheduler_status": "RUNNING",
+  "scheduler_verified_exact_version": true,
+  "scientific_acceptance": "PENDING",
+  "source_archive_sha256": "f01cae6f5f52ab1d2ee67ecaaf404f13016636e761c367315caf2a26dbd5cd1e",
+  "source_commit": "888ff7ccc0ee92e15a8b47eeeba1f3ede4ec2f3b",
+  "source_copy_retirement_status": "REMOVED",
+  "spec_identity": "ae79d3f35d996b2462310bcc3027d8dd8894797b74834ce11a2d353f2e8b7ac6",
+  "strict_replay": "PENDING",
+  "submission_reconciliation": "First call stopped at SOURCE_PUBLISHED with RuntimeError; independent source ready observation; same journal reentered, exactly one kernel v1 returned.",
+  "version": 1
+}

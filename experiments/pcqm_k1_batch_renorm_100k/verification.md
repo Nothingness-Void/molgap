@@ -31,3 +31,16 @@ and not retested here; native qualification remains mandatory for each arm.
 Logs (D: external, no checkpoint fixture retained):
 `D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/local_checks.log` and
 `D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/local_checks_repaired.log`.
+
+## Prospective RML and inherited custody limitation
+
+The actual compiler published two validated prospective trajectories before
+remote submission. RML rebuild succeeded and retained all16 existing replay
+members; this pair has no terminal membership yet. Global check --frozen failed
+on an inherited ignored historical model at
+`platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt`.
+No history was downloaded, copied, relinked or rewritten to pass that check.
+This fresh-worktree/global-artifact-check conflict was reported as an actual
+infrastructure gap to the authorized reconstruction conversation. Its resolution
+is pending; neither a global frozen pass nor strict replay is claimed.
+Log: `D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/rml_frozen.log`.
