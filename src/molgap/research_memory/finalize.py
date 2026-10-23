@@ -21,7 +21,7 @@ from molgap.evidence_pointers import load_json_object
 from .paths import bound_artifact_path, repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import (accepted_reference_evidence, pair_binding, reference_trajectory,
                      terminal_reference_evidence, validate_pair_observation,
-                     validate_ineligible_continuation)
+                     validate_terminal_continuation)
 from .roles import validate_observed_role_truth
 from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
@@ -112,12 +112,96 @@ def verified_receipt(directory: Path) -> dict[str, Any]:
     return receipt
 
 
+def _qualification_amendment(root: Path, previous: Path, frozen_bytes: bytes,
+                             package: dict, trace_bytes: bytes | None) -> None:
+    """Requalification may add proof, never revise the accepted scientific result."""
+    receipt = verified_receipt(previous)
+    old = load_terminal_input(previous)
+    if prospective_bytes(previous, receipt) != frozen_bytes:
+        raise ValueError("qualification revision changed the original prospective bytes")
+    for field in ("trajectory_id", "run_id", "action_id", "decision",
+                  "acceptance_ref", "roles", "costs", "role_use"):
+        if package.get(field) != old.get(field):
+            raise ValueError("qualification revision changed accepted " + field)
+    for field in (old["evidence"].keys() | package["evidence"].keys()) - {"artifacts"}:
+        if package["evidence"].get(field) != old["evidence"].get(field):
+            raise ValueError("qualification revision changed accepted evidence " + field)
+    for field in ("artifacts",):
+        if any(item not in package["evidence"].get(field, [])
+               for item in old["evidence"].get(field, [])):
+            raise ValueError("qualification revision removed accepted evidence artifacts")
+    if any(package["artifact_hashes"].get(pointer) != digest
+           for pointer, digest in old["artifact_hashes"].items()):
+        raise ValueError("qualification revision changed accepted artifact bindings")
+    old_manifest, new_manifest = old.get("trace_manifest"), package.get("trace_manifest")
+    if old_manifest is not None or new_manifest is not None:
+        if not isinstance(old_manifest, dict) or not isinstance(new_manifest, dict) or any(
+                old_manifest.get(field) != new_manifest.get(field)
+                for field in (old_manifest.keys() | new_manifest.keys()) - {"backtest_eligibility"}):
+            raise ValueError("qualification revision changed accepted trace semantics")
+    old_trace = (previous / "trace.json").read_bytes() if receipt["trace_status"] == "available" else None
+    if trace_bytes != old_trace:
+        raise ValueError("qualification revision changed accepted trace bytes")
+
+
+def current_finalized_directory(repo_root: str | Path, trajectory_or_directory: str | Path) -> Path:
+    """Resolve the unique append-only qualification tip; forks never pick a winner."""
+    root = Path(repo_root).resolve()
+    path = repo_local_path(root, trajectory_or_directory)
+    if path.is_file():
+        path = path.parent
+    if path.name == "rml_finalized":
+        receipt = verified_receipt(path)
+        owner = (repo_local_path(root, receipt["prospective_ref"]).parent
+                 if receipt.get("prospective_ref") else path.parent)
+    else:
+        owner = path
+    original = repo_local_path(root, owner / "rml_finalized")
+    revisions = sorted((owner / "qualification_revisions").glob("*/rml_finalized"))
+    if not original.is_dir():
+        if revisions:
+            raise ValueError("qualification revision has no original finalization")
+        return original
+    initial = verified_receipt(original)
+    frozen = prospective_bytes(original, initial)
+    directories = {original, *revisions}
+    children = {}
+    for directory in revisions:
+        directory = repo_local_path(root, directory)
+        receipt = verified_receipt(directory)
+        package = load_terminal_input(directory)
+        pointer = package.get("supersedes_finalization_ref")
+        if not isinstance(pointer, str) or pointer not in package.get("artifact_hashes", {}):
+            raise ValueError("qualification revision requires a hash-bound superseded receipt")
+        parent = repo_local_path(root, pointer)
+        if parent.name != "finalization.json" or parent.parent not in directories:
+            raise ValueError("qualification revision parent is outside its prospective chain")
+        verify_bound_artifact(root, pointer, package["artifact_hashes"][pointer])
+        if (receipt["trajectory_id"] != initial["trajectory_id"]
+                or prospective_bytes(directory, receipt) != frozen):
+            raise ValueError("qualification revision changed its prospective identity")
+        _qualification_amendment(root, parent.parent, frozen, package,
+            (directory / "trace.json").read_bytes() if receipt["trace_status"] == "available" else None)
+        if parent.parent in children:
+            raise ValueError("qualification finalization fork requires explicit reconciliation")
+        children[parent.parent] = directory
+    current, visited = original, {original}
+    while current in children:
+        current = children[current]
+        if current in visited:
+            raise ValueError("qualification finalization chain contains a cycle")
+        visited.add(current)
+    if visited != directories:
+        raise ValueError("qualification finalization chain has an unreachable revision")
+    return current
+
+
 def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
     """Validate the staged records and cross-links against their eventual view."""
     from .validate import _trajectory_pointers, validate_repository_records
 
     receipt = verified_receipt(staging)
-    baseline = validate_repository_records(root)
+    baseline = validate_repository_records(root, verify_comparison_artifacts=False)
     discovered = baseline["discovered"]
     replacements = set(receipt["replacements"].values())
     ids = {}
@@ -227,12 +311,35 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         "terminal": package,
         "trace_sha256": hashlib.sha256(trace_bytes).hexdigest() if trace_bytes is not None else None,
     })).hexdigest()
-    destination = repo_local_path(root, trajectory_path.parent / "rml_finalized")
-    if destination.exists():
-        receipt = verified_receipt(destination)
-        if receipt["source_artifact_digest"] != digest:
-            raise ValueError("FINALIZATION_CONFLICT: immutable terminal inputs changed")
-        return {**receipt, "status": "ALREADY_FINALIZED"}
+    original_destination = repo_local_path(root, trajectory_path.parent / "rml_finalized")
+    supersedes = package.get("supersedes_finalization_ref")
+    previous = None
+    if supersedes is not None:
+        if not isinstance(supersedes, str) or supersedes not in package["artifact_hashes"]:
+            raise ValueError("qualification revision requires a hash-bound superseded receipt")
+        old_receipt = repo_local_path(root, supersedes)
+        if old_receipt.name != "finalization.json":
+            raise ValueError("qualification revision must supersede an exact finalization receipt")
+        previous = old_receipt.parent
+        current = current_finalized_directory(root, trajectory_path)
+        destination = repo_local_path(root, trajectory_path.parent /
+            "qualification_revisions" / digest / "rml_finalized")
+        if destination.is_dir():
+            receipt = verified_receipt(destination)
+            if receipt["source_artifact_digest"] != digest:
+                raise ValueError("FINALIZATION_CONFLICT: immutable qualification inputs changed")
+            return {**verified_receipt(current), "status": "ALREADY_FINALIZED"}
+        if current != previous:
+            raise ValueError("qualification revision must supersede the unique current finalization")
+        _qualification_amendment(root, previous, frozen_bytes, package, trace_bytes)
+    else:
+        destination = original_destination
+        if destination.exists():
+            receipt = verified_receipt(destination)
+            if receipt["source_artifact_digest"] != digest:
+                raise ValueError("FINALIZATION_CONFLICT: immutable terminal inputs changed")
+            return {**verified_receipt(current_finalized_directory(root, trajectory_path)),
+                    "status": "ALREADY_FINALIZED"}
     if frozen["decision"]["outcome"] != "ACTIVE":
         raise ValueError("cannot finalize an already terminal trajectory")
     run_id = package["run_id"]
@@ -355,12 +462,10 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         eligible = manifest["backtest_eligibility"]["eligible"]
         if manifest["reference_id"] is None and (paired is not None or frozen["state_at_start"]["reference_ids"]):
             raise ValueError("unreferenced trace cannot discard a frozen reference or same-run binding")
+        if package.get("continuation_ref") is not None:
+            validate_terminal_continuation(root, package, require_strict=eligible)
         if paired is not None:
             observation = validate_pair_observation(package.get("same_run_observation"))
-            if package.get("continuation_ref") is not None:
-                if eligible:
-                    raise ValueError("continued physical jobs remain excluded from same-run replay")
-                validate_ineligible_continuation(root, package)
             if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
                 paired["spec_identity"], paired["logical_run_id"], frozen["state_at_start"]["source_commit"]
             ):
@@ -383,9 +488,16 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             if paired["comparison_role"] == "candidate":
                 reference_path = resolve_repo_pointer(root, paired["reference_trajectory_ref"])
                 assert reference_path is not None
-                reference_terminal = load_terminal_input(reference_path.parent / "rml_finalized")
-                if validate_pair_observation(reference_terminal.get("same_run_observation")) != observation:
-                    if eligible or validate_ineligible_continuation(root, reference_terminal) != observation:
+                reference_terminal = load_terminal_input(current_finalized_directory(root, reference_path))
+                reference_observation = validate_pair_observation(reference_terminal.get("same_run_observation"))
+                if reference_observation != observation:
+                    if eligible:
+                        raise ValueError("same-run candidate and control have different observed platform jobs")
+                    candidate_origin = (validate_terminal_continuation(root, package)
+                        if package.get("continuation_ref") is not None else observation)
+                    reference_origin = (validate_terminal_continuation(root, reference_terminal)
+                        if reference_terminal.get("continuation_ref") is not None else reference_observation)
+                    if candidate_origin != reference_origin:
                         raise ValueError("same-run candidate and control have different observed platform jobs")
         elif eligible and (comparison is None or not comparison["strict_ready"]):
             raise ValueError("new eligible trace requires existing strict V5 comparison acceptance")
@@ -426,6 +538,11 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     for key in components:
         compact.pop(key, None)
     files["terminal_input.json"] = json_bytes(compact)
+    if previous is not None:
+        old_receipt = verified_receipt(previous)
+        for name in files:
+            if name in old_receipt["published_hashes"]:
+                replacements[name] = (previous / name).relative_to(root).as_posix()
     receipt = {
         "format": "molgap-rml-finalization-v2", "finalization_id": "finalize-" + digest,
         "prospective_ref": trajectory_path.relative_to(root).as_posix(),
@@ -453,7 +570,20 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             raise ValueError("prospective trajectory changed during finalization")
         # Rename cannot overwrite a nonempty committed directory: competing
         # writers either publish once or fail without a partial visible state.
-        os.rename(staging, destination)
+        lock = None
+        if previous is not None:
+            revision_root = repo_local_path(root, trajectory_path.parent / "qualification_revisions")
+            revision_root.mkdir(parents=True, exist_ok=True)
+            lock = revision_root / ".publication.lock"
+            lock.mkdir()
+        try:
+            if previous is not None and current_finalized_directory(root, trajectory_path) != previous:
+                raise ValueError("qualification revision parent changed before publication")
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            os.rename(staging, destination)
+        finally:
+            if lock is not None:
+                lock.rmdir()
         sync_directory(destination.parent)
     finally:
         if staging.exists():

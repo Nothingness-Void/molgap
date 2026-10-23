@@ -68,7 +68,13 @@ def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
     return pointers
 
 
-def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
+def validate_repository_records(repo_root: str | Path, *, verify_comparison_artifacts: bool = True) -> dict[str, Any]:
+    """Validate the catalog; metadata transactions need no unrelated model payloads.
+
+    The default also verifies comparison artifact bytes. Turning that off keeps
+    schemas, identities, metadata references and canonical trace checks intact;
+    it grants no runtime or comparison qualification to a new run.
+    """
     root = Path(repo_root).resolve()
     discovered = discover_records(root)
     records: dict[str, list[tuple[Path, dict[str, Any]]]] = {
@@ -159,9 +165,10 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
     for path in discovered.comparison_readiness:
         record = validate_comparison_readiness(
             load_json(path),
-            evidence_verifier=lambda pointer, digest: verify_bound_artifact(
+            evidence_verifier=(lambda pointer, digest: verify_bound_artifact(
                 root, pointer, digest
-            ),
+            )) if verify_comparison_artifacts else None,
+            metadata_only=not verify_comparison_artifacts,
         )
         records["comparison_readiness"].append((path, record))
     for path in discovered.target_transform_assets:
