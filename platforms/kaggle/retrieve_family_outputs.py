@@ -25,7 +25,7 @@ from molgap.research_memory.trace import file_digest
 
 
 def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path,
-        destination, resume_checkpoint_sha256=None, http_session=None):
+        destination, resume_checkpoint_sha256=None, http_session=None, on_plan=None):
     """Retain only native-owner dependencies; semantic acceptance stays local."""
     from tempfile import TemporaryDirectory
     from molgap.family_training_runner import inspect_retained_native_qualification
@@ -51,7 +51,11 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
     from molgap.experiment_spec import _digest
     _digest(certificate_id, "runtime_certificate_id")
 
-    transfers = []
+    transfers, plans = [], []
+    def announce(plan):
+        plans.append(plan)
+        if on_plan is not None:
+            on_plan(plan)
     def metadata(names, *, remote_root=remote_native, local_root=None):
         local_root = native if local_root is None else local_root
         retained, missing = {}, []
@@ -64,6 +68,10 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
                 missing.append(name)
         if not missing:
             return retained
+        announce({"phase": "native_metadata", "files": [
+            {"remote_path": (remote_root / name).as_posix(), "size_bytes": None}
+            for name in missing], "unknown_size_files": len(missing),
+            "known_download_bytes": 0, "reused_bytes": sum(len(raw) for raw in retained.values())})
         with TemporaryDirectory(prefix=".native-metadata-", dir=destination.parent) as temporary:
             paths = [(remote_root / name).as_posix() for name in missing]
             retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
@@ -104,6 +112,7 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
         if inventory["status"] == "DEPENDENCIES_VERIFIED":
             return {"status": "DEPENDENCIES_VERIFIED", "native_root": str(native),
                 "known_local_bytes": inventory["known_local_bytes"],
+                "retrieval_plans": plans,
                 "downloaded_files": transfers, "network_accessed": bool(transfers),
                 "scientific_acceptance": "NOT_EVALUATED", "native_qualification": "NOT_EVALUATED"}
         missing = [item for item in inventory["dependencies"] if not item["present"] and item["sha256"] is not None]
@@ -112,23 +121,25 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
         selected = [item for item in missing if Path(item["path"]).suffix == ".json"] or missing
         if not selected:
             raise ValueError("Native dependency has no retained hash binding")
-        groups = {}
+        groups, sizes = {}, {}
         for item in selected:
             path = Path(item["local_path"])
             local_root, remote_root = ((actual_resume, remote_resume)
                 if resumed and path.is_relative_to(actual_resume) else (native, remote_native))
             relative = path.relative_to(local_root).as_posix()
-            groups.setdefault(local_root, {})[(remote_root / relative).as_posix()] = (relative, item["sha256"])
+            remote = (remote_root / relative).as_posix()
+            groups.setdefault(local_root, {})[remote] = (relative, item["sha256"])
+            sizes[remote] = item["size_bytes"]
         for local_root, files in groups.items():
             result = retrieve_pinned_exact_files(api, context=context, remote_manifest_path=remote_manifest_path,
-                files=files, destination=local_root, http_session=http_session)
+                files=files, destination=local_root, http_session=http_session, sizes=sizes, on_plan=announce)
             transfers.extend(item["path"] for item in result["files"] if item["state"] != "ALREADY_RETAINED")
     raise ValueError("Native dependency inventory did not resolve within its bounded frontiers")
 
 
 def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: str,
                             local_manifest: Path, manifest_sha256: str,
-                            destination: Path, http_session=None) -> dict:
+                            destination: Path, http_session=None, on_plan=None) -> dict:
     """Use an already authenticated owning-account KaggleApi.
 
     This function is called by the platform adapter/skill, not experiment_cli.
@@ -140,9 +151,11 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     version = context.platform_version
     transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
                  and version.isdecimal() else retrieve_selected_kaggle_files)
+    options = {"on_plan": on_plan, "sizes": {remote_manifest_path: local_manifest.stat().st_size}}
     result = transport(
         api, context=context, remote_manifest_path=remote_manifest_path,
         files=required, destination=destination, http_session=http_session,
+        **(options if transport is retrieve_pinned_exact_files else {}),
     )
     result.update({"producer_version": manifest["context"]["platform_version"],
                    "manifest_sha256": manifest_sha256})
@@ -205,11 +218,15 @@ def main(argv=None):
     import argparse
     from contextlib import redirect_stderr, redirect_stdout
     import io
+    import sys
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
     from molgap.experiment_package import _PackageVerification
-    from molgap.kaggle_output_retrieval import _selected_files
+    from molgap.kaggle_output_retrieval import _selected_files, plan_pinned_files
+    progress_stream = sys.stderr
+    def announce(plan):
+        print(canonical_json({"retrieval_plan": plan}), file=progress_stream, flush=True)
 
     class Parser(argparse.ArgumentParser):
         def error(self, message):
@@ -293,27 +310,26 @@ def main(argv=None):
                         not retained_manifest.is_file()
                         or file_digest(retained_manifest) != args.manifest_sha256):
                     raise ValueError("Existing retrieval must retain the original pinned manifest")
-            for relative, pin in files.values():
-                target = destination / relative
-                _safe_local(target)
-                if target.exists() and (not target.is_file() or file_digest(target) != pin):
-                    raise ValueError("Retained output conflicts with pinned artifact")
             result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
                       "network_accessed": False, "scientific_acceptance": False,
                       "producer_version": manifest["context"]["platform_version"],
-                      "manifest_sha256": args.manifest_sha256}
+                      "manifest_sha256": args.manifest_sha256,
+                      "retrieval_plan": None if args.execute else plan_pinned_files(files, destination,
+                          sizes={args.remote_manifest_path: args.local_manifest.stat().st_size})}
+            if args.strict:
+                result["native_dependencies"] = "resolved from pinned certificate before proof transfer"
             if args.execute:
                 stage = "platform_retrieval"
                 from molgap.kaggle_submission import connect_kaggle
                 api = connect_kaggle(args.credentials)
                 result = retrieve_family_outputs(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
-                    manifest_sha256=args.manifest_sha256, destination=destination)
+                    manifest_sha256=args.manifest_sha256, destination=destination, on_plan=announce)
                 if args.strict:
                     stage = "native_dependencies"
                     result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
                         manifest=manifest, remote_manifest_path=args.remote_manifest_path,
-                        destination=destination, resume_checkpoint_sha256=resume_checkpoint)
+                        destination=destination, resume_checkpoint_sha256=resume_checkpoint, on_plan=announce)
                     result["network_accessed"] = (result.get("network_accessed", False)
                         or result["native_dependencies"]["network_accessed"])
                 stage = "retrieval_mapping"

@@ -53,6 +53,38 @@ verified files on reentry; legacy opaque session references retain pinned listin
 Source/job/version reconciliation and obtaining the small manifest belong to
 the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
 
+New native preflight producers retain `native_proofs.zip` (and
+`actual_resume_proofs.zip` for continuation probes). This is lossless storage of
+the original proof files: shared byte chunks are compressed once, and readers
+reconstruct each original SHA256 before the existing safe CPU tensor checks.
+The atomically published certificate pins the archive and its members. Only
+after checking publication and intact storage does the producer retire its
+scratch `.pt` copies; checkpoints, selected models, curves and predictions stay
+with their existing retention owners. An interrupted retirement remains readable.
+
+Strict retrieval follows certificate-bound physical dependencies and prints
+the exact next transfer frontier, known bytes, unknown-size count and reused
+bytes before payload requests. It downloads the archives instead of their
+uncompressed members. Metadata without known sizes stays explicitly unknown.
+Repeated retrieval verifies and reuses retained bytes; it never downloads all
+remote checkpoints or rewrites historical certificates.
+
+Old remote versions still require their original files. For an explicit local
+migration, `native_proof_storage.pack_proofs` can write a separate archive from
+`proof_bindings(certificate)` without deleting anything. Retain the original
+certificate/provenance beside it and pass that directory through the existing
+strict native-root override; original file hashes authenticate reconstruction.
+Do not retire historical originals until that custody change is separately
+authorized. Compacting locally does not publish a smaller remote artifact.
+
+The [real MsgNorm verification](D:/molgap-artifacts/reconciliation/k1-message-norm-100k/proof_storage_20261024/verification.json)
+retains measurements and strict acceptance: eight native proofs shrink from
+451.21 to209.82MiB (53.50%). Replacing only these proofs would reduce the original
+593.90MiB retrieval to352.50MiB; the remaining142.68MiB stays required. Original
+artifacts were preserved, so this is demonstrated storage size, not reclaimed
+disk space. Packing took about4.3 seconds per arm; decompression adds CPU work.
+No new native training or remote publication was performed for this verification.
+
 Cross-experiment Kaggle packages are grouped by workload role:
 `acquisition/`, `training/`, and `evaluation/`. Experiment-specific kernels
 stay with their owning experiment.

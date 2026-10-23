@@ -171,3 +171,13 @@ desktop copies; their original input list was preserved in the same directory.
 All four physical windows still total26.04814252059333 T4-device hours, including
 failed version2. Supplying all four windows twice produced the identical ledger
 and ignored four duplicates. No cost event or terminal record was republished.
+
+After the native-proof storage reader update, the same four real arms passed
+two further ordinary strict calls with identical reports and unchanged canonical
+records. The existing SDK retrieval adapter also reused every payload and native
+dependency on two calls per arm: zero downloads and no output-transfer network
+access. No frozen package, source proof, training state or scientific conclusion
+was changed. [Reader verification](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261024/current_reader_summary.json)
+and [retrieval repetition](D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/automatic_acceptance_20261024/current_reader_retrieval_summary.json)
+retain these observations; the adjacent source manifest pins the exact shared
+reader and archived normalization modules used.

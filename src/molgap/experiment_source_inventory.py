@@ -78,6 +78,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/family_training_outputs.py',
     'src/molgap/family_training_recipe.py',
     'src/molgap/family_training_runner.py',
+    'src/molgap/native_proof_storage.py',
     'src/molgap/family_training_session.py',
     'src/molgap/gps.py',
     'src/molgap/gptrans.py',

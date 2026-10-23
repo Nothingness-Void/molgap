@@ -114,9 +114,10 @@ def test_new_common_owners_are_in_static_inventory_and_import_in_isolation(tmp_p
     required = {"src/molgap/common/" + name + ".py"
                 for name in ("io", "paths", "spec", "wire")}
     required.add("src/molgap/experiment_catalog.py")
+    required.add("src/molgap/native_proof_storage.py")
     assert required <= set(COMMON_SOURCE_FILES)
     entry = "src/molgap/experiment_spec.py"
-    closure = discover_source_dependencies(root, [entry])
+    closure = discover_source_dependencies(root, [entry, "src/molgap/native_proof_storage.py"])
     assert {"src/molgap/common/spec.py", "src/molgap/common/wire.py",
             "src/molgap/experiment_catalog.py"} <= set(closure.source_files)
     copied = tmp_path / "isolated"
@@ -128,10 +129,11 @@ def test_new_common_owners_are_in_static_inventory_and_import_in_isolation(tmp_p
         "import pathlib,sys; sys.path.insert(0,sys.argv[1]); "
         "from molgap.experiment_spec import ExperimentSpec; "
         "from molgap.common import io,paths,spec,wire; "
+        "from molgap import native_proof_storage; "
         "paths.validate_relative_path('experiments/probe/spec.json'); "
         "root=pathlib.Path(sys.argv[1]).resolve(); "
         "assert all(pathlib.Path(m.__file__).resolve().is_relative_to(root) "
-        "for m in (io,paths,spec,wire)); "
+        "for m in (io,paths,spec,wire,native_proof_storage)); "
         "assert 'molgap.server_control' not in sys.modules"
     )
     result = subprocess.run(

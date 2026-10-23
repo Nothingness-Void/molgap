@@ -392,7 +392,11 @@ def run_screen_preflight(**options):
         certificate["execution_proof"] = execution_proof
     if resource is not None:
         certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
-    atomic_json(output / "runtime_certificate.json", certificate)
+    from .native_proof_storage import compact_certificate, retire_proof_sources
+    from .research_memory.trace import atomic_write, json_bytes
+    compact_certificate(output, certificate)
+    atomic_write(output / "runtime_certificate.json", json_bytes(certificate))
+    retire_proof_sources(output, certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
             "status": "measured", "semantics": "process_wall", "hardware": provenance["accelerator"],
@@ -468,9 +472,14 @@ def run_screen_resume_preflight(*, resume_output, **options):
         atomic_json(output / "runtime_certificate.json", cert)
     proofs = _actual_resume_proofs(recipe, data, tuning, Path(options["initial_state_path"]),
                                   retained, output, device="cuda")
-    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
+    actual = {"status": "accepted", "proofs": proofs,
         "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
-        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
+        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")}
+    from .native_proof_storage import compact_certificate, retire_proof_sources
+    from .research_memory.trace import atomic_write, json_bytes
+    compact_certificate(output, actual, actual_resume=True)
+    atomic_write(output / "actual_resume_certificate.json", json_bytes(actual))
+    retire_proof_sources(output, actual)
     return result
 
 
@@ -523,15 +532,12 @@ def _verify_profile_proof(root, probe, profile_proof, *, required):
 
 def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenance):
     """An observed reference artifact, not a summary boolean, gates fill removal."""
-    import torch
     from .family_training_session import validate_session_resume
     if (type(proof) is not dict or set(proof) != {"path", "sha256", "state_fingerprint"}
             or proof["path"] != "fill-enabled.pt"):
         raise ValueError("Missing native safety-fill reference proof")
-    path = _artifact_path(Path(root).absolute(), proof["path"])
-    if normalized_file_sha(path) != proof["sha256"]:
-        raise ValueError("Native safety-fill artifact hash mismatch")
-    retained = torch.load(path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    retained = load_proof(root, proof)
     if (type(retained) is not dict or set(retained) != {"format", "context", "recipe_identity",
             "runtime_fingerprint", "execution_role", "observations", "state"}
             or retained["format"] != "molgap-gptrans-memory-fill-reference-v1"
@@ -559,7 +565,6 @@ def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenan
 
 
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
-    import torch
     from .family_training_session import validate_session_resume
     from .k1_execution_qualification import _verify_execution_proof
     root = Path(directory).absolute()
@@ -583,19 +588,14 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     origin = certificate.get("resume_origin")
     if type(origin) is not dict or set(origin) != {"path", "sha256"} or origin["path"] != "resumed-first.pt":
         raise ValueError("Missing serialized native resume origin")
-    origin_path = _artifact_path(root, origin["path"])
-    if normalized_file_sha(origin_path) != origin["sha256"]:
-        raise ValueError("Native resume-origin hash mismatch")
-    origin_state = torch.load(origin_path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    origin_state = load_proof(root, origin)
     origin_progress = validate_session_resume(probe, origin_state)
     if origin_progress.optimizer_step != 1 or origin_progress.status != "paused" or len(origin_state["rng_state"]["cuda"]) != 1:
         raise ValueError("Native resume origin is not an observed isolated-GPU scratch step")
     fingerprints = []
     for proof in proofs:
-        path = _artifact_path(root, proof["path"])
-        if normalized_file_sha(path) != proof["sha256"]:
-            raise ValueError("Native proof artifact hash mismatch")
-        state = torch.load(path, map_location="cpu", weights_only=True)
+        state = load_proof(root, proof)
         if validate_session_resume(probe, state).status != "complete":
             raise ValueError("Incomplete native proof endpoint")
         if len(state["rng_state"]["cuda"]) != 1:
@@ -636,12 +636,23 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
         raise ValueError("Native qualification recipe differs from the frozen run")
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     dependencies = {}
+    from .native_proof_storage import retained_storage, proof_stream
+    storages = {}
+    native_storage = retained_storage(root, certificate)
+    if native_storage is not None:
+        storages[(str(root), native_storage["path"])] = native_storage
 
     def add(name, digest=None, *, base=root):
         # Keep the same local-path boundary for absent and present artifacts.
         if (type(name) is not str or "\\" in name or ":" in name
                 or any(part in {"", ".", ".."} for part in name.split("/"))):
             raise ValueError("Invalid native proof dependency path")
+        storage = next((item for (directory, _), item in storages.items()
+                        if directory == str(base) and name in item["members"]), None)
+        if storage is not None and name in storage["members"]:
+            if digest != storage["members"][name]["sha256"]:
+                raise ValueError("Native proof member hash differs from certificate")
+            name, digest = storage["path"], storage["sha256"]
         path = repo_local_path(base, name)
         _safe_local(path)
         key = str(path)
@@ -651,15 +662,17 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
             _digest(digest, "native proof dependency.sha256")
         present = path.is_file()
         dependencies[key] = {"path": name, "local_path": str(path), "sha256": digest,
-            "present": present, "size_bytes": path.stat().st_size if present else None}
+            "present": present, "size_bytes": path.stat().st_size if present else (
+                storage["size_bytes"] if storage is not None and name == storage["path"] else None)}
         return dependencies[key]
 
     def walk(value):
         if isinstance(value, dict):
             if "path" in value and "sha256" in value:
                 add(value["path"], value["sha256"])
-            for child in value.values():
-                walk(child)
+            for key, child in value.items():
+                if key != "proof_storage":
+                    walk(child)
         elif isinstance(value, list):
             for child in value:
                 walk(child)
@@ -681,13 +694,21 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
         resume_cert = add("actual_resume_certificate.json", base=resume_root)
         if resume_cert["present"]:
             actual = _json(Path(resume_cert["local_path"]))
+            actual_storage = retained_storage(resume_root, actual, actual_resume=True)
+            if actual_storage is not None:
+                # Both packs may share a directory; add() selects by member.
+                for proof in actual.get("proofs", []):
+                    if proof["sha256"] != actual_storage["members"][proof["path"]]["sha256"]:
+                        raise ValueError("Actual resume proof storage binding differs")
+                storages[(str(resume_root), actual_storage["path"])] = actual_storage
             for proof in actual.get("proofs", []):
                 add(proof["path"], proof["sha256"], base=resume_root)
     rows = [dependencies[name] for name in sorted(dependencies)]
     missing = [item["path"] for item in rows if not item["present"]]
     result = {"status": "BLOCKED", "dependencies": rows, "missing": missing,
-        "known_local_bytes": sum(item["size_bytes"] or 0 for item in rows),
-        "missing_size_bytes": None if missing else 0,
+        "known_local_bytes": sum(item["size_bytes"] or 0 for item in rows if item["present"]),
+        "missing_size_bytes": (sum(item["size_bytes"] for item in rows if not item["present"])
+            if all(item["size_bytes"] is not None for item in rows if not item["present"]) else None),
         "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
     # Verify every available hash even while another dependency is missing.
     for item in rows:
@@ -706,14 +727,21 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
         result["blockers"] = ["native_proof_dependencies_missing"]
         return result
     if inventory_only:
+        # Legacy local migration has no archive pin in its immutable certificate.
+        # Original per-file SHA values authenticate the reconstructed bytes.
+        for (base, _), storage in storages.items():
+            if storage["sha256"] is None:
+                for name, item in storage["members"].items():
+                    with proof_stream(base, name, item["sha256"], packed=True):
+                        pass
         return {**result, "status": "DEPENDENCIES_VERIFIED", "blockers": []}
     _verify_preflight(root, recipe, provenance, profiling_required=record.get("profiling") is not None)
     if resume_checkpoint_sha256 is not None:
-        import torch
         from .family_training_session import validate_session_resume
         fingerprints = []
         for proof in actual["proofs"]:
-            state = torch.load(_artifact_path(resume_root, proof["path"]), map_location="cpu", weights_only=True)
+            from .native_proof_storage import load_proof
+            state = load_proof(resume_root, proof)
             progress = validate_session_resume(recipe, state)
             fingerprint = _state_fingerprint(state)
             if (progress.optimizer_step != actual["resume_step"] + 1

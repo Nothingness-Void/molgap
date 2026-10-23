@@ -277,6 +277,30 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
         ExecutionTuning(training_workers=0, development_workers=0), initial,
         retained, proofs_root, device="cpu")
     assert len(proofs) == 2 and proofs[0]["state_fingerprint"] == proofs[1]["state_fingerprint"]
+    from molgap.native_proof_storage import compact_certificate, retire_proof_sources, load_proof, RESUME_ARCHIVE
+    original_proofs = [torch.load(proofs_root / proof["path"], weights_only=True) for proof in proofs]
+    certificate = {"proofs": proofs}
+    compact_certificate(proofs_root, certificate, actual_resume=True)
+    # An interrupted publication must leave the original proofs available.
+    with pytest.raises(FileNotFoundError):
+        retire_proof_sources(proofs_root, certificate)
+    assert all((proofs_root / proof["path"]).is_file() for proof in proofs)
+    from molgap.research_memory.trace import atomic_write, json_bytes
+    atomic_write(proofs_root / "actual_resume_certificate.json", json_bytes(certificate))
+    archive_path = proofs_root / RESUME_ARCHIVE
+    archive_bytes = archive_path.read_bytes()
+    archive_path.write_bytes(b"interrupted archive")
+    with pytest.raises(ValueError, match="intact published storage"):
+        retire_proof_sources(proofs_root, certificate)
+    with pytest.raises(ValueError, match="Malformed native proof storage"):
+        load_proof(proofs_root, {**proofs[0], "path": "actual-resume-absent.pt"})
+    assert all((proofs_root / proof["path"]).is_file() for proof in proofs)
+    archive_path.write_bytes(archive_bytes)
+    retire_proof_sources(proofs_root, certificate)
+    assert (proofs_root / RESUME_ARCHIVE).is_file()
+    assert not any((proofs_root / proof["path"]).exists() for proof in proofs)
+    for proof, original in zip(proofs, original_proofs):
+        assert_equal(load_proof(proofs_root, proof), original)
     assert_equal(before, retained)
     session = actual_session()
     session.checkpoint_builder = outputs.checkpoint_from_builder

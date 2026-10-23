@@ -305,7 +305,11 @@ def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_valida
     contract.write_bytes(b"{}")
     context = replace(case["context"], platform_version="7", training_recipe_sha256=sha256_file(contract))
     provenance = {"context": context.to_dict(), "recipe_identity": "fixture-recipe"}
-    proof = b"synthetic proof bytes; never native qualification"
+    import io
+    import torch
+    buffer = io.BytesIO()
+    torch.save({"synthetic_transport_tensor": torch.arange(4)}, buffer)
+    proof = buffer.getvalue()  # Transport fixture, never native qualification.
     profile_trace = b"{}"
     report = {"trace_sha256": hashlib.sha256(profile_trace).hexdigest()}
     encode = lambda value: json.dumps(value, sort_keys=True).encode()
@@ -363,6 +367,47 @@ def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_valida
         if resumed:
             assert retained == destination.parent / "_resume_preflight" / context.arm_id
             assert (retained / "actual-resume-b.pt").read_bytes() == proof
+        prior_requests = len(api.client.kernels.exact_requests)
+        assert invoke()["network_accessed"] is False
+        assert len(api.client.kernels.exact_requests) == prior_requests
+
+        # The same transport journey consumes producer-packed proofs, without
+        # fetching their uncompressed logical members or invoking tensor checks.
+        from molgap.native_proof_storage import compact_certificate, retire_proof_sources
+        from molgap.research_memory.trace import atomic_write, json_bytes
+        packed_certificate = dict(certificate)
+        compact_certificate(retained, packed_certificate)
+        atomic_write(retained / "runtime_certificate.json", json_bytes(packed_certificate))
+        retire_proof_sources(retained, packed_certificate)
+        metadata["runtime_certificate.json"] = encode(packed_certificate)
+        metadata["native_proofs.zip"] = (retained / "native_proofs.zip").read_bytes()
+        metadata.pop("repeat-a.pt")
+        manifest["runtime"]["runtime_certificate_id"] = canonical_fingerprint(packed_certificate)
+        if resumed:
+            actual = json.loads(metadata["actual_resume_certificate.json"])
+            compact_certificate(retained, actual, actual_resume=True)
+            atomic_write(retained / "actual_resume_certificate.json", json_bytes(actual))
+            retire_proof_sources(retained, actual)
+            metadata["actual_resume_certificate.json"] = encode(actual)
+            metadata["actual_resume_proofs.zip"] = (retained / "actual_resume_proofs.zip").read_bytes()
+            metadata.pop("actual-resume-a.pt")
+            metadata.pop("actual-resume-b.pt")
+        destination = tmp_path / "packed-download" / "arm"
+        destination.mkdir(parents=True)
+        (destination / contract.name).write_bytes(contract.read_bytes())
+        files = [_File(prefix + "/" + name, "https://offline.invalid/" + prefix + "/" + name) for name in metadata]
+        payloads = {item.url: metadata[item.file_name[len(prefix)+1:]] for item in files}
+        if resumed:
+            files.append(_File(output_provenance_remote, "https://offline.invalid/output-provenance"))
+            payloads[files[-1].url] = encode(provenance)
+        api, http = _Api(context.account, [_ResponsePage(files)]), _Http(payloads)
+        result = invoke()
+        assert result["status"] == "DEPENDENCIES_VERIFIED"
+        assert not any(request.file_path.endswith(".pt") for request in api.client.kernels.exact_requests)
+        assert any(plan["known_download_bytes"] > 0 for plan in result["retrieval_plans"])
+        prior_requests = len(api.client.kernels.exact_requests)
+        assert invoke()["network_accessed"] is False
+        assert len(api.client.kernels.exact_requests) == prior_requests
     semantic.assert_not_called()
     assert api.client.kernels.requests == []
     assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
