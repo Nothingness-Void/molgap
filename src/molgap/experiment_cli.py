@@ -514,8 +514,12 @@ def main(argv: list[str] | None = None) -> int:
 def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
-        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
+        "executed", "closure_complete", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
         "strict_mode", "physical_allocation_costs") if key in result}
+    if "results" in result:
+        summary["closure"] = [{key: row[key] for key in
+            ("trajectory_id", "trajectory", "pipeline_status", "finalization_status", "error") if key in row}
+            for row in result["results"]]
     if "strict_validation" in result:
         strict = result["strict_validation"]
         summary["strict_validation"] = {key: strict[key] for key in

@@ -173,7 +173,11 @@ def validate_repository_records(repo_root: str | Path, *, verify_comparison_arti
         records["comparison_readiness"].append((path, record))
     for path in discovered.target_transform_assets:
         record = validate_target_transform_asset(load_json(path))
-        unique("target_transform_asset_id", record["asset_id"], path)
+        prior = ids["target_transform_asset_id"].get(record["asset_id"])
+        # Frozen experiments may retain the same shared transform at distinct
+        # custody paths. An ID still cannot stand for different content.
+        if prior is None or load_json(prior) != record:
+            unique("target_transform_asset_id", record["asset_id"], path)
         records["target_transform_assets"].append((path, record))
     for path in discovered.reference_bundles:
         record = validate_reference_bundle(load_json(path))

@@ -201,6 +201,9 @@ its scientific decision, costs, roles and trace. An already qualified canonical
 tip is reused; repeating acceptance does not create another revision.
 Staging creates existing terminal-package metadata, not canonical finalization;
 explicit `--execute` delegates reviewed inputs to the existing terminal owner.
+`executed=true` means that closure was attempted. `closure_complete` and the
+per-arm `closure` results distinguish successful closure from partial or failed
+transactions; strict replay status remains separate.
 Incomplete staging returns top-level `STAGED_DRAFT` and a nonzero CLI status.
 `--role-audit` accepts an observed audit with exact `context`, protected
 `role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown

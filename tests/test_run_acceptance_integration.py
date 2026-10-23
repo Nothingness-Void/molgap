@@ -527,6 +527,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
                 # finalizer rejects them through its structured arm failures.
                 failed = accept_run_workflow(*case.original, **options)
                 assert failed["status"] == "INCOMPLETE", (path, failed)
+                assert failed["executed"] is True and failed["closure_complete"] is False
                 assert len(failed["results"]) == len(arms), (path, failed)
                 assert all(result["pipeline_status"] == "FINALIZATION_FAILED" and
                            result["error"] == expected_error for result in failed["results"]), (path, failed)
@@ -572,6 +573,11 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         package = json.loads((case.repo / where["terminal"]).read_bytes())
         assert package["supersedes_finalization_ref"] == receipts[arm_id].relative_to(case.repo).as_posix()
         assert package["artifact_hashes"][package["supersedes_finalization_ref"]] == file_digest(receipts[arm_id])
+    # Real custody can keep identical transforms under more than one question.
+    transform = next((case.repo / "experiments").rglob("target_transform.json"))
+    shared_copy = case.repo / "experiments/shared_transform/target_transform.json"
+    shared_copy.parent.mkdir(parents=True)
+    shared_copy.write_bytes(transform.read_bytes())
     closed = close_terminal_multi_arm(case.repo, [{key: where[key] for key in ("trajectory", "terminal", "trace")}
         for _, where in sorted(qualified["locations"].items(), key=lambda item: item[0] != reference_arm)])
     assert all(item["pipeline_status"] == "COMPLETE" for item in closed), closed
@@ -591,3 +597,11 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     with pytest.raises(ValueError, match="changed accepted decision"):
         family.qualify_same_run_terminal_packages(case.repo, resolved, changed_locations, native, reports=result["arms"])
     assert all(path.read_bytes() == retained[arm] for arm, path in receipts.items())
+    # A valid self-digest does not permit rebinding an existing transform ID.
+    from molgap.comparison_readiness import target_transform_asset_digest
+    conflicting = json.loads(shared_copy.read_bytes())
+    conflicting["mean"] += 1
+    conflicting["asset_sha256"] = target_transform_asset_digest(conflicting)
+    shared_copy.write_bytes(canonical_json(conflicting).encode())
+    with pytest.raises(ValueError, match="duplicate target_transform_asset_id"):
+        validate_repository_records(case.repo)
