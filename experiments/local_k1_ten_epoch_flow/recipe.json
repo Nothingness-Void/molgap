@@ -1,0 +1,77 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "neural_atom_k1",
+  "mode": "composed",
+  "seed": 42,
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "dataset": {
+    "manifest": "local_flow_2048_v1/manifest.json",
+    "manifest_sha256": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+    "development": true
+  },
+  "train_rows": 2048,
+  "development_rows": 512,
+  "optimizer_steps": 160,
+  "learning_rate": 0.001,
+  "weight_decay": 0.01,
+  "schedule": {
+    "kind": "cosine_epoch",
+    "total_units": 10,
+    "minimum_lr": 1e-06,
+    "warmup_units": 0,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-live",
+  "sampler": "python-epoch-shuffle",
+  "checkpoint_every": 80,
+  "target_mean_eV": 5.17597480583936,
+  "target_std_eV": 1.2374254623843393,
+  "ema_decay": null,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.7.1",
+  "addons": [
+    {
+      "name": "k1_channel_gain",
+      "version": "1",
+      "config": {
+        "channels": 192,
+        "layer": 6
+      },
+      "source_sha256": "be28777635101239040b029e596cc6ccc356490b6d5d3b5aec1c5bf55d2898d9"
+    }
+  ],
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "neural_atom_k1",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "native-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": null,
+    "torch_version": "2.7.1"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 160,
+    "sample_presentations": 20480,
+    "completed_passes": 10,
+    "next_batch": 0,
+    "development_rows": 512,
+    "source_idx_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+    "target_sha256": "d1ac52c36815bfa35147bdab00beefa16fd10b6786ade288ad99f915fab030ea",
+    "precision": "fp32"
+  },
+  "train_role_identity": "dde483f3e167ff7a755cf458dce50e0784d5eb2bed53f9578c80c522f90edfb7",
+  "development_role_identity": "197ee384a94f6734f730067b85de48270eda4270b268cf7819cc3bdb7c5c5584",
+  "logging": {
+    "mode": "epoch",
+    "interval": null
+  }
+}

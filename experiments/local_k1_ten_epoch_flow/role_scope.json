@@ -1,0 +1,25 @@
+{
+  "allowed_roles": [
+    "train",
+    "development"
+  ],
+  "role_bindings": {
+    "train": {
+      "role": "train",
+      "membership_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+      "row_order_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+      "usage_sha256": "dde483f3e167ff7a755cf458dce50e0784d5eb2bed53f9578c80c522f90edfb7"
+    },
+    "development": {
+      "role": "development",
+      "membership_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "row_order_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "usage_sha256": "197ee384a94f6734f730067b85de48270eda4270b268cf7819cc3bdb7c5c5584"
+    }
+  },
+  "official_validation": false,
+  "test_dev": false,
+  "test_challenge": false,
+  "purpose": "infrastructure-only",
+  "authority_ref": "experiments/local_k1_ten_epoch_flow/authority.json"
+}

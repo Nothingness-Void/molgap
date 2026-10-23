@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "local-k1-ten-epoch-flow",
+  "version": "1",
+  "status": "candidate",
+  "policy_type": "research_action",
+  "created_from_source_digest": "f5b10c3a31161c8cb4e615645fc943cd65810ff730ac51f6c10fc4e73e876cd1",
+  "comparability_selector": {
+    "scientific_contract": "local-k1-ten-epoch-flow-v1"
+  },
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "observation_point": null,
+  "borderline_action": "NO_TRAIN",
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  }
+}
