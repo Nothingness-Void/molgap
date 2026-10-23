@@ -2,6 +2,7 @@
 from copy import deepcopy
 from dataclasses import replace
 import json
+from pathlib import Path
 
 import pytest
 import torch
@@ -186,9 +187,44 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     declaration = _spec_payload([arm])
     declaration["prospective"]["arms"][0]["trajectory_id"] = "synthetic-trajectory"
     spec = ExperimentSpec(declaration)
-    ctx = replace(context(family, path), experiment_id=declaration["experiment_id"],
-        logical_run_id=declaration["logical_run_id"], spec_identity=spec.identity,
-        arm_identity=canonical_fingerprint(arm), training_recipe_sha256=recipe_source_sha)
+    from molgap import experiment_launch as launch
+    from molgap.constants import REPO_ROOT
+    from molgap.experiment_package import build_experiment_source_package
+    package_dir = tmp_path / "source-package"
+    package = build_experiment_source_package(spec, REPO_ROOT, ["README.md"], package_dir)
+    package_identity = package["package_identity"]
+    platform_reference = "synthetic-account/synthetic-pair-run"
+
+    def observed_receipt(version):
+        version = str(version)
+        binding = launch.build_launch_receipt(spec, package_dir,
+            expected_package_identity=package_identity)["binding"]
+        known = lambda value: {"value": value, "missing_reason": None}
+        unknown = {"value": None, "missing_reason": "not_observed"}
+        response = {"format": launch.RESPONSE_FORMAT, "version": launch.VERSION,
+            "mode": "observed", "outcome": "accepted", "conflict_kind": None,
+            "binding": binding,
+            "canonical_platform_reference": known(platform_reference),
+            "platform_version": known(version),
+            "physical_runs": known([{"run_identity": "synthetic-physical-run-v" + version,
+                "canonical_reference": platform_reference,
+                "platform_version": known(version), "arm_ids": ["reference"]}]),
+            "timestamp": unknown, "monitor_paths": unknown}
+        receipt = launch.reconcile_platform_response(spec, package_dir,
+            launch.canonical_json(response), expected_package_identity=package_identity)
+        directory = tmp_path / ("receipt-v" + version)
+        directory.mkdir()
+        return launch.write_launch_receipt(launch.canonical_json(receipt), directory,
+            spec, package_dir, expected_package_identity=package_identity)
+
+    origin_receipt = observed_receipt("1")
+    continued_receipt = observed_receipt("2")
+    origin_ctx = RunContext.from_launch(spec, origin_receipt, package_dir,
+        expected_package_identity=package_identity, arm_id="reference")
+    # The worker writes before it can observe a platform version. Preserve
+    # that unknown producer field throughout checkpointing and disk restore;
+    # the later receipt is carried separately by terminal staging.
+    ctx = replace(origin_ctx, platform_version=None)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
         trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
     assert b"\r" not in (outputs.root / "training_contract.json").read_bytes()
@@ -200,15 +236,25 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     assert paused.status == "paused" and paused.optimizer_step == 2
     wire = torch.load(outputs.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     assert ("ema" in wire) is development
-    trajectory = {"trajectory_id": "synthetic-trajectory", "record_mode": "prospective",
-        "state_at_start": {"source_commit": ctx.source_commit, "source_config_identity": ctx.arm_identity},
-        "actions": [{"action_id": "A1", "run_ids": [ctx.logical_run_id + ":reference"], "attempt_ids": ["v1"]}],
-        "decision": {"outcome": "ACTIVE"}}
+    assert wire["context"]["platform_version"] is None
+    from molgap.experiment_family_workflow import terminal_attempt_id
+    trace_run_id = ctx.logical_run_id + ":" + ctx.arm_id + ":downstream"
+    origin_attempt_id = terminal_attempt_id(spec, ctx.arm_id, "1")
+    from test_run_acceptance_integration import _trajectory
+    binding = declaration["prospective"]["arms"][0]
+    trajectory = _trajectory(binding, arm, ctx, "experiments/synthetic/training_contract.json")
+    trajectory["actions"][0]["run_ids"] = [trace_run_id]
+    trajectory["actions"][0]["attempt_ids"] = [origin_attempt_id]
+    trajectory_path = tmp_path / binding["output"] / "trajectory.json"
+    trajectory_path.parent.mkdir(parents=True, exist_ok=True)
+    trajectory_path.write_text(launch.canonical_json(trajectory), encoding="utf-8")
     bundle = tmp_path / "bundle"
     create_resume_bundle(outputs.root, ctx, trajectory, bundle)
     verified = validate_resume_bundle(bundle, spec, context=ctx, trajectory=trajectory)
     assert verified["status"] == "RESUME_VERIFIED"
     assert verified["owner"]["optimizer_steps"] == 2
+    assert len(verified["sidecars"]["context"]) == 1
+    assert json.loads(verified["sidecars"]["context"][0].read_text(encoding="utf-8"))["context"]["platform_version"] is None
     from molgap.family_training_runner import validate_screen_resume
     damaged = deepcopy(wire)
     damaged.pop("ema" if development else "scheduler")
@@ -260,6 +306,65 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
         assert telemetry["best_development_mae_eV"] == pytest.approx(report["observed"]["development_mae_eV"])
     else:
         assert telemetry["development_mae_eV"] is telemetry["best_development_mae_eV"] is None
+
+    # Exercise the real continuation serializer and validator using the actual
+    # source checkpoint bundle and restored SessionOutputs curve. The receipt,
+    # source package and bundle owners run for real; CPU fixtures do not qualify
+    # a native runtime or strict replay.
+    from molgap.experiment_terminal_staging import stage_verified_terminal_packages
+    from molgap.research_memory.paired import validate_terminal_continuation
+    from molgap.research_memory.trace import file_digest, load_canonical_trace
+    source_trace = load_canonical_trace(tmp_path / "output" / "canonical_trace.json")
+    continued_trace = load_canonical_trace(restored / "canonical_trace.json")
+    assert continued_trace["observations"][:len(source_trace["observations"])] == source_trace["observations"]
+    authority = tmp_path / "synthetic-recovery-authority.json"
+    authority.write_text(json.dumps({"format": "synthetic-fixture-authority-v1",
+        "scope": "local CPU fixture only; no submission or research authority"}), encoding="utf-8")
+    native_root = tmp_path / "native-not-qualified"
+    native_root.mkdir()
+    (native_root / "runtime_certificate.json").write_text(json.dumps({
+        "status": "NOT_QUALIFIED", "reason": "This synthetic CPU fixture did not run native preflight."}),
+        encoding="utf-8")
+    actual_resume_root = tmp_path / "resume-not-native-qualified"
+    actual_resume_root.mkdir()
+    (actual_resume_root / "actual_resume_certificate.json").write_text(json.dumps({
+        "status": "NOT_QUALIFIED",
+        "reason": "CPU mechanical restore equivalence is not native resume qualification."}),
+        encoding="utf-8")
+    continued_attempt_id = terminal_attempt_id(spec, ctx.arm_id, "2")
+    continued_ctx = RunContext.from_launch(spec, continued_receipt, package_dir,
+        expected_package_identity=package_identity, arm_id="reference")
+    staging_report = inspect_output(restored, context=continued_ctx,
+        expected=record["acceptance_requirements"])
+    assert staging_report["status"] == "MECHANICALLY_VERIFIED", staging_report
+    assert staging_report["observed"]["producer_platform_version"] is None
+    assert json.loads((restored / "output_manifest.json").read_text(encoding="utf-8"))["context"]["platform_version"] is None
+    trace_locator = (restored / "canonical_trace.json").relative_to(tmp_path).as_posix()
+    terminal_pointer = binding["output"] + "/terminal.json"
+    staging_resolved = {"spec": spec,
+        "options": {"repo_root": tmp_path, "package_dir": package_dir,
+            "expected_package_identity": package_identity, "receipt_path": continued_receipt},
+        "contexts": {"reference": continued_ctx},
+        "outputs": {"reference": {"output_dir": restored,
+            "expected": record["acceptance_requirements"], "context": continued_ctx}},
+        "locations": {"reference": {"trajectory_id": binding["trajectory_id"],
+            "run_id": trace_run_id, "trajectory": binding["output"] + "/trajectory.json",
+            "terminal": terminal_pointer, "trace": trace_locator}},
+        "continuations": {"reference": {"package_dir": package_dir,
+            "origin_receipt": origin_receipt, "continued_receipt": continued_receipt,
+            "resume_bundle": bundle, "continued_output": restored, "authority": authority,
+            "native_root": native_root, "actual_resume_root": actual_resume_root}}}
+    staged = stage_verified_terminal_packages(None, tmp_path, trace_run_id, continued_attempt_id,
+        resolved=staging_resolved, reports={"reference": staging_report})
+    assert staged["executed"] is False
+    terminal = json.loads(Path(staged["paths"]["reference"]["terminal"]).read_text(encoding="utf-8"))
+    continuation_path = tmp_path / terminal["continuation_ref"]
+    continuation_record = json.loads(continuation_path.read_text(encoding="utf-8"))
+    assert terminal["artifact_hashes"][terminal["continuation_ref"]] == file_digest(continuation_path)
+    assert continuation_record["origin"]["attempt_id"] == origin_attempt_id
+    assert terminal["same_run_observation"]["attempt_id"] == continued_attempt_id
+    assert validate_terminal_continuation(tmp_path, terminal) == continuation_record["origin"]
+
     manifest_path = outputs.root / "output_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     resume_path = outputs.root / manifest["artifacts"]["resume"]["path"]

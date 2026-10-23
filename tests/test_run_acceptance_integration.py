@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import hashlib
 from collections import Counter
+from pathlib import Path
 
 import pytest
 
@@ -172,7 +173,7 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
 
     result = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         diagnose=True, stage_terminal=True)
-    assert result["status"] == "MECHANICALLY_VERIFIED", result
+    assert result["status"] == "STAGED_DRAFT", result
     assert {arm: report["status"] for arm, report in result["arms"].items()} == {
         arm: "MECHANICALLY_VERIFIED" for arm in arms}
     assert set(result["diagnosis"]["arms"]) == set(arms)
@@ -190,7 +191,7 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
         "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
         "--retrieved-root", str(case.paths.artifact_root / "retrieved"), "--diagnose", "--stage-terminal"])
     cli_result = json.loads(capsys.readouterr().out)
-    assert exit_code == 0, cli_result
+    assert exit_code == 1, cli_result
     assert cli_result["diagnosis"]["status"] == "DIAGNOSED", cli_result
     assert cli_result["terminal_staging"]["status"] == "STAGED_DRAFT", cli_result
     after = sorted(path.relative_to(case.run).as_posix() for path in case.run.rglob("*") if path.is_file())
@@ -350,6 +351,17 @@ def _seed_reference_records(case):
 def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
     case = frozen_shared_acceptance_run(tmp_path, repo)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
+    reference_arm = declaration["prospective"]["same_run_replay"]["reference_arm_id"]
+    for arm_id, where in locations.items():
+        trajectory = json.loads((case.repo / where["trajectory"]).read_bytes())
+        trajectory["state_at_start"]["same_run_replay"] = {
+            "schema": "molgap-same-run-replay-binding-v1", "spec_identity": case.spec.identity,
+            "logical_run_id": declaration["logical_run_id"], "arm_id": arm_id,
+            "comparison_role": "reference" if arm_id == reference_arm else "candidate",
+            "reference_arm_id": reference_arm,
+            "reference_trajectory_id": locations[reference_arm]["trajectory_id"],
+            "reference_trajectory_ref": locations[reference_arm]["trajectory"]}
+        (case.repo / where["trajectory"]).write_bytes(canonical_json(trajectory).encode())
     _seed_reference_records(case)
     decisions, audits = {}, {}
     for arm_id, context in contexts.items():
@@ -526,3 +538,56 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert {arm_id: path.read_bytes() for arm_id, path in receipts.items()} == retained
     validated = validate_repository_records(case.repo)
     assert validated["root"] == case.repo.resolve()
+
+    # Exercise requalification after mechanical closure with real saved CPU
+    # outputs and finalization. Native GPU admission and scientific comparison
+    # qualification are explicit substitutes, never claims about this fixture.
+    from copy import deepcopy
+    from molgap import comparison_readiness as comparison_owner
+    from molgap.research_memory.terminal_wiring import close_terminal_multi_arm
+    from molgap.research_memory.trace import file_digest
+    from test_comparison_readiness import _side
+    resolved = resolve_run_acceptance_inputs(*case.original,
+        retrieved_root=case.paths.artifact_root / "retrieved")
+    native = {}
+    for arm_id, item in resolved["outputs"].items():
+        directory = Path(item["output_dir"])
+        (directory / "runtime_certificate.json").write_text('{}', encoding="utf-8")
+        (directory / "runtime_provenance.json").write_text(
+            json.dumps({"runtime_fingerprint": "synthetic-runtime"}), encoding="utf-8")
+        native[arm_id] = {"status": "VERIFIED", "dependencies": [{"path": "runtime_certificate.json",
+            "local_path": str(directory / "runtime_certificate.json")}], "synthetic_substitute": True}
+    assess = comparison_owner.assess_comparison_readiness
+    def fixture_comparison(**kwargs):
+        for side in ("candidate", "reference"):
+            original_side = kwargs[side]
+            fixture_side = _side(side)
+            kwargs[side] = {**fixture_side, **{key: value for key, value in original_side.items()
+                if key in {"artifact_bindings", "reference_bundle_id", "reference_bundle_sha256"}}}
+        return assess(**kwargs)
+    monkeypatch.setattr(comparison_owner, "assess_comparison_readiness", fixture_comparison)
+    qualified = family.qualify_same_run_terminal_packages(case.repo, resolved,
+        result["terminal_staging"]["locations"], native, reports=result["arms"])
+    for arm_id, where in qualified["locations"].items():
+        package = json.loads((case.repo / where["terminal"]).read_bytes())
+        assert package["supersedes_finalization_ref"] == receipts[arm_id].relative_to(case.repo).as_posix()
+        assert package["artifact_hashes"][package["supersedes_finalization_ref"]] == file_digest(receipts[arm_id])
+    closed = close_terminal_multi_arm(case.repo, [{key: where[key] for key in ("trajectory", "terminal", "trace")}
+        for _, where in sorted(qualified["locations"].items(), key=lambda item: item[0] != reference_arm)])
+    assert all(item["pipeline_status"] == "COMPLETE" for item in closed), closed
+    before_reuse = {path.relative_to(case.repo).as_posix(): path.read_bytes()
+        for path in (case.repo / "experiments").rglob("*") if path.is_file()}
+    reused = family.qualify_same_run_terminal_packages(case.repo, resolved,
+        result["terminal_staging"]["locations"], native, reports=result["arms"])
+    assert reused["canonical_reused"] is True
+    assert before_reuse == {path.relative_to(case.repo).as_posix(): path.read_bytes()
+        for path in (case.repo / "experiments").rglob("*") if path.is_file()}
+    changed = deepcopy(json.loads((case.repo / qualified["locations"][arm_id]["terminal"]).read_bytes()))
+    changed["decision"]["next_allowed_actions"] = ["ALTERED"]
+    changed_path = case.repo / "experiments/changed_science.json"
+    changed_path.write_bytes(canonical_json(changed).encode())
+    changed_locations = deepcopy(qualified["locations"])
+    changed_locations[arm_id]["terminal"] = changed_path.relative_to(case.repo).as_posix()
+    with pytest.raises(ValueError, match="changed accepted decision"):
+        family.qualify_same_run_terminal_packages(case.repo, resolved, changed_locations, native, reports=result["arms"])
+    assert all(path.read_bytes() == retained[arm] for arm, path in receipts.items())

@@ -159,20 +159,37 @@ Unknown weight sources keep the conservative EMA trace requirement.
 `--strict-inputs` optionally supplies per-arm `native_root` and
 `comparison_readiness_ref` locations. Missing proof files report their pinned
 hashes and unknown missing-byte sizes; they cannot establish qualification.
-Use `--continuation-receipt` for an independently bound physical successor and
-reviewed continuation terminal inputs. `--physical-runs` supplies the existing
+For a successor, supply `--continuation-receipt`, `--resume-prepared` (the existing
+`prepare-resume` directory), and `--resume-authority` with terminal staging.
+The entry derives each arm's original receipt, bundle/checkpoint, trace prefix,
+native proof directory and any pinned recovery repair; it builds and binds the
+existing continuation record without editing the prospective plan. The default
+continued proof directory is `<retrieved-root>/_resume_preflight/<arm>`;
+`--strict-inputs` can override `native_root`/`actual_resume_root` for older custody.
+Outcome, decision and observed role audit remain explicit scientific inputs.
+Use reviewed `--locations` for read-only checks of already finalized history.
+`--physical-runs` supplies the existing
 hash-bound physical-allocation observations, including failed attempts, counted
 once per physical job/version.
+
+`platforms/kaggle/retrieve_family_outputs.py` accepts the same continued receipt
+and `--strict --resume-prepared`. It retains a separate version-specific output
+mapping and selectively downloads only manifest/native-certificate dependencies.
+Download verifies exact-version bytes, not tensor semantics; strict acceptance
+performs native qualification. No all-output or all-checkpoint download occurs.
 
 With reviewed `--locations`, or explicit decision/role inputs for staging,
 strict acceptance validates native/comparison evidence before invoking the
 original terminal finalizer. Without `--execute`, canonical replay remains
 `PENDING_FINALIZATION`; after execution the canonical replay pool is checked.
 Strict qualification does not change scientific decisions or establish
-`READY_FOR_DESKTOP`. Existing immutable finalizations require an explicitly
-bound qualification revision; acceptance never overwrites their history.
+`READY_FOR_DESKTOP`. For an existing mechanical finalization, qualification
+automatically binds the current receipt as an append-only revision and preserves
+its scientific decision, costs, roles and trace. An already qualified canonical
+tip is reused; repeating acceptance does not create another revision.
 Staging creates existing terminal-package metadata, not canonical finalization;
 explicit `--execute` delegates reviewed inputs to the existing terminal owner.
+Incomplete staging returns top-level `STAGED_DRAFT` and a nonzero CLI status.
 `--role-audit` accepts an observed audit with exact `context`, protected
 `role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown
 role use blocks closure rather than becoming an untouched claim. No script

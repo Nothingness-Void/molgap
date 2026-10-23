@@ -101,7 +101,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                         retrieved_root=None, execute=False, execution_root=None,
                         diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
                         diagnostic_output=None, n_bootstrap=0, seed=42, role_audit=None,
-                        strict_inputs=None, continuation_receipt=None, physical_runs=None):
+                        strict_inputs=None, continuation_receipt=None, physical_runs=None,
+                        resume_prepared=None, resume_authority=None):
     """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
     from .experiment_run_acceptance import resolve_run_acceptance_inputs
     from .experiment_workflow import accept_workflow
@@ -109,10 +110,18 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         raise ValueError("A scientific outcome and decision reference must be provided together")
     if role_audit is not None and not (stage_terminal or outcome is not None):
         raise ValueError("A role audit requires terminal staging")
+    if (resume_prepared is None) != (resume_authority is None):
+        raise ValueError("Resume preparation and explicit recovery authority are required together")
+    if resume_prepared is not None and (continuation_receipt is None or not (stage_terminal or outcome is not None)):
+        raise ValueError("Resume closure requires a continued receipt and terminal staging")
     resolution = dict(retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     if continuation_receipt is not None:
         resolution["continuation_receipt"] = continuation_receipt
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
+    if resume_prepared is not None:
+        from .experiment_workflow_resume import resolve_terminal_resume
+        resolved["continuations"] = resolve_terminal_resume(resolved, resume_prepared,
+            resume_authority, strict_inputs=strict_inputs)
     spec, options = resolved["spec"], resolved["options"]
     retention = None
     if execution_root is not None:
@@ -147,11 +156,22 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         for arm_id, item in resolved["outputs"].items():
             output = Path(item["output_dir"])
             supplied_strict = strict_inputs.get(arm_id, {})
+            continuation = resolved.get("continuations", {}).get(arm_id)
+            native_root = supplied_strict.get("native_root", output)
+            native_context = resolved["contexts"][arm_id]
+            resume_options = {}
+            if continuation is not None:
+                from .experiment_family_workflow import RunContext
+                native_root = continuation["native_root"]
+                native_context = RunContext.from_launch(spec, continuation["origin_receipt"],
+                    options["package_dir"], expected_package_identity=options["expected_package_identity"], arm_id=arm_id)
+                resume_options = dict(resume_directory=continuation["actual_resume_root"],
+                    resume_checkpoint_sha256=_json(continuation["resume_bundle"])["artifacts"]["checkpoint"]["sha256"])
             provenance_path = _artifact_path(output, "runtime_provenance.json")
             provenance_bytes = provenance_path.read_bytes()
-            native[arm_id] = inspect_retained_native_qualification(supplied_strict.get("native_root", output),
+            native[arm_id] = inspect_retained_native_qualification(native_root,
                 recipe_path=_artifact_path(output, "training_contract.json"),
-                provenance=_json_bytes(provenance_bytes), context=resolved["contexts"][arm_id])
+                provenance=_json_bytes(provenance_bytes), context=native_context, **resume_options)
             original_digest = hashlib.sha256(provenance_bytes).hexdigest()
             original = next((dependency for dependency in native[arm_id]["dependencies"]
                 if Path(dependency["local_path"]).resolve() == provenance_path.resolve()), None)
@@ -198,6 +218,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
             execution_root=execution_root, _retention=retention)
         result["terminal_staging"] = staged
+        if staged.get("blockers"):
+            result.update(status="STAGED_DRAFT", blockers=staged["blockers"])
         if strict_inputs is not None and staged.get("blockers"):
             return {**result, "status": "BLOCKED", "executed": False,
                 "strict_validation": {"status": "BLOCKED", "native": native},
@@ -215,6 +237,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native, reports=result["arms"])
         qualified = {**resolved, "locations": qualification["locations"]}
         result["strict_comparison"] = qualification
+        if qualification.get("canonical_reused"):
+            strict = inspect_run_strict_evidence(repo_root, qualified, strict_inputs,
+                _native_reports=native_cache)
+            return {**result, "status": "COMPLETE" if strict["status"] == "VERIFIED" else "BLOCKED",
+                "strict_validation": strict, "strict_mode": "CANONICAL_READ_ONLY",
+                "executed": False, "blockers": strict["blockers"]}
         result["strict_validation"] = inspect_run_strict_evidence(repo_root, qualified, strict_inputs,
             require_finalized=False, _native_reports=native_cache)
         if result["strict_validation"]["status"] != "VERIFIED":
@@ -264,18 +292,53 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
     records = {kind: [] for kind in ("trajectories", "evidence", "traces", "costs")}
     for arm_id, item in sorted(resolved["outputs"].items()):
         supplied = inputs.get(arm_id, {})
-        if type(supplied) is not dict or set(supplied) - {"native_root", "comparison_readiness_ref"}:
+        if type(supplied) is not dict or set(supplied) - {
+                "native_root", "comparison_readiness_ref", "actual_resume_root",
+                "recovery_repair", "repair_source_root"}:
             raise ValueError("Unknown strict acceptance location override")
         output = Path(item["output_dir"]).absolute()
         row = {"native_qualification": {"status": "BLOCKED"},
             "comparison": {"status": "BLOCKED"}, "replay": {"status": "BLOCKED"}, "blockers": []}
         arms[arm_id] = row
+        terminal, continuation_record, metadata_error = None, None, None
+        try:
+            trajectory_path = repo_local_path(root, resolved["locations"][arm_id]["trajectory"])
+            finalized = trajectory_path.parent / "rml_finalized"
+            if require_finalized:
+                from .research_memory.finalize import current_finalized_directory
+                finalized = current_finalized_directory(root, trajectory_path)
+                verified_receipt(finalized)
+                terminal = load_terminal_input(finalized)
+                trajectory = validate_trajectory(_json(finalized / "trajectory.json"))
+                manifest = validate_trace_manifest(_json(finalized / "trace_manifest.json"))
+            else:
+                from .research_memory.plan import resolve_decision_state
+                terminal = _json(repo_local_path(root, resolved["locations"][arm_id]["terminal"]))
+                trajectory = validate_trajectory(resolve_decision_state(root, _json(trajectory_path)))
+                manifest = validate_trace_manifest(terminal["trace_manifest"])
+            if terminal.get("continuation_ref") is not None:
+                pointer = terminal["continuation_ref"]
+                verify_bound_artifact(root, pointer, terminal["artifact_hashes"][pointer])
+                continuation_record = _json(bound_artifact_path(root, pointer))
+        except (ValueError, OSError, KeyError) as exc:
+            metadata_error = exc
         try:
             context = resolved["contexts"][arm_id]
             if _native_reports is None:
+                native_root, native_context, resume_options = supplied.get("native_root", output), context, {}
+                if continuation_record is not None:
+                    from .experiment_family_workflow import RunContext
+                    native_root = supplied.get("native_root", bound_artifact_path(root,
+                        continuation_record["native_certificate"]["path"]).parent)
+                    native_context = RunContext(**_json(bound_artifact_path(root,
+                        continuation_record["source_context"]["path"]))["context"])
+                    resume_options = dict(resume_checkpoint_sha256=continuation_record["checkpoint"]["sha256"],
+                        resume_directory=supplied.get("actual_resume_root", bound_artifact_path(root,
+                            continuation_record["actual_resume_certificate"]["path"]).parent))
                 row["native_qualification"] = inspect_retained_native_qualification(
-                    supplied.get("native_root", output), recipe_path=_artifact_path(output, "training_contract.json"),
-                    provenance=_json(_artifact_path(output, "runtime_provenance.json")), context=context)
+                    native_root, recipe_path=_artifact_path(output, "training_contract.json"),
+                    provenance=_json(_artifact_path(output, "runtime_provenance.json")), context=native_context,
+                    **resume_options)
             else:
                 # Private synchronous reuse: bind every dependency to its exact
                 # bytes again, while retaining the completed CPU tensor checks.
@@ -294,24 +357,16 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
             row["native_qualification"]["error"] = str(exc)
             row["blockers"].append("native_qualification_invalid")
         try:
-            trajectory_path = repo_local_path(root, resolved["locations"][arm_id]["trajectory"])
-            finalized = trajectory_path.parent / "rml_finalized"
-            if require_finalized:
-                from .research_memory.finalize import current_finalized_directory
-                finalized = current_finalized_directory(root, trajectory_path)
-                verified_receipt(finalized)
-                terminal = load_terminal_input(finalized)
-                trajectory = validate_trajectory(_json(finalized / "trajectory.json"))
-                manifest = validate_trace_manifest(_json(finalized / "trace_manifest.json"))
-            else:
-                from .research_memory.plan import resolve_decision_state
-                terminal = _json(repo_local_path(root, resolved["locations"][arm_id]["terminal"]))
-                trajectory = validate_trajectory(resolve_decision_state(root, _json(trajectory_path)))
-                manifest = validate_trace_manifest(terminal["trace_manifest"])
+            if metadata_error is not None:
+                raise metadata_error
             _bindings(root, terminal.get("artifact_hashes"))
             if terminal.get("continuation_ref") is not None:
                 from .research_memory.paired import validate_terminal_continuation
-                validate_terminal_continuation(root, terminal, require_strict=True)
+                cached = ((row["native_qualification"],
+                    continuation_record["checkpoint"]["sha256"])
+                    if row["native_qualification"]["status"] == "VERIFIED" else None)
+                validate_terminal_continuation(root, terminal, require_strict=True,
+                    _native_verification=cached)
             verify_bound_artifact(root, manifest["trace_artifact_ref"], manifest["trace_artifact_sha256"])
             validate_manifest_trace(manifest, load_canonical_trace(bound_artifact_path(root, manifest["trace_artifact_ref"])))
             for kind, filename in (() if not require_finalized else (("trajectories", "trajectory.json"), ("evidence", "v5_evidence.json"),

@@ -613,11 +613,12 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
 
 
 def inspect_retained_native_qualification(directory, *, recipe_path, provenance, context,
-        resume_checkpoint_sha256=None, resume_directory=None):
+        resume_checkpoint_sha256=None, resume_directory=None, inventory_only=False):
     """Inventory retained proof dependencies and reuse the native CPU recheck.
 
     Missing byte sizes stay unknown. This reads safe CPU tensors only; it does
     not run a model, recreate a probe or confer scientific/replay acceptance.
+    Inventory-only callers verify dependency bytes without loading proof tensors.
     """
     from .experiment_launch import _safe_local
     from .research_memory.paths import repo_local_path
@@ -691,19 +692,22 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
             item["verified_sha256"] = normalized_file_sha(Path(item["local_path"]))
             if item["sha256"] is not None and item["verified_sha256"] != item["sha256"]:
                 raise ValueError("Native proof artifact hash mismatch: " + item["path"])
+    if actual is not None and (
+            actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0
+            or actual.get("checkpoint_sha256") != resume_checkpoint_sha256
+            or type(actual.get("resume_step")) is not int
+            or [proof.get("path") for proof in actual.get("proofs", [])]
+                != ["actual-resume-a.pt", "actual-resume-b.pt"]):
+        raise ValueError("Actual retained-state native resume qualification differs")
     if missing:
         result["blockers"] = ["native_proof_dependencies_missing"]
         return result
+    if inventory_only:
+        return {**result, "status": "DEPENDENCIES_VERIFIED", "blockers": []}
     _verify_preflight(root, recipe, provenance, profiling_required=record.get("profiling") is not None)
     if resume_checkpoint_sha256 is not None:
         import torch
         from .family_training_session import validate_session_resume
-        if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0
-                or actual.get("checkpoint_sha256") != resume_checkpoint_sha256
-                or type(actual.get("resume_step")) is not int
-                or [proof.get("path") for proof in actual.get("proofs", [])]
-                    != ["actual-resume-a.pt", "actual-resume-b.pt"]):
-            raise ValueError("Actual retained-state native resume qualification differs")
         fingerprints = []
         for proof in actual["proofs"]:
             state = torch.load(_artifact_path(resume_root, proof["path"]), map_location="cpu", weights_only=True)

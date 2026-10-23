@@ -71,7 +71,7 @@ def validate_pair_observation(value: Any) -> dict[str, str]:
 
 
 def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
-                                   require_strict: bool = False) -> dict[str, str]:
+                                   require_strict: bool = False, _native_verification=None) -> dict[str, str]:
     """Bind a physical successor to retained state; eligibility stays with V5."""
     from .paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .trace import load_canonical_trace
@@ -122,7 +122,8 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
     if manifest.get("format") != "molgap-family-output-v1" or manifest["artifacts"]["trace"]["sha256"] != record["continued_trace"]["sha256"]:
         raise ValueError("continuation output/trace binding mismatch")
     context = load_json_object(retained["source_context"])["context"]
-    if context != manifest["context"]:
+    if ({k: v for k, v in context.items() if k != "platform_version"}
+            != {k: v for k, v in manifest["context"].items() if k != "platform_version"}):
         raise ValueError("continuation output context changed")
     for field, observed_field in (("spec_identity", "spec_identity"),
                                   ("logical_run_id", "logical_run_id"),
@@ -134,6 +135,10 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
     for observation in (origin, continued):
         if observation["platform_run_reference"].partition("@")[0] != context["run_reference"]:
             raise ValueError("continuation observation/output run mismatch")
+    for observed, identity in ((context, origin), (manifest["context"], continued)):
+        version = observed.get("platform_version")
+        if version is not None and not identity["attempt_id"].endswith("-v" + str(version)):
+            raise ValueError("continuation producer version differs from its receipt observation")
     if resume_key == "resume_bundle":
         from molgap.experiment_resume import validate_resume_bundle
         checked = validate_resume_bundle(retained[resume_key], context=context)
@@ -176,7 +181,7 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
         for key, observation in (("origin_receipt", origin), ("continued_receipt", continued)):
             observed_context = RunContext.from_launch(spec, retained[key], package_dir,
                 expected_package_identity=package["package_identity"], arm_id=context["arm_id"])
-            _check_context(context, observed_context)
+            _check_context(context if key == "origin_receipt" else manifest["context"], observed_context)
             if (terminal_attempt_id(spec, context["arm_id"], observed_context.platform_version) != observation["attempt_id"]
                     or observed_context.run_reference != observation["platform_run_reference"]):
                 raise ValueError("strict continuation receipt/attempt identity mismatch")
@@ -205,10 +210,26 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
         if (len(original_provenance) != 1
                 or load_json_object(original_provenance[0]) != provenance):
             raise ValueError("strict continuation changed the original runtime/data/initialization identity")
-        native = inspect_retained_native_qualification(native_root, recipe_path=recipe_path,
-            provenance=provenance, context=RunContext(**context),
-            resume_checkpoint_sha256=bundle["artifacts"]["checkpoint"]["sha256"],
-            resume_directory=retained["actual_resume_certificate"].parent)
+        checkpoint_sha = bundle["artifacts"]["checkpoint"]["sha256"]
+        if _native_verification is None:
+            native = inspect_retained_native_qualification(native_root, recipe_path=recipe_path,
+                provenance=provenance, context=RunContext(**context),
+                resume_checkpoint_sha256=checkpoint_sha,
+                resume_directory=retained["actual_resume_certificate"].parent)
+        else:
+            # Same acceptance call only: retain the completed tensor comparison,
+            # while checking that its checkpoint and proof bytes are unchanged.
+            from .trace import file_digest
+            native, verified_checkpoint = _native_verification
+            if verified_checkpoint != checkpoint_sha:
+                raise ValueError("Cached continuation proof belongs to another checkpoint")
+            dependencies = {Path(item["local_path"]).resolve(): item for item in native["dependencies"]}
+            required = {retained["native_certificate"].resolve(), retained["actual_resume_certificate"].resolve()}
+            if not required <= dependencies.keys():
+                raise ValueError("Cached continuation proof omits native/resume certificates")
+            for path, item in dependencies.items():
+                if file_digest(path) != item.get("verified_sha256"):
+                    raise ValueError("Continuation proof dependency changed after verification")
         if native["status"] != "VERIFIED":
             raise ValueError("strict continuation native qualification is incomplete: " + str(native))
         if "recovery_repair" in retained:

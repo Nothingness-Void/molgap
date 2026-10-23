@@ -69,10 +69,10 @@ def test_legacy_repository_retrieved_root_and_explicit_locations(acceptance_run)
         resolve_run_acceptance_inputs(*case.original, retrieved_root=root, locations=where)
 
 
-def retain(case, arm):
-    context = RunContext.from_launch(case.spec, case.run / "operations/launch_receipt.json",
+def retain(case, arm, *, receipt=None):
+    context = RunContext.from_launch(case.spec, receipt or case.run / "operations/launch_receipt.json",
         case.package, expected_package_identity=case.manifest["package_identity"], arm_id=arm)
-    destination = case.paths.artifact_root / "retained" / arm
+    destination = case.paths.artifact_root / "retained" / (context.platform_version if receipt else "original") / arm
     trace = b"synthetic retained trace"
     destination.mkdir(parents=True)
     (destination / "trace.json").write_bytes(trace)
@@ -83,25 +83,47 @@ def retain(case, arm):
     return context, destination, pin
 
 
-def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run):
+@pytest.mark.parametrize("continuation", [False, True])
+def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, continuation):
     case = acceptance_run
+    receipt = None
+    original_mappings = {}
+    if continuation:
+        from test_experiment_launch import build
+        response = deepcopy(case.receipt["response"])
+        response["platform_version"]["value"] = "8"
+        for physical in response["physical_runs"]["value"]:
+            physical["platform_version"]["value"] = "8"
+        receipt = case.paths.artifact_root / "continuation-receipt.json"
+        write(receipt, build((case.spec, case.package, case.manifest["package_identity"]), response))
+        for arm in (a["arm_id"] for a in case.spec.to_dict()["arms"]):
+            context, destination, pin = retain(case, arm)
+            target = record_run_retrieval(*case.original, context=context,
+                destination=destination, manifest_sha256=pin)
+            original_mappings[target] = target.read_bytes()
     destinations = {}
     for arm in (a["arm_id"] for a in case.spec.to_dict()["arms"]):
-        context, destination, pin = retain(case, arm)
+        context, destination, pin = retain(case, arm, receipt=receipt)
         target = record_run_retrieval(*case.original, context=context,
-            destination=destination, manifest_sha256=pin)
+            destination=destination, manifest_sha256=pin, continuation_receipt=receipt)
         assert target == record_run_retrieval(*case.original, context=context,
-            destination=destination, manifest_sha256=pin)
+            destination=destination, manifest_sha256=pin, continuation_receipt=receipt)
         assert json.loads(target.read_bytes())["context"] == context.to_dict()
+        assert target.parent.name == ("8" if continuation else "retrieved_outputs")
         destinations[arm] = destination
-    result = resolve_run_acceptance_inputs(*case.original)
+    result = resolve_run_acceptance_inputs(*case.original, continuation_receipt=receipt)
+    assert result["original_receipt"] == case.run / "operations/launch_receipt.json"
+    assert all(path.read_bytes() == raw for path, raw in original_mappings.items())
+    if continuation:
+        assert all("original" in item["output_dir"]
+                   for item in resolve_run_acceptance_inputs(*case.original)["outputs"].values())
     assert {arm: item["output_dir"] for arm, item in result["outputs"].items()} == {
         arm: str(path) for arm, path in destinations.items()}
     assert result["raw_traces"] == {arm: str(path / "trace.json") for arm, path in destinations.items()}
     first = next(iter(destinations))
     (destinations[first] / "output_manifest.json").write_bytes(b"changed")
     with pytest.raises(ValueError, match="manifest changed"):
-        resolve_run_acceptance_inputs(*case.original)
+        resolve_run_acceptance_inputs(*case.original, continuation_receipt=receipt)
 
 
 def test_damaged_retrieval_never_publishes_mapping(acceptance_run):

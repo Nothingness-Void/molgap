@@ -152,7 +152,7 @@ class _HttpResponse:
         return False
 
     def iter_content(self, chunk_size):
-        assert chunk_size == 1024 * 1024
+        assert chunk_size in (65536, 1024 * 1024)
         for offset in range(0, len(self.payload), 7):
             yield self.payload[offset : offset + 7]
 
@@ -285,6 +285,90 @@ def test_downloads_only_five_manifest_artifacts_and_manifest_with_full_paths(
     assert (
         case["destination"] / "output_manifest.json"
     ).read_bytes() == case["local_manifest"].read_bytes()
+
+
+@pytest.mark.parametrize("resumed", [False, True])
+@pytest.mark.parametrize("damage", [None, "certificate", "proof"])
+def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_validation(
+    tmp_path, monkeypatch, resumed, damage,
+):
+    from dataclasses import replace
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from molgap import family_training_runner as owner
+    from molgap.screen_policy import canonical_fingerprint
+    from molgap.training_reproducibility import sha256_file
+    case = _case(tmp_path, monkeypatch)
+    destination = case["destination"]
+    destination.mkdir()
+    contract = destination / "training_contract.json"
+    contract.write_bytes(b"{}")
+    context = replace(case["context"], platform_version="7", training_recipe_sha256=sha256_file(contract))
+    provenance = {"context": context.to_dict(), "recipe_identity": "fixture-recipe"}
+    proof = b"synthetic proof bytes; never native qualification"
+    profile_trace = b"{}"
+    report = {"trace_sha256": hashlib.sha256(profile_trace).hexdigest()}
+    encode = lambda value: json.dumps(value, sort_keys=True).encode()
+    report_bytes = encode(report)
+    certificate = {"provenance_sha256": canonical_fingerprint(provenance),
+        "proofs": [{"path": "repeat-a.pt", "sha256": hashlib.sha256(proof).hexdigest()}],
+        "profile_proof": {"report": "profile_qualification/profile.json",
+            "sha256": hashlib.sha256(report_bytes).hexdigest()}}
+    manifest = {"runtime": {"runtime_certificate_id": canonical_fingerprint(certificate)},
+        "artifacts": {"contract": {"path": contract.name}}}
+    prefix = "runs/session-7/_resume_preflight/" + context.arm_id if resumed else "runs/session-7"
+    metadata = {"runtime_certificate.json": encode(certificate), "runtime_provenance.json": encode(provenance),
+        "profile_qualification/profile.json": report_bytes, "profile_qualification/trace.json": profile_trace,
+        "repeat-a.pt": proof}
+    checkpoint = "1" * 64 if resumed else None
+    if resumed:
+        metadata["actual_resume_certificate.json"] = encode({"status": "accepted", "formal_training_exposure": 0,
+            "checkpoint_sha256": checkpoint, "resume_step": 1, "proofs": [
+            {"path": "actual-resume-a.pt", "sha256": hashlib.sha256(proof).hexdigest()},
+            {"path": "actual-resume-b.pt", "sha256": hashlib.sha256(proof).hexdigest()}]})
+        metadata.update({"actual-resume-a.pt": proof, "actual-resume-b.pt": proof})
+    if damage == "certificate":
+        metadata["runtime_certificate.json"] = encode({**certificate, "changed": True})
+    if damage == "proof":
+        metadata["repeat-a.pt"] = b"corrupt proof bytes"
+    files, payloads = [], {}
+    for name, payload in metadata.items():
+        remote = prefix + "/" + name
+        url = "https://offline.invalid/" + remote
+        files.append(_File(remote, url))
+        payloads[url] = payload
+    output_provenance_remote = "runs/session-7/arm/runtime_provenance.json"
+    if resumed:
+        url = "https://offline.invalid/" + output_provenance_remote
+        files.append(_File(output_provenance_remote, url))
+        payloads[url] = encode(provenance)
+    api, http = _Api(context.account, [_ResponsePage(files)]), _Http(payloads)
+    monkeypatch.setattr(owner, "read_recipe", lambda _: ({}, SimpleNamespace(identity="fixture-recipe")))
+    semantic = Mock(side_effect=AssertionError("Retrieval cannot claim native qualification"))
+    monkeypatch.setattr(owner, "_verify_preflight", semantic)
+    invoke = lambda: case["retrieve"].retrieve_native_dependencies(api, context=context,
+        manifest=manifest, remote_manifest_path=("runs/session-7/arm/output_manifest.json" if resumed
+            else case["remote_manifest"]), destination=destination,
+        resume_checkpoint_sha256=checkpoint, http_session=http)
+    if damage is not None:
+        with pytest.raises((ValueError, RuntimeError)):
+            invoke()
+    else:
+        result = invoke()
+        assert result["status"] == "DEPENDENCIES_VERIFIED"
+        assert result["native_qualification"] == "NOT_EVALUATED"
+        retained = Path(result["native_root"])
+        assert (retained / "repeat-a.pt").read_bytes() == proof
+        assert (retained / "profile_qualification/trace.json").read_bytes() == profile_trace
+        if resumed:
+            assert retained == destination.parent / "_resume_preflight" / context.arm_id
+            assert (retained / "actual-resume-b.pt").read_bytes() == proof
+    semantic.assert_not_called()
+    assert api.client.kernels.requests == []
+    assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
+    assert all(request.file_path.startswith(prefix + "/") or resumed
+        and request.file_path == output_provenance_remote for request in api.client.kernels.exact_requests)
+    assert not any("last_checkpoint" in url or "selected_model" in url for url in http.urls)
 
 
 def test_wrong_authenticated_account_publishes_nothing(tmp_path, monkeypatch):

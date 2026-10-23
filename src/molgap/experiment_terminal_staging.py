@@ -204,9 +204,19 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             raise ValueError("Terminal run must bind exactly one frozen prospective action")
         action = actions[0]
         observed_attempt = terminal_attempt_id(spec, arm_id, context.platform_version)
+        continuation = None
+        if arm_id in resolved.get("continuations", {}):
+            from .research_memory.paired import build_terminal_continuation
+            continuation = build_terminal_continuation(root,
+                output=trajectory_path.parent / "terminal_staging" / "continuations" /
+                    str(context.platform_version) / "continuation.json",
+                **resolved["continuations"][arm_id])
+            if (continuation["origin"]["attempt_id"] not in action["attempt_ids"]
+                    or continuation["same_run_observation"]["attempt_id"] != observed_attempt):
+                raise ValueError("Continuation does not connect the frozen action to this observed attempt")
         if (action["source_commit"] != context.source_commit or
-                (observed_attempt is not None and observed_attempt not in action["attempt_ids"])):
-            raise ValueError("Terminal source/attempt differs from the frozen prospective action")
+                (observed_attempt is not None and observed_attempt not in action["attempt_ids"] and continuation is None)):
+            raise ValueError("Terminal source/attempt differs from the frozen prospective action; use prepared resume evidence and recovery authority")
         observed = report["observed"]
         output_root = Path(item["output_dir"]).absolute()
         manifest_path = _artifact_path(output_root, "output_manifest.json")
@@ -217,6 +227,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], dict(restored)
+        if continuation is not None:
+            hashes.update(continuation["artifact_hashes"])
         allocation, allocation_costs = None, []
         if retention is not None:
             allocation, allocation_costs, bindings, retained_artifacts = _allocation_observation(root, retention, arm_id)
@@ -330,6 +342,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "platform_name": context.platform, "platform_run_reference": context.run_reference,
                 "attempt_id": observed_attempt, "source_commit": context.source_commit,
                 "source_package_sha256": context.source_archive_sha256}
+        if continuation is not None:
+            from .research_memory.paired import validate_terminal_continuation
+            package.update(continuation_ref=continuation["continuation_ref"],
+                same_run_observation=continuation["same_run_observation"])
+            validate_terminal_continuation(root, package)
         existing = directory / "terminal.json"
         package["finalized_at"] = (_json(existing)["finalized_at"] if existing.is_file()
             else datetime.now(timezone.utc).isoformat())

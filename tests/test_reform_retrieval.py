@@ -93,18 +93,31 @@ def unknown_producer(retrieval):
 
 
 @pytest.mark.parametrize("execute", [False, True])
-def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_producer, capsys, execute):
+@pytest.mark.parametrize("continuation", [False, True])
+def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_producer, capsys, execute, continuation):
     case = unknown_producer
     original = snapshot(case.run)
     pinned = case.local.read_bytes()
-    assert case.context.platform_version == "7"
-    assert case.adapter.main(arguments(case, execute=execute)) == 0
+    args = arguments(case, execute=execute)
+    if continuation:
+        response = deepcopy(case.receipt["response"])
+        response["platform_version"]["value"] = "8"
+        for physical in response["physical_runs"]["value"]:
+            physical["platform_version"]["value"] = "8"
+        receipt = build((case.spec, case.package, case.manifest["package_identity"]), response)
+        successor = case.profile.parent / "continuation-receipt.json"
+        write(successor, receipt)
+        case.context = RunContext.from_launch(case.spec, successor, case.package,
+            expected_package_identity=case.manifest["package_identity"], arm_id="gptrans_t")
+        args += ["--continuation-receipt", str(successor)]
+    assert case.context.platform_version == ("8" if continuation else "7")
+    assert case.adapter.main(args) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["producer_version"] is None
     assert result["manifest_sha256"] == hashlib.sha256(pinned).hexdigest()
     assert result["scientific_acceptance"] is False
     if execute:
-        assert result["status"] == "RETRIEVED" and result["receipt_version"] == "7"
+        assert result["status"] == "RETRIEVED" and result["receipt_version"] == case.context.platform_version
         assert result["platform_version_verified_by_output_api"] is True
         assert result["unselected_outputs_downloaded"] is False
         assert case.retrieve.call_args.kwargs["context"] == case.context
@@ -112,6 +125,8 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
         assert retained == pinned
         assert json.loads(retained)["context"]["platform_version"] is None
         assert len(case.http.urls) == len(ROLES) + 1
+        assert all(request.version_number == int(case.context.platform_version)
+                   for request in case.api.client.kernels.exact_requests)
     else:
         assert result["status"] == "READY_FOR_RETRIEVAL"
         case.auth.assert_not_called()
@@ -120,7 +135,7 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
     assert case.local.read_bytes() == pinned
     retained_run = snapshot(case.run)
     if execute:
-        mapping = "operations/retrieved_outputs/gptrans_t.json"
+        mapping = "operations/retrieved_outputs/" + ("8/" if continuation else "") + "gptrans_t.json"
         record = json.loads(retained_run.pop(mapping))
         assert record["context"] == case.context.to_dict()
         assert record["manifest_sha256"] == result["manifest_sha256"]
@@ -189,7 +204,11 @@ def test_no_execute_verifies_actual_original_context_without_auth_or_writes(retr
     assert result["status"] == "READY_FOR_RETRIEVAL"
     assert result["producer_version"] == "7"
     assert result["executed"] is result["network_accessed"] is result["scientific_acceptance"] is False
-    original.assert_called_once_with(case.profile, case.repo, "synthetic-run", "v1")
+    from molgap.experiment_package import _PackageVerification
+    original.assert_called_once()
+    assert original.call_args.args == (case.profile, case.repo, "synthetic-run", "v1")
+    assert set(original.call_args.kwargs) == {"_verification"}
+    assert isinstance(original.call_args.kwargs["_verification"], _PackageVerification)
     case.auth.assert_not_called()
     case.retrieve.assert_not_called()
     assert case.api.client_builds == 0 and case.http.urls == []
@@ -459,8 +478,9 @@ def test_original_transport_rejects_bytes_from_another_attempt(retrieval, capsys
     assert json.loads(captured.out)["stage"] == "platform_retrieval"
     assert "SECRET" not in captured.out and captured.err == ""
     case.retrieve.assert_called_once()
-    assert not (case.destination / "output_manifest.json").exists()
+    assert (case.destination / "output_manifest.json").read_bytes() == case.local.read_bytes()
     assert not any(case.destination.rglob("*.bin"))
+    assert not (case.run / "operations/retrieved_outputs").exists()
 
 
 def test_platform_diagnostics_and_exception_secrets_never_escape(retrieval, capsys):
