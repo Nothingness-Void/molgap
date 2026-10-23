@@ -26,7 +26,8 @@ owns Kaggle3 identity, receipts and reconciliation. Keep the unresolved question
 on its owner; no active model or implementation adoption is implied.
 
 K1 normalization mechanisms is closed without model adoption. Full owner history
-through `710b8834` is reachable from pushed archive `0e98722b`; desktop retains
+through real automatic verification `48e4c6a5` is reachable from pushed archive
+`aab98f69` (including original closure `710b8834`); desktop retains
 the [accepted evidence and strict qualification](experiments/pcqm_k1_norm_mechanisms_100k/qualification_20261023.md).
 Restore that owner only when its normalization implementation is needed; its
 ordinary read-only verification commands preserve the frozen training packages.
