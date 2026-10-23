@@ -116,12 +116,14 @@ def frozen_shared_acceptance_run(tmp_path, repo):
     from test_experiment_workflow import _arm, _spec_payload
     from test_family_training_runner import contract_file
     from test_family_training_session import events, make_session
+    import torch
 
     profile = tmp_path / "machine-shared-acceptance.json"
     write(profile, {"format": "molgap-machine-paths-v1", "python": sys.executable,
         **{name: str(tmp_path / name) for name in ("data_root", "artifact_root", "scratch_root")}})
     paths = MachinePaths.from_file(profile)
     arm_specs, contracts = [], {}
+    training_target_sha256 = None
     for family, version, arm_id in (
             ("neural_atom_k1", "3", "k1_candidate"),
             ("gptrans_t", "2", "gptrans_candidate")):
@@ -130,6 +132,9 @@ def frozen_shared_acceptance_run(tmp_path, repo):
             contract_root = tmp_path / "native-contracts" / arm_id
             contract_root.mkdir(parents=True)
             contract_path, record = contract_file(contract_root, session)
+            training_targets = torch.cat([graph.y for graph in session.loaders.data.train])
+            training_target_sha256 = hashlib.sha256(
+                training_targets.numpy().astype("<f4", copy=False).tobytes()).hexdigest()
             arm = _arm(family, version, arm_id,
                 recipe_sha256=hashlib.sha256(canonical_json(record).encode()).hexdigest(),
                 state_sha256=session.recipe.initialization_sha256)
@@ -173,6 +178,7 @@ def frozen_shared_acceptance_run(tmp_path, repo):
         return {"path": name, "sha256": hashlib.sha256(raw).hexdigest()}
 
     target = add(generated_root + "/target.json", canonical_json({
+        "training_float32_target_sha256": training_target_sha256,
         "development_target_sha256": contracts["k1_candidate"][0]["acceptance_requirements"]["target_sha256"],
         "target_encoding": "little-endian-float64-contiguous-raw-bytes"}).encode())
     for arm, binding in zip(declaration["arms"], declaration["prospective"]["arms"]):

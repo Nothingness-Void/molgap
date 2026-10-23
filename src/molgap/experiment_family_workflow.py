@@ -48,6 +48,8 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
     from .family_training_runner import read_recipe
+    from .research_memory.finalize import (current_finalized_directory, load_terminal_input,
+        verified_receipt, prospective_bytes, _qualification_amendment, _bindings)
     root = Path(repo_root).resolve()
     declaration = resolved["spec"].to_dict()
     pair = declaration["prospective"].get("same_run_replay")
@@ -56,7 +58,70 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     reference_id = pair["reference_arm_id"]
     if any(native_reports[arm]["status"] != "VERIFIED" for arm in locations):
         raise ValueError("Every same-run arm requires independently reverified native proof")
-    packages = {arm: _json(repo_local_path(root, loc["terminal"])) for arm, loc in locations.items()}
+    packages, finalized = {}, {}
+    for arm_id, loc in locations.items():
+        current = current_finalized_directory(root, loc["trajectory"])
+        terminal_path = repo_local_path(root, loc["terminal"])
+        incoming = _json(terminal_path) if terminal_path.is_file() else None
+        if current.is_dir():
+            receipt = verified_receipt(current)
+            accepted = load_terminal_input(current)
+            if incoming is not None:
+                if incoming.get("format") == "molgap-rml-terminal-input-v2":
+                    incoming = load_terminal_input(terminal_path.parent)
+                # Preserve qualification bindings absent from an older staged
+                # input, while the existing owner rejects altered science.
+                candidate = copy.deepcopy(incoming)
+                candidate["artifact_hashes"] = {**accepted["artifact_hashes"], **candidate["artifact_hashes"]}
+                candidate["evidence"]["artifacts"] = accepted["evidence"]["artifacts"] + [
+                    item for item in candidate["evidence"]["artifacts"]
+                    if item not in accepted["evidence"]["artifacts"]]
+                trace = bound_artifact_path(root, candidate["trace_manifest"]["trace_artifact_ref"])
+                _qualification_amendment(root, current, prospective_bytes(current, receipt),
+                    candidate, trace.read_bytes())
+                accepted.update({key: value for key, value in candidate.items() if key not in accepted})
+                accepted["artifact_hashes"] = candidate["artifact_hashes"]
+                accepted["evidence"]["artifacts"] = candidate["evidence"]["artifacts"]
+            packages[arm_id], finalized[arm_id] = accepted, current
+        elif incoming is not None:
+            packages[arm_id] = incoming
+        else:
+            raise ValueError("Strict qualification requires staged or canonical terminal evidence")
+    if len(finalized) == len(locations) and all(package["trace_manifest"]["backtest_eligibility"]["eligible"]
+            for package in packages.values()):
+        comparisons, reused = {}, {}
+        for arm_id, package in packages.items():
+            ctx = resolved["contexts"][arm_id]
+            observation = package.get("same_run_observation", {})
+            expected = {"schema": "molgap-same-run-observation-v1", "spec_identity": resolved["spec"].identity,
+                "logical_run_id": ctx.logical_run_id, "platform_name": ctx.platform,
+                "platform_run_reference": ctx.run_reference,
+                "attempt_id": terminal_attempt_id(resolved["spec"], arm_id, ctx.platform_version),
+                "source_commit": ctx.source_commit, "source_package_sha256": ctx.source_archive_sha256}
+            if observation != expected:
+                raise ValueError("Canonical qualification differs from the observed run context")
+            _bindings(root, package["artifact_hashes"])
+            artifacts = {item["name"]: item["sha256"] for item in package["evidence"]["artifacts"]}
+            for name, item in reports[arm_id]["observed"]["artifacts"].items():
+                if artifacts.get("training_trace" if name == "trace" else name) != item["sha256"]:
+                    raise ValueError("Canonical qualification differs from the observed output artifacts")
+            if arm_id != reference_id:
+                pointer = package.get("comparison_readiness_ref")
+                if pointer not in package["artifact_hashes"]:
+                    raise ValueError("Canonical qualification has no bound strict comparison")
+                comparison = _json(repo_local_path(root, pointer))
+                validate_comparison_readiness(comparison,
+                    evidence_verifier=lambda ref, sha: verify_bound_artifact(root, ref, sha))
+                if (not comparison["strict_ready"] or comparison["candidate_id"] != package["evidence"]["evidence_id"]
+                        or comparison["reference_id"] != packages[reference_id]["evidence"]["evidence_id"]):
+                    raise ValueError("Canonical strict comparison differs from the accepted pair")
+                comparisons[arm_id] = comparison
+            reused[arm_id] = {**locations[arm_id],
+                "terminal": (finalized[arm_id] / "terminal_input.json").relative_to(root).as_posix(),
+                "trace": package["trace_manifest"]["trace_artifact_ref"]}
+        return {"locations": reused, "comparisons": comparisons, "canonical_reused": True,
+            "reference_bundle_ref": None, "directory": None,
+            "qualification_adapter_sha256": file_digest(Path(__file__))}
     adapter_sha256 = file_digest(Path(__file__))
     identity = canonical_fingerprint({"packages": packages, "native": native_reports,
         "qualification_adapter_sha256": adapter_sha256})
@@ -90,7 +155,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         target_binding = resolved["target_identities"][arm_id]
         target_plan = target_binding._pinned_json(target_binding.plan_path, target_binding.plan_sha256)
         target_entry = next(entry for entry in target_plan["arms"] if entry["arm_id"] == arm_id)
-        target_pin = target_entry["target_manifest"]
+        target_pin = (target_entry["target_manifest"]
+            if target_plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
+            else target_entry["reference_artifacts"]["target_manifest"])
         targets = target_binding._pinned_json(target_pin["path"], target_pin["sha256"])
         transform = {"format": "molgap-target-transform-asset-v1", "asset_id": arm["training"]["transform"]["sha256"],
             "target_identity": arm["data"]["target"], "mean": recipe.target_mean_eV, "std": recipe.target_std_eV,
@@ -98,7 +165,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "target_sha256": targets["training_float32_target_sha256"]}
         transform["asset_sha256"] = target_transform_asset_digest(transform)
         validate_target_transform_asset(transform)
-        transform_path = repo_local_path(root, Path(locations[arm_id]["trajectory"]).parents[4]
+        transform_path = repo_local_path(root, Path(locations[arm_id]["trajectory"]).parent.parent
             / "comparison_assets" / transform["asset_sha256"] / "target_transform.json")
         publish_immutable_bytes(transform_path, json_bytes(transform))
         transform_ref = transform_path.relative_to(root).as_posix()
@@ -126,8 +193,12 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "ema_enabled": recipe.ema_decay is not None, "ema_decay": recipe.ema_decay,
             "ema_update_frequency": 1 if recipe.ema_decay is not None else None,
             "evaluation_weight_source": data["selection_weights"]}
+        certificates = [entry["local_path"] for entry in native_reports[arm_id]["dependencies"]
+                        if entry["path"] == "runtime_certificate.json"]
+        if len(certificates) != 1:
+            raise ValueError("Native qualification requires one exact retained certificate")
         bindings = {"checkpoint": binding(artifact_locator(root, Path(item["output_dir"]) / "selected_model.pt")),
-            "runtime_certificate": binding(artifact_locator(root, Path(item["output_dir"]) / "runtime_certificate.json")),
+            "runtime_certificate": binding(artifact_locator(root, Path(certificates[0]))),
             "prediction_manifest": binding(publish(arm_id, "prediction_manifest.json", {"prediction_sha256": data["hashes"]["development_predictions_sha256"],
                 "source_idx_sha256": item["expected"]["source_idx_sha256"], "target_sha256": item["expected"]["target_sha256"],
                 "ordering_semantics": "frozen source_idx order", "evaluation_role_identity": contract["development_role_identity"],
@@ -186,6 +257,10 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             package = copy.deepcopy(package)
         package["artifact_hashes"][bundle_ref] = file_digest(root / bundle_ref)
         package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+        if arm_id in finalized:
+            previous = (finalized[arm_id] / "finalization.json").relative_to(root).as_posix()
+            package["supersedes_finalization_ref"] = previous
+            package["artifact_hashes"][previous] = file_digest(root / previous)
         terminal_ref = publish(arm_id, "qualified_terminal.json", package)
         qualified[arm_id] = {**locations[arm_id], "terminal": terminal_ref,
             "trace": package["trace_manifest"]["trace_artifact_ref"]}

@@ -6,13 +6,14 @@ keep their original custody and exact digests. Staging never finalizes RML.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import hashlib
 from pathlib import Path
 
 from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
 from .research_memory.paths import artifact_locator, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
-from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory, validate_trace_manifest_plan, validate_trace_manifest
+from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
 from .research_memory.trace import file_digest, json_bytes, load_canonical_trace
 from .screen_policy import canonical_fingerprint
 
@@ -20,23 +21,11 @@ from .screen_policy import canonical_fingerprint
 PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
 
 
-def _frozen_trace_manifest_plan(output_root, artifacts, context):
-    binding = artifacts.get("contract")
-    if binding is None:
-        return None
-    path = _artifact_path(output_root, binding["path"])
-    if binding["sha256"] != context.training_recipe_sha256 or file_digest(path) != context.training_recipe_sha256:
-        raise ValueError("Trace plan contract differs from the frozen recipe")
-    contract = _json(path)
-    return (validate_trace_manifest_plan(contract["trace_manifest_plan"])
-            if "trace_manifest_plan" in contract else None)
-
-
 def _per_arm(value, arm_id):
     return value.get(arm_id) if isinstance(value, dict) else value
 
 
-def _cost_events(native, context, where, action_id, source_ref):
+def _cost_events(native, context, where, action_id, source_ref, *, category="training", suffix=""):
     """Translate only measured native seconds; retain everything else as unknown."""
     events = []
     for index, cost in enumerate(native):
@@ -53,13 +42,44 @@ def _cost_events(native, context, where, action_id, source_ref):
                        for name in ("device_hours", "cpu_hours", "wall_hours", "queue_hours")}
         measurement[field] = {"value": cost["value"] / 3600, "status": "measured"}
         event = {"schema": "molgap-cost-event-v1",
-            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{index}",
+            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{suffix}{index}",
             "trajectory_id": where["trajectory_id"], "action_id": action_id, "run_id": where["run_id"],
             "attempt_id": context["attempt_id"] or "unknown", "platform": context["platform"],
-            "hardware": cost["hardware"], "category": "training", "evidence_ref": source_ref,
+            "hardware": cost["hardware"], "category": category, "evidence_ref": source_ref,
             "measurement": measurement}
         events.append(validate_cost_event(event))
     return events
+
+
+def _allocation_observation(root, retention, arm_id):
+    """Bind the observed window; assigned device records need no cost apportionment."""
+    from .experiment_retention import _manifest_bytes
+    manifest = retention["manifest"]
+    manifest_path = Path(retention["manifest_path"])
+    directory = manifest_path.parent
+    refs = {"execution_retention": {
+        "path": manifest_path.name,
+        "sha256": hashlib.sha256(_manifest_bytes(manifest)).hexdigest()},
+        "allocation_ledger": manifest["allocation_ledger"]["root"],
+        "arm_allocation_ledger": manifest["allocation_ledger"]["arms"][arm_id]}
+    bindings, artifacts = {}, []
+    for name, reference in refs.items():
+        locator = artifact_locator(root, directory / reference["path"])
+        verify_bound_artifact(root, locator, reference["sha256"])
+        bindings[locator] = reference["sha256"]
+        artifacts.append({"name": name, "locator": locator, "sha256": reference["sha256"],
+            "availability": "machine_local_verified" if locator.startswith("external://") else "durable_local_verified"})
+    ledger = retention["ledgers"]["root"]
+    devices = [device for device in ledger["devices"] if device["arm_id"] == arm_id]
+    observation = {"scope": ledger["scope"], "started_at": ledger["started_at"],
+        "observed_at": ledger["observed_at"], "status": ledger["status"], "devices": devices,
+        "prior_segments_recorded": len(ledger["prior_segments"]),
+        "prior_unobserved_intervals": ledger["prior_unobserved_intervals"],
+        "cumulative_costs_evaluated": False, "artifact_refs": sorted(bindings)}
+    native = [{"metric": "device_seconds", "unit": "seconds", "value": device["allocated_seconds"],
+        "status": "measured", "semantics": "allocated_device", "hardware": device["hardware"]}
+        for device in devices]
+    return observation, native, bindings, artifacts
 
 
 def _roles(root, audit_ref, context, where, action_id):
@@ -119,7 +139,8 @@ def _diagnostic_binding(root, resolved, report):
 
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
-        diagnostic_report=None, role_audit=None, resolved=None, reports=None):
+        diagnostic_report=None, role_audit=None, resolved=None, reports=None,
+        execution_root=None, _retention=None):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -133,6 +154,16 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     root = Path(repo_root).resolve()
     spec = resolved["spec"]
+    frozen_options = resolved.get("options", {})
+    frozen_package = frozen_options.get("package_dir")
+    verification = frozen_options.get("_verification")
+    retention = _retention
+    if execution_root is not None and retention is None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(resolved["contexts"].values()))
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=frozen_options["expected_package_identity"], source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
     outputs = {arm_id: {**item,
         **({"context": resolved["contexts"][arm_id]} if "context" not in item else {}),
         **({"target_identity": resolved["target_identities"][arm_id]}
@@ -162,6 +193,10 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         from .research_memory.plan import resolve_decision_state
         trajectory_path = repo_local_path(root, where["trajectory"])
         trajectory = validate_trajectory(resolve_decision_state(root, _json(trajectory_path)))
+        # Restore only exact metadata pins from the original source package.
+        from .research_memory.terminal_wiring import _restore_frozen_generated_metadata
+        restored = _restore_frozen_generated_metadata(
+            root, trajectory, frozen_package, _verification=verification)
         if trajectory["trajectory_id"] != where["trajectory_id"] or trajectory["record_mode"] != "prospective":
             raise ValueError("Terminal staging requires the owning prospective trajectory")
         actions = [action for action in trajectory["actions"] if where["run_id"] in action["run_ids"]]
@@ -169,9 +204,19 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             raise ValueError("Terminal run must bind exactly one frozen prospective action")
         action = actions[0]
         observed_attempt = terminal_attempt_id(spec, arm_id, context.platform_version)
+        continuation = None
+        if arm_id in resolved.get("continuations", {}):
+            from .research_memory.paired import build_terminal_continuation
+            continuation = build_terminal_continuation(root,
+                output=trajectory_path.parent / "terminal_staging" / "continuations" /
+                    str(context.platform_version) / "continuation.json",
+                **resolved["continuations"][arm_id])
+            if (continuation["origin"]["attempt_id"] not in action["attempt_ids"]
+                    or continuation["same_run_observation"]["attempt_id"] != observed_attempt):
+                raise ValueError("Continuation does not connect the frozen action to this observed attempt")
         if (action["source_commit"] != context.source_commit or
-                (observed_attempt is not None and observed_attempt not in action["attempt_ids"])):
-            raise ValueError("Terminal source/attempt differs from the frozen prospective action")
+                (observed_attempt is not None and observed_attempt not in action["attempt_ids"] and continuation is None)):
+            raise ValueError("Terminal source/attempt differs from the frozen prospective action; use prepared resume evidence and recovery authority")
         observed = report["observed"]
         output_root = Path(item["output_dir"]).absolute()
         manifest_path = _artifact_path(output_root, "output_manifest.json")
@@ -181,7 +226,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if (manifest.get("artifacts") != observed["artifacts"] or manifest.get("costs") != observed["costs"]
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
-        artifacts, hashes = [], {}
+        artifacts, hashes = [], dict(restored)
+        if continuation is not None:
+            hashes.update(continuation["artifact_hashes"])
+        allocation, allocation_costs = None, []
+        if retention is not None:
+            allocation, allocation_costs, bindings, retained_artifacts = _allocation_observation(root, retention, arm_id)
+            hashes.update(bindings)
+            artifacts.extend(retained_artifacts)
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
@@ -193,7 +245,6 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             if name == "trace":
                 trace_path, trace_locator = path, locator
         trace = load_canonical_trace(trace_path)
-        trace_plan = _frozen_trace_manifest_plan(output_root, observed["artifacts"], context)
         if (trace["trajectory_id"], trace["run_id"]) != (where["trajectory_id"], where["run_id"]):
             raise ValueError("Actual canonical trace differs from the prospective owner/run")
         explicit_outcome, explicit_decision = _per_arm(outcome, arm_id), _per_arm(decision_ref, arm_id)
@@ -215,8 +266,6 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         hashes[manifest_locator] = file_digest(manifest_path)
         if diagnostic_binding is not None:
             hashes[diagnostic_binding["locator"]] = diagnostic_binding["sha256"]
-        if diagnostic_binding is not None:
-            hashes[diagnostic_binding["locator"]] = diagnostic_binding["sha256"]
         # Input-addressed metadata avoids overwriting a draft when a later audit
         # or explicit decision completes it. Retried identical staging is stable.
         identity = canonical_fingerprint({"report": report, "outcome": explicit_outcome,
@@ -228,10 +277,23 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         terminal_ref = pointer("terminal.json")
         costs = _cost_events(observed["costs"], {"attempt_id": observed_attempt, "platform": context.platform},
             where, action["action_id"], objective_ref)
+        if allocation is not None:
+            existing_allocation = any(event["measurement"]["device_hours"]["status"] == "measured"
+                                      for event in costs)
+            # Retained scopes may overlap; retain both sources without adding
+            # a second measurement to RML's additive device-hour ledger.
+            allocation["event_status"] = ("not_aggregated_existing_device_measurement" if existing_allocation
+                                           else "recorded_current_window")
+            if not existing_allocation:
+                costs.extend(_cost_events(allocation_costs,
+                    {"attempt_id": observed_attempt, "platform": context.platform}, where, action["action_id"],
+                    objective_ref, category="other", suffix="allocation-"))
         objective = {"context": context.to_dict(), "mechanical_verification": report,
             "native_costs": observed["costs"], "costs": costs, "roles": [],
             "missing_evidence": ["scientific_comparison_not_evaluated", "runtime_qualification_not_evaluated",
                 "replay_readiness_not_evaluated", *role_blockers], "diagnostic_report": diagnostic_binding}
+        if allocation is not None:
+            objective["allocation_observation"] = allocation
         publish_immutable_bytes(directory / "observed.json", json_bytes(objective))
         hashes[objective_ref] = file_digest(directory / "observed.json")
         closure_ready = not blockers
@@ -260,18 +322,10 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
         from .research_memory.terminal_wiring import build_default_trace_manifest
         trace_manifest = build_default_trace_manifest(root, trajectory, {"run_id": where["run_id"]}, trace)
-        if trace_plan is not None:
-            trace_manifest.update(trace_plan)
-            trace_manifest["backtest_eligibility"] = {"eligible": False, "exclusion_reasons":
-                ["strict_comparison_readiness_not_established"]
-                + (["missing_frozen_reference"] if trace_manifest["reference_id"] is None else [])}
         trace_manifest.update(trace_artifact_ref=trace_locator, trace_artifact_sha256=hashes[trace_locator],
             terminal_evidence_ref=terminal_ref)
         for field in trace_manifest["trace_fields"]:
-            observed_field = any(row.get(field) is not None for row in trace["observations"])
-            if trace_plan is not None and trace_plan["trace_fields"][field] and not observed_field:
-                raise ValueError("Frozen trace plan field was not observed: " + field)
-            trace_manifest["trace_fields"][field] = observed_field
+            trace_manifest["trace_fields"][field] = any(row.get(field) is not None for row in trace["observations"])
         package = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": where["trajectory_id"],
             "run_id": where["run_id"], "action_id": action["action_id"], "acceptance_ref": acceptance_ref,
             "decision": final_decision, "evidence": evidence, "costs": costs, "roles": roles,
@@ -288,8 +342,12 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "platform_name": context.platform, "platform_run_reference": context.run_reference,
                 "attempt_id": observed_attempt, "source_commit": context.source_commit,
                 "source_package_sha256": context.source_archive_sha256}
+        if continuation is not None:
+            from .research_memory.paired import validate_terminal_continuation
+            package.update(continuation_ref=continuation["continuation_ref"],
+                same_run_observation=continuation["same_run_observation"])
+            validate_terminal_continuation(root, package)
         existing = directory / "terminal.json"
-        validate_trace_manifest(trace_manifest)
         package["finalized_at"] = (_json(existing)["finalized_at"] if existing.is_file()
             else datetime.now(timezone.utc).isoformat())
         publish_immutable_bytes(existing, json_bytes(package))

@@ -1,10 +1,11 @@
 """Selective retrieval for the family output protocol; no all-output fallback.
 
 The platform skill reconciles the exact kernel/version and retrieves/pins its
-small manifest first. This adapter downloads only manifest-bound required files.
-Kaggle's output-list API addresses the latest session, so every downloaded byte
-is rechecked against that independently pinned manifest rather than trusting a
-slug to identify an attempt. Signed URLs never appear in returned receipts.
+small manifest first. This adapter downloads manifest-bound required files and,
+with explicit strict retrieval, the native owner's certificate-bound dependencies.
+Numeric receipt versions use the existing exact-version transport. Legacy opaque
+session references retain the manifest-pinned listing path. Every downloaded byte
+is checked against the pinned manifest; signed URLs never appear in receipts.
 """
 from __future__ import annotations
 
@@ -16,9 +17,85 @@ from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
 from molgap.kaggle_output_retrieval import (
     retrieve_execution_retention as _retrieve_execution_retention,
+    retrieve_exact_metadata,
+    retrieve_pinned_exact_files,
     retrieve_selected_kaggle_files,
 )
 from molgap.research_memory.trace import file_digest
+
+
+def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path,
+        destination, resume_checkpoint_sha256=None, http_session=None):
+    """Retain only native-owner dependencies; semantic acceptance stays local."""
+    from tempfile import TemporaryDirectory
+    from molgap.family_training_runner import inspect_retained_native_qualification
+    from molgap.research_memory.paths import repo_local_path
+    from molgap.screen_policy import canonical_fingerprint
+
+    destination = Path(destination).absolute()
+    prefix = PurePosixPath(remote_manifest_path).parent
+    resumed = resume_checkpoint_sha256 is not None
+    native = destination.parent / "_resume_preflight" / context.arm_id if resumed else destination
+    remote_native = prefix.parent / "_resume_preflight" / context.arm_id if resumed else prefix
+    _safe_local(native)
+    version = context.platform_version
+    if not isinstance(version, str) or not version.isascii() or not version.isdecimal():
+        raise ValueError("Strict dependency retrieval requires an exact numeric version")
+    certificate_id = manifest.get("runtime", {}).get("runtime_certificate_id")
+    from molgap.experiment_spec import _digest
+    _digest(certificate_id, "runtime_certificate_id")
+
+    def metadata(names, *, remote_root=remote_native):
+        with TemporaryDirectory(prefix=".native-metadata-", dir=destination.parent) as temporary:
+            paths = [(remote_root / name).as_posix() for name in names]
+            retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
+                version=int(version), paths=paths, destination=Path(temporary), http_session=http_session)
+            return {name: repo_local_path(Path(temporary), remote).read_bytes()
+                    for name, remote in zip(names, paths)}
+
+    # The output manifest authenticates the certificate; the certificate binds
+    # provenance. Keep unvalidated metadata outside the retained arm directory.
+    from molgap.experiment_family_workflow import _json_bytes
+    payloads = metadata(["runtime_certificate.json", "runtime_provenance.json"])
+    certificate, provenance = (_json_bytes(payloads[name]) for name in
+        ("runtime_certificate.json", "runtime_provenance.json"))
+    if (canonical_fingerprint(certificate) != certificate_id
+            or certificate.get("provenance_sha256") != canonical_fingerprint(provenance)):
+        raise ValueError("Native metadata differs from the manifest-bound certificate")
+    from molgap.experiment_launch import publish_immutable_bytes
+    for name, payload in payloads.items():
+        publish_immutable_bytes(native / name, payload)
+    if resumed:
+        output_provenance = metadata(["runtime_provenance.json"], remote_root=prefix)["runtime_provenance.json"]
+        if canonical_fingerprint(_json_bytes(output_provenance)) != certificate["provenance_sha256"]:
+            raise ValueError("Continued output provenance differs from its native certificate")
+        publish_immutable_bytes(destination / "runtime_provenance.json", output_provenance)
+    if resumed and not (native / "actual_resume_certificate.json").is_file():
+        payload = metadata(["actual_resume_certificate.json"])["actual_resume_certificate.json"]
+        publish_immutable_bytes(native / "actual_resume_certificate.json", payload)
+
+    recipe = repo_local_path(destination, manifest["artifacts"]["contract"]["path"])
+    for _ in range(4):
+        inventory = inspect_retained_native_qualification(native, recipe_path=recipe,
+            provenance=provenance, context=context, resume_checkpoint_sha256=resume_checkpoint_sha256,
+            resume_directory=native, inventory_only=True)
+        if inventory["status"] == "DEPENDENCIES_VERIFIED":
+            return {"status": "DEPENDENCIES_VERIFIED", "native_root": str(native),
+                "known_local_bytes": inventory["known_local_bytes"],
+                "scientific_acceptance": "NOT_EVALUATED", "native_qualification": "NOT_EVALUATED"}
+        missing = [item for item in inventory["dependencies"] if not item["present"] and item["sha256"] is not None]
+        # Profile JSON can disclose a further pinned trace. Fetch its frontier
+        # before tensor proofs, without enumerating unrelated worker files.
+        selected = [item for item in missing if Path(item["path"]).suffix == ".json"] or missing
+        if not selected:
+            raise ValueError("Native dependency has no retained hash binding")
+        files = {}
+        for item in selected:
+            relative = Path(item["local_path"]).relative_to(native).as_posix()
+            files[(remote_native / relative).as_posix()] = (relative, item["sha256"])
+        retrieve_pinned_exact_files(api, context=context, remote_manifest_path=remote_manifest_path,
+            files=files, destination=native, http_session=http_session)
+    raise ValueError("Native dependency inventory did not resolve within its bounded frontiers")
 
 
 def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: str,
@@ -32,7 +109,10 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     """
     manifest, required = _family_files(context, remote_manifest_path, local_manifest,
                                        manifest_sha256)
-    result = retrieve_selected_kaggle_files(
+    version = context.platform_version
+    transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
+                 and version.isdecimal() else retrieve_selected_kaggle_files)
+    result = transport(
         api, context=context, remote_manifest_path=remote_manifest_path,
         files=required, destination=destination, http_session=http_session,
     )
@@ -63,7 +143,8 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
     if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent
-    required = {}
+    # A failed payload download must leave its pinned manifest for safe reentry.
+    required = {remote_manifest_path: ("output_manifest.json", manifest_sha256)}
     for role, item in manifest["artifacts"].items():
         _path(item["path"])
         from molgap.experiment_spec import _digest
@@ -72,7 +153,6 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         if remote in required:
             raise ValueError("Aliased retention roles")
         required[remote] = (item["path"], item["sha256"])
-    required[remote_manifest_path] = ("output_manifest.json", manifest_sha256)
     return manifest, required
 
 
@@ -100,6 +180,7 @@ def main(argv=None):
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
+    from molgap.experiment_package import _PackageVerification
     from molgap.kaggle_output_retrieval import _selected_files
 
     class Parser(argparse.ArgumentParser):
@@ -114,21 +195,32 @@ def main(argv=None):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--credentials", type=Path)
+    parser.add_argument("--continuation-receipt", type=Path)
+    parser.add_argument("--resume-prepared", type=Path)
+    parser.add_argument("--strict", action="store_true")
     parser.add_argument("--execute", action="store_true")
     stage = "arguments"
     try:
         args = parser.parse_args(argv)
         if bool(args.credentials) != args.execute:
             raise ValueError("Explicit credentials are required only with --execute")
+        if (args.resume_prepared is not None and (not args.strict or args.continuation_receipt is None)
+                or args.strict and args.continuation_receipt is not None and args.resume_prepared is None):
+            raise ValueError("Strict continuation retrieval requires its original resume preparation")
         # SDK diagnostics may contain credentials or signed URLs. Only the
         # adapter's finite JSON receipt is allowed on either output stream.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             stage = "original_run"
+            verification = _PackageVerification()
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
             spec, options, prepared = _original_run(
-                args.profile, args.repo_root, args.run_id, args.attempt_id)
+                args.profile, args.repo_root, args.run_id, args.attempt_id, _verification=verification)
+            from molgap.experiment_run_acceptance import _continuation_options
+            options = _continuation_options(spec, options, args.continuation_receipt,
+                args.repo_root, verification)
             context = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
-                expected_package_identity=options["expected_package_identity"], arm_id=args.arm)
+                expected_package_identity=options["expected_package_identity"], arm_id=args.arm,
+                _verification=verification)
             if context.platform != "kaggle":
                 raise ValueError("Expected an original Kaggle run")
             stage = "manifest"
@@ -143,6 +235,19 @@ def main(argv=None):
             # bind retrieval through the reconciled receipt and pinned bytes.
             if context.platform_version is None:
                 raise ValueError("An exact reconciled receipt version is required")
+            resume_checkpoint = None
+            if args.strict:
+                from molgap.experiment_spec import _digest
+                _digest(manifest.get("runtime", {}).get("runtime_certificate_id"), "runtime_certificate_id")
+                if not context.platform_version.isascii() or not context.platform_version.isdecimal():
+                    raise ValueError("Strict dependency retrieval requires an exact numeric version")
+                if args.resume_prepared is not None:
+                    from molgap.experiment_workflow_resume import resolve_terminal_resume
+                    bindings = resolve_terminal_resume({"spec": spec, "options": options, "prepared": prepared,
+                        "outputs": {arm["arm_id"]: {"output_dir": str(args.destination.parent / arm["arm_id"])}
+                            for arm in spec.to_dict()["arms"]}}, args.resume_prepared, None)
+                    resume_checkpoint = _json(bindings[args.arm]["resume_bundle"])["artifacts"]["checkpoint"]["sha256"]
+                    _digest(resume_checkpoint, "resume checkpoint.sha256")
             stage = "destination"
             destination = args.destination.absolute()
             _safe_local(destination)
@@ -176,10 +281,17 @@ def main(argv=None):
                 result = retrieve_family_outputs(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
                     manifest_sha256=args.manifest_sha256, destination=destination)
+                if args.strict:
+                    stage = "native_dependencies"
+                    result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
+                        manifest=manifest, remote_manifest_path=args.remote_manifest_path,
+                        destination=destination, resume_checkpoint_sha256=resume_checkpoint)
                 stage = "retrieval_mapping"
                 from molgap.experiment_run_acceptance import record_run_retrieval
                 mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
-                    context=context, destination=destination, manifest_sha256=args.manifest_sha256)
+                    context=context, destination=destination, manifest_sha256=args.manifest_sha256,
+                    continuation_receipt=args.continuation_receipt,
+                    _verification=verification)
                 result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)

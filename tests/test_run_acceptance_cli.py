@@ -95,9 +95,13 @@ def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_
     receipt = tmp_path / "v3.json"
     assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
         "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--strict", "--continuation-receipt", str(receipt), "--physical-runs", str(physical)]) == 1
+        "--strict", "--continuation-receipt", str(receipt), "--physical-runs", str(physical),
+        "--resume-prepared", str(tmp_path / "recovery"),
+        "--resume-authority", str(tmp_path / "decision.md"), "--stage-terminal"]) == 1
     assert owner.call_args.kwargs["strict_inputs"] == {}
     assert owner.call_args.kwargs["continuation_receipt"] == receipt
+    assert owner.call_args.kwargs["resume_prepared"] == tmp_path / "recovery"
+    assert owner.call_args.kwargs["resume_authority"] == tmp_path / "decision.md"
     assert owner.call_args.kwargs["physical_runs"] == [{"physical_run": "bound-by-owner"}]
     visible = json.loads(capsys.readouterr().out)["strict_validation"]
     assert visible["status"] == "BLOCKED"

@@ -131,6 +131,10 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
             command.add_argument("--continuation-receipt", type=_local)
+            command.add_argument("--resume-prepared", type=_local,
+                help="Existing prepare-resume directory; derive continuation evidence from its pins")
+            command.add_argument("--resume-authority", type=_local,
+                help="Explicit recovery decision/authority retained for this continuation")
             command.add_argument("--strict", action="store_true",
                 help="Recheck retained native, strict comparison and canonical replay evidence")
             command.add_argument("--strict-inputs", type=_local,
@@ -277,6 +281,8 @@ def _dispatch(args) -> tuple[dict, int]:
                         execute=args.execute, execution_root=args.execution_root)
                     if args.continuation_receipt is not None:
                         options["continuation_receipt"] = args.continuation_receipt
+                    if args.resume_prepared is not None or args.resume_authority is not None:
+                        options.update(resume_prepared=args.resume_prepared, resume_authority=args.resume_authority)
                     if args.strict_inputs is not None:
                         options["strict_inputs"] = _json(args.strict_inputs)
                     elif args.strict:
@@ -310,7 +316,8 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
                     args.decision_ref, args.role_audit, args.output, args.strict_inputs,
-                    args.strict, args.continuation_receipt, args.physical_runs)):
+                    args.strict, args.continuation_receipt, args.physical_runs,
+                    args.resume_prepared, args.resume_authority)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:
                 raise ValueError("Explicit Spec acceptance requires --outputs")

@@ -271,6 +271,30 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     assert recovery["package_identity"] == case.manifest["package_identity"]
     recovered_launch = json.loads((attempt2 / "source_dataset/experiment_launch.json").read_bytes())
     assert set(recovered_launch["resume"]) == set(bundles)
+    # Acceptance reuses the exact prepared bundle map, without another release
+    # check or a hand-authored continuation envelope.
+    from molgap.experiment_workflow_resume import resolve_terminal_resume
+    spec, options, original_prepared = runs._original_run(*case.original)
+    original_receipt = options["receipt_path"]
+    options["receipt_path"] = attempt2.parent / "continued_receipt.json"
+    resolved = {"spec": spec, "options": options, "prepared": original_prepared,
+        "outputs": {arm: {"output_dir": str(tmp_path / "retrieved" / arm)} for arm in bundles}}
+    authority = case.repo / "resume-decision.md"
+    authority.write_text("Explicit fixture recovery authority", encoding="utf-8")
+    assembled = resolve_terminal_resume(resolved, attempt2, authority)
+    for arm, inputs in assembled.items():
+        assert inputs["origin_receipt"] == original_receipt
+        assert inputs["continued_receipt"] == options["receipt_path"]
+        assert inputs["resume_bundle"] == attempt2 / "source_dataset" / recovered_launch["resume"][arm]["manifest"]
+        assert inputs["actual_resume_root"] == tmp_path / "retrieved/_resume_preflight" / arm
+    launch_path = attempt2 / "source_dataset/experiment_launch.json"
+    original_launch = launch_path.read_bytes()
+    launch_path.write_bytes(original_launch + b"\n")
+    try:
+        with pytest.raises(ValueError, match="launch changed"):
+            resolve_terminal_resume(resolved, attempt2, authority)
+    finally:
+        launch_path.write_bytes(original_launch)
     original_launch = json.loads((case.prepared / "source_dataset/experiment_launch.json").read_bytes())
     assert {k: v for k, v in recovered_launch.items() if k != "resume"} == original_launch
     for arm_id in bundles:

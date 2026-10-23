@@ -40,6 +40,80 @@ def _runner_repair_ast(raw, *, original=False):
     return ast.dump(tree, include_attributes=False)
 
 
+def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs=None):
+    """Reuse prepared resume pins at acceptance; do not rerun release checks."""
+    from .research_memory.paths import repo_local_path
+    from .research_memory.trace import file_digest
+
+    options, spec = resolved["options"], resolved["spec"]
+    root = Path(options["repo_root"])
+    prepared = _path(root, str(prepared))
+    authority = _path(root, str(authority)) if authority is not None else None
+    _safe_local(prepared)
+    if authority is not None and not authority.is_file():
+        raise ValueError("Continuation requires the explicit retained recovery authority")
+    report = _json(prepared / "workflow_report.json")
+    if (report.get("format") != "molgap-workflow-recovery-preparation-v1"
+            or report.get("status") not in {"RESUME_INPUTS_PREPARED", "PREPARED_FOR_PLATFORM"}
+            or report.get("spec_identity") != spec.identity
+            or report.get("package_identity") != options["expected_package_identity"]
+            or Path(report["original_prepared"]).resolve() != Path(resolved["prepared"]).resolve()):
+        raise ValueError("Resume preparation does not belong to this frozen run")
+    origin = Path(report["original_receipt"])
+    original = Path(resolved["prepared"]).parent / "operations/launch_receipt.json"
+    if file_digest(origin) != file_digest(original) or origin.resolve() == Path(options["receipt_path"]).resolve():
+        raise ValueError("Resume acceptance requires original and continued launch receipts")
+    release = _json(prepared / "release_report.json")
+    launch_path = Path(release["inputs"]["launch_config"])
+    _safe_local(launch_path)
+    if launch_path.resolve() != (prepared / "source_dataset/experiment_launch.json").resolve():
+        raise ValueError("Resume launch must remain in its prepared source dataset")
+    if (release.get("status") != "LOCAL_RELEASE_INPUTS_VERIFIED" or release.get("errors")
+            or file_digest(launch_path) != release["checks"]["workflow:launch"]["launch_sha256"]):
+        raise ValueError("Prepared resume launch changed after release")
+    launch = _json(launch_path)
+    if (launch.get("spec_identity") != spec.identity
+            or set(launch.get("resume", {})) != set(resolved["outputs"])):
+        raise ValueError("Prepared resume launch must bind every frozen arm")
+    repair = report.get("recovery_repair")
+    if repair is not None:
+        repair_path = repo_local_path(launch_path.parent, "recovery_repair.json")
+        if file_digest(repair_path) != repair.get("manifest_sha256"):
+            raise ValueError("Prepared recovery repair differs from its retained pin")
+    result = {}
+    for arm_id, item in resolved["outputs"].items():
+        binding = launch["resume"][arm_id]
+        bundle = repo_local_path(launch_path.parent, binding["manifest"])
+        if file_digest(bundle) != binding["sha256"]:
+            raise ValueError("Prepared resume bundle changed: " + arm_id)
+        supplied = (strict_inputs or {}).get(arm_id, {})
+        output = Path(item["output_dir"])
+        native = _path(root, str(supplied.get("native_root", output.parent / "_resume_preflight" / arm_id)))
+        result[arm_id] = dict(package_dir=options["package_dir"], origin_receipt=origin,
+            continued_receipt=options["receipt_path"], resume_bundle=bundle,
+            continued_output=output, native_root=native,
+            actual_resume_root=_path(root, str(supplied.get("actual_resume_root", native))))
+        if authority is not None:
+            result[arm_id]["authority"] = authority
+        if repair is not None:
+            result[arm_id].update(recovery_repair=repair_path,
+                repair_source_root=launch_path.parent / "recovery_repair")
+        for key in ("recovery_repair", "repair_source_root"):
+            if key in supplied:
+                result[arm_id][key] = _path(root, str(supplied[key]))
+    return result
+
+
+def _rebase_paths(value, source, destination):
+    if isinstance(value, dict):
+        return {key: _rebase_paths(item, source, destination) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_rebase_paths(item, source, destination) for item in value]
+    if isinstance(value, str) and (value == str(source) or value.startswith(str(source) + os.sep)):
+        return str(destination) + value[len(str(source)):]
+    return value
+
+
 def _repair_payloads(spec, root, package, manifest, declaration):
     if declaration is None:
         return None, {}
