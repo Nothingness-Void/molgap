@@ -176,6 +176,22 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
             manifest["comparability_identity"]["strict_identity"]["physical_batch_per_device"] += 1
     assert build_screening_backtest(manifests)["included_comparable_groups"] == []
 
+    # A fresh checkout inherits accepted metadata without ignored checkpoints.
+    # Index checking must match rebuild; strict artifact validation stays strict.
+    from molgap.research_memory.compiler import rebuild_research_memory
+    from molgap.research_memory.cli import main
+    checkpoint = tmp_path / comparison["reference_artifact_bindings"]["checkpoint"]["ref"]
+    checkpoint.unlink()
+    with pytest.raises(ValueError, match="required repository pointer is missing"):
+        validate_repository_records(tmp_path)
+    assert rebuild_research_memory(tmp_path)["replay_pool.json"] == pool
+    main(["--repo-root", str(tmp_path), "check", "--frozen"])
+    with pytest.raises(ValueError, match="required repository pointer is missing"):
+        main(["--repo-root", str(tmp_path), "check", "--frozen", "--portable"])
+    (tmp_path / "research_memory/derived/replay_pool.json").write_bytes(b"stale")
+    with pytest.raises(SystemExit, match="stale derived outputs: replay_pool.json"):
+        main(["--repo-root", str(tmp_path), "check", "--frozen"])
+
 
 def test_eligible_continuation_must_match_current_pair_attempt(tmp_path, monkeypatch):
     setup_mock_repo(tmp_path)

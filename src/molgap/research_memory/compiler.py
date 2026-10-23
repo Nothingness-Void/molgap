@@ -331,7 +331,9 @@ def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 
 def frozen_differences(repo_root: str | Path) -> list[str]:
     root = Path(repo_root).resolve()
-    payloads = compile_research_memory(root)
+    # Compare the same metadata projection that rebuild publishes. Historical
+    # payload custody is checked by acceptance/validate, not index freshness.
+    payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = root / "research_memory" / "derived"
     differences = []
     for name in DERIVED_FILENAMES:

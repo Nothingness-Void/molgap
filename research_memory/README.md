@@ -24,6 +24,11 @@ For older accepted records, ordinary `rebuild` followed by `check --frozen`
 regenerates these views without reclosure, downloads or training. Existing policy
 selectors containing old coarse identity strings may no longer match; revise
 them only as an explicit new policy version, never by editing frozen policies.
+`check --frozen` uses the same metadata projection as `rebuild`; it checks index
+freshness, not local availability of every historical comparison payload.
+Missing ignored weights in a fresh worktree do not require hydration for this
+check. `validate`, `check --frozen --portable`, and strict run acceptance retain
+their artifact checks; index freshness alone never establishes replay readiness.
 
 ```text
 python -m molgap.research_memory validate
