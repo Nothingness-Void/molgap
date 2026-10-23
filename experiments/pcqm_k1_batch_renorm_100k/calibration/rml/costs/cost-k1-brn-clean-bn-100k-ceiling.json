@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-brn-clean-bn-100k-ceiling",
+  "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md",
+  "hardware": "Existing desktop GPU cuda:0; CPU4 threads",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.5
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-brn-clean-bn-100k-20261024",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+}

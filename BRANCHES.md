@@ -12,12 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
-K1 Batch Renorm scale-versus-affine100K is owned by
-`codex/exp/k1-batch-renorm-100k`, checkout
-`D:/molgap-worktrees/k1-batch-renorm-100k`, from desktop440e5fe1 before release.
-[Owning status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-batch-renorm-100k/experiments/pcqm_k1_batch_renorm_100k/STATUS.md)
-bind Kaggle1 kernel140432543/version1. Keep implementation and eventual
-acceptance on that owner; no model adoption or automatic successor is implied.
+K1 Batch Renorm scale-versus-affine100K is terminally accepted without adoption.
+Full history through `aa057687` is reachable from pushed archive `7c71b9dd`.
+Desktop retains [strict replay and final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md)
+for both arms and the completed local Clean-BN diagnostic. The
+[custody record](experiments/pcqm_k1_batch_renorm_100k/terminal_custody.md) owns restoration and artifact locations;
+no rejected BatchRenorm implementation or catalog hook is adopted.
 
 K1 fixed-versus-learned MsgNorm100K is terminally accepted without adoption.
 Owner history through `4105cd3d` is reachable from pushed archive merge

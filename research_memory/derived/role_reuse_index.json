@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 629,
+  "ambiguous_historical_role_record_count": 657,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -532,6 +532,76 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
@@ -2907,6 +2977,132 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "internal_development_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "internal_development_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "train_calibration",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
       "role_identity": null,
       "role_name": "common",
@@ -4405,7 +4601,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 401,
+  "explicit_role_event_count": 420,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4431,6 +4627,15 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-input-pipeline-local-20261013"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687:train_calibration": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-train_calibration-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
@@ -4884,6 +5089,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-brn_affine-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_affine-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_affine-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_affine-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-brn_scale-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_scale-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_scale-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_scale-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -4937,6 +5198,38 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000": [
@@ -5468,6 +5761,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-brn_affine-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-brn_affine-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-brn_scale-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-brn_scale-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-train-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -5502,6 +5823,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-input-pipeline-local-20261013"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34:pcqm4mv2-ogb-fixed-100k-v1:training-0-100000": [
@@ -7363,6 +7698,8 @@
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -7433,6 +7770,8 @@
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
+      "pcqm-k1-brn-clean-bn-100k-20261024",
+      "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
       "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
@@ -7494,6 +7833,8 @@
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -7564,6 +7905,8 @@
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
+      "pcqm-k1-brn-clean-bn-100k-20261024",
+      "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
       "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
@@ -8061,6 +8404,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-brn_affine-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_affine-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_affine-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_affine-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-brn_scale-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_scale-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_scale-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_scale-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -8114,6 +8513,38 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
@@ -9829,6 +10260,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-brn_affine-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_affine-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_affine-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_affine-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-brn_scale-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-brn_scale-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-brn_scale-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-brn_scale-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -9882,6 +10369,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-internal_development_decoded-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
@@ -10383,6 +10886,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-brn_affine-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-brn_affine-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-brn_scale-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-brn_scale-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-train-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -10408,6 +10939,29 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-input-pipeline-train_decoded-labels_read-20261013",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-input-pipeline-local-20261013"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-local-runtime-attempt002-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-brn-clean-bn-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [

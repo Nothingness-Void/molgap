@@ -1,0 +1,53 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-f9ad8644c320ead9189e0793a5da2b4f19fd466bf679fa7d125cda902c7aa9cc",
+  "finalized_at": "2026-10-23T19:57:30.457551+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/authority.json": "44d166a73303bb47a087deaa20379861027804c9e17298d520f9bcbfb5220795",
+    "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json": "b0a2d2f3e2933a6f2b07abbbad41cdf6478fe0002dbd8ab8d6aebb25bbccad76",
+    "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/terminal_staging/v1/83268ef8fce69581/acceptance.json": "93e111d0e45eaf9e5a43a838309868d3b1ba807f5dd0d5a2abf75b7cbe40fa22",
+    "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/terminal_staging/v1/83268ef8fce69581/observed.json": "4d4af7008c49ec2f5ce0e4f28df404bd22863651a256ea72fb66b14e3418e7c5",
+    "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/comparison_readiness.json": "0822f05a42416647fff84237d58813712c5951bef5df7247c79793e493891285",
+    "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/reference_bundle.json": "66a29f37ef0fa7540ddd2682d209a7e5c20026825db5ea4672e65bed48eb349b",
+    "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json": "286d0b47e321107482cb7565a0d22786479a17e3749a1ebb9158b7963f28da7e",
+    "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md": "4088873b1e961ba407781af3538b2c5debec1079c78b6a226313e82c06910cdd",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/execution/allocation_ledger.json": "88c264f807de38b983959956e60d85ca163191a03d70b9e02bc47eb005acd7b5",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/execution/brn_affine/allocation_ledger.json": "88c264f807de38b983959956e60d85ca163191a03d70b9e02bc47eb005acd7b5",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/execution/execution_retention.json": "986bbf796b070adc79eecfea0e51f0ba4158a9e37d185c5e5409c8c238778772",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/canonical_trace.json": "9a0688be52768ede33fea93ecf74bb7bbb4be7044a5267ca13ecc7329953cde7",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/canonical_trace.json.context.json": "6c773098f0a0b40c3a305e94b6d5b9f11e5f72faf74a5b6438caf2be79917fd1",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/development_predictions.pt": "4f9aea792a7dadd6b10fe7101e7448630b17dff66db12cbf6138f72b7be41ab5",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/last_checkpoint.pt": "39f7ff28e5a2c8f6b7aa28e5e8e0a2dc4a2253d796958b6261cba7e91bc5eb42",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/output_manifest.json": "17130999a65079218e1b59e856dcf90e0620b375c9538822155a45465d4d5dcc",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/selected_model.pt": "0d43c632e91acf410c5652dfd2781a8e996808a8483f669e3e602ec13b85906e",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/training_contract.json": "b0a2d2f3e2933a6f2b07abbbad41cdf6478fe0002dbd8ab8d6aebb25bbccad76",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-batch-renorm-100k-s42/v1/reports/terminal_diagnostic_dc8a058a42d47591b02646f47b5e1ff402245463a202bcb9861a5ed70f516d8b.json": "eddb587ccee08094a000483ce61132956b56a73c9e9453102032ce80149e1485"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/trajectory.json",
+  "prospective_sha256": "df19fc7049566348246f2b4e19f9dce6f72240def9ea2fddaa7cf87ca62fdbf2",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-0.json": "e41e0a4d36f47aea8ce217461ac26a8df6a3ea404b468658e03cdceafd492b50",
+    "costs/cost-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-allocation-0.json": "0c39d08eeea36ef4133f6e0c6e85553b759627cc4b99f8f9ba1c8043c0c6e83c",
+    "roles/role-brn_affine-development-labels_read.json": "048cd639362e83e8db5db05d0a82deb612627bf5cae548669121e2ecd497df7a",
+    "roles/role-brn_affine-development-metric_computed.json": "cfa0f7e90ac91b4f8bceb16b79018bbbbafd47d2ae8d25c3b77c1142e68c6b6b",
+    "roles/role-brn_affine-development-prediction_input.json": "6a6b909bc88875b45398fc526970e78d16a6626919af8fe91deae10de42a7918",
+    "roles/role-brn_affine-development-selection_used.json": "7eea347560326c2410bdcdc8514f26266ffa9dad82fe26cdd6e8ee283bd5e133",
+    "roles/role-brn_affine-train-labels_read.json": "69d2992958139f98d75941a48911943216a2e3e86e49aba7823c7c409e928b71",
+    "roles/role-brn_affine-train-training_membership.json": "c94de59e70ac72feb5ecc07364987331ef60c13bc87c6349841e5605f443891e",
+    "terminal_input.json": "ddd3ddd975ad0aecfaf7aa3c342ba71a0bcce7f3f6742b500a1320731e6fb523",
+    "trace.json": "9a0688be52768ede33fea93ecf74bb7bbb4be7044a5267ca13ecc7329953cde7",
+    "trace_manifest.json": "6e210b32f76ead2db459973ca5d8c6ae546df1a5961fbf4a7c9b473035fd1f4c",
+    "trajectory.json": "0a62a4f730cdaed73754898124d969c06b81b18ad8e646043b2158eb9c354640",
+    "v5_evidence.json": "43a6565a53830bd806485ff2e355818f274f1d2e856d7cc4f211b3ad56908d5b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "f9ad8644c320ead9189e0793a5da2b4f19fd466bf679fa7d125cda902c7aa9cc",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+}

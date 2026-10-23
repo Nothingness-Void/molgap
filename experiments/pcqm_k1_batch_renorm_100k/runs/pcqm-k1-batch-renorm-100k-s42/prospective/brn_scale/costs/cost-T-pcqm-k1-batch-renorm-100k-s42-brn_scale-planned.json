@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-batch-renorm-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-batch-renorm-100k-s42-brn_scale-planned",
+  "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/authority.json",
+  "hardware": "Tesla T4x2 FP32; one newly trained arm per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 2.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 2.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_scale:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+}

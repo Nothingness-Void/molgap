@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-brn-clean-bn-100k-observed",
+  "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/acceptance.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.0033116319444444443
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.0001566047222210424
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.002501757166666923
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-brn-clean-bn-100k-20261024",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+}

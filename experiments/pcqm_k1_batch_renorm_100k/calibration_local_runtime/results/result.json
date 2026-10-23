@@ -1,0 +1,126 @@
+{
+  "format": "molgap-brn-clean-bn-result-v1",
+  "status": "complete",
+  "started_at_utc": "2026-10-23T20:12:20.539698+00:00",
+  "inputs_sha256": "8137e4114bd56ada0fafffd71d2376b88adfa9d4a909a92570b96a61e2be1524",
+  "prospective_sha256": "36883e4839aed2757648bebb083e269001b56742c66bcee40360eab6a757b010",
+  "training_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.7.1+cu128",
+    "cpu_threads": 4,
+    "hardware": "NVIDIA GeForce RTX 5060"
+  },
+  "roles": {
+    "training_labels_decoded": [
+      0,
+      100000
+    ],
+    "calibration_features": [
+      0,
+      16384
+    ],
+    "calibration_labels_used": false,
+    "development": [
+      100000,
+      150000
+    ],
+    "development_selection_used_previously": true,
+    "protected_roles_consumed": false
+  },
+  "arms": {
+    "brn_scale": {
+      "original_mae_eV": 0.14169639348983765,
+      "retained_mae_eV": 0.14169638845860957,
+      "calibrated_mae_eV": 0.14607258141040802,
+      "reproduction_max_abs_eV": 7.62939453125e-06,
+      "selected_live_state_sha256": "5050bbde8988790b499ebf585e33a7ad51fb028503f120a238c318c54d1b8b77",
+      "calibration": {
+        "policy": {
+          "format": "molgap-clean-bn-policy-v1",
+          "input_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "training_role_identity": "ff4e583c64afd8478b200e89f8b04dd3ee84e52a352455125641eec64c45eb62",
+          "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+          "batches": 128,
+          "batch_size": 128,
+          "role": "train",
+          "estimator": "cumulative-batch"
+        },
+        "policy_identity": "d8b8de651436e8bd76cd8596941dda51517cf494b8ec7b721dc71f9e052daa2e",
+        "raw_revision": 0,
+        "raw_state_identity": "5050bbde8988790b499ebf585e33a7ad51fb028503f120a238c318c54d1b8b77",
+        "clean_state_identity": "29dca96f5d73c11acd4cb9a22f6b7165a653a07a48f5f6c7317eaa2e56bccdda",
+        "identity": "26386445e50dc28369e467d052e99cf453a565982bbb9a2f902d03daf09e0796"
+      },
+      "calibration_source_weights": "selected-live snapshot; no EMA updates"
+    },
+    "brn_affine": {
+      "original_mae_eV": 0.14334189891815186,
+      "retained_mae_eV": 0.14334189840257167,
+      "calibrated_mae_eV": 0.1601097136735916,
+      "reproduction_max_abs_eV": 2.86102294921875e-06,
+      "selected_live_state_sha256": "324c67f4231cc08282e27ccd248ff4df75de3ca11dc0edb4f920623ea3823ea0",
+      "calibration": {
+        "policy": {
+          "format": "molgap-clean-bn-policy-v1",
+          "input_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "training_role_identity": "ff4e583c64afd8478b200e89f8b04dd3ee84e52a352455125641eec64c45eb62",
+          "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+          "batches": 128,
+          "batch_size": 128,
+          "role": "train",
+          "estimator": "cumulative-batch"
+        },
+        "policy_identity": "d8b8de651436e8bd76cd8596941dda51517cf494b8ec7b721dc71f9e052daa2e",
+        "raw_revision": 0,
+        "raw_state_identity": "324c67f4231cc08282e27ccd248ff4df75de3ca11dc0edb4f920623ea3823ea0",
+        "clean_state_identity": "2f54566c7fa366e020867021d06ea5cea7849e010e6118af4a3b510992b9aa3c",
+        "identity": "5b3424599f3f562e9707426f3d2aa7d51e450b769a6ada035931adf4c1cb1683"
+      },
+      "calibration_source_weights": "selected-live snapshot; no EMA updates"
+    }
+  },
+  "runtime_qualification": "original-prediction reproduction under explicit local runtime",
+  "training_recipe_torch_versions": {
+    "brn_scale": "2.11.0",
+    "brn_affine": "2.11.0"
+  },
+  "wall_seconds": 77.19060210000316,
+  "process_cpu_seconds": 244.546875,
+  "device_seconds": 68.58938830000261,
+  "device_cost_semantics": "one_local_gpu_process_allocation_window",
+  "contrasts_affine_minus_scale": {
+    "original": {
+      "delta": 0.0016455093145370484,
+      "ci95": [
+        0.0009067193868160248,
+        0.002400195775270462
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    "calibrated": {
+      "delta": 0.01403712724685669,
+      "ci95": [
+        0.013059133023381233,
+        0.014981389912247657
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 2000,
+      "seed": 42
+    }
+  },
+  "ended_at_utc": "2026-10-23T20:13:28.658486+00:00",
+  "checks": {
+    "frozen_inputs": true,
+    "exact_roles": true,
+    "original_reproduced": true,
+    "finite_aligned_predictions": true,
+    "selected_live_preserved": true,
+    "calibration_bn_buffers_only": true,
+    "protected_roles_untouched": true
+  }
+}

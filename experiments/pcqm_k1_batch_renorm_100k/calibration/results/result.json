@@ -1,0 +1,40 @@
+{
+  "format": "molgap-brn-clean-bn-result-v1",
+  "status": "failed",
+  "started_at_utc": "2026-10-23T20:04:57.808658+00:00",
+  "inputs_sha256": "10c3bdd383445d17bc9628468012065cd5f098a65d61ed399ef535e74b316c4a",
+  "prospective_sha256": "b5f0b75cf534e25de0c21e5e8205cfb80b054b55092aa1c837f2ed2066ea22fe",
+  "training_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.7.1+cu128",
+    "cpu_threads": 4,
+    "hardware": "NVIDIA GeForce RTX 5060"
+  },
+  "roles": {
+    "training_labels_decoded": [
+      0,
+      100000
+    ],
+    "calibration_features": [
+      0,
+      16384
+    ],
+    "calibration_labels_used": false,
+    "development": [
+      100000,
+      150000
+    ],
+    "development_selection_used_previously": true,
+    "protected_roles_consumed": false
+  },
+  "arms": {},
+  "error_type": "ValueError",
+  "error": "Local Torch differs from frozen recipe pin",
+  "wall_seconds": 9.006325800000923,
+  "process_cpu_seconds": 11.921875,
+  "device_seconds": 0.5637769999957527,
+  "device_cost_semantics": "one_local_gpu_process_allocation_window"
+}

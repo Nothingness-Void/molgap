@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/terminal_staging/v1/83268ef8fce69581/acceptance.json",
+      "sha256": "93e111d0e45eaf9e5a43a838309868d3b1ba807f5dd0d5a2abf75b7cbe40fa22"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/selected_model.pt",
+      "sha256": "0d43c632e91acf410c5652dfd2781a8e996808a8483f669e3e602ec13b85906e"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/cost_records.json",
+      "sha256": "42c5e3803af1277cca9b132463bbce2aff067ef037398459ce8795f50d793f95"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md",
+      "sha256": "4088873b1e961ba407781af3538b2c5debec1079c78b6a226313e82c06910cdd"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/paired_analysis.json",
+      "sha256": "8a3f17707aae47194a732b779c7db928c528a4c7ed40286a0c51c0d5487c0990"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/prediction_manifest.json",
+      "sha256": "6eaa3d436b8e36e8944741ac688d744268f55321d3c736ef8960ddcef6b85d28"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/role_history.json",
+      "sha256": "1c8f14045f8ec4acaf0669520ba5a6001cc5004b86ae2b8f5d2dc34f59a382a0"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/runtime_certificate.json",
+      "sha256": "5e457280f9b4343d7c417c57087a760afbb901226d8964329fed1edf9afc11b3"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_affine/training_contract.json",
+      "sha256": "b0a2d2f3e2933a6f2b07abbbad41cdf6478fe0002dbd8ab8d6aebb25bbccad76"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/bound_trace_manifest.json",
+      "sha256": "72b3a5e44b9e547525b97bf6012fb6906c43a027262aa1114682fccc26d31ce8"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "architecture-config",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "91126c4ff1b4f6826593bb052fe5400c1e0144103055ea27ffeea2bb6841f63c",
+    "optimizer_fused": false,
+    "optimizer_identity": "f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c",
+    "optimizer_mode": "native-adamw",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "60677044cd34a634c634235baae7da7f5c0c0c2163b1587a901e9b4405772b7f",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "3acb62159d6e74650ed9d04ac53bee79554565a7164f767e759abf02ccbfa76d",
+      "reference": "209b43f70c192fc79cc405e1a9b014b39d6c99dc521d245d4dd6bbca5c5bc4ba"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_scale/terminal_staging/v1/0a7c04560b885510/acceptance.json",
+      "sha256": "734972122fee2f2ff56fefb41fe2e0d625d3cfde6f0a2e936d956d6acbd34b4d"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_scale/selected_model.pt",
+      "sha256": "14911ad06f454e2e7d08d9314dd574ad0c7104d8f55c2c71aee5f76d2477d997"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/cost_records.json",
+      "sha256": "6eaa400e417fe2fae3ebb2dee18ce6f30be998f496ab0f54a946ad09f85748f6"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md",
+      "sha256": "4088873b1e961ba407781af3538b2c5debec1079c78b6a226313e82c06910cdd"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/prediction_manifest.json",
+      "sha256": "bf6650db3ae81877842c9c57cc524a782a441a8f61373a7b473e27eb846bc60d"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/role_history.json",
+      "sha256": "37b2d6caa954d1920a1906db549df4f4c677e06c9d2e25fc028d7aee913a0ed2"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_scale/runtime_certificate.json",
+      "sha256": "ca2075a0649963cbd9b2e12f54a8b681285544f3be228d8bddd4aca31e0cfea8"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/outputs/brn_scale/training_contract.json",
+      "sha256": "a51b2358af320802cb38aac5b9b541a3868cfd4e9bd5b60f89c0fbe4652b35fe"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_scale/bound_trace_manifest.json",
+      "sha256": "53f6f6f53ef4df8f16d5fb9f7b3002283b97352ab93a9e17758f399fe088d558"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale-898d3ff195587f8c7eaf",
+  "reference_bundle_sha256": "4497827677ca14f3616aba27cd746153aa92e8589eef32c12016c05bed2428c4",
+  "reference_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

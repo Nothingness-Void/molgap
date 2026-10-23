@@ -1,0 +1,148 @@
+{
+  "audit_basis": {
+    "bound_mechanical_acceptance": "MECHANICALLY_VERIFIED",
+    "bound_native_qualification": "VERIFIED",
+    "development_rows": [
+      100000,
+      150000
+    ],
+    "evidence": [
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\source_terminal_verification.json",
+        "sha256": "babebaff3bb68b65e8a596a21734407e9cf9275a3ed6221d793ccc3c252b24b3"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\metadata\\experiment\\input_resolution.json",
+        "sha256": "c270d7d8a3e8045519056fe149cef65b7061cd86c964bf3b70362a56130f54ca"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\runtime_provenance.json",
+        "sha256": "0a9cc6b15d249bf4c25af85cfbfcf07b70c819567b020f5b26fe88fdba94640f"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\output_manifest.json",
+        "sha256": "17130999a65079218e1b59e856dcf90e0620b375c9538822155a45465d4d5dcc"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\canonical_trace.json",
+        "sha256": "9a0688be52768ede33fea93ecf74bb7bbb4be7044a5267ca13ecc7329953cde7"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\development_predictions.pt",
+        "sha256": "4f9aea792a7dadd6b10fe7101e7448630b17dff66db12cbf6138f72b7be41ab5"
+      }
+    ],
+    "limitations": "No OS-wide access audit; untouched finding is scoped to the verified frozen workload and mounted fixed-role inputs.",
+    "method": "Source-reviewed observed execution and artifact audit; not inferred solely from permissions.",
+    "source_commit": "888ff7ccc0ee92e15a8b47eeeba1f3ede4ec2f3b",
+    "source_loader": "src/molgap/family_training_runner.py:219-235",
+    "train_rows": [
+      0,
+      100000
+    ]
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "brn_affine",
+    "arm_identity": "d51f88458ee523dac10c2ae69dacee4eaf1fcfa26dcd560b9c4535e80ad42083",
+    "experiment_id": "pcqm_k1_batch_renorm_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-batch-renorm-100k-s42",
+    "package_identity": "6b56369539f267c25bf93ba6fa47c11c3e4281c6d9e9f1e11ff1a97a37f2c1ab",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-k1-batch-renorm-100k-s42",
+    "source_archive_sha256": "f01cae6f5f52ab1d2ee67ecaaf404f13016636e761c367315caf2a26dbd5cd1e",
+    "source_commit": "888ff7ccc0ee92e15a8b47eeeba1f3ede4ec2f3b",
+    "spec_identity": "ae79d3f35d996b2462310bcc3027d8dd8894797b74834ce11a2d353f2e8b7ac6",
+    "training_recipe_sha256": "b0a2d2f3e2933a6f2b07abbbad41cdf6478fe0002dbd8ab8d6aebb25bbccad76"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "training_membership"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_acceptance/brn_affine_role_audit.json",
+      "role_event_id": "role-brn_affine-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    }
+  ]
+}

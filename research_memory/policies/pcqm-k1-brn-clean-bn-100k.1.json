@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-brn-clean-bn-100k",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "pcqm-k1-brn-clean-bn-100k-v1"},
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "created_from_source_digest": "93794aa41866f86b0167db6a2a87919ef53e00d772a4bf056a94999fcf5509c6",
+  "approval": {"approved_by": null, "approved_at": null, "authority_ref": null},
+  "cost_model": {"kind": "measured_only", "assumptions": []},
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "action_rule": {"field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1, "action": "RUN_DIAGNOSTIC"},
+  "borderline_action": "NO_TRAIN"
+}

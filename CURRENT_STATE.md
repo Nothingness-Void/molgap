@@ -65,13 +65,13 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
-User-authorized K1 Batch Renorm100K pair belongs to
-`codex/exp/k1-batch-renorm-100k`; BRANCHES owns its checkout routing.
-[Status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-batch-renorm-100k/experiments/pcqm_k1_batch_renorm_100k/STATUS.md)
-retain scale-only versus scale-plus-mean correction, each40passes, Kaggle1
-kernel140432543/version1 (observed RUNNING2026-10-24JST). Strict terminal replay
-and predeclared local calibration attribution are pending. The explicit local
-Luna30minute monitor is scoped to this job; no server handoff or automatic retry.
+Kaggle1 Batch Renorm100K kernel140432543/version1 is terminally accepted.
+Both40pass arms have complete strict replay without exclusions. Scale-only is
+CLOSED; scale-plus-mean correction is NEGATIVE_UNDER_CONTRACT,1.6455meV worse.
+The [final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md)
+includes the completed local selected-LIVE Clean-BN diagnostic: the disadvantage
+increases to14.0371meV. No adoption, retry or scale-up; complete history is archived,
+canonical evidence retained here. The requested Luna heartbeat ended on COMPLETE.
 
 User-authorized K1 graph-wise message DropPath100K belongs to
 `codex/exp/k1-message-droppath-100k`; resolve its checkout through BRANCHES.

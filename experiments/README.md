@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does detached mean correction improve beyond scale-only BatchRenorm in K1? | Two40pass arms strict replay-ready; affine worse1.6455meV, negative. Selected-LIVE Clean-BN increases gap to14.0371meV; no adoption, complete history archived | [Final attribution](pcqm_k1_batch_renorm_100k/final_attribution.md) |
 | K1 single-forward True EMA 100K screen? | Follow the retained decision and its evidence limits | [Decision](pcqm_k1_single_true_ema_100k/decision.md) |
 | Shared 100K operator profile? | Follow the owning protocol and retained evidence | [Entry](family_100k_operator_profile/README.md) |
 | Shared checkpoint efficiency? | Follow the bounded execution diagnostic | [Entry](family_checkpoint_efficiency/README.md) |

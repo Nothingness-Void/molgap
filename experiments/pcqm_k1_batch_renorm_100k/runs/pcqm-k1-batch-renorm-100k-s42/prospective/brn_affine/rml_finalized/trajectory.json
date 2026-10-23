@@ -1,0 +1,120 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-batch-renorm-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-planned",
+        "cost-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-0",
+        "cost-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream"
+      ],
+      "source_commit": "888ff7ccc0ee92e15a8b47eeeba1f3ede4ec2f3b",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/strict_qualification/898d3ff195587f8c7eaf/brn_affine/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-batch-renorm-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/rml_decision_snapshots/48f8104498104e6cea8e377def8ea911342ffdb954d4ad1aa6e02317eeee6692.json",
+    "snapshot_sha256": "48f8104498104e6cea8e377def8ea911342ffdb954d4ad1aa6e02317eeee6692",
+    "state_timestamp": "2026-10-23T17:38:26.771698+00:00"
+  },
+  "family_id": "pcqm-k1-batch-renorm-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "No useful mean-correction benefit",
+      "Correction worsens optimization",
+      "Apparent benefit is mediated by running-buffer estimates",
+      "One paired seed cannot resolve training stochasticity"
+    ],
+    "changed_mechanism": "detached-training-mean-correction",
+    "cheapest_falsifier": "Same-job100K40pass scale-only versus affine correction, then retained selected-model clean-buffer diagnostic",
+    "decision_changed_if_negative": "Close mean-correction contrast under frozen gate; preserve diagnostic evidence; no blind retry",
+    "decision_changed_if_positive": "Nominate further review after at least3meV gain with upper95percent paired interval below zero; complete calibration attribution; no automatic scale-up",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-batch-renorm-100k-s42-brn_affine-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+    "observed_deficiency": "A retained predictor is sensitive to BN calibration; training-time utility and incremental mean-correction benefit remain untested",
+    "related_closed_family_ids": [
+      "K1 MsgNorm fixed-versus-learned",
+      "K1 Post-Node versus Post-Graph RMS",
+      "K1 Post-LN exposure"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-bn-mechanism-a100-20261008"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does detached mean correction improve K1 beyond detached scale correction under one frozen Batch Renorm recipe?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale-898d3ff195587f8c7eaf",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_affine/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
+      "experiments/pcqm_k1_batch_renorm_100k/baseline_data_declaration.json",
+      "experiments/pcqm_k1_batch_renorm_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-bn-mechanism-a100-20261008"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "brn_affine",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-batch-renorm-100k-s42",
+      "reference_arm_id": "brn_scale",
+      "reference_trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "reference_trajectory_ref": "experiments/pcqm_k1_batch_renorm_100k/runs/pcqm-k1-batch-renorm-100k-s42/prospective/brn_scale/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "ae79d3f35d996b2462310bcc3027d8dd8894797b74834ce11a2d353f2e8b7ac6"
+    },
+    "source_commit": "888ff7ccc0ee92e15a8b47eeeba1f3ede4ec2f3b",
+    "source_config_identity": "d51f88458ee523dac10c2ae69dacee4eaf1fcfa26dcd560b9c4535e80ad42083"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+}

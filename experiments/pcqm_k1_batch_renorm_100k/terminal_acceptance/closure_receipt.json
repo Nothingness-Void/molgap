@@ -1,0 +1,108 @@
+{
+  "status": "COMPLETE",
+  "executed": true,
+  "strict_validation": {
+    "status": "VERIFIED",
+    "arms": {
+      "brn_affine": {
+        "native_qualification": {
+          "status": "VERIFIED",
+          "dependencies": [
+            {
+              "path": "native_proofs.zip",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\native_proofs.zip",
+              "sha256": "23a23719d25f531ca44bb55e14b1a89ce1248bcb4ad61ab1d87bab0111064216",
+              "present": true,
+              "size_bytes": 109990314,
+              "verified_sha256": "23a23719d25f531ca44bb55e14b1a89ce1248bcb4ad61ab1d87bab0111064216"
+            },
+            {
+              "path": "runtime_certificate.json",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\runtime_certificate.json",
+              "sha256": null,
+              "present": true,
+              "size_bytes": 1943,
+              "verified_sha256": "5e457280f9b4343d7c417c57087a760afbb901226d8964329fed1edf9afc11b3"
+            },
+            {
+              "path": "runtime_provenance.json",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_affine\\runtime_provenance.json",
+              "sha256": null,
+              "present": true,
+              "size_bytes": 1554,
+              "verified_sha256": "0a9cc6b15d249bf4c25af85cfbfcf07b70c819567b020f5b26fe88fdba94640f"
+            }
+          ],
+          "missing": [],
+          "known_local_bytes": 109993811,
+          "missing_size_bytes": 0,
+          "scientific_acceptance": "NOT_EVALUATED",
+          "replay_readiness": "NOT_EVALUATED",
+          "blockers": []
+        },
+        "comparison": {
+          "status": "VERIFIED",
+          "comparison_class": "STRICT_CAUSAL",
+          "blockers": []
+        },
+        "replay": {
+          "status": "VERIFIED",
+          "exclusions": []
+        },
+        "blockers": []
+      },
+      "brn_scale": {
+        "native_qualification": {
+          "status": "VERIFIED",
+          "dependencies": [
+            {
+              "path": "native_proofs.zip",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_scale\\native_proofs.zip",
+              "sha256": "ed8d267b186ad7e30b4e7fd657100fb0e41ee8e5beeeaac5fc4dc3dc8aa14700",
+              "present": true,
+              "size_bytes": 109990291,
+              "verified_sha256": "ed8d267b186ad7e30b4e7fd657100fb0e41ee8e5beeeaac5fc4dc3dc8aa14700"
+            },
+            {
+              "path": "runtime_certificate.json",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_scale\\runtime_certificate.json",
+              "sha256": null,
+              "present": true,
+              "size_bytes": 1943,
+              "verified_sha256": "ca2075a0649963cbd9b2e12f54a8b681285544f3be228d8bddd4aca31e0cfea8"
+            },
+            {
+              "path": "runtime_provenance.json",
+              "local_path": "D:\\molgap-artifacts\\reconciliation\\k1-batch-renorm-100k\\outputs\\brn_scale\\runtime_provenance.json",
+              "sha256": null,
+              "present": true,
+              "size_bytes": 1553,
+              "verified_sha256": "8f5600508e0533040e80241d4ff35509cda456e5a86ccb434e59880175250e9a"
+            }
+          ],
+          "missing": [],
+          "known_local_bytes": 109993787,
+          "missing_size_bytes": 0,
+          "scientific_acceptance": "NOT_EVALUATED",
+          "replay_readiness": "NOT_EVALUATED",
+          "blockers": []
+        },
+        "comparison": {
+          "status": "NOT_APPLICABLE",
+          "reason": "accepted_reference_arm"
+        },
+        "replay": {
+          "status": "VERIFIED",
+          "exclusions": []
+        },
+        "blockers": []
+      }
+    },
+    "blockers": [],
+    "scientific_acceptance": "NOT_EVALUATED",
+    "ready_for_desktop": "NOT_EVALUATED",
+    "training_executed": false,
+    "inference_executed": false,
+    "network_accessed": false
+  }
+}
