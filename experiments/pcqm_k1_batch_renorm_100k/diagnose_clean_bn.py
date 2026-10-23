@@ -18,8 +18,10 @@ def run(args):
     root = Path(__file__).resolve().parents[2]
     inputs_path = Path(args.inputs).resolve()
     inputs = json.loads(inputs_path.read_text(encoding="utf-8"))
+    local_runtime = inputs.get("local_inference_runtime")
+    ceiling = inputs["ceiling_seconds"]
     if (inputs["format"] != "molgap-brn-clean-bn-input-v1" or
-            inputs["ceiling_seconds"] != 1800 or inputs["cpu_threads"] != 4 or
+            (ceiling != 1800 if local_runtime is None else not 0 < ceiling <= 1780) or inputs["cpu_threads"] != 4 or
             not 0 < inputs["prediction_tolerance_eV"] <= 1e-4):
         raise ValueError("Diagnostic contract/budget differs")
     device_name = inputs["device"]
@@ -48,11 +50,11 @@ def run(args):
     import torch
     from torch_geometric.loader import DataLoader
 
-    deadline = started + 1800
+    deadline = started + ceiling
 
     def guard():
         if time.perf_counter() >= deadline:
-            raise TimeoutError("Total 1800-second diagnostic budget exhausted")
+            raise TimeoutError("Declared total diagnostic wall budget exhausted")
 
     trajectory_path = (root / inputs["trajectory_ref"]).resolve()
     trajectory_path.relative_to(root / "experiments")
@@ -89,6 +91,13 @@ def run(args):
     initial = bound(inputs["initialization"])
     if initial != Path(args.initial_state).resolve():
         raise ValueError("Initialization argument differs from published input")
+    if local_runtime is not None:
+        prior = json.loads(bound(inputs["prior_attempt"]["trajectory"]).read_text(encoding="utf-8"))
+        prior_result = json.loads(bound(inputs["prior_attempt"]["result"]).read_text(encoding="utf-8"))
+        if (prior["decision"]["outcome"] != "NO_TRAIN" or prior_result["status"] != "failed" or
+                prior_result.get("arms") or prior_result.get("error") != "Local Torch differs from frozen recipe pin" or
+                local_runtime != prior_result["runtime"]):
+            raise ValueError("Revised local runtime lacks the exact closed prior failure binding")
     strict = json.loads(bound(inputs["strict_verification"]).read_text(encoding="utf-8"))
     if (strict["status"] != "COMPLETE" or strict["executed"] is not True or
             strict["strict_validation"]["status"] != "VERIFIED"):
@@ -144,6 +153,10 @@ def run(args):
     device = torch.device(device_name)
     if device.type == "cuda" and not torch.cuda.is_available():
         raise ValueError("Requested local desktop GPU unavailable")
+    if local_runtime is not None and local_runtime != {
+            "device": device_name, "torch": str(torch.__version__), "cpu_threads": 4,
+            "hardware": "cpu" if device.type == "cpu" else torch.cuda.get_device_name(device)}:
+        raise ValueError("Observed local inference runtime differs from its prospective pin")
     data = load_training_data(Path(args.data_root), bindings[ARMS[0]][0].dataset)
     if (data.train_source_start != 0 or data.development_source_start != 100000 or
             data.train_rows != 100000 or data.development_rows != 50000):
@@ -161,6 +174,9 @@ def run(args):
                         "calibration_labels_used": False, "development": [100000, 150000],
                         "development_selection_used_previously": True, "protected_roles_consumed": False},
               "arms": {}}
+    report["runtime_qualification"] = ("original-prediction reproduction under explicit local runtime"
+        if local_runtime is not None else "frozen training Torch pin plus original-prediction reproduction")
+    report["training_recipe_torch_versions"] = {arm: bindings[arm][0].torch_version for arm in ARMS}
 
     def save_report():
         if device.type == "cuda":
@@ -176,7 +192,7 @@ def run(args):
             guard()
             recipe, selected, retained = bindings[arm]
             _assert_target_statistics(recipe, data)
-            if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
+            if local_runtime is None and str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
                 raise ValueError("Local Torch differs from frozen recipe pin")
             model, _ = load_family_model(recipe, initial)
             model.load_state_dict(selected["model"], strict=True)
