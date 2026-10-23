@@ -1,0 +1,48 @@
+{
+  "audit_scope": "Actual fixed train/internal-development loader inputs and retained output identities. Both ranges are within official train. No protected role was requested or read.",
+  "context": {
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "arm_id": "channel_gain",
+    "arm_identity": "15ad06e2b39da33f0d923aa7687689f4f9b0d63bedd0a046a9d191fada384178",
+    "experiment_id": "local-k1-ten-epoch-flow",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "local-k1-channel-gain-10ep-20261023-r3",
+    "package_identity": "8a8d614450155c5ccd1c714ac961b0554f12edda80320a1ec9492644ac3fe4c6",
+    "platform": "local",
+    "platform_version": "1",
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/local-k1-channel-gain-10ep-20261023-r3",
+    "source_archive_sha256": "c8fbb4032b9762f9909163e6b3eb31b230770b5a24851750b48a834e6fa1f037",
+    "source_commit": "18174aefab97244b11c02dd68d9e12ea36db8e36",
+    "spec_identity": "5aa2f142d4d90a7d69d6a719b567cdbc5d1f4f787f28b45436b79a9598a7acda",
+    "training_recipe_sha256": "e08a579e5f9f7b0633826248894e750e3d40b6beabb46cfec894e244847d0e0b"
+  },
+  "observation_sources": {
+    "dataset_manifest": {
+      "path": "D:/molgap-data/local_flow_2048_v1/manifest.json",
+      "sha256": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+    },
+    "development_predictions_sha256": "1438af5f9fde76e976f5508edb50e7b7142f7e5826f410a3ae5739e96f0eb4c3",
+    "development_source_idx_range": [
+      100000,
+      100512
+    ],
+    "invocation_pids": [
+      1256,
+      31036
+    ],
+    "parent_official_train_row_count": 3378606,
+    "source_archive_sha256": "c8fbb4032b9762f9909163e6b3eb31b230770b5a24851750b48a834e6fa1f037",
+    "source_commit": "18174aefab97244b11c02dd68d9e12ea36db8e36",
+    "train_source_idx_range": [
+      0,
+      2048
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": []
+}

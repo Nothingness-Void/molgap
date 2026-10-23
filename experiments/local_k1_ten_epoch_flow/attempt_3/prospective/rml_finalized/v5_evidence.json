@@ -1,0 +1,80 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/training_contract.json",
+      "name": "contract",
+      "sha256": "e08a579e5f9f7b0633826248894e750e3d40b6beabb46cfec894e244847d0e0b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "1438af5f9fde76e976f5508edb50e7b7142f7e5826f410a3ae5739e96f0eb4c3"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "7c1d634c99d2586a66bfb25dbed76d26e50023758045ebdcdd0a674bc678c25b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "09974233339a4416168877923557e6d2c7e8014713d570846aa33ba52b4d2cac"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "8f1885c68cee1cef380da91ffa720fe81284cb265dd7f6776ab5091e34c629f6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "7c5a53acd76aa2cc5d244356e70b187e7e801dc5f86ab4384f0ab7716a000592"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/local_k1_ten_epoch_flow/attempt_3/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.4449698836542666,
+    "missing_reason": null,
+    "selected_optimizer_step": 160,
+    "selected_weights": "live",
+    "source_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

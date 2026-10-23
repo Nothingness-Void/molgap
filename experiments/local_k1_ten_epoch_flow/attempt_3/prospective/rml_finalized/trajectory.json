@@ -1,0 +1,103 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "channel_gain-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-local-k1-channel-gain-flow-20261023-r3-planned",
+        "cost-terminal-TB-local-k1-channel-gain-flow-20261023-r3-0"
+      ],
+      "evidence_refs": [
+        "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json"
+      ],
+      "run_ids": [
+        "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream"
+      ],
+      "source_commit": "18174aefab97244b11c02dd68d9e12ea36db8e36",
+      "type": "execution_diagnostic"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/local_k1_ten_epoch_flow/authority.json",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "local-k1-ten-epoch-flow",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/local_k1_ten_epoch_flow/role_scope.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/rml_decision_snapshots/1448460b354ff339057a213ef854af08080fe4a0647bba64cc0766670e44f8f9.json",
+    "snapshot_sha256": "1448460b354ff339057a213ef854af08080fe4a0647bba64cc0766670e44f8f9",
+    "state_timestamp": "2026-10-23T05:57:05.276944+00:00"
+  },
+  "family_id": "local-k1-ten-epoch-flow",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The model may be correct while adapter, process lifecycle or terminal binding fails."
+    ],
+    "changed_mechanism": "192 identity-initialized channel gains after aggregation at layer6.",
+    "cheapest_falsifier": "One real model,160 updates,checkpoint at80,new-process restoration,mechanical acceptance and infrastructure-only RML closure.",
+    "decision_changed_if_negative": "Repair the failing existing owner and repeat only the affected real lifecycle.",
+    "decision_changed_if_positive": "Record the exercised lifecycle only; no model adoption.",
+    "expected_native_cost_ref": "cost-TB-local-k1-channel-gain-flow-20261023-r3-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-TB-local-k1-channel-gain-flow-20261023-r3",
+    "observed_deficiency": "Prior component checks did not establish the interrupted real training lifecycle.",
+    "related_closed_family_ids": [
+      "K1 normalization and DropPath are separate existing questions; no transfer claim."
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-slot-readout-diagnostic-20261002"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can one registered K1 channel-gain model complete frozen preparation, native execution, process restart and infrastructure-only terminal closure?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3"
+    ],
+    "evidence_refs": [
+      "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/local_k1_ten_epoch_flow/authority.json",
+    "contract_refs": [
+      "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json",
+      "experiments/local_k1_ten_epoch_flow/README.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-slot-readout-diagnostic-20261002"
+    ],
+    "prior_trajectory_ids": [
+      "TB-k1-slot-readout-diagnostic-20261002",
+      "TB-local-k1-channel-gain-flow-20261023",
+      "TB-local-k1-channel-gain-flow-20261023-r2"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/local_k1_ten_epoch_flow/role_scope.json"
+    ],
+    "source_commit": "18174aefab97244b11c02dd68d9e12ea36db8e36",
+    "source_config_identity": "15ad06e2b39da33f0d923aa7687689f4f9b0d63bedd0a046a9d191fada384178"
+  },
+  "track": "B",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+}

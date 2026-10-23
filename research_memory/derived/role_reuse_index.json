@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 582,
+  "ambiguous_historical_role_record_count": 585,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -490,6 +490,27 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
@@ -6752,6 +6773,7 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
@@ -6874,6 +6896,7 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",

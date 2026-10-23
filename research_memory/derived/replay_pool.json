@@ -11026,6 +11026,15 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+      "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "full_platform_release_native_cost_unknown",
         "strict_v5_comparison_readiness_not_established",
         "trace_cumulative_native_device_time_not_retained"
@@ -11148,5 +11157,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "cd758b42b0ed666dc822f967502e988c445fa047a69a018652c1660d204507cc"
+  "source_digest": "9f6c24f1f0e67237bc81346b866325657797caf368525fc958d883c081970c44"
 }

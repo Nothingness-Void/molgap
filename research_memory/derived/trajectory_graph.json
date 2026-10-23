@@ -436,6 +436,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-local-k1-channel-gain-flow-20261023-r2:A001",
+      "target": "experiments/local_k1_ten_epoch_flow/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-local-k1-channel-gain-flow-20261023-r3:A001",
+      "target": "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-local-k1-channel-gain-flow-20261023:A001",
+      "target": "experiments/local_k1_ten_epoch_flow/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm:A001",
       "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
       "type": "action_produced_evidence"
@@ -2091,6 +2106,21 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-local-k1-channel-gain-flow-20261023",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-local-k1-channel-gain-flow-20261023-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-local-k1-channel-gain-flow-20261023-r3",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -2662,6 +2692,10 @@
     },
     {
       "id": "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
       "type": "evidence"
     },
     {
@@ -3482,6 +3516,18 @@
     },
     {
       "id": "TB-k1-v4-192-kaggle3-reference-custody-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-local-k1-channel-gain-flow-20261023",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-local-k1-channel-gain-flow-20261023-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-local-k1-channel-gain-flow-20261023-r3",
       "type": "trajectory"
     },
     {

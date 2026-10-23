@@ -1,0 +1,40 @@
+{
+  "completed_passes": 10,
+  "invocation_pids": [
+    1256,
+    31036
+  ],
+  "native_actual_resume_accepted": true,
+  "optimizer_steps": 160,
+  "package_identity": "8a8d614450155c5ccd1c714ac961b0554f12edda80320a1ec9492644ac3fe4c6",
+  "pause_checkpoint_sha256": "53eea0fc64bfea6783c37f033230e2ee905d3735fa9824e05f3ae8a48e586c00",
+  "pause_optimizer_step": 80,
+  "post_training_acceptance_modules": {
+    "comparison_readiness.py": "81b0b98e908e35541ee8eb2e9dbff204f10748270d3416bd85153c00b31a2da9",
+    "research_memory/compiler.py": "e6558c1015ddc01ce5bbdec884748f63434935e1d9b8c19f159b5f7ce17b2004",
+    "research_memory/discovery.py": "ccf1e6c9f88200922dd9d8144ec0a07df15d073a55fdb8e0825bc277f5abfa82",
+    "research_memory/finalize.py": "fcb3f1d181990b96f643e0ec864c94272adf1838fdcb0cffbebe93500252023f",
+    "research_memory/paired.py": "2c03287bfef90e3eb4cee8cbfcda21c1218c552f8b0d23b1f99c2e881e1bfb49",
+    "research_memory/pipeline.py": "4983e011983b12b507aaeaa069e515a58d77f88d011c883247e95b8ad00a6a6a",
+    "research_memory/terminal_wiring.py": "d880e860544b0d32c4c092bcf1f8ff63b6bfb65878eaa43681a6749c4a0ce3b4",
+    "research_memory/validate.py": "da372c1318a12e9ec4bdc8659b696f2c839277fc931bebd1f2dc855fb17d18c3"
+  },
+  "previous_attempts": {
+    "attempt_2": "Failed FP32 train target statistics before formal training; no trace.",
+    "original": "Failed executable recipe/Spec identity before formal training; no trace."
+  },
+  "replay_eligibility": "NOT_REQUESTED",
+  "sample_presentations": 20480,
+  "scientific_comparison": "NOT_EVALUATED",
+  "source_commit": "18174aefab97244b11c02dd68d9e12ea36db8e36",
+  "spec_identity": "5aa2f142d4d90a7d69d6a719b567cdbc5d1f4f787f28b45436b79a9598a7acda",
+  "terminal": {
+    "finalization_id": "finalize-b36db192b3747627bc5da88318051022295285df3f76779ba8769b38851c1684",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "pipeline_status": "COMPLETE",
+    "replay_eligible": false,
+    "replay_pool_added": [],
+    "validation_status": "VALID"
+  },
+  "trace_prefix_preserved": true
+}

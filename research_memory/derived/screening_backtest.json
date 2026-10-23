@@ -221,6 +221,15 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+      "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "full_platform_release_native_cost_unknown",
         "strict_v5_comparison_readiness_not_established",
         "trace_cumulative_native_device_time_not_retained"
@@ -409,5 +418,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 45
+  "trace_count": 46
 }
