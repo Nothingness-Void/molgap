@@ -25,12 +25,19 @@ BondLocal plus pair-update-normalization100K is owned by
 owns Kaggle3 identity, receipts and reconciliation. Keep the unresolved question
 on its owner; no active model or implementation adoption is implied.
 
-The active K1 normalization-mechanism question is owned by
-`codex/exp/k1-norm-mechanisms-100k`, checkout
-`D:/molgap-worktrees/k1-norm-mechanisms-100k`. Its
-[status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-norm-mechanisms-100k/experiments/pcqm_k1_norm_mechanisms_100k/STATUS.md)
-owns remote reconciliation and its source/receipt pointers. Keep this unresolved
-question on its owner; no model adoption or wholesale integration is implied.
+K1 normalization mechanisms is closed without model adoption. Full owner history
+through `710b8834` is reachable from pushed archive `0e98722b`; desktop retains
+the [accepted evidence and strict qualification](experiments/pcqm_k1_norm_mechanisms_100k/qualification_20261023.md).
+Restore that owner only when its normalization implementation is needed; its
+ordinary read-only verification commands preserve the frozen training packages.
+The completed physical checkout was retired after verified external custody;
+the qualification method gives the exact restore command and custody pointer.
+
+The [single-model RTX5060 lifecycle exercise](experiments/local_k1_ten_epoch_flow/attempt_3/method.md)
+closed `INFRASTRUCTURE_ONLY`. Source history through `cd8b4b76` is reachable from
+the same archive commit. Desktop retains canonical evidence and shared execution
+infrastructure; the channel-gain Addon is not adopted. Its temporary C: checkout
+was archived and removed; retained execution artifacts stay under D:.
 
 Accepted local K1 execution-speed custody belongs to
 `codex/exp/k1-fused-layout-speed-100k`; its

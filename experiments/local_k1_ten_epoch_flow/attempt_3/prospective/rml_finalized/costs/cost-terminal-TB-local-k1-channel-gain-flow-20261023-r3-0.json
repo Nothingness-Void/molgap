@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "channel_gain-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-TB-local-k1-channel-gain-flow-20261023-r3-0",
+  "evidence_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/observed.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.008133518638888846
+    }
+  },
+  "platform": "local",
+  "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+}

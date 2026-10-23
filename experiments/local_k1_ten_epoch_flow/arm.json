@@ -1,0 +1,82 @@
+{
+  "arm_id": "channel_gain",
+  "scientific_role": "candidate",
+  "family": {
+    "name": "neural_atom_k1",
+    "version": "3"
+  },
+  "base": {
+    "name": "neural_atom_k1",
+    "version": "1",
+    "sha256": "cf9647890715641bd393adbe9872ed34128d0203f0dc8b385dca86049d34c2a0"
+  },
+  "initialization": {
+    "kind": "frozen_state",
+    "seed": 42,
+    "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+  },
+  "data": {
+    "dataset": {
+      "name": "pcqm4mv2",
+      "version": "1",
+      "sha256": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+    },
+    "split": {
+      "name": "local-flow-2048",
+      "version": "1",
+      "sha256": "1905dd7a7288e507d45394998e06ee9fd89ab03274e6851a1eafa49b15020f6d"
+    },
+    "roles": [
+      {
+        "role": "train",
+        "membership_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+        "row_order_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+        "usage_sha256": "dde483f3e167ff7a755cf458dce50e0784d5eb2bed53f9578c80c522f90edfb7"
+      },
+      {
+        "role": "development",
+        "membership_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+        "row_order_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+        "usage_sha256": "197ee384a94f6734f730067b85de48270eda4270b268cf7819cc3bdb7c5c5584"
+      }
+    ],
+    "feature_schema": "ogb-atom9-bond3-rwse16-v1",
+    "feature_sha256": "e2bf36187cbace2322ee1c4163c46024d257ba43e72977a2b01b9af4b26cf311",
+    "target": "pcqm4mv2-gap-eV-direct"
+  },
+  "training": {
+    "recipe": {
+      "name": "shared-family-training",
+      "version": "1",
+      "sha256": "21deb6283e83f6e862a41ff8814f0e373c86bc57190d4897907cb7b3be119b8c"
+    },
+    "overrides": {},
+    "objective": {
+      "name": "normalized-gap-l1",
+      "version": "1",
+      "sha256": "91126c4ff1b4f6826593bb052fe5400c1e0144103055ea27ffeea2bb6841f63c"
+    },
+    "sampler": {
+      "name": "frozen-family-pass-order",
+      "version": "1",
+      "sha256": "dd466f04384f612ca4efa939ba07ffcf61db494c4c9c447e601335d859c5e9af"
+    },
+    "transform": {
+      "name": "frozen-train-mean-sample-std",
+      "version": "1",
+      "sha256": "803c73d8041aded239bc4f84233e5a308df1c4183add551078ca9a9a0a913ced"
+    }
+  },
+  "addons": [
+    {
+      "name": "k1_channel_gain",
+      "version": "1",
+      "config": {
+        "channels": 192,
+        "layer": 6
+      },
+      "source_sha256": "be28777635101239040b029e596cc6ccc356490b6d5d3b5aec1c5bf55d2898d9"
+    }
+  ],
+  "addon_semantics": "ordered"
+}

@@ -1,0 +1,77 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 10,
+    "development_rows": 512,
+    "next_batch": 0,
+    "optimizer_steps": 160,
+    "precision": "fp32",
+    "sample_presentations": 20480,
+    "source_idx_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+    "target_sha256": "d1ac52c36815bfa35147bdab00beefa16fd10b6786ade288ad99f915fab030ea"
+  },
+  "addons": [
+    {
+      "config": {
+        "channels": 192,
+        "layer": 6
+      },
+      "name": "k1_channel_gain",
+      "source_sha256": "be28777635101239040b029e596cc6ccc356490b6d5d3b5aec1c5bf55d2898d9",
+      "version": "1"
+    }
+  ],
+  "batch_size": 128,
+  "checkpoint_every": 80,
+  "dataset": {
+    "development": true,
+    "manifest": "local_flow_2048_v1/manifest.json",
+    "manifest_sha256": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+  },
+  "development_role_identity": "197ee384a94f6734f730067b85de48270eda4270b268cf7819cc3bdb7c5c5584",
+  "development_rows": 512,
+  "drop_last": true,
+  "ema_decay": null,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": true,
+    "ema": null,
+    "family": "neural_atom_k1",
+    "name": "shared-family-accelerated",
+    "optimizer": "native-adamw",
+    "precision": "fp32",
+    "tf32": false,
+    "torch_version": "2.7.1"
+  },
+  "family": "neural_atom_k1",
+  "finite_check_every": 50,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": null,
+    "mode": "epoch"
+  },
+  "mode": "composed",
+  "optimizer_steps": 160,
+  "sampler": "python-epoch-shuffle",
+  "schedule": {
+    "kind": "cosine_epoch",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 10,
+    "warmup_units": 0
+  },
+  "seed": 42,
+  "selection": "best-development-live",
+  "target_mean_eV": 5.1759748458862305,
+  "target_std_eV": 1.237425446510315,
+  "torch_version": "2.7.1",
+  "train_role_identity": "dde483f3e167ff7a755cf458dce50e0784d5eb2bed53f9578c80c522f90edfb7",
+  "train_rows": 2048,
+  "weight_decay": 0.01
+}

@@ -221,6 +221,15 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+      "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "full_platform_release_native_cost_unknown",
         "strict_v5_comparison_readiness_not_established",
         "trace_cumulative_native_device_time_not_retained"
@@ -350,6 +359,28 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"track0999-select-live\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"9a4534bf4f851adc742d8629a4f36e3b7aa474788bfd7a24d51f2cd9480d195d\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"target_transform_identity\":\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\",\"terminal_endpoint_identity\":\"124960updates-15994880presentations\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms\"}",
+      "run_ids": [
+        "pcqm-k1-rms-position-160ep-100k-s42-20261022:post_node_rms:downstream",
+        "pcqm-k1-rms-position-160ep-100k-s42-20261022:pre_node_rms:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"track0999-select-live\",\"evaluation_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"lr_schedule_identity\":\"882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1\",\"optimizer_identity\":\"9a4534bf4f851adc742d8629a4f36e3b7aa474788bfd7a24d51f2cd9480d195d\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f\",\"scientific_contract\":\"k1-norm-mechanisms-100k-160pass-v1\",\"selection_role_identity\":\"9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f\",\"target_transform_identity\":\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\",\"terminal_endpoint_identity\":\"124960updates-15994880presentations\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms\"}",
+      "run_ids": [
+        "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_graph_rms:downstream",
+        "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development_500000_549999\",\"lr_schedule_identity\":\"cosine60-epoch0-4e-4-epoch59-1e-6\",\"optimizer_identity\":\"adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"train[0:500000]-development[500000:550000]\",\"scientific_contract\":\"pcqm-fixed500k-dev50k-matched60-v4\",\"selection_role_identity\":\"best-development-raw-model-60epochs\",\"target_transform_identity\":\"45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834\",\"terminal_endpoint_identity\":\"optimizer_steps234360:sample_presentations29998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-matched-500k-v4-three-arm\"}",
       "run_ids": [
         "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
@@ -392,6 +423,10 @@
     }
   ],
   "included_trajectory_ids": [
+    "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+    "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+    "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+    "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
     "TB-gptrans-local-bias-rwse16-100k-s42-a2",
     "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
     "TB-gptrans-noisy-nodes-100k-s42",
@@ -409,5 +444,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 45
+  "trace_count": 50
 }

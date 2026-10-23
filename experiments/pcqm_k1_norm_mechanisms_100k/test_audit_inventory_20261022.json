@@ -1,0 +1,25 @@
+{
+  "tested_commit": "9bda07165cffc4687965ed815837d8bf5b3a0829",
+  "collected_cases": 124,
+  "test_functions": 39,
+  "files": {
+    "tests/test_kaggle_bootstrap.py": 86,
+    "tests/test_experiment_workflow_resume.py": 10,
+    "tests/test_shared_resume_transport.py": 25,
+    "tests/test_machine_paths.py": 3
+  },
+  "source_sha256": {
+    "tests/test_experiment_workflow_resume.py": "71099aff0497e37ee69f1e776cd6d5b7c078ae6889fd060655e7de64f95126ec",
+    "tests/test_kaggle_bootstrap.py": "b58f4ca9d19647c601275fe9245ce768bbc6d6f3d501bea17dda1669f6c385fc",
+    "tests/test_machine_paths.py": "9c7bf0dd22077836d061d85464e4a2712156cbd59e75d17abd9e9e5f8de2d7d8",
+    "tests/test_shared_resume_transport.py": "c0e099e00eb38625914f42e6b2c3bb2a1c807df174cf6088bb9c1ea19beb1b1c"
+  },
+  "original_pass_seconds": 303.18,
+  "per_test_timings": "not_recorded",
+  "audit_execution": "collection only:124 cases in3.66s; no test bodies executed",
+  "proposed_matrix_keep": 11,
+  "proposed_matrix_drop": 37,
+  "identity_only_remove": 1,
+  "native_training_cases": 0,
+  "csv_sha256": "2da8071544d68d483381f8b1b09426563f3c472afc021ee0f7284f1b48292ed7"
+}

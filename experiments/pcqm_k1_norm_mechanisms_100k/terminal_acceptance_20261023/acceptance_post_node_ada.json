@@ -1,0 +1,330 @@
+{
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-v1",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.4494369769288888
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "measurement_scope": "One dedicated native T4 assigned to this arm for the physical entry window, including setup/qualification/idle. v2 is failed preflight, no new formal updates.",
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-cost-event-v1",
+      "source_entry_path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain\\experiment\\allocation_entry_observation.json",
+      "source_entry_sha256": "73d462e14f892552e5a9d5d8baa309fd2a4d8adb88272579f6a1bb9d680033c8",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-v2",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-v2",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.11740067486250001
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "measurement_scope": "One dedicated native T4 assigned to this arm for the physical entry window, including setup/qualification/idle. v2 is failed preflight, no new formal updates.",
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-cost-event-v1",
+      "source_entry_path": "D:\\molgap-artifacts\\recovery\\k1-norm-mechanisms-100k\\v2\\terminal_diagnostic\\experiment\\allocation_entry_observation.json",
+      "source_entry_sha256": "b38353b990e9db664aa4e9243994d071efa59e40be42cf1ba18edec5be7e6561",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-v3",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-v3",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.415196618246111
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "measurement_scope": "One dedicated native T4 assigned to this arm for the physical entry window, including setup/qualification/idle. v2 is failed preflight, no new formal updates.",
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-cost-event-v1",
+      "source_entry_path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\scope_gain_v3\\experiment\\allocation_entry_observation.json",
+      "source_entry_sha256": "9f5c82dca3b74ba1afc4a59b351cc8c9d17e5237714e0665fa81ecfdec0f4a1d",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    }
+  ],
+  "evidence_id": "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+  "mechanical_report": {
+    "blockers": [],
+    "context": {
+      "account": "nothingnessvoid",
+      "arm_id": "post_node_ada",
+      "arm_identity": "8e4e31ad3355ad8df8942430f1fb1eaee21aaf85b461d60ed7a9e973008bf9ce",
+      "experiment_id": "pcqm_k1_norm_mechanisms_100k",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022",
+      "package_identity": "881a59b417c0c45693adb4f480829375ca879995824334dac2b69c2992f7f92a",
+      "platform": "kaggle",
+      "platform_version": "3",
+      "run_reference": "nothingnessvoid/molgap-k1-rms-scope-gain-160ep-100k-s42",
+      "source_archive_sha256": "93e3555c7c19a9750bf2baba0caff83979a051c7f11fd6b4a29f095328739821",
+      "source_commit": "040f7192ad6ef01fedccbdf17752cca8f7658ddb",
+      "spec_identity": "6bf67d644ec94a2b393dd0e3accd211989071a13fe8d14d38449c3d279f31379",
+      "training_recipe_sha256": "2f446daca4675189c24f03c558af052dc597056b7d6cb63865d80b57fe1374b0"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "2f446daca4675189c24f03c558af052dc597056b7d6cb63865d80b57fe1374b0"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "f35353ff7698d9ac3bb6c47255795660b83d025d1cc8cafbf0ec624e4cb507f5"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "8b64ba4ae79e9cff363aa22fc6b37d4adc0bab18c0d006a4503cdca8a64699cd"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "0f69c79710117229f322991a887564df48a97c9b188c6e8cbd01bfb7173b5b8b"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "d85c8a22a8c737546d8dd8d94f9ff3e83b2454296f91a833d0273b69f81b658d"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "Tesla T4",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        },
+        {
+          "hardware": "Tesla T4",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.1408568108934164,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 160,
+        "next_batch": 0,
+        "optimizer_steps": 124960,
+        "sample_presentations": 15994880,
+        "status": "complete"
+      },
+      "selected_optimizer_step": 109340,
+      "selected_weights": "live",
+      "target_identity": {
+        "acceptance_plan_sha256": "a9c2324a95481f98587cf06041fba354aeb33b5bae403c7be506c0d867bab9e4",
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": {
+          "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        }
+      }
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "STOP_NO_SCALE_UP",
+    "comparison_status": "DESCRIPTIVE_ONLY_STRICT_READINESS_NOT_ESTABLISHED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_READY",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "replay_limitations": [
+    "strict_comparison_readiness_not_established",
+    "native_proof_payloads_not_locally_reverified",
+    "external_artifact_custody_nonportable"
+  ],
+  "role_evidence": {
+    "membership_owner": "experiments/pcqm_k1_norm_mechanisms_100k/role_plan.json",
+    "observed_output_manifest": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_node_ada/output_manifest.json",
+    "observed_trace": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_node_ada/canonical_trace.json",
+    "protected_role_claim_scope": "This frozen run only; does not reset historical role consumption.",
+    "recipe": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_node_ada/training_contract.json",
+    "scope": "Frozen train/development recipe and completed observed outputs; no new role access by acceptance."
+  },
+  "role_use": {
+    "common": "untouched",
+    "development": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-train-training-membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-train-labels-read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-train-metric-computed",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-development-prediction-input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-development-labels-read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-development-metric-computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_node_ada.json",
+      "role_event_id": "role-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada-development-selection-used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    }
+  ],
+  "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+  "source_cost_provenance_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
+    "final": true,
+    "next_allowed_actions": [
+      "retain accepted evidence; no retry or scale-up"
+    ],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "new explicit user-authorized decision-relevant question"
+    ]
+  }
+}

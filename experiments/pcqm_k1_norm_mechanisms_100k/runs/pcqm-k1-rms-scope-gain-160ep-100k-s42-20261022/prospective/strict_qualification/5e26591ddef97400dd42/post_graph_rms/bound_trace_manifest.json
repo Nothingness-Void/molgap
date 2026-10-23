@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "strict_comparison_readiness_not_established",
+      "native_proof_payloads_not_locally_reverified",
+      "external_artifact_custody_nonportable"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "fc8db326f660c50948161c598f2918eb615bff0a3a18c8dd439f65b3f6bc0a76",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "track0999-select-live",
+    "evaluation_role_identity": "9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f",
+    "lr_schedule_identity": "882bee08451d61fbb4c8cb16bf91d6b9a008e3abfd8404f7bfe429f19261f7f1",
+    "matched_architecture_required": false,
+    "optimizer_identity": "9a4534bf4f851adc742d8629a4f36e3b7aa474788bfd7a24d51f2cd9480d195d",
+    "precision_identity": "fp32-no-tf32",
+    "row_split_identity": "77cd97a1c3013290d5b5fe89a63ce45e2a234a96f31556057f925ad33047379f",
+    "scientific_contract": "k1-norm-mechanisms-100k-160pass-v1",
+    "selection_role_identity": "9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "terminal_endpoint_identity": "124960updates-15994880presentations",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_norm_mechanisms_100k/generated/385f8909e602c5a8ddbb42bb81559e5ef4bc43933f27aff28156bd34a31c4b3e/post_graph_rms/recipe.json",
+  "evaluation_role_identity": "9d542c3fe22a7e04622bd07d73df4f6703e7908c776e8421d3a19d16c027057f",
+  "exposure": {
+    "optimizer_steps": 124960,
+    "sample_presentations": 15994880
+  },
+  "metric_semantics": "MAE-gap-eV-minimize",
+  "model_identity": "fc8db326f660c50948161c598f2918eb615bff0a3a18c8dd439f65b3f6bc0a76",
+  "presentation_semantics_ref": "experiments/pcqm_k1_norm_mechanisms_100k/protocol.md",
+  "reference_id": "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+  "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_graph_rms:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-live",
+  "terminal_evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/rml_terminal_post_graph_rms.json",
+  "trace_artifact_ref": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/canonical_trace.json",
+  "trace_artifact_sha256": "7117ba1b7f7e5d52c58da55e0c1c750aea4360a9ce95300eca3ae630008dd369",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

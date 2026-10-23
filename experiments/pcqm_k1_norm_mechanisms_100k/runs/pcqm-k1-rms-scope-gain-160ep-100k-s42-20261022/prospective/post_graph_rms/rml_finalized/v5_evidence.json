@@ -1,0 +1,383 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
+      "name": "terminal_decision_20261023.md",
+      "role": "provenance",
+      "sha256": "bb0dec12ed3a320606b32f7472be5e63abc89e6d864f22332dfec458500c54fc"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+      "name": "provenance_costs.json",
+      "role": "provenance",
+      "sha256": "ac133272d67eed56338efdc2cab9a81fece207ede3884dc7b4a31c3bdaeb7318"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/role_plan.json",
+      "name": "role_plan.json",
+      "role": "provenance",
+      "sha256": "281a82cfe8c4058116545f182cb1cf489811d6106fcb17f842fabe2386b87708"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/protocol.md",
+      "name": "protocol.md",
+      "role": "provenance",
+      "sha256": "2a98edd6f712db7f88d3d36f8ff0e63add1e394d058ea906f8c65e3f665cc8b0"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/prospective/post_graph_rms/trajectory.json",
+      "name": "trajectory.json",
+      "role": "provenance",
+      "sha256": "b87ef6aa5b42c93fc29d6ee26260e60f6678f352b9b2b6ad3a9f5ae345360467"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/generated/385f8909e602c5a8ddbb42bb81559e5ef4bc43933f27aff28156bd34a31c4b3e/post_graph_rms/recipe.json",
+      "name": "recipe.json",
+      "role": "provenance",
+      "sha256": "508252b12cb949dfd6aeb21c68f136ea52b978fa33010b4d0bcee0d07372b917"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/declaration_template.json",
+      "name": "declaration_template.json",
+      "role": "provenance",
+      "sha256": "cd8bf7afb0412c63b4c6ee87f911b3ec4ea20de7886a82d51c4e95ca8c6294ad"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/experiment.json",
+      "name": "experiment.json",
+      "role": "provenance",
+      "sha256": "32a9f679f579e2a3a2ead264c8f1bd771293d16c7ccd7daa3321177307540278"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/acceptance_check.json",
+      "name": "mechanical_acceptance_report",
+      "role": "analysis",
+      "sha256": "26eefcc6036b218d7d275472a88ce0f6f08d0b71d0107b90846cc5cf1c7ea613"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/output_manifest.json",
+      "name": "output_manifest.json",
+      "role": "provenance",
+      "sha256": "ad6fd70a1ed6dfcd09059fa29387459347d3fda4d8ddccbbeea1fdbaac504890"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/runtime_certificate.json",
+      "name": "runtime_certificate.json",
+      "role": "provenance",
+      "sha256": "1bc24b0ab50e038a121f1fe4db5fc1be3c1fd3add17659bafe04619a2c7ef947"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/runtime_provenance.json",
+      "name": "runtime_provenance.json",
+      "role": "provenance",
+      "sha256": "b860db33a5d64c6dccc2558dd0d1e35b0bf4a23f10a5805ec1708d1e6b0361e5"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/canonical_trace.json.context.json",
+      "name": "canonical_trace.json.context.json",
+      "role": "provenance",
+      "sha256": "54ac75c20a1940454b04cf6c493662dde3d9c7b66010391cb1181111844666b9"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/norm_diagnostics.json",
+      "name": "norm_diagnostics.json",
+      "role": "provenance",
+      "sha256": "1c7fceabdef4eb72f827759f82e4eb9859ae8f6d0bf294aa34b2f1b01f2279fc"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/launch_receipt.json",
+      "name": "launch_receipt.json",
+      "role": "provenance",
+      "sha256": "e27d83a556c615e30b703183fc76913448755e5684b4875be159cd3cff825942"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/platform_response.json",
+      "name": "platform_response.json",
+      "role": "provenance",
+      "sha256": "42fefd99f0817035fabebbd9f26579300202a3841146ec063b96cfbc8f93a2ac"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/scheduler_observation_latest.json",
+      "name": "scheduler_observation_latest.json",
+      "role": "provenance",
+      "sha256": "f254a0477f832388c7ccbf42b2025f19087679ba996ef4346b6ab8d395965be7"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/source_upload_verification.json",
+      "name": "source_upload_verification.json",
+      "role": "provenance",
+      "sha256": "e0a82d102f4d583ace56b4b7b1cb65aca3841f69bfd017bf98a79c30ca3e05d7"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/source_verification.json",
+      "name": "source_verification.json",
+      "role": "provenance",
+      "sha256": "5e096d9bec3d68dcf59c53f0e9451c57c5fa01acdeb7dc708fab7818c9585ceb"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/scope_gain/submission/startup_observation.json",
+      "name": "startup_observation.json",
+      "role": "provenance",
+      "sha256": "43e36d2153fadce30fda976349b7bbd0eb3f22f9208891570cdb9e369f0b2c79"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/operations/launch_receipt.json",
+      "name": "launch_receipt.json",
+      "role": "provenance",
+      "sha256": "e27d83a556c615e30b703183fc76913448755e5684b4875be159cd3cff825942"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/operations/source_verification.json",
+      "name": "source_verification.json",
+      "role": "provenance",
+      "sha256": "5e096d9bec3d68dcf59c53f0e9451c57c5fa01acdeb7dc708fab7818c9585ceb"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/operations/source_upload_verification.json",
+      "name": "source_upload_verification.json",
+      "role": "provenance",
+      "sha256": "e0a82d102f4d583ace56b4b7b1cb65aca3841f69bfd017bf98a79c30ca3e05d7"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/prepared/package/SOURCE_COMMIT.txt",
+      "name": "SOURCE_COMMIT.txt",
+      "role": "provenance",
+      "sha256": "30b813c36f56317aca931d2c88a6e4e112594c9949b96d248e5abd8e3abf357b"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/prepared/package/SOURCE_ARCHIVE_SHA256.txt",
+      "name": "SOURCE_ARCHIVE_SHA256.txt",
+      "role": "provenance",
+      "sha256": "2f36156bf2df3935bd639b6b58634b2831883bc5a207fc7df28d8820040bd35b"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/prepared/package/SOURCE_FILES.json",
+      "name": "SOURCE_FILES.json",
+      "role": "provenance",
+      "sha256": "b3115e0f47032c4239c4c4a09d084ec5136357682e88617c77c57f9c2fcfcba2"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/v1/prepared/package/package_manifest.json",
+      "name": "package_manifest.json",
+      "role": "provenance",
+      "sha256": "a2be097d87ec585f587e588919bee680534920f9104b0650c3337c4c808f2627"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/input_resolution.json",
+      "name": "input_resolution.json",
+      "role": "provenance",
+      "sha256": "f5a16017fd354b4e125a5cf96a462ff012639c3a5edfaa09ee9ba4aaaa955871"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/pair_state.json",
+      "name": "pair_state.json",
+      "role": "provenance",
+      "sha256": "a109f5d199b5db1cc68b00dd2dbe3bfbc7b958aeefe2f710d0f90d9f3a94bfb6"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/execution_report.json",
+      "name": "execution_report.json",
+      "role": "provenance",
+      "sha256": "a109f5d199b5db1cc68b00dd2dbe3bfbc7b958aeefe2f710d0f90d9f3a94bfb6"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/launch_receipt.canonical.json",
+      "name": "launch_receipt.canonical.json",
+      "role": "provenance",
+      "sha256": "65a469407a4fecd81ef3fed513874ae1d21fdc7b5af4a1acd52c7cf4c8becce2"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/launch_receipt.json",
+      "name": "launch_receipt.json",
+      "role": "provenance",
+      "sha256": "d1df6fea2034952185b97d3caaec3ea5dcd06938fe11cc3f162f970db25eccb1"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/source_verification.json",
+      "name": "source_verification.json",
+      "role": "provenance",
+      "sha256": "230446551ced6fffe199887a610ef3de768b085bf3bc79713fa4fbb3f66ebd0c"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/operations/source_upload_verification.json",
+      "name": "source_upload_verification.json",
+      "role": "provenance",
+      "sha256": "a32c5a692a21822cce026ca56a5845445160be34b362fdac99f0178422534353"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/resume_plan.json",
+      "name": "resume_plan.json",
+      "role": "provenance",
+      "sha256": "d0e6e705d325e1f000477af5f10b188be474856df94b1b17c0656d78da3cf111"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v3/prepared/source_dataset/recovery_repair/src/molgap/experiment_resume.py",
+      "name": "experiment_resume.py",
+      "role": "provenance",
+      "sha256": "cd6892d786867608002713e3db839ca535fd381dde6b773bd64faf7e7ded8fc7"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/recovery_repair_provenance.json",
+      "name": "recovery_repair_provenance.json",
+      "role": "provenance",
+      "sha256": "2ff3d89742d5fe364dadae88de7e6967fe9875bc25f59e56d5e059a51f3a9b46"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/_resume_preflight/post_graph_rms/actual_resume_certificate.json",
+      "name": "actual_resume_certificate.json",
+      "role": "provenance",
+      "sha256": "e70afc85a1e37260ec681aa31f2801240a0a9886ffaf4f83125a1c51d27c9657"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/_resume_preflight/post_node_ada/actual_resume_certificate.json",
+      "name": "actual_resume_certificate.json",
+      "role": "provenance",
+      "sha256": "879566c47300fd596fb982ce13e46c2849e9894ee003577250bd60585e7303c0"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/training_contract.json",
+      "name": "contract",
+      "role": "retained_artifact",
+      "sha256": "508252b12cb949dfd6aeb21c68f136ea52b978fa33010b4d0bcee0d07372b917"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/development_predictions.pt",
+      "name": "predictions",
+      "role": "retained_artifact",
+      "sha256": "ac6b9296e75b6e5b4e634af848145dd98337746233a89d8fb06da07d6384011b"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/last_checkpoint.pt",
+      "name": "resume",
+      "role": "retained_artifact",
+      "sha256": "7d86fa9355850c6f9db9686d03ed9f79dfdf52905f841f265f9a96bccbce5411"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/selected_model.pt",
+      "name": "selected_model",
+      "role": "retained_artifact",
+      "sha256": "4f20a634e85b2dbd589e2f026628a0d4039ac5e7cab94c5b691357a860996489"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/post_graph_rms/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "7117ba1b7f7e5d52c58da55e0c1c750aea4360a9ce95300eca3ae630008dd369"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain/experiment/allocation_entry_observation.json",
+      "name": "allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "73d462e14f892552e5a9d5d8baa309fd2a4d8adb88272579f6a1bb9d680033c8"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/recovery/k1-norm-mechanisms-100k/v2/terminal_diagnostic/experiment/allocation_entry_observation.json",
+      "name": "allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "b38353b990e9db664aa4e9243994d071efa59e40be42cf1ba18edec5be7e6561"
+    },
+    {
+      "availability": "machine_local_verified_nonportable",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-norm-mechanisms-100k/scope_gain_v3/experiment/allocation_entry_observation.json",
+      "name": "allocation_entry_observation.json",
+      "role": "provenance",
+      "sha256": "9f5c82dca3b74ba1afc4a59b351cc8c9d17e5237714e0665fa81ecfdec0f4a1d"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_graph_rms.json",
+      "name": "acceptance_post_graph_rms.json",
+      "role": "analysis",
+      "sha256": "04010ce897ab384a46c3ac018d2ace910f53b2fc0fd6c8d611a40a6dd6848359"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_norm_mechanisms_100k/generated/385f8909e602c5a8ddbb42bb81559e5ef4bc43933f27aff28156bd34a31c4b3e/post_graph_rms/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13850894982755185,
+    "selected_optimizer_step": 112464,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/acceptance_post_graph_rms.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-23",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Existing mechanical reports, retained bytes and explicit terminal decision; native proof payloads not reverified."
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "STOP_NO_SCALE_UP",
+    "comparison_status": "DESCRIPTIVE_ONLY_STRICT_READINESS_NOT_ESTABLISHED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_READY",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "common": "untouched",
+    "development": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "accepted_norm_terminal_evidence",
+  "track": "B"
+}

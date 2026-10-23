@@ -1,0 +1,23 @@
+{
+  "user_authorized": true,
+  "scope": "single-model local RTX 5060 ten-epoch infrastructure exercise; no scientific data acceptance",
+  "arms": [
+    "channel_gain"
+  ],
+  "seeds": [
+    42
+  ],
+  "platform": "local",
+  "accelerator": "NVIDIA GeForce RTX 5060",
+  "epochs": 10,
+  "optimizer_steps": 160,
+  "pause_after_step": 80,
+  "resume_original_horizon": true,
+  "train_rows": 2048,
+  "development_rows": 512,
+  "scientific_comparison_authorized": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "authorization": "User 2026-10-23: single model ten epochs, only prove workflow normal; repair and rerun when broken"
+}

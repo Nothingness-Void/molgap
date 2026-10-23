@@ -1,15 +1,15 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 121
+- Validated V5 evidence: 126
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
-- CLOSED: 17
+- ACTIVE: 3
+- CLOSED: 19
 - INCONCLUSIVE: 23
-- INFRASTRUCTURE_ONLY: 7
-- NEGATIVE_UNDER_CONTRACT: 29
+- INFRASTRUCTURE_ONLY: 8
+- NEGATIVE_UNDER_CONTRACT: 31
 - NO_TRAIN: 48
 - POSITIVE_UNDER_CONTRACT: 8
 
@@ -19,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 361
-- Coarse historical role records: 582
+- Explicit role events: 389
+- Coarse historical role records: 613
 - Repeatedly selected role identities: 22
 
 ## Cost
@@ -108,10 +108,10 @@
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
 - NVIDIA A100-SXM4-40GB wall_hours: measured=0.079196 (5 measured records), estimated=0.666667 (2 estimated records), measurement_missing=2, not_applicable=0
-- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.026849 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- NVIDIA GeForce RTX 5060 device_hours: measured=0.095238 (3 measured records), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA GeForce RTX 5060 queue_hours: not applicable (5 records); measurement_missing=0
-- NVIDIA GeForce RTX 5060 wall_hours: measured=0.137844 (4 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.026849 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
+- NVIDIA GeForce RTX 5060 device_hours: measured=0.095238 (3 measured records), estimated=0.166667 (1 estimated record), measurement_missing=5, not_applicable=0
+- NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=5
+- NVIDIA GeForce RTX 5060 wall_hours: measured=0.145977 (5 measured records), estimated=0.166667 (1 estimated record), measurement_missing=3, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution device_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA GeForce RTX 5060; local desktop execution queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -144,10 +144,10 @@
 - RTX5060 device_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
 - RTX5060 queue_hours: not applicable (2 records); measurement_missing=0
 - RTX5060 wall_hours: measured=0.089502 (1 measured record), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
-- Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=39, not_applicable=0
-- Tesla T4 device_hours: measured=43.275779 (15 measured records), estimated=55.000000 (8 estimated records), measurement_missing=16, not_applicable=0
-- Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=39, not_applicable=0
-- Tesla T4 wall_hours: measured=64.312667 (19 measured records), estimated=55.000000 (8 estimated records), measurement_missing=12, not_applicable=0
+- Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=47, not_applicable=0
+- Tesla T4 device_hours: measured=69.323921 (23 measured records), estimated=55.000000 (8 estimated records), measurement_missing=16, not_applicable=0
+- Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=47, not_applicable=0
+- Tesla T4 wall_hours: measured=64.312667 (19 measured records), estimated=55.000000 (8 estimated records), measurement_missing=20, not_applicable=0
 - Tesla T4 x2 allocation; candidate assigned GPU0 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4 x2 allocation; candidate assigned GPU0 device_hours: measured=unknown (0 measured records), estimated=8.000000 (1 estimated record), measurement_missing=1, not_applicable=0
 - Tesla T4 x2 allocation; candidate assigned GPU0 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
@@ -236,6 +236,10 @@
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation device_hours: measured=0.003323 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4; version2 separate diagnostic window, excludes recovery training invocation wall_hours: measured=0.003323 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- Tesla T4x2 FP32 device_hours: measured=unknown (0 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 FP32 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- Tesla T4x2 FP32 wall_hours: measured=unknown (0 measured records), estimated=26.000000 (4 estimated records), measurement_missing=0, not_applicable=0
 - Tesla_P100_PCIE_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -268,18 +272,18 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 238
-- Cost-event coverage: 122/133 trajectories; incomplete native measurement=98
+- Measurement-missing cost events: 254
+- Cost-event coverage: 129/140 trajectories; incomplete native measurement=105
 
 ## Screening Backtest
 - Status: available
-- Eligible traces: 10
-- Excluded traces: 35
+- Eligible traces: 14
+- Excluded traces: 36
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 88
+- [INFO] trace_unavailable_for_backtest: 90
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 98
+- [WARN] incomplete_native_cost_measurement: 105
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 44
-- [WARN] trajectory_without_v5_evidence: 12
+- [WARN] missing_explicit_role_identity: 47
+- [WARN] trajectory_without_v5_evidence: 14

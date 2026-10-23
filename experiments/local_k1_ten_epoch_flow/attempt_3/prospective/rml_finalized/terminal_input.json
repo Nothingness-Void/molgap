@@ -1,0 +1,104 @@
+{
+  "acceptance_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/acceptance.json": "b87439f8f9cf591e634cad1b47f2f370e9e4f4010930edb6748b17b36602e4c4",
+    "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/observed.json": "e7ca0e3120653dd5eb74986b5b91c9867a5bbc67508946b12486006748c5af78",
+    "experiments/local_k1_ten_epoch_flow/attempt_3/role_audit.json": "edf62d1c50a690da4b64af6857218cd45f698e110ade8f1db89b88abb9493183",
+    "experiments/local_k1_ten_epoch_flow/attempt_3/terminal_decision.md": "e2b6271365508f7af731a7a80ae079019ae9ac79fa132c82fe9a72d293c3c317",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/canonical_trace.json": "8f1885c68cee1cef380da91ffa720fe81284cb265dd7f6776ab5091e34c629f6",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/canonical_trace.json.context.json": "7c5a53acd76aa2cc5d244356e70b187e7e801dc5f86ab4384f0ab7716a000592",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/development_predictions.pt": "1438af5f9fde76e976f5508edb50e7b7142f7e5826f410a3ae5739e96f0eb4c3",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/last_checkpoint.pt": "7c1d634c99d2586a66bfb25dbed76d26e50023758045ebdcdd0a674bc678c25b",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/output_manifest.json": "d91750c7679875c257a16b51d3f8cdfdd0ad3c17d1178a7f45982bbe6be8ca6c",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/selected_model.pt": "09974233339a4416168877923557e6d2c7e8014713d570846aa33ba52b4d2cac",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/training_contract.json": "e08a579e5f9f7b0633826248894e750e3d40b6beabb46cfec894e244847d0e0b"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-10-23T06:02:29.207285+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-TB-local-k1-channel-gain-flow-20261023-r3-0.json",
+        "sha256": "34ea9e03439eb75694ffe3b2b95a2fc0e24341f6e95ba10f3b536cc2a4a08a5f"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "e89ddad8f4b7d5dac34ec982fd2811a7abea9a3e60ade9fa760efa98cdf869f5"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "3b8c98e4bc898f5fcda101395752c2bdbfb8feab550e3b557c063e3ab8d6fa7b"
+      }
+    ],
+    "roles": []
+  },
+  "requested_outcome": "INFRASTRUCTURE_ONLY",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_160",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 160,
+      "sample_presentations": 20480
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/recipe.json",
+    "reference_id": null,
+    "run_id": "local-k1-channel-gain-10ep-20261023-r3:channel_gain:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/local_k1_ten_epoch_flow/attempt_3/prospective/terminal_staging/v1/4054c6cc2213b652/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_3/execution/channel_gain/canonical_trace.json",
+    "trace_artifact_sha256": "8f1885c68cee1cef380da91ffa720fe81284cb265dd7f6776ab5091e34c629f6",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r3"
+}
