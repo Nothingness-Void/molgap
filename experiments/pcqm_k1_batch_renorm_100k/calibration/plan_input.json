@@ -1,0 +1,147 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-brn-clean-bn-100k",
+    "question": "Does a common cumulative Clean-BN pass alter the accepted selected-LIVE affine-minus-scale contrast?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-brn-clean-bn-100k-20261024",
+      "observed_deficiency": "The accepted endpoint contrast does not distinguish BN buffer mediation from learned-function differences.",
+      "supporting_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      ],
+      "alternative_explanations": [
+        "BN running-buffer mediation",
+        "Learned-function differences",
+        "Selected-development and one-seed uncertainty"
+      ],
+      "changed_mechanism": "Reset and cumulatively recompute only BN running buffers on the same16384 ordered training members, dropout off, selected LIVE weights fixed.",
+      "cheapest_falsifier": "One128-batch calibration per arm then aligned50K development inference under1800s total.",
+      "decision_changed_if_positive": "A disappearing contrast supports buffer mediation as a compatible explanation; close NO_TRAIN without promotion.",
+      "decision_changed_if_negative": "A persistent contrast supports learned-function differences as compatible, without identifying a unique cause; close NO_TRAIN.",
+      "expected_native_cost_ref": "cost-k1-brn-clean-bn-100k-ceiling",
+      "related_closed_family_ids": [
+        "pcqm-k1-batch-renorm-100k"
+      ],
+      "historical_unknowns": [
+        "Training stochasticity",
+        "Independent-role transfer",
+        "Unique causal attribution"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "eddba680821bad834f4757b3eb20ab647e1bee19",
+      "source_config_identity": "10c3bdd383445d17bc9628468012065cd5f098a65d61ed399ef535e74b316c4a",
+      "contract_refs": [
+        "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md",
+        "experiments/pcqm_k1_batch_renorm_100k/calibration/inputs.json",
+        "experiments/pcqm_k1_batch_renorm_100k/protocol.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      ],
+      "prior_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_batch_renorm_100k/calibration/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_bn_buffer_calibration",
+        "run_ids": [
+          "local-k1-brn-clean-bn-100k-20261024"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "eddba680821bad834f4757b3eb20ab647e1bee19",
+        "evidence_refs": [
+          "experiments/pcqm_k1_batch_renorm_100k/calibration/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-brn-clean-bn-100k-ceiling"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/decision.md",
+      "next_allowed_actions": [
+        "Bounded local selected-LIVE Clean-BN diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md",
+    "comparison_blockers": [
+      "Previously selection-used development cohort",
+      "Single training seed; no independent transfer"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-brn-clean-bn-100k-ceiling",
+      "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-brn-clean-bn-100k-20261024",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "Existing desktop GPU cuda:0; CPU4 threads",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "device_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-brn-clean-bn-100k",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/calibration/roles.json"
+    ],
+    "source_commit": "eddba680821bad834f4757b3eb20ab647e1bee19",
+    "state_timestamp": "2026-10-23T20:01:54.502037+00:00"
+  }
+}

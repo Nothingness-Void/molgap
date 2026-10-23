@@ -1,0 +1,52 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/acceptance.json": "5f29d98805f31b3b839c09919ee6f73fc7544f7493a07630f264316b0deddbd0",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/attribution.md": "b7f34eedbbcadaed90b4f5b977943716eb5ef1234c6cd01e083cb3d220184541",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/decision.md": "d551b4ea920eb7a0d2c1cea8460290adc8226927ebbb9c300d6d2bedab3212a6",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/inputs.json": "10c3bdd383445d17bc9628468012065cd5f098a65d61ed399ef535e74b316c4a",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/protocol.md": "93794aa41866f86b0167db6a2a87919ef53e00d772a4bf056a94999fcf5509c6",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/results/incomplete.json": "89f4b87969ed9eda64665495cc8461e0896f4fb3465bb630587c54ddb6e60069",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/results/result.json": "e365dc3ebb80451059b66911690d21d8641e6bef81d51a4664c52083a4ef3d8a",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/roles.json": "87de586e7b52031fd06b7fe3dba51ef296f539193e909f747d2278b3eb62ea7d",
+    "experiments/pcqm_k1_batch_renorm_100k/calibration/terminal_decision.md": "d057b95ea1c4685d016d45fc21cd93876ba02b460e2dec43d7c518c373dcdf2f",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/calibration_result/result.json": "e365dc3ebb80451059b66911690d21d8641e6bef81d51a4664c52083a4ef3d8a",
+    "external:///D:/molgap-artifacts/reconciliation/k1-batch-renorm-100k/close_calibration.py": "48817a9123bd96dfddd87b9a634724d9f260141db833049a641ed32bd78ddbd3",
+    "research_memory/policies/pcqm-k1-brn-clean-bn-100k.1.json": "53a9080d73fbe752db5d5d09d93500dc76d39683bdb196a8882104f51f72c0e1"
+  },
+  "finalized_at": "2026-10-23T20:06:55.316056+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-k1-brn-clean-bn-100k-observed.json",
+        "sha256": "bfa037d121b25241dfd8d176bd29ae90c3245dac4709a1d32acb5e7015d4c137"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "0fe150f99fb07cc3fa0cb369d307d280239af1fd063c8cba1d3a6f06e0998fa4"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "e2e6c0cee2d373e269212e2efee470396dfe9d6a9372cd818da06ff75c28f097"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-k1-brn-clean-bn-train_decoded-labels_read.json",
+        "sha256": "099def75074bcac15650d0da29176a5742975b322ed6c0ce6245c050fdb5b979"
+      },
+      {
+        "ref": "roles/role-k1-brn-clean-bn-internal_development_decoded-labels_read.json",
+        "sha256": "9e70780d971e41115ae998f3707decfab337c265ed90ce3f744c7d07e4051734"
+      }
+    ]
+  },
+  "run_id": "local-k1-brn-clean-bn-100k-20261024",
+  "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+}
