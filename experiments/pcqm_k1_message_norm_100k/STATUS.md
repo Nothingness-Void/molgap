@@ -1,6 +1,23 @@
 # Status
 
-## Submitted,2026-10-23 JST
+## Terminal reconciliation,2026-10-23 JST
+
+Kaggle1 kernel140391249/version1 is COMPLETE. Both arms completed40 passes,
+31240 optimizer steps and3998720 presentations. Source/mount/target identity,
+mechanical artifacts and native repeat/resume proofs are VERIFIED; the paired
+comparison is STRICT_CAUSAL. [Decision](terminal_decision.md) closes fixed as
+CLOSED and learned as NEGATIVE_UNDER_CONTRACT (1.364meV below the3meV gate).
+[Attribution](attribution.md) records curves, learned scales and limits.
+
+Both canonical finalizations are complete after integrating shared repair
+1ef378ff (owner cherry-pick cd934440). Native proofs and replay are VERIFIED for
+each arm with no exclusions. Ordinary strict revalidation was CANONICAL_READ_ONLY,
+11.72seconds,112 experiment files byte-identical, executed=false. RML frozen
+check passed. [Qualification](qualification_20261024.md) records exact evidence
+and the initial asset-collision incident. No model adoption or new training.
+The user-authorized Luna monitor stopped after terminal notification.
+
+## Historical submission observations,2026-10-23 JST
 
 Kaggle1 accepted **140391249/version1**, kernel
 [nothingnessvoid/molgap-k1-msgnorm-100k-s42](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-msgnorm-100k-s42).
@@ -34,7 +51,7 @@ deterministic CPU scope. After fixing only the fixture, both passed in11.81secon
 (14.05seconds including wrapper). No unrelated suite was rerun. Checks cover
 real accelerated K1 hooks, finite gradients, identical initial fixed/learned
 outputs, and serialized populated optimizer/EMA/RNG restoration on synthetic
-CPU graphs. Native T4 execution and quality remain properties of this remote job.
+CPU graphs. Native T4 execution and quality were verified separately from retained remote evidence.
 Logs: D:/molgap-artifacts/validation/k1-message-norm-100k.txt and
 k1-message-norm-100k-recheck.txt. [Infrastructure review](infrastructure_review.md)
 records source reuse and upstream qualification boundaries.

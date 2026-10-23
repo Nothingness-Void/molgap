@@ -1,0 +1,148 @@
+{
+  "audit_basis": {
+    "bound_mechanical_acceptance": "MECHANICALLY_VERIFIED",
+    "bound_native_qualification": "VERIFIED",
+    "development_rows": [
+      100000,
+      150000
+    ],
+    "evidence": [
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\source_verification.json",
+        "sha256": "d870c12f8504a932adce61ca6ca2413d8ffe48a4f16bbad3be5b066b6b0c2059"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\metadata\\experiment\\input_resolution.json",
+        "sha256": "8aaac5e0827310fcfbe04aac200356080042bd4cdd7ec623330034686e6957b4"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\outputs\\msgnorm_fixed\\runtime_provenance.json",
+        "sha256": "74da48691fefd095ec99dde032ac672442efdd271ccb2ef2c16aed6c10319ec7"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\outputs\\msgnorm_fixed\\output_manifest.json",
+        "sha256": "363623402cb91d6fc54c36f30c62dbf7c16caf001258e54bf54f42f7df74c6e1"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\outputs\\msgnorm_fixed\\canonical_trace.json",
+        "sha256": "75083d80f9d4c53c60755d4346d69178b4c524ccb92a800a912711eca519dd97"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-message-norm-100k\\outputs\\msgnorm_fixed\\development_predictions.pt",
+        "sha256": "c232cacb2fa812a1d06201ce2fd8daec299fca4a3d4e1b3a76fc5622c15e30f4"
+      }
+    ],
+    "limitations": "No OS-wide access audit; untouched finding is scoped to the verified frozen workload and mounted fixed-role inputs.",
+    "method": "Source-reviewed observed execution and artifact audit; not inferred solely from permissions.",
+    "source_commit": "9dd7145cada76b5d68c308c95bc0f022f7ad781a",
+    "source_loader": "src/molgap/family_training_runner.py:219-235",
+    "train_rows": [
+      0,
+      100000
+    ]
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "msgnorm_fixed",
+    "arm_identity": "cf5a62e7aae7c1cdb66d4079d51e1cf8781fa20399bea1430c10fbc7023b2cd2",
+    "experiment_id": "pcqm_k1_message_norm_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-message-norm-100k-s42",
+    "package_identity": "08d420753b6b2b2fe4fddf16b27722b802453dabcb04dad120b73e03f5dab8fa",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-k1-msgnorm-100k-s42",
+    "source_archive_sha256": "0c80e1a86b5fcf7433481376e63a27d46746e518d56abbccf2a053cffee6bc5d",
+    "source_commit": "9dd7145cada76b5d68c308c95bc0f022f7ad781a",
+    "spec_identity": "11f6ccd57047b915f3fc7435cf49925352370759101e09e3a08bdd532e01aa47",
+    "training_recipe_sha256": "0e2cdae73fde557442cdd4fdf8138d257ee2607421eae2d55b98e0fcc1ea05fd"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "training_membership"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_norm_100k/terminal_acceptance/msgnorm_fixed_role_audit.json",
+      "role_event_id": "role-msgnorm_fixed-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed"
+    }
+  ]
+}

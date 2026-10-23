@@ -1,0 +1,121 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-message-norm-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned-planned",
+        "cost-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned-0",
+        "cost-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_learned/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-message-norm-100k-s42:msgnorm_learned:downstream"
+      ],
+      "source_commit": "9dd7145cada76b5d68c308c95bc0f022f7ad781a",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/strict_qualification/deec2ee2134ba29d072e/msgnorm_learned/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_message_norm_100k/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-message-norm-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_message_norm_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/rml_decision_snapshots/3fa9e218f658c4d4bb99b3af5c44e60da4b493406a7eac3d5f6de59a136b3510.json",
+    "snapshot_sha256": "3fa9e218f658c4d4bb99b3af5c44e60da4b493406a7eac3d5f6de59a136b3510",
+    "state_timestamp": "2026-10-23T12:33:40.736260+00:00"
+  },
+  "family_id": "pcqm-k1-message-norm-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "No useful development improvement",
+      "Learned scale changes optimization without improving selected generalization",
+      "A single paired seed cannot resolve training stochasticity"
+    ],
+    "changed_mechanism": "learned-relative-message-amplitude",
+    "cheapest_falsifier": "Same-job fixed versus learned MsgNorm100K/40-pass pair with selected Live predictions and complete traces",
+    "decision_changed_if_negative": "Close learned-amplitude contrast under the frozen material gate without changing model recommendation",
+    "decision_changed_if_positive": "Nominate further review only after at least3meV improvement and upper95percent paired-row interval below zero; no adoption or scale-up",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+    "observed_deficiency": "Prior node/graph normalization comparisons do not measure relative neighbor-message amplitude; usefulness remains untested",
+    "related_closed_family_ids": [
+      "K1 original-LR Post-LN160",
+      "K1 Post-Node versus Post-Graph RMS160",
+      "K1 Post-Node RMS versus AdaRMS160"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does learning relative neighbor-message amplitude improve K1 over fixed-unit-scale MsgNorm?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed-deec2ee2134ba29d072e",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/msgnorm_learned/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_learned/recipe.json",
+      "experiments/pcqm_k1_message_norm_100k/baseline_data_declaration.json",
+      "experiments/pcqm_k1_message_norm_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_message_norm_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "msgnorm_learned",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-message-norm-100k-s42",
+      "reference_arm_id": "msgnorm_fixed",
+      "reference_trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+      "reference_trajectory_ref": "experiments/pcqm_k1_message_norm_100k/runs/pcqm-k1-message-norm-100k-s42/prospective/msgnorm_fixed/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "11f6ccd57047b915f3fc7435cf49925352370759101e09e3a08bdd532e01aa47"
+    },
+    "source_commit": "9dd7145cada76b5d68c308c95bc0f022f7ad781a",
+    "source_config_identity": "66cf58990780e56b78f7967f5a6d52574135d171a5ddd1df9d6174d5b9a95743"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+}

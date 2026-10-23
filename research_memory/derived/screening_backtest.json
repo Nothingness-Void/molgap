@@ -420,9 +420,22 @@
         "TB-gptrans-t-100k-v4-reference",
         "TC-gptrans-flow-ablation-100k-s42"
       ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"unspecified_in_contract\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development\",\"lr_schedule_identity\":\"unspecified_in_contract\",\"optimizer_identity\":\"unspecified_in_contract\",\"precision_identity\":\"unspecified_in_contract\",\"row_split_identity\":\"unspecified_in_contract\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"best_development_metric\",\"target_transform_identity\":\"unspecified_in_contract\",\"terminal_endpoint_identity\":\"endpoint_31240\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed\"}",
+      "run_ids": [
+        "pcqm-k1-message-norm-100k-s42:msgnorm_fixed:downstream",
+        "pcqm-k1-message-norm-100k-s42:msgnorm_learned:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+        "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      ]
     }
   ],
   "included_trajectory_ids": [
+    "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+    "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
     "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -444,5 +457,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 50
+  "trace_count": 52
 }

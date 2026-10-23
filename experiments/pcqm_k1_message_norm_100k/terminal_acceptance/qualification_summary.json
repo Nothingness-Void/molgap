@@ -1,0 +1,38 @@
+{
+  "returncode": 0,
+  "seconds": 11.719472199998563,
+  "status": "MECHANICALLY_VERIFIED",
+  "mode": "CANONICAL_READ_ONLY",
+  "executed": false,
+  "strict": "VERIFIED",
+  "files_before": 112,
+  "files_after": 112,
+  "all_experiment_bytes_unchanged": true,
+  "arms": {
+    "msgnorm_fixed": {
+      "native": "VERIFIED",
+      "replay": {
+        "exclusions": [],
+        "status": "VERIFIED"
+      },
+      "comparison": {
+        "reason": "accepted_reference_arm",
+        "status": "NOT_APPLICABLE"
+      },
+      "blockers": []
+    },
+    "msgnorm_learned": {
+      "native": "VERIFIED",
+      "replay": {
+        "exclusions": [],
+        "status": "VERIFIED"
+      },
+      "comparison": {
+        "blockers": [],
+        "comparison_class": "STRICT_CAUSAL",
+        "status": "VERIFIED"
+      },
+      "blockers": []
+    }
+  }
+}
