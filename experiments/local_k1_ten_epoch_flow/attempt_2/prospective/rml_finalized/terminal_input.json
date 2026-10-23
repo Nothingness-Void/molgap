@@ -1,0 +1,36 @@
+{
+  "acceptance_ref": "experiments/local_k1_ten_epoch_flow/attempt_2/failed_preflight_closure/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/local_k1_ten_epoch_flow/attempt_2/failed_preflight_closure/acceptance.json": "d52914bdb0585c929abfb059086e3c49c13359e97b91a90f7b11f194456af4ba",
+    "experiments/local_k1_ten_epoch_flow/attempt_2/failed_preflight_closure/decision.md": "caf52263e8bbb4cb59390283487c7ffa80ea2d1c6a90fa1392b357ee06cf2513",
+    "experiments/local_k1_ten_epoch_flow/recipe.json": "915e82005828078cfbdab329327e1cbe7c981145b7f9a84f1e8e346e2ae41361",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/attempt_2/execution/invocations/2026-10-23T05-51-11.345360%2B00-00-pid49708.json": "554fec44a73f29d7bb2e974e50e2fd68589f574e35625c28ced5bbaed7b8aec7",
+    "external:///D:/molgap-data/local_flow_2048_v1/manifest.json": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+  },
+  "finalized_at": "2026-10-23T06:28:14.784667+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "a13e57f9a973f3caac8a31e8c6e630e3181299fb67680035537fbea15196def7"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "83895b34b27413e009a3f93eda9323f1cc3183ffc1f99ee951fb67063c459d26"
+      }
+    ],
+    "roles": []
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "local-k1-channel-gain-10ep-20261023-r2:channel_gain:downstream",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r2"
+}

@@ -1,0 +1,29 @@
+{
+  "format": "acceptance-v1",
+  "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+  "run_id": "local-k1-channel-gain-10ep-20261023:channel_gain:downstream",
+  "outcome": {
+    "artifact_status": "failure_receipt_retained",
+    "budget_decision": "closed",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "preflight_failed",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "final": true,
+    "decision_ref": "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/decision.md",
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "reopen_conditions": []
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "reason": "Frozen recipe source identity mismatch before native training."
+}

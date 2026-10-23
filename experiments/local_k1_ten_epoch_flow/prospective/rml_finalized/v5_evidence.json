@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/decision.md",
+      "name": "decision.md",
+      "sha256": "419fa34f6bcf1284d868bcb6c99dac5ba44368810617e8727400fad6f4e6c0e5"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "f7450a7e767e9055be96629d98ea410730ca52f932764d9410bd51a0a0df680a"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/execution/invocations/2026-10-23T05-45-34.756872%2B00-00-pid9844.json",
+      "name": "2026-10-23T05-45-34.756872+00-00-pid9844.json",
+      "sha256": "d0db4a70dcd69132161797ab605549d08e95cc6fa9f8965d5b7b788929f117da"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "external:///D:/molgap-data/local_flow_2048_v1/manifest.json",
+      "name": "manifest.json",
+      "sha256": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/local_k1_ten_epoch_flow/recipe.json",
+      "name": "recipe.json",
+      "sha256": "915e82005828078cfbdab329327e1cbe7c981145b7f9a84f1e8e346e2ae41361"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/local_k1_ten_epoch_flow/recipe.json",
+  "metrics": {},
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained failure invocation, frozen input identity and source failure boundary; no scientific reinterpretation"
+  },
+  "outcome": {
+    "artifact_status": "failure_receipt_retained",
+    "budget_decision": "closed",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "preflight_failed",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "not_applicable"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "local preflight failure; no formal training",
+  "track": "B"
+}

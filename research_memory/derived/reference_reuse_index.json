@@ -300,6 +300,44 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local preflight failure; no formal training",
+      "source_envelope": "experiments/local_k1_ten_epoch_flow/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "local preflight failure; no formal training",
+      "source_envelope": "experiments/local_k1_ten_epoch_flow/attempt_2/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified",
         "machine_local_verified_nonportable"
       ],

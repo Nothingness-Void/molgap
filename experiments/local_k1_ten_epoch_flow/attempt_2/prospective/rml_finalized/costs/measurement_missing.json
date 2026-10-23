@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-e30403d002182e1dbf457d89",
+  "evidence_ref": "experiments/local_k1_ten_epoch_flow/attempt_2/prospective/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "local-k1-channel-gain-10ep-20261023-r2:channel_gain:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023-r2"
+}

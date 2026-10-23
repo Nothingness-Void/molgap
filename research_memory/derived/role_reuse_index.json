@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 613,
+  "ambiguous_historical_role_record_count": 619,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -490,6 +490,48 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -7165,6 +7207,8 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
@@ -7292,6 +7336,8 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-failed-TB-local-k1-channel-gain-flow-20261023",
+      "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",

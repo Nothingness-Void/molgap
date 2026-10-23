@@ -1,0 +1,36 @@
+{
+  "acceptance_ref": "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/acceptance.json": "f7450a7e767e9055be96629d98ea410730ca52f932764d9410bd51a0a0df680a",
+    "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/decision.md": "419fa34f6bcf1284d868bcb6c99dac5ba44368810617e8727400fad6f4e6c0e5",
+    "experiments/local_k1_ten_epoch_flow/recipe.json": "915e82005828078cfbdab329327e1cbe7c981145b7f9a84f1e8e346e2ae41361",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/execution/invocations/2026-10-23T05-45-34.756872%2B00-00-pid9844.json": "d0db4a70dcd69132161797ab605549d08e95cc6fa9f8965d5b7b788929f117da",
+    "external:///D:/molgap-data/local_flow_2048_v1/manifest.json": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+  },
+  "finalized_at": "2026-10-23T06:27:40.559368+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "35a7185cea7ecbdd1ac14e3cfa71c4d0fa9350fe18617675f37f3cab9d071c25"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "8da5586d51a102949f16864b9a12919c346410e8523610fc2933cd87bc999b50"
+      }
+    ],
+    "roles": []
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "local-k1-channel-gain-10ep-20261023:channel_gain:downstream",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023"
+}

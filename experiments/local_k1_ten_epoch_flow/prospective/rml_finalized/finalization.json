@@ -1,0 +1,30 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-0ab4bc10e16c3c7458aa6360d8d4ba1b6927c49b7ee95fc9b4ebed1c2fa2c98a",
+  "finalized_at": "2026-10-23T06:27:40.559368+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/acceptance.json": "f7450a7e767e9055be96629d98ea410730ca52f932764d9410bd51a0a0df680a",
+    "experiments/local_k1_ten_epoch_flow/failed_preflight_closure/decision.md": "419fa34f6bcf1284d868bcb6c99dac5ba44368810617e8727400fad6f4e6c0e5",
+    "experiments/local_k1_ten_epoch_flow/recipe.json": "915e82005828078cfbdab329327e1cbe7c981145b7f9a84f1e8e346e2ae41361",
+    "external:///D:/molgap-artifacts/local-k1-ten-epoch-flow/execution/invocations/2026-10-23T05-45-34.756872%2B00-00-pid9844.json": "d0db4a70dcd69132161797ab605549d08e95cc6fa9f8965d5b7b788929f117da",
+    "external:///D:/molgap-data/local_flow_2048_v1/manifest.json": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "prospective_ref": "experiments/local_k1_ten_epoch_flow/prospective/trajectory.json",
+  "prospective_sha256": "6217dc3839a5a5e9fc419fdfdee548584689ce7db3e04b0bfdb77d77994b4bcc",
+  "published_hashes": {
+    "costs/measurement_missing.json": "8af289eab172cfabeb363aa21219bc54258401a06f7c11c1c802f99a22158e5a",
+    "terminal_input.json": "b87adf314eb4d23b9525d1ed9f3b58f17f0f574f2f93000c27efcb77f650dbde",
+    "trajectory.json": "35a7185cea7ecbdd1ac14e3cfa71c4d0fa9350fe18617675f37f3cab9d071c25",
+    "v5_evidence.json": "8da5586d51a102949f16864b9a12919c346410e8523610fc2933cd87bc999b50"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/local_k1_ten_epoch_flow/prospective/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "0ab4bc10e16c3c7458aa6360d8d4ba1b6927c49b7ee95fc9b4ebed1c2fa2c98a",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-local-k1-channel-gain-flow-20261023"
+}

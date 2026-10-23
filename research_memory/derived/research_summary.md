@@ -1,14 +1,14 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 126
+- Validated V5 evidence: 128
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 3
+- ACTIVE: 1
 - CLOSED: 19
 - INCONCLUSIVE: 23
-- INFRASTRUCTURE_ONLY: 8
+- INFRASTRUCTURE_ONLY: 10
 - NEGATIVE_UNDER_CONTRACT: 31
 - NO_TRAIN: 48
 - POSITIVE_UNDER_CONTRACT: 8
@@ -20,7 +20,7 @@
 
 ## Roles
 - Explicit role events: 389
-- Coarse historical role records: 613
+- Coarse historical role records: 619
 - Repeatedly selected role identities: 22
 
 ## Cost
@@ -264,15 +264,15 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
-- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
-- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
-- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=15, not_applicable=0
 - unknown-before-authorized-device-query cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 254
+- Measurement-missing cost events: 256
 - Cost-event coverage: 129/140 trajectories; incomplete native measurement=105
 
 ## Screening Backtest
@@ -286,4 +286,4 @@
 - [WARN] incomplete_native_cost_measurement: 105
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 47
-- [WARN] trajectory_without_v5_evidence: 14
+- [WARN] trajectory_without_v5_evidence: 12

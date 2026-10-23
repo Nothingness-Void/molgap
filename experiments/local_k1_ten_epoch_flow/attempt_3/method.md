@@ -56,3 +56,10 @@ Source/evidence history through `cd8b4b76` is preserved in pushed archive
 `0e98722b`. The temporary managed C: checkout was archived and removed after
 desktop retained these canonical records. The Addon is not adopted into desktop;
 its frozen source package and all training artifacts remain in D: custody.
+
+The two earlier preflight-only attempts were subsequently closed through the
+existing finalizer as INFRASTRUCTURE_ONLY, with their actual failure invocations
+and unchanged prospective inputs. Both handoffs are VALID/COMPLETE; the replay
+pool delta is empty. Their closure records live in each attempt's
+`failed_preflight_closure/` and `prospective/rml_finalized/`. No formal training
+trace or measured allocation cost was invented for these failed preflights.
