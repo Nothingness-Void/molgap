@@ -50,6 +50,15 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    ("k1_batch_renorm", "1"): AddonContract(
+        "neural_atom_k1", "k1-local-normalization", "molgap.k1_batch_renorm",
+        (AddonConfigField("correct_shift", "integer", minimum=0, maximum=1),
+         AddonConfigField("warmup_updates", "integer", value=3905, minimum=0),
+         AddonConfigField("ramp_updates", "integer", value=3905, minimum=1),
+         AddonConfigField("r_max", value=3.0), AddonConfigField("d_max", value=5.0)),
+        family_versions=("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_batch_renorm:apply_addon",
+    ),
     **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",
