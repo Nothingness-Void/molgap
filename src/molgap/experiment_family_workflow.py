@@ -1248,8 +1248,9 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
     if not execute:
         return {"status": "MECHANICALLY_VERIFIED", "arms": reports, "executed": False}
     results = execute_terminal_descriptor(repo_root, spec, descriptor)
-    return {"status": "COMPLETE" if all(r.get("pipeline_status") == "COMPLETE" for r in results) else "INCOMPLETE",
-            "arms": reports, "results": results, "executed": True}
+    complete = all(r.get("pipeline_status") == "COMPLETE" for r in results)
+    return {"status": "COMPLETE" if complete else "INCOMPLETE",
+            "arms": reports, "results": results, "executed": True, "closure_complete": complete}
 
 
 def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: dict, *,
