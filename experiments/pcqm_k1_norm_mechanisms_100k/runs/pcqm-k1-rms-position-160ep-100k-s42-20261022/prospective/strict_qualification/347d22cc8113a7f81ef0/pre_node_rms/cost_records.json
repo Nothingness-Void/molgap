@@ -1,0 +1,37 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms-v1",
+      "evidence_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_acceptance_20261023/provenance_costs.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 6.042036990259167
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "measurement_scope": "One dedicated native T4 assigned to this arm for the physical entry window, including setup/qualification/idle. v2 is failed preflight, no new formal updates.",
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022:pre_node_rms:downstream",
+      "schema": "molgap-cost-event-v1",
+      "source_entry_path": "D:\\molgap-artifacts\\reconciliation\\k1-norm-mechanisms-100k\\position\\experiment\\allocation_entry_observation.json",
+      "source_entry_sha256": "9e7bf7a8f54de5524eca84b6f04bf3095edac86428adc57ab89d6da237773c0c",
+      "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+    }
+  ]
+}

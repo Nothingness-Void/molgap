@@ -11,19 +11,26 @@ at0.138508950eV,1.645meV better than Post-Node RMS, below the3meV material
 nomination gate. Post-Node/Graph serialization references close CLOSED;
 Pre-Node/AdaRMS close NEGATIVE_UNDER_CONTRACT. No model adoption or scale-up.
 
-All four independent RML terminal pipelines completed; derived rebuild and
-check --frozen passed. Strict replay readiness remains excluded: strict V5
-comparison readiness is not established, native scratch tensor proofs were
-not independently reverified locally, and large artifacts have explicit
-machine-local custody. [Acceptance method](terminal_acceptance_20261023/method.md)
-and [records](terminal_acceptance_20261023/locations.json) retain the details.
+All four independent RML terminal pipelines completed. Subsequent exact-proof
+qualification reverified native scratch and actual-resume tensors on CPU,
+established the two declared same-run package comparisons, and appended four
+qualification revisions without changing original scientific decisions,
+metrics, prospective bytes or initial finalizations. The canonical replay pool
+now includes exactly these four additional traces, with no prior entry removed.
+[Qualification method and evidence](qualification_20261023.md) owns the revision
+and final canonical-check pointers. Large artifacts retain explicit local
+custody; replay qualification is not portability, promotion or READY authority.
+[Initial acceptance method](terminal_acceptance_20261023/method.md) and
+[records](terminal_acceptance_20261023/locations.json) retain the earlier scope.
 The subsequent portable repository check failed on inherited historical local
 payload claims absent from this checkout; no missing artifact from this
 experiment was reported. No historical catalog was downloaded to clear it.
 
-Total observed physical entry allocation is26.048143 native T4-device hours,
-including failed scope/gain versions1/2; no inherited ledger double-counting.
-Only142.80MiB of new final scope/gain outputs/metadata was retrieved toD:.
+Total observed physical entry allocation is26.04814252059333 native T4-device
+hours, including0.234801349725 T4-device hours for failed version2; every
+physical job/version is counted once, without inherited-ledger double-counting.
+The initial acceptance retrieved142.80MiB of final scope/gain artifacts; later
+qualification retrieved only exact referenced native proof tensors toD:.
 Owner branch retains accepted evidence; long-lived integration/archive routing
 is pending reviewed custody. No monitor or successor has been created.
 
