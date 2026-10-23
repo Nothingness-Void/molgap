@@ -33,6 +33,25 @@ def _json(path: Path) -> dict:
     return _json_bytes(path.read_bytes())
 
 
+def _verify_canonical_output(root, spec, context, package, observed, output_dir):
+    """Bind accepted evidence to this observed run without relying on artifact names."""
+    from .research_memory.paths import bound_artifact_path
+    expected = {"schema": "molgap-same-run-observation-v1", "spec_identity": spec.identity,
+        "logical_run_id": context.logical_run_id, "platform_name": context.platform,
+        "platform_run_reference": context.run_reference,
+        "attempt_id": terminal_attempt_id(spec, context.arm_id, context.platform_version),
+        "source_commit": context.source_commit, "source_package_sha256": context.source_archive_sha256}
+    if package.get("same_run_observation") != expected:
+        raise ValueError("Canonical qualification differs from the observed run context")
+    artifacts = {(bound_artifact_path(root, item["locator"]).resolve(), item["sha256"])
+                 for item in package["evidence"]["artifacts"]}
+    for item in observed["artifacts"].values():
+        path = (bound_artifact_path(root, item["locator"]) if "locator" in item
+                else _artifact_path(Path(output_dir), item["path"]))
+        if (path.resolve(), item["sha256"]) not in artifacts:
+            raise ValueError("Canonical qualification differs from the observed output artifacts")
+
+
 def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports):
     """Translate verified family artifacts into the existing V5 comparison forms.
 
@@ -92,19 +111,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         comparisons, reused = {}, {}
         for arm_id, package in packages.items():
             ctx = resolved["contexts"][arm_id]
-            observation = package.get("same_run_observation", {})
-            expected = {"schema": "molgap-same-run-observation-v1", "spec_identity": resolved["spec"].identity,
-                "logical_run_id": ctx.logical_run_id, "platform_name": ctx.platform,
-                "platform_run_reference": ctx.run_reference,
-                "attempt_id": terminal_attempt_id(resolved["spec"], arm_id, ctx.platform_version),
-                "source_commit": ctx.source_commit, "source_package_sha256": ctx.source_archive_sha256}
-            if observation != expected:
-                raise ValueError("Canonical qualification differs from the observed run context")
+            _verify_canonical_output(root, resolved["spec"], ctx, package,
+                reports[arm_id]["observed"], resolved["outputs"][arm_id]["output_dir"])
             _bindings(root, package["artifact_hashes"])
-            artifacts = {item["name"]: item["sha256"] for item in package["evidence"]["artifacts"]}
-            for name, item in reports[arm_id]["observed"]["artifacts"].items():
-                if artifacts.get("training_trace" if name == "trace" else name) != item["sha256"]:
-                    raise ValueError("Canonical qualification differs from the observed output artifacts")
             if arm_id != reference_id:
                 pointer = package.get("comparison_readiness_ref")
                 if pointer not in package["artifact_hashes"]:

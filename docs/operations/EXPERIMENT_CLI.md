@@ -99,12 +99,18 @@ The following commands can use these same four options instead of `--spec`:
 | `inspect-output` | `--arm`, `--artifact-root`, `--expectations`; use the existing output inspector |
 | `accept-workflow` | `--retrieved-root` or retained retrieval maps; optional `--outputs`/`--locations` overrides; mechanically inspect without a terminal package |
 | `build-resume` | `--arm`, `--source-output`, `--output`; retain original incomplete-run identity |
-| `prepare-resume` | `--resume-plan`, `--output`; use existing checkpoint/resume preparation |
+| `prepare-resume` | `--resume-plan`, `--output`; prepare local continuation inputs only |
 
 Run lookup resolves the original package, identity, receipt and preparation;
 do not override them with explicit package/receipt arguments. Output paths and
 descriptors retain their existing local safety and evidence boundaries. Missing
 or uncertain journal/receipt identity requires platform reconciliation.
+
+Successful resume staging reports `RESUME_INPUTS_PREPARED`. It retains the original
+source, configuration, prospective records and producer context; it does not
+register a new attempt or produce a fresh-release submission. The owning
+continuation adapter must bind the physical successor identity. The fresh-release
+Kaggle submitter rejects these inputs before authentication or publication.
 
 The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
 can reuse the original journal when separately authorized to execute. The
@@ -144,6 +150,15 @@ publishing new comparison/terminal records. This mode also skips default
 diagnosis; an explicitly supplied `--diagnose` still runs the saved-artifact
 analysis. The original mechanical reports are reused inside the invocation.
 
+Already finalized runs need no hand-written locations or repeated outcome/role
+inputs: `accept_run.py --strict --execute --profile <profile> --run-id <run>
+--attempt-id <attempt>` discovers their canonical tips and verified retrieval
+maps. A continuation still selects its exact `--continuation-receipt`. Accepted
+artifact locators/hashes and observations must match the retrieved run. Fully
+qualified tips are rechecked read-only even with `--execute`; mechanical-only
+tips reuse their accepted facts for qualification. Explicit `--diagnose` remains
+available; strict rechecks do not run it by default.
+
 Run-ID acceptance also accepts `--strict`. It inventories and rechecks retained
 native proof tensors on CPU, then translates the frozen same-run pair into the
 existing target-transform asset, reference bundle and comparison-readiness
@@ -171,6 +186,9 @@ and `--strict --resume-prepared`. It retains a separate version-specific output
 mapping and selectively downloads only manifest/native-certificate dependencies.
 Download verifies exact-version bytes, not tensor semantics; strict acceptance
 performs native qualification. No all-output or all-checkpoint download occurs.
+Retained certificate/provenance metadata is checked against the output manifest
+before reuse. Complete retained dependencies cause zero downloads; the retrieval
+report distinguishes retained files from actual network transfers.
 
 With reviewed `--locations`, or explicit decision/role inputs for staging,
 strict acceptance validates native/comparison evidence before invoking the
@@ -311,8 +329,8 @@ $incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
 - `validate-spec` returns the canonical declaration and its identity. This is
   structural validation, not verification of declared source/data/state bytes.
 - `plan-prospective` is available only for Spec v2. It publishes one canonical
-  RML trajectory per arm from frozen per-arm plan inputs, then rebuilds derived
-  indexes. A nonzero partial result can retain published trajectories; reconcile
+  RML trajectory per arm from frozen per-arm plan inputs, leaving derived
+  index rebuilding to the existing RML CLI. A nonzero partial result can retain published trajectories; reconcile
   them before retrying. It is not a submission or training authorization. See
   the [planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
 - `package` calls `build_experiment_source_package` with exactly the supplied
@@ -410,17 +428,15 @@ cannot release any of those operations.
 
 ## Local Verification
 
-Use the configured project virtual environment with this checkout's `src` on
-`PYTHONPATH`, not system Python. CLI tests mock construction/preflight workers;
-local package fixtures use temporary local Git repositories. They do not submit
-remotely or train models.
+Use the selected checkout and its project environment. The
+[verification conventions](INFRASTRUCTURE_VERIFICATION.md) own fixed workflow
+selection, test-growth limits and the distinction between fixtures, actual
+candidate packages and native qualification. Select affected scopes together:
 
 ```powershell
-$env:PYTHONPATH = (Resolve-Path src).Path
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
-.\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
+$profilePath = 'D:/molgap-machine-profile.json' # Use this host's profile.
+.\.venv\Scripts\python.exe platforms/local/run.py --profile $profilePath --module molgap.local_testing -- --scope prepare --scope accept -- -q
 ```
 
-Workflow and training-adapter fixtures are synthetic; they establish schema and
-mechanical behavior only. No GPU training qualification is claimed. Local tests
-do not confer formal training authorization.
+Use direct pytest only for affected lower-level invariants outside those journeys.
+Successful local checks confer no training or submission authority.
