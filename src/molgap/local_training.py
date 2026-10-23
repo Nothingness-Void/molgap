@@ -156,7 +156,7 @@ def main(argv=None):
         "run_id": result.get("logical_run_id"),
         "report": str(path.absolute()), "scientific_acceptance": "NOT_EVALUATED"}
     print(json.dumps(visible, ensure_ascii=False, indent=2))
-    return 1 if result["status"] in {"BLOCKED", "INCOMPLETE"} else 0
+    return 1 if result["status"] in {"BLOCKED", "INCOMPLETE", "STAGED_DRAFT"} else 0
 
 
 def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
@@ -205,7 +205,8 @@ def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
         staged = stage_verified_terminal_packages(None, root, declaration["logical_run_id"], "v1",
             resolved=resolved, reports=mechanical["arms"], outcome=outcome,
             decision_ref=decision_ref, role_audit=role_audit)
-        result = {**mechanical, "terminal_staging": staged}
+        result = {**mechanical, "terminal_staging": staged,
+                  "status": staged["status"], "blockers": staged.get("blockers", [])}
         if execute:
             if staged.get("blockers"):
                 result.update(status="BLOCKED", executed=False)
