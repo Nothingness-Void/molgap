@@ -1,0 +1,14 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-msgnorm-100k-s42",
+  "kernel_id": 140391249,
+  "version": 1,
+  "entry_sha256": "cadb65528354f47a8d5b2b91e7a88deb96e2020341f3d0d971efe4e4cb66ac20",
+  "entry_bytes_equal": true,
+  "private": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/k1-msgnorm-100k-src",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "observed_at": "2026-10-23T12:39:56.802904+00:00"
+}

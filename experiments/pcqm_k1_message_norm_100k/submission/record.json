@@ -1,0 +1,36 @@
+{
+  "logical_run_id": "pcqm-k1-message-norm-100k-s42",
+  "attempt_id": "v1",
+  "kernel": "nothingnessvoid/molgap-k1-msgnorm-100k-s42",
+  "kernel_id": 140391249,
+  "version": 1,
+  "source_commit": "9dd7145cada76b5d68c308c95bc0f022f7ad781a",
+  "package_identity": "08d420753b6b2b2fe4fddf16b27722b802453dabcb04dad120b73e03f5dab8fa",
+  "owner_branch": "codex/exp/k1-message-norm-100k",
+  "scheduler_observation": {
+    "kernel": "nothingnessvoid/molgap-k1-msgnorm-100k-s42",
+    "version": 1,
+    "status": "KernelWorkerStatus.RUNNING",
+    "failure_message": "",
+    "observed_at": "2026-10-23T12:39:57.101155+00:00"
+  },
+  "formal_training_observed": false,
+  "native_qualification": "not_yet_observed",
+  "replay_status": "pending_terminal_evidence",
+  "durable_run_root": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-norm-100k-s42\\v1",
+  "publication_reconciliation": "First immediate source status unknown; independent read confirmed private version1 READY; same journal continued without another dataset create or kernel retry.",
+  "bindings": {
+    "source_upload_verification.json": {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-norm-100k-s42\\v1\\operations\\source_upload_verification.json",
+      "sha256": "a66a2b5b7fbb96f00682c61ba318c8746bd36645690483dda42eadafea9af204"
+    },
+    "remote_release_report.json": {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-norm-100k-s42\\v1\\operations\\remote_release_report.json",
+      "sha256": "aa321eb7552e08c2c3084777e304ac67edbd6e79d70396292c4ee51a5685cc71"
+    },
+    "submission_state.json": {
+      "path": "D:\\molgap-artifacts\\runs\\pcqm-k1-message-norm-100k-s42\\v1\\operations\\submission_state.json",
+      "sha256": "745fac3fd0ddb970e75cd3a2c9f007b3d7a9bebc83b8267b3289701db9f16e67"
+    }
+  }
+}

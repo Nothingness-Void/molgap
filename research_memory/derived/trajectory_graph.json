@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed:A001",
+      "target": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_fixed/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned:A001",
+      "target": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_learned/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms:A001",
       "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/post_node_rms/recipe.json",
       "type": "action_produced_evidence"
@@ -1333,6 +1343,26 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
+      "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "type": "prior_evidence"
     },
     {
@@ -3252,6 +3282,14 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "type": "trajectory"
     },
     {

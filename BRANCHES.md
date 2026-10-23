@@ -12,6 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+K1 fixed-versus-learned MsgNorm100K is owned by
+`codex/exp/k1-message-norm-100k`, checkout
+`D:/molgap-worktrees/k1-message-norm-100k`.
+[Protocol and status](experiments/pcqm_k1_message_norm_100k/README.md) own
+Kaggle1 job140391249/version1. No scientific adoption or terminal replay claim.
+
 K1 graph-wise message DropPath100K is owned by
 `codex/exp/k1-message-droppath-100k`, checkout
 `D:/molgap-worktrees/k1-message-droppath-100k`.
