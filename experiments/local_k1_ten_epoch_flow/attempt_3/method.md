@@ -1,6 +1,6 @@
 # Observed local lifecycle exercise
 
-One existing K1 channel-gain model ran on the RTX 5060 using the original
+One K1 model with the new channel-gain Addon ran on the RTX 5060 using the original
 initialization and a frozen ten-pass horizon. Source commit `18174aef` owns the
 FP32 target-statistic correction and local driver. Attempt 3 uses mean
 5.1759748458862305 and sample standard deviation 1.237425446510315; the owner
@@ -8,7 +8,8 @@ verified these against decoded training targets. Earlier recipes/prospectives
 were retained. The original and attempt 2 both failed before formal training
 (recipe identity, then FP32 statistics); neither has an invented training trace.
 
-`platforms/local/train.py` performed preparation/native qualification, five
+The existing `prepare_family_training` owner froze the package and prospective
+records. `platforms/local/train.py` then performed native qualification, five
 training passes, cooperative pause at step 80, a new-process native retained-state
 qualification, the remaining five passes, mechanical acceptance, terminal
 staging and RML closure. PID 1256 acknowledged 80 updates / 10240 presentations;
