@@ -612,6 +612,112 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     return certificate
 
 
+def inspect_retained_native_qualification(directory, *, recipe_path, provenance, context,
+        resume_checkpoint_sha256=None, resume_directory=None):
+    """Inventory retained proof dependencies and reuse the native CPU recheck.
+
+    Missing byte sizes stay unknown. This reads safe CPU tensors only; it does
+    not run a model, recreate a probe or confer scientific/replay acceptance.
+    """
+    from .experiment_launch import _safe_local
+    from .research_memory.paths import repo_local_path
+    # The selected source owner parses its own frozen recipe extensions.
+    from .family_training_runner import read_recipe as read_owned_recipe
+    root = Path(directory).absolute()
+    _safe_local(root)
+    record, recipe = read_owned_recipe(recipe_path)
+    _check_context(provenance.get("context"), context)
+    if (normalized_file_sha(Path(recipe_path)) != context.training_recipe_sha256
+            or provenance.get("recipe_identity") != recipe.identity):
+        raise ValueError("Native qualification recipe differs from the frozen run")
+    certificate = _json(_artifact_path(root, "runtime_certificate.json"))
+    dependencies = {}
+
+    def add(name, digest=None, *, base=root):
+        # Keep the same local-path boundary for absent and present artifacts.
+        if (type(name) is not str or "\\" in name or ":" in name
+                or any(part in {"", ".", ".."} for part in name.split("/"))):
+            raise ValueError("Invalid native proof dependency path")
+        path = repo_local_path(base, name)
+        _safe_local(path)
+        key = str(path)
+        if key in dependencies and dependencies[key]["sha256"] not in {None, digest}:
+            raise ValueError("Conflicting native proof dependency hashes")
+        if digest is not None:
+            _digest(digest, "native proof dependency.sha256")
+        present = path.is_file()
+        dependencies[key] = {"path": name, "local_path": str(path), "sha256": digest,
+            "present": present, "size_bytes": path.stat().st_size if present else None}
+        return dependencies[key]
+
+    def walk(value):
+        if isinstance(value, dict):
+            if "path" in value and "sha256" in value:
+                add(value["path"], value["sha256"])
+            for child in value.values():
+                walk(child)
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+
+    add("runtime_certificate.json")
+    add("runtime_provenance.json")
+    walk(certificate)
+    if "resource_qualification_sha256" in certificate:
+        add("resource_qualification.json", certificate["resource_qualification_sha256"])
+    profile = certificate.get("profile_proof")
+    if isinstance(profile, dict) and "report" in profile:
+        report = add(profile["report"], profile.get("sha256"))
+        add("profile_qualification/trace.json", _json(Path(report["local_path"])).get("trace_sha256")
+            if report["present"] else None)
+    resume_root = Path(resume_directory or root).absolute()
+    actual = None
+    if resume_checkpoint_sha256 is not None:
+        _digest(resume_checkpoint_sha256, "resume checkpoint.sha256")
+        resume_cert = add("actual_resume_certificate.json", base=resume_root)
+        if resume_cert["present"]:
+            actual = _json(Path(resume_cert["local_path"]))
+            for proof in actual.get("proofs", []):
+                add(proof["path"], proof["sha256"], base=resume_root)
+    rows = [dependencies[name] for name in sorted(dependencies)]
+    missing = [item["path"] for item in rows if not item["present"]]
+    result = {"status": "BLOCKED", "dependencies": rows, "missing": missing,
+        "known_local_bytes": sum(item["size_bytes"] or 0 for item in rows),
+        "missing_size_bytes": None if missing else 0,
+        "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+    # Verify every available hash even while another dependency is missing.
+    for item in rows:
+        if item["present"] and item["sha256"] is not None:
+            if normalized_file_sha(Path(item["local_path"])) != item["sha256"]:
+                raise ValueError("Native proof artifact hash mismatch: " + item["path"])
+    if missing:
+        result["blockers"] = ["native_proof_dependencies_missing"]
+        return result
+    _verify_preflight(root, recipe, provenance, profiling_required=record.get("profiling") is not None)
+    if resume_checkpoint_sha256 is not None:
+        import torch
+        from .family_training_session import validate_session_resume
+        if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0
+                or actual.get("checkpoint_sha256") != resume_checkpoint_sha256
+                or type(actual.get("resume_step")) is not int
+                or [proof.get("path") for proof in actual.get("proofs", [])]
+                    != ["actual-resume-a.pt", "actual-resume-b.pt"]):
+            raise ValueError("Actual retained-state native resume qualification differs")
+        fingerprints = []
+        for proof in actual["proofs"]:
+            state = torch.load(_artifact_path(resume_root, proof["path"]), map_location="cpu", weights_only=True)
+            progress = validate_session_resume(recipe, state)
+            fingerprint = _state_fingerprint(state)
+            if (progress.optimizer_step != actual["resume_step"] + 1
+                    or len(state["rng_state"].get("cuda", [])) != 1
+                    or fingerprint != proof.get("state_fingerprint")):
+                raise ValueError("Actual native resume proof state/cursor differs")
+            fingerprints.append(fingerprint)
+        if len(set(fingerprints)) != 1:
+            raise ValueError("Actual native resume next-step repeats differ")
+    return {**result, "status": "VERIFIED", "blockers": []}
+
+
 def _begin_cost_interval(root, context, *, had_checkpoint):
     """An unfinished invocation or unbound ledger makes cumulative cost unknown."""
     path, marker = root / "allocation_costs.json", root / "invocation_cost_state.json"
@@ -663,9 +769,11 @@ def _resume_trajectory(recipe, context, options):
         "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
 
 
-def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **options):
+def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_after_step=None, **options):
     """Same callable for every scale/platform; same-budget resume only."""
     import torch
+    if pause_after_step is not None and (type(pause_after_step) is not int or pause_after_step < 1):
+        raise ValueError("pause_after_step must be a positive absolute optimizer step")
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
     from .family_training_outputs import SessionOutputs
@@ -706,6 +814,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
                         actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
                     raise ValueError("Actual retained-state native resume qualification is missing or changed")
             session.load_state_dict(outputs.retained_state())
+        if pause_after_step is not None and not session.progress.optimizer_step < pause_after_step <= recipe.optimizer_steps:
+            raise ValueError("Step pause must follow the retained cursor within the frozen training horizon")
         outputs.logger.start(session.progress)
     except Exception:
         session.close()
@@ -719,8 +829,13 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         segment = mode_policy(recipe.family, recipe.mode).segment_passes
         bounded = segment is not None
         stop_pass = ((session.progress.pass_index // segment + 1) * segment) if bounded else None
-        should_pause = lambda: pause[0] or (
-            bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
+        acknowledged_step = [session.progress.optimizer_step]
+        def should_pause():
+            # The loop calls this after every acknowledged update, before its
+            # checkpoint callback refreshes session.progress.
+            acknowledged_step[0] += 1
+            return pause[0] or (pause_after_step is not None and acknowledged_step[0] >= pause_after_step) or (
+                bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
         if "profiling" in record:
             from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
             profile_root = root / "profiles" / f"step_{session.progress.optimizer_step}_{time.time_ns()}"
