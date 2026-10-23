@@ -59,8 +59,9 @@ def _source_digest(records: dict[str, list[tuple[Path, dict[str, Any]]]], root: 
     return digest.hexdigest()
 
 
-def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
-    validated = validate_repository_records(repo_root)
+def compile_research_memory(repo_root: str | Path, *, verify_comparison_artifacts: bool = True) -> dict[str, bytes]:
+    validated = validate_repository_records(repo_root,
+        verify_comparison_artifacts=verify_comparison_artifacts)
     root: Path = validated["root"]
     records = validated["records"]
 
@@ -316,7 +317,7 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 
 def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
-    payloads = compile_research_memory(root)
+    payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = repo_local_path(root, "research_memory/derived")
     output_root.mkdir(parents=True, exist_ok=True)
     for name, payload in sorted(payloads.items()):

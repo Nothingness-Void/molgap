@@ -136,6 +136,35 @@ apply the directory mode's descriptive thresholds as frozen scientific gates.
 `accept-workflow` Run mode adds `--diagnose`, `--stage-terminal`, `--outcome`,
 `--decision-ref`, `--role-audit`, and `--output`. The thin
 `platforms/local/accept_run.py` selects diagnosis and staging automatically.
+Explicit reviewed `--locations` skips default staging; an explicit
+`--stage-terminal` still requests the stager.
+With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or
+outcome, the entry checks existing canonical qualification tips without
+publishing new comparison/terminal records. This mode also skips default
+diagnosis; an explicitly supplied `--diagnose` still runs the saved-artifact
+analysis. The original mechanical reports are reused inside the invocation.
+
+Run-ID acceptance also accepts `--strict`. It inventories and rechecks retained
+native proof tensors on CPU, then translates the frozen same-run pair into the
+existing target-transform asset, reference bundle and comparison-readiness
+records. Only the selected evaluation weight source requires its development
+curve: tracking EMA with explicit Live selection still retains EMA identity.
+Unknown weight sources keep the conservative EMA trace requirement.
+`--strict-inputs` optionally supplies per-arm `native_root` and
+`comparison_readiness_ref` locations. Missing proof files report their pinned
+hashes and unknown missing-byte sizes; they cannot establish qualification.
+Use `--continuation-receipt` for an independently bound physical successor and
+reviewed continuation terminal inputs. `--physical-runs` supplies the existing
+hash-bound physical-allocation observations, including failed attempts, counted
+once per physical job/version.
+
+With reviewed `--locations`, or explicit decision/role inputs for staging,
+strict acceptance validates native/comparison evidence before invoking the
+original terminal finalizer. Without `--execute`, canonical replay remains
+`PENDING_FINALIZATION`; after execution the canonical replay pool is checked.
+Strict qualification does not change scientific decisions or establish
+`READY_FOR_DESKTOP`. Existing immutable finalizations require an explicitly
+bound qualification revision; acceptance never overwrites their history.
 Staging creates existing terminal-package metadata, not canonical finalization;
 explicit `--execute` delegates reviewed inputs to the existing terminal owner.
 `--role-audit` accepts an observed audit with exact `context`, protected

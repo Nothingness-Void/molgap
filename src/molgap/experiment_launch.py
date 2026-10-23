@@ -264,12 +264,12 @@ def build_launch_receipt(spec: ExperimentSpec, package_dir: Path, *,
 
 
 def reconcile_platform_response(spec: ExperimentSpec, package_dir: Path, response_json: str,
-                                *, expected_package_identity: str) -> dict:
+                                *, expected_package_identity: str, _verification=None) -> dict:
     """Reconcile one explicit canonical observation locally, never retry submission."""
     if response_json is None:
         raise TypeError("Reconciliation requires an explicit response")
     return build_launch_receipt(spec, package_dir, expected_package_identity=expected_package_identity,
-                                response_json=response_json)
+                                response_json=response_json, _verification=_verification)
 
 
 def _validated_receipt(raw, spec, package_dir, expected_package_identity, *, _verification=None):

@@ -156,6 +156,46 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     assert {entry["reference_id"] for entry in entries} == {reference["ev_id"]}
 
 
+def test_eligible_continuation_must_match_current_pair_attempt(tmp_path, monkeypatch):
+    setup_mock_repo(tmp_path)
+    reference = create_candidate_arm(
+        tmp_path, "continued_ref", "T-continued-ref", "run-continued-ref", "ev-continued-ref"
+    )
+    candidate = create_candidate_arm(
+        tmp_path, "continued_candidate", "T-continued-candidate", "run-continued-candidate",
+        "ev-continued-candidate",
+    )
+    ref_trace = _prepare_arm(tmp_path, reference, reference, "reference")
+    candidate_trace = _prepare_arm(tmp_path, candidate, reference, "candidate")
+    assert close_terminal_arm(
+        tmp_path, reference["traj_path"], reference["terminal_path"], trace=ref_trace
+    )["pipeline_status"] == "COMPLETE"
+    comparison_ref, digest = _strict_comparison(tmp_path, reference, candidate)
+
+    terminal = json.loads(candidate["terminal_path"].read_bytes())
+    terminal["comparison_readiness_ref"] = comparison_ref
+    terminal["artifact_hashes"][comparison_ref] = digest
+    terminal["same_run_observation"]["attempt_id"] = "one-job-v3"
+    continuation_pointer = "experiments/continued_candidate/continuation.json"
+    continuation_path = tmp_path / continuation_pointer
+    _put(continuation_path, {"synthetic": "the test substitutes only proof validation"})
+    terminal["continuation_ref"] = continuation_pointer
+    terminal["artifact_hashes"][continuation_pointer] = file_digest(continuation_path)
+    _put(candidate["terminal_path"], terminal)
+
+    # The strict proof validator is an external boundary here. Its origin is
+    # the reference's v1 attempt, while the candidate claims current v3.
+    import importlib
+    finalize_module = importlib.import_module("molgap.research_memory.finalize")
+    monkeypatch.setattr(finalize_module, "validate_terminal_continuation",
+        lambda _root, _terminal, **_kwargs: json.loads(
+            reference["terminal_path"].read_bytes())["same_run_observation"])
+    with pytest.raises(ValueError, match="different observed platform jobs"):
+        close_terminal_arm(
+            tmp_path, candidate["traj_path"], candidate["terminal_path"], trace=candidate_trace
+        )
+
+
 def test_replay_eligible_same_run_reference_rejects_a_cross_job_continuation(tmp_path):
     setup_mock_repo(tmp_path)
     reference = create_candidate_arm(

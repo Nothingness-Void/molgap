@@ -239,6 +239,8 @@ def test_dangling_evidence_is_rejected_with_source_and_field(tmp_path, monkeypat
     )
     with pytest.raises(ValueError, match=r"trajectory\.json:result\.evidence_ids.*ev-missing"):
         validate_repository_records(tmp_path)
+    with pytest.raises(ValueError, match=r"trajectory\.json:result\.evidence_ids.*ev-missing"):
+        validate_repository_records(tmp_path, verify_comparison_artifacts=False)
 
 
 def test_portability_check_detects_uncommitted_pointer_closure(tmp_path):

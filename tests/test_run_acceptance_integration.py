@@ -132,6 +132,34 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert {arm: item["trace"] for arm, item in explicit["locations"].items()} == {
         arm: item["trace"] for arm, item in locations.items()}
 
+    # A reconciled successor changes the physical attempt without rewriting
+    # the frozen v7 prospective or weakening its source/package binding.
+    from copy import deepcopy
+    from molgap.experiment_launch import build_launch_receipt
+    successor_response = deepcopy(case.receipt["response"])
+    successor_response["platform_version"]["value"] = "8"
+    for run in successor_response["physical_runs"]["value"]:
+        run["platform_version"]["value"] = "8"
+        run["run_identity"] = "kernel1/version8"
+    successor_receipt = build_launch_receipt(case.spec, case.package,
+        expected_package_identity=case.manifest["package_identity"],
+        response_json=canonical_json(successor_response))
+    successor_path = case.paths.artifact_root / "continuation_receipt.json"
+    successor_path.write_bytes(canonical_json(successor_receipt).encode())
+    with pytest.raises(ValueError, match="context/source/arm mismatch: platform_version"):
+        resolve_run_acceptance_inputs(*case.original,
+            retrieved_root=case.paths.artifact_root / "retrieved", continuation_receipt=successor_path)
+    resumed = resolve_run_acceptance_inputs(*case.original,
+        retrieved_root=case.paths.artifact_root / "continued", continuation_receipt=successor_path)
+    assert {context.platform_version for context in resumed["contexts"].values()} == {"8"}
+    assert resumed["options"]["receipt_path"] == successor_path
+    assert {arm: where["trajectory"] for arm, where in resumed["locations"].items()} == {
+        arm: where["trajectory"] for arm, where in explicit["locations"].items()}
+    with pytest.raises(ValueError, match="later attempt"):
+        resolve_run_acceptance_inputs(*case.original,
+            retrieved_root=case.paths.artifact_root / "retrieved",
+            continuation_receipt=case.run / "operations/launch_receipt.json")
+
     result = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         diagnose=True, stage_terminal=True)
     assert result["status"] == "MECHANICALLY_VERIFIED", result

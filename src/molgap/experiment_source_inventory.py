@@ -200,7 +200,7 @@ SHARED_SOURCE_FILES = _all_registered_sources()
 # Host credentials, controllers and retrieval never belong to worker payloads.
 _HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transport.py",
     "src/molgap/kaggle_credentials.py",
-    "src/molgap/local_runtime.py", "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
+    "src/molgap/local_runtime.py", "src/molgap/local_training.py", "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
     "src/molgap/artifact_inventory.py", "src/molgap/experiment_run.py", "src/molgap/experiment_timings.py",
     "src/molgap/kaggle_output_retrieval.py", "src/molgap/kaggle_submission.py",
     "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py",
@@ -237,6 +237,7 @@ _TEST_SUPPORT_FILES = frozenset({
     "pyproject.toml",
     "platforms/local/run.py",
     "platforms/local/accept_run.py",
+    "platforms/local/train.py",
     "platforms/kaggle/run_experiment.py",
     "platforms/kaggle/submit_workflow.py",
     "platforms/kaggle/retrieve_family_outputs.py",

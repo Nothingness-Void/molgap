@@ -12,16 +12,16 @@ from .experiment_family_artifacts import artifact_adapter
 from .experiment_family_workflow import (EXPECTED, EXPECTED_FAMILY, RunContext,
                                          TargetIdentityBinding, _check_context, _json)
 from .experiment_launch import _safe_local, canonical_json, publish_immutable_bytes
-from .experiment_package import read_packaged_text
+from .experiment_package import _PackageVerification, read_packaged_text
 from .experiment_spec import _canonical, _digest, _unique_object
 from .research_memory.paths import artifact_locator, bound_artifact_path, repo_local_path
 from .research_memory.trace import file_digest
 from .screen_policy import canonical_fingerprint
 
 
-def _packaged_json(package, name, digest=None):
+def _packaged_json(package, name, digest=None, *, _verification=None):
     validate_relative_path(name)
-    raw = read_packaged_text(package, name)
+    raw = read_packaged_text(package, name, _verification=_verification)
     if digest is not None and hashlib.sha256(raw.encode()).hexdigest() != digest:
         raise ValueError("Packaged acceptance input differs from its frozen pin")
     value = json.loads(raw, object_pairs_hook=_unique_object)
@@ -54,12 +54,14 @@ def _mapping_path(run, arm_id):
 
 
 def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
-                         destination, manifest_sha256):
+                         destination, manifest_sha256, _verification=None):
     """Record only successfully retained manifest-bound bytes; never copy outputs."""
     from .experiment_run import _original_run
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=_verification)
     expected = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
-        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id)
+        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id,
+        _verification=_verification)
     if context != expected:
         raise ValueError("Retrieval mapping differs from the original launch context")
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
@@ -87,14 +89,40 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
 
 
 def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
-                                  retrieved_root=None, supplied=None, locations=None):
+                                  retrieved_root=None, supplied=None, locations=None,
+                                  continuation_receipt=None):
     """Resolve all arms from frozen plans, explicit paths or verified retrieval maps."""
     from .experiment_run import _original_run
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    verification = _PackageVerification()
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=verification)
     run, package = prepared.parent, options["package_dir"]
+    if continuation_receipt is not None:
+        from .experiment_launch import read_launch_receipt
+        original_receipt = options["receipt_path"]
+        successor = Path(continuation_receipt)
+        successor = successor if successor.is_absolute() else Path(repo_root) / successor
+        _safe_local(successor.absolute())
+        # A successor may change only the physical attempt. Package verification
+        # and both reconciled receipts retain the original scientific identity.
+        read_launch_receipt(successor.absolute(), spec, package,
+            expected_package_identity=options["expected_package_identity"], _verification=verification)
+        for arm in spec.to_dict()["arms"]:
+            before = RunContext.from_launch(spec, original_receipt, package,
+                expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+                _verification=verification)
+            after = RunContext.from_launch(spec, successor, package,
+                expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+                _verification=verification)
+            if ({k: v for k, v in before.to_dict().items() if k != "platform_version"}
+                    != {k: v for k, v in after.to_dict().items() if k != "platform_version"}
+                    or not after.platform_version.isdecimal() or not before.platform_version.isdecimal()
+                    or int(after.platform_version) <= int(before.platform_version)):
+                raise ValueError("Continuation receipt must bind a later attempt of the original frozen run")
+        options["receipt_path"] = successor.absolute()
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
     workflow = _json(run / "inputs/workflow_plan.json")
-    acceptance = _packaged_json(package, workflow["acceptance_plan"])
+    acceptance = _packaged_json(package, workflow["acceptance_plan"], _verification=verification)
     if (acceptance.get("format") not in {"molgap-family-acceptance-plan-v1",
                                          "molgap-family-same-run-acceptance-plan-v1"}
             or acceptance.get("spec_identity") != spec.identity):
@@ -122,13 +150,15 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
         contract = entry["contract"]
         if set(contract) != {"path", "sha256"} or contract["sha256"] != arm["training"]["recipe"]["sha256"]:
             raise ValueError("Frozen acceptance recipe differs from the Spec")
-        recipe = _packaged_json(package, contract["path"], contract["sha256"])
+        recipe = _packaged_json(package, contract["path"], contract["sha256"], _verification=verification)
         if recipe.get("acceptance_requirements") != expected:
             raise ValueError("Frozen acceptance expectations differ from the recipe")
         context = RunContext.from_launch(spec, options["receipt_path"], package,
-            expected_package_identity=options["expected_package_identity"], arm_id=arm_id)
+            expected_package_identity=options["expected_package_identity"], arm_id=arm_id,
+            _verification=verification)
         contexts[arm_id] = context
-        proposal = _packaged_json(package, binding["plan_spec_ref"], binding["plan_spec_sha256"])
+        proposal = _packaged_json(package, binding["plan_spec_ref"], binding["plan_spec_sha256"],
+                                  _verification=verification)
         trajectory = proposal["trajectory"]
         if (trajectory.get("trajectory_id") != binding["trajectory_id"]
                 or trajectory.get("state_at_start", {}).get("source_config_identity") != canonical_fingerprint(arm)):
@@ -186,7 +216,7 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
             _safe_local(trace)
             raw_traces[arm_id] = str(trace)
     target_identity = TargetIdentityBinding.from_frozen_package(
-        spec, Path(repo_root), package, workflow["acceptance_plan"])
+        spec, Path(repo_root), package, workflow["acceptance_plan"], _verification=verification)
     return {"spec": spec, "options": options, "prepared": prepared,
             "outputs": outputs, "locations": resolved_locations, "contexts": contexts,
             "acceptance_plan": acceptance, "run_directory": run, "raw_traces": raw_traces,

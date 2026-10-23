@@ -121,9 +121,17 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
-def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+def read_packaged_text(package_dir: Path, relative_path: str, *, _verification=None) -> str:
     """Read a reviewed source member from an already verified immutable package."""
     name = _name(relative_path)
+    if _verification is not None:
+        # Re-read all six files before using the exact-content memo. A path or
+        # unchanged stat record is never authority for cached archive members.
+        _read_verified_package(package_dir, _verification=_verification)
+        try:
+            return _verification._members[name].decode("utf-8")
+        except KeyError as exc:
+            raise ValueError("Missing verified packaged text source") from exc
     with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
         members = [member for member in archive.getmembers() if member.name == name]
         if len(members) != 1 or not members[0].isfile() or members[0].linkname:
@@ -133,10 +141,28 @@ def read_packaged_text(package_dir: Path, relative_path: str) -> str:
             raise ValueError("Missing packaged text source")
         with stream:
             return stream.read().decode("utf-8")
+
+
+def initial_state_paths(initial_states: dict) -> dict[str, str]:
+    """Bind byte-identical initializations to one deterministic staged file."""
+    from .experiment_launch import _safe_local
+    from .experiment_spec import _identifier
+    from .training_reproducibility import sha256_file
+    representatives, result = {}, {}
+    for arm_id in sorted(initial_states):
+        _identifier(arm_id, "arm_id")
+        path = Path(initial_states[arm_id]).absolute()
+        _safe_local(path)
+        digest = sha256_file(path)
+        result[arm_id] = representatives.setdefault(digest, f"initial_states/{arm_id}.pt")
+    return result
+
+
 def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict, *,
-                        _verification=None) -> Path:
+                        initial_paths=None, _verification=None) -> Path:
     """Common immutable worker inputs; no platform metadata or submission."""
     from .experiment_launch import _safe_local, publish_immutable_bytes
+    from .experiment_launch_config import _relative
     from .experiment_spec import _identifier
     package_dir, destination = Path(package_dir).absolute(), Path(destination).absolute()
     raw, _ = _read_verified_package(package_dir, _verification=_verification)
@@ -145,11 +171,18 @@ def stage_source_inputs(package_dir: Path, destination: Path, initial_states: di
     for name in sorted(SIDECARS):
         target = "source_payload.bin" if name == "source.tar.gz" else name
         publish_immutable_bytes(destination / target, raw[name])
+    paths = initial_state_paths(initial_states) if initial_paths is None else initial_paths
+    if set(paths) != set(initial_states):
+        raise ValueError("Staged initialization paths must cover exactly the supplied arms")
     for arm_id, path in initial_states.items():
         _identifier(arm_id, "arm_id")
         path = Path(path).absolute()
         _safe_local(path)
-        publish_immutable_bytes(destination / "initial_states" / (arm_id + ".pt"), path.read_bytes())
+        relative = _relative(paths[arm_id], f"initial_paths[{arm_id}]")
+        if not relative.startswith("initial_states/"):
+            raise ValueError("Staged initialization must stay in initial_states")
+        # Publishing a shared path again also rejects conflicting arm bytes.
+        publish_immutable_bytes(destination / relative, path.read_bytes())
     return destination
 
 
@@ -364,13 +397,16 @@ class _PackageVerification:
     def __init__(self):
         self._fingerprint = None
         self._manifest = None
+        self._members = {}
 
     def verify(self, raw, repo_root=None):
         fingerprint = tuple((name, _sha(raw[name])) for name in sorted(SIDECARS))
         if repo_root is not None or fingerprint != self._fingerprint:
-            manifest = _verify_package_snapshot(raw, repo_root)
+            members = {}
+            manifest = _verify_package_snapshot(raw, repo_root, _members=members)
             self._fingerprint = fingerprint
             self._manifest = _json_bytes(manifest)
+            self._members = members
         return _load(self._manifest)
 
 
@@ -397,7 +433,7 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
     return _read_verified_package(package_dir, repo_root, _verification=_verification)[1]
 
 
-def _verify_package_snapshot(raw, repo_root=None):
+def _verify_package_snapshot(raw, repo_root=None, *, _members=None):
     """Validate the exact bytes read by the package owner, never reopen the archive."""
     manifest = _load(raw["package_manifest.json"])
     if type(manifest) is not dict or raw["package_manifest.json"] != _json_bytes(manifest):
@@ -457,6 +493,8 @@ def _verify_package_snapshot(raw, repo_root=None):
                     raise ValueError("Derived JSON must be bounded and canonical")
             if name == config_name:
                 config_payload = payload
+            if _members is not None:
+                _members[name] = payload
             seen.add(name)
     if seen != set(entries):
         raise ValueError("Archive member set differs from inventory")

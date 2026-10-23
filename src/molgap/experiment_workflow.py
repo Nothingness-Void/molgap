@@ -218,6 +218,10 @@ def _arm_inputs(repo_root, arms, bindings):
         jobs.append({"arm_id": arm_id, "device": arm["device"], "recipe": arm["recipe"],
                      "initial_state": f"initial_states/{arm_id}.pt",
                      "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    from .experiment_package import initial_state_paths
+    paths = initial_state_paths(initial_states)
+    for job in jobs:
+        job["initial_state"] = paths[job["arm_id"]]
     return jobs, recipes, initial_states
 
 
@@ -251,9 +255,10 @@ def prepare_family_training(spec, repo_root, plan, output):
     output.mkdir(parents=True)
     package = output / "package"
     manifest = build_experiment_source_package(spec, repo_root, source_files, package)
-    staged = stage_source_inputs(package, output / "inputs", initial_states)
+    staged = stage_source_inputs(package, output / "inputs", initial_states,
+        initial_paths={job["arm_id"]: job["initial_state"] for job in jobs})
     release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
-        recipe_files=recipes, initial_states={arm: staged / "initial_states" / (arm + ".pt") for arm in initial_states},
+        recipe_files=recipes, initial_states={job["arm_id"]: staged / job["initial_state"] for job in jobs},
         required_modules=sorted({module for job in validated for module in job["required_modules"]}
             | {"molgap.experiment_training_worker", "molgap.family_training_outputs"}), input_root=staged)
     _atomic(output / "release_report.json", release)
@@ -374,11 +379,11 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None, _content_verification=None, _verification=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     from .experiment_package import _PackageVerification
 
-    verification = _PackageVerification()
+    verification = _verification if _verification is not None else _PackageVerification()
     started = perf_counter()
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
     _safe_local(output)
@@ -403,12 +408,12 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
               "prospective_published": False, "publication_intent": False,
               "timings": {"input_validation_seconds": perf_counter() - started}}
     phase_started = perf_counter()
+    failure = None
     def record(stage, result):
         nonlocal phase_started
         report["timings"][stage + "_seconds"] = perf_counter() - phase_started
         phase_started = perf_counter()
         report["stages"].append({"stage": stage, "result": result})
-        _atomic(output / "workflow_report.json", report)
     try:
         record("family_recipes", observations["family_recipes"])
         record("prospective_check", observations["prospective"])
@@ -428,7 +433,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         staged, kernel = stage["input_root"], stage["kernel_dir"]
         release = check_release_inputs(spec, package,
             expected_package_identity=manifest["package_identity"], recipe_files=recipes,
-            initial_states={a: staged / "initial_states" / (a + ".pt") for a in initial_states},
+            initial_states={job["arm_id"]: staged / job["initial_state"] for job in stage["launch"]["jobs"]},
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
             input_root=staged, dataset_manifests=inputs["dataset_manifests"] or None,
@@ -466,37 +471,54 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
                                    "Remote all-arm runtime qualification is still mandatory."])
         return report
     except Exception as exc:
+        failure = exc
         status = "ERROR_BEFORE_PUBLICATION" if report["prospective_published"] is False else "ERROR_REQUIRES_RECONCILIATION"
         report.update(status=status, error=str(exc))
         raise
+    except BaseException as exc:
+        failure = exc
+        raise
     finally:
         report["timings"]["total_local_preparation_seconds"] = perf_counter() - started
-        _atomic(output / "workflow_report.json", report)
+        try:
+            # Only the pre-publication intent and terminal state are recovery
+            # boundaries. Intermediate stages stay in this one final report.
+            _atomic(output / "workflow_report.json", report)
+        except OSError as report_error:
+            if failure is None:
+                raise
+            # A secondary storage fault must not replace the causal failure.
+            # The last durable intent (or missing report) still blocks retry.
+            failure.workflow_report_error = report_error
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                     expected_package_identity, locations=None, execute=False,
-                    target_identities=None, execution_root=None):
+                    target_identities=None, execution_root=None, _verification=None,
+                    _reports=None, _retention=None):
     """Inspect every arm independently of optional scientific closure inputs."""
     if execute and locations is None:
         raise ValueError("Terminal execution requires explicit reviewed terminal locations")
     from .experiment_family_workflow import inspect_terminal_output
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
-        package_dir=package_dir, expected_package_identity=expected_package_identity)
+        package_dir=package_dir, expected_package_identity=expected_package_identity,
+        **({"_verification": _verification} if _verification is not None else {}))
     if target_identities is not None:
         if type(target_identities) is not dict or set(target_identities) - set(outputs):
             raise ValueError("Target identity bindings name unknown workflow arms")
         for arm_id, binding in target_identities.items():
             outputs[arm_id]["target_identity"] = binding
-    retention = None
-    if execution_root is not None:
+    retention = _retention
+    if execution_root is not None and retention is None:
         from .experiment_retention import validate_execution_retention
         context = next(iter(outputs.values()))["context"]
         retention = validate_execution_retention(Path(execution_root), spec,
             package_identity=expected_package_identity, source_commit=context.source_commit,
             source_archive_sha256=context.source_archive_sha256)
-    reports = {arm_id: inspect_terminal_output(item)
-               for arm_id, item in outputs.items()}
+    # The run adapter can share its inspection inside one synchronous closure.
+    # Descriptor translation and finalization still verify the retained bytes.
+    reports = (_reports if _reports is not None else
+               {arm_id: inspect_terminal_output(item) for arm_id, item in outputs.items()})
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}
     if locations is None:

@@ -66,14 +66,21 @@ def discover_records(repo_root: str | Path) -> DiscoveredRecords:
                     collect(child, suffix_only=True)
             elif name == "handoff":
                 collect(path / "READY_FOR_DESKTOP.json", suffix_only=True)
-    from .finalize import verified_receipt
+    from .finalize import current_finalized_directory, verified_receipt
 
+    inventory = {kind: set(candidates) for kind, candidates in paths.items()}
+    checked_owners = set()
     for directory in sorted(finalized):
         receipt = verified_receipt(directory)
+        owner = (repo_local_path(root, receipt["prospective_ref"]).parent
+                 if receipt.get("prospective_ref") else directory.parent)
+        if owner not in checked_owners:
+            current_finalized_directory(root, owner)
+            checked_owners.add(owner)
         for published, original in receipt["replacements"].items():
             old = repo_local_path(root, original)
-            old.relative_to(directory.parent.resolve())
-            for candidates in paths.values():
-                if directory / published in candidates:
+            old.relative_to(owner.resolve())
+            for kind, candidates in paths.items():
+                if directory / published in inventory[kind]:
                     candidates.discard(old)
     return DiscoveredRecords(**{name: tuple(sorted(values)) for name, values in paths.items()})

@@ -92,6 +92,8 @@ def report(entry):
 @pytest.mark.parametrize("failure", [None, RuntimeError("preflight failed"),
                                     subprocess.TimeoutExpired("pip", 30), KeyboardInterrupt()])
 def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
+    from molgap.experiment_allocation import aggregate_physical_allocation_costs
+
     ticks = iter([100.0, 145.0])
     monkeypatch.setattr(entry.time, "perf_counter", lambda: next(ticks))
 
@@ -120,6 +122,58 @@ def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
     assert "idle assigned GPU" in value["scope"]
     assert "not observed" in value["platform_release_scope"]
     assert value["entire_platform_release_seconds"] is None
+
+    # Account retained entry bytes by physical version, independently of arm
+    # copies and inherited narrower Python-runtime ledgers.
+    def bound(name, payload):
+        path = entry.OUTPUT_ROOT / name
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return {"path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+    physical = {"run_identity": "kernel77/version2", "canonical_reference": "owner/question",
+                "platform_version": {"value": "2", "missing_reason": None}, "arm_ids": ["a", "b"]}
+    receipt = {"format": "molgap-experiment-launch-receipt", "binding": {
+        "requested_logical_platform": "kaggle", "spec_identity": "synthetic-spec"},
+        "physical_runs": {"value": [physical]}}
+    execution = {"format": "molgap-kaggle-two-phase-pair-v2", "spec_identity": "synthetic-spec",
+                 "hardware": ["Tesla T4", "Tesla T4"],
+                 "prior_segments": [{"allocated_device_seconds": 999999}]}
+    current = {"platform": "kaggle", "physical_run": physical,
+        "observation": bound("current-entry.json", value),
+        "receipt": bound("current-receipt.json", receipt),
+        "execution_report": bound("execution.json", execution)}
+    prior_physical = {**physical, "run_identity": "kernel77/version1",
+                      "platform_version": {"value": "1", "missing_reason": None}}
+    prior = {**current, "physical_run": prior_physical,
+        "receipt": bound("prior-receipt.json", {**receipt, "physical_runs": {"value": [prior_physical]}}),
+        "observation": bound("prior-entry.json", {**value, "status": "failed",
+            "monotonic_seconds": 9., "allocated_device_seconds": 18.})}
+    summary = aggregate_physical_allocation_costs([prior, current, current])
+    assert summary["duplicates_ignored"] == 1
+    assert [window["status"] for window in summary["windows"]] == ["failed", value["status"]]
+    bucket = summary["cost_ledger"]["totals_by_hardware"]["Tesla T4"]
+    assert bucket["device_hours"]["measured"]["known_total"] == pytest.approx(108 / 3600)
+    assert bucket["device_hours"]["measured"]["known_records"] == 2
+    assert bucket["queue_hours"]["measured"]["known_total"] is None
+    assert bucket["cpu_hours"]["unknown_records"] == 2
+    assert all(window["evidence"] for window in summary["windows"])
+
+    unknown = {**current, "observation": bound("unknown-entry.json", {
+        **value, "observed_gpu_count": None, "allocated_device_seconds": None,
+        "gpu_count_source": None})}
+    missing = aggregate_physical_allocation_costs([unknown])
+    assert missing["windows"][0]["device_hours"] is None
+    unknown_bucket = missing["cost_ledger"]["totals_by_hardware"]["Tesla T4"]["device_hours"]
+    assert unknown_bucket["measured"]["known_total"] is None
+    assert unknown_bucket["unknown_records"] == 1
+
+    conflicting = {**current, "observation": bound("conflicting-entry.json", {
+        **value, "monotonic_seconds": 46., "allocated_device_seconds": 92.})}
+    with pytest.raises(ValueError, match="Conflicting observations"):
+        aggregate_physical_allocation_costs([current, conflicting])
+    Path(current["observation"]["path"]).write_text("{}")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        aggregate_physical_allocation_costs([current])
 
 
 @pytest.mark.parametrize("metadata", [FileNotFoundError(), subprocess.CalledProcessError(1, "nvidia-smi"),

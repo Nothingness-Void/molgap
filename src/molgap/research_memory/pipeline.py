@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .compiler import rebuild_research_memory
-from .finalize import finalize, verified_receipt
+from .finalize import current_finalized_directory, finalize, verified_receipt
 from .paths import repo_local_path
 
 
@@ -65,7 +65,7 @@ def recover_terminal_derived(repo_root: str | Path, trajectories: list[str | Pat
         path = repo_local_path(root, trajectory)
         if not path.is_dir():
             path = path.parent
-        directory = path if path.name == "rml_finalized" else path / "rml_finalized"
+        directory = current_finalized_directory(root, path)
         directory.relative_to(root / "experiments")
         receipt = verified_receipt(directory)
         handoffs.append(terminal_handoff({**receipt, "status": "ALREADY_FINALIZED"}))

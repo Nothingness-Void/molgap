@@ -17,6 +17,52 @@ from test_family_training_session import events, make_session
 from test_experiment_spec import payload
 
 
+
+@pytest.mark.parametrize("damage", ["missing", "changed", "complete"])
+def test_retained_native_dependency_inventory_fails_closed(tmp_path, monkeypatch, damage):
+    """Synthetic bytes test admission to the real verifier, never native truth."""
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from molgap import family_training_runner as owner
+    from molgap.v4_runtime import normalized_source_sha256
+    contract = tmp_path / "training_contract.json"
+    contract.write_bytes(b"{}\r\n")
+    ctx = replace(context("neural_atom_k1", contract), training_recipe_sha256=normalized_source_sha256(contract))
+    provenance = {"context": ctx.to_dict(), "recipe_identity": "frozen-recipe"}
+    (tmp_path / "runtime_provenance.json").write_text(json.dumps(provenance), encoding="utf-8")
+    proof = tmp_path / "repeat-a.pt"
+    proof.write_bytes(b"synthetic dependency, not a tensor qualification")
+    digest = sha256_file(proof)
+    (tmp_path / "runtime_certificate.json").write_text(json.dumps({"proofs": [
+        {"path": proof.name, "sha256": digest}]}), encoding="utf-8")
+    monkeypatch.setattr(owner, "read_recipe", lambda _: ({}, SimpleNamespace(identity="frozen-recipe")))
+    verifier = Mock()
+    monkeypatch.setattr(owner, "_verify_preflight", verifier)
+    if damage == "missing":
+        proof.unlink()
+    elif damage == "changed":
+        proof.write_bytes(b"changed")
+    if damage == "changed":
+        with pytest.raises(ValueError, match="hash mismatch"):
+            owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
+                provenance=provenance, context=ctx)
+        verifier.assert_not_called()
+        return
+    result = owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
+        provenance=provenance, context=ctx)
+    if damage == "missing":
+        assert result["status"] == "BLOCKED"
+        assert result["missing"] == ["repeat-a.pt"]
+        assert result["missing_size_bytes"] is None
+        verifier.assert_not_called()
+    else:
+        assert result["status"] == "VERIFIED"
+        assert result["missing"] == []
+        verifier.assert_called_once()
+    assert result["scientific_acceptance"] == result["replay_readiness"] == "NOT_EVALUATED"
+
+
+
 def contract_file(tmp_path, session):
     data, recipe = session.loaders.data, session.recipe
     source = torch.cat([graph.source_idx for graph in data.development]) if data.development else None

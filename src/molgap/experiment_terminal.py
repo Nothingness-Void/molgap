@@ -293,7 +293,8 @@ def translate_terminal_descriptor(
     root = Path(repo_root).resolve()
     declaration = spec.to_dict()
     expected = {arm["arm_id"]: arm for arm in declaration["arms"]}
-    from .research_memory.paired import pair_binding, validate_pair_observation
+    from .research_memory.paired import (pair_binding, validate_pair_observation,
+                                         validate_terminal_continuation)
     v2 = declaration["schema_version"] == SCHEMA_VERSION_V2
     resolved = []
     paired_observations = []
@@ -376,6 +377,11 @@ def translate_terminal_descriptor(
                 }
                 if observation != expected_observation:
                     raise ValueError("same-run terminal observation differs from descriptor evidence")
+                if terminal.get("continuation_ref") is not None:
+                    validate_terminal_continuation(root, terminal, require_strict=True)
+                # Replay eligibility binds the current physical attempt across
+                # arms. The continuation validator's origin is useful for
+                # custody, but cannot stand in for this observed job identity.
                 paired_observations.append(observation)
         if terminal.get("run_id") != arm["run_id"]:
             raise ValueError("terminal run identity mismatch")
@@ -387,7 +393,25 @@ def translate_terminal_descriptor(
         identity = arm["observed"]["identity"]
         attempt = identity["attempt_id"]["value"]
         if attempt is not None and attempt not in action["attempt_ids"]:
-            raise ValueError("observed attempt identity mismatch with frozen action")
+            # Continuation preserves the prospective action, rather than editing
+            # its original attempt after training. Retained state and an exact
+            # trace prefix must independently bind the physical successor.
+            if terminal.get("continuation_ref") is None:
+                raise ValueError("observed attempt identity mismatch with frozen action")
+            origin = validate_terminal_continuation(root, terminal)
+            continued = validate_pair_observation(terminal.get("same_run_observation"))
+            expected_continued = {
+                "schema": continued["schema"], "spec_identity": spec.identity,
+                "logical_run_id": declaration["logical_run_id"],
+                "platform_name": identity["platform"]["name"],
+                "platform_run_reference": identity["platform"]["run_reference"]["value"],
+                "attempt_id": attempt, "source_commit": identity["source_commit"]["value"],
+                "source_package_sha256": identity["source_package_sha256"]["value"],
+            }
+            if (origin["attempt_id"] not in action["attempt_ids"]
+                    or origin["source_commit"] != action["source_commit"]
+                    or continued != expected_continued):
+                raise ValueError("continuation attempt identity mismatch with frozen action or descriptor")
         commit = identity["source_commit"]["value"]
         if commit is not None and commit != action["source_commit"]:
             raise ValueError("observed source commit identity mismatch with frozen action")
