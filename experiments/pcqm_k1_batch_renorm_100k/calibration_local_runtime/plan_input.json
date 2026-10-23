@@ -1,0 +1,151 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-brn-clean-bn-100k",
+    "question": "Does a common cumulative Clean-BN pass alter the accepted selected-LIVE affine-minus-scale contrast?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "observed_deficiency": "The accepted endpoint contrast does not distinguish BN buffer mediation from learned-function differences.",
+      "supporting_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "pcqm-k1-brn-clean-bn-100k-20261024"
+      ],
+      "alternative_explanations": [
+        "BN running-buffer mediation",
+        "Learned-function differences",
+        "Selected-development and one-seed uncertainty"
+      ],
+      "changed_mechanism": "Reset and cumulatively recompute only BN running buffers on the same16384 ordered training members, dropout off, selected LIVE weights fixed.",
+      "cheapest_falsifier": "Original predictions must reproduce within1e-4eV under the bound runtime; then128 calibration batches/arm and50K development inference within1780s total.",
+      "decision_changed_if_positive": "A disappearing contrast supports buffer mediation as a compatible explanation; close NO_TRAIN without promotion.",
+      "decision_changed_if_negative": "A persistent contrast supports learned-function differences as compatible, without identifying a unique cause; close NO_TRAIN.",
+      "expected_native_cost_ref": "cost-k1-brn-clean-bn-100k-ceiling-attempt002",
+      "related_closed_family_ids": [
+        "k1-brn-clean-bn-100k",
+        "pcqm-k1-batch-renorm-100k"
+      ],
+      "historical_unknowns": [
+        "Training stochasticity",
+        "Independent-role transfer",
+        "Unique causal attribution"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "8dca0462f3632810f62c5efb69e52b3242653e90",
+      "source_config_identity": "8137e4114bd56ada0fafffd71d2376b88adfa9d4a909a92570b96a61e2be1524",
+      "contract_refs": [
+        "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/protocol.md",
+        "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/inputs.json",
+        "experiments/pcqm_k1_batch_renorm_100k/protocol.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "TB-k1-brn-clean-bn-100k-20261024"
+      ],
+      "prior_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+        "pcqm-k1-brn-clean-bn-100k-20261024"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_bn_buffer_calibration",
+        "run_ids": [
+          "local-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002"
+        ],
+        "attempt_ids": [
+          "attempt-002"
+        ],
+        "source_commit": "8dca0462f3632810f62c5efb69e52b3242653e90",
+        "evidence_refs": [
+          "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-brn-clean-bn-100k-ceiling-attempt002"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/decision.md",
+      "next_allowed_actions": [
+        "Bounded local selected-LIVE Clean-BN diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/protocol.md",
+    "comparison_blockers": [
+      "Previously selection-used development cohort",
+      "Single training seed; no independent transfer"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-brn-clean-bn-100k-ceiling-attempt002",
+      "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "action_id": "A001",
+      "run_id": "local-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "attempt_id": "attempt-002",
+      "platform": "local-windows",
+      "hardware": "Existing desktop GPU cuda:0; CPU4 threads",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.49444444444444446,
+          "status": "estimated"
+        },
+        "device_hours": {
+          "value": 0.49444444444444446,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-brn-clean-bn-100k",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/roles.json"
+    ],
+    "source_commit": "8dca0462f3632810f62c5efb69e52b3242653e90",
+    "state_timestamp": "2026-10-23T20:09:29.758406+00:00"
+  }
+}

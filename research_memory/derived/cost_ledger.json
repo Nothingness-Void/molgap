@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 79,
-  "event_count": 300,
+  "estimated_event_count": 81,
+  "event_count": 304,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 268,
-  "not_applicable_event_count": 85,
+  "measurement_missing_event_count": 270,
+  "not_applicable_event_count": 89,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -934,6 +934,54 @@
         "not_applicable_records": 0,
         "unknown_records": 0
       },
+      "Existing desktop GPU cuda:0; CPU4 threads:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:device_hours": {
+        "estimated": {
+          "known_records": 2,
+          "known_total": 0.9944444444444445
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:wall_hours": {
+        "estimated": {
+          "known_records": 2,
+          "known_total": 0.9944444444444445
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "NVIDIA A100-SXM4-40GB:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -988,8 +1036,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.0105078125
+          "known_records": 3,
+          "known_total": 0.08174913194444446
         },
         "not_applicable_records": 0,
         "unknown_records": 2
@@ -1000,8 +1048,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.009792833833331922
+          "known_records": 3,
+          "known_total": 0.0290020464166648
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -1015,7 +1063,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 5,
         "unknown_records": 0
       },
       "NVIDIA GeForce RTX 5060:wall_hours": {
@@ -1024,8 +1072,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.01639823805555352
+          "known_records": 4,
+          "known_total": 0.040341829138887994
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -5011,6 +5059,56 @@
         "unknown_records": 0
       }
     },
+    "Existing desktop GPU cuda:0; CPU4 threads": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 2,
+          "known_total": 0.9944444444444445
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 2,
+          "known_total": 0.9944444444444445
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "Hygon DCU": {
       "cpu_hours": {
         "estimated": {
@@ -5218,8 +5316,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.026848958333333332
+          "known_records": 4,
+          "known_total": 0.09809027777777779
         },
         "not_applicable_records": 0,
         "unknown_records": 7
@@ -5230,8 +5328,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 0.09523754322222128
+          "known_records": 5,
+          "known_total": 0.11444675580555415
         },
         "not_applicable_records": 0,
         "unknown_records": 5
@@ -5245,7 +5343,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 5,
+        "not_applicable_records": 7,
         "unknown_records": 4
       },
       "wall_hours": {
@@ -5254,8 +5352,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 5,
-          "known_total": 0.14597727097222002
+          "known_records": 7,
+          "known_total": 0.16992086205555448
         },
         "not_applicable_records": 0,
         "unknown_records": 3
@@ -13163,6 +13261,202 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "TB-k1-brn-clean-bn-100k-20261024": {
+      "Existing desktop GPU cuda:0; CPU4 threads:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.5
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0033116319444444443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0001566047222210424
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.002501757166666923
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002": {
+      "Existing desktop GPU cuda:0; CPU4 threads:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.49444444444444446
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "Existing desktop GPU cuda:0; CPU4 threads:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.49444444444444446
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0679296875
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.019052607861111837
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.021441833916667544
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "TB-k1-clean-fit-generalization-500k-20261009": {

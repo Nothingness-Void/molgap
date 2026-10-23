@@ -6,9 +6,9 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 144,
-      "with_complete_native_measurement": 24,
-      "with_cost_event": 133,
+      "trajectories_total": 146,
+      "with_complete_native_measurement": 26,
+      "with_cost_event": 135,
       "with_incomplete_native_measurement": 109,
       "without_cost_event": 11
     },
@@ -863,6 +863,56 @@
           "unknown_records": 0
         }
       },
+      "Existing desktop GPU cuda:0; CPU4 threads": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 2,
+            "known_total": 0.9944444444444445
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 2,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 2,
+            "known_total": 0.9944444444444445
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "Hygon DCU": {
         "cpu_hours": {
           "estimated": {
@@ -1070,8 +1120,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 2,
-            "known_total": 0.026848958333333332
+            "known_records": 4,
+            "known_total": 0.09809027777777779
           },
           "not_applicable_records": 0,
           "unknown_records": 7
@@ -1082,8 +1132,8 @@
             "known_total": 0.16666666666666666
           },
           "measured": {
-            "known_records": 3,
-            "known_total": 0.09523754322222128
+            "known_records": 5,
+            "known_total": 0.11444675580555415
           },
           "not_applicable_records": 0,
           "unknown_records": 5
@@ -1097,7 +1147,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 5,
+          "not_applicable_records": 7,
           "unknown_records": 4
         },
         "wall_hours": {
@@ -1106,8 +1156,8 @@
             "known_total": 0.16666666666666666
           },
           "measured": {
-            "known_records": 5,
-            "known_total": 0.14597727097222002
+            "known_records": 7,
+            "known_total": 0.16992086205555448
           },
           "not_applicable_records": 0,
           "unknown_records": 3
@@ -3164,17 +3214,17 @@
         }
       }
     },
-    "unknown_events": 268
+    "unknown_events": 270
   },
   "evidence": {
-    "validated": 132,
+    "validated": 134,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 90,
+      "count": 92,
       "severity": "INFO"
     },
     {
@@ -3204,20 +3254,20 @@
     }
   ],
   "roles": {
-    "coarse_historical": 639,
-    "explicit_events": 413,
-    "repeatedly_selected": 22
+    "coarse_historical": 657,
+    "explicit_events": 420,
+    "repeatedly_selected": 24
   },
-  "source_digest": "b9a0f6b2f4e447299a2a79f9da90c74d0c7cd51c2db00816f2e59bcd097c0bdf",
+  "source_digest": "0daf40a5192dee7a728bc38874cd9d8d7d91cf55c16fd3f1f36f2b8afb7912db",
   "trajectories": {
-    "count": 144,
+    "count": 146,
     "outcomes": {
       "ACTIVE": 1,
       "CLOSED": 21,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 10,
       "NEGATIVE_UNDER_CONTRACT": 33,
-      "NO_TRAIN": 48,
+      "NO_TRAIN": 50,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

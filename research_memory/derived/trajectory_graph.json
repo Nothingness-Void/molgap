@@ -306,6 +306,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002:A001",
+      "target": "experiments/pcqm_k1_batch_renorm_100k/calibration_local_runtime/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-brn-clean-bn-100k-20261024:A001",
+      "target": "experiments/pcqm_k1_batch_renorm_100k/calibration/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-clean-fit-generalization-500k-20261009:A001",
       "target": "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json",
       "type": "action_produced_evidence"
@@ -711,6 +721,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "target": "TB-k1-brn-clean-bn-100k-20261024",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "target": "TB-k1-brn-clean-bn-100k-20261024",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-chemical-aux-component-cache-retry2-20260930",
       "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
       "type": "parent_trajectory"
@@ -1066,6 +1096,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-brn-clean-bn-100k-20261024",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
@@ -1353,6 +1388,26 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "target": "TB-k1-brn-clean-bn-100k-20261024",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "target": "TB-k1-brn-clean-bn-100k-20261024",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -2058,6 +2113,11 @@
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -3145,6 +3205,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-brn-clean-bn-100k-20261024",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-brn-clean-bn-100k-local-runtime-attempt002-20261024",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-clean-fit-generalization-500k-20261009",
       "type": "evidence"
     },
@@ -3610,6 +3678,14 @@
     },
     {
       "id": "TB-k1-bn-mechanism-a100-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-brn-clean-bn-100k-20261024",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
       "type": "trajectory"
     },
     {
