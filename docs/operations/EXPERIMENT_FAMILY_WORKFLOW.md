@@ -130,7 +130,12 @@ truthful blockers rather than this completion hook.
 `output_manifest.json` format is `molgap-family-output-v1`: context, adapter,
 progress, runtime, native costs and five distinct artifact roles: `contract`,
 `trace`, `predictions`, `selected_model`, `resume`. Each has a relative POSIX path
-and exact-byte SHA256. Metadata uses the existing RML `json_bytes` encoder
+and exact-byte SHA256. Shared-session producers also declare `trace_context`,
+the trace's `<trace path>.context.json` identity companion, so selective retrieval
+retains it. Final-only sessions omit `predictions`. Older manifests remain
+readable when their required companion is already retained; adding this role to
+new output does not repair or rewrite a previously frozen manifest.
+Metadata uses the existing RML `json_bytes` encoder
 (UTF-8, sorted keys, finite numbers, LF) and the launch receipt's atomic
 no-overwrite publisher. Identical retry is allowed; conflicting metadata fails.
 Retain new protocol bundles under a `family_outputs/` subdirectory of the

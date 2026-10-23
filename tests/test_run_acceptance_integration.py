@@ -251,7 +251,7 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert snapshot["diagnosis"]["comparisons"] == result["diagnosis"]["comparisons"]
 
 
-def _seal_shared_retention(case, root):
+def _seal_shared_retention(case, root, *, prior_segments=()):
     arm_ids = [arm["arm_id"] for arm in case.spec.to_dict()["arms"]]
     arm_roots = {arm_id: root / arm_id for arm_id in arm_ids}
     clock = [0.0]
@@ -260,6 +260,7 @@ def _seal_shared_retention(case, root):
         hardware=["Tesla T4", "Tesla T4"],
         assignments={arm_id: index for index, arm_id in enumerate(arm_ids)},
         started=0.0,
+        prior_segments=prior_segments,
         clock=lambda: clock[0],
     )
     clock[0] = 1.0
@@ -340,7 +341,18 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         (case.repo / name).unlink()
 
     retention_root = tmp_path / "execution-retention"
-    sealed = _seal_shared_retention(case, retention_root)
+    sealed = _seal_shared_retention(case, retention_root, prior_segments=[{
+        "format": "molgap-allocation-ledger-v1", "spec_identity": case.spec.identity,
+        "status": "running"}])
+    from molgap import experiment_retention as retention
+    validations = []
+    validate_retention = retention.validate_execution_retention
+
+    def count_retention(*args, **kwargs):
+        validations.append(True)
+        return validate_retention(*args, **kwargs)
+
+    monkeypatch.setattr(retention, "validate_execution_retention", count_retention)
     from molgap import experiment_family_workflow as family
     inspected = Counter()
     inspect = family.inspect_terminal_output
@@ -369,6 +381,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert result.get("diagnosis") is None
     assert inspected == Counter({arm_id: 1 for arm_id in arms})
     assert len(translations) == 2
+    assert len(validations) == 1
     assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
     assert result["execution_retention"]["manifest"] == sealed["manifest"]
     assert result["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
@@ -384,8 +397,28 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         staged_terminal = result["terminal_staging"]["paths"][arm_id]["terminal"]
         package = json.loads((case.repo / staged_terminal).read_bytes())
         assert package["artifact_hashes"][recipe] == case.manifest["generated_records"][recipe]
+        allocation_cost, = [event for event in package["costs"] if event["category"] == "other"]
+        assert allocation_cost["hardware"] == "Tesla T4"
+        assert allocation_cost["measurement"]["device_hours"] == {"value": 1 / 3600, "status": "measured"}
+        assert all(allocation_cost["measurement"][field] == {"value": None, "status": "measurement_missing"}
+                   for field in ("wall_hours", "cpu_hours", "queue_hours"))
+        assert allocation_cost["attempt_id"] == declaration["logical_run_id"] + "-v7"
+        objective = json.loads((case.repo / allocation_cost["evidence_ref"]).read_bytes())
+        window = objective["allocation_observation"]
+        assert window["devices"] == [{"device": list(arms).index(arm_id), "hardware": "Tesla T4",
+            "arm_id": arm_id, "allocated_seconds": 1.0}]
+        assert window["prior_segments_recorded"] == 1
+        assert window["prior_unobserved_intervals"] is True
+        assert window["cumulative_costs_evaluated"] is False
+        assert window["event_status"] == "recorded_current_window"
+        expected_allocations = {artifact_locator(case.repo, retention_root / name)
+            for name in ("execution_retention.json", "allocation_ledger.json", arm_id + "/allocation_ledger.json")}
+        assert set(window["artifact_refs"]) == expected_allocations
+        assert expected_allocations <= package["artifact_hashes"].keys()
         finalization = case.repo / where["trajectory"]
         assert finalization.parent.joinpath("rml_finalized", "finalization.json").is_file()
+        finalized_cost = finalization.parent / "rml_finalized/costs" / (allocation_cost["cost_event_id"] + ".json")
+        assert json.loads(finalized_cost.read_bytes()) == allocation_cost
 
     assert len(trajectory_contracts) == len(arms)
     assert all(not (case.repo / name).exists() for name in set(case.generated) - trajectory_contracts)
@@ -398,6 +431,33 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert all(item["finalization_status"] == "ALREADY_FINALIZED" for item in repeated["results"])
     assert inspected == Counter({arm_id: 2 for arm_id in arms})
     assert len(translations) == 4
+    assert len(validations) == 2
+
+    # A native allocated-device observation can overlap this retained window.
+    # Keep both sources, without adding a second device-hour event.
+    one_arm = next(iter(arms))
+    manifest_path = case.paths.artifact_root / "retrieved" / one_arm / "output_manifest.json"
+    original_manifest = manifest_path.read_bytes()
+    try:
+        for status, hardware in (("measured", "Tesla T4"), ("estimated", "Tesla T4"), ("measured", "unknown")):
+            native = json.loads(original_manifest)
+            native["costs"].append({"metric": "device_seconds", "unit": "seconds", "value": 0.5,
+                "status": status, "semantics": "allocated_device", "hardware": hardware})
+            manifest_path.write_bytes(canonical_json(native).encode())
+            draft = accept_run_workflow(*case.original, **{**options, "execute": False})
+            terminal_path = draft["terminal_staging"]["paths"][one_arm]["terminal"]
+            terminal_package = json.loads((case.repo / terminal_path).read_bytes())
+            device_cost, = [event for event in terminal_package["costs"]
+                           if event["measurement"]["device_hours"]["status"] == "measured"]
+            overlaps = status == "measured" and hardware == "Tesla T4"
+            assert device_cost["measurement"]["device_hours"]["value"] == (0.5 if overlaps else 1) / 3600
+            assert device_cost["category"] == ("training" if overlaps else "other")
+            objective = json.loads((case.repo / device_cost["evidence_ref"]).read_bytes())
+            assert objective["allocation_observation"]["event_status"] == (
+                "not_aggregated_existing_device_measurement" if overlaps else "recorded_current_window")
+            assert objective["native_costs"] == native["costs"]
+    finally:
+        manifest_path.write_bytes(original_manifest)
 
     # Same-call reuse must still reject bytes changed after terminal staging.
     from molgap import experiment_terminal_staging as staging
@@ -405,20 +465,36 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     output = case.paths.artifact_root / "retrieved" / next(iter(arms))
     manifest = json.loads((output / "output_manifest.json").read_bytes())
     checkpoint = output / manifest["artifacts"]["selected_model"]["path"]
-    checkpoint_bytes = checkpoint.read_bytes()
+    for path in (checkpoint, retention_root / "allocation_ledger.json", retention_root / "execution_retention.json"):
+        retained_bytes = path.read_bytes()
 
-    def change_after_staging(*args, **kwargs):
-        staged = stage(*args, **kwargs)
-        checkpoint.write_bytes(b"changed after staging")
-        return staged
+        def change_after_staging(*args, **kwargs):
+            staged = stage(*args, **kwargs)
+            path.write_bytes(b"changed after staging")
+            return staged
 
-    monkeypatch.setattr(staging, "stage_verified_terminal_packages", change_after_staging)
-    try:
-        with pytest.raises(ValueError, match="bound artifact SHA mismatch"):
-            accept_run_workflow(*case.original, **options)
-    finally:
-        checkpoint.write_bytes(checkpoint_bytes)
-    assert inspected == Counter({arm_id: 3 for arm_id in arms})
+        monkeypatch.setattr(staging, "stage_verified_terminal_packages", change_after_staging)
+        try:
+            expected_error = "bound artifact SHA mismatch: " + artifact_locator(case.repo, path)
+            if path == checkpoint:
+                # Descriptor translation rejects its bound model bytes before
+                # the per-arm terminal transactions start.
+                with pytest.raises(ValueError, match="bound artifact SHA mismatch") as failed:
+                    accept_run_workflow(*case.original, **options)
+                assert str(failed.value) == expected_error, path
+            else:
+                # Allocation bindings belong to the terminal package. The
+                # finalizer rejects them through its structured arm failures.
+                failed = accept_run_workflow(*case.original, **options)
+                assert failed["status"] == "INCOMPLETE", (path, failed)
+                assert len(failed["results"]) == len(arms), (path, failed)
+                assert all(result["pipeline_status"] == "FINALIZATION_FAILED" and
+                           result["error"] == expected_error for result in failed["results"]), (path, failed)
+            assert {arm_id: path.read_bytes() for arm_id, path in receipts.items()} == retained
+        finally:
+            path.write_bytes(retained_bytes)
+    assert inspected == Counter({arm_id: 8 for arm_id in arms})
+    assert len(validations) == 8
     assert {arm_id: path.read_bytes() for arm_id, path in receipts.items()} == retained
     validated = validate_repository_records(case.repo)
     assert validated["root"] == case.repo.resolve()

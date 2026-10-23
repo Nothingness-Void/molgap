@@ -199,6 +199,13 @@ uses the existing V5/RML validators and reports missing evidence; positive/READY
 claims still require their owning scientific acceptance. The CLI reference owns
 the advanced explicit-location path.
 
+When the execution-retention bundle was retrieved, pass `--execution-root` to
+bind its verified allocation ledger into terminal evidence and cost events.
+Only each arm's assigned, observed window is counted; prior segments and unknown
+intervals remain explicit. An existing measured native allocation is not counted
+again. The ledger is validated once per acceptance call; finalization still
+checks the bound bytes independently.
+
 The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) owns arguments;
 the [workflow reference](EXPERIMENT_WORKFLOW.md) retains legacy preparation and
 terminal semantics. Acceptance is read-only by default. Explicit terminal closure

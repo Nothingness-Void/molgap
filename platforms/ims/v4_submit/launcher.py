@@ -255,6 +255,7 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
     staging_parent.mkdir(parents=True, exist_ok=True)
     staging = staging_parent / f".{spec['run_id']}.staging-{os.getpid()}"
     staging.mkdir(parents=False, exist_ok=False)
+    operation = "stage_run"
     try:
         code = staging / "code"
         safe_extract(archive, code)
@@ -294,12 +295,20 @@ def stage_run(inbox: Path, infrastructure: Path) -> Path:
                 "launcher_sha256": sha256_file(Path(__file__)),
             },
         )
+        operation = "publish_run"
         os.replace(staging, run_root)
     except BaseException as error:
-        atomic_json(
-            staging / "staging_error.json",
-            {"status": "error", "error": f"{type(error).__name__}: {error}"},
-        )
+        # Observe only after failure: pre-rename probes can hide transient handles.
+        try:
+            atomic_json(staging / "staging_error.json", {
+                "status": "error", "error": f"{type(error).__name__}: {error}",
+                "operation": operation, "errno": getattr(error, "errno", None),
+                "winerror": getattr(error, "winerror", None), "pid": os.getpid(),
+                "cwd": str(Path.cwd()), "staging": str(staging), "run_root": str(run_root),
+                "staging_exists": staging.exists(), "run_root_exists": run_root.exists(),
+            })
+        except OSError:
+            pass  # A diagnostic write must not replace the original IO failure.
         raise
     return run_root
 

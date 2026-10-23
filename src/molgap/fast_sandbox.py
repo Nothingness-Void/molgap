@@ -252,7 +252,7 @@ def run_sandbox(factory, *, forward=None, batch=None, addon_parameters=None, see
     return report
 
 
-def run_family_sandbox(family: str, *, addons=(), k1_execution=None, seed=42, threads=1):
+def run_family_sandbox(family: str, *, addons=(), k1_execution=None, addon_parameters=None, seed=42, threads=1):
     """Random baseline plus reviewed slots through the accelerated CPU forwards."""
     from copy import copy
     from .family_model_ops import make_gptrans_backbone, k1_forward
@@ -283,7 +283,7 @@ def run_family_sandbox(family: str, *, addons=(), k1_execution=None, seed=42, th
                 return k1_forward(model, borrowed)
         from .gptrans_execution_backend import prepare_layout, prepared_forward
         return prepared_forward(model, prepare_layout(copy(batch)))
-    result = run_sandbox(factory, forward=forward, seed=seed, threads=threads)
+    result = run_sandbox(factory, forward=forward, addon_parameters=addon_parameters, seed=seed, threads=threads)
     result.update(family=family, model_identity="random baseline with reviewed slots",
                   frozen_initialization_loaded=False)
     return result
@@ -302,7 +302,8 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
         raise ValueError("Unknown sandbox arm")
     adapter = training_adapter(arm)
     if adapter.module == "molgap.family_training_runner":
-        result = run_family_sandbox(arm["family"]["name"], addons=tuple(arm["addons"]), seed=seed, threads=threads)
+        result = run_family_sandbox(arm["family"]["name"], addons=tuple(arm["addons"]),
+            addon_parameters=addon_parameters, seed=seed, threads=threads)
         result.update(spec_identity=spec.identity, arm_id=arm_id)
         return result
     if adapter.model_factory is None or adapter.module != "molgap.graph_screen_training":

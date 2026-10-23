@@ -495,7 +495,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
                     expected_package_identity, locations=None, execute=False,
                     target_identities=None, execution_root=None, _verification=None,
-                    _reports=None):
+                    _reports=None, _retention=None):
     """Inspect every arm independently of optional scientific closure inputs."""
     if execute and locations is None:
         raise ValueError("Terminal execution requires explicit reviewed terminal locations")
@@ -508,8 +508,8 @@ def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
             raise ValueError("Target identity bindings name unknown workflow arms")
         for arm_id, binding in target_identities.items():
             outputs[arm_id]["target_identity"] = binding
-    retention = None
-    if execution_root is not None:
+    retention = _retention
+    if execution_root is not None and retention is None:
         from .experiment_retention import validate_execution_retention
         context = next(iter(outputs.values()))["context"]
         retention = validate_execution_retention(Path(execution_root), spec,

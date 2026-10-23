@@ -6,6 +6,7 @@ keep their original custody and exact digests. Staging never finalizes RML.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import hashlib
 from pathlib import Path
 
 from .common.io import publish_immutable_bytes
@@ -24,7 +25,7 @@ def _per_arm(value, arm_id):
     return value.get(arm_id) if isinstance(value, dict) else value
 
 
-def _cost_events(native, context, where, action_id, source_ref):
+def _cost_events(native, context, where, action_id, source_ref, *, category="training", suffix=""):
     """Translate only measured native seconds; retain everything else as unknown."""
     events = []
     for index, cost in enumerate(native):
@@ -41,13 +42,44 @@ def _cost_events(native, context, where, action_id, source_ref):
                        for name in ("device_hours", "cpu_hours", "wall_hours", "queue_hours")}
         measurement[field] = {"value": cost["value"] / 3600, "status": "measured"}
         event = {"schema": "molgap-cost-event-v1",
-            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{index}",
+            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{suffix}{index}",
             "trajectory_id": where["trajectory_id"], "action_id": action_id, "run_id": where["run_id"],
             "attempt_id": context["attempt_id"] or "unknown", "platform": context["platform"],
-            "hardware": cost["hardware"], "category": "training", "evidence_ref": source_ref,
+            "hardware": cost["hardware"], "category": category, "evidence_ref": source_ref,
             "measurement": measurement}
         events.append(validate_cost_event(event))
     return events
+
+
+def _allocation_observation(root, retention, arm_id):
+    """Bind the observed window; assigned device records need no cost apportionment."""
+    from .experiment_retention import _manifest_bytes
+    manifest = retention["manifest"]
+    manifest_path = Path(retention["manifest_path"])
+    directory = manifest_path.parent
+    refs = {"execution_retention": {
+        "path": manifest_path.name,
+        "sha256": hashlib.sha256(_manifest_bytes(manifest)).hexdigest()},
+        "allocation_ledger": manifest["allocation_ledger"]["root"],
+        "arm_allocation_ledger": manifest["allocation_ledger"]["arms"][arm_id]}
+    bindings, artifacts = {}, []
+    for name, reference in refs.items():
+        locator = artifact_locator(root, directory / reference["path"])
+        verify_bound_artifact(root, locator, reference["sha256"])
+        bindings[locator] = reference["sha256"]
+        artifacts.append({"name": name, "locator": locator, "sha256": reference["sha256"],
+            "availability": "machine_local_verified" if locator.startswith("external://") else "durable_local_verified"})
+    ledger = retention["ledgers"]["root"]
+    devices = [device for device in ledger["devices"] if device["arm_id"] == arm_id]
+    observation = {"scope": ledger["scope"], "started_at": ledger["started_at"],
+        "observed_at": ledger["observed_at"], "status": ledger["status"], "devices": devices,
+        "prior_segments_recorded": len(ledger["prior_segments"]),
+        "prior_unobserved_intervals": ledger["prior_unobserved_intervals"],
+        "cumulative_costs_evaluated": False, "artifact_refs": sorted(bindings)}
+    native = [{"metric": "device_seconds", "unit": "seconds", "value": device["allocated_seconds"],
+        "status": "measured", "semantics": "allocated_device", "hardware": device["hardware"]}
+        for device in devices]
+    return observation, native, bindings, artifacts
 
 
 def _roles(root, audit_ref, context, where, action_id):
@@ -107,7 +139,8 @@ def _diagnostic_binding(root, resolved, report):
 
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
-        diagnostic_report=None, role_audit=None, resolved=None, reports=None):
+        diagnostic_report=None, role_audit=None, resolved=None, reports=None,
+        execution_root=None, _retention=None):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -124,6 +157,13 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
     frozen_options = resolved.get("options", {})
     frozen_package = frozen_options.get("package_dir")
     verification = frozen_options.get("_verification")
+    retention = _retention
+    if execution_root is not None and retention is None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(resolved["contexts"].values()))
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=frozen_options["expected_package_identity"], source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
     outputs = {arm_id: {**item,
         **({"context": resolved["contexts"][arm_id]} if "context" not in item else {}),
         **({"target_identity": resolved["target_identities"][arm_id]}
@@ -177,6 +217,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], dict(restored)
+        allocation, allocation_costs = None, []
+        if retention is not None:
+            allocation, allocation_costs, bindings, retained_artifacts = _allocation_observation(root, retention, arm_id)
+            hashes.update(bindings)
+            artifacts.extend(retained_artifacts)
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
@@ -220,10 +265,23 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         terminal_ref = pointer("terminal.json")
         costs = _cost_events(observed["costs"], {"attempt_id": observed_attempt, "platform": context.platform},
             where, action["action_id"], objective_ref)
+        if allocation is not None:
+            existing_allocation = any(event["measurement"]["device_hours"]["status"] == "measured"
+                                      for event in costs)
+            # Retained scopes may overlap; retain both sources without adding
+            # a second measurement to RML's additive device-hour ledger.
+            allocation["event_status"] = ("not_aggregated_existing_device_measurement" if existing_allocation
+                                           else "recorded_current_window")
+            if not existing_allocation:
+                costs.extend(_cost_events(allocation_costs,
+                    {"attempt_id": observed_attempt, "platform": context.platform}, where, action["action_id"],
+                    objective_ref, category="other", suffix="allocation-"))
         objective = {"context": context.to_dict(), "mechanical_verification": report,
             "native_costs": observed["costs"], "costs": costs, "roles": [],
             "missing_evidence": ["scientific_comparison_not_evaluated", "runtime_qualification_not_evaluated",
                 "replay_readiness_not_evaluated", *role_blockers], "diagnostic_report": diagnostic_binding}
+        if allocation is not None:
+            objective["allocation_observation"] = allocation
         publish_immutable_bytes(directory / "observed.json", json_bytes(objective))
         hashes[objective_ref] = file_digest(directory / "observed.json")
         closure_ready = not blockers

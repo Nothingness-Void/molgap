@@ -201,11 +201,14 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
                           runtime: dict, costs: list[dict]) -> Path:
     root = Path(output_dir).absolute()
     _safe_local(root)
-    artifact_adapter(adapter, (context.family_name, context.family_version))
     profile = artifact_adapter(adapter, (context.family_name, context.family_version))
     roles = ROLES
     if profile.protocol == "family-session" and "predictions" not in artifacts:
         roles = ROLES - {"predictions"}
+    if profile.protocol == "family-session" and "trace_context" in artifacts:
+        roles = roles | {"trace_context"}
+        if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
+            raise ValueError("Trace companion must bind the declared trace")
     if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}

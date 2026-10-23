@@ -629,6 +629,126 @@ def _packaged_release(case, tmp_path, monkeypatch):
               restore_roundtrip=restore_roundtrip, lose_next_post=lose_next_post)
 
 
+def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
+    """Continue the submitted identity through real CPU training and terminal owners."""
+    import time
+    import torch
+    from contextlib import redirect_stdout
+    from io import StringIO
+    from molgap.common.paths import MachinePaths
+    from molgap.experiment_allocation import AllocationLedger
+    from molgap.experiment_family_workflow import RunContext
+    from molgap.experiment_package import read_packaged_text
+    from molgap.experiment_retention import seal_execution_retention
+    from molgap.experiment_run import accept_run_workflow
+    from molgap.family_training_data import load_training_data
+    from molgap.family_training_kernel import FamilyKernel
+    from molgap.family_training_loaders import FamilyLoaders
+    from molgap.family_training_outputs import SessionOutputs
+    from molgap.family_training_runner import _recipe_configuration, PROFILES
+    from molgap.family_training_session import FamilyTrainingSession
+    from molgap.gptrans_execution_tuning import ExecutionTuning
+    from molgap.research_memory.compiler import frozen_differences
+    from molgap.training_reproducibility import configure_fp32_determinism, sha256_file
+    from test_kaggle_family_retrieval import _module, _Api, _File, _ResponsePage
+
+    paths = MachinePaths.from_file(case.value["machine_profile"])
+    run_id, attempt = case.value["logical_run_id"], case.value["attempt_id"]
+    package = case.prepared / "package"
+    frozen = json.loads((case.prepared.parent / "inputs/workflow_plan.json").read_bytes())
+    launch = json.loads((case.prepared / "source_dataset/experiment_launch.json").read_bytes())
+    remote = paths.artifact_root / "offline-worker"
+    remote.mkdir()
+    contexts, decisions, audits, downloads = {}, {}, {}, []
+    for job in launch["jobs"]:
+        arm_id = job["arm_id"]
+        context = RunContext.from_launch(spec, case.output / "launch_receipt.json", package,
+            expected_package_identity=manifest["package_identity"], arm_id=arm_id)
+        contexts[arm_id] = context
+        contract = paths.scratch_root / (arm_id + "-contract.json")
+        contract.parent.mkdir(parents=True, exist_ok=True)
+        contract.write_text(read_packaged_text(package, job["recipe"]), encoding="utf-8")
+        record = json.loads(contract.read_bytes())
+        recipe = _recipe_configuration(record)
+        data = load_training_data(paths.data_root, recipe.dataset)
+        initial = next(item["initial_state"] for item in frozen["arms"] if item["arm_id"] == arm_id)
+        initial = Path(initial) if Path(initial).is_absolute() else case.repo / initial
+        configure_fp32_determinism(recipe.seed)
+        started = time.perf_counter()
+        output = SessionOutputs(remote / arm_id, context, contract=contract, adapter=PROFILES[recipe.family],
+            trajectory_id=job["trajectory_id"], train_role_identity=record["train_role_identity"])
+        session = FamilyTrainingSession(FamilyKernel(recipe, initial, device="cpu"),
+            FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0, development_workers=0)),
+            checkpoint=output.checkpoint, selected=output.selected, pass_finished=output.pass_finished)
+        session.batch_finished = output.batch_finished
+        try:
+            progress = session.run()
+            checked = output.complete(progress, runtime={"platform": context.platform, "account": context.account,
+                "precision": "fp32", "source_commit": context.source_commit,
+                "source_archive_sha256": context.source_archive_sha256}, costs=[{
+                    "metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - started,
+                    "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"}])
+            assert checked["status"] == "MECHANICALLY_VERIFIED", checked
+            assert progress.optimizer_step == recipe.optimizer_steps
+        finally:
+            session.close()
+        decision = case.repo / "experiments/question" / (arm_id + "-disposition.md")
+        decision.write_text("Synthetic infrastructure exercise only; no scientific conclusion.\n", encoding="utf-8")
+        decisions[arm_id] = decision.relative_to(case.repo).as_posix()
+        audit = case.repo / "audits" / (arm_id + ".json")
+        atomic_json(audit, {"context": context.to_dict(), "roles": [],
+            "role_use": {role: "untouched" for role in ("official_validation", "test_dev", "test_challenge")}})
+        audits[arm_id] = audit.relative_to(case.repo).as_posix()
+
+    # A deterministic fixture clock describes a simulated allocation, not measured GPU time.
+    clock = [0.]
+    ledger = AllocationLedger(spec_identity=spec.identity, hardware=["Tesla T4", "Tesla T4"],
+        assignments={job["arm_id"]: job["device"] for job in launch["jobs"]}, started=0., clock=lambda: clock[0])
+    clock[0] = 1.
+    ledger.write(remote, "complete", arm_roots=[remote / arm for arm in contexts])
+    seal_execution_retention(remote, spec, package_identity=manifest["package_identity"],
+        source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
+        arm_roots={arm: remote / arm for arm in contexts})
+    with monkeypatch.context() as transport:
+        retriever = _module(transport)
+        for arm_id, context in contexts.items():
+            pinned = remote / arm_id / "output_manifest.json"
+            value = json.loads(pinned.read_bytes())
+            files = {"output_manifest.json", *(item["path"] for item in value["artifacts"].values())}
+            prefix = f"runs/kernel77/version1/{arm_id}"
+            payloads = {"https://offline.invalid/" + prefix + "/" + name: remote / arm_id / name for name in files}
+            api = _Api(context.account, [_ResponsePage([_File(prefix + "/" + name, url)
+                for name, url in ((name, "https://offline.invalid/" + prefix + "/" + name) for name in files)])])
+            class Http:
+                def get(self, url, **kwargs):
+                    downloads.append(url)
+                    return Response(content=payloads[url].read_bytes())
+            transport.setattr(owner, "connect_kaggle", lambda *_: api)
+            transport.setattr("requests.Session", Http)
+            captured = StringIO()
+            with redirect_stdout(captured):
+                code = retriever.main(["--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
+                    "--run-id", run_id, "--attempt-id", attempt, "--arm", arm_id,
+                    "--remote-manifest-path", prefix + "/output_manifest.json", "--local-manifest", str(pinned),
+                    "--manifest-sha256", sha256_file(pinned), "--destination", str(paths.artifact_root / "retrieved" / arm_id),
+                    "--credentials", str(case.credentials), "--execute"])
+            assert code == 0, captured.getvalue()
+            assert json.loads(captured.getvalue())["status"] == "RETRIEVED"
+    result = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt,
+        diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
+        decision_ref=decisions, role_audit=audits, execution_root=remote)
+    assert result["status"] == "COMPLETE", result
+    assert result["diagnosis"]["status"] == "DIAGNOSED", result["diagnosis"]
+    assert result["diagnosis"]["reference_arm_id"] == "baseline"
+    assert not frozen_differences(case.repo)
+    for binding in spec.to_dict()["prospective"]["arms"]:
+        final = case.repo / binding["output"] / "rml_finalized"
+        assert json.loads((final / "trajectory.json").read_bytes())["decision"]["outcome"] == "INCONCLUSIVE"
+        assert (final / "finalization.json").is_file()
+    return {"status": result["status"], "diagnosis": result["diagnosis"]["status"],
+            "downloaded_files": len(downloads), "source_identity": spec.identity}
+
+
 def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, monkeypatch):
     from molgap import experiment_package as package_owner
     from molgap.experiment_launch import read_launch_receipt
@@ -641,7 +761,7 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
     monkeypatch.setattr(package_owner, "_verify_package_snapshot", counted)
     verification_counts = []
     code, first = case.run()
-    assert code == 1
+    assert code == 1, first
     assert first["status"] == "BLOCKED", first
     assert first["stage"] == "release_recheck", json.dumps(first, indent=2)
     assert len(verifications) == 1
@@ -713,6 +833,7 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
         verification_counts.append(len(verifications))
     assert receipt_path.read_bytes() == retained
     assert case.transport().api.created == case.transport().api.pushed == 1
+    lifecycle = _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch)
     # An independent call must fully validate again, even if only one sidecar
     # changed after this transaction's successful content checks.
     (case.prepared / "package/SOURCE_COMMIT.txt").write_text("0" * 40 + "\n")
@@ -721,33 +842,60 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
             authority_ref=case.value["authority_ref"],
             monitor_paths=case.value["monitor_paths"], execute=False)
     assert case.transport().api.created == case.transport().api.pushed == 1
-    return {"status": result["status"], "family": case.value["arms"][0]["model"]["family"],
+    return {"status": result["status"], "family": spec.to_dict()["arms"][0]["family"]["name"], "lifecycle": lifecycle,
             "verification_counts": verification_counts, "api_created": case.transport().api.created,
             "api_pushed": case.transport().api.pushed}
 
 
 def test_real_package_release_post_receipt_reuses_only_exact_content(scientific, tmp_path):
     case = scientific
-    from copy import deepcopy
-    from test_scientific_input import _git
-    value = deepcopy(case.value)
-    second = deepcopy(value["arms"][0])
-    second["arm_id"] = "candidate_two"
-    value["arms"].append(second)
-    atomic_json(case.path, value)
-    authority_path = case.repo / value["authority_ref"]
-    authority = json.loads(authority_path.read_bytes())
-    authority["arms"].append("candidate_two")
-    atomic_json(authority_path, authority)
+    import torch
+    from molgap.family_training_data import load_training_data
+    from molgap.experiment_family_workflow import tensor_digest
+    from molgap.family_training_runner import family_arm_bindings
+    from test_family_training_data import write_pinned_data
+    from test_scientific_pair_input import _pair, _commit
+    from test_experiment_workflow import _write_json
+    from molgap.common.paths import MachinePaths
+    paths = MachinePaths.from_file(case.value["machine_profile"])
+    _, selection, _ = write_pinned_data(paths.data_root, train_rows=256, development_rows=3)
+    data = load_training_data(paths.data_root, selection)
+    recipe_path = case.repo / case.value["arms"][0]["recipe_ref"]
+    record = json.loads(recipe_path.read_bytes())
+    record.update(dataset=selection.__dict__, target_mean_eV=data.target_mean_eV, target_std_eV=data.target_std_eV)
+    record["acceptance_requirements"].update(
+        source_idx_sha256=tensor_digest(torch.cat([g.source_idx for g in data.development]), role="source_idx"),
+        target_sha256=tensor_digest(torch.cat([g.y for g in data.development]), role="target"))
+    _write_json(recipe_path, record)
+    data_path = case.repo / case.value["arms"][0]["data_ref"]["spec_ref"]
+    declaration = json.loads(data_path.read_bytes())
+    base = declaration["arms"][0]
+    base["data"]["dataset"]["sha256"] = selection.manifest_sha256
+    base["training"]["recipe"]["sha256"] = __import__("hashlib").sha256(recipe_path.read_bytes()).hexdigest()
+    from molgap.family_training_runner import _recipe_configuration
+    bindings = family_arm_bindings(_recipe_configuration(record))
+    base["training"].update({key: bindings[key] for key in ("sampler", "transform", "objective")})
+    _write_json(data_path, declaration)
+    value, authority, input_path = _pair(case)
+    value["shared"].update(training={}, purpose="architecture_comparison")
+    model = dict(value["shared"]["model"])
+    name = "k1_readout_scale" if model["family"] == "neural_atom_k1" else "gptrans_readout_scale"
+    model["addons"] = [name]
+    value["arms"][1]["model"] = model
+    target_path = case.repo / value["same_run"]["target_manifest_ref"]
+    target = json.loads(target_path.read_bytes())
+    target["target_encoding"] = "little-endian-float64-contiguous-raw-bytes"
+    _write_json(target_path, target)
+    # This fixture's unavailable-history case is exercised by prepare; this
+    # independent lifecycle fixture needs a self-contained canonical RML corpus.
+    (case.repo / "experiments/history/comparison_readiness.json").unlink()
     platform_path = case.repo / value["platform_ref"]
     platform = json.loads(platform_path.read_bytes())
     platform["kaggle"].update(allocation_wall_limit_seconds=32400, cleanup_reserve_seconds=180)
-    atomic_json(platform_path, platform)
-    _git(case.repo, "add", "--", case.path.relative_to(case.repo).as_posix(),
-         value["authority_ref"], value["platform_ref"])
-    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Explicit paired fixture with shared initial state and launch budget")
+    _write_json(platform_path, platform)
+    _commit(case, value, authority, input_path)
     child = r'''
-import json, pathlib, sys
+import json, pathlib, sys, torch
 from types import SimpleNamespace as NS
 repo, experiment, temp, tests = map(pathlib.Path, sys.argv[1:])
 sys.path.insert(0, str(repo / "src"))
@@ -756,6 +904,7 @@ import pytest
 import test_kaggle_submission as journey
 case = NS(repo=repo, path=experiment, value=json.loads(experiment.read_bytes()), tmp=experiment.parents[3])
 patch = pytest.MonkeyPatch()
+torch.set_num_threads(1)
 try:
     release = journey._packaged_release(case, temp, patch)
     summary = journey._assert_real_package_release_post_receipt_reuses_only_exact_content(release, patch)
@@ -764,13 +913,14 @@ finally:
 print(json.dumps(summary))
 '''
     completed = subprocess.run([sys.executable, "-I", "-c", child,
-        str(case.repo), str(case.path), str(tmp_path), str(Path(__file__).resolve().parent)],
-        cwd=case.repo, text=True, capture_output=True, timeout=180)
+        str(case.repo), str(input_path), str(tmp_path), str(Path(__file__).resolve().parent)],
+        cwd=case.repo, text=True, capture_output=True, timeout=240)
     assert completed.returncode == 0, completed.stdout + completed.stderr
     observation = json.loads(completed.stdout.splitlines()[-1])
     assert observation["status"] == "SUBMISSION_BOUND"
     assert observation["verification_counts"] == [1, 1, 1, 1, 1]
     assert observation["api_created"] == observation["api_pushed"] == 1
+    assert observation["lifecycle"]["status"] == "COMPLETE"
 
 
 def test_same_prepared_release_cannot_switch_journals_after_unknown(release, monkeypatch, tmp_path):

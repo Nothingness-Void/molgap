@@ -111,13 +111,21 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
         retrieved_root=retrieved_root, supplied=supplied, locations=locations)
     spec, options = resolved["spec"], resolved["options"]
+    retention = None
+    if execution_root is not None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(resolved["contexts"].values()))
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=options["expected_package_identity"], source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
     identity = {"run_id": run_id, "attempt_id": attempt_id, "spec_identity": spec.identity}
     automatic = diagnose or stage_terminal or outcome is not None
     # Ordinary inspection does not depend on a future terminal input package.
     result = accept_workflow(spec, supplied=resolved["outputs"],
         locations=None if automatic or locations is None else resolved["locations"],
         execute=False if automatic or locations is None else execute,
-        execution_root=execution_root, target_identities=resolved.get("target_identities"), **options)
+        execution_root=execution_root, _retention=retention,
+        target_identities=resolved.get("target_identities"), **options)
     result.update(identity)
     if result["status"] == "BLOCKED":
         return result
@@ -138,20 +146,21 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         staged = stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, locations=locations,
             outcome=outcome, decision_ref=decision_ref, role_audit=role_audit,
-            diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"])
+            diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
+            execution_root=execution_root, _retention=retention)
         result["terminal_staging"] = staged
         if execute:
             if staged.get("blockers") or outcome is None:
                 return {**result, "status": "BLOCKED", "executed": False}
             closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
-                execute=True, execution_root=execution_root,
+                execute=True, execution_root=execution_root, _retention=retention,
                 target_identities=resolved.get("target_identities"), _reports=result["arms"], **options)
             return {**closed, **identity, "diagnosis": result.get("diagnosis"), "terminal_staging": staged}
     elif execute and automatic:
         if locations is None:
             raise ValueError("Use --stage-terminal with explicit --outcome/--decision-ref, or reviewed --locations")
         closed = accept_workflow(spec, supplied=resolved["outputs"], locations=resolved["locations"],
-            execute=True, execution_root=execution_root,
+            execute=True, execution_root=execution_root, _retention=retention,
             target_identities=resolved.get("target_identities"), _reports=result["arms"], **options)
         return {**closed, **identity, "diagnosis": result.get("diagnosis")}
     elif execute and locations is None:

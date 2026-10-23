@@ -296,7 +296,8 @@ class SessionOutputs:
             self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
                 epoch_or_pass=progress.optimizer_step / self.recipe.loop_plan.steps_per_pass)
         artifacts = {"selected_model": "selected_model.pt", "resume": "last_checkpoint.pt",
-            "trace": "canonical_trace.json", "contract": "training_contract.json"}
+            "trace": "canonical_trace.json", "trace_context": "canonical_trace.json.context.json",
+            "contract": "training_contract.json"}
         if self.recipe.dataset.development:
             artifacts["predictions"] = "development_predictions.pt"
         write_output_manifest(self.root, self.context, adapter=self.adapter, artifacts=artifacts,
@@ -340,7 +341,12 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         contract, recipe = read_recipe(paths["contract"])
         if expected != contract["acceptance_requirements"]:
             raise ValueError("Expectations differ from the frozen contract")
-        if set(paths) != (ROLES if recipe.dataset.development else ROLES - {"predictions"}):
+        roles = ROLES if recipe.dataset.development else ROLES - {"predictions"}
+        if "trace_context" in paths:
+            roles = roles | {"trace_context"}
+            if artifacts["trace_context"]["path"] != artifacts["trace"]["path"] + ".context.json":
+                raise ValueError("Trace companion differs from the declared trace")
+        if set(paths) != roles:
             raise ValueError("Artifact roles differ from selected data roles")
         _runtime(manifest["runtime"], context, "fp32")
         _costs(manifest["costs"])

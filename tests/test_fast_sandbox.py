@@ -126,12 +126,26 @@ def test_zero_start_reports_blocked_upstream_without_false_rejection():
     assert report["addons"]["zero"]["connected_nonzero"] == ["_molgap_addons.zero.return_projection.weight"]
 
 
-def test_explicit_parameter_groups_support_reviewed_base_parameter_reuse():
-    report = run_sandbox(TinyGraph, addon_parameters=lambda model: {"base_reuse": ["head.weight"]})
+@pytest.mark.parametrize("family", [None, "neural_atom_k1", "gptrans_t"])
+def test_explicit_parameter_groups_support_reviewed_base_parameter_reuse(family):
+    if family is None:
+        probe = lambda groups: run_sandbox(TinyGraph, addon_parameters=groups)
+    else:
+        from molgap.experiment_spec import ExperimentSpec
+        from test_experiment_workflow import _arm, _spec_payload
+        version = "3" if family == "neural_atom_k1" else "2"
+        spec = ExperimentSpec(_spec_payload([_arm(family, version, "candidate")], platform="kaggle"))
+        probe = lambda groups: run_arm_sandbox(spec, "candidate", addon_parameters=groups)
+    def ownership(model):
+        # The real family's final readout remains on its ordinary forward path.
+        head = next(name for name, module in reversed(list(model.named_modules()))
+                    if isinstance(module, nn.Linear) and module.out_features == 1)
+        return {"base_reuse": [head + ".weight"]}
+    report = probe(ownership)
     assert report["status"] == "PASSED", report
     assert report["addons"]["base_reuse"]["status"] == "PASSED"
-    assert report["checks"]["backbone_gradients"]["connected_nonzero"] == ["head.bias"]
-    wrong = run_sandbox(TinyGraph, addon_parameters={"bad": ["unwritten.weight"]})
+    assert report["checks"]["backbone_gradients"]["connected_nonzero"]
+    wrong = probe({"bad": ["unwritten.weight"]})
     assert wrong["status"] == "FAILED" and "missing" in wrong["error"]["message"]
 
 
