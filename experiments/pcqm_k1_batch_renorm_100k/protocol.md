@@ -85,8 +85,10 @@ One private Kaggle1 T4x2 slot, one arm/device.14400s allocation ceiling,
 not measured BRN performance. Queue/CPU unknown remain unknown.
 Shared native repeat/serialized-resume preflight precedes training. Its two-step
 initial probe covers the BN warmup; correction-active behavior additionally
-requires the targeted local serialized-resume check and actual retained training
-resume proof. Do not imply the startup probe executed3906updates.
+requires the targeted local serialized-resume check and the complete finite
+training trace. Any actual remote continuation additionally requires its own
+retained resume proof. Do not imply the startup probe executed3906updates or
+that a continuously running job exercised a correction-active remote restart.
 
 Reuse scientific input -> submit_workflow -> native workers -> exact retrieval
 -> accept_run --strict -> canonical terminal/RML. Freeze a committed source

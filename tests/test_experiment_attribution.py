@@ -15,7 +15,7 @@ from molgap.fast_sandbox import run_sandbox
 from molgap.models.substrate import ModelSubstrate
 from molgap.training_reproducibility import sha256_file
 from test_family_training_runner import contract_file, context
-from test_family_training_session import SyntheticKernel, events, make_session
+from test_family_training_session import SyntheticKernel, assert_equal, events, make_session
 
 
 class _ToyBackbone(torch.nn.Module):
@@ -210,3 +210,199 @@ def test_diagnose_rejects_selection_mismatch_and_wrong_curve_metric(native_pair,
         analyze_family_pair(native_pair[0], ema, n_bootstrap=10)
     with pytest.raises(ValueError, match="metric must match"):
         analyze_family_pair(*native_pair, primary_metric="ema_dev_metric", n_bootstrap=10)
+
+
+def test_k1_batch_renorm_family_kernel_resume_journey(tmp_path):
+    from copy import deepcopy
+    from pathlib import Path
+
+    import numpy as np
+    from torch import nn
+    from torch_geometric.nn.norm import BatchNorm as PyGBatchNorm
+
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.family_training_data import DatasetSelection
+    from molgap.family_training_kernel import FamilyKernel, load_family_model
+    from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
+    from molgap.k1_batch_renorm import BatchRenorm1d
+    from molgap.qm9_neural_atom import make_encoder
+    from molgap.training_reproducibility import (
+        atomic_torch_save, capture_rng_state, restore_rng_state,
+    )
+    from molgap.v4_runtime import state_dict_sha256
+
+    config = {"correct_shift": 1, "warmup_updates": 3905, "ramp_updates": 3905,
+        "r_max": 3.0, "d_max": 5.0}
+    scale_config = {**config, "correct_shift": 0}
+    assert [key for key in config if config[key] != scale_config[key]] == ["correct_shift"]
+
+    with torch.random.fork_rng(devices=[]):
+        torch.manual_seed(42)
+        base = make_encoder("neural_atom_k1")
+    initial = {key: value.detach().cpu().clone() for key, value in base.state_dict().items()}
+    keys = tuple(initial)
+    parameter_count = sum(parameter.numel() for parameter in base.parameters())
+    trainable_count = sum(parameter.numel() for parameter in base.parameters() if parameter.requires_grad)
+    del base
+    digest = state_dict_sha256(initial)
+    initial_path = tmp_path / "k1-initial.pt"
+    atomic_torch_save(initial_path, {"model_state": initial, "state_sha256": digest})
+    addon = build_addon_declaration(("neural_atom_k1", "3"), "k1_batch_renorm",
+        repo_root=Path(__file__).resolve().parents[1], config=config)
+    recipe = FamilyRecipe("neural_atom_k1", "composed", 42, digest,
+        DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 2,
+        .0004, .00001, ScheduleSpec("cosine_step", 2), "final-ema",
+        "python-epoch-shuffle", 2, target_mean_eV=0., target_std_eV=1.,
+        ema_decay=.999, addons=(addon,),
+        torch_version=str(torch.__version__).split("+", 1)[0])
+
+    def restore_safe_rng(state):
+        restored = deepcopy(state)
+        name, values, position, has_gauss, cached_gaussian = restored["numpy"]
+        restored["numpy"] = (name, np.asarray(values, dtype=np.uint32),
+            position, has_gauss, cached_gaussian)
+        restore_rng_state(restored)
+
+    from molgap.experiment_family_workflow import tensor_safe_rng_state
+
+    # Interior r/d values ensure a missing stop-gradient changes input backward.
+    value = torch.tensor([[0., 1.], [1., 2.], [2., 3.]])
+    # Update 3905 is still ordinary BN; update 7810 reaches both frozen caps.
+    boundary = BatchRenorm1d(2, correct_shift=1)
+    boundary.train()
+    with torch.no_grad():
+        boundary.num_batches_tracked.fill_(3904)
+    batch_mean = value.mean(0)
+    batch_var = value.var(0, unbiased=False)
+    ordinary = (value - batch_mean) / torch.sqrt(batch_var + boundary.eps)
+    torch.testing.assert_close(boundary(value), ordinary * boundary.weight + boundary.bias)
+    assert boundary.num_batches_tracked.item() == 3905
+
+    corrected = BatchRenorm1d(2, correct_shift=1)
+    shiftless = BatchRenorm1d(2, correct_shift=0)
+    shiftless.load_state_dict(corrected.state_dict(), strict=True)
+    corrected.train()
+    shiftless.train()
+    with torch.no_grad():
+        for module in (corrected, shiftless):
+            module.running_mean.zero_()
+            module.running_var.fill_(1.)
+            module.weight.copy_(torch.tensor([1.25, -.75]))
+            module.bias.copy_(torch.tensor([.1, -.2]))
+            module.num_batches_tracked.fill_(7809)
+    differentiable = value.clone().requires_grad_()
+    old_mean, old_var = corrected.running_mean.clone(), corrected.running_var.clone()
+    variance, mean = torch.var_mean(differentiable.detach(), dim=0, unbiased=False)
+    inv_std = torch.rsqrt(old_var + corrected.eps)
+    expected_r = (torch.sqrt(variance + corrected.eps) * inv_std).clamp(1 / 3, 3)
+    expected_d = ((mean - old_mean) * inv_std).clamp(-5, 5)
+    normalized = (differentiable - mean) * torch.rsqrt(variance + corrected.eps)
+    expected_output = (normalized * expected_r + expected_d) * corrected.weight + corrected.bias
+    probe = torch.tensor([[1., -.3], [.2, 1.1], [-.7, .4]])
+    actual_output = corrected(differentiable)
+    torch.testing.assert_close(actual_output, expected_output)
+    scale_output = shiftless(value)
+    torch.testing.assert_close(actual_output.detach() - scale_output,
+        (expected_d * corrected.weight).expand_as(actual_output))
+    assert corrected.num_batches_tracked.item() == 7810
+    assert torch.all((expected_r > 1 / 3) & (expected_r < 3))
+    assert torch.all(expected_d.abs() < 5)
+    (actual_output * probe).sum().backward()
+    weighted_grad = probe * corrected.weight.detach() * expected_r
+    expected_input_grad = (weighted_grad - weighted_grad.mean(0)
+        - normalized.detach() * (weighted_grad * normalized.detach()).mean(0)) / torch.sqrt(variance + corrected.eps)
+    torch.testing.assert_close(differentiable.grad, expected_input_grad)
+    torch.testing.assert_close(corrected.running_var,
+        old_var * .9 + value.var(0, unbiased=True) * .1)
+    capped = BatchRenorm1d(2)
+    capped.num_batches_tracked.fill_(7809)
+    large = value * 10
+    large_norm = (large - large.mean(0)) / torch.sqrt(large.var(0, unbiased=False) + capped.eps)
+    torch.testing.assert_close(capped(large), large_norm * 3 + 5)
+
+    eval_bn = BatchRenorm1d(2)
+    native_eval = nn.BatchNorm1d(2)
+    native_eval.load_state_dict(eval_bn.state_dict(), strict=True)
+    eval_bn.eval()
+    native_eval.eval()
+    counter = eval_bn.num_batches_tracked.clone()
+    torch.testing.assert_close(eval_bn(value), native_eval(value))
+    assert torch.equal(eval_bn.num_batches_tracked, counter)
+    cumulative = BatchRenorm1d(2, momentum=None)
+    native_cumulative = nn.BatchNorm1d(2, momentum=None)
+    native_cumulative.load_state_dict(cumulative.state_dict(), strict=True)
+    with torch.no_grad():
+        cumulative.num_batches_tracked.fill_(3)
+        native_cumulative.num_batches_tracked.fill_(3)
+    cumulative.train()
+    native_cumulative.train()
+    torch.testing.assert_close(cumulative(value), native_cumulative(value))
+    for name, tensor in cumulative.state_dict().items():
+        torch.testing.assert_close(tensor, native_cumulative.state_dict()[name])
+
+    threads = torch.get_num_threads()
+    deterministic = torch.are_deterministic_algorithms_enabled()
+    warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
+    try:
+        torch.set_num_threads(1)
+        torch.use_deterministic_algorithms(True, warn_only=False)
+        with torch.random.fork_rng(devices=[]):
+            torch.manual_seed(42)
+            kernel = FamilyKernel(recipe, initial_path, device="cpu")
+            modules = [module for module in kernel.model.modules() if isinstance(module, BatchRenorm1d)]
+            assert len(modules) == 18
+            assert all(type(getattr(block, name)) is PyGBatchNorm
+                for block in kernel.model.local_blocks for name in ("norm1", "norm3"))
+            assert tuple(kernel.model.state_dict()) == keys
+            assert sum(parameter.numel() for parameter in kernel.model.parameters()) == parameter_count
+            assert sum(parameter.numel() for parameter in kernel.model.parameters()
+                if parameter.requires_grad) == trainable_count
+            for key, tensor in initial.items():
+                assert torch.equal(kernel.model.state_dict()[key].cpu(), tensor)
+            assert all(module.correct_shift == 1 for module in modules)
+
+            # This is an enabled-correction synthetic boundary injection, not 3905 trained updates.
+            for module in modules:
+                module.num_batches_tracked.fill_(7809)
+            from test_family_training_kernel import synthetic_batch
+            batch = synthetic_batch()
+            kernel.model.train()
+            loss, absolute, rows = kernel.step(batch, check_finite=True)
+            assert loss.ndim == 0 and torch.isfinite(loss) and torch.isfinite(absolute) and rows == 2
+            assert all(module.num_batches_tracked.item() == 7810 for module in modules)
+            assert kernel.optimizer.state and kernel.ema.update_calls == 1
+
+            checkpoint = {"model": deepcopy(kernel.model.state_dict()),
+                "optimizer": deepcopy(kernel.optimizer.state_dict()),
+                "ema": deepcopy(kernel.ema.state_dict()),
+                "rng_state": tensor_safe_rng_state(capture_rng_state())}
+            checkpoint_path = tmp_path / "k1-resume.pt"
+            atomic_torch_save(checkpoint_path, checkpoint)
+            checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+
+            with torch.random.fork_rng(devices=[]):
+                selected_model, _ = load_family_model(recipe, initial_path)
+            selected_model.load_state_dict(checkpoint["model"], strict=True)
+            assert_equal(selected_model.state_dict(), checkpoint["model"])
+            restore_safe_rng(checkpoint["rng_state"])
+
+            kernel.step(batch, check_finite=True)
+            expected = {"model": deepcopy(kernel.model.state_dict()),
+                "optimizer": deepcopy(kernel.optimizer.state_dict()),
+                "ema": deepcopy(kernel.ema.state_dict()),
+                "rng_state": tensor_safe_rng_state(capture_rng_state())}
+            resumed = FamilyKernel(recipe, initial_path, device="cpu")
+            resumed.model.load_state_dict(checkpoint["model"], strict=True)
+            resumed.optimizer.load_state_dict(checkpoint["optimizer"])
+            resumed.ema.load_state_dict(checkpoint["ema"])
+            restore_safe_rng(checkpoint["rng_state"])
+            resumed.step(batch, check_finite=True)
+            assert_equal(resumed.model.state_dict(), expected["model"])
+            assert_equal(resumed.optimizer.state_dict(), expected["optimizer"])
+            assert_equal(resumed.ema.state_dict(), expected["ema"])
+            assert_equal(tensor_safe_rng_state(capture_rng_state()), expected["rng_state"])
+            kernel.close()
+            resumed.close()
+    finally:
+        torch.set_num_threads(threads)
+        torch.use_deterministic_algorithms(deterministic, warn_only=warn_only)
