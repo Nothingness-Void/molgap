@@ -15,13 +15,9 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 92,
+      "count": 88,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -268,13 +264,9 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 48,
+      "count": 44,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -323,12 +315,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 16,
+      "count": 12,
       "items": [
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
-        "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
-        "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

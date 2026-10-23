@@ -65,6 +65,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+The four-arm K1 RMS-mechanism screen is terminally accepted, with four independent
+RML closures. Graph-RMS is best0.138509eV and improves Post-Node by1.645meV,
+below its3meV material nomination gate; no adoption/scale-up. Strict replay
+qualification remains excluded. [Decision](experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md)
+owns results and attribution; owner branch retains evidence pending reviewed Git custody.
+
 Kaggle1 extended-exposure K1 normalization is terminally accepted: four complete
 160-pass arms and independent RML closure. Both references are CLOSED; both
 candidates are NEGATIVE_UNDER_CONTRACT. [Decision and attribution](experiments/pcqm_k1_norm_exposure_100k/terminal_decision.md)

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "b5f9f0a0ea63089c39bdc186d06a03062b5c28ab8e12f04de146fdb721e1b669",
+  "source_digest": "e11d585b996a6d1557dafbdddd986011b0e0f9c047ffd564e5c0bbd5af069fc9",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -20,57 +20,65 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
       "family_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-position-160ep-100k-s42-20261022/prospective/post_node_rms/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-position-160ep-100k-s42-20261022/prospective/post_node_rms/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
       "family_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-position-160ep-100k-s42-20261022/prospective/pre_node_rms/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-position-160ep-100k-s42-20261022/prospective/pre_node_rms/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
       "family_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/prospective/post_graph_rms/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/prospective/post_graph_rms/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md",
       "family_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/prospective/post_node_ada/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_norm_mechanisms_100k/runs/pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022/prospective/post_node_ada/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
     },

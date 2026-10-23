@@ -1,5 +1,31 @@
 # Status
 
+Terminal acceptance completed on2026-10-23. Position140062850/version1 and
+scope/gain140063114/version3 are COMPLETE. All four arms passed the existing
+mechanical inspector at160 passes/124960 updates/15994880 presentations;
+scope/gain preserved exact version1 trace prefixes after accepted native
+actual-resume preflight. No new training was launched during acceptance.
+
+[Decision and attribution](terminal_decision_20261023.md): Graph-RMS is best
+at0.138508950eV,1.645meV better than Post-Node RMS, below the3meV material
+nomination gate. Post-Node/Graph serialization references close CLOSED;
+Pre-Node/AdaRMS close NEGATIVE_UNDER_CONTRACT. No model adoption or scale-up.
+
+All four independent RML terminal pipelines completed; derived rebuild and
+check --frozen passed. Strict replay readiness remains excluded: strict V5
+comparison readiness is not established, native scratch tensor proofs were
+not independently reverified locally, and large artifacts have explicit
+machine-local custody. [Acceptance method](terminal_acceptance_20261023/method.md)
+and [records](terminal_acceptance_20261023/locations.json) retain the details.
+
+Total observed physical entry allocation is26.048143 native T4-device hours,
+including failed scope/gain versions1/2; no inherited ledger double-counting.
+Only142.80MiB of new final scope/gain outputs/metadata was retrieved toD:.
+Owner branch retains accepted evidence; long-lived integration/archive routing
+is pending reviewed custody. No monitor or successor has been created.
+
+## Version3 submission observation (historical)
+
 Kaggle1 continuation **140063114/version3** was accepted and source-bound on
 2026-10-22. Last scheduler observation: **QUEUED**, 07:10:33 UTC. The user
 requested ending the wait; native preflight and formal resumed progress have

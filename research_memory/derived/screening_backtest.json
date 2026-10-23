@@ -5,6 +5,46 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022:post_node_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022:pre_node_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_graph_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -409,5 +449,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 45
+  "trace_count": 49
 }

@@ -10810,6 +10810,46 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022:post_node_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-position-160ep-100k-s42-20261022:pre_node_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_graph_rms:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "external_artifact_custody_nonportable",
+        "native_proof_payloads_not_locally_reverified",
+        "strict_comparison_readiness_not_established"
+      ],
+      "run_id": "pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022:post_node_ada:downstream",
+      "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -11148,5 +11188,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "cd758b42b0ed666dc822f967502e988c445fa047a69a018652c1660d204507cc"
+  "source_digest": "0b1f30e66580b7d9df6c2a7fa9df126759da114b82681db82cffa517474e838b"
 }
