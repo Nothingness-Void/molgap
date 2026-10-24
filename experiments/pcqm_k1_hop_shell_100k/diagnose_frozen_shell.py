@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from copy import copy
+from contextlib import nullcontext
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -31,7 +32,7 @@ def run(inputs_path, output):
 
     inputs_path, output = Path(inputs_path).resolve(), Path(output).resolve()
     inputs = json.loads(inputs_path.read_text(encoding="utf-8"))
-    if (inputs["ceiling_seconds"] != 1800 or inputs["prediction_tolerance_eV"] != 1e-4
+    if (not 0 < inputs["ceiling_seconds"] <= 1800 or inputs["prediction_tolerance_eV"] != 1e-4
             or inputs["cpu_threads"] != 4 or inputs["device"] != "cuda:0"):
         raise ValueError("Frozen local diagnostic bounds differ")
     prospective = root / inputs["trajectory_ref"]
@@ -123,7 +124,10 @@ def run(inputs_path, output):
         def forward(current, cpu_batch):
             guard()
             borrowed = copy(cpu_batch)
-            with deterministic_memory_fill_context(enabled=recipe.k1_execution.evaluation_memory_fill), \
+            config = recipe.k1_execution
+            fill = (nullcontext() if config is None else
+                    deterministic_memory_fill_context(enabled=config.evaluation_memory_fill))
+            with fill, \
                     cpu_layout_context(current, borrowed, device), \
                     execution_context(current, borrowed, device, recipe.k1_execution):
                 value = k1_forward(current, k1_batch_to_device(borrowed, device, training=False))

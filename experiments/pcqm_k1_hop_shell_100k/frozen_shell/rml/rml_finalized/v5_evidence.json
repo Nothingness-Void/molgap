@@ -1,0 +1,110 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/protocol.md",
+      "name": "0",
+      "sha256": "d60869f59a193494155ed2e5ab6ffdea2f765734758243ba98421f2888ce9fcc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/decision.md",
+      "name": "1",
+      "sha256": "93cfc57ae13cc4396758cc7ad7df9761c73c5bfb017777a70f792919433f1cdf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+      "name": "2",
+      "sha256": "620c3c33babd9cb4e61043a47160f134273f04f4af55c1c7741f93e5755f61bf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md",
+      "name": "3",
+      "sha256": "587e1066d750e0ca8e7463d93db591d4de98ef41dc513833d52a60c3ee0e4415"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/inputs.json",
+      "name": "4",
+      "sha256": "fa0eaa2c70c4d94793df05f3f7232079ec60db97564d01550eba8507b0eb72e6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json",
+      "name": "5",
+      "sha256": "f7e941a7bfbda02bbbf6b4594489ea5574c04fc797259ff1c36215feba0c2571"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/results/result.json",
+      "name": "6",
+      "sha256": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_shell_result/result.json",
+      "name": "7",
+      "sha256": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_source_attempt001.zip",
+      "name": "8",
+      "sha256": "dce5f18621710a75817ab38e260910a7434307ae672a7d00f44dbf2f4751e029"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_hop_shell_100k/close_frozen_shell.py",
+      "name": "9",
+      "sha256": "10dfaf46eb09661f620d9439d95ce9473c4a4c4ea286ee9e6c8b921eacbcecac"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/protocol.md",
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md",
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-hop-shell-frozen-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-24",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata ingestion of separately observed local diagnostic."
+  },
+  "observed_execution": {
+    "inference_executed": false,
+    "training_executed": false,
+    "training_replay_ready": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "within_original_cumulative_ceiling",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "development_batch_prepared": "consumed",
+    "development_decoded": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "p8_hard": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_decoded": "consumed"
+  },
+  "scope": "pcqm-k1-hop-shell-frozen",
+  "track": "B"
+}
