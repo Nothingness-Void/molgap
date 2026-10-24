@@ -2993,6 +2993,28 @@
         "path": "experiments/pcqm_k1_hop_shell_100k/terminal_custody.md",
         "source_ref": "molgap-desktop"
       }
+    },
+    {
+      "owner_id": "codex/exp/k1-hop-fusion-qualification",
+      "original_path": "D:\\molgap-worktrees\\k1-hop-fusion-qualification",
+      "original_head": "e8412611eed7debe6e0d4471327479253d1ecbbc",
+      "scientific_status": "NO_TRAIN retained fixed-prediction fusion diagnostic; no training/strict fusion replay/adoption",
+      "physical_disposition": "PHYSICALLY_RETIRED",
+      "archive_ancestry": {
+        "ref": "refs/remotes/origin/molgap-desktop",
+        "verified_commit": "e8412611eed7debe6e0d4471327479253d1ecbbc",
+        "original_head_is_ancestor": true
+      },
+      "artifact_restore_limits": "Restore only this diagnostic if needed. Existing input predictions remain at their D: custody paths. Fixed output and source/evidence are committed in desktop; no checkpoint or native-proof copies were created.",
+      "recovery_ref": "e8412611eed7debe6e0d4471327479253d1ecbbc",
+      "custody_manifest": {
+        "path": "D:\\molgap-artifacts\\retirement\\k1-hop-fusion-qualification\\custody.json",
+        "sha256": "4f80fabf97cb4b7453c77fd137f9966145fed7fabd4816fbe485581a44f223bc"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_hop_fusion_qualification/terminal_custody.md",
+        "source_ref": "molgap-desktop"
+      }
     }
   ]
 }
