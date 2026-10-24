@@ -1,0 +1,77 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/k1-tail-wd-500k-src",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "08b6d3f8f53b8c12ce4e20477975e96e13cf6299fb85125823f8f7cc7afe4317",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "97b4bb8a5b8d33f8ae1035461d6ab78a73a5e167d5f093f4e847f2949bca14b8",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "038c832a124a37918af400f131beabde3da543e6772a0708ef3b83bccb57a1f3",
+      "bytes": 47848
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/acceptance_plan.json",
+      "sha256": "ef0beb9f2e427ccbbea877c02048be6bdabd3bca1f92f6f9fab4077c087cc608",
+      "bytes": 1708
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+      "sha256": "2833210e4d2cb89170848acef45270025c8348a613637a43e15a4946e9680f9b",
+      "bytes": 1831
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json",
+      "sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648",
+      "bytes": 1832
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+      "sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6",
+      "bytes": 207
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "5092cde7ba18797e7edc5376d70513926ea48845b902cd7e91291e5819b250a3",
+      "bytes": 1686
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+      "bytes": 5544
+    },
+    {
+      "path": "initial_states/tail_wd1e2.pt",
+      "sha256": "5436def30fae5c99284f6d6055a07826514c1be7e5cb8e80e9c81c65a87ba0b8",
+      "bytes": 15597683
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "5094e5115ea520377cfc8eb45cd3f80abb69181b1c9de0df827b45d368194084",
+      "bytes": 12717
+    },
+    {
+      "path": "prospective/tail_wd1e2/trajectory.json",
+      "sha256": "f9eae1d92853e1537a8b183a283187d02d0f87c43a1ff649a8b38d495cf703b4",
+      "bytes": 4874
+    },
+    {
+      "path": "prospective/tail_wd1e3/trajectory.json",
+      "sha256": "d25a91fef51d2dc1d78dceaeaecc6f0d83182d1db3e06d19c06334312adc56ef",
+      "bytes": 4874
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+      "bytes": 903147
+    }
+  ]
+}

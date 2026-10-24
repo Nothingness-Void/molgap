@@ -1,5 +1,10 @@
 # Branch routing
 
+This checkout is `codex/exp/k1-tail-regularization-500k`, based on verified
+desktop7aa6814b. Its [owning status](experiments/pcqm_k1_tail_regularization_500k/STATUS.md)
+binds Kaggle1 kernel140639445/version1. Keep this unresolved experiment's
+implementation, receipts and future acceptance here; no mainline adoption.
+
 This file owns branch and custody navigation, not model/job status. CURRENT_STATE.md owns state,
 ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch before remote comparison.
 
