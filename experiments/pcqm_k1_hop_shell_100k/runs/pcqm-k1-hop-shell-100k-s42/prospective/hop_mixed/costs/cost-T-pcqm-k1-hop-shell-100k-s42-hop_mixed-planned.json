@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-hop-shell-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-hop-shell-100k-s42-hop_mixed-planned",
+  "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/authority.json",
+  "hardware": "Tesla T4x2 FP32; one newly trained arm per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 2.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 2.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed"
+}

@@ -1,0 +1,119 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-hop-shell-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-hop-shell-100k-s42-hop_mixed-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_mixed/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream"
+      ],
+      "source_commit": "ce0d9c8ea0287accec4b584005b322a9227b7ee4",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_hop_shell_100k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-hop-shell-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/runs/pcqm-k1-hop-shell-100k-s42/prospective/rml_decision_snapshots/e1823e469399c02886a401b928a351c57fc587ee4be39f78e1579d3056b03113.json",
+    "snapshot_sha256": "e1823e469399c02886a401b928a351c57fc587ee4be39f78e1579d3056b03113",
+    "state_timestamp": "2026-10-24T04:18:31.433882+00:00"
+  },
+  "family_id": "pcqm-k1-hop-shell-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Existing K1 already encodes sufficient topology",
+      "Shell recurrence worsens optimization or transfer",
+      "Extra branch exceeds native cost cap",
+      "One seed cannot establish training stochasticity"
+    ],
+    "changed_mechanism": "exact-shortest-hop-content-partition",
+    "cheapest_falsifier": "Equal-parameter100K mixed-versus-ordered four-hop content under25percent native overhead gate",
+    "decision_changed_if_negative": "Close ordered-shell contrast negative or stop for cost; preserve attribution without blind cutoff,width,LR,seed retry",
+    "decision_changed_if_positive": "At least3meV improvement with negative95percent upper paired interval nominates strict review only; absolute K1 benefit and500K remain separate",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-hop-shell-100k-s42-hop_mixed-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+    "observed_deficiency": "Existing useful K1 global exchange does not establish whether distant chemical node content benefits from explicit shell partition; scalar topology biases and local mixing failed",
+    "related_closed_family_ids": [
+      "K1 BatchRenorm mean correction",
+      "K1 MsgNorm learned amplitude",
+      "K1 SSMA onehop aggregation",
+      "QM9 virtual multihop edges and sparse path attention",
+      "SPD PairToken scalar bias"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-500k-bottleneck-diagnostic-20261007"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does preserving exact1-to4hop node-content partition improve K1 beyond its equal-content mixed residual?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_mixed/recipe.json",
+      "experiments/pcqm_k1_hop_shell_100k/baseline_data_declaration.json",
+      "experiments/pcqm_k1_hop_shell_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-500k-bottleneck-diagnostic-20261007"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
+      "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "hop_mixed",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-hop-shell-100k-s42",
+      "reference_arm_id": "hop_mixed",
+      "reference_trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "reference_trajectory_ref": "experiments/pcqm_k1_hop_shell_100k/runs/pcqm-k1-hop-shell-100k-s42/prospective/hop_mixed/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "b8589296d04ffc1ffe9959eb141aa78d5a5f9d2dac844fdf942336d6636ea077"
+    },
+    "source_commit": "ce0d9c8ea0287accec4b584005b322a9227b7ee4",
+    "source_config_identity": "5add69dd7952c4ebae70a4f2ecb3a283faab3a885d1736bc29136fba7ffc1f5b"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed"
+}
