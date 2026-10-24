@@ -1,0 +1,54 @@
+{
+  "observed_at": "2026-10-24T04:36:14.862883+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-hop-shell-100k-s42",
+  "kernel_id": 140519502,
+  "version": 1,
+  "source": "Authenticated Kaggle Logs page, read-only browser observation",
+  "scheduler_status_displayed": "Running",
+  "accelerator_displayed": "GPU T4 x2",
+  "events": [
+    {
+      "elapsed_seconds": 233.5,
+      "message": "INPUT_RESOLVED hop_mixed datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1/manifest.json"
+    },
+    {
+      "elapsed_seconds": 233.5,
+      "message": "INPUT_RESOLVED hop_ordered datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1/manifest.json"
+    },
+    {
+      "elapsed_seconds": 233.6,
+      "message": "PAIR_PHASE_START preflight"
+    },
+    {
+      "elapsed_seconds": 332.6,
+      "message": "PAIR_PHASE_COMPLETE preflight"
+    },
+    {
+      "elapsed_seconds": 332.6,
+      "message": "PAIR_PHASE_START train"
+    }
+  ],
+  "training_artifacts_downloaded": false,
+  "terminal_acceptance": "NOT_EVALUATED",
+  "limitation": "Visible startup only; detailed runtime certificates, actual costs, updates and strict replay require terminal artifact acceptance.",
+  "first_completed_passes": [
+    {
+      "arm_id": "hop_ordered",
+      "remote_elapsed_seconds": 558.4,
+      "completed_passes": 1,
+      "optimizer_steps": 781,
+      "sample_presentations": 99968,
+      "development_mae_eV": 0.34603816270828247,
+      "pass_wall_seconds": 190.0584079150001
+    },
+    {
+      "arm_id": "hop_mixed",
+      "remote_elapsed_seconds": 558.9,
+      "completed_passes": 1,
+      "optimizer_steps": 781,
+      "sample_presentations": 99968,
+      "development_mae_eV": 0.3545725643634796,
+      "pass_wall_seconds": 190.56177940099997
+    }
+  ]
+}
