@@ -94,6 +94,57 @@ The journal retains phase timings. `RUNNING`, `SUBMISSION_BOUND` and startup
 messages do not imply native, scientific or terminal acceptance. Existing
 [retrieval and acceptance](EXPERIMENT_WORKFLOW.md) owners still apply.
 
+### HTTP observations and uncertain source recovery
+
+Source/kernel publication failures retain `platform_error` in the same journal
+and compact CLI output: error type, operation stage, endpoint class, observed
+HTTP status and a bounded response request ID when available. The SDK can raise
+an HTTPError for a JSON API error with HTTP200; its numeric `api_status` is kept
+separate. Missing fields stay absent. URLs, response bodies, exception messages,
+authorization/cookie headers and credentials are not retained. Read-only SDK
+identity wrappers carry these safe details through their generic RuntimeError.
+No observation adds a retry or turns an uncertain response into proven absence.
+
+For `SOURCE_UNKNOWN`, reuse the original `--prepared`, `--output`, authority and
+monitor arguments in the platform command above. Do not regenerate the package,
+remove the journal, change the dataset slug or call dataset creation separately.
+If the exact source remains absent/unobservable, the existing journal stops at
+reconciliation. A ready private version1 must still pass the existing complete
+allowlist, size and byte-hash roundtrip plus release checks. An authorized
+`--execute` reentry can then submit the kernel, so that command belongs to the
+experiment's submitting owner; it is not a read-only status query. Default mode
+checks local inputs only. A `BOUND` reentry verifies its retained receipt rather
+than posting again.
+
+On2026-10-25, the K1 tail-regularization500K source publication reported
+HTTPError after200.532s and left `SOURCE_UNKNOWN`. The old HTTP status/request ID
+cannot be reconstructed from that journal and must not be backfilled. The owning
+task independently observed exact source `nothingnessvoid/k1-tail-wd-500k-src`
+ready/private/version1 with14 matching names/sizes, then reentered its original
+operation. Retained `source_upload_verification.json` records all14 content
+hashes verified; `submission_state.json` subsequently reached BOUND with
+kernel140639445/version1 and unchanged package
+`09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32`,
+source873c3ac4. The journal and read-only reconciliation receipt are under
+`D:/molgap-artifacts/runs/pcqm-k1-tail-regularization-500k-s42/v1/operations/`.
+Infrastructure maintenance inspected those local receipts; it did not recreate
+the source, submit a job, modify frozen training inputs or establish native
+qualification.
+
+For that retained operation, from the primary checkout with its explicit
+external `$credentials` path, the exact existing reentry is:
+
+```powershell
+$attempt = 'D:/molgap-artifacts/runs/pcqm-k1-tail-regularization-500k-s42/v1'
+& ./.venv/Scripts/python.exe platforms/kaggle/submit_workflow.py `
+  --prepared "$attempt/prepared" --output "$attempt/operations" --credentials $credentials `
+  --authority experiments/pcqm_k1_tail_regularization_500k/authority.json `
+  --monitor-path experiments/pcqm_k1_tail_regularization_500k/STATUS.md --execute
+```
+
+That operation is already BOUND; further scheduler reconciliation remains with
+its owner. This command is recorded for recovery provenance, not a new launch.
+
 ## Declaration reuse
 
 `execution_comparison.py` owns normalized comparison paths, version handling,

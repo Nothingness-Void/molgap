@@ -24,7 +24,7 @@ from .experiment_package import read_packaged_text, verify_experiment_source_pac
 from .experiment_spec import ExperimentSpec
 from .common.kaggle import (
     dataset_status as _dataset_status, dataset_details as _dataset_details,
-    kernel_source as _kernel_source,
+    kernel_source as _kernel_source, platform_error_details,
 )
 from .kaggle_accelerator_push import (ReleaseRecheckError, _verify_release_report,
                                      push_kernel_with_accelerator)
@@ -390,6 +390,15 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             except OSError as persistence_error:
                 error.journal_error = persistence_error
                 raise error
+        def retain_platform_failure(error, phase, *, stage, endpoint_class):
+            detail = platform_error_details(error, stage=stage, endpoint_class=endpoint_class)
+            try:
+                save(phase, error_type=type(error).__name__, platform_error=detail)
+            except OSError as persistence_error:
+                error.platform_error = detail
+                error.journal_error = persistence_error
+                raise error from None
+            return detail
         api = api or connect_kaggle(credentials)
         if api.get_config_value(api.CONFIG_NAME_USER) != account:
             raise ValueError("Authenticated SDK account differs from prepared owner")
@@ -430,8 +439,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     if actual != dataset or response.error:
                         raise ValueError("Source publication identity differs")
                 except Exception as error:
-                    save("SOURCE_UNKNOWN", error_type=type(error).__name__)
-                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN", "submitted": False}
+                    detail = retain_platform_failure(error, "SOURCE_UNKNOWN",
+                        stage="source_publication", endpoint_class="dataset_create_new")
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN",
+                            "submitted": False, "platform_error": detail}
                 save("SOURCE_PUBLISHED")
                 source_status = _dataset_status(api, dataset)
             elif state["phase"] == "NEW":
@@ -492,8 +503,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return {"status": "BLOCKED", "stage": "kernel_preparation", "submitted": False,
                             **detail,
                             "next_action": "Resolve the local preparation error before continuing"}
-                save("SUBMIT_UNKNOWN", error_type=type(error).__name__)
-                return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
+                detail = retain_platform_failure(error, "SUBMIT_UNKNOWN",
+                    stage="kernel_publication", endpoint_class="kernel_push")
+                return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN",
+                        "submitted": "UNKNOWN", "platform_error": detail}
             atomic_json(output / "platform_response.json", response)
             if response["status"] != "submitted" or response.get("reconciliation_required"):
                 save("SUBMIT_UNKNOWN")

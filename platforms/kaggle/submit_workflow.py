@@ -56,7 +56,9 @@ def main(argv=None):
             from molgap.experiment_input import local_preparation_error
             payload=local_preparation_error(error,stage)
         else:
+            from molgap.common.kaggle import platform_error_details
             payload={"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,
+                     "platform_error":platform_error_details(error, stage=stage, endpoint_class="kaggle_api"),
                      "error_code":"PLATFORM_" + type(error).__name__.upper(),
                      "field":"platform.journal",
                      "next_action":"Inspect the submission journal and reconcile before retrying"}

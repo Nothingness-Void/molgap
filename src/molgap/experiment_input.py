@@ -787,7 +787,7 @@ def local_preparation_error(error,stage):
 
 def compact_operation_report(result, *, prepared=None, operations=None):
     """Human-facing summary; full library reports remain at their existing owners."""
-    keys = ("status", "stage", "field", "error_type", "error_code", "errno", "winerror", "reason", "submitted",
+    keys = ("status", "stage", "phase", "platform_error", "field", "error_type", "error_code", "errno", "winerror", "reason", "submitted",
             "run_directory", "spec_identity", "package_identity", "source_commit",
             "kernel", "kernel_id", "version", "scheduler_status", "reused_preparation",
             "prepared", "operations", "release_report", "release_recheck", "local_call_seconds")

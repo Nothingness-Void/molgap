@@ -227,6 +227,7 @@ def test_lost_kernel_response_reconciles_matching_source_without_repost(release,
 
 
 def test_unobserved_kernel_timeout_never_retries_post(release, monkeypatch):
+    import requests
     def local_failure(**kwargs):
         raise OSError("synthetic local failure before POST dispatch")
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", local_failure)
@@ -240,13 +241,22 @@ def test_unobserved_kernel_timeout_never_retries_post(release, monkeypatch):
     def lost(**kwargs):
         _dispatch_before_post(kwargs)
         release.api.pushed += 1
-        raise TimeoutError("secret-bearing transport error")
+        response = requests.Response()
+        response.status_code = 403
+        response.url = "https://www.kaggle.com/api/v1/kernels/push?token=do-not-print"
+        response.headers["X-Request-Id"] = "kernel-request-42"
+        raise requests.HTTPError("secret-bearing transport error", response=response)
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", lost)
     unknown = release.run()
     assert unknown["status"] == "RECONCILIATION_REQUIRED"
     assert unknown["submitted"] == "UNKNOWN"
     state = json.loads((release.output / "submission_state.json").read_bytes())
     assert state["phase"] == "SUBMIT_UNKNOWN"
+    assert state["platform_error"] == unknown["platform_error"] == {
+        "error_type": "HTTPError", "stage": "kernel_publication",
+        "endpoint_class": "kaggle_api", "http_status": 403, "request_id": "kernel-request-42"}
+    assert "do-not-print" not in canonical_json(state)
+    assert "secret-bearing" not in canonical_json(state)
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
     assert release.api.created == 1 and release.api.pushed == 1
 
@@ -254,22 +264,52 @@ def test_unobserved_kernel_timeout_never_retries_post(release, monkeypatch):
 def test_unobserved_dataset_timeout_never_retries_create(release, monkeypatch):
     def lost(*args, **kwargs):
         release.api.created += 1
-        raise TimeoutError()
+        raise TimeoutError("secret-bearing transport error")
     monkeypatch.setattr(release.api, "dataset_create_new", lost)
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
     assert release.run()["status"] == "RECONCILIATION_REQUIRED"
     assert release.api.created == 1 and release.api.pushed == 0
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert state["platform_error"] == {"error_type": "TimeoutError",
+        "stage": "source_publication", "endpoint_class": "dataset_create_new"}
+    assert "secret-bearing" not in canonical_json(state)
 
 
-def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch):
+def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch, capsys):
+    import requests
     real_create = release.api.dataset_create_new
     def lost(*args, **kwargs):
         real_create(*args, **kwargs)
-        raise TimeoutError()
+        response = requests.Response()
+        response.status_code = 503
+        response.url = "https://storage.googleapis.com/private-upload?token=do-not-print"
+        response.headers.update({"X-GUploader-UploadID": "upload-request-42", "Set-Cookie": "do-not-print"})
+        response._content = b'{"message":"do-not-print"}'
+        raise requests.HTTPError("do-not-print", response=response)
     monkeypatch.setattr(release.api, "dataset_create_new", lost)
-    assert release.run()["status"] == "RECONCILIATION_REQUIRED"
+    # Use the actual CLI serializer as well as the journal: neither default
+    # compact output nor retained evidence may discard or leak the HTTP fact.
+    entry_spec = importlib.util.spec_from_file_location("submission_http_fixture",
+        Path(__file__).resolve().parents[1] / "platforms/kaggle/submit_workflow.py")
+    entry = importlib.util.module_from_spec(entry_spec)
+    entry_spec.loader.exec_module(entry)
+    monkeypatch.setattr(owner, "connect_kaggle", lambda _: release.api)
+    monkeypatch.setattr(requests, "Session", lambda: release.http)
+    assert entry.main(["--prepared", str(release.prepared), "--credentials", str(release.credentials),
+        "--output", str(release.output), "--authority", "authority.json",
+        "--monitor-path", "experiments/example/STATUS.md", "--execute"]) == 1
+    printed = capsys.readouterr().out
+    compact = json.loads(printed)
+    assert compact["status"] == "RECONCILIATION_REQUIRED" and compact["phase"] == "SOURCE_UNKNOWN"
+    detail = {"error_type": "HTTPError", "stage": "source_publication",
+        "endpoint_class": "google_storage", "http_status": 503, "request_id": "upload-request-42"}
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert state["platform_error"] == compact["platform_error"] == detail
+    assert "do-not-print" not in printed + canonical_json(state)
+    assert release.api.created == 1 and release.api.pushed == 0
     assert release.run()["status"] == "SUBMISSION_BOUND"
-    assert release.api.created == 1
+    assert release.api.created == release.api.pushed == 1
+    assert json.loads((release.output / "submission_state.json").read_bytes())["platform_error"] == detail
 
 
 def test_quota_shortfall_stops_before_publication(release):
@@ -400,11 +440,28 @@ def test_connector_reuses_explicit_credentials_without_global_auth(monkeypatch, 
     assert seen == [path]
 
 
-def test_dataset_status_matches_installed_sdk_signature(release):
+def test_dataset_status_matches_installed_sdk_signature(release, monkeypatch):
     release.api.dataset = True
     assert owner._dataset_status(release.api, "owner/new-source") == {"status": "ready"}
     release.api.ready = False
     assert owner._dataset_status(release.api, "owner/new-source") == {"status": "processing"}
+    import requests
+    response = requests.Response()
+    response.status_code = 200  # The installed SDK can raise HTTPError for JSON code.
+    response.url = "https://www.kaggle.com/api/v1/datasets/status?token=do-not-print"
+    response.headers.update({"X-Request-Id": "unsafe\nheader", "X-Kaggle-Request-Id": "status-request-42"})
+    response._content = b'{"code":429,"message":"do-not-print"}'
+    def denied(_):
+        raise requests.HTTPError("do-not-print", response=response)
+    monkeypatch.setattr(release.api, "dataset_status", denied)
+    with pytest.raises(RuntimeError, match="Dataset status is unknown") as raised:
+        owner._dataset_status(release.api, "owner/new-source")
+    from molgap.common.kaggle import platform_error_details
+    details = platform_error_details(raised.value, stage="platform_operations", endpoint_class="other_http")
+    assert details == {"error_type": "HTTPError", "stage": "dataset_status",
+        "endpoint_class": "kaggle_api", "http_status": 200, "api_status": 429,
+        "request_id": "status-request-42"}
+    assert "do-not-print" not in canonical_json(details) + str(raised.value)
 
 
 @pytest.mark.parametrize("ref,private", [("owner/new-source", True), ("other/source", True), ("owner/new-source", False)])
