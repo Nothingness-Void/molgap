@@ -6,6 +6,13 @@
 The existing platform preparation completed in76.28s; its release-input check
 took13.42s. No native training or scientific result is established by this.
 
+Interpretation boundary: versus the historical parent, both arms also share a
+fresh optimizer/LR horizon and plain single-forward supervised loss instead of
+the parent's two-forward consistency objective. Only B-versus-A isolates decay.
+An improvement versus the retained starting predictor establishes a useful whole
+tail recipe under this contract; it cannot uniquely credit weight decay or prove
+the parent's plateau had one cause.
+
 Used shared family training, atomic IO/state hashing, scientific-input compiler,
 source-package/release/prospective owners and Kaggle prepared workflow. Added no
 model, trainer loop, submitter, logger or RML framework. Small shared extensions:
