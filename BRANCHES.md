@@ -12,6 +12,13 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+K1 equal-content hop-shell100K is owned by
+`codex/exp/k1-hop-shell-100k`, checkout
+`D:/molgap-worktrees/k1-hop-shell-100k`.
+[Owning status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-hop-shell-100k/experiments/pcqm_k1_hop_shell_100k/STATUS.md)
+retain the Kaggle1 mixed-versus-ordered shell comparison. Keep implementation,
+acceptance and attribution on that owner; no active model adoption is implied.
+
 K1 Batch Renorm scale-versus-affine100K is terminally accepted without adoption.
 Full history through `c677aa45` is reachable from pushed archive `f92e4694`.
 Desktop retains [strict replay and final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md)
