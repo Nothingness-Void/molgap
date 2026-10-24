@@ -25,7 +25,10 @@ class Api:
 
 class Http:
     status_code = 200
+    def __init__(self):
+        self.calls = 0
     def get(self, url, **_):
+        self.calls += 1
         assert url == "https://signed.invalid/secret"
         return self
     def __enter__(self):
@@ -43,10 +46,11 @@ def context(version=3):
 @pytest.mark.parametrize(("version", "expected_version"), [(3, 3), ("1", 1)])
 def test_exact_binary_version_hash_and_idempotency(tmp_path, version, expected_version):
     api = Api()
+    http = Http()
     pin = hashlib.sha256(b"retained prediction bytes").hexdigest()
     files = {"run/predictions.pt": ("run/predictions.pt",pin)}
     args = dict(context=context(version),remote_manifest_path="run/manifest.json",files=files,
-                destination=tmp_path,http_session=Http())
+                destination=tmp_path,http_session=http)
     result = retrieve_pinned_exact_files(api,**args)
     assert api.request.version_number == expected_version
     assert api.request.file_path == "run/predictions.pt"
@@ -54,8 +58,10 @@ def test_exact_binary_version_hash_and_idempotency(tmp_path, version, expected_v
     assert result["receipt_version"] == expected_version
     assert result["platform_version_verified_by_output_api"] is True
     assert "secret" not in str(result)
+    assert http.calls == 1
     api.download_kernel_output = lambda _: pytest.fail("Retained file must not be requested again")
     assert retrieve_pinned_exact_files(api,**args)["files"][0]["state"] == "ALREADY_RETAINED"
+    assert http.calls == 1
 
 
 @pytest.mark.parametrize("version", [

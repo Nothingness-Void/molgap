@@ -13,10 +13,12 @@ from .paths import resolve_repo_pointer, verify_bound_artifact
 from .trace import atomic_write, file_digest, json_bytes
 
 
-def _expected(root, record):
+def _expected(root, record, *, verify_artifacts: bool = True):
     if record.get("terminal_candidate_ref"):
-        return _terminal_expected(root, record)
-    manifest, readiness = verify_candidate_qualification(root, record["candidate_qualification_ref"])
+        return _terminal_expected(root, record, verify_artifacts=verify_artifacts)
+    manifest, readiness = verify_candidate_qualification(
+        root, record["candidate_qualification_ref"], verify_artifacts=verify_artifacts
+    )
     qualification = load_json_object(resolve_repo_pointer(root, record["candidate_qualification_ref"]))
     acceptance = load_json_object(resolve_repo_pointer(root, qualification["acceptance_ref"]))
     accepted = acceptance["arms"][qualification["acceptance_arm"]]
@@ -45,9 +47,9 @@ def _expected(root, record):
     return bundle, view
 
 
-def _terminal_expected(root, record):
+def _terminal_expected(root, record, *, verify_artifacts: bool = True):
     """Enroll an already strict terminal candidate; never qualify missing proof."""
-    from .finalize import verified_receipt
+    from .finalize import load_terminal_input, verified_receipt
     from .trace import load_canonical_trace, validate_manifest_trace
     from molgap.comparison_readiness import validate_comparison_readiness
     directory = resolve_repo_pointer(root, record["terminal_candidate_ref"]).parent
@@ -57,9 +59,14 @@ def _terminal_expected(root, record):
     load = lambda p: load_json_object(resolve_repo_pointer(root, p))
     trajectory, original = load(record["terminal_candidate_ref"]), load(record["original_manifest_ref"])
     evidence = load_json_object(directory / "v5_evidence.json")
-    terminal = load_json_object(directory / "terminal_input.json")
+    terminal = load_terminal_input(directory)
     ready = load(record["terminal_readiness_ref"])
-    validate_comparison_readiness(ready, evidence_verifier=lambda p, s: verify_bound_artifact(root, p, s))
+    validate_comparison_readiness(
+        ready,
+        evidence_verifier=(lambda p, s: verify_bound_artifact(root, p, s))
+        if verify_artifacts else None,
+        metadata_only=not verify_artifacts,
+    )
     accepted = load(record["acceptance_ref"])
     arm = accepted["arms"][record["acceptance_arm"]]
     if (not ready["strict_ready"] or ready["comparison_class"] != "STRICT_CAUSAL"
@@ -84,10 +91,12 @@ def _terminal_expected(root, record):
     prediction = load(bindings["prediction_manifest"]["ref"])
     if prediction != arm["prediction_manifest"]:
         raise ValueError("terminal comparator prediction not independently accepted")
-    verify_bound_artifact(root, prediction["artifact_locator"], prediction["artifact_sha256"])
+    if verify_artifacts:
+        verify_bound_artifact(root, prediction["artifact_locator"], prediction["artifact_sha256"])
     trace = load_canonical_trace(resolve_repo_pointer(root, original["trace_artifact_ref"]))
     validate_manifest_trace(original, trace)
-    verify_bound_artifact(root, original["trace_artifact_ref"], original["trace_artifact_sha256"])
+    if verify_artifacts:
+        verify_bound_artifact(root, original["trace_artifact_ref"], original["trace_artifact_sha256"])
     if (not all(original["trace_fields"].values())
             or trace["observations"][-1]["optimizer_step"] != identity["optimizer_steps"]
             or trace["observations"][-1]["sample_presentations"] != identity["sample_presentations"]):
@@ -114,14 +123,17 @@ def _terminal_expected(root, record):
     return bundle, view
 
 
-def verify_candidate_reference(root: Path, pointer: str, *, expected_bundle=None):
+def verify_candidate_reference(
+    root: Path, pointer: str, *, expected_bundle=None, verify_artifacts: bool = True
+):
     root = Path(root).resolve()
     record = load_json_object(resolve_repo_pointer(root, pointer))
     if record.get("format") != "molgap-accepted-candidate-reference-v1" or record["qualification_ref"] != pointer:
         raise ValueError("unsupported candidate reference qualification")
     for ref, digest in record["artifact_hashes"].items():
-        verify_bound_artifact(root, ref, digest)
-    bundle, view = _expected(root, record)
+        if verify_artifacts:
+            verify_bound_artifact(root, ref, digest)
+    bundle, view = _expected(root, record, verify_artifacts=verify_artifacts)
     if (load_json_object(resolve_repo_pointer(root, record["bundle_ref"])) != bundle
             or load_json_object(resolve_repo_pointer(root, record["reference_view_ref"])) != view
             or expected_bundle is not None and dict(expected_bundle) != bundle):

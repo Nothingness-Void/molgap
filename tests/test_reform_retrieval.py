@@ -5,6 +5,8 @@ from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
+import sys
+from types import SimpleNamespace
 from unittest.mock import Mock
 
 import pytest
@@ -32,6 +34,13 @@ def payload(base_payload, request):
 def retrieval(frozen_run, tmp_path, monkeypatch):
     case = frozen_run
     case.adapter = _module(monkeypatch)
+    # Numeric producer versions use the exact-file transport.  Keep the fake
+    # SDK surface equivalent to that transport while retaining the real
+    # request, redirect and hash-verifying code under test.
+    service = sys.modules["kagglesdk.kernels.types.kernels_api_service"]
+    class ApiDownloadKernelOutputRequest:
+        pass
+    service.ApiDownloadKernelOutputRequest = ApiDownloadKernelOutputRequest
     case.context = RunContext.from_launch(case.spec, case.run / "operations/launch_receipt.json",
         case.package, expected_package_identity=case.manifest["package_identity"], arm_id="gptrans_t")
     case.remote = "runs/version7/gptrans/output_manifest.json"
@@ -55,6 +64,16 @@ def retrieval(frozen_run, tmp_path, monkeypatch):
     case.payloads[manifest_url] = case.local.read_bytes()
     case.api = _Api(case.context.account, [_ResponsePage(case.remote_files)])
     case.http = _Http(case.payloads)
+    redirects = {item.file_name: item.url for item in case.remote_files}
+    client_type = type(case.api.client)
+    original_enter = client_type.__enter__
+    def enter(client):
+        value = original_enter(client)
+        def download_kernel_output(request):
+            return SimpleNamespace(url=redirects[request.file_path])
+        value.kernels.kernels_api_client.download_kernel_output = download_kernel_output
+        return value
+    monkeypatch.setattr(client_type, "__enter__", enter)
     case.auth = Mock(return_value=case.api)
     monkeypatch.setattr("molgap.kaggle_submission.connect_kaggle", case.auth)
     case.original_retrieve = case.adapter.retrieve_family_outputs
@@ -105,7 +124,7 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
     assert result["scientific_acceptance"] is False
     if execute:
         assert result["status"] == "RETRIEVED" and result["receipt_version"] == "7"
-        assert result["platform_version_verified_by_output_api"] is False
+        assert result["platform_version_verified_by_output_api"] is True
         assert result["unselected_outputs_downloaded"] is False
         assert case.retrieve.call_args.kwargs["context"] == case.context
         retained = (case.destination / "output_manifest.json").read_bytes()
@@ -223,7 +242,7 @@ def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(retriev
     assert result["status"] == "RETRIEVED" and result["executed"] is True
     assert result["producer_version"] == result["receipt_version"] == "7"
     assert result["scientific_acceptance"] is False
-    assert result["platform_version_verified_by_output_api"] is False
+    assert result["platform_version_verified_by_output_api"] is True
     assert result["unselected_outputs_downloaded"] is False
     case.auth.assert_called_once_with(case.profile.parent / "unread-credentials.json")
     case.retrieve.assert_called_once()

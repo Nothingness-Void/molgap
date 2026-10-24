@@ -69,10 +69,10 @@ def test_legacy_repository_retrieved_root_and_explicit_locations(acceptance_run)
         resolve_run_acceptance_inputs(*case.original, retrieved_root=root, locations=where)
 
 
-def retain(case, arm):
-    context = RunContext.from_launch(case.spec, case.run / "operations/launch_receipt.json",
+def retain(case, arm, *, receipt=None):
+    context = RunContext.from_launch(case.spec, receipt or case.run / "operations/launch_receipt.json",
         case.package, expected_package_identity=case.manifest["package_identity"], arm_id=arm)
-    destination = case.paths.artifact_root / "retained" / arm
+    destination = case.paths.artifact_root / "retained" / (context.platform_version if receipt else "original") / arm
     trace = b"synthetic retained trace"
     destination.mkdir(parents=True)
     (destination / "trace.json").write_bytes(trace)
@@ -98,8 +98,98 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run):
     assert {arm: item["output_dir"] for arm, item in result["outputs"].items()} == {
         arm: str(path) for arm, path in destinations.items()}
     assert result["raw_traces"] == {arm: str(path / "trace.json") for arm, path in destinations.items()}
-    first = next(iter(destinations))
-    (destinations[first] / "output_manifest.json").write_bytes(b"changed")
+
+    # A successor receipt may be selected only after every arm has a
+    # hash-bound canonical continuation.  Retrieval maps remain separate from
+    # the immutable original mappings and repeated discovery is read-only.
+    from test_experiment_launch import build
+    from molgap.research_memory.paths import artifact_locator
+    from molgap.research_memory.trace import file_digest, json_bytes
+
+    response = deepcopy(case.receipt["response"])
+    response["platform_version"]["value"] = "8"
+    for physical in response["physical_runs"]["value"]:
+        physical["platform_version"]["value"] = "8"
+    receipt = case.paths.artifact_root / "continuation-receipt.json"
+    write(receipt, build((case.spec, case.package, case.manifest["package_identity"]), response))
+    original_mappings = {
+        path: path.read_bytes()
+        for path in (case.run / "operations" / "retrieved_outputs").glob("*.json")
+    }
+    continued = {}
+    for arm in (a["arm_id"] for a in case.spec.to_dict()["arms"]):
+        context, destination, pin = retain(case, arm, receipt=receipt)
+        target = record_run_retrieval(*case.original, context=context,
+            destination=destination, manifest_sha256=pin, continuation_receipt=receipt)
+        assert target == record_run_retrieval(*case.original, context=context,
+            destination=destination, manifest_sha256=pin, continuation_receipt=receipt)
+        continued[arm] = destination
+    resumed = resolve_run_acceptance_inputs(*case.original, continuation_receipt=receipt)
+    assert resumed["original_receipt"] == case.run / "operations/launch_receipt.json"
+    assert {context.platform_version for context in resumed["contexts"].values()} == {"8"}
+    assert {arm: item["output_dir"] for arm, item in resumed["outputs"].items()} == {
+        arm: str(path) for arm, path in continued.items()}
+    assert {path: path.read_bytes() for path in original_mappings} == original_mappings
+
+    # Build the smallest byte-integrity finalization accepted by the owning
+    # finalizer API; this is not a scientific closure fixture.
+    declaration = case.spec.to_dict()
+    continuation_paths = []
+    for binding in declaration["prospective"]["arms"]:
+        owner = case.repo / binding["output"]
+        trajectory = {"trajectory_id": binding["trajectory_id"]}
+        write(owner / "trajectory.json", trajectory)
+        continued_observation = {"attempt_id": binding["arm_id"] + "-v8"}
+        pointer = owner / "continuation.json"
+        origin_receipt = case.run / "operations/launch_receipt.json"
+        record = {"format": "molgap-terminal-continuation-v1", "continued": continued_observation,
+            **{key: {"path": artifact_locator(case.repo, path), "sha256": file_digest(path)}
+               for key, path in (("origin_receipt", origin_receipt), ("continued_receipt", receipt))}}
+        write(pointer, record)
+        hashes = {item["path"]: item["sha256"] for item in
+                  (record["origin_receipt"], record["continued_receipt"])}
+        hashes[artifact_locator(case.repo, pointer)] = file_digest(pointer)
+        terminal = {"trajectory_id": binding["trajectory_id"],
+            "run_id": declaration["logical_run_id"] + ":" + binding["arm_id"] + ":downstream",
+            "continuation_ref": artifact_locator(case.repo, pointer), "artifact_hashes": hashes,
+            "same_run_observation": continued_observation}
+        finalized = owner / "rml_finalized"
+        for name, value in (("trajectory.json", trajectory), ("prospective_snapshot.json", trajectory),
+                            ("v5_evidence.json", {"synthetic": True}), ("terminal_input.json", terminal)):
+            write(finalized / name, value)
+        published = {path.name: file_digest(path) for path in finalized.iterdir()}
+        write(finalized / "finalization.json", {"format": "molgap-rml-finalization-v1",
+            "trajectory_id": binding["trajectory_id"], "published_hashes": published, "replacements": {},
+            "source_artifact_digest": hashlib.sha256(json_bytes({
+                "trajectory_sha256": file_digest(finalized / "prospective_snapshot.json"),
+                "terminal": terminal, "trace_sha256": None})).hexdigest()})
+        continuation_paths.append(pointer)
+        if len(continuation_paths) == 1:
+            with pytest.raises(ValueError, match="one common continuation"):
+                resolve_run_acceptance_inputs(*case.original)
+    automatic = resolve_run_acceptance_inputs(*case.original)
+    assert automatic["outputs"] == resumed["outputs"]
+    assert automatic["options"]["receipt_path"] == receipt
+    assert {context.platform_version for context in automatic["contexts"].values()} == {"8"}
+    before = {path.relative_to(case.repo).as_posix(): path.read_bytes()
+              for path in (case.repo / "experiments").rglob("*") if path.is_file()}
+    assert resolve_run_acceptance_inputs(*case.original)["outputs"] == automatic["outputs"]
+    after = {path.relative_to(case.repo).as_posix(): path.read_bytes()
+             for path in (case.repo / "experiments").rglob("*") if path.is_file()}
+    assert after == before
+    retained_receipt = receipt.read_bytes()
+    receipt.write_bytes(b"changed accepted receipt")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        resolve_run_acceptance_inputs(*case.original)
+    receipt.write_bytes(retained_receipt)
+    retained_continuation = continuation_paths[0].read_bytes()
+    continuation_paths[0].write_bytes(b"changed continuation")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        resolve_run_acceptance_inputs(*case.original)
+    continuation_paths[0].write_bytes(retained_continuation)
+
+    first = next(iter(continued))
+    (continued[first] / "output_manifest.json").write_bytes(b"changed")
     with pytest.raises(ValueError, match="manifest changed"):
         resolve_run_acceptance_inputs(*case.original)
 

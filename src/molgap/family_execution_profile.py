@@ -28,7 +28,8 @@ def profile_artifact_refs(root):
     names = ("execution_profile_receipt.json", "runtime_certificate.json",
              "preflight.json", "runtime_manifest.json", "runtime_provenance.json",
              "repeat-a.pt", "repeat-b.pt", "resumed.pt", "resumed-first.pt",
-             "fill-enabled.pt")
+             "fill-enabled.pt", "native_proofs.zip", "actual_resume_proofs.zip",
+             "actual_resume_certificate.json")
     paths = [root / name for name in names if (root / name).is_file()]
     for directory in ("profiles", "profile_qualification"):
         folder = root / directory

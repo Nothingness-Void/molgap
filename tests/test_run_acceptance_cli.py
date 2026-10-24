@@ -11,12 +11,16 @@ from molgap import experiment_run as runs
 
 
 def test_run_acceptance_cli_needs_no_outputs_or_locations(tmp_path, monkeypatch, capsys):
-    owner = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}, "executed": False})
+    accepted_reference = {"reference_id": "ev-reference", "path": "experiments/reference/finalization.json"}
+    owner = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}, "executed": False,
+                              "terminal_staging": {}, "accepted_reference": accepted_reference})
     monkeypatch.setattr(runs, "accept_run_workflow", owner)
     assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
         "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
         "--retrieved-root", str(tmp_path / "retrieved")]) == 0
-    assert json.loads(capsys.readouterr().out)["status"] == "MECHANICALLY_VERIFIED"
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["status"] == "MECHANICALLY_VERIFIED"
+    assert payload["accepted_reference"] == accepted_reference
     assert owner.call_args.kwargs["supplied"] is None
     assert owner.call_args.kwargs["locations"] is None
     assert owner.call_args.kwargs["retrieved_root"] == tmp_path / "retrieved"

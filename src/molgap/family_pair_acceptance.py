@@ -18,7 +18,7 @@ from .training_reproducibility import atomic_json, sha256_file
 def verify_session_reference(root, bundle):
     """Reuse a complete finalized Session control without another training run."""
     from .comparison_readiness import validate_reference_bundle
-    from .research_memory.finalize import verified_receipt
+    from .research_memory.finalize import load_terminal_input, verified_receipt
     from .research_memory.paths import resolve_repo_pointer, verify_bound_artifact
     from .research_memory.schemas import validate_trace_manifest
     root = Path(root).resolve()
@@ -37,7 +37,7 @@ def verify_session_reference(root, bundle):
             or trace["backtest_eligibility"] != {"eligible": True, "exclusion_reasons": []}
             or resolve_repo_pointer(root, bundle["trace_manifest_ref"]) != directory / "trace_manifest.json"):
         raise ValueError("Session reference is not its own complete accepted control")
-    terminal = _json(directory / "terminal_input.json")
+    terminal = load_terminal_input(directory)
     original_ref = terminal["observed_reference_ref"]
     verify_bound_artifact(root, original_ref, terminal["artifact_hashes"][original_ref])
     original = _json(resolve_repo_pointer(root, original_ref))

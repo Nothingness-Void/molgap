@@ -67,7 +67,18 @@ def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
     return pointers
 
 
-def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
+def validate_repository_records(
+    repo_root: str | Path, *, verify_comparison_artifacts: bool = True
+) -> dict[str, Any]:
+    """Validate the catalog, optionally without rereading comparison payloads.
+
+    Metadata-only callers still receive schema, identity, pointer, canonical
+    trace, and additive qualification-overlay checks.  They skip only bound
+    comparison artifact byte verification; this does not grant strict readiness
+    or alter any frozen record.
+    """
+    if type(verify_comparison_artifacts) is not bool:
+        raise ValueError("verify_comparison_artifacts must be an explicit boolean")
     root = Path(repo_root).resolve()
     discovered = discover_records(root)
     records: dict[str, list[tuple[Path, dict[str, Any]]]] = {
@@ -124,10 +135,15 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
     for path in discovered.traces:
         record = validate_trace_manifest(load_json(path))
         from .reference_qualification import qualified_reference_manifest
-        record = qualified_reference_manifest(root, path, record)
+        record = qualified_reference_manifest(
+            root, path, record, verify_artifacts=verify_comparison_artifacts
+        )
         from .candidate_qualification import qualified_candidate_record
         if record["comparison_role"] == "candidate":
-            record = qualified_candidate_record(root, path, record, kind="manifest")
+            record = qualified_candidate_record(
+                root, path, record, kind="manifest",
+                verify_artifacts=verify_comparison_artifacts,
+            )
         _validate_pointers(
             root,
             [
@@ -163,12 +179,18 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         record = validate_comparison_prelaunch(load_json(path))
         records["comparison_prelaunch"].append((path, record))
     for path in discovered.comparison_readiness:
+        record = load_json(path)
         from .candidate_qualification import qualified_candidate_record
+        record = qualified_candidate_record(
+            root, path, record, kind="readiness",
+            verify_artifacts=verify_comparison_artifacts,
+        )
         record = validate_comparison_readiness(
-            qualified_candidate_record(root, path, load_json(path), kind="readiness"),
-            evidence_verifier=lambda pointer, digest: verify_bound_artifact(
-                root, pointer, digest
-            ),
+            record,
+            evidence_verifier=(
+                lambda pointer, digest: verify_bound_artifact(root, pointer, digest)
+            ) if verify_comparison_artifacts else None,
+            metadata_only=not verify_comparison_artifacts,
         )
         records["comparison_readiness"].append((path, record))
     for path in discovered.target_transform_assets:

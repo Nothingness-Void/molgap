@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 
-from .experiment_family_workflow import _artifact_path, tensor_digest
+from .experiment_family_workflow import tensor_digest
 from .family_training_data import PassBatchSampler
 
 
@@ -64,14 +64,11 @@ def _execution_state_fingerprint(value):
 
 def _execution_artifact(root, record, label):
     """Verify and load one CPU proof artifact named by an execution record."""
-    import torch
     if (type(record) is not dict or set(record) != {"path", "sha256", "fingerprint"}
             or type(record["path"]) is not str):
         raise ValueError("Malformed K1 execution " + label + " artifact record")
-    path = _artifact_path(root, record["path"])
-    if _runner_file_sha(path) != record["sha256"]:
-        raise ValueError("K1 execution " + label + " artifact hash changed")
-    state = torch.load(path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    state = load_proof(root, record)
     if _execution_state_fingerprint(state) != record["fingerprint"]:
         raise ValueError("K1 execution " + label + " state fingerprint changed")
     return state
@@ -82,10 +79,8 @@ def _execution_tensor_artifact(root, record, label):
     if (type(record) is not dict or set(record) != {"path", "sha256", "fingerprint"}
             or type(record["path"]) is not str):
         raise ValueError("Malformed K1 execution " + label + " artifact record")
-    path = _artifact_path(root, record["path"])
-    if _runner_file_sha(path) != record["sha256"]:
-        raise ValueError("K1 execution " + label + " artifact hash changed")
-    value = torch.load(path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    value = load_proof(root, record)
     if not isinstance(value, torch.Tensor) or _runner_state_fingerprint(value) != record["fingerprint"]:
         raise ValueError("K1 execution " + label + " tensor fingerprint changed")
     return value

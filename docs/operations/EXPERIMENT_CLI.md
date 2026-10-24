@@ -107,6 +107,28 @@ Recovery output must be fresh and outside the checkout and original
 inputs/prepared/operations. The existing owner validates checkpoint/native
 semantics and all acceptance gates; owner result/exit meanings are unchanged.
 
+Run-ID acceptance also supports `--strict` for retained native proofs, frozen
+same-run comparisons and actual replay membership. `--strict-inputs` optionally
+locates per-arm proof roots. With canonical accepted tips, `--strict --execute`
+rechecks their bound artifacts read-only; it does not stage or close them again.
+Missing historical roles or scientific decisions remain explicit inputs.
+Runtime role sidecars are consumed automatically when available.
+
+Closed continuations resolve their shared successor receipt from every arm's
+hash-bound canonical record. An unclosed continuation requires
+`--continuation-receipt`; staging also needs `--resume-prepared` and
+`--resume-authority`. These reuse the original resume bundle, source checkpoint,
+trace prefix and native proof without editing the prospective action. Local
+attempt IDs remain distinct from physical platform versions. `--physical-runs`
+optionally accounts for bound allocation windows once per job/version.
+
+The owning family retriever accepts the continued receipt and
+`--strict --resume-prepared`. It selects manifest/certificate dependencies only,
+verifies retained files before reuse and reports actual downloads separately.
+Lossless proof archives preserve original tensor-file hashes; tensor semantics
+are checked by strict acceptance. `closure_complete` reports terminal completion
+separately from scientific qualification and replay status.
+
 ## Input and Output Contract
 
 Direct `--spec`, terminal descriptor and launch-response JSON is UTF-8 canonical JSON:

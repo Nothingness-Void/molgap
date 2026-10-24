@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -52,13 +53,24 @@ def _reference_binding_is_valid(
     return False
 
 
-def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, Any]) -> dict[str, Any]:
+def _canonical_reference_manifest(
+    root: Path,
+    path: Path,
+    manifest: dict[str, Any],
+    *,
+    verify_comparison_artifacts: bool = True,
+) -> dict[str, Any]:
     """Use a hash-bound migration sidecar without rewriting accepted V5 bytes."""
     from .reference_qualification import qualified_reference_manifest
-    manifest = qualified_reference_manifest(root, path, manifest)
+    manifest = qualified_reference_manifest(
+        root, path, manifest, verify_artifacts=verify_comparison_artifacts
+    )
     if manifest["comparison_role"] == "candidate":
         from .candidate_qualification import qualified_candidate_record
-        manifest = qualified_candidate_record(root, path, manifest, kind="manifest")
+        manifest = qualified_candidate_record(
+            root, path, manifest, kind="manifest",
+            verify_artifacts=verify_comparison_artifacts,
+        )
     binding_path = repo_local_path(root, path.parent / "trace_migration.json")
     if manifest["comparison_role"] != "reference" or not binding_path.is_file():
         return manifest
@@ -67,8 +79,9 @@ def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, An
         raise ValueError("unsupported reference trace migration")
     if resolve_repo_pointer(root, binding["original_manifest_ref"]) != path.resolve():
         raise ValueError("migration does not bind its original manifest")
-    verify_bound_artifact(root, binding["original_manifest_ref"], binding["original_manifest_sha256"])
-    verify_bound_artifact(root, binding["canonical_manifest_ref"], binding["canonical_manifest_sha256"])
+    if verify_comparison_artifacts:
+        verify_bound_artifact(root, binding["original_manifest_ref"], binding["original_manifest_sha256"])
+        verify_bound_artifact(root, binding["canonical_manifest_ref"], binding["canonical_manifest_sha256"])
     migrated = validate_trace_manifest(load_json_object(resolve_repo_pointer(root, binding["canonical_manifest_ref"])))
     mutable = {"trace_artifact_ref", "trace_artifact_sha256", "trace_fields"}
     if {k: v for k, v in manifest.items() if k not in mutable} != {
@@ -81,7 +94,8 @@ def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, An
         and a.get("sha256") == binding["source_trace_sha256"] for a in evidence["artifacts"]
     ):
         raise ValueError("migration source is not bound by frozen reference evidence")
-    verify_bound_artifact(root, migrated["trace_artifact_ref"], migrated["trace_artifact_sha256"])
+    if verify_comparison_artifacts:
+        verify_bound_artifact(root, migrated["trace_artifact_ref"], migrated["trace_artifact_sha256"])
     canonical = load_canonical_trace(resolve_repo_pointer(root, migrated["trace_artifact_ref"]))
     validate_manifest_trace(migrated, canonical)
     if not any(p.get("source") == binding["source_trace_ref"] and
@@ -91,25 +105,176 @@ def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, An
     return migrated
 
 
-def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
+def strict_comparability_identity(observed, strict):
+    """Project a verified strict contract for ordinary and intervention views."""
+    import json
+
+    def fields(*names):
+        return json.dumps({name: strict[name] for name in names},
+                          sort_keys=True, separators=(",", ":"))
+
+    return {**observed,
+        "dataset_identity": strict["dataset_identity"],
+        "row_split_identity": fields("data_role_identity", "row_membership_identity", "row_order_identity"),
+        "architecture_identity": strict["architecture_config_identity"],
+        "optimizer_identity": strict["optimizer_identity"],
+        "lr_schedule_identity": strict["schedule_identity"],
+        "target_transform_identity": fields("target_transform_identity", "target_transform_asset_sha256"),
+        "precision_identity": fields("precision", "tf32_enabled", "deterministic_algorithms"),
+        "ema_semantics": fields("ema_enabled", "ema_decay", "ema_update_frequency",
+                                "weight_semantics", "evaluation_weight_source"),
+        "evaluation_role_identity": strict["evaluation_role_identity"],
+        "selection_role_identity": fields("selection_role_identity", "checkpoint_selection_identity"),
+        "terminal_endpoint_identity": fields("optimizer_steps", "sample_presentations"),
+        "strict_identity": strict}
+
+
+def replay_manifests(
+    root: Path,
+    records: dict[str, list],
+    *,
+    verify_comparison_artifacts: bool = True,
+) -> list[dict[str, Any]]:
+    """Project accepted strict identities into disposable replay views.
+
+    Frozen manifests are never rewritten.  A candidate/reference identity is
+    projected only from the comparison record bound by its terminal input; the
+    metadata-only mode skips payload-byte verification while retaining the same
+    strict identity projection and schema checks.
+    """
+    from .finalize import load_terminal_input
+
+    manifests = [
+        _canonical_reference_manifest(
+            root,
+            path,
+            manifest,
+            verify_comparison_artifacts=verify_comparison_artifacts,
+        )
+        for path, manifest in records["traces"]
+    ]
+    effective_manifests = {
+        path.resolve(): manifest
+        for (path, _), manifest in zip(records["traces"], manifests)
+    }
+    evidence = {p.resolve(): e for p, e in records["evidence"]}
+    comparisons = {p.resolve(): c for p, c in records["comparison_readiness"]}
+    identities: dict[str, dict[str, Any]] = {}
+    for path, _ in records["traces"]:
+        manifest = effective_manifests[path.resolve()]
+        if manifest["comparison_role"] != "candidate":
+            continue
+        finalization = path.parent / "finalization.json"
+        if not finalization.is_file():
+            continue
+        terminal = load_terminal_input(path.parent)
+        pointer = terminal.get("comparison_readiness_ref")
+        if not isinstance(pointer, str):
+            continue
+        comparison_path = resolve_repo_pointer(root, pointer)
+        comparison = comparisons.get(comparison_path)
+        if comparison is None or not comparison["strict_ready"]:
+            continue
+        if verify_comparison_artifacts:
+            digest = terminal.get("artifact_hashes", {}).get(pointer)
+            if not isinstance(digest, str):
+                raise ValueError("Replay comparison metadata is not hash bound")
+            verify_bound_artifact(root, pointer, digest)
+        evidence_path = resolve_repo_pointer(root, manifest["terminal_evidence_ref"])
+        accepted = evidence.get(evidence_path)
+        if accepted is None:
+            continue
+        # ``candidate_id`` is a caller-defined model/arm label, while the
+        # terminal evidence id names the accepted run.  Older accepted records
+        # deliberately use different values.  The hash-bound terminal pointer
+        # above proves which readiness record belongs to this run; only the
+        # frozen reference identity has a cross-record equality contract here.
+        if comparison["reference_id"] != manifest["reference_id"]:
+            raise ValueError("Replay comparison differs from accepted reference identity")
+        for side in ("candidate", "reference"):
+            identity = {
+                **comparison["matched_fields"],
+                **{
+                    key: values[side]
+                    for key, values in comparison["mismatched_fields"].items()
+                },
+            }
+            evidence_id = (accepted["evidence_id"] if side == "candidate"
+                           else comparison["reference_id"])
+            if evidence_id in identities and identities[evidence_id] != identity:
+                raise ValueError("Conflicting strict replay identities for accepted evidence")
+            identities[evidence_id] = identity
+
+    result = []
+    for manifest in manifests:
+        accepted_path = resolve_repo_pointer(root, manifest["terminal_evidence_ref"])
+        accepted = evidence.get(accepted_path)
+        strict = identities.get(accepted["evidence_id"]) if accepted else None
+        if strict is not None:
+            identity = strict_comparability_identity(manifest["comparability_identity"], strict)
+            manifest = {
+                **manifest,
+                "_observed_comparability_identity": deepcopy(
+                    manifest["comparability_identity"]
+                ),
+                "comparability_identity": identity,
+            }
+        result.append(manifest)
+    return result
+
+
+def build_replay_pool(
+    root: Path,
+    records: dict[str, list],
+    *,
+    manifests=None,
+    verify_comparison_artifacts: bool = True,
+) -> dict[str, Any]:
     trajectories = {t["trajectory_id"]: t for _, t in records["trajectories"]}
     evidence_by_path = {p.resolve(): e for p, e in records["evidence"]}
-    manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
+    if manifests is None:
+        manifests = replay_manifests(
+            root, records, verify_comparison_artifacts=verify_comparison_artifacts
+        )
+    # A later comparator view can reuse an accepted candidate's terminal
+    # evidence.  Carry the already-derived strict identity onto that disposable
+    # view so EMA/optimizer worlds do not fall back to the older label-only
+    # comparability representation.
+    projected_by_evidence = {
+        resolve_repo_pointer(root, manifest["terminal_evidence_ref"]): manifest["comparability_identity"]
+        for manifest in manifests
+        if "strict_identity" in manifest.get("comparability_identity", {})
+    }
     # An accepted candidate may supply a later world's control, without adding
     # another trajectory or pretending it originally trained as a control.
     from .candidate_reference import verify_candidate_reference
     for _, bundle in records.get("reference_bundles", []):
         pointer = bundle.get("candidate_reference_qualification_ref")
-        if pointer and any(m["comparison_role"] == "candidate" and m["reference_id"] == bundle["reference_id"]
-                           for m in manifests):
-            view = verify_candidate_reference(root, pointer, expected_bundle=bundle)
+        if pointer and any(
+            m["comparison_role"] == "candidate" and m["reference_id"] == bundle["reference_id"]
+            for m in manifests
+        ):
+            view = verify_candidate_reference(root, pointer, expected_bundle=bundle,
+                verify_artifacts=verify_comparison_artifacts)
+            evidence_path = resolve_repo_pointer(root, view["terminal_evidence_ref"])
+            projected = projected_by_evidence.get(evidence_path)
+            if projected is not None:
+                view = {
+                    **view,
+                    "_observed_comparability_identity": deepcopy(
+                        view["comparability_identity"]
+                    ),
+                    "comparability_identity": deepcopy(projected),
+                }
             # Multiple prospectively frozen bundles may reuse the same accepted
             # run. Collapse only identical verified views, never conflicting
             # identities or unqualified records from the general trace corpus.
             if not any(existing == view for existing in manifests):
                 manifests.append(view)
     from .ema_replay import ema_intervention_worlds
-    manifests = ema_intervention_worlds(root, manifests, records)
+    manifests = ema_intervention_worlds(
+        root, manifests, records, verify_artifacts=verify_comparison_artifacts
+    )
     grouping = build_screening_backtest(manifests)
     keys = {g["comparability_key"] for g in grouping["included_comparable_groups"]}
     excluded = list(grouping["excluded_traces"])

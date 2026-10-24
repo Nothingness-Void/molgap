@@ -452,7 +452,8 @@ def workflow_case(tmp_path):
     _git(repo, "config", "user.email", "synthetic@example.invalid")
     _git(repo, "config", "user.name", "Synthetic workflow fixture")
     _git(repo, "config", "core.autocrlf", "false")
-    _git(repo, "add", "--", *source_names, *recipes.values())
+    (repo / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    _git(repo, "add", "--", ".gitattributes", *source_names, *recipes.values())
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic workflow sources")
 
     payload = _spec_payload(arms, platform="kaggle")

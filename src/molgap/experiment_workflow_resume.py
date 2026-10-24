@@ -18,6 +18,101 @@ from .experiment_workflow import _platform_adapter, _path, _write_preparation_re
 RESUME_PLAN_FORMAT = "molgap-workflow-resume-v1"
 
 
+def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs=None):
+    """Resolve prepared resume pins for terminal acceptance.
+
+    The original prospective action and source package stay immutable.  This
+    adapter only proves that a separately prepared recovery directory carries
+    the exact per-arm resume bundles and that the selected successor receipt is
+    the one already bound by ``resolved``.
+    """
+    from .research_memory.paths import repo_local_path
+    from .research_memory.trace import file_digest
+
+    options, spec = resolved["options"], resolved["spec"]
+    root = Path(options["repo_root"]).resolve()
+    prepared = _path(root, str(prepared))
+    authority = _path(root, str(authority)) if authority is not None else None
+    _safe_local(prepared)
+    if authority is not None and not authority.is_file():
+        raise ValueError("Continuation requires the explicit retained recovery authority")
+    report = _json(prepared / "workflow_report.json")
+    original_prepared = Path(resolved["prepared"]).resolve()
+    if (report.get("format") != "molgap-workflow-recovery-preparation-v1"
+            or report.get("status") not in {"RESUME_INPUTS_PREPARED", "PREPARED_FOR_PLATFORM"}
+            or report.get("spec_identity") != spec.identity
+            or report.get("package_identity") != options["expected_package_identity"]
+            or Path(report.get("original_prepared", "")).resolve() != original_prepared):
+        raise ValueError("Resume preparation does not belong to this frozen run")
+    origin = Path(report.get("original_receipt", ""))
+    original = original_prepared.parent / "operations" / "launch_receipt.json"
+    _safe_local(origin.absolute())
+    if (not origin.is_file() or file_digest(origin) != file_digest(original)
+            or origin.resolve() == Path(options["receipt_path"]).resolve()):
+        raise ValueError("Resume acceptance requires original and continued launch receipts")
+    release = _json(prepared / "release_report.json")
+    launch_path = Path(release.get("inputs", {}).get("launch_config", ""))
+    _safe_local(launch_path.absolute())
+    expected_launch = prepared / "source_dataset" / "experiment_launch.json"
+    if launch_path.resolve() != expected_launch.resolve():
+        raise ValueError("Resume launch must remain in its prepared source dataset")
+    launch_digest = release.get("checks", {}).get("workflow:launch", {}).get("launch_sha256")
+    if (release.get("status") != "LOCAL_RELEASE_INPUTS_VERIFIED" or release.get("errors")
+            or not launch_digest or file_digest(launch_path) != launch_digest):
+        raise ValueError("Prepared resume launch changed after release")
+    launch = _json(launch_path)
+    if (launch.get("spec_identity") != spec.identity
+            or set(launch.get("resume", {})) != set(resolved["outputs"])):
+        raise ValueError("Prepared resume launch must bind every frozen arm")
+    repair = report.get("recovery_repair")
+    repair_path = None
+    repair_source_root = None
+    if repair is not None:
+        repair_path = repo_local_path(launch_path.parent, "recovery_repair.json")
+        if file_digest(repair_path) != repair.get("manifest_sha256"):
+            raise ValueError("Prepared recovery repair differs from its retained pin")
+        repair_source_root = launch_path.parent / "recovery_repair"
+    result = {}
+    strict_inputs = strict_inputs or {}
+    if type(strict_inputs) is not dict or set(strict_inputs) - set(resolved["outputs"]):
+        raise ValueError("Resume strict inputs must name only frozen run arms")
+    for arm_id, item in resolved["outputs"].items():
+        binding = launch["resume"][arm_id]
+        if (type(binding) is not dict or set(binding) != {"manifest", "sha256"}
+                or not isinstance(binding["manifest"], str)):
+            raise ValueError("Prepared resume launch has an invalid arm binding")
+        bundle = repo_local_path(launch_path.parent, binding["manifest"])
+        _safe_local(bundle)
+        if not bundle.is_file() or file_digest(bundle) != binding["sha256"]:
+            raise ValueError("Prepared resume bundle changed: " + arm_id)
+        supplied = strict_inputs.get(arm_id, {})
+        if type(supplied) is not dict or set(supplied) - {
+                "native_root", "actual_resume_root", "recovery_repair", "repair_source_root"}:
+            raise ValueError("Unknown resume strict input override")
+        output = Path(item["output_dir"]).absolute()
+        native = _path(root, str(supplied.get(
+            "native_root", output.parent / "_resume_preflight" / arm_id)))
+        actual_resume = _path(root, str(supplied.get("actual_resume_root", native)))
+        result[arm_id] = {
+            "package_dir": options["package_dir"],
+            "origin_receipt": origin,
+            "continued_receipt": options["receipt_path"],
+            "resume_bundle": bundle,
+            "continued_output": output,
+            "native_root": native,
+            "actual_resume_root": actual_resume,
+        }
+        if authority is not None:
+            result[arm_id]["authority"] = authority
+        if repair is not None:
+            result[arm_id].update(recovery_repair=repair_path,
+                repair_source_root=repair_source_root)
+        for key in ("recovery_repair", "repair_source_root"):
+            if key in supplied:
+                result[arm_id][key] = _path(root, str(supplied[key]))
+    return result
+
+
 def _original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path):
     root, prepared, package = map(lambda p: Path(p).absolute(), (repo_root, prepared, package_dir))
     for path in (root, prepared, package):

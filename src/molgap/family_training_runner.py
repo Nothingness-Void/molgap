@@ -552,7 +552,14 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
         certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
         if qualification is not None:
             qualification.validate(probe)
-    atomic_json(output / "runtime_certificate.json", certificate)
+    # Native proof tensors are large, repeated and transport-only.  Publish a
+    # lossless archive and bind it into the certificate before retiring the
+    # scratch copies; an interrupted publication remains readable.
+    from .native_proof_storage import compact_certificate, retire_proof_sources
+    from .research_memory.trace import atomic_write, json_bytes
+    compact_certificate(output, certificate)
+    atomic_write(output / "runtime_certificate.json", json_bytes(certificate))
+    retire_proof_sources(output, certificate)
     atomic_json(output / "preflight_costs.json", {"context": provenance["context"], "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
             "status": "measured", "semantics": "process_wall", "hardware": provenance["accelerator"],
@@ -694,9 +701,14 @@ def run_screen_resume_preflight(*, resume_output, **options):
                        "state_fingerprint": _state_fingerprint(observed)})
     if proofs[0]["state_fingerprint"] != proofs[1]["state_fingerprint"]:
         raise ValueError("Actual resume next-step repeats differ")
-    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
+    actual = {"status": "accepted", "proofs": proofs,
         "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
-        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
+        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")}
+    from .native_proof_storage import compact_certificate, retire_proof_sources
+    from .research_memory.trace import atomic_write, json_bytes
+    compact_certificate(output, actual, actual_resume=True)
+    atomic_write(output / "actual_resume_certificate.json", json_bytes(actual))
+    retire_proof_sources(output, actual)
     return result
 
 
@@ -720,15 +732,12 @@ def _verify_profile_proof(root, probe, profile_proof, *, required):
 
 def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenance):
     """An observed reference artifact, not a summary boolean, gates fill removal."""
-    import torch
     from .family_training_session import validate_session_resume
     if (type(proof) is not dict or set(proof) != {"path", "sha256", "state_fingerprint"}
             or proof["path"] != "fill-enabled.pt"):
         raise ValueError("Missing native safety-fill reference proof")
-    path = _artifact_path(Path(root).absolute(), proof["path"])
-    if normalized_file_sha(path) != proof["sha256"]:
-        raise ValueError("Native safety-fill artifact hash mismatch")
-    retained = torch.load(path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    retained = load_proof(root, proof)
     if (type(retained) is not dict or set(retained) != {"format", "context", "recipe_identity",
             "runtime_fingerprint", "execution_role", "observations", "state"}
             or retained["format"] != "molgap-gptrans-memory-fill-reference-v1"
@@ -758,12 +767,18 @@ def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenan
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
     if recipe.integration_preview or recipe.qualification is not None:
         raise ValueError("Qualification-only Modern2D evidence cannot admit formal training")
-    import torch
     from .family_training_session import validate_session_resume
     from .k1_execution_qualification import _verify_execution_proof
     root = Path(directory).absolute()
     saved = _json(_artifact_path(root, "runtime_provenance.json"))
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
+    from .native_proof_storage import retained_storage
+    storage = retained_storage(root, certificate)
+    if storage is not None:
+        archive = _artifact_path(root, storage["path"])
+        if not archive.is_file() or (storage["sha256"] is not None
+                and normalized_file_sha(archive) != storage["sha256"]):
+            raise ValueError("Native proof storage archive hash changed")
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     if certificate.get("status") != "accepted":
@@ -782,19 +797,14 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     origin = certificate.get("resume_origin")
     if type(origin) is not dict or set(origin) != {"path", "sha256"} or origin["path"] != "resumed-first.pt":
         raise ValueError("Missing serialized native resume origin")
-    origin_path = _artifact_path(root, origin["path"])
-    if normalized_file_sha(origin_path) != origin["sha256"]:
-        raise ValueError("Native resume-origin hash mismatch")
-    origin_state = torch.load(origin_path, map_location="cpu", weights_only=True)
+    from .native_proof_storage import load_proof
+    origin_state = load_proof(root, origin)
     origin_progress = validate_session_resume(probe, origin_state)
     if origin_progress.optimizer_step != 1 or origin_progress.status != "paused" or len(origin_state["rng_state"]["cuda"]) != 1:
         raise ValueError("Native resume origin is not an observed isolated-GPU scratch step")
     fingerprints = []
     for proof in proofs:
-        path = _artifact_path(root, proof["path"])
-        if normalized_file_sha(path) != proof["sha256"]:
-            raise ValueError("Native proof artifact hash mismatch")
-        state = torch.load(path, map_location="cpu", weights_only=True)
+        state = load_proof(root, proof)
         if validate_session_resume(probe, state).status != "complete":
             raise ValueError("Incomplete native proof endpoint")
         if len(state["rng_state"]["cuda"]) != 1:
@@ -823,6 +833,143 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         from .modern2d_execution import _verified_prepared_certificate
         return _verified_prepared_certificate(certificate, recipe)
     return certificate
+
+
+def inspect_retained_native_qualification(directory, *, recipe_path, provenance, context,
+        resume_checkpoint_sha256=None, resume_directory=None, inventory_only=False):
+    """Inventory retained proof dependencies and reuse the native CPU recheck.
+
+    Missing byte sizes stay unknown. Inventory-only callers verify dependency
+    bytes without loading proof tensors; the full path additionally performs
+    the existing native CPU/state checks. This function never confers
+    scientific or replay acceptance.
+    """
+    from .experiment_launch import _safe_local
+    from .research_memory.paths import repo_local_path
+    root = Path(directory).absolute()
+    _safe_local(root)
+    record, recipe = read_recipe(recipe_path)
+    _check_context(provenance.get("context"), context)
+    if (normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256
+            or provenance.get("recipe_identity") != recipe.identity):
+        raise ValueError("Native qualification recipe differs from the frozen run")
+    certificate = _json(_artifact_path(root, "runtime_certificate.json"))
+    dependencies = {}
+    from .native_proof_storage import retained_storage, proof_stream
+    storages = {}
+    native_storage = retained_storage(root, certificate)
+    if native_storage is not None:
+        storages[(str(root), native_storage["path"])] = native_storage
+
+    def add(name, digest=None, *, base=root):
+        # Keep the same local-path boundary for absent and present artifacts.
+        if (type(name) is not str or "\\" in name or ":" in name
+                or any(part in {"", ".", ".."} for part in name.split("/"))):
+            raise ValueError("Invalid native proof dependency path")
+        storage = next((item for (directory, _), item in storages.items()
+                        if directory == str(base) and name in item["members"]), None)
+        if storage is not None and name in storage["members"]:
+            if digest != storage["members"][name]["sha256"]:
+                raise ValueError("Native proof member hash differs from certificate")
+            name, digest = storage["path"], storage["sha256"]
+        path = repo_local_path(base, name)
+        _safe_local(path)
+        key = str(path)
+        if key in dependencies and dependencies[key]["sha256"] not in {None, digest}:
+            raise ValueError("Conflicting native proof dependency hashes")
+        if digest is not None:
+            _digest(digest, "native proof dependency.sha256")
+        present = path.is_file()
+        dependencies[key] = {"path": name, "local_path": str(path), "sha256": digest,
+            "present": present, "size_bytes": path.stat().st_size if present else (
+                storage["size_bytes"] if storage is not None and name == storage["path"] else None)}
+        return dependencies[key]
+
+    def walk(value):
+        if isinstance(value, dict):
+            if "path" in value and "sha256" in value:
+                add(value["path"], value["sha256"])
+            for key, child in value.items():
+                if key != "proof_storage":
+                    walk(child)
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+
+    add("runtime_certificate.json")
+    add("runtime_provenance.json")
+    walk(certificate)
+    if "resource_qualification_sha256" in certificate:
+        add("resource_qualification.json", certificate["resource_qualification_sha256"])
+    profile = certificate.get("profile_proof")
+    if isinstance(profile, dict) and "report" in profile:
+        report = add(profile["report"], profile.get("sha256"))
+        add("profile_qualification/trace.json", _json(Path(report["local_path"])).get("trace_sha256")
+            if report["present"] else None)
+    resume_root = Path(resume_directory or root).absolute()
+    actual = None
+    if resume_checkpoint_sha256 is not None:
+        _digest(resume_checkpoint_sha256, "resume checkpoint.sha256")
+        resume_cert = add("actual_resume_certificate.json", base=resume_root)
+        if resume_cert["present"]:
+            actual = _json(Path(resume_cert["local_path"]))
+            actual_storage = retained_storage(resume_root, actual, actual_resume=True)
+            if actual_storage is not None:
+                for proof in actual.get("proofs", []):
+                    if proof["sha256"] != actual_storage["members"][proof["path"]]["sha256"]:
+                        raise ValueError("Actual resume proof storage binding differs")
+                storages[(str(resume_root), actual_storage["path"])] = actual_storage
+            for proof in actual.get("proofs", []):
+                add(proof["path"], proof["sha256"], base=resume_root)
+    rows = [dependencies[name] for name in sorted(dependencies)]
+    missing = [item for item in rows if not item["present"]]
+    result = {"status": "BLOCKED", "dependencies": rows, "missing": missing,
+        "known_local_bytes": sum(item["size_bytes"] or 0 for item in rows if item["present"]),
+        "missing_size_bytes": (sum(item["size_bytes"] for item in rows if not item["present"])
+            if all(item["size_bytes"] is not None for item in rows if not item["present"]) else None),
+        "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+    # Verify every available hash even while another dependency is missing.
+    for item in rows:
+        if item["present"]:
+            item["verified_sha256"] = normalized_file_sha(Path(item["local_path"]))
+            if item["sha256"] is not None and item["verified_sha256"] != item["sha256"]:
+                raise ValueError("Native proof artifact hash mismatch: " + item["path"])
+    if actual is not None and (
+            actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0
+            or actual.get("checkpoint_sha256") != resume_checkpoint_sha256
+            or type(actual.get("resume_step")) is not int
+            or [proof.get("path") for proof in actual.get("proofs", [])]
+                != ["actual-resume-a.pt", "actual-resume-b.pt"]):
+        raise ValueError("Actual retained-state native resume qualification differs")
+    if missing:
+        result["blockers"] = ["native_proof_dependencies_missing"]
+        return result
+    if inventory_only:
+        # Legacy local migration has no archive pin in its immutable
+        # certificate; original member hashes still authenticate recovery.
+        for (base, _), storage in storages.items():
+            if storage["sha256"] is None:
+                for name, item in storage["members"].items():
+                    with proof_stream(base, name, item["sha256"], packed=True):
+                        pass
+        return {**result, "status": "DEPENDENCIES_VERIFIED", "blockers": []}
+    _verify_preflight(root, recipe, provenance, profiling_required=record.get("profiling") is not None)
+    if resume_checkpoint_sha256 is not None:
+        from .family_training_session import validate_session_resume
+        fingerprints = []
+        for proof in actual["proofs"]:
+            from .native_proof_storage import load_proof
+            state = load_proof(resume_root, proof)
+            progress = validate_session_resume(recipe, state)
+            fingerprint = _state_fingerprint(state)
+            if (progress.optimizer_step != actual["resume_step"] + 1
+                    or len(state["rng_state"].get("cuda", [])) != 1
+                    or fingerprint != proof.get("state_fingerprint")):
+                raise ValueError("Actual native resume proof state/cursor differs")
+            fingerprints.append(fingerprint)
+        if len(set(fingerprints)) != 1:
+            raise ValueError("Actual native resume next-step repeats differ")
+    return {**result, "status": "VERIFIED", "blockers": []}
 
 
 def _publish_verified_preflight_metadata(output, preflight_dir, provenance, certificate):

@@ -772,7 +772,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     _write_json(output / "runtime_manifest.json", runtime)
     _write_json(output / "architecture_preflight.json", architecture)
     _write_json(output / "runtime_certificate.json", certificate)
-    _write_json(output / "diagnostic_cost.json", {"formal_sample_presentations": 0, "scope": "bounded preflight"})
+    _write_json(output / "diagnostic_cost.json", {"context": context.to_dict(),
+        "formal_sample_presentations": 0, "scope": "bounded preflight"})
     return certificate
 
 

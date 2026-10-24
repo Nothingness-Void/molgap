@@ -370,6 +370,18 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         action_attempt_id = _frozen_action_attempt(action)
         if action["source_commit"] != context.source_commit:
             raise ValueError("Terminal source/attempt differs from the frozen prospective action")
+        continuation = None
+        if arm_id in resolved.get("continuations", {}):
+            from .research_memory.paired import build_terminal_continuation
+            continuation = build_terminal_continuation(root,
+                output=trajectory_path.parent / "terminal_staging" / "continuations" /
+                    str(context.platform_version) / "continuation.json",
+                **resolved["continuations"][arm_id])
+            continued = continuation["same_run_observation"]
+            if (continuation["origin"]["attempt_id"] not in action["attempt_ids"]
+                    or continuation["origin"]["source_commit"] != action["source_commit"]
+                    or continued["source_commit"] != action["source_commit"]):
+                raise ValueError("Continuation does not connect the frozen action to this observed attempt")
         observed = report["observed"]
         output_root = Path(item["output_dir"]).absolute()
         manifest_path = _artifact_path(output_root, "output_manifest.json")
@@ -381,6 +393,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], {}
         hashes.update(restored)
+        if continuation is not None:
+            hashes.update(continuation["artifact_hashes"])
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
@@ -455,6 +469,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         pointer = lambda name: (directory / name).relative_to(root).as_posix()
         objective_ref, acceptance_ref = pointer("observed.json"), pointer("acceptance.json")
         terminal_ref = pointer("terminal.json")
+        # Allocation and action identity remain bound to the frozen prospective
+        # action.  A continuation's physical attempt is retained only in its
+        # same_run_observation, never substituted into cost/action evidence.
         costs = _cost_events(observed["costs"], {"attempt_id": action_attempt_id, "platform": context.platform},
             where, action["action_id"], objective_ref)
         objective = {"context": context.to_dict(), "mechanical_verification": report,
@@ -509,6 +526,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "platform_name": context.platform, "platform_run_reference": context.run_reference,
                 "attempt_id": action_attempt_id, "source_commit": context.source_commit,
                 "source_package_sha256": context.source_archive_sha256}
+        if continuation is not None:
+            from .research_memory.paired import validate_terminal_continuation
+            package.update(continuation_ref=continuation["continuation_ref"],
+                same_run_observation=continuation["same_run_observation"])
+            validate_terminal_continuation(root, package)
         existing = directory / "terminal.json"
         package["finalized_at"] = (_json(existing)["finalized_at"] if existing.is_file()
             else datetime.now(timezone.utc).isoformat())

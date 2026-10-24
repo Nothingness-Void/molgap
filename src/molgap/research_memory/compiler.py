@@ -12,7 +12,7 @@ from typing import Any
 from .backtest import build_screening_backtest
 from .backtest import build_policy_backtests
 from .policy import load_policy_registry
-from .replay import build_replay_pool
+from .replay import build_replay_pool, replay_manifests
 from .cost import build_cost_ledger
 from .derived import validate_derived_outputs
 from .references import build_reference_reuse_index
@@ -66,8 +66,20 @@ def _source_digest(records: dict[str, list[tuple[Path, dict[str, Any]]]], root: 
     return digest.hexdigest()
 
 
-def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
-    validated = validate_repository_records(repo_root)
+def compile_research_memory(
+    repo_root: str | Path, *, verify_comparison_artifacts: bool = True
+) -> dict[str, bytes]:
+    """Compile disposable indexes from validated records.
+
+    ``verify_comparison_artifacts=False`` is reserved for metadata-only freshness
+    checks.  It preserves strict identities and schemas while avoiding unrelated
+    payload reads; the normal compiler remains fully strict by default.
+    """
+    if type(verify_comparison_artifacts) is not bool:
+        raise ValueError("verify_comparison_artifacts must be an explicit boolean")
+    validated = validate_repository_records(
+        repo_root, verify_comparison_artifacts=verify_comparison_artifacts
+    )
     root: Path = validated["root"]
     records = validated["records"]
 
@@ -79,7 +91,9 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         trajectories.append({**record, "_path": _relative(root, path)})
     costs = [record for _, record in records["costs"]]
     roles = [record for _, record in records["roles"]]
-    traces = [record for _, record in records["traces"]]
+    traces = replay_manifests(
+        root, records, verify_comparison_artifacts=verify_comparison_artifacts
+    )
     ready = []
     for path, record in records["ready"]:
         ready.append({**record, "_path": _relative(root, path)})
@@ -174,7 +188,9 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
         "blocked": [],
     }
     backtest = build_screening_backtest(traces)
-    replay_pool = build_replay_pool(root, records)
+    replay_pool = build_replay_pool(
+        root, records, manifests=traces, verify_comparison_artifacts=verify_comparison_artifacts
+    )
     policy_backtest = build_policy_backtests(load_policy_registry(root), replay_pool)
 
     trajectory_evidence_ids = {
@@ -323,7 +339,9 @@ def compile_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 
 def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
     root = Path(repo_root).resolve()
-    payloads = compile_research_memory(root)
+    # Rebuilding disposable indexes uses the same metadata projection as the
+    # freshness check; strict artifact custody remains an acceptance concern.
+    payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = repo_local_path(root, "research_memory/derived")
     output_root.mkdir(parents=True, exist_ok=True)
     for name, payload in sorted(payloads.items()):
@@ -337,7 +355,9 @@ def rebuild_research_memory(repo_root: str | Path) -> dict[str, bytes]:
 
 def frozen_differences(repo_root: str | Path) -> list[str]:
     root = Path(repo_root).resolve()
-    payloads = compile_research_memory(root)
+    # Compare the same metadata projection that rebuild publishes. Historical
+    # payload custody remains owned by acceptance/validate, not index freshness.
+    payloads = compile_research_memory(root, verify_comparison_artifacts=False)
     output_root = root / "research_memory" / "derived"
     differences = []
     for name in DERIVED_FILENAMES:

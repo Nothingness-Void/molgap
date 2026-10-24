@@ -9,12 +9,15 @@ from .paths import resolve_repo_pointer, verify_bound_artifact
 from .trace import json_bytes
 
 
-def ema_intervention_worlds(root, manifests, records):
+def ema_intervention_worlds(
+    root, manifests, records, *, verify_artifacts: bool = True
+):
     """Add a scoped reference view only after actual strict terminal acceptance.
 
     This is not permission to reuse an EMA candidate in a matched-EMA world.
     Both observed identities survive beside an explicitly declared intervention.
     """
+    from .replay import strict_comparability_identity
     additions, replacements = [], {}
     trajectories = {t['trajectory_id']: t for _, t in records['trajectories']}
     bundles = [b for _, b in records.get('reference_bundles', [])]
@@ -22,7 +25,12 @@ def ema_intervention_worlds(root, manifests, records):
         purpose = ready.get('experiment_purpose')
         if purpose not in {'ema_comparison', 'optimizer_comparison'} or not ready.get('strict_ready'):
             continue
-        validate_comparison_readiness(ready, evidence_verifier=lambda p, s: verify_bound_artifact(root, p, s))
+        validate_comparison_readiness(
+            ready,
+            evidence_verifier=(lambda p, s: verify_bound_artifact(root, p, s))
+            if verify_artifacts else None,
+            metadata_only=not verify_artifacts,
+        )
         expected_fields = {'ema_decay', 'checkpoint_selection_identity'} if purpose == 'ema_comparison' else {'optimizer_identity', 'optimizer_mode'}
         world_field = 'ema_semantics' if purpose == 'ema_comparison' else 'optimizer_identity'
         if ready['comparison_class'] != 'STRICT_CAUSAL' or set(ready['mismatched_fields']) != expected_fields:
@@ -38,7 +46,8 @@ def ema_intervention_worlds(root, manifests, records):
                 raise ValueError('EMA replay readiness is not bound by terminal evidence')
             for a in evidence['artifacts']:
                 if a['locator'] == pointer:
-                    verify_bound_artifact(root, pointer, a['sha256'])
+                    if verify_artifacts:
+                        verify_bound_artifact(root, pointer, a['sha256'])
             plans = [load_json_object(resolve_repo_pointer(root, p)) for p in trajectory['state_at_start']['contract_refs']
                 if p.endswith('/comparison_readiness_prelaunch.json')]
             if len(plans) != 1:
@@ -53,8 +62,19 @@ def ema_intervention_worlds(root, manifests, records):
             if len(bound) != 1 or 'candidate_reference_qualification_ref' not in bound[0]:
                 raise ValueError('EMA replay requires its verified accepted comparator')
             from .candidate_reference import verify_candidate_reference
-            reference = verify_candidate_reference(root, bound[0]['candidate_reference_qualification_ref'], expected_bundle=bound[0])
-            if any(candidate['comparability_identity'][k] != reference['comparability_identity'][k]
+            reference = verify_candidate_reference(
+                root,
+                bound[0]['candidate_reference_qualification_ref'],
+                expected_bundle=bound[0],
+                verify_artifacts=verify_artifacts,
+            )
+            candidate_observed = candidate.get(
+                '_observed_comparability_identity', candidate['comparability_identity']
+            )
+            reference_observed = reference.get(
+                '_observed_comparability_identity', reference['comparability_identity']
+            )
+            if any(candidate_observed[k] != reference_observed[k]
                    for k in (*BASE_COMPARABILITY_FIELDS, 'architecture_identity') if k != world_field):
                 raise ValueError('EMA intervention has an undeclared replay-world mismatch')
             accepted = load_json_object(resolve_repo_pointer(root, ready['candidate_artifact_bindings']['acceptance']['ref']))
@@ -66,9 +86,22 @@ def ema_intervention_worlds(root, manifests, records):
             world = {'purpose': purpose, 'reference_id': ready['reference_id'],
                 'intervention': ready['mismatched_fields'], 'prelaunch_bundle_sha256': ready['reference_bundle_sha256']}
             world_id = ('qualified-ema-intervention:' if purpose == 'ema_comparison' else 'qualified-optimizer-intervention:') + hashlib.sha256(json_bytes(world)).hexdigest()
-            for manifest in (candidate, reference):
+            for side, manifest in (('candidate', candidate), ('reference', reference)):
                 view = deepcopy(manifest)
-                view['_observed_comparability_identity'] = deepcopy(manifest['comparability_identity'])
+                view['_observed_comparability_identity'] = deepcopy(
+                    manifest.get('_observed_comparability_identity', manifest['comparability_identity'])
+                )
+                strict = {**ready['matched_fields'], **{
+                    key: values[side] for key, values in ready['mismatched_fields'].items()}}
+                grouped = deepcopy(strict)
+                for field in ready['mismatched_fields']:
+                    grouped[field] = {'world_id': world_id}
+                view['comparability_identity'] = strict_comparability_identity(
+                    view['comparability_identity'], grouped)
+                # One projection covers coarse fields and the full grouping
+                # fingerprint. The original observed contract stays intact.
+                view['comparability_identity'].update(
+                    strict_identity=strict, strict_group_identity=grouped)
                 view['_intervention_world'] = {**world, 'readiness_ref': pointer}
                 view['comparability_identity'][world_field] = world_id
                 view['comparability_identity']['matched_architecture_required'] = True

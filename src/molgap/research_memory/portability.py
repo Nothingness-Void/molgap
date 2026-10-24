@@ -5,12 +5,106 @@ from __future__ import annotations
 import os
 import subprocess
 from pathlib import Path, PureWindowsPath
+from tempfile import TemporaryDirectory
 from typing import Any, Iterable
 from urllib.parse import urlparse
 
 from molgap.evidence_pointers import ALLOWED_REMOTE_SCHEMES, load_json_object
 
 from .paths import repo_local_path, resolve_repo_pointer
+
+
+def require_byte_preserving_git_paths(root: Path, paths: Iterable[str | Path]) -> None:
+    """Require committed attributes that preserve hash-bound bytes verbatim.
+
+    The check is deliberately limited to the paths about to be published.  It
+    does not migrate existing evidence and it does not inspect model payloads.
+    The empty-tree probe keeps an uncommitted ``.gitattributes`` or an
+    ``info/attributes`` rule from being mistaken for a committed contract.
+    """
+    names: set[str] = set()
+    for pointer in paths:
+        raw = str(pointer)
+        if raw.startswith("external://"):
+            continue
+        if raw.startswith("repo://"):
+            parsed = urlparse(raw)
+            raw = f"{parsed.netloc}{parsed.path}".lstrip("/")
+        names.add(repo_local_path(root, raw).relative_to(root).as_posix())
+    if not names:
+        return
+
+    attributes = ("text", "filter", "ident", "working-tree-encoding")
+    request = b"".join(name.encode("utf-8") + b"\0" for name in sorted(names))
+    # Keep the empty-tree probe outside the repository: qualification is a read-only
+    # publication check and must not add a loose object during validate-only planning.
+    git_objects = subprocess.run(
+        ["git", "rev-parse", "--git-path", "objects"],
+        cwd=root,
+        capture_output=True,
+    )
+    if git_objects.returncode:
+        raise ValueError("Cannot qualify Git byte preservation outside an initialized repository")
+    object_path = Path(git_objects.stdout.decode().strip())
+    alternate = str((root / object_path).resolve() if not object_path.is_absolute()
+                    else object_path.resolve())
+    with TemporaryDirectory(prefix="molgap-git-attrs-") as object_dir:
+        env = {**os.environ, "GIT_ATTR_NOSYSTEM": "1",
+               "GIT_OBJECT_DIRECTORY": object_dir,
+               "GIT_ALTERNATE_OBJECT_DIRECTORIES": alternate}
+        empty = subprocess.run(
+            ["git", "hash-object", "-w", "-t", "tree", "--stdin"],
+            cwd=root,
+            input=b"",
+            capture_output=True,
+            env=env,
+        )
+        if empty.returncode:
+            raise ValueError("Cannot qualify Git byte preservation outside an initialized repository")
+        empty_tree = empty.stdout.decode("ascii").strip()
+        for source in (empty_tree, "HEAD", None):
+            options = ["-c", "core.attributesFile=" + os.devnull] if source else []
+            result = subprocess.run(
+                [
+                    "git",
+                    *options,
+                    "check-attr",
+                    *( ["--source=" + source] if source else [] ),
+                    "-z",
+                    "--stdin",
+                    *attributes,
+                ],
+                cwd=root,
+                input=request,
+                capture_output=True,
+                env=env,
+            )
+            if result.returncode:
+                raise ValueError(
+                    "Cannot qualify Git byte preservation; commit repository attributes first"
+                )
+            fields = result.stdout.split(b"\0")
+            if fields[-1:] != [b""] or len(fields) != len(names) * len(attributes) * 3 + 1:
+                raise ValueError("Malformed Git attribute qualification response")
+            for index in range(0, len(fields) - 1, 3):
+                name, attr, value = (
+                    item.decode("utf-8") for item in fields[index : index + 3]
+                )
+                if name not in names or attr not in attributes:
+                    raise ValueError("Unexpected Git attribute qualification response")
+                if source == empty_tree:
+                    if value != "unspecified":
+                        raise ValueError(
+                            f"Git info/attributes masks hash-bound path: {name}; "
+                            "move its transform rules into committed .gitattributes"
+                        )
+                    continue
+                if value != "unset" and (attr == "text" or value != "unspecified"):
+                    raise ValueError(
+                        f"Git may transform hash-bound bytes: {name} ({attr}={value}); "
+                        "commit -text -filter -ident -working-tree-encoding for this path "
+                        "before publication"
+                    )
 
 
 # These identifiers and auxiliary logs are not repository file pointers.

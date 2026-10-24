@@ -172,7 +172,7 @@ def retrieve_selected_kaggle_files(api, *, context, remote_manifest_path: str,
 
 def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                                files: Mapping[str, Any], destination: Path,
-                               http_session=None) -> dict:
+                               http_session=None, sizes=None, on_plan=None) -> dict:
     """Stream manifest-bound files at one physical version, without directory scans.
 
     A retained environment can contain thousands of unrelated files; enumerating
@@ -192,14 +192,16 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
     required = _selected_files(files)
     if len(required) > 4096:
         raise ValueError("Exact artifact allowlist exceeds the bounded request budget")
+    plan = plan_pinned_files(required, destination, sizes=sizes)
+    if on_plan is not None:
+        on_plan(plan)
+    reused = {row["remote_path"] for row in plan["files"] if row["state"] == "ALREADY_RETAINED"}
     retained = []
     with api.build_kaggle_client() as client:
         for remote, (local, pin) in required.items():
             target = repo_local_path(Path(destination).absolute(), local)
             _safe_local(target)
-            if target.exists():
-                if not target.is_file() or file_digest(target) != pin:
-                    raise ValueError("Retained exact output conflicts with pinned artifact")
+            if remote in reused:
                 retained.append(dict(path=local, sha256=pin, state="ALREADY_RETAINED"))
                 continue
             request = ApiDownloadKernelOutputRequest()
@@ -211,9 +213,32 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                 raise RuntimeError("Exact artifact redirect failed; no list/bulk fallback") from None
             retained.extend(_download_selected(urls={remote: redirect.url},
                 required={remote: (local, pin)}, destination=destination, http_session=http_session))
+    downloaded = sum(item["state"] != "ALREADY_RETAINED" for item in retained)
     return dict(kernel=context.run_reference, receipt_version=version, files=retained,
+        retrieval_plan=plan, downloaded_files=downloaded, network_accessed=bool(downloaded),
         transport="version_specific_manifest_pinned_files", unselected_outputs_downloaded=False,
-        platform_version_verified_by_output_api=True)
+        platform_version_verified_by_output_api=bool(downloaded))
+
+
+def plan_pinned_files(files, destination, *, sizes=None):
+    """Describe exact cached/download bytes before any payload request."""
+    rows = []
+    for remote, (local, pin) in _selected_files(files).items():
+        target = repo_local_path(Path(destination).absolute(), local)
+        _safe_local(target)
+        present = target.is_file()
+        if target.exists() and (not present or file_digest(target) != pin):
+            raise ValueError("Retained exact output conflicts with pinned artifact")
+        size = target.stat().st_size if present else (sizes or {}).get(remote)
+        if size is not None and (type(size) is not int or size < 0):
+            raise ValueError("Invalid pinned artifact byte size")
+        rows.append({"remote_path": remote, "local_path": local, "sha256": pin,
+                     "size_bytes": size, "state": "ALREADY_RETAINED" if present else "DOWNLOAD"})
+    missing = [row for row in rows if row["state"] == "DOWNLOAD"]
+    return {"files": rows,
+        "reused_bytes": sum(row["size_bytes"] for row in rows if row["state"] == "ALREADY_RETAINED"),
+        "known_download_bytes": sum(row["size_bytes"] or 0 for row in missing),
+        "unknown_size_files": sum(row["size_bytes"] is None for row in missing)}
 
 
 def retrieve_execution_retention(
@@ -305,4 +330,5 @@ def retrieve_execution_retention(
     return result
 
 
-__all__ = ["retrieve_selected_kaggle_files", "retrieve_execution_retention"]
+__all__ = ["retrieve_selected_kaggle_files", "retrieve_pinned_exact_files", "plan_pinned_files",
+           "retrieve_execution_retention"]

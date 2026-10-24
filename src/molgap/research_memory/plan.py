@@ -13,7 +13,7 @@ from pathlib import Path, PureWindowsPath
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
-from .paths import repo_local_path, resolve_repo_pointer
+from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .discovery import DiscoveredRecords, discover_records
 from .paired import pair_binding
 from .schemas import validate_cost_event, validate_id, validate_trajectory
@@ -30,6 +30,8 @@ class _PlanningSnapshot:
     existing_cost_ids: frozenset[str]
     policies: list[dict[str, Any]]
     source_hashes: dict[str, str]
+    shared_ref: str
+    shared_bytes: bytes
 
 
 class PlanBatchError(RuntimeError):
@@ -63,7 +65,65 @@ def _source_pointers(root: Path, trajectory: dict[str, Any], discovered: Discove
     return pointers
 
 
+_SHARED_FIELDS = frozenset(
+    {
+        "known_trajectory_ids",
+        "known_evidence_ids",
+        "source_commit",
+        "source_hashes",
+        "policy_sha256",
+        "policy_snapshot",
+    }
+)
+
+
+def resolve_decision_state(repo_root: str | Path, trajectory: dict[str, Any]) -> dict[str, Any]:
+    """Expand an immutable v2 knowledge pointer for existing readers."""
+    record = copy.deepcopy(trajectory)
+    state = record.get("decision_state")
+    if not isinstance(state, dict) or state.get("schema") != "molgap-decision-state-v2":
+        return record
+    validate_decision_state(state)
+    root = Path(repo_root).resolve()
+    verify_bound_artifact(root, state["snapshot_ref"], state["snapshot_sha256"])
+    snapshot = load_json_object(resolve_repo_pointer(root, state["snapshot_ref"]))
+    if snapshot.get("schema") != "molgap-decision-knowledge-v1" or set(snapshot) != _SHARED_FIELDS | {"schema"}:
+        raise ValueError("unsupported shared decision knowledge snapshot")
+    common = {key: snapshot[key] for key in _SHARED_FIELDS}
+    if any(key in state and state[key] != value for key, value in common.items()):
+        raise ValueError("decision state overrides frozen shared knowledge")
+    if hashlib.sha256(json_bytes(common["policy_snapshot"])).hexdigest() != common["policy_sha256"]:
+        raise ValueError("decision policy snapshot hash mismatch")
+    policy = common["policy_snapshot"]
+    if (policy["policy_id"], policy["version"]) != (state["policy_id"], state["policy_version"]):
+        raise ValueError("decision policy differs from shared snapshot")
+    record["decision_state"] = {**common, **state}
+    validate_decision_state(record["decision_state"])
+    return record
+
+
 def validate_decision_state(state: dict[str, Any]) -> None:
+    if state.get("schema") == "molgap-decision-state-v2":
+        from .schemas import SHA256_PATTERN
+
+        if not isinstance(state.get("snapshot_ref"), str) or not state["snapshot_ref"]:
+            raise ValueError("decision state requires shared snapshot_ref")
+        if not SHA256_PATTERN.fullmatch(str(state.get("snapshot_sha256", ""))):
+            raise ValueError("decision state requires shared snapshot_sha256")
+        if "known_evidence_ids" not in state:
+            if _SHARED_FIELDS & state.keys():
+                raise ValueError("compact decision state cannot override shared knowledge")
+            probe = {
+                **state,
+                "known_trajectory_ids": [],
+                "known_evidence_ids": state.get("active_reference_ids", []),
+                "source_commit": "shared-snapshot",
+            }
+            probe.pop("schema")
+            validate_decision_state(probe)
+            return
+    elif "schema" in state:
+        raise ValueError("unsupported decision state schema")
     for key in ("known_trajectory_ids", "known_evidence_ids", "active_reference_ids",
                 "available_actions", "role_snapshot_refs"):
         values = state.get(key)
@@ -161,10 +221,20 @@ def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Pat
         else:
             decision_state["action_inputs_sha256"] = file_digest(action_path)
             decision_state["source_hashes"][spec["action_inputs_ref"]] = file_digest(action_path)
+    if _snapshot is not None:
+        decision_state = {
+            key: value for key, value in decision_state.items() if key not in _SHARED_FIELDS
+        }
+        decision_state.update(
+            schema="molgap-decision-state-v2",
+            snapshot_ref=_snapshot.shared_ref,
+            snapshot_sha256=hashlib.sha256(_snapshot.shared_bytes).hexdigest(),
+        )
+    else:
+        decision_state["policy_snapshot"] = policy
     trajectory["decision_state"] = decision_state
     validate_trajectory(trajectory)
-    files = {"trajectory.json": json_bytes(trajectory),
-             "decision_state.json": json_bytes(decision_state), "policy_snapshot.json": json_bytes(policy)}
+    files = {"trajectory.json": json_bytes(trajectory)}
     costs = spec.get("costs", [])
     cost_ids = set()
     existing_cost_ids = (_snapshot.existing_cost_ids if _snapshot is not None else
@@ -188,7 +258,7 @@ def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Pat
     if not required_costs <= cost_ids:
         raise ValueError("plan spec must supply its referenced prospective cost events")
     return {"trajectory_id": trajectory["trajectory_id"], "destination": destination,
-            "files": files, "source_hashes": decision_state["source_hashes"]}
+            "files": files, "source_hashes": bindings}
 
 
 def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
@@ -218,6 +288,17 @@ def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
 
 def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
          *, _snapshot: _PlanningSnapshot | None = None, validate_only: bool = False) -> dict[str, Any]:
+    if _snapshot is None:
+        if pair_binding(_prepare_trajectory(spec)) is not None:
+            raise ValueError("same-run replay must be planned in one frozen multi-arm batch")
+        root = Path(repo_root).resolve()
+        destination = repo_local_path(root, output)
+        relative_output = destination.relative_to(root).as_posix()
+        return plan_many(
+            root,
+            [{"spec": spec, "output": relative_output}],
+            validate_only=validate_only,
+        )["results"][0]
     prepared = _prepare_plan(repo_root, spec, output, _snapshot=_snapshot)
     if validate_only:
         root = Path(repo_root).resolve()
@@ -276,11 +357,6 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
                 raise ValueError("same-run replay batch requires one reference and at least one candidate")
             if len({binding["arm_id"] for _, _, binding in group}) != len(group):
                 raise ValueError("same-run replay batch repeats an arm identity")
-            source_commits = {
-                trajectory["state_at_start"].get("source_commit") for trajectory, _, _ in group
-            }
-            if len(source_commits) > 1:
-                raise ValueError("same-run arms must freeze one source commit")
             reference, reference_output, reference_binding = references[0]
             expected_ref = (reference_output / "trajectory.json").as_posix()
             if reference_binding["reference_trajectory_ref"] != expected_ref:
@@ -290,6 +366,8 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
                         binding["reference_arm_id"]) != (
                             reference["trajectory_id"], expected_ref, reference_binding["arm_id"]):
                     raise ValueError("same-run candidate does not bind the batch reference")
+                if trajectory["state_at_start"]["source_commit"] != reference["state_at_start"]["source_commit"]:
+                    raise ValueError("same-run arms must freeze one source commit")
 
     discovered = discover_records(root)
     existing_trajectories = [load_json_object(p) for p in discovered.trajectories]
@@ -338,6 +416,25 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
         if path is None:
             raise ValueError("planning state requires locally frozen bindings")
         bindings[pointer] = file_digest(path)
+    shared_bytes = json_bytes(
+        {
+            "schema": "molgap-decision-knowledge-v1",
+            "known_trajectory_ids": known_trajectories,
+            "known_evidence_ids": known_evidence,
+            "source_commit": commit,
+            "source_hashes": bindings,
+            "policy_sha256": hashlib.sha256(json_bytes(policy)).hexdigest(),
+            "policy_snapshot": policy,
+        }
+    )
+    common_parent = Path(
+        os.path.commonpath([str(destination.parent) for _, destination, _ in prepared])
+    )
+    shared_ref = (
+        common_parent / "rml_decision_snapshots" /
+        (hashlib.sha256(shared_bytes).hexdigest() + ".json")
+    ).as_posix()
+    shared_path = repo_local_path(root, shared_ref)
     snapshot = _PlanningSnapshot(
         discovered=discovered,
         commit=commit,
@@ -347,6 +444,8 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
         existing_cost_ids=existing_costs,
         policies=policies,
         source_hashes=bindings,
+        shared_ref=shared_ref,
+        shared_bytes=shared_bytes,
     )
     # Deep schema/evidence/action/cost checks for every arm precede all writes.
     # Partial publication now means an actual publish failure, not a bad plan.
@@ -358,6 +457,15 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
             if validate_only:
                 raise PlanBatchError(index, len(prepared), [], exc) from exc
             raise
+    from .portability import require_byte_preserving_git_paths
+    require_byte_preserving_git_paths(
+        root,
+        [
+            *bindings,
+            shared_path,
+            *(item["destination"] / name for item in validated for name in item["files"]),
+        ],
+    )
     results = []
     if validate_only:
         # Each arm carries the same union from this snapshot. Recheck it once
@@ -368,6 +476,12 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
                     raise ValueError("decision source changed during planning validation")
         except Exception as exc:
             raise PlanBatchError(0, len(prepared), [], exc) from exc
+    if not validate_only:
+        if shared_path.exists():
+            if shared_path.read_bytes() != shared_bytes:
+                raise ValueError("shared decision snapshot changed")
+        else:
+            atomic_write(shared_path, shared_bytes)
     for index, item in enumerate(validated):
         try:
             if validate_only:

@@ -168,6 +168,17 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--seed", type=int, default=42)
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
+            command.add_argument("--continuation-receipt", type=_local)
+            command.add_argument("--resume-prepared", type=_local,
+                help="Existing prepare-resume directory for this continuation")
+            command.add_argument("--resume-authority", type=_local,
+                help="Explicit retained recovery authority")
+            command.add_argument("--strict", action="store_true",
+                help="Recheck retained native, comparison and replay evidence")
+            command.add_argument("--strict-inputs", type=_local,
+                help="Per-arm strict proof/comparison locations")
+            command.add_argument("--physical-runs", type=_local,
+                help="Hash-bound physical allocation records")
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
@@ -322,6 +333,18 @@ def _dispatch(args) -> tuple[dict, int]:
                     options = dict(supplied=_json(args.outputs) if args.outputs is not None else None,
                         locations=_json(args.locations) if args.locations is not None else None,
                         execute=args.execute, execution_root=args.execution_root)
+                    if args.continuation_receipt is not None:
+                        options["continuation_receipt"] = args.continuation_receipt
+                    if args.resume_prepared is not None or args.resume_authority is not None:
+                        options.update(resume_prepared=args.resume_prepared,
+                            resume_authority=args.resume_authority)
+                    if args.strict_inputs is not None:
+                        options["strict_inputs"] = _json(args.strict_inputs)
+                    elif args.strict:
+                        options["strict_inputs"] = {}
+                    if args.physical_runs is not None:
+                        options["physical_runs"] = json.loads(
+                            args.physical_runs.read_text(encoding="utf-8"))
                     if args.retrieved_root is not None:
                         options["retrieved_root"] = args.retrieved_root
                     if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
@@ -348,7 +371,9 @@ def _dispatch(args) -> tuple[dict, int]:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
-                    args.decision_ref, args.role_audit, args.scientific_acceptance, args.output)):
+                    args.decision_ref, args.role_audit, args.scientific_acceptance, args.output,
+                    args.continuation_receipt, args.resume_prepared, args.resume_authority,
+                    args.strict_inputs, args.strict, args.physical_runs)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:
                 raise ValueError("Explicit Spec acceptance requires --outputs")
@@ -527,7 +552,8 @@ def main(argv: list[str] | None = None) -> int:
             result, code = _dispatch(args)
         if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
                 and not args.verbose and ((args.command == "diagnose" and args.output is not None)
-                                         or "diagnosis" in result or "terminal_staging" in result)):
+                                         or "diagnosis" in result or "terminal_staging" in result
+                                         or "strict_validation" in result or "closure_complete" in result)):
             result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
@@ -541,8 +567,20 @@ def main(argv: list[str] | None = None) -> int:
 def _acceptance_summary(result):
     """Keep ordinary stdout bounded; detailed evidence remains at its report pointer."""
     summary = {key: result[key] for key in ("status", "run_id", "attempt_id", "spec_identity",
-        "executed", "scientific_acceptance", "scientific_outcome", "replay_readiness", "blockers",
-        "execution_retention") if key in result}
+        "executed", "closure_complete", "scientific_acceptance", "scientific_outcome",
+        "replay_readiness", "blockers", "execution_retention", "strict_mode",
+        "physical_allocation_costs", "accepted_reference") if key in result}
+    if "strict_validation" in result:
+        strict = result["strict_validation"]
+        summary["strict_validation"] = {key: strict[key] for key in
+            ("status", "blockers", "replay_readiness", "ready_for_desktop") if key in strict}
+        summary["strict_validation"]["arms"] = {
+            arm: {key: row[key] for key in ("comparison", "replay", "blockers") if key in row}
+            for arm, row in strict.get("arms", {}).items()}
+    if "strict_comparison" in result:
+        summary["strict_comparison"] = {key: result["strict_comparison"][key]
+            for key in ("directory", "locations", "reference_bundle_ref")
+            if key in result["strict_comparison"]}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
     diagnostic = result.get("diagnosis") or result
@@ -554,6 +592,10 @@ def _acceptance_summary(result):
     if "terminal_staging" in result:
         staging = result["terminal_staging"]
         summary["terminal_staging"] = {key: staging[key] for key in ("status", "paths", "blockers") if key in staging}
+    if "results" in result:
+        summary["closure"] = [{key: row[key] for key in
+            ("trajectory_id", "trajectory", "pipeline_status", "finalization_status", "error")
+            if key in row} for row in result["results"]]
     return summary
 
 

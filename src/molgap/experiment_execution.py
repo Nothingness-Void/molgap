@@ -611,8 +611,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            formal_training=None, authority_path=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
-    from .research_memory.trace import file_digest
-    from .v4_runtime import inspect_frozen_state_artifact
+    from .v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
     if phase not in {"preflight", "train"}:
         raise ValueError("Unsupported execution phase")
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == job["arm_id"])
@@ -629,7 +628,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     if trajectory["state_at_start"].get("source_commit") != context.source_commit:
         raise ValueError("Published trajectory/source commit mismatch")
     recipe = _artifact_path(source_root, job["recipe"])
-    if file_digest(recipe) != context.training_recipe_sha256:
+    if normalized_source_sha256(recipe) != context.training_recipe_sha256:
         raise ValueError("Executable recipe/Spec hash mismatch")
     initial = _artifact_path(staged_root, job["initial_state"])
     if arm["initialization"]["state_sha256"] is None:

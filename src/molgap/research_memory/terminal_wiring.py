@@ -600,7 +600,7 @@ def build_default_trace_manifest(
     state = trajectory.get("state_at_start", {})
     contract_refs = state.get("contract_refs", [])
     contract_ref = contract_refs[0] if contract_refs else ""
-    reference_id = state.get("reference_ids", [""])[0] if state.get("reference_ids") else ""
+    reference_id = state["reference_ids"][0] if state.get("reference_ids") else None
 
     # Load frozen contract if available to extract authoritative identities
     contract_obj: dict[str, Any] = {}
@@ -690,7 +690,10 @@ def build_default_trace_manifest(
             "lr_schedule_identity": str(lr_schedule_identity),
             "target_transform_identity": str(target_transform_identity),
             "precision_identity": str(precision_identity),
-            "ema_semantics": "ema" if has_ema else "none",
+            # Missing EMA metrics do not prove EMA tracking was disabled. Strict
+            # replay derives selected weights/configuration from bound V5
+            # evidence; closure retains the contract's explicit value.
+            "ema_semantics": str(contract_obj.get("ema_semantics", "unknown")),
             "evaluation_role_identity": "internal_development",
             "selection_role_identity": "best_development_metric",
             "terminal_endpoint_identity": f"endpoint_{max_steps or len(observations)}",
@@ -699,7 +702,8 @@ def build_default_trace_manifest(
         },
         "backtest_eligibility": {
             "eligible": False,
-            "exclusion_reasons": ["closure_synthesized_manifest_not_prelaunch_calibrated"],
+            "exclusion_reasons": ["closure_synthesized_manifest_not_prelaunch_calibrated"]
+            + (["missing_frozen_reference"] if reference_id is None else []),
         },
         "trace_fields": {
             "epoch_or_pass": True,
@@ -786,7 +790,8 @@ def close_terminal_arm(
             )
         # Verify durable receipt has trace_status = available
         traj_path = repo_local_path(root, trajectory)
-        receipt_path = traj_path.parent / "rml_finalized/finalization.json"
+        from .finalize import current_finalized_directory
+        receipt_path = current_finalized_directory(root, traj_path) / "finalization.json"
         if receipt_path.is_file():
             receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
             if receipt.get("trace_status") != "available":

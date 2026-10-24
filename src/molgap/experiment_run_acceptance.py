@@ -49,17 +49,101 @@ def _output_path(value, *, paths, repo_root, run, external_only=False):
     return path
 
 
-def _mapping_path(run, arm_id):
-    return run / "operations" / "retrieved_outputs" / (arm_id + ".json")
+def _mapping_path(run, arm_id, platform_version=None):
+    """Return the immutable retrieval map for an original or successor run."""
+    directory = run / "operations" / "retrieved_outputs"
+    if platform_version is not None:
+        validate_relative_path(platform_version)
+        directory /= platform_version
+    return directory / (arm_id + ".json")
+
+
+def _continuation_options(spec, options, receipt, repo_root, verification=None):
+    """Bind a physical successor while retaining the original scientific identity."""
+    if receipt is None:
+        return dict(options)
+    from .experiment_launch import read_launch_receipt
+
+    original_receipt, package = options["receipt_path"], options["package_dir"]
+    successor = Path(receipt)
+    successor = successor if successor.is_absolute() else Path(repo_root) / successor
+    _safe_local(successor.absolute())
+    read_launch_receipt(successor.absolute(), spec, package,
+        expected_package_identity=options["expected_package_identity"], _verification=verification)
+    for arm in spec.to_dict()["arms"]:
+        before = RunContext.from_launch(spec, original_receipt, package,
+            expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+            _verification=verification)
+        after = RunContext.from_launch(spec, successor, package,
+            expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
+            _verification=verification)
+        if ({k: v for k, v in before.to_dict().items() if k != "platform_version"}
+                != {k: v for k, v in after.to_dict().items() if k != "platform_version"}
+                or not isinstance(after.platform_version, str) or not after.platform_version.isdecimal()
+                or not isinstance(before.platform_version, str) or not before.platform_version.isdecimal()
+                or int(after.platform_version) <= int(before.platform_version)):
+            raise ValueError("Continuation receipt must bind a later attempt of the original frozen run")
+    return {**options, "receipt_path": successor.absolute()}
+
+
+def _accepted_continuation_receipt(spec, options, repo_root):
+    """Discover one common, hash-bound successor already accepted for every arm."""
+    from .research_memory.finalize import current_finalized_directory, load_terminal_input
+    from .research_memory.paths import verify_bound_artifact
+
+    root = Path(repo_root).resolve()
+    successors, canonical = [], {}
+    declaration = spec.to_dict()
+    bindings = declaration["prospective"]["arms"]
+    for binding in bindings:
+        current = current_finalized_directory(root, binding["output"] + "/trajectory.json")
+        if not current.is_dir():
+            continue
+        terminal = load_terminal_input(current)
+        canonical[binding["arm_id"]] = (current, terminal)
+        pointer = terminal.get("continuation_ref")
+        if pointer is None:
+            continue
+        if (terminal.get("trajectory_id") != binding["trajectory_id"]
+                or terminal.get("run_id") != declaration["logical_run_id"] + ":" + binding["arm_id"] + ":downstream"):
+            raise ValueError("Accepted continuation differs from the original prospective identity")
+        hashes = terminal.get("artifact_hashes", {})
+        if not isinstance(pointer, str) or pointer not in hashes:
+            raise ValueError("Accepted continuation record is not bound")
+        verify_bound_artifact(root, pointer, hashes[pointer])
+        record = _json(bound_artifact_path(root, pointer))
+        if (record.get("format") != "molgap-terminal-continuation-v1"
+                or record.get("continued") != terminal.get("same_run_observation")):
+            raise ValueError("Accepted continuation differs from the terminal observation")
+        retained = {}
+        for key in ("origin_receipt", "continued_receipt"):
+            item = record.get(key)
+            if (type(item) is not dict or set(item) != {"path", "sha256"}
+                    or hashes.get(item["path"]) != item["sha256"]):
+                raise ValueError("Accepted continuation receipt is not bound")
+            verify_bound_artifact(root, item["path"], item["sha256"])
+            retained[key] = bound_artifact_path(root, item["path"])
+        if file_digest(retained["origin_receipt"]) != file_digest(options["receipt_path"]):
+            raise ValueError("Accepted continuation does not start at the original receipt")
+        successors.append((retained["continued_receipt"].resolve(), record["continued_receipt"]["sha256"]))
+    if not successors:
+        return None, canonical
+    if len(successors) != len(bindings) or len({digest for _, digest in successors}) != 1:
+        raise ValueError("Accepted arms require one common continuation receipt")
+    return successors[0][0], canonical
 
 
 def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
-                         destination, manifest_sha256):
+                         destination, manifest_sha256, continuation_receipt=None,
+                         _verification=None):
     """Record only successfully retained manifest-bound bytes; never copy outputs."""
     from .experiment_run import _original_run
-    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id)
+    spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
+                                           _verification=_verification)
+    options = _continuation_options(spec, options, continuation_receipt, repo_root, _verification)
     expected = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
-        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id)
+        expected_package_identity=options["expected_package_identity"], arm_id=context.arm_id,
+        _verification=_verification)
     if context != expected:
         raise ValueError("Retrieval mapping differs from the original launch context")
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
@@ -81,13 +165,15 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
             raise ValueError("Retrieved output artifact differs from its pinned bytes")
     value = {"format": "molgap-run-retrieved-output-v1", "context": context.to_dict(),
              "output_dir": str(destination), "manifest_sha256": manifest_sha256}
-    target = _mapping_path(run, context.arm_id)
+    target = _mapping_path(run, context.arm_id,
+        context.platform_version if continuation_receipt is not None else None)
     publish_immutable_bytes(target, canonical_json(value).encode())
     return target
 
 
 def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
-                                  retrieved_root=None, supplied=None, locations=None):
+                                  retrieved_root=None, supplied=None, locations=None,
+                                  continuation_receipt=None):
     """Resolve all arms from frozen plans, explicit paths or verified retrieval maps."""
     from .experiment_run import _original_run
     from .experiment_package import _PackageVerification
@@ -95,6 +181,12 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
     spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
                                            _verification=verification)
     run, package = prepared.parent, options["package_dir"]
+    original_receipt = options["receipt_path"]
+    canonical_finalizations = {}
+    if continuation_receipt is None:
+        continuation_receipt, canonical_finalizations = _accepted_continuation_receipt(
+            spec, options, repo_root)
+    options = _continuation_options(spec, options, continuation_receipt, repo_root, verification)
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
     workflow = _json(run / "inputs/workflow_plan.json")
     acceptance = _packaged_json(package, workflow["acceptance_plan"], _verification=verification)
@@ -169,7 +261,8 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
             destination = root / arm_id
             _safe_local(destination)
         else:
-            mapping_path = _mapping_path(run, arm_id)
+            mapping_path = _mapping_path(run, arm_id,
+                context.platform_version if continuation_receipt is not None else None)
             _safe_local(mapping_path)
             mapping = _json(mapping_path)
             if set(mapping) != {"format", "context", "output_dir", "manifest_sha256"} or mapping["format"] != "molgap-run-retrieved-output-v1":
@@ -195,6 +288,8 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
     target_identity = TargetIdentityBinding.from_frozen_package(
         spec, Path(repo_root), package, workflow["acceptance_plan"], _verification=verification)
     return {"spec": spec, "options": options, "prepared": prepared,
+            "_canonical_finalizations": canonical_finalizations,
+            "original_receipt": original_receipt,
             "outputs": outputs, "locations": resolved_locations, "contexts": contexts,
             "acceptance_plan": acceptance, "run_directory": run, "raw_traces": raw_traces,
             "target_identities": {arm_id: target_identity for arm_id in arms}}

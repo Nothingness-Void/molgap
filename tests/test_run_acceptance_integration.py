@@ -6,6 +6,7 @@ import hashlib
 import shutil
 from dataclasses import replace
 from pathlib import Path
+import pytest
 from molgap.experiment_attribution import ATTRIBUTION_FORMAT
 from molgap.experiment_allocation import AllocationLedger
 from molgap.experiment_family_workflow import RunContext
@@ -145,6 +146,44 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
         locations=locations)
     assert {arm: item["trace"] for arm, item in explicit["locations"].items()} == {
         arm: item["trace"] for arm, item in locations.items()}
+
+    # A reconciled successor changes only the physical receipt context.  The
+    # original prospective locations remain canonical and cannot be reused
+    # with a mismatched successor context.
+    from copy import deepcopy
+    from molgap.experiment_launch import build_launch_receipt
+    successor_response = deepcopy(case.receipt["response"])
+    successor_response["platform_version"]["value"] = "8"
+    for physical in successor_response["physical_runs"]["value"]:
+        physical["platform_version"]["value"] = "8"
+        physical["run_identity"] = "kernel1/version8"
+    successor_receipt = build_launch_receipt(case.spec, case.package,
+        expected_package_identity=case.manifest["package_identity"],
+        response_json=canonical_json(successor_response))
+    successor_path = case.paths.artifact_root / "continuation_receipt.json"
+    successor_path.write_bytes(canonical_json(successor_receipt).encode())
+    first_arm = next(iter(arms))
+    original_manifest_path = case.paths.artifact_root / "retrieved" / first_arm / "output_manifest.json"
+    original_manifest = original_manifest_path.read_bytes()
+    mismatched_manifest = json.loads(original_manifest)
+    mismatched_manifest["context"]["platform_version"] = "7"
+    original_manifest_path.write_bytes(canonical_json(mismatched_manifest).encode())
+    try:
+        with pytest.raises(ValueError, match="context/source/arm mismatch: platform_version"):
+            resolve_run_acceptance_inputs(*case.original,
+                retrieved_root=case.paths.artifact_root / "retrieved", continuation_receipt=successor_path)
+    finally:
+        original_manifest_path.write_bytes(original_manifest)
+    resumed = resolve_run_acceptance_inputs(*case.original,
+        retrieved_root=case.paths.artifact_root / "continued", continuation_receipt=successor_path)
+    assert {context.platform_version for context in resumed["contexts"].values()} == {"8"}
+    assert resumed["options"]["receipt_path"] == successor_path
+    assert {arm: where["trajectory"] for arm, where in resumed["locations"].items()} == {
+        arm: where["trajectory"] for arm, where in explicit["locations"].items()}
+    with pytest.raises(ValueError, match="later attempt"):
+        resolve_run_acceptance_inputs(*case.original,
+            retrieved_root=case.paths.artifact_root / "retrieved",
+            continuation_receipt=case.run / "operations/launch_receipt.json")
 
     result = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         diagnose=True, stage_terminal=True)

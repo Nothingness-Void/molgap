@@ -9,11 +9,15 @@ from .trace import load_canonical_trace, validate_manifest_trace
 
 
 def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=None,
-                                   expected_bundle_path=None) -> dict:
+                                   expected_bundle_path=None,
+                                   verify_artifacts: bool = True) -> dict:
     """Admission is recovery of an accepted control, never a new causal claim."""
-    from .finalize import verified_receipt
+    from .finalize import load_terminal_input, verified_receipt
 
     root = Path(root).resolve()
+    def bound(ref: str, digest: str) -> None:
+        if verify_artifacts:
+            verify_bound_artifact(root, ref, digest)
     path = resolve_repo_pointer(root, pointer)
     if path is None:
         raise ValueError("reference qualification must be locally retained")
@@ -23,7 +27,7 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
         raise ValueError("unsupported reference qualification")
     bindings = record["artifact_hashes"]
     for ref, digest in bindings.items():
-        verify_bound_artifact(root, ref, digest)
+        bound(ref, digest)
 
     def load(field):
         ref = record[field]
@@ -49,7 +53,7 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
     if record["original_manifest_ref"] != (directory / "trace_manifest.json").relative_to(root).as_posix():
         raise ValueError("qualification manifest is not from accepted transaction")
     evidence = load_json_object(directory / "v5_evidence.json")
-    terminal = load_json_object(directory / "terminal_input.json")
+    terminal = load_terminal_input(directory)
     if (original["comparison_role"] not in ({"reference", "candidate"} if control_enrollment else {"reference"})
             or manifest["comparison_role"] != "reference"
             or trajectory["decision"]["outcome"] == "ACTIVE"
@@ -92,7 +96,7 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
             raise ValueError("qualification event sidecar is unbound")
         sidecar = load_json_object(resolve_repo_pointer(root, ref))
         source = sidecar["source_ref"]
-        verify_bound_artifact(root, source, sidecar["source_sha256"])
+        bound(source, sidecar["source_sha256"])
         if (sidecar[key] != terminal[key]
                 or sidecar[key] != load_json_object(resolve_repo_pointer(root, source))[key]):
             raise ValueError("qualification fabricated observed events")
@@ -113,7 +117,7 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
         digest = acceptance["source_acceptance_sha256"]
         if terminal["artifact_hashes"].get(source) != digest or bindings.get(source) != digest:
             raise ValueError("control acceptance is not bound to the original terminal transaction")
-        verify_bound_artifact(root, source, digest)
+        bound(source, digest)
         native = load_json_object(resolve_repo_pointer(root, source))
         if native.get("accepted") is not True:
             raise ValueError("control lacked independently accepted native artifacts")
@@ -159,7 +163,9 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
     return manifest
 
 
-def qualified_reference_manifest(root: Path, path: Path, manifest: dict) -> dict:
+def qualified_reference_manifest(
+    root: Path, path: Path, manifest: dict, *, verify_artifacts: bool = True
+) -> dict:
     """The marker lives outside the immutable finalization inventory."""
     marker = path.parent.parent / "reference_qualification.json"
     if not marker.is_file():
@@ -170,4 +176,4 @@ def qualified_reference_manifest(root: Path, path: Path, manifest: dict) -> dict
         return manifest
     if record.get("original_manifest_ref") != path.resolve().relative_to(Path(root).resolve()).as_posix():
         raise ValueError("reference qualification marker targets another manifest")
-    return verify_reference_qualification(root, pointer)
+    return verify_reference_qualification(root, pointer, verify_artifacts=verify_artifacts)

@@ -11,21 +11,26 @@ from molgap.comparison_readiness import (
     validate_comparison_prelaunch, validate_comparison_readiness,
 )
 from molgap.evidence_pointers import load_json_object
-from .finalize import verified_receipt
+from .finalize import load_terminal_input, verified_receipt
 from .paths import resolve_repo_pointer, verify_bound_artifact
 from .reference_qualification import verify_reference_qualification
 from .schemas import validate_trace_manifest
 from .trace import load_canonical_trace, validate_manifest_trace
 
 
-def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict]:
+def assess_candidate_qualification(
+    root: Path, record: dict, *, verify_artifacts: bool = True
+) -> tuple[dict, dict]:
     """Derive admission only from retained, hash-bound original observations."""
     root = Path(root).resolve()
+    def bound(ref: str, digest: str) -> None:
+        if verify_artifacts:
+            verify_bound_artifact(root, ref, digest)
     if record.get("format") != "molgap-candidate-qualification-v1":
         raise ValueError("unsupported candidate qualification")
     bindings = record["artifact_hashes"]
     for ref, digest in bindings.items():
-        verify_bound_artifact(root, ref, digest)
+        bound(ref, digest)
 
     def load(field):
         ref = record[field]
@@ -40,7 +45,7 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
         raise ValueError("candidate manifest is not from its immutable transaction")
     original = validate_trace_manifest(load("original_manifest_ref"))
     evidence = load_json_object(directory / "v5_evidence.json")
-    terminal = load_json_object(directory / "terminal_input.json")
+    terminal = load_terminal_input(directory)
     prelaunch = validate_comparison_prelaunch(load("prelaunch_ref"))
     old = load("original_readiness_ref")
     if (terminal["comparison_readiness_ref"] != record["original_readiness_ref"]
@@ -61,7 +66,9 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
         raise ValueError("qualification requires the candidate's own accepted terminal identity")
 
     ref_record = load("reference_qualification_ref")
-    ref_manifest = verify_reference_qualification(root, record["reference_qualification_ref"])
+    ref_manifest = verify_reference_qualification(
+        root, record["reference_qualification_ref"], verify_artifacts=verify_artifacts
+    )
     if ref_record["original_bundle_ref"] != record["original_bundle_ref"]:
         raise ValueError("qualification cannot substitute another prospective reference")
     bundle = load_json_object(resolve_repo_pointer(root, ref_record["qualified_bundle_ref"]))
@@ -110,11 +117,11 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
     roles = artifact("role_history")
     costs = artifact("cost_records")
     for sidecar, key in ((roles, "roles"), (costs, "costs")):
-        verify_bound_artifact(root, sidecar["source_ref"], sidecar["source_sha256"])
+        bound(sidecar["source_ref"], sidecar["source_sha256"])
         if sidecar[key] != terminal[key]:
             raise ValueError("qualification fabricated candidate role/cost events")
     trace = load_canonical_trace(resolve_repo_pointer(root, original["trace_artifact_ref"]))
-    verify_bound_artifact(root, original["trace_artifact_ref"], original["trace_artifact_sha256"])
+    bound(original["trace_artifact_ref"], original["trace_artifact_sha256"])
     validate_manifest_trace(original, trace)
     completion = load("completion_ref")
     last = trace["observations"][-1]
@@ -145,7 +152,7 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
         ref = bundle[kind + "_ref"]
         reference_bindings[kind] = {"ref": ref, "sha256": ref_record["artifact_hashes"][ref]}
     for kind, binding in reference_bindings.items():
-        verify_bound_artifact(root, binding["ref"], binding["sha256"])
+        bound(binding["ref"], binding["sha256"])
         if kind + "_ref" in bundle and binding["ref"] != bundle[kind + "_ref"]:
             raise ValueError("reference evidence differs from its qualified bundle")
     if reference_bindings["checkpoint"]["sha256"] != bundle["checkpoint_identity"]:
@@ -170,7 +177,11 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
         reference_id=frozen_ref, reference=reference,
         **{k: old[k] for k in ("experiment_purpose", "declared_intervention_fields",
                               "intervention_group_id", "mechanism_id")})
-    validate_comparison_readiness(readiness, evidence_verifier=lambda p, s: verify_bound_artifact(root, p, s))
+    validate_comparison_readiness(
+        readiness,
+        evidence_verifier=(lambda p, s: bound(p, s)) if verify_artifacts else None,
+        metadata_only=not verify_artifacts,
+    )
     if readiness["comparison_class"] != "STRICT_CAUSAL" or not readiness["strict_ready"]:
         raise ValueError("candidate qualification did not establish strict observed comparison")
     manifest = deepcopy(original)
@@ -182,9 +193,13 @@ def assess_candidate_qualification(root: Path, record: dict) -> tuple[dict, dict
     return validate_trace_manifest(manifest), readiness
 
 
-def verify_candidate_qualification(root: Path, pointer: str) -> tuple[dict, dict]:
+def verify_candidate_qualification(
+    root: Path, pointer: str, *, verify_artifacts: bool = True
+) -> tuple[dict, dict]:
     record = load_json_object(resolve_repo_pointer(root, pointer))
-    manifest, readiness = assess_candidate_qualification(root, record)
+    manifest, readiness = assess_candidate_qualification(
+        root, record, verify_artifacts=verify_artifacts
+    )
     for field, expected in (("qualified_manifest_ref", manifest), ("qualified_readiness_ref", readiness)):
         ref = record[field]
         if ref not in record["artifact_hashes"] or load_json_object(resolve_repo_pointer(root, ref)) != expected:
@@ -192,7 +207,9 @@ def verify_candidate_qualification(root: Path, pointer: str) -> tuple[dict, dict
     return manifest, readiness
 
 
-def qualified_candidate_record(root: Path, path: Path, record: dict, *, kind: str) -> dict:
+def qualified_candidate_record(
+    root: Path, path: Path, record: dict, *, kind: str, verify_artifacts: bool = True
+) -> dict:
     marker = (path.parent.parent if kind == "manifest" else path.parent.parent / "rml_plan") / "candidate_qualification.json"
     if not marker.is_file():
         return record
@@ -201,5 +218,7 @@ def qualified_candidate_record(root: Path, path: Path, record: dict, *, kind: st
     field = "original_manifest_ref" if kind == "manifest" else "original_readiness_ref"
     if descriptor[field] != path.resolve().relative_to(Path(root).resolve()).as_posix():
         raise ValueError("candidate qualification marker targets another record")
-    manifest, readiness = verify_candidate_qualification(root, pointer)
+    manifest, readiness = verify_candidate_qualification(
+        root, pointer, verify_artifacts=verify_artifacts
+    )
     return manifest if kind == "manifest" else readiness

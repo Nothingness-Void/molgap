@@ -337,12 +337,14 @@ class SessionOutputs:
     def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity,
                  resume_trajectory=None, action_id=None):
         from .family_training_runner import read_recipe
+        from .v4_bundle import _payload
+        from .v4_runtime import normalized_source_sha256
         self.root, self.context, self.adapter = Path(root).absolute(), context, adapter
         self.resume_trajectory = resume_trajectory
         self.bounded_pair = False
         self.pending_pass = None
         _safe_local(self.root)
-        if file_digest(contract) != context.training_recipe_sha256:
+        if normalized_source_sha256(Path(contract)) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
         if self.recipe.formal_interface:
@@ -374,7 +376,7 @@ class SessionOutputs:
             if self.recipe.dataset.development else None, action_id=action_id,
             resume_trajectory=resume_trajectory)
         _recover_commit(self.root, self.context)
-        publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
+        publish_immutable_bytes(self.root / "training_contract.json", _payload(Path(contract)))
         self.pending = self.root / "session_pending"
         _safe_local(self.pending.absolute())
         self.pending.mkdir(exist_ok=True)

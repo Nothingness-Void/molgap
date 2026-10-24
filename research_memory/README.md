@@ -54,6 +54,14 @@ or qualify remote-only evidence. `terminal-pipeline` accepts `--trace-source`
 and `--arm` through shared trace wiring. Server planning/finalization remains
 server-owned only; these entry points do not import desktop operational custody.
 
+Planning and finalization require committed Git attributes that preserve new
+hash-bound evidence bytes. `experiments/.gitattributes` and
+`research_memory/policies/.gitattributes` disable text, filter, ident and encoding
+conversion; extra bound paths need the same rule before publication. Existing
+accepted bytes are not normalized or rewritten. `check --frozen` uses the same
+metadata projection as rebuild; payload qualification remains the strict
+acceptance owner's task, independent of unrelated historical weights.
+
 RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no
 command submits training, accesses protected data, changes a scientific gate,

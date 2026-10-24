@@ -69,6 +69,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/family_training_outputs.py',
     'src/molgap/family_training_recipe.py',
     'src/molgap/family_training_runner.py',
+    'src/molgap/native_proof_storage.py',
     'src/molgap/family_training_session.py',
     'src/molgap/gps.py',
     'src/molgap/gptrans.py',
@@ -110,6 +111,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/research_memory/paths.py',
     'src/molgap/research_memory/pipeline.py',
     'src/molgap/research_memory/plan.py',
+    'src/molgap/research_memory/portability.py',
     'src/molgap/research_memory/policy.py',
     'src/molgap/research_memory/recovery.py',
     'src/molgap/research_memory/references.py',
@@ -233,6 +235,8 @@ def runtime_source_files(repo_root, records=()):
 # molecular data, model states and Git repositories under temporary directories.
 # Retain all test Python so shared fixtures do not need a second import catalog.
 _TEST_SUPPORT_FILES = frozenset({
+    "experiments/.gitattributes",
+    "research_memory/policies/.gitattributes",
     "pyproject.toml",
     "platforms/local/run.py",
     "platforms/local/accept_run.py",

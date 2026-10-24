@@ -250,6 +250,11 @@ where they are; this command downloads and copies no training payloads. Drafts
 do not close RML. Closure requires an explicit outcome, decision reference,
 observed role evidence and `--execute` through the existing terminal owner.
 Missing/uncertain receipt or journal bindings require original reconciliation.
+For an already closed run, add `--strict --execute` to recheck its accepted
+canonical evidence without rewriting the terminal. Closed continuations resolve
+only their hash-bound accepted successor; unclosed continuations still require
+an explicit receipt. The retriever reuses hash-matching outputs and compressed
+native proofs; it never requests all platform files.
 The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) owns the remaining
 arguments and local path limits; the [recovery contract](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow)
 retains incomplete-checkpoint and native-runtime restrictions.

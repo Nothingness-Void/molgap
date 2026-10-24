@@ -35,7 +35,8 @@ def configured(case, tmp_path):
         target = repo / source.relative_to(ROOT)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(source.read_bytes().replace(b"\r\n", b"\n"))
-    for name in ("platforms/kaggle/run_experiment.py", "platforms/kaggle/submit_workflow.py"):
+    for name in ("platforms/kaggle/run_experiment.py", "platforms/kaggle/submit_workflow.py",
+                 "experiments/.gitattributes", "research_memory/policies/.gitattributes"):
         target = repo / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes((ROOT / name).read_bytes().replace(b"\r\n", b"\n"))

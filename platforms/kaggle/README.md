@@ -30,6 +30,11 @@ external machine-local storage and prepares only unless `--execute` is explicit.
 
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
+Hash-matching retained files are reused. `--strict` additionally selects native
+certificate dependencies, including lossless proof archives, and reports new
+downloads separately. Continued outputs use `--continuation-receipt` and
+`--resume-prepared`, with version-specific retained mappings. This verifies
+transport bytes; strict acceptance owns tensor qualification and replay.
 Source/job/version reconciliation and obtaining the small manifest belong to
 the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
 

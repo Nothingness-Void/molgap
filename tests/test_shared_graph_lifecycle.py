@@ -113,10 +113,9 @@ def _install_family(repo, monkeypatch):
         handle.write(f"ADDONS = MappingProxyType({{**ADDONS, ('synthetic_shift', '1'): {addon_contract!r}}})\n")
     execution_path = repo / "src/molgap/experiment_execution.py"
     source = execution_path.read_text(encoding="utf-8")
-    registration = (f"\n    {FAMILY!r}: graph_training_adapter({FAMILY!r}, "
-        f"model_factory={adapter.model_factory!r}, addons={adapter.addons!r}),")
-    source = source.replace("TRAINING_ADAPTERS = MappingProxyType({",
-        "TRAINING_ADAPTERS = MappingProxyType({" + registration, 1)
+    source += (f"\nTRAINING_ADAPTERS = MappingProxyType({{**TRAINING_ADAPTERS, "
+        f"{FAMILY!r}: graph_training_adapter({FAMILY!r}, "
+        f"model_factory={adapter.model_factory!r}, addons={adapter.addons!r})}})\n")
     execution_path.write_text(source, encoding="utf-8")
     model_module = _load_module("molgap.synthetic_shared_graph", repo / "src/molgap/synthetic_shared_graph.py", monkeypatch)
     _load_module("molgap.synthetic_shared_addon", repo / "src/molgap/synthetic_shared_addon.py", monkeypatch)
@@ -127,6 +126,7 @@ def _install_family(repo, monkeypatch):
     _git(repo, "config", "user.email", "synthetic@example.invalid")
     _git(repo, "config", "user.name", "Shared graph fixture")
     _git(repo, "config", "core.autocrlf", "false")
+    (repo / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
     return arm, owner, model_module, sources
 
 
@@ -176,7 +176,7 @@ def test_new_model_and_tiny_addon_reuse_release_training_and_acceptance(tmp_path
     initial_state = repo / "initial.pt"
     torch.save(initial_model.state_dict(), initial_state)
     arm["initialization"]["state_sha256"] = model_state_sha256(initial_model)
-    _git(repo, "add", "--", *sources, "recipes/new_graph.json")
+    _git(repo, "add", "--", ".gitattributes", *sources, "recipes/new_graph.json")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic model and shared release sources")
     payload = _spec_payload([arm], platform="kaggle")
     binding = payload["prospective"]["arms"][0]

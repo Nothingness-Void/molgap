@@ -16,14 +16,128 @@ from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
 from molgap.kaggle_output_retrieval import (
     retrieve_execution_retention as _retrieve_execution_retention,
+    retrieve_exact_metadata,
+    retrieve_pinned_exact_files,
     retrieve_selected_kaggle_files,
 )
 from molgap.research_memory.trace import file_digest
 
 
+def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path,
+        destination, resume_checkpoint_sha256=None, http_session=None, on_plan=None):
+    """Retrieve only certificate-bound native dependencies; acceptance stays local."""
+    from tempfile import TemporaryDirectory
+    from molgap.family_training_runner import inspect_retained_native_qualification
+    from molgap.research_memory.paths import repo_local_path
+    from molgap.screen_policy import canonical_fingerprint
+
+    destination = Path(destination).absolute()
+    prefix = PurePosixPath(remote_manifest_path).parent
+    resumed = resume_checkpoint_sha256 is not None
+    native = destination.parent / "_resume_preflight" / context.arm_id if resumed else destination
+    remote_native = prefix.parent / "_resume_preflight" / context.arm_id if resumed else prefix
+    actual_resume = native
+    remote_resume = remote_native
+    # Older continuation retrievals retained the original certificate beside
+    # the output and actual-resume proof in its separate runtime directory.
+    if resumed and (destination / "runtime_certificate.json").is_file():
+        native = destination
+    _safe_local(native)
+    version = context.platform_version
+    if not isinstance(version, str) or not version.isascii() or not version.isdecimal():
+        raise ValueError("Strict dependency retrieval requires an exact numeric version")
+    certificate_id = manifest.get("runtime", {}).get("runtime_certificate_id")
+    from molgap.experiment_spec import _digest
+    _digest(certificate_id, "runtime_certificate_id")
+
+    transfers, plans = [], []
+
+    def announce(plan):
+        plans.append(plan)
+        if on_plan is not None:
+            on_plan(plan)
+
+    def metadata(names, *, remote_root=remote_native, local_root=None):
+        local_root = native if local_root is None else local_root
+        retained, missing = {}, []
+        for name in names:
+            path = repo_local_path(local_root, name)
+            _safe_local(path)
+            if path.is_file():
+                retained[name] = path.read_bytes()
+            else:
+                missing.append(name)
+        if not missing:
+            return retained
+        announce({"phase": "native_metadata", "files": [
+            {"remote_path": (remote_root / name).as_posix(), "size_bytes": None}
+            for name in missing], "unknown_size_files": len(missing),
+            "known_download_bytes": 0, "reused_bytes": sum(len(raw) for raw in retained.values())})
+        with TemporaryDirectory(prefix=".native-metadata-", dir=destination.parent) as temporary:
+            paths = [(remote_root / name).as_posix() for name in missing]
+            retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
+                version=int(version), paths=paths, destination=Path(temporary), http_session=http_session)
+            transfers.extend(paths)
+            retained.update({name: repo_local_path(Path(temporary), remote).read_bytes()
+                for name, remote in zip(missing, paths)})
+        return retained
+
+    from molgap.experiment_family_workflow import _json_bytes
+    payloads = metadata(["runtime_certificate.json", "runtime_provenance.json"])
+    certificate, provenance = (_json_bytes(payloads[name]) for name in
+        ("runtime_certificate.json", "runtime_provenance.json"))
+    if (canonical_fingerprint(certificate) != certificate_id
+            or certificate.get("provenance_sha256") != canonical_fingerprint(provenance)):
+        raise ValueError("Native metadata differs from the manifest-bound certificate")
+    from molgap.experiment_launch import publish_immutable_bytes
+    for name, payload in payloads.items():
+        publish_immutable_bytes(native / name, payload)
+    if resumed:
+        output_provenance = metadata(["runtime_provenance.json"], remote_root=prefix,
+            local_root=destination)["runtime_provenance.json"]
+        if canonical_fingerprint(_json_bytes(output_provenance)) != certificate["provenance_sha256"]:
+            raise ValueError("Continued output provenance differs from its native certificate")
+        publish_immutable_bytes(destination / "runtime_provenance.json", output_provenance)
+    if resumed and not (actual_resume / "actual_resume_certificate.json").is_file():
+        payload = metadata(["actual_resume_certificate.json"], remote_root=remote_resume,
+            local_root=actual_resume)["actual_resume_certificate.json"]
+        publish_immutable_bytes(actual_resume / "actual_resume_certificate.json", payload)
+
+    recipe = repo_local_path(destination, manifest["artifacts"]["contract"]["path"])
+    for _ in range(4):
+        inventory = inspect_retained_native_qualification(native, recipe_path=recipe,
+            provenance=provenance, context=context, resume_checkpoint_sha256=resume_checkpoint_sha256,
+            resume_directory=actual_resume, inventory_only=True)
+        if inventory["status"] == "DEPENDENCIES_VERIFIED":
+            return {"status": "DEPENDENCIES_VERIFIED", "native_root": str(native),
+                "known_local_bytes": inventory["known_local_bytes"], "retrieval_plans": plans,
+                "downloaded_files": transfers, "network_accessed": bool(transfers),
+                "scientific_acceptance": "NOT_EVALUATED", "native_qualification": "NOT_EVALUATED"}
+        missing = [item for item in inventory["dependencies"] if not item["present"] and item["sha256"] is not None]
+        # Metadata frontiers are fetched first; only then request proof archives
+        # or other certificate-bound files. Never enumerate unrelated outputs.
+        selected = [item for item in missing if Path(item["path"]).suffix == ".json"] or missing
+        if not selected:
+            raise ValueError("Native dependency has no retained hash binding")
+        groups, sizes = {}, {}
+        for item in selected:
+            path = Path(item["local_path"])
+            local_root, remote_root = ((actual_resume, remote_resume)
+                if resumed and path.is_relative_to(actual_resume) else (native, remote_native))
+            relative = path.relative_to(local_root).as_posix()
+            remote = (remote_root / relative).as_posix()
+            groups.setdefault(local_root, {})[remote] = (relative, item["sha256"])
+            sizes[remote] = item["size_bytes"]
+        for local_root, files in groups.items():
+            result = retrieve_pinned_exact_files(api, context=context, remote_manifest_path=remote_manifest_path,
+                files=files, destination=local_root, http_session=http_session, sizes=sizes, on_plan=announce)
+            transfers.extend(item["path"] for item in result["files"] if item["state"] != "ALREADY_RETAINED")
+    raise ValueError("Native dependency inventory did not resolve within its bounded frontiers")
+
+
 def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: str,
                             local_manifest: Path, manifest_sha256: str,
-                            destination: Path, http_session=None) -> dict:
+                            destination: Path, http_session=None, on_plan=None) -> dict:
     """Use an already authenticated owning-account KaggleApi.
 
     This function is called by the platform adapter/skill, not experiment_cli.
@@ -32,11 +146,20 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     """
     manifest, required = _family_files(context, remote_manifest_path, local_manifest,
                                        manifest_sha256)
-    result = retrieve_selected_kaggle_files(
+    version = context.platform_version
+    transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
+                 and version.isdecimal() else retrieve_selected_kaggle_files)
+    options = {"on_plan": on_plan, "sizes": {remote_manifest_path: local_manifest.stat().st_size}}
+    result = transport(
         api, context=context, remote_manifest_path=remote_manifest_path,
         files=required, destination=destination, http_session=http_session,
+        **(options if transport is retrieve_pinned_exact_files else {}),
     )
+    # The exact-file transport converts the canonical text version to the
+    # SDK's integer request field.  Keep the adapter receipt ABI in its
+    # original RunContext spelling so callers do not observe transport detail.
     result.update({"producer_version": manifest["context"]["platform_version"],
+                   "receipt_version": context.platform_version,
                    "manifest_sha256": manifest_sha256})
     return result
 
@@ -65,7 +188,10 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
     if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent
-    required = {}
+    # Keep the small pinned manifest in the first publication frontier so a
+    # failed payload transfer always leaves the identity needed for safe
+    # re-entry; artifact bytes remain independently hash-bound.
+    required = {remote_manifest_path: ("output_manifest.json", manifest_sha256)}
     for role, item in manifest["artifacts"].items():
         _path(item["path"])
         from molgap.experiment_spec import _digest
@@ -74,7 +200,6 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         if remote in required:
             raise ValueError("Aliased retention roles")
         required[remote] = (item["path"], item["sha256"])
-    required[remote_manifest_path] = ("output_manifest.json", manifest_sha256)
     return manifest, required
 
 
@@ -99,10 +224,15 @@ def main(argv=None):
     import argparse
     from contextlib import redirect_stderr, redirect_stdout
     import io
+    import sys
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
-    from molgap.kaggle_output_retrieval import _selected_files
+    from molgap.kaggle_output_retrieval import _selected_files, plan_pinned_files
+    progress_stream = sys.stderr
+
+    def announce(plan):
+        print(canonical_json({"retrieval_plan": plan}), file=progress_stream, flush=True)
 
     class Parser(argparse.ArgumentParser):
         def error(self, message):
@@ -116,6 +246,7 @@ def main(argv=None):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--credentials", type=Path)
+    parser.add_argument("--strict", action="store_true")
     parser.add_argument("--execute", action="store_true")
     stage = "arguments"
     try:
@@ -167,17 +298,34 @@ def main(argv=None):
                 _safe_local(target)
                 if target.exists() and (not target.is_file() or file_digest(target) != pin):
                     raise ValueError("Retained output conflicts with pinned artifact")
+            version = context.platform_version
+            if args.strict and (not isinstance(version, str) or not version.isascii() or not version.isdecimal()):
+                raise ValueError("Strict dependency retrieval requires an exact numeric version")
+            retrieval_plan = None
+            if isinstance(version, str) and version.isascii() and version.isdecimal():
+                retrieval_plan = plan_pinned_files(files, destination,
+                    sizes={args.remote_manifest_path: args.local_manifest.stat().st_size})
             result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
                       "network_accessed": False, "scientific_acceptance": False,
                       "producer_version": manifest["context"]["platform_version"],
-                      "manifest_sha256": args.manifest_sha256}
+                      "manifest_sha256": args.manifest_sha256,
+                      "retrieval_plan": retrieval_plan}
+            if args.strict:
+                result["native_dependencies"] = "resolved from pinned certificate before proof transfer"
             if args.execute:
                 stage = "platform_retrieval"
                 from molgap.kaggle_submission import connect_kaggle
                 api = connect_kaggle(args.credentials)
                 result = retrieve_family_outputs(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
-                    manifest_sha256=args.manifest_sha256, destination=destination)
+                    manifest_sha256=args.manifest_sha256, destination=destination, on_plan=announce)
+                if args.strict:
+                    stage = "native_dependencies"
+                    result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
+                        manifest=manifest, remote_manifest_path=args.remote_manifest_path,
+                        destination=destination, on_plan=announce)
+                    result["network_accessed"] = (result.get("network_accessed", False)
+                        or result["native_dependencies"]["network_accessed"])
                 stage = "retrieval_mapping"
                 from molgap.experiment_run_acceptance import record_run_retrieval
                 mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,

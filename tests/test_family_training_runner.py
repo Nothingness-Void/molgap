@@ -174,3 +174,32 @@ def test_resource_matching_is_metadata_only(requested, observed, hip):
 def test_wrong_allocation_cannot_be_qualified(requested, observed, hip):
     with pytest.raises(ValueError):
         validate_accelerator_request(requested, observed, hip_runtime=hip)
+
+
+def test_native_proof_storage_round_trip_and_interrupted_retirement(tmp_path):
+    import hashlib
+    from molgap.native_proof_storage import (RESUME_ARCHIVE, compact_certificate, load_proof,
+        proof_stream, retire_proof_sources)
+    from molgap.research_memory.trace import atomic_write, json_bytes
+
+    first, second = tmp_path / "actual-resume-a.pt", tmp_path / "actual-resume-b.pt"
+    torch.save({"state": torch.arange(4)}, first)
+    torch.save({"state": torch.arange(4)}, second)
+    from molgap.training_reproducibility import sha256_file
+    certificate = {"proofs": [{"path": first.name, "sha256": sha256_file(first)},
+        {"path": second.name, "sha256": sha256_file(second)}]}
+    compact_certificate(tmp_path, certificate, actual_resume=True)
+    with pytest.raises(FileNotFoundError):
+        retire_proof_sources(tmp_path, certificate)
+    atomic_write(tmp_path / "actual_resume_certificate.json", json_bytes(certificate))
+    archive = tmp_path / RESUME_ARCHIVE
+    original = archive.read_bytes()
+    archive.write_bytes(b"interrupted archive")
+    with pytest.raises(ValueError, match="intact published storage"):
+        retire_proof_sources(tmp_path, certificate)
+    archive.write_bytes(original)
+    retire_proof_sources(tmp_path, certificate)
+    assert not first.exists() and not second.exists() and archive.is_file()
+    with proof_stream(tmp_path, first.name, certificate["proofs"][0]["sha256"]) as stream:
+        assert hashlib.sha256(stream.read()).hexdigest() == certificate["proofs"][0]["sha256"]
+    assert load_proof(tmp_path, certificate["proofs"][0])["state"].tolist() == [0, 1, 2, 3]

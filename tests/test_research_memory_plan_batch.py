@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from collections import Counter
 from importlib import import_module
 from pathlib import Path
@@ -22,6 +23,11 @@ def _write_json(path: Path, value: dict) -> None:
 @pytest.fixture
 def planning_root(tmp_path, monkeypatch):
     root = tmp_path
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    subprocess.run(["git", "add", ".gitattributes"], cwd=root, check=True)
+    subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        "commit", "-qm", "Preserve fixture bytes"], cwd=root, check=True)
     seed = root / "experiments/seed"
     _write_json(seed / "trajectory.json", {
         "trajectory_id": "T-existing",
@@ -196,7 +202,10 @@ def test_batch_shares_frozen_snapshot_and_preserves_input_order(planning_root):
         json.loads((root / item["path"] / "trajectory.json").read_text(encoding="utf-8"))
         for item in result["results"]
     ]
-    first_state, second_state = (record["decision_state"] for record in records)
+    first_state, second_state = (
+        plan_module.resolve_decision_state(root, record)["decision_state"]
+        for record in records
+    )
     for key in ("known_trajectory_ids", "known_evidence_ids", "source_commit",
                 "source_hashes", "policy_sha256"):
         assert first_state[key] == second_state[key]
@@ -238,7 +247,11 @@ def test_same_run_pair_is_frozen_in_one_batch(planning_root):
     records = [json.loads((root / item["path"] / "trajectory.json").read_text()) for item in result["results"]]
     assert records[0]["state_at_start"]["same_run_replay"]["comparison_role"] == "reference"
     assert records[1]["state_at_start"]["same_run_replay"]["reference_trajectory_id"] == "T-a"
-    assert records[0]["decision_state"]["known_evidence_ids"] == records[1]["decision_state"]["known_evidence_ids"] == ["E-existing"]
+    assert all(
+        plan_module.resolve_decision_state(root, record)["decision_state"]["known_evidence_ids"]
+        == ["E-existing"]
+        for record in records
+    )
 
 
 def test_same_run_pair_rejects_unbound_peer_before_publication(planning_root):
@@ -288,8 +301,12 @@ def test_single_plan_still_discovers_each_time(planning_root):
     assert first == {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"}
     assert second == {"trajectory_id": "T-b", "status": "PLANNED", "path": "experiments/arm-b"}
     assert len(discovery_calls) == 2
-    first_state = json.loads((root / first["path"] / "decision_state.json").read_text(encoding="utf-8"))
-    second_state = json.loads((root / second["path"] / "decision_state.json").read_text(encoding="utf-8"))
+    first_state = plan_module.resolve_decision_state(
+        root, json.loads((root / first["path"] / "trajectory.json").read_text(encoding="utf-8"))
+    )["decision_state"]
+    second_state = plan_module.resolve_decision_state(
+        root, json.loads((root / second["path"] / "trajectory.json").read_text(encoding="utf-8"))
+    )["decision_state"]
     assert first_state["known_trajectory_ids"] == ["T-existing"]
     assert second_state["known_trajectory_ids"] == ["T-a", "T-existing"]
     assert str(Path("experiments/arm-a/trajectory.json")) in second_state["source_hashes"]
