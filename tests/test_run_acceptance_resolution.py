@@ -23,6 +23,7 @@ def test_resolves_all_frozen_arms_after_source_records_disappear(acceptance_run)
     # Mutable checkout records are deliberately absent. The frozen archive owns them.
     assert not (case.repo / "plans/acceptance.json").exists()
     result = resolve_run_acceptance_inputs(*case.original, retrieved_root=root)
+    assert result["_canonical_finalizations"] == {}
     assert result["spec"].identity == case.spec.identity
     assert set(result["outputs"]) == {"k1_candidate", "gptrans_candidate"}
     for arm, item in result["outputs"].items():
@@ -84,7 +85,7 @@ def retain(case, arm, *, receipt=None):
 
 
 @pytest.mark.parametrize("continuation", [False, True])
-def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, continuation):
+def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, continuation, monkeypatch):
     case = acceptance_run
     receipt = None
     original_mappings = {}
@@ -112,6 +113,7 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, co
         assert target.parent.name == ("8" if continuation else "retrieved_outputs")
         destinations[arm] = destination
     result = resolve_run_acceptance_inputs(*case.original, continuation_receipt=receipt)
+    assert result["_canonical_finalizations"] == {}
     assert result["original_receipt"] == case.run / "operations/launch_receipt.json"
     assert all(path.read_bytes() == raw for path, raw in original_mappings.items())
     if continuation:
@@ -128,6 +130,7 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, co
         # canonical terminal pointers may select that exact retained receipt.
         declaration = case.spec.to_dict()
         continuation_paths = []
+        expected_finalizations = {}
         for index, binding in enumerate(declaration["prospective"]["arms"]):
             owner = case.repo / binding["output"]
             trajectory = {"trajectory_id": binding["trajectory_id"]}
@@ -147,6 +150,7 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, co
                 "continuation_ref": artifact_locator(case.repo, pointer), "artifact_hashes": hashes,
                 "same_run_observation": continued}
             finalized = owner / "rml_finalized"
+            expected_finalizations[binding["arm_id"]] = (finalized, terminal)
             # This is a minimal byte-integrity fixture, not scientific closure.
             for name, value in (("trajectory.json", trajectory), ("prospective_snapshot.json", trajectory),
                                 ("v5_evidence.json", {"synthetic": True}), ("terminal_input.json", terminal)):
@@ -161,7 +165,20 @@ def test_maps_bind_exact_context_and_manifest_without_copying(acceptance_run, co
             if index == 0:
                 with pytest.raises(ValueError, match="one common continuation"):
                     resolve_run_acceptance_inputs(*case.original)
+        import molgap.experiment_run_acceptance as resolution
+
+        discover = resolution._accepted_continuation_receipt
+        discovered = []
+
+        def capture_canonical(*args):
+            successor, canonical = discover(*args)
+            discovered.append(canonical)
+            return successor, canonical
+
+        monkeypatch.setattr(resolution, "_accepted_continuation_receipt", capture_canonical)
         automatic = resolve_run_acceptance_inputs(*case.original)
+        assert automatic["_canonical_finalizations"] is discovered[-1]
+        assert automatic["_canonical_finalizations"] == expected_finalizations
         assert automatic["outputs"] == result["outputs"]
         assert automatic["options"]["receipt_path"] == receipt
         assert {value.platform_version for value in automatic["contexts"].values()} == {"8"}

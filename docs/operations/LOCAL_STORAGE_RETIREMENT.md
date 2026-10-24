@@ -43,6 +43,10 @@ Successful preparation retires earlier unpublished failed preparations only when
 their payload bytes match the verified replacement. Unique files, uncertain
 publication, operation journals and links block retirement. Compact reports and
 an inventory receipt survive; interrupted deletion resumes against that receipt.
+On reentry, completed receipts with no remaining payload move byte-for-byte to
+`local_preparation_failures/completed/`, which is not rescanned. Discovery and
+pending cleanup stay bounded per call; overflow or archive conflicts are reported
+without discarding recovery inputs.
 After a Kaggle submission reaches `BOUND`, its journaled cleanup removes verified
 upload payload copies and `source_roundtrip`. Reentry uses the bound identity and
 retirement receipt; failed or unknown publication keeps its recovery inputs.

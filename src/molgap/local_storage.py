@@ -233,10 +233,12 @@ def retire_failed_preparations(run, spec_identity, package_identity):
     """Retire only unpublished failed copies after the replacement is verified.
 
     Existing workflow/release reports remain as compact receipts beside each old
-    name. A pending retirement receipt is retried after interrupted unlink; no
-    process guessing, lock removal, or published preparation deletion occurs.
+    name, then move to completed/ on reentry. A pending retirement receipt is
+    retried after interrupted unlink; no process guessing, lock removal, or
+    published preparation deletion occurs.
     """
     from .experiment_package import verify_experiment_source_package
+    from .common.io import publish_immutable_bytes
     from .training_reproducibility import atomic_json
     run = Path(run).absolute()
     _safe_local(run)
@@ -244,10 +246,17 @@ def retire_failed_preparations(run, spec_identity, package_identity):
     _safe_local(failures)
     if not failures.exists():
         return []
-    children = list(islice(failures.iterdir(), _MAX_CANDIDATES + 1))
-    if len(children) > _MAX_CANDIDATES:
-        return [{"path": str(failures), "status": "REPORT_ONLY", "reason": "Candidate bound exceeded"}]
-    names = {child.name.removesuffix(".json") for child in children
+    # Bound metadata discovery separately from pending owners: each owner may
+    # have both a directory and receipt, plus the unscanned completed namespace.
+    # Draining completed receipts gives subsequent calls progress through legacy
+    # histories without an unbounded directory scan or payload inventory.
+    discovery_bound = 2 * _MAX_CANDIDATES + 1
+    children = list(islice(failures.iterdir(), discovery_bound + 1))
+    results = []
+    if len(children) > discovery_bound:
+        results.append({"path": str(failures), "status": "REPORT_ONLY",
+                        "reason": "Candidate bound exceeded"})
+    names = {child.name.removesuffix(".json") for child in children[:discovery_bound]
              if re.fullmatch(r"prepared-[0-9a-f]{32}(?:\.json)?", child.name)}
     pending = []
     for name in names:
@@ -256,14 +265,31 @@ def retire_failed_preparations(run, spec_identity, package_identity):
         _safe_local(receipt)
         if not old.exists() and receipt.exists():
             try:
-                retained = json.loads(receipt.read_bytes())
+                identity = _identity(receipt)
+                payload = receipt.read_bytes()
+                retained = json.loads(payload)
                 if retained["local_payload_retirement"]["status"] == "REMOVED":
+                    try:
+                        archived = failures / "completed" / receipt.name
+                        _safe_local(archived)
+                        publish_immutable_bytes(archived, payload)
+                        _safe_local(receipt)
+                        if _identity(receipt) != identity:
+                            raise ValueError("Completed retirement receipt changed before relocation")
+                        receipt.unlink()
+                    except (OSError, ValueError) as exc:
+                        results.append({"path": str(receipt), "status": "REPORT_ONLY", "reason": str(exc)})
                     continue
             except (OSError, ValueError, KeyError, TypeError):
                 pass
         pending.append(name)
+    if len(pending) > _MAX_CANDIDATES:
+        if len(children) <= discovery_bound:
+            results.append({"path": str(failures), "status": "REPORT_ONLY",
+                            "reason": "Candidate bound exceeded"})
+        pending = sorted(pending)[:_MAX_CANDIDATES]
     if not pending:
-        return []  # Completed receipts need no replacement-package rehash.
+        return results  # Completed receipts need no replacement-package rehash.
     manifest = verify_experiment_source_package(prepared / "package")
     report = json.loads((prepared / "workflow_report.json").read_bytes())
     if (manifest["spec_identity"] != spec_identity or manifest["package_identity"] != package_identity
@@ -271,7 +297,6 @@ def retire_failed_preparations(run, spec_identity, package_identity):
             or report.get("package_identity") != package_identity):
         raise ValueError("Failed preparation retirement requires its verified replacement")
     replacement, _ = _tree_files(prepared)
-    results = []
     for name in sorted(pending):
         old = failures / name
         result = {"path": str(old), "status": "REPORT_ONLY"}

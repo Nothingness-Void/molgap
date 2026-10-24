@@ -289,22 +289,56 @@ def failed_preparation(tmp_path, package):
 
 def test_failed_preparation_retirement_preserves_compact_original_receipts(failed_preparation):
     case = failed_preparation
+    # Legacy flat receipts must not permanently crowd a new pending owner out.
+    historical = json.dumps({"workflow_report": case.report,
+        "local_payload_retirement": {"status": "REMOVED"}}).encode()
+    for index in range(129):
+        (case.old.parent / f"prepared-{index:032x}.json").write_bytes(historical)
     assert case.retire()[0]["status"] == "REMOVED"
     assert not case.old.exists()
     receipt = json.loads(case.old.with_name(case.old.name + ".json").read_bytes())
     assert receipt["workflow_report"] == case.report
     assert receipt["local_payload_retirement"]["status"] == "REMOVED"
     assert (case.run / "prepared/package/source.tar.gz").is_file()
+    for index in range(129):
+        historical_name = f"prepared-{index:032x}.json"
+        assert not (case.old.parent / historical_name).exists()
+        assert (case.old.parent / "completed" / historical_name).read_bytes() == historical
 
 
-def test_completed_retirement_reentry_does_not_rehash_replacement(failed_preparation, monkeypatch):
+@pytest.mark.parametrize("archive_state", ["absent", "identical", "conflict", "link"])
+def test_completed_retirement_reentry_does_not_rehash_replacement(
+        failed_preparation, monkeypatch, archive_state):
     from molgap import experiment_package
     case = failed_preparation
     assert case.retire()[0]["status"] == "REMOVED"
+    receipt = case.old.with_name(case.old.name + ".json")
+    payload = receipt.read_bytes()
+    archived = case.old.parent / "completed" / receipt.name
+    if archive_state != "absent":
+        archived.parent.mkdir()
+        if archive_state in {"identical", "conflict"}:
+            archived.write_bytes(payload if archive_state == "identical" else b"conflicting receipt")
+        else:
+            original = Path.lstat
+            def reparse(path, *args, **kwargs):
+                if path == archived.parent:
+                    return SimpleNamespace(st_mode=stat.S_IFDIR, st_file_attributes=0x400)
+                return original(path, *args, **kwargs)
+            monkeypatch.setattr(Path, "lstat", reparse)
     def unexpected(*args, **kwargs):
         raise AssertionError("completed retirement rehashed replacement")
     monkeypatch.setattr(experiment_package, "verify_experiment_source_package", unexpected)
-    assert case.retire() == []
+    if archive_state in {"conflict", "link"}:
+        result = case.retire()
+        assert len(result) == 1 and result[0]["status"] == "REPORT_ONLY"
+        assert receipt.read_bytes() == payload
+        if archive_state == "conflict":
+            assert archived.read_bytes() == b"conflicting receipt"
+    else:
+        assert case.retire() == []
+        assert not receipt.exists() and archived.read_bytes() == payload
+        assert case.retire() == []
 
 
 @pytest.mark.parametrize("change", ["operations", "unknown", "published", "newbytes", "link"])

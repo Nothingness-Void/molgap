@@ -130,7 +130,8 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
 @pytest.mark.parametrize("development", [False, True])
-def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_path, cpu_replay, initial_states, family, development):
+def test_actual_session_output_translation_and_cpu_mechanical_inspection(
+        tmp_path, cpu_replay, initial_states, family, development, monkeypatch):
     from molgap.experiment_resume import create_resume_bundle, restore_resume_bundle, validate_resume_bundle
     from molgap.family_training_data import DatasetSelection, TrainingData
     from molgap.family_training_kernel import FamilyKernel
@@ -400,6 +401,59 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     blocked = inspect_output(outputs.root, context=ctx, expected=record["acceptance_requirements"])
     assert blocked["status"] == "BLOCKED"
     assert any("exposure" in error for error in blocked["blockers"])
+
+    if family == "neural_atom_k1" and development:
+        # Exercise the actual worker entry before run(), using this already
+        # constructed CPU fixture as its admission boundary. Source/native
+        # admission is supplied here, not qualified by this cleanup check.
+        import signal
+        import molgap.family_training_kernel as kernels
+        import molgap.family_training_session as sessions
+        from molgap import family_training_runner as worker
+        failed_root = tmp_path / "startup-failure"
+        failed_root.mkdir()
+        worker._begin_cost_interval(failed_root, ctx, had_checkpoint=False)
+        created, kernel_closes = [], []
+        def cpu_kernel(configuration, state_path, *, device):
+            assert device == "cuda"
+            kernel = FamilyKernel(configuration, state_path, device="cpu")
+            close = kernel.close
+            def close_kernel():
+                kernel_closes.append(True)
+                close()
+            kernel.close = close_kernel
+            return kernel
+        def retained_session(*args, **kwargs):
+            value = FamilyTrainingSession(*args, **kwargs)
+            created.append(value)
+            return value
+        original_signal, previous = signal.signal, signal.getsignal(signal.SIGTERM)
+        def interrupt_startup(number, handler):
+            result = original_signal(number, handler)
+            if handler is not previous:
+                raise OSError("startup interrupted before session.run")
+            return result
+        with monkeypatch.context() as boundary:
+            boundary.setattr(worker, "_bootstrap", lambda **_: (
+                record, recipe, data, ExecutionTuning(training_workers=0, development_workers=0),
+                ctx, {"accelerator": "synthetic-cpu"}, tmp_path))
+            boundary.setattr(worker, "_verify_preflight", lambda *a, **k: {})
+            boundary.setattr(worker, "_loaded_source", lambda _: tmp_path)
+            boundary.setattr(kernels, "FamilyKernel", cpu_kernel)
+            boundary.setattr(sessions, "FamilyTrainingSession", retained_session)
+            boundary.setattr(signal, "signal", interrupt_startup)
+            with pytest.raises(OSError, match="startup interrupted"):
+                worker.run_screen_arm(output=failed_root, recipe_path=path,
+                    initial_state_path=initial, package_dir=package_dir,
+                    trajectory_id="synthetic-trajectory")
+        assert signal.getsignal(signal.SIGTERM) is previous
+        assert len(created) == len(kernel_closes) == 1
+        failed = created[0]
+        assert failed.closed and failed.loaders.closed
+        assert failed.progress.optimizer_step == failed.progress.sample_presentations == 0
+        assert not failed.kernel.optimizer.state
+        assert not (failed_root / "last_checkpoint.pt").exists()
+        assert not (failed_root / "output_manifest.json").exists()
 
 
 def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):

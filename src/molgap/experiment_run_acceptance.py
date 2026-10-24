@@ -178,9 +178,9 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
                                            _verification=verification)
     run, package = prepared.parent, options["package_dir"]
     original_receipt = options["receipt_path"]
-    canonical = {}
+    canonical_finalizations = {}
     if continuation_receipt is None:
-        continuation_receipt, canonical = _accepted_continuation_receipt(spec, options, repo_root)
+        continuation_receipt, canonical_finalizations = _accepted_continuation_receipt(spec, options, repo_root)
     options = _continuation_options(spec, options, continuation_receipt, repo_root, verification)
     paths = MachinePaths.from_file(profile).outside_checkout(repo_root)
     workflow = _json(run / "inputs/workflow_plan.json")
@@ -281,7 +281,7 @@ def resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, *,
     target_identity = TargetIdentityBinding.from_frozen_package(
         spec, Path(repo_root), package, workflow["acceptance_plan"], _verification=verification)
     return {"spec": spec, "options": options, "prepared": prepared,
-            "_canonical_finalizations": canonical,
+            "_canonical_finalizations": canonical_finalizations,
             "original_receipt": original_receipt,
             "outputs": outputs, "locations": resolved_locations, "contexts": contexts,
             "acceptance_plan": acceptance, "run_directory": run, "raw_traces": raw_traces,

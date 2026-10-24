@@ -858,8 +858,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
         raise
     pause = [False]
     previous_signal = signal.getsignal(signal.SIGTERM)
-    signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
     try:
+        signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
         # A completed physical ten-pass segment makes work externally retrievable.
         # The scientific horizon, scheduler and selected-state policy remain60.
         segment = mode_policy(recipe.family, recipe.mode).segment_passes
@@ -884,7 +884,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
         else:
             progress = session.run(should_pause=should_pause)
     finally:
-        signal.signal(signal.SIGTERM, previous_signal)
+        # run() closes itself, but admission/observer setup can fail before it.
+        # The same idempotent owner also covers those in-process exits.
+        try:
+            session.close()
+        finally:
+            signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began
     total = _finish_cost_interval(root, context, prior_cost, elapsed)
     if progress.status != "complete":
