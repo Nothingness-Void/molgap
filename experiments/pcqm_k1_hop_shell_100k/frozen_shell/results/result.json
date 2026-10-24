@@ -1,0 +1,35 @@
+{
+  "format": "molgap-k1-frozen-shell-result-v1",
+  "status": "failed",
+  "inputs_sha256": "fa0eaa2c70c4d94793df05f3f7232079ec60db97564d01550eba8507b0eb72e6",
+  "prospective_sha256": "61201a0fe0379c50abdaea2fa6caad296ff779e5ccad628a5e541b188b43a27a",
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.7.1+cu128",
+    "cpu_threads": 4,
+    "hardware": "NVIDIA GeForce RTX 5060"
+  },
+  "training_recipe_torch_version": "2.11.0",
+  "training_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "roles": {
+    "train_labels_decoded": [
+      0,
+      100000
+    ],
+    "development": [
+      100000,
+      150000
+    ],
+    "selection_used": false,
+    "protected_roles_consumed": false
+  },
+  "started_at_utc": "2026-10-24T11:10:17.762678+00:00",
+  "error_type": "AttributeError",
+  "error": "'NoneType' object has no attribute 'evaluation_memory_fill'",
+  "wall_seconds": 10.29175830000895,
+  "process_cpu_seconds": 14.875,
+  "device_seconds": 2.079473300007521,
+  "device_cost_scope": "one desktop GPU allocation window; excludes training and queue"
+}

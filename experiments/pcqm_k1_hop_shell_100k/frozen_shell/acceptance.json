@@ -1,0 +1,111 @@
+{
+  "format": "molgap-local-frozen-diagnostic-acceptance-v1",
+  "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024",
+  "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+  "outcome": {
+    "execution_status": "failed_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "within_original_cumulative_ceiling",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "A separately prospective authorized discriminator"
+    ]
+  },
+  "role_use": {
+    "train_decoded": "consumed",
+    "development_decoded": "consumed",
+    "development_batch_prepared": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched",
+    "p8_hard": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-hop-shell-frozen-100k-20261024-observed",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0028588217500024864,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.004131944444444444,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.0005776314722243114,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_decoded-labels_read",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_batch_prepared-prediction_input",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "2af65c28ef57a0ec878a3148355ee455b535a99f5703f418875c1f91ade7d8b9",
+      "role_name": "development_batch_prepared",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    }
+  ],
+  "checks": {},
+  "comparison_class": "CONTEXT_ONLY",
+  "analysis_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/results/result.json",
+  "execution_scope": "Frozen selected checkpoint; no optimizer, gradients, model selection or training replay qualification.",
+  "limitation": "Previously selection-used development; row uncertainty is not training stochasticity."
+}

@@ -11,6 +11,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed:A001",
+      "target": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_mixed/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered:A001",
+      "target": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_ordered/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed:A001",
       "target": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_fixed/recipe.json",
       "type": "action_produced_evidence"
@@ -421,6 +431,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-hop-shell-frozen-100k-20261024-attempt002:A001",
+      "target": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-hop-shell-frozen-100k-20261024:A001",
+      "target": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-late-weight-average-20261008:A001",
       "target": "experiments/pcqm_k1_late_weight_average/inputs.json",
       "type": "action_produced_evidence"
@@ -738,6 +758,16 @@
     {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "parent_trajectory"
     },
     {
@@ -1161,6 +1191,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-hop-shell-frozen-100k-20261024",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-reference-kaggle3-100k-s42-v2",
       "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
@@ -1408,6 +1443,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -2047,6 +2092,16 @@
     },
     {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-500k-bn-calibration-20261007",
       "type": "prior_evidence"
     },
@@ -2263,6 +2318,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-hop-shell-frozen-100k-20261024",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -2921,6 +2981,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "type": "evidence"
     },
@@ -3289,6 +3357,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-hop-shell-frozen-100k-20261024",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-late-weight-average-20261008",
       "type": "evidence"
     },
@@ -3394,6 +3470,14 @@
     },
     {
       "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
       "type": "trajectory"
     },
     {
@@ -3746,6 +3830,14 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "trajectory"
     },
     {

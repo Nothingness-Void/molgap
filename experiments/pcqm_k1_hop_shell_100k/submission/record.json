@@ -1,0 +1,28 @@
+{
+  "arms": [
+    "hop_mixed",
+    "hop_ordered"
+  ],
+  "attempt_id": "v1",
+  "kernel": "nothingnessvoid/molgap-k1-hop-shell-100k-s42",
+  "kernel_id": 140519502,
+  "logical_run_id": "pcqm-k1-hop-shell-100k-s42",
+  "native_qualification": "VERIFIED",
+  "observed_scheduler_status": "COMPLETE",
+  "package_identity": "9215c4823b48b994e8eb5ca93724ffcc7bff0903048f221b59e54d3e62368882",
+  "receipt_ref": "experiments/pcqm_k1_hop_shell_100k/submission/launch_receipt.json",
+  "replay_readiness": "VERIFIED_BOTH_ARMS",
+  "run_directory": "D:\\molgap-artifacts\\runs\\pcqm-k1-hop-shell-100k-s42\\v1",
+  "scientific_acceptance": {
+    "hop_mixed": "CLOSED",
+    "hop_ordered": "NEGATIVE_UNDER_CONTRACT"
+  },
+  "source_archive_sha256": "68816dfe1add4b18df598f2d60ba1d1bbf2904199e971cb29d1245d0da51aac5",
+  "source_commit": "ce0d9c8ea0287accec4b584005b322a9227b7ee4",
+  "spec_identity": "b8589296d04ffc1ffe9959eb141aa78d5a5f9d2dac844fdf942336d6636ea077",
+  "version": 1,
+  "training_phase": "COMPLETE",
+  "startup_observation_ref": "experiments/pcqm_k1_hop_shell_100k/submission/startup_observation.json",
+  "scheduler_observation_authority": "Luna monitor report 2026-10-24T06:32:18.403Z",
+  "strict_verification_ref": "D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/strict_recheck.json"
+}

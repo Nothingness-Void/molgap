@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-002",
+  "category": "inference",
+  "cost_event_id": "cost-k1-hop-shell-frozen-planned-attempt002",
+  "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/protocol.md",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.49444444444444446
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.49444444444444446
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-hop-shell-frozen-100k-20261024-attempt002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+}

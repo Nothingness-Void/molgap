@@ -1,0 +1,188 @@
+{
+  "context": {
+    "experiment_id": "pcqm_k1_hop_shell_100k",
+    "logical_run_id": "pcqm-k1-hop-shell-100k-s42",
+    "arm_id": "hop_mixed",
+    "arm_identity": "5add69dd7952c4ebae70a4f2ecb3a283faab3a885d1736bc29136fba7ffc1f5b",
+    "spec_identity": "b8589296d04ffc1ffe9959eb141aa78d5a5f9d2dac844fdf942336d6636ea077",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "ce0d9c8ea0287accec4b584005b322a9227b7ee4",
+    "source_archive_sha256": "68816dfe1add4b18df598f2d60ba1d1bbf2904199e971cb29d1245d0da51aac5",
+    "package_identity": "9215c4823b48b994e8eb5ca93724ffcc7bff0903048f221b59e54d3e62368882",
+    "training_recipe_sha256": "72977fa4dbacd55eb2dd3d79833dc4a516b547ae470ec3a5845b427c0ce3686c",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-hop-shell-100k-s42",
+    "platform_version": "1"
+  },
+  "role_use": {
+    "train": "training_membership",
+    "development": "selection_used",
+    "train_fixed_eval": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched",
+    "p8_hard": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-train-training_membership",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-train-labels_read",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-development-prediction_input",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-development-labels_read",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-development-metric_computed",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-development-selection_used",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-train_fixed_eval-prediction_input",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "b83e23eb1db808bf694ae4894d62b50c9840bcd869ba7ac2456f40ddf0530bf3",
+      "role_name": "train_fixed_eval",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-hop_mixed-train_fixed_eval-metric_computed",
+      "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-hop-shell-100k-s42:hop_mixed:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "b83e23eb1db808bf694ae4894d62b50c9840bcd869ba7ac2456f40ddf0530bf3",
+      "role_name": "train_fixed_eval",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/hop_mixed_role_audit.json"
+    }
+  ],
+  "audit_basis": {
+    "method": "Source-reviewed frozen execution plus exact-version source/mount/output/native and fixed-cohort receipt audit; permissions alone are not observations.",
+    "source_commit": "ce0d9c8ea0287accec4b584005b322a9227b7ee4",
+    "source_owners": [
+      "src/molgap/family_training_data.py:load_training_data",
+      "src/molgap/family_training_runner.py:run_screen_preflight",
+      "src/molgap/k1_hop_shell_observation.py:observe_pass"
+    ],
+    "train_rows": [
+      0,
+      100000
+    ],
+    "development_rows": [
+      100000,
+      150000
+    ],
+    "fixed_train_evaluation_rows": [
+      0,
+      4096
+    ],
+    "fixed_train_passes": [
+      10,
+      20,
+      30,
+      40
+    ],
+    "bound_mechanical_acceptance": "MECHANICALLY_VERIFIED",
+    "bound_native_qualification": "VERIFIED",
+    "evidence": [
+      {
+        "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\strict_initial.json",
+        "sha256": "b904fe9d48385ec2d8606dd9e0bc47b1f51618929d5ee829943f794f68af781a"
+      },
+      {
+        "path": "D:\\molgap-worktrees\\k1-hop-shell-100k\\experiments\\pcqm_k1_hop_shell_100k\\submission\\terminal_observation.json",
+        "sha256": "848ce56511afb9d7ecd33af5e56dc19e3d8078ae928e98f9b5c2b9028e26889c"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-hop-shell-100k-s42\\v1\\hop_mixed\\output_manifest.json",
+        "sha256": "ba17d34fd6e5421fcbbd134a1b111384f1303985d805fbfb7f2e593cf3bdcb3d"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-hop-shell-100k-s42\\v1\\hop_mixed\\canonical_trace.json",
+        "sha256": "4e5cf066d37842f2556b23ba9dde7a035eab926655f66d8d083f8fd213cdb89f"
+      },
+      {
+        "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-hop-shell-100k-s42\\v1\\hop_mixed\\train_cohort\\manifest.json",
+        "sha256": "06bb04b763d5ab49243803cf645ca33a3d1c887ffbc3c6f5ded0a10d450bf3fe"
+      }
+    ],
+    "limitations": "Scope is the verified frozen workload and fixed-role mounts; no OS-wide access audit. TRAIN cohort evaluations add no gradient exposure and never select weights."
+  }
+}

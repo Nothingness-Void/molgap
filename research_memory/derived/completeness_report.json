@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 146,
-    "with_complete_native_measurement": 26,
-    "with_cost_event": 135,
-    "with_incomplete_native_measurement": 109,
+    "trajectories_total": 150,
+    "with_complete_native_measurement": 28,
+    "with_cost_event": 139,
+    "with_incomplete_native_measurement": 111,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 92,
+      "count": 94,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -72,6 +72,8 @@
         "TB-k1-flag-kaggle3-100k-s42-v1",
         "TB-k1-full-convergence-20260919",
         "TB-k1-gptrans-full-fusion-r3",
+        "TB-k1-hop-shell-frozen-100k-20261024",
+        "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
         "TB-k1-late-weight-average-20261008",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
@@ -141,11 +143,13 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 109,
+      "count": 111,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+        "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",

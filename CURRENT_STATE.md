@@ -65,13 +65,14 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
-User-authorized K1 equal-content hop-shell100K belongs to
-`codex/exp/k1-hop-shell-100k`; BRANCHES owns checkout routing.
-Its [status and exact submission identity](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-hop-shell-100k/experiments/pcqm_k1_hop_shell_100k/STATUS.md)
-own Kaggle1 kernel140519502/version1. Both-arm preflight completed and the
-training phase started on2026-10-24 JST. Strict replay and scientific acceptance
-remain pending; no adoption or scale-up is released. The requested same-chat
-Luna monitor checks every30minutes and notifies only on actionable changes.
+Kaggle1 equal-content K1 hop-shell100K kernel140519502/version1 is terminally
+accepted with both40-pass arms strictly replay-ready and no exclusions.
+Mixed is CLOSED; ordered is NEGATIVE_UNDER_CONTRACT, with1.116meV numerical gain
+below the3meV gate. [Attribution](experiments/pcqm_k1_hop_shell_100k/analysis_zh.md)
+retains fixed-TRAIN/structure evidence and the completed frozen-shell discriminator.
+Full rejected history is archived; canonical evidence is retained here. Fixed
+fusion is descriptive only; no model adoption, retry,500K/full or new training
+is released. BRANCHES and terminal custody own source restoration.
 
 Kaggle1 Batch Renorm100K kernel140432543/version1 is terminally accepted.
 Both40pass arms have complete strict replay without exclusions. Scale-only is

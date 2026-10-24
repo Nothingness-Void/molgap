@@ -1,0 +1,211 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+  "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+  "action_id": "A001",
+  "finalized_at": "2026-10-24T11:13:43.863344+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/protocol.md": "d60869f59a193494155ed2e5ab6ffdea2f765734758243ba98421f2888ce9fcc",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/decision.md": "93cfc57ae13cc4396758cc7ad7df9761c73c5bfb017777a70f792919433f1cdf",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md": "620c3c33babd9cb4e61043a47160f134273f04f4af55c1c7741f93e5755f61bf",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md": "587e1066d750e0ca8e7463d93db591d4de98ef41dc513833d52a60c3ee0e4415",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/inputs.json": "fa0eaa2c70c4d94793df05f3f7232079ec60db97564d01550eba8507b0eb72e6",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json": "f7e941a7bfbda02bbbf6b4594489ea5574c04fc797259ff1c36215feba0c2571",
+    "experiments/pcqm_k1_hop_shell_100k/frozen_shell/results/result.json": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c",
+    "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_shell_result/result.json": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c",
+    "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_source_attempt001.zip": "dce5f18621710a75817ab38e260910a7434307ae672a7d00f44dbf2f4751e029",
+    "experiments/pcqm_k1_hop_shell_100k/close_frozen_shell.py": "10dfaf46eb09661f620d9439d95ce9473c4a4c4ea286ee9e6c8b921eacbcecac"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024",
+    "track": "B",
+    "scope": "pcqm-k1-hop-shell-frozen",
+    "legacy_contract": "pcqm-k1-hop-shell-frozen-v1",
+    "outcome": {
+      "execution_status": "failed_no_training",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "within_original_cumulative_ceiling",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_hop_shell_100k/frozen_shell/protocol.md",
+        "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+        "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md",
+        "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "train_decoded": "consumed",
+      "development_decoded": "consumed",
+      "development_batch_prepared": "consumed",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched",
+      "common": "untouched",
+      "ood": "untouched",
+      "p8_hard": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-24",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata ingestion of separately observed local diagnostic."
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": false,
+      "training_replay_ready": false
+    },
+    "artifacts": [
+      {
+        "name": "0",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/protocol.md",
+        "sha256": "d60869f59a193494155ed2e5ab6ffdea2f765734758243ba98421f2888ce9fcc",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "1",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/decision.md",
+        "sha256": "93cfc57ae13cc4396758cc7ad7df9761c73c5bfb017777a70f792919433f1cdf",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "2",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+        "sha256": "620c3c33babd9cb4e61043a47160f134273f04f4af55c1c7741f93e5755f61bf",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "3",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md",
+        "sha256": "587e1066d750e0ca8e7463d93db591d4de98ef41dc513833d52a60c3ee0e4415",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "4",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/inputs.json",
+        "sha256": "fa0eaa2c70c4d94793df05f3f7232079ec60db97564d01550eba8507b0eb72e6",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "5",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json",
+        "sha256": "f7e941a7bfbda02bbbf6b4594489ea5574c04fc797259ff1c36215feba0c2571",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "6",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/results/result.json",
+        "sha256": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "7",
+        "locator": "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_shell_result/result.json",
+        "sha256": "df2d9920a603af419e62af1fe328b419ee642b16ac90d581babbb62283da9b6c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "8",
+        "locator": "external:///D:/molgap-artifacts/reconciliation/k1-hop-shell-100k/frozen_source_attempt001.zip",
+        "sha256": "dce5f18621710a75817ab38e260910a7434307ae672a7d00f44dbf2f4751e029",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "9",
+        "locator": "experiments/pcqm_k1_hop_shell_100k/close_frozen_shell.py",
+        "sha256": "10dfaf46eb09661f620d9439d95ce9473c4a4c4ea286ee9e6c8b921eacbcecac",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "A separately prospective authorized discriminator"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-hop-shell-frozen-100k-20261024-observed",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0028588217500024864,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.004131944444444444,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.0005776314722243114,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_decoded-labels_read",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_batch_prepared-prediction_input",
+      "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-shell-frozen-100k-20261024",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "2af65c28ef57a0ec878a3148355ee455b535a99f5703f418875c1f91ade7d8b9",
+      "role_name": "development_batch_prepared",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/acceptance.json"
+    }
+  ]
+}

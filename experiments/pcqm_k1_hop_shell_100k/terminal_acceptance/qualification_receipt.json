@@ -1,0 +1,39 @@
+{
+  "format": "molgap-hop-shell-qualification-receipt-v1",
+  "strict_validation": "VERIFIED",
+  "replay_readiness": "VERIFIED",
+  "arms": {
+    "hop_mixed": {
+      "native": "VERIFIED",
+      "replay": "VERIFIED",
+      "comparison": "NOT_APPLICABLE"
+    },
+    "hop_ordered": {
+      "native": "VERIFIED",
+      "replay": "VERIFIED",
+      "comparison": "VERIFIED"
+    }
+  },
+  "reports": {
+    "strict_closure.json": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\strict_closure.json",
+      "sha256": "7dad3dad0751cc6b410d359cc5e1ac6d0d7d34f403ed5cfd4bc4f9e49a270be5"
+    },
+    "strict_recheck.json": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\strict_recheck.json",
+      "sha256": "5b9ae118e363058138d728e50179eb10a25d28bc182581e789f6b14a0c2fefba"
+    },
+    "diagnostic.json": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\diagnostic.json",
+      "sha256": "81e82da83f400043c7f411216c05275dfa2e96cbd0f6479034f3b0ebdeee41b2"
+    },
+    "fixed_train_and_structure.json": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\fixed_train_and_structure.json",
+      "sha256": "56529636c12a9201ffe72a166e6a38e7fac89f7fdf15a677aa1056156beb0eae"
+    },
+    "development_curves.png": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-hop-shell-100k\\development_curves.png",
+      "sha256": "b4577b502c53f14f8f5af1ece7b55be61f6e208160d93ac184af80479b71e2b9"
+    }
+  }
+}

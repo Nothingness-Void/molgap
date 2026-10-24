@@ -1,0 +1,77 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/k1-hop-shell-100k-src",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "5504c0fed08f199664df1154269483ad2acef37d11791e3adeab5c46dcfed56a",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "3ac78c4057c05df231c97d3b390fc8e925e10682fcd12753ffdb1e99ec104bf3",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "1c2ec6785f0a830624451ee58bcfb8d88a464cc9c6ffa695f7a8df0438b3edec",
+      "bytes": 48165
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/acceptance_plan.json",
+      "sha256": "dddaed7be7cda4efa24eacb4083822cb7d88a3a57aefb7a116878c8f8e8dcdd5",
+      "bytes": 1700
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_mixed/recipe.json",
+      "sha256": "72977fa4dbacd55eb2dd3d79833dc4a516b547ae470ec3a5845b427c0ce3686c",
+      "bytes": 1924
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_ordered/recipe.json",
+      "sha256": "209e8a4b897c661bd5c9e3970ceaecddcb648e1316d50def38b220dbccbd1e20",
+      "bytes": 1924
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "a882187d41a574f25eb593bd51712bb8fb0664993ee76154ca2c2e86e35323ff",
+      "bytes": 1632
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "b8589296d04ffc1ffe9959eb141aa78d5a5f9d2dac844fdf942336d6636ea077",
+      "bytes": 5834
+    },
+    {
+      "path": "initial_states/hop_mixed.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "29e0bede4845cd317638397e1ab785b6f2e56a8be095cd2a2b8e39cb14dcb11b",
+      "bytes": 12884
+    },
+    {
+      "path": "prospective/hop_mixed/trajectory.json",
+      "sha256": "59fa8ea5bdb5d5c70a65bb46cddb817b94782e24659a8514ecf19dae594f2499",
+      "bytes": 5284
+    },
+    {
+      "path": "prospective/hop_ordered/trajectory.json",
+      "sha256": "dc1c09b724c33e2e49e1635ea71beba06940b688be12f5f0a7932fda0eabb37b",
+      "bytes": 5300
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "68816dfe1add4b18df598f2d60ba1d1bbf2904199e971cb29d1245d0da51aac5",
+      "bytes": 909185
+    }
+  ]
+}
