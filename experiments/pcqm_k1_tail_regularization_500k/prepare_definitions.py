@@ -13,7 +13,8 @@ from molgap.family_training_kernel import load_family_model
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
 from molgap.family_training_runner import family_arm_bindings
 from molgap.screen_policy import canonical_fingerprint
-from molgap.training_reproducibility import atomic_json, atomic_torch_save, sha256_file
+from molgap.training_reproducibility import atomic_torch_save, sha256_file
+from molgap.experiment_family_workflow import _publish as atomic_json
 from molgap.v4_runtime import state_dict_sha256
 
 ROOT = Path(__file__).resolve().parents[2]
