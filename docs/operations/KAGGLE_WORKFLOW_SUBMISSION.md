@@ -24,6 +24,11 @@ and policy failures are reported together. `prepare-workflow` repeats these
 cheap checks before creating its output directory; native accelerator
 qualification remains mandatory on the worker.
 
+Scientific Modern2D releases also require their frozen comparison plan and
+prospective reference binding before any source upload. Context-only historical
+training packages are blocked; explicit execution diagnostics keep their own
+authority. This checks closure capability, not future Replay-Ready status.
+
 ```powershell
 .venv\Scripts\python.exe -m molgap.experiment_cli check-workflow --spec $spec --repo-root . --plan $plan
 .venv\Scripts\python.exe -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root . --plan $plan --output $prepared

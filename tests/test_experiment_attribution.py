@@ -40,6 +40,7 @@ def _write_native_arm(arm_dir, *, arm_id, family="neural_atom_k1", weights="live
         ctx = replace(context(family, path), arm_id=arm_id)
         outputs = SessionOutputs(arm_dir, ctx, contract=path, adapter=PROFILES[family],
             trajectory_id="synthetic-" + arm_id, train_role_identity=record["train_role_identity"])
+        session.loaders.attach_role_audit(outputs.role_audit)
         session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
         session.batch_finished = outputs.batch_finished
         progress = session.run()

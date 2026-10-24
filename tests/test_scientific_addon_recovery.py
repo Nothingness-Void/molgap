@@ -105,6 +105,7 @@ def _session(case, output=None):
         outputs = SessionOutputs(output, case.context, contract=contract,
             adapter=PROFILES[case.recipe.family], trajectory_id=case.trajectory["trajectory_id"],
             train_role_identity=case.record["train_role_identity"])
+        pool.attach_role_audit(outputs.role_audit)
         session = FamilyTrainingSession(kernel, pool,
             checkpoint=checkpoint,
             checkpoint_builder=outputs.checkpoint_from_builder,
@@ -252,6 +253,9 @@ def _recovery_case(scientific):
         manifest["package_identity"], receipt, result.bundle,
         arm_id=context.arm_id, source_output=result.source)
     assert result.export["status"] == "RESUME_VERIFIED", result.export
+    checked = validate_resume_bundle(result.bundle, result.spec,
+        arm_id=result.context.arm_id, context=result.context, trajectory=result.trajectory_raw)
+    assert any(item.name == "role_audit.json" for item in checked["sidecars"]["provenance"])
     return result
 
 
@@ -275,6 +279,15 @@ def _assert_real_family_addon_bundle_restores_exact_session_and_next_updates(rec
     restore_resume_bundle(case.bundle, restored, case.spec,
         arm_id=case.context.arm_id, context=case.context, trajectory=case.trajectory_raw)
     assert file_digest(restored / "last_checkpoint.pt") == file_digest(case.source / "last_checkpoint.pt")
+    source_audit = json.loads((case.source / "role_audit.json").read_bytes())
+    restored_audit = json.loads((restored / "role_audit.json").read_bytes())
+    source_events = {event["role_event_id"]: event for event in source_audit["roles"]}
+    restored_events = {event["role_event_id"]: event for event in restored_audit["roles"]}
+    assert restored_events.keys() == source_events.keys()
+    for event_id, event in source_events.items():
+        assert {key: restored_events[event_id][key] for key in event
+                if key != "evidence_ref"} == {key: event[key] for key in event
+                                               if key != "evidence_ref"}
     saved = torch.load(restored / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     assert saved.pop("context") == case.context.to_dict()
     resumed = _session(case, restored)
@@ -295,6 +308,9 @@ def _assert_real_family_addon_bundle_restores_exact_session_and_next_updates(rec
     resumed_report = resumed_outputs.complete(progress,
         runtime=runtime, costs=costs)
     assert resumed_report["status"] == "MECHANICALLY_VERIFIED"
+    resumed_audit = json.loads((restored / "role_audit.json").read_bytes())
+    assert {event["role_event_id"] for event in resumed_audit["roles"]} >= source_events.keys()
+    assert resumed_audit["context"] == case.context.to_dict()
     trace = json.loads((restored / "canonical_trace.json").read_bytes())
     rows = [row for row in trace["observations"] if row["event"] == "observation"]
     assert [(row["optimizer_step"], row["sample_presentations"]) for row in rows] == [(2, 256), (4, 512)]
@@ -310,6 +326,12 @@ def _assert_real_family_addon_bundle_restores_exact_session_and_next_updates(rec
     assert (restored / "output_manifest.json").is_file()
     assert (case.tmp / "control-session/output_manifest.json").is_file()
     assert not (case.run / "operations").exists()
+    missing_audit = case.tmp / "missing-role-audit"
+    missing_audit.mkdir()
+    (missing_audit / "last_checkpoint.pt").write_bytes(
+        (case.source / "last_checkpoint.pt").read_bytes())
+    with pytest.raises(ValueError, match="Role audit sidecar missing"):
+        _session(case, missing_audit)
     record_property("addon_recovery", json.dumps({
         "family": case.context.family_name, "addon_keys": case.addon_keys,
         "spec_identity": case.spec.identity, "package_identity": case.manifest["package_identity"],

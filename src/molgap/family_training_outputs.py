@@ -1,6 +1,7 @@
 """Session artifact translation using existing atomic IO, trace and inspection owners."""
 from __future__ import annotations
 
+import json
 import math
 import os
 import time
@@ -9,11 +10,14 @@ from pathlib import Path
 
 from .experiment_family_workflow import (
     OUTPUT_FORMAT, ROLES, StageRecorder, _artifact_path, _check_context, _costs, _digest,
-    _finite_tree, _inspect_predictions, _json, _publish, _runtime, write_output_manifest,
-    write_resume_state,
+    _finite_tree, _inspect_predictions, _json, _runtime, tensor_digest,
+    write_output_manifest, write_resume_state,
 )
+from .experiment_family_artifacts import SESSION_OPTIONAL_ARTIFACTS
 from .experiment_launch import _safe_local, publish_immutable_bytes
 from .research_memory.trace import atomic_write, file_digest, json_bytes, sync_directory, validate_canonical_trace
+from .research_memory.roles import validate_observed_role_truth
+from .research_memory.schemas import validate_role_event
 from .family_training_session import validate_session_resume
 from .training_reproducibility import atomic_torch_save
 
@@ -103,9 +107,235 @@ def _assert_model_schema(selected, resume):
         raise ValueError("Selected model tensor schema differs from resume")
 
 
+class RoleAudit:
+    """Persist the observed role facts for one shared training session.
+
+    The sidecar deliberately uses the existing terminal role-audit mapping
+    (``context``, ``role_use`` and ``roles``).  Event records are emitted only
+    after a loader has yielded a real batch or an output callback has received
+    a computed metric/selection.  Permit and role-history bytes bind the input
+    identity, but never create an observed event by themselves.
+    """
+
+    PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
+
+    def _resume_action_id(self, resume_trajectory):
+        if resume_trajectory is None:
+            return "A001"
+        if isinstance(resume_trajectory, (bytes, bytearray)):
+            value = json.loads(bytes(resume_trajectory).decode("utf-8"))
+        elif isinstance(resume_trajectory, dict):
+            value = resume_trajectory
+        else:
+            value = _json(Path(resume_trajectory))
+        actions = value.get("actions") if isinstance(value, dict) else None
+        if not isinstance(actions, list):
+            raise ValueError("Resume trajectory lacks prospective actions for role audit")
+        matches = [action for action in actions
+                   if isinstance(action, dict) and self.run_id in action.get("run_ids", [])]
+        if len(matches) != 1:
+            raise ValueError("Resume trajectory lacks one action for the bound downstream run")
+        action_id = matches[0].get("action_id")
+        if not isinstance(action_id, str) or not action_id:
+            raise ValueError("Resume trajectory action lacks an identity")
+        return action_id
+
+    @staticmethod
+    def _evidence_ref(path):
+        """Use a repository locator when the output is inside a checkout."""
+        for parent in (path.parent, *path.parents):
+            if (parent / ".git").exists():
+                return path.relative_to(parent).as_posix()
+        return path.name
+
+    def __init__(self, root, context, *, trajectory_id, train_role_identity,
+                 development_role_identity=None, action_id=None, resume_trajectory=None):
+        self.root = Path(root).absolute()
+        self.path = self.root / "role_audit.json"
+        self.context = context
+        self.trajectory_id = trajectory_id
+        self.run_id = context.logical_run_id + ":" + context.arm_id + ":downstream"
+        self.action_id = action_id or self._resume_action_id(resume_trajectory)
+        self.evidence_ref = self._evidence_ref(self.path)
+        self._bindings = {}
+        self.roles = []
+        # A missing protected-role observation is unknown until the admitted
+        # train/development streams have actually completed.  The loader
+        # boundary, rather than possession of a permit or absence of a log,
+        # is what lets the terminal claim those roles were untouched.
+        self.role_use = {role: "unknown" for role in self.PROTECTED_ROLES}
+        _safe_local(self.root)
+        self.root.mkdir(parents=True, exist_ok=True)
+        if self.path.is_file():
+            self._load()
+        elif (self.root / "last_checkpoint.pt").is_file():
+            raise ValueError(
+                "Role audit sidecar missing for an existing checkpoint; refusing scientific resume")
+        else:
+            self._write()
+
+    def _load(self):
+        audit = _json(self.path)
+        if audit.get("context") != self.context.to_dict():
+            raise ValueError("Role audit differs from the frozen run/source/attempt context")
+        roles, role_use = audit.get("roles"), audit.get("role_use")
+        if not isinstance(roles, list) or not isinstance(role_use, dict):
+            raise ValueError("Role audit requires observed role_use and existing-schema roles")
+        rebased = False
+        loaded_roles = []
+        for event in roles:
+            event = validate_role_event(event)
+            if (event["trajectory_id"], event["run_id"], event["action_id"]) != (
+                    self.trajectory_id, self.run_id, self.action_id):
+                raise ValueError("Role audit event differs from its session identity")
+            if event["evidence_ref"] != self.evidence_ref:
+                reference_name = event["evidence_ref"].replace("\\", "/").rsplit("/", 1)[-1]
+                if reference_name != self.path.name:
+                    raise ValueError("Role audit event source differs from its sidecar")
+                # Portable resume changes the output root.  Rebind only the
+                # evidence locator; all event identities and observed facts
+                # remain byte-for-byte semantic data from the source run.
+                event = dict(event)
+                event["evidence_ref"] = self.evidence_ref
+                rebased = True
+            loaded_roles.append(event)
+        for role in self.PROTECTED_ROLES:
+            if role_use.get(role) not in {"untouched", "consumed", "not_applicable", "unknown"}:
+                raise ValueError("Role audit lacks explicit protected-role truth: " + role)
+        validate_observed_role_truth([role_use], loaded_roles)
+        self.roles = [dict(event) for event in loaded_roles]
+        self.role_use = dict(role_use)
+        for event in self.roles:
+            logical_role = ("development" if event["role_name"] in {"common_dev", "development"}
+                            or event["access_kind"] in {"selection_used", "metric_computed"}
+                            and event["role_name"] not in {"train", "train_100k", "train_500k"}
+                            else "train")
+            self._bindings.setdefault(logical_role, (event["role_name"],
+                event["dataset_identity"], event["row_manifest_hash"]))
+        if rebased:
+            self._write()
+
+    def _write(self):
+        value = {"context": self.context.to_dict(), "role_use": dict(self.role_use),
+                 "roles": [dict(event) for event in self.roles]}
+        validate_observed_role_truth([value["role_use"],], value["roles"])
+        atomic_write(self.path, json_bytes(value))
+
+    @staticmethod
+    def _source_row_hash(source_indices):
+        if source_indices is None:
+            return None
+        import torch
+        if isinstance(source_indices, range):
+            source_indices = torch.arange(source_indices.start, source_indices.stop,
+                                          source_indices.step, dtype=torch.int64)
+        elif isinstance(source_indices, torch.Tensor):
+            source_indices = source_indices.reshape(-1)
+            if source_indices.dtype != torch.int64:
+                raise ValueError("Role audit source indices must be int64")
+        else:
+            source_indices = torch.as_tensor(tuple(source_indices), dtype=torch.int64)
+        return tensor_digest(source_indices, role="source_idx")
+
+    def bind_dataset(self, logical_role, dataset, *, manifest_sha256=None, source_indices=None):
+        """Bind actual dataset identity before any access event is emitted."""
+        permit = getattr(dataset, "permit", None)
+        role_name = getattr(permit, "role", None)
+        if not isinstance(role_name, str) or not role_name:
+            role_name = "train" if logical_role == "train" else "development"
+        dataset_identity = getattr(permit, "version_identity", None)
+        row_manifest_hash = getattr(permit, "manifest_sha256", None)
+        if not isinstance(dataset_identity, str) or not dataset_identity:
+            dataset_identity = manifest_sha256
+        if not isinstance(dataset_identity, str) or not dataset_identity:
+            raise ValueError("Role audit dataset lacks an admitted manifest identity: " + str(logical_role))
+        if not isinstance(row_manifest_hash, str) or not row_manifest_hash:
+            row_manifest_hash = self._source_row_hash(source_indices) or manifest_sha256
+        if not isinstance(row_manifest_hash, str) or not row_manifest_hash:
+            raise ValueError("Role audit dataset lacks an admitted row identity: " + str(logical_role))
+        binding = (role_name, dataset_identity, row_manifest_hash)
+        previous = self._bindings.get(logical_role)
+        if previous is not None and previous != binding:
+            raise ValueError("Role audit dataset identity changed during a session")
+        self._bindings[logical_role] = binding
+        self.role_use.setdefault(role_name, "unknown")
+        self._write()
+
+    def _binding(self, logical_role):
+        binding = self._bindings.get(logical_role)
+        if binding is not None:
+            return binding
+        raise ValueError("Role audit lacks an admitted dataset binding: " + str(logical_role))
+
+    def observe(self, logical_role, access_kinds, *, selection_used=False):
+        """Record only facts established by a yielded batch or owner callback."""
+        role_name, dataset_identity, row_manifest_hash = self._binding(logical_role)
+        access_kinds = list(access_kinds)
+        if selection_used and "selection_used" not in access_kinds:
+            access_kinds.append("selection_used")
+        existing = {(event["role_name"], event["access_kind"]): event for event in self.roles}
+        changed = False
+        for access_kind in access_kinds:
+            key = (role_name, access_kind)
+            if key in existing:
+                continue
+            event = {
+                "schema": "molgap-role-event-v1",
+                "role_event_id": f"role-{self.trajectory_id}-{role_name}-{access_kind}",
+                "trajectory_id": self.trajectory_id,
+                "action_id": self.action_id,
+                "run_id": self.run_id,
+                "dataset_identity": dataset_identity,
+                "row_manifest_hash": row_manifest_hash,
+                "role_name": role_name,
+                "access_kind": access_kind,
+                "selection_used": bool(selection_used or access_kind == "selection_used"),
+                "evidence_ref": self.evidence_ref,
+            }
+            self.roles.append(validate_role_event(event))
+            changed = True
+        if changed:
+            self.role_use[role_name] = "consumed"
+            self._write()
+
+    def observe_batch(self, logical_role):
+        kinds = ("training_membership", "prediction_input", "labels_read") \
+            if logical_role == "train" else ("prediction_input", "labels_read")
+        self.observe(logical_role, kinds)
+
+    def observe_metrics(self, logical_role, *, selection_used=False):
+        kinds = ["metric_computed"]
+        if selection_used:
+            kinds.append("selection_used")
+        self.observe(logical_role, kinds, selection_used=selection_used)
+
+    def validate(self, *, development):
+        validate_observed_role_truth([self.role_use], self.roles)
+        required = {"train": {"training_membership", "prediction_input", "labels_read", "metric_computed"}}
+        if development:
+            required["development"] = {"prediction_input", "labels_read", "metric_computed"}
+        for logical_role, access_kinds in required.items():
+            role_name = self._binding(logical_role)[0]
+            if self.role_use.get(role_name) != "consumed":
+                raise ValueError("Role audit lacks observed execution for " + logical_role)
+            observed_kinds = {event["access_kind"] for event in self.roles
+                              if event["role_name"] == role_name}
+            if not access_kinds <= observed_kinds:
+                raise ValueError("Role audit lacks observed access for " + logical_role)
+        # Only a complete admitted loader boundary proves that protected roles
+        # were untouched.  A missing sidecar or an unobserved stream remains
+        # unknown and fails closed at terminal staging.
+        for role in self.PROTECTED_ROLES:
+            self.role_use[role] = "untouched"
+        self._write()
+
+    def pointer(self):
+        return {"path": self.path.name, "sha256": file_digest(self.path)}
+
+
 class SessionOutputs:
     def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity,
-                 resume_trajectory=None):
+                 resume_trajectory=None, action_id=None):
         from .family_training_runner import read_recipe
         self.root, self.context, self.adapter = Path(root).absolute(), context, adapter
         self.resume_trajectory = resume_trajectory
@@ -138,6 +368,11 @@ class SessionOutputs:
         self.root.mkdir(parents=True, exist_ok=True)
         if train_role_identity != record["train_role_identity"]:
             raise ValueError("Training metric role differs from frozen contract")
+        self.role_audit = RoleAudit(self.root, context, trajectory_id=trajectory_id,
+            train_role_identity=train_role_identity,
+            development_role_identity=record.get("development_role_identity")
+            if self.recipe.dataset.development else None, action_id=action_id,
+            resume_trajectory=resume_trajectory)
         _recover_commit(self.root, self.context)
         publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
         self.pending = self.root / "session_pending"
@@ -177,6 +412,8 @@ class SessionOutputs:
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
+        if evaluation is not None:
+            self.role_audit.observe_metrics("development", selection_used=True)
         atomic_torch_save(self.pending / "selected_model.pt", {"context": self.context.to_dict(),
             "model": state, "optimizer_step": progress.optimizer_step,
             "epoch_or_pass": progress.optimizer_step / self.recipe.loop_plan.steps_per_pass,
@@ -253,6 +490,9 @@ class SessionOutputs:
 
     def pass_finished(self, progress, metrics):
         self.logger.pass_finished(progress, metrics)
+        self.role_audit.observe_metrics("train", selection_used=False)
+        if metrics["development"] is not None:
+            self.role_audit.observe_metrics("development", selection_used=False)
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
@@ -287,6 +527,7 @@ class SessionOutputs:
     def complete(self, progress, *, runtime, costs, target_identity=None):
         if progress.status != "complete":
             raise ValueError("Partial work is not a terminal endpoint")
+        self.role_audit.validate(development=self.recipe.dataset.development)
         rows = [row for row in self.stage.recorder.record["observations"] if row["event"] == "observation"]
         if not rows or rows[-1]["optimizer_step"] != progress.optimizer_step:
             self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
@@ -296,6 +537,14 @@ class SessionOutputs:
             "trace_context": "canonical_trace.json.context.json"}
         if self.recipe.dataset.development:
             artifacts["predictions"] = "development_predictions.pt"
+        artifacts["role_audit"] = "role_audit.json"
+        native_names = ("runtime_certificate.json", "runtime_provenance.json")
+        native_present = tuple((self.root / name).is_file() for name in native_names)
+        if native_present == (True, True):
+            for name in native_names:
+                artifacts[name[:-5]] = name
+        elif native_present != (False, False):
+            raise ValueError("Runtime certificate/provenance sidecars must be published as a pair")
         write_output_manifest(self.root, self.context, adapter=self.adapter, artifacts=artifacts,
             progress={"optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,
                 "completed_passes": progress.pass_index, "next_batch": progress.next_batch, "status": progress.status},
@@ -352,11 +601,20 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         if expected != contract["acceptance_requirements"]:
             raise ValueError("Expectations differ from the frozen contract")
         required_roles = ROLES if recipe.dataset.development else ROLES - {"predictions"}
+        runtime_roles = {"runtime_certificate", "runtime_provenance"}
+        if (root / "role_audit.json").is_file() and "role_audit" not in artifacts:
+            raise ValueError("Role audit sidecar is not bound by output manifest")
+        if "role_audit" in artifacts and artifacts["role_audit"]["path"] != "role_audit.json":
+            raise ValueError("Role audit must bind the fixed role_audit.json sidecar")
+        optional_roles = SESSION_OPTIONAL_ARTIFACTS
+        present_runtime_roles = set(paths) & runtime_roles
+        if present_runtime_roles not in (set(), runtime_roles):
+            raise ValueError("Runtime certificate/provenance artifact pair is incomplete")
         if "trace_context" in paths:
             required_roles = required_roles | {"trace_context"}
             if artifacts["trace_context"]["path"] != artifacts["trace"]["path"] + ".context.json":
                 raise ValueError("Trace companion path differs from its bound trace")
-        if set(paths) != required_roles:
+        if set(paths) != required_roles | (set(paths) & optional_roles):
             raise ValueError("Artifact roles differ from selected data roles")
         _runtime(manifest["runtime"], context, "fp32")
         _costs(manifest["costs"])
@@ -431,6 +689,19 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         observed.update(progress=actual, artifacts=artifacts, costs=manifest["costs"],
             selected_optimizer_step=selected["optimizer_step"], selected_weights=selected["weights"],
             producer_platform_version=manifest["context"]["platform_version"])
+        audit_path = root / "role_audit.json"
+        if audit_path.is_file():
+            audit = _json(audit_path)
+            _check_context(audit.get("context"), context)
+            audit_roles, audit_use = audit.get("roles"), audit.get("role_use")
+            if not isinstance(audit_roles, list) or not isinstance(audit_use, dict):
+                raise ValueError("Role audit requires observed role_use and existing-schema roles")
+            for event in audit_roles:
+                validate_role_event(event)
+            validate_observed_role_truth([audit_use], audit_roles)
+            audit_ref = audit_path.relative_to(root).as_posix()
+            observed["role_audit"] = {"path": audit_ref, "sha256": file_digest(audit_path),
+                                       "role_use": audit_use, "event_count": len(audit_roles)}
     except (ValueError, TypeError, KeyError, OSError, RuntimeError, EOFError, StopIteration) as exc:
         blockers.append(str(exc))
     return {"status": "BLOCKED" if blockers else "MECHANICALLY_VERIFIED", "blockers": blockers,

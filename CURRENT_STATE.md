@@ -156,6 +156,12 @@ history and eligibility. See [`research_memory/README.md`](research_memory/READM
 
 ## Shared experiment infrastructure
 
+The [configured Modern2D workflow](docs/operations/MODERN2D_CONFIGURED_WORKFLOW.md)
+connects frozen addon comparisons, observed runtime roles and accepted baseline
+reuse to actual replay admission. The bounded CPU Session journey admits complete
+negative results without retraining the control. Historical missing evidence is
+unchanged; native GPU execution and new compute authority remain separate.
+
 The completed [K1 execution diagnostic](experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md)
 accepted a shared100K execution benefit with identical selected tensors and
 predictions. Scientific promotion/Replay remain excluded.

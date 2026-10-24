@@ -48,7 +48,10 @@ def configured(case, tmp_path):
     # Packaging must retain their original pin, not treat them as derived bytes.
     binding_path = repo / binding_ref
     binding_path.write_text(json.dumps(json.loads(binding_path.read_bytes()), indent=2) + "\n", encoding="utf-8")
-    recipe = replace(case.recipe, train_rows=100000, development_rows=50000, optimizer_steps=46860,
+    recipe = replace(case.recipe, train_rows=100000, development_rows=50000, optimizer_steps=15620,
+        schedule=replace(case.recipe.schedule, total_units=15620, reference_epochs=20),
+        formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
+            horizon_passes=20, horizon_steps=15620),
         dataset=replace(case.recipe.dataset, manifest="training_input.json", manifest_sha256=file_digest(repo / binding_ref)))
     family = recipe.interface
     record = build_screen_recipe("reference", configuration=recipe, family=family,
@@ -90,11 +93,13 @@ def configured(case, tmp_path):
     authority_ref = "experiments/question/authority.json"
     authority = dict(format=CONFIGURED_AUTHORITY_FORMAT, owner="server", purpose="CONFIGURED_SCREEN",
         user_authorized=True, scientific_training_authorized=True, logical_run_id="configured-fixture-run",
-        arms=["candidate"], interfaces=[list(family)], seeds=[42], physical_batch_size=128,
+        same_run_reference_arm_id="reference", arms=["reference", "candidate"],
+        interfaces=[list(family), list(family)], seeds=[42], physical_batch_size=128,
         roles=["train_100k", "common_dev"], scale_500k_authorized=False,
         protected_role_access_authorized=False, extra_seed_authorized=False, automatic_successor_authorized=False,
         full_training_authorized=False, allocated_t4_hours_ceiling=1, single_arm_reason="CPU fixture for one family",
-        recipes=dict(candidate=dict(horizon_passes=8, horizon_steps=6248)),
+        recipes=dict(reference=dict(horizon_passes=20, horizon_steps=15620),
+            candidate=dict(horizon_passes=20, horizon_steps=15620)),
         run_reference="fixture/configured", gpu=dict(owner="fixture", accelerator="NvidiaTeslaT4",
             allocated_devices=2, wall_ceiling_seconds=1800, allocated_t4_hours_ceiling=1))
     _write_json(repo / authority_ref, authority)
@@ -121,11 +126,16 @@ def configured(case, tmp_path):
         timestamp="2026-10-19T00:00:00Z", question=asdict(question),
         profile=asdict(ExecutionProfile("server", "C", "kaggle", "CPU synthetic fixture", "metadata only", None, None)),
         platform_ref=platform_ref, role_ref="experiments/reference/roles.json", decision_ref="experiments/reference/decision.md",
-        seeds=[42], arms=[dict(arm_id="candidate", model=dict(family=family[0], version=family[1], addons=[
-            dict(name=("ppgt" if family[0] == "ppgt_small" else "esa") + "_readout_scale", version="1", config=None)]),
+        seeds=[42], same_run=dict(reference_arm_id="reference", target_manifest_ref=target_ref),
+        arms=[dict(arm_id="reference", model=dict(family=family[0], version=family[1], addons=[]),
             recipe_ref=recipe_ref, data_ref=dict(spec_ref=spec_ref, arm_id="reference"), initial_state_ref=str(case.initial),
-            training=dict(horizon_passes=8, learning_rate=.0008), reference_ref=dict(plan_ref=plan_ref, arm_id="reference"),
-            purpose="context_only")])
+            training={}, reference_ref=dict(plan_ref=plan_ref, arm_id="reference"),
+            purpose="architecture_comparison"),
+            dict(arm_id="candidate", model=dict(family=family[0], version=family[1], addons=[
+                dict(name=("ppgt" if family[0] == "ppgt_small" else "esa") + "_readout_scale", version="1", config=None)]),
+            recipe_ref=recipe_ref, data_ref=dict(spec_ref=spec_ref, arm_id="reference"), initial_state_ref=str(case.initial),
+            training=dict(horizon_passes=20, learning_rate=.001), reference_ref=dict(plan_ref=plan_ref, arm_id="reference"),
+            purpose="architecture_comparison")])
     path = repo / "experiments/question/experiment.json"
     _write_json(path, value)
     _git(repo, "init")
@@ -142,10 +152,13 @@ def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch
     value, spec, workflow, paths = resolve_experiment_input(c.path, c.repo)
     plan = json.loads((c.repo / workflow["acceptance_plan"]).read_bytes())
     assert plan["format"] == CONFIGURED_PLAN_FORMAT
-    assert check_plan(spec, c.repo, plan)["comparison_scope"] == "CONTEXT_ONLY"
+    checked = check_plan(spec, c.repo, plan)
+    assert checked["comparison_scope"] == "STRICT_CAUSAL" and not checked["noReplay"]
+    assert checked["reference_status"] == "SAME_RUN_REFERENCE_PLANNED"
+    assert plan["comparison"]["declared_intervention_fields"] == ["architecture_config_identity"]
     _, recipe = read_recipe(c.repo / workflow["arms"][0]["recipe"])
-    assert recipe.mode == "composed" and recipe.optimizer_steps == 6248
-    assert recipe.learning_rate == .0008 and recipe.formal_training.configured
+    assert recipe.mode == "reference" and recipe.optimizer_steps == 15620
+    assert recipe.learning_rate == .001 and recipe.formal_training.configured
     # Source identity checks require imports from the fixture checkout itself.
     program = r'''
 import sys, pathlib, subprocess, json
@@ -158,13 +171,14 @@ import molgap.kaggle_submission as platform
 def forbidden(*a,**k): raise AssertionError('remote call or recompile')
 platform.submit_prepared_workflow=forbidden
 value,spec,workflow,paths=resolve_experiment_input(path,repo)
-_,recipe=read_recipe(repo/workflow['arms'][0]['recipe'])
+job=next(item for item in workflow['arms'] if item['arm_id']=='candidate')
+_,recipe=read_recipe(repo/job['recipe'])
 prepared=prepare_experiment_input(path,repo)
 assert prepared['status']=='PREPARED_FOR_PLATFORM',prepared
 assert prepared['submitted'] is False
 context=RunContext.for_training(spec,pathlib.Path(prepared['prepared'])/'package',
     expected_package_identity=prepared['package_identity'],arm_id='candidate',account='fixture',run_reference='fixture/configured')
-native,authority_path=build_formal_context(spec=spec,job=workflow['arms'][0],source_root=repo,
+native,authority_path=build_formal_context(spec=spec,job=job,source_root=repo,
     staged_root=pathlib.Path(prepared['prepared']),input_root=repo/'experiments/reference',run_context=context)
 native.validate_before_payload(recipe=recipe,context=context,spec=spec,authority_path=authority_path,
     input_root=repo/'experiments/reference')
@@ -198,14 +212,14 @@ def test_configured_authority_rejects_scope_changes(configured):
         with pytest.raises(ValueError):
             validate_configured_authority({**c.authority, field: value}, spec.to_dict(), recipes)
     # A new scale is an explicit contract, never a decision from the 100K MAE.
-    original = recipes["candidate"]
     steps = 8 * (500000 // 128)
-    larger = replace(original, train_rows=500000, optimizer_steps=steps,
-        schedule=replace(original.schedule, total_units=steps),
-        formal_training=replace(original.formal_training, horizon_steps=steps))
+    larger = {name: replace(recipe, train_rows=500000, optimizer_steps=steps,
+        schedule=replace(recipe.schedule, total_units=steps, reference_epochs=8),
+        formal_training=replace(recipe.formal_training, horizon_passes=8, horizon_steps=steps))
+        for name, recipe in recipes.items()}
     authority = {**c.authority, "roles": ["train_500k", "common_dev"], "scale_500k_authorized": True,
-        "recipes": {"candidate": {"horizon_passes": 8, "horizon_steps": steps}}}
-    assert validate_configured_authority(authority, spec.to_dict(), {"candidate": larger}) == 1800
+        "recipes": {name: {"horizon_passes": 8, "horizon_steps": steps} for name in larger}}
+    assert validate_configured_authority(authority, spec.to_dict(), larger) == 1800
 
 
 def test_configured_metadata_tamper_is_rejected(configured):
@@ -218,27 +232,13 @@ def test_configured_metadata_tamper_is_rejected(configured):
         check_plan(spec, c.repo, plan)
 
 
-def test_configured_two_independent_arms(configured):
+def test_configured_independent_arms_require_a_frozen_pair(configured):
     c = configured
     value = deepcopy(c.value)
-    second = deepcopy(value["arms"][0])
-    second.update(arm_id="second", training={"learning_rate": .0006, "horizon_passes": 8})
-    value["arms"].append(second)
-    authority = deepcopy(c.authority)
-    authority["arms"].append("second")
-    authority["interfaces"].append(deepcopy(authority["interfaces"][0]))
-    authority["recipes"]["second"] = deepcopy(authority["recipes"]["candidate"])
-    _write_json(c.repo / value["authority_ref"], authority)
+    value.pop("same_run")
     _write_json(c.path, value)
-    _git(c.repo, "add", ".")
-    _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Independent paired arms")
-    _, spec, workflow, _ = resolve_experiment_input(c.path, c.repo)
-    assert [job["device"] for job in workflow["arms"]] == [0, 1]
-    assert len({job["recipe"] for job in workflow["arms"]}) == 2
-    identities = [read_recipe(c.repo / job["recipe"])[1].identity for job in workflow["arms"]]
-    assert len(set(identities)) == 2
-    plan = json.loads((c.repo / workflow["acceptance_plan"]).read_bytes())
-    assert len(check_plan(spec, c.repo, plan)["arms"]) == 2
+    with pytest.raises(ValueError, match="same-run or retained frozen reference"):
+        resolve_experiment_input(c.path, c.repo)
 
 
 def test_execution_repair_reissues_only_source_pin(configured):
@@ -255,7 +255,8 @@ def test_execution_repair_reissues_only_source_pin(configured):
     authority = dict(purpose="CONFIGURED_EXECUTION_REPAIR", scientific_training_authorized=False)
     retained, reissued = _read_scientific_recipe(path, family, authority)
     assert retained == original and path.read_bytes() == before
-    assert reissued.execution_policy["feature_transform_source_sha256"] == indexed_transform_identity(family)
+    assert reissued.execution_policy["feature_transform_source_sha256"] == indexed_transform_identity(
+        family, feature_only=True)
     for denied in ({**authority, "purpose": "CONFIGURED_SCREEN"},
                    {**authority, "scientific_training_authorized": True},
                    {"purpose": "CONFIGURED_EXECUTION_REPAIR"}):

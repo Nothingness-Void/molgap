@@ -24,7 +24,7 @@ SCOPES = {
     ),
     "submit": (_PLATFORM_ROUNDTRIP,),
     "accept": (
-        "tests/test_run_acceptance_integration.py::test_top_level_execute_restores_frozen_generated_metadata",
+        "tests/test_same_run_replay.py::test_same_run_pair_reaches_replay_only_after_reference_acceptance",
     ),
     "resume": (
         _ADDON_RECOVERY,

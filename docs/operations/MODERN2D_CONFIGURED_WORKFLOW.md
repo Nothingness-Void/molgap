@@ -29,8 +29,18 @@ For each Modern2D arm:
   recipe plus a pinned accepted native qualification in the authority.
   The compiler packages that evidence; historical recipes keep the original
   graphwise default. The exact new model/recipe still passes native admission.
-- `purpose` is `context_only`. These initial model screens collect evidence;
-  they do not manufacture a matched comparison, superiority or Replay admission.
+- Scientific addon screens use `purpose: architecture_comparison`. The first
+  contract explicitly declares `same_run.reference_arm_id` and
+  `same_run.target_manifest_ref`; its authority also names
+  `same_run_reference_arm_id`. The reference keeps its frozen recipe unchanged.
+  The compiler freezes both identities and the allowed architecture delta.
+  `context_only` is reserved for the explicit execution diagnostics below;
+  historical context-only training packages cannot release another screen.
+- Successful closure registers the baseline once and returns `accepted_reference`.
+  `derive-input --from-run ...` then removes the baseline arm and fills
+  `reference_ref.bundle_ref` plus the question's frozen reference ID. Review
+  the addon delta and supply fresh authority; the baseline is not trained again.
+  This path supports architecture addons with an otherwise matching contract.
 
 One slot can contain one or two independent Modern2D arms, including two arms
 of the same family. A single arm needs an explicit reason for leaving the other
@@ -81,10 +91,22 @@ all-arm native repeat/resume qualification remains mandatory. Passing CPU
 fixtures does not supply a native certificate.
 
 Session outputs retain selected/last weights, optimizer/RNG state, predictions,
-canonical trace and its context companion. Target identity uses the pinned
-manifest. The shared inspector verifies saved bytes; shared terminal/RML owners
-retain context-only/INCONCLUSIVE semantics. Missing costs remain missing.
+canonical trace, its context companion and the observed `role_audit.json`.
+Actual loader, metric and selection callbacks populate the audit; permissions
+alone do not establish observed role use. Native certificate/provenance files
+are retained as small artifacts when present. Target identity uses the pinned
+manifest. The shared inspector verifies saved bytes; pair acceptance consumes
+them without inference, closes the reference before the candidate, and checks
+actual replay-pool membership. Complete negative outcomes are eligible.
+Missing evidence still blocks closure; missing costs remain missing.
 Portable recovery uses the existing package/receipt/resume-bundle owners.
+
+Local storage attempt, frozen action attempt and platform version are separate
+identities. Terminal evidence uses the frozen action; the launch receipt binds
+the physical kernel/version. Recovery never renames the original action.
+`accept-run --stage-terminal --outcome ... --decision-ref ... --execute` consumes
+the runtime audit automatically. Explicit scientific decisions remain required;
+no observed gain grants another run or promotion.
 
 This implementation does not certify native throughput, model quality, a
 completed formal training run or Desktop migration. Those require evidence from

@@ -66,6 +66,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     ctx = context(family, path)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
         trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     progress = session.run()
     runtime = {"platform": ctx.platform, "account": ctx.account, "precision": "fp32",

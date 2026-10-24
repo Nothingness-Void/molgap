@@ -252,6 +252,7 @@ def test_preview_output_is_mechanical_and_explicitly_integration_pending(tmp_pat
     outputs = SessionOutputs(tmp_path / "output", context, contract=path,
         adapter=MODERN2D_PREVIEW_PROFILE, trajectory_id="synthetic-trajectory",
         train_role_identity=record["train_role_identity"])
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     final = session.run()
     runtime = {"platform": context.platform, "account": context.account, "precision": "fp32",

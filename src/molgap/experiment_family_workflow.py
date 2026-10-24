@@ -238,6 +238,9 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
         roles = roles | {"trace_context"}
         if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
             raise ValueError("Session trace companion must match the declared trace")
+    if profile.protocol == "family-session":
+        from .experiment_family_artifacts import SESSION_OPTIONAL_ARTIFACTS
+        roles = roles | (set(artifacts) & SESSION_OPTIONAL_ARTIFACTS)
     if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}
@@ -1062,9 +1065,9 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
             raise ValueError("Expected existing per-arm trajectory/terminal/trace locations")
         prospective = _json(repo_local_path(root, where["trajectory"]))
         actions = [action for action in prospective["actions"] if where["run_id"] in action["run_ids"]]
-        if len(actions) != 1 or len(actions[0]["attempt_ids"]) != 1:
+        if len(actions) != 1:
             raise ValueError("Closure requires one frozen attempt for the observed run; reconcile recovery separately")
-        attempt_id = actions[0]["attempt_ids"][0]
+        attempt_id = _frozen_action_attempt(actions[0])
         observation = report["observed"]
         def binding(role):
             entry = observation["artifacts"][role]
@@ -1117,12 +1120,17 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
     return descriptor
 
 
-def terminal_attempt_id(spec, arm_id, platform_version):
-    if not platform_version:
-        return None
-    declaration = spec.to_dict()
-    prefix = declaration["logical_run_id"] if declaration["prospective"].get("same_run_replay") else arm_id
-    return prefix + "-v" + platform_version
+def _frozen_action_attempt(action: dict) -> str:
+    """Return the one attempt frozen for a terminal action.
+
+    The action owns logical attempt identity.  A launch receipt's platform
+    version remains a physical observation on ``RunContext`` and must never be
+    used to manufacture an action attempt identifier.
+    """
+    attempts = action.get("attempt_ids")
+    if not isinstance(attempts, list) or len(attempts) != 1 or not isinstance(attempts[0], str):
+        raise ValueError("Closure requires one frozen attempt for the observed run; reconcile recovery separately")
+    return attempts[0]
 
 
 def _terminal_identity(spec, context, *, attempt_id=None):

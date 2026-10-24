@@ -33,6 +33,7 @@ def prepared(tmp_path, family="neural_atom_k1", development=True):
 
 
 def bind(session, out):
+    session.loaders.attach_role_audit(out.role_audit)
     session.checkpoint, session.selected, session.pass_finished = out.checkpoint, out.selected, out.pass_finished
 
 

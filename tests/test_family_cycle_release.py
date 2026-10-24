@@ -68,11 +68,13 @@ def test_two_live_ema_metrics_ev_trace_and_real_ten_pass_transport(tmp_path):
     ctx = context("gptrans_t", contract)
     trajectory = {"trajectory_id": "synthetic-cycle", "record_mode": "prospective",
         "state_at_start": {"source_commit": ctx.source_commit, "source_config_identity": ctx.arm_identity},
-        "actions": [{"action_id": "A001", "run_ids": [ctx.run_reference], "attempt_ids": ["v1"]}],
+        "actions": [{"action_id": "A001", "run_ids": [ctx.logical_run_id + ":" + ctx.arm_id + ":downstream"],
+                      "attempt_ids": ["v1"]}],
         "decision": {"outcome": "ACTIVE"}}
     outputs = SessionOutputs(tmp_path / "execution/reference", ctx, contract=contract,
         adapter="gptrans-session-v1", trajectory_id=trajectory["trajectory_id"],
         train_role_identity=record["train_role_identity"], resume_trajectory=json.dumps(trajectory).encode())
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     progress = session.run(should_pause=lambda: session.progress.pass_index == 10)
     assert progress.status == "paused" and progress.optimizer_step == 20

@@ -193,6 +193,51 @@ def _startup(http, ref):
     return {**result, "events": events}
 
 
+def _check_scientific_release(spec, package, staged, authority, manifest):
+    """Reject historical context-only training before any platform mutation."""
+    from .modern2d_training_release import (
+        is_formal_screen, plan_path, PROFILE_PURPOSE, REPAIR_PURPOSE,
+        validate_same_run_comparison_plan, validate_retained_comparison_plan,
+    )
+    if not is_formal_screen(spec) or authority.get("purpose") in {PROFILE_PURPOSE, REPAIR_PURPOSE}:
+        return
+    from .common.identity import validate_execution_identity
+    from .research_memory.paired import pair_binding
+
+    declaration = spec.to_dict()
+    pair = declaration["prospective"].get("same_run_replay")
+    plan = json.loads(read_packaged_text(package, plan_path(spec)))
+    if not plan.get("comparison"):
+        raise ValueError("Scientific Modern2D submission requires a prospectively frozen replay comparison; context-only training is not released")
+    if pair is not None:
+        validate_same_run_comparison_plan(spec, plan)
+    else:
+        comparison = validate_retained_comparison_plan(spec, plan)
+        pointer = comparison["reference_bundle"]
+        payload = read_packaged_text(package, pointer["path"])
+        if hashlib.sha256(payload.encode()).hexdigest() != pointer["sha256"]:
+            raise ValueError("Scientific reference bundle changed after freezing")
+        bundle = json.loads(payload)
+        if (bundle.get("reference_id") != comparison["reference_id"]
+                or bundle.get("comparison_identity") != comparison["reference_identity"]
+                or not bundle.get("finalized_reference_ref")):
+            raise ValueError("Scientific comparison is not bound to an accepted Session reference")
+    for arm in declaration["arms"]:
+        arm_id = arm["arm_id"]
+        trajectory = _json(staged / "prospective" / arm_id / "trajectory.json")
+        validate_execution_identity(spec, arm_id, trajectory, manifest["source_commit"])
+        if pair is None:
+            if comparison["reference_id"] not in trajectory["state_at_start"]["reference_ids"]:
+                raise ValueError("Scientific reference was not frozen in the prospective action")
+            continue
+        binding = pair_binding(trajectory)
+        if (binding is None or binding["spec_identity"] != spec.identity
+                or binding["logical_run_id"] != declaration["logical_run_id"]
+                or binding["arm_id"] != arm_id
+                or binding["reference_arm_id"] != pair["reference_arm_id"]):
+            raise ValueError("Scientific comparison differs from the frozen prospective pair")
+
+
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              monitor_paths, execute=False, api=None, http_session=None,
                              reconcile_retired_push=False, reconcile_sdk_transport=False):
@@ -266,6 +311,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                "authority_ref": authority_ref, "authority_sha256": hashlib.sha256(canonical_json(authority).encode()).hexdigest(),
                "monitor_paths": list(monitor_paths)}
     if not execute:
+        _check_scientific_release(spec, package, staged, authority, manifest)
         _verify_release_report(prepared / "release_report.json", kernel / "run.py")
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
     output.mkdir(parents=True, exist_ok=True)
@@ -275,6 +321,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         state = _json(journal) if journal.exists() else {"binding": binding, "phase": "NEW", "timings": {}}
         if state["binding"] != binding:
             raise ValueError("Preserve the journal; submission inputs or authority changed")
+        scientific_checked = False
+        if "kernel_response" not in state and state["phase"] not in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
+            _check_scientific_release(spec, package, staged, authority, manifest)
+            scientific_checked = True
         phase_start = perf_counter()
         def save(phase, **fields):
             nonlocal phase_start
@@ -326,6 +376,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
                 save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
+            # Reconciliation remains available for historical jobs, but a
+            # confirmed-absence recovery cannot bypass a new compute release.
+            if not scientific_checked:
+                _check_scientific_release(spec, package, staged, authority, manifest)
             _verify_release_report(prepared / "release_report.json", kernel / "run.py")
             atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_budget, api=api))
             if _kernel_source(api, ref) is not None:

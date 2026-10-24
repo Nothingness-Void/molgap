@@ -20,6 +20,7 @@ from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
 from .experiment_execution import SESSION_INTERFACES, shared_training_adapters
+from .research_memory.trace import atomic_write
 
 
 INTERFACES = SESSION_INTERFACES
@@ -618,6 +619,32 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
         raise ValueError("Resume trace/cursor mismatch")
     if trace["trajectory_id"] != trajectory["trajectory_id"]:
         raise ValueError("Resume trace/trajectory identity mismatch")
+    # Shared family bundles carry the observed role sidecar as provenance.  A
+    # direct wire-boundary unit may omit the transport manifest intentionally;
+    # the actual portable bundle path always has it and must retain the audit.
+    if manifest:
+        provenance = sidecars.get("provenance", [])
+        role_audits = [path for path in provenance if path.name.casefold() == "role_audit.json"]
+        if len(role_audits) != 1:
+            raise ValueError("Resume bundle lacks exactly one role audit sidecar")
+        from .research_memory.roles import validate_observed_role_truth
+        from .research_memory.schemas import validate_role_event
+        audit = _json(role_audits[0])
+        if set(audit) != {"context", "role_use", "roles"}:
+            raise ValueError("Resume role audit has an unsupported schema")
+        if context is not None:
+            _check_context(audit["context"], RunContext(**context))
+        audit_roles, audit_use = audit["roles"], audit["role_use"]
+        if type(audit_roles) is not list or type(audit_use) is not dict:
+            raise ValueError("Resume role audit requires role_use and roles")
+        expected_identity = (trace["trajectory_id"], trace["run_id"], manifest["run"]["action_id"])
+        for event in audit_roles:
+            validate_role_event(event)
+            if (event["trajectory_id"], event["run_id"], event["action_id"]) != expected_identity:
+                raise ValueError("Resume role audit identity differs from its trace")
+            if event["evidence_ref"].replace("\\", "/").rsplit("/", 1)[-1] != "role_audit.json":
+                raise ValueError("Resume role audit event is not bound to its sidecar")
+        validate_observed_role_truth([audit_use], audit_roles)
     return {"status": "SHARED_RESUME_VERIFIED", "optimizer_steps": progress.optimizer_step,
             "sample_presentations": progress.sample_presentations, "recipe_identity": recipe.identity}
 
@@ -798,6 +825,20 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     return certificate
 
 
+def _publish_verified_preflight_metadata(output, preflight_dir, provenance, certificate):
+    """Bind verified preflight JSON to the arm output before terminal publication."""
+    output, preflight_dir = Path(output).absolute(), Path(preflight_dir).absolute()
+    if output == preflight_dir:
+        return
+    for name, expected in (("runtime_provenance.json", provenance),
+                           ("runtime_certificate.json", certificate)):
+        source = _artifact_path(preflight_dir, name)
+        payload = source.read_bytes()
+        if _json(source) != expected:
+            raise ValueError("Verified preflight metadata changed before output binding: " + name)
+        atomic_write(output / name, payload)
+
+
 def _begin_cost_interval(root, context, *, had_checkpoint):
     """An unfinished invocation or unbound ledger makes cumulative cost unknown."""
     path, marker = root / "allocation_costs.json", root / "invocation_cost_state.json"
@@ -895,7 +936,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         kernel_options["formal_training"] = _admit_formal_training(options.get("formal_training"), recipe)
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda", **kernel_options)
     _loaded_source(options["package_dir"])
-    session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
+    session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning,
+        role_audit=outputs.role_audit),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
@@ -952,6 +994,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
                 receipt["reason"] = result["reason"] = "STOP_FOR_COST"
         atomic_json(root / "pause_receipt.json", receipt)
         return result
+    _publish_verified_preflight_metadata(root, preflight_dir or output, provenance, certificate)
     hardware = provenance["accelerator"]
     costs = [{"metric": "wall_seconds", "unit": "seconds", "value": total,
         "status": "measured" if total is not None else "missing",

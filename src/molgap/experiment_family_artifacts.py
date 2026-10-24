@@ -8,6 +8,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from types import MappingProxyType
 
+# Retained Session observations use the same allowlist in publication,
+# inspection and selective platform retrieval. Historical outputs omit them.
+SESSION_OPTIONAL_ARTIFACTS = frozenset({"role_audit", "runtime_certificate", "runtime_provenance"})
 
 @dataclass(frozen=True)
 class ArtifactAdapter:

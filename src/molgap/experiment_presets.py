@@ -155,6 +155,26 @@ def build_scientific_input_template(run_directory, repo_root, experiment_id,
     validate_relative_path(draft["decision_ref"])
     for field in ("authority", "authority_ref", "role_ref"):
         draft.pop(field, None)
+    pair = original.get("prospective", {}).get("same_run_replay")
+    from .modern2d_training_release import is_formal_screen
+    if pair is not None and is_formal_screen(ExperimentSpec(original)):
+        reference = next(item for item in original["prospective"]["arms"]
+                         if item["arm_id"] == pair["reference_arm_id"])
+        checkout = Path(repo_root).absolute()
+        bundle_path = checkout / reference["output"] / "reference/reference_bundle.json"
+        if bundle_path.is_file():
+            from .family_pair_acceptance import verify_session_reference
+            bundle = verify_session_reference(repo_root, _read(bundle_path))
+            # A fresh draft reuses the accepted control, without copying its
+            # trajectory or reserving another baseline training allocation.
+            draft.pop("same_run", None)
+            draft["arms"] = [item for item in draft["arms"]
+                             if item["arm_id"] != pair["reference_arm_id"]]
+            pointer = {"path": bundle_path.relative_to(checkout).as_posix(),
+                       "sha256": file_digest(bundle_path)}
+            for item in draft["arms"]:
+                item["reference_ref"]["bundle_ref"] = pointer
+            draft["question"]["reference_ids"] = [bundle["reference_id"]]
     return draft
 
 

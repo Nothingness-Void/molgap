@@ -159,6 +159,15 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
                 execute=True, execution_root=execution_root, _inspections=inspections,
                 target_identities=resolved.get("target_identities"), **options)
+            if closed["status"] == "COMPLETE" and resolved["acceptance_plan"].get("comparison") is not None:
+                from .experiment_family_workflow import family_replay_status
+                from .family_pair_acceptance import register_session_reference
+                closed.update(family_replay_status(repo_root,
+                    [item["trajectory_id"] for item in staged["locations"].values()]))
+                if closed["replay_readiness"] == "REPLAY_READY":
+                    registered = register_session_reference(repo_root, spec, staged)
+                    if registered is not None:
+                        closed["accepted_reference"] = registered
             return {**closed, **identity, "diagnosis": result.get("diagnosis"), "terminal_staging": staged}
     elif execute and automatic:
         if locations is None:

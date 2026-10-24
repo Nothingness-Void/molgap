@@ -12,9 +12,28 @@ def training_loader_options(workers):
             "pin_memory": True, **({"prefetch_factor": 2} if workers else {})}
 
 
+class _ObservedRoleStream:
+    """Observe the first real batch in a stream without changing its loader."""
+    def __init__(self, loader, role_audit, logical_role):
+        self.loader = loader
+        self.role_audit = role_audit
+        self.logical_role = logical_role
+        self._observed = False
+
+    def __iter__(self):
+        for batch in self.loader:
+            if not self._observed:
+                self.role_audit.observe_batch(self.logical_role)
+                self._observed = True
+            yield batch
+
+    def __len__(self):
+        return len(self.loader)
+
+
 class FamilyLoaders:
     """Own one immutable train view and an optional bounded development cache."""
-    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning):
+    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning, *, role_audit=None):
         import torch
         from torch_geometric.loader import DataLoader
         from .gptrans_execution_backend import PreparedLoader, assert_static_dataset
@@ -65,6 +84,7 @@ class FamilyLoaders:
             raise ValueError("Loaded data differs from the frozen recipe selection")
         assert_static_dataset(data.train)
         self.recipe, self.data, self.tuning = recipe, data, tuning
+        self.role_audit = None
         self.feature_bindings = None
         if (recipe.integration_preview or recipe.formal_interface) and data.indexed:
             from .data.indexed_inputs import IndexedRoleDataset
@@ -99,6 +119,31 @@ class FamilyLoaders:
                     batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
                     source_start=data.development_source_start, retain_model_inputs=True,
                     retain_random_walk_pe=recipe.family == "neural_atom_k1")
+        if role_audit is not None:
+            self.attach_role_audit(role_audit)
+
+    def attach_role_audit(self, role_audit):
+        """Attach the shared run observer after data admission and loader setup."""
+        if not callable(getattr(role_audit, "bind_dataset", None)):
+            raise TypeError("Role audit must expose bind_dataset")
+        if self.role_audit is not None and self.role_audit is not role_audit:
+            raise ValueError("Family loader role audit cannot be replaced")
+        self.role_audit = role_audit
+        train_indices = self.data.train_source_indices
+        if train_indices is None and self.data.train_source_start is not None:
+            train_indices = range(self.data.train_source_start,
+                                  self.data.train_source_start + self.data.train_rows)
+        role_audit.bind_dataset("train", self.data.train,
+            manifest_sha256=self.recipe.dataset.manifest_sha256,
+            source_indices=train_indices)
+        if self.data.development is not None:
+            development_indices = self.data.development_source_indices
+            if development_indices is None and self.data.development_source_start is not None:
+                development_indices = range(self.data.development_source_start,
+                                            self.data.development_source_start + self.data.development_rows)
+            role_audit.bind_dataset("development", self.data.development,
+                manifest_sha256=self.recipe.dataset.manifest_sha256,
+                source_indices=development_indices)
 
     def train(self, pass_index, start_batch):
         if self.closed:
@@ -109,17 +154,21 @@ class FamilyLoaders:
             drop_last=self.recipe.drop_last)
         self.sampler.pass_index, self.sampler.start_batch = validated.pass_index, validated.start_batch
         self.generator.manual_seed(self.recipe.seed + pass_index)
-        return self.training
+        return (_ObservedRoleStream(self.training, self.role_audit, "train")
+                if self.role_audit is not None else self.training)
 
     def dev(self):
         if not self.closed and self.data.indexed and self.development_cache is not None:
-            return self.development_cache
+            return (_ObservedRoleStream(self.development_cache, self.role_audit, "development")
+                    if self.role_audit is not None else self.development_cache)
         if not self.closed and (self.recipe.cpu_synthetic_only or self.data.indexed or
                 self.recipe.integration_preview or self.recipe.formal_interface) and self.development is not None:
-            return self.development
+            return (_ObservedRoleStream(self.development, self.role_audit, "development")
+                    if self.role_audit is not None else self.development)
         if self.closed or self.development_cache is None:
             raise ValueError("No selected development role in this loader pool")
-        return self.development_cache
+        return (_ObservedRoleStream(self.development_cache, self.role_audit, "development")
+                if self.role_audit is not None else self.development_cache)
 
     def calibration(self, policy):
         """Independent ordered train-only stream; never advances training RNG/cursor."""
@@ -127,8 +176,10 @@ class FamilyLoaders:
         from torch_geometric.loader import DataLoader
         if self.closed or policy != self.recipe.clean_bn:
             raise ValueError("Calibration requires the frozen selected training policy")
-        return DataLoader(self.data.train, batch_size=policy.batch_size, shuffle=False,
+        loader = DataLoader(self.data.train, batch_size=policy.batch_size, shuffle=False,
             drop_last=True, num_workers=0, generator=torch.Generator().manual_seed(self.recipe.seed))
+        return (_ObservedRoleStream(loader, self.role_audit, "train")
+                if self.role_audit is not None else loader)
 
     def close(self):
         if self.closed:

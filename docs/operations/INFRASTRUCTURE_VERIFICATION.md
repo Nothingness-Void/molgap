@@ -42,7 +42,7 @@ invariant; full-suite maintenance is an explicit separate operation.
 | `prepare` | K1/3 and GPTrans/2 scientific-input compilation and frozen recovery |
 | `train` | Real K1/GPTrans addons and PPGT/3/ESA/4 kernels, loaders, output publication and saved-state continuation on generated CPU graphs |
 | `submit` | Real local package/release/receipt/retrieval owners with fake network and a synthetic trainer |
-| `accept` | Existing finalizer with frozen generated metadata removed and externally retained traces |
+| `accept` | Real synthetic Session outputs and role observations through reference-first finalization and actual replay admission |
 | `resume` | Real-model continuation plus the ten-pass chunk transport and concurrent accounting snapshot |
 
 These fixtures use bounded synthetic data and model configurations. They do

@@ -10,7 +10,10 @@ from collections.abc import Mapping
 from pathlib import Path
 
 from .common.io import publish_immutable_bytes
-from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
+from .experiment_family_workflow import (
+    _artifact_path, _check_context, _frozen_action_attempt, _json, _runtime,
+    inspect_terminal_output,
+)
 from .research_memory.paths import artifact_locator, bound_artifact_path, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
 from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
@@ -47,7 +50,10 @@ def _materialize_inline_role_audit(root: Path, value, context, trajectory_path: 
         # without deriving any role state from it.
         audit["context"] = context.to_dict()
     elif audit["context"] != context.to_dict():
-        raise ValueError("Observed role audit differs from the frozen run/source/attempt context")
+        try:
+            _check_context(audit["context"], context)
+        except ValueError as exc:
+            raise ValueError("Observed role audit differs from the frozen run/source/attempt context") from exc
     if "roles" not in audit:
         audit["roles"] = []
     role_use = audit.get("role_use")
@@ -114,7 +120,10 @@ def _roles(root, audit_ref, context, where, action_id):
     audit_ref = audit_path.relative_to(root).as_posix()
     audit = _json(audit_path)
     if audit.get("context") != context.to_dict():
-        raise ValueError("Observed role audit differs from the frozen run/source/attempt context")
+        try:
+            _check_context(audit.get("context"), context)
+        except ValueError as exc:
+            raise ValueError("Observed role audit differs from the frozen run/source/attempt context") from exc
     role_use, events = audit.get("role_use"), audit.get("roles")
     if not isinstance(role_use, dict) or not isinstance(events, list):
         raise ValueError("Role audit requires observed role_use and existing-schema roles")
@@ -130,6 +139,26 @@ def _roles(root, audit_ref, context, where, action_id):
     blockers = (["observed_protected_role_audit_incomplete"]
                 if any(role_use[role] == "unknown" for role in PROTECTED_ROLES) else [])
     return role_use, events, blockers, audit_ref
+
+
+def _runtime_role_audit(output_root: Path, observed: Mapping):
+    """Load the runtime's hash-checked role-audit sidecar when present.
+
+    ``inspect_session_output`` verifies the sidecar bytes and exposes only its
+    relative path and digest.  Terminal staging consumes that exact artifact;
+    it never reconstructs role facts from the recipe or from a hand-authored
+    terminal argument.
+    """
+    entry = observed.get("role_audit") if isinstance(observed, Mapping) else None
+    if entry is None:
+        return None
+    if (not isinstance(entry, Mapping) or set(entry) - {"path", "sha256", "role_use", "event_count"}
+            or not isinstance(entry.get("path"), str) or not isinstance(entry.get("sha256"), str)):
+        raise ValueError("Runtime role audit sidecar binding is invalid")
+    path = _artifact_path(output_root, entry["path"])
+    if file_digest(path) != entry["sha256"]:
+        raise ValueError("Runtime role audit sidecar changed after mechanical inspection")
+    return _json(path)
 
 
 def _scientific_input(value, arm_id):
@@ -297,6 +326,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         for arm_id, item in resolved["outputs"].items()}
     locations = locations if locations is not None else resolved["locations"]
     frozen_options = resolved.get("options", {})
+    acceptance_plan = resolved.get("acceptance_plan")
+    comparison = (acceptance_plan.get("comparison")
+                  if isinstance(acceptance_plan, Mapping) else None)
     frozen_package = package_dir or frozen_options.get("package_dir")
     verification = frozen_options.get("_verification")
     arm_ids = {arm["arm_id"] for arm in spec.to_dict()["arms"]}
@@ -335,9 +367,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if len(actions) != 1:
             raise ValueError("Terminal run must bind exactly one frozen prospective action")
         action = actions[0]
-        observed_attempt = terminal_attempt_id(spec, arm_id, context.platform_version)
-        if (action["source_commit"] != context.source_commit or
-                (observed_attempt is not None and observed_attempt not in action["attempt_ids"])):
+        action_attempt_id = _frozen_action_attempt(action)
+        if action["source_commit"] != context.source_commit:
             raise ValueError("Terminal source/attempt differs from the frozen prospective action")
         observed = report["observed"]
         output_root = Path(item["output_dir"]).absolute()
@@ -370,7 +401,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             blockers.append("explicit_outcome_and_decision_ref_required")
         if explicit_outcome is not None and explicit_outcome not in TRAJECTORY_OUTCOMES - {"ACTIVE"}:
             raise ValueError("Expected an explicit existing terminal trajectory outcome")
-        if explicit_outcome in {"READY_FOR_DESKTOP", "POSITIVE_UNDER_CONTRACT", "POSITIVE_BELOW_GATE"}:
+        if (explicit_outcome == "READY_FOR_DESKTOP"
+                or (explicit_outcome in {"POSITIVE_UNDER_CONTRACT", "POSITIVE_BELOW_GATE"}
+                    and comparison is None)):
             blockers.append("positive_or_ready_requires_owning_scientific_acceptance")
         if explicit_decision is not None:
             explicit_decision = repo_local_path(root, explicit_decision).relative_to(root).as_posix()
@@ -393,7 +426,12 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 "observed": None, "acceptance": str(owner["acceptance_path"]),
                 "closure_ready": True, "blockers": []}
             continue
-        role_input = _role_input(role_audit, arm_id)
+        # A producer sidecar is the authoritative observed role record when
+        # present. Explicit audits remain a compatibility path for outputs
+        # produced before the runtime sidecar existed.
+        runtime_role_audit = _runtime_role_audit(output_root, observed)
+        role_input = (runtime_role_audit if runtime_role_audit is not None
+                      else _role_input(role_audit, arm_id))
         role_input = _materialize_inline_role_audit(
             root, role_input, context, trajectory_path, attempt_id, arm_id,
             where, action["action_id"]
@@ -417,7 +455,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         pointer = lambda name: (directory / name).relative_to(root).as_posix()
         objective_ref, acceptance_ref = pointer("observed.json"), pointer("acceptance.json")
         terminal_ref = pointer("terminal.json")
-        costs = _cost_events(observed["costs"], {"attempt_id": observed_attempt, "platform": context.platform},
+        costs = _cost_events(observed["costs"], {"attempt_id": action_attempt_id, "platform": context.platform},
             where, action["action_id"], objective_ref)
         objective = {"context": context.to_dict(), "mechanical_verification": report,
             "native_costs": observed["costs"], "costs": costs, "roles": [],
@@ -469,7 +507,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             package["same_run_observation"] = {"schema": "molgap-same-run-observation-v1",
                 "spec_identity": spec.identity, "logical_run_id": context.logical_run_id,
                 "platform_name": context.platform, "platform_run_reference": context.run_reference,
-                "attempt_id": observed_attempt, "source_commit": context.source_commit,
+                "attempt_id": action_attempt_id, "source_commit": context.source_commit,
                 "source_package_sha256": context.source_archive_sha256}
         existing = directory / "terminal.json"
         package["finalized_at"] = (_json(existing)["finalized_at"] if existing.is_file()
@@ -479,5 +517,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         paths[arm_id] = {"terminal": str(existing), "observed": str(directory / "observed.json"),
             "acceptance": str(directory / "acceptance.json"), "closure_ready": not blockers, "blockers": blockers}
         all_blockers.extend(f"{arm_id}: {blocker}" for blocker in blockers)
-    return {"status": "STAGED_DRAFT" if all_blockers else "STAGED_CLOSURE_READY",
+    result = {"status": "STAGED_DRAFT" if all_blockers else "STAGED_CLOSURE_READY",
         "arms": reports, "paths": paths, "locations": staged, "blockers": all_blockers, "executed": False}
+    if comparison is not None and scientific_acceptance is None:
+        from .family_pair_acceptance import complete_pair_terminal_packages
+        result = complete_pair_terminal_packages(root, spec, comparison=comparison,
+            outputs=outputs, staged=result)
+        pair = spec.to_dict()["prospective"].get("same_run_replay")
+        if pair is not None:
+            order = [pair["reference_arm_id"], *pair["candidate_arm_ids"]]
+            result["locations"] = {arm_id: result["locations"][arm_id] for arm_id in order}
+    return result

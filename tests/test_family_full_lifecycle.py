@@ -116,6 +116,7 @@ def test_clean_endpoint_uses_existing_publication_and_inspector(tmp_path, develo
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path,
         adapter=PROFILES[session.recipe.family], trajectory_id="synthetic-clean",
         train_role_identity=record["train_role_identity"])
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     progress = session.run()
     report = outputs.complete(progress, runtime={"platform": ctx.platform, "account": ctx.account,

@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import json
 import hashlib
+import shutil
+from dataclasses import replace
+from pathlib import Path
 from molgap.experiment_attribution import ATTRIBUTION_FORMAT
 from molgap.experiment_allocation import AllocationLedger
 from molgap.experiment_family_workflow import RunContext
@@ -58,7 +61,7 @@ def _trajectory(binding, arm, context, recipe_path):
             "type": "TRAIN",
             "source_commit": context.source_commit,
             "run_ids": [run_id],
-            "attempt_ids": [context.logical_run_id + "-v7"],
+            "attempt_ids": [context.logical_run_id + "-v2"],
             "evidence_refs": ["experiments/synthetic/acceptance.json"],
             "cost_event_ids": [],
         }],
@@ -86,8 +89,12 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     record = json.loads(contract_path.read_bytes())
     session = make_session(arm["family"]["name"], development=True,
         schedule_kind="cosine_step", events=events())
-    outputs = SessionOutputs(directory, context, contract=contract_path, adapter=entry["adapter"],
-        trajectory_id=binding["trajectory_id"], train_role_identity=record["train_role_identity"])
+    action_id = "action-" + arm_id.replace("_", "-")
+    producer_context = replace(context, platform_version=None)
+    outputs = SessionOutputs(directory, producer_context, contract=contract_path, adapter=entry["adapter"],
+        trajectory_id=binding["trajectory_id"], train_role_identity=record["train_role_identity"],
+        action_id=action_id)
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
     progress = session.run()
@@ -252,18 +259,34 @@ def test_acceptance_without_diagnosis_preserves_execution_retention(tmp_path, re
 
 def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
     case = frozen_shared_acceptance_run(tmp_path, repo)
+    # Keep the local recovery attempt at v2 while the observed launch receipt
+    # records physical platform version 1. The action attempt must come from
+    # the frozen trajectory, independently of the receipt version.
+    from molgap.experiment_launch import build_launch_receipt
+    response = json.loads(json.dumps(case.receipt["response"]))
+    response["platform_version"] = {"value": "1", "missing_reason": None}
+    for physical in response["physical_runs"]["value"]:
+        physical["run_identity"] = "kernel1/version1"
+        physical["platform_version"] = {"value": "1", "missing_reason": None}
+    receipt = build_launch_receipt(case.spec, case.package,
+        expected_package_identity=case.manifest["package_identity"],
+        response_json=canonical_json(response))
+    case.run.joinpath("operations/launch_receipt.json").write_bytes(canonical_json(receipt).encode())
+    journal = json.loads(case.run.joinpath("operations/submission_state.json").read_bytes())
+    journal["kernel_response"]["version_number"] = 1
+    case.run.joinpath("operations/submission_state.json").write_bytes(canonical_json(journal).encode())
+    v2_run = case.paths.run_directory(case.spec.to_dict()["logical_run_id"], "v2")
+    shutil.copytree(case.run, v2_run)
+    case.run, case.prepared, case.package = v2_run, v2_run / "prepared", v2_run / "prepared/package"
+    case.original = (case.profile, case.repo, case.spec.to_dict()["logical_run_id"], "v2")
+    case.receipt = receipt
     declaration, arms, locations, contexts = _materialize_shared_case(case)
     _seed_reference_records(case)
-    decisions, audits = {}, {}
+    decisions = {}
     for arm_id, item in contexts.items():
         decision = case.repo / (arm_id + "-decision.md")
         decision.write_text("Infrastructure-only terminal disposition.", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
-        audits[arm_id] = {
-            "context": item.to_dict(), "roles": [],
-            "role_use": {role: "untouched" for role in
-                          ("official_validation", "test_dev", "test_challenge")},
-        }
 
     # The resolver reads frozen package members.  Remove every generated
     # checkout file so terminal staging must restore only trajectory-pinned
@@ -292,7 +315,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     result = accept_run_workflow(*case.original,
         retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root, stage_terminal=True, outcome="INCONCLUSIVE",
-        decision_ref=decisions, role_audit=audits)
+        decision_ref=decisions)
 
     assert result["status"] == "COMPLETE", result
     assert result["executed"] is True
@@ -310,5 +333,11 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         staged_terminal = result["terminal_staging"]["paths"][arm_id]["terminal"]
         package = json.loads((case.repo / staged_terminal).read_bytes())
         assert package["artifact_hashes"][recipe] == case.manifest["generated_records"][recipe]
+        assert {cost["attempt_id"] for cost in package["costs"]} == {
+            declaration["logical_run_id"] + "-v2"}
+        if "same_run_observation" in package:
+            assert package["same_run_observation"]["attempt_id"] == declaration["logical_run_id"] + "-v2"
+        observed = json.loads(Path(result["terminal_staging"]["paths"][arm_id]["observed"]).read_bytes())
+        assert observed["context"]["platform_version"] == "1"
     validated = validate_repository_records(case.repo)
     assert validated["root"] == case.repo.resolve()

@@ -77,6 +77,7 @@ def test_research_mechanism_session_resume_and_complete_outputs(
     outputs = SessionOutputs(tmp_path / "output", context, contract=contract,
         adapter="modern2d-formal-session-v1", trajectory_id="research-fixture-trajectory",
         train_role_identity=record["train_role_identity"])
+    full.loaders.attach_role_audit(outputs.role_audit)
     full.checkpoint, full.selected, full.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     with (prepared_kernel_execution(full.kernel)
           if execution_mode == "prepared-v2" else nullcontext()):

@@ -28,6 +28,7 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path):
     output = SessionOutputs(tmp_path / "output", context, contract=path,
         adapter="modern2d-formal-session-v1", trajectory_id="fixture-trajectory",
         train_role_identity=record["train_role_identity"])
+    session.loaders.attach_role_audit(output.role_audit)
     session.checkpoint, session.selected, session.pass_finished = output.checkpoint, output.selected, output.pass_finished
     progress = session.run()
     runtime = dict(platform="local", account="fixture", precision="fp32",

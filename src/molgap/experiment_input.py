@@ -6,6 +6,7 @@ It freezes normal JSON through existing canonical parsers; old --spec is intact.
 from pathlib import Path
 from time import perf_counter
 import json
+import math
 import re
 from uuid import uuid4
 
@@ -314,7 +315,15 @@ def _compile_scientific_input(path, root, value):
             if len(targets) != len(items) or any(target != targets[0] for target in targets):
                 raise ValueError("Same-run target requires one explicit pin shared by every arm preset")
             pair["target_manifest_ref"] = targets[0]["path"]
-        _object(pair, "reference_arm_id target_manifest_ref", "same_run")
+        if (type(pair) is not dict
+                or set(pair) - {"reference_arm_id", "target_manifest_ref", "minimum_material_gain_eV"}
+                or {"reference_arm_id", "target_manifest_ref"} - set(pair)):
+            raise ValueError("same_run: expected reference_arm_id, target_manifest_ref and optional minimum_material_gain_eV")
+        if "minimum_material_gain_eV" in pair:
+            gate = pair["minimum_material_gain_eV"]
+            if (type(gate) not in (int, float) or isinstance(gate, bool)
+                    or not math.isfinite(gate) or gate < 0):
+                raise ValueError("same_run.minimum_material_gain_eV must be a finite non-negative number")
         if len(items) != 2 or pair["reference_arm_id"] not in arm_ids:
             raise ValueError("Same-run comparison requires one reference and one candidate")
         if authority.get("same_run_reference_arm_id") != pair["reference_arm_id"]:
@@ -324,6 +333,8 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Same-run target differs from its frozen baseline preset")
     compiled, data_specs = [], set()
     modern_inputs = {}
+    modern_comparison_assets = {}
+    modern_retained_references = {}
     input_abis = [scientific_input_abi((a["model"]["family"], a["model"]["version"]))
                   for a in items]
     modern = all(abi == MODERN2D_SCIENTIFIC_INPUT_ABI for abi in input_abis)
@@ -332,13 +343,50 @@ def _compile_scientific_input(path, root, value):
     for item in items:
         preset = presets.get(item["arm_id"])
         _object(item, "arm_id model recipe_ref data_ref initial_state_ref training purpose" +
-                ("" if pair is not None else " reference_ref"), "scientific arm")
+                (" reference_ref" if modern or pair is None else ""), "scientific arm")
         _identifier(item["arm_id"], "arm_id")
         _object(item["model"], "family version addons", "model")
         family = (item["model"]["family"], item["model"]["version"])
         if scientific_input_abi(family) not in SUPPORTED_SCIENTIFIC_INPUT_ABIS:
             raise ValueError("Scientific compiler requires a reviewed catalog scientific_input_abi")
-        record, baseline = _read_scientific_recipe(local(item["recipe_ref"]), family, authority)
+        source_record, source_baseline = _read_scientific_recipe(local(item["recipe_ref"]), family, authority)
+        # A retained Modern2D candidate keeps the indexed recipe as
+        # provenance, but its scientific baseline is the contract that was
+        # actually accepted and registered.  This matters for a first
+        # configured bootstrap whose authorized horizon differs from the
+        # original formal/indexed plan (for example 20 versus 60 passes).
+        record, baseline = source_record, source_baseline
+        accepted_bundle = None
+        accepted_bundle_pointer = None
+        retained_bundle_declared = False
+        if (modern and pair is None and isinstance(item.get("reference_ref"), dict)
+                and "bundle_ref" in item["reference_ref"]):
+            from .comparison_readiness import validate_reference_bundle
+            from .evidence_pointers import validate_release_reference_bundle_evidence
+            from .family_pair_acceptance import verify_session_reference
+            accepted_bundle_pointer = item["reference_ref"]["bundle_ref"]
+            _object(accepted_bundle_pointer, "path sha256", "reference_ref.bundle_ref")
+            accepted_bundle = verify_session_reference(
+                root, retained(accepted_bundle_pointer))
+            accepted_bundle = validate_release_reference_bundle_evidence(
+                accepted_bundle, repo_root=root,
+                reference_bundle_path=repo_local_path(root, accepted_bundle_pointer["path"]))
+            accepted_bundle = validate_reference_bundle(accepted_bundle)
+            bundle_record, bundle_baseline = _read_scientific_recipe(
+                local(accepted_bundle["contract_ref"]), family, authority)
+            if (bundle_baseline.interface != family or bundle_baseline.seed != source_baseline.seed
+                    or bundle_baseline.dataset.manifest_sha256 != source_baseline.dataset.manifest_sha256
+                    or bundle_baseline.initialization_sha256 != source_baseline.initialization_sha256
+                    or bundle_record.get("model_config") != source_record.get("model_config")
+                    or bundle_record.get("train_role_identity") != source_record.get("train_role_identity")
+                    or bundle_record.get("development_role_identity") != source_record.get("development_role_identity")
+                    or accepted_bundle["prediction_manifest"]["source_idx_sha256"] !=
+                       source_record["acceptance_requirements"]["source_idx_sha256"]
+                    or accepted_bundle["prediction_manifest"]["target_sha256"] !=
+                       source_record["acceptance_requirements"]["target_sha256"]):
+                raise ValueError("Accepted Modern2D bundle differs from indexed data/model provenance")
+            record, baseline = bundle_record, bundle_baseline
+            retained_bundle_declared = True
         if preset is not None and baseline.initialization_sha256 != preset["initialization_state_sha256"]:
             raise ValueError("Preset initialization differs from its frozen recipe")
         if baseline.interface != family or baseline.seed != 42 or not baseline.dataset.development:
@@ -348,17 +396,21 @@ def _compile_scientific_input(path, root, value):
         source_spec = ExperimentSpec(_read(local(item["data_ref"]["spec_ref"])))
         source = source_spec.to_dict()
         previous = next((a for a in source["arms"] if a["arm_id"] == item["data_ref"]["arm_id"]), None)
+        recipe_source_pins = {hashlib.sha256(_payload(local(item["recipe_ref"]))).hexdigest()}
+        if accepted_bundle is not None:
+            recipe_source_pins.add(file_digest(local(accepted_bundle["contract_ref"])))
         if (previous is None or previous["family"] != {"name": family[0], "version": family[1]}
-                or previous["training"]["recipe"]["sha256"] != hashlib.sha256(_payload(local(item["recipe_ref"]))).hexdigest()
-                or previous["data"]["dataset"]["sha256"] != baseline.dataset.manifest_sha256
+                or previous["training"]["recipe"]["sha256"] not in recipe_source_pins
+                or previous["data"]["dataset"]["sha256"] != source_baseline.dataset.manifest_sha256
                 or previous["initialization"] != {"kind": "frozen_state", "seed": 42,
-                                                   "state_sha256": baseline.initialization_sha256}
-                or training_adapter(previous).mode(previous) != baseline.mode
-                or (baseline.mode == "composed" and list(baseline.addons) != previous["addons"])):
+                                                   "state_sha256": source_baseline.initialization_sha256}
+                or training_adapter(previous).mode(previous) != source_baseline.mode
+                or (source_baseline.mode == "composed" and list(source_baseline.addons) != previous["addons"])):
             raise ValueError("Frozen data declaration, initialization and reference recipe differ")
         roles = {r["role"]: r for r in previous["data"]["roles"]}
         if set(roles) != {"train", "development"} or any(
-                record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
+                source_record[r + "_role_identity"] != roles[r]["usage_sha256"]
+                or record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
         if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling"} if modern else {"learning_rate", "weight_decay"}):
             raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
@@ -376,6 +428,13 @@ def _compile_scientific_input(path, root, value):
         is_reference = pair is not None and item["arm_id"] == pair["reference_arm_id"]
         arm.update(arm_id=item["arm_id"], scientific_role="reference" if is_reference else "candidate", addons=addons,
                    addon_semantics="ordered" if addons else "baseline")
+        if is_reference and addons != previous["addons"]:
+            raise ValueError("Same-run reference must retain its frozen recipe and addons")
+        if is_reference and modern and set(item["training"]) - {
+                "horizon_passes", "execution_mode", "profiling"}:
+            raise ValueError("Same-run reference only permits its shared horizon and execution fields")
+        if is_reference and not modern and item["training"]:
+            raise ValueError("Same-run reference must retain its frozen recipe and addons")
         mode = training_adapter(arm).mode(arm)
         edits = dict(item["training"])
         profiling_config = edits.pop("profiling", None)
@@ -393,6 +452,11 @@ def _compile_scientific_input(path, root, value):
                 formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
                     horizon_passes=passes, horizon_steps=steps, execution_mode=execution_mode))
         recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **edits)
+        if (modern and authority.get("purpose") not in {
+                "CONFIGURED_EXECUTION_PROFILE", "CONFIGURED_EXECUTION_REPAIR"}
+                and item["purpose"] == "architecture_comparison"
+                and recipe.selection != "best-development-live"):
+            raise ValueError("Modern2D architecture comparison requires best-development-live selection")
         bindings = family_arm_bindings(recipe)
         arm["base"] = bindings["base"]
         arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
@@ -417,40 +481,48 @@ def _compile_scientific_input(path, root, value):
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())
         inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
-        if pair is not None:
-            if preset is not None and target_pin != preset["target_manifest"]:
-                raise ValueError("Same-run target differs from its frozen baseline preset")
-            if is_reference and (item["training"] or addons != previous["addons"]):
-                raise ValueError("Same-run reference must retain its frozen recipe and addons")
-            if not is_reference and recipe == baseline:
-                raise ValueError("Same-run candidate must declare a scientific change")
-            target = _read(local(pair["target_manifest_ref"]))
-            if target.get("development_target_sha256") != requirements["target_sha256"]:
-                raise ValueError("Same-run target manifest differs from the frozen recipe")
-            compiled.append((item, arm, new_record, None, None, None, None, [],
-                             str(initial.absolute()), source["evidence"]))
-            continue
-        _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
-        reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
-        if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
-            raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
-        reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
-        if reference is None:
-            raise ValueError("Existing retained reference arm is missing; no baseline is trained")
-        if preset is not None and reference["reference_artifacts"]["target_manifest"] != preset["target_manifest"]:
-            raise ValueError("Retained target differs from its frozen baseline preset")
-        if reference["contract"] != pin(item["recipe_ref"]):
-            raise ValueError("Retained reference is not bound to the frozen baseline recipe")
+        reference = None
         if modern:
-            # A retained declaration supplies data provenance, not an accepted
-            # scientific reference. Keep initial screens explicitly context-only.
-            if item["purpose"] != "context_only":
-                raise ValueError("Modern2D initial screens require context_only; no matched reference is inferred")
+            diagnostic = authority.get("purpose") in {
+                "CONFIGURED_EXECUTION_PROFILE", "CONFIGURED_EXECUTION_REPAIR"}
+            declared_reference_ref = item.get("reference_ref")
+            retained_bundle_declared = (isinstance(declared_reference_ref, dict)
+                                         and "bundle_ref" in declared_reference_ref)
+            if pair is None and not diagnostic and not retained_bundle_declared:
+                raise ValueError("Modern2D scientific training requires a same-run or retained frozen reference")
+            if item["purpose"] == "context_only" and not diagnostic:
+                raise ValueError("Modern2D scientific training cannot use context_only")
+            if diagnostic and item["purpose"] != "context_only":
+                raise ValueError("Modern2D execution diagnostics require context_only")
+            # Modern2D always carries an explicit provenance anchor. In a
+            # same-run pair this is the retained indexed input/target source;
+            # a later scientific candidate may additionally bind an accepted
+            # Session reference bundle without retraining that baseline.
+            reference_ref = item["reference_ref"]
+            if (type(reference_ref) is not dict
+                    or {"plan_ref", "arm_id"} - set(reference_ref)
+                    or set(reference_ref) - {"plan_ref", "arm_id", "bundle_ref"}):
+                raise ValueError("reference_ref: expected plan_ref arm_id and optional bundle_ref")
+            if "bundle_ref" in reference_ref:
+                _object(reference_ref["bundle_ref"], "path sha256", "reference_ref.bundle_ref")
+            reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
+            if (type(reference_plan) is not dict
+                    or reference_plan.get("spec_identity") != source_spec.identity):
+                raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
+            reference = next((e for e in reference_plan["arms"]
+                              if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
+            if reference is None:
+                raise ValueError("Existing retained reference arm is missing; no baseline is trained")
+            if not retained_bundle_declared and reference["contract"] != pin(item["recipe_ref"]):
+                raise ValueError("Retained reference is not bound to the frozen baseline recipe")
             from .modern2d_training_release import PLAN_FORMAT, CONFIGURED_PLAN_FORMAT
             if reference_plan.get("format") not in {PLAN_FORMAT, CONFIGURED_PLAN_FORMAT}:
                 raise ValueError("Modern2D requires an existing pinned indexed input plan")
             metadata = retained(reference_plan["inputs"])
-            input_ref = (Path(reference_plan["inputs"]["path"]).parent / metadata["training_input"]["path"]).as_posix()
+            input_ref = (metadata["training_input"]["path"] if
+                         reference_plan.get("format") == CONFIGURED_PLAN_FORMAT else
+                         (Path(reference_plan["inputs"]["path"]).parent /
+                          metadata["training_input"]["path"]).as_posix())
             input_pin = pin(input_ref)
             if (input_pin["sha256"] != recipe.dataset.manifest_sha256
                     or input_pin["sha256"] != metadata["training_input"]["sha256"]):
@@ -471,7 +543,138 @@ def _compile_scientific_input(path, root, value):
                 feature["transform_config_sha"] = canonical_fingerprint(transform_configuration(family, recipe.model_config))
                 source_model["feature_binding_sha256"][role] = canonical_fingerprint(feature)
             arm["data"]["feature_sha256"] = canonical_fingerprint(source_model["feature_binding_sha256"])
-            modern_inputs[item["arm_id"]] = (metadata, input_ref, source_model, recipe)
+            from .modern2d_training_release import comparison_identity
+            modern_identity, target_transform, contract_identity = comparison_identity(
+                arm, recipe, baseline, new_record, metadata, target)
+            modern_inputs[item["arm_id"]] = (metadata, input_ref, source_model, recipe, modern_identity)
+            modern_comparison_assets[item["arm_id"]] = (target_transform, contract_identity)
+            retained_scientific = pair is None and not diagnostic and "bundle_ref" in reference_ref
+            if retained_scientific:
+                if item["purpose"] != "architecture_comparison":
+                    raise ValueError("Retained Modern2D references support architecture_comparison only")
+                from .comparison_readiness import (
+                    STRICT_IDENTITY_FIELDS, validate_reference_bundle,
+                    validate_role_applicability_plan, validate_target_transform_asset,
+                    validate_trace_plan, validate_runtime_qualification_plan)
+                bundle_pointer = reference_ref["bundle_ref"]
+                bundle = accepted_bundle
+                if bundle is None or accepted_bundle_pointer != bundle_pointer:
+                    from .evidence_pointers import validate_release_reference_bundle_evidence
+                    from .family_pair_acceptance import verify_session_reference
+                    bundle = verify_session_reference(root, retained(bundle_pointer))
+                    bundle = validate_release_reference_bundle_evidence(
+                        bundle, repo_root=root,
+                        reference_bundle_path=repo_local_path(root, bundle_pointer["path"]))
+                    bundle = validate_reference_bundle(bundle)
+                if tuple(question.reference_ids) != (bundle["reference_id"],):
+                    raise ValueError("Retained Modern2D reference ID is not frozen in the question")
+                # Bootstrap publication may relocate/rewrite compact JSON
+                # pointers. Compare the immutable recipe/target identities,
+                # not paths or formatting bytes.
+                prediction = bundle["prediction_manifest"]
+                if (prediction["source_idx_sha256"] != requirements["source_idx_sha256"]
+                        or prediction["target_sha256"] != requirements["target_sha256"]):
+                    raise ValueError("Retained Modern2D bundle target differs from indexed provenance")
+                # The accepted bundle's compact row/target sidecars are a
+                # separate publication from the indexed development target
+                # manifest. Match their semantic pins and row count rather
+                # than comparing paths or serialized bytes.
+                row_manifest = _read(local(bundle["row_manifest_ref"]))
+                target_manifest = _read(local(bundle["target_manifest_ref"]))
+                if (row_manifest.get("source_idx_sha256") != prediction["source_idx_sha256"]
+                        or row_manifest.get("rows") != prediction["row_count"]
+                        or target_manifest.get("target_sha256") != prediction["target_sha256"]
+                        or target_manifest.get("rows") != prediction["row_count"]
+                        or target_manifest.get("unit") != "eV"):
+                    raise ValueError("Retained Modern2D bundle row/target sidecars differ from indexed provenance")
+                bundle_asset = validate_target_transform_asset(_read(local(bundle["target_transform_asset_ref"])))
+                if bundle_asset != target_transform:
+                    raise ValueError("Retained Modern2D target transform differs from frozen recipe/input")
+                reference_identity = bundle["comparison_identity"]
+                if set(reference_identity) != set(STRICT_IDENTITY_FIELDS):
+                    raise ValueError("Retained Modern2D reference identity is incomplete")
+                changed = sorted(field for field in STRICT_IDENTITY_FIELDS
+                                 if modern_identity[field] != reference_identity[field])
+                if changed != ["architecture_config_identity"]:
+                    raise ValueError("Retained Modern2D candidate differs outside architecture intervention")
+                # The accepted bundle carries the complete prospective
+                # comparison declaration from the original transaction.  The
+                # indexed plan remains provenance for recipe/data/target
+                # identity and may be the formal (non-configured) plan.
+                frozen_comparison = bundle.get("comparison_plan")
+                if (type(frozen_comparison) is not dict
+                        or frozen_comparison.get("experiment_purpose") != "architecture_comparison"):
+                    raise ValueError("Retained Modern2D reference lacks its frozen comparison plan")
+                if (frozen_comparison.get("declared_intervention_fields") != ["architecture_config_identity"]
+                        or not isinstance(frozen_comparison.get("intervention_group_id"), str)
+                        or not frozen_comparison["intervention_group_id"].strip()):
+                    raise ValueError("Retained Modern2D comparison intervention differs from the accepted plan")
+                frozen_identities = frozen_comparison.get("identities")
+                if (type(frozen_identities) is not dict
+                        or frozen_identities.get(reference["arm_id"]) != reference_identity
+                        or frozen_comparison.get("target_transform_asset") != bundle_asset
+                        or frozen_comparison.get("contract_identity") != contract_identity):
+                    raise ValueError("Retained Modern2D frozen comparison is not bound to its accepted reference")
+                # The bootstrap arm has no candidate prelaunch yet. Reuse its
+                # frozen role/trace/runtime declarations and assess a fresh
+                # candidate prelaunch against the accepted bundle below.
+                role_plan = validate_role_applicability_plan(
+                    frozen_comparison.get("role_applicability_plan"),
+                    experiment_purpose="architecture_comparison")
+                trace_plan = validate_trace_plan(
+                    frozen_comparison.get("trace_plan"),
+                    experiment_purpose="architecture_comparison", ema_enabled=False)
+                runtime_plan = validate_runtime_qualification_plan(
+                    frozen_comparison.get("runtime_qualification_plan"))
+                context = {"reference_id": bundle["reference_id"],
+                           "experiment_purpose": "architecture_comparison",
+                           "role_applicability_plan": role_plan,
+                           "trace_plan": trace_plan,
+                           "runtime_qualification_plan": runtime_plan}
+                if "minimum_material_gain_eV" in frozen_comparison:
+                    gate = frozen_comparison["minimum_material_gain_eV"]
+                    if (type(gate) not in (int, float) or isinstance(gate, bool)
+                            or not math.isfinite(gate) or gate < 0):
+                        raise ValueError("Modern2D material-gain gate must be finite and non-negative")
+                    context["minimum_material_gain_eV"] = gate
+                modern_retained_references[item["arm_id"]] = {
+                    "bundle": bundle, "bundle_ref": bundle_pointer,
+                    "context": context, "identity": modern_identity,
+                    "target_transform": bundle_asset,
+                    "contract_identity": contract_identity,
+                    "changed": changed}
+        if pair is not None:
+            if preset is not None and target_pin != preset["target_manifest"]:
+                raise ValueError("Same-run target differs from its frozen baseline preset")
+            if not is_reference and recipe == baseline:
+                raise ValueError("Same-run candidate must declare a scientific change")
+            target = _read(local(pair["target_manifest_ref"]))
+            if target.get("development_target_sha256") != requirements["target_sha256"]:
+                raise ValueError("Same-run target manifest differs from the frozen recipe")
+            compiled.append((item, arm, new_record, reference, None, None, None, [],
+                             str(initial.absolute()), source["evidence"]))
+            continue
+        if modern and item["arm_id"] in modern_retained_references:
+            retained_reference = modern_retained_references[item["arm_id"]]
+            compiled.append((item, arm, new_record, reference,
+                             retained_reference["bundle"], retained_reference["context"],
+                             retained_reference["identity"], retained_reference["changed"],
+                             str(initial.absolute()), source["evidence"]))
+            continue
+        _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
+        reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
+        if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
+            raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
+        reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
+        if reference is None:
+            raise ValueError("Existing retained reference arm is missing; no baseline is trained")
+        if (preset is not None and
+                (reference["target_manifest"] if modern else reference["reference_artifacts"]["target_manifest"])
+                != preset["target_manifest"]):
+            raise ValueError("Retained target differs from its frozen baseline preset")
+        if reference["contract"] != pin(item["recipe_ref"]):
+            raise ValueError("Retained reference is not bound to the frozen baseline recipe")
+        if modern:
             compiled.append((item, arm, new_record, reference, None, None, None, [], str(initial.absolute()), source["evidence"]))
             continue
         bundle = validate_reference_bundle(retained(reference["reference_bundle"]))
@@ -515,6 +718,87 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Scientific candidate has no change from the retained reference")
         compiled.append((item, arm, new_record, reference, bundle, context, identity, changed, str(initial.absolute()), source["evidence"]))
 
+    comparison = None
+    if modern and pair is not None:
+        from .comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE, STRICT_IDENTITY_FIELDS
+        horizons = {(entry[3].formal_training.horizon_passes,
+                     entry[3].formal_training.horizon_steps)
+                    for entry in modern_inputs.values()}
+        if len(horizons) != 1:
+            raise ValueError("Same-run Modern2D reference and candidate must share one explicit horizon")
+        pair_items = {entry[0]["arm_id"]: entry[0] for entry in compiled}
+        purposes = {item["purpose"] for item in pair_items.values()}
+        if purposes != {"architecture_comparison"}:
+            raise ValueError("Modern2D same-run scientific training requires architecture_comparison")
+        declared = ["architecture_config_identity"]
+        if set(declared) - INTERVENTION_FIELDS_BY_PURPOSE["architecture_comparison"]:
+            raise ValueError("Modern2D comparison intervention is outside the architecture scope")
+        reference_id = pair["reference_arm_id"]
+        reference_identity = modern_inputs[reference_id][4]
+        identities = {arm_id: modern_inputs[arm_id][4] for arm_id in arm_ids}
+        if set(reference_identity) != set(STRICT_IDENTITY_FIELDS) or any(
+                set(identity) != set(STRICT_IDENTITY_FIELDS) for identity in identities.values()):
+            raise ValueError("Modern2D comparison identity must account for every strict field")
+        for arm_id, identity in identities.items():
+            if arm_id == reference_id:
+                continue
+            differences = sorted(field for field in STRICT_IDENTITY_FIELDS
+                                 if identity[field] != reference_identity[field])
+            if differences != declared:
+                raise ValueError("Modern2D candidate differs outside the declared architecture intervention: "
+                                 + str(differences))
+        comparison = {"experiment_purpose": "architecture_comparison",
+            "intervention_group_id": question.changed_mechanism,
+            "declared_intervention_fields": declared,
+                "identities": identities,
+                "target_transform_asset": modern_comparison_assets[reference_id][0],
+                "role_applicability_plan": {
+                    "training_membership": "applicable", "prediction_input": "applicable",
+                    "labels_read": "applicable", "metric_computed": "applicable",
+                    "selection_used": "applicable", "external_submission": "not_applicable"},
+                "trace_plan": {
+                    "optimizer_step": True, "sample_presentations": True,
+                    "epoch_or_pass": True, "learning_rate": True,
+                    "live_train_metric": True, "live_dev_metric": True,
+                    "ema_dev_metric": False, "checkpoint_identity": True},
+                 "runtime_qualification_plan": {
+                     "status": "declared", "runtime_certificate_required": True,
+                     "qualification_scope": modern_inputs[reference_id][4]["runtime_certificate_scope"]},
+                "contract_identity": modern_comparison_assets[reference_id][1]}
+        if pair is not None and "minimum_material_gain_eV" in pair:
+            comparison["minimum_material_gain_eV"] = pair["minimum_material_gain_eV"]
+    elif modern and modern_retained_references:
+        from .comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE, STRICT_IDENTITY_FIELDS
+        if len(modern_retained_references) != len(compiled):
+            raise ValueError("Modern2D scientific arms must all use the same retained reference")
+        retained_ids = {item["bundle"]["reference_id"] for item in modern_retained_references.values()}
+        retained_pointers = {canonical_json(item["bundle_ref"]) for item in modern_retained_references.values()}
+        if len(retained_ids) != 1 or len(retained_pointers) != 1:
+            raise ValueError("Modern2D scientific arms must share one retained reference bundle")
+        first = next(iter(modern_retained_references.values()))
+        declared = ["architecture_config_identity"]
+        if set(declared) - INTERVENTION_FIELDS_BY_PURPOSE["architecture_comparison"]:
+            raise ValueError("Modern2D comparison intervention is outside the architecture scope")
+        identities = {arm_id: item["identity"] for arm_id, item in modern_retained_references.items()}
+        reference_identity = first["bundle"]["comparison_identity"]
+        if (set(reference_identity) != set(STRICT_IDENTITY_FIELDS)
+                or any(set(identity) != set(STRICT_IDENTITY_FIELDS) for identity in identities.values())):
+            raise ValueError("Modern2D retained comparison identity must account for every strict field")
+        comparison = {"experiment_purpose": "architecture_comparison",
+            "intervention_group_id": question.changed_mechanism,
+            "declared_intervention_fields": declared,
+            "identities": identities,
+            "reference_id": first["bundle"]["reference_id"],
+            "reference_bundle": first["bundle_ref"],
+            "reference_identity": reference_identity,
+            "target_transform_asset": first["target_transform"],
+            "role_applicability_plan": first["context"]["role_applicability_plan"],
+            "trace_plan": first["context"]["trace_plan"],
+                 "runtime_qualification_plan": first["context"]["runtime_qualification_plan"],
+            "contract_identity": first["contract_identity"]}
+        if "minimum_material_gain_eV" in first["context"]:
+            comparison["minimum_material_gain_eV"] = first["context"]["minimum_material_gain_eV"]
+
     # Commit only human/source inputs. Never require committing machine envelopes.
     # The selected data/roles are copied into this package's canonical Spec.
     # A baseline experiment_spec.json is a committed compilation input, not a
@@ -538,7 +822,8 @@ def _compile_scientific_input(path, root, value):
         recipe_pin = derive(prefix + "/" + arm_id + "/recipe.json", recipe)
         arm["training"]["recipe"] = {"name": FAMILIES[(arm["family"]["name"], arm["family"]["version"])].recipe,
                                      "version": "1", "sha256": recipe_pin["sha256"]}
-        prelaunch = None if modern or pair is not None else assess_comparison_prelaunch(candidate_id=arm_id,
+        retained_modern = modern and pair is None and bundle is not None
+        prelaunch = None if (pair is not None or (modern and not retained_modern)) else assess_comparison_prelaunch(candidate_id=arm_id,
             candidate_plan={"comparison_identity": identity, "source_config_status": "frozen", "source_commit_or_archive": commit},
             reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose=item["purpose"],
             intervention_group_id=question.changed_mechanism, declared_intervention_fields=changed,
@@ -551,7 +836,8 @@ def _compile_scientific_input(path, root, value):
         tid = "T-" + value["logical_run_id"] + attempt_suffix + "-" + arm_id
         proposal = build_execution_proposal(question=question, arm=arm, trajectory_id=tid, source_commit=commit,
             run=value["logical_run_id"], version=value["attempt_id"], contract_ref=recipe_pin["path"],
-            contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name],
+            contract_refs=[recipe_pin["path"], item["data_ref"]["spec_ref"], config_name] +
+                ([item["reference_ref"]["bundle_ref"]["path"]] if retained_modern else []),
             authority_ref=authority_ref, role_ref=value["role_ref"], decision_ref=value["decision_ref"],
             timestamp=value["timestamp"], profile=profile,
             action_type=("execution_diagnostic" if authority.get("purpose") in {
@@ -567,14 +853,21 @@ def _compile_scientific_input(path, root, value):
             "plan_spec_sha256": proposal_pin["sha256"],
             "output": f"experiments/{value['experiment_id']}/runs/{value['logical_run_id']}{attempt_suffix}/prospective/{arm_id}"})
         arms.append(arm)
-        entry = {"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
-            "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
-            **({"target_manifest": target_pin} if pair is not None else {
-                "comparison_prelaunch": comparison_pin, "reference_bundle": reference["reference_bundle"],
-                "reference_artifacts": reference["reference_artifacts"]})} if not modern else {
-                "arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
+        if not modern:
+            entry = {"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
+                "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
+                **({"target_manifest": target_pin} if pair is not None else {
+                    "comparison_prelaunch": comparison_pin, "reference_bundle": reference["reference_bundle"],
+                    "reference_artifacts": reference["reference_artifacts"]})}
+        else:
+            entry = {"arm_id": arm_id, "adapter": training_adapter(arm).artifact_adapter,
                 "expected": recipe["acceptance_requirements"], "contract": recipe_pin,
                 "target_manifest": reference["target_manifest"]}
+            if retained_modern:
+                entry.update(comparison_prelaunch=comparison_pin,
+                    reference_bundle=item["reference_ref"]["bundle_ref"])
+                if reference.get("reference_artifacts") is not None:
+                    entry["reference_artifacts"] = reference["reference_artifacts"]
         acceptance.append(entry)
         jobs.append({"arm_id": arm_id, "device": device, "recipe": recipe_pin["path"], "initial_state": initial})
     if any(c[-1] != compiled[0][-1] for c in compiled):
@@ -586,6 +879,8 @@ def _compile_scientific_input(path, root, value):
             "candidate_arm_ids": [a for a in arm_ids if a != pair["reference_arm_id"]]}} if pair is not None else {})},
         "evidence": evidence, "terminal_protocol": TERMINAL_PROTOCOL})
     acceptance_value = {"format": ("molgap-family-same-run-acceptance-plan-v1" if pair is not None else "molgap-family-acceptance-plan-v1"), "spec_identity": spec.identity, "arms": acceptance}
+    if comparison is not None:
+        acceptance_value["comparison"] = comparison
     if modern:
         from .modern2d_training_release import CONFIGURED_PLAN_FORMAT, validate_configured_authority
         validate_configured_authority(authority, spec.to_dict(), {name: item[3] for name, item in modern_inputs.items()})
@@ -599,7 +894,7 @@ def _compile_scientific_input(path, root, value):
                 or len({canonical_fingerprint({key: item[0][key] for key in shared_fields})
                         for item in modern_inputs.values()}) != 1):
             raise ValueError("Modern2D arms must share one accepted indexed input binding")
-        metadata, input_ref, _, _ = next(iter(modern_inputs.values()))
+        metadata, input_ref, _, _, _ = next(iter(modern_inputs.values()))
         metadata = {key: deepcopy(metadata[key]) for key in shared_fields}
         # An accepted input is retained source, not compiler-generated JSON.
         # Pin its original bytes so pretty-printed accepted manifests need not

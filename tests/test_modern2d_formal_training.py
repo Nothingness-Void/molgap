@@ -70,6 +70,10 @@ def bind_formal_outputs(tmp_path, case, session, name):
     outputs = SessionOutputs(tmp_path / name, context, contract=contract,
         adapter=MODERN2D_FORMAL_PROFILE, trajectory_id="synthetic-formal-trajectory",
         train_role_identity=record["train_role_identity"])
+    initial_audit = json.loads((outputs.root / "role_audit.json").read_bytes())
+    assert all(initial_audit["role_use"][role] == "unknown"
+               for role in ("official_validation", "test_dev", "test_challenge"))
+    session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint_builder = outputs.checkpoint_from_builder
     session.selected = outputs.selected
     session.pass_finished = outputs.pass_finished
@@ -103,10 +107,31 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
         "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"},
         {"metric": "device_seconds", "unit": "seconds", "value": None,
         "status": "missing", "semantics": "allocated_device", "hardware": "synthetic-cpu"}]
+    (full_outputs.root / "runtime_certificate.json").write_text(
+        json.dumps({"fixture": "runtime-certificate"}), encoding="utf-8")
+    (full_outputs.root / "runtime_provenance.json").write_text(
+        json.dumps({"fixture": "runtime-provenance"}), encoding="utf-8")
     full_outputs.logger.start(full.progress)
     endpoint = full.run()
     full_report = full_outputs.complete(endpoint, runtime=runtime, costs=costs)
     assert full_report["status"] == "MECHANICALLY_VERIFIED"
+    role_audit = json.loads((full_outputs.root / "role_audit.json").read_bytes())
+    assert role_audit["context"] == context.to_dict()
+    assert all(role_audit["role_use"][role] == "untouched"
+               for role in ("official_validation", "test_dev", "test_challenge"))
+    assert role_audit["role_use"]["train"] == "consumed"
+    assert role_audit["role_use"]["development"] == "consumed"
+    assert {event["access_kind"] for event in role_audit["roles"]} >= {
+        "training_membership", "prediction_input", "labels_read", "metric_computed", "selection_used"}
+    assert full_report["observed"]["role_audit"]["path"] == "role_audit.json"
+    manifest = json.loads((full_outputs.root / "output_manifest.json").read_bytes())
+    assert manifest["artifacts"]["role_audit"]["path"] == "role_audit.json"
+    assert manifest["artifacts"]["role_audit"]["sha256"] == sha256_file(
+        full_outputs.root / "role_audit.json")
+    for name in ("runtime_certificate", "runtime_provenance"):
+        assert full_report["observed"]["artifacts"][name]["path"] == name + ".json"
+        assert full_report["observed"]["artifacts"][name]["sha256"] == sha256_file(
+            full_outputs.root / (name + ".json"))
     expected = deepcopy(full.state_dict())
     checkpoints = []
     first = actual_session(case, checkpoints)
@@ -138,6 +163,9 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
     assert validate_session_resume(case.recipe, retained).next_batch == 0
     resumed_report = resumed_outputs.complete(resumed.progress, runtime=runtime, costs=costs)
     assert resumed_report["status"] == "MECHANICALLY_VERIFIED"
+    resumed_audit = json.loads((resumed_outputs.root / "role_audit.json").read_bytes())
+    assert len(resumed_audit["roles"]) == len(role_audit["roles"])
+    assert resumed_audit["context"] == resumed_context.to_dict()
     assert resumed_report["observed"]["selected_weights"] == "live"
     trace = json.loads((resumed_outputs.root / "canonical_trace.json").read_bytes())
     rows = [row for row in trace["observations"] if row["event"] == "observation"]

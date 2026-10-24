@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+from dataclasses import replace
 from pathlib import Path
 import sys
 from types import ModuleType
@@ -153,16 +154,18 @@ class _Http:
         return _HttpResponse(payload)
 
 
-def _case(tmp_path, monkeypatch, *, username="owning-account"):
+def _case(tmp_path, monkeypatch, *, username="owning-account", session=False):
     retrieve = _module(monkeypatch)
     context = _context()
+    if session:
+        context = replace(context, family_version="2")
     remote_manifest = "runs/session-7/output_manifest.json"
     files = {}
     payloads = {}
     artifacts = {}
 
-    for role in _ROLE_ORDER:
-        assert role in ROLES
+    role_order = _ROLE_ORDER + (("role_audit", "runtime_certificate", "runtime_provenance") if session else ())
+    for role in role_order:
         relative = f"nested/{role}/artifact.bin"
         payload = f"synthetic-{role}-bytes".encode()
         artifacts[role] = {
@@ -177,7 +180,7 @@ def _case(tmp_path, monkeypatch, *, username="owning-account"):
     manifest = {
         "format": "molgap-family-output-v1",
         "context": context.to_dict(),
-        "adapter": "gptrans-v1",
+        "adapter": "gptrans-session-v1" if session else "gptrans-v1",
         "artifacts": artifacts,
         "progress": {},
         "runtime": {},
@@ -233,17 +236,18 @@ def _run(case, *, username=None, manifest_sha256=None):
     )
 
 
+@pytest.mark.parametrize("session", [False, True])
 def test_downloads_only_five_manifest_artifacts_and_manifest_with_full_paths(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, session
 ):
-    case = _case(tmp_path, monkeypatch)
+    case = _case(tmp_path, monkeypatch, session=session)
 
     result = _run(case)
 
     expected_paths = {entry["path"] for entry in case["artifacts"].values()}
     expected_paths.add("output_manifest.json")
     assert {entry["path"] for entry in result["files"]} == expected_paths
-    assert len(case["http"].urls) == 6
+    assert len(case["http"].urls) == len(case["artifacts"]) + 1
     assert case["extra_url"] not in case["http"].urls
     assert result["unselected_outputs_downloaded"] is False
     assert result["kernel"] == case["context"].run_reference

@@ -45,9 +45,16 @@ def prepared(tmp_path, mode, *, passes=2):
     path = tmp_path / "contract.json"
     path.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
     ctx = context("gptrans_t", path)
+    trajectory = {"trajectory_id": "synthetic-trajectory", "record_mode": "prospective",
+        "state_at_start": {"source_commit": ctx.source_commit, "source_config_identity": ctx.arm_identity},
+        "actions": [{"action_id": "A001", "run_ids": [ctx.logical_run_id + ":" + ctx.arm_id + ":downstream"],
+                      "attempt_ids": ["v1"]}],
+        "decision": {"outcome": "ACTIVE"}}
+    trajectory_bytes = json.dumps(trajectory, sort_keys=True).encode()
     def reopen():
         return SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES["gptrans_t"],
-            trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
+            trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"],
+            resume_trajectory=trajectory_bytes)
     out = reopen()
     bind(session, out)
     return session, out, reopen, ctx
@@ -109,18 +116,7 @@ def test_bounded_pair_recovers_selected_trace_and_checkpoint_together(tmp_path, 
 @pytest.mark.parametrize("mode", MODES)
 def test_ten_pass_transport_hook_only_sees_committed_bundle(tmp_path, monkeypatch, mode):
     session, out, _, _ = prepared(tmp_path, mode, passes=11)
-    trajectory = {
-        "trajectory_id": "synthetic-trajectory",
-        "record_mode": "prospective",
-        "state_at_start": {
-            "source_commit": out.context.source_commit,
-            "source_config_identity": out.context.arm_identity,
-        },
-        "actions": [{"action_id": "A001", "run_ids": [out.context.run_reference],
-                      "attempt_ids": ["v1"]}],
-        "decision": {"outcome": "ACTIVE"},
-    }
-    out.resume_trajectory = json.dumps(trajectory, sort_keys=True).encode()
+    trajectory = json.loads(out.resume_trajectory)
 
     # A parent-side ledger tick may atomically publish a newer generation after
     # the worker has captured the bytes for this transport chunk.  The resume

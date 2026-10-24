@@ -317,7 +317,8 @@ def _sidecar_paths(source: Path) -> dict[str, list[Path]]:
         if lower in {"runtime_manifest.json", "runtime_certificate.json", "preflight.json",
                      "architecture_preflight.json", "diagnostic_preflight.json"}:
             groups["runtime"].append(item)
-        elif "provenance" in lower or lower == "training_contract.json":
+        elif (lower == "role_audit.json" or "provenance" in lower
+              or lower == "training_contract.json"):
             groups["provenance"].append(item)
         elif "context" in lower:
             groups["context"].append(item)

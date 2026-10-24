@@ -11,7 +11,7 @@ from __future__ import annotations
 from pathlib import Path, PurePosixPath
 
 from molgap.experiment_family_workflow import RunContext, ROLES, _check_context, _json
-from molgap.experiment_family_artifacts import artifact_adapter
+from molgap.experiment_family_artifacts import artifact_adapter, SESSION_OPTIONAL_ARTIFACTS
 from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
 from molgap.kaggle_output_retrieval import (
@@ -60,6 +60,8 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         roles = roles | {"trace_context"}
         if manifest["artifacts"]["trace_context"]["path"] != manifest["artifacts"]["trace"]["path"] + ".context.json":
             raise ValueError("Trace companion is not bound to the declared trace")
+    if profile.protocol == "family-session":
+        roles = roles | (set(manifest["artifacts"]) & SESSION_OPTIONAL_ARTIFACTS)
     if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent
