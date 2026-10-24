@@ -1,0 +1,46 @@
+{
+  "format": "k1-hop-fusion-reference-inventory-v1",
+  "scope": {"metadata_only": true, "tensor_loaded": false, "training_or_inference": false, "remote_queries": false, "manifest_hashes_recomputed": false},
+  "hop_candidate": {
+    "run_id": "pcqm-k1-hop-shell-100k-s42",
+    "canonical_sources": ["experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/retrieval_inventory.json", "experiments/pcqm_k1_hop_shell_100k/terminal_acceptance/qualification_receipt.json", "experiments/pcqm_k1_hop_shell_100k/runs/pcqm-k1-hop-shell-100k-s42/prospective/strict_qualification/*/prediction_manifest.json"],
+    "cohort": {"train_rows": [0, 100000], "development_rows": [100000, 150000], "development_count": 50000, "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d", "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4", "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137", "target": "Gap (eV)"},
+    "recipe": {"precision": "FP32; TF32 off", "batch_size": 128, "tail_batch": "drop_last", "optimizer": "AdamW lr=4e-4 wd=1e-5", "schedule": "cosine 40 epochs; min_lr=1e-6", "seed": 42, "horizon": {"epochs": 40, "optimizer_steps": 31240, "sample_presentations": 3998720}, "forward_passes_per_update": 1, "ema": "decay 0.999 tracked; selected endpoint is best-development-live"},
+    "qualification": {"strict_validation": "VERIFIED", "replay_readiness": "VERIFIED", "hop_mixed": {"native": "VERIFIED", "replay": "VERIFIED", "comparison": "NOT_APPLICABLE"}, "hop_ordered": {"native": "VERIFIED", "replay": "VERIFIED", "comparison": "VERIFIED"}},
+    "saved_predictions": [
+      {"arm": "hop_mixed", "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-hop-shell-100k-s42\\v1\\hop_mixed\\development_predictions.pt", "sha256": "c636b2123db3729de75270d7a89d25bd7107fdd1090829565664f6e5f33944f4", "bytes": 803285, "mae_eV": 0.14296044249, "trajectory": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed", "evidence_id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed"},
+      {"arm": "hop_ordered", "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-hop-shell-100k-s42\\v1\\hop_ordered\\development_predictions.pt", "sha256": "d4bf1b6b59212733820b925e3724a0ea2e2461b46c6dbcf3f25281c4be792977", "bytes": 803349, "mae_eV": 0.14184465319, "trajectory": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered", "evidence_id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered"}
+    ]
+  },
+  "references": [
+    {
+      "id": "pcqm-k1-v4-100k-reference-s42",
+      "score_eV": 0.1413736343383789,
+      "canonical_sources": ["experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/prediction_manifest.json", "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json", "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json", "experiments/pcqm_k1_variants_100k/training_contract.json"],
+      "cohort_and_recipe": "Same train[0,100000)/development[100000,150000), fixed dataset and 50K source/target identities as hop. Seed 42, FP32/no-TF32, batch 128/drop_last, AdamW 4e-4/1e-5, cosine 40/min 1e-6, 40 epochs, 31240 steps, 3998720 presentations. EMA disabled; selected best-development live weights. Original K1 baseline architecture.",
+      "artifact": {"canonical_locator": "external://local-platform-record/kaggle/pcqm_k1_v4_reference_s42_v2/best_development_payload.pt", "artifact_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91", "prediction_sha256": "7a9fa76f67f0dae8bd1a0bca1b9486d5b5ad11081e26b94966290adc9f514b70", "mapped_checkout_path": "D:\\文档\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_k1_v4_reference_s42_v2\\best_development_payload.pt", "mapped_checkout_path_exists": false, "exact_D_drive_persistence_path_declared": false},
+      "qualification": "V5 comparison_status=strict_reference_accepted; transfer_status=reusable_same_contract_only. This is a qualified reference, but no existing strict hop-vs-K1 comparison is recorded."
+    },
+    {
+      "id": "K1 Mean2 + Consistency2 fixed 50:50 teacher",
+      "score_eV": 0.134665993,
+      "canonical_sources": ["experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md", "experiments/pcqm_k1_dropout_consistency/protocol.md", "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/scientific_metrics.json", "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json", "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json"],
+      "components": [
+        {"arm": "dropout_mean2", "path": "D:\\文档\\molgap\\experiments\\pcqm_k1_dropout_consistency\\recovery_reconciliation_v3\\dropout_mean2\\development_predictions.pt", "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076", "bytes": 803349, "filesystem": "ordinary file; no symlink/junction observed", "trajectory": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1", "evidence_id": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal"},
+        {"arm": "dropout_consistency2", "path": "D:\\文档\\molgap\\experiments\\pcqm_k1_dropout_consistency\\failure_reconciliation_v1\\dropout_consistency2\\development_predictions.pt", "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a", "bytes": 803349, "filesystem": "ordinary file; no symlink/junction observed", "trajectory": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1", "evidence_id": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"}
+      ],
+      "comparability": "Same fixed 50K development role/target as hop, but both were two-forward stochastic objectives; no EMA, best clean-development live selection. Mean2 MAE 0.1402572855657339; Consistency2 MAE 0.13872850305497647. The 0.134665993 fixed-teacher value is a historical summary; no standalone fused prediction artifact is manifested.",
+      "qualification": "Both endpoints are NEGATIVE_UNDER_CONTRACT; strict_v5_comparison=not_qualified and replay exclusions include cross-attempt control continuation/cumulative native cost. Useful retained-prediction comparator, not a strict reference."
+    },
+    {
+      "id": "K1 + PairToken fixed equal 50:50 historical fusion",
+      "score_eV": 0.134085209633708,
+      "canonical_sources": ["origin/molgap-server:experiments/pcqm_specialist_combination_transfer/decision.md", "origin/molgap-server:experiments/pcqm_specialist_combination_transfer/protocol.md", "origin/molgap-server:experiments/pcqm_specialist_combination_transfer/trajectory.json", "origin/molgap-server:experiments/pcqm_specialist_combination_transfer/v5_evidence.json", "origin/molgap-server:experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json"],
+      "cohort_and_recipe": "Historical 100K members both use train[0,100000)/development[100000,150000), seed 42, FP32/no-TF32, batch 128, AdamW 4e-4/1e-5, cosine 40/min 1e-6; PairToken adds an all-pair relation token. Fixed R1 weight is 0.5/0.5. Development rows had already selected checkpoints.",
+      "artifacts": {"matrix_locator": "platforms/_records/local/pcqm_molecular_router_audit/aligned_prediction_matrix.pt", "matrix_sha256": "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb", "matrix_available_at_mapped_checkout_path": false, "pairtoken_payload_locator": "external://local-platform-record/scnet/k1_pair_token_job_122275244/best_development_payload.pt", "pairtoken_payload_sha256": "b67be3f9ba0c67ca0eb1cf7dffa00ad535e9f04f5f8371aadad1e6a2711e0331"},
+      "qualification": "V5 comparison_status=PAIRED_ENDPOINT; transfer_status=EXPLORATORY_FIXED_EQUAL_ONLY; trajectory outcome=NO_TRAIN. Cached origin/molgap-server Git metadata only was read. Historical stronger opportunity-cost result, not currently available tensor input or strict independent confirmation."
+    }
+  ],
+  "payload_schema": {"canonical_keys_or_shape_declaration_found": false, "searched": ["hop retrieval inventory/output manifests/strict prediction manifests", "Mean2 and Consistency2 output manifests and acceptance records", "K1 V5 prediction manifest/reference bundle"], "canonical_declarations_cover": ["path", "SHA-256", "row count and source/target identity where recorded"], "keys": null, "shape": null, "note": "No prediction tensor was opened. Parent may inspect schema after publishing the frozen prospective record."},
+  "unresolved_strict_facts": ["Original K1 payload has a canonical external locator and verified hash, but its exact D: persisted path is not declared and the mapped checkout path is absent.", "The historical K1+PairToken 100K aligned matrix is not present at its mapped path; only cached owner metadata and summary metric support the historical result.", "No strict hop mixed/hop ordered fusion comparison against original K1 or historical fusions is recorded.", "Mean2/Consistency2 retained components are available on the same development rows, but their terminal records expressly do not qualify strict V5 comparison/replay."]
+}

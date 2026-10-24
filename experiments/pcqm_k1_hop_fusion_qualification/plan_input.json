@@ -1,0 +1,152 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-hop-fusion-qualification-100k",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-retained-fixed-fusion",
+    "question": "Does the already observed hop-shell equal blend add value beyond retained stronger K1 predictors and their fixed fusion?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-hop-fusion-qualification-100k",
+      "observed_deficiency": "An improvement over weak same-job constituents does not establish incremental value over existing stronger predictors.",
+      "alternative_explanations": [
+        "Old fixed fusion already dominates the new pair",
+        "The two existing blends supply complementary errors",
+        "Apparent gain is specific to selection-used development or different recipes"
+      ],
+      "changed_mechanism": "No model intervention; fixed float64 averages of existing selected LIVE predictions",
+      "cheapest_falsifier": "Hash-bound aligned retained tensors and paired bootstrap; no checkpoint/model work",
+      "supporting_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+        "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+      ],
+      "expected_native_cost_ref": "cost-k1-hop-fusion-qualification-planned",
+      "related_closed_family_ids": [
+        "pcqm-k1-hop-shell-100k",
+        "k1-dropout-consistency"
+      ],
+      "decision_changed_if_positive": "Prioritize one bounded integration question only if references and costs support it; no automatic500K/adoption",
+      "decision_changed_if_negative": "Close this integration proposal without repeat module or reference training"
+    },
+    "state_at_start": {
+      "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+      "source_config_identity": "556787bf2b8da67670c04e2227b048b59a71803e85eef7ed527ba3904af462d7",
+      "contract_refs": [
+        "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+        "experiments/pcqm_k1_hop_fusion_qualification/inputs.json",
+        "experiments/pcqm_k1_hop_fusion_qualification/evidence_review.md"
+      ],
+      "reference_ids": [
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+        "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+      ],
+      "parent_trajectory_ids": [
+        "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
+      ],
+      "prior_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+        "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_saved_artifact_analysis",
+        "run_ids": [
+          "local-k1-hop-fusion-qualification-100k"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+        "evidence_refs": [
+          "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-hop-fusion-qualification-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_hop_fusion_qualification/decision.md",
+      "next_allowed_actions": [
+        "One bounded CPU saved-prediction comparison"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+    "comparison_blockers": [
+      "Selection-used development; not independent generalization or seed variance.",
+      "Old mean2/consistency references have unresolved native-cost/continuation strict-replay exclusions.",
+      "New shell predictors use different scientific mechanisms and runtime; this arithmetic is not a strict training causal comparison.",
+      "Original K1 payload and historical PairToken matrix are unavailable; their scalar scores are contextual only.",
+      "No measured inference marginal cost; four-model serving cost is not inferred from two-model arithmetic."
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-hop-fusion-qualification-planned",
+      "trajectory_id": "TB-k1-hop-fusion-qualification-100k",
+      "action_id": "A001",
+      "run_id": "local-k1-hop-fusion-qualification-100k",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-hop-fusion-qualification",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-24T17:04:34.089876+00:00",
+    "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+    ]
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "cost_event_ids": [
+        "cost-k1-hop-fusion-qualification-observed",
+        "cost-k1-hop-fusion-qualification-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+      ],
+      "run_ids": [
+        "local-k1-hop-fusion-qualification-100k"
+      ],
+      "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+      "type": "local_saved_artifact_analysis"
+    }
+  ],
+  "comparison_blockers": [
+    "Selection-used development; not independent generalization or seed variance.",
+    "Old mean2/consistency references have unresolved native-cost/continuation strict-replay exclusions.",
+    "New shell predictors use different scientific mechanisms and runtime; this arithmetic is not a strict training causal comparison.",
+    "Original K1 payload and historical PairToken matrix are unavailable; their scalar scores are contextual only.",
+    "No measured inference marginal cost; four-model serving cost is not inferred from two-model arithmetic."
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately frozen expert set with available qualified references and a model-count/native-cost comparison; no retry of the negative module contrast"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+    ],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-hop-fusion-qualification",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_hop_fusion_qualification/rml_decision_snapshots/51f8912e443472e08f5a70b23bb6ad6be70a50d22341efa17144fffba1cbdd4c.json",
+    "snapshot_sha256": "51f8912e443472e08f5a70b23bb6ad6be70a50d22341efa17144fffba1cbdd4c",
+    "state_timestamp": "2026-10-24T17:04:34.089876+00:00"
+  },
+  "family_id": "k1-retained-fixed-fusion",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Old fixed fusion already dominates the new pair",
+      "The two existing blends supply complementary errors",
+      "Apparent gain is specific to selection-used development or different recipes"
+    ],
+    "changed_mechanism": "No model intervention; fixed float64 averages of existing selected LIVE predictions",
+    "cheapest_falsifier": "Hash-bound aligned retained tensors and paired bootstrap; no checkpoint/model work",
+    "decision_changed_if_negative": "Close this integration proposal without repeat module or reference training",
+    "decision_changed_if_positive": "Prioritize one bounded integration question only if references and costs support it; no automatic500K/adoption",
+    "expected_native_cost_ref": "cost-k1-hop-fusion-qualification-planned",
+    "hypothesis_id": "H-k1-hop-fusion-qualification-100k",
+    "observed_deficiency": "An improvement over weak same-job constituents does not establish incremental value over existing stronger predictors.",
+    "related_closed_family_ids": [
+      "pcqm-k1-hop-shell-100k",
+      "k1-dropout-consistency"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the already observed hop-shell equal blend add value beyond retained stronger K1 predictors and their fixed fusion?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "k1-hop-fusion-qualification-100k-evidence"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_hop_fusion_qualification/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_k1_hop_fusion_qualification/protocol.md",
+      "experiments/pcqm_k1_hop_fusion_qualification/inputs.json",
+      "experiments/pcqm_k1_hop_fusion_qualification/evidence_review.md"
+    ],
+    "parent_trajectory_ids": [
+      "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
+    ],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+    ],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_fusion_qualification/inputs.json"
+    ],
+    "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+    "source_config_identity": "556787bf2b8da67670c04e2227b048b59a71803e85eef7ed527ba3904af462d7"
+  },
+  "track": "B",
+  "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+}

@@ -1,0 +1,155 @@
+{
+  "format": "molgap-retained-fixed-fusion-inputs-v1",
+  "kind": "fixed_fusion_qualification",
+  "cpu_threads": 4,
+  "ceiling_seconds": 600,
+  "development_bounds": [
+    100000,
+    150000
+  ],
+  "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+  "artifacts": {
+    "hop_mixed": {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-k1-hop-shell-100k-s42/v1/hop_mixed/development_predictions.pt",
+      "sha256": "c636b2123db3729de75270d7a89d25bd7107fdd1090829565664f6e5f33944f4",
+      "fields": {
+        "source_idx": [
+          "source_idx"
+        ],
+        "target": [
+          "target_eV"
+        ],
+        "prediction": [
+          "prediction_eV"
+        ]
+      }
+    },
+    "hop_ordered": {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-k1-hop-shell-100k-s42/v1/hop_ordered/development_predictions.pt",
+      "sha256": "d4bf1b6b59212733820b925e3724a0ea2e2461b46c6dbcf3f25281c4be792977",
+      "fields": {
+        "source_idx": [
+          "source_idx"
+        ],
+        "target": [
+          "target_eV"
+        ],
+        "prediction": [
+          "prediction_eV"
+        ]
+      }
+    },
+    "retained_mean2": {
+      "path": "D:/文档/molgap/experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+      "fields": {
+        "source_idx": [
+          "source_idx"
+        ],
+        "target": [
+          "target_eV"
+        ],
+        "prediction": [
+          "prediction_eV"
+        ]
+      }
+    },
+    "retained_consistency": {
+      "path": "D:/文档/molgap/experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a",
+      "fields": {
+        "source_idx": [
+          "source_idx"
+        ],
+        "target": [
+          "target_eV"
+        ],
+        "prediction": [
+          "prediction_eV"
+        ]
+      }
+    }
+  },
+  "fixed_formulas": {
+    "hop_equal": {
+      "hop_mixed": 0.5,
+      "hop_ordered": 0.5
+    },
+    "retained_equal": {
+      "retained_mean2": 0.5,
+      "retained_consistency": 0.5
+    },
+    "four_equal": {
+      "hop_equal": 0.5,
+      "retained_equal": 0.5
+    }
+  },
+  "comparisons": {
+    "hop_equal_vs_ordered": [
+      "hop_ordered",
+      "hop_equal"
+    ],
+    "hop_equal_vs_mixed": [
+      "hop_mixed",
+      "hop_equal"
+    ],
+    "hop_equal_vs_retained_equal": [
+      "retained_equal",
+      "hop_equal"
+    ],
+    "four_equal_vs_retained_equal": [
+      "retained_equal",
+      "four_equal"
+    ],
+    "four_equal_vs_hop_equal": [
+      "hop_equal",
+      "four_equal"
+    ]
+  },
+  "correlations": {
+    "hop_pair": [
+      "hop_mixed",
+      "hop_ordered"
+    ],
+    "retained_pair": [
+      "retained_mean2",
+      "retained_consistency"
+    ],
+    "equal_blends": [
+      "hop_equal",
+      "retained_equal"
+    ]
+  },
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "comparison_limits": [
+    "Selection-used development; not independent generalization or seed variance.",
+    "Old mean2/consistency references have unresolved native-cost/continuation strict-replay exclusions.",
+    "New shell predictors use different scientific mechanisms and runtime; this arithmetic is not a strict training causal comparison.",
+    "Original K1 payload and historical PairToken matrix are unavailable; their scalar scores are contextual only.",
+    "No measured inference marginal cost; four-model serving cost is not inferred from two-model arithmetic."
+  ],
+  "unavailable_references": [
+    {
+      "id": "pcqm-k1-v4-100k-reference-s42",
+      "artifact_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+      "development_mae_eV": 0.1413736343383789,
+      "status": "missing_local_payload"
+    },
+    {
+      "id": "TC-k1-pairtoken-combination-transfer",
+      "artifact_sha256": "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb",
+      "development_mae_eV": 0.134085209633708,
+      "status": "historical_summary_only_missing_local_prediction_matrix"
+    }
+  ],
+  "executed_source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+  "executed_source_files": {
+    "experiments/pcqm_k1_hop_fusion_qualification/run.py": "9cda12e6837a6f543a7651fab2a224fabd7979d0070cbd2e142428a08bea9c6b",
+    "src/molgap/experiment_attribution.py": "ad3d89496179dff990ad9d83b5f3b8668686299a72e4120c0220530b0d39420c",
+    "src/molgap/router.py": "b31f471ec211621cf8b2b5344d62023aca92c0a5f12df3a254853fee78a0baa7",
+    "src/molgap/training_reproducibility.py": "1cbbc071b1a27967bd87cefc4c1bb7471f324134640e8042e955f7edfdd600a0"
+  }
+}

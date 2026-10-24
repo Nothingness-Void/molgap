@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 693,
+  "ambiguous_historical_role_record_count": 701,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1221,6 +1221,62 @@
     },
     {
       "evidence_id": "family-session-speed-20261014",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-hop-fusion-qualification-100k-evidence",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -4853,7 +4909,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 443,
+  "explicit_role_event_count": 445,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -7446,6 +7502,20 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-fusion-qualification-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-fusion-qualification-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-k1-slot-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -8134,6 +8204,7 @@
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
+      "k1-hop-fusion-qualification-100k-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -8273,6 +8344,7 @@
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
+      "k1-hop-fusion-qualification-100k-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -9938,6 +10010,20 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-residual-screen-20261004"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-fusion-qualification-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-fusion-qualification-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
       },
       {
         "access_kind": "labels_read",
@@ -12605,6 +12691,20 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-residual-screen-20261004"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-fusion-qualification-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-fusion-qualification-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
       },
       {
         "access_kind": "labels_read",

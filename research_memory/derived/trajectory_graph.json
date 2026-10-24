@@ -431,6 +431,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-hop-fusion-qualification-100k:A001",
+      "target": "experiments/pcqm_k1_hop_fusion_qualification/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-hop-shell-frozen-100k-20261024-attempt002:A001",
       "target": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json",
       "type": "action_produced_evidence"
@@ -758,6 +763,16 @@
     {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-fusion-qualification-100k",
       "type": "parent_trajectory"
     },
     {
@@ -1443,6 +1458,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "target": "TB-k1-brn-clean-bn-100k-20261024-local-runtime-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-fusion-qualification-100k",
       "type": "prior_evidence"
     },
     {
@@ -2276,6 +2301,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
       "type": "prior_evidence"
@@ -2283,6 +2313,11 @@
     {
       "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-residual-screen-20261004",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-hop-fusion-qualification-100k",
       "type": "prior_evidence"
     },
     {
@@ -2534,6 +2569,16 @@
       "source": "pcqm-scale-transfer-diagnostic-evidence",
       "target": "TB-gptrans-noisy-pair-norm-500k-s42",
       "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "reference_used"
     },
     {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
@@ -2811,6 +2856,11 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
       "type": "reference_used"
@@ -2818,6 +2868,11 @@
     {
       "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-residual-screen-20261004",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-hop-fusion-qualification-100k",
       "type": "reference_used"
     },
     {
@@ -3038,6 +3093,10 @@
     },
     {
       "id": "family-session-speed-20261014",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-hop-fusion-qualification-100k-evidence",
       "type": "evidence"
     },
     {
@@ -3830,6 +3889,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-hop-fusion-qualification-100k",
       "type": "trajectory"
     },
     {

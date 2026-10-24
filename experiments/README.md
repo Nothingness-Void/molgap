@@ -6,6 +6,10 @@ and local frozen-shell attribution are closed without adoption.
 [Analysis and qualification](pcqm_k1_hop_shell_100k/analysis_zh.md),
 [archived source and artifact custody](pcqm_k1_hop_shell_100k/terminal_custody.md).
 
+[Retained hop-fusion qualification](pcqm_k1_hop_fusion_qualification/analysis_zh.md)
+is accepted NO_TRAIN CPU arithmetic. Fixed four-expert output complementarity
+does not establish module stacking, strict fusion replay or500K transfer.
+
 One directory per **question**, never per calendar phase. A phase number ages;
 a question does not. Anything whose output does not enter the model registry or
 change the recommended predictor belongs here rather than in `production/`.

@@ -74,6 +74,12 @@ Full rejected history is archived; canonical evidence is retained here. Fixed
 fusion is descriptive only; no model adoption, retry,500K/full or new training
 is released. BRANCHES and terminal custody own source restoration.
 
+The subsequent [retained fixed-fusion qualification](experiments/pcqm_k1_hop_fusion_qualification/analysis_zh.md)
+is closed NO_TRAIN. It compares the hop equal blend with available older K1
+experts and their fixed four-way average. Its decision owns the numerical
+complementarity and missing reference/cost/model-count discriminators; no new
+training, strict fusion replay or model adoption follows.
+
 Kaggle1 Batch Renorm100K kernel140432543/version1 is terminally accepted.
 Both40pass arms have complete strict replay without exclusions. Scale-only is
 CLOSED; scale-plus-mean correction is NEGATIVE_UNDER_CONTRACT,1.6455meV worse.

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6cc39afb28d584dbbaf803cea419e9e01c1a97818c5cbb33c45cb64fce579a7f",
+  "source_digest": "23c5413672b0392c6a6c43bcee48067322d6cd9b6c3db79a732effacc76275f5",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1631,6 +1631,25 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-gptrans-full-fusion-r3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md",
+      "family_id": "k1-retained-fixed-fusion",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
+        "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_hop_fusion_qualification/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "k1-hop-fusion-qualification-100k-evidence"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
     },
     {
       "completeness_status": "complete",

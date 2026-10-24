@@ -12,6 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+The [retained hop-fusion qualification](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md)
+is a completed NO_TRAIN saved-prediction diagnostic. Its evidence, thin
+reproduction wrapper and fixed predictions integrate into desktop through the
+diagnostic non-promotion route; no rejected model/catalog implementation is
+included. The source commit691bce0c remains bound by its prospective record.
+
 K1 equal-content hop-shell100K is terminally accepted without adoption.
 Full owner history through `499571f9` is reachable from pushed archive `9cca9524`.
 Desktop retains [strict qualification and attribution](experiments/pcqm_k1_hop_shell_100k/analysis_zh.md),

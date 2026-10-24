@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-hop-fusion-qualification-observed",
+  "evidence_ref": "experiments/pcqm_k1_hop_fusion_qualification/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.0010416666666666667
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.0008401427777830072
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-hop-fusion-qualification-100k",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+}

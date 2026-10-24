@@ -1,0 +1,52 @@
+{
+  "format": "molgap-execution-check-v1",
+  "experiment": "pcqm_k1_hop_fusion_qualification",
+  "status": "complete",
+  "source_commit": "691bce0c305f43fc4f18198b338237b02759a864",
+  "run_count": 1,
+  "exit_code": 0,
+  "command": "D:\\文档\\molgap\\.venv\\Scripts\\python.exe experiments\\pcqm_k1_hop_fusion_qualification\\run.py",
+  "environment": {
+    "PYTHONPATH": "D:\\molgap-worktrees\\k1-hop-fusion-qualification\\src",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "TMP": "D:\\molgap-scratch",
+    "TEMP": "D:\\molgap-scratch",
+    "CUDA_VISIBLE_DEVICES": "",
+    "device": "cpu"
+  },
+  "inputs_sha256": "556787bf2b8da67670c04e2227b048b59a71803e85eef7ed527ba3904af462d7",
+  "prospective_sha256": "1eb8f583ec4bcb97a2bb1495c92d32c2a5b0d5efb9550206c3bd09173208785d",
+  "completion_sha256": "baf383da9698036cbab1fcf92047eac49df1a8028712508a37722972b199b259",
+  "completion_files_verified": true,
+  "verified_completion_files": [
+    {
+      "name": "fixed_predictions.pt",
+      "sha256": "e77ff1bd838b72c5ae659c0dade2d517f9fc8c43f3144da7f52d47f60a22f502",
+      "bytes": 1802867
+    },
+    {
+      "name": "result.json",
+      "sha256": "b14fab51983ec136316b3c4f2c85712c0c6e54d86fb1c18671c103b6971a833e",
+      "bytes": 5529
+    }
+  ],
+  "result": {
+    "rows": 50000,
+    "wall_seconds": 3.0245140000188258,
+    "process_cpu_seconds": 3.75,
+    "cpu_threads": 4,
+    "output_bytes_including_completion": 1808714
+  },
+  "checks": {
+    "current_inputs_hash_matches_result_and_completion": true,
+    "prospective_hash_matches_result": true,
+    "completion_output_hashes_match": true,
+    "source_commit_matches_requested": true,
+    "training_executed": false,
+    "inference_executed": false,
+    "optimizer_created": false,
+    "gradients_computed": false
+  }
+}

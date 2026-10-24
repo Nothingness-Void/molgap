@@ -1,0 +1,147 @@
+{
+  "format": "molgap-k1-saved-analysis-v1",
+  "kind": "fixed_fusion_qualification",
+  "status": "complete",
+  "rows": 50000,
+  "mae_eV": {
+    "hop_mixed": 0.14296044248998166,
+    "hop_ordered": 0.14184465318620204,
+    "retained_mean2": 0.1402572855657339,
+    "retained_consistency": 0.13872850305497647,
+    "hop_equal": 0.13651074754416942,
+    "retained_equal": 0.1346659925311804,
+    "four_equal": 0.13156531191647053
+  },
+  "comparisons": {
+    "hop_equal_vs_ordered": {
+      "n_molecules": 50000,
+      "baseline_mae_eV": 0.14184465318620204,
+      "candidate_mae_eV": 0.13651074754416942,
+      "mean_delta_eV": -0.005333905642032623,
+      "lower_95_eV": -0.005825920070707798,
+      "upper_95_eV": -0.004859105812311173,
+      "probability_candidate_better": 1.0,
+      "threshold_eV": 0.003,
+      "noninferiority_margin_eV": 0.0005,
+      "passes_material_gate": true,
+      "passes_noninferiority_gate": true,
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    "hop_equal_vs_mixed": {
+      "n_molecules": 50000,
+      "baseline_mae_eV": 0.14296044248998166,
+      "candidate_mae_eV": 0.13651074754416942,
+      "mean_delta_eV": -0.006449694945812225,
+      "lower_95_eV": -0.006920115998327732,
+      "upper_95_eV": -0.005977758019328118,
+      "probability_candidate_better": 1.0,
+      "threshold_eV": 0.003,
+      "noninferiority_margin_eV": 0.0005,
+      "passes_material_gate": true,
+      "passes_noninferiority_gate": true,
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    "hop_equal_vs_retained_equal": {
+      "n_molecules": 50000,
+      "baseline_mae_eV": 0.1346659925311804,
+      "candidate_mae_eV": 0.13651074754416942,
+      "mean_delta_eV": 0.001844755012989044,
+      "lower_95_eV": 0.0011026771674752236,
+      "upper_95_eV": 0.002582134340584278,
+      "probability_candidate_better": 0.0,
+      "threshold_eV": 0.003,
+      "noninferiority_margin_eV": 0.0005,
+      "passes_material_gate": false,
+      "passes_noninferiority_gate": false,
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    "four_equal_vs_retained_equal": {
+      "n_molecules": 50000,
+      "baseline_mae_eV": 0.1346659925311804,
+      "candidate_mae_eV": 0.13156531191647053,
+      "mean_delta_eV": -0.003100680614709854,
+      "lower_95_eV": -0.003485484775722027,
+      "upper_95_eV": -0.002711183403015137,
+      "probability_candidate_better": 1.0,
+      "threshold_eV": 0.003,
+      "noninferiority_margin_eV": 0.0005,
+      "passes_material_gate": false,
+      "passes_noninferiority_gate": true,
+      "n_bootstrap": 2000,
+      "seed": 42
+    },
+    "four_equal_vs_hop_equal": {
+      "n_molecules": 50000,
+      "baseline_mae_eV": 0.13651074754416942,
+      "candidate_mae_eV": 0.13156531191647053,
+      "mean_delta_eV": -0.004945435627698899,
+      "lower_95_eV": -0.005335118809968233,
+      "upper_95_eV": -0.004558439462870359,
+      "probability_candidate_better": 1.0,
+      "threshold_eV": 0.003,
+      "noninferiority_margin_eV": 0.0005,
+      "passes_material_gate": true,
+      "passes_noninferiority_gate": true,
+      "n_bootstrap": 2000,
+      "seed": 42
+    }
+  },
+  "fixed_formulas": {
+    "hop_equal": {
+      "hop_mixed": 0.5,
+      "hop_ordered": 0.5
+    },
+    "retained_equal": {
+      "retained_mean2": 0.5,
+      "retained_consistency": 0.5
+    },
+    "four_equal": {
+      "hop_equal": 0.5,
+      "retained_equal": 0.5
+    }
+  },
+  "residual_correlations": {
+    "hop_pair": 0.8608888750259229,
+    "retained_pair": 0.8698866857735743,
+    "equal_blends": 0.8975138340677977
+  },
+  "source_hashes": {
+    "hop_mixed": "c636b2123db3729de75270d7a89d25bd7107fdd1090829565664f6e5f33944f4",
+    "hop_ordered": "d4bf1b6b59212733820b925e3724a0ea2e2461b46c6dbcf3f25281c4be792977",
+    "retained_mean2": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+    "retained_consistency": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+  },
+  "inputs_sha256": "556787bf2b8da67670c04e2227b048b59a71803e85eef7ed527ba3904af462d7",
+  "prospective_sha256": "1eb8f583ec4bcb97a2bb1495c92d32c2a5b0d5efb9550206c3bd09173208785d",
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+  "runtime": {
+    "device": "cpu",
+    "cpu_threads": 4,
+    "torch": "2.7.1+cu128"
+  },
+  "training_executed": false,
+  "inference_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "checks": {
+    "input_hashes_verified": true,
+    "prospective_before_execution": true,
+    "no_model_execution": true,
+    "alignment_verified": true,
+    "fixed_weights_preserved": true,
+    "consumed_development_limits_preserved": true
+  },
+  "wall_seconds": 3.0245140000188258,
+  "process_cpu_seconds": 3.75,
+  "limitations": [
+    "Selection-used development; not independent generalization or seed variance.",
+    "Old mean2/consistency references have unresolved native-cost/continuation strict-replay exclusions.",
+    "New shell predictors use different scientific mechanisms and runtime; this arithmetic is not a strict training causal comparison.",
+    "Original K1 payload and historical PairToken matrix are unavailable; their scalar scores are contextual only.",
+    "No measured inference marginal cost; four-model serving cost is not inferred from two-model arithmetic."
+  ]
+}

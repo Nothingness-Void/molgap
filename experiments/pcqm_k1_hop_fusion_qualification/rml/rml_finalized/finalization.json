@@ -1,0 +1,49 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-226ce27b34baa257b3463c0276d7b10c2d689d57604b27d19c64c9939c241c9b",
+  "finalized_at": "2026-10-24T17:09:17.043086+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_hop_fusion_qualification/README.md": "bb76d3e878bfe2344fd8c0715caa3be073fbb467ddbf7b8776770ae0cc55e180",
+    "experiments/pcqm_k1_hop_fusion_qualification/acceptance.json": "1aeb845042fcfdf35f10ece8538ec1b470caedd718e8020386927260eada4ff8",
+    "experiments/pcqm_k1_hop_fusion_qualification/analysis_zh.md": "99c4ba0606b96f840ec22c0c3e3dcd4544a35157be180fd8392db98cfa097b0f",
+    "experiments/pcqm_k1_hop_fusion_qualification/attribution.md": "e6af9a5f6961b021220a286e85cabf79ba5f01e940ee18daae9fb093065206a3",
+    "experiments/pcqm_k1_hop_fusion_qualification/decision.md": "c8f01530d139d9ef5756bab52d6c969cda98040d9fbe1235716554d974cb4352",
+    "experiments/pcqm_k1_hop_fusion_qualification/evidence_review.md": "f93f6fe6b003f1e76e48f8bc86506cb0053c4bf5b9870d38195080bf66c62cad",
+    "experiments/pcqm_k1_hop_fusion_qualification/executed_source/experiments/pcqm_k1_hop_fusion_qualification/run.py": "9cda12e6837a6f543a7651fab2a224fabd7979d0070cbd2e142428a08bea9c6b",
+    "experiments/pcqm_k1_hop_fusion_qualification/executed_source/src/molgap/experiment_attribution.py": "ad3d89496179dff990ad9d83b5f3b8668686299a72e4120c0220530b0d39420c",
+    "experiments/pcqm_k1_hop_fusion_qualification/executed_source/src/molgap/router.py": "b31f471ec211621cf8b2b5344d62023aca92c0a5f12df3a254853fee78a0baa7",
+    "experiments/pcqm_k1_hop_fusion_qualification/executed_source/src/molgap/training_reproducibility.py": "1cbbc071b1a27967bd87cefc4c1bb7471f324134640e8042e955f7edfdd600a0",
+    "experiments/pcqm_k1_hop_fusion_qualification/execution_check.json": "fdb0ba8673ab0dd2caf4ecde0097274cd30f4c931afd02329e7995b1f79c74d1",
+    "experiments/pcqm_k1_hop_fusion_qualification/inputs.json": "556787bf2b8da67670c04e2227b048b59a71803e85eef7ed527ba3904af462d7",
+    "experiments/pcqm_k1_hop_fusion_qualification/plan_input.json": "da6dafc3d059648521452c43a1d8767df3077bc61630275a64a851e0747a40eb",
+    "experiments/pcqm_k1_hop_fusion_qualification/protocol.md": "58f094cd8c91a2833e93e04f5ec5296a4bca5536ac889c1d56414c3e63690c5f",
+    "experiments/pcqm_k1_hop_fusion_qualification/reference_inventory.json": "4e448e0391f6f195346cee8072e35e8331155c0912d3d7e8033a230cb341d13c",
+    "experiments/pcqm_k1_hop_fusion_qualification/results/completion.json": "baf383da9698036cbab1fcf92047eac49df1a8028712508a37722972b199b259",
+    "experiments/pcqm_k1_hop_fusion_qualification/results/fixed_predictions.pt": "e77ff1bd838b72c5ae659c0dade2d517f9fc8c43f3144da7f52d47f60a22f502",
+    "experiments/pcqm_k1_hop_fusion_qualification/results/result.json": "b14fab51983ec136316b3c4f2c85712c0c6e54d86fb1c18671c103b6971a833e",
+    "experiments/pcqm_k1_hop_fusion_qualification/rml_decision_snapshots/51f8912e443472e08f5a70b23bb6ad6be70a50d22341efa17144fffba1cbdd4c.json": "51f8912e443472e08f5a70b23bb6ad6be70a50d22341efa17144fffba1cbdd4c",
+    "experiments/pcqm_k1_hop_fusion_qualification/run.py": "9cda12e6837a6f543a7651fab2a224fabd7979d0070cbd2e142428a08bea9c6b",
+    "experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md": "04a0056532dbf8a3e6b14f999781bb64405b1cf800561452d81ea0b90e1a28e5",
+    "research_memory/policies/pcqm-k1-hop-fusion-qualification.1.json": "18692aac49dd6e30c2fd53915ace9a9445f7afbaa29019a974baba57ae4339df"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_k1_hop_fusion_qualification/rml/trajectory.json",
+  "prospective_sha256": "1eb8f583ec4bcb97a2bb1495c92d32c2a5b0d5efb9550206c3bd09173208785d",
+  "published_hashes": {
+    "costs/cost-k1-hop-fusion-qualification-observed.json": "e87b8fc42c592dad490548eea852f03a00687d50d4f5f5f27b7953dcef540b55",
+    "roles/role-k1-hop-fusion-qualification-labels_read.json": "75df68119e6cdde665a1b89ed9ffec4e4190adb0f547dff40e9eb7eddfc41279",
+    "roles/role-k1-hop-fusion-qualification-metric_computed.json": "56806439e0dfb190ea03ca0a32878e1c5168b2fcae43689328b093ef56707fb2",
+    "terminal_input.json": "ccbcc77a6dd977fffcda4da52f4431fddbbb7d8d3af9520d8e3e06f4d7ef0a10",
+    "trajectory.json": "f38d5abb5556d4a3a5a88f7e98edfa1e990838f9ba0776bf63c303dbce89f2af",
+    "v5_evidence.json": "aeeaa90ee925484777dddc345674f081899889de0a1aa1e3f92fc6d4d8937bef"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_hop_fusion_qualification/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "226ce27b34baa257b3463c0276d7b10c2d689d57604b27d19c64c9939c241c9b",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-hop-fusion-qualification-100k"
+}
