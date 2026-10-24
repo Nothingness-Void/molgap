@@ -38,6 +38,10 @@ exception ends the worker, the pair runner cancels peers and reaps processes,
 and no failed guard can start training or silently become random initialization.
 The process-boundary cleanup limits this launch risk; the reusable explicit-close
 follow-up must preserve the frozen package and goes to infrastructure maintenance.
+The infrastructure owner subsequently fixed explicit exception cleanup and
+sanitized HTTP failure observability in desktop3395ed0e/1a031ca1. This remote
+package remains873c3ac4; no in-place payload mutation or experimental branch merge
+was performed to adopt those fixes during training.
 
 Kaggle1 read-only reconciliation by Luna observed DropPath140239597/v1 and RMS
 position140063114/v3 COMPLETE,43.279aggregate GPU hours after reservations,
