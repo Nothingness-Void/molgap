@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 684,
+  "ambiguous_historical_role_record_count": 693,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -4006,6 +4006,69 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "development_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-late-weight-average-20261008",
       "role_identity": null,
       "role_name": "common",
@@ -4790,7 +4853,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 439,
+  "explicit_role_event_count": 443,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5398,6 +5461,20 @@
         "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
       },
       {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-development-labels_read",
         "selection_used": true,
@@ -5455,6 +5532,13 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_decoded-labels_read",
@@ -6158,6 +6242,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
       },
       {
         "access_kind": "labels_read",
@@ -8122,6 +8213,7 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-hop-shell-frozen-100k-20261024",
+      "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-local-speed-10ep-fused_layout-20261011",
       "pcqm-k1-local-speed-10ep-reference-20261011",
@@ -8260,6 +8352,7 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-hop-shell-frozen-100k-20261024",
+      "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-local-speed-10ep-fused_layout-20261011",
       "pcqm-k1-local-speed-10ep-reference-20261011",
@@ -8847,6 +8940,20 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
       },
       {
         "access_kind": "labels_read",
@@ -10761,6 +10868,20 @@
         "trajectory_id": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered"
       },
       {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "role-msgnorm_fixed-development-labels_read",
         "selection_used": true,
@@ -10815,6 +10936,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-development_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-development_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development_decoded": [
@@ -11466,6 +11603,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-brn-clean-bn-100k-20261024"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-hop-shell-frozen-100k-20261024-attempt002-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
       },
       {
         "access_kind": "labels_read",

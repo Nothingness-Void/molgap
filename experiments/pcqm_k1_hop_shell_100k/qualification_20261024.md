@@ -35,7 +35,8 @@ manifest-bound final models, predictions, trace/resume state and compact native
 proof archives, plus execution retention. It does not download, train or infer.
 The portable custody record owns archive restoration after the checkout retires.
 
-Retrieval retained376726755bytes (359.2MiB including metadata copies).
+Retention is approximately359.3MiB including metadata copies; the exact final
+inventory and transfer accounting belong to terminal_acceptance/retrieval_inventory.json.
 Compressed native proofs account for224009863bytes; final resume/model/prediction
 artifacts and small metadata account for the remainder. No epoch history chunks,
 environments, graph data, all-output archive or expanded proof copies were retained.

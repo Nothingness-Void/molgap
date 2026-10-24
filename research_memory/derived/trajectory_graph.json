@@ -431,6 +431,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-hop-shell-frozen-100k-20261024-attempt002:A001",
+      "target": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-hop-shell-frozen-100k-20261024:A001",
       "target": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/inputs.json",
       "type": "action_produced_evidence"
@@ -758,6 +763,11 @@
     {
       "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
       "target": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "parent_trajectory"
     },
     {
@@ -1181,6 +1191,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-hop-shell-frozen-100k-20261024",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-reference-kaggle3-100k-s42-v2",
       "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
@@ -1433,6 +1448,11 @@
     {
       "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
       "target": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -2298,6 +2318,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-hop-shell-frozen-100k-20261024",
+      "target": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -3336,6 +3361,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-late-weight-average-20261008",
       "type": "evidence"
     },
@@ -3805,6 +3834,10 @@
     },
     {
       "id": "TB-k1-hop-shell-frozen-100k-20261024",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
       "type": "trajectory"
     },
     {

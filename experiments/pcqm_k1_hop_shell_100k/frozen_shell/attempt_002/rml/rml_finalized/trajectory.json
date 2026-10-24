@@ -1,0 +1,119 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "attempt-002"
+      ],
+      "cost_event_ids": [
+        "cost-k1-hop-shell-frozen-100k-20261024-attempt002-observed",
+        "cost-k1-hop-shell-frozen-planned-attempt002"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json"
+      ],
+      "run_ids": [
+        "local-k1-hop-shell-frozen-100k-20261024-attempt002"
+      ],
+      "source_commit": "55a604a9f51ec3d687306ea157855624f6aea383",
+      "type": "frozen_shell_inference"
+    }
+  ],
+  "comparison_blockers": [
+    "Previously selection-used cohort",
+    "Frozen intervention is not training-time causal evidence"
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "A separately prospective authorized discriminator"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-hop-shell-frozen",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/rml_decision_snapshots/f58cc6c6ed519fe0e4d0a94885f61d7f5f0dbdd9ff18006db2d7c068324889d5.json",
+    "snapshot_sha256": "f58cc6c6ed519fe0e4d0a94885f61d7f5f0dbdd9ff18006db2d7c068324889d5",
+    "state_timestamp": "2026-10-24T11:17:35.357550+00:00"
+  },
+  "family_id": "k1-hop-shell-frozen",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The function uses shell partition",
+      "The mixed and ordered operations are effectively interchangeable at selected weights",
+      "Local inference mismatch prevents interpretation"
+    ],
+    "changed_mechanism": "Replace only ordered content by the four-slot equal mixture at selected ordered weights; restore flags and preserve all tensors.",
+    "cheapest_falsifier": "Reproduce original50K predictions within1e-4eV; stop on failure, otherwise one frozen mixed-content evaluation within1780s.",
+    "decision_changed_if_negative": "Record weak reliance or unresolved reproduction; no retraining.",
+    "decision_changed_if_positive": "Record frozen reliance descriptively; no promotion or change to accepted training outcome.",
+    "expected_native_cost_ref": "cost-k1-hop-shell-frozen-planned-attempt002",
+    "historical_unknowns": [
+      "Training stochasticity",
+      "Independent-role transfer",
+      "Training-time intervention effect"
+    ],
+    "hypothesis_id": "H-k1-hop-shell-frozen-100k-20261024-attempt002",
+    "observed_deficiency": "The accepted training contrast does not identify frozen reliance on shell partition.",
+    "related_closed_family_ids": [
+      "pcqm-k1-hop-shell-100k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-hop-shell-frozen-100k-20261024"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the accepted selected ordered-shell function rely on distance-partitioned content at identical weights?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-k1-hop-shell-frozen-100k-20261024-attempt002"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/protocol.md",
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json",
+      "experiments/pcqm_k1_hop_shell_100k/protocol.md",
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/terminal_decision.md"
+    ],
+    "parent_trajectory_ids": [
+      "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "TB-k1-hop-shell-frozen-100k-20261024"
+    ],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "pcqm-k1-hop-shell-frozen-100k-20261024"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attempt_002/inputs.json"
+    ],
+    "source_commit": "55a604a9f51ec3d687306ea157855624f6aea383",
+    "source_config_identity": "012f87de4a32fde5d47d8a7192eab8dd1e95964e805354251734e6272c74f0a6"
+  },
+  "track": "B",
+  "trajectory_id": "TB-k1-hop-shell-frozen-100k-20261024-attempt002"
+}

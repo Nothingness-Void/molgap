@@ -1,0 +1,56 @@
+{
+  "format": "molgap-k1-frozen-shell-result-v1",
+  "status": "complete",
+  "inputs_sha256": "012f87de4a32fde5d47d8a7192eab8dd1e95964e805354251734e6272c74f0a6",
+  "prospective_sha256": "e900986912e3605c58ffe954f6b9968604e6aaf3b9ecd371683be9c1248ab882",
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.7.1+cu128",
+    "cpu_threads": 4,
+    "hardware": "NVIDIA GeForce RTX 5060"
+  },
+  "training_recipe_torch_version": "2.11.0",
+  "training_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "roles": {
+    "train_labels_decoded": [
+      0,
+      100000
+    ],
+    "development": [
+      100000,
+      150000
+    ],
+    "selection_used": false,
+    "protected_roles_consumed": false
+  },
+  "started_at_utc": "2026-10-24T11:19:18.383772+00:00",
+  "reproduction_max_abs_eV": 1.9073486328125e-06,
+  "original_mae_eV": 0.14184464514255524,
+  "wall_seconds": 50.24178440000105,
+  "process_cpu_seconds": 157.1875,
+  "device_seconds": 41.0362019000022,
+  "device_cost_scope": "one desktop GPU allocation window; excludes training and queue",
+  "mixed_at_ordered_weights_mae_eV": 0.1526593118906021,
+  "mixed_minus_original": {
+    "delta": 0.010814666466712952,
+    "ci95": [
+      0.010227009817600252,
+      0.011395647885918616
+    ],
+    "probability_better": 0.0,
+    "n_bootstrap": 2000,
+    "seed": 42
+  },
+  "selected_state_sha256": "96c7dd1852dd655cdbd809729e41213062123ff52e9e2f4fdd53a8018bf2b26b",
+  "checks": {
+    "frozen_inputs": true,
+    "original_reproduced": true,
+    "exact_development_rows": true,
+    "weights_and_buffers_preserved": true,
+    "ordered_flags_restored": true,
+    "no_training_or_selection": true,
+    "protected_roles_untouched": true
+  }
+}
