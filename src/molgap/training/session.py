@@ -321,6 +321,7 @@ class FamilyTrainingSession:
         self._metric_host, self._metric_dtype = [], None
         evaluation = None
         live_evaluation = None
+        ema_evaluation = None
         if self.recipe.dataset.development:
             if self.recipe.selection_weights == "clean-ema":
                 self.kernel.calibrate(self.loaders)
@@ -339,16 +340,19 @@ class FamilyTrainingSession:
                 raise RuntimeError("Evaluation adapter did not retain its observed result")
             from ..family_training_policy import mode_policy
             policy = mode_policy(self.recipe.family, self.recipe.mode)
-            for weights in policy.extra_development_weights:
+            for weights in dict.fromkeys((*policy.extra_development_weights, *self.recipe.development_reports)):
                 if weights != self.recipe.selection_weights:
-                    if weights != "live":
-                        raise ValueError("No reporting field for this extra development state")
-                    live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
+                    if weights == "live":
+                        live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
+                    elif weights == "ema":
+                        ema_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
         metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
         metrics["learning_rates_used"] = self._last_update_learning_rates
         metrics["scheduler_next_learning_rates"] = [group["lr"] for group in self.kernel.optimizer.param_groups]
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
+        if ema_evaluation is not None:
+            metrics["development_ema"] = ema_evaluation
         self.pass_finished(progress, metrics)
 
     def _persist(self, progress):

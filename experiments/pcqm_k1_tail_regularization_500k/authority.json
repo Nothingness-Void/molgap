@@ -1,0 +1,18 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "authorized_at": "2026-10-24T18:26:14.463095+00:00",
+  "account": "nothingnessvoid",
+  "arms": [
+    "tail_wd1e3",
+    "tail_wd1e2"
+  ],
+  "seeds": [
+    42
+  ],
+  "allocated_t4_hours_ceiling": 12,
+  "allocation_wall_limit_seconds": 21600,
+  "same_run_reference_arm_id": "tail_wd1e3",
+  "scope": "User approved 500K20pass warm-start pair, WD1e-3 versus1e-2; one T4x2 job; shutdown after actual training starts. No full/protected roles/retry/adoption.",
+  "reference_semantics": "Two new tail recipes; moderate WD candidate is the within-job comparator, not a retrained original baseline."
+}

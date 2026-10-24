@@ -36,6 +36,11 @@ trainers and generic `graph-screen-v1` have not been migrated to this session;
 explicit configurable logging through this builder fails for those routes.
 Another family using the shared session inherits logging through the same hooks.
 
+Frozen shadow development evaluations supplied by `FamilyRecipe.development_reports`
+are also exposed as `extra_development_mae_eV`, keyed by `live` or `ema`, when
+present. The ordinary `development_mae_eV` and `weight_state` retain the selected
+state. The logger forwards already computed metrics and performs no evaluation.
+
 ## Fixed output
 
 Every summary is one flushed `TRAIN_LOG ` line followed by compact sorted JSON,

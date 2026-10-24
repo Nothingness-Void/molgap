@@ -1,0 +1,105 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_tail_regularization_500k",
+  "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-10-24T18:26:14.463095+00:00",
+  "monitor_paths": [
+    "experiments/pcqm_k1_tail_regularization_500k/STATUS.md"
+  ],
+  "authority_ref": "experiments/pcqm_k1_tail_regularization_500k/authority.json",
+  "role_ref": "experiments/pcqm_k1_tail_regularization_500k/role_plan.json",
+  "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+  "seeds": [
+    42
+  ],
+  "question": {
+    "policy_id": "pcqm-k1-tail-regularization-500k-s42",
+    "action": "RUN_PAIRED_500K_TAIL",
+    "question": "Does stronger late decoupled weight decay improve K1 generalization from the same selected500K predictor?",
+    "deficiency": "Accepted49-to60 fixed clean TRAIN improves0.538meV while development worsens0.787meV; additional exposure alone is not supported.",
+    "changed_mechanism": "late-decoupled-weight-decay",
+    "supporting_evidence": [
+      "pcqm-k1-clean-fit-generalization-500k-20261009"
+    ],
+    "alternatives": [
+      "Both decay levels insufficient",
+      "Strong decay underfits",
+      "BN state dominates",
+      "One-seed variability"
+    ],
+    "closed_families": [
+      "K1 late weight averaging",
+      "K1 consistency500K under material gate",
+      "blind slot-width expansion"
+    ],
+    "positive_decision": "Nominate this warm-start recipe only after valid paired evidence; no automatic full/adoption.",
+    "negative_decision": "Close this tail recipe; do not add epochs or retry seeds blindly.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4 FP32",
+    "cheapest_falsifier": "Two20pass warm-start recipes; no from-scratch baseline or new model module.",
+    "estimated_device_hours": 4.5,
+    "estimated_wall_hours": 4.5
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+      "title": "MolGap K1 Tail WD 500K S42",
+      "datasets": [
+        "nothingnessvoid/k1-tail-wd-500k-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/k1-tail-wd-500k-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 21600,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "same_run": {
+    "reference_arm_id": "tail_wd1e3",
+    "target_manifest_ref": "experiments/pcqm_k1_tail_regularization_500k/target_manifest.json"
+  },
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_tail_regularization_500k/base_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_tail_regularization_500k/data_declaration.json",
+      "arm_id": "tail_wd1e3"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/k1-tail-regularization-500k/selected_epoch49.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "tail_wd1e3"
+    },
+    {
+      "arm_id": "tail_wd1e2",
+      "training": {
+        "weight_decay": 0.01
+      }
+    }
+  ]
+}

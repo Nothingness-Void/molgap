@@ -124,6 +124,23 @@ after metadata admission, before input/GPU work. A missing checkpoint binding or
 unfinished prior invocation makes cumulative wall cost unknown; it is never
 relabelled measured. Queue/device allocation costs remain platform-owned.
 
+Optional `development_reports=("ema",)` adds a frozen shadow Raw-EMA development
+evaluation to LIVE-selected training. It uses the same evaluation owner, preserves
+the selection rule and binds the extra metric in canonical trace semantics.
+The empty default is omitted from recipe bytes. Raw EMA and selected Clean-EMA
+cannot share the trace's single EMA field; that combination fails configuration.
+
+An explicitly authorized trained-state initialization may include
+`reference_development` tensors in its existing frozen-state envelope. Optional
+recipe metadata `initial_development_check` pins positive `prediction_tolerance_eV`
+and `mae_tolerance_eV` (at most1e-4). Before the first formal update, the shared
+runner evaluates the LIVE initialization on the already-authorized development
+role, requires identical rows/targets and unchanged state, then verifies both
+prediction and MAE tolerances. It retains `initial_development_check.json` as a
+small startup diagnostic; selective acceptance should retain it alongside the
+ordinary output protocol. It does not invent an epoch, optimizer resume, new
+baseline training or a strict qualification of the parent history.
+
 Development selection consumes only the explicitly selected internal role at a
 complete pass. Final-only selection never opens a development loader or creates
 a development score. An unfinished pass is not reported as a finished epoch.

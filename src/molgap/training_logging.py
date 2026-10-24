@@ -65,6 +65,7 @@ class TrainingLogger:
         self.pending_pass = None
         self.metric_pass = self.best_pass = None
         self.train_mae = self.dev_mae = self.best_mae = None
+        self.extra_development_mae = {}
         if observation_train_unit not in {"normalized-Gap", "eV"}:
             raise ValueError("Unsupported retained training metric unit")
         for row in observations:
@@ -96,6 +97,8 @@ class TrainingLogger:
         self._metrics(progress.pass_index, metrics["normalized_train_gap_mae"],
                       None if evaluation is None else evaluation["mae_eV"])
         self.pending_pass = progress.optimizer_step
+        self.extra_development_mae = {state: metrics["development_" + state]["mae_eV"]
+            for state in ("live", "ema") if metrics.get("development_" + state) is not None}
 
     def checkpoint_finished(self, progress):
         self.checkpoint_step = progress.optimizer_step
@@ -130,6 +133,8 @@ class TrainingLogger:
             "pass_timing_scope": ("invocation_partial_pass" if self.started_midpass else "full_pass") if epoch else None,
             "checkpoint_optimizer_steps": self.checkpoint_step,
         }
+        if self.extra_development_mae:
+            record["extra_development_mae_eV"] = dict(self.extra_development_mae)
         line = LOG_PREFIX + json.dumps(record, sort_keys=True, separators=(",", ":"), allow_nan=False)
         atomic_json(self.root / "training_progress.json", record)
         self.emit(line)
