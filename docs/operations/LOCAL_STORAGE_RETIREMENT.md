@@ -103,3 +103,50 @@ It is generated from verified retirement receipts; only a published, verified
 entry establishes snapshot custody. It carries no payloads or new scientific
 schema/runtime. Restore from its exact ref and custody manifest, not a retired
 absolute directory name.
+
+### On-demand historical recovery
+
+A failed global `check --frozen --portable` is an availability report, not a
+request to hydrate the historical catalog. Keep its failure visible. For the
+question being investigated, resolve the frozen SHA through the published
+retirement receipts, then verify the candidate bytes before using them. The
+existing read-only lookup accepts an original absolute path or SHA:
+
+```powershell
+& ./.venv/Scripts/python.exe D:/molgap-cleanup-retained-20261017/payload-retirement/resolve-local-availability.py <original-path-or-sha256>
+```
+
+Its index and the custody journal are hash-bound by this document's linked
+retirement index. Multiple matches are historical layers: consult the current
+bounded37 overlay before treating an earlier exact keeper as recoverable.
+If this lookup has no match, inspect the relevant owner's custody manifest and
+the journal, rather than infer loss from a missing old filename. An endpoint
+extraction with a different SHA cannot restore the original optimizer/RNG state
+or native proof. A cache can be regenerated only within its applicable authority.
+An exact cold copy may be read directly by an existing explicit-path consumer;
+restore only the required files to their declared paths when that consumer
+requires them. Neither method changes frozen evidence or qualifies a new pair.
+
+The2026-10-25 follow-up to the retained hop-fusion diagnostic classified the
+existing portable failure:103 entries cover93 distinct paths.53 entries match
+the availability overlay and one additional entry matches the custody journal;
+these matches do not by themselves establish current original-byte availability.
+38 entries have exact-SHA cold copies (29 files,31605413 bytes), with overlap
+between these groups.15 entries have neither a match in those receipts nor an
+exact copy in the four checked cold roots; their recovery remains unresolved.
+The global check was not rerun or declared passing. The bounded inspection,
+per-entry matches and actual cold-copy hashes are retained in
+[the local audit](D:/molgap-artifacts/reconciliation/k1-hop-fusion-qualification/custody_gap_audit.json).
+
+That audit also resolves the qualified K1 reference
+`pcqm-k1-v4-100k-reference-s42`: the external locator ending in
+`pcqm_k1_v4_reference_s42_v2/best_development_payload.pt` has an exact local
+keeper at
+`platforms/_records/scnet/k1_v4_reference_payload/neural_atom_k1_v4.pt`
+(801959 bytes, SHA256
+`966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91`).
+The existing retirement journal records that same-byte alias; this follow-up
+rehashed the actual file without loading tensors. The historical K1/PairToken
+matrix SHA `c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb`
+remains unresolved in the inspected receipts and local paths. Neither finding
+changes the completed fusion diagnostic or establishes a new strict comparison.
