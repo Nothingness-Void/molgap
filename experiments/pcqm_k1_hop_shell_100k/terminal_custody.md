@@ -32,6 +32,13 @@ The source ZIP receipts verify all original executed source bytes, independently
 of Git working-tree line endings. They are local custody, not remote downloads.
 terminal_acceptance/retrieval_inventory.json owns the minimal remote inventory.
 
-Physical owner retirement is pending the verified desktop publication. Only
-disposable Python/pytest caches were found ignored; no unique payload is inside
-the checkout. Scientific state is closed independently of physical retirement.
+Physical owner retirement completed after desktop evidence commit1294ab67 was
+pushed, all141 transferred Git blobs were compared exactly and owner ancestry
+was verified in pushed archive. The clean worktree and redundant local/remote
+owner refs were removed. Only disposable Python/pytest caches were ignored;
+all necessary unique outputs remain under the external D: paths above.
+
+The verified receipt D:/molgap-artifacts/retirement/k1-hop-shell-100k/custody.json,
+SHA256839ce095e58e0b051724ab3cd01cbea056bb93b8344e397fa31ee73c860b8a99,
+records PHYSICALLY_RETIRED. Its entry is appended to the existing retirement
+index's subsequent_retirements; historical inventory/counts remain unchanged.

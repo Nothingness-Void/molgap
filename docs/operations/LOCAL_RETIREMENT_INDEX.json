@@ -2971,6 +2971,28 @@
         "source_ref": "molgap-desktop"
       },
       "artifact_restore_limits": "Required native outputs/proofs and selected-LIVE diagnostic artifacts retained under external D: paths. Exact diagnostic source bundles preserve source bytes; restore archived model/catalog for strict run reinspection."
+    },
+    {
+      "owner_id": "codex/exp/k1-hop-shell-100k",
+      "original_path": "D:\\molgap-worktrees\\k1-hop-shell-100k",
+      "original_head": "499571f9fdbed2842608c766235f28a8555d92c3",
+      "scientific_status": "mixed CLOSED; ordered NEGATIVE_UNDER_CONTRACT; both complete strict replay; frozen diagnostics NO_TRAIN",
+      "physical_disposition": "PHYSICALLY_RETIRED",
+      "archive_ancestry": {
+        "ref": "refs/heads/archive",
+        "verified_commit": "9cca95247883d539247802ef441da3777f79569d",
+        "original_head_is_ancestor": true
+      },
+      "artifact_restore_limits": "Restore only archived owner source when needed; retained exact-version proof/model/prediction/resume/trace artifacts stay on D:. No inherited-catalog hydration or new scientific release.",
+      "recovery_ref": "499571f9fdbed2842608c766235f28a8555d92c3",
+      "custody_manifest": {
+        "path": "D:\\molgap-artifacts\\retirement\\k1-hop-shell-100k\\custody.json",
+        "sha256": "839ce095e58e0b051724ab3cd01cbea056bb93b8344e397fa31ee73c860b8a99"
+      },
+      "canonical_record": {
+        "path": "experiments/pcqm_k1_hop_shell_100k/terminal_custody.md",
+        "source_ref": "molgap-desktop"
+      }
     }
   ]
 }
