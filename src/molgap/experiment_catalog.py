@@ -50,6 +50,17 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    ("k1_hop_shell", "1"): AddonContract(
+        "neural_atom_k1", "k1-hop-shell-content", "molgap.k1_hop_shell",
+        (AddonConfigField("ordered", "integer", minimum=0, maximum=1),
+         AddonConfigField("hops", value=4), AddonConfigField("width", value=64),
+         AddonConfigField("layer_policy", value="3-6-9"),
+         AddonConfigField("seed", value=42)),
+        ("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_hop_shell:apply_addon",
+        policy_hook="molgap.k1_hop_shell_observation:policy",
+        extra_source_files=("src/molgap/k1_hop_shell_observation.py",),
+    ),
     **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",

@@ -14,7 +14,7 @@ import time
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
 from .family_training_recipe import FamilyRecipe
-from .family_training_policy import mode_policy
+from .family_training_policy import mode_policy, recipe_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
@@ -375,9 +375,11 @@ def run_screen_preflight(**options):
             source_idx_path=output / "execution-evaluation-source-idx.pt")
         _verify_execution_proof(output, probe, execution_proof, required=True)
     resource = None
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
-        resource = mode_policy(recipe.family, recipe.mode).qualify_resources(recipe, data, tuning, Path(options["initial_state_path"]))
+    if recipe_policy(recipe).qualify_resources is not None:
+        resource = recipe_policy(recipe).qualify_resources(recipe, data, tuning, Path(options["initial_state_path"]))
         atomic_json(output / "resource_qualification.json", resource)
+        if resource.get("status") != "accepted":
+            raise ValueError("Native resource qualification rejected the candidate")
     atomic_json(output / "runtime_provenance.json", provenance)
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "provenance_sha256": canonical_fingerprint(provenance), "probe_recipe_identity": probe.identity,
@@ -463,9 +465,9 @@ def run_screen_resume_preflight(*, resume_output, **options):
     progress = validate_session_resume(recipe, retained)
     if progress.status == "complete":
         raise ValueError("Cannot resume a completed shared session")
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+    if recipe_policy(recipe).qualify_resources is not None:
         resource = _json(output / "resource_qualification.json")
-        qualified = mode_policy(recipe.family, recipe.mode).refresh_resources(resource, progress.pass_index)
+        qualified = recipe_policy(recipe).refresh_resources(resource, progress.pass_index)
         atomic_json(output / "resource_qualification.json", qualified)
         cert = _json(output / "runtime_certificate.json")
         cert["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
@@ -574,7 +576,7 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     if certificate.get("status") != "accepted":
         raise ValueError("Native preflight certificate is not accepted")
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+    if recipe_policy(recipe).qualify_resources is not None:
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
             raise ValueError("Missing or changed native resource qualification")
@@ -797,7 +799,7 @@ def _finish_cost_interval(root, context, prior, elapsed):
 
 def _resume_trajectory(recipe, context, options):
     """Chunk retention is explicit recipe/policy, never an experiment-name lookup."""
-    if not recipe.resume_chunks and mode_policy(recipe.family, recipe.mode).segment_passes is None:
+    if not recipe.resume_chunks and recipe_policy(recipe).segment_passes is None:
         return None
     if options.get("prospective_root") is None:
         raise ValueError("Resume chunks require the verified staged prospective root")
@@ -839,12 +841,18 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
     prior_cost = interval["prior_wall_seconds"]
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
     _loaded_source(options["package_dir"])
-    session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
-        checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
+    loaders = FamilyLoaders(recipe, data, tuning)
+    policy = recipe_policy(recipe)
+    def pass_finished(progress, metrics):
+        if policy.observe_pass is not None:
+            policy.observe_pass(kernel, loaders, root, progress)
+        outputs.pass_finished(progress, metrics)
+    session = FamilyTrainingSession(kernel, loaders,
+        checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=pass_finished,
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
         if had_checkpoint:
-            if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+            if recipe_policy(recipe).qualify_resources is not None:
                 actual = _json(_artifact_path(Path(preflight_dir or output), "actual_resume_certificate.json"))
                 if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0 or
                         actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
@@ -862,7 +870,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
     try:
         # A completed physical ten-pass segment makes work externally retrievable.
         # The scientific horizon, scheduler and selected-state policy remain60.
-        segment = mode_policy(recipe.family, recipe.mode).segment_passes
+        segment = recipe_policy(recipe).segment_passes
         bounded = segment is not None
         stop_pass = ((session.progress.pass_index // segment + 1) * segment) if bounded else None
         acknowledged_step = [session.progress.optimizer_step]

@@ -127,8 +127,8 @@ class SessionOutputs:
         if normalized_source_sha256(Path(contract)) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
-        from .family_training_policy import mode_policy
-        self.policy = mode_policy(self.recipe.family, self.recipe.mode)
+        from .family_training_policy import recipe_policy
+        self.policy = recipe_policy(self.recipe)
         self.resume_keep_count = record.get("resume_keep_count", self.policy.chunk_keep_count)
         self.bounded_pair = self.policy.process_timing
         self.expected = record["acceptance_requirements"]

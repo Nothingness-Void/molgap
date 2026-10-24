@@ -1,7 +1,7 @@
 """Shared CPU-derived dense layout for K1; no model or checkpoint parameters."""
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import contextmanager, ExitStack
 from dataclasses import dataclass, field
 
 
@@ -74,7 +74,11 @@ def cpu_layout_context(model, cpu_batch, device):
         model._execution_graph_count = layout.graphs
         for mixer in mixers:
             mixer._execution_dense_layout = layout
-        yield
+        with ExitStack() as stack:
+            substrate = getattr(model, "_molgap_substrate", None)
+            if substrate is not None:
+                stack.enter_context(substrate.cpu_batch_context(cpu_batch, device))
+            yield
     finally:
         if hasattr(model, "_execution_graph_count"):
             del model._execution_graph_count

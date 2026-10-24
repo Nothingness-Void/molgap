@@ -8,6 +8,7 @@ creating an optimizer. Whole-model pickle and concurrent forwards are unsupporte
 from __future__ import annotations
 
 from dataclasses import dataclass
+from contextlib import contextmanager, ExitStack
 from enum import Enum
 import re
 
@@ -150,6 +151,22 @@ class ModelSubstrate:
         if self._active:
             raise RuntimeError("Cannot seal during a substrate forward")
         self._sealed = True
+
+    @contextmanager
+    def cpu_batch_context(self, cpu_batch, device):
+        """Enter optional addon contexts before the caller transfers its batch.
+
+        Shared values belong only to this invocation; addons namespace their
+        keys and retain no batch tensors after their context exits.
+        """
+        shared = {}
+        with ExitStack() as stack:
+            for name in self._entries:
+                addon = getattr(self.model, self.namespace)[name]
+                context = getattr(addon, "cpu_batch_context", None)
+                if context is not None:
+                    stack.enter_context(context(cpu_batch, device, shared))
+            yield
 
     def _mutable(self):
         if self._sealed:
