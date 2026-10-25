@@ -1,0 +1,116 @@
+{
+  "artifacts": [
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/output_manifest.json",
+      "sha256": "032e303c57fbbba02b2b8872a9980897a6a02906f9e349b156e34b2a7feaf699"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/training_contract.json",
+      "sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/canonical_trace.json",
+      "sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/role_audit.json",
+      "sha256": "3d57dab52c35574d388ab9d0c74f49577d329ea109c5269c9b3e2422832c0b3e"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/runtime_certificate.json",
+      "sha256": "32468a79d26f0d47552e33b1d96dba665507483749295e16a6162b27f92ed5a0"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_reference/runtime_provenance.json",
+      "sha256": "dd8ace6e16adc5e21d002bbecb3389cd92b99e06c506338b3fec94704222078c"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/output_manifest.json",
+      "sha256": "d1e54757953ce96142c19d6b7225224922518956c1352bdaf6937c7721624d8f"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/training_contract.json",
+      "sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/canonical_trace.json",
+      "sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/role_audit.json",
+      "sha256": "b7da52a0f2e737857b0a0dd702f8ee0560142fe57cf6111b1af3aef80c6b2187"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/runtime_certificate.json",
+      "sha256": "93fcdd4217c5d1a188a02bcfe15cf69050630dcc57ae2a6280c9705aeaa9ef0e"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/esa_count/runtime_provenance.json",
+      "sha256": "b673feb2c425d2cf91ce953e90a80a94dd4607e29be83457fdb668ef1a2de10c"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/execution_retention.json",
+      "sha256": "1a0e1ec8501e5d98c34cb1e0420279853b3669cb9d75c3bd1b37e3365c6c9951"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/execution_report.json",
+      "sha256": "c4c825c05dab8d540e7e70966301038e35f23612444c342780fb2e1e1d31eba6"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/completed_v2/metadata/allocation_ledger.json",
+      "sha256": "6ccbd8bcdbc965dd20b405f17ff4c8bb1a213d5d910b3b3c8966196f613d8781"
+    }
+  ],
+  "candidate": {
+    "final_pass_mae_eV": 0.20227138698101044,
+    "parameters": 5015745,
+    "selected_mae_eV": 0.2004349772810936,
+    "selected_optimizer_step": 25773,
+    "selected_pass": 33
+  },
+  "candidate_ahead_passes": 57,
+  "cross_family_ranking": "NOT_QUALIFIED",
+  "curve_gain_pass10": 0.010967254638671875,
+  "curve_gain_pass20": 0.010713472962379456,
+  "failed_plus_retry_python_wall_seconds": 6801.672196616,
+  "failed_python_wall_seconds": 220.880103223,
+  "final_pass_gain_eV": 0.00232851505279541,
+  "format": "molgap-esa-count-persistence-summary-v1",
+  "frozen_material_gate_eV": 0.003,
+  "full_billing": "measurement_missing",
+  "gain_95_row_interval_eV": [
+    0.001821567985534668,
+    0.004518858675479889
+  ],
+  "kernel": "kaseichou/molgap-esa-count-persistence-100k-v2",
+  "kernel_id": 140722385,
+  "last10_mean_gain_eV": 0.0023416638374328612,
+  "last10_positive_passes": 10,
+  "point_gate_passed": true,
+  "posthoc_blend_not_promoted": true,
+  "posthoc_equal_blend_mae_eV": 0.19115886189699172,
+  "progress_each": {
+    "common_dev_rows": 50000,
+    "complete_passes": 60,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "reference": {
+    "final_pass_mae_eV": 0.20459990203380585,
+    "parameters": 5015233,
+    "selected_mae_eV": 0.20361478926420212,
+    "selected_optimizer_step": 36707,
+    "selected_pass": 47
+  },
+  "reference_decision": "INCONCLUSIVE_REFERENCE_ENROLLMENT",
+  "retry_allocated_device_seconds": 13161.584186786,
+  "retry_python_wall_seconds": 6580.792093393,
+  "rml_status_ref": "experiments/esa_count_persistence_100k/results/completed_v2/rml_status.json",
+  "row_interval_establishes_material_gain_at_least_0p003": false,
+  "row_interval_establishes_seed_variance": false,
+  "scale_500k_or_extra_seed_released": false,
+  "scientific_decision_candidate": "POSITIVE_UNDER_CONTRACT",
+  "selected_gain_eV": 0.0031798119831085206,
+  "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+  "version": 1
+}

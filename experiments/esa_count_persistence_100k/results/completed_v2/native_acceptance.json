@@ -1,0 +1,162 @@
+{
+  "format": "molgap-luna-acceptance-retry-v1",
+  "status": "PASS",
+  "acceptance_scope": "MECHANICAL_SAVED_ARTIFACT_AND_NATIVE_PROOF_VERIFICATION_ONLY",
+  "scientific_verdict": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "scope": {
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "attempt_id": "v1",
+    "physical_run": "kernel140722385/version1",
+    "read_only": true,
+    "inference_executed": false,
+    "training_executed": false,
+    "network_accessed": false,
+    "graph_caches_read": false,
+    "protected_role_data_read": false
+  },
+  "frozen_binding": {
+    "experiment_id": "esa_count_persistence_100k",
+    "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+    "package_identity": "07e0a59f67a9bf684c49093271bbf014178b3d38d409b7e21888b53ee8885fce",
+    "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+    "arms": ["esa_reference", "esa_count"]
+  },
+  "owner_checks": {
+    "original_run": "molgap.experiment_run._original_run",
+    "resolver": "molgap.experiment_run_acceptance.resolve_run_acceptance_inputs",
+    "mechanical_acceptance": "MECHANICALLY_VERIFIED",
+    "native_inventory": "DEPENDENCIES_VERIFIED",
+    "native_full": "VERIFIED",
+    "certificate_fabrication": false
+  },
+  "arms": {
+    "esa_reference": {
+      "recipe_sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+      "execution_reference": {
+        "path": "execution-reference.pt",
+        "expected_sha256": "c92938e3098c54e90b03ed45147e68421b0fb868a3add1f1abc4d22e62945aa5",
+        "observed_sha256": "c92938e3098c54e90b03ed45147e68421b0fb868a3add1f1abc4d22e62945aa5",
+        "size_bytes": 60365177,
+        "hash_matches": true
+      },
+      "native_proofs_zip_sha256": "d9d26edb1702a0c97b432f896f2d81ad0dcedf3b29646cab3db566486dd29b09",
+      "mechanical_progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080
+      },
+      "selected": {
+        "optimizer_step": 36707,
+        "pass": 47,
+        "weights": "live",
+        "mae_float64_eV": 0.20361478626728058,
+        "parameter_tensors": 130,
+        "parameter_numel": 5015233,
+        "finite": true
+      },
+      "resume": {
+        "status": "complete",
+        "optimizer_step": 46860,
+        "sample_presentations": 5998080,
+        "pass_index": 60,
+        "next_batch": 0,
+        "selected_step": 36707,
+        "parameter_tensors": 130,
+        "parameter_numel": 5015233,
+        "finite": true
+      },
+      "predictions": {
+        "rows": 50000,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701",
+        "rowids_aligned": true,
+        "targets_aligned": true,
+        "finite": true,
+        "mae_float64_eV": 0.20361478926420212
+      },
+      "role_audit": {
+        "event_count": 8,
+        "train_and_metric_selection_observed": true,
+        "protected_roles": "untouched",
+        "sha256": "3d57dab52c35574d388ab9d0c74f49577d329ea109c5269c9b3e2422832c0b3e"
+      }
+    },
+    "esa_count": {
+      "recipe_sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80",
+      "execution_reference": {
+        "path": "execution-reference.pt",
+        "expected_sha256": "a5def7f30e872f23c57da9261465258fd379fa3bcf47549053a17d0474471b0b",
+        "observed_sha256": "a5def7f30e872f23c57da9261465258fd379fa3bcf47549053a17d0474471b0b",
+        "size_bytes": 60374185,
+        "hash_matches": true
+      },
+      "native_proofs_zip_sha256": "cfc4a6110bd761e0894400dafeef01d4a99f3281d3ac475ff4599a096b43b2ae",
+      "mechanical_progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080
+      },
+      "selected": {
+        "optimizer_step": 25773,
+        "pass": 33,
+        "weights": "live",
+        "mae_float64_eV": 0.20043498277664185,
+        "parameter_tensors": 132,
+        "parameter_numel": 5015745,
+        "finite": true
+      },
+      "resume": {
+        "status": "complete",
+        "optimizer_step": 46860,
+        "sample_presentations": 5998080,
+        "pass_index": 60,
+        "next_batch": 0,
+        "selected_step": 25773,
+        "parameter_tensors": 132,
+        "parameter_numel": 5015745,
+        "finite": true
+      },
+      "predictions": {
+        "rows": 50000,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701",
+        "rowids_aligned": true,
+        "targets_aligned": true,
+        "finite": true,
+        "mae_float64_eV": 0.2004349772810936
+      },
+      "role_audit": {
+        "event_count": 8,
+        "train_and_metric_selection_observed": true,
+        "protected_roles": "untouched",
+        "sha256": "b7da52a0f2e737857b0a0dd702f8ee0560142fe57cf6111b1af3aef80c6b2187"
+      }
+    }
+  },
+  "pair_metrics": {
+    "rowids_sha256_equal": true,
+    "targets_sha256_equal": true,
+    "mae_float64_eV": {
+      "esa_reference": 0.20361478926420212,
+      "esa_count": 0.2004349772810936
+    },
+    "reference_minus_candidate_mae_float64_eV": 0.003179811983108516
+  },
+  "focused_tests": {
+    "status": "PASS",
+    "tests_passed": 16,
+    "duration_seconds": 23.01,
+    "warnings": 3,
+    "command": ".venv\\Scripts\\python.exe -m pytest -q tests/test_modern2d_formal_training.py::test_formal_actual_session_resume_full_state_and_readonly_dev tests/test_kaggle_pinned_exact_files.py --basetemp=E:/MolGap/scratch/esa-count-acceptance-20261025/tests-retry",
+    "scope": "CPU parameterized PPGT/ESA actual-session journey plus offline exact-file retrieval tests only"
+  },
+  "pointers": {
+    "original_frozen_run": "E:/MolGap/artifacts/runs/esa-count-persistence-k2-100k-s42-r2/v1",
+    "receipt": "E:/MolGap/artifacts/runs/esa-count-persistence-k2-100k-s42-r2/v1/operations/launch_receipt.json",
+    "retained_experiment": "E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment",
+    "previous_blocked_report_untouched": "E:/MolGap/scratch/esa-count-acceptance-20261025/luna_acceptance.json"
+  }
+}

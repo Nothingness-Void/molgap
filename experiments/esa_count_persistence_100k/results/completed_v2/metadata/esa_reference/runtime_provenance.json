@@ -1,0 +1,80 @@
+{
+  "context": {
+    "experiment_id": "esa_count_persistence_100k",
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "arm_id": "esa_reference",
+    "arm_identity": "331817a77bc4464188e9fe607f45b2eae300effe45996de55787e8bdc2c31a1a",
+    "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+    "source_archive_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+    "package_identity": "07e0a59f67a9bf684c49093271bbf014178b3d38d409b7e21888b53ee8885fce",
+    "training_recipe_sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v2",
+    "platform_version": null
+  },
+  "recipe_identity": "7ca9995507c697035e7b7a6fa9a8156ecbda0101f202cc9b524aee3a222617ea",
+  "dataset_manifest_sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+  "initialization": {
+    "file_sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a",
+    "state_sha256": "3e6a7beecfc14880cad68e365bb25255dd12359b2dc8c3c5ee219b3582efa8c0",
+    "tensor_count": 130,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "8c699ccb55b256b6e9bb0f556b97db3cd1c8ae631d27f4b63bcc5f9d95a1d022",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4",
+  "formal_training_context": {
+    "run_context": {
+      "experiment_id": "esa_count_persistence_100k",
+      "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+      "arm_id": "esa_reference",
+      "arm_identity": "331817a77bc4464188e9fe607f45b2eae300effe45996de55787e8bdc2c31a1a",
+      "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+      "family_name": "esa_small",
+      "family_version": "4",
+      "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+      "source_archive_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+      "package_identity": "07e0a59f67a9bf684c49093271bbf014178b3d38d409b7e21888b53ee8885fce",
+      "training_recipe_sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+      "platform": "kaggle",
+      "account": "kaseichou",
+      "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v2",
+      "platform_version": null
+    },
+    "recipe_identity": "7ca9995507c697035e7b7a6fa9a8156ecbda0101f202cc9b524aee3a222617ea",
+    "authority_sha256": "8edb85349109849f37c4392bda7fc23a1833886e71a9de82c195fff02a6760cb",
+    "train_permit": {
+      "role": "train_100k",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "6ff650abbbe9c49cd8c38b48894a466aed561ba1901836112ea4f6e6eee5d229",
+      "role_history_sha256": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "development_permit": {
+      "role": "common_dev",
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "30bbaac38bd37d966bf94ba0758cd97707f842d76912e69bb5a2ea5c8de77d7a",
+      "role_history_sha256": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+      "max_chunk_bytes": 536870912,
+      "scope": "ACCEPTED_INDEXED_INPUT_V1"
+    },
+    "train_feature_binding_sha256": "8f77a7e2f77ec3c2bb0f630a0a4c2b457ebf5b353d6b02e63f439860bb869b04",
+    "development_feature_binding_sha256": "62fcca65ae7fe80ed823d1494d5bb9e57f81bb5d407ff2ceacb077f3e7b71d96",
+    "max_wall_seconds": 13500,
+    "allocated_accelerators": [
+      "NvidiaTeslaT4",
+      "NvidiaTeslaT4"
+    ],
+    "configured": true
+  },
+  "formal_training_context_identity": "9c0a339cd63391daec17e7b4930976abdcc6277a2a1fe32d468c18c6a2211f32"
+}
