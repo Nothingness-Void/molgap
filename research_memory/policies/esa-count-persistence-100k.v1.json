@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "RUN_MATCHED60",
+    "field": "user_authorized_research_campaign",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "Human2026-10-25 requests RML-based research and a bounded successor; this permits one exact paired60-pass100K run only.",
+    "authority_ref": "experiments/esa_count_persistence_100k/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "esa-count-persistence-train100k-commondev50k-60pass-fp32-bs128-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "One T4x2 notebook at most4 wall/session-quota hours,8 physicalT4-hours.",
+      "Fresh native repeat/resume and prepared execution qualification for both recipes.",
+      "Reference-first strict closure and actual Replay membership required, with no automatic scale or successor."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "f34906ceb9c5ac8c8dd0de74ed3ed678e0b5ba82cc6aa438fcf0f5f2f4858abf",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "esa-count-persistence-100k",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_research_campaign"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}
