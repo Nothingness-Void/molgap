@@ -23,7 +23,7 @@ def main():
         raise FileExistsError('Prospective already published')
     artifacts = Path('D:/molgap-artifacts/diagnostics/k1-scale-attribution-20261025')
     artifacts.mkdir(parents=True, exist_ok=True)
-    archive = Path('D:/下载/k1-bn-mechanism-a100-20261008.zip')
+    archive = Path('D:/涓嬭浇/k1-bn-mechanism-a100-20261008.zip')
     original = json.loads((ROOT / 'experiments/pcqm_k1_complete_local_audit/inputs.json').read_text())
     bind = lambda p: {'path': str(p.resolve()), 'sha256': sha256_file(p)}
     probe = artifacts / 'probes'
@@ -84,7 +84,7 @@ def main():
     refs = ['pcqm-k1-clean-fit-generalization-500k-20261009', 'pcqm-k1-late-weight-average-20261008']
     t = spec['trajectory']
     t.update(trajectory_id=TID, family_id='k1-scale-attribution', question='Do matched clean TRAIN and consumed development separate tail weight effects from BN state effects, and which prior100K gains actually transferred?')
-    t['hypothesis'].update(hypothesis_id='H-k1-scale-attribution-20261025', observed_deficiency='Both selected tail recipes regress; direct clean-fit and BN attribution remained unexecuted.',
+    t['hypothesis'].update(hypothesis_id='H-' + POLICY, observed_deficiency='Both selected tail recipes regress; direct clean-fit and BN attribution remained unexecuted.',
         supporting_evidence_ids=refs, alternative_explanations=['Tail regression disappears after BN repair', 'Clean TRAIN improves while development worsens', 'Both clean TRAIN and development worsen'],
         changed_mechanism='Independent TRAIN-only BN recalibration of five frozen LIVE states; no learned weight change', cheapest_falsifier='Exact retained16384TRAIN and50000development CPU inference using frozen source',
         expected_native_cost_ref=cost_id, related_closed_family_ids=['k1-clean-fit-generalization', 'k1-tail-regularization'])
