@@ -437,24 +437,27 @@ def validate_retained_comparison_plan(spec, plan, root=None):
     return comparison
 
 
-def validate_transfer_plan(spec, root, plan, authority):
+def validate_transfer_plan(spec, root, plan, authority, *, read_pointer=None):
     """Bind a transfer's actual source recipes without granting a causal claim."""
-    from .family_training_runner import read_recipe
+    from .family_training_runner import parse_recipe_record
+    load = read_pointer if read_pointer is not None else lambda pointer: _json(_pinned(root, pointer))
     pointer = authority["transfer_study_ref"]
     if plan.get("transfer") != pointer or "comparison" in plan:
         raise ValueError("Transfer study cannot replace its declaration with a strict comparison")
-    study = _json(_pinned(root, pointer))
+    study = load(pointer)
     ids = [a["arm_id"] for a in spec.to_dict()["arms"]]
     if (type(study) is not dict or set(study) != {"format", "experiment_purpose", "arms"} or
             study["format"] != "molgap-modern2d-transfer-plan-v1" or
             study["experiment_purpose"] != "transfer_study" or set(study["arms"]) != set(ids)):
         raise ValueError("Transfer study requires the exact noncausal arm declaration")
+    recipes = {}
     for entry in plan["arms"]:
         item = study["arms"][entry["arm_id"]]
         if type(item) is not dict or set(item) != {"source_contract"}:
             raise ValueError("Transfer provenance requires its pinned original contract")
-        old_record, old = read_recipe(_pinned(root, item["source_contract"]))
-        new_record, new = read_recipe(_pinned(root, entry["contract"]))
+        old_record, old = parse_recipe_record(load(item["source_contract"]))
+        new_record, new = parse_recipe_record(load(entry["contract"]))
+        recipes[entry["arm_id"]] = new
         fields = ("interface", "seed", "initialization_sha256", "batch_size", "drop_last",
                   "learning_rate", "weight_decay", "gradient_clip", "selection", "sampler",
                   "target_mean_eV", "target_std_eV", "ema_decay", "model_config", "addons")
@@ -465,6 +468,7 @@ def validate_transfer_plan(spec, root, plan, authority):
                 any(old_record["acceptance_requirements"][key] != new_record["acceptance_requirements"][key]
                     for key in ("source_idx_sha256", "target_sha256", "development_rows", "precision"))):
             raise ValueError("Transfer changed model, transform, optimizer, clock or endpoint beyond training membership")
+    validate_configured_authority(authority, spec.to_dict(), recipes)
     return study
 
 

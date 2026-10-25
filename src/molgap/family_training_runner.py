@@ -107,7 +107,11 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
 
 
 def read_recipe(path):
-    record = _json(Path(path))
+    return parse_recipe_record(_json(Path(path)))
+
+
+def parse_recipe_record(record):
+    """Validate the same recipe from a file or verified immutable package bytes."""
     if not METADATA <= set(record):
         raise ValueError("Shared contract lacks frozen acceptance/role bindings")
     recipe = _recipe_configuration(record)

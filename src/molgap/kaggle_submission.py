@@ -196,8 +196,8 @@ def _startup(http, ref):
 def _check_scientific_release(spec, package, staged, authority, manifest):
     """Reject historical context-only training before any platform mutation."""
     from .modern2d_training_release import (
-        is_formal_screen, plan_path, PROFILE_PURPOSE, REPAIR_PURPOSE,
-        validate_same_run_comparison_plan, validate_retained_comparison_plan,
+        is_formal_screen, plan_path, PROFILE_PURPOSE, REPAIR_PURPOSE, TRANSFER_PURPOSE,
+        validate_same_run_comparison_plan, validate_retained_comparison_plan, validate_transfer_plan,
     )
     if not is_formal_screen(spec) or authority.get("purpose") in {PROFILE_PURPOSE, REPAIR_PURPOSE}:
         return
@@ -207,6 +207,19 @@ def _check_scientific_release(spec, package, staged, authority, manifest):
     declaration = spec.to_dict()
     pair = declaration["prospective"].get("same_run_replay")
     plan = json.loads(read_packaged_text(package, plan_path(spec)))
+    if authority.get("purpose") == TRANSFER_PURPOSE:
+        def pinned(pointer):
+            if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
+                raise ValueError("Transfer release requires exact packaged evidence pointers")
+            payload = read_packaged_text(package, pointer["path"])
+            if hashlib.sha256(payload.encode()).hexdigest() != pointer["sha256"]:
+                raise ValueError("Transfer packaged evidence changed")
+            return json.loads(payload)
+        validate_transfer_plan(spec, None, plan, authority, read_pointer=pinned)
+        for arm in declaration["arms"]:
+            trajectory = _json(staged / "prospective" / arm["arm_id"] / "trajectory.json")
+            validate_execution_identity(spec, arm["arm_id"], trajectory, manifest["source_commit"])
+        return
     if not plan.get("comparison"):
         raise ValueError("Scientific Modern2D submission requires a prospectively frozen replay comparison; context-only training is not released")
     if pair is not None:

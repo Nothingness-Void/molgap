@@ -337,6 +337,37 @@ def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured):
     assert not anchored["graph_payload_read"] and not anchored["scientific_reference_accepted"]
     _, anchor_recipe = read_recipe(c.repo / anchored["pins"]["contract.json"]["path"])
     assert anchor_recipe.train_rows == 500000 and anchor_recipe.schedule == old.schedule
+    # Exercise the owning platform's final release helper against the actual
+    # prepared archive, rather than treating compiler success as submission.
+    # As in the configured journey above, package validators must import from
+    # the actual checkout being released, not the parent pytest checkout.
+    program = r'''
+import sys, pathlib, json
+repo=pathlib.Path(sys.argv[1]); path=pathlib.Path(sys.argv[2]); sys.path.insert(0,str(repo/'src'))
+from molgap.experiment_input import prepare_experiment_input
+from molgap.experiment_spec import ExperimentSpec
+from molgap.kaggle_submission import _check_scientific_release
+from molgap.experiment_package import verify_experiment_source_package
+result=prepare_experiment_input(path,repo)
+assert result['status']=='PREPARED_FOR_PLATFORM',result
+prepared=pathlib.Path(result['prepared'])
+manifest=verify_experiment_source_package(prepared/'package')
+spec=ExperimentSpec.from_json((prepared/'package/experiment_spec.json').read_text(encoding='utf-8'))
+authority=json.loads((repo/'experiments/question/authority.json').read_bytes())
+_check_scientific_release(spec,prepared/'package',prepared/'source_dataset',authority,manifest)
+forged={**authority,'transfer_study_ref':{**authority['transfer_study_ref'],'sha256':'0'*64}}
+try:
+    _check_scientific_release(spec,prepared/'package',prepared/'source_dataset',forged,manifest)
+except ValueError:
+    pass
+else:
+    raise AssertionError('Forged transfer pointer passed release')
+print(json.dumps({'status':'CPU_ACCEPTED','package_identity':manifest['package_identity'],'remote_calls':0}))
+'''
+    result = subprocess.run([sys.executable, "-I", "-c", program, str(c.repo), str(c.path)], cwd=c.repo,
+        env={**os.environ, "CUDA_VISIBLE_DEVICES": "-1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"},
+        text=True, capture_output=True, timeout=180)
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_execution_repair_reissues_only_source_pin(configured):
