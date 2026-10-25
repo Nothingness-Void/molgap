@@ -27,6 +27,15 @@ Both actual training-contract hashes match their retained output contexts.
 Producer `platform_version=null` remains unchanged; actual version 1 comes from
 the physical receipt. The resolver does not fabricate producer metadata.
 
+Peer review found two additional concrete weaknesses in that patch: rebuilding
+a recipe dropped its initialization guard, and NaN/shape-invalid retained values
+could evade ordinary tolerance comparisons. The compiler now retains compatible
+guards and explicitly rejects inheriting them across architecture changes. The
+existing runtime guard checks shape, row count, index dtype, finite values and
+consistency between MAE and retained prediction bytes before qualification.
+The reporting-resume unit test is correctly named an in-memory resume; the
+separate real worker test owns serialized checkpoint and recovery coverage.
+
 ## Verification actually executed
 
 One focused invocation passed 21 checks in 121.57 seconds:
@@ -47,6 +56,15 @@ No standalone logs were saved for that invocation/smoke. Their original outputs
 are tool session 52096, final chunk f51668, and smoke chunk ce3485. Do not claim
 an independent saved log or rerun merely to create one. Subsequent closure logs
 are separately retained in `D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/`.
+
+The follow-up guard repair used one focused selection of four existing test
+instances, not another full suite. The first command had a node-name typo and
+exited4 during collection; it is not a passing test execution. Correcting that
+literal name produced exit0, `4 passed, 1 warning in 44.68s`, outer wall48.807s.
+Exact command/stdout/stderr/timers are retained in
+`infrastructure_verification/guard_attempt_001/` and `guard_attempt_002/`.
+The warning is the upstream torch_geometric.distributed deprecation. Native
+GPU qualification and the missing TRAIN digest are not established by these tests.
 
 ## Local diagnostic adapter errors
 

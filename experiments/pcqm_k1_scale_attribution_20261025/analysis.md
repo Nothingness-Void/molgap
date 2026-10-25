@@ -54,8 +54,9 @@ refs. LIVE, EMA and Clean-BN are different output states and remain separate.
 
 Its 100K gain was 3.043577 meV, only 0.043577 above the material gate. Applying
 the same frozen 100K weights to the 500K development cohort reduced that gain
-to about 0.416 meV. The loss of gain is 2.627 meV, paired-row interval
-[-3.805, -1.441] meV. No extra training was needed to observe this loss.
+to about 0.416 meV. The change in gain is -2.627 meV, independent-row bootstrap
+interval [-3.805, -1.441] meV: the two development cohorts are disjoint and cannot
+be paired. No extra training was needed to observe this loss.
 
 This identifies cohort-dependent gain for those frozen predictors. It does not
 isolate a chemical cause or measure seed variability. Simple atom-count and
@@ -91,7 +92,7 @@ themselves identify a causal scale law.
 Authority: original V4 curves, the complete historical ledger and the accepted
 [clean-fit diagnostic](../pcqm_k1_clean_fit_generalization_500k/terminal_decision.md).
 
-### 5. BN is a measurable penalty, but does not explain most late regression
+### 5. BN calibration helps, but most late regression remains after it
 
 At the same composed K1 pass-49 weights, TRAIN-only Clean-BN lowers development
 MAE from 0.104904075 to 0.103658948: 1.245127 meV, interval [1.107800, 1.379097].
@@ -135,10 +136,14 @@ target evidence or convert it to replay-ready by themselves.
 Each development increase has a positive conditional paired-row interval.
 The tenfold WD increase's selected advantage shrinks from .212 meV raw to
 .035 meV clean, with an interval crossing zero. The final clean endpoint is
-.180 meV worse at higher WD. These observations reject a buffer-only explanation
-and do not support another tail-WD grid or simply more exposure under this recipe.
-They show learned-function regression conditional on the retained initialization
-and changed tail recipe, without isolating which bundled recipe change caused it.
+.180 meV worse at higher WD. The tested buffer recalibration does not rescue the
+tail, and these results do not support another WD grid or simply more exposure
+under this recipe.
+They show regression between independently calibrated predictors conditional on
+the retained initialization and changed tail recipe. They do not isolate which
+bundled recipe change caused it or rule out all possible BN-statistic estimators.
+The [interpretation review](interpretation_limits.md) narrows broader wording in
+the already frozen terminal documents without changing their measurements or decision.
 
 ## Remaining identification limits
 
@@ -162,10 +167,14 @@ repeat this tail weight-decay grid, or add epochs solely because K1 appears to
 converge early. Existing evidence already rejects those justifications.
 
 The next useful training question should compare identical 500K output-state,
-exposure and runtime contracts while isolating one still-unidentified recipe
-choice. A single-forward, fixed Clean-BN comparison of scratch initialization
-against the retained 100K-pretrained backbone would isolate the claimed
-pretraining transfer, while avoiding two-forward cost and raw/EMA confusion.
+downstream exposure and runtime contracts while isolating one still-unidentified
+recipe choice. A single-forward, fixed Clean-BN comparison of scratch initialization
+against the retained 100K-pretrained backbone would measure the conditional effect
+of that initialization. Total upstream-plus-downstream exposure and cost differ;
+it cannot separately identify pretraining membership, objective or horizon.
+Single-forward quality non-inferiority has not been established by the older100K
+screen. Using it in both new arms would define a new shared condition, with separate
+downstream and inherited pretraining costs, rather than assume equivalence to mean2.
 This is a proposed discriminator, not a proven better model or a launched job.
 Confirm it is not already answered by a strict owner before freezing it; no
 automatic retry, promotion, new stopping rule or full-data run is authorized

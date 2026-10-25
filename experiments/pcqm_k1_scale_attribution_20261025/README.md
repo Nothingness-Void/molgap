@@ -8,6 +8,8 @@ The bounded investigation was authorized for 2026-10-25 05:41:35–07:41:35 UTC.
 - [Completed fixed-weight decision](attempt_002/terminal_decision.md) and
   [attribution](attempt_002/attribution.md): all five retained states reproduce;
   common Clean-BN does not remove worse development despite better TRAIN fit.
+- [Interpretation review](interpretation_limits.md): confines the buffer claim
+  to the tested calibration procedure and preserves frozen terminal bytes.
 - [Frozen retry protocol](attempt_002/protocol.md), [result](attempt_002/results/result.json)
   and [completion](attempt_002/results/completion.json): actual CPU execution,
   predicates, costs and artifact hashes. This is not training replay readiness.
