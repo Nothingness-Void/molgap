@@ -1,5 +1,28 @@
 # Status
 
+## Qualification update — 2026-10-25
+
+The exact TRAIN proof was recovered from frozen source/data without training.
+The shared acceptance path now verifies both native proofs and both independent
+strict replay entries without exclusions. Candidate comparison is
+STRICT_CAUSAL/VERIFIED; the other arm is the accepted reference. Reentry used
+CANONICAL_READ_ONLY and preserved31 frozen/qualification files unchanged.
+See [qualification attempts and exact logs](analysis/target_recovery_20261025/qualification_20261025.md).
+
+Both scientific recipes remain NEGATIVE_UNDER_CONTRACT. The separately accepted
+[fixed retained-tail diagnostic](../pcqm_k1_scale_attribution_20261025/analysis.md)
+found better sampled TRAIN fit but worse development after common TRAIN-only
+calibration. It does not identify a universal K1 ceiling or a unique mechanism.
+No retraining, adoption, new gate or successor follows.
+
+Complete negative source history follows archive custody; desktop receives only
+canonical evidence/configuration for RML discovery. The notes below preserve the
+earlier reconciliation state; their missing-proof and missing-probe observations
+were superseded by the linked qualification and diagnostic, not rewritten in
+the frozen training records.
+
+## Earlier terminal reconciliation
+
 Desktop owner: `codex/exp/k1-tail-regularization-500k`.
 Kaggle1 kernel140639445/version1 is COMPLETE. Luna's terminal observation is
 retained in [submission/terminal_observation.json](submission/terminal_observation.json).

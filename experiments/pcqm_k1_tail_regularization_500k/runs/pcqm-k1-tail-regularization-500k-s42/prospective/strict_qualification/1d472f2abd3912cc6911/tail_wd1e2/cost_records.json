@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-tail-regularization-500k-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-0",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.1799968039497224
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-tail-regularization-500k-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.282762207011667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    }
+  ]
+}

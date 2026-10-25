@@ -1,0 +1,76 @@
+{
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "role_event_id": "role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "role_event_id": "role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "role_event_id": "role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "role_event_id": "role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "role_event_id": "role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    }
+  ]
+}

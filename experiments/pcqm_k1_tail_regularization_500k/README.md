@@ -1,5 +1,13 @@
 # K1 late regularization500K
 
+Closed negative, with both arms strictly replay-ready after the2026-10-25
+[qualification](analysis/target_recovery_20261025/qualification_20261025.md).
+[Terminal custody](terminal_custody.md) owns source restoration and durable
+artifact locations. Desktop retains canonical evidence only; the preparation
+helper and full rejected experiment source remain in archive history. The
+historical submission commands below apply only to a restored owning checkout
+and do not authorize another invocation or training run.
+
 Desktop-owned warm-start question. [Protocol](protocol.md) owns the scientific
 scope; [status](STATUS.md) owns observations; [decision](decision.md) owns disposition.
 `experiment.json` is the editable input for the existing Kaggle workflow.
@@ -18,6 +26,6 @@ Retain the tiny `initial_development_check.json` diagnostic from each arm as wel
 No output-all download. Separate strict mechanical replay from historical parent
 comparison, fine-tuning benefit and adoption. No terminal claims before evidence.
 
-Terminal endpoints and the exact strict-qualification blocker are in STATUS.md;
-decision.md closes both scientific recipes as negative. Retain the owner until
-the unresolved qualification is reconciled; this is not a replay-ready pair.
+Terminal endpoints and qualification chronology are in STATUS.md. The original
+decision.md closes both scientific recipes as negative; qualification adds
+replay eligibility without changing that result.

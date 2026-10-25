@@ -1,0 +1,60 @@
+{
+  "format": "molgap-k1-target-recovery-payload-retrieval-v1",
+  "retrieved_at_utc": "2026-10-25T06:52:50.046814+00:00",
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "version": 2,
+  "allowlist": {
+    "target_recovery/labels.bin": [
+      "target_recovery/labels.bin",
+      "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676"
+    ],
+    "target_recovery/data_manifest.json": [
+      "target_recovery/data_manifest.json",
+      "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    ]
+  },
+  "result": {
+    "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "receipt_version": 2,
+    "files": [
+      {
+        "path": "target_recovery/labels.bin",
+        "sha256": "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676",
+        "state": "RETAINED"
+      },
+      {
+        "path": "target_recovery/data_manifest.json",
+        "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "state": "RETAINED"
+      }
+    ],
+    "retrieval_plan": {
+      "files": [
+        {
+          "remote_path": "target_recovery/labels.bin",
+          "local_path": "target_recovery/labels.bin",
+          "sha256": "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676",
+          "size_bytes": 2000000,
+          "state": "DOWNLOAD"
+        },
+        {
+          "remote_path": "target_recovery/data_manifest.json",
+          "local_path": "target_recovery/data_manifest.json",
+          "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+          "size_bytes": 4790,
+          "state": "DOWNLOAD"
+        }
+      ],
+      "reused_bytes": 0,
+      "known_download_bytes": 2004790,
+      "unknown_size_files": 0
+    },
+    "transport": "version_specific_manifest_pinned_files",
+    "unselected_outputs_downloaded": false,
+    "downloaded_files": 2,
+    "network_accessed": true,
+    "platform_version_verified_by_output_api": true
+  },
+  "source_idx_downloaded": false
+}
