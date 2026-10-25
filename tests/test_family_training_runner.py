@@ -155,6 +155,8 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         "best-development-ema" if development else "final-live", "torch-pass-randperm", 1,
         target_mean_eV=3., target_std_eV=2., ema_decay=.999 if development else None,
         torch_version=str(torch.__version__).split("+", 1)[0])
+    if family == "neural_atom_k1" and development:
+        recipe = replace(recipe, selection="best-development-live", development_reports=("ema",))
     data = TrainingData([graph(i) for i in range(256)],
         [graph(256 + i) for i in range(2)] if development else None,
         selection.manifest_sha256, 256, 2 if development else 0,
@@ -329,6 +331,12 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     assert telemetry["status"] == progress.status
     if development:
         assert telemetry["best_development_mae_eV"] == pytest.approx(report["observed"]["development_mae_eV"])
+        if family == "neural_atom_k1":
+            trace = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))
+            assert trace["metric_semantics"]["live_dev_metric"]["weights"] == "live"
+            assert trace["metric_semantics"]["ema_dev_metric"]["weights"] == "ema"
+            assert all(point["live_dev_metric"] is not None and point["ema_dev_metric"] is not None
+                       for point in trace["observations"])
     else:
         assert telemetry["development_mae_eV"] is telemetry["best_development_mae_eV"] is None
 
@@ -455,12 +463,70 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         assert not (failed_root / "last_checkpoint.pt").exists()
         assert not (failed_root / "output_manifest.json").exists()
 
+        # Reuse the actual CPU kernel/worker boundary for the retained predictor
+        # guard. Native/source admission remains the explicit substitute above.
+        probe = actual_session()
+        try:
+            reference = probe.kernel.evaluate(probe.loaders, weights="live")
+        finally:
+            probe.close()
+        guarded_initial = tmp_path / "guarded-initial.pt"
+        initial_payload = torch.load(initial, map_location="cpu", weights_only=True)
+        initial_payload["reference_development"] = reference
+        torch.save(initial_payload, guarded_initial)
+        guard_record = {**record, "initial_development_check": {
+            "prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}}
+        for matches in (True, False):
+            guard_root = tmp_path / ("guard-valid" if matches else "guard-mismatch")
+            guard_root.mkdir()
+            worker._begin_cost_interval(guard_root, ctx, had_checkpoint=False)
+            if not matches:
+                initial_payload["reference_development"] = {**reference,
+                    "prediction_eV": reference["prediction_eV"] + 1}
+                torch.save(initial_payload, guarded_initial)
+            with monkeypatch.context() as boundary:
+                boundary.setattr(worker, "_bootstrap", lambda **_: (
+                    guard_record, recipe, data, ExecutionTuning(training_workers=0, development_workers=0),
+                    ctx, {"accelerator": "synthetic-cpu"}, tmp_path))
+                boundary.setattr(worker, "_verify_preflight", lambda *a, **k: {})
+                boundary.setattr(worker, "_loaded_source", lambda _: tmp_path)
+                boundary.setattr(kernels, "FamilyKernel", cpu_kernel)
+                boundary.setattr(sessions, "FamilyTrainingSession", retained_session)
+                options = dict(output=guard_root, recipe_path=path, initial_state_path=guarded_initial,
+                    package_dir=package_dir, trajectory_id="synthetic-trajectory", pause_after_step=1)
+                if matches:
+                    assert worker.run_screen_arm(**options)["status"] == "PAUSED"
+                    accepted = json.loads((guard_root / "initial_development_check.json").read_text())
+                    assert accepted["status"] == "VERIFIED" and accepted["optimizer_steps"] == 0
+                    assert created[-1].progress.optimizer_step == 1
+                else:
+                    with pytest.raises(ValueError, match="does not reproduce"):
+                        worker.run_screen_arm(**options)
+                    assert created[-1].progress.optimizer_step == 0
+                    assert not (guard_root / "last_checkpoint.pt").exists()
+                assert created[-1].closed and created[-1].loaders.closed
+
 
 def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
     session = make_session("neural_atom_k1", development=False, schedule_kind="cosine_step", events=events())
     try:
         path, original = contract_file(tmp_path, session)
         assert read_recipe(path)[1] == session.recipe
+        retained = deepcopy(original)
+        retained["initial_development_check"] = {"prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
+        path.write_text(json.dumps(retained), encoding="utf-8")
+        assert read_recipe(path)[1] == session.recipe
+        reported = deepcopy(original)
+        reported["development_reports"] = ["ema"]
+        path.write_text(json.dumps(reported), encoding="utf-8")
+        assert read_recipe(path)[1] == replace(session.recipe, development_reports=("ema",))
+        for invalid in ({"prediction_tolerance_eV": 1e-4},
+                        {"prediction_tolerance_eV": float("nan"), "mae_tolerance_eV": 1e-6},
+                        {"prediction_tolerance_eV": True, "mae_tolerance_eV": 1e-6}):
+            retained["initial_development_check"] = invalid
+            path.write_text(json.dumps(retained), encoding="utf-8")
+            with pytest.raises(ValueError):
+                read_recipe(path)
         for change in ("counter", "unknown", "development"):
             record = deepcopy(original)
             if change == "counter":

@@ -71,6 +71,15 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
         assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v1"
     assert not any("comparison_prelaunch" in name for name in plan["generated_records"])
+    from molgap.experiment_family_workflow import same_run_comparison_scope
+    scope = same_run_comparison_scope(value, "candidate", "baseline")
+    assert scope["experiment_purpose"] == "optimizer_comparison"
+    assert scope["declared_intervention_fields"] == ["optimizer_identity"]
+    for purpose in ("architecture_comparison", "unknown"):
+        invalid = deepcopy(value)
+        invalid["shared"]["purpose"] = purpose
+        with pytest.raises(ValueError):
+            same_run_comparison_scope(invalid, "candidate", "baseline", declared_fields=["optimizer_identity"])
     freeze_experiment_input(path, case.repo)
     previous = spec.identity
     value["attempt_id"] = "v2"
@@ -106,6 +115,11 @@ def test_reference_and_retry_cannot_infer_authority(scientific):
     value["attempt_id"] = "v2"
     _commit(case, value, authority, path)
     with pytest.raises(ValueError):
+        resolve_experiment_input(path, case.repo)
+    value["attempt_id"] = "v1"
+    value["shared"]["purpose"] = "architecture_comparison"
+    _commit(case, value, authority, path)
+    with pytest.raises(ValueError, match="outside one logical group"):
         resolve_experiment_input(path, case.repo)
 
 

@@ -39,7 +39,7 @@ class SyntheticKernel(FamilyKernel):
         return loss, absolute, rows
 
 
-def make_session(family, *, development, schedule_kind, events, drop_last=True):
+def make_session(family, *, development, schedule_kind, events, drop_last=True, report_ema=False):
     configure_fp32_determinism(42)
     rows = 257
     train = [Data(x=torch.zeros(1, 9, dtype=torch.long),
@@ -62,10 +62,11 @@ def make_session(family, *, development, schedule_kind, events, drop_last=True):
     selection = DatasetSelection("manifest.json", "1" * 64, development)
     recipe = FamilyRecipe(family, "reference", 42, "2" * 64, selection, rows,
         3 if development else 0, budget, .001, .01, schedule,
-        "best-development-ema" if development else "final-ema",
+        ("best-development-live" if report_ema else "best-development-ema") if development else "final-ema",
         "python-epoch-shuffle" if family == "neural_atom_k1" else "torch-pass-randperm",
         checkpoint_every=2, target_mean_eV=3., target_std_eV=2., ema_decay=.999,
-        finite_check_every=1, drop_last=drop_last)
+        finite_check_every=1, drop_last=drop_last,
+        development_reports=("ema",) if report_ema else ())
     data = TrainingData(train, dev, selection.manifest_sha256, rows, 3 if development else 0,
         0, rows if development else None, 3., 2.)
     pool = FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0))
@@ -81,6 +82,40 @@ def make_session(family, *, development, schedule_kind, events, drop_last=True):
 
 def events():
     return {"checkpoint": [], "selected": [], "passes": []}
+
+
+def test_live_selection_with_frozen_ema_reporting_survives_serialized_resume():
+    from dataclasses import replace
+    log = events()
+    complete = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch",
+        events=log, report_ema=True)
+    assert FamilyRecipe.from_dict(complete.recipe.to_dict()) == complete.recipe
+    complete.run()
+    for progress, metrics in log["passes"]:
+        assert metrics["development"]["source_idx"].tolist() == [257, 258, 259]
+        assert metrics["development_ema"]["source_idx"].tolist() == [257, 258, 259]
+        assert metrics["development"]["mae_eV"] != metrics["development_ema"]["mae_eV"]
+    assert all(selection[1] == "live" for selection in log["selected"])
+    resumed_log = events()
+    first = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch",
+        events=resumed_log, report_ema=True)
+    first.run(should_pause=lambda: True)
+    resumed = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch",
+        events=resumed_log, report_ema=True)
+    resumed.load_state_dict(resumed_log["checkpoint"][-1])
+    resumed.run()
+    assert_equal(complete.state_dict(), resumed.state_dict())
+    assert_equal(log["passes"], resumed_log["passes"])
+    assert_equal(log["selected"], resumed_log["selected"])
+    # Evaluating an additional state must leave optimization unchanged.
+    baseline = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch",
+        events=events(), report_ema=True)
+    baseline.recipe = replace(baseline.recipe, development_reports=())
+    baseline.kernel.recipe = baseline.recipe
+    baseline.loaders.recipe = baseline.recipe
+    baseline.run()
+    for component in ("model", "optimizer", "ema", "rng_state"):
+        assert_equal(complete.state_dict()[component], baseline.state_dict()[component])
 
 
 def assert_equal(left, right):

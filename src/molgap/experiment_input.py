@@ -473,6 +473,20 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Scientific candidate has no change from the retained reference")
         compiled.append((item, arm, new_record, reference, bundle, context, identity, changed, str(initial.absolute()), source["evidence"]))
 
+    if pair is not None:
+        from .experiment_family_workflow import same_run_comparison_scope
+        reference = next(row for row in compiled if row[1]["arm_id"] == pair["reference_arm_id"])
+        for row in compiled:
+            if row is reference:
+                continue
+            changed = []
+            if any(row[2][key] != reference[2][key] for key in ("learning_rate", "weight_decay")):
+                changed.append("optimizer_identity")
+            if any(row[1][key] != reference[1][key] for key in ("base", "addons")):
+                changed.append("architecture_config_identity")
+            same_run_comparison_scope(value, row[1]["arm_id"], pair["reference_arm_id"],
+                                      declared_fields=changed)
+
     # Commit only human/source inputs. Never require committing machine envelopes.
     # The selected data/roles are copied into this package's canonical Spec.
     # A baseline experiment_spec.json is a committed compilation input, not a

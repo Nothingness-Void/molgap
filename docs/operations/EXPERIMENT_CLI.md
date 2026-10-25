@@ -184,6 +184,15 @@ warm-start mean/std remain the actual recipe values. This interface binds
 reviewed evidence; it does not prove how an arbitrary supplied digest was
 measured. Raw CSV labels alone do not prove executed shard bytes when the
 original graph acceptance allowed numeric tolerance.
+Same-run comparison reads its declared purpose and mechanism from the pinned
+human input inside the source package. Optimizer comparisons permit the declared
+learning-rate/weight-decay identity change; architecture/mechanism comparisons
+permit the architecture identity change. Unknown purposes and mixed groups fail
+closed; terminal identity differences never declare their own intervention.
+Historical `development_reports` and `initial_development_check` contracts retain
+their original reporting and predictor guard semantics. Additional EMA reporting
+does not change LIVE checkpoint selection; fresh warm starts verify the retained
+development predictor before their first update.
 Already qualified canonical records retain their original bound evidence.
 Historical reference runs use their retained strict comparison inputs, rather
 than the same-run translator; missing comparison evidence stays `BLOCKED`.
