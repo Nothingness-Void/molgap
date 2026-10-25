@@ -1,0 +1,21 @@
+{
+  "account": "nothingnessvoid",
+  "allocated_t4_hours_ceiling": 18,
+  "allocation_wall_limit_seconds": 32400,
+  "arms": [
+    "scratch",
+    "pretrained"
+  ],
+  "authorized_at": "2026-10-26T00:00:00+09:00",
+  "automatic_retry": false,
+  "cleanup_reserve_seconds": 180,
+  "format": "molgap-execution-authority-v1",
+  "protocol_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+  "reference_semantics": "Scratch is a new explicitly released within-slot comparator; retained100K pretrained initialization changes only initial model state. Cross-slot comparisons are descriptive auxiliary evidence.",
+  "same_run_reference_arm_id": "scratch",
+  "scope": "One of two authorized Kaggle1 T4x2 slots: single; 500K30 passes per arm; initialization comparison only. Total two-slot ceiling36 allocated T4 hours; no automatic retry, full training, protected roles or adoption.",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}
