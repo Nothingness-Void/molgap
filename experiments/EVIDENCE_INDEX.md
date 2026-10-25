@@ -88,6 +88,10 @@ was authorized for frozen inference on the predeclared later cohort, not500K tra
 Its [terminal interpretation](pcqm_gptrans_triplet_portability/decision_terminal.md)
 retained positive-but-uncertain point evidence without passing the frozen gate.
 
+The2026-10-25 [ESA count-persistence selection](esa_count_persistence_100k/decision.md)
+used source-built RML curves to freeze a new matched60-pass reference/candidate
+question. This is prospective research selection, not an accepted outcome.
+
 The 2026-10-11 [source-dependence assay](pcqm_gptrans_source_dependence/decision.md)
 was authorized for read-only attention/gate observations on fixed input-only
 panels, not training or a causal training claim.

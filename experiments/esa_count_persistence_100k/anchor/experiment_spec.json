@@ -1,0 +1,114 @@
+{
+  "arms": [
+    {
+      "addon_semantics": "baseline",
+      "addons": [],
+      "arm_id": "esa_native_v3",
+      "base": {
+        "name": "esa_small",
+        "sha256": "740c260d30f8d8c6929c7b79e3b1416abea5099b980825755a25276b164495ee",
+        "version": "1"
+      },
+      "data": {
+        "dataset": {
+          "name": "pcqm4mv2",
+          "sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+          "version": "1"
+        },
+        "feature_schema": "ogb-atom9-bond3-directed-edge-isolate-mask-v3",
+        "feature_sha256": "8eafcff9ae207f589ebefe2b7df6694637c466903b4cb248181c96f727df5858",
+        "roles": [
+          {
+            "membership_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "role": "train",
+            "row_order_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "usage_sha256": "70551945c4dac7fc7825fe4271ed184768780eea704ae1eb9159c6565749a16f"
+          },
+          {
+            "membership_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+            "role": "development",
+            "row_order_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+            "usage_sha256": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7"
+          }
+        ],
+        "split": {
+          "name": "accepted-indexed-train100k-commondev-v2",
+          "sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+          "version": "1"
+        },
+        "target": "pcqm4mv2-gap-eV-direct"
+      },
+      "family": {
+        "name": "esa_small",
+        "version": "4"
+      },
+      "initialization": {
+        "kind": "frozen_state",
+        "seed": 42,
+        "state_sha256": "3e6a7beecfc14880cad68e365bb25255dd12359b2dc8c3c5ee219b3582efa8c0"
+      },
+      "scientific_role": "reference",
+      "training": {
+        "objective": {
+          "name": "normalized-gap-l1",
+          "sha256": "298f2df0a9df346a381d6d295cdee9a56abd23c77b0d47c7d58d48a90bfbf663",
+          "version": "1"
+        },
+        "overrides": {},
+        "recipe": {
+          "name": "modern2d_formal_training_v1",
+          "sha256": "294052d54ecbf85b5994ccf4f5c764fef64428dfa738b8604cc0d0f77f7c4761",
+          "version": "1"
+        },
+        "sampler": {
+          "name": "frozen-family-pass-order",
+          "sha256": "b43abeea0003f0d12d06bb4050f4fec0633abd52f70d0dfe97da8c09ecc4b555",
+          "version": "1"
+        },
+        "transform": {
+          "name": "frozen-train-mean-sample-std",
+          "sha256": "cb7793f85d8719dbc33d821893c6461df987399ea651acd30117e014be8d9527",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "evidence": {
+    "policy": {
+      "name": "molgap-v5",
+      "sha256": "4bce417fc3fa2191903cb4afdfd7633f8727598064460c73c9012cfb9d4e710b",
+      "version": "1"
+    },
+    "required_artifacts": [
+      "v5_evidence",
+      "costs",
+      "roles",
+      "trace_manifest",
+      "terminal_artifact"
+    ]
+  },
+  "experiment_id": "esa-count-persistence-anchor",
+  "logical_run_id": "esa-count-persistence-source-only",
+  "platform": {
+    "accelerator": "NvidiaTeslaT4",
+    "atomic_checkpoints": true,
+    "cpu_cores": 4,
+    "device_count": 2,
+    "memory_gib": 29,
+    "name": "kaggle",
+    "retrievable_chunks": true
+  },
+  "prospective": {
+    "arms": [
+      {
+        "arm_id": "esa_native_v3",
+        "output": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/rml",
+        "plan_spec_ref": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/plan_input.json",
+        "plan_spec_sha256": "a7204fb5e35b686cc63c469c97658564efbd2ee954bd64318d165d3504dfee8c",
+        "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v2"
+      }
+    ]
+  },
+  "schema_version": "molgap-experiment-spec-v2",
+  "terminal_protocol": "molgap-experiment-terminal-descriptor-v1"
+}

@@ -1,0 +1,109 @@
+{
+  "arms": [
+    {
+      "arm_id": "esa_reference",
+      "model": {
+        "addons": [],
+        "family": "esa_small",
+        "version": "4"
+      }
+    },
+    {
+      "arm_id": "esa_count",
+      "model": {
+        "addons": [
+          {
+            "config": {
+              "variant": "count_readout"
+            },
+            "name": "esa_count_readout",
+            "version": "1"
+          }
+        ],
+        "family": "esa_small",
+        "version": "4"
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority_ref": "experiments/esa_count_persistence_100k/authority.json",
+  "decision_ref": "experiments/esa_count_persistence_100k/protocol.md",
+  "experiment_id": "esa_count_persistence_100k",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "esa-count-persistence-k2-100k-s42-v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "monitor_paths": [
+    "experiments/esa_count_persistence_100k/STATUS.md"
+  ],
+  "platform_ref": "experiments/esa_count_persistence_100k/platform.json",
+  "profile": {
+    "cheapest_falsifier": "One reference bootstrap plus one identical-horizon candidate; later matching candidates reuse the accepted baseline.",
+    "estimated_device_hours": 6,
+    "estimated_wall_hours": 3,
+    "hardware": "NvidiaTeslaT4x2",
+    "owner": "server",
+    "platform": "kaggle",
+    "track": "C"
+  },
+  "question": {
+    "action": "RUN_MATCHED60",
+    "alternatives": [
+      "Early optimization advantage vanishes by60 passes.",
+      "Count-based readout worsens chemically hard rows.",
+      "The backbone remains weak despite a within-family improvement."
+    ],
+    "changed_mechanism": "esa-count-readout-only",
+    "closed_families": [
+      "ppgt-content-conditioner-below-gate",
+      "esa-identity-residual-no-consistent-gain",
+      "generic-parameter-widening"
+    ],
+    "deficiency": "The20-pass count lead is contextual; older RML routes often lose early or narrow-cohort gains. No strict reusable ESA reference exists for this horizon.",
+    "negative_decision": "Close count persistence under this contract; retain complete negative replay evidence and reference; no successor.",
+    "policy_id": "esa-count-persistence-100k",
+    "positive_decision": "Inspect endpoints and late curves, register one accepted reference and close both arms through RML; retain a lead only, no automatic scale or seeds.",
+    "prior_trajectories": [],
+    "question": "Does zero-start atom-count FiLM retain a material endpoint gain through a complete60-pass ESA screen?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "modern2d-execution-repair-s42-v2-esa-accepted"
+    ]
+  },
+  "role_ref": "experiments/modern2d_configured_100k/research_arms/roles.json",
+  "same_run": {
+    "minimum_material_gain_eV": 0.003,
+    "reference_arm_id": "esa_reference",
+    "target_manifest_ref": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "data_ref": {
+      "arm_id": "esa_native_v3",
+      "spec_ref": "experiments/esa_count_persistence_100k/anchor/experiment_spec.json"
+    },
+    "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/esa_count_persistence_100k/anchor/contract.json",
+    "reference_ref": {
+      "arm_id": "esa_native_v3",
+      "plan_ref": "experiments/esa_count_persistence_100k/anchor/acceptance_plan.json"
+    },
+    "training": {
+      "execution_mode": "prepared-v2",
+      "horizon_passes": 60,
+      "profiling": {
+        "active_steps": 4,
+        "module_paths": [],
+        "ppgt_phases": false,
+        "profile_memory": false,
+        "record_shapes": false,
+        "row_limit": 50,
+        "warmup_steps": 8,
+        "with_stack": false
+      }
+    }
+  },
+  "timestamp": "2026-10-25T05:05:00Z"
+}

@@ -1,0 +1,64 @@
+{
+  "allocated_t4_hours_ceiling": 8,
+  "arms": [
+    "esa_reference",
+    "esa_count"
+  ],
+  "authorization_basis": "Human2026-10-25 JST requested historical RML research and submission. Bounded to one Kaggle2 T4x2 paired seed42 screen,4 wall/quota hours,8 physical T4 hours, no automatic successor.",
+  "automatic_successor_authorized": false,
+  "execution_mode": "prepared-v2",
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-configured-authority-v1",
+  "fresh_native_execution_gate": true,
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 8,
+    "owner": "kaseichou",
+    "wall_ceiling_seconds": 14400
+  },
+  "interfaces": [
+    [
+      "esa_small",
+      "4"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "kaggle_quota_hours_ceiling": 4,
+  "logical_run_id": "esa-count-persistence-k2-100k-s42-v1",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "protected_role_access_authorized": false,
+  "purpose": "CONFIGURED_SCREEN",
+  "recipes": {
+    "esa_count": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    },
+    "esa_reference": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    }
+  },
+  "research_design": {
+    "campaign_ref": "experiments/esa_count_persistence_100k/protocol.md",
+    "reference_status": "One newly frozen same-run reference for this exact60-pass contract; reuse after acceptance, no historical upgrade."
+  },
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v1",
+  "same_run_reference_arm_id": "esa_reference",
+  "scale_500k_authorized": false,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_reissue_authorized": true,
+  "user_authorized": true
+}

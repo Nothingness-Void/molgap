@@ -84,4 +84,5 @@ and its decision remains the authority. Grouping is by routing domain only.
 `pcqm_gptrans_t_100k_v4/` · `pcqm_gptrans_t_500k/` ·
 `pcqm_gptrans_v5_audit_reference/` · `pcqm_gptrans_bottleneck_audit/` ·
 `pcqm_gptrans_triplet_portability/` · `pcqm_gptrans_source_dependence/` ·
-`pcqm_gptrans_execution40/` · `pcqm_gptrans_execution_tuning40/`
+`pcqm_gptrans_execution40/` · `pcqm_gptrans_execution_tuning40/` ·
+`esa_count_persistence_100k/`

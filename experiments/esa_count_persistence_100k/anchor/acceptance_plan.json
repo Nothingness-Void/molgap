@@ -1,0 +1,21 @@
+{
+  "arms": [
+    {
+      "arm_id": "esa_native_v3",
+      "contract": {
+        "path": "experiments/esa_count_persistence_100k/anchor/contract.json",
+        "sha256": "294052d54ecbf85b5994ccf4f5c764fef64428dfa738b8604cc0d0f77f7c4761"
+      },
+      "target_manifest": {
+        "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+        "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2"
+      }
+    }
+  ],
+  "format": "molgap-modern2d-formal-reference-plan-v1",
+  "inputs": {
+    "path": "experiments/modern2d_configured_100k/research_arms/anchors/esa/training_inputs.json",
+    "sha256": "56c112057edce84092ad926d3c9a0275019fb21c0ec3da9f05172ac2aa12ff83"
+  },
+  "spec_identity": "35c5e7b923648ed6e53ec80ad9140f8c049f7f574df0f5626a9720fe9476c116"
+}
