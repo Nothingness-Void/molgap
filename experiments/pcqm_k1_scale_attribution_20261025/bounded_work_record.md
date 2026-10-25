@@ -55,3 +55,23 @@ reported separately. It has not been launched or claimed to improve accuracy.
 
 Final integration, strict-acceptance and portable-check results are recorded
 below only after their actual commands complete.
+
+## Completed qualification and integration verification
+
+The real tail acceptance rerun completed in11.898seconds using
+CANONICAL_READ_ONLY: native proofs and strict replay VERIFIED for both arms,
+candidate STRICT_CAUSAL/VERIFIED, no exclusions and no changes to31 preexisting
+files during acceptance. Top-level scientific/READY evaluation is deliberately
+not claimed; the previously frozen negative decisions remain authoritative.
+
+Negative owner`cda7921ac72bff68f3996e85335d3343ef1c9f5c` is reachable from pushed
+archive`373e276292ad9af50297638c178a1b0cb8503433`. The integration branch imports
+168 canonical/configuration files,1,093,315bytes, with all Git HEAD hashes/lengths
+verified against the source owner. It excludes the preparation helper and does
+not merge rejected shared implementation.
+
+The integration branch's RML rebuild and check --frozen both passed. The two
+tail entries are capability complete with no exclusions, and both diagnostic
+attempts are finalized NO_TRAIN. Exact execution receipts are preserved under
+`infrastructure_verification/desktop_integration/`. The final portable availability
+check is separate and must not be inferred from index freshness.
