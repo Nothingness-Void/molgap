@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "RUN_MATCHED60",
+    "field": "user_authorized_research_campaign",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "Human standing unchanged-scientific-contract infrastructure-error retry authorization; one source-repaired retry only.",
+    "authority_ref": "experiments/esa_count_persistence_100k/retry_v2/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "esa-count-persistence-train100k-commondev50k-60pass-fp32-bs128-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Failed allocation retained separately; full account quota increment227.773s debited.",
+      "One retry ceiling13500s/3.75wallquota hours/7.5physicalT4-hours; combined below original4hour budget.",
+      "No completed formal model from failed attempt; exact same60pass recipe and strict pair, new native admission mandatory."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "f34906ceb9c5ac8c8dd0de74ed3ed678e0b5ba82cc6aa438fcf0f5f2f4858abf",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "esa-count-persistence-repair-100k",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_research_campaign"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

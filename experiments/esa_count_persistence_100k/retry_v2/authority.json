@@ -1,0 +1,74 @@
+{
+  "aggregate_original_wall_ceiling_seconds": 14400,
+  "allocated_t4_hours_ceiling": 7.5,
+  "arms": [
+    "esa_reference",
+    "esa_count"
+  ],
+  "authorization_basis": "Human standing instruction authorizes unchanged-contract error diagnosis and repair/retry without reconfirmation. Coordinator permits one repaired-source reissue after pre-training infrastructure failure140716050/v1; no scientific delta. Combined account quota debit227.773s plus retry ceiling13500s is below original14400s. No automatic successor or additional seed/scale/protected role.",
+  "automatic_successor_authorized": false,
+  "execution_mode": "prepared-v2",
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-configured-authority-v1",
+  "fresh_native_execution_gate": true,
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 7.5,
+    "owner": "kaseichou",
+    "wall_ceiling_seconds": 13500
+  },
+  "interfaces": [
+    [
+      "esa_small",
+      "4"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "kaggle_quota_hours_ceiling": 3.75,
+  "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "prior_account_quota_debit_seconds": 227.773,
+  "protected_role_access_authorized": false,
+  "purpose": "CONFIGURED_SCREEN",
+  "recipes": {
+    "esa_count": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    },
+    "esa_reference": {
+      "horizon_passes": 60,
+      "horizon_steps": 46860
+    }
+  },
+  "research_design": {
+    "campaign_ref": "experiments/esa_count_persistence_100k/retry_v2/protocol.md",
+    "reference_status": "Same frozen science, new strict pair identities under repaired source; no inherited native training certificate."
+  },
+  "retry_of": {
+    "failure_ref": "experiments/esa_count_persistence_100k/results/failure_v1/failure.json",
+    "formal_optimizer_updates_observed": 0,
+    "kernel": "kaseichou/molgap-esa-count-persistence-100k-v1",
+    "kernel_id": 140716050,
+    "terminal_status": "ERROR",
+    "version": 1
+  },
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v2",
+  "same_run_reference_arm_id": "esa_reference",
+  "scale_500k_authorized": false,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_reissue_authorized": true,
+  "user_authorized": true
+}
