@@ -45,7 +45,7 @@ def _commit(case, value, authority, path):
 
 
 @pytest.mark.parametrize("purpose", ["optimizer_comparison", "initialization_comparison"])
-def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scientific, purpose):
+def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scientific, purpose, tmp_path):
     case = scientific
     value, authority, path = _pair(case)
     if purpose == "initialization_comparison":
@@ -105,6 +105,13 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
                for arm in blocked["arms"])
     target_path.write_bytes(retained)
     assert check_acceptance_plan(spec, case.repo, acceptance, require_training_targets=True)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    from molgap.kaggle_workflow import stage_acceptance_inputs
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+    staged = tmp_path / "acceptance"
+    staged_binding = stage_acceptance_inputs(spec, case.repo, plan["acceptance_plan"], staged)
+    assert TargetIdentityBinding.from_acceptance_plan(
+        spec, staged, staged_binding["plan_path"], plan_sha256=staged_binding["plan_sha256"]
+    ).repo_root == staged.absolute()
     for binding in spec.to_dict()["prospective"]["arms"]:
         proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
