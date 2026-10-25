@@ -1,0 +1,234 @@
+{
+  "format": "molgap-native-qualification-review-v1",
+  "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+  "attempt_id": "v1",
+  "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+  "source_commit": "873c3ac4e8c04f7658d5f1711d1fe4e17f7d9eb12",
+  "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+  "input_resolution": {
+    "method": "resolve_run_acceptance_inputs",
+    "status": "RESOLVED",
+    "run_directory": "D:\\molgap-artifacts\\runs\\pcqm-k1-tail-regularization-500k-s42\\v1",
+    "source_of_context": "frozen original run receipt and packaged acceptance/spec"
+  },
+  "arms": {
+    "tail_wd1e3": {
+      "status": "VERIFIED",
+      "inspection": "inspect_retained_native_qualification(inventory_only=False)",
+      "elapsed_seconds": 7.477268999999978,
+      "elapsed_scope": "single local call wall time; includes certificate-bound archive verification and CPU proof validation; excludes input resolution and report serialization",
+      "blockers": [],
+      "native_dependency_count": 3,
+      "known_local_bytes": 111876663,
+      "dependencies": [
+        {
+          "path": "native_proofs.zip",
+          "size_bytes": 111873157,
+          "sha256": "6bfba9924ac218930f23b4886da890b3ce2bc94ae6f2c7ff69c6aed53ad37025",
+          "certificate_sha256": "6bfba9924ac218930f23b4886da890b3ce2bc94ae6f2c7ff69c6aed53ad37025"
+        },
+        {
+          "path": "runtime_certificate.json",
+          "size_bytes": 1943,
+          "sha256": "10706d8675649fa78eaeed467d018a9b55ddc642ecc3071412dbcf4bcc6d1f20"
+        },
+        {
+          "path": "runtime_provenance.json",
+          "size_bytes": 1563,
+          "sha256": "69a05305f11a80188801f00bbf01d07b7092d678426652bd7c7fa9289ebf43f7"
+        }
+      ],
+      "identity": {
+        "resolved_context": {
+          "experiment_id": "pcqm_k1_tail_regularization_500k",
+          "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+          "arm_id": "tail_wd1e3",
+          "arm_identity": "bc311d19bd0b174df45bebf9adf6d63e6b446621a88c98cd23351ff0856e49b4",
+          "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+          "family_name": "neural_atom_k1",
+          "family_version": "3",
+          "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+          "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+          "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+          "training_recipe_sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648",
+          "platform": "kaggle",
+          "account": "nothingnessvoid",
+          "run_reference": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+          "platform_version": "1"
+        },
+        "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+        "manifest_sha256": "a5aa6e8f62849bcb600016d6d0b5e202d3fc738c08d2d55a98510d6cd60b89aa",
+        "runtime_certificate_id": "bf50371cdccbc9dfaeb0f8b8a0dcf9df1bdbc0efd6626d1720bc031badb1ef54",
+        "training_recipe_sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648",
+        "recipe_identity": "2f4098efa1f9362cff8a2f1ad11a8c97a672b5ecce7c68c3d8026109bcf1c220",
+        "provenance_sha256": "647f1b2472a302ebd4f09f94fa1c6b45e9079a17d043513b2de93da5f1c23de8"
+      },
+      "certificate": {
+        "status": "accepted",
+        "formal_training_exposure": 0,
+        "probe_recipe_identity": "922eef8616663be5c9c8d9afd118ba13ca9548a9b62e655e7f1e0474592daa5c",
+        "proof_storage": {
+          "path": "native_proofs.zip",
+          "size_bytes": 111873157,
+          "sha256": "6bfba9924ac218930f23b4886da890b3ce2bc94ae6f2c7ff69c6aed53ad37025",
+          "members": {
+            "repeat-a.pt": {
+              "size_bytes": 59134885,
+              "sha256": "5032394f757959137f200a977bdb71e3ca8b5a008559dde24f9b73196a2e1580"
+            },
+            "repeat-b.pt": {
+              "size_bytes": 59134885,
+              "sha256": "6deffd4b3096e215b7cca515d200f4747dc5634d300b1ea9bd7ad709e13e67a1"
+            },
+            "resumed-first.pt": {
+              "size_bytes": 59123263,
+              "sha256": "5662a30188487e82298c189fa985079a73f2a691e89afe08f2c7d8ebc572752c"
+            },
+            "resumed.pt": {
+              "size_bytes": 59133203,
+              "sha256": "461fd187c1a35e0fa1080a5d70510cc140c889c44124ded0cc765b49226fc348"
+            }
+          }
+        },
+        "resume_origin": {
+          "path": "resumed-first.pt",
+          "sha256": "5662a30188487e82298c189fa985079a73f2a691e89afe08f2c7d8ebc572752c"
+        },
+        "proofs": [
+          {
+            "path": "repeat-a.pt",
+            "sha256": "5032394f757959137f200a977bdb71e3ca8b5a008559dde24f9b73196a2e1580",
+            "state_fingerprint": "bdf02f0ad649759ddc98afcd2e900ed0e22d400de5e4698220b985be6f87e86a"
+          },
+          {
+            "path": "repeat-b.pt",
+            "sha256": "6deffd4b3096e215b7cca515d200f4747dc5634d300b1ea9bd7ad709e13e67a1",
+            "state_fingerprint": "bdf02f0ad649759ddc98afcd2e900ed0e22d400de5e4698220b985be6f87e86a"
+          },
+          {
+            "path": "resumed.pt",
+            "sha256": "461fd187c1a35e0fa1080a5d70510cc140c889c44124ded0cc765b49226fc348",
+            "state_fingerprint": "bdf02f0ad649759ddc98afcd2e900ed0e22d400de5e4698220b985be6f87e86a"
+          }
+        ]
+      },
+      "scientific_acceptance": "NOT_EVALUATED",
+      "strict_replay_readiness": "NOT_EVALUATED"
+    },
+    "tail_wd1e2": {
+      "status": "VERIFIED",
+      "inspection": "inspect_retained_native_qualification(inventory_only=False)",
+      "elapsed_seconds": 2.2397374000001946,
+      "elapsed_scope": "single local call wall time; includes certificate-bound archive verification and CPU proof validation; excludes input resolution and report serialization",
+      "blockers": [],
+      "native_dependency_count": 3,
+      "known_local_bytes": 111876054,
+      "dependencies": [
+        {
+          "path": "native_proofs.zip",
+          "size_bytes": 111872548,
+          "sha256": "a7c517bc3cf03fa07b36d458455d87f52c3fa0f459c25dc3d19e82661f02572e",
+          "certificate_sha256": "a7c517bc3cf03fa07b36d458455d87f52c3fa0f459c25dc3d19e82661f02572e"
+        },
+        {
+          "path": "runtime_certificate.json",
+          "size_bytes": 1943,
+          "sha256": "04d5988533a24c57267e030a2d3f7fd36456bf936fd4c9ce2041e0b6c23c4c5c"
+        },
+        {
+          "path": "runtime_provenance.json",
+          "size_bytes": 1563,
+          "sha256": "b790ec9a8a7aecda6a6eadee623327edaaf23f1ad513723d6f60480961c2ce5d"
+        }
+      ],
+      "identity": {
+        "resolved_context": {
+          "experiment_id": "pcqm_k1_tail_regularization_500k",
+          "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+          "arm_id": "tail_wd1e2",
+          "arm_identity": "6554a0f06d86080812f86e7439a3d93791aa0a49e56d31c76cd58bac95a0ac37",
+          "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+          "family_name": "neural_atom_k1",
+          "family_version": "3",
+          "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+          "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+          "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+          "training_recipe_sha256": "2833210e4d2cb89170848acef45270025c8348a613637a43e15a4946e9680f9b",
+          "platform": "kaggle",
+          "account": "nothingnessvoid",
+          "run_reference": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+          "platform_version": "1"
+        },
+        "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+        "manifest_sha256": "688559b69bad4c7bfc26aa299e89e105e657175975cc6f4b7f991a3ce1632853",
+        "runtime_certificate_id": "e21a24b6f0f39b7d8466a43ebf89f9984eecf00560aa0b66493045083a43d9dd",
+        "training_recipe_sha256": "2833210e4d2cb89170848acef45270025c8348a613637a43e15a4946e9680f9b",
+        "recipe_identity": "6e1c0a0cd706ee2f830facb2328386693e026ef0f64226a43889d3f69c148c92",
+        "provenance_sha256": "dbdddcd696f5a71ea3396251b818d85a1c06d02c6efea5d68a04ef0111722433"
+      },
+      "certificate": {
+        "status": "accepted",
+        "formal_training_exposure": 0,
+        "probe_recipe_identity": "c4f79408ac14b6da67573004d82e8f617269c34d0a3e632f4da1041a8efa06a0",
+        "proof_storage": {
+          "path": "native_proofs.zip",
+          "size_bytes": 111872548,
+          "sha256": "a7c517bc3cf03fa07b36d458455d87f52c3fa0f459c25dc3d19e82661f02572e",
+          "members": {
+            "repeat-a.pt": {
+              "size_bytes": 59134885,
+              "sha256": "3021da6cd30791b4987c899f58e5c451481d3ef36c6e11ad7e5a95a7ec7bc9fc"
+            },
+            "repeat-b.pt": {
+              "size_bytes": 59134885,
+              "sha256": "aa6df7efeb395d44f6f28ec583f51a95e44568766c0fe9f4f82eefb4bb4622bb"
+            },
+            "resumed-first.pt": {
+              "size_bytes": 59123263,
+              "sha256": "8be2ad1c9276838ccf001b37fc537e6d8ce9606e64a9d806775aa732b550882f"
+            },
+            "resumed.pt": {
+              "size_bytes": 59133203,
+              "sha256": "219603cb94d04c683a44de3fc34361624c9b23a8305d9647306af4a2c9e562b7"
+            }
+          }
+        },
+        "resume_origin": {
+          "path": "resumed-first.pt",
+          "sha256": "8be2ad1c9276838ccf001b37fc537e6d8ce9606e64a9d806775aa732b550882f"
+        },
+        "proofs": [
+          {
+            "path": "repeat-a.pt",
+            "sha256": "3021da6cd30791b4987c899f58e5c451481d3ef36c6e11ad7e5a95a7ec7bc9fc",
+            "state_fingerprint": "090f7920f2c9a4843864e1333e62d6356c3d6a9801cc5e8a87f654731c0ef5d2"
+          },
+          {
+            "path": "repeat-b.pt",
+            "sha256": "aa6df7efeb395d44f6f28ec583f51a95e44568766c0fe9f4f82eefb4bb4622bb",
+            "state_fingerprint": "090f7920f2c9a4843864e1333e62d6356c3d6a9801cc5e8a87f654731c0ef5d2"
+          },
+          {
+            "path": "resumed.pt",
+            "sha256": "219603cb94d04c683a44de3fc34361624c9b23a8305d9647306af4a2c9e562b7",
+            "state_fingerprint": "090f7920f2c9a4843864e1333e62d6356c3d6a9801cc5e8a87f654731c0ef5d2"
+          }
+        ]
+      },
+      "scientific_acceptance": "NOT_EVALUATED",
+      "strict_replay_readiness": "NOT_EVALUATED"
+    }
+  },
+  "total_native_qualification_seconds": 9.717006400000173,
+  "scope": {
+    "remote_access": "none",
+    "training_or_inference": "none",
+    "result": "native proof qualification verified for both arms",
+    "does_not_establish": [
+      "scientific acceptance",
+      "strict comparison",
+      "strict replay readiness",
+      "promotion/adoption"
+    ]
+  }
+}

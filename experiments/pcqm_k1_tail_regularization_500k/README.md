@@ -17,3 +17,7 @@ for logical run `pcqm-k1-tail-regularization-500k-s42`, attempt `v1`.
 Retain the tiny `initial_development_check.json` diagnostic from each arm as well.
 No output-all download. Separate strict mechanical replay from historical parent
 comparison, fine-tuning benefit and adoption. No terminal claims before evidence.
+
+Terminal endpoints and the exact strict-qualification blocker are in STATUS.md;
+decision.md closes both scientific recipes as negative. Retain the owner until
+the unresolved qualification is reconciled; this is not a replay-ready pair.

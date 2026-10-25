@@ -1,41 +1,51 @@
 # Status
 
-Owner: `codex/exp/k1-tail-regularization-500k`, based on desktop7aa6814b.
-Kaggle1 [kernel140639445/version1](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-tail-wd-500k-s42)
-is submitted. The source response, exact receipt and byte-verification records
-are retained in [submission](submission/launch_receipt.json).
+Desktop owner: `codex/exp/k1-tail-regularization-500k`.
+Kaggle1 kernel140639445/version1 is COMPLETE. Luna's terminal observation is
+retained in [submission/terminal_observation.json](submission/terminal_observation.json).
+The same Luna monitor is PAUSED; no successor/retry is authorized.
 
-Frozen executable source873c3ac4, Spec
-`f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994`, package
-`09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32`.
-Arms `tail_wd1e3` and `tail_wd1e2` each target20passes/78,120new optimizer steps.
+Both arms completed20/20 new passes,78120 updates,9999360 sample presentations.
+Both initial50000-row predictor checks are VERIFIED with exactly zero prediction
+and MAE difference. The source/spec/package and receipts remain frozen.
 
-Luna verified actual startup at2026-10-25 04:08JST (2026-10-24 19:08UTC):
-both arms completed pass1 with3,906steps/499,968sample presentations and remained
-RUNNING without a failure message. Their fail-closed initial predictor checks
-therefore passed before formal updates. [Exact startup observation](submission/startup_verified_observation.json)
-retains source resolution, native preflight/train phase starts and both TRAIN_LOGs.
-
-| Arm | Pass1 LIVE development MAE/eV | Shadow EMA MAE/eV | Invocation elapsed/s |
+| Arm | Best LIVE pass | Best LIVE MAE/eV | Final LIVE MAE/eV |
 |---|---:|---:|---:|
-| tail_wd1e3 |0.10771922767162323|0.10591693222522736|665.05886826|
-| tail_wd1e2 |0.10838806629180908|0.10583055764436722|666.768229678|
+| tail_wd1e3 |15|0.1058295891|0.1064472869|
+| tail_wd1e2 |15|0.1056173816|0.1064675227|
 
-These are first-pass progress points, not final benefit or an early-stop gate.
-No terminal acceptance, replay-ready result or model adoption is claimed.
+Initial LIVE MAE:0.1049040854eV. Both tail recipes are
+NEGATIVE_UNDER_CONTRACT; see [decision](decision.md), [attribution](attribution.md)
+and the saved-artifact [analysis](analysis/analysis_summary.json).
+This is not a failure of training execution and not proof of every K1 route failing.
 
-The source create call lost its response with HTTPError. Read-only reconciliation
-proved the exact private source version1 ready; the original journal then
-verified content and continued to this one bound kernel. No second source or
-kernel was created. The diagnostic-observability gap was reported to the
-infrastructure owner; the frozen training package remains unchanged.
+Existing shared retrieval obtained only manifest-selected model/resume/predictions,
+contracts/traces and certificate-bound compressed native proofs:373255330new payload
+bytes plus53807B metadata. All are on D:. No old resume chunks, graph cache,
+environment or output-all copy was downloaded. Two retrieval mappings are retained
+under D:/molgap-artifacts/runs/pcqm-k1-tail-regularization-500k-s42/v1/operations/retrieved_outputs.
 
-Durable operation root:
-`D:/molgap-artifacts/runs/pcqm-k1-tail-regularization-500k-s42/v1/operations`.
-One existing Luna/max conversation owns30minute same-chat heartbeat checks.
-Its ID is `01a168cc-d27b-7363-bccf-cbdecc42c4d4`, titled
-`Kaggle1 K1 500K 后段双臂监控`; it notifies the parent once at terminal state.
-The primary agent does not poll runtime. Desktop offline time is allowed; no
-server transfer or takeover. Local heartbeat checks require this desktop online;
-the Kaggle job runs independently. The startup condition for the user's shutdown
-request is satisfied. The exact shutdown command result is reported separately.
+Measured allocation window:23635.887890484002T4device-seconds,6.565524414device-hours
+pair. Queue/provisioning before Python remain unknown. Owning cost ledgers are
+under D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment.
+
+Mechanical output inspection and aligned50000-row diagnosis pass for both arms.
+Strict replay qualification is BLOCKED: the frozen target manifest omits
+training_float32_target_sha256; shared prepare/release did not reject that missing
+input. [Exact blocker](analysis/strict_blocker.json) is reported to the authorized
+infrastructure task. Frozen evidence is not changed. No replay-ready claim is made.
+
+The fixed uniform16384TRAIN/BN endpoint discriminator is insufficient_evidence
+because the exact graph cohort is not locally retained. No different cohort or
+bulk cache hydration was used. The scientific negative endpoint remains valid;
+weight versus BN causality is not established.
+
+Keep the owner ref/worktree while strict qualification remains unresolved.
+Do not merge rejected tail implementation into desktop or delete its recovery ref.
+
+Shared non-strict terminal publication has completed for both arms: closure_complete=true.
+RML check --frozen passes. The two trajectories are discoverable with their negative
+decisions, observed roles/costs and full20-point traces. Their replay entries remain
+excluded until strict target/reference qualification is supplied; mechanical
+publication is not a substitute for replay readiness. See
+[closure receipt](analysis/mechanical_closure.json).

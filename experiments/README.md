@@ -1,5 +1,10 @@
 # Experiments
 
+[K1 selected-weight tail regularization500K](pcqm_k1_tail_regularization_500k/STATUS.md)
+completed both20-pass arms and closes negative without adoption. Mechanical RML
+closure passes; strict replay is blocked by missing ordered TRAIN-target evidence.
+Its owner remains retained for qualification reconciliation.
+
 K1 equal-content hop-shell100K is terminally accepted with two complete strict
 replay entries. The1.116meV ordered-shell gain misses its3meV gate; both training
 and local frozen-shell attribution are closed without adoption.

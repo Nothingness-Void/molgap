@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "11b183cb4fdff1648ca927c4e635faebb4476c06599b1028450391fd14e92daf",
+  "source_digest": "a45afef3f1a150a195e27055efba122b599ce8f678185a33f518d499596fd4a5",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -182,13 +182,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
       "family_id": "pcqm-k1-tail-regularization-500k-s42",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
     },
@@ -196,13 +198,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
       "family_id": "pcqm-k1-tail-regularization-500k-s42",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
     },

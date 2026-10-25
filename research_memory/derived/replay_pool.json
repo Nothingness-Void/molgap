@@ -32237,6 +32237,38 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e2:downstream",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-tail-regularization-500k-s42:tail_wd1e3:downstream",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -32626,5 +32658,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "9c05b048d3896672b978fb33c0fe85e02910a2f35e1ba2c6b0969d57097dded5"
+  "source_digest": "b24ebe40ecc268bcf1366259a5df2373e7270335fa0daf4a83ed459b2d12c316"
 }

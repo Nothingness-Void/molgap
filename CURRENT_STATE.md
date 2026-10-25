@@ -3,9 +3,11 @@
 ## Owning branch question
 
 This experiment checkout owns the [K1 selected-weight tail regularization500K pair](experiments/pcqm_k1_tail_regularization_500k/STATUS.md),
-Kaggle1 kernel140639445/version1. It is separate from the desktop recommendation
-below. Frozen20-pass recipes compare WD1e-3/1e-2; no adoption or terminal result
-is implied. Source, runtime and acceptance remain on this owner until closure.
+Kaggle1 kernel140639445/version1 is complete. Both frozen20-pass WD1e-3/1e-2
+recipes close negative; no adoption or additional exposure is recommended.
+Mechanical/scientific RML closure passes. Strict replay remains blocked by missing
+ordered TRAIN-target evidence; keep this owner and exact artifacts for reconciliation.
+The desktop recommendation below is unchanged.
 
 ## Reuse Navigation
 

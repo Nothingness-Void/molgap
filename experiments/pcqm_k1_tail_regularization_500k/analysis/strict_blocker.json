@@ -1,0 +1,32 @@
+{
+  "format": "molgap-operation-observation-v1",
+  "operation": "accept-workflow --strict --execute",
+  "status": "BLOCKED",
+  "scientific_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "error_type": "KeyError",
+  "error_key": "training_float32_target_sha256",
+  "source_location": "src/molgap/experiment_family_workflow.py:174",
+  "frozen_target_manifest": "experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+  "frozen_manifest_sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6",
+  "present_fields": [
+    "development_target_sha256",
+    "target",
+    "target_encoding"
+  ],
+  "cause": "Experiment preparation omitted TRAIN target digest; shared prepare/release did not reject it before submission. Strict target-transform construction indexes it only at terminal acceptance.",
+  "preserved": [
+    "frozen source/spec/package/manifest",
+    "real two-arm outputs",
+    "initial prediction reproduction",
+    "native proof archives",
+    "allocation ledgers"
+  ],
+  "not_allowed": [
+    "substitute development or dataset hash for training target bytes",
+    "mutate frozen manifest",
+    "claim two complete replay entries",
+    "rerun training"
+  ],
+  "data_availability": "No locally retained exact full500K target payload; three TRAIN shards cannot establish full500K target hash.",
+  "reported_to_infrastructure_thread": "01a14421-e9d1-73a1-9059-3723d77d0f02"
+}
