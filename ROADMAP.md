@@ -11,6 +11,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
+Accept the [ESA count-persistence screen](experiments/esa_count_persistence_100k/protocol.md)
+through saved-artifact inspection and reference-first RML closure, then assess
+endpoint and late-curve persistence. Existing Luna B owns healthy monitoring;
+do not duplicate the task or treat a planned pair as terminal Replay evidence.
+
 The [Modern2D structural decision](experiments/modern2d_structure_100k/results/decision.md)
 retains ESA count conditioning as an exploratory lead, not a scale release.
 Review observed-role/reference closure before a separately authorized scientific

@@ -6,6 +6,12 @@
 
 ## Server execution status
 
+The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
+was submitted to Kaggle2 as one reference/candidate60-pass screen. Exact receipt
+and prospective comparison belong to that experiment. The existing Luna B
+heartbeat monitors it; native admission, scientific outcome and terminal Replay
+remain pending. No automatic successor,500K or protected-role release follows.
+
 The [PPGT/ESA structural screen](experiments/modern2d_structure_100k/results/decision.md)
 completed both20-pass endpoints with independent native/output acceptance.
 Retain ESA count readout as a contextual exploratory lead; close this PPGT
