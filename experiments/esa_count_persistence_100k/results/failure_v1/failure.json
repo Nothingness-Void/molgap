@@ -1,0 +1,109 @@
+{
+  "allocated_device_seconds_measured": 441.760206446,
+  "artifacts": [
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/bootstrap_allocation.json",
+      "sha256": "0f316aeb119732751c13d5f92dd16e609ee5c49e0d166d1f927019cdd85a1a1f"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/environment_qualification.json",
+      "sha256": "b6120215e08c7eb0d99e610d94f0f3d0f7d0343fa24f3625d4c2d4a0a59846fb"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/allocation_ledger.json",
+      "sha256": "a0b0be99c8367f5618ff149a6a86bc043b23b08563ac50384dbb96fb6dee5a7d"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/execution_report.json",
+      "sha256": "3cefda7056244b5d639862c49866378969f951ebbfca7b8a61ad706930e2aa1e"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/execution_retention.json",
+      "sha256": "ebe45d29aaf800645d14bf8c1b654ac4bc37cc47587b2e0a88e2517f3268c34c"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/train_log_receipt.json",
+      "sha256": "986bbafabce6e58bbdae56b72a728edc230d9d174ee0cf7297e269db219df987"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/retry_budget_observation.json",
+      "sha256": "9f429ebec9c8b0419f2bc1538b83cd6ab6cb9d4a7b71714935c3f24322089a98"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/train.log",
+      "sha256": "704f6e0f4bdfde5498b704ec558e2560262f4c14cbbf0c1b0411a26ed1fc6087"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/runtime_certificate.json",
+      "sha256": "7335e07a7754d46569788d09ac4330308196440eb701a41eafb3644d9a985b5d"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/runtime_provenance.json",
+      "sha256": "f89d7a322d43d5970ec098060a2b87d7aedf07a8a950b8600b6dadfe60eb91a3"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/execution_repair.json",
+      "sha256": "99c212407144fbe2ef16e6cd5805dc39161e7ce94e59dbaaea90f5b576fe8bd8"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/preflight_costs.json",
+      "sha256": "4d586aff95b6a6b8b4a4ca72fc81bc8e73219507821d3a29ec4fa45ccc829231"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_reference/invocation_cost_state.json",
+      "sha256": "af96ececcbc482309ed2da5bd9e719454dddf4df53f16656b1d3f9f2d218a556"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/train.log",
+      "sha256": "704f6e0f4bdfde5498b704ec558e2560262f4c14cbbf0c1b0411a26ed1fc6087"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/runtime_certificate.json",
+      "sha256": "29ce3795bba51cf358c49a9d63fb1677582fabb7d681ed4261db1b17d7f87238"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/runtime_provenance.json",
+      "sha256": "aa4116331579e6be4826f0d68e559dc1fdf511a519a277ac7996b763722733db"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/execution_repair.json",
+      "sha256": "a2a725595656f58ffb6f4fda33c5b822b55f8869bdfcd2f78b7af9cca481b1f5"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/preflight_costs.json",
+      "sha256": "f5eeb2fba8af9972a48be9c6414a96f503266eca31813b5c5ed209c44b7ea907"
+    },
+    {
+      "path": "experiments/esa_count_persistence_100k/results/failure_v1/retained/experiment/esa_count/invocation_cost_state.json",
+      "sha256": "762302dc49fa84097710878f9e9357357fb57e00ee318927c8d8e38194592b9a"
+    }
+  ],
+  "billing": "measurement_missing",
+  "canonical_rml_finalized": false,
+  "cause": "verify_repair_proof required loose repeat-b.pt after compact_certificate/retire_proof_sources moved those exact bytes into native_proofs.zip.",
+  "classification": "INFRASTRUCTURE_ONLY",
+  "failed_wall_seconds_measured": 220.880103223,
+  "formal_optimizer_updates_observed": 0,
+  "formal_update_basis": "Both tracebacks stop at _verify_preflight before the formal Session run; exact output listing contains no formal trace/model/checkpoint. Scratch native proof updates are separate.",
+  "format": "molgap-execution-failure-observation-v1",
+  "kernel": "kaseichou/molgap-esa-count-persistence-100k-v1",
+  "kernel_id": 140716050,
+  "native_state_retrieval": "Certificate/report metadata and original digests retained; large archives remain independently retrievable from private exact Kaggle version.",
+  "package_identity": "948c135343390ddf7e45dd8abfe5fa190feeba1b7bd8952bfac6b0b7203d4f64",
+  "preflight_returncodes": [
+    0,
+    0
+  ],
+  "repair": "Use existing native_proof_storage.load_proof with original path+SHA and retain numerical/resume gates.",
+  "replay_ready": false,
+  "role_audit": "No formal Session output audit was emitted; do not invent runtime role truth.",
+  "scheduler_status": "ERROR",
+  "scientific_status": "INCONCLUSIVE",
+  "source_commit": "9f0fe6222fdae7a2975c0497a15d8060be43662e",
+  "storage_attempt": "v2",
+  "training_process_returncodes": [
+    1,
+    1
+  ],
+  "version": 1
+}

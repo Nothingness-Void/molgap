@@ -1,0 +1,58 @@
+{
+  "format": "molgap-bounded-retry-budget-observation-v1",
+  "before": {
+    "observed_at": "2026-10-25T05:10:50.355072+00:00",
+    "quota": {
+      "quotaRefreshTime": "2026-10-31 00:00:00",
+      "gpuQuota": {
+        "totalTimeAllowed": {
+          "seconds": 108000,
+          "nanos": 0
+        },
+        "timeUsed": {
+          "seconds": 0,
+          "nanos": 0
+        },
+        "timeReserved": {
+          "seconds": 0,
+          "nanos": 0
+        }
+      }
+    },
+    "provider": "KaggleSdk.GetAcceleratorQuotaStatistics",
+    "quota_semantics": "platform_session_hours",
+    "available_gpu_hours": 30.0,
+    "authorized_ceiling_gpu_hours": 4
+  },
+  "after": {
+    "observed_at": "2026-10-25T05:48:24.539451+00:00",
+    "quota": {
+      "quotaRefreshTime": "2026-10-31 00:00:00",
+      "gpuQuota": {
+        "totalTimeAllowed": {
+          "seconds": 108000,
+          "nanos": 0
+        },
+        "timeUsed": {
+          "seconds": 227,
+          "nanos": 773000000
+        },
+        "timeReserved": {
+          "seconds": 0,
+          "nanos": 0
+        }
+      }
+    },
+    "provider": "KaggleSdk.GetAcceleratorQuotaStatistics",
+    "quota_semantics": "platform_session_hours",
+    "available_gpu_hours": 29.93672972222222,
+    "authorized_ceiling_gpu_hours": 3.75
+  },
+  "account_quota_increment_seconds": 227.773,
+  "failed_python_wall_seconds": 220.880103223,
+  "retry_wall_ceiling_seconds": 13500,
+  "original_wall_ceiling_seconds": 14400,
+  "account_budget_headroom_seconds": 672.227,
+  "billing_per_job": "NOT_INFERRED",
+  "scope": "The full observed account increment is charged; no causality or full billing inferred."
+}

@@ -1,0 +1,39 @@
+{
+  "context": {
+    "experiment_id": "esa_count_persistence_100k",
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-v1",
+    "arm_id": "esa_reference",
+    "arm_identity": "331817a77bc4464188e9fe607f45b2eae300effe45996de55787e8bdc2c31a1a",
+    "spec_identity": "22a1ef0849c82646614a677e75aafe0abe0740206d9234b8b7905617f5e810b8",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "source_commit": "9f0fe6222fdae7a2975c0497a15d8060be43662e",
+    "source_archive_sha256": "790eb5cab8f885798e3ac2b78665ef996078a91e4035d7cda78963739889a1d7",
+    "package_identity": "948c135343390ddf7e45dd8abfe5fa190feeba1b7bd8952bfac6b0b7203d4f64",
+    "training_recipe_sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v1",
+    "platform_version": null
+  },
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 75.858383215,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "native qualification entry through proof publication"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": null,
+      "status": "missing",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "reason": "requires platform allocation accounting"
+    }
+  ]
+}

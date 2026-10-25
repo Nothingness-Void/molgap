@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 40, in <module>
+    main()
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 26, in main
+    result = execute_training_phase(spec=spec, job=job, phase=args.phase,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py", line 663, in execute_training_phase
+    return runner(spec=spec, package_dir=package_dir,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 1065, in run_screen_arm
+    certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 826, in _verify_preflight
+    report = verify_repair_proof(root, certificate['execution_repair_proof'], probe)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_execution_proof.py", line 140, in verify_repair_proof
+    file = _artifact_path(root, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_family_workflow.py", line 351, in _artifact_path
+    raise ValueError(f"Missing artifact: {value}")
+ValueError: Missing artifact: repeat-b.pt
