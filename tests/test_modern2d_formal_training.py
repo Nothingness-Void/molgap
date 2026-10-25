@@ -179,6 +179,37 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
     assert_equal(before, readonly.state_dict())
     readonly.close()
 
+    # A separate training process must re-read the same proof after native
+    # storage retires its loose file; an accepted producer alone is not enough.
+    from molgap.modern2d_execution_proof import compare_states, verify_repair_proof
+    from molgap.native_proof_storage import compact_certificate, retire_proof_sources
+    from molgap.research_memory.trace import atomic_write, file_digest, json_bytes
+
+    proof_root = tmp_path / "packed-execution-proof"
+    proof_root.mkdir()
+    for name in ("execution-reference.pt", "repeat-b.pt"):
+        torch.save(expected, proof_root / name)
+    pin = lambda name: {"path": name, "sha256": file_digest(proof_root / name)}
+    report = dict(format="molgap-modern2d-execution-repair-proof-v1",
+        recipe_identity=case.recipe.identity, scientific_training_released=False,
+        reference=pin("execution-reference.pt"), candidate=pin("repeat-b.pt"),
+        **compare_states(expected, expected))
+    report_path = proof_root / "execution_repair.json"
+    atomic_write(report_path, json_bytes(report))
+    proof = pin(report_path.name)
+    assert verify_repair_proof(proof_root, proof, case.recipe) == report
+    certificate = {"proofs": [pin("repeat-b.pt")]}
+    compact_certificate(proof_root, certificate)
+    atomic_write(proof_root / "runtime_certificate.json", json_bytes(certificate))
+    retire_proof_sources(proof_root, certificate)
+    assert not (proof_root / "repeat-b.pt").exists()
+    assert verify_repair_proof(proof_root, proof, case.recipe) == report
+    altered = deepcopy(report)
+    altered["candidate"]["sha256"] = "0" * 64
+    atomic_write(report_path, json_bytes(altered))
+    with pytest.raises(ValueError, match="bind the requested original"):
+        verify_repair_proof(proof_root, pin(report_path.name), case.recipe)
+
 
 def test_native_admission_and_preview_fail_before_payload(case, tmp_path, monkeypatch):
     from molgap import family_training_data, family_training_kernel, v4_runtime

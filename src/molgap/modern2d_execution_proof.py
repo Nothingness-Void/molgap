@@ -123,8 +123,8 @@ def run_reference(*, probe, data, tuning, options, output, formal_admission,
 
 def verify_repair_proof(root, proof, probe):
     """Recompute strict model-update drift from hash-bound saved CPU states."""
-    import torch
     from .experiment_family_workflow import _json, _artifact_path
+    from .native_proof_storage import load_proof
     from .research_memory.trace import file_digest
     root = Path(root)
     path = _artifact_path(root, 'execution_repair.json')
@@ -137,10 +137,14 @@ def verify_repair_proof(root, proof, probe):
         raise ValueError('Execution diagnostic cannot grant scientific training release')
     states = {}
     for role, name in (('reference', 'execution-reference.pt'), ('candidate', 'repeat-b.pt')):
-        file = _artifact_path(root, name)
-        if report[role] != dict(path=name, sha256=file_digest(file)):
+        binding = report[role]
+        if (type(binding) is not dict or set(binding) != {'path', 'sha256'}
+                or binding['path'] != name):
             raise ValueError('Execution diagnostic state binding changed')
-        states[role] = torch.load(file, map_location='cpu', weights_only=True)
+        # Preflight may retire exact-byte proofs into native_proofs.zip before
+        # the training process rechecks them. The storage owner verifies the
+        # original SHA for either representation; numerical gates stay here.
+        states[role] = load_proof(root, binding)
         from .family_training_session import validate_session_resume
         if validate_session_resume(probe, states[role]).status != 'complete':
             raise ValueError('Execution diagnostic scratch endpoint is incomplete')
