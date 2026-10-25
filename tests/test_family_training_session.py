@@ -84,7 +84,7 @@ def events():
     return {"checkpoint": [], "selected": [], "passes": []}
 
 
-def test_live_selection_with_frozen_ema_reporting_survives_serialized_resume():
+def test_live_selection_with_frozen_ema_reporting_survives_in_memory_resume():
     from dataclasses import replace
     log = events()
     complete = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch",

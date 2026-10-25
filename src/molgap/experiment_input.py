@@ -404,6 +404,10 @@ def _compile_scientific_input(path, root, value):
             new_record["profiling"] = deepcopy(record["profiling"])
         if "resume_keep_count" in record:
             new_record["resume_keep_count"] = record["resume_keep_count"]
+        if "initial_development_check" in record:
+            if arm["base"] != previous["base"] or addons != previous["addons"]:
+                raise ValueError("Initial predictor guard cannot be inherited by a changed architecture")
+            new_record["initial_development_check"] = deepcopy(record["initial_development_check"])
         initial = Path(item["initial_state_ref"])
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())

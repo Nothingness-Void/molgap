@@ -872,12 +872,28 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
             reference = retained["reference_development"]
             before = state_dict_sha256(kernel.model.state_dict())
             observed = kernel.evaluate(session.loaders, weights="live")
+            check = record["initial_development_check"]
+            for view in (reference, observed):
+                if type(view) is not dict or not {"source_idx", "target_eV", "prediction_eV", "mae_eV"} <= set(view):
+                    raise ValueError("Initial predictor requires complete retained prediction fields")
+                vectors = [view[key] for key in ("source_idx", "target_eV", "prediction_eV")]
+                if (any(not isinstance(value, torch.Tensor) or value.ndim != 1 for value in vectors)
+                        or vectors[0].numel() != recipe.development_rows
+                        or any(value.shape != vectors[0].shape for value in vectors)
+                        or vectors[0].dtype != torch.int64
+                        or any(not value.is_floating_point() or not torch.isfinite(value).all() for value in vectors[1:])):
+                    raise ValueError("Initial predictor requires finite, equally shaped development vectors")
+                mae = view["mae_eV"]
+                if type(mae) not in (int, float) or not math.isfinite(mae) or mae < 0:
+                    raise ValueError("Initial predictor requires finite nonnegative MAE")
+                recomputed = float((view["prediction_eV"] - view["target_eV"]).abs().mean())
+                if not math.isfinite(recomputed) or abs(recomputed - mae) > check["mae_tolerance_eV"]:
+                    raise ValueError("Initial predictor retained MAE differs from prediction bytes")
             if (not torch.equal(observed["source_idx"], reference["source_idx"])
                     or not torch.equal(observed["target_eV"], reference["target_eV"])):
                 raise ValueError("Initial predictor development rows/targets differ")
             delta = float((observed["prediction_eV"] - reference["prediction_eV"]).abs().max())
             mae_delta = abs(observed["mae_eV"] - float(reference["mae_eV"]))
-            check = record["initial_development_check"]
             if (delta > check["prediction_tolerance_eV"] or mae_delta > check["mae_tolerance_eV"]
                     or before != state_dict_sha256(kernel.model.state_dict())):
                 raise ValueError("Initial predictor does not reproduce its retained prediction")

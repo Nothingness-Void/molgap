@@ -476,14 +476,25 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         torch.save(initial_payload, guarded_initial)
         guard_record = {**record, "initial_development_check": {
             "prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}}
-        for matches in (True, False):
-            guard_root = tmp_path / ("guard-valid" if matches else "guard-mismatch")
+        for damage in ("valid", "mismatch", "nan_prediction", "wrong_shape", "nan_mae", "inconsistent_mae"):
+            matches = damage == "valid"
+            guard_root = tmp_path / ("guard-" + damage)
             guard_root.mkdir()
             worker._begin_cost_interval(guard_root, ctx, had_checkpoint=False)
-            if not matches:
-                initial_payload["reference_development"] = {**reference,
-                    "prediction_eV": reference["prediction_eV"] + 1}
-                torch.save(initial_payload, guarded_initial)
+            guarded_reference = deepcopy(reference)
+            if damage == "mismatch":
+                guarded_reference["prediction_eV"] += 1
+                guarded_reference["mae_eV"] = float((guarded_reference["prediction_eV"] - guarded_reference["target_eV"]).abs().mean())
+            elif damage == "nan_prediction":
+                guarded_reference["prediction_eV"][0] = float("nan")
+            elif damage == "wrong_shape":
+                guarded_reference["prediction_eV"] = guarded_reference["prediction_eV"].reshape(-1, 1)
+            elif damage == "nan_mae":
+                guarded_reference["mae_eV"] = float("nan")
+            elif damage == "inconsistent_mae":
+                guarded_reference["mae_eV"] += .1
+            initial_payload["reference_development"] = guarded_reference
+            torch.save(initial_payload, guarded_initial)
             with monkeypatch.context() as boundary:
                 boundary.setattr(worker, "_bootstrap", lambda **_: (
                     guard_record, recipe, data, ExecutionTuning(training_workers=0, development_workers=0),
@@ -500,7 +511,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
                     assert accepted["status"] == "VERIFIED" and accepted["optimizer_steps"] == 0
                     assert created[-1].progress.optimizer_step == 1
                 else:
-                    with pytest.raises(ValueError, match="does not reproduce"):
+                    with pytest.raises(ValueError, match="Initial predictor"):
                         worker.run_screen_arm(**options)
                     assert created[-1].progress.optimizer_step == 0
                     assert not (guard_root / "last_checkpoint.pt").exists()
