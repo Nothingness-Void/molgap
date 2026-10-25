@@ -1,6 +1,29 @@
 # Submission state
 
-2026-10-26 JST: NOT_SUBMITTED. Source preparation is in progress.
-Initialization comparison was unsupported at desktop340800a1; the infrastructure
-owner is repairing that exact gap. No remote publication or training is claimed.
-Physical IDs/version/source receipts remain pending.
+2026-10-26 JST: both authorized Kaggle1 jobs are submitted and receipt-bound.
+Scheduler observations report RUNNING; native qualification and training progress
+are not established by these observations. No automatic successor or retry.
+
+| Slot | Kernel ID / version | Scheduler | Durable operations |
+| --- | --- | --- | --- |
+| single | 140826099 / 1 | RUNNING | [pcqm-k1-init-forward-500k-single-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-single-s42/v1/operations/) |
+| mean2 | 140826274 / 1 | RUNNING | [pcqm-k1-init-forward-500k-mean2-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-mean2-s42/v1/operations/) |
+
+Frozen execution source remains `64933302a449cd48961a610028a17bd6ae6d2e23`.
+Both original v1 packages, run IDs, launch bytes and four published prospective
+trajectories were reused. Recovery extracted only the pinned comparison declaration
+from each verified source package into its acceptance attachments, then used existing
+release binding and platform submission. Each workflow report retains the original
+error and recovery facts. No source refreeze or prospective republication occurred.
+
+The local staging fix is `b6f17d11` (cherry-pick of `776868f6`); it does not replace
+the frozen worker source. Both source datasets are private version1, with complete
+upload byte verification and actual kernel/version/source receipts in operations.
+The initial post-create status calls returned HTTP403; later authoritative checks
+confirmed the same datasets ready before journal reentry. Neither dataset was recreated.
+
+Upload/roundtrip copies were retired by the existing bound-submission cleaner.
+Canonical planning records and immutable source packages remain retained.
+Startup log requests timed out; no native admission or epoch completion is claimed.
+
+Next: reconcile these exact versions and retain required evidence; do not resubmit.
