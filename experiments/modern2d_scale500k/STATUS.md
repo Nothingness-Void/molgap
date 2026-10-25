@@ -11,4 +11,9 @@ The allowed IMS account had no visible user job at inspection. Independently
 pinned parent acceptance, train500K and Common-Dev manifest bytes matched their
 retained accepted hashes. The existing scheduled CPU export adapter was submitted
 as1819147.ccpbs1; [receipt](cpu/submission.json) retains source/request hashes.
-The selected output has not yet been independently accepted or published.
+Export and independent decoded verification completed; the exact121-file local
+copy also matched every accepted byte/size pin. Root acceptance:
+`65009bf7c911ef69c0b1b00a523fed8f9cb58be353b6a087c2f3fa894976d5bd`.
+Scheduled CPU metadata job1819192.ccpbs1 binds the original100K target transform
+and retained model configurations; [receipt](cpu/metadata_submission.json).
+The data has not yet been published to Kaggle; no GPU compute is released.
