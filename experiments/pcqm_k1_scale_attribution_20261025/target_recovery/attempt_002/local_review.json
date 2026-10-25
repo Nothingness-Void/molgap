@@ -1,0 +1,25 @@
+{
+  "format": "molgap-target-recovery-bootstrap-repair-review-v1",
+  "created_at_utc": "2026-10-25T06:37:41.967914+00:00",
+  "status": "LOCALLY_PREPARED_NOT_SUBMITTED",
+  "prior_attempt": "kernel version1; immutable files retained",
+  "evidence_log": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\diagnostic_log_excerpt.json",
+  "evidence_log_sha256": "f632c5242dda52465c04ed7785829b638ad00fa52ba6fb0fc2d3e5bd0bce8dc9",
+  "confirmed_chain": "frozen experiment_package -> v4_bundle -> training_reproducibility -> eager numpy; then pip mutation; later PyG -> torch._dynamo -> np.random -> mtrand ABI error before graph construction",
+  "repair": "same dependency pins installed before any MolGap/scientific imports; loaded/disk numpy version and random/PyG/Torch bridge checks before labels",
+  "source_and_data": "unchanged original archive/package and dataset versions",
+  "supervisor": "unchanged 900 seconds / absolute 07:35 UTC / process-group hard termination",
+  "checks": {
+    "syntax": "PASS",
+    "embedding": "exact byte identity verified",
+    "bootstrap_order": "PASS",
+    "loader_executed": false,
+    "remote_requests": false,
+    "tests_run": false
+  },
+  "files": {
+    "worker.py": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766",
+    "entry.py": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "kernel-metadata.json": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656"
+  }
+}

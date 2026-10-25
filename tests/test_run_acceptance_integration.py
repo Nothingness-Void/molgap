@@ -348,8 +348,10 @@ def _seed_reference_records(case):
     costs.write_bytes(canonical_json(cost).encode())
 
 
-def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
-    case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False)
+@pytest.mark.parametrize("comparison_purpose", ["architecture_comparison", "optimizer_comparison"])
+def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, comparison_purpose):
+    case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
+                                       comparison_purpose=comparison_purpose)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
     reference_arm = declaration["prospective"]["same_run_replay"]["reference_arm_id"]
     for arm_id, where in locations.items():
@@ -550,6 +552,13 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     from test_comparison_readiness import _side
     resolved = resolve_run_acceptance_inputs(*case.original,
         retrieved_root=case.paths.artifact_root / "retrieved")
+    # Checkout edits cannot change the purpose retained in the source package.
+    configuration = case.repo / "experiments/synthetic/config.json"
+    archived = configuration.read_bytes()
+    configuration.write_text('{"format":"untrusted","arms":[]}', encoding="utf-8")
+    scopes = family._frozen_same_run_scopes(resolved)
+    configuration.write_bytes(archived)
+    assert all(scope["experiment_purpose"] == comparison_purpose for scope in scopes.values())
     native = {}
     for arm_id, item in resolved["outputs"].items():
         directory = Path(item["output_dir"])
@@ -560,9 +569,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             "local_path": str(directory / "runtime_certificate.json")}], "synthetic_substitute": True}
     assess = comparison_owner.assess_comparison_readiness
     def fixture_comparison(**kwargs):
+        assert kwargs["experiment_purpose"] == comparison_purpose
         for side in ("candidate", "reference"):
             original_side = kwargs[side]
             fixture_side = _side(side)
+            if comparison_purpose == "optimizer_comparison":
+                # The identity substitute changes only its declared optimizer;
+                # the bindings still come from the saved CPU run.
+                fixture_side["comparison_identity"]["architecture_config_identity"] = "same-architecture"
+                fixture_side["comparison_identity"]["optimizer_identity"] = side + "-optimizer"
             kwargs[side] = {**fixture_side, **{key: value for key, value in original_side.items()
                 if key in {"artifact_bindings", "reference_bundle_id", "reference_bundle_sha256"}}}
         return assess(**kwargs)

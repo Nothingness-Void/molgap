@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-scale-attribution-20261025-attempt-002-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "c80703ca74d312e4571f48f7d21c95fb4dc9f941cff7641f258715415aaf59fd",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-scale-attribution-20261025-attempt-002",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

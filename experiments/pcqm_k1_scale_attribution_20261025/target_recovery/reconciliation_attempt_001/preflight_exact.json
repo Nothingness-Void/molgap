@@ -1,0 +1,131 @@
+{
+  "checked_at_utc": "2026-10-25T06:24:17.525502+00:00",
+  "authenticated_username": "nothingnessvoid",
+  "datasets": [
+    {
+      "ref": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+      "listed": true,
+      "files": [
+        {
+          "name": "README.md",
+          "size_bytes": 490
+        },
+        {
+          "name": "manifest.json",
+          "size_bytes": 4790
+        },
+        {
+          "name": "train/train_shard_0000.pt",
+          "size_bytes": 202363317
+        },
+        {
+          "name": "train/train_shard_0001.pt",
+          "size_bytes": 202787061
+        },
+        {
+          "name": "train/train_shard_0002.pt",
+          "size_bytes": 203498165
+        },
+        {
+          "name": "train/train_shard_0003.pt",
+          "size_bytes": 206032693
+        },
+        {
+          "name": "train/train_shard_0004.pt",
+          "size_bytes": 203880309
+        },
+        {
+          "name": "train/train_shard_0005.pt",
+          "size_bytes": 205399541
+        },
+        {
+          "name": "train/train_shard_0006.pt",
+          "size_bytes": 203054325
+        },
+        {
+          "name": "train/train_shard_0007.pt",
+          "size_bytes": 201454965
+        },
+        {
+          "name": "train/train_shard_0008.pt",
+          "size_bytes": 202626101
+        },
+        {
+          "name": "train/train_shard_0009.pt",
+          "size_bytes": 203743093
+        },
+        {
+          "name": "train/train_shard_0010.pt",
+          "size_bytes": 213447349
+        }
+      ]
+    },
+    {
+      "ref": "nothingnessvoid/k1-tail-wd-500k-src/1",
+      "listed": true,
+      "files": [
+        {
+          "name": "SOURCE_ARCHIVE_SHA256.txt",
+          "size_bytes": 65
+        },
+        {
+          "name": "SOURCE_COMMIT.txt",
+          "size_bytes": 41
+        },
+        {
+          "name": "SOURCE_FILES.json",
+          "size_bytes": 47848
+        },
+        {
+          "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/acceptance_plan.json",
+          "size_bytes": 1708
+        },
+        {
+          "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+          "size_bytes": 1831
+        },
+        {
+          "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json",
+          "size_bytes": 1832
+        },
+        {
+          "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+          "size_bytes": 207
+        },
+        {
+          "name": "experiment_launch.json",
+          "size_bytes": 1686
+        },
+        {
+          "name": "experiment_spec.json",
+          "size_bytes": 5544
+        },
+        {
+          "name": "initial_states/tail_wd1e2.pt",
+          "size_bytes": 15597683
+        },
+        {
+          "name": "package_manifest.json",
+          "size_bytes": 12717
+        },
+        {
+          "name": "prospective/tail_wd1e2/trajectory.json",
+          "size_bytes": 4874
+        },
+        {
+          "name": "prospective/tail_wd1e3/trajectory.json",
+          "size_bytes": 4874
+        },
+        {
+          "name": "source_payload.bin",
+          "size_bytes": 903147
+        }
+      ]
+    }
+  ],
+  "target_kernel_search": {
+    "succeeded": true,
+    "count": 0,
+    "matches": []
+  }
+}

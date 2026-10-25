@@ -1,0 +1,66 @@
+{
+  "format": "molgap-k1-target-recovery-metadata-validation-v1",
+  "validated_at_utc": "2026-10-25T06:52:34.987387+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "version": 2,
+  "checks": {
+    "returned_identity_bound": true,
+    "entry_complete": true,
+    "entry_manifest_hash_matches": true,
+    "entry_observation_hash_matches": true,
+    "worker_complete": true,
+    "ordered_train_membership": true,
+    "numpy_installed_before_molgap_imports": true,
+    "numpy_consistency": true,
+    "manifest_complete": true,
+    "source_identity": true,
+    "data_identity": true,
+    "source_idx_reconstructed_hash_matches_remote_manifest": true,
+    "labels_manifest_pin": true,
+    "all_nontrain_roles_not_read": true,
+    "execution_scope_no_model": true
+  },
+  "all_checks_pass": true,
+  "selected_payload_allowlist": [
+    "target_recovery/labels.bin",
+    "target_recovery/data_manifest.json"
+  ],
+  "source_indices": {
+    "file": "target_recovery/source_idx.bin",
+    "downloaded": false,
+    "verification": "locally_reconstructed_verified_range",
+    "range": {
+      "start": 0,
+      "stop_exclusive": 500000,
+      "dtype": "little-endian-int64"
+    },
+    "sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "remote_manifest_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"
+  },
+  "entry_cost": {
+    "wall_seconds": 306.03824080799995,
+    "measured_process_tree_cpu_seconds": 814.828792,
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.22634133111111113
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "gpu_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "session_timeout_seconds_required_at_submission": 900,
+    "absolute_cutoff_utc": "2026-10-25T07:35:00+00:00",
+    "cleanup_reserve_seconds": 20
+  },
+  "manifest_cpu_cost": {
+    "worker_wall_seconds": 304.541174335,
+    "worker_process_cpu_seconds": 25.95225802,
+    "bootstrap_child_cpu": "entry_receipt includes reaped pip child usage",
+    "gpu": "not_applicable",
+    "queue": "measurement_missing"
+  }
+}

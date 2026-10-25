@@ -1,0 +1,244 @@
+{
+  "format": "molgap-k1-target-recovery-failure-reconciliation-v1",
+  "actual_identity": {
+    "kernel_ref": "/code/nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "version": 1,
+    "kernel_id": 140726588,
+    "terminal_status": "ERROR"
+  },
+  "source_binding": {
+    "request_source_commit": "3548bd3a972c2c1257d6c2dee93ad5973877c5b3",
+    "requested_package_hashes": {
+      "worker.py": "094ae2ae2c954348b064e160b36ffe09cc8753aea52f4dfb481b6c162e8fea6d",
+      "entry.py": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+      "kernel-metadata.json": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+      "protocol.md": "5b9c376824e503031cc8654a468a689bffd2bd6223f943d5d9ecf32e26026fed",
+      "local_review.json": "e0b6feebd0ad77fa8a8701864e209e7787e97d3f08173a25162667346a49cb3f"
+    },
+    "published_kernel_code_raw_sha256": "c7d8dddd559aa24f09aed2b4e24e1d49ce9fa574febfb2730e775f75fadc8507",
+    "published_kernel_code_lf_normalized_sha256": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+    "entry_sha256_in_runtime_receipt": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+    "entry_equal_after_lf_normalization": true,
+    "worker_sha256_in_runtime_receipt": "094ae2ae2c954348b064e160b36ffe09cc8753aea52f4dfb481b6c162e8fea6d",
+    "worker_sha256_in_observation_binding": true
+  },
+  "metadata_binding": {
+    "submitted_metadata_sha256": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+    "submitted_exact_dataset_refs": [
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+      "nothingnessvoid/k1-tail-wd-500k-src/1"
+    ],
+    "actual_pulled_metadata": {
+      "id": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+      "id_no": 140726588,
+      "title": "MolGap K1 Target Proof 500K 20261025",
+      "code_file": "molgap-k1-target-proof-500k-20261025.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_tpu": false,
+      "enable_internet": true,
+      "keywords": [],
+      "dataset_sources": [
+        "nothingnessvoid/k1-tail-wd-500k-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "kernel_sources": [],
+      "competition_sources": [],
+      "model_sources": []
+    },
+    "actual_pull_exposes_version_suffixes": false,
+    "note": "Kaggle kernels_pull snapshot contains dataset slugs only; it omits numeric version suffixes. Exact source/data content checks reached before failure are recorded below."
+  },
+  "preflight_remote_versions": {
+    "exact_listings": [
+      {
+        "ref": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+        "listed": true,
+        "files": [
+          {
+            "name": "README.md",
+            "size_bytes": 490
+          },
+          {
+            "name": "manifest.json",
+            "size_bytes": 4790
+          },
+          {
+            "name": "train/train_shard_0000.pt",
+            "size_bytes": 202363317
+          },
+          {
+            "name": "train/train_shard_0001.pt",
+            "size_bytes": 202787061
+          },
+          {
+            "name": "train/train_shard_0002.pt",
+            "size_bytes": 203498165
+          },
+          {
+            "name": "train/train_shard_0003.pt",
+            "size_bytes": 206032693
+          },
+          {
+            "name": "train/train_shard_0004.pt",
+            "size_bytes": 203880309
+          },
+          {
+            "name": "train/train_shard_0005.pt",
+            "size_bytes": 205399541
+          },
+          {
+            "name": "train/train_shard_0006.pt",
+            "size_bytes": 203054325
+          },
+          {
+            "name": "train/train_shard_0007.pt",
+            "size_bytes": 201454965
+          },
+          {
+            "name": "train/train_shard_0008.pt",
+            "size_bytes": 202626101
+          },
+          {
+            "name": "train/train_shard_0009.pt",
+            "size_bytes": 203743093
+          },
+          {
+            "name": "train/train_shard_0010.pt",
+            "size_bytes": 213447349
+          }
+        ]
+      },
+      {
+        "ref": "nothingnessvoid/k1-tail-wd-500k-src/1",
+        "listed": true,
+        "files": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "size_bytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "size_bytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "size_bytes": 47848
+          },
+          {
+            "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/acceptance_plan.json",
+            "size_bytes": 1708
+          },
+          {
+            "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+            "size_bytes": 1831
+          },
+          {
+            "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json",
+            "size_bytes": 1832
+          },
+          {
+            "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+            "size_bytes": 207
+          },
+          {
+            "name": "experiment_launch.json",
+            "size_bytes": 1686
+          },
+          {
+            "name": "experiment_spec.json",
+            "size_bytes": 5544
+          },
+          {
+            "name": "initial_states/tail_wd1e2.pt",
+            "size_bytes": 15597683
+          },
+          {
+            "name": "package_manifest.json",
+            "size_bytes": 12717
+          },
+          {
+            "name": "prospective/tail_wd1e2/trajectory.json",
+            "size_bytes": 4874
+          },
+          {
+            "name": "prospective/tail_wd1e3/trajectory.json",
+            "size_bytes": 4874
+          },
+          {
+            "name": "source_payload.bin",
+            "size_bytes": 903147
+          }
+        ]
+      }
+    ]
+  },
+  "worker_failure": {
+    "stage": "train_label_read_started",
+    "train_labels_state": "reading_unknown_subset",
+    "decoded_train_membership": "unknown",
+    "error": {
+      "type": "ValueError",
+      "message": "numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject"
+    },
+    "entry_status": "FAILED",
+    "worker_returncode": 1,
+    "worker_observation_sha256": "65d9c4b4d45654ba89ee310bbac16240cec27bfaf5bb2d702e109f20d1e68aa7"
+  },
+  "content_guards_passed_before_failure": {
+    "source_payload_archive_sha256_expected": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+    "basis": "Worker emits train_label_read_started only after source_payload.bin hash, source package identity, original recipe manifest pin, exact manifest resolution and 10-shard/500000-row checks pass. Frozen worker source lines are recorded in failure_reconciliation.md.",
+    "data_manifest_sha256_expected": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "worker_manifest_status_at_failure": "No completion manifest was written; the stage order shows the pinned manifest and shard-count checks completed before the failure."
+  },
+  "cost": {
+    "wall_start_utc": "2026-10-25T06:26:42.752193+00:00",
+    "wall_end_utc": "2026-10-25T06:31:00.520705+00:00",
+    "wall_seconds": 257.76853715699997,
+    "measured_process_tree_cpu_seconds": 784.43983,
+    "cpu_hours_status": "measurement_missing",
+    "queue_hours_status": "measurement_missing",
+    "gpu_hours_status": "not_applicable"
+  },
+  "diagnostic_log": {
+    "source": "direct list_kernel_session_output response, no kernels_output/bulk download",
+    "log_line_count": 83,
+    "log_byte_count": 11191,
+    "traceback_excerpt_path": "diagnostic_abi_traceback_minimal.txt",
+    "traceback_excerpt_sha256": "2a392396447568ed6fd8eae0b864d525d380e4b0c8520fba97a86de410039565",
+    "output_files_listed": [
+      {
+        "file_name": "target_recovery/entry_receipt.json",
+        "size_bytes": null
+      },
+      {
+        "file_name": "target_recovery/worker_observation.json",
+        "size_bytes": null
+      }
+    ],
+    "selected_output_jsons": [
+      "target_recovery/entry_receipt.json",
+      "target_recovery/worker_observation.json"
+    ],
+    "completion_manifest_present_or_retrieved": false,
+    "labels_downloaded": false,
+    "indices_downloaded": false
+  },
+  "abi_cause": {
+    "numpy_loaded_before_pip_install": true,
+    "evidence": [
+      "worker.py:97 imports molgap.experiment_package before worker.py:103 pip install",
+      "experiment_package.py:19 imports v4_bundle; v4_bundle.py:13 imports training_reproducibility; training_reproducibility.py:19 has unconditional top-level import numpy as np",
+      "failure traceback shows later torch_geometric -> torch._dynamo.utils accesses np.random and fails initializing numpy.random.mtrand"
+    ],
+    "likely_mechanism": "The same worker process loads NumPy during source-package verification, then runs pip install numpy<2. If that install changes the on-disk NumPy while the old module remains in memory, later loading the NumPy random C extension can produce this ABI mismatch. Exact pre/post NumPy versions are absent from the retained log, so this mechanism is strongly consistent but not fully proven."
+  },
+  "interpretation_limits": [
+    "Worker observation remains reading_unknown_subset / decoded_train_membership unknown; do not reclassify as not_read or all500k_decoded.",
+    "No labels, indices, data_manifest output or completion manifest were retrieved. No target qualification or scientific acceptance follows.",
+    "Actual pulled kernel metadata lists source slugs without numeric versions; exact numeric version authority is the immutable submitted metadata and run content checks, not the pull metadata snapshot alone."
+  ]
+}

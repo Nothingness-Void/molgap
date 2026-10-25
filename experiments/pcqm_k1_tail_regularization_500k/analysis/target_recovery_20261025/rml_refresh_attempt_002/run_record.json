@@ -1,0 +1,31 @@
+[
+  {
+    "name": "rebuild",
+    "started_utc": "2026-10-25T07:10:27.2533736Z",
+    "finished_utc": "2026-10-25T07:10:50.4489126Z",
+    "exit_code": 0,
+    "wall_seconds": 23.1929692,
+    "args": [
+      "-m",
+      "molgap.research_memory",
+      "--repo-root",
+      "D:\\molgap-worktrees\\k1-tail-regularization-500k",
+      "rebuild"
+    ]
+  },
+  {
+    "name": "check_frozen",
+    "started_utc": "2026-10-25T07:10:50.4907818Z",
+    "finished_utc": "2026-10-25T07:11:14.3817745Z",
+    "exit_code": 0,
+    "wall_seconds": 23.8909477,
+    "args": [
+      "-m",
+      "molgap.research_memory",
+      "--repo-root",
+      "D:\\molgap-worktrees\\k1-tail-regularization-500k",
+      "check",
+      "--frozen"
+    ]
+  }
+]

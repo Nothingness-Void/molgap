@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "23c5413672b0392c6a6c43bcee48067322d6cd9b6c3db79a732effacc76275f5",
+  "source_digest": "47671ad2b8cd763b5ca2e09f256270bd0fc23094800239391df51474ce334b2e",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -177,6 +177,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+      "family_id": "pcqm-k1-tail-regularization-500k-s42",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+      "family_id": "pcqm-k1-tail-regularization-500k-s42",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
     },
     {
       "completeness_status": "complete",
@@ -1851,6 +1883,38 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_scale_attribution_20261025/terminal_decision.md",
+      "family_id": "k1-scale-attribution",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_scale_attribution_20261025/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-scale-attribution-20261025-attempt001-failure"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-scale-attribution-20261025"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/terminal_decision.md",
+      "family_id": "k1-scale-attribution",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-scale-attribution-20261025-attempt002"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
     },
     {
       "completeness_status": "complete",

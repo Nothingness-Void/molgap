@@ -12,6 +12,20 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+The [bounded K1 scale attribution](experiments/pcqm_k1_scale_attribution_20261025/README.md)
+is an accepted NO_TRAIN diagnostic. Reviewed source/evidence and reusable
+compatibility/guard repairs from `codex/exp/k1-scale-attribution-20261025` use
+the diagnostic non-promotion route into desktop; the model recommendation
+is unchanged. Its [custody manifest](experiments/pcqm_k1_scale_attribution_20261025/artifact_custody.json)
+owns the small retained prediction matrix. The negative tail500K owner through
+`cda7921ac72bff68f3996e85335d3343ef1c9f5c` is durably reachable from pushed archive
+`373e276292ad9af50297638c178a1b0cb8503433`. Both arms are strictly replay-ready;
+their negative scientific decision is unchanged. Desktop receives canonical
+evidence/configuration only, excluding the preparation helper and rejected
+shared implementation. [Terminal custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md)
+owns recovery paths; the [byte-verified import](experiments/pcqm_k1_scale_attribution_20261025/tail_evidence_import.json)
+binds168 copied records to the archived owner.
+
 The [retained hop-fusion qualification](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md)
 is a completed NO_TRAIN saved-prediction diagnostic. Its evidence, thin
 reproduction wrapper and fixed predictions integrate into desktop through the

@@ -26,6 +26,26 @@ BASE_COMPARABILITY_FIELDS = (
 
 def _comparison_key(trace: dict[str, Any]) -> str:
     identity = trace["comparability_identity"]
+    optimizer_scope = identity.get("bound_optimizer_intervention")
+    optimizer_key = None
+    if optimizer_scope is not None:
+        # This projection is supplied only by replay_manifests after validating
+        # the canonical comparison binding and the same observed physical pair.
+        side = trace["comparison_role"]
+        expected = optimizer_scope.get("expected", {})
+        strict = identity.get("strict_identity", {})
+        if (optimizer_scope.get("format") != "molgap-bound-replay-optimizer-intervention-v1"
+                or optimizer_scope.get("experiment_purpose") != "optimizer_comparison"
+                or optimizer_scope.get("declared_intervention_fields") != ["optimizer_identity"]
+                or side not in {"candidate", "reference"}
+                or optimizer_scope.get("reference_id") != trace["reference_id"]
+                or optimizer_scope.get(side + "_id") != optimizer_scope.get("evidence_id")
+                or set(expected) != {"candidate", "reference"}
+                or identity.get("optimizer_identity") != expected[side]
+                or strict.get("optimizer_identity") != expected[side]):
+            raise ValueError("Replay optimizer variant differs from its bound comparison")
+        optimizer_key = json.dumps({key: value for key, value in optimizer_scope.items()
+                                   if key != "evidence_id"}, sort_keys=True, separators=(",", ":"))
     fields = list(BASE_COMPARABILITY_FIELDS)
     if identity["matched_architecture_required"]:
         fields.append("architecture_identity")
@@ -33,9 +53,12 @@ def _comparison_key(trace: dict[str, Any]) -> str:
         "reference_id": trace["reference_id"],
         "identity": {field: identity[field] for field in fields},
     }
+    if optimizer_key is not None:
+        key["identity"]["optimizer_identity"] = optimizer_key
     if "strict_identity" in identity:
         strict = {k: v for k, v in identity["strict_identity"].items()
-            if k != "architecture_config_identity" or identity["matched_architecture_required"]}
+            if (k != "architecture_config_identity" or identity["matched_architecture_required"])
+            and (k != "optimizer_identity" or optimizer_key is None)}
         key["identity"]["strict_identity_sha256"] = hashlib.sha256(
             json.dumps(strict, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     return json.dumps(key, sort_keys=True, separators=(",", ":"))

@@ -116,6 +116,7 @@ class FamilyRecipe:
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
     resume_chunks: bool = False
+    development_reports: tuple[str, ...] = ()
 
     def __post_init__(self):
         from .experiment_spec import _digest
@@ -167,6 +168,12 @@ class FamilyRecipe:
             raise ValueError("Unsupported EMA decay")
         if self.selection.endswith("ema") and self.ema_decay is None:
             raise ValueError("EMA weight selection requires EMA state")
+        if (type(self.development_reports) is not tuple or len(set(self.development_reports)) != len(self.development_reports)
+                or any(v not in {"live", "ema"} for v in self.development_reports)
+                or ("ema" in self.development_reports and self.ema_decay is None)):
+            raise ValueError("Development reporting requires distinct available weight states")
+        if self.selection.endswith("clean-ema") and "ema" in self.development_reports:
+            raise ValueError("Raw EMA reporting cannot overwrite the selected Clean-EMA trace field")
         if (self.clean_bn is not None) != self.selection.endswith("clean-ema"):
             raise ValueError("Clean selection requires an explicit calibration policy")
         if self.clean_bn is not None and (type(self.clean_bn) is not CalibrationPolicy or
@@ -225,6 +232,10 @@ class FamilyRecipe:
             values["clean_bn"] = self.clean_bn.to_dict()
         if not self.resume_chunks:
             values.pop("resume_chunks")
+        if not self.development_reports:
+            values.pop("development_reports")
+        else:
+            values["development_reports"] = list(self.development_reports)
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -238,7 +249,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "resume_chunks"):
+        for name in ("addons", "clean_bn", "resume_chunks", "development_reports"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
@@ -249,6 +260,10 @@ class FamilyRecipe:
         try:
             values["dataset"] = DatasetSelection(**values["dataset"])
             values["schedule"] = ScheduleSpec(**values["schedule"])
+            if "development_reports" in values:
+                if type(values["development_reports"]) is not list:
+                    raise ValueError("Development reports must be a list")
+                values["development_reports"] = tuple(values["development_reports"])
             if "input_sidecar" in values:
                 values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
             if "k1_execution" in values:

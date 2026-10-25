@@ -1,0 +1,49 @@
+{
+  "format": "molgap-desktop-integration-rml-check-v1",
+  "repo": "D:\\molgap-worktrees\\k1-scale-attribution-20261025",
+  "head": "3fe2e2d6136691768dc30049f2fcc273f55bac91",
+  "profile": "D:\\molgap-machine-profile.json",
+  "steps": [
+    {
+      "name": "rebuild",
+      "started_utc": "2026-10-25T07:16:36.648066+00:00",
+      "command": [
+        "D:\\文档\\molgap\\.venv\\Scripts\\python.exe",
+        "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\platforms\\local\\run.py",
+        "--profile",
+        "D:\\molgap-machine-profile.json",
+        "--module",
+        "molgap.research_memory",
+        "--",
+        "rebuild"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 24.047835700001087,
+      "stdout_bytes": 412,
+      "stderr_bytes": 272,
+      "stdout_sha256": "dbb62ce19c5d79720908e6f196c6d2d26e6beff76c23a00ab9e4efcb0e77df14",
+      "stderr_sha256": "42fe445a8487c4130969d33b8c74d90f10e176c7fe32db21f7edb2e7f4c5af29"
+    },
+    {
+      "name": "check_frozen",
+      "started_utc": "2026-10-25T07:17:00.703364+00:00",
+      "command": [
+        "D:\\文档\\molgap\\.venv\\Scripts\\python.exe",
+        "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\platforms\\local\\run.py",
+        "--profile",
+        "D:\\molgap-machine-profile.json",
+        "--module",
+        "molgap.research_memory",
+        "--",
+        "check",
+        "--frozen"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 24.210506299999906,
+      "stdout_bytes": 44,
+      "stderr_bytes": 272,
+      "stdout_sha256": "6913c40d7dbc20783fbdd4c2646c0945ed82d2e475ff768a30df139bb9fc5710",
+      "stderr_sha256": "42fe445a8487c4130969d33b8c74d90f10e176c7fe32db21f7edb2e7f4c5af29"
+    }
+  ]
+}

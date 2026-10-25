@@ -1,0 +1,166 @@
+{
+  "events": [
+    {
+      "data": "ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+      "stream_name": "stderr",
+      "time": 203.975097468
+    },
+    {
+      "data": "bigframes 2.48.0 requires google-cloud-bigquery-storage<3.0.0,>=2.30.0, which is not installed.\n",
+      "stream_name": "stderr",
+      "time": 203.975148157
+    },
+    {
+      "data": "bayesian-optimization 3.4.0 requires numpy>=2.1.3; python_full_version == \"3.13.*\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975152931
+    },
+    {
+      "data": "opencv-python-headless 4.14.0.94 requires numpy>=2; python_version >= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975155626
+    },
+    {
+      "data": "mne 1.13.2 requires numpy<3,>=2.1, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975158292
+    },
+    {
+      "data": "opencv-python 4.14.0.94 requires numpy>=2; python_version >= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.97518224
+    },
+    {
+      "data": "kaggle-environments 1.32.7 requires numpy>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.97518687
+    },
+    {
+      "data": "cesium 0.12.4 requires numpy<3.0,>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975190482
+    },
+    {
+      "data": "dopamine-rl 4.1.2 requires gym<=0.25.2, but you have gym 0.26.2 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975194401
+    },
+    {
+      "data": "gradio 6.26.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975198628
+    },
+    {
+      "data": "cupy-cuda12x 14.0.1 requires numpy<2.6,>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975202731
+    },
+    {
+      "data": "moviepy 1.0.3 requires decorator<5.0,>=4.0.2, but you have decorator 5.3.1 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975206954
+    },
+    {
+      "data": "ml-dtypes 0.6.0 requires numpy>=2.0.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975210776
+    },
+    {
+      "data": "ml-dtypes 0.6.0 requires numpy>=2.1.0; python_version >= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975214399
+    },
+    {
+      "data": "tobler 0.14.0 requires numpy>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975218698
+    },
+    {
+      "data": "jax 0.11.1 requires numpy>=2.1, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975221993
+    },
+    {
+      "data": "opencv-contrib-python 4.14.0.94 requires numpy>=2; python_version >= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975225631
+    },
+    {
+      "data": "dm-tree 0.1.10 requires numpy>=2.1.0; python_version >= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975229115
+    },
+    {
+      "data": "jaxlib 0.11.1 requires numpy>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975232518
+    },
+    {
+      "data": "xarray-einstats 0.11.0 requires numpy>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975237109
+    },
+    {
+      "data": "tifffile 2026.8.23 requires numpy>=2.1, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975240828
+    },
+    {
+      "data": "pytensor 2.38.3 requires numpy>=2.0, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975244275
+    },
+    {
+      "data": "shap 0.52.0 requires numpy>=2, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975247502
+    },
+    {
+      "data": "rasterio 1.5.1 requires numpy>=2, but you have numpy 1.26.4 which is incompatible.\n",
+      "stream_name": "stderr",
+      "time": 203.975257636
+    },
+    {
+      "data": "INPUT_RESOLVED tail_wd1e3 datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json\n",
+      "stream_name": "stdout",
+      "time": 207.491789046
+    },
+    {
+      "data": "INPUT_RESOLVED tail_wd1e2 datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json\n",
+      "stream_name": "stdout",
+      "time": 207.514064077
+    },
+    {
+      "data": "PAIR_PHASE_START preflight\n",
+      "stream_name": "stdout",
+      "time": 207.553108669
+    },
+    {
+      "data": "PAIR_PHASE_COMPLETE preflight\n",
+      "stream_name": "stdout",
+      "time": 572.178925392
+    },
+    {
+      "data": "PAIR_PHASE_START train\n",
+      "stream_name": "stdout",
+      "time": 572.18015051
+    },
+    {
+      "data": "TRAIN_LOG {\"arm_id\":\"tail_wd1e3\",\"best_development_mae_eV\":0.10771922767162323,\"best_metric_pass\":1,\"checkpoint_optimizer_steps\":3906,\"completed_passes\":1,\"development_mae_eV\":0.10771922767162323,\"elapsed_seconds\":665.05886826,\"eta_seconds\":12636.11849694,\"event\":\"epoch\",\"extra_development_mae_eV\":{\"ema\":0.10591693222522736},\"family\":\"neural_atom_k1\",\"format\":\"molgap-training-log-v1\",\"learning_rates\":[9.94459753267812e-05],\"metric_pass\":1,\"next_batch\":0,\"optimizer_steps\":3906,\"pass_timing_scope\":\"full_pass\",\"pass_wall_seconds\":665.05886826,\"planned_optimizer_steps\":78120,\"planned_passes\":20.0,\"sample_presentations\":499968,\"status\":\"running\",\"train_live_mae_eV\":0.0746651583805532,\"updates_per_second\":5.873164296296515,\"weight_state\":\"live\"}\n",
+      "stream_name": "stdout",
+      "time": 1290.967815583
+    },
+    {
+      "data": "TRAIN_LOG {\"arm_id\":\"tail_wd1e2\",\"best_development_mae_eV\":0.10838806629180908,\"best_metric_pass\":1,\"checkpoint_optimizer_steps\":3906,\"completed_passes\":1,\"development_mae_eV\":0.10838806629180908,\"elapsed_seconds\":666.7682296780001,\"eta_seconds\":12668.596363882001,\"event\":\"epoch\",\"extra_development_mae_eV\":{\"ema\":0.10583055764436722},\"family\":\"neural_atom_k1\",\"format\":\"molgap-training-log-v1\",\"learning_rates\":[9.94459753267812e-05],\"metric_pass\":1,\"next_batch\":0,\"optimizer_steps\":3906,\"pass_timing_scope\":\"full_pass\",\"pass_wall_seconds\":666.7682296780001,\"planned_optimizer_steps\":78120,\"planned_passes\":20.0,\"sample_presentations\":499968,\"status\":\"running\",\"train_live_mae_eV\":0.07464549537300239,\"updates_per_second\":5.8581075494348465,\"weight_state\":\"live\"}\n",
+      "stream_name": "stdout",
+      "time": 1292.469089587
+    }
+  ],
+  "failure_message": "",
+  "kernel": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+  "observed_at": "2026-10-24T19:08:13.230286+00:00",
+  "scheduler_status": "KernelWorkerStatus.RUNNING",
+  "scope": "startup observation; not native qualification",
+  "transport": "ConnectionError",
+  "version": 1
+}

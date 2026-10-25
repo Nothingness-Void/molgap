@@ -1,0 +1,852 @@
+{
+  "format": "molgap-canonical-evidence-copy-v1",
+  "owner_tip": "cda7921ac72bff68f3996e85335d3343ef1c9f5c",
+  "archive_commit": "373e276292ad9af50297638c178a1b0cb8503433",
+  "excluded_implementation": [
+    "experiments/pcqm_k1_tail_regularization_500k/prepare_definitions.py"
+  ],
+  "shared_source_copied": false,
+  "files": [
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/README.md",
+      "bytes": 1960,
+      "sha256": "63f8adee1763d0976700864161f4317c492e52b8adf8c5357cf4e0a7d1f9edf8"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/STATUS.md",
+      "bytes": 4336,
+      "sha256": "3c6da5c257b94ee0b427ef977d9276e70c699637eb79008c2f30b4f5ba91e378"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/acceptance_record.md",
+      "bytes": 3110,
+      "sha256": "052e1903870530865e1d1f729fbe26f31cffe5c5b87601518c44ef6542e4293a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/analysis_summary.json",
+      "bytes": 31412,
+      "sha256": "b7a3e10e35f6285598ba6fa647a39e63d140dc3750e4cf5d2bed1ae868b5668c"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/attribution_report.md",
+      "bytes": 246,
+      "sha256": "b3505685fad11abb70f4949ea8e0741d7766aa40305b6714f165de2c95866434"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/initial_comparison.json",
+      "bytes": 7053,
+      "sha256": "c95651ac2b44d3d84ebe547cc86a77ad51e54c082096691e14981c54d2d4804d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/mechanical_closure.json",
+      "bytes": 221978,
+      "sha256": "ba5ad0dbd16859070b9184edddf1ee831495a0f4d06e0745acc544c043f8b060"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/native_qualification.json",
+      "bytes": 11181,
+      "sha256": "34136f6849d5df5f07ec208709f2cdaf85b4ce7db793864c3b29786273c23cba"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/strict_blocker.json",
+      "bytes": 1435,
+      "sha256": "cd090607021fe4f1736217d6291e805ef35bd49617927c9e9b11dd4ef2e2f0df"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/command.txt",
+      "bytes": 614,
+      "sha256": "6769f0f8ccac932f96322575319999a823b47d5e67e5ff8ea61cca0b0252d5bc"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/copy_manifest.json",
+      "bytes": 2260,
+      "sha256": "45a8c3abc74e7b7760399ab99411f2c67d00ec1ee9df223400f6b2e8faa03b30"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/exit_code.txt",
+      "bytes": 3,
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/stderr.txt",
+      "bytes": 272,
+      "sha256": "42fe445a8487c4130969d33b8c74d90f10e176c7fe32db21f7edb2e7f4c5af29"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/stdout.txt",
+      "bytes": 165190,
+      "sha256": "4e5424656873df9567555ba3e5ff02ba93d875ff49b9811d67ca7d994d5c120a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/wall_seconds.txt",
+      "bytes": 12,
+      "sha256": "43a82522ca38e6940a1ad91c76b62bd7eb352a94e77267086b91ad7c95ce8c28"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/command.txt",
+      "bytes": 612,
+      "sha256": "be6c7e29ce6dcd741851e1634f34d1328d98fa3dcc47d1ebc2580d03bc91ea74"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/copy_manifest.json",
+      "bytes": 9308,
+      "sha256": "4353d51bd9972df5b37957ae448ab6b4acdbc02a1f461c40c75879e30f9522ad"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/exit_code.txt",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/post_run_snapshot_check.json",
+      "bytes": 1173,
+      "sha256": "54de73e935aac61f2c97e51596132306845e7b2f0e0747fa7504d747ffce4954"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/pre_run_snapshot.json",
+      "bytes": 10552,
+      "sha256": "24dae2915318cfcec70fa725c73abfea7a7ed3f0201aa783b0ca225f4ad5737f"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/qualification_append_verification.json",
+      "bytes": 290,
+      "sha256": "98a8ce5909d68ea5534f6ddc9595aeac2f35bb977f68c0e87abc8a889dd59c8a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/run_record.json",
+      "bytes": 1253,
+      "sha256": "cb47724e80814fef5e8793e3536179498a04d154e9010296e5e4f6c7226dbcbd"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/stderr.txt",
+      "bytes": 272,
+      "sha256": "42fe445a8487c4130969d33b8c74d90f10e176c7fe32db21f7edb2e7f4c5af29"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/stdout.txt",
+      "bytes": 8785,
+      "sha256": "3a584dc176b45192b6f77a7bc6e1dc5222fde5599852798a3dc6c0961e488931"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_002/wall_seconds.txt",
+      "bytes": 10,
+      "sha256": "0a8619e1ea2b640890e47331a740e8b435843654535c2eab25d9a0ba398c2d2e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/data_manifest.json",
+      "bytes": 4790,
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/entry_receipt.json",
+      "bytes": 1246,
+      "sha256": "8e3b2b9e1c75ad5497b120d0039c802444c4078be7b337d9f510d9af8a5e23ac"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/final_validation.json",
+      "bytes": 3838,
+      "sha256": "eda1571a0bda83bdaeaae7377ba2a32617737b387749b6d4999aff6b6cd0ddaa"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/manifest.json",
+      "bytes": 12606,
+      "sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/metadata_retrieval.json",
+      "bytes": 992,
+      "sha256": "cbb2fb323cf4a1d907a22cb9e3a945df5f8ebc6543e08808a6de234eff23e196"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/metadata_validation.json",
+      "bytes": 2225,
+      "sha256": "4e1ff688b75c74c0f3c137f63b67b55a0b5ba06a23be7ee45685ad16bb58d0ec"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/payload_retrieval.json",
+      "bytes": 2109,
+      "sha256": "60287966369aae31c768eca9f934d147fce4a4bae4e1214d791f5d048fc1c93e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/post_started.json",
+      "bytes": 815,
+      "sha256": "cc339bbac92baddb95cebc4016eedd9dea5f27414ffc83c904481df570908e3f"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/qualification_20261025.md",
+      "bytes": 7973,
+      "sha256": "56b0c1b108ae2ede4d7962122db4c8d8295cb271fc2544f01901ee9a71a5126d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/request_frozen.json",
+      "bytes": 4813,
+      "sha256": "d5c189354c7988d54b3e748f5cb02ce8be6565994f785e434183c27df4983b01"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/check_frozen/command.txt",
+      "bytes": 142,
+      "sha256": "b254c19979d5bcb8391301a5d643a40e7698077f22a8ea0c2ff3f6921a4a2f69"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/check_frozen/exit_code.txt",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/check_frozen/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/check_frozen/stdout.txt",
+      "bytes": 44,
+      "sha256": "6913c40d7dbc20783fbdd4c2646c0945ed82d2e475ff768a30df139bb9fc5710"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/check_frozen/wall_seconds.txt",
+      "bytes": 10,
+      "sha256": "f116df03232876e92bc4068185d09fb029829642289a833f7227c3b9574ed9ac"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/copy_manifest.json",
+      "bytes": 9308,
+      "sha256": "4353d51bd9972df5b37957ae448ab6b4acdbc02a1f461c40c75879e30f9522ad"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/rebuild/command.txt",
+      "bytes": 135,
+      "sha256": "c4f0cbeee9fed63507584b44f5454a2ea0433c1b1d0e0b935cbc4e1c66e0412a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/rebuild/exit_code.txt",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/rebuild/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/rebuild/stdout.txt",
+      "bytes": 412,
+      "sha256": "dbb62ce19c5d79720908e6f196c6d2d26e6beff76c23a00ab9e4efcb0e77df14"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/rebuild/wall_seconds.txt",
+      "bytes": 10,
+      "sha256": "4e1dc47983b1a105d41004d6df40f711dfc39d035937ee9f4fbb79d2b15710ac"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/rml_refresh_attempt_002/run_record.json",
+      "bytes": 749,
+      "sha256": "ddffdb382637f8d0ed3ebe63cedf47dc8207221037621215648a9f9772fd2132"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/source_provenance.json",
+      "bytes": 6712,
+      "sha256": "ed4660e7110bd520cedb13c1636a8b8466365a3863b313af4b40f66f828e13be"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/strict_inputs.json",
+      "bytes": 527,
+      "sha256": "eed69e0cc77748e4de90c70125888dab92ae4a9e19fc59389bfd7cbb32624a70"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/submission_response.json",
+      "bytes": 414,
+      "sha256": "4fe9390952cef0c0d44e2371f1acbdede33a7429ed670e720aefe54fc5f406f5"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/target_transform.json",
+      "bytes": 557,
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/worker_observation.json",
+      "bytes": 1139,
+      "sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/attribution.md",
+      "bytes": 2959,
+      "sha256": "fe1f83a4c540fa12d8fbb4617eca37afe6ddb88c0261c7e61792d633d32bbbdb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/authority.json",
+      "bytes": 667,
+      "sha256": "e62a00e1192d671d5c897982cefee27aabf1649c95c8b408c191b846c540524d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/base_recipe.json",
+      "bytes": 2187,
+      "sha256": "3fbccc9528f74e2a86fcbcd1522f2f8028aba0af72c0661a8ecba650739a071b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/data_declaration.json",
+      "bytes": 3873,
+      "sha256": "602283211f2fc8645a223629d705541eb56faf2c60ce10d5fa36cede694f6dae"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+      "bytes": 3581,
+      "sha256": "7c02204d0e75ea9f9bbf72327c4f16afdb8a3d3842283fd7ac60c957109c4fa1"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/experiment.json",
+      "bytes": 3604,
+      "sha256": "cd52212943c9b2f801a45cd3fee0acd664baa4685ef0d4a42b111354f1d62051"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/acceptance_plan.json",
+      "bytes": 1708,
+      "sha256": "ef0beb9f2e427ccbbea877c02048be6bdabd3bca1f92f6f9fab4077c087cc608"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/plan_input.json",
+      "bytes": 4155,
+      "sha256": "f46e7df587b51b1569d609072ab1362de93889e4a55327a45c42ac9b50793004"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+      "bytes": 1831,
+      "sha256": "2833210e4d2cb89170848acef45270025c8348a613637a43e15a4946e9680f9b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/plan_input.json",
+      "bytes": 4155,
+      "sha256": "7f0452cc568052e16af08e80c58263044600db882b50d40ce2eec7a31b144479"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json",
+      "bytes": 1832,
+      "sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/initialization_provenance.json",
+      "bytes": 3326,
+      "sha256": "798b3d7c5a2ae651d9d29673704c72fdf782b525022c6e3365027daf754bc22b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/preparation_record.md",
+      "bytes": 3256,
+      "sha256": "34394d6d27d960fed8edf37ccd83533ce3e48380657a86e4909db2d221823435"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/protocol.md",
+      "bytes": 5403,
+      "sha256": "33e8dc1f57765fefaf1e9e483eab92072f0fe828266a6da48e41f68131bb87bd"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/role_audits/arms.json",
+      "bytes": 191,
+      "sha256": "3096203a13a60e3f7621c90d94979c0d1e34068379d784165c122f84d554907f"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e2.json",
+      "bytes": 5990,
+      "sha256": "56efe96c329a0ab4425ead96d2054c09da9fe7b3c958d2fc2f2ae12093ad4049"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json",
+      "bytes": 5990,
+      "sha256": "4d387e4acef5063a87051d43b6e9cacdbdb23cdaa717510e6f3a1845e1f2ec19"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/role_plan.json",
+      "bytes": 1226,
+      "sha256": "c9b39f8031ee5c5db3bb43a926a661d344f2a8f786fa458057238e790b2e3a8c"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/comparison_assets/d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a/target_transform.json",
+      "bytes": 557,
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/rml_decision_snapshots/342ff415fec8315bafd909f32ed79c1ea6145a3522fde140d131b41cf749bd5c.json",
+      "bytes": 67593,
+      "sha256": "342ff415fec8315bafd909f32ed79c1ea6145a3522fde140d131b41cf749bd5c"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/bound_trace_manifest.json",
+      "bytes": 2643,
+      "sha256": "030bb5e985f64f45f9d03342c72c51e956fc2190f88674a9cb1398084cab7015"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/comparison_readiness.json",
+      "bytes": 12075,
+      "sha256": "1776f2cb43d6fb5316f8f16404be1052d014a7a0f11a361206a34ab96ac5ccef"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/cost_records.json",
+      "bytes": 2239,
+      "sha256": "10456c5aa0d6d071309fdf30917e0cca50752327032481984567bf644b90f173"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/paired_analysis.json",
+      "bytes": 450,
+      "sha256": "2db0556d43bd0a4a92d7ab9cfcfd0c9acd999c345caf3635deda315fccb85c48"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "3cc9f0e348e41402c5c2bdc2857e541a99568c5d43b400cca4fb862e17539444"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/qualified_terminal.json",
+      "bytes": 19520,
+      "sha256": "84968be039bcf3eeb662ada11e2da6431dc51f2b774fd7ce6c9c9a5e83d153eb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/role_history.json",
+      "bytes": 3968,
+      "sha256": "6141b64bf895e7e5a32f25983ef3146b14dd6f5b70ae7da8145d8b16feaab972"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e2/target_manifest.json",
+      "bytes": 207,
+      "sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/bound_trace_manifest.json",
+      "bytes": 2643,
+      "sha256": "61508e675c8621b6587698369486de6cd90878e14c36955e82bd9ae4227fb1eb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/cost_records.json",
+      "bytes": 2238,
+      "sha256": "c5a3fde66e895c0d6754f22af70c543b25530a67a8079a20ac45a573dc0c8499"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "453170b3ea2b8bf993087f7fedb9cd49d5f4528d5499e2d5925491c8875b7a08"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/qualified_terminal.json",
+      "bytes": 19053,
+      "sha256": "0d6f67ef72988749db601f3d8efa58b7a1c19c52b53d93d927964af0aad692aa"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/reference_bundle.json",
+      "bytes": 5237,
+      "sha256": "461b996faf31baac54752bbd5fc707e820fb371a70c1afd67058dcf13872d74d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/role_history.json",
+      "bytes": 3968,
+      "sha256": "db6ccac4450995d512c3d47b45496f910e2300fb551a597de461bd540deaf331"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/1d472f2abd3912cc6911/tail_wd1e3/target_manifest.json",
+      "bytes": 207,
+      "sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/costs/cost-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-planned.json",
+      "bytes": 861,
+      "sha256": "0232ca92cb4e630f18e2952848464a43a3567e8fb9635fe2556c3239135f8a61"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-0.json",
+      "bytes": 985,
+      "sha256": "c5766e171a4308122d80f5ce0e7d0e0b4f5774de2e5e44446bc3b6ccec85c397"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-allocation-0.json",
+      "bytes": 992,
+      "sha256": "1a2714df398a3bd4ea626364d76d4371b95b3cf0c3d52aa144997b2e32e3d008"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/finalization.json",
+      "bytes": 9219,
+      "sha256": "ccd3b0d7797562970061e882c7afa1da62550bbeea2d9e4a5acaa4fb14f04526"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-labels_read.json",
+      "bytes": 694,
+      "sha256": "6209e80878fafa4a1b3e47ca5ed70de885764252ed259b59b1327ae4432553e7"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-metric_computed.json",
+      "bytes": 702,
+      "sha256": "3291ba303d4079cebbd9c1ca5714f6afdce18cbe50b8c784b66a887b28302938"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-prediction_input.json",
+      "bytes": 704,
+      "sha256": "f540f858abe535fc5169fc93bad39201fe3ea8af61e6ea3355150e34f643ec6a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-selection_used.json",
+      "bytes": 699,
+      "sha256": "9e53fbb3b579ee690815e764154ae11bb957dbd8e069d3ee6506a7bedf330a81"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-training_membership.json",
+      "bytes": 704,
+      "sha256": "0b6234cea5abb4bc9f089def53882536a0f2dfe555cad708377fa1459ec765de"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/terminal_input.json",
+      "bytes": 10032,
+      "sha256": "18b6edcc22305683f1473c8e5935affd2c1bec8093600036fe7a206591528736"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/trace.json",
+      "bytes": 12987,
+      "sha256": "777c5a6653fa44a899fd50ceb115d38da307a6bc1b07226a7910ca49fe40a9cb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/trace_manifest.json",
+      "bytes": 2709,
+      "sha256": "41a35e7f404fcab1a7d26638091993de49e2f56f07f3ab15196f036a47c6e698"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/trajectory.json",
+      "bytes": 5710,
+      "sha256": "9442976150e80327ec0dfc6c74fcd8b97852e28c67d3ccfda4b3e0860984988d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/v5_evidence.json",
+      "bytes": 4828,
+      "sha256": "441bafd46aec08a36ee09e4e015d822accf5e7f208f88749d20d4161a8e81758"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-0.json",
+      "bytes": 985,
+      "sha256": "c5766e171a4308122d80f5ce0e7d0e0b4f5774de2e5e44446bc3b6ccec85c397"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-allocation-0.json",
+      "bytes": 992,
+      "sha256": "1a2714df398a3bd4ea626364d76d4371b95b3cf0c3d52aa144997b2e32e3d008"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/finalization.json",
+      "bytes": 5550,
+      "sha256": "ca04c1c72463459e8017eb205f255b045d029e499bff360b8c9ab524c8840ddd"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-labels_read.json",
+      "bytes": 694,
+      "sha256": "6209e80878fafa4a1b3e47ca5ed70de885764252ed259b59b1327ae4432553e7"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-metric_computed.json",
+      "bytes": 702,
+      "sha256": "3291ba303d4079cebbd9c1ca5714f6afdce18cbe50b8c784b66a887b28302938"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-prediction_input.json",
+      "bytes": 704,
+      "sha256": "f540f858abe535fc5169fc93bad39201fe3ea8af61e6ea3355150e34f643ec6a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-selection_used.json",
+      "bytes": 699,
+      "sha256": "9e53fbb3b579ee690815e764154ae11bb957dbd8e069d3ee6506a7bedf330a81"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-training_membership.json",
+      "bytes": 704,
+      "sha256": "0b6234cea5abb4bc9f089def53882536a0f2dfe555cad708377fa1459ec765de"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/terminal_input.json",
+      "bytes": 8856,
+      "sha256": "5cec16c7204e07d63c00c5e6609ef7f27d7275bc815c10a73e2ef57a53c24699"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/trace.json",
+      "bytes": 12987,
+      "sha256": "777c5a6653fa44a899fd50ceb115d38da307a6bc1b07226a7910ca49fe40a9cb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/trace_manifest.json",
+      "bytes": 2633,
+      "sha256": "8d8592981d8e93179d9ae4dd78117171234f62b09521c1ca29ce67971789a820"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/trajectory.json",
+      "bytes": 5227,
+      "sha256": "8446a2061a3f4e70c427749fb97dd5b512822bb3e7e2bc5dc1a5c492a6bfc82e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/v5_evidence.json",
+      "bytes": 4520,
+      "sha256": "16ebe542a172cb9e2aee248b4f973007b68dd930469ad91fc0d76a266f9a82d4"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/acceptance.json",
+      "bytes": 967,
+      "sha256": "ec91f13f5d4972d124eae6f8740f30c13316dd6b94b80f62864116038750a4e3"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/observed.json",
+      "bytes": 8568,
+      "sha256": "ad1a10aa9387326790e418679d002bd4dfd894200b2bdaf0922d9dc2436957e6"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/terminal.json",
+      "bytes": 18024,
+      "sha256": "5f208b3d940bd7e743a3a579491eb4fc75a460c6ba54a484235cdd22fa98b53e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/311d19a20a95fbfa/acceptance.json",
+      "bytes": 967,
+      "sha256": "ec91f13f5d4972d124eae6f8740f30c13316dd6b94b80f62864116038750a4e3"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/311d19a20a95fbfa/observed.json",
+      "bytes": 8985,
+      "sha256": "da7c3b97ec67497d74480856f861ffb8604c7b5b15bb85537e7c2437ee7d1b3a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/311d19a20a95fbfa/terminal.json",
+      "bytes": 18265,
+      "sha256": "2a076d07621a84c0d94aa27becc9c5df56300a355859fbfeb52885b04ad4b194"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/trajectory.json",
+      "bytes": 4874,
+      "sha256": "f9eae1d92853e1537a8b183a283187d02d0f87c43a1ff649a8b38d495cf703b4"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/costs/cost-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-planned.json",
+      "bytes": 861,
+      "sha256": "217c9824e93ab1fd3a183f53586cb5b8aa64d8cdc55f942233f75f8a7e4799ef"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-0.json",
+      "bytes": 984,
+      "sha256": "20020c33dcaeaaa23dc87da64cc3c6beae5dd3a2a4611c8d86e7323218dce6b7"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-allocation-0.json",
+      "bytes": 992,
+      "sha256": "ddfeae2bb55da862efee6f4ff96e3efb776d35c7bc144fd9f5c09bc3822c6085"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/finalization.json",
+      "bytes": 8966,
+      "sha256": "abb5ea38cb2b775524689b1b801a177eeb2489cfe4b2ab19e2d3ae0935c9c79b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-labels_read.json",
+      "bytes": 694,
+      "sha256": "06a754a9f01c668aeed8bed00ef6a8df3c431a4e79337b00e10e26467b19a6c5"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-metric_computed.json",
+      "bytes": 702,
+      "sha256": "2fd6805cfcfe5f23241d30045565be16ee75810b07c48094280ae205e6c47687"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-prediction_input.json",
+      "bytes": 704,
+      "sha256": "05cab3910e1900a78da317f1f31a8eb1f5cbf4a9472119981e79ff4aeb48b50e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-selection_used.json",
+      "bytes": 699,
+      "sha256": "3ec0e7b73a9f292b7317b67fdb7d2f18d9af267cd7ed4d3048e420381cdae452"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-training_membership.json",
+      "bytes": 704,
+      "sha256": "b91d666cc6a40d1c0fe508b62fdcbbf14f9c8c129187c9f3edf094bcfe8d7185"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/terminal_input.json",
+      "bytes": 9568,
+      "sha256": "168119b9746d8955578163b38bdf2d44cf7f2b796894b0d0b05eae426b26d67d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/trace.json",
+      "bytes": 12993,
+      "sha256": "1bb940367ecad2dd927b0e5317a205295611c40f90ab6c1a971e97c8bfbb340d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/trace_manifest.json",
+      "bytes": 2709,
+      "sha256": "5a3f7ea5f1e653e66bf39c447db94cb0a62a743505490fc6f8c8ce5a1c44779b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/trajectory.json",
+      "bytes": 5316,
+      "sha256": "e869fe31fe6f805eebc07db679c9f0854172099adb58c86e6d21b8d9e3e245af"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/v5_evidence.json",
+      "bytes": 4826,
+      "sha256": "3a6ec182088c6ac1a6c173d52657fd9a8426c23ce4db3a92bebed1811b1354b2"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-0.json",
+      "bytes": 984,
+      "sha256": "20020c33dcaeaaa23dc87da64cc3c6beae5dd3a2a4611c8d86e7323218dce6b7"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-allocation-0.json",
+      "bytes": 992,
+      "sha256": "ddfeae2bb55da862efee6f4ff96e3efb776d35c7bc144fd9f5c09bc3822c6085"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/finalization.json",
+      "bytes": 5550,
+      "sha256": "c51db24131bb142a804062dfe399381c8b7bdddb9a23ba6c2031281a5f98d63b"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-labels_read.json",
+      "bytes": 694,
+      "sha256": "06a754a9f01c668aeed8bed00ef6a8df3c431a4e79337b00e10e26467b19a6c5"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-metric_computed.json",
+      "bytes": 702,
+      "sha256": "2fd6805cfcfe5f23241d30045565be16ee75810b07c48094280ae205e6c47687"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-prediction_input.json",
+      "bytes": 704,
+      "sha256": "05cab3910e1900a78da317f1f31a8eb1f5cbf4a9472119981e79ff4aeb48b50e"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-selection_used.json",
+      "bytes": 699,
+      "sha256": "3ec0e7b73a9f292b7317b67fdb7d2f18d9af267cd7ed4d3048e420381cdae452"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-training_membership.json",
+      "bytes": 704,
+      "sha256": "b91d666cc6a40d1c0fe508b62fdcbbf14f9c8c129187c9f3edf094bcfe8d7185"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/terminal_input.json",
+      "bytes": 8856,
+      "sha256": "439c96c0e83838fdc2b614fbe93047571c2cacdd228e2182fe94ef42ead66755"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/trace.json",
+      "bytes": 12993,
+      "sha256": "1bb940367ecad2dd927b0e5317a205295611c40f90ab6c1a971e97c8bfbb340d"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/trace_manifest.json",
+      "bytes": 2633,
+      "sha256": "976fd7350574822160afc38cf376259910a7036d675c4ac439f71d57883adbcc"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/trajectory.json",
+      "bytes": 5227,
+      "sha256": "6c2528b7028a3fbc340ed5408ddc708c163f02a2aef66c79c956dfe563f73f67"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/v5_evidence.json",
+      "bytes": 4518,
+      "sha256": "388a7aa5d0f72cef87d498ea6436e84437cf8d69e03a3c570889aa381d68abd1"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/acceptance.json",
+      "bytes": 967,
+      "sha256": "00e883029d66933fe1083b36d90c5710ab49369d6a74001cd455d7d0cdde1e29"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/observed.json",
+      "bytes": 8571,
+      "sha256": "763e2a05db4bcc2490ae834dc8e33c662fc4e75eb8f185019eabbbdb476da175"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/terminal.json",
+      "bytes": 18021,
+      "sha256": "a713ba2891ef922078f6a3eb3c17dfe55ebbaacce07673d8d024631df79d40c5"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/e269746cb6f9c9cc/acceptance.json",
+      "bytes": 967,
+      "sha256": "00e883029d66933fe1083b36d90c5710ab49369d6a74001cd455d7d0cdde1e29"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/e269746cb6f9c9cc/observed.json",
+      "bytes": 8988,
+      "sha256": "0e155942afc6acc569a68c1dfb701c6fee9ea6e375d475b724884052abb1b344"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/e269746cb6f9c9cc/terminal.json",
+      "bytes": 18262,
+      "sha256": "69db5409ebb680e418c5e22b80dda3731191485ae8085c3f0db9ceaa5693c8d6"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/trajectory.json",
+      "bytes": 4874,
+      "sha256": "d25a91fef51d2dc1d78dceaeaecc6f0d83182d1db3e06d19c06334312adc56ef"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/launch_receipt.json",
+      "bytes": 3546,
+      "sha256": "ea0815d83021e4bfba623bf013b6ccdc3199b5556686a0ddcd66a10438cb553a"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/platform_response.json",
+      "bytes": 1309,
+      "sha256": "225f2311e636b80be167d91996fcc2606474a40953cb76682adacd8c78240cc1"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/retrieval_metadata_receipt.json",
+      "bytes": 4579,
+      "sha256": "755374b6a3c416d0e786243e3ef67a7faa26ebcdf546d833442c7cbc598c5a9c"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/source_reconciliation_20261024T184316Z.json",
+      "bytes": 1921,
+      "sha256": "01d6d03e350372d571e66736e6d08f31d60d1fbbe3cf484b970fc8bc375a1a22"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/source_upload_verification.json",
+      "bytes": 2879,
+      "sha256": "b40314ed83794298846d9df5ad6a1ca9abbc6f6be2d6315fa96fa8900fb3fb1f"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/source_verification.json",
+      "bytes": 466,
+      "sha256": "070f134e38613608a3225a459430bb0cbd8c1f08072893d99056f703a0835328"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/startup_verified_observation.json",
+      "bytes": 7648,
+      "sha256": "b8188e2b648be503de89f0c58826084d6c9aa263159f1a4c0f4a93b8eb2634d5"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/submission/terminal_observation.json",
+      "bytes": 6730,
+      "sha256": "1367e3a94211295ebf753635b452e1a045b64850f29f7adeeb29bb73e76f5071"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+      "bytes": 207,
+      "sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6"
+    },
+    {
+      "path": "experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md",
+      "bytes": 3123,
+      "sha256": "3507acc800c4435f14b9c81f3a025c90a5da5fbe7ab75cbbed04351f464a543b"
+    },
+    {
+      "path": "research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json",
+      "bytes": 882,
+      "sha256": "3a285c4b9b11fd3c6748f4ba521b481ee015933b65eb27b88f1f74eeb6594b7a"
+    }
+  ],
+  "total_bytes": 1093315
+}

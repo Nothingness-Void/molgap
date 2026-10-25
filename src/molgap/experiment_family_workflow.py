@@ -52,6 +52,67 @@ def _verify_canonical_output(root, spec, context, package, observed, output_dir)
             raise ValueError("Canonical qualification differs from the observed output artifacts")
 
 
+def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_fields=None):
+    """Read the intervention group declared before training, never infer it from results."""
+    from .comparison_readiness import _validate_intervention_scope
+    shared = configuration.get("shared", {})
+    arms = configuration.get("arms")
+    if (type(shared) is not dict or type(arms) is not list
+            or any(type(item) is not dict for item in arms)):
+        raise ValueError("Same-run comparison requires frozen scientific arm declarations")
+    selected = [item for item in arms if item.get("arm_id") == arm_id]
+    references = [item for item in arms if item.get("arm_id") == reference_id]
+    if len(selected) != 1 or len(references) != 1:
+        raise ValueError("Same-run comparison requires exact frozen arm identities")
+    candidate, reference = ({**shared, **selected[0]}, {**shared, **references[0]})
+    purpose = candidate.get("purpose", "architecture_comparison")
+    if purpose != reference.get("purpose", "architecture_comparison"):
+        raise ValueError("Same-run arms declare different comparison purposes")
+    allowed = {"architecture_comparison": ["architecture_config_identity"],
+               "mechanism_comparison": ["architecture_config_identity"],
+               "optimizer_comparison": ["optimizer_identity"]}
+    if purpose not in allowed:
+        raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
+    question = configuration.get("question", {})
+    group = question.get("changed_mechanism") if type(question) is dict else None
+    if group is None:
+        group = "architecture-config" if purpose == "architecture_comparison" else None
+    scope = {"experiment_purpose": purpose, "intervention_group_id": group,
+             "mechanism_id": group if purpose == "mechanism_comparison" else None,
+             "declared_intervention_fields": allowed[purpose] if declared_fields is None else declared_fields}
+    _validate_intervention_scope(**scope, require_nonempty=True)
+    if set(scope["declared_intervention_fields"]) - set(allowed[purpose]):
+        raise ValueError("Same-run declaration exceeds supported scientific changes")
+    return scope
+
+
+def _frozen_same_run_scopes(resolved):
+    """Use the archived human input; the mutable checkout is not scope authority."""
+    declaration = resolved["spec"].to_dict()
+    pair = declaration["prospective"]["same_run_replay"]
+    reference = pair["reference_arm_id"]
+    binding = resolved["target_identities"][reference]
+    if binding.package_dir is None:
+        raise ValueError("Same-run strict scope requires the frozen source package")
+    manifest = _json(binding.package_dir / "package_manifest.json")
+    source = manifest.get("configuration_source")
+    if source is None:
+        # Original hand-authored packages had only architecture comparison.
+        return {arm["arm_id"]: {"experiment_purpose": "architecture_comparison",
+            "intervention_group_id": "architecture-config", "mechanism_id": None,
+            "declared_intervention_fields": ["architecture_config_identity"]}
+            for arm in declaration["arms"] if arm["arm_id"] != reference}
+    if source.get("compiler") != "molgap-scientific-experiment-v1":
+        raise ValueError("Unknown frozen scientific comparison compiler")
+    if source.get("path") not in manifest["relative_allowlist"]:
+        raise ValueError("Scientific comparison source is absent from the frozen package")
+    configuration = binding._pinned_json(source["path"], source["sha256"], label="scientific scope")
+    if configuration.get("format") != source["compiler"]:
+        raise ValueError("Frozen scientific comparison format differs")
+    return {arm["arm_id"]: same_run_comparison_scope(configuration, arm["arm_id"], reference)
+            for arm in declaration["arms"] if arm["arm_id"] != reference}
+
+
 def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
     """Resolve retained target proof without reading training graphs or models."""
     from .comparison_readiness import target_transform_asset_digest, validate_target_transform_asset
@@ -206,6 +267,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
                      resolve_strict_target_transforms(root, resolved, strict_inputs))
     if target_report["status"] != "VERIFIED":
         return {**target_report, "executed": False}
+    scopes = _frozen_same_run_scopes(resolved)
     transforms = {arm: row["transform"] for arm, row in target_report["arms"].items()}
     target_manifests = {arm: row["targets"] for arm, row in target_report["arms"].items()}
     appended = {arm: row["supplemental_binding"] for arm, row in target_report["arms"].items()
@@ -344,7 +406,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             sides[arm_id]["artifact_bindings"]["paired_analysis"] = binding(paired_ref)
             comparison = assess_comparison_readiness(candidate_id=package["evidence"]["evidence_id"], candidate=sides[arm_id],
                 reference_id=packages[reference_id]["evidence"]["evidence_id"], reference=sides[reference_id],
-                declared_intervention_fields=["architecture_config_identity"])
+                **scopes[arm_id])
             validate_comparison_readiness(comparison, evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha))
             comparisons[arm_id] = comparison
             comparison_ref = publish(arm_id, "comparison_readiness.json", comparison)

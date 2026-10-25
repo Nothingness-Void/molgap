@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-scale-attribution-20261025-attempt002-observed",
+  "evidence_ref": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.6888932291666666
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.17981138575000008
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-pcqm-k1-scale-attribution-20261025-attempt-002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+}

@@ -120,3 +120,12 @@ research_memory/policies/pcqm-gptrans-resistance-100k-s42-20261020.1.json -text
 experiments/pcqm_k1_batch_renorm_100k/** -text whitespace=cr-at-eol
 research_memory/policies/pcqm-k1-batch-renorm-100k.1.json -text
 research_memory/policies/pcqm-k1-brn-clean-bn-100k.1.json -text
+
+experiments/pcqm_k1_scale_attribution_20261025/** -text -filter -ident -working-tree-encoding
+research_memory/policies/pcqm-k1-scale-attribution-20261025.1.json -text -filter -ident -working-tree-encoding
+src/molgap/k1_retained_tail_diagnostic.py -text -filter -ident -working-tree-encoding
+research_memory/policies/pcqm-k1-scale-attribution-20261025-attempt-002.1.json -text -filter -ident -working-tree-encoding
+
+experiments/pcqm_k1_tail_regularization_500k/** -text whitespace=cr-at-eol
+
+research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json -text whitespace=cr-at-eol

@@ -1,0 +1,96 @@
+{
+  "format": "molgap-k1-target-recovery-submission-request-v1",
+  "frozen_at_utc": "2026-10-25T06:44:14.781817+00:00",
+  "attempt": 2,
+  "owning_commit": "a31cd00a3204c38d39cd75278e506f4f172b9d30",
+  "checkout_head": "11c2789cf0aef844cd511f3d25153eb6ad0f8df6",
+  "package_directory": "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\experiments\\pcqm_k1_scale_attribution_20261025\\target_recovery\\attempt_002",
+  "package_files": [
+    {
+      "relative_path": "entry.py",
+      "bytes": 21768,
+      "sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+      "matches_authorized_commit": true,
+      "authorized_commit_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+      "raw_bytes_match_authorized_commit": true
+    },
+    {
+      "relative_path": "kernel-metadata.json",
+      "bytes": 497,
+      "sha256": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+      "matches_authorized_commit": true,
+      "authorized_commit_sha256": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+      "raw_bytes_match_authorized_commit": true
+    },
+    {
+      "relative_path": "worker.py",
+      "bytes": 12646,
+      "sha256": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766",
+      "matches_authorized_commit": true,
+      "authorized_commit_sha256": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766",
+      "raw_bytes_match_authorized_commit": true
+    },
+    {
+      "relative_path": "README.md",
+      "bytes": 2002,
+      "sha256": "03179e8e6ace6cc36db34fe94b70dac7763fae24453626606d53d2de2b544ce7",
+      "matches_authorized_commit": true,
+      "authorized_commit_sha256": "03179e8e6ace6cc36db34fe94b70dac7763fae24453626606d53d2de2b544ce7",
+      "raw_bytes_match_authorized_commit": true
+    },
+    {
+      "relative_path": "local_review.json",
+      "bytes": 1519,
+      "sha256": "4a9fc0c6e6df374b1e50380d33d48976cd4742280af3834321879c17e90fd288",
+      "matches_authorized_commit": false,
+      "authorized_commit_sha256": "4a9fc0c6e6df374b1e50380d33d48976cd4742280af3834321879c17e90fd288",
+      "raw_bytes_match_authorized_commit": true
+    }
+  ],
+  "executable_and_metadata_files_match_authorized_commit": true,
+  "all_package_files_match_authorized_commit": true,
+  "local_review_file_matches_authorized_commit": true,
+  "account_owner": "nothingnessvoid",
+  "account_owner_verified_before_post": true,
+  "credential_material_in_artifact": false,
+  "requested_kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "requested_returned_version_expectation": 2,
+  "returned_version_is_unbound_until_actual_response": true,
+  "timeout_seconds": 900,
+  "resources": {
+    "tpu": false,
+    "gpu": false,
+    "internet": true
+  },
+  "dataset_sources": [
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+    "nothingnessvoid/k1-tail-wd-500k-src/1"
+  ],
+  "cutoff_utc": "2026-10-25T07:35:00Z",
+  "cutoff_contract_source": "attempt_002 README.md and worker.py",
+  "no_training_or_model_inference": true,
+  "prior_attempt_version": 1,
+  "prior_attempt_terminal_poll_sha256": "f79e5b185bae537616529fb079f45e054490c7c091581084ab35a08e2d848409",
+  "prior_failure_preserved": true,
+  "method": "platforms.kaggle.credential_api.api_for_credentials(...).kernels_push(package_dir, timeout=900)",
+  "response_path": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\submission_response.json",
+  "preflight": {
+    "review_status": "LOCALLY_PREPARED_NOT_SUBMITTED",
+    "reviewed_worker_sha256": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766",
+    "metadata_owner": "nothingnessvoid",
+    "reviewed_entry_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "kernel_type": "script",
+    "entry": "entry.py",
+    "private": true,
+    "reviewed_metadata_sha256": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656"
+  },
+  "commit_binding_method": "SHA256 of raw bytes from git show <commit>:<path>, compared with physical package file bytes",
+  "source_commit_file_byte_sha256": {
+    "entry.py": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "kernel-metadata.json": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+    "worker.py": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766",
+    "README.md": "03179e8e6ace6cc36db34fe94b70dac7763fae24453626606d53d2de2b544ce7",
+    "local_review.json": "4a9fc0c6e6df374b1e50380d33d48976cd4742280af3834321879c17e90fd288"
+  },
+  "prior_freeze_note": "An initial draft compared Git object IDs; it was superseded before POST by this raw-byte SHA256 binding."
+}

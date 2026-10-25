@@ -1,0 +1,31 @@
+{
+  "absolute_cutoff_utc": "2026-10-25T07:35:00+00:00",
+  "cleanup_reserve_seconds": 20,
+  "cpu_hours": {
+    "status": "measured",
+    "value": 0.22634133111111113
+  },
+  "cpu_scope": "Entry and reaped children; interruption may omit unreaped descendants",
+  "entry_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+  "format": "molgap-cpu-target-recovery-entry-v1",
+  "gpu_hours": {
+    "status": "not_applicable",
+    "value": null
+  },
+  "manifest_sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b",
+  "measured_process_tree_cpu_seconds": 814.828792,
+  "queue_hours": {
+    "status": "measurement_missing",
+    "value": null
+  },
+  "requested_accelerator": "CPU",
+  "scope": "Entry through worker termination; platform queue and release excluded",
+  "session_timeout_seconds_required_at_submission": 900,
+  "status": "COMPLETE",
+  "wall_end_utc": "2026-10-25T06:49:44.466161+00:00",
+  "wall_seconds": 306.03824080799995,
+  "wall_start_utc": "2026-10-25T06:44:38.427946+00:00",
+  "worker_observation_sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741",
+  "worker_returncode": 0,
+  "worker_sha256": "97db7d400101b8ed254e7b60bfbbbec8fb375b1e9f028474dfffb58eaa0b8766"
+}

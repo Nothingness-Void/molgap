@@ -108,7 +108,8 @@ def frozen_acceptance_run(tmp_path, repo):
         generated=generated, original=(profile, repo, declaration["logical_run_id"], "v1"))
 
 
-def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True):
+def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
+                                 comparison_purpose="architecture_comparison"):
     """Freeze current shared-family contracts for the joined diagnostic path."""
     from molgap.experiment_package import build_experiment_source_package
     from molgap.experiment_spec import ExperimentSpec
@@ -157,7 +158,9 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True)
     config_source = repo / "experiments/synthetic/config.json"
     config_source.parent.mkdir(parents=True, exist_ok=True)
     config_bytes = canonical_json({"format": "molgap-scientific-experiment-v1",
-        "experiment_id": declaration["experiment_id"], "question": "synthetic acceptance fixture"}).encode()
+        "experiment_id": declaration["experiment_id"], "question": {"changed_mechanism": "synthetic-intervention"},
+        "arms": [{"arm_id": arm["arm_id"], "purpose": comparison_purpose}
+                 for arm in declaration["arms"]]}).encode()
     config_source.write_bytes(config_bytes)
     subprocess.run(["git", "add", "experiments/synthetic/config.json"], cwd=repo, check=True)
     subprocess.run(["git", "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic acceptance config"],

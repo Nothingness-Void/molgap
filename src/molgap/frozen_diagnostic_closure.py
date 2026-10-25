@@ -48,6 +48,12 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
         expected_roles = {"train_decoded": {"labels_read": list(range(500000))},
                           "train_descriptive": {"prediction_input": train, "metric_computed": train},
                           "internal_development": {a:dev for a in ("labels_read", "prediction_input", "metric_computed", "selection_used")}}
+    elif result["format"] == "molgap-k1-retained-tail-diagnostic-v1":
+        # Probe archives decode only these retained TRAIN rows, not all500K.
+        if len(train) != 16384 or len(set(train)) != len(train) or any(i < 0 or i >= 500000 for i in train) or dev != list(range(500000, 550000)):
+            raise ValueError("Retained tail diagnostic membership differs")
+        expected_roles = {"train_descriptive": {a: train for a in ("labels_read", "prediction_input", "metric_computed")},
+                          "internal_development": {a: dev for a in ("labels_read", "prediction_input", "metric_computed", "selection_used")}}
     elif result["format"] == "molgap-k1-component-diagnostic-v1":
         sample = result["sample_source_idx"]
         sample_dev, sample_train = [i for i in sample if i >= 500000], [i for i in sample if i < 500000]

@@ -1,0 +1,36 @@
+{
+  "format": "molgap-target-recovery-local-static-review-v1",
+  "created_at_utc": "2026-10-25T06:14:33.613819+00:00",
+  "worker_executed": false,
+  "remote_calls": false,
+  "syntax": "PASS",
+  "embedded_worker": "exact_bytes_verified",
+  "cpu_metadata": "PASS",
+  "source_sidecars": "all_five_byte_identical_to_verified_package",
+  "local_source_mount_shape": "PARTIAL: source_payload.bin absent; canonical package/source.tar.gz verified as expected payload bytes",
+  "required_remote_source_mount_shape": "expanded_sidecars_plus_source_payload.bin; wrapped ZIP fails closed",
+  "source_package_verified": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+  "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+  "data_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "declared_train_shards": 10,
+  "local_train_shards_present": 0,
+  "full500k_label_check": "NOT_EXECUTED",
+  "cutoff": "2026-10-25T07:35:00+00:00",
+  "cleanup_reserve_seconds": 20,
+  "sdk_session_timeout_seconds": 900,
+  "files": {
+    "worker.py": "094ae2ae2c954348b064e160b36ffe09cc8753aea52f4dfb481b6c162e8fea6d",
+    "entry.py": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+    "kernel-metadata.json": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+    "README.md": "aa286f37a2e9bc260e61e559c742df2aaad37cdc660a4e82f380cefdbf3e9de4"
+  },
+  "revised_at_utc": "2026-10-25T06:16:07.699454+00:00",
+  "revision_checks": {
+    "syntax": "PASS",
+    "embedded_worker": "exact_bytes_verified",
+    "source_guard": "frozen v4_runtime.normalized_source_sha256 compared with SOURCE_FILES",
+    "failure_role_receipt": "atomic states not_started / reading_unknown_subset / all500k_decoded; entry binds observation hash",
+    "loader_execution": "NOT_EXECUTED",
+    "remote_calls": false
+  }
+}

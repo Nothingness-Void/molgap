@@ -1,0 +1,18 @@
+{
+  "command": "\"D:\\文档\\molgap\\.venv\\Scripts\\python.exe\" \"platforms/local/run.py\" --repo-root \"D:\\molgap-worktrees\\k1-scale-attribution-20261025\" --profile \"D:\\molgap-machine-profile.json\" --module pytest -- \"tests/test_family_training_runner.py::test_actual_session_output_translation_and_cpu_mechanical_inspection[True-neural_atom_k1]\" \"tests/test_scientific_pair_input.py::test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt\" \"tests/test_family_training_session.py::test_live_selection_with_frozen_ema_reporting_survives_in_memory_resume\" -q",
+  "cwd": "D:\\molgap-worktrees\\k1-scale-attribution-20261025",
+  "python": "D:\\文档\\molgap\\.venv\\Scripts\\python.exe",
+  "checkout_source": "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\src",
+  "profile": "D:\\molgap-machine-profile.json",
+  "started_utc": "2026-10-25T06:35:47.933Z",
+  "finished_utc": "2026-10-25T06:36:36.742Z",
+  "wall_seconds": 48.807,
+  "exit_code": 0,
+  "nodes": [
+    "tests/test_family_training_runner.py::test_actual_session_output_translation_and_cpu_mechanical_inspection[True-neural_atom_k1]",
+    "tests/test_scientific_pair_input.py::test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt",
+    "tests/test_family_training_session.py::test_live_selection_with_frozen_ema_reporting_survives_in_memory_resume"
+  ],
+  "stdout": "stdout.txt",
+  "stderr": "stderr.txt"
+}

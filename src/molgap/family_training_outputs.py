@@ -154,8 +154,10 @@ class SessionOutputs:
             semantics["ema_dev_metric" if weights in {"ema", "clean-ema"} else "live_dev_metric"] = {
                 "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
                 "weights": weights, "direction": "minimize"}
-            if "live" in self.policy.extra_development_weights and self.recipe.ema_decay is not None:
-                semantics["live_dev_metric"] = {**semantics["ema_dev_metric"], "weights": "live"}
+            for extra in dict.fromkeys((*self.policy.extra_development_weights, *self.recipe.development_reports)):
+                semantics["ema_dev_metric" if extra == "ema" else "live_dev_metric"] = {
+                    "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
+                    "weights": extra, "direction": "minimize"}
         semantics["live_train_metric"]["unit"] = self.policy.train_metric_unit
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
             semantics, trajectory_id=trajectory_id,
@@ -270,6 +272,8 @@ class SessionOutputs:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
         if metrics.get("development_live") is not None:
             fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
+        if metrics.get("development_ema") is not None:
+            fields["ema_dev_metric"] = metrics["development_ema"]["mae_eV"]
         if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
         self.pending_pass = (progress, fields)

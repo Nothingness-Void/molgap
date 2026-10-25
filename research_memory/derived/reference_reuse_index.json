@@ -572,6 +572,50 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/e8ce9a5cb1f851ce0922ce379be1348d66e27cf638691e0e03ea1f3f9b50ce42/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified",
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/b263d47c4b41bcedff4114c6351c4eb865e41d38db7297505c1c15192f9d920b/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "machine_local_verified"
       ],
       "comparison_status": "NOT_EVALUATED",
@@ -2689,6 +2733,52 @@
       "used_by_trajectory_ids": [
         "TB-pcqm-expert-oracle-feasibility-20260930"
       ]
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "incomplete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-scale-attribution-20261025",
+      "source_envelope": "experiments/pcqm_k1_scale_attribution_20261025/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-scale-attribution-20261025-attempt-002",
+      "source_envelope": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [

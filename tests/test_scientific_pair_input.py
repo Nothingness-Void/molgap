@@ -47,8 +47,21 @@ def _commit(case, value, authority, path):
 def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scientific):
     case = scientific
     value, authority, path = _pair(case)
+    recipe_path = case.repo / value["shared"]["recipe_ref"]
+    guarded_recipe = json.loads(recipe_path.read_bytes())
+    guard = {"prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
+    guarded_recipe["initial_development_check"] = guard
+    _write_json(recipe_path, guarded_recipe)
+    data_path = case.repo / value["shared"]["data_ref"]["spec_ref"]
+    data_spec = json.loads(data_path.read_bytes())
+    source_arm = next(arm for arm in data_spec["arms"]
+        if arm["arm_id"] == value["shared"]["data_ref"]["arm_id"])
+    source_arm["training"]["recipe"]["sha256"] = hashlib.sha256(recipe_path.read_bytes()).hexdigest()
+    _write_json(data_path, data_spec)
     _commit(case, value, authority, path)
     _, spec, plan, _ = resolve_experiment_input(path, case.repo)
+    assert all(json.loads((case.repo / arm["recipe"]).read_bytes())["initial_development_check"] == guard
+               for arm in plan["arms"])
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["reference", "candidate"]
     acceptance = json.loads((case.repo / plan["acceptance_plan"]).read_bytes())
     target_path = case.repo / value["same_run"]["target_manifest_ref"]
@@ -71,6 +84,15 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
         assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v1"
     assert not any("comparison_prelaunch" in name for name in plan["generated_records"])
+    from molgap.experiment_family_workflow import same_run_comparison_scope
+    scope = same_run_comparison_scope(value, "candidate", "baseline")
+    assert scope["experiment_purpose"] == "optimizer_comparison"
+    assert scope["declared_intervention_fields"] == ["optimizer_identity"]
+    for purpose in ("architecture_comparison", "unknown"):
+        invalid = deepcopy(value)
+        invalid["shared"]["purpose"] = purpose
+        with pytest.raises(ValueError):
+            same_run_comparison_scope(invalid, "candidate", "baseline", declared_fields=["optimizer_identity"])
     freeze_experiment_input(path, case.repo)
     previous = spec.identity
     value["attempt_id"] = "v2"
@@ -92,6 +114,16 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
         proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
         assert validate_execution_identity(retry_spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v2"
+    incompatible = deepcopy(value)
+    incompatible.update(logical_run_id="guarded-architecture-change", attempt_id="v1")
+    incompatible.pop("retry_of")
+    incompatible["shared"]["purpose"] = "architecture_comparison"
+    model = deepcopy(incompatible["shared"]["model"])
+    model["addons"] = ["k1_readout_scale" if model["family"] == "neural_atom_k1" else "gptrans_readout_scale"]
+    incompatible["arms"][1].update(model=model, training={})
+    _commit(case, incompatible, authority, path)
+    with pytest.raises(ValueError, match="guard cannot be inherited"):
+        resolve_experiment_input(path, case.repo)
 
 
 def test_reference_and_retry_cannot_infer_authority(scientific):
@@ -106,6 +138,11 @@ def test_reference_and_retry_cannot_infer_authority(scientific):
     value["attempt_id"] = "v2"
     _commit(case, value, authority, path)
     with pytest.raises(ValueError):
+        resolve_experiment_input(path, case.repo)
+    value["attempt_id"] = "v1"
+    value["shared"]["purpose"] = "architecture_comparison"
+    _commit(case, value, authority, path)
+    with pytest.raises(ValueError, match="outside one logical group"):
         resolve_experiment_input(path, case.repo)
 
 

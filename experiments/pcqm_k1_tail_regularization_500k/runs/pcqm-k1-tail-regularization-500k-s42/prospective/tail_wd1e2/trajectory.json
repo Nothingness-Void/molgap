@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-tail-regularization-500k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-tail-regularization-500k-s42:tail_wd1e2:downstream"
+      ],
+      "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K_TAIL",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_tail_regularization_500k/authority.json",
+    "chosen_action": "RUN_PAIRED_500K_TAIL",
+    "policy_id": "pcqm-k1-tail-regularization-500k-s42",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_tail_regularization_500k/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/rml_decision_snapshots/342ff415fec8315bafd909f32ed79c1ea6145a3522fde140d131b41cf749bd5c.json",
+    "snapshot_sha256": "342ff415fec8315bafd909f32ed79c1ea6145a3522fde140d131b41cf749bd5c",
+    "state_timestamp": "2026-10-24T18:28:13.134758+00:00"
+  },
+  "family_id": "pcqm-k1-tail-regularization-500k-s42",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Both decay levels insufficient",
+      "Strong decay underfits",
+      "BN state dominates",
+      "One-seed variability"
+    ],
+    "changed_mechanism": "late-decoupled-weight-decay",
+    "cheapest_falsifier": "Two20pass warm-start recipes; no from-scratch baseline or new model module.",
+    "decision_changed_if_negative": "Close this tail recipe; do not add epochs or retry seeds blindly.",
+    "decision_changed_if_positive": "Nominate this warm-start recipe only after valid paired evidence; no automatic full/adoption.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
+    "observed_deficiency": "Accepted49-to60 fixed clean TRAIN improves0.538meV while development worsens0.787meV; additional exposure alone is not supported.",
+    "related_closed_family_ids": [
+      "K1 late weight averaging",
+      "K1 consistency500K under material gate",
+      "blind slot-width expansion"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-clean-fit-generalization-500k-20261009"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does stronger late decoupled weight decay improve K1 generalization from the same selected500K predictor?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_tail_regularization_500k/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+      "experiments/pcqm_k1_tail_regularization_500k/data_declaration.json",
+      "experiments/pcqm_k1_tail_regularization_500k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-clean-fit-generalization-500k-20261009"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_tail_regularization_500k/role_plan.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "tail_wd1e2",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+      "reference_arm_id": "tail_wd1e3",
+      "reference_trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+      "reference_trajectory_ref": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994"
+    },
+    "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+    "source_config_identity": "6554a0f06d86080812f86e7439a3d93791aa0a49e56d31c76cd58bac95a0ac37"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+}

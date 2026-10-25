@@ -1,0 +1,28 @@
+{
+  "format": "molgap-k1-target-recovery-metadata-retrieval-v1",
+  "retrieved_at_utc": "2026-10-25T06:51:56.292978+00:00",
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "version": 2,
+  "receipt": {
+    "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "version": 2,
+    "files": [
+      {
+        "path": "target_recovery/entry_receipt.json",
+        "sha256": "8e3b2b9e1c75ad5497b120d0039c802444c4078be7b337d9f510d9af8a5e23ac"
+      },
+      {
+        "path": "target_recovery/worker_observation.json",
+        "sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741"
+      },
+      {
+        "path": "target_recovery/manifest.json",
+        "sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b"
+      }
+    ],
+    "transport": "version_specific_exact_file",
+    "scientific_acceptance": false,
+    "unselected_outputs_downloaded": false
+  }
+}

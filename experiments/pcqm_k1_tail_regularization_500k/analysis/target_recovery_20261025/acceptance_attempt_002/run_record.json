@@ -1,0 +1,37 @@
+{
+  "started_utc": "2026-10-25T07:09:48.4668365Z",
+  "finished_utc": "2026-10-25T07:10:00.3676194Z",
+  "wall_seconds": 11.8982321,
+  "exit_code": 0,
+  "python": "D:\\文档\\molgap\\.venv\\Scripts\\python.exe",
+  "args": [
+    "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\platforms\\local\\run.py",
+    "--repo-root",
+    "D:\\molgap-worktrees\\k1-scale-attribution-20261025",
+    "--profile",
+    "D:\\molgap-machine-profile.json",
+    "--module",
+    "molgap.experiment_cli",
+    "--",
+    "accept-workflow",
+    "--repo-root",
+    "D:\\molgap-worktrees\\k1-tail-regularization-500k",
+    "--profile",
+    "D:\\molgap-machine-profile.json",
+    "--run-id",
+    "pcqm-k1-tail-regularization-500k-s42",
+    "--attempt-id",
+    "v1",
+    "--strict-inputs",
+    "D:\\molgap-worktrees\\k1-tail-regularization-500k\\experiments\\pcqm_k1_tail_regularization_500k\\analysis\\target_recovery_20261025\\strict_inputs.json",
+    "--execute",
+    "--verbose"
+  ],
+  "environment": {
+    "PYTHONPATH": "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\src",
+    "PYTHONUTF8": "1",
+    "TEMP": "D:\\molgap-scratch",
+    "TMP": "D:\\molgap-scratch"
+  },
+  "caller_head": "af154ac02b7c6d9202c37509d29e16b20969c7af"
+}

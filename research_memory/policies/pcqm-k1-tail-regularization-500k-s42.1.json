@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_PAIRED_500K_TAIL",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-tail-regularization-500k-s42"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "33e8dc1f57765fefaf1e9e483eab92072f0fe828266a6da48e41f68131bb87bd",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-tail-regularization-500k-s42",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}
