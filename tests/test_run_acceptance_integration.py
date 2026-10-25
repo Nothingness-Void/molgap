@@ -91,6 +91,10 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     record = json.loads(contract_path.read_bytes())
     session = make_session(arm["family"]["name"], development=True,
         schedule_kind="cosine_step", events=events())
+    from molgap.family_training_runner import read_recipe
+    session.recipe = read_recipe(contract_path)[1]
+    session.kernel.recipe = session.recipe
+    session.loaders.recipe = session.recipe
     outputs = SessionOutputs(directory, context, contract=contract_path, adapter=entry["adapter"],
         trajectory_id=binding["trajectory_id"], train_role_identity=record["train_role_identity"])
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
@@ -348,7 +352,7 @@ def _seed_reference_records(case):
     costs.write_bytes(canonical_json(cost).encode())
 
 
-@pytest.mark.parametrize("comparison_purpose", ["architecture_comparison", "optimizer_comparison"])
+@pytest.mark.parametrize("comparison_purpose", ["architecture_comparison", "optimizer_comparison", "initialization_comparison"])
 def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, comparison_purpose):
     case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
                                        comparison_purpose=comparison_purpose)
@@ -578,6 +582,11 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
                 # the bindings still come from the saved CPU run.
                 fixture_side["comparison_identity"]["architecture_config_identity"] = "same-architecture"
                 fixture_side["comparison_identity"]["optimizer_identity"] = side + "-optimizer"
+            if comparison_purpose == "initialization_comparison":
+                expected_arm = arms[reference_arm if side == "reference" else "gptrans_candidate"]
+                assert original_side["comparison_identity"]["initialization_identity"] == canonical_fingerprint(expected_arm["initialization"])
+                fixture_side["comparison_identity"]["architecture_config_identity"] = "same-architecture"
+                fixture_side["comparison_identity"]["initialization_identity"] = original_side["comparison_identity"]["initialization_identity"]
             kwargs[side] = {**fixture_side, **{key: value for key, value in original_side.items()
                 if key in {"artifact_bindings", "reference_bundle_id", "reference_bundle_sha256"}}}
         return assess(**kwargs)

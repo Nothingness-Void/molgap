@@ -417,8 +417,6 @@ def _compile_scientific_input(path, root, value):
                 raise ValueError("Same-run target differs from its frozen baseline preset")
             if is_reference and (item["training"] or addons != previous["addons"]):
                 raise ValueError("Same-run reference must retain its frozen recipe and addons")
-            if not is_reference and recipe == baseline:
-                raise ValueError("Same-run candidate must declare a scientific change")
             target = _read(local(pair["target_manifest_ref"]))
             if target.get("development_target_sha256") != requirements["target_sha256"]:
                 raise ValueError("Same-run target manifest differs from the frozen recipe")
@@ -478,7 +476,7 @@ def _compile_scientific_input(path, root, value):
         compiled.append((item, arm, new_record, reference, bundle, context, identity, changed, str(initial.absolute()), source["evidence"]))
 
     if pair is not None:
-        from .experiment_family_workflow import same_run_comparison_scope
+        from .experiment_family_workflow import same_run_comparison_scope, validate_initialization_peer
         reference = next(row for row in compiled if row[1]["arm_id"] == pair["reference_arm_id"])
         for row in compiled:
             if row is reference:
@@ -488,8 +486,19 @@ def _compile_scientific_input(path, root, value):
                 changed.append("optimizer_identity")
             if any(row[1][key] != reference[1][key] for key in ("base", "addons")):
                 changed.append("architecture_config_identity")
-            same_run_comparison_scope(value, row[1]["arm_id"], pair["reference_arm_id"],
-                                      declared_fields=changed)
+            if row[1]["initialization"] != reference[1]["initialization"]:
+                changed.append("initialization_identity")
+            if row[1]["training"]["objective"] != reference[1]["training"]["objective"]:
+                # Historical reference/composed modes share the default loss.
+                if not (row[2]["mode"] in {"reference", "composed"}
+                        and reference[2]["mode"] in {"reference", "composed"}):
+                    changed.append("loss_identity")
+            scope = same_run_comparison_scope(value, row[1]["arm_id"], pair["reference_arm_id"],
+                                              declared_fields=changed)
+            if scope["experiment_purpose"] == "initialization_comparison":
+                if len(compiled) != 2:
+                    raise ValueError("Initialization comparison requires one exact same-run pair")
+                validate_initialization_peer(row[1], reference[1], row[2], reference[2])
 
     # Commit only human/source inputs. Never require committing machine envelopes.
     # The selected data/roles are copied into this package's canonical Spec.
@@ -557,7 +566,10 @@ def _compile_scientific_input(path, root, value):
         "evidence": evidence, "terminal_protocol": TERMINAL_PROTOCOL})
     acceptance_pin = derive(prefix + "/acceptance_plan.json", {"format": (
         "molgap-family-same-run-acceptance-plan-v1" if pair is not None else "molgap-family-acceptance-plan-v1"),
-        "spec_identity": spec.identity, "arms": acceptance})
+        "spec_identity": spec.identity, "arms": acceptance,
+        **({"comparison_source": {"path": config_name, "sha256": input_sha}}
+           if pair is not None and any(item[0]["purpose"] == "initialization_comparison" for item in compiled)
+           else {})})
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",
         "dataset_manifests": dataset_manifests,

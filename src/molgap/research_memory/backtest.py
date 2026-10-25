@@ -24,27 +24,44 @@ BASE_COMPARABILITY_FIELDS = (
 )
 
 
+# Each supported projection changes exactly one field. Keep this separate from
+# the broader comparison-purpose registry: replay supports one physical pair.
+BOUND_REPLAY_INTERVENTIONS = {
+    "optimizer_comparison": ("optimizer_identity", "bound_optimizer_intervention",
+                             "molgap-bound-replay-optimizer-intervention-v1"),
+    "initialization_comparison": ("initialization_identity", "bound_initialization_intervention",
+                                  "molgap-bound-replay-initialization-intervention-v1"),
+}
+
+
 def _comparison_key(trace: dict[str, Any]) -> str:
     identity = trace["comparability_identity"]
-    optimizer_scope = identity.get("bound_optimizer_intervention")
-    optimizer_key = None
-    if optimizer_scope is not None:
+    scope_fields = {key for key in identity if key.startswith("bound_") and key.endswith("_intervention")}
+    supported = {key: (purpose, field, format_name)
+                 for purpose, (field, key, format_name) in BOUND_REPLAY_INTERVENTIONS.items()}
+    if len(scope_fields) > 1 or scope_fields - supported.keys():
+        raise ValueError("Replay requires one supported bound intervention")
+    intervention_field = intervention_key = None
+    if scope_fields:
+        scope_name = next(iter(scope_fields))
+        purpose, intervention_field, format_name = supported[scope_name]
+        scope = identity[scope_name]
         # This projection is supplied only by replay_manifests after validating
         # the canonical comparison binding and the same observed physical pair.
         side = trace["comparison_role"]
-        expected = optimizer_scope.get("expected", {})
+        expected = scope.get("expected", {})
         strict = identity.get("strict_identity", {})
-        if (optimizer_scope.get("format") != "molgap-bound-replay-optimizer-intervention-v1"
-                or optimizer_scope.get("experiment_purpose") != "optimizer_comparison"
-                or optimizer_scope.get("declared_intervention_fields") != ["optimizer_identity"]
+        if (scope.get("format") != format_name
+                or scope.get("experiment_purpose") != purpose
+                or scope.get("declared_intervention_fields") != [intervention_field]
                 or side not in {"candidate", "reference"}
-                or optimizer_scope.get("reference_id") != trace["reference_id"]
-                or optimizer_scope.get(side + "_id") != optimizer_scope.get("evidence_id")
+                or scope.get("reference_id") != trace["reference_id"]
+                or scope.get(side + "_id") != scope.get("evidence_id")
                 or set(expected) != {"candidate", "reference"}
-                or identity.get("optimizer_identity") != expected[side]
-                or strict.get("optimizer_identity") != expected[side]):
-            raise ValueError("Replay optimizer variant differs from its bound comparison")
-        optimizer_key = json.dumps({key: value for key, value in optimizer_scope.items()
+                or identity.get(intervention_field) != expected[side]
+                or strict.get(intervention_field) != expected[side]):
+            raise ValueError("Replay intervention variant differs from its bound comparison")
+        intervention_key = json.dumps({key: value for key, value in scope.items()
                                    if key != "evidence_id"}, sort_keys=True, separators=(",", ":"))
     fields = list(BASE_COMPARABILITY_FIELDS)
     if identity["matched_architecture_required"]:
@@ -53,12 +70,13 @@ def _comparison_key(trace: dict[str, Any]) -> str:
         "reference_id": trace["reference_id"],
         "identity": {field: identity[field] for field in fields},
     }
-    if optimizer_key is not None:
-        key["identity"]["optimizer_identity"] = optimizer_key
+    if intervention_key is not None:
+        key["identity"][intervention_field] = intervention_key
     if "strict_identity" in identity:
         strict = {k: v for k, v in identity["strict_identity"].items()
-            if (k != "architecture_config_identity" or identity["matched_architecture_required"])
-            and (k != "optimizer_identity" or optimizer_key is None)}
+            if (k != "architecture_config_identity" or identity["matched_architecture_required"]
+                or intervention_field == "initialization_identity")
+            and (k != intervention_field or intervention_key is None)}
         key["identity"]["strict_identity_sha256"] = hashlib.sha256(
             json.dumps(strict, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     return json.dumps(key, sort_keys=True, separators=(",", ":"))

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -70,7 +71,8 @@ def _prepare_arm(root: Path, arm: dict, reference: dict, role: str) -> Path:
     return canonical_path
 
 
-def _strict_comparison(root: Path, reference: dict, candidate: dict) -> tuple[str, str]:
+def _strict_comparison(root: Path, reference: dict, candidate: dict,
+                       purpose: str = "architecture_comparison") -> tuple[str, str]:
     reference_root = reference["exp_dir"]
     candidate_root = candidate["exp_dir"]
     transform = _target_transform_asset()
@@ -100,6 +102,13 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict) -> tuple[st
     reference_side["reference_bundle_id"] = bundle["reference_bundle_id"]
     reference_side["reference_bundle_sha256"] = reference_bundle_digest(bundle)
     candidate_side = _side("candidate-arch")
+    field = {"architecture_comparison": "architecture_config_identity",
+             "optimizer_comparison": "optimizer_identity",
+             "initialization_comparison": "initialization_identity"}[purpose]
+    if purpose != "architecture_comparison":
+        candidate_side["comparison_identity"]["architecture_config_identity"] = "reference-arch"
+        for side, value in ((candidate_side, "a" * 64), (reference_side, "b" * 64)):
+            side["comparison_identity"][field] = value
     for side, directory, names in (
         (reference_side, reference_root, REQUIRED_OBSERVED_BINDINGS),
         (candidate_side, candidate_root, REQUIRED_CANDIDATE_OBSERVED_BINDINGS),
@@ -117,7 +126,8 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict) -> tuple[st
     comparison = assess_comparison_readiness(
         candidate_id=candidate["ev_id"], candidate=candidate_side,
         reference_id=reference["ev_id"], reference=reference_side,
-        declared_intervention_fields=["architecture_config_identity"],
+        declared_intervention_fields=[field], experiment_purpose=purpose,
+        intervention_group_id=field,
     )
     assert comparison["strict_ready"] is True
     path = candidate_root / "comparison_readiness.json"
@@ -125,7 +135,8 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict) -> tuple[st
     return path.relative_to(root).as_posix(), file_digest(path)
 
 
-def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
+@pytest.mark.parametrize("purpose", ["architecture_comparison", "optimizer_comparison", "initialization_comparison"])
+def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path, purpose):
     setup_mock_repo(tmp_path)
     reference = create_candidate_arm(tmp_path, "pair_ref", "T-pair-ref", "run-ref", "ev-pair-ref")
     candidate = create_candidate_arm(tmp_path, "pair_candidate", "T-pair-candidate", "run-candidate", "ev-pair-candidate")
@@ -138,7 +149,7 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     with pytest.raises(ValueError, match="requires strict V5 comparison"):
         close_terminal_arm(tmp_path, candidate["traj_path"], candidate["terminal_path"], trace=candidate_trace)
     assert not (candidate["exp_dir"] / "rml_finalized").exists()
-    comparison_ref, digest = _strict_comparison(tmp_path, reference, candidate)
+    comparison_ref, digest = _strict_comparison(tmp_path, reference, candidate, purpose)
     terminal = json.loads(candidate["terminal_path"].read_text())
     terminal["comparison_readiness_ref"] = comparison_ref
     terminal["artifact_hashes"][comparison_ref] = digest
@@ -168,13 +179,54 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     from molgap.research_memory.backtest import build_screening_backtest
     from molgap.research_memory.replay import replay_manifests
     from molgap.research_memory.validate import validate_repository_records
-    manifests = replay_manifests(tmp_path, validate_repository_records(tmp_path)["records"])
+    records = validate_repository_records(tmp_path)["records"]
+    manifests = replay_manifests(tmp_path, records)
     # Batch/EMA/runtime differences in strict identities must survive projection,
     # even when the older coarse labels and reference ID happen to match.
-    for manifest in manifests:
-        if manifest["comparison_role"] == "candidate":
-            manifest["comparability_identity"]["strict_identity"]["physical_batch_per_device"] += 1
-    assert build_screening_backtest(manifests)["included_comparable_groups"] == []
+    for field, changed in (("physical_batch_per_device", 129), ("loss_identity", "different-loss"),
+                           ("schedule_identity", "different-schedule"), ("seed", 43),
+                           ("feature_identity", "different-features")):
+        altered = copy.deepcopy(manifests)
+        for manifest in altered:
+            if manifest["comparison_role"] == "candidate":
+                manifest["comparability_identity"]["strict_identity"][field] = changed
+        assert build_screening_backtest(altered)["included_comparable_groups"] == []
+    if purpose != "architecture_comparison":
+        field = comparison["declared_intervention_fields"][0]
+        scope_name = "bound_" + field.removesuffix("_identity") + "_intervention"
+        assert all(scope_name in entry["comparability_identity"] for entry in entries)
+        altered = copy.deepcopy(manifests)
+        altered[0]["comparability_identity"]["strict_identity"][field] = "unexpected"
+        with pytest.raises(ValueError, match="differs from its bound comparison"):
+            build_screening_backtest(altered)
+        other_scope = ("bound_optimizer_intervention" if purpose == "initialization_comparison"
+                       else "bound_initialization_intervention")
+        for extra_scope in ("bound_unknown_intervention", other_scope):
+            altered = copy.deepcopy(manifests)
+            altered[0]["comparability_identity"][extra_scope] = {}
+            with pytest.raises(ValueError, match="one supported bound intervention"):
+                build_screening_backtest(altered)
+        duplicated = {**records, "traces": [*records["traces"], next(
+            item for item in records["traces"] if item[1]["comparison_role"] == "candidate")]}
+        with pytest.raises(ValueError, match="one exact accepted candidate/reference trace pair"):
+            replay_manifests(tmp_path, duplicated)
+        # Retained manifests never grant exemptions themselves, including when
+        # their purported scope names are unknown to the supported projection.
+        forged = copy.deepcopy(records)
+        forged["comparison_readiness"] = []
+        for _, manifest in forged["traces"]:
+            manifest["comparability_identity"][scope_name] = {"expected": "forged"}
+            manifest["comparability_identity"]["bound_unknown_intervention"] = {}
+        projected = replay_manifests(tmp_path, forged)
+        assert all(not any(key.startswith("bound_") for key in manifest["comparability_identity"])
+                   for manifest in projected)
+        assert build_screening_backtest(projected)["included_comparable_groups"] == []
+        if purpose == "initialization_comparison":
+            altered = copy.deepcopy(manifests)
+            for manifest in altered:
+                if manifest["comparison_role"] == "candidate":
+                    manifest["comparability_identity"]["strict_identity"]["architecture_config_identity"] = "different-architecture"
+            assert build_screening_backtest(altered)["included_comparable_groups"] == []
 
     # A fresh checkout inherits accepted metadata without ignored checkpoints.
     # Index checking must match rebuild; strict artifact validation stays strict.
