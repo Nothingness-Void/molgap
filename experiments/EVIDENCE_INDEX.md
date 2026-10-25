@@ -90,7 +90,9 @@ retained positive-but-uncertain point evidence without passing the frozen gate.
 
 The2026-10-25 [ESA count-persistence selection](esa_count_persistence_100k/decision.md)
 used source-built RML curves to freeze a new matched60-pass reference/candidate
-question. This is prospective research selection, not an accepted outcome.
+question. The [complete paired result](esa_count_persistence_100k/results/completed_v2/decision.md)
+retained a positive within-family point gain with late attenuation; both actual
+trajectories became Replay-Ready, without seed/scale or cross-family promotion.
 
 The 2026-10-11 [source-dependence assay](pcqm_gptrans_source_dependence/decision.md)
 was authorized for read-only attention/gate observations on fixed input-only

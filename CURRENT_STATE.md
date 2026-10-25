@@ -7,11 +7,11 @@
 ## Server execution status
 
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
-has a RUNNING repaired-source reissue on Kaggle2 after the original failed
-before its first formal update at a packed-proof consumer. Exact failure/cost,
-CPU repair verification and both receipts remain with that experiment. Existing
-Luna B monitors the new bound job; native admission and terminal Replay remain
-pending. No scientific verdict,500K or protected-role release follows.
+completed both60-pass endpoints. Count readout passed its frozen within-family
+point gate with a smaller late-horizon benefit. Independent native/output
+acceptance, both Replay admissions and immutable baseline registration passed.
+Failure/cost and reporting repairs remain with the experiment. Existing Luna B
+is paused; no active job, automatic successor,500K or protected-role release remains.
 
 The [PPGT/ESA structural screen](experiments/modern2d_structure_100k/results/decision.md)
 completed both20-pass endpoints with independent native/output acceptance.

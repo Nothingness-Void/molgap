@@ -1,13 +1,14 @@
 # ESA count persistence — operation
 
 The repaired-source reissue `kaseichou/molgap-esa-count-persistence-100k-v2`,
-kernel140722385/version1, was observed RUNNING on2026-10-25. Its actual
-[receipt](retry_v2/submission_kaggle2_v1.json) binds source675480a35 and the new
-prospective pair. Source/private/T4/mount/entry checks passed; native admission,
-formal training progress and Replay remain pending. The scientific recipe is
-unchanged; the new ceiling is3.75 session hours/7.5 allocated T4-hours after
-charging the original failure. Existing Luna B/30-minute heartbeat monitors
-only this exact job via [binding](monitor.json), with healthy silence.
+kernel140722385/version1, completed both60-pass endpoints on2026-10-25.
+Independent saved-output/native acceptance and reference-first RML closure
+passed. Both actual trajectories are Replay-Ready and the immutable baseline
+bundle is registered; [terminal decision](results/completed_v2/decision.md) and
+[RML status](results/completed_v2/rml_status.json) own interpretation and identity.
+The [launch receipt](retry_v2/submission_kaggle2_v1.json) remains historical.
+The existing Luna heartbeat is paused and [binding](monitor.json) is closed.
+No continuation, successor, extra seed,500K or protected evaluation was released.
 
 Kaggle2 `kaseichou/molgap-esa-count-persistence-100k-v1`, kernel140716050/version1,
 ended ERROR before any formal optimizer update. Both native workers returned0;

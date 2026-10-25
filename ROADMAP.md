@@ -11,21 +11,22 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
-Accept the [ESA count-persistence screen](experiments/esa_count_persistence_100k/protocol.md)
-through saved-artifact inspection and reference-first RML closure, then assess
-endpoint and late-curve persistence. Existing Luna B owns healthy monitoring;
-do not duplicate the task or treat a planned pair as terminal Replay evidence.
+The [ESA count-persistence decision](experiments/esa_count_persistence_100k/results/completed_v2/decision.md)
+retains a qualified within-family lead and one reusable accepted reference.
+Its paired trajectories are Replay-Ready; no scientific successor is released.
+A later separately authorized question must distinguish count information from
+generic readout adaptation, rather than extend the closed horizon or rerun its baseline.
 
 The [Modern2D structural decision](experiments/modern2d_structure_100k/results/decision.md)
-retains ESA count conditioning as an exploratory lead, not a scale release.
-Review observed-role/reference closure before a separately authorized scientific
-confirmation; do not reopen the below-gate PPGT conditioner or force Replay.
+retained the ESA lead tested by the completed pair above. Its historical
+context-only scope is unchanged; do not reopen the below-gate PPGT conditioner
+or reinterpret old runs as the newly accepted reference.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 |— | C-MODERN2D-EXECUTION | Closed: the [prepared pair](experiments/modern2d_configured_100k/prepared_pair/results/decision.md) passed native and complete20-pass output checks within9h. | Preserve execution/curve/profile evidence; no scientific nomination or automatic successor |
 |— | C-MODERN2D-RESEARCH8 | Four-slot/eight-arm campaign terminal: ESA completed20 passes; PPGT stopped for cost after10 plus partialpass11. | Preserve [decisions and saved-output analysis](experiments/modern2d_configured_100k/research_arms/STATUS.md); no nomination, forced Replay, extension or automatic successor |
-|1 | C-MODERN2D-PROSPECTIVE-PAIR | Resolve [local-attempt versus physical-version closure](experiments/modern2d_configured_100k/prepared_pair/results/rml_status.json) and qualify the prospective reference/same-run pair route before another scientific release. | Prove local retry v2/remote version1 handling before compute; preserve original completed plans; no forced Replay, retrospective scientific claim or automatic retraining |
+|— | C-MODERN2D-PROSPECTIVE-PAIR | Closed: the [new ESA pair](experiments/esa_count_persistence_100k/results/completed_v2/rml_status.json) completed reference-first closure and real Replay admission. | Preserve original blocked historical plans and the new accepted immutable reference; no retrospective upgrade or automatic scale release |
 |— | C-MODERN2D-REPAIR | Closed: [native execution repair evidence](experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md) accepted for both families. | Preserve PPGT CPU/native discrepancy and ESA exact two-step state; any warmed throughput or scientific training needs separate frozen release; no automatic successor or training Replay |
 |1 | C-ESA-ATTRIBUTION | Accept the paired [ESA LR and WD screens](experiments/modern2d_configured_100k/esa_attribution/protocol.md), profiling, curves and exact role/cost/terminal evidence. | Four seed42 arms, one shared reference,60 passes; each slot8h/16T4h; no forced Replay or automatic scale/successor |
 |1 | C-MODERN2D-CONFIGURED | Existing Luna B monitors the separately authorized [repaired profile retry](experiments/modern2d_configured_100k/ppgt_profile/retry_v2/STATUS.md); A accepts exact native/profile/repeat/resume/role/cost evidence at terminal. | Six train-only scratch updates within1800 seconds/1 allocated T4-hour; no formal continuation,500K, automatic retry/successor or forced Replay |

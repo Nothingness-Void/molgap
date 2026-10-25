@@ -1,0 +1,21 @@
+{
+  "decision_ref": "experiments/esa_count_persistence_100k/results/completed_v2/decision.md",
+  "event_id": "evt-0e243afa9ebfa1bea7917f5c",
+  "event_state": "CLOSED",
+  "heartbeat_state": "PAUSED_CONFIRMED",
+  "monitor_automation": "molgap-k1-conjugated-dual-kaggle2-monitor",
+  "native_or_scientific_successor_submitted": false,
+  "outcome": {
+    "artifacts": "ACCEPTED",
+    "candidate": "POSITIVE_UNDER_CONTRACT",
+    "comparison": "STRICT_CAUSAL",
+    "execution": "COMPLETE_60_PASSES_EACH",
+    "native_qualification": "VERIFIED_BOTH_ARMS",
+    "new_paired_groups": 1,
+    "new_trajectories": 2,
+    "protected_role_access": false,
+    "reference": "ACCEPTED_REUSABLE_BASELINE",
+    "replay_readiness": "REPLAY_READY",
+    "successor_submitted": false
+  }
+}
