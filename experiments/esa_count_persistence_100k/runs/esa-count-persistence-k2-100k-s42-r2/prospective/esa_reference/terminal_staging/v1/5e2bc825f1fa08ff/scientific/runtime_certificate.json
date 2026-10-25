@@ -1,0 +1,60 @@
+{
+  "execution_repair_proof": {
+    "path": "execution_repair.json",
+    "sha256": "b22b0752d57cd7812ec7f31ca0f9a4467aba19813b0096ca2c8d9b62f13b8178"
+  },
+  "formal_training_exposure": 0,
+  "format": "molgap-runtime-certificate-v1",
+  "probe_recipe_identity": "ff8b5e6a8dd7079834fdd041add81bbf82667b5bd62b2d6093f960687869f4aa",
+  "profile_proof": {
+    "report": "profile_qualification/profile.json",
+    "sha256": "3ba4ed3971d9b152d2dfe040021e43518ccbfaad1e0995900d643c12d4744a1c"
+  },
+  "proof_storage": {
+    "members": {
+      "repeat-a.pt": {
+        "sha256": "c0623f9eaa486daed1c0640cfd3a0ec07fc9d75412d5cea38256cb25d5b45a1c",
+        "size_bytes": 60359294
+      },
+      "repeat-b.pt": {
+        "sha256": "ea25a166f69883b5752d1aba6957414bffb41f3ab56c6ae57ba7bc9d0a6424cb",
+        "size_bytes": 60359294
+      },
+      "resumed-first.pt": {
+        "sha256": "87d5c720e549d6004f279fbf51cc87bc47902f485739d974548784f18710de9d",
+        "size_bytes": 60356051
+      },
+      "resumed.pt": {
+        "sha256": "1443999b359d4206f233f3d575ecdd88907cbbfd9783d4a2325ce3ab890f9054",
+        "size_bytes": 60358765
+      }
+    },
+    "path": "native_proofs.zip",
+    "sha256": "d9d26edb1702a0c97b432f896f2d81ad0dcedf3b29646cab3db566486dd29b09",
+    "size_bytes": 113270959
+  },
+  "proofs": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "c0623f9eaa486daed1c0640cfd3a0ec07fc9d75412d5cea38256cb25d5b45a1c",
+      "state_fingerprint": "426f4c221a7ece759e449ad8dadd33a48ed669ef28ac9942dd813c3225676dbd"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "ea25a166f69883b5752d1aba6957414bffb41f3ab56c6ae57ba7bc9d0a6424cb",
+      "state_fingerprint": "426f4c221a7ece759e449ad8dadd33a48ed669ef28ac9942dd813c3225676dbd"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "1443999b359d4206f233f3d575ecdd88907cbbfd9783d4a2325ce3ab890f9054",
+      "state_fingerprint": "426f4c221a7ece759e449ad8dadd33a48ed669ef28ac9942dd813c3225676dbd"
+    }
+  ],
+  "provenance_sha256": "682c18ad8705302d970ec952448a765823f1189a1da3dc4d9e79b8463ca40fe4",
+  "resume_origin": {
+    "path": "resumed-first.pt",
+    "sha256": "87d5c720e549d6004f279fbf51cc87bc47902f485739d974548784f18710de9d"
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "status": "accepted"
+}

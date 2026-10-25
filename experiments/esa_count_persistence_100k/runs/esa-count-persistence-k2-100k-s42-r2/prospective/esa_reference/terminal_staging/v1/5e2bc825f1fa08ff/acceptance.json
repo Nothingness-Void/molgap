@@ -1,0 +1,29 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/esa_count_persistence_100k/results/completed_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  }
+}

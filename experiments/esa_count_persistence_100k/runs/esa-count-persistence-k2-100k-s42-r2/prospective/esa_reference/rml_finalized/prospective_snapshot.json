@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "esa-count-persistence-k2-100k-s42-r2-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-planned"
+      ],
+      "evidence_refs": [
+        "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json"
+      ],
+      "run_ids": [
+        "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream"
+      ],
+      "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/esa_count_persistence_100k/retry_v2/protocol.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_MATCHED60",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/esa_count_persistence_100k/retry_v2/authority.json",
+    "chosen_action": "RUN_MATCHED60",
+    "policy_id": "esa-count-persistence-repair-100k",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/modern2d_configured_100k/research_arms/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/rml_decision_snapshots/12886a3754beede8dc758b49d1cde41bb945c56746599c368b96b049fda9c549.json",
+    "snapshot_sha256": "12886a3754beede8dc758b49d1cde41bb945c56746599c368b96b049fda9c549",
+    "state_timestamp": "2026-10-25T05:54:18.089459+00:00"
+  },
+  "family_id": "esa-count-persistence-repair-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Early optimization advantage vanishes by60 passes.",
+      "Count-based readout worsens chemically hard rows.",
+      "The backbone remains weak despite a within-family improvement."
+    ],
+    "changed_mechanism": "esa-count-readout-only",
+    "cheapest_falsifier": "One reference bootstrap plus one identical-horizon candidate; later matching candidates reuse the accepted baseline.",
+    "decision_changed_if_negative": "Close count persistence under this contract; retain complete negative replay evidence and reference; no successor.",
+    "decision_changed_if_positive": "Inspect endpoints and late curves, register one accepted reference and close both arms through RML; retain a lead only, no automatic scale or seeds.",
+    "expected_native_cost_ref": "cost-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "observed_deficiency": "The20-pass count lead is contextual; older RML routes often lose early or narrow-cohort gains. No strict reusable ESA reference exists for this horizon.",
+    "related_closed_family_ids": [
+      "ppgt-content-conditioner-below-gate",
+      "esa-identity-residual-no-consistent-gain",
+      "generic-parameter-widening"
+    ],
+    "supporting_evidence_ids": [
+      "modern2d-execution-repair-s42-v2-esa-accepted"
+    ]
+  },
+  "owner": "server",
+  "question": "Does zero-start atom-count FiLM retain a material endpoint gain through a complete60-pass ESA screen?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/esa_count_persistence_100k/retry_v2/authority.json",
+    "contract_refs": [
+      "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json",
+      "experiments/esa_count_persistence_100k/anchor/experiment_spec.json",
+      "experiments/esa_count_persistence_100k/retry_v2/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "modern2d-execution-repair-s42-v2-esa-accepted"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/modern2d_configured_100k/research_arms/roles.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "esa_reference",
+      "comparison_role": "reference",
+      "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+      "reference_arm_id": "esa_reference",
+      "reference_trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "reference_trajectory_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a"
+    },
+    "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+    "source_config_identity": "331817a77bc4464188e9fe607f45b2eae300effe45996de55787e8bdc2c31a1a"
+  },
+  "track": "C",
+  "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+}

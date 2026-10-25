@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "759b7697ec5b1de171096106753565c6d7e3bf13f9a5a646cb6f129ccf813d68",
+    "dataset_identity": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690",
+    "ema_semantics": "717e6477f47a966c442bedc5f9bac25a4a23b37f7b103c8250f6339f57c7d9fe",
+    "evaluation_role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+    "lr_schedule_identity": "94f63ca913e1360870242db50282a3ebb056e0bf2c4020a6d3c7c81398077850",
+    "matched_architecture_required": false,
+    "optimizer_identity": "4a9f084de465ebc827284629ff0d2a070505b92fcd11863a0801ac2ca2653a19",
+    "precision_identity": "fp32",
+    "row_split_identity": "98eb9fb51e1f935e45dd57d7a1f3bc55a19ed785bf39dfc65cf382c0b57e556f",
+    "scientific_contract": "a0cca55d3acd9efd42e64d1d4348ae012533da708e093cd56ec1c0268c1e3d5b",
+    "selection_role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+    "target_transform_identity": "11cfd7adcaaedd398818cca9da029d7d4962f26867fa6e7dececbf05c5aefd60",
+    "terminal_endpoint_identity": "b7c18df5a72847d37bdcc0712d93aae6fd2d2a5c775cfb36a450b762909041cb",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_count/recipe.json",
+  "evaluation_role_identity": "e41849a065c94ad5ba0a4e5b92384d1496756a12ac4c7d1df5772eb12deeeeb7",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "759b7697ec5b1de171096106753565c6d7e3bf13f9a5a646cb6f129ccf813d68",
+  "presentation_semantics_ref": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_count/recipe.json",
+  "reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+  "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "7c214ccd184b24cf42d80b40ae5dc565a9b70e35dd27854fc8b672a67a107fca",
+  "terminal_evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/2afdeff0d475bfcd/terminal.json",
+  "trace_artifact_ref": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/canonical_trace.json",
+  "trace_artifact_sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

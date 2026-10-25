@@ -1,0 +1,353 @@
+{
+  "acceptance_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+    "experiments/esa_count_persistence_100k/results/completed_v2/decision.md": "7f4ec05ee648b1ede14d5bec7ce2beddac1064c0c77f7a2e171efca5e9650b74",
+    "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/acceptance.json": "ee569dda371417cbb3f4f820d6ebeb3beb42bf95cab3a7bc10478973860fe515",
+    "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/observed.json": "7374d2d08478fdacce801be57fa5a5322ac3a996804820af595bc92cd94d357f",
+    "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json": "a2a971b55ab0ae38c1a6b8f774b5da29f7b9a32668609d08f8dbefb3e10eb8be",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/canonical_trace.json": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/canonical_trace.json.context.json": "c6c7cf5d0992f6aec90e72c9d95b89f7fb2ea0f915c28b97cf6014396ce7b596",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/development_predictions.pt": "be197e19e2ed97ec058b943ccbcbc2925b3d4c1db7133b16e7661503cdd336b2",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/last_checkpoint.pt": "75ef9e9cbe2f68c3ea8dcfd1699796194f0a0d1201d57e1be7a94974e2d05733",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/output_manifest.json": "032e303c57fbbba02b2b8872a9980897a6a02906f9e349b156e34b2a7feaf699",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/role_audit.json": "3d57dab52c35574d388ab9d0c74f49577d329ea109c5269c9b3e2422832c0b3e",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/runtime_certificate.json": "32468a79d26f0d47552e33b1d96dba665507483749295e16a6162b27f92ed5a0",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/runtime_provenance.json": "dd8ace6e16adc5e21d002bbecb3389cd92b99e06c506338b3fec94704222078c",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/selected_model.pt": "bac425b12c1b9a5d1a98a86b531d5a939d4182fa7c9ea954d9bc8b15847f9f53",
+    "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/training_contract.json": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "esa-count-persistence-k2-100k-s42-r2-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-0",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.7703644300641665
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/esa_count_persistence_100k/results/completed_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/training_contract.json",
+        "name": "contract",
+        "role": "contract",
+        "sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/development_predictions.pt",
+        "name": "predictions",
+        "role": "predictions",
+        "sha256": "be197e19e2ed97ec058b943ccbcbc2925b3d4c1db7133b16e7661503cdd336b2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/last_checkpoint.pt",
+        "name": "resume",
+        "role": "resume",
+        "sha256": "75ef9e9cbe2f68c3ea8dcfd1699796194f0a0d1201d57e1be7a94974e2d05733"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/role_audit.json",
+        "name": "role_audit",
+        "role": "role_audit",
+        "sha256": "3d57dab52c35574d388ab9d0c74f49577d329ea109c5269c9b3e2422832c0b3e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/runtime_certificate.json",
+        "name": "runtime_certificate",
+        "role": "runtime_certificate",
+        "sha256": "32468a79d26f0d47552e33b1d96dba665507483749295e16a6162b27f92ed5a0"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/runtime_provenance.json",
+        "name": "runtime_provenance",
+        "role": "runtime_provenance",
+        "sha256": "dd8ace6e16adc5e21d002bbecb3389cd92b99e06c506338b3fec94704222078c"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/selected_model.pt",
+        "name": "selected_model",
+        "role": "selected_model",
+        "sha256": "bac425b12c1b9a5d1a98a86b531d5a939d4182fa7c9ea954d9bc8b15847f9f53"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/canonical_trace.json",
+        "name": "training_trace",
+        "role": "training_trace",
+        "sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "role": "trace_context",
+        "sha256": "c6c7cf5d0992f6aec90e72c9d95b89f7fb2ea0f915c28b97cf6014396ce7b596"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/esa_count_persistence_100k/results/completed_v2/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.20361478926420212,
+      "missing_reason": null,
+      "selected_optimizer_step": 36707,
+      "selected_weights": "live",
+      "source_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "common_dev": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_100k": "consumed"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-25T08:13:27.149594+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "INCONCLUSIVE",
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-training_membership",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-metric_computed",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-selection_used",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/role_audit-esa_reference-df807e771db90aa5.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-metric_computed",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    }
+  ],
+  "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+  "same_run_observation": {
+    "attempt_id": "esa-count-persistence-k2-100k-s42-r2-v1",
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-esa-count-persistence-100k-v2",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+    "source_package_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+    "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_reference/recipe.json",
+    "reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_reference:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/terminal_staging/v1/5e2bc825f1fa08ff/terminal.json",
+    "trace_artifact_ref": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_reference/canonical_trace.json",
+    "trace_artifact_sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+}

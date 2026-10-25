@@ -1,0 +1,46 @@
+{
+  "accepted_reference": {
+    "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/reference/reference_bundle.json",
+    "reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "sha256": "4e3310af2e5b39f0a721a9a59654d9b1c55e486bfc7c3d3c78c8eaeefd365b3e"
+  },
+  "actual_admitted_trajectories": [
+    "T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+    "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+  ],
+  "actual_new_pair_group_count": 1,
+  "arms": [
+    {
+      "arm_id": "esa_reference",
+      "outcome": "INCONCLUSIVE",
+      "receipt": {
+        "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/rml_finalized/finalization.json",
+        "sha256": "5e87c6b39b3f52e0bd0c71d714788c79b1eeffa65ecd01eaa28bc5db77d85838"
+      },
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "arm_id": "esa_count",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "receipt": {
+        "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/rml_finalized/finalization.json",
+        "sha256": "f004e539060defc1a65e2a73228d214ca395bd3eab1553b2b48697c280c95f6d"
+      },
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    }
+  ],
+  "format": "molgap-configured-scientific-closure-observation-v1",
+  "fresh_derived_snapshot": "E:/MolGap/scratch/esa-count-acceptance-20261025/derived_after_closure",
+  "global_derived_publication": "DEFERRED_TO_PRESERVE_UNRELATED_USER_CHANGES",
+  "global_source_comparable_groups": 11,
+  "global_source_replay_entry_count": 54,
+  "new_pair_count": 1,
+  "new_trajectory_count": 2,
+  "protected_roles_read": false,
+  "replay_readiness": "REPLAY_READY",
+  "source_digest": "5bbb4f3705806477ade0ecd75a561edb2f3b037fb55f1eece4d0bd5df8a6af49",
+  "status": "COMPLETE",
+  "successor_submitted": false,
+  "training_or_inference_executed_during_acceptance": false,
+  "user_derived_views_preserved_bytewise": true
+}

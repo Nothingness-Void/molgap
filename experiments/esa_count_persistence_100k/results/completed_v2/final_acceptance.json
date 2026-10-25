@@ -1,0 +1,121 @@
+{
+  "status": "PASS",
+  "blockers": [],
+  "scope": "read-only canonical RML acceptance closure verification",
+  "owner_call": {
+    "function": "accept_run_workflow",
+    "run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "attempt_id": "v1",
+    "strict_inputs": {},
+    "execute": false,
+    "outcome": null,
+    "decision_ref": null,
+    "stage_terminal": false,
+    "diagnose": false,
+    "status": "MECHANICALLY_VERIFIED",
+    "strict_mode": "CANONICAL_READ_ONLY",
+    "strict_validation": "VERIFIED",
+    "replay_readiness": "VERIFIED",
+    "executed": false,
+    "training_executed": false,
+    "inference_executed": false,
+    "network_accessed": false
+  },
+  "closure_record": {
+    "path": "E:/MolGap/scratch/esa-count-acceptance-20261025/terminal_acceptance.json",
+    "status": "COMPLETE",
+    "closure_complete": true,
+    "replay_readiness": "REPLAY_READY",
+    "replay_trajectory_ids": [
+      "T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    ]
+  },
+  "checks": {
+    "final_receipts": {
+      "status": "PASS",
+      "esa_reference": {
+        "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/rml_finalized/finalization.json",
+        "format": "molgap-rml-finalization-v1",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+        "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+        "source_artifact_digest": "de2e361b7c9f6f69e1fc78600db384f38001b73dfa6711b0800eebc3aac06a72",
+        "trace_sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398"
+      },
+      "esa_count": {
+        "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/rml_finalized/finalization.json",
+        "format": "molgap-rml-finalization-v1",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+        "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+        "source_artifact_digest": "3ea2e7ee7d955b2b896b371e2c981de032fa7b75aa28017e6a3e43a2c45fbfb9",
+        "trace_sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53"
+      }
+    },
+    "strict_comparison_actual_source_provenance": {
+      "status": "PASS",
+      "comparison_class": "STRICT_CAUSAL",
+      "candidate_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "readiness_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/2afdeff0d475bfcd/scientific/comparison_readiness.json",
+      "readiness_sha256": "a58caa509af7d25ac087285e76ba37a7f037cfcfaaeae89ae0748ec232252c5b",
+      "readiness_reference_bundle_id": "bundle-ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "readiness_reference_bundle_sha256": "e4947627b769ed80856cd9c736455a4dce0e99a193f653b73f3cad32b4531f4a",
+      "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+      "source_archive_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+      "arms": {
+        "esa_reference": {
+          "source_config_sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+          "runtime_provenance_sha256": "dd8ace6e16adc5e21d002bbecb3389cd92b99e06c506338b3fec94704222078c",
+          "runtime_certificate_sha256": "32468a79d26f0d47552e33b1d96dba665507483749295e16a6162b27f92ed5a0",
+          "trace_sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398"
+        },
+        "esa_count": {
+          "source_config_sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80",
+          "runtime_provenance_sha256": "b673feb2c425d2cf91ce953e90a80a94dd4607e29be83457fdb668ef1a2de10c",
+          "runtime_certificate_sha256": "93fcdd4217c5d1a188a02bcfe15cf69050630dcc57ae2a6280c9705aeaa9ef0e",
+          "trace_sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53"
+        }
+      }
+    },
+    "fresh_replay_membership": {
+      "status": "PASS",
+      "path": "E:/MolGap/scratch/esa-count-acceptance-20261025/derived_after_closure/replay_pool.json",
+      "format": "molgap-rml-replay-pool-v1",
+      "entry_count": 54,
+      "exclusion_count": 21,
+      "matched_trajectory_ids": [
+        "T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+        "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      ],
+      "matched_reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "matched_exclusions": []
+    },
+    "accepted_reference_bundle": {
+      "status": "PASS",
+      "path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/reference/reference_bundle.json",
+      "format": "molgap-reference-bundle-v1",
+      "reference_bundle_id": "accepted-ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "reference_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "file_sha256": "4e3310af2e5b39f0a721a9a59654d9b1c55e486bfc7c3d3c78c8eaeefd365b3e",
+      "content_digest": "0ac07f59fe698b835f79afadad10a9fd84badb4dd4bb2d8a005fff8f8fa73b8b",
+      "finalized_reference_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/rml_finalized/trajectory.json",
+      "paired_accepted_evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "prediction_sha256": "be197e19e2ed97ec058b943ccbcbc2925b3d4c1db7133b16e7661503cdd336b2"
+    }
+  },
+  "unique_ids": {
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "attempt_id": "v1",
+    "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+    "trajectory_ids": {
+      "esa_reference": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "esa_count": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    "evidence_ids": {
+      "esa_reference": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "esa_count": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    "accepted_reference_bundle_id": "accepted-ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+    "comparison_reference_bundle_id": "bundle-ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+  }
+}

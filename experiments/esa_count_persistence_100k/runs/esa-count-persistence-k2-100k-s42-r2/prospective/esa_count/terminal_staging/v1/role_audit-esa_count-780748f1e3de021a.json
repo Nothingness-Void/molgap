@@ -1,0 +1,132 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "esa_count",
+    "arm_identity": "5f923039c8e097e285bac793452f8ee8bbbe59db3f1da640964ace0a9f5e2bd7",
+    "experiment_id": "esa_count_persistence_100k",
+    "family_name": "esa_small",
+    "family_version": "4",
+    "logical_run_id": "esa-count-persistence-k2-100k-s42-r2",
+    "package_identity": "07e0a59f67a9bf684c49093271bbf014178b3d38d409b7e21888b53ee8885fce",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "kaseichou/molgap-esa-count-persistence-100k-v2",
+    "source_archive_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+    "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+    "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+    "training_recipe_sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80"
+  },
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-training_membership",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-prediction_input",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-labels_read",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-metric_computed",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-selection_used",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/role_audit-esa_count-780748f1e3de021a.json",
+      "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-metric_computed",
+      "role_name": "train_100k",
+      "row_manifest_hash": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "run_id": "esa-count-persistence-k2-100k-s42-r2:esa_count:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    }
+  ]
+}

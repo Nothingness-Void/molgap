@@ -1,0 +1,115 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "b1b6511215066e81f038e84b1a4d2773b1568394a7a4dc7cc916ebb554d6343b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "4a4eea878649517d1ef0ef9d9b5b097b085ba6d7b4655a38eb8799d8c246aaaa"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "b7da52a0f2e737857b0a0dd702f8ee0560142fe57cf6111b1af3aef80c6b2187"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "93fcdd4217c5d1a188a02bcfe15cf69050630dcc57ae2a6280c9705aeaa9ef0e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "b673feb2c425d2cf91ce953e90a80a94dd4607e29be83457fdb668ef1a2de10c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "3c06dc04b373ed306a019f8d1aec0b0dd2d024bd722eb2aba1187cde7634ea7d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1/experiment/esa_count/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "c8e44e3b6c38e94b33e0622c3915cda1c1e6c0d77b5be52642756de56507d07e"
+    },
+    {
+      "availability": "durable_local_verified",
+      "locator": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/2afdeff0d475bfcd/scientific/comparison_readiness.json",
+      "name": "comparison_readiness",
+      "sha256": "a58caa509af7d25ac087285e76ba37a7f037cfcfaaeae89ae0748ec232252c5b"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/esa_count_persistence_100k/results/completed_v2/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/esa_count_persistence_100k/generated/d5abee9f355f7a880e159cd479d5391619858b7c1b4dfcbaaf5a5caf356ce8f0/esa_count/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.2004349772810936,
+    "missing_reason": null,
+    "selected_optimizer_step": 25773,
+    "selected_weights": "live",
+    "source_ref": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/terminal_staging/v1/2afdeff0d475bfcd/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "POSITIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_100k": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "C"
+}

@@ -1,0 +1,139 @@
+{
+  "arms": {
+    "esa_count": {
+      "files": [
+        {
+          "path": "output_manifest.json",
+          "sha256": "d1e54757953ce96142c19d6b7225224922518956c1352bdaf6937c7721624d8f",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "training_contract.json",
+          "sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "development_predictions.pt",
+          "sha256": "b1b6511215066e81f038e84b1a4d2773b1568394a7a4dc7cc916ebb554d6343b",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "last_checkpoint.pt",
+          "sha256": "4a4eea878649517d1ef0ef9d9b5b097b085ba6d7b4655a38eb8799d8c246aaaa",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "role_audit.json",
+          "sha256": "b7da52a0f2e737857b0a0dd702f8ee0560142fe57cf6111b1af3aef80c6b2187",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "runtime_certificate.json",
+          "sha256": "93fcdd4217c5d1a188a02bcfe15cf69050630dcc57ae2a6280c9705aeaa9ef0e",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "runtime_provenance.json",
+          "sha256": "b673feb2c425d2cf91ce953e90a80a94dd4607e29be83457fdb668ef1a2de10c",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "selected_model.pt",
+          "sha256": "3c06dc04b373ed306a019f8d1aec0b0dd2d024bd722eb2aba1187cde7634ea7d",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "canonical_trace.json",
+          "sha256": "5e62bececc108805e24b36f9e62047a05887c747eb8d2448f0184ea854a83c53",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "c8e44e3b6c38e94b33e0622c3915cda1c1e6c0d77b5be52642756de56507d07e",
+          "state": "ALREADY_RETAINED"
+        }
+      ],
+      "manifest_sha256": "d1e54757953ce96142c19d6b7225224922518956c1352bdaf6937c7721624d8f",
+      "native_dependencies": {
+        "downloaded_files": [
+          "execution-reference.pt"
+        ],
+        "known_local_bytes": 200957321,
+        "native_qualification": "NOT_EVALUATED",
+        "status": "DEPENDENCIES_VERIFIED"
+      },
+      "status": "RETRIEVED",
+      "transport": "version_specific_manifest_pinned_files"
+    },
+    "esa_reference": {
+      "files": [
+        {
+          "path": "output_manifest.json",
+          "sha256": "032e303c57fbbba02b2b8872a9980897a6a02906f9e349b156e34b2a7feaf699",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "training_contract.json",
+          "sha256": "4ff5ea6741b89e1d686d09030871f8a7d28e592a95894173c9f46d68618501fa",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "development_predictions.pt",
+          "sha256": "be197e19e2ed97ec058b943ccbcbc2925b3d4c1db7133b16e7661503cdd336b2",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "last_checkpoint.pt",
+          "sha256": "75ef9e9cbe2f68c3ea8dcfd1699796194f0a0d1201d57e1be7a94974e2d05733",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "role_audit.json",
+          "sha256": "3d57dab52c35574d388ab9d0c74f49577d329ea109c5269c9b3e2422832c0b3e",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "runtime_certificate.json",
+          "sha256": "32468a79d26f0d47552e33b1d96dba665507483749295e16a6162b27f92ed5a0",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "runtime_provenance.json",
+          "sha256": "dd8ace6e16adc5e21d002bbecb3389cd92b99e06c506338b3fec94704222078c",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "selected_model.pt",
+          "sha256": "bac425b12c1b9a5d1a98a86b531d5a939d4182fa7c9ea954d9bc8b15847f9f53",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "canonical_trace.json",
+          "sha256": "136e194801a8512348b15d67f006212ecc00d8e5b81889c53159ef150a834398",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "c6c7cf5d0992f6aec90e72c9d95b89f7fb2ea0f915c28b97cf6014396ce7b596",
+          "state": "ALREADY_RETAINED"
+        }
+      ],
+      "manifest_sha256": "032e303c57fbbba02b2b8872a9980897a6a02906f9e349b156e34b2a7feaf699",
+      "native_dependencies": {
+        "downloaded_files": [
+          "execution-reference.pt"
+        ],
+        "known_local_bytes": 200536790,
+        "native_qualification": "NOT_EVALUATED",
+        "status": "DEPENDENCIES_VERIFIED"
+      },
+      "status": "RETRIEVED",
+      "transport": "version_specific_manifest_pinned_files"
+    }
+  },
+  "credentials_included": false,
+  "format": "molgap-exact-family-retrieval-observation-v1",
+  "kernel_id": 140722385,
+  "unselected_payloads_downloaded": false,
+  "version": 1
+}
