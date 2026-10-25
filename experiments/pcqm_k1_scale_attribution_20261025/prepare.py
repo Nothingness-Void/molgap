@@ -23,7 +23,7 @@ def main():
         raise FileExistsError('Prospective already published')
     artifacts = Path('D:/molgap-artifacts/diagnostics/k1-scale-attribution-20261025')
     artifacts.mkdir(parents=True, exist_ok=True)
-    archive = Path('D:/涓嬭浇/k1-bn-mechanism-a100-20261008.zip')
+    archive = Path('D:/\u4e0b\u8f7d/k1-bn-mechanism-a100-20261008.zip')
     original = json.loads((ROOT / 'experiments/pcqm_k1_complete_local_audit/inputs.json').read_text())
     bind = lambda p: {'path': str(p.resolve()), 'sha256': sha256_file(p)}
     probe = artifacts / 'probes'
