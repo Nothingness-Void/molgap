@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/inputs.json",
+      "name": "inputs.json",
+      "sha256": "403fe96be9a2eddba241aa3473954fb430aa7f1246c537b65b82b03c4c9ad1d7"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/roles.json",
+      "name": "roles.json",
+      "sha256": "5976b0dc5de86380fb8b46bb7dabc29f3ead6f907c4da9cd87b554f4d12a6eaf"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/protocol.md",
+      "name": "protocol.md",
+      "sha256": "8f5670be1c97b5d0f2726f22340b37f8694b01f63bf9271b67e8b7048edeae4c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/decision.md",
+      "name": "decision.md",
+      "sha256": "2cd951901aa8a38b40a6c7948fbaf15e6c3258722a954c33f73983658df304dd"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/execution_receipt.json",
+      "name": "execution_receipt.json",
+      "sha256": "b55f0092198d837fffb1b2a069e5ce0b75e0bf7d3304f24c1a72e821eaf8d396"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "a2a987d205daac8c8a300c9292889f798ee3f76668033cdc619136ae7669b5a5"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/attribution.md",
+      "name": "attribution.md",
+      "sha256": "5635bea014a0846a58be19ca1fbc0779e63687a3b0e16adb7ca30160087f13a2"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "11034f1dcbcc8636e04b86def00a10a3bb7fb8b21786133696c194d38bb71d2a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/close_failed_attempt.py",
+      "name": "close_failed_attempt.py",
+      "sha256": "0b8460bdf09242109a7aa54b5c4e8c6640af49f2bf413a815bb8954766161cae"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/prepare.py",
+      "name": "source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/prepare.py",
+      "sha256": "554caa2d128bff848275a3f9f7a282a52d42428546ce38d3d5e660fb1034b216"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/run.py",
+      "name": "source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/run.py",
+      "sha256": "73e1bd80cc1f8d88908419517626611c54297cb187f2beb9760d440978f0275e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/protocol.md",
+      "name": "source_attempt_001/experiments/pcqm_k1_scale_attribution_20261025/protocol.md",
+      "sha256": "8f5670be1c97b5d0f2726f22340b37f8694b01f63bf9271b67e8b7048edeae4c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/source_attempt_001/src/molgap/k1_retained_tail_diagnostic.py",
+      "name": "source_attempt_001/src/molgap/k1_retained_tail_diagnostic.py",
+      "sha256": "ea90f0d1a679f11f41d4b893136a9ff70f7e666482d91906e3b9e73002be5e97"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_scale_attribution_20261025/source_attempt_001/src/molgap/frozen_diagnostic_closure.py",
+      "name": "source_attempt_001/src/molgap/frozen_diagnostic_closure.py",
+      "sha256": "27300507116d01d8add4bfbeb1b46a47d2de0029d25522d95fd580aefdf772a9"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_scale_attribution_20261025/protocol.md",
+      "experiments/pcqm_k1_scale_attribution_20261025/terminal_decision.md",
+      "experiments/pcqm_k1_scale_attribution_20261025/attribution.md",
+      "experiments/pcqm_k1_scale_attribution_20261025/acceptance.json",
+      "experiments/pcqm_k1_scale_attribution_20261025/execution_receipt.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-scale-attribution-20261025-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-25",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure of observed failed process"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_scale_attribution_20261025/execution_receipt.json",
+    "inference_executed": false,
+    "training_executed": false,
+    "training_replay_ready": false
+  },
+  "outcome": {
+    "artifact_status": "partial_local_hash_verified",
+    "budget_decision": "infrastructure_attempt_closed",
+    "comparison_status": "incomplete",
+    "execution_status": "failed_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_descriptive": "consumed"
+  },
+  "scope": "pcqm-k1-scale-attribution-20261025",
+  "track": "B"
+}

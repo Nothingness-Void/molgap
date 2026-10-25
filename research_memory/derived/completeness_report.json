@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 151,
-    "with_complete_native_measurement": 29,
-    "with_cost_event": 140,
-    "with_incomplete_native_measurement": 111,
+    "trajectories_total": 153,
+    "with_complete_native_measurement": 30,
+    "with_cost_event": 142,
+    "with_incomplete_native_measurement": 112,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 95,
+      "count": 97,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -83,6 +83,8 @@
         "TB-k1-saved-bn-rows-20261008",
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
+        "TB-k1-scale-attribution-20261025",
+        "TB-k1-scale-attribution-20261025-attempt-002",
         "TB-k1-slot-readout-diagnostic-20261002",
         "TB-k1-slot-width96-kaggle3-100k-s42-v1",
         "TB-k1-slot96-cpu-qualification-20261002",
@@ -144,7 +146,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 111,
+      "count": 112,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
@@ -221,6 +223,7 @@
         "TB-k1-reference-kaggle3-100k-s42-v2",
         "TB-k1-residual-reconciliation",
         "TB-k1-saved-trace-pair-20261008",
+        "TB-k1-scale-attribution-20261025",
         "TB-k1-slot-width96-kaggle3-100k-s42-v1",
         "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-ssma-kaggle3-100k-s42-v1",

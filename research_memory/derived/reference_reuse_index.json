@@ -2694,6 +2694,52 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "incomplete",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-scale-attribution-20261025",
+      "source_envelope": "experiments/pcqm_k1_scale_attribution_20261025/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-scale-attribution-20261025-attempt-002",
+      "source_envelope": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "consumed_role_observational_diagnostic",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

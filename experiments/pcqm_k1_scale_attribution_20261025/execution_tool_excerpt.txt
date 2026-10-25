@@ -1,0 +1,19 @@
+事后根据执行工具返回内容保存；原运行没有保存stderr文件。以下是functions.exec中exec_command返回的SpawnProcess stderr摘录，非本地原始日志文件。返回内容中的反斜线在Python ValueError repr中转义。
+
+原调用环境/命令：workdir=D:\molgap-worktrees\k1-scale-attribution-20261025；PYTHONPATH=D:\molgap-worktrees\k1-scale-attribution-20261025\src；TEMP=TMP=D:\molgap-scratch；执行 D:\文档\molgap\.venv\Scripts\python.exe experiments\pcqm_k1_scale_attribution_20261025\run.py。exec_command初次返回session_id=14863；后续write_stdin报告exit_code=1。receipt见execution_receipt.json（worker_exitcode=1, timeout=false, parent_observed_wall_seconds=29.8604183, status=failed）。
+
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\multiprocessing\process.py", line 314, in _bootstrap
+    self.run()
+  File "C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\molgap-worktrees\k1-scale-attribution-20261025\src\molgap\k1_retained_tail_diagnostic.py", line 64, in run
+    verify_imports()
+  File "D:\molgap-worktrees\k1-scale-attribution-20261025\src\molgap\k1_retained_tail_diagnostic.py", line 44, in verify_imports
+    relative = path.relative_to(frozen.resolve()).as_posix()
+  File "C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 818, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r} OR one path is relative and the other is absolute."
+ValueError: 'D:\\molgap-worktrees\\k1-scale-attribution-20261025\\src\\molgap\\constants.py' is not in the subpath of 'D:\\molgap-artifacts\\diagnostics\\k1-scale-attribution-20261025\\frozen_source' OR one path is relative and the other is absolute.
+
+Audit ordering: the worker loaded train_probe.pt and development_probe.pt, created/validated source-index tensors and compared graph membership/forbidden fields before calling verify_imports(). The exception was at that frozen-source guard (diagnostic source line 64). No endpoint loop, prediction, or reproduction guard ran. No separate stderr file was saved by the original execution.

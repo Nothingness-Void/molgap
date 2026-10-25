@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 701,
+  "ambiguous_historical_role_record_count": 715,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -4405,6 +4405,104 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "role_identity": null,
+      "role_name": "train_descriptive",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "role_identity": null,
+      "role_name": "train_descriptive",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-slot-readout-diagnostic-20261002",
       "role_identity": null,
       "role_name": "internal_development",
@@ -4909,7 +5007,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 445,
+  "explicit_role_event_count": 454,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -7856,6 +7954,41 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-late-weight-average-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-attempt001-internal_development",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development_decoded": [
@@ -7980,6 +8113,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-attempt001-train_descriptive",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_features": [
@@ -8293,6 +8454,8 @@
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "pcqm-k1-scale-attribution-20261025-attempt002",
       "pcqm-k1-slot-readout-diagnostic-20261002",
       "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-slot96-cpu-qualification-20261002",
@@ -8433,6 +8596,8 @@
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "pcqm-k1-scale-attribution-20261025-attempt002",
       "pcqm-k1-slot-readout-diagnostic-20261002",
       "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-slot96-cpu-qualification-20261002",
@@ -10268,6 +10433,41 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-late-weight-average-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-attempt001-internal_development",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development_retained_predictions": [
@@ -12947,6 +13147,41 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-late-weight-average-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-attempt001-internal_development",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
@@ -13021,6 +13256,50 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_descriptive": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_descriptive-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_descriptive-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-scale-attribution-20261025-attempt002-train_descriptive-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025-attempt-002"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-scale-attribution-attempt001-train_descriptive",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-scale-attribution-20261025"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_features": [

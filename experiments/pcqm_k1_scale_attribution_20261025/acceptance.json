@@ -1,0 +1,100 @@
+{
+  "format": "molgap-local-frozen-diagnostic-acceptance-v1",
+  "evidence_id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+  "run_id": "local-k1-scale-attribution-20261025",
+  "outcome": {
+    "execution_status": "failed_no_training",
+    "artifact_status": "partial_local_hash_verified",
+    "comparison_status": "incomplete",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "infrastructure_attempt_closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_scale_attribution_20261025/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate prospective authorized diagnostic"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched",
+    "train_descriptive": "consumed",
+    "internal_development": "consumed"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-scale-attribution-attempt001-observed",
+      "trajectory_id": "TB-k1-scale-attribution-20261025",
+      "action_id": "A001",
+      "run_id": "local-k1-scale-attribution-20261025",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_scale_attribution_20261025/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.008294560638888823,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-scale-attribution-attempt001-train_descriptive",
+      "trajectory_id": "TB-k1-scale-attribution-20261025",
+      "action_id": "A001",
+      "run_id": "local-k1-scale-attribution-20261025",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_descriptive",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_scale_attribution_20261025/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-scale-attribution-attempt001-internal_development",
+      "trajectory_id": "TB-k1-scale-attribution-20261025",
+      "action_id": "A001",
+      "run_id": "local-k1-scale-attribution-20261025",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_scale_attribution_20261025/acceptance.json"
+    }
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "checks": {},
+  "analysis_ref": "experiments/pcqm_k1_scale_attribution_20261025/execution_receipt.json",
+  "blockers": [
+    "Frozen import guard failed before inference"
+  ],
+  "cost_scope": "Measured outer process wall including spawn/import/loading; CPU unavailable; excludes preparation and closure",
+  "execution_scope": "Graph decoding and source verification only; no predictions, optimizer, gradients or training",
+  "role_history": "Development was selection-consumed by historical training; this failed attempt performed no new selection"
+}

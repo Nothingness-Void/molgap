@@ -486,6 +486,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-scale-attribution-20261025-attempt-002:A001",
+      "target": "experiments/pcqm_k1_scale_attribution_20261025/attempt_002/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-scale-attribution-20261025:A001",
+      "target": "experiments/pcqm_k1_scale_attribution_20261025/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-slot-readout-diagnostic-20261002:A001",
       "target": "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json",
       "type": "action_produced_evidence"
@@ -2201,6 +2211,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "target": "TB-k1-scale-attribution-20261025",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "target": "TB-k1-scale-attribution-20261025-attempt-002",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "target": "TB-family-100k-operator-profile-k1_mean2-s42",
       "type": "prior_evidence"
@@ -2378,6 +2398,16 @@
     {
       "source": "pcqm-k1-late-weight-average-20261008",
       "target": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-scale-attribution-20261025",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-scale-attribution-20261025-attempt-002",
       "type": "prior_evidence"
     },
     {
@@ -3456,6 +3486,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-scale-attribution-20261025-attempt001-failure",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-slot-readout-diagnostic-20261002",
       "type": "evidence"
     },
@@ -3941,6 +3979,14 @@
     },
     {
       "id": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-scale-attribution-20261025",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-scale-attribution-20261025-attempt-002",
       "type": "trajectory"
     },
     {
