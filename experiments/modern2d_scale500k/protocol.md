@@ -83,3 +83,12 @@ competitive performance against a qualified strong reference, and convergence
 within this budget. A within-family improvement alone does not nominate a new
 incumbent. Without compatible retained comparisons, report the limitation and
 do not assert a pure data-diversity cause. No positive result grants another run.
+
+The retained100K outputs supplied selected predictions and full scalar curves,
+but not independently retained final-live prediction tensors for both sources.
+Therefore row bootstrap can qualify a selected-endpoint contrast only; it must
+not be relabeled confidence over the matched final-live gain. The new run retains
+both selected and final payloads. A missing original confidence/comparator input
+keeps that part of the rescue gate INCONCLUSIVE; it never becomes zero uncertainty
+or permission to reconstruct historical observations. No supplementary baseline
+inference or new baseline training is included in this two-arm authority.

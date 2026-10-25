@@ -1,0 +1,18 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "source_contract": {
+        "path": "experiments/modern2d_scale500k/source_contracts/esa_count_100k.json",
+        "sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80"
+      }
+    },
+    "ppgt_mean_500k": {
+      "source_contract": {
+        "path": "experiments/modern2d_scale500k/source_contracts/ppgt_mean_100k.json",
+        "sha256": "5a4de5d9a78a8b21f31154b63d6660b55d8bf8289a357a526647c746a107134a"
+      }
+    }
+  },
+  "experiment_purpose": "transfer_study",
+  "format": "molgap-modern2d-transfer-plan-v1"
+}

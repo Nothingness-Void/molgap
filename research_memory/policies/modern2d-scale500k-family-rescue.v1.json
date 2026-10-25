@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_SCALE_DUAL",
+    "field": "user_authorized_scale_dual",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "Human2026-10-26 explicitly requests one500K PPGT/ESA dualarm submission. This closes the two authorized family opportunities within one slot; no newscientificsuccessor.",
+    "authority_ref": "experiments/modern2d_scale500k/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "modern2d500k-commondev-exact100kclock-transfer-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "OneT4x2 slot <=9 sessionhours,18allocatedT4hours including alloverheads/idletail; exactnativechecksrequired.",
+      "Transfer evidence isnoncausal; no forcedstrictReplay or desktopnomination."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "cbff12b7ecac8a2ded42571dd6f2d4be492e9da2ce6416799c5361866ea1d247",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "modern2d-scale500k-family-rescue",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_scale_dual"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

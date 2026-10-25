@@ -1,0 +1,67 @@
+{
+  "allocated_t4_hours_ceiling": 18,
+  "arms": [
+    "ppgt_mean_500k",
+    "esa_count_500k"
+  ],
+  "authorization_basis": "Human2026-10-26 explicitly requests one500K PPGT/ESA dualarm submission. This closes the two authorized family opportunities within one slot; no newscientificsuccessor.",
+  "automatic_successor_authorized": false,
+  "execution_mode": "prepared-v2",
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-configured-authority-v1",
+  "fresh_native_execution_gate": true,
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 18,
+    "owner": "kaseichou",
+    "wall_ceiling_seconds": 32400
+  },
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "esa_small",
+      "4"
+    ]
+  ],
+  "kaggle_quota_hours_ceiling": 9,
+  "logical_run_id": "modern2d-scale500k-k2-s42-v1",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "protected_role_access_authorized": false,
+  "purpose": "CONFIGURED_TRANSFER_STUDY",
+  "recipes": {
+    "esa_count_500k": {
+      "horizon_passes": 12,
+      "horizon_steps": 46860
+    },
+    "ppgt_mean_500k": {
+      "horizon_passes": 4,
+      "horizon_steps": 15620
+    }
+  },
+  "research_design": {
+    "campaign_ref": "experiments/modern2d_scale500k/protocol.md",
+    "reference_status": "Retained100K sourceprovenance only; no newbaselines, no strictcrossscaleclaim."
+  },
+  "roles": [
+    "train_500k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-modern2d-scale500k-s42-v1",
+  "scale_500k_authorized": true,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_reissue_authorized": true,
+  "transfer_study_ref": {
+    "path": "experiments/modern2d_scale500k/transfer_plan.json",
+    "sha256": "0deaaed1615cff50bef483daa96201d490df85568cfabe7e7c351be860d16d4d"
+  },
+  "user_authorized": true
+}
