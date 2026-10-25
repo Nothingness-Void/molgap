@@ -124,6 +124,22 @@ scientific matrix and its [terminal interpretation](attempt_002/terminal_decisio
 These diagnostics cannot repair the original training run's missing strict
 target evidence or convert it to replay-ready by themselves.
 
+| Same Clean-BN protocol | TRAIN MAE, eV | Development MAE, eV | Development change from initialization |
+|---|---:|---:|---:|
+| Retained pass-49 initialization | .056516516 | .103658948 | Reference |
+| WD .001 selected tail pass 15 | .055473890 | .104811300 | +1.152 meV |
+| WD .01 selected tail pass 15 | .055356491 | .104776548 | +1.118 meV |
+| WD .001 final tail pass 20 | .054299372 | .105134167 | +1.475 meV |
+| WD .01 final tail pass 20 | .054823561 | .105313709 | +1.655 meV |
+
+Each development increase has a positive conditional paired-row interval.
+The tenfold WD increase's selected advantage shrinks from .212 meV raw to
+.035 meV clean, with an interval crossing zero. The final clean endpoint is
+.180 meV worse at higher WD. These observations reject a buffer-only explanation
+and do not support another tail-WD grid or simply more exposure under this recipe.
+They show learned-function regression conditional on the retained initialization
+and changed tail recipe, without isolating which bundled recipe change caused it.
+
 ## Remaining identification limits
 
 - No seed replication establishes a variance band for tiny 100K wins.
