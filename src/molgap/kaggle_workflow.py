@@ -95,6 +95,9 @@ def acceptance_input_pins(spec, repo_root, plan_path):
     if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
         raise ValueError("Producer acceptance inputs are blocked")
     pointers = {plan_path: file_digest(path)}
+    if "comparison_source" in plan:
+        pointer = plan["comparison_source"]
+        pointers[pointer["path"]] = pointer["sha256"]
     for arm in plan["arms"]:
         arm_pointers = ([arm["contract"], arm["target_manifest"]]
                         if plan["format"] == "molgap-family-same-run-acceptance-plan-v1" else
