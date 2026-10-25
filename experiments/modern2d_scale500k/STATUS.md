@@ -9,5 +9,6 @@ the earlier ESA100K monitor remains paused until an exact new job is bound.
 
 The allowed IMS account had no visible user job at inspection. Independently
 pinned parent acceptance, train500K and Common-Dev manifest bytes matched their
-retained accepted hashes. The existing scheduled CPU export adapter is selected;
-the selected output has not yet been independently accepted or published.
+retained accepted hashes. The existing scheduled CPU export adapter was submitted
+as1819147.ccpbs1; [receipt](cpu/submission.json) retains source/request hashes.
+The selected output has not yet been independently accepted or published.
