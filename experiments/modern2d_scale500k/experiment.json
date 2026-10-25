@@ -1,0 +1,137 @@
+{
+  "arms": [
+    {
+      "arm_id": "ppgt_mean_500k",
+      "data_ref": {
+        "arm_id": "ppgt_author_v2",
+        "spec_ref": "experiments/modern2d_scale500k/anchors/ppgt/experiment_spec.json"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "model": {
+        "addons": [
+          {
+            "config": {
+              "variant": "mean_readout"
+            },
+            "name": "ppgt_research_mean_readout",
+            "version": "1"
+          }
+        ],
+        "family": "ppgt_small",
+        "version": "3"
+      },
+      "purpose": "transfer_study",
+      "recipe_ref": "experiments/modern2d_scale500k/anchors/ppgt/contract.json",
+      "reference_ref": {
+        "arm_id": "ppgt_author_v2",
+        "plan_ref": "experiments/modern2d_scale500k/anchors/ppgt/acceptance_plan.json"
+      },
+      "training": {
+        "evaluation_every_steps": 781,
+        "execution_mode": "prepared-v2",
+        "horizon_passes": 20,
+        "horizon_steps": 15620,
+        "profiling": {
+          "active_steps": 4,
+          "module_paths": [],
+          "ppgt_phases": true,
+          "profile_memory": false,
+          "record_shapes": false,
+          "row_limit": 50,
+          "warmup_steps": 8,
+          "with_stack": false
+        }
+      }
+    },
+    {
+      "arm_id": "esa_count_500k",
+      "data_ref": {
+        "arm_id": "esa_native_v3",
+        "spec_ref": "experiments/modern2d_scale500k/anchors/esa/experiment_spec.json"
+      },
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-native-preflight/initial_states_v1/esa_native_v3.pt",
+      "model": {
+        "addons": [
+          {
+            "config": {
+              "variant": "count_readout"
+            },
+            "name": "esa_count_readout",
+            "version": "1"
+          }
+        ],
+        "family": "esa_small",
+        "version": "4"
+      },
+      "purpose": "transfer_study",
+      "recipe_ref": "experiments/modern2d_scale500k/anchors/esa/contract.json",
+      "reference_ref": {
+        "arm_id": "esa_native_v3",
+        "plan_ref": "experiments/modern2d_scale500k/anchors/esa/acceptance_plan.json"
+      },
+      "training": {
+        "evaluation_every_steps": 781,
+        "execution_mode": "prepared-v2",
+        "horizon_passes": 60,
+        "horizon_steps": 46860,
+        "profiling": {
+          "active_steps": 4,
+          "module_paths": [],
+          "ppgt_phases": false,
+          "profile_memory": false,
+          "record_shapes": false,
+          "row_limit": 50,
+          "warmup_steps": 8,
+          "with_stack": false
+        }
+      }
+    }
+  ],
+  "attempt_id": "v1",
+  "authority_ref": "experiments/modern2d_scale500k/authority.json",
+  "decision_ref": "experiments/modern2d_scale500k/protocol.md",
+  "experiment_id": "modern2d_scale500k",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "modern2d-scale500k-k2-s42-v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "monitor_paths": [
+    "experiments/modern2d_scale500k/STATUS.md"
+  ],
+  "platform_ref": "experiments/modern2d_scale500k/platform.json",
+  "profile": {
+    "cheapest_falsifier": "One500K model perT4; reuse source100K records, no baseline retraining",
+    "estimated_device_hours": 18,
+    "estimated_wall_hours": 9,
+    "hardware": "NvidiaTeslaT4x2",
+    "owner": "server",
+    "platform": "kaggle",
+    "track": "C"
+  },
+  "question": {
+    "action": "RUN_SCALE_DUAL",
+    "alternatives": [
+      "Data diversity mayhelpbutthefamilyremainnoncompetitive.",
+      "Historicalstrongcomparatorsmaynotqualifyonthe sameCommonDev.",
+      "Runtime/loadercostmayexceedfrozenbudget."
+    ],
+    "changed_mechanism": "Training membership expands to500K; unchanged family models and source100K optimizer/LR/normalization/evaluation clocks.",
+    "closed_families": [
+      "ppgt-content-conditioner-below-gate"
+    ],
+    "deficiency": "Both new families lagged strong historical baselines; ESA longer100K training didnotclose its developmentgap, while PPGT ended20passesstillimproving.",
+    "negative_decision": "Retain negative/inconclusive evidence, separate cost failures from model limits, close covered task without furthercompute.",
+    "policy_id": "modern2d-scale500k-family-rescue",
+    "positive_decision": "Retain perarm endpoint and curves; separately qualify comparison/competitive evidence; no automatic successor or fullpromotion.",
+    "prior_trajectories": [],
+    "question": "Can500K distinct training members rescue retained PPGT/ESA configurations at the original exact update clocks?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    ]
+  },
+  "role_ref": "experiments/modern2d_scale500k/roles.json",
+  "seeds": [
+    42
+  ],
+  "timestamp": "2026-10-25T17:33:16.715324+00:00"
+}
