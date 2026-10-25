@@ -2,11 +2,12 @@
 import multiprocessing
 from pathlib import Path
 import time
+import sys
 from molgap.k1_retained_tail_diagnostic import run
 
 if __name__ == '__main__':
     from molgap.training_reproducibility import atomic_json
-    here = Path(__file__).resolve().parent
+    here = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parent
     started = time.perf_counter()
     budget = min(1200, max(0, 1792914095 - time.time()))
     if budget <= 0:

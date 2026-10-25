@@ -19,6 +19,13 @@ def run(experiment, output):
     if any('molgap.' + n in sys.modules for n in ('qm9_neural_atom', 'k1_screen_training')):
         raise ValueError('Model import preceded frozen binding')
     molgap.__path__.insert(0, str(frozen / 'src/molgap'))
+    # Match the existing frozen diagnostic owner: __init__ may preload constants.
+    import importlib
+    constants = importlib.import_module('molgap.constants')
+    exported = [n for n, v in vars(molgap).items() if n.isupper() and n in vars(constants) and v is vars(constants)[n]]
+    constants = importlib.reload(constants)
+    for name in exported:
+        setattr(molgap, name, vars(constants)[name])
     import torch
     from torch_geometric.loader import DataLoader
     from .training_reproducibility import atomic_json, atomic_torch_save, sha256_file, configure_fp32_determinism, build_runtime_manifest
@@ -32,7 +39,7 @@ def run(experiment, output):
     if trajectory['state_at_start']['source_config_identity'] != sha256_file(experiment / 'inputs.json'):
         raise ValueError('Prospective input hash differs')
     for name, digest in inputs['executed_source_files'].items():
-        if sha256_file(experiment.parents[1] / name) != digest:
+        if sha256_file(Path(inputs['repo_root']) / name) != digest:
             raise ValueError('Diagnostic source changed: ' + name)
     inventory = json.loads(Path(inputs['source_inventory']['path']).read_text())
     pins = {x['path']: x['sha256'] for x in inventory['files']}
