@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "esa-count-persistence-k2-100k-s42-v1-v2",
+  "category": "training",
+  "cost_event_id": "cost-T-esa-count-persistence-k2-100k-s42-v1-v2-esa_reference-planned",
+  "evidence_ref": "experiments/esa_count_persistence_100k/authority.json",
+  "hardware": "NvidiaTeslaT4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 6
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "esa-count-persistence-k2-100k-s42-v1:esa_reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-esa-count-persistence-k2-100k-s42-v1-v2-esa_reference"
+}
