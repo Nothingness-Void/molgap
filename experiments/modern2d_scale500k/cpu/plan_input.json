@@ -46,7 +46,7 @@
     "role_snapshot_refs": [
       "experiments/modern2d_scale500k/cpu/roles.json"
     ],
-    "source_commit": "0a9bc28381356811a5243590e10df84aeb6dcf94",
+    "source_commit": "c02777a31bcbf0c3c1e01e8afc973cb203126cf1",
     "state_timestamp": "2026-10-25T16:08:31.774708+00:00"
   },
   "trajectory": {
@@ -65,7 +65,7 @@
         "run_ids": [
           "modern2d-scale500k-selected-export:input_export:downstream"
         ],
-        "source_commit": "0a9bc28381356811a5243590e10df84aeb6dcf94",
+        "source_commit": "c02777a31bcbf0c3c1e01e8afc973cb203126cf1",
         "type": "execution_diagnostic"
       }
     ],
@@ -93,7 +93,9 @@
       "historical_unknowns": [],
       "hypothesis_id": "H-T-modern2d-scale500k-selected-export-v1",
       "observed_deficiency": "Modern2D500K selected transport is not yet accepted.",
-      "related_closed_family_ids": [],
+      "related_closed_family_ids": [
+        "modern2d-native-qualification"
+      ],
       "supporting_evidence_ids": [
         "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
       ]
@@ -119,7 +121,7 @@
       "role_snapshot_refs": [
         "experiments/modern2d_scale500k/cpu/roles.json"
       ],
-      "source_commit": "0a9bc28381356811a5243590e10df84aeb6dcf94",
+      "source_commit": "c02777a31bcbf0c3c1e01e8afc973cb203126cf1",
       "source_config_identity": "93d29523e2630a76f6c04adab61b009d75415091e8d42fa504c512fff35df9cb"
     },
     "track": "C",
