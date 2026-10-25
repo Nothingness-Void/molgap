@@ -622,7 +622,8 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
         raise ValueError("Completed shared session cannot be resumed")
     trace = validate_canonical_trace(_json(artifacts["trace"]))
     observations = [r for r in trace["observations"] if r["event"] == "observation"]
-    if len(observations) != progress.pass_index or any(r["optimizer_step"] > progress.optimizer_step for r in observations):
+    observation_interval = getattr(recipe.formal_training, "evaluation_every_steps", None) or recipe.loop_plan.steps_per_pass
+    if len(observations) != progress.optimizer_step // observation_interval or any(r["optimizer_step"] > progress.optimizer_step for r in observations):
         raise ValueError("Resume trace/cursor mismatch")
     if trace["trajectory_id"] != trajectory["trajectory_id"]:
         raise ValueError("Resume trace/trajectory identity mismatch")

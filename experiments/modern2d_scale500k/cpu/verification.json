@@ -1,0 +1,444 @@
+{
+  "report_schema": "molgap-verification-worker-report-v2",
+  "report_date": "2026-10-26",
+  "timezone": "Asia/Tokyo",
+  "project": "C:/Users/Adminn/Documents/molgap",
+  "worker_scope": "verification_only",
+  "overall_status": "CPU_EXPORT_PREPARE_ONLY_PASS_SCHEMA_PASS_FOCUSED_LATEST_PASS",
+  "release_assessment": {
+    "unchanged_cpu_export_request": "PASS_PREPARE_ONLY_TRUST_PINS_AND_DOCS",
+    "rml_policy_and_trajectory_schema": "PASS",
+    "focused_existing_tests": "PASS_CONFIGURED_OUTPUTS_4_SCIENTIFIC_INPUT_12_500K_NODE_AND_PROBE",
+    "rml_durability": "OPEN_UNTRACKED_DECISION_SNAPSHOT",
+    "gpu_or_kaggle_release": "NOT_ASSESSED_OR_AUTHORIZED_BY_THIS_WORKER"
+  },
+  "constraints_observed": {
+    "models_loaded": false,
+    "payload_export_executed": false,
+    "remote_submission": false,
+    "remote_access": false,
+    "export_execute_flag": false,
+    "broad_tests_run": false,
+    "focused_source_tests_run": true,
+    "synthetic_test_models_loaded": true,
+    "real_models_or_payloads_loaded": false,
+    "repository_files_written_by_worker": false
+  },
+  "source_files": {
+    "request": {
+      "path": "experiments/modern2d_scale500k/cpu/export_request.json",
+      "sha256": "9004681f398165a5246fff1fe583c4fcf21e056465a76e0fa8e7bed365ff119c"
+    },
+    "plan_input": {
+      "path": "experiments/modern2d_scale500k/cpu/plan_input.json",
+      "sha256": "153f1f701c021b9a7be44d273ecb7ab13aa23513d6a8f8698b0d432b840be018"
+    },
+    "policy": {
+      "path": "research_memory/policies/modern2d-scale500k-input-export.v1.json",
+      "sha256": "34eb90a445241321b1ace987f3989123dbebbe79fb4f969de8fcbec6078b6ef6"
+    },
+    "native_preflight_request": {
+      "path": "experiments/modern2d_model_integration/native_preflight/cpu_export_request.json",
+      "sha256": "b9c31e687482c5eef704d4d388e4fa15b307538a403d78f85a2e2e8f6c8e7497"
+    },
+    "native_acceptance": {
+      "path": "platforms/_records/ims/pcqm_unified_roles_v2/two_p_release/native_acceptance.json",
+      "sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65"
+    },
+    "canonical_rml_trajectory": {
+      "path": "experiments/modern2d_scale500k/cpu/rml/trajectory.json",
+      "sha256": "9512923cecc2563623484370cc4216b709b107cca969d62b98f738c1db4dc563"
+    },
+    "canonical_rml_cost": {
+      "path": "experiments/modern2d_scale500k/cpu/rml/costs/cost-T-modern2d-scale500k-selected-export-v1-planned.json",
+      "sha256": "f5c917e928d03b38eb315d992d15016e9ba5ca775e687cc2bafb8fdc5308abb5"
+    },
+    "rml_decision_snapshot": {
+      "path": "experiments/modern2d_scale500k/cpu/rml_decision_snapshots/f7ce118d10cdabb17a609ac3ce688f9b85707a117ceecd5585f13a850d8047a8.json",
+      "sha256": "f7ce118d10cdabb17a609ac3ce688f9b85707a117ceecd5585f13a850d8047a8"
+    },
+    "focused_test_files": {
+      "tests/test_modern2d_input_preparation.py": "be93492a5189e2087e8922836f39334900c0638b5b29d462d48a37759c38fdb7",
+      "tests/test_modern2d_formal_training.py": "e7d348f612f9f503d0ca7f0338d69000aecf3e6c85fff4583b5f47ed092cb620",
+      "tests/test_modern2d_configured_outputs.py": "1b900d5349430d6ed676d5f513488527cc8ed535e43bd388d5d203ead7445c8",
+      "tests/test_family_training_session.py": "2b50d8892e3f144a52b8a6db3760384afe3c1112440268dd857a165951119424",
+      "src/molgap/family_training_recipe.py": "ac4a73a102209e1157173e8bbd42acc504eb6cf8ac522f605d3a3a756976a8ca"
+    },
+    "focused_runtime_files": {
+      "src/molgap/family_training_runner.py": "b7e819bf692b02b723c59cf9b5b87c7909a93be9397d3deca35ce79ad93b72ab",
+      "src/molgap/family_training_session.py": "e40a43aa588456e6c0c915689c63cba7396700a58a16f3ee1dfb04b4fbcfa468",
+      "src/molgap/family_training_outputs.py": "ad28a3b3dc5849a9863bd556e463a1a54645e9d84a16ab55fe71570be76d1118",
+      "src/molgap/experiment_family_artifacts.py": "8991005df5faeab5458040aadb0e423f303dcab8221c4a7349e8149f2322833",
+      "tests/test_modern2d_scientific_input.py": "c76614b2c8ced60b51b84f9a75108edf965b44723879dd25bb45026fb9ef1783"
+    }
+  },
+  "prepare_only": {
+    "command": ".venv\\Scripts\\python.exe -B experiments\\modern2d_model_integration\\scripts\\export_inputs.py --request C:\\Users\\Adminn\\Documents\\molgap\\experiments\\modern2d_scale500k\\cpu\\export_request.json --boundary C:\\Users\\Adminn\\Documents\\molgap",
+    "exit_code": 0,
+    "stdout": {
+      "status": "PREPARE_ONLY_NOT_EXECUTED",
+      "request_sha256": "9004681f398165a5246fff1fe583c4fcf21e056465a76e0fa8e7bed365ff119c",
+      "roles": ["train_500k", "common_dev"],
+      "remote_submission": false,
+      "training_released": false
+    }
+  },
+  "request_trust_pins": {
+    "status": "PASS",
+    "checks_all_true": true,
+    "checks": {
+      "format_scope_parent_root_match_native_preflight": true,
+      "common_dev_permit_matches_native_preflight": true,
+      "parent_acceptance_matches_native_acceptance_file_sha256": true,
+      "common_dev_manifest_matches_native_acceptance": true,
+      "train_500k_manifest_matches_native_acceptance": true,
+      "common_dev_and_train_500k_rows_match_native_acceptance": true,
+      "both_role_versions_match_native_acceptance_rule": true,
+      "all_role_chunk_limits_match_536870912": true,
+      "role_set_is_train_500k_plus_common_dev": true
+    },
+    "native_acceptance_context": {
+      "status": "DATA_ROLE_ACCEPTED",
+      "gpu_used": false,
+      "graphs_rebuilt": false,
+      "rule_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "parent_acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65"
+    }
+  },
+  "documentation_navigation": {
+    "status": "PASS",
+    "documents_scanned": 4,
+    "pointers_checked": 12,
+    "anchors_checked": 1,
+    "issues": [],
+    "documents": [
+      "experiments/modern2d_scale500k/README.md",
+      "experiments/modern2d_scale500k/protocol.md",
+      "experiments/modern2d_scale500k/STATUS.md",
+      "experiments/modern2d_scale500k/decision.md"
+    ]
+  },
+  "focused_tests": {
+    "status": "PASS_LATEST_SCOPES",
+    "historical_run_status": "STALE_PRE_FIX_MAIN_FIXES_LANDED",
+    "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\updated-20261026-02\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\updated-20261026-02\\junit.xml tests\\test_modern2d_input_preparation.py tests\\test_modern2d_formal_training.py tests\\test_modern2d_configured_outputs.py tests\\test_family_training_session.py",
+    "runner": "platforms/local/run.py",
+    "python": ".venv\\Scripts\\python.exe",
+    "root_conftest": "ABSENT_NO_NOCONFTEST_REQUIRED",
+    "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/updated-20261026-02",
+    "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/updated-20261026-02/junit.xml",
+    "exit_code": 1,
+    "tests": 133,
+    "passed": 131,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 67.129,
+    "suite_results": [
+      {
+        "path": "tests/test_modern2d_input_preparation.py",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "status": "PASS"
+      },
+      {
+        "path": "tests/test_modern2d_formal_training.py",
+        "tests": 60,
+        "failures": 0,
+        "errors": 0,
+        "status": "PASS"
+      },
+      {
+        "path": "tests/test_modern2d_configured_outputs.py",
+        "tests": 4,
+        "failures": 2,
+        "errors": 0,
+        "status": "FAIL"
+      },
+      {
+        "path": "tests/test_family_training_session.py",
+        "tests": 56,
+        "failures": 0,
+        "errors": 0,
+        "status": "PASS"
+      }
+    ],
+    "new_500k_node": {
+      "nodeid": "tests/test_modern2d_input_preparation.py::test_500k_metadata_reuses_verified_nested100k_transform",
+      "status": "PASS",
+      "duration_seconds": 10.616,
+      "coverage_claim": "The generated 500K ABI/transform/target-statistics/indexed-loader and wrong-prefix fail-closed checks passed in the existing input-preparation workflow."
+    },
+    "failures": [
+      {
+        "nodeid": "tests/test_modern2d_configured_outputs.py::test_configured_addon_outputs_are_independently_inspected[ppgt_small/3-step-clock]",
+        "status": "STALE_PRE_FIX",
+        "exception": "ValueError",
+        "message": "Development selection requires a complete terminal pass",
+        "test_setup": "tests/test_modern2d_configured_outputs.py:21-24",
+        "trigger": "optimizer_steps=3 with a configured horizon of 3 and evaluation_every_steps=1",
+        "guard": "src/molgap/family_training_recipe.py:214-215",
+        "trace_artifact": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/updated-20261026-02/junit.xml"
+      },
+      {
+        "nodeid": "tests/test_modern2d_configured_outputs.py::test_configured_addon_outputs_are_independently_inspected[esa_small/4-step-clock]",
+        "status": "STALE_PRE_FIX",
+        "exception": "ValueError",
+        "message": "Development selection requires a complete terminal pass",
+        "test_setup": "tests/test_modern2d_configured_outputs.py:21-24",
+        "trigger": "optimizer_steps=3 with a configured horizon of 3 and evaluation_every_steps=1",
+        "guard": "src/molgap/family_training_recipe.py:214-215",
+        "trace_artifact": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/updated-20261026-02/junit.xml"
+      }
+    ],
+    "prior_baseline_before_new_step_clock_cases": {
+      "status": "PASS",
+      "tests": 130,
+      "passed": 130,
+      "failed": 0,
+      "errors": 0,
+      "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/baseline-20261026-01",
+      "note": "Earlier baseline run before the newly added 500K and step-clock cases; not used to mask the current failures."
+    },
+    "latest_reruns": {
+      "configured_outputs": {
+        "status": "PASS",
+        "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\configured-20261026-10\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\configured-20261026-10\\junit.xml tests\\test_modern2d_configured_outputs.py",
+        "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/configured-20261026-10",
+        "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/configured-20261026-10/junit.xml",
+        "exit_code": 0,
+        "tests": 4,
+        "passed": 4,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "warnings": 4,
+        "duration_seconds": 18.210,
+        "note": "Latest run after final-prediction atomic retention changes; both step-clock families and retrieval inspection passed.",
+        "session_optional_retrieval": {
+          "status": "PASS",
+          "allowlist": "SESSION_OPTIONAL_ARTIFACTS",
+          "role": "final_predictions",
+          "path": "final_development_predictions.pt",
+          "terminal_metric_compare": "PASS",
+          "mechanical_inspection": "inspect_output/inspect_session_output PASS"
+        }
+      },
+      "scientific_input": {
+        "status": "PASS",
+        "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\scientific-20261026-05\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\scientific-20261026-05\\junit.xml tests\\test_modern2d_scientific_input.py",
+        "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/scientific-20261026-05",
+        "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/scientific-20261026-05/junit.xml",
+        "exit_code": 0,
+        "tests": 12,
+        "passed": 12,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "duration_seconds": 263.600,
+        "transfer_nodeids": [
+          "tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair[ppgt_small/3]",
+          "tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair[esa_small/4]"
+        ],
+        "transfer_status": "PASS_BOTH_FAMILY_FIXTURES",
+        "payload_opened": false
+      },
+      "transfer_node_rerun_after_freeze_anchor": {
+        "status": "PASS",
+        "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-09\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-09\\junit.xml tests\\test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair",
+        "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-09",
+        "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-09/junit.xml",
+        "exit_code": 0,
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "duration_seconds": 44.650,
+        "transfer_status": "PASS_BOTH_FAMILY_FIXTURES",
+        "freeze_scale_anchor": "PASS",
+        "payload_opened": false,
+        "note": "Targeted rerun after the test's final freeze_scale_anchor call; this is a subset of the 12-case scientific-input run and is not counted again."
+      }
+    },
+    "unique_node_accounting": {
+      "requested_four_suite_nodes": {
+        "historical_passed": 131,
+        "historical_pre_fix_failed": 2,
+        "resolved_step_clock_nodes_now_passed": 2,
+        "unique_current_pass_nodes": 133
+      },
+      "scientific_input_full_file_unique_nodes": 12,
+      "transfer_targeted_rerun_unique_addition": 0,
+      "configured_outputs_latest_rerun_unique_addition": 0,
+      "unique_pass_node_total": 145,
+      "counting_note": "The 2 transfer rerun nodes are already included in the 12 scientific-input nodes; the 4 configured-output rerun nodes are already represented in the four-suite node set. Reruns are retained as evidence but not added to the unique count."
+    },
+    "configured_step_clock_probe": {
+      "status": "PASS",
+      "source_helper": "src/molgap/family_training_runner.py:_probe_recipe",
+      "scope": "manual generated CPU fixture only; no real payload",
+      "input_step_clock_recipe": {
+        "mode": "composed",
+        "dataset_development": true,
+        "development_rows": 3,
+        "optimizer_steps": 3,
+        "checkpoint_every": 1,
+        "selection": "best-development-live",
+        "formal_training": {
+          "purpose": "configured-screen",
+          "phase": "train",
+          "horizon_passes": 2,
+          "horizon_steps": 3,
+          "execution_mode": "original",
+          "evaluation_every_steps": 1
+        },
+        "schedule": {
+          "kind": "cosine_step",
+          "total_units": 3,
+          "reference_epochs": 4
+        }
+      },
+      "probe_outputs": [
+        {
+          "family": "ppgt_small",
+          "family_version": "3",
+          "recipe_identity": "dc36ccb222374db1dd7b21ee208b23adb61615f6bf2daceacbfc93e5c9b3f0b4",
+          "probe_identity": "5962cf5c60c836c779c194a3326dd2041f671488b90f1f7e920f20254d109853",
+          "dataset_development": false,
+          "development_rows": 0,
+          "optimizer_steps": 2,
+          "checkpoint_every": 1,
+          "selection": "final-live",
+          "formal_training": {
+            "purpose": "configured-screen",
+            "phase": "native-preflight",
+            "horizon_passes": 2,
+            "horizon_steps": 3,
+            "execution_mode": "original",
+            "evaluation_every_steps": 1
+          },
+          "schedule": {
+            "kind": "cosine_step",
+            "total_units": 3,
+            "reference_epochs": 4
+          },
+          "model_config_type": "PPGTAuthorConfig",
+          "validation": "PASS"
+        },
+        {
+          "family": "esa_small",
+          "family_version": "4",
+          "recipe_identity": "aee59a9d15adc3d23fb77c8e8384a0befb1a37ef6c5a7a9875e16f44e708fc68",
+          "probe_identity": "58892b9e71b6e7dd6038f8a98fcc1d66d3e3dbd45f25fe961a90daf8c8e86473",
+          "dataset_development": false,
+          "development_rows": 0,
+          "optimizer_steps": 2,
+          "checkpoint_every": 1,
+          "selection": "final-live",
+          "formal_training": {
+            "purpose": "configured-screen",
+            "phase": "native-preflight",
+            "horizon_passes": 2,
+            "horizon_steps": 3,
+            "execution_mode": "original",
+            "evaluation_every_steps": 1
+          },
+          "schedule": {
+            "kind": "cosine_step",
+            "total_units": 3,
+            "reference_epochs": 4
+          },
+          "model_config_type": "ESANativeConfig",
+          "validation": "PASS"
+        }
+      ],
+      "synthetic_only": true,
+      "payload_opened": false,
+      "manual_scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/probe-20261026-07"
+    }
+  },
+  "schema_validation": {
+    "policy": {
+      "custom_validator": "PASS",
+      "json_schema": "PASS",
+      "policy_registry": "PASS",
+      "scientific_contract": "NO_TRAIN_SELECTED_CPU_EXPORT500K_COMMONDEV_V1"
+    },
+    "cost_event": {
+      "custom_validator": "PASS",
+      "json_schema": "PASS",
+      "category": "cache_build"
+    },
+    "decision_state": {
+      "custom_validator": "PASS",
+      "json_schema": "PASS"
+    },
+    "trajectory_plan_input_direct": {
+      "json_schema": "EXPECTED_PLANNER_SHAPE_NOT_CANONICAL_RECORD",
+      "note": "Direct validation reports missing schema; existing planner injects canonical schema/defaults in memory."
+    },
+    "trajectory_prepared": {
+      "custom_validator": "PASS",
+      "json_schema": "PASS",
+      "supporting_evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "supporting_evidence_exists_in_discovered_rml": true,
+      "related_closed_family_ids": ["modern2d-native-qualification"]
+    },
+    "canonical_rml_trajectory": {
+      "custom_validator": "PASS",
+      "json_schema": "PASS",
+      "decision_snapshot_resolution": "PASS",
+      "trajectory_id": "T-modern2d-scale500k-selected-export-v1",
+      "policy_id": "modern2d-scale500k-input-export",
+      "policy_version": "v1"
+    }
+  },
+  "read_only_rml_paths": {
+    "all_referenced_paths_resolved": true,
+    "canonical_plan_observed": true,
+    "decision_snapshot_resolution": "PASS",
+    "source_commit_in_canonical_plan": "c02777a31bcbf0c3c1e01e8afc973cb203126cf1",
+    "checkout_head_at_final_check": "eba6abedf1a39ff2e53b1733b65ba8a886cf2986",
+    "source_commit_note": "The canonical plan freezes c02777a; checkout HEAD advanced to eba6abe afterward. This is frozen-plan provenance, not a schema failure.",
+    "rml_derived_rebuild_by_worker": false
+  },
+  "remaining_findings": [
+    {
+      "id": "RML-SNAPSHOT-DURABILITY",
+      "severity": "workspace_durability",
+      "status": "OPEN",
+      "detail": "The canonical trajectory resolves its decision snapshot, but git status currently reports experiments/modern2d_scale500k/cpu/rml_decision_snapshots/ as untracked. Preserve/commit that snapshot before claiming portable RML closure."
+    },
+    {
+      "id": "CPU-EXPORT-EXECUTION",
+      "severity": "not_run_by_scope",
+      "status": "INTENTIONALLY_NOT_EXECUTED",
+      "detail": "The unchanged exporter request passed prepare-only. This worker did not use --execute or submit a remote job."
+    }
+  ],
+  "workspace_observation": {
+    "worker_project_file_writes": false,
+    "relevant_target_status_after_check": [
+      "M src/molgap/family_training_recipe.py (main/concurrent change)",
+      "M src/molgap/family_training_runner.py (main/concurrent change)",
+      "M src/molgap/family_training_session.py (main/concurrent change)",
+      "M src/molgap/family_training_outputs.py (main/concurrent change)",
+      "M src/molgap/experiment_family_artifacts.py (main/concurrent change)",
+      "M tests/test_modern2d_configured_outputs.py (main/concurrent change)",
+      "M tests/test_modern2d_input_preparation.py (main/concurrent change)",
+      "M tests/test_modern2d_scientific_input.py (main/concurrent change)",
+      "?? experiments/modern2d_scale500k/cpu/rml_decision_snapshots/"
+    ],
+    "note": "The workspace was already dirty and main was changing the listed source/test files concurrently. The worker only read project files, ran tests into the external scratch path, and wrote this report outside the project."
+  },
+  "not_run": [
+    "--execute export",
+    "Kaggle or any remote submission",
+    "models or payload generation",
+    "broad test suites",
+    "RML derived rebuild"
+  ],
+  "next_minimal_action": "Focused CPU/compiler/configured checks are clear at the synthetic verification boundary. Keep the unchanged exporter at prepare-only, preserve/commit the required decision snapshot, and wait for main's additional regression before any further tests; no remote or payload execution was performed."
+}

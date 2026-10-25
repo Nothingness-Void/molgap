@@ -167,7 +167,7 @@ def _read_scientific_recipe(path, family, authority):
     except ValueError as error:
         repair = (authority.get("purpose") == "CONFIGURED_EXECUTION_REPAIR"
                   and authority.get("scientific_training_authorized") is False)
-        fresh_screen = (authority.get("purpose") == "CONFIGURED_SCREEN"
+        fresh_screen = (authority.get("purpose") in {"CONFIGURED_SCREEN", "CONFIGURED_TRANSFER_STUDY"}
                   and authority.get("scientific_training_authorized") is True
                   and authority.get("source_reissue_authorized") is True)
         if (not (repair or fresh_screen)
@@ -261,6 +261,11 @@ def _compile_scientific_input(path, root, value):
         "input": input_sha, "commit": initial_commit})
     authority_ref = value.get("authority_ref", prefix + "/authority.json")
     authority = _read(local(authority_ref)) if "authority_ref" in value else deepcopy(value["authority"])
+    transfer_study = authority.get("purpose") == "CONFIGURED_TRANSFER_STUDY"
+    if transfer_study:
+        transfer_provenance = retained(authority["transfer_study_ref"])
+        for source in transfer_provenance["arms"].values():
+            retained(source["source_contract"])
     if "execution_qualification_ref" in authority:
         retained(authority["execution_qualification_ref"] )
     if authority.get("research_design", {}).get("campaign_ref"):
@@ -306,6 +311,8 @@ def _compile_scientific_input(path, root, value):
             from .experiment_presets import expand_baseline_preset
             items[index], presets[item["arm_id"]] = expand_baseline_preset(item, read_local=local)
     pair = value.get("same_run")
+    if transfer_study and pair is not None:
+        raise ValueError("Transfer study cannot declare a strict same-run architecture pair")
     if pair is not None:
         pair = deepcopy(pair)
         if type(pair) is not dict:
@@ -412,7 +419,7 @@ def _compile_scientific_input(path, root, value):
                 source_record[r + "_role_identity"] != roles[r]["usage_sha256"]
                 or record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling"} if modern else {"learning_rate", "weight_decay"}):
+        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling", "horizon_steps", "evaluation_every_steps"} if modern else {"learning_rate", "weight_decay"}):
             raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
@@ -443,14 +450,22 @@ def _compile_scientific_input(path, root, value):
             ProfileConfig.from_dict(profiling_config)
         if modern:
             passes = edits.pop("horizon_passes", baseline.formal_training.horizon_passes)
+            exact_steps = edits.pop("horizon_steps", None)
+            evaluation_every = edits.pop("evaluation_every_steps", None)
+            if (exact_steps is None) != (evaluation_every is None) or (exact_steps is not None and not transfer_study):
+                raise ValueError("Explicit step clock requires an authorized transfer study")
             execution_mode = edits.pop("execution_mode", "original")
             if type(passes) is not int or passes < 1:
                 raise ValueError("Modern2D horizon_passes must be a positive integer")
-            steps = passes * (baseline.train_rows // baseline.batch_size)
+            steps = passes * (baseline.train_rows // baseline.batch_size) if exact_steps is None else exact_steps
+            if type(steps) is not int or steps < 1:
+                raise ValueError("Frozen step horizon must be a positive integer")
+            physical_passes = passes if exact_steps is None else (steps + baseline.train_rows // baseline.batch_size - 1) // (baseline.train_rows // baseline.batch_size)
             edits.update(optimizer_steps=steps,
                 schedule=replace(baseline.schedule, total_units=steps, reference_epochs=passes),
                 formal_training=Modern2DFormalTrainingProfile(purpose="configured-screen",
-                    horizon_passes=passes, horizon_steps=steps, execution_mode=execution_mode))
+                    horizon_passes=physical_passes, horizon_steps=steps, execution_mode=execution_mode,
+                    evaluation_every_steps=evaluation_every))
         recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **edits)
         if (modern and authority.get("purpose") not in {
                 "CONFIGURED_EXECUTION_PROFILE", "CONFIGURED_EXECUTION_REPAIR"}
@@ -488,12 +503,14 @@ def _compile_scientific_input(path, root, value):
             declared_reference_ref = item.get("reference_ref")
             retained_bundle_declared = (isinstance(declared_reference_ref, dict)
                                          and "bundle_ref" in declared_reference_ref)
-            if pair is None and not diagnostic and not retained_bundle_declared:
+            if pair is None and not diagnostic and not retained_bundle_declared and not transfer_study:
                 raise ValueError("Modern2D scientific training requires a same-run or retained frozen reference")
             if item["purpose"] == "context_only" and not diagnostic:
                 raise ValueError("Modern2D scientific training cannot use context_only")
             if diagnostic and item["purpose"] != "context_only":
                 raise ValueError("Modern2D execution diagnostics require context_only")
+            if transfer_study and (item["purpose"] != "transfer_study" or retained_bundle_declared):
+                raise ValueError("Transfer study must retain noncausal purpose and explicit source provenance")
             # Modern2D always carries an explicit provenance anchor. In a
             # same-run pair this is the retained indexed input/target source;
             # a later scientific candidate may additionally bind an accepted
@@ -548,7 +565,7 @@ def _compile_scientific_input(path, root, value):
                 arm, recipe, baseline, new_record, metadata, target)
             modern_inputs[item["arm_id"]] = (metadata, input_ref, source_model, recipe, modern_identity)
             modern_comparison_assets[item["arm_id"]] = (target_transform, contract_identity)
-            retained_scientific = pair is None and not diagnostic and "bundle_ref" in reference_ref
+            retained_scientific = pair is None and not diagnostic and not transfer_study and "bundle_ref" in reference_ref
             if retained_scientific:
                 if item["purpose"] != "architecture_comparison":
                     raise ValueError("Retained Modern2D references support architecture_comparison only")
@@ -904,6 +921,8 @@ def _compile_scientific_input(path, root, value):
         metadata["authority"] = pin(authority_ref)
         metadata_pin = derive(prefix + "/training_inputs.json", metadata)
         acceptance_value.update(format=CONFIGURED_PLAN_FORMAT, authority=pin(authority_ref), inputs=metadata_pin)
+        if transfer_study:
+            acceptance_value["transfer"] = pin(authority["transfer_study_ref"]["path"])
     acceptance_pin = derive(prefix + "/acceptance_plan.json", acceptance_value)
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",

@@ -1,6 +1,9 @@
 """Real tiny CPU sessions feed the existing saved-artifact inspector."""
 from pathlib import Path
+from dataclasses import replace
+from copy import deepcopy
 import json
+import pytest
 import torch
 
 from molgap.experiment_family_workflow import RunContext, inspect_output
@@ -10,8 +13,25 @@ from test_modern2d_formal_training import case, actual_session
 from test_modern2d_addon_session import composed
 
 
-def test_configured_addon_outputs_are_independently_inspected(case, tmp_path):
+@pytest.mark.parametrize("step_clock", [False, True], ids=["pass-clock", "step-clock"])
+def test_configured_addon_outputs_are_independently_inspected(case, tmp_path, step_clock):
     case.recipe = composed(case)
+    if step_clock:
+        from molgap.modern2d_training import Modern2DFormalTrainingProfile
+        case.recipe = replace(case.recipe, optimizer_steps=3,
+            schedule=replace(case.recipe.schedule, total_units=3),
+            formal_training=Modern2DFormalTrainingProfile("configured-screen", horizon_passes=2,
+                horizon_steps=3, evaluation_every_steps=1))
+        checkpoints = []
+        prefix = actual_session(case, checkpoints)
+        assert prefix.run(should_pause=lambda: True).optimizer_step == 1
+        assert checkpoints[-1]["cursor"]["selected_step"] == 1
+        resumed = actual_session(case, [])
+        resumed.load_state_dict(deepcopy(checkpoints[-1]))
+        assert resumed.run().optimizer_step == 3
+        resumed_state = deepcopy(resumed.state_dict())
+        prefix.close()
+        resumed.close()
     session = actual_session(case, [])
     recipe = case.recipe
     from molgap.family_training_runner import build_screen_recipe
@@ -31,6 +51,10 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path):
     session.loaders.attach_role_audit(output.role_audit)
     session.checkpoint, session.selected, session.pass_finished = output.checkpoint, output.selected, output.pass_finished
     progress = session.run()
+    if step_clock:
+        from test_family_training_session import assert_equal
+        assert_equal(resumed_state, session.state_dict())
+        assert progress.next_batch == 1
     runtime = dict(platform="local", account="fixture", precision="fp32",
         source_commit=context.source_commit, source_archive_sha256=context.source_archive_sha256)
     costs = [dict(metric="wall_seconds", unit="seconds", status="missing", value=None,
@@ -41,6 +65,9 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path):
     rows = json.loads((output.root / "canonical_trace.json").read_bytes())["observations"]
     observed = [row for row in rows if row["event"] == "observation"]
     assert observed
+    if step_clock:
+        assert [row["optimizer_step"] for row in observed] == [1, 2, 3]
+        assert [row["epoch_or_pass"] for row in observed] == [0.5, 1.0, 1.5]
     assert all(row["wall_time_seconds"] is not None and
                row["cumulative_wall_time_seconds"] is not None and
                row["checkpoint_identity"] is not None and

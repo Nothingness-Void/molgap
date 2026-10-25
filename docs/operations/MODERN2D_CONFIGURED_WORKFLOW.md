@@ -112,6 +112,33 @@ This implementation does not certify native throughput, model quality, a
 completed formal training run or Desktop migration. Those require evidence from
 their own authorized execution, not a successful declaration or CPU test.
 
+## Explicit scale-transfer studies
+
+A separately authorized `CONFIGURED_TRANSFER_STUDY` keeps the same compiler,
+Session, native gates and output protocol. It consumes accepted train500K plus
+Common-Dev and uses per-arm pinned original100K contracts in
+`authority.transfer_study_ref`. The transfer plan and every source contract are
+packaged and checked at release. It cannot declare a same-run causal pair,
+retained architecture bundle or STRICT_CAUSAL claim. Such a study retains
+context/paired-endpoint evidence; it is not architecture Replay admission.
+
+Its scientific input uses `purpose: transfer_study` and explicitly supplies
+`training.horizon_steps` plus `evaluation_every_steps`. `horizon_passes` keeps
+the original schedule's reference clock; the profile separately records the
+ceiling of actual500K passes and exact terminal cursor. Source LR trajectory,
+optimizer, model/addons, target transform and endpoint must match the pinned
+100K contract. Evaluations/checkpoints occur at the frozen update interval,
+including within a physical pass. The ordinary architecture path retains its
+complete-pass semantics and cannot opt into this clock.
+
+Selected CPU metadata accepts either training scale plus Common-Dev. An explicit
+`normalization_reference` pins the source100K member/order digest and constants;
+both metadata preparation and the training loader recompute them from the actual
+nested100K prefix of500K labels. Merely copying recipe constants is insufficient.
+Optional typed `model_configs` keeps the actual retained budget model's feature
+bindings rather than replacing it with the author's larger default. These
+capabilities grant no data publication, training authority or promotion.
+
 ## Execution-only PPGT profiling
 
 The same input/recipe/Session/package/platform owners support a separately

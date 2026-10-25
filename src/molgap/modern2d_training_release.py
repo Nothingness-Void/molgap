@@ -16,6 +16,7 @@ CONFIGURED_PLAN_FORMAT = "molgap-modern2d-configured-plan-v1"
 CONFIGURED_AUTHORITY_FORMAT = "molgap-modern2d-configured-authority-v1"
 PROFILE_PURPOSE = "CONFIGURED_EXECUTION_PROFILE"
 REPAIR_PURPOSE = "CONFIGURED_EXECUTION_REPAIR"
+TRANSFER_PURPOSE = "CONFIGURED_TRANSFER_STUDY"
 WALL_CEILING_SECONDS = 16200
 CHECKPOINT_RESERVE_SECONDS = 600
 BUDGET_FORMAT = "molgap-modern2d-retry-budget-v1"
@@ -198,7 +199,7 @@ def validate_configured_authority(authority, declaration, recipes=None):
     if (authority.get("format") != CONFIGURED_AUTHORITY_FORMAT or authority.get("owner") != "server"
             or authority.get("user_authorized") is not True
             or authority.get("scientific_training_authorized") is not (not profiling)
-            or authority.get("purpose") not in {"CONFIGURED_SCREEN", PROFILE_PURPOSE, REPAIR_PURPOSE}
+            or authority.get("purpose") not in {"CONFIGURED_SCREEN", PROFILE_PURPOSE, REPAIR_PURPOSE, TRANSFER_PURPOSE}
             or authority.get("logical_run_id") != declaration["logical_run_id"]
             or authority.get("arms") != [a["arm_id"] for a in arms]
             or authority.get("interfaces") != [[a["family"]["name"], a["family"]["version"]] for a in arms]
@@ -220,6 +221,11 @@ def validate_configured_authority(authority, declaration, recipes=None):
             or not authority["run_reference"].startswith(gpu["owner"] + "/")
             or (len(arms) == 1 and not authority.get("single_arm_reason"))):
         raise ValueError("Configured authority does not cover the exact roles, arms and full allocation")
+    if authority.get("purpose") == TRANSFER_PURPOSE and (
+            authority["roles"] != ["train_500k", "common_dev"] or
+            type(authority.get("transfer_study_ref")) is not dict or
+            declaration.get("prospective", {}).get("same_run_replay") is not None):
+        raise ValueError("Transfer release requires a separately pinned500K noncausal study")
     if authority.get("purpose") == PROFILE_PURPOSE and (len(arms) != 1 or authority["interfaces"] != [["ppgt_small", "3"]]
             or authority["roles"] != ["train_100k", "common_dev"] or wall > 1800
             or budget > 1 or authority.get("scratch_optimizer_updates_per_model") != 6):
@@ -237,6 +243,9 @@ def validate_configured_authority(authority, declaration, recipes=None):
         if authority.get("recipes") != expected:
             raise ValueError("Configured authority recipe/horizon binding changed")
         for recipe in recipes.values():
+            if (recipe.formal_training.evaluation_every_steps is not None and
+                    authority.get("purpose") != TRANSFER_PURPOSE):
+                raise ValueError("Exact step-clock recipes require explicit transfer authority")
             if recipe.formal_training.execution_mode == "prepared-v2" and (
                     authority.get("execution_mode") != "prepared-v2"
                     or authority.get("fresh_native_execution_gate") is not True):
@@ -428,6 +437,37 @@ def validate_retained_comparison_plan(spec, plan, root=None):
     return comparison
 
 
+def validate_transfer_plan(spec, root, plan, authority):
+    """Bind a transfer's actual source recipes without granting a causal claim."""
+    from .family_training_runner import read_recipe
+    pointer = authority["transfer_study_ref"]
+    if plan.get("transfer") != pointer or "comparison" in plan:
+        raise ValueError("Transfer study cannot replace its declaration with a strict comparison")
+    study = _json(_pinned(root, pointer))
+    ids = [a["arm_id"] for a in spec.to_dict()["arms"]]
+    if (type(study) is not dict or set(study) != {"format", "experiment_purpose", "arms"} or
+            study["format"] != "molgap-modern2d-transfer-plan-v1" or
+            study["experiment_purpose"] != "transfer_study" or set(study["arms"]) != set(ids)):
+        raise ValueError("Transfer study requires the exact noncausal arm declaration")
+    for entry in plan["arms"]:
+        item = study["arms"][entry["arm_id"]]
+        if type(item) is not dict or set(item) != {"source_contract"}:
+            raise ValueError("Transfer provenance requires its pinned original contract")
+        old_record, old = read_recipe(_pinned(root, item["source_contract"]))
+        new_record, new = read_recipe(_pinned(root, entry["contract"]))
+        fields = ("interface", "seed", "initialization_sha256", "batch_size", "drop_last",
+                  "learning_rate", "weight_decay", "gradient_clip", "selection", "sampler",
+                  "target_mean_eV", "target_std_eV", "ema_decay", "model_config", "addons")
+        if (old.train_rows != 100000 or new.train_rows != 500000 or
+                any(getattr(old, f) != getattr(new, f) for f in fields) or
+                old.schedule != new.schedule or old.optimizer_steps != new.optimizer_steps or
+                new.formal_training.evaluation_every_steps != old.loop_plan.steps_per_pass or
+                any(old_record["acceptance_requirements"][key] != new_record["acceptance_requirements"][key]
+                    for key in ("source_idx_sha256", "target_sha256", "development_rows", "precision"))):
+            raise ValueError("Transfer changed model, transform, optimizer, clock or endpoint beyond training membership")
+    return study
+
+
 def check_plan(spec, root, plan):
     """No payload/model IO and no accepted-reference or superiority claim."""
     from .family_training_runner import read_recipe, validate_screen_recipe
@@ -441,7 +481,8 @@ def check_plan(spec, root, plan):
     pair = declaration.get("prospective", {}).get("same_run_replay")
     allowed = ({"format", "spec_identity", "authority", "inputs", "arms"},
                {"format", "spec_identity", "authority", "inputs", "arms", "budget_reconciliation"},
-               {"format", "spec_identity", "authority", "inputs", "arms", "comparison"})
+               {"format", "spec_identity", "authority", "inputs", "arms", "comparison"},
+               {"format", "spec_identity", "authority", "inputs", "arms", "transfer"})
     if (not is_formal_screen(spec) or type(plan) is not dict or
             set(plan) not in allowed or
             plan["format"] not in {PLAN_FORMAT, CONFIGURED_PLAN_FORMAT} or plan["spec_identity"] != spec.identity):
@@ -459,6 +500,10 @@ def check_plan(spec, root, plan):
         if "budget_reconciliation" in plan:
             raise ValueError("Configured runs cannot inherit historical retry budgets")
         validate_configured_authority(authority, declaration)
+        if authority.get("purpose") == TRANSFER_PURPOSE:
+            validate_transfer_plan(spec, root, plan, authority)
+        elif "transfer" in plan:
+            raise ValueError("A non-transfer authority cannot release a transfer plan")
         if (authority.get("purpose") == "CONFIGURED_SCREEN" and not pair
                 and "comparison" not in plan):
             raise ValueError("Configured Modern2D scientific training requires a same-run frozen reference")

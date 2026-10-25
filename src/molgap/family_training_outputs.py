@@ -22,7 +22,7 @@ from .family_training_session import validate_session_resume
 from .training_reproducibility import atomic_torch_save
 
 
-_COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt"}
+_COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt", "final_development_predictions.pt"}
 
 
 def _recover_commit(root, context):
@@ -434,7 +434,7 @@ class SessionOutputs:
     def checkpoint(self, progress, state):
         if self.pending_pass is not None and self.pending_pass[0].optimizer_step != progress.optimizer_step:
             raise ValueError("Pass metrics differ from acknowledged checkpoint")
-        changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json")
+        changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json", "final_development_predictions.pt")
                    if (self.pending / name).is_file()]
         destination = self.pending if changed or self.pending_pass is not None else self.root
         write_resume_state(destination / "last_checkpoint.pt", self.context, adapter=self.adapter,
@@ -458,7 +458,7 @@ class SessionOutputs:
             recorder = deepcopy(self.stage.recorder)
             recorder.path = self.pending / "canonical_trace.json"
             recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
-                epoch_or_pass=progress.pass_index, **fields,
+                epoch_or_pass=progress.optimizer_step / self.recipe.loop_plan.steps_per_pass, **fields,
                 checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
                 wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
                 device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
@@ -495,6 +495,11 @@ class SessionOutputs:
         self.role_audit.observe_metrics("train", selection_used=False)
         if metrics["development"] is not None:
             self.role_audit.observe_metrics("development", selection_used=False)
+            if (getattr(self.recipe.formal_training, "evaluation_every_steps", None) is not None
+                    and progress.optimizer_step == self.recipe.optimizer_steps):
+                atomic_torch_save(self.pending / "final_development_predictions.pt",
+                    {"context": self.context.to_dict(), **{key: metrics["development"][key].detach().cpu()
+                        for key in ("source_idx", "target_eV", "prediction_eV")}})
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
@@ -508,7 +513,7 @@ class SessionOutputs:
         recorder = deepcopy(self.stage.recorder)
         recorder.path = self.pending / "canonical_trace.json"
         recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
-            epoch_or_pass=progress.pass_index, **fields)
+            epoch_or_pass=progress.optimizer_step / self.recipe.loop_plan.steps_per_pass, **fields)
 
     def retained_state(self):
         import torch
@@ -539,6 +544,8 @@ class SessionOutputs:
             "trace_context": "canonical_trace.json.context.json"}
         if self.recipe.dataset.development:
             artifacts["predictions"] = "development_predictions.pt"
+            if getattr(self.recipe.formal_training, "evaluation_every_steps", None) is not None:
+                artifacts["final_predictions"] = "final_development_predictions.pt"
         artifacts["role_audit"] = "role_audit.json"
         native_names = ("runtime_certificate.json", "runtime_provenance.json")
         native_present = tuple((self.root / name).is_file() for name in native_names)
@@ -638,9 +645,10 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         if companion.get("stage_id") != "downstream":
             raise ValueError("Trace context stage mismatch")
         rows = [row for row in trace["observations"] if row["event"] == "observation"]
-        expected_steps = list(range(recipe.loop_plan.steps_per_pass, recipe.optimizer_steps + 1,
-                                    recipe.loop_plan.steps_per_pass))
-        if recipe.optimizer_steps % recipe.loop_plan.steps_per_pass:
+        observation_interval = getattr(recipe.formal_training, "evaluation_every_steps", None) or recipe.loop_plan.steps_per_pass
+        expected_steps = list(range(observation_interval, recipe.optimizer_steps + 1,
+                                    observation_interval))
+        if recipe.optimizer_steps % observation_interval:
             expected_steps.append(recipe.optimizer_steps)
         if [row["optimizer_step"] for row in rows] != expected_steps:
             raise ValueError("Trace is missing complete-pass or partial-terminal exposure")
@@ -679,6 +687,14 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             for value in (selected.get("development_mae_eV"), state["cursor"]["best_development_mae_eV"], at[key], min(values)):
                 if type(value) not in (int, float) or not math.isclose(value, observed["development_mae_eV"], rel_tol=1e-6, abs_tol=1e-8):
                     raise ValueError("Selected predictions/trace/resume metric disagree")
+            if getattr(recipe.formal_training, "evaluation_every_steps", None) is not None:
+                if "final_predictions" not in paths or artifacts["final_predictions"]["path"] != "final_development_predictions.pt":
+                    raise ValueError("Step-clock terminal requires its final live prediction payload")
+                final = _inspect_predictions(paths["final_predictions"], context=context, expected=expected,
+                    target_identity=target_identity)
+                if not math.isclose(final["development_mae_eV"], rows[-1][key], rel_tol=1e-6, abs_tol=1e-8):
+                    raise ValueError("Final predictions differ from the terminal trace metric")
+                observed["final_development_mae_eV"] = final["development_mae_eV"]
         else:
             if (selected.get("development_mae_eV") is not None or any(
                     trace["metric_semantics"][key] is not None or any(row[key] is not None for row in rows)

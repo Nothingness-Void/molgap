@@ -95,16 +95,20 @@ def validate_session_resume(recipe, state):
     pass_index, offset = divmod(step, plan.steps_per_pass)
     rows_per_pass = plan.steps_per_pass * plan.physical_batch_size if plan.drop_last else plan.train_rows
     pending_rows = min(offset * plan.physical_batch_size, rows_per_pass)
+    evaluation_every = (getattr(recipe.formal_training, "evaluation_every_steps", None)
+                        if recipe.dataset.development else None)
+    metric_offset = offset if evaluation_every is None else step % evaluation_every
+    metric_rows = pending_rows if evaluation_every is None else metric_offset * plan.physical_batch_size
     if (type(cursor["pass_index"]) is not int or type(cursor["next_batch"]) is not int or
             (cursor["pass_index"], cursor["next_batch"]) != (pass_index, offset) or
             type(state["sample_presentations"]) is not int or
             state["sample_presentations"] != pass_index * rows_per_pass + pending_rows or
-            type(cursor["pending_rows"]) is not int or cursor["pending_rows"] != pending_rows or
+            type(cursor["pending_rows"]) is not int or cursor["pending_rows"] != metric_rows or
             cursor["status"] not in {"running", "paused", "complete"} or
             (cursor["status"] == "complete") != (step == plan.optimizer_steps)):
         raise ValueError("Resume cursor/exposure differs from acknowledged work")
     values = cursor["pending_absolute"]
-    if (type(values) is not list or len(values) != offset or any(
+    if (type(values) is not list or len(values) != metric_offset or any(
             not isinstance(value, torch.Tensor) or value.ndim != 0 or not value.is_floating_point()
             or not bool(torch.isfinite(value)) or bool(value < 0) for value in values)):
         raise ValueError("Resume partial-pass metrics are incomplete")
@@ -116,9 +120,10 @@ def validate_session_resume(recipe, state):
     if selected is not None and (type(selected) is not int or not 1 <= selected <= step):
         raise ValueError("Invalid selected optimizer step")
     if recipe.dataset.development:
-        if (best is None) != (selected is None) or ((pass_index > 0) != (best is not None)):
+        selection_interval = evaluation_every or plan.steps_per_pass
+        if (best is None) != (selected is None) or ((step >= selection_interval) != (best is not None)):
             raise ValueError("Resume has missing development selection history")
-        if selected is not None and selected % plan.steps_per_pass:
+        if selected is not None and selected % selection_interval:
             raise ValueError("Development selection did not occur at a complete pass")
     elif best is not None or selected != (step if step == plan.optimizer_steps else None):
         raise ValueError("Final-only recipe contains development selection")
@@ -420,12 +425,16 @@ class FamilyTrainingSession:
                         Parameter.POSITIONAL_OR_KEYWORD, Parameter.KEYWORD_ONLY}) and not any(
                         item.kind == Parameter.VAR_KEYWORD for item in parameters.values()):
                     raise TypeError("Evaluation adapter must accept the on_evaluation keyword")
+            evaluation_every = (getattr(self.recipe.formal_training, "evaluation_every_steps", None)
+                                if self.recipe.dataset.development else None)
             return run_training_loop(self.kernel.model, self.recipe.loop_plan, self.loaders.train,
                 step, self._persist, start_step=self.progress.optimizer_step,
                 before_pass=self.schedule.before_pass, before_step=self.schedule.before_step,
-                after_step=self.schedule.after_step, after_pass=self._finish_pass,
+                after_step=self.schedule.after_step, after_pass=self._finish_pass if evaluation_every is None else None,
                 observe_batch=observe, should_pause=should_pause,
-                report_progress=report if self.batch_finished is not None else None)
+                report_progress=report if self.batch_finished is not None else None,
+                observation_every=evaluation_every,
+                after_observation=self._finish_pass if evaluation_every is not None else None)
         finally:
             self.close()
 

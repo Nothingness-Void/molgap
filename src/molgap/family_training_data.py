@@ -177,7 +177,9 @@ def load_indexed_training_data(root: Path, selection: DatasetSelection) -> Train
     from .research_memory.paths import repo_local_path
     path = resolve_pinned_manifest(root, selection)
     binding = _json(path)
-    if (type(binding) is not dict or set(binding) != {"format", "data_root", "scope", "train", "development"} or
+    if (type(binding) is not dict or set(binding) not in (
+            {"format", "data_root", "scope", "train", "development"},
+            {"format", "data_root", "scope", "train", "development", "normalization_reference"}) or
             binding["format"] != "molgap-indexed-training-input-v1" or
             binding["scope"] not in {"CPU_SYNTHETIC_ONLY", "ACCEPTED_INDEXED_INPUT_V1"}):
         raise ValueError("Unknown indexed family input binding")
@@ -208,10 +210,32 @@ def load_indexed_training_data(root: Path, selection: DatasetSelection) -> Train
     targets = torch.cat(list(train.selected_targets()))
     if len(targets) < 2 or not bool(torch.isfinite(targets).all()):
         raise ValueError("Indexed train-only normalization needs finite labels")
+    mean, std = indexed_target_statistics(targets, train.source_indices,
+        binding.get("normalization_reference"))
     return TrainingData(train, dev, selection.manifest_sha256, len(train), len(dev) if dev else 0,
-        None, None, float(targets.mean()), float(sample_std_compat(targets).clamp_min(1e-6)),
+        None, None, mean, std,
         synthetic=binding["scope"] == "CPU_SYNTHETIC_ONLY", train_source_indices=train.source_indices,
         development_source_indices=dev.source_indices if dev else None, indexed=True)
+
+
+def indexed_target_statistics(targets, source_indices, reference=None):
+    """Verify a scale study's pinned nested-train transform against actual labels."""
+    import torch
+    from .experiment_family_workflow import tensor_digest
+    if reference is not None:
+        fields = {"role", "rows", "source_index_sha256", "mean_eV", "std_eV"}
+        if (type(reference) is not dict or set(reference) != fields or
+                reference["role"] != "train_100k" or reference["rows"] != 100000 or
+                len(source_indices) != 500000 or len(targets) != 500000):
+            raise ValueError("Frozen scale normalization requires exact nested100K source")
+        indices = torch.tensor(source_indices[:100000], dtype=torch.int64)
+        if tensor_digest(indices, role="source_idx") != reference["source_index_sha256"]:
+            raise ValueError("Frozen normalization source membership/order differs")
+        targets = targets[:100000]
+    mean, std = float(targets.mean()), float(sample_std_compat(targets).clamp_min(1e-6))
+    if reference is not None and (mean, std) != (reference["mean_eV"], reference["std_eV"]):
+        raise ValueError("Frozen normalization source labels/statistics differ")
+    return mean, std
 
 
 class PassBatchSampler:

@@ -211,7 +211,10 @@ class FamilyRecipe:
         if self.torch_version not in {"2.7.1", "2.11.0"}:
             raise ValueError("Unsupported execution runtime pin")
         plan = self.loop_plan
-        if self.dataset.development and self.optimizer_steps % plan.steps_per_pass:
+        evaluation_interval = getattr(self.formal_training, "evaluation_every_steps", None)
+        if self.dataset.development and self.optimizer_steps % plan.steps_per_pass and not (
+                getattr(self.formal_training, "configured", False) and evaluation_interval is not None
+                and self.optimizer_steps % evaluation_interval == 0):
             raise ValueError("Development selection requires a complete terminal pass")
         maximum_steps = self.schedule.total_units * (plan.steps_per_pass if self.schedule.epoch_based else 1)
         if self.optimizer_steps > maximum_steps:
@@ -300,6 +303,8 @@ class FamilyRecipe:
 
     def to_dict(self):
         values = asdict(self)
+        if values.get("formal_training") and values["formal_training"].get("evaluation_every_steps") is None:
+            values["formal_training"].pop("evaluation_every_steps", None)
         if (values.get("formal_training") or {}).get("execution_mode") == "original":
             # Preserve historical serialized recipes while new execution modes
             # remain explicit in newly frozen contracts.

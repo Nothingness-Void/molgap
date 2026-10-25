@@ -53,6 +53,7 @@ def run_training_loop(
     before_step: Callable | None = None, after_step: Callable | None = None,
     after_pass: Callable | None = None, observe_batch: Callable | None = None,
     should_pause: Callable | None = None, report_progress: Callable | None = None,
+    observation_every: int | None = None, after_observation: Callable | None = None,
 ) -> LoopProgress:
     """One bounded, resumable outer loop for any family, scale or platform.
 
@@ -72,6 +73,9 @@ def run_training_loop(
         raise ValueError("Resume step is outside the frozen execution budget")
     if not callable(checkpoint):
         raise TypeError("An atomic checkpoint owner is required")
+    if (observation_every is None) != (after_observation is None) or (
+            observation_every is not None and (type(observation_every) is not int or observation_every < 1)):
+        raise ValueError("Step-clock observation requires a positive interval and callback")
 
     def progress(current, status):
         pass_index, offset = divmod(current, plan.steps_per_pass)
@@ -110,10 +114,13 @@ def run_training_loop(
                 if pass_finished and after_pass is not None:
                     after_pass(pass_index, progress(current, "running"))
                 complete = current == plan.optimizer_steps
+                observed = observation_every is not None and (current % observation_every == 0 or complete)
+                if observed:
+                    after_observation(pass_index, progress(current, "running"))
                 paused = not complete and should_pause is not None and should_pause()
                 status = "complete" if complete else "paused" if paused else "running"
                 if (current % plan.checkpoint_every == 0 or
-                        (pass_finished and plan.checkpoint_at_pass) or complete or paused):
+                        (pass_finished and plan.checkpoint_at_pass) or complete or paused or observed):
                     checkpoint(progress(current, status))
                 if report_progress is not None:
                     report_progress(progress(current, status))

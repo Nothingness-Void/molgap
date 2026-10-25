@@ -242,6 +242,103 @@ def test_configured_independent_arms_require_a_frozen_pair(configured):
         resolve_experiment_input(c.path, c.repo)
 
 
+def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured):
+    c = configured
+    value = deepcopy(c.value)
+    value.pop("same_run")
+    value["arms"] = [value["arms"][0]]
+    value["arms"][0].update(purpose="transfer_study",
+        training=dict(horizon_passes=20, horizon_steps=15620, evaluation_every_steps=781))
+    old_path = c.repo / value["arms"][0]["recipe_ref"]
+    old_record, old = read_recipe(old_path)
+    source_spec_copy = c.repo / "experiments/reference/source100k_spec.json"
+    _write_json(source_spec_copy, json.loads((c.repo / value["arms"][0]["data_ref"]["spec_ref"]).read_bytes()))
+    old_copy = c.repo / "experiments/reference/source100k.json"
+    _write_json(old_copy, old_record)
+    study_path = c.repo / "experiments/question/transfer.json"
+    _write_json(study_path, dict(format="molgap-modern2d-transfer-plan-v1", experiment_purpose="transfer_study",
+        arms={"reference": dict(source_contract=_pointer(c.repo, old_copy))}))
+    binding_path = c.repo / "experiments/reference/training_input.json"
+    binding = json.loads(binding_path.read_bytes())
+    train, train_record = permit_record("train_500k")
+    binding["train"] = train_record
+    _write_json(binding_path, binding)
+    new = replace(old, train_rows=500000,
+        dataset=replace(old.dataset, manifest_sha256=file_digest(binding_path)),
+        formal_training=replace(old.formal_training, horizon_passes=4, evaluation_every_steps=781))
+    record = build_screen_recipe(new.mode, configuration=new, family=new.interface,
+        source_idx_sha256="2" * 64, target_sha256="3" * 64,
+        train_role_identity="c" * 64, development_role_identity="c" * 64)
+    _write_json(old_path, record)
+    spec_path = c.repo / value["arms"][0]["data_ref"]["spec_ref"]
+    payload = json.loads(spec_path.read_bytes())
+    arm = payload["arms"][0]
+    arm["data"]["dataset"]["sha256"] = new.dataset.manifest_sha256
+    arm["training"]["recipe"]["sha256"] = file_digest(old_path)
+    bindings = family_arm_bindings(new)
+    arm["base"] = bindings["base"]
+    arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
+    source = ExperimentSpec(payload)
+    _write_json(spec_path, source.to_dict())
+    metadata_path = c.repo / "experiments/reference/training_inputs.json"
+    metadata = json.loads(metadata_path.read_bytes())
+    metadata["training_input"]["sha256"] = new.dataset.manifest_sha256
+    model = metadata["models"]["reference"]
+    feature = model["feature_bindings"].pop("train_100k")
+    model["feature_binding_sha256"].pop("train_100k")
+    feature.update(role="train_500k", base_dataset_manifest_sha=train.manifest_sha256,
+        role_history_sha=train.role_history_sha256)
+    model["feature_bindings"]["train_500k"] = feature
+    model["feature_binding_sha256"]["train_500k"] = canonical_fingerprint(feature)
+    arm["data"]["feature_sha256"] = canonical_fingerprint(model["feature_binding_sha256"])
+    _write_json(spec_path, ExperimentSpec(payload).to_dict())
+    _write_json(metadata_path, metadata)
+    prior_path = c.repo / value["arms"][0]["reference_ref"]["plan_ref"]
+    prior = json.loads(prior_path.read_bytes())
+    prior.update(spec_identity=ExperimentSpec(payload).identity, inputs=_pointer(c.repo, metadata_path))
+    prior["arms"][0]["contract"] = _pointer(c.repo, old_path)
+    _write_json(prior_path, prior)
+    authority = {**c.authority, "purpose": "CONFIGURED_TRANSFER_STUDY", "arms": ["reference"],
+        "interfaces": [list(new.interface)], "roles": ["train_500k", "common_dev"],
+        "scale_500k_authorized": True, "recipes": {"reference": dict(horizon_passes=4, horizon_steps=15620)},
+        "transfer_study_ref": _pointer(c.repo, study_path)}
+    authority.pop("same_run_reference_arm_id")
+    _write_json(c.repo / value["authority_ref"], authority)
+    _write_json(c.path, value)
+    _git(c.repo, "add", ".")
+    _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Freeze noncausal scale fixture")
+    _, spec, workflow, _ = resolve_experiment_input(c.path, c.repo)
+    plan = json.loads((c.repo / workflow["acceptance_plan"]).read_bytes())
+    result = check_plan(spec, c.repo, plan)
+    assert result["comparison_scope"] == "CONTEXT_ONLY" and result["noReplay"]
+    assert "comparison" not in plan and "same_run_replay" not in spec.to_dict()["prospective"]
+    _, compiled = read_recipe(c.repo / plan["arms"][0]["contract"]["path"])
+    assert compiled.optimizer_steps == old.optimizer_steps
+    assert compiled.schedule == old.schedule
+    assert compiled.formal_training.evaluation_every_steps == 781
+    assert (compiled.loop_plan.steps_per_pass, plan["arms"][0]["expected"]["next_batch"]) == (3906, 3902)
+    # The scale anchor uses this same compiler contract; it never enrolls a
+    # trained reference or reads the fake fixture's absent graph mount.
+    from molgap.modern2d_research_prepare import freeze_scale_anchor
+    qualification = deepcopy(metadata)
+    qualification.update(status="INPUT_METADATA_PREPARED",
+        roles={role: dict(rows=rows, source_idx_tensor_sha256="2" * 64)
+               for role, rows in (("train_500k", 500000), ("common_dev", 50000))})
+    model_id = "ppgt_author_v2" if new.family == "ppgt_small" else "esa_native_v3"
+    qualification["models"] = {model_id: qualification["models"]["reference"]}
+    qualification_path = c.repo / "experiments/reference/qualification.json"
+    _write_json(qualification_path, qualification)
+    anchored = freeze_scale_anchor(c.repo, base="experiments/scale_anchor",
+        source_spec_ref=source_spec_copy.relative_to(c.repo).as_posix(),
+        source_contract_ref=old_copy.relative_to(c.repo).as_posix(), source_arm_id="reference",
+        accepted_metadata_ref=qualification_path.relative_to(c.repo).as_posix(),
+        accepted_input_ref=binding_path.relative_to(c.repo).as_posix(),
+        target_manifest=prior["arms"][0]["target_manifest"])
+    assert not anchored["graph_payload_read"] and not anchored["scientific_reference_accepted"]
+    _, anchor_recipe = read_recipe(c.repo / anchored["pins"]["contract.json"]["path"])
+    assert anchor_recipe.train_rows == 500000 and anchor_recipe.schedule == old.schedule
+
+
 def test_execution_repair_reissues_only_source_pin(configured):
     from molgap.experiment_input import _read_scientific_recipe
     c = configured

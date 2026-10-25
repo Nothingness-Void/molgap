@@ -32,15 +32,24 @@ def _read(path):
     return json.loads(path.read_bytes())
 
 
+def _role_rows(request):
+    roles = request.get("roles", {})
+    if type(roles) is not dict or set(roles) not in (
+            {"train_100k", "common_dev"}, {"train_500k", "common_dev"}):
+        raise ValueError("Exact accepted training scale plus Common-Dev required")
+    train = "train_500k" if "train_500k" in roles else "train_100k"
+    return {train: 500000 if train == "train_500k" else 100000, "common_dev": 50000}
+
+
 def _request(request):
-    exact(request, REQUEST_FIELDS, "qualification input request")
+    exact(request, REQUEST_FIELDS | ({"normalization_reference", "model_configs"} & set(request)), "qualification input request")
     if request["format"] != REQUEST_FORMAT:
         raise ValueError("Unknown qualification input request format")
     for key in ("export_acceptance_sha256", "parent_acceptance_sha256"):
         digest(request[key], key)
-    exact(request["roles"], ROLE_ROWS, "exact 100K/Common-Dev roles")
+    role_rows = _role_rows(request)
     permits = {}
-    for role, rows in ROLE_ROWS.items():
+    for role, rows in role_rows.items():
         record = exact(request["roles"][role], {"permit", "authority", "role_history", "rows",
                        "source_index_sha256", "logical_content_sha256"}, "external role pins")
         permit = AcceptedIndexedInputPermit(**record["permit"])
@@ -54,7 +63,7 @@ def _request(request):
     if len({permit.version_identity for permit in permits.values()}) != 1:
         raise ValueError("Export role versions disagree")
     inventory = request["inventory"]
-    if type(inventory) is not dict or not inventory or len(inventory) > 2 * sum(ROLE_ROWS.values()) + 6:
+    if type(inventory) is not dict or not inventory or len(inventory) > 2 * sum(role_rows.values()) + 6:
         raise ValueError("Explicit bounded accepted export inventory required")
     for name, item in inventory.items():
         if (type(name) is not str or not name or "\\" in name or ":" in name or
@@ -85,6 +94,8 @@ def _request(request):
 
 def _verify_export(root, request, permits):
     """Reuse the export inventory and accepted loader, without opening a parent mount."""
+    role_rows = _role_rows(request)
+    train_role = next(iter(role_rows))
     acceptance_path = _local(root, "acceptance.json")
     if file_digest(acceptance_path) != request["export_acceptance_sha256"]:
         raise ValueError("Externally supplied export acceptance SHA differs")
@@ -93,15 +104,15 @@ def _verify_export(root, request, permits):
             acceptance.get("status") != "DATA_ROLE_ACCEPTED" or
             acceptance.get("scope") != "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY" or
             acceptance.get("parent_acceptance_sha256") != request["parent_acceptance_sha256"] or
-            acceptance.get("rule_identity") != permits["train_100k"].version_identity or
+            acceptance.get("rule_identity") != permits[train_role].version_identity or
             acceptance.get("private_required") is not True or
             acceptance.get("inventory") != request["inventory"] or
-            set(acceptance.get("roles", {})) != set(ROLE_ROWS) or
+            set(acceptance.get("roles", {})) != set(role_rows) or
             any(acceptance.get(k) is not False for k in ("official_validation_read", "test_roles_read",
                                                        "graphs_rebuilt", "audit_label_statistics_exposed"))):
         raise ValueError("Export acceptance differs from external selected-role pins")
     # Check metadata pins before using any mounted manifest to determine paths.
-    for name in ("export_request.json", "census.json", *(f"roles/{r}.json" for r in ROLE_ROWS)):
+    for name in ("export_request.json", "census.json", *(f"roles/{r}.json" for r in role_rows)):
         pin = request["inventory"].get(name)
         path = _local(root, name)
         if (pin is None or pin["bytes"] > MAX_METADATA_BYTES or
@@ -109,12 +120,12 @@ def _verify_export(root, request, permits):
             raise ValueError("Export metadata differs from external inventory")
     exported_request = _read(_local(root, "export_request.json"))
     if (exported_request.get("format") != EXPORT_FORMAT or
-            exported_request.get("roles") != list(ROLE_ROWS) or
+            exported_request.get("roles") != list(role_rows) or
             exported_request.get("parent_acceptance_sha256") != request["parent_acceptance_sha256"] or
             canonical_fingerprint(exported_request) != acceptance.get("request_identity")):
         raise ValueError("Export parent/request binding differs")
     allowed = {"export_request.json", "census.json"}
-    for role, rows in ROLE_ROWS.items():
+    for role, rows in role_rows.items():
         record, permit = request["roles"][role], permits[role]
         expected = {"path": f"roles/{role}.json", "sha256": permit.manifest_sha256,
                     **{k: record[k] for k in ("rows", "source_index_sha256", "logical_content_sha256")}}
@@ -172,8 +183,10 @@ def prepare_qualification_inputs(request, *, execute=False):
     if type(execute) is not bool:
         raise TypeError("execute must be an explicit bool")
     root, output, permits = _request(request)
+    role_rows = _role_rows(request)
+    train_role = next(iter(role_rows))
     if not execute:
-        return {"status": "PREPARE_ONLY_NOT_EXECUTED", "roles": dict(ROLE_ROWS),
+        return {"status": "PREPARE_ONLY_NOT_EXECUTED", "roles": role_rows,
                 "output_root": str(output), "payloads_read": False, "remote_submission": False}
     _verify_export(root, request, permits)
     import torch
@@ -186,6 +199,10 @@ def prepare_qualification_inputs(request, *, execute=False):
 
     binding = {"format": "molgap-indexed-training-input-v1", "data_root": "indexed_assets",
                "scope": "ACCEPTED_INDEXED_INPUT_V1"}
+    if "model_configs" in request and type(request["model_configs"]) is not dict:
+        raise ValueError("Metadata model configurations must be an explicit mapping")
+    if "normalization_reference" in request:
+        binding["normalization_reference"] = request["normalization_reference"]
     models = {}
     for family, contract in FAMILIES.items():
         entry = contract.execution
@@ -200,11 +217,17 @@ def prepare_qualification_inputs(request, *, execute=False):
             raise ValueError("Modern2D preview family lacks a CONFIG_TYPE")
         if entry.input_model_name in models:
             raise ValueError("Duplicate Modern2D input model name")
+        config_values = dict(request.get("model_configs", {}).get(entry.input_model_name, {}))
+        if "layer_types" in config_values:
+            config_values["layer_types"] = tuple(config_values["layer_types"])
         models[entry.input_model_name] = {
-            "family": list(family), "model_config": asdict(config_type()),
+            "family": list(family), "model_config": asdict(config_type(**config_values)),
             "feature_bindings": {}, "feature_binding_sha256": {}}
+    if ("model_configs" in request and (type(request["model_configs"]) is not dict or
+            set(request["model_configs"]) - set(models))):
+        raise ValueError("Metadata model configuration must name an existing typed family")
     roles, training_ids = {}, None
-    for role, rows in ROLE_ROWS.items():
+    for role, rows in role_rows.items():
         record = request["roles"][role]
         dataset = IndexedRoleDataset(root, permits[role], authority=record["authority"],
                                      role_history=record["role_history"])
@@ -213,12 +236,13 @@ def prepare_qualification_inputs(request, *, execute=False):
         indices = dataset.source_indices
         roles[role] = {"rows": rows, "source_idx_tensor_sha256": tensor_digest(
             torch.tensor(indices, dtype=torch.int64), role="source_idx")}
-        if role == "train_100k":
+        if role == train_role:
             training_ids = set(indices)
             targets = torch.cat(list(dataset.selected_targets()))
             if targets.device.type != "cpu" or len(targets) != rows or not bool(torch.isfinite(targets).all()):
                 raise ValueError("Train normalization requires exact finite CPU selected labels")
-            mean, std = float(targets.mean()), float(sample_std_compat(targets).clamp_min(1e-6))
+            from .family_training_data import indexed_target_statistics
+            mean, std = indexed_target_statistics(targets, indices, request.get("normalization_reference"))
             del targets
         elif training_ids.intersection(indices):
             raise ValueError("Training and Common-Dev memberships overlap")
@@ -227,7 +251,7 @@ def prepare_qualification_inputs(request, *, execute=False):
                                                     configuration=model["model_config"])
             model["feature_bindings"][role] = feature
             model["feature_binding_sha256"][role] = canonical_fingerprint(feature)
-        binding["train" if role == "train_100k" else "development"] = {
+        binding["train" if role == train_role else "development"] = {
             k: record[k] for k in ("permit", "authority", "role_history")}
         del dataset
     # Recheck immutable metadata after decoding; payload identity was verified by
@@ -252,7 +276,8 @@ def prepare_qualification_inputs(request, *, execute=False):
                 "parent_acceptance_sha256": request["parent_acceptance_sha256"],
                 "inventory_sha256": canonical_fingerprint(request["inventory"]),
                 "target_mean_eV": mean, "target_std_eV": std,
-                "normalization": {"role": "train_100k", "dtype": "float64", "correction": 1, "std_floor": 1e-6},
+                "normalization": {"role": "train_100k" if "normalization_reference" in request else train_role,
+                                  "dtype": "float64", "correction": 1, "std_floor": 1e-6},
                 "roles": roles, "models": models, "development_label_statistics_exposed": False,
                 "scientific_training_authorized": False, "publication_status": "NOT_PUBLISHED"}
     qualification_inputs = publish("qualification_inputs.json", metadata)

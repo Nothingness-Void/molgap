@@ -41,6 +41,7 @@ class Modern2DFormalTrainingProfile:
     horizon_passes: int = 60
     horizon_steps: int = FORMAL_STEPS
     execution_mode: str = "original"
+    evaluation_every_steps: int | None = None
 
     def __post_init__(self):
         if self.execution_mode not in {"original", "batched-v1", "prepared-v2"} or (
@@ -51,7 +52,14 @@ class Modern2DFormalTrainingProfile:
                     or type(self.horizon_passes) is not int or self.horizon_passes < 1
                     or type(self.horizon_steps) is not int or self.horizon_steps < 1):
                 raise ValueError("Configured training requires a positive explicit horizon")
+            if self.evaluation_every_steps is not None and (
+                    type(self.evaluation_every_steps) is not int or
+                    not 1 <= self.evaluation_every_steps <= self.horizon_steps or
+                    self.horizon_steps % self.evaluation_every_steps):
+                raise ValueError("Step-clock evaluation must divide the exact frozen endpoint")
             return
+        if self.evaluation_every_steps is not None:
+            raise ValueError("Step-clock evaluation requires a new configured profile")
         if (self.purpose != "formal-100k-common-dev" or self.phase not in {"train", "native-preflight"}
                 or type(self.horizon_passes) is not int or self.horizon_passes != 60
                 or type(self.horizon_steps) is not int or self.horizon_steps != FORMAL_STEPS):
@@ -72,13 +80,18 @@ class Modern2DFormalTrainingProfile:
                     or recipe.qualification is not None or recipe.input_sidecar is not None
                     or recipe.k1_execution is not None or recipe.ema_decay is not None or recipe.clean_bn is not None
                     or recipe.schedule.epoch_based or recipe.schedule.total_units != self.horizon_steps
-                    or recipe.schedule.reference_epochs != self.horizon_passes):
+                    or (self.evaluation_every_steps is None and
+                        recipe.schedule.reference_epochs != self.horizon_passes)):
                 raise ValueError("Configured profile differs from the model recipe or explicit schedule")
             if synthetic:
                 if recipe.train_rows not in (128, 256) or recipe.development_rows > 128 or recipe.optimizer_steps > 4:
                     raise ValueError("Configured CPU fixtures retain bounded synthetic data and four updates")
-            elif (recipe.train_rows not in (100000, 500000)
-                    or self.horizon_steps != self.horizon_passes * (recipe.train_rows // recipe.batch_size)):
+            elif (recipe.train_rows not in (100000, 500000) or (
+                    self.evaluation_every_steps is None and
+                    self.horizon_steps != self.horizon_passes * (recipe.train_rows // recipe.batch_size)) or (
+                    self.evaluation_every_steps is not None and
+                    self.horizon_passes != (self.horizon_steps + recipe.train_rows // recipe.batch_size - 1) //
+                        (recipe.train_rows // recipe.batch_size))):
                 raise ValueError("Configured horizon differs from the selected training scale")
             if probe:
                 if (recipe.optimizer_steps != 2 or recipe.dataset.development or recipe.development_rows
@@ -255,7 +268,8 @@ class Modern2DFormalTrainingContext:
         if binding_path.stat().st_size > 1024**2 or normalized_file_sha(binding_path) != recipe.dataset.manifest_sha256:
             raise ValueError("Formal indexed binding changed or exceeds the metadata ceiling")
         binding = _json(binding_path)
-        if (set(binding) != {"format", "data_root", "scope", "train", "development"}
+        allowed_binding = {"format", "data_root", "scope", "train", "development"}
+        if (set(binding) not in (allowed_binding, allowed_binding | {"normalization_reference"})
                 or binding["format"] != "molgap-indexed-training-input-v1"
                 or binding["scope"] != "ACCEPTED_INDEXED_INPUT_V1"):
             raise ValueError("Formal training requires an accepted indexed input binding")

@@ -73,7 +73,7 @@ def _file_inventory(root):
 def _compact_payload(path, *, role, rows, source_start):
     """Write one accepted packed shard without a Python graph list."""
     source_idx = torch.arange(source_start, source_start + rows, dtype=torch.int64)
-    baseline = 0.0 if role == "train_100k" else 100.0
+    baseline = 0.0 if role.startswith("train_") else 100.0
     target = (torch.arange(rows, dtype=torch.float32) / 1000.0) + baseline
 
     # A stride-zero expanded singleton is a valid packed tensor view.  It keeps
@@ -134,18 +134,19 @@ def _census(rows):
     }
 
 
-def _make_accepted_export(workspace):
+def _make_accepted_export(workspace, train_role="train_100k"):
     """Create accepted ABI bytes and the external pins consumed by the helper."""
     export_root = workspace / "accepted-export"
     export_root.mkdir()
+    role_rows = {train_role: 500000 if train_role == "train_500k" else 100000, "common_dev": 50000}
     parent_manifest_sha = {
         role: _sha("parent-manifest-" + role)
-        for role in ROLE_ROWS
+        for role in role_rows
     }
     parent_authorities = {}
     parent_histories = {}
     parent_permits = {}
-    for role in ROLE_ROWS:
+    for role in role_rows:
         authority = {
             "scope": "ACCEPTED_INDEXED_INPUT_V1",
             "role": role,
@@ -175,18 +176,18 @@ def _make_accepted_export(workspace):
 
     # Keep Common-Dev disjoint from training, as the real role contract does.
     specs = {
-        "train_100k": (100_000, 0),
-        "common_dev": (50_000, 200_000),
+        train_role: (role_rows[train_role], 0),
+        "common_dev": (50_000, 1_000_000),
     }
     role_details = {}
     exported_request = {
         "format": EXPORT_FORMAT,
         "private_required": True,
-        "roles": list(ROLE_ROWS),
+        "roles": list(role_rows),
         "parent_acceptance_sha256": PARENT_ACCEPTANCE,
-        "permits": {role: asdict(parent_permits[role]) for role in ROLE_ROWS},
+        "permits": {role: asdict(parent_permits[role]) for role in role_rows},
         "max_chunk_bytes": MAX_CHUNK_BYTES,
-        "max_rows": dict(ROLE_ROWS),
+        "max_rows": role_rows,
         "scope": "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY",
         "status": "DATA_ROLE_ACCEPTED",
     }
@@ -369,6 +370,39 @@ def _make_accepted_export(workspace):
 @pytest.fixture(scope="module")
 def accepted_fixture(tmp_path_factory):
     return _make_accepted_export(tmp_path_factory.mktemp("modern2d-input"))
+
+
+def test_500k_metadata_reuses_verified_nested100k_transform(tmp_path):
+    from molgap.family_training_data import DatasetSelection, load_indexed_training_data
+    from molgap.v4_runtime import sample_std_compat
+    ctx = _make_accepted_export(tmp_path, "train_500k")
+    request = ctx["request"]
+    detail = ctx["roles"]["train_500k"]
+    targets = detail["target"][:100000].double()
+    reference = {"role": "train_100k", "rows": 100000,
+        "source_index_sha256": tensor_digest(detail["source_idx"][:100000], role="source_idx"),
+        "mean_eV": float(targets.mean()), "std_eV": float(sample_std_compat(targets))}
+    request["normalization_reference"] = reference
+    assert prepare_qualification_inputs(request)["roles"] == {"train_500k": 500000, "common_dev": 50000}
+    result = prepare_qualification_inputs(request, execute=True)
+    output = Path(result["output_root"])
+    metadata = _read_json(output / "qualification_inputs.json")
+    assert (metadata["target_mean_eV"], metadata["target_std_eV"]) == (reference["mean_eV"], reference["std_eV"])
+    assert metadata["roles"]["train_500k"]["rows"] == 500000
+    # Exercise the actual loader binding without copying or inventing graph bytes.
+    binding = _read_json(output / "training_input.json")
+    binding["data_root"] = "accepted-export"
+    path = tmp_path / "training_input.json"
+    _write_json(path, binding)
+    data = load_indexed_training_data(tmp_path, DatasetSelection(path.name, file_digest(path), True))
+    assert (data.target_mean_eV, data.target_std_eV) == (reference["mean_eV"], reference["std_eV"])
+    assert data.train_rows == 500000 and data.development_rows == 50000
+    for key, value in (("source_index_sha256", "f" * 64), ("mean_eV", reference["mean_eV"] + 1)):
+        broken = deepcopy(binding)
+        broken["normalization_reference"][key] = value
+        _write_json(path, broken)
+        with pytest.raises(ValueError, match="Frozen normalization"):
+            load_indexed_training_data(tmp_path, DatasetSelection(path.name, file_digest(path), True))
 
 
 def _request_for(ctx, name, *, export_root=None):
