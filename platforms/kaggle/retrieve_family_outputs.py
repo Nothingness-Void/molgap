@@ -224,15 +224,10 @@ def main(argv=None):
     import argparse
     from contextlib import redirect_stderr, redirect_stdout
     import io
-    import sys
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
     from molgap.kaggle_output_retrieval import _selected_files, plan_pinned_files
-    progress_stream = sys.stderr
-
-    def announce(plan):
-        print(canonical_json({"retrieval_plan": plan}), file=progress_stream, flush=True)
 
     class Parser(argparse.ArgumentParser):
         def error(self, message):
@@ -255,6 +250,8 @@ def main(argv=None):
             raise ValueError("Explicit credentials are required only with --execute")
         # SDK diagnostics may contain credentials or signed URLs. Only the
         # adapter's finite JSON receipt is allowed on either output stream.
+        # Plans belong in that receipt, not an outer progress stream which
+        # would escape redirection even when a later transport check fails.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             stage = "original_run"
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
@@ -318,12 +315,12 @@ def main(argv=None):
                 api = connect_kaggle(args.credentials)
                 result = retrieve_family_outputs(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
-                    manifest_sha256=args.manifest_sha256, destination=destination, on_plan=announce)
+                    manifest_sha256=args.manifest_sha256, destination=destination)
                 if args.strict:
                     stage = "native_dependencies"
                     result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
                         manifest=manifest, remote_manifest_path=args.remote_manifest_path,
-                        destination=destination, on_plan=announce)
+                        destination=destination)
                     result["network_accessed"] = (result.get("network_accessed", False)
                         or result["native_dependencies"]["network_accessed"])
                 stage = "retrieval_mapping"

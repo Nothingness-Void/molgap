@@ -238,12 +238,15 @@ def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(retriev
     case = retrieval
     before = snapshot(case.run)
     assert case.adapter.main(arguments(case, execute=True)) == 0
-    result = json.loads(capsys.readouterr().out)
+    captured = capsys.readouterr()
+    assert captured.err == ""
+    result = json.loads(captured.out)
     assert result["status"] == "RETRIEVED" and result["executed"] is True
     assert result["producer_version"] == result["receipt_version"] == "7"
     assert result["scientific_acceptance"] is False
     assert result["platform_version_verified_by_output_api"] is True
     assert result["unselected_outputs_downloaded"] is False
+    assert result["retrieval_plan"]["files"]
     case.auth.assert_called_once_with(case.profile.parent / "unread-credentials.json")
     case.retrieve.assert_called_once()
     assert case.retrieve.call_args.kwargs["context"] == case.context
@@ -252,8 +255,11 @@ def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(retriev
     assert retained["output_manifest.json"] == case.local.read_bytes()
     case.api.client.kernels.pages.append(_ResponsePage(case.remote_files))
     assert case.adapter.main(arguments(case, execute=True)) == 0
-    retry = json.loads(capsys.readouterr().out)
+    captured = capsys.readouterr()
+    assert captured.err == ""
+    retry = json.loads(captured.out)
     assert all(item["state"] == "ALREADY_RETAINED" for item in retry["files"])
+    assert all(item["state"] == "ALREADY_RETAINED" for item in retry["retrieval_plan"]["files"])
     assert len(case.http.urls) == len(ROLES) + 1
     assert snapshot(case.destination) == retained
     retained_run = snapshot(case.run)
@@ -419,14 +425,33 @@ def test_retained_artifact_conflict_fails_before_auth(retrieval, capsys):
 def test_original_transport_rejects_bytes_from_another_attempt(retrieval, capsys):
     case = retrieval
     # Even a matching latest-session slug cannot replace the independent pin.
-    case.payloads[case.remote_files[0].url] = b"another-attempt"
+    payload_url = case.remote_files[0].url
+    pinned_payload = case.payloads[payload_url]
+    case.payloads[payload_url] = b"another-attempt"
     assert case.adapter.main(arguments(case, execute=True)) == 2
     captured = capsys.readouterr()
     assert json.loads(captured.out)["stage"] == "platform_retrieval"
     assert "SECRET" not in captured.out and captured.err == ""
     case.retrieve.assert_called_once()
-    assert not (case.destination / "output_manifest.json").exists()
+    # The verified manifest is the recovery frontier, not a completion marker.
+    # Keep its exact identity while rejecting the first mismatched payload.
+    assert (case.destination / "output_manifest.json").read_bytes() == case.local.read_bytes()
     assert not any(case.destination.rglob("*.bin"))
+    mapping = case.run / "operations/retrieved_outputs/gptrans_t.json"
+    assert not mapping.exists()
+
+    case.payloads[payload_url] = pinned_payload
+    assert case.adapter.main(arguments(case, execute=True)) == 0
+    captured = capsys.readouterr()
+    assert "SECRET" not in captured.out and captured.err == ""
+    result = json.loads(captured.out)
+    assert result["status"] == "RETRIEVED"
+    manifest_item = next(item for item in result["files"] if item["path"] == "output_manifest.json")
+    assert manifest_item["state"] == "ALREADY_RETAINED"
+    assert case.http.urls.count(case.remote_files[-1].url) == 1
+    assert mapping.is_file()
+    for item in case.output["artifacts"].values():
+        assert hashlib.sha256((case.destination / item["path"]).read_bytes()).hexdigest() == item["sha256"]
 
 
 def test_platform_diagnostics_and_exception_secrets_never_escape(retrieval, capsys):
