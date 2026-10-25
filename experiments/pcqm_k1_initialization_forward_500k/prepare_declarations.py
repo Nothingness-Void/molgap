@@ -141,7 +141,7 @@ def main():
             closed_families=["K1 tail regularization500K", "K1 consistency500K"],
             positive_decision="Nomination only after >=1meV gain and paired95%CI excludes zero within this slot; no automatic adoption.",
             negative_decision="Close or retain inconclusive evidence under the frozen contract; no automatic retry or scale-up.")
-        experiment["question"]["supporting_evidence"] = ["pcqm-k1-scale-attribution-20261025"]
+        experiment["question"]["supporting_evidence"] = ["pcqm-k1-scale-attribution-20261025-attempt002"]
         write(slot_rel + "/experiment.json", experiment)
         policy = read(ROOT / "research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json")
         policy.update(policy_id=run, created_from_source_digest=hashlib.sha256((HERE / "protocol.md").read_bytes()).hexdigest())
