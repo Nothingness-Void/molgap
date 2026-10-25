@@ -1336,6 +1336,34 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
         "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}
 
 
+def acceptance_dependency_pins(plan: dict) -> dict[str, str]:
+    """Project typed artifact references once for transport and recovery.
+
+    Scientific/schema admission remains with check_acceptance_plan. Traversing
+    the existing pointer type keeps optional dependencies in the same inventory.
+    """
+    from .common.paths import validate_relative_path
+    pins = {}
+
+    def collect(value):
+        if type(value) is dict:
+            if set(value) == {"path", "sha256"}:
+                name = value["path"]
+                validate_relative_path(name)
+                _digest(value["sha256"], "acceptance dependency digest")
+                if pins.setdefault(name, value["sha256"]) != value["sha256"]:
+                    raise ValueError("Conflicting acceptance artifact pins")
+            else:
+                for child in value.values():
+                    collect(child)
+        elif type(value) is list:
+            for child in value:
+                collect(child)
+
+    collect(plan)
+    return pins
+
+
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
                           require_training_targets=False) -> dict:
     """Prelaunch capability and retained-reference check, without execution.

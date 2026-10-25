@@ -86,7 +86,7 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
 
 def acceptance_input_pins(spec, repo_root, plan_path):
     """Return the validated allowlist shared by staging and publication."""
-    from .experiment_family_workflow import _json, check_acceptance_plan
+    from .experiment_family_workflow import _json, check_acceptance_plan, acceptance_dependency_pins
     from .research_memory.trace import file_digest
     root = Path(repo_root).absolute()
     path = _artifact_path(root, plan_path)
@@ -94,18 +94,10 @@ def acceptance_input_pins(spec, repo_root, plan_path):
     report = check_acceptance_plan(spec, root, plan)
     if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
         raise ValueError("Producer acceptance inputs are blocked")
-    pointers = {plan_path: file_digest(path)}
-    if "comparison_source" in plan:
-        pointer = plan["comparison_source"]
-        pointers[pointer["path"]] = pointer["sha256"]
-    for arm in plan["arms"]:
-        arm_pointers = ([arm["contract"], arm["target_manifest"]]
-                        if plan["format"] == "molgap-family-same-run-acceptance-plan-v1" else
-                        [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"], *arm["reference_artifacts"].values()])
-        for pointer in arm_pointers:
-            prior = pointers.setdefault(pointer["path"], pointer["sha256"])
-            if prior != pointer["sha256"]:
-                raise ValueError("Conflicting acceptance artifact pins")
+    pointers = acceptance_dependency_pins(plan)
+    digest = file_digest(path)
+    if pointers.setdefault(plan_path, digest) != digest:
+        raise ValueError("Conflicting acceptance artifact pins")
     return pointers
 
 
@@ -145,3 +137,145 @@ def bind_release(stage, spec, release):
     release["checks"]["workflow:launch"] = check_workflow_binding(spec,
         launch_config=stage["launch_path"], kernel_metadata=stage["metadata_path"],
         entry_script=stage["entry_path"])
+
+
+def recover_prepared_workflow(prepared, *, operations=None, _verification=None):
+    """Finish local binding without republishing the frozen inputs."""
+    import json
+    from copy import deepcopy
+    from .common.identity import validate_execution_identity
+    from .experiment_family_workflow import _json, acceptance_dependency_pins
+    from .experiment_launch import _safe_local, build_launch_receipt
+    from .experiment_package import _PackageVerification, verify_experiment_source_package
+    from .experiment_preflight import _atomic
+    from .experiment_spec import ExperimentSpec
+    from .research_memory.schemas import validate_trajectory
+    from .research_memory.paths import repo_local_path
+
+    prepared = Path(prepared).absolute()
+    _safe_local(prepared)
+    report_path = prepared / "workflow_report.json"
+    report = _json(report_path)
+    # Completed recovery is read-only, including when platform operations started.
+    if report.get("status") == "PREPARED_FOR_PLATFORM":
+        return report
+    owner = prepared.with_name(prepared.name + ".submission_owner.json")
+    journals = [prepared / "submission_state.json",
+                prepared.parent / "operations" / "submission_state.json"]
+    if operations is not None:
+        journals.append(Path(operations).absolute() / "submission_state.json")
+    for path in (owner, *journals):
+        _safe_local(path)
+        if path.exists():
+            raise ValueError("Reconcile the existing submission owner/journal before preparation recovery")
+    if (report.get("format") != "molgap-workflow-preparation-v1"
+            or report.get("status") != "ERROR_REQUIRES_RECONCILIATION"
+            or report.get("prospective_published") is not True
+            or report.get("publication_intent") is not True
+            or report.get("submitted") is not False):
+        raise ValueError("Recovery requires a failed preparation after complete prospective publication")
+    stages = {item["stage"]: item["result"] for item in report["stages"]}
+    prospective = stages.get("prospective", {})
+    if prospective.get("status") != "PROSPECTIVE_PLANNED_RML_PENDING":
+        raise ValueError("Partial or uncertain prospective publication cannot be recovered")
+    verification = _verification if _verification is not None else _PackageVerification()
+    package = prepared / "package"
+    manifest = verify_experiment_source_package(package, _verification=verification)
+    spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
+    if (report["spec_identity"] != spec.identity or stages.get("package") != manifest
+            or spec.to_dict()["platform"]["name"] != "kaggle"):
+        raise ValueError("Recovery differs from the original frozen package")
+    staged, kernel = prepared / "source_dataset", prepared / "kernel"
+    launch_path = staged / "experiment_launch.json"
+    launch = _json(launch_path)
+    if (launch.get("spec_identity") != spec.identity
+            or launch.get("expected_package_identity") != manifest["package_identity"]
+            or launch.get("expected_source_archive_sha256") != manifest["archive_sha256"]
+            or "resume" in launch):
+        raise ValueError("Recovery launch differs from the original frozen package")
+    bindings = spec.to_dict()["prospective"]["arms"]
+    expected_records = [(b["trajectory_id"], b["output"]) for b in bindings]
+    records = prospective.get("completed_records", [])
+    if (len(records) != len(bindings)
+            or [(r.get("trajectory_id"), r.get("path")) for r in records] != expected_records
+            or any(r.get("status") != "PLANNED" for r in records)
+            or set(launch.get("prospective_sha256", {})) != {b["arm_id"] for b in bindings}):
+        raise ValueError("Incomplete prospective publication bindings")
+    for binding in bindings:
+        path = staged / "prospective" / binding["arm_id"] / "trajectory.json"
+        _safe_local(path)
+        if hashlib.sha256(path.read_bytes()).hexdigest() != launch["prospective_sha256"][binding["arm_id"]]:
+            raise ValueError("Staged prospective bytes changed")
+        trajectory = validate_trajectory(_json(path))
+        if (trajectory["record_mode"] != "prospective"
+                or trajectory["trajectory_id"] != binding["trajectory_id"]):
+            raise ValueError("Invalid staged prospective identity")
+        validate_execution_identity(spec, binding["arm_id"], trajectory, manifest["source_commit"])
+    original = deepcopy(stages.get("check_release", {}))
+    if original.get("status") != "LOCAL_RELEASE_INPUTS_VERIFIED" or original.get("errors") != []:
+        raise ValueError("Original release checks did not pass")
+    if (original.get("spec_identity") != spec.identity
+            or original.get("package_identity") != manifest["package_identity"]
+            or original.get("source_commit") != manifest["source_commit"]
+            or original.get("source_archive_sha256") != manifest["archive_sha256"]
+            or Path(original["inputs"]["package"]).resolve() != package.resolve()):
+        raise ValueError("Original release identity differs from the verified package")
+    target = launch.get("target_identity", {})
+    plan_name, plan_digest = target["plan_path"], target["plan_sha256"]
+    plan_raw = read_packaged_text(package, plan_name, _verification=verification).encode("utf-8")
+    if hashlib.sha256(plan_raw).hexdigest() != plan_digest:
+        raise ValueError("Frozen acceptance plan differs from launch pin")
+    pins = acceptance_dependency_pins(json.loads(plan_raw))
+    pins[plan_name] = plan_digest
+    missing = {}
+    for relative, digest in pins.items():
+        destination = repo_local_path(staged / "acceptance", relative)
+        _safe_local(destination)
+        if destination.exists():
+            if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                raise ValueError("Existing acceptance attachment bytes changed: " + relative)
+        else:
+            raw = read_packaged_text(package, relative, _verification=verification).encode("utf-8")
+            if hashlib.sha256(raw).hexdigest() != digest:
+                raise ValueError("Frozen package acceptance attachment differs: " + relative)
+            missing[relative] = raw
+    recovery = {"stage": "preparation_recovery", "result": {
+        "status": "RECOVERING", "original_status": report["status"],
+        "original_error": report.get("error"), "restored_acceptance_paths": sorted(missing)}}
+    report["stages"].append(recovery)
+    _atomic(report_path, report)
+    try:
+        for relative, raw in missing.items():
+            publish_immutable_bytes(repo_local_path(staged / "acceptance", relative), raw)
+        release = deepcopy(original)
+        stage = {"entry_path": kernel / "run.py", "launch_path": launch_path,
+                 "metadata_path": kernel / "kernel-metadata.json"}
+        bind_release(stage, spec, release)
+        receipt = build_launch_receipt(spec, package,
+            expected_package_identity=manifest["package_identity"], _verification=verification)
+        _atomic(prepared / "release_report.json", release)
+        report["stages"].extend([{"stage": "final_release_binding", "result": release},
+                                 {"stage": "launch_receipt", "result": receipt}])
+        recovery["result"]["status"] = "RECOVERED"
+        report.pop("error", None)
+        report.update(status="PREPARED_FOR_PLATFORM", package_identity=manifest["package_identity"],
+            source_commit=manifest["source_commit"], release_report=str(prepared / "release_report.json"),
+            kernel_dir=str(kernel), source_dataset_dir=str(staged), accelerator=launch["accelerator"],
+            limitations=["Local preparation only; workload skill publishes and submits.",
+                         "Remote all-arm runtime qualification is still mandatory."])
+    except Exception as error:
+        recovery["result"].update(status="RECOVERY_FAILED", error=str(error))
+        raise
+    finally:
+        _atomic(report_path, report)
+    # Reuse the existing retirement owner for any earlier unpublished attempts.
+    # A successful recovery must not require another preparation invocation.
+    if prepared.name == "prepared" and (prepared.parent / "local_preparation_failures").exists():
+        from .local_storage import retire_failed_preparations
+        try:
+            report["retired_failed_preparations"] = retire_failed_preparations(
+                prepared.parent, spec.identity, manifest["package_identity"])
+        except (OSError, ValueError):
+            report["retirement_status"] = "PENDING_INSPECTION"
+        _atomic(report_path, report)
+    return report

@@ -40,6 +40,23 @@ An already published prospective declaration is immutable; do not rerun its
 fresh-declaration checker or create another plan to recover an existing job.
 Use its prepared package and the operation journal below.
 
+Acceptance staging, upload allowlists and recovery derive their dependencies
+from the same typed artifact references in the acceptance plan. The source
+archive remains a source/configuration package, not a copy of all retained data.
+
+If preparation failed after complete prospective publication and its immutable
+launch was written, use `submit_workflow.py --recover-prepared --prepared
+$prepared` to finish the original final binding. Recovery requires the original
+successful release checks and verifies the frozen package and staged prospective
+bytes; it restores only missing acceptance attachments available under their
+frozen package hashes.
+Changed existing files, partial publication and any submission owner/journal
+require reconciliation. It never replans, repackages or rewrites the launch, and
+retains failure/recovery facts in `workflow_report.json`. Successful recovery
+uses the existing retirement owner for earlier unpublished failed copies.
+Repeating completed recovery is read-only. Append the existing submission arguments and `--execute`
+to continue directly through the original journaled submitter when authorized.
+
 ## Platform operation
 
 The prepared source package must contain a bounded authority with
