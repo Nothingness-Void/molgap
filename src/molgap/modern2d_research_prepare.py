@@ -153,7 +153,7 @@ def freeze_scale_anchor(repo_root, *, base, source_spec_ref, source_contract_ref
         model["feature_binding_sha256"][role] = canonical_fingerprint(feature)
     save("training_inputs.json", dict(format="molgap-modern2d-formal-input-metadata-v1",
         scientific_training_authorized=True, target_mean_eV=recipe.target_mean_eV, target_std_eV=recipe.target_std_eV,
-        training_input=dict(path="training_input.json", sha256=pins["training_input.json"]["sha256"]),
+        training_input=dict(pins["training_input.json"]),
         models={source_arm_id: model}))
     values = family_arm_bindings(recipe)
     arm.update(base=values["base"], addons=list(recipe.addons), addon_semantics="ordered" if recipe.addons else "baseline")

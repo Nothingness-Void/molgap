@@ -335,6 +335,8 @@ def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured):
         accepted_input_ref=binding_path.relative_to(c.repo).as_posix(),
         target_manifest=prior["arms"][0]["target_manifest"])
     assert not anchored["graph_payload_read"] and not anchored["scientific_reference_accepted"]
+    anchor_metadata = json.loads((c.repo / anchored["pins"]["training_inputs.json"]["path"]).read_bytes())
+    assert anchor_metadata["training_input"] == anchored["pins"]["training_input.json"]
     _, anchor_recipe = read_recipe(c.repo / anchored["pins"]["contract.json"]["path"])
     assert anchor_recipe.train_rows == 500000 and anchor_recipe.schedule == old.schedule
     # Exercise the owning platform's final release helper against the actual
