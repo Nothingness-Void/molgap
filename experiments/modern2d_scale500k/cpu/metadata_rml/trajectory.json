@@ -1,0 +1,97 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "input_metadata-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-modern2d-scale500k-selected-metadata-v1-planned"
+      ],
+      "evidence_refs": [
+        "experiments/modern2d_scale500k/cpu/metadata_request.json"
+      ],
+      "run_ids": [
+        "modern2d-scale500k-selected-metadata:input_metadata:downstream"
+      ],
+      "source_commit": "04dce547112aa8ae6a41c747dab399c3cac6f2bf",
+      "type": "execution_diagnostic"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_scale500k/decision.md",
+    "next_allowed_actions": [
+      "one authorized execution diagnostic"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "FREEZE_SELECTED_METADATA",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/modern2d_scale500k/cpu/metadata_authority.json",
+    "chosen_action": "FREEZE_SELECTED_METADATA",
+    "policy_id": "modern2d-scale500k-input-metadata",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/modern2d_scale500k/cpu/metadata_roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/modern2d_scale500k/cpu/rml_decision_snapshots/1bb665af76ab06fc4623c822710e39a1e9bd366d84b5d23fb12d9d30b058cd31.json",
+    "snapshot_sha256": "1bb665af76ab06fc4623c822710e39a1e9bd366d84b5d23fb12d9d30b058cd31",
+    "state_timestamp": "2026-10-25T16:35:13.440158+00:00"
+  },
+  "family_id": "modern2d-scale500k-input-metadata",
+  "hypothesis": {
+    "alternative_explanations": [
+      "wrong membership",
+      "target-transform drift"
+    ],
+    "changed_mechanism": "Metadata binding only, no model training",
+    "cheapest_falsifier": "Existing metadata owner; decode accepted labels for frozen transform only",
+    "decision_changed_if_negative": "Keep error, noGPUrelease.",
+    "decision_changed_if_positive": "Retain exact metadata, require freshGPUrelease.",
+    "expected_native_cost_ref": "cost-T-modern2d-scale500k-selected-metadata-v1-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-modern2d-scale500k-selected-metadata-v1",
+    "observed_deficiency": "No accepted500K feature/normalization binding exists for these models.",
+    "related_closed_family_ids": [
+      "modern2d-native-qualification"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    ]
+  },
+  "owner": "server",
+  "question": "Can accepted500K input metadata retain the original100K transform and model configurations?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/modern2d_scale500k/cpu/metadata_authority.json",
+    "contract_refs": [
+      "experiments/modern2d_scale500k/cpu/metadata_request.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/modern2d_scale500k/cpu/metadata_roles.json"
+    ],
+    "source_commit": "169e6e163263d595117dfd584f1814ea07ee043f",
+    "source_config_identity": "08bd7f89aa36b1bd7ffe53b801db37d6ddc86e021ab58e4c2381c4692414ddbc"
+  },
+  "track": "C",
+  "trajectory_id": "T-modern2d-scale500k-selected-metadata-v1"
+}

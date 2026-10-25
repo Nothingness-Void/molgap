@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "input_metadata-v1",
+  "category": "cache_build",
+  "cost_event_id": "cost-T-modern2d-scale500k-selected-metadata-v1-planned",
+  "evidence_ref": "experiments/modern2d_scale500k/cpu/metadata_authority.json",
+  "hardware": "16CPU_0GPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    }
+  },
+  "platform": "ims",
+  "run_id": "modern2d-scale500k-selected-metadata:input_metadata:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-modern2d-scale500k-selected-metadata-v1"
+}
