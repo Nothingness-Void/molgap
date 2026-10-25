@@ -1,0 +1,15 @@
+{
+  "geometry": "unused",
+  "graphs_rebuilt": false,
+  "operations": [
+    "verify_existing_selected_export_inventory",
+    "compute_frozen_nested100k_train_statistics",
+    "freeze_typed_feature_bindings_without_models"
+  ],
+  "protected_roles": "untouched",
+  "roles": [
+    "train_500k",
+    "common_dev"
+  ],
+  "training": false
+}

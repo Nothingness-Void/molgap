@@ -1,0 +1,20 @@
+{
+  "allocated_cpus": 16,
+  "allocated_gpus": 0,
+  "authorization": "Human2026-10-26 dual500K training requires scheduledCPU metadata, typed retained-model feature bindings and source100K train-only transform verification; noGPU or protectedrole.",
+  "cpu_platform": "ims",
+  "format": "molgap-selected-role-cpu-authority-v1",
+  "graphs_rebuilt": false,
+  "output_root": "/lustre/home/users/sm2/chou/molgap-modern2d-scale500k-metadata-v1",
+  "owner": "server",
+  "parent_root": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r2",
+  "protected_role_access_authorized": false,
+  "purpose": "SELECTED_METADATA_ONLY",
+  "roles": [
+    "train_500k",
+    "common_dev"
+  ],
+  "scientific_training_authorized": false,
+  "user_authorized": true,
+  "wall_ceiling_seconds": 600
+}
