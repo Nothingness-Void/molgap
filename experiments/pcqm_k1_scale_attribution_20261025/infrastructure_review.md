@@ -92,6 +92,33 @@ It must preserve the original target manifest and normalization. Completion,
 receipt, actual role use and strict replay are checked independently; writing
 a plausible target hash is never evidence recovery.
 
+The first CPU recovery, kernel140726588/version1, ended ERROR. This task's
+adapter imported the package verifier, which eagerly imported NumPy, before
+running the platform dependency installation. The later PyG/Torch import hit
+a NumPy random-extension ABI mismatch. The frozen training source is unchanged;
+the adapter had deviated from the working platform bootstrap order. Version1's
+before/after NumPy versions were not captured, and its raw role observation
+retains unknown partial membership rather than inventing a zero-read receipt.
+
+The separately frozen version2 installs the same dependencies before scientific
+imports, following the existing platform owner. Actual execution confirms those
+modules were absent before installation, loaded/installed NumPy1.26.4 agrees,
+and the complete original TRAIN loader succeeds. It recovers500,000 finite,
+ordered float32 labels with SHA256
+`cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676`.
+Only2,000,000 label bytes and4,790 data-manifest bytes were downloaded as payload;
+small receipts and source reconciliation are separate. The4MB deterministic
+index file was reconstructed locally and matched the remote digest, not downloaded.
+
+Both [failed-attempt receipts](target_recovery/reconciliation_attempt_001/failure_reconciliation.md)
+and [successful validation](target_recovery/reconciliation_attempt_002/final_validation.json)
+are retained. Version2 wall306.038s and process-tree CPU814.829s are separate
+measurements; its worker alone used25.952CPU seconds, with dependency/bootstrap
+children accounting for the remainder. Version1 wall257.769s and process-tree
+CPU784.440s remain charged as failed work. Neither attempt used an accelerator,
+model inference or training. Exact source, data and version bindings come from
+the receipts; strict training qualification remains a subsequent operation.
+
 The evidence identifies missing producer/consumer compatibility and an incomplete
 historical proof contract. It does not show that a large new framework or another
 hundred synthetic tests is needed. Qualify the exact frozen recipe through its

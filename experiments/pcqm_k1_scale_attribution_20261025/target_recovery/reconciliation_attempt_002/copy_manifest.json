@@ -1,0 +1,118 @@
+{
+  "format": "molgap-k1-target-recovery-attempt-002-copy-manifest-v1",
+  "created_at_local": "2026-10-25T15:56:32.9403391+09:00",
+  "destination": "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\experiments\\pcqm_k1_scale_attribution_20261025\\target_recovery\\reconciliation_attempt_002",
+  "excluded": [
+    "labels.bin: retained only in external reconciliation custody; 2,000,000 bytes",
+    "source_idx.bin: not downloaded; range reconstructed locally and verified against remote SHA256"
+  ],
+  "file_count": 15,
+  "total_copied_bytes": 62788,
+  "files": [
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\request_frozen.json",
+      "relative_destination": "request_frozen.json",
+      "bytes": 4813,
+      "sha256": "d5c189354c7988d54b3e748f5cb02ce8be6565994f785e434183c27df4983b01",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\post_started.json",
+      "relative_destination": "post_started.json",
+      "bytes": 815,
+      "sha256": "cc339bbac92baddb95cebc4016eedd9dea5f27414ffc83c904481df570908e3f",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\submission_response.json",
+      "relative_destination": "submission_response.json",
+      "bytes": 414,
+      "sha256": "4fe9390952cef0c0d44e2371f1acbdede33a7429ed670e720aefe54fc5f406f5",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\poll_006.json",
+      "relative_destination": "poll_006.json",
+      "bytes": 347,
+      "sha256": "24add8c4c29a44e2c3e3ecff8325ce71920ae0c202c1990b51d8dc7f2ec42cce",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\metadata_retrieval.json",
+      "relative_destination": "metadata_retrieval.json",
+      "bytes": 992,
+      "sha256": "cbb2fb323cf4a1d907a22cb9e3a945df5f8ebc6543e08808a6de234eff23e196",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\metadata_validation.json",
+      "relative_destination": "metadata_validation.json",
+      "bytes": 2225,
+      "sha256": "4e1ff688b75c74c0f3c137f63b67b55a0b5ba06a23be7ee45685ad16bb58d0ec",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\payload_retrieval.json",
+      "relative_destination": "payload_retrieval.json",
+      "bytes": 2109,
+      "sha256": "60287966369aae31c768eca9f934d147fce4a4bae4e1214d791f5d048fc1c93e",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\final_validation.json",
+      "relative_destination": "final_validation.json",
+      "bytes": 3838,
+      "sha256": "eda1571a0bda83bdaeaae7377ba2a32617737b387749b6d4999aff6b6cd0ddaa",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\source_binding.json",
+      "relative_destination": "source_binding.json",
+      "bytes": 5006,
+      "sha256": "b8bd045d9f4a7b97590c26fc256dcbc346923fa408cff67373d66a10734dcb64",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\retrieved\\target_recovery\\entry_receipt.json",
+      "relative_destination": "outputs\\target_recovery\\entry_receipt.json",
+      "bytes": 1246,
+      "sha256": "8e3b2b9e1c75ad5497b120d0039c802444c4078be7b337d9f510d9af8a5e23ac",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\retrieved\\target_recovery\\worker_observation.json",
+      "relative_destination": "outputs\\target_recovery\\worker_observation.json",
+      "bytes": 1139,
+      "sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\retrieved\\target_recovery\\manifest.json",
+      "relative_destination": "outputs\\target_recovery\\manifest.json",
+      "bytes": 12606,
+      "sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\payload\\target_recovery\\data_manifest.json",
+      "relative_destination": "outputs\\target_recovery\\data_manifest.json",
+      "bytes": 4790,
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\actual_kernel_source\\kernel-metadata.json",
+      "relative_destination": "actual_kernel_source\\kernel-metadata.json",
+      "bytes": 582,
+      "sha256": "0bc79617e6a2810ba0d328f7be162e1f4404f6fc897a44211d36e0e2b0a463e0",
+      "source_destination_equal": true
+    },
+    {
+      "source": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\actual_kernel_source\\molgap-k1-target-proof-500k-20261025.py",
+      "relative_destination": "actual_kernel_source\\molgap-k1-target-proof-500k-20261025.py",
+      "bytes": 21866,
+      "sha256": "ae39838d2496e4bd29920e9cab13b3cf10c84ae015e8988af24c9344136fb5c3",
+      "source_destination_equal": true
+    }
+  ]
+}

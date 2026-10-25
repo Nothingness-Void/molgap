@@ -25,6 +25,11 @@ The bounded investigation was authorized for 2026-10-25 05:41:35–07:41:35 UTC.
   verified in external D: storage and the primary checkout. Recover exact bytes
   through the manifest; do not hydrate unrelated historical artifacts.
 
+The two fixed graph probes were restored from the user's existing verified ZIP,
+not downloaded:378,020,626 extracted bytes under the D: diagnostic root. Their
+source archive, individual hashes and checkpoint/source locations are pinned by
+`attempt_002/inputs.json`. No C: evidence payload was created.
+
 ![Fixed retained K1 states: in-sample fit and development error](plots/k1_retained_tail_attribution.png)
 
 The figure uses categorical retained states, not an exposure-aligned learning

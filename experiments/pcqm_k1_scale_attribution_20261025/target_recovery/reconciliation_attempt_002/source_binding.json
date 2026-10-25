@@ -1,0 +1,115 @@
+{
+  "format": "molgap-k1-target-recovery-source-binding-v1",
+  "checked_at_utc": "2026-10-25T06:55:18.852810+00:00",
+  "account_owner": "nothingnessvoid",
+  "push_response": {
+    "actual_kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "actual_version": 2,
+    "kernel_id": 140726588,
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-target-proof-500k-20261025"
+  },
+  "terminal_output_api_binding": {
+    "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "version": 2,
+    "terminal_status": "COMPLETE"
+  },
+  "source_pull": {
+    "method": "api.kernels_pull(actual_kernel, metadata=True, quiet=True); latest source for returned kernel; no later submission made",
+    "returned_path": "D:\\molgap-artifacts\\reconciliation\\k1-scale-attribution-20261025\\target_recovery\\attempt_002\\actual_kernel_source",
+    "metadata_file": "kernel-metadata.json",
+    "metadata_bytes": 582,
+    "metadata_sha256": "0bc79617e6a2810ba0d328f7be162e1f4404f6fc897a44211d36e0e2b0a463e0",
+    "code_file": "molgap-k1-target-proof-500k-20261025.py",
+    "code_bytes": 21866,
+    "code_raw_sha256": "ae39838d2496e4bd29920e9cab13b3cf10c84ae015e8988af24c9344136fb5c3",
+    "code_lf_normalized_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "submitted_entry_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "submitted_entry_lf_normalized_sha256": "e98a0f4d321b66afba67cd177b283f1caf834aa8ab37d942454726a2675f87e0",
+    "pulled_lf_matches_submitted_sha256": true
+  },
+  "pulled_metadata": {
+    "id": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "id_no": 140726588,
+    "title": "MolGap K1 Target Proof 500K 20261025",
+    "code_file": "molgap-k1-target-proof-500k-20261025.py",
+    "kernel_type": "script",
+    "is_private": true,
+    "enable_gpu": false,
+    "enable_tpu": false,
+    "enable_internet": true,
+    "dataset_sources": [
+      "nothingnessvoid/k1-tail-wd-500k-src",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "dataset_source_numeric_suffixes_present": false,
+    "dataset_sources_are_unversioned": true
+  },
+  "submitted_metadata": {
+    "dataset_sources": [
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+      "nothingnessvoid/k1-tail-wd-500k-src/1"
+    ],
+    "dataset_sources_sha256": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+    "enable_gpu": false,
+    "enable_tpu": false
+  },
+  "dataset_version_note": {
+    "pulled_metadata_omits_numeric_suffixes": true,
+    "submitted_metadata_sources_with_exact_versions": [
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+      "nothingnessvoid/k1-tail-wd-500k-src/1"
+    ],
+    "output_data_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "claim": "Pulled metadata lists dataset slugs without version suffixes; exact data content is bound by the successful worker manifest and pinned data-manifest SHA256."
+  },
+  "pull_file_bytes": {
+    "code": 21866,
+    "metadata": 582,
+    "total": 22448
+  },
+  "source_matches_submitted_entry": true,
+  "cpu_only_metadata": true,
+  "identity_matches_returned_kernel": true,
+  "source_pull_version_binding": {
+    "requested_kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+    "returned_version": 2,
+    "kernel_pull_version_specific": false,
+    "latest_source_pull_has_no_successor_submission": true,
+    "terminal_status_from_version_specific_output_api": "COMPLETE",
+    "version_specific_output_files_verified": true,
+    "note": "The source pull resolves the current source for the returned kernel slug. It was made immediately after version 2 completed with no successor POST; output files were retrieved from explicit version 2 and verified by the output API."
+  },
+  "download_accounting": {
+    "basis": "exact retained file payload bytes; excludes API control envelopes, redirects and status response bodies",
+    "selected_output_payload": {
+      "bytes": 2004790,
+      "files": {
+        "target_recovery/labels.bin": 2000000,
+        "target_recovery/data_manifest.json": 4790
+      }
+    },
+    "version_specific_small_output_metadata": {
+      "bytes": 14991,
+      "files": {
+        "entry_receipt.json": 1246,
+        "worker_observation.json": 1139,
+        "manifest.json": 12606
+      }
+    },
+    "kernel_source_and_metadata_pull": {
+      "bytes": 22448,
+      "files": {
+        "code_file": 21866,
+        "kernel-metadata.json": 582
+      }
+    },
+    "source_idx": {
+      "bytes_downloaded": 0,
+      "method": "locally_reconstructed_verified_range",
+      "range": "little-endian int64 [0,500000)",
+      "sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"
+    },
+    "retained_file_bytes_total_excluding_source_idx": 2042229,
+    "labels_binary_copied_to_experiment": false
+  }
+}
