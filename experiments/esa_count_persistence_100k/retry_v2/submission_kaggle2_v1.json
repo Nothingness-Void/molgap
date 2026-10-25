@@ -1,0 +1,37 @@
+{
+  "dataset_sources": [
+    "kaseichou/molgap-modern2d-100k-commondev-v1",
+    "kaseichou/molgap-esa-count-persistence-source-v2"
+  ],
+  "format": "molgap-observed-submission-record-v1",
+  "frozen_action_attempt": "esa-count-persistence-k2-100k-s42-r2-v1",
+  "kernel": "kaseichou/molgap-esa-count-persistence-100k-v2",
+  "kernel_id": 140722385,
+  "machine_shape": "NvidiaTeslaT4",
+  "monitor_ref": "experiments/esa_count_persistence_100k/monitor.json",
+  "native_qualification": "PENDING_NEW_GATE",
+  "observed_at": "2026-10-25T05:58:35.280746+00:00",
+  "package_identity": "07e0a59f67a9bf684c49093271bbf014178b3d38d409b7e21888b53ee8885fce",
+  "private": true,
+  "receipt": {
+    "path": "E:/MolGap/artifacts/runs/esa-count-persistence-k2-100k-s42-r2/v1/operations/launch_receipt.json",
+    "sha256": "4080a1a22dc5f1351828a3d033300fcd9f0f0d6606e1922b6f25477a58f9dc36"
+  },
+  "remote_entry_bytes_equal": true,
+  "replay_readiness": "PENDING_TERMINAL_EVIDENCE",
+  "retry_of": {
+    "controller_event_status": "CLOSED",
+    "event_id": "evt-1282c1f32fa080fcda3d7bf5",
+    "formal_optimizer_updates_observed": 0,
+    "kernel_id": 140716050,
+    "status": "ERROR",
+    "version": 1
+  },
+  "scheduler_status": "RUNNING",
+  "source_archive_sha256": "e6b27a326a92194dd389a8b5768f30e0ca97a5912cb181d00532ffe580bf9e93",
+  "source_commit": "675480a35e67f82308b11fe41570ada43219db9f",
+  "spec_identity": "58ec9567e6b8699be9a6ab3df73b43fc9a382bd1b042201e3a21b3c478f0ac9a",
+  "status": "SUBMISSION_BOUND",
+  "storage_attempt": "v1",
+  "version": 1
+}

@@ -11,18 +11,18 @@
   "jobs": [
     {
       "closed": false,
-      "control_state": "E:/MolGap/artifacts/runs/esa-count-persistence-k2-100k-s42-v1/v2/monitor/control_state.json",
-      "kernel": "kaseichou/molgap-esa-count-persistence-100k-v1",
-      "kernel_id": 140716050,
-      "output_directory": "E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-v1-v2",
+      "control_state": "E:/MolGap/artifacts/runs/esa-count-persistence-k2-100k-s42-r2/v1/monitor/control_state.json",
+      "kernel": "kaseichou/molgap-esa-count-persistence-100k-v2",
+      "kernel_id": 140722385,
+      "output_directory": "E:/MolGap/artifacts/retained/esa-count-persistence-k2-100k-s42-r2-v1",
       "slot": "esa_count_pair",
       "version": 1
     }
   ],
-  "kaggle_session_quota_hours_ceiling": 4,
+  "kaggle_session_quota_hours_ceiling": 3.75,
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "owner": "server",
-  "physical_t4_hours_ceiling": 8,
+  "physical_t4_hours_ceiling": 7.5,
   "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
-  "wall_ceiling_seconds": 14400
+  "wall_ceiling_seconds": 13500
 }
