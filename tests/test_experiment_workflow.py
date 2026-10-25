@@ -680,6 +680,17 @@ def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_ca
     assert TargetIdentityBinding.from_acceptance_plan(
         spec, destination, plan_path, plan_sha256=binding["plan_sha256"]
     ).repo_root == destination.absolute()
+    from molgap.experiment_family_workflow import acceptance_dependency_pins
+    # The transport projection follows typed pointers, including optional fields,
+    # rather than a second list of schema-specific field names.
+    projected = {"arms": plan["arms"], "optional_source": {"path": "nested/source.json", "sha256": "a" * 64}}
+    assert acceptance_dependency_pins(projected) == {
+        **{key: value for key, value in pointers.items() if key != plan_path},
+        "nested/source.json": "a" * 64,
+    }
+    projected["conflicting_source"] = {"path": "nested/source.json", "sha256": "b" * 64}
+    with pytest.raises(ValueError, match="Conflicting acceptance artifact pins"):
+        acceptance_dependency_pins(projected)
 
 
 @pytest.mark.parametrize("phase", ["preflight", "train"])

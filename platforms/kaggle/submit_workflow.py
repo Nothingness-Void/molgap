@@ -13,6 +13,8 @@ def main(argv=None):
     inputs=parser.add_mutually_exclusive_group(required=True)
     inputs.add_argument("--prepared",type=Path)
     inputs.add_argument("--experiment",type=Path)
+    parser.add_argument("--recover-prepared", action="store_true",
+                        help="Finish a failed published preparation from its frozen inputs")
     parser.add_argument("--repo-root",type=Path,default=Path.cwd())
     parser.add_argument("--credentials",type=Path)
     parser.add_argument("--output",type=Path)
@@ -23,6 +25,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     stage="arguments"
     try:
+        if args.recover_prepared and not args.prepared:
+            raise ValueError("--recover-prepared requires --prepared")
         if args.execute and not args.credentials:
             raise ValueError("--execute requires explicit credentials before preparation")
         from contextlib import nullcontext
@@ -31,6 +35,16 @@ def main(argv=None):
         verification = _PackageVerification()
         scope = _shared_release_verification() if (args.experiment and args.execute) else nullcontext()
         with scope:
+            if args.recover_prepared:
+                from molgap.kaggle_workflow import recover_prepared_workflow
+                stage="local_preparation_recovery"
+                with redirect_stdout(sys.stderr):
+                    prepared = recover_prepared_workflow(args.prepared, operations=args.output,
+                                                         _verification=verification)
+                if not args.execute:
+                    from molgap.experiment_input import compact_operation_report
+                    print(canonical_json(prepared if args.verbose else compact_operation_report(prepared)))
+                    return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
             if args.experiment:
                 from molgap.experiment_input import prepare_experiment_input
                 if args.output or args.authority or args.monitor_path:
