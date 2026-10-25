@@ -168,6 +168,15 @@ Unknown weight sources keep the conservative EMA trace requirement.
 `--strict-inputs` optionally supplies per-arm `native_root` and
 `comparison_readiness_ref` locations. Missing proof files report their pinned
 hashes and unknown missing-byte sizes; they cannot establish qualification.
+For a new scratch/pretrained pair, declare `purpose: initialization_comparison`
+in the scientific input and give each arm its own frozen recipe, data declaration
+and initial-state reference. Exactly one reference and one candidate are supported.
+Only initial-state identity and its optional initial-development check may differ;
+model, loss, data, seed and downstream training contract remain identical. The
+compiler pins this declaration for strict acceptance, and verified same-run evidence
+binds the initialization intervention in replay. Historical evidence is unchanged;
+pretraining provenance and cost remain separate from the matched downstream budget.
+
 New same-run preparation requires `training_float32_target_sha256` in its
 target manifest. This is the ordered training-label FP32 byte identity; the
 development digest and complete dataset/shard digests cannot replace it.

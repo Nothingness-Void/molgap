@@ -128,7 +128,12 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
     for family, version, arm_id in (
             ("neural_atom_k1", "3", "k1_candidate"),
             ("gptrans_t", "2", "gptrans_candidate")):
+        if comparison_purpose == "initialization_comparison":
+            family, version = "neural_atom_k1", "3"
         session = make_session(family, development=True, schedule_kind="cosine_step", events=events())
+        if comparison_purpose == "initialization_comparison" and arm_id == "gptrans_candidate":
+            from dataclasses import replace
+            session.recipe = replace(session.recipe, initialization_sha256="3" * 64)
         try:
             contract_root = tmp_path / "native-contracts" / arm_id
             contract_root.mkdir(parents=True)
@@ -197,7 +202,7 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
                 "attempt_ids": [declaration["logical_run_id"] + "-v7"],
                 "source_commit": source}]}}
         binding["plan_spec_sha256"] = add(binding["plan_spec_ref"], canonical_json(proposal).encode())["sha256"]
-        entries.append({"arm_id": arm_id, "adapter": "k1-session-v1" if arm_id == "k1_candidate" else "gptrans-session-v1",
+        entries.append({"arm_id": arm_id, "adapter": "k1-session-v1" if arm["family"]["name"] == "neural_atom_k1" else "gptrans-session-v1",
             "expected": record["acceptance_requirements"], "contract": contract,
             "reference_artifacts": {"target_manifest": target}})
 

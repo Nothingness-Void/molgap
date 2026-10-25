@@ -70,7 +70,8 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
         raise ValueError("Same-run arms declare different comparison purposes")
     allowed = {"architecture_comparison": ["architecture_config_identity"],
                "mechanism_comparison": ["architecture_config_identity"],
-               "optimizer_comparison": ["optimizer_identity"]}
+               "optimizer_comparison": ["optimizer_identity"],
+               "initialization_comparison": ["initialization_identity"]}
     if purpose not in allowed:
         raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
     question = configuration.get("question", {})
@@ -111,6 +112,29 @@ def _frozen_same_run_scopes(resolved):
         raise ValueError("Frozen scientific comparison format differs")
     return {arm["arm_id"]: same_run_comparison_scope(configuration, arm["arm_id"], reference)
             for arm in declaration["arms"] if arm["arm_id"] != reference}
+
+
+def validate_initialization_peer(arm, reference, contract, reference_contract):
+    """A declared warm-start comparison changes only its frozen initial state."""
+    for key in ("family", "base", "addons", "addon_semantics", "data"):
+        if arm[key] != reference[key]:
+            raise ValueError("Initialization peers differ outside initial state: " + key)
+    for key in ("sampler", "transform", "objective", "overrides"):
+        if arm["training"][key] != reference["training"][key]:
+            raise ValueError("Initialization peers differ outside initial state: " + key)
+    if ({k: v for k, v in arm["initialization"].items() if k != "state_sha256"}
+            != {k: v for k, v in reference["initialization"].items() if k != "state_sha256"}):
+        raise ValueError("Initialization comparison must retain initialization kind and seed")
+    if arm["initialization"]["state_sha256"] == reference["initialization"]["state_sha256"]:
+        raise ValueError("Initialization comparison requires distinct initial states")
+    fixed = []
+    for side, recipe in ((arm, contract), (reference, reference_contract)):
+        if recipe.get("initialization_sha256") != side["initialization"]["state_sha256"]:
+            raise ValueError("Initialization contract differs from frozen Spec")
+        fixed.append({k: v for k, v in recipe.items()
+                      if k not in {"initialization_sha256", "initial_development_check"}})
+    if fixed[0] != fixed[1]:
+        raise ValueError("Initialization peers differ outside initial state: recipe")
 
 
 def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
@@ -268,6 +292,13 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     if target_report["status"] != "VERIFIED":
         return {**target_report, "executed": False}
     scopes = _frozen_same_run_scopes(resolved)
+    retained_recipes = {arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json")
+                        for arm_id, item in resolved["outputs"].items()}
+    by_arm = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    for arm_id, scope in scopes.items():
+        if scope["experiment_purpose"] == "initialization_comparison":
+            validate_initialization_peer(by_arm[arm_id], by_arm[reference_id],
+                retained_recipes[arm_id][0], retained_recipes[reference_id][0])
     transforms = {arm: row["transform"] for arm, row in target_report["arms"].items()}
     target_manifests = {arm: row["targets"] for arm, row in target_report["arms"].items()}
     appended = {arm: row["supplemental_binding"] for arm, row in target_report["arms"].items()
@@ -313,7 +344,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         data = _load_arm_artifacts(Path(item["output_dir"]), context=ctx, expected=item["expected"],
             target_identity=resolved.get("target_identities", {}).get(arm_id), _inspection=reports[arm_id])
         loaded[arm_id] = data
-        contract, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+        contract, recipe = retained_recipes[arm_id]
         role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
         targets, transform = target_manifests[arm_id], transforms[arm_id]
         transform_path = repo_local_path(root, Path(locations[arm_id]["trajectory"]).parent.parent
@@ -344,6 +375,10 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "ema_enabled": recipe.ema_decay is not None, "ema_decay": recipe.ema_decay,
             "ema_update_frequency": 1 if recipe.ema_decay is not None else None,
             "evaluation_weight_source": data["selection_weights"]}
+        if any(scope["experiment_purpose"] == "initialization_comparison" for scope in scopes.values()):
+            if recipe.initialization_sha256 != arm["initialization"]["state_sha256"]:
+                raise ValueError("Observed recipe initialization differs from frozen Spec")
+            comparison_identity["initialization_identity"] = canonical_fingerprint(arm["initialization"])
         certificates = [entry["local_path"] for entry in native_reports[arm_id]["dependencies"]
                         if entry["path"] == "runtime_certificate.json"]
         if len(certificates) != 1:
@@ -1192,7 +1227,9 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
     if pair is None:
         raise ValueError("Same-run acceptance requires a prospective Spec pair")
     arms = {arm["arm_id"]: arm for arm in declaration["arms"]}
-    if type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms"} or plan["spec_identity"] != spec.identity:
+    if (type(plan) is not dict or set(plan) not in (
+            {"format", "spec_identity", "arms"}, {"format", "spec_identity", "arms", "comparison_source"})
+            or plan["spec_identity"] != spec.identity):
         raise ValueError("Acceptance plan/Spec mismatch")
     entries = plan["arms"]
     if type(entries) is not list or [entry.get("arm_id") for entry in entries] != list(arms):
@@ -1200,6 +1237,25 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
     if set(arms) != {pair["reference_arm_id"], *pair["candidate_arm_ids"]}:
         raise ValueError("Same-run acceptance cannot include unbound arms")
     reference = arms[pair["reference_arm_id"]]
+    configuration = None
+    if "comparison_source" in plan:
+        source = plan["comparison_source"]
+        if type(source) is not dict or set(source) != {"path", "sha256"}:
+            raise ValueError("Expected pinned scientific comparison source")
+        _digest(source["sha256"], "comparison source digest")
+        path = _artifact_path(Path(repo_root).absolute(), source["path"])
+        if file_digest(path) != source["sha256"]:
+            raise ValueError("Scientific comparison source hash mismatch")
+        configuration = _json(path)
+        if (configuration.get("format") != "molgap-scientific-experiment-v1"
+                or configuration.get("logical_run_id") != declaration["logical_run_id"]
+                or configuration.get("same_run", {}).get("reference_arm_id") != pair["reference_arm_id"]):
+            raise ValueError("Scientific comparison source differs from frozen run")
+    initialization_pair = configuration is not None and all(
+        same_run_comparison_scope(configuration, candidate, pair["reference_arm_id"])["experiment_purpose"]
+        == "initialization_comparison" for candidate in pair["candidate_arm_ids"])
+    if initialization_pair and len(arms) != 2:
+        raise ValueError("Initialization comparison requires one exact same-run pair")
     results, contracts, expectations = [], [], []
     for entry in entries:
         blockers = []
@@ -1208,9 +1264,14 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                 raise ValueError("Missing or unknown same-run acceptance fields")
             arm = arms[entry["arm_id"]]
             artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            for key in ("family", "base", "initialization", "data"):
+            for key in ("family", "base", "data", *(("initialization",) if not initialization_pair else ())):
                 if arm[key] != reference[key]:
                     raise ValueError("Same-run peer identity differs: " + key)
+            if initialization_pair:
+                if arm["addons"] != reference["addons"] or arm["training"]["objective"] != reference["training"]["objective"]:
+                    raise ValueError("Initialization comparison must retain architecture and loss")
+                if arm is not reference and arm["initialization"] == reference["initialization"]:
+                    raise ValueError("Initialization comparison requires distinct initial states")
             for key in ("sampler", "transform", "overrides"):
                 if arm["training"][key] != reference["training"][key]:
                     raise ValueError("Same-run peer training identity differs: " + key)
@@ -1238,6 +1299,8 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                     raise ValueError("Plan artifact hash mismatch")
                 return _json(path)
             contract = pinned(entry["contract"])
+            if initialization_pair and contract.get("initialization_sha256") != arm["initialization"]["state_sha256"]:
+                raise ValueError("Initialization contract differs from frozen Spec")
             if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != expected:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
             _development_role(contract)
@@ -1260,6 +1323,14 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
     ):
         for row in results:
             row.update(status="BLOCKED", blockers=["Same-run peers differ in exposure, optimization or development identity"])
+    if initialization_pair and len(contracts) == len(entries):
+        by_id = dict(zip(arms, contracts))
+        try:
+            for candidate in pair["candidate_arm_ids"]:
+                validate_initialization_peer(arms[candidate], reference, by_id[candidate], by_id[pair["reference_arm_id"]])
+        except ValueError as exc:
+            for row in results:
+                row.update(status="BLOCKED", blockers=[str(exc)])
     return {"status": "BLOCKED" if any(row["blockers"] for row in results) else "ACCEPTANCE_INPUTS_AVAILABLE",
         "spec_identity": spec.identity, "arms": results, "trainer_execution": "NOT_VERIFIED",
         "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}

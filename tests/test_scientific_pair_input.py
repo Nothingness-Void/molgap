@@ -44,9 +44,12 @@ def _commit(case, value, authority, path):
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "--allow-empty", "-m", "Synthetic pair input")
 
 
-def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scientific):
+@pytest.mark.parametrize("purpose", ["optimizer_comparison", "initialization_comparison"])
+def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scientific, purpose):
     case = scientific
     value, authority, path = _pair(case)
+    if purpose == "initialization_comparison":
+        value["logical_run_id"] = "compact-initialization-pair"
     recipe_path = case.repo / value["shared"]["recipe_ref"]
     guarded_recipe = json.loads(recipe_path.read_bytes())
     guard = {"prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
@@ -58,10 +61,33 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
         if arm["arm_id"] == value["shared"]["data_ref"]["arm_id"])
     source_arm["training"]["recipe"]["sha256"] = hashlib.sha256(recipe_path.read_bytes()).hexdigest()
     _write_json(data_path, data_spec)
+    if purpose == "initialization_comparison":
+        import torch
+        from molgap.v4_runtime import state_dict_sha256
+        value["shared"].update(purpose=purpose, training={})
+        initial = torch.load(value["shared"]["initial_state_ref"], weights_only=True)
+        first = next(key for key, tensor in initial.items() if tensor.is_floating_point())
+        initial[first] = initial[first] + .01
+        candidate_initial = path.parent / "candidate-initial.pt"
+        candidate_initial.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(initial, candidate_initial)
+        candidate_recipe = json.loads(recipe_path.read_bytes())
+        candidate_recipe["initialization_sha256"] = state_dict_sha256(initial)
+        candidate_recipe.pop("initial_development_check", None)
+        recipe_name = "experiments/compact/candidate-recipe.json"
+        _write_json(case.repo / recipe_name, candidate_recipe)
+        candidate_spec = deepcopy(data_spec)
+        candidate_arm = next(a for a in candidate_spec["arms"] if a["arm_id"] == source_arm["arm_id"])
+        candidate_arm["initialization"]["state_sha256"] = candidate_recipe["initialization_sha256"]
+        candidate_arm["training"]["recipe"]["sha256"] = hashlib.sha256((case.repo / recipe_name).read_bytes()).hexdigest()
+        spec_name = "experiments/compact/candidate-spec.json"
+        _write_json(case.repo / spec_name, candidate_spec)
+        value["arms"][1].update(recipe_ref=recipe_name, initial_state_ref=str(candidate_initial),
+            data_ref={"spec_ref": spec_name, "arm_id": source_arm["arm_id"]})
     _commit(case, value, authority, path)
     _, spec, plan, _ = resolve_experiment_input(path, case.repo)
     assert all(json.loads((case.repo / arm["recipe"]).read_bytes())["initial_development_check"] == guard
-               for arm in plan["arms"])
+               for arm in plan["arms"] if purpose != "initialization_comparison" or arm["arm_id"] == "baseline")
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["reference", "candidate"]
     acceptance = json.loads((case.repo / plan["acceptance_plan"]).read_bytes())
     target_path = case.repo / value["same_run"]["target_manifest_ref"]
@@ -82,17 +108,36 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
     for binding in spec.to_dict()["prospective"]["arms"]:
         proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
-        assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v1"
+        assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == f"{value['logical_run_id']}-v1"
     assert not any("comparison_prelaunch" in name for name in plan["generated_records"])
     from molgap.experiment_family_workflow import same_run_comparison_scope
     scope = same_run_comparison_scope(value, "candidate", "baseline")
-    assert scope["experiment_purpose"] == "optimizer_comparison"
-    assert scope["declared_intervention_fields"] == ["optimizer_identity"]
-    for purpose in ("architecture_comparison", "unknown"):
+    assert scope["experiment_purpose"] == purpose
+    assert scope["declared_intervention_fields"] == ["initialization_identity" if purpose == "initialization_comparison" else "optimizer_identity"]
+    for invalid_purpose in ("architecture_comparison", "unknown"):
         invalid = deepcopy(value)
-        invalid["shared"]["purpose"] = purpose
+        invalid["shared"]["purpose"] = invalid_purpose
         with pytest.raises(ValueError):
             same_run_comparison_scope(invalid, "candidate", "baseline", declared_fields=["optimizer_identity"])
+    if purpose == "initialization_comparison":
+        ordinary = deepcopy(value)
+        ordinary["logical_run_id"] = "undeclared-initialization-pair"
+        ordinary["shared"]["purpose"] = "architecture_comparison"
+        _commit(case, ordinary, authority, path)
+        with pytest.raises(ValueError, match="outside one logical group"):
+            resolve_experiment_input(path, case.repo)
+        mixed = deepcopy(value)
+        mixed["logical_run_id"] = "mixed-initialization-pair"
+        mixed["arms"][1]["training"] = {"learning_rate": .007}
+        _commit(case, mixed, authority, path)
+        with pytest.raises(ValueError, match="outside one logical group"):
+            resolve_experiment_input(path, case.repo)
+        no_scope = deepcopy(acceptance)
+        no_scope.pop("comparison_source")
+        assert check_acceptance_plan(spec, case.repo, no_scope)["status"] == "BLOCKED"
+        _commit(case, value, authority, path)
+        # Return to the exact committed source used by the frozen spec.
+        return
     freeze_experiment_input(path, case.repo)
     previous = spec.identity
     value["attempt_id"] = "v2"

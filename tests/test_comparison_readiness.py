@@ -15,6 +15,7 @@ from molgap.comparison_readiness import (
     assess_comparison_readiness,
     reference_bundle_digest,
     target_transform_asset_digest,
+    validate_comparison_prelaunch,
     validate_comparison_readiness,
     validate_reference_bundle,
     validate_stochasticity,
@@ -164,20 +165,26 @@ def _reference_bundle() -> dict:
     }
 
 
-def _prelaunch(reference_bundle: dict | None = None) -> dict:
+def _prelaunch(
+    reference_bundle: dict | None = None,
+    candidate_identity: dict | None = None,
+    **kwargs,
+) -> dict:
     reference_bundle = reference_bundle or _reference_bundle()
     return assess_comparison_prelaunch(
         candidate_id="candidate",
         candidate_plan={
-            "comparison_identity": _identity("candidate-arch"),
+            "comparison_identity": candidate_identity or _identity("candidate-arch"),
             "source_config_status": "frozen",
             "source_commit_or_archive": "2" * 40,
         },
         reference_id="reference",
         reference_bundle=reference_bundle,
-        experiment_purpose="architecture_comparison",
-        intervention_group_id="architecture",
-        declared_intervention_fields=["architecture_config_identity"],
+        experiment_purpose=kwargs.pop("experiment_purpose", "architecture_comparison"),
+        intervention_group_id="declared-intervention",
+        declared_intervention_fields=kwargs.pop(
+            "declared_intervention_fields", ["architecture_config_identity"]
+        ),
         role_applicability_plan=_side("candidate-arch")["role_applicability_plan"],
         trace_plan=_side("candidate-arch")["trace_field_availability"],
         runtime_qualification_plan={
@@ -185,6 +192,7 @@ def _prelaunch(reference_bundle: dict | None = None) -> dict:
             "runtime_certificate_required": True,
             "qualification_scope": "candidate runtime tuple",
         },
+        **kwargs,
     )
 
 
@@ -202,13 +210,37 @@ def _assess(candidate: dict | None = None, reference: dict | None = None, **kwar
     )
 
 
-def test_all_fields_and_complete_artifacts_are_strict_causal():
-    result = _assess()
+@pytest.mark.parametrize("identity_mode", ["legacy", "matching-initialization", "initialization-only"])
+def test_all_fields_and_complete_artifacts_are_strict_causal(identity_mode):
+    candidate, reference = _side("candidate-arch"), _reference_side()
+    bundle = _reference_bundle()
+    purpose, declared = "architecture_comparison", ["architecture_config_identity"]
+    if identity_mode != "legacy":
+        candidate["comparison_identity"]["initialization_identity"] = "c" * 64
+        reference["comparison_identity"]["initialization_identity"] = "c" * 64
+    if identity_mode == "initialization-only":
+        candidate["comparison_identity"]["architecture_config_identity"] = "reference-arch"
+        candidate["comparison_identity"]["initialization_identity"] = "d" * 64
+        purpose, declared = "initialization_comparison", ["initialization_identity"]
+    bundle["comparison_identity"] = reference["comparison_identity"].copy()
+    reference["reference_bundle_sha256"] = reference_bundle_digest(bundle)
+    comparison = {"experiment_purpose": purpose, "declared_intervention_fields": declared}
+    result = _assess(candidate=candidate, reference=reference, **comparison)
     assert result["comparison_class"] == "STRICT_CAUSAL"
     assert result["strict_ready"] is True
     validate_comparison_readiness(
         result, evidence_verifier=lambda _pointer, _digest: None
     )
+    plan = _prelaunch(bundle, candidate["comparison_identity"], **comparison)
+    assert plan["prelaunch_ready"] is True
+    validate_comparison_prelaunch(plan)
+    assert ("initialization_identity" in result["matched_fields"]
+        or "initialization_identity" in result["mismatched_fields"]) == (identity_mode != "legacy")
+    if identity_mode == "initialization-only":
+        candidate["comparison_identity"]["initialization_identity"] = "c" * 64
+        unchanged = _assess(candidate=candidate, reference=reference, **comparison)
+        assert "DECLARED_INTERVENTION_NOT_OBSERVED" in unchanged["blocker_codes"]
+        assert _prelaunch(bundle, candidate["comparison_identity"], **comparison)["prelaunch_ready"] is False
 
 
 @pytest.mark.parametrize(
@@ -280,15 +312,40 @@ def test_validator_rejects_forged_noncausal_strict_record():
         ("optimizer_identity", "different-optimizer"),
         ("checkpoint_selection_identity", "different-selection"),
         ("sample_presentations", 5_000_000),
+        ("initialization_identity", "d" * 64),
+        ("loss_identity", "different-loss"),
     ],
 )
 def test_scientific_recipe_mismatch_is_not_strict(field, value):
     candidate = _side("candidate-arch")
+    reference = _reference_side()
+    if field == "initialization_identity":
+        reference["comparison_identity"][field] = "c" * 64
     candidate["comparison_identity"][field] = value
-    result = _assess(candidate=candidate)
+    result = _assess(candidate=candidate, reference=reference)
     assert result["strict_ready"] is False
     assert result["comparison_class"] == "PAIRED_ENDPOINT"
     assert field in result["mismatched_fields"]
+    bundle = _reference_bundle()
+    bundle["comparison_identity"] = reference["comparison_identity"].copy()
+    plan = _prelaunch(bundle, candidate["comparison_identity"])
+    assert plan["prelaunch_ready"] is False
+    assert field in plan["mismatched_fields"]
+    if field != "initialization_identity":
+        candidate["comparison_identity"]["architecture_config_identity"] = "reference-arch"
+        candidate["comparison_identity"]["initialization_identity"] = "d" * 64
+        reference["comparison_identity"]["initialization_identity"] = "c" * 64
+        comparison = {"experiment_purpose": "initialization_comparison",
+            "declared_intervention_fields": ["initialization_identity"]}
+        result = _assess(candidate=candidate, reference=reference, **comparison)
+        assert result["strict_ready"] is False
+        assert "SCIENTIFIC_CONTRACT_MISMATCH" in result["blocker_codes"]
+        bundle["comparison_identity"] = reference["comparison_identity"].copy()
+        assert _prelaunch(bundle, candidate["comparison_identity"], **comparison)["prelaunch_ready"] is False
+        with pytest.raises(ValueError, match="outside one logical group"):
+            _assess(candidate=candidate, reference=reference,
+                experiment_purpose="initialization_comparison",
+                declared_intervention_fields=["initialization_identity", field])
 
 
 def test_ema_and_live_weights_are_not_strictly_equal():
@@ -372,22 +429,70 @@ def test_scalar_only_history_is_context_only():
     assert result["decision_scope"] == ["historical context"]
 
 
-def test_missing_field_is_not_implicitly_matched():
+@pytest.mark.parametrize("missing_side", ["candidate", "reference", "both"])
+@pytest.mark.parametrize("purpose", ["architecture_comparison", "initialization_comparison"])
+def test_missing_field_is_not_implicitly_matched(missing_side, purpose):
     candidate = _side("candidate-arch")
-    del candidate["comparison_identity"]["optimizer_mode"]
-    result = _assess(candidate=candidate)
-    assert "candidate.optimizer_mode" in result["missing_fields"]
-    assert "optimizer_mode" not in result["matched_fields"]
+    reference = _reference_side()
+    candidate["comparison_identity"]["initialization_identity"] = "d" * 64
+    reference["comparison_identity"]["initialization_identity"] = "c" * 64
+    if purpose == "architecture_comparison":
+        candidate["comparison_identity"]["initialization_identity"] = "c" * 64
+    else:
+        candidate["comparison_identity"]["architecture_config_identity"] = "reference-arch"
+    missing_field = "initialization_identity"
+    if missing_side == "both" and purpose == "architecture_comparison":
+        # Legacy comparisons without either optional identity remain supported;
+        # retain the original missing-mandatory-field check in this table row.
+        missing_field, missing_side = "optimizer_mode", "candidate"
+    for side_name, side in (("candidate", candidate), ("reference", reference)):
+        if missing_side in {side_name, "both"}:
+            side["comparison_identity"].pop(missing_field)
+    comparison = {"experiment_purpose": purpose,
+        "declared_intervention_fields": ["initialization_identity"]
+            if purpose == "initialization_comparison" else ["architecture_config_identity"]}
+    result = _assess(candidate=candidate, reference=reference, **comparison)
+    expected_side = "candidate" if missing_side == "both" else missing_side
+    assert f"{expected_side}.{missing_field}" in result["missing_fields"]
+    assert missing_field not in result["matched_fields"]
     assert result["strict_ready"] is False
+    bundle = _reference_bundle()
+    bundle["comparison_identity"] = reference["comparison_identity"].copy()
+    plan = _prelaunch(bundle, candidate["comparison_identity"], **comparison)
+    assert plan["prelaunch_ready"] is False
+    assert f"{expected_side}.{missing_field}" in plan["missing_fields"]
 
 
-def test_manual_strict_record_cannot_hide_unaccounted_identity():
-    result = _assess()
-    result["matched_fields"].pop("optimizer_mode")
+@pytest.mark.parametrize("purpose", ["architecture_comparison", "initialization_comparison"])
+def test_manual_strict_record_cannot_hide_unaccounted_identity(purpose):
+    candidate, reference = _side("candidate-arch"), _reference_side()
+    comparison = {"experiment_purpose": purpose,
+        "declared_intervention_fields": ["architecture_config_identity"]}
+    if purpose == "initialization_comparison":
+        candidate["comparison_identity"]["architecture_config_identity"] = "reference-arch"
+        candidate["comparison_identity"]["initialization_identity"] = "d" * 64
+        reference["comparison_identity"]["initialization_identity"] = "c" * 64
+        comparison["declared_intervention_fields"] = ["initialization_identity"]
+    result = _assess(candidate=candidate, reference=reference, **comparison)
+    bundle = _reference_bundle()
+    bundle["comparison_identity"] = reference["comparison_identity"].copy()
+    plan = _prelaunch(bundle, candidate["comparison_identity"], **comparison)
+    if purpose == "initialization_comparison":
+        for record, validate in ((result, validate_comparison_readiness),
+            (plan, validate_comparison_prelaunch)):
+            malformed = copy.deepcopy(record)
+            malformed["mismatched_fields"]["initialization_identity"]["candidate"] = "not-a-hash"
+            with pytest.raises(ValueError, match="SHA-256"):
+                validate(malformed)
+    field = "initialization_identity" if purpose == "initialization_comparison" else "optimizer_mode"
+    result["mismatched_fields" if field == "initialization_identity" else "matched_fields"].pop(field)
+    plan["mismatched_fields" if field == "initialization_identity" else "matched_fields"].pop(field)
     with pytest.raises(ValueError, match="every strict identity field"):
         validate_comparison_readiness(
             result, evidence_verifier=lambda _pointer, _digest: None
         )
+    with pytest.raises(ValueError, match="every planned identity field"):
+        validate_comparison_prelaunch(plan)
 
 
 def test_consumed_role_is_not_reported_as_untouched():
@@ -435,6 +540,10 @@ def test_row_bootstrap_cannot_be_training_stochasticity():
 def test_scalar_metric_cannot_validate_as_reference_bundle():
     with pytest.raises(ValueError, match="reference-bundle format"):
         validate_reference_bundle({"mae_eV": 0.1})
+    bundle = _reference_bundle()
+    bundle["comparison_identity"]["initialization_identity"] = None
+    with pytest.raises(ValueError, match="SHA-256"):
+        validate_reference_bundle(bundle)
 
 
 def test_causal_prelaunch_rejects_all_not_applicable_roles():

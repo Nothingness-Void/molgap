@@ -9,7 +9,7 @@ from typing import Any
 
 from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
-from .backtest import _comparison_key, build_screening_backtest
+from .backtest import BOUND_REPLAY_INTERVENTIONS, _comparison_key, build_screening_backtest
 from .trace import load_canonical_trace, json_bytes, trace_digest, validate_manifest_trace
 from .schemas import validate_trace_manifest
 from .paired import accepted_reference_evidence, pair_binding, terminal_reference_evidence
@@ -98,13 +98,14 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
     from .finalize import load_terminal_input
 
     manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
-    # Frozen metadata cannot self-declare an optimizer grouping exemption.
+    # Frozen metadata cannot self-declare a grouping exemption.
     manifests = [{**m, "comparability_identity": {key: value
-        for key, value in m["comparability_identity"].items() if key != "bound_optimizer_intervention"}}
+        for key, value in m["comparability_identity"].items()
+        if not (key.startswith("bound_") and key.endswith("_intervention"))}}
         for m in manifests]
     evidence = {p.resolve(): e for p, e in records["evidence"]}
     comparisons = {p.resolve(): c for p, c in records["comparison_readiness"]}
-    identities, optimizer_scopes = {}, {}
+    identities, intervention_scopes = {}, {}
     for path, manifest in records["traces"]:
         if manifest["comparison_role"] != "candidate" or not (path.parent / "finalization.json").is_file():
             continue
@@ -127,34 +128,37 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
             if eid in identities and identities[eid] != identity:
                 raise ValueError("Conflicting strict replay identities for accepted evidence")
             identities[eid] = identity
-        if (comparison.get("comparison_class") == "STRICT_CAUSAL"
-                and comparison.get("experiment_purpose") == "optimizer_comparison"
-                and comparison.get("declared_intervention_fields") == ["optimizer_identity"]
-                and set(comparison["mismatched_fields"]) == {"optimizer_identity"}
+        projection = BOUND_REPLAY_INTERVENTIONS.get(comparison.get("experiment_purpose"))
+        if (projection is not None and comparison.get("comparison_class") == "STRICT_CAUSAL"
+                and comparison.get("declared_intervention_fields") == [projection[0]]
+                and set(comparison["mismatched_fields"]) == {projection[0]}
                 and terminal.get("same_run_observation") is not None):
+            field, scope_name, format_name = projection
             references = [(p, m) for p, m in records["traces"]
                 if m["comparison_role"] == "reference" and m["reference_id"] == comparison["reference_id"]]
-            if len(references) != 1:
-                raise ValueError("Optimizer replay requires one exact accepted reference trace")
+            candidates = [m for _, m in records["traces"]
+                if m["comparison_role"] == "candidate" and m["reference_id"] == comparison["reference_id"]]
+            if len(references) != 1 or len(candidates) != 1:
+                raise ValueError("Intervention replay requires one exact accepted candidate/reference trace pair")
             ref_path, ref_manifest = references[0]
             ref_evidence = evidence[resolve_repo_pointer(root, ref_manifest["terminal_evidence_ref"])]
             ref_terminal = load_terminal_input(ref_path.parent)
             if (ref_evidence["evidence_id"] != comparison["reference_id"]
                     or ref_terminal.get("same_run_observation") != terminal["same_run_observation"]):
-                raise ValueError("Optimizer replay comparison differs from the observed reference pair")
-            scope = {"format": "molgap-bound-replay-optimizer-intervention-v1",
+                raise ValueError("Intervention replay comparison differs from the observed reference pair")
+            scope = {"format": format_name,
                 "experiment_purpose": comparison["experiment_purpose"],
                 "intervention_group_id": comparison["intervention_group_id"],
                 "declared_intervention_fields": comparison["declared_intervention_fields"],
                 "candidate_id": comparison["candidate_id"], "reference_id": comparison["reference_id"],
                 "comparison_sha256": terminal["artifact_hashes"][pointer],
-                "expected": comparison["mismatched_fields"]["optimizer_identity"]}
+                "expected": comparison["mismatched_fields"][field]}
             for side in ("candidate", "reference"):
                 eid = comparison[side + "_id"]
                 projected = {**scope, "evidence_id": eid}
-                if eid in optimizer_scopes and optimizer_scopes[eid] != projected:
-                    raise ValueError("Conflicting bound optimizer replay pairs")
-                optimizer_scopes[eid] = projected
+                if eid in intervention_scopes and intervention_scopes[eid] != (scope_name, projected):
+                    raise ValueError("Conflicting bound intervention replay pairs")
+                intervention_scopes[eid] = (scope_name, projected)
 
     result = []
     for manifest in manifests:
@@ -177,8 +181,11 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
                 "selection_role_identity": fields("selection_role_identity", "checkpoint_selection_identity"),
                 "terminal_endpoint_identity": fields("optimizer_steps", "sample_presentations"),
                 "strict_identity": strict}
-            if accepted["evidence_id"] in optimizer_scopes:
-                identity["bound_optimizer_intervention"] = optimizer_scopes[accepted["evidence_id"]]
+            if "initialization_identity" in strict:
+                identity["initialization_identity"] = strict["initialization_identity"]
+            if accepted["evidence_id"] in intervention_scopes:
+                scope_name, scope = intervention_scopes[accepted["evidence_id"]]
+                identity[scope_name] = scope
             manifest = {**manifest, "comparability_identity": identity}
         result.append(manifest)
     return result
