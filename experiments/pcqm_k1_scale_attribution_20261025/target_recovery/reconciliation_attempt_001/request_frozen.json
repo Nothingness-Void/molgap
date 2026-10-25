@@ -1,0 +1,166 @@
+{
+  "format": "molgap-k1-target-recovery-kaggle-submit-request-v1",
+  "status": "PREPOST_REQUEST_FROZEN",
+  "frozen_at_utc": "2026-10-25T06:26:16.491928+00:00",
+  "owner": "nothingnessvoid",
+  "source_checkout": "D:\\molgap-worktrees\\k1-scale-attribution-20261025",
+  "source_commit": "3548bd3a972c2c1257d6c2dee93ad5973877c5b3",
+  "source_worktree_status_at_request": [
+    "?? experiments/pcqm_k1_scale_attribution_20261025/artifact_custody.json",
+    "?? experiments/pcqm_k1_scale_attribution_20261025/plots/k1_retained_tail_attribution.png",
+    "?? experiments/pcqm_k1_scale_attribution_20261025/plots/plot_retained_k1_tail_attribution.py"
+  ],
+  "submitted_package_directory": "D:\\molgap-worktrees\\k1-scale-attribution-20261025\\experiments\\pcqm_k1_scale_attribution_20261025\\target_recovery",
+  "requested_kernel_identity": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "actual_kernel_identity": "unknown_pending_response",
+  "method": "platforms.kaggle.credential_api.api_for_credentials(...).kernels_push(package_dir, timeout=900)",
+  "sdk_session_timeout_seconds": 900,
+  "entry_absolute_cutoff_utc": "2026-10-25T07:35:00+00:00",
+  "credential_path": "D:\\下载\\Key\\.kaggle1_cli\\kaggle.json",
+  "credential_contents_recorded": false,
+  "source_data_refs": [
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/3",
+    "nothingnessvoid/k1-tail-wd-500k-src/1"
+  ],
+  "cpu_only": {
+    "enable_gpu": false,
+    "enable_tpu": false
+  },
+  "file_sha256": {
+    "worker.py": "094ae2ae2c954348b064e160b36ffe09cc8753aea52f4dfb481b6c162e8fea6d",
+    "entry.py": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+    "kernel-metadata.json": "5df16c88e1f4e3ad73f0945edaa5cd991925b85b428d2686152796d740ec8656",
+    "protocol.md": "5b9c376824e503031cc8654a468a689bffd2bd6223f943d5d9ecf32e26026fed",
+    "local_review.json": "e0b6feebd0ad77fa8a8701864e209e7787e97d3f08173a25162667346a49cb3f"
+  },
+  "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+  "source_package_verified": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+  "data_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "preflight_receipt": "preflight_exact.json",
+  "target_kernel_search": {
+    "succeeded": true,
+    "count": 0,
+    "matches": []
+  },
+  "target_status_probe": {
+    "exists": false,
+    "error": {
+      "type": "HTTPError",
+      "message": "403 Client Error: Forbidden for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus"
+    }
+  },
+  "remote_source_files": [
+    {
+      "name": "SOURCE_ARCHIVE_SHA256.txt",
+      "size_bytes": 65
+    },
+    {
+      "name": "SOURCE_COMMIT.txt",
+      "size_bytes": 41
+    },
+    {
+      "name": "SOURCE_FILES.json",
+      "size_bytes": 47848
+    },
+    {
+      "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/acceptance_plan.json",
+      "size_bytes": 1708
+    },
+    {
+      "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
+      "size_bytes": 1831
+    },
+    {
+      "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json",
+      "size_bytes": 1832
+    },
+    {
+      "name": "acceptance/experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+      "size_bytes": 207
+    },
+    {
+      "name": "experiment_launch.json",
+      "size_bytes": 1686
+    },
+    {
+      "name": "experiment_spec.json",
+      "size_bytes": 5544
+    },
+    {
+      "name": "initial_states/tail_wd1e2.pt",
+      "size_bytes": 15597683
+    },
+    {
+      "name": "package_manifest.json",
+      "size_bytes": 12717
+    },
+    {
+      "name": "prospective/tail_wd1e2/trajectory.json",
+      "size_bytes": 4874
+    },
+    {
+      "name": "prospective/tail_wd1e3/trajectory.json",
+      "size_bytes": 4874
+    },
+    {
+      "name": "source_payload.bin",
+      "size_bytes": 903147
+    }
+  ],
+  "remote_data_files": [
+    {
+      "name": "README.md",
+      "size_bytes": 490
+    },
+    {
+      "name": "manifest.json",
+      "size_bytes": 4790
+    },
+    {
+      "name": "train/train_shard_0000.pt",
+      "size_bytes": 202363317
+    },
+    {
+      "name": "train/train_shard_0001.pt",
+      "size_bytes": 202787061
+    },
+    {
+      "name": "train/train_shard_0002.pt",
+      "size_bytes": 203498165
+    },
+    {
+      "name": "train/train_shard_0003.pt",
+      "size_bytes": 206032693
+    },
+    {
+      "name": "train/train_shard_0004.pt",
+      "size_bytes": 203880309
+    },
+    {
+      "name": "train/train_shard_0005.pt",
+      "size_bytes": 205399541
+    },
+    {
+      "name": "train/train_shard_0006.pt",
+      "size_bytes": 203054325
+    },
+    {
+      "name": "train/train_shard_0007.pt",
+      "size_bytes": 201454965
+    },
+    {
+      "name": "train/train_shard_0008.pt",
+      "size_bytes": 202626101
+    },
+    {
+      "name": "train/train_shard_0009.pt",
+      "size_bytes": 203743093
+    },
+    {
+      "name": "train/train_shard_0010.pt",
+      "size_bytes": 213447349
+    }
+  ],
+  "source_mount_requirement": "expanded_sidecars_plus_source_payload.bin",
+  "data_shard_validation": "worker verifies pinned manifest has exactly 10 TRAIN shards and 500000 rows"
+}

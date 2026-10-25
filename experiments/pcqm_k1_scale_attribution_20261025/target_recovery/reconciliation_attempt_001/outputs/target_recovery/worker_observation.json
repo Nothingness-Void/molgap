@@ -1,0 +1,16 @@
+{
+  "format": "molgap-target-recovery-worker-observation-v1",
+  "status": "FAILED",
+  "train_labels_state": "reading_unknown_subset",
+  "decoded_train_membership": "unknown",
+  "stage": "train_label_read_started",
+  "updated_at_utc": "2026-10-25T06:30:59.766487+00:00",
+  "development": "not_read",
+  "official_validation": "not_read",
+  "test_dev": "not_read",
+  "test_challenge": "not_read",
+  "error": {
+    "type": "ValueError",
+    "message": "numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject"
+  }
+}

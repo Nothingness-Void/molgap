@@ -1,0 +1,34 @@
+{
+  "absolute_cutoff_utc": "2026-10-25T07:35:00+00:00",
+  "cleanup_reserve_seconds": 20,
+  "cpu_hours": {
+    "status": "measurement_missing",
+    "value": null
+  },
+  "cpu_scope": "Entry and reaped children; interruption may omit unreaped descendants",
+  "entry_sha256": "170759b37a81f3ee16562e96e9e04b46efaac0ec1611f5b1316b6db4aeeaf0b9",
+  "error": {
+    "message": "CPU recovery worker exit 1",
+    "type": "RuntimeError"
+  },
+  "format": "molgap-cpu-target-recovery-entry-v1",
+  "gpu_hours": {
+    "status": "not_applicable",
+    "value": null
+  },
+  "measured_process_tree_cpu_seconds": 784.43983,
+  "queue_hours": {
+    "status": "measurement_missing",
+    "value": null
+  },
+  "requested_accelerator": "CPU",
+  "scope": "Entry through worker termination; platform queue and release excluded",
+  "session_timeout_seconds_required_at_submission": 900,
+  "status": "FAILED",
+  "wall_end_utc": "2026-10-25T06:31:00.520705+00:00",
+  "wall_seconds": 257.76853715699997,
+  "wall_start_utc": "2026-10-25T06:26:42.752193+00:00",
+  "worker_observation_sha256": "65d9c4b4d45654ba89ee310bbac16240cec27bfaf5bb2d702e109f20d1e68aa7",
+  "worker_returncode": 1,
+  "worker_sha256": "094ae2ae2c954348b064e160b36ffe09cc8753aea52f4dfb481b6c162e8fea6d"
+}
