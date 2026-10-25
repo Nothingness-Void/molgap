@@ -75,3 +75,28 @@ tail entries are capability complete with no exclusions, and both diagnostic
 attempts are finalized NO_TRAIN. Exact execution receipts are preserved under
 `infrastructure_verification/desktop_integration/`. The final portable availability
 check is separate and must not be inferred from index freshness.
+
+## Final primary availability and retirement
+
+Desktop merge`0593e09eae3e680e9751b6b7e1cacc849e36d3cf` was pushed. Primary
+verification again matched all168 imported files against Git HEAD and disk,
+plus all25 ignored diagnostic results against their custody hashes. No rejected
+model was adopted. Three completed temporary checkouts and their temporary refs
+were retired after archive/desktop reachability and artifact preservation were
+verified; the unrelated live worktrees and primary untracked files were preserved.
+
+The primary `check --frozen --portable` ran exactly once: exit1 after58.502seconds.
+It reports103 missing artifact references across34 V5 evidence records and20
+historical experiment directories:30 experiment paths,71 Kaggle-record paths,
+and2 IMS-record paths. None belongs to this diagnostic or the imported tail
+owner. This is an unresolved whole-catalog availability failure, not a portable
+pass. No old payload catalog was hydrated or frozen retention claim rewritten.
+Receipts and the integrity report are in
+`infrastructure_verification/portable_final/`. The Windows redirected text
+capture garbled the Chinese absolute-path prefix; ASCII relative artifact paths
+used for classification are intact. Captured receipts are preserved without rerun.
+
+All scientific compute, remote CPU attempts, acceptance and storage retirement
+finished before07:25UTC, within the07:41:35UTC hard deadline. Only this final
+documentation commit/push and goal closeout remained. No new training, active
+accelerator or unfinished diagnostic worker was left by this investigation.

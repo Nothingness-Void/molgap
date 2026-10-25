@@ -25,6 +25,11 @@ evidence/configuration only, excluding the preparation helper and rejected
 shared implementation. [Terminal custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md)
 owns recovery paths; the [byte-verified import](experiments/pcqm_k1_scale_attribution_20261025/tail_evidence_import.json)
 binds168 copied records to the archived owner.
+After primary Git/disk verification of those records and the25 diagnostic
+payloads, the completed attribution, tail and temporary archive checkouts were
+removed on2026-10-25. Their temporary local/remote experiment refs were deleted;
+the diagnostic source remains reachable from desktop merge`0593e09e`, and the
+negative source from archive`373e2762`. Other experiment checkouts were untouched.
 
 The [retained hop-fusion qualification](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md)
 is a completed NO_TRAIN saved-prediction diagnostic. Its evidence, thin

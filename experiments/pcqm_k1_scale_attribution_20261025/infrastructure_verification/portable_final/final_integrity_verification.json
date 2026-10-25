@@ -1,0 +1,65 @@
+{
+  "primary_head": "0593e09eae3e680e9751b6b7e1cacc849e36d3cf",
+  "imported_tail_manifest": {
+    "manifest_path": "experiments/pcqm_k1_scale_attribution_20261025/tail_evidence_import.json",
+    "manifest_git_sha256": "0f6e219cde1dc00ed6a1d3f7a84da75c62c4edf5ebcd972c6b2debcf4c149d9f",
+    "manifest_disk_sha256": "0f6e219cde1dc00ed6a1d3f7a84da75c62c4edf5ebcd972c6b2debcf4c149d9f",
+    "manifest_git_equals_disk": true,
+    "entry_count": 168,
+    "declared_total_bytes": 1093315,
+    "git_blob_matches": 168,
+    "disk_matches": 168,
+    "git_disk_byte_equal": 168,
+    "mismatches": []
+  },
+  "artifact_custody_manifest": {
+    "path": "experiments/pcqm_k1_scale_attribution_20261025/artifact_custody.json",
+    "git_sha256": "5a64573a681178154596841c0d427d537e4e6f9aca9693e7d81d0c1240a4781d",
+    "disk_sha256": "5a64573a681178154596841c0d427d537e4e6f9aca9693e7d81d0c1240a4781d",
+    "git_equals_disk": true,
+    "schema": "molgap.artifact_custody.v1",
+    "declared_artifact_count": 25,
+    "declared_total_bytes": 10905337,
+    "raw_artifact_count": 25,
+    "matched_files": 25,
+    "git_ignored_files": 25,
+    "mismatches_or_not_ignored": []
+  },
+  "portable_check": {
+    "exit_code": 1,
+    "wall_seconds": 58.502,
+    "stdout_bytes": 0,
+    "stderr_bytes": 22827,
+    "missing_artifact_reference_lines": 103,
+    "distinct_v5_evidence_records": 34,
+    "path_categories": {
+      "experiment-owned artifact path": 30,
+      "Kaggle record artifact path": 71,
+      "IMS record artifact path": 2
+    },
+    "owners_by_experiment_directory": {
+      "family_100k_operator_profile": 10,
+      "family_topology_t4_100k": 10,
+      "pcqm_gine_expert": 1,
+      "pcqm_gptrans_centered_logits_100k_kaggle1_pair": 2,
+      "pcqm_gptrans_full_convergence": 1,
+      "pcqm_gptrans_geometry_channels_100k_kaggle1": 4,
+      "pcqm_gptrans_input_init_100k": 2,
+      "pcqm_gptrans_local_inductive_bias_100k_kaggle1": 2,
+      "pcqm_gptrans_pair_memory_dual_100k_kaggle1": 2,
+      "pcqm_k1_clean_second_100k": 2,
+      "pcqm_k1_consistency_ablation_500k": 2,
+      "pcqm_k1_consistency_fusion_transfer": 3,
+      "pcqm_k1_dropout_consistency": 4,
+      "pcqm_k1_flag": 1,
+      "pcqm_k1_full_convergence": 1,
+      "pcqm_k1_fusion_distillation": 2,
+      "pcqm_k1_local_mixing_clean_aux": 3,
+      "pcqm_k1_pair_value_100k": 1,
+      "pcqm_k1_prenorm_norm_100k": 48,
+      "pcqm_k1_slot_width96": 2
+    },
+    "references_to_this_scale_or_tail_task": [],
+    "interpretation": "Portable check failed on missing artifacts referenced by historical V5 evidence; no missing references name this scale-attribution task or the imported tail task."
+  }
+}
