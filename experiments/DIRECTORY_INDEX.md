@@ -14,6 +14,8 @@ and its decision remains the authority. Grouping is by routing domain only.
 
 ## QM9 and architecture discovery
 
+`modern2d_scale500k/`
+
 `modern2d_structure_100k/`
 
 `family_workflow_trial_100k/`

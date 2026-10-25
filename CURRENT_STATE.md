@@ -6,11 +6,11 @@
 
 ## Server execution status
 
-The human authorized two final family-specific PPGT/ESA scale questions. The
-[design](experiments/esa_count_persistence_100k/scale_rescue_plan.md) is retained
-without compute release: accepted500K transport and equal-step transfer
-declaration/closure support remain prerequisites. No new job has been submitted;
-the existing Luna B monitor stays paused.
+The human requested one PPGT/ESA500K dual-arm task. The
+[owning protocol](experiments/modern2d_scale500k/protocol.md) combines both
+family questions in one T4x2 allocation. Selected input export and exact-step
+transfer release/closure remain prerequisites; [status](experiments/modern2d_scale500k/STATUS.md)
+owns observed execution. No GPU job has been submitted.
 
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
 completed both60-pass endpoints. Count readout passed its frozen within-family

@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "EXPORT_SELECTED_ROLES",
+    "field": "user_authorized_input_export",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "Human authorized500K dual training and its scheduled CPU-only selected input prerequisite.",
+    "authority_ref": "experiments/modern2d_scale500k/cpu/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "NO_TRAIN_SELECTED_CPU_EXPORT500K_COMMONDEV_V1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "One16CPU zeroGPU job,7200s maximum; export and independent verification only."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "9004681f398165a5246fff1fe583c4fcf21e056465a76e0fa8e7bed365ff119c",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "modern2d-scale500k-input-export",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_input_export"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

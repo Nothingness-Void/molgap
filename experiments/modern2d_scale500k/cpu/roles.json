@@ -1,0 +1,8 @@
+{
+  "roles": ["train_500k", "common_dev"],
+  "operations": ["copy_existing_selected_graph_tensors", "independent_decoded_export_verification"],
+  "protected_roles": "untouched",
+  "geometry": "unused",
+  "graphs_rebuilt": false,
+  "training": false
+}

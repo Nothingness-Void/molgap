@@ -11,10 +11,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
-The human offered two final PPGT/ESA family-specific scale experiments. The
-[bounded design](experiments/esa_count_persistence_100k/scale_rescue_plan.md)
-requires accepted500K/Common-Dev inputs and honest equal-step transfer support
-before release. It is not an executable declaration or an active GPU job.
+Prepare the human-requested [PPGT/ESA500K dual-arm task](experiments/modern2d_scale500k/protocol.md).
+Reuse selected-role CPU export/acceptance and the configured family workflow;
+release only after the declared500K inputs, exposure/transform and legitimate
+transfer-evidence path qualify. No new baseline or architecture is included.
 
 The [ESA count-persistence decision](experiments/esa_count_persistence_100k/results/completed_v2/decision.md)
 retains a qualified within-family lead and one reusable accepted reference.

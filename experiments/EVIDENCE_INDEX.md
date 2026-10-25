@@ -1,5 +1,9 @@
 # Experiment evidence index
 
+The2026-10-25 [two-family500K design](modern2d_scale500k/decision.md) reserved
+one PPGT/ESA dual-arm task. Input/runtime qualification remained prerequisites;
+this planning record supplied no trained result or Replay claim.
+
 The2026-10-14 [common-cycle dual preparation](pcqm_gptrans_cycle_pair_100k/decision_prelaunch.md)
 records synthetic checks, bounded CPU infrastructure attempts and unresolved
 shared-contract reference/release gates; no GPU result or architecture gain.

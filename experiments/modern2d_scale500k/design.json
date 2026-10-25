@@ -1,0 +1,29 @@
+{
+  "format": "molgap-research-design-draft-v1",
+  "owner": "server",
+  "experiment_id": "modern2d_scale500k",
+  "execution_state": "INPUT_PREREQUISITE_NOT_GPU_RELEASED",
+  "authorization": "Human requested one dual-arm500K task for PPGT and ESA; no100K baseline retraining or extra scientific successor.",
+  "gpu_slots": 1,
+  "allocated_devices": 2,
+  "accelerator": "NvidiaTeslaT4",
+  "physical_batch_per_device": 128,
+  "seed": 42,
+  "precision": "fp32",
+  "tf32": false,
+  "roles": ["train_500k", "common_dev"],
+  "wall_ceiling_seconds": 32400,
+  "kaggle_quota_hours_ceiling": 9,
+  "allocated_t4_hours_ceiling": 18,
+  "arms": [
+    {"arm_id": "ppgt_mean_500k", "family": ["ppgt_small", "3"], "addon": "ppgt_research_mean_readout/1", "optimizer_steps": 15620, "sample_presentations": 1999360, "learning_rate": 0.001},
+    {"arm_id": "esa_count_500k", "family": ["esa_small", "4"], "addon": "esa_count_readout/1", "optimizer_steps": 46860, "sample_presentations": 5998080, "learning_rate": 0.0003}
+  ],
+  "scientific_comparison_intent": "transfer_study_not_strict_architecture_comparison",
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_scientific_successor_authorized": false,
+  "full_training_authorized": false,
+  "replay_ready": false,
+  "release_blockers": ["500K selected export/publication not yet accepted", "Exact step-budget/evaluation clock support", "Frozen100K transform provenance/runtime support", "Legitimate noncausal transfer release/closure support"]
+}
