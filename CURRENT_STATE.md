@@ -6,6 +6,12 @@
 
 ## Server execution status
 
+The human authorized two final family-specific PPGT/ESA scale questions. The
+[design](experiments/esa_count_persistence_100k/scale_rescue_plan.md) is retained
+without compute release: accepted500K transport and equal-step transfer
+declaration/closure support remain prerequisites. No new job has been submitted;
+the existing Luna B monitor stays paused.
+
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
 completed both60-pass endpoints. Count readout passed its frozen within-family
 point gate with a smaller late-horizon benefit. Independent native/output

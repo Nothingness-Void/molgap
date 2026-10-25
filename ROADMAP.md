@@ -11,11 +11,17 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
+The human offered two final PPGT/ESA family-specific scale experiments. The
+[bounded design](experiments/esa_count_persistence_100k/scale_rescue_plan.md)
+requires accepted500K/Common-Dev inputs and honest equal-step transfer support
+before release. It is not an executable declaration or an active GPU job.
+
 The [ESA count-persistence decision](experiments/esa_count_persistence_100k/results/completed_v2/decision.md)
 retains a qualified within-family lead and one reusable accepted reference.
-Its paired trajectories are Replay-Ready; no scientific successor is released.
-A later separately authorized question must distinguish count information from
-generic readout adaptation, rather than extend the closed horizon or rerun its baseline.
+Its paired trajectories are Replay-Ready; the newly authorized scale question
+above does not alter that completed horizon or its historical mechanism claim.
+Distinguishing count information from generic readout adaptation remains a
+separate, unsubmitted hypothesis.
 
 The [Modern2D structural decision](experiments/modern2d_structure_100k/results/decision.md)
 retained the ESA lead tested by the completed pair above. Its historical

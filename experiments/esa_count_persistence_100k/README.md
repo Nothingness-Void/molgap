@@ -11,3 +11,11 @@ Exact declarations are in `experiment.json`,
 This is a new prospective reference bootstrap, not a rewrite of the historical
 context-only screen. The unchanged accepted data, initialization, model,
 Session, addon, native gate and reference-first terminal owners are reused.
+
+## Newly authorized scale question
+
+The human offered two final family-specific research opportunities. The
+[scale-rescue design](scale_rescue_plan.md) separates distinct-molecule benefit
+from additional updates and records the unresolved input/release prerequisites.
+It is a draft, not a submitted job or an upgrade of the accepted100K result.
+
