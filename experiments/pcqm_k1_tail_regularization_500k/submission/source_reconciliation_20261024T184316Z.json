@@ -1,0 +1,57 @@
+{
+  "format": "molgap-kaggle-source-reconciliation-v1",
+  "observed_at": "2026-10-24T18:43:15.378454+00:00",
+  "credential_owner": "nothingnessvoid",
+  "dataset_ref": "nothingnessvoid/k1-tail-wd-500k-src",
+  "original_submission_observation": {
+    "journal_phase": "SOURCE_UNKNOWN",
+    "error_type": "HTTPError",
+    "http_status_code": null,
+    "cause_detail": "Original HTTPError response/status/body was not persisted. A separate bounded authenticated GET observed current source state; no POST was recreated."
+  },
+  "source_state": "ready",
+  "same_journal_resume": {
+    "can_resume_to_hash_validation": true,
+    "requires_existing_adapter_roundtrip_and_release_recheck": true,
+    "reason": "Ready private version 1 and file names/sizes match; content hash verification remains pending"
+  },
+  "kernel_submission_performed": false,
+  "dataset_status_get": {
+    "endpoint_kind": "GET dataset status",
+    "http_status_code": null,
+    "result": "ready"
+  },
+  "dataset_get": {
+    "endpoint_kind": "GET dataset metadata",
+    "http_status_code": null,
+    "identity": "nothingnessvoid/k1-tail-wd-500k-src",
+    "current_version_number": 1,
+    "private": true
+  },
+  "dataset_file_listing_get": {
+    "endpoint_kind": "GET dataset file listing",
+    "http_status_code": null,
+    "remote_file_count": 14,
+    "prepared_file_count": 14,
+    "complete_listing": true,
+    "names_and_sizes_match": true,
+    "missing": [],
+    "unexpected": [],
+    "size_mismatches": [],
+    "content_hashes_verified": false
+  },
+  "observed_gets": [
+    {
+      "endpoint_kind": "GET Kaggle API",
+      "http_status_code": 200
+    }
+  ],
+  "status_get_recheck": {
+    "endpoint_kind": "GET dataset status",
+    "timeout_seconds": 30,
+    "http_status_code": null,
+    "status": "ready",
+    "error_type": null,
+    "observed_at": "2026-10-24T18:43:58.704861+00:00"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "question": "Frozen 20-pass tail recipes versus reproduced initial LIVE predictor",
+  "scientific_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "parent_comparison_scope": "Whole warm-start recipe; not a unique weight-decay attribution",
+  "bootstrap_scope": "paired development rows, conditional on selected checkpoints; not seed uncertainty or held-out selection correction",
+  "initial_state_sha256": "dfe681a620ffd248b584fec44ccc29fdad38654407a44753b7830d4f33ef2e20",
+  "initial_artifact_sha256": "5436def30fae5c99284f6d6055a07826514c1be7e5cb8e80e9c81c65a87ba0b8",
+  "initial_recorded_mae_eV": 0.10490408539772034,
+  "arms": {
+    "tail_wd1e3": {
+      "initial_reproduction": {
+        "context": {
+          "experiment_id": "pcqm_k1_tail_regularization_500k",
+          "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+          "arm_id": "tail_wd1e3",
+          "arm_identity": "bc311d19bd0b174df45bebf9adf6d63e6b446621a88c98cd23351ff0856e49b4",
+          "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+          "family_name": "neural_atom_k1",
+          "family_version": "3",
+          "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+          "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+          "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+          "training_recipe_sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648",
+          "platform": "kaggle",
+          "account": "nothingnessvoid",
+          "run_reference": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+          "platform_version": null
+        },
+        "status": "VERIFIED",
+        "weights": "live",
+        "optimizer_steps": 0,
+        "initialization_sha256": "dfe681a620ffd248b584fec44ccc29fdad38654407a44753b7830d4f33ef2e20",
+        "development_rows": 50000,
+        "mae_eV": 0.10490408539772034,
+        "maximum_prediction_difference_eV": 0.0,
+        "mae_difference_eV": 0.0,
+        "tolerances": {
+          "mae_tolerance_eV": 1e-06,
+          "prediction_tolerance_eV": 0.0001
+        }
+      },
+      "selected_vs_initial": {
+        "n_molecules": 50000,
+        "baseline_mae_eV": 0.10490407729625702,
+        "candidate_mae_eV": 0.105829588971138,
+        "mean_delta_eV": 0.0009255116748809815,
+        "lower_95_eV": 0.0006691048294305801,
+        "upper_95_eV": 0.001183943145751953,
+        "probability_candidate_better": 0.0,
+        "threshold_eV": 0.001,
+        "noninferiority_margin_eV": 0.0005,
+        "passes_material_gate": false,
+        "passes_noninferiority_gate": false,
+        "n_bootstrap": 2000,
+        "seed": 42
+      },
+      "selected_pass": 15,
+      "selected_live_trace_mae_eV": 0.10582958906888962,
+      "final_live_mae_eV": 0.10644728690385818,
+      "final_shadow_ema_mae_eV": 0.10603459179401398,
+      "best_shadow_ema_mae_eV": 0.10578566044569016,
+      "normalized_stochastic_training_objective": {
+        "initial_pass": 0.0634514687461726,
+        "final_pass": 0.05755300213965738,
+        "not_clean_train_mae": true
+      },
+      "output_manifest_sha256": "a5aa6e8f62849bcb600016d6d0b5e202d3fc738c08d2d55a98510d6cd60b89aa",
+      "trace_sha256": "1bb940367ecad2dd927b0e5317a205295611c40f90ab6c1a971e97c8bfbb340d"
+    },
+    "tail_wd1e2": {
+      "initial_reproduction": {
+        "context": {
+          "experiment_id": "pcqm_k1_tail_regularization_500k",
+          "logical_run_id": "pcqm-k1-tail-regularization-500k-s42",
+          "arm_id": "tail_wd1e2",
+          "arm_identity": "6554a0f06d86080812f86e7439a3d93791aa0a49e56d31c76cd58bac95a0ac37",
+          "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+          "family_name": "neural_atom_k1",
+          "family_version": "3",
+          "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+          "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+          "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+          "training_recipe_sha256": "2833210e4d2cb89170848acef45270025c8348a613637a43e15a4946e9680f9b",
+          "platform": "kaggle",
+          "account": "nothingnessvoid",
+          "run_reference": "nothingnessvoid/molgap-k1-tail-wd-500k-s42",
+          "platform_version": null
+        },
+        "status": "VERIFIED",
+        "weights": "live",
+        "optimizer_steps": 0,
+        "initialization_sha256": "dfe681a620ffd248b584fec44ccc29fdad38654407a44753b7830d4f33ef2e20",
+        "development_rows": 50000,
+        "mae_eV": 0.10490408539772034,
+        "maximum_prediction_difference_eV": 0.0,
+        "mae_difference_eV": 0.0,
+        "tolerances": {
+          "mae_tolerance_eV": 1e-06,
+          "prediction_tolerance_eV": 0.0001
+        }
+      },
+      "selected_vs_initial": {
+        "n_molecules": 50000,
+        "baseline_mae_eV": 0.10490407729625702,
+        "candidate_mae_eV": 0.10561739196777344,
+        "mean_delta_eV": 0.0007133146715164185,
+        "lower_95_eV": 0.0004637194241285324,
+        "upper_95_eV": 0.000976997945308685,
+        "probability_candidate_better": 0.0,
+        "threshold_eV": 0.001,
+        "noninferiority_margin_eV": 0.0005,
+        "passes_material_gate": false,
+        "passes_noninferiority_gate": false,
+        "n_bootstrap": 2000,
+        "seed": 42
+      },
+      "selected_pass": 15,
+      "selected_live_trace_mae_eV": 0.10561738163232803,
+      "final_live_mae_eV": 0.10646752268075943,
+      "final_shadow_ema_mae_eV": 0.10597310215234756,
+      "best_shadow_ema_mae_eV": 0.10576648265123367,
+      "normalized_stochastic_training_objective": {
+        "initial_pass": 0.06343475885448917,
+        "final_pass": 0.05756247558817458,
+        "not_clean_train_mae": true
+      },
+      "output_manifest_sha256": "688559b69bad4c7bfc26aa299e89e105e657175975cc6f4b7f991a3ce1632853",
+      "trace_sha256": "777c5a6653fa44a899fd50ceb115d38da307a6bc1b07226a7910ca49fe40a9cb"
+    }
+  },
+  "fixed_train_and_bn_followup": {
+    "status": "INSUFFICIENT_EVIDENCE",
+    "reason": "The exact uniform 16384/500000 TRAIN cohort and full development graph inputs are not retained locally. The historical cache path no longer exists. Three retained TRAIN shards cover only rows 0:150000 and cannot substitute. No bulk cache hydration or new remote execution was performed.",
+    "not_established": [
+      "clean TRAIN fit at the new selected/final endpoints",
+      "weight-generalization versus BN-buffer contribution",
+      "unique cause of initial degradation"
+    ]
+  },
+  "analysis_cost": {
+    "wall_seconds": 1.5380437999999685,
+    "cpu_process_seconds": 3.984375,
+    "scope": "saved initial/selected comparison and role audit assembly; excludes earlier shared diagnosis and strict acceptance",
+    "accelerator_used": false
+  }
+}

@@ -37,7 +37,9 @@ curve. Calibration TRAIN members also supply the in-sample metric. Development
 members have already influenced historical selection. Conditional row intervals
 do not estimate training-seed variability.
 
-Source is retained on `codex/exp/k1-scale-attribution-20261025`; accepted diagnostic
+Source originated on `codex/exp/k1-scale-attribution-20261025`; accepted diagnostic
 evidence and reviewed reusable infrastructure follow BRANCHES' non-promotion
-integration route. The original negative training question remains owned by
-`codex/exp/k1-tail-regularization-500k` until its independent closure and custody.
+integration route. The original negative training question is strictly qualified
+and archived; [custody](../pcqm_k1_tail_regularization_500k/terminal_custody.md)
+owns its distinct training replay evidence. The [bounded work record](bounded_work_record.md)
+retains this investigation's scope, limits and final integration checks.

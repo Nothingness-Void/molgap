@@ -1,0 +1,108 @@
+{
+  "format": "molgap-k1-target-recovery-final-validation-v1",
+  "validated_at_utc": "2026-10-25T06:53:15.230222+00:00",
+  "account": "nothingnessvoid",
+  "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "version": 2,
+  "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+  "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+  "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+  "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994",
+  "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "checks": {
+    "metadata_validation_passed": true,
+    "entry_binds_submitted_entry_bytes": true,
+    "entry_and_manifest_bind_worker_bytes": true,
+    "entry_returncode_zero_and_complete": true,
+    "entry_wall_under_900_seconds": true,
+    "entry_deadline_before_cutoff": true,
+    "labels_exact_size_hash_and_dtype": true,
+    "labels_all_finite": true,
+    "data_manifest_exact_size_hash": true,
+    "retrieval_used_only_two_pinned_files": true,
+    "source_idx_reconstructed_verified": true,
+    "nontrain_roles_not_read": true
+  },
+  "all_checks_pass": true,
+  "downloaded_files": [
+    {
+      "path": "target_recovery/labels.bin",
+      "bytes": 2000000,
+      "sha256": "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676"
+    },
+    {
+      "path": "target_recovery/data_manifest.json",
+      "bytes": 4790,
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    }
+  ],
+  "label_array": {
+    "count": 500000,
+    "dtype": "little-endian-float32",
+    "all_finite": true
+  },
+  "source_indices": {
+    "remote_file": "target_recovery/source_idx.bin",
+    "downloaded": false,
+    "local_reconstruction": "locally_reconstructed_verified_range",
+    "range_start": 0,
+    "range_stop_exclusive": 500000,
+    "dtype": "little-endian-int64",
+    "sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "matched_remote_manifest_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"
+  },
+  "runtime_import_receipt": {
+    "loaded_before_install": {
+      "numpy": false,
+      "torch": false,
+      "torch_geometric": false
+    },
+    "numpy_consistency": {
+      "loaded_version": "1.26.4",
+      "disk_distribution_version": "1.26.4",
+      "module_path": "/usr/local/lib/python3.13/dist-packages/numpy/__init__.py",
+      "random_module_path": "/usr/local/lib/python3.13/dist-packages/numpy/random/__init__.py",
+      "torch_numpy_bridge": "PASS",
+      "pyg_data_import": "PASS",
+      "python": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+      "torch": "2.11.0+cpu"
+    },
+    "bootstrap_dependencies": [
+      "numpy<2",
+      "torch-geometric==2.6.1",
+      "ogb==1.3.6"
+    ]
+  },
+  "execution_cost": {
+    "wall_seconds": 306.03824080799995,
+    "measured_process_tree_cpu_seconds": 814.828792,
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.22634133111111113
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "gpu_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "cutoff": "2026-10-25T07:35:00+00:00",
+    "session_timeout_seconds": 900
+  },
+  "scientific_scope": {
+    "train_rows": 500000,
+    "train_labels_read": true,
+    "development": "not_read",
+    "official_validation": "not_read",
+    "test_dev": "not_read",
+    "test_challenge": "not_read",
+    "model_or_inference": false
+  },
+  "retrieval": {
+    "known_download_bytes": 2004790,
+    "unselected_outputs_downloaded": false,
+    "platform_version_verified_by_output_api": true
+  }
+}

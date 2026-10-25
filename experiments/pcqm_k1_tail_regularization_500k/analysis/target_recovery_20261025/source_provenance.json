@@ -1,0 +1,146 @@
+{
+  "account": "nothingnessvoid",
+  "copied_metadata": [
+    {
+      "bytes": 3838,
+      "file": "final_validation.json",
+      "sha256": "eda1571a0bda83bdaeaae7377ba2a32617737b387749b6d4999aff6b6cd0ddaa",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/final_validation.json"
+    },
+    {
+      "bytes": 2225,
+      "file": "metadata_validation.json",
+      "sha256": "4e1ff688b75c74c0f3c137f63b67b55a0b5ba06a23be7ee45685ad16bb58d0ec",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/metadata_validation.json"
+    },
+    {
+      "bytes": 992,
+      "file": "metadata_retrieval.json",
+      "sha256": "cbb2fb323cf4a1d907a22cb9e3a945df5f8ebc6543e08808a6de234eff23e196",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/metadata_retrieval.json"
+    },
+    {
+      "bytes": 2109,
+      "file": "payload_retrieval.json",
+      "sha256": "60287966369aae31c768eca9f934d147fce4a4bae4e1214d791f5d048fc1c93e",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/payload_retrieval.json"
+    },
+    {
+      "bytes": 4813,
+      "file": "request_frozen.json",
+      "sha256": "d5c189354c7988d54b3e748f5cb02ce8be6565994f785e434183c27df4983b01",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/request_frozen.json"
+    },
+    {
+      "bytes": 414,
+      "file": "submission_response.json",
+      "sha256": "4fe9390952cef0c0d44e2371f1acbdede33a7429ed670e720aefe54fc5f406f5",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/submission_response.json"
+    },
+    {
+      "bytes": 815,
+      "file": "post_started.json",
+      "sha256": "cc339bbac92baddb95cebc4016eedd9dea5f27414ffc83c904481df570908e3f",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/post_started.json"
+    },
+    {
+      "bytes": 1246,
+      "file": "entry_receipt.json",
+      "sha256": "8e3b2b9e1c75ad5497b120d0039c802444c4078be7b337d9f510d9af8a5e23ac",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/retrieved/target_recovery/entry_receipt.json"
+    },
+    {
+      "bytes": 12606,
+      "file": "manifest.json",
+      "sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/retrieved/target_recovery/manifest.json"
+    },
+    {
+      "bytes": 1139,
+      "file": "worker_observation.json",
+      "sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/retrieved/target_recovery/worker_observation.json"
+    },
+    {
+      "bytes": 4790,
+      "file": "data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/payload/target_recovery/data_manifest.json"
+    }
+  ],
+  "data_binding": {
+    "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "original_recipe_sha256": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648"
+  },
+  "execution": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.22634133111111113
+    },
+    "entry_status": "COMPLETE",
+    "gpu_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "manifest_sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b",
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "requested_accelerator": "CPU",
+    "wall_seconds": 306.03824080799995,
+    "worker_observation_sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741",
+    "worker_returncode": 0
+  },
+  "format": "molgap-k1-target-recovery-provenance-v1",
+  "frozen_transform": {
+    "asset_id": "2d056ceed8135a62d602c5ee01bf1d5a2f15669b4a882d68d96edb8bc27783ca",
+    "asset_sha256": "d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a",
+    "ddof": 1,
+    "mean": 5.413434982299805,
+    "source_row_manifest_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "std": 1.17672860622406,
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_sha256": "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676",
+    "variance_convention": "sample"
+  },
+  "generated_files": {
+    "strict_inputs.json": {
+      "bytes": 527,
+      "sha256": "eed69e0cc77748e4de90c70125888dab92ae4a9e19fc59389bfd7cbb32624a70"
+    },
+    "target_transform.json": {
+      "bytes": 557,
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    }
+  },
+  "kernel": "nothingnessvoid/molgap-k1-target-proof-500k-20261025",
+  "ordered_train_membership": {
+    "dtype": "little-endian-int64",
+    "matches_frozen_role": true,
+    "range_start": 0,
+    "range_stop_exclusive": 500000,
+    "sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"
+  },
+  "raw_labels_copied_into_repository": false,
+  "recovery_attempt_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002",
+  "scope": "Exact original TRAIN labels; CPU only; no graph construction, model, inference, or optimizer.",
+  "source_binding": {
+    "package_identity": "09efe4c0b754b0c7b7f2d1ea8e7a679be3b0a7b2763eb30a8afc9fff131c1e32",
+    "source_archive_sha256": "ce4326952cc6b379cb577aac9bb090adfe8e290922839e397dd92a38f643a055",
+    "source_commit": "873c3ac4e8c04f7658d5f1711dfe4e17f7d9eb12",
+    "spec_identity": "f5404cb801a792bf57f56dfde0b496e8f21a7ad67b9f22f93a8721cc1d04a994"
+  },
+  "status": "VERIFIED",
+  "train_labels": {
+    "all_finite": true,
+    "bytes": 2000000,
+    "dtype": "little-endian-float32",
+    "external_locator": "external:///D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/payload/target_recovery/labels.bin",
+    "rows": 500000,
+    "sha256": "cef6fbb56a546b1808b2a42e94b8a08354d23928512be23de9f1c8b8f66f3676",
+    "source_path": "D:/molgap-artifacts/reconciliation/k1-scale-attribution-20261025/target_recovery/attempt_002/payload/target_recovery/labels.bin"
+  },
+  "validated_at_utc": "2026-10-25T06:53:15.230222+00:00",
+  "version": 2
+}

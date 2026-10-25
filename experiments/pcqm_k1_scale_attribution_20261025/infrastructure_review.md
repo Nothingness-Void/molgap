@@ -123,3 +123,37 @@ The evidence identifies missing producer/consumer compatibility and an incomplet
 historical proof contract. It does not show that a large new framework or another
 hundred synthetic tests is needed. Qualify the exact frozen recipe through its
 owning acceptance path, and reserve strict replay claims for real retained proof.
+
+## Real replay projection incident
+
+After exact TRAIN proof recovery, the actual acceptance invocation completed both
+native proofs as VERIFIED and the candidate comparison as STRICT_CAUSAL/VERIFIED.
+It still returned BLOCKED after77.044seconds because RML excluded both traces as
+`no_compatible_candidate_reference_trace_pair`. The strict identities differed
+only in `optimizer_identity`, exactly the frozen weight-decay intervention.
+
+The shared replay selector treated optimizer identity as an unconditional matching
+field, even though the hash-bound comparison explicitly qualified that difference.
+Commit`af154ac02b7c6d9202c37509d29e16b20969c7af` repairs only this projection. It
+binds an optimizer grouping scope to the exact accepted comparison, both actual
+optimizer values and the observed physical pair. Other strict fields remain in
+the key. Unknown/mixed interventions and frozen metadata that self-declare an
+exemption do not obtain this scope. No frozen trace or scientific result changed.
+
+The existing selector on the real canonical records changed from two excluded
+singletons to one compatible pair. This read-only reproduction is separate from
+the subsequent full acceptance result, recorded by the original tail owner in
+`analysis/target_recovery_20261025/qualification_20261025.md`.
+
+The actual rerun exited0 in11.898seconds: strict validation and both independent
+replay records VERIFIED, capability complete, no exclusions. Candidate comparison
+is STRICT_CAUSAL/VERIFIED; the accepted reference is NOT_APPLICABLE. Reentry used
+CANONICAL_READ_ONLY, with no training, inference or network access and31 existing
+files unchanged by acceptance. Rebuild and frozen-index check then passed. The
+original negative decisions remain in force; READY and a new scientific decision
+were not evaluated by this verification.
+
+The new projection supports one exact accepted optimizer pair. Multiple candidates
+sharing a reference fail closed; it does not silently invent reference copies or
+weaken other matching fields. Internal selector helpers consume validated records;
+they are not independent evidence authenticators.

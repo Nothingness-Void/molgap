@@ -41,6 +41,12 @@ The report separates confirmed observations from unresolved initialization,
 seed and recipe effects. A new training discriminator is proposed only;
 no training release or model adoption follows from this NO_TRAIN diagnostic.
 
+The completed tail500K pair now has two independent complete strict replay
+entries without exclusions after exact TRAIN-proof recovery and the bounded
+replay-selector repair. Both recipes remain negative; no successor is released.
+[Qualification and custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md)
+own the actual acceptance results and archived source.
+
 1. Consistency500K is closed below its material gate and formally finalized in
    RML. [Canonical custody](experiments/pcqm_k1_consistency_ablation_500k/README.md)
    retains both traces and missing-reference exclusions; no adoption or strict replay.

@@ -7,6 +7,11 @@ sampled training fit improves while development worsens. It qualifies neither
 module stacking nor a universal capacity/early-plateau explanation. No adoption
 or new training is released; the original training replay qualification is separate.
 
+[K1 tail regularization500K](pcqm_k1_tail_regularization_500k/README.md) is closed
+negative with two complete strict replay entries and no exclusions. Its full
+source history is archived; desktop retains byte-verified canonical evidence,
+configuration and qualification, without the rejected preparation implementation.
+
 K1 equal-content hop-shell100K is terminally accepted with two complete strict
 replay entries. The1.116meV ordered-shell gain misses its3meV gate; both training
 and local frozen-shell attribution are closed without adoption.

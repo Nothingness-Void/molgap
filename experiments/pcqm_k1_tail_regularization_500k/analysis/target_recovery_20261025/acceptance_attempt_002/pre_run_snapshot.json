@@ -1,0 +1,199 @@
+{
+  "created_utc": "2026-10-25T07:09:24.6895275Z",
+  "owner": "D:\\molgap-worktrees\\k1-tail-regularization-500k",
+  "caller": "D:\\molgap-worktrees\\k1-scale-attribution-20261025",
+  "git": {
+    "owner_head": "b6114c8a9ae42ae879a79a72dd35925d3d51a896",
+    "owner_status": " M research_memory/derived/policy_backtest.json\n M research_memory/derived/reference_reuse_index.json\n M research_memory/derived/replay_pool.json\n M research_memory/derived/research_summary.json\n M research_memory/derived/screening_backtest.json\n M research_memory/derived/trajectory_index.json\n?? experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/\n?? experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/comparison_assets/\n?? experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/strict_qualification/\n?? experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/qualification_revisions/\n?? experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/qualification_revisions/",
+    "caller_head": "af154ac02b7c6d9202c37509d29e16b20969c7af",
+    "caller_status": " M experiments/pcqm_k1_scale_attribution_20261025/infrastructure_review.md\n?? experiments/pcqm_k1_scale_attribution_20261025/bounded_work_record.md"
+  },
+  "files": [
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/decision.md",
+      "sha256": "7c02204d0e75ea9f9bbf72327c4f16afdb8a3d3842283fd7ac60c957109c4fa1",
+      "bytes": 3581
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/target_manifest.json",
+      "sha256": "c55b20cfddf8fc1648aa7196ca2a9acbacdf3ecc27022fa20749d2d10b08b0e6",
+      "bytes": 207
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/0428fbef6b1b3fe7/terminal.json",
+      "sha256": "5f208b3d940bd7e743a3a579491eb4fc75a460c6ba54a484235cdd22fa98b53e",
+      "bytes": 18024
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/terminal_staging/v1/311d19a20a95fbfa/terminal.json",
+      "sha256": "2a076d07621a84c0d94aa27becc9c5df56300a355859fbfeb52885b04ad4b194",
+      "bytes": 18265
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/terminal.json",
+      "sha256": "a713ba2891ef922078f6a3eb3c17dfe55ebbaacce07673d8d024631df79d40c5",
+      "bytes": 18021
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/e269746cb6f9c9cc/terminal.json",
+      "sha256": "69db5409ebb680e418c5e22b80dda3731191485ae8085c3f0db9ceaa5693c8d6",
+      "bytes": 18262
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e2/rml_finalized/terminal_input.json",
+      "sha256": "5cec16c7204e07d63c00c5e6609ef7f27d7275bc815c10a73e2ef57a53c24699",
+      "bytes": 8856
+    },
+    {
+      "scope": "frozen",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/rml_finalized/terminal_input.json",
+      "sha256": "439c96c0e83838fdc2b614fbe93047571c2cacdd228e2182fe94ef42ead66755",
+      "bytes": 8856
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/command.txt",
+      "sha256": "6769f0f8ccac932f96322575319999a823b47d5e67e5ff8ea61cca0b0252d5bc",
+      "bytes": 614
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/copy_manifest.json",
+      "sha256": "45a8c3abc74e7b7760399ab99411f2c67d00ec1ee9df223400f6b2e8faa03b30",
+      "bytes": 2260
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/exit_code.txt",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "bytes": 3
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/stderr.txt",
+      "sha256": "42fe445a8487c4130969d33b8c74d90f10e176c7fe32db21f7edb2e7f4c5af29",
+      "bytes": 272
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/stdout.txt",
+      "sha256": "4e5424656873df9567555ba3e5ff02ba93d875ff49b9811d67ca7d994d5c120a",
+      "bytes": 165190
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/acceptance_attempt_001/wall_seconds.txt",
+      "sha256": "43a82522ca38e6940a1ad91c76b62bd7eb352a94e77267086b91ad7c95ce8c28",
+      "bytes": 12
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "bytes": 4790
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/entry_receipt.json",
+      "sha256": "8e3b2b9e1c75ad5497b120d0039c802444c4078be7b337d9f510d9af8a5e23ac",
+      "bytes": 1246
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/final_validation.json",
+      "sha256": "eda1571a0bda83bdaeaae7377ba2a32617737b387749b6d4999aff6b6cd0ddaa",
+      "bytes": 3838
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/manifest.json",
+      "sha256": "bee080c9e8b9f55571c8d0b156d9c8f4605742f163d92d936aadde8f1fbeae0b",
+      "bytes": 12606
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/metadata_retrieval.json",
+      "sha256": "cbb2fb323cf4a1d907a22cb9e3a945df5f8ebc6543e08808a6de234eff23e196",
+      "bytes": 992
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/metadata_validation.json",
+      "sha256": "4e1ff688b75c74c0f3c137f63b67b55a0b5ba06a23be7ee45685ad16bb58d0ec",
+      "bytes": 2225
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/payload_retrieval.json",
+      "sha256": "60287966369aae31c768eca9f934d147fce4a4bae4e1214d791f5d048fc1c93e",
+      "bytes": 2109
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/post_started.json",
+      "sha256": "cc339bbac92baddb95cebc4016eedd9dea5f27414ffc83c904481df570908e3f",
+      "bytes": 815
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/qualification_20261025.md",
+      "sha256": "be779a2258e0ce516355a5969ae453f902d93d1c56997c4bfda9f9914d503729",
+      "bytes": 5490
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/request_frozen.json",
+      "sha256": "d5c189354c7988d54b3e748f5cb02ce8be6565994f785e434183c27df4983b01",
+      "bytes": 4813
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/source_provenance.json",
+      "sha256": "ed4660e7110bd520cedb13c1636a8b8466365a3863b313af4b40f66f828e13be",
+      "bytes": 6712
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/strict_inputs.json",
+      "sha256": "eed69e0cc77748e4de90c70125888dab92ae4a9e19fc59389bfd7cbb32624a70",
+      "bytes": 527
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/submission_response.json",
+      "sha256": "4fe9390952cef0c0d44e2371f1acbdede33a7429ed670e720aefe54fc5f406f5",
+      "bytes": 414
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/target_transform.json",
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be",
+      "bytes": 557
+    },
+    {
+      "scope": "recovery_tree_preexisting",
+      "path": "experiments/pcqm_k1_tail_regularization_500k/analysis/target_recovery_20261025/worker_observation.json",
+      "sha256": "b2c6d68a2e84754854bd13d1e74e72e59ca5b361040ff556427d33ffe1f03741",
+      "bytes": 1139
+    },
+    {
+      "scope": "acceptance_input",
+      "path": "D:\\molgap-worktrees\\k1-tail-regularization-500k\\experiments\\pcqm_k1_tail_regularization_500k\\analysis\\target_recovery_20261025\\strict_inputs.json",
+      "sha256": "eed69e0cc77748e4de90c70125888dab92ae4a9e19fc59389bfd7cbb32624a70",
+      "bytes": 527
+    },
+    {
+      "scope": "acceptance_input",
+      "path": "D:\\molgap-worktrees\\k1-tail-regularization-500k\\experiments\\pcqm_k1_tail_regularization_500k\\analysis\\target_recovery_20261025\\target_transform.json",
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be",
+      "bytes": 557
+    }
+  ]
+}

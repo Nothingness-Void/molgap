@@ -1,0 +1,48 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-c8642de7ee01362a83edb856ed471c35f9da5a0cfc2f2c6579990bc735ff7ba7",
+  "finalized_at": "2026-10-25T04:42:12.572492+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_tail_regularization_500k/decision.md": "7c02204d0e75ea9f9bbf72327c4f16afdb8a3d3842283fd7ac60c957109c4fa1",
+    "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e3/recipe.json": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648",
+    "experiments/pcqm_k1_tail_regularization_500k/role_audits/tail_wd1e3.json": "4d387e4acef5063a87051d43b6e9cacdbdb23cdaa717510e6f3a1845e1f2ec19",
+    "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/acceptance.json": "00e883029d66933fe1083b36d90c5710ab49369d6a74001cd455d7d0cdde1e29",
+    "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/terminal_staging/v1/a956cfa0df2b4ec2/observed.json": "763e2a05db4bcc2490ae834dc8e33c662fc4e75eb8f185019eabbbdb476da175",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/allocation_ledger.json": "da960d4d4568ec5101707368e69a7dbd562c0123680f1aca2b3ac09cfac98515",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/execution_retention.json": "cbd0e29135ee049881034603f3e75e7585bbdb247378255218d246b08c1c5720",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/allocation_ledger.json": "da960d4d4568ec5101707368e69a7dbd562c0123680f1aca2b3ac09cfac98515",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/canonical_trace.json": "1bb940367ecad2dd927b0e5317a205295611c40f90ab6c1a971e97c8bfbb340d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/canonical_trace.json.context.json": "9e432de0beb5b37a7512444beff8708f24856a79c6b82222fcd1ef548713b9df",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/development_predictions.pt": "d5a5330c5d2147583d6565a368b6971e7bcf21b4f8f649e0ecb1beb8631e2a6b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/last_checkpoint.pt": "8b091491bb6ff1907d956b36b329c469726cb934f9bb32cc9d2f05a136146fef",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/output_manifest.json": "a5aa6e8f62849bcb600016d6d0b5e202d3fc738c08d2d55a98510d6cd60b89aa",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/selected_model.pt": "6797e80169c67dfe539d43dde779f17564f989c0ca41d9416c6d92975ab4e7b1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-tail-regularization-500k-s42/v1/experiment/tail_wd1e3/training_contract.json": "e846231409dbba292ff5f217ae4bc6395c4af7466a825babec987bdd7f7f2648"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/trajectory.json",
+  "prospective_sha256": "d25a91fef51d2dc1d78dceaeaecc6f0d83182d1db3e06d19c06334312adc56ef",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-0.json": "20020c33dcaeaaa23dc87da64cc3c6beae5dd3a2a4611c8d86e7323218dce6b7",
+    "costs/cost-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-allocation-0.json": "ddfeae2bb55da862efee6f4ff96e3efb776d35c7bc144fd9f5c09bc3822c6085",
+    "roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-labels_read.json": "06a754a9f01c668aeed8bed00ef6a8df3c431a4e79337b00e10e26467b19a6c5",
+    "roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-metric_computed.json": "2fd6805cfcfe5f23241d30045565be16ee75810b07c48094280ae205e6c47687",
+    "roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-prediction_input.json": "05cab3910e1900a78da317f1f31a8eb1f5cbf4a9472119981e79ff4aeb48b50e",
+    "roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-selection_used.json": "3ec0e7b73a9f292b7317b67fdb7d2f18d9af267cd7ed4d3048e420381cdae452",
+    "roles/role-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3-training_membership.json": "b91d666cc6a40d1c0fe508b62fdcbbf14f9c8c129187c9f3edf094bcfe8d7185",
+    "terminal_input.json": "439c96c0e83838fdc2b614fbe93047571c2cacdd228e2182fe94ef42ead66755",
+    "trace.json": "1bb940367ecad2dd927b0e5317a205295611c40f90ab6c1a971e97c8bfbb340d",
+    "trace_manifest.json": "976fd7350574822160afc38cf376259910a7036d675c4ac439f71d57883adbcc",
+    "trajectory.json": "6c2528b7028a3fbc340ed5408ddc708c163f02a2aef66c79c956dfe563f73f67",
+    "v5_evidence.json": "388a7aa5d0f72cef87d498ea6436e84437cf8d69e03a3c570889aa381d68abd1"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_tail_regularization_500k/runs/pcqm-k1-tail-regularization-500k-s42/prospective/tail_wd1e3/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "c8642de7ee01362a83edb856ed471c35f9da5a0cfc2f2c6579990bc735ff7ba7",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+}

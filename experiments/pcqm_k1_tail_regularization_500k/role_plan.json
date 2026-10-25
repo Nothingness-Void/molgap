@@ -1,0 +1,33 @@
+{
+  "development": {
+    "rows": 50000,
+    "source_idx_start": 500000,
+    "source_idx_stop": 550000
+  },
+  "development_previously_consumed": true,
+  "fixed_train_followup": "Same frozen16384TRAIN cohort at start/selected/final, using retained artifacts after completion; no new training.",
+  "geometry_model_inputs": false,
+  "official_validation": "sealed",
+  "planned": true,
+  "role_identities": [
+    {
+      "membership_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role": "train",
+      "row_order_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "usage_sha256": "fefafcb28045edf38d99980fa6cb13065ed59ebc42a080da979973c560b0fcc2"
+    },
+    {
+      "membership_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role": "development",
+      "row_order_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "usage_sha256": "926d1f595ada0b02b51b8f663ed8dc5e52985aeb906f395d2b86f09600ba4659"
+    }
+  ],
+  "test": "sealed",
+  "train": {
+    "rows": 500000,
+    "source_idx_start": 0,
+    "source_idx_stop": 500000
+  },
+  "train_metric": "stochastic normalized objective, not clean fit"
+}
