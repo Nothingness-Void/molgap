@@ -70,10 +70,21 @@ PairToken 0.104303729: **0.699 meV worse**, row interval [0.139, 1.253] meV.
 Keep the dated early report; use the recovered matched comparison for inference.
 The two reference values are not interchangeable.
 
+The matched60-v4 PairToken curves add an independent historical fit/generalization
+observation: over zero-based epochs40–59, its TRAIN MAE was lower than K1 by
+1.667 meV on average while development MAE was higher by1.126 meV. The module
+adds only22,848 parameters (+0.62%); total presentations grew from about4M at100K
+to30M at500K. This pair therefore does not support a simple explanation of fewer
+total presentations or an unused relation branch. It still does not identify
+which schedule, capacity or selection mechanism caused its late reversal.
+
 Authority: the same [pinned historical ledger](../pcqm_k1_complete_local_audit/historical_evidence.md),
 its exact-reference and frozen cross-cohort sources. The older
 [scale summary](../pcqm_scale_transfer_attribution/decision.md) predates that
 reference recovery and must not be treated as the latest matched comparison.
+The direct frozen audit is commit`f426350ad636d32ea05c059664cea35fa44f1618`,
+`experiments/pcqm_k1_cross_scale_frozen/decision.md`; its completed remote work
+is reviewed as retained evidence only, without taking over server custody.
 
 ### 4. The curves do not support a universal early learning plateau
 

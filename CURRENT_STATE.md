@@ -30,6 +30,17 @@ another submission needs explicit authority. See [reference roles](models/REFERE
 
 User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 
+The [2026-10-25 scale synthesis](experiments/pcqm_k1_scale_attribution_20261025/analysis.md)
+and accepted [retained-tail discriminator](experiments/pcqm_k1_scale_attribution_20261025/README.md)
+take precedence for the next K1 research choice. Recent within-module100K gains
+do not establish improvement over original K1; the strongest100K package was
+not carried unchanged to500K. Under the fixed TRAIN-only calibration procedure,
+the retained tail improves in-sample fit while worsening development. Do not
+repeat that tail-WD grid or stack nominal gains into another500K package.
+The report separates confirmed observations from unresolved initialization,
+seed and recipe effects. A new training discriminator is proposed only;
+no training release or model adoption follows from this NO_TRAIN diagnostic.
+
 1. Consistency500K is closed below its material gate and formally finalized in
    RML. [Canonical custody](experiments/pcqm_k1_consistency_ablation_500k/README.md)
    retains both traces and missing-reference exclusions; no adoption or strict replay.

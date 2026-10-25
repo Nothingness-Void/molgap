@@ -1,5 +1,12 @@
 # Experiments
 
+[K1 scale attribution](pcqm_k1_scale_attribution_20261025/README.md) combines
+the historical comparison audit with an accepted fixed five-state NO_TRAIN
+diagnostic. The tested Clean-BN procedure does not recover the negative tail:
+sampled training fit improves while development worsens. It qualifies neither
+module stacking nor a universal capacity/early-plateau explanation. No adoption
+or new training is released; the original training replay qualification is separate.
+
 K1 equal-content hop-shell100K is terminally accepted with two complete strict
 replay entries. The1.116meV ordered-shell gain misses its3meV gate; both training
 and local frozen-shell attribution are closed without adoption.
