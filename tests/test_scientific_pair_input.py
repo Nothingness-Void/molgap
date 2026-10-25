@@ -1,7 +1,9 @@
 """Shared human declarations feed existing same-run and attempt owners."""
 from copy import deepcopy
+import hashlib
 import json
 from pathlib import Path
+import struct
 
 import pytest
 
@@ -24,6 +26,7 @@ def _pair(case):
     target = "experiments/compact/target.json"
     recipe = json.loads((case.repo / shared["recipe_ref"]).read_bytes())
     _write_json(case.repo / target, {
+        "training_float32_target_sha256": hashlib.sha256(struct.pack("<3f", -1., 0., 1.)).hexdigest(),
         "development_target_sha256": recipe["acceptance_requirements"]["target_sha256"],
         "target_encoding": "little-endian-float32-contiguous-raw-bytes"})
     value["same_run"] = {"reference_arm_id": "baseline", "target_manifest_ref": target}
@@ -48,7 +51,21 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
     _, spec, plan, _ = resolve_experiment_input(path, case.repo)
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["reference", "candidate"]
     acceptance = json.loads((case.repo / plan["acceptance_plan"]).read_bytes())
-    assert check_acceptance_plan(spec, case.repo, acceptance)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    target_path = case.repo / value["same_run"]["target_manifest_ref"]
+    retained = target_path.read_bytes()
+    targets = json.loads(retained)
+    targets.pop("training_float32_target_sha256")
+    _write_json(target_path, targets)
+    missing = deepcopy(acceptance)
+    for entry in missing["arms"]:
+        entry["target_manifest"]["sha256"] = hashlib.sha256(target_path.read_bytes()).hexdigest()
+    assert check_acceptance_plan(spec, case.repo, missing)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    blocked = check_acceptance_plan(spec, case.repo, missing, require_training_targets=True)
+    assert blocked["status"] == "BLOCKED"
+    assert all(any("training_float32_target_sha256" in reason for reason in arm["blockers"])
+               for arm in blocked["arms"])
+    target_path.write_bytes(retained)
+    assert check_acceptance_plan(spec, case.repo, acceptance, require_training_targets=True)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
     for binding in spec.to_dict()["prospective"]["arms"]:
         proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]

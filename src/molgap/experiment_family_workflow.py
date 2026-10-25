@@ -52,7 +52,78 @@ def _verify_canonical_output(root, spec, context, package, observed, output_dir)
             raise ValueError("Canonical qualification differs from the observed output artifacts")
 
 
-def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports):
+def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
+    """Resolve retained target proof without reading training graphs or models."""
+    from .comparison_readiness import target_transform_asset_digest, validate_target_transform_asset
+    from .family_training_runner import read_recipe
+    from .research_memory.paths import artifact_locator, bound_artifact_path
+    root = Path(repo_root).resolve()
+    declaration = resolved["spec"].to_dict()
+    requirements, blockers = {}, []
+    if strict_inputs is None:
+        strict_inputs = {}
+    if type(strict_inputs) is not dict or set(strict_inputs) - set(resolved["outputs"]):
+        raise ValueError("Strict inputs must name only frozen run arms")
+    # Resolve every transform before publishing any qualification metadata.
+    for arm_id, item in sorted(resolved["outputs"].items()):
+        try:
+            arm = next(arm for arm in declaration["arms"] if arm["arm_id"] == arm_id)
+            _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+            role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
+            target_binding = resolved["target_identities"][arm_id]
+            target_plan = target_binding._pinned_json(target_binding.plan_path, target_binding.plan_sha256)
+            entry = next(entry for entry in target_plan["arms"] if entry["arm_id"] == arm_id)
+            pin = (entry["target_manifest"] if target_plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
+                   else entry["reference_artifacts"]["target_manifest"])
+            targets = target_binding._pinned_json(pin["path"], pin["sha256"])
+            supplied = strict_inputs.get(arm_id, {})
+            if type(supplied) is not dict:
+                raise ValueError("Strict arm inputs must be an object")
+            asset = supplied.get("target_transform_asset")
+            expected_transform = {"format": "molgap-target-transform-asset-v1",
+                "asset_id": arm["training"]["transform"]["sha256"], "target_identity": arm["data"]["target"],
+                "mean": recipe.target_mean_eV, "std": recipe.target_std_eV, "ddof": 1,
+                "variance_convention": "sample", "source_row_manifest_sha256": role_by_name["train"]["membership_sha256"]}
+            if asset is not None:
+                if type(asset) is not dict or set(asset) != {"path", "sha256"}:
+                    raise ValueError("Target transform evidence requires path and sha256")
+                _digest(asset["sha256"], "target transform evidence digest")
+                path = bound_artifact_path(root, asset["path"])
+                _safe_local(path)
+                raw = path.read_bytes()
+                if hashlib.sha256(raw).hexdigest() != asset["sha256"]:
+                    raise ValueError("Target transform evidence file hash mismatch")
+                transform = validate_target_transform_asset(_json_bytes(raw))
+                if any(transform.get(key) != value for key, value in expected_transform.items()):
+                    raise ValueError("Target transform evidence differs from frozen normalization/train identity")
+            else:
+                if "training_float32_target_sha256" not in targets:
+                    raise ValueError("Frozen training_float32_target_sha256 is missing; supply a hash-bound "
+                        "target_transform_asset from retained ordered training-label evidence")
+                _digest(targets.get("training_float32_target_sha256"), "training_float32_target_sha256")
+                transform = {**expected_transform, "target_sha256": targets["training_float32_target_sha256"]}
+                transform["asset_sha256"] = target_transform_asset_digest(transform)
+                validate_target_transform_asset(transform)
+            if (not math.isfinite(transform["mean"]) or not math.isfinite(transform["std"])
+                    or transform["std"] <= 0):
+                raise ValueError("Target transform normalization must be finite with positive std")
+            if "training_float32_target_sha256" in targets:
+                _digest(targets["training_float32_target_sha256"], "training_float32_target_sha256")
+                if transform["target_sha256"] != targets["training_float32_target_sha256"]:
+                    raise ValueError("Target transform evidence differs from frozen training targets")
+            requirements[arm_id] = {"transform": transform, "targets": targets}
+            if asset is not None:
+                requirements[arm_id]["supplemental_binding"] = {
+                    "ref": artifact_locator(root, path), "sha256": asset["sha256"]}
+        except (ValueError, TypeError, KeyError, OSError, StopIteration) as exc:
+            blockers.append(arm_id + ": " + str(exc))
+            requirements[arm_id] = {"required_evidence": ["target_transform_asset"], "blockers": [str(exc)]}
+    return {"status": "BLOCKED" if blockers else "VERIFIED", "blockers": blockers,
+            "arms": requirements}
+
+
+def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports, strict_inputs=None,
+                                       _target_transforms=None):
     """Translate verified family artifacts into the existing V5 comparison forms.
 
     Publishes new metadata and terminal inputs. Original terminal packages and
@@ -61,8 +132,8 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     import copy
     import numpy as np
     from .comparison_readiness import (CAUSAL_REQUIRED_ROLE_KINDS, ROLE_EVENT_KINDS,
-        assess_comparison_readiness, reference_bundle_digest, target_transform_asset_digest,
-        validate_comparison_readiness, validate_reference_bundle, validate_target_transform_asset)
+        assess_comparison_readiness, reference_bundle_digest,
+        validate_comparison_readiness, validate_reference_bundle)
     from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
@@ -131,8 +202,29 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         return {"locations": reused, "comparisons": comparisons, "canonical_reused": True,
             "reference_bundle_ref": None, "directory": None,
             "qualification_adapter_sha256": file_digest(Path(__file__))}
+    target_report = (_target_transforms if _target_transforms is not None else
+                     resolve_strict_target_transforms(root, resolved, strict_inputs))
+    if target_report["status"] != "VERIFIED":
+        return {**target_report, "executed": False}
+    transforms = {arm: row["transform"] for arm, row in target_report["arms"].items()}
+    target_manifests = {arm: row["targets"] for arm, row in target_report["arms"].items()}
+    appended = {arm: row["supplemental_binding"] for arm, row in target_report["arms"].items()
+                if "supplemental_binding" in row}
+    binding_blockers, binding_requirements = [], {}
+    for arm_id, asset in appended.items():
+        try:
+            verify_bound_artifact(root, asset["ref"], asset["sha256"])
+            accepted_hash = packages[arm_id]["artifact_hashes"].get(asset["ref"])
+            if accepted_hash is not None and accepted_hash != asset["sha256"]:
+                raise ValueError("Target transform evidence cannot replace an accepted binding")
+        except (ValueError, OSError) as exc:
+            binding_blockers.append(arm_id + ": " + str(exc))
+            binding_requirements[arm_id] = {"required_evidence": ["target_transform_asset"], "blockers": [str(exc)]}
+    if binding_blockers:
+        return {"status": "BLOCKED", "arms": binding_requirements, "blockers": binding_blockers, "executed": False}
     adapter_sha256 = file_digest(Path(__file__))
     identity = canonical_fingerprint({"packages": packages, "native": native_reports,
+        "target_transforms": transforms, "target_transform_evidence": appended,
         "qualification_adapter_sha256": adapter_sha256})
     directory = repo_local_path(root, Path(locations[reference_id]["trajectory"]).parent.parent
         / "strict_qualification" / identity[:20])
@@ -161,19 +253,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         loaded[arm_id] = data
         contract, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
         role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
-        target_binding = resolved["target_identities"][arm_id]
-        target_plan = target_binding._pinned_json(target_binding.plan_path, target_binding.plan_sha256)
-        target_entry = next(entry for entry in target_plan["arms"] if entry["arm_id"] == arm_id)
-        target_pin = (target_entry["target_manifest"]
-            if target_plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
-            else target_entry["reference_artifacts"]["target_manifest"])
-        targets = target_binding._pinned_json(target_pin["path"], target_pin["sha256"])
-        transform = {"format": "molgap-target-transform-asset-v1", "asset_id": arm["training"]["transform"]["sha256"],
-            "target_identity": arm["data"]["target"], "mean": recipe.target_mean_eV, "std": recipe.target_std_eV,
-            "ddof": 1, "variance_convention": "sample", "source_row_manifest_sha256": role_by_name["train"]["membership_sha256"],
-            "target_sha256": targets["training_float32_target_sha256"]}
-        transform["asset_sha256"] = target_transform_asset_digest(transform)
-        validate_target_transform_asset(transform)
+        targets, transform = target_manifests[arm_id], transforms[arm_id]
         transform_path = repo_local_path(root, Path(locations[arm_id]["trajectory"]).parent.parent
             / "comparison_assets" / transform["asset_sha256"] / "target_transform.json")
         publish_immutable_bytes(transform_path, json_bytes(transform))
@@ -242,6 +322,17 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     sides[reference_id].update(reference_bundle_id=reference_bundle["reference_bundle_id"], reference_bundle_sha256=reference_bundle_digest(reference_bundle))
     comparisons, qualified = {}, {}
     for arm_id, package in packages.items():
+        package = copy.deepcopy(package)
+        if arm_id in appended:
+            asset = appended[arm_id]
+            verify_bound_artifact(root, asset["ref"], asset["sha256"])
+            if asset["ref"] in package["artifact_hashes"] and package["artifact_hashes"][asset["ref"]] != asset["sha256"]:
+                raise ValueError("Target transform evidence cannot replace an accepted binding")
+            package["artifact_hashes"][asset["ref"]] = asset["sha256"]
+            artifact = {"name": "target_transform_evidence", "locator": asset["ref"], "sha256": asset["sha256"],
+                "availability": "machine_local_verified" if asset["ref"].startswith("external://") else "durable_local_verified"}
+            if artifact not in package["evidence"]["artifacts"]:
+                package["evidence"]["artifacts"].append(artifact)
         if arm_id != reference_id:
             left, right = loaded[reference_id], loaded[arm_id]
             if not np.array_equal(left["source_idx"], right["source_idx"]) or not np.array_equal(left["target_eV"], right["target_eV"]):
@@ -259,11 +350,8 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             comparison_ref = publish(arm_id, "comparison_readiness.json", comparison)
             if not comparison["strict_ready"]:
                 raise ValueError("Strict comparison remains blocked: " + repr(comparison["blocker_codes"]))
-            package = copy.deepcopy(package)
             package["comparison_readiness_ref"] = comparison_ref
             package["artifact_hashes"][comparison_ref] = file_digest(root / comparison_ref)
-        else:
-            package = copy.deepcopy(package)
         package["artifact_hashes"][bundle_ref] = file_digest(root / bundle_ref)
         package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
         if arm_id in finalized:
@@ -1034,7 +1122,8 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
             "runtime_qualification": "NOT_EVALUATED"}
 
 
-def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
+def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
+                                    require_training_targets=False) -> dict:
     """Check frozen peer/target availability, never certify a future reference."""
     declaration = spec.to_dict()
     pair = declaration["prospective"].get("same_run_replay")
@@ -1091,6 +1180,8 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
             _development_role(contract)
             target = pinned(entry["target_manifest"])
+            if require_training_targets:
+                _digest(target.get("training_float32_target_sha256"), "training_float32_target_sha256")
             if target.get("development_target_sha256") != expected["target_sha256"] or target.get("target_encoding") not in {
                 "little-endian-float32-contiguous-raw-bytes", "little-endian-float64-contiguous-raw-bytes"
             }:
@@ -1112,7 +1203,8 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
         "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}
 
 
-def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
+def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
+                          require_training_targets=False) -> dict:
     """Prelaunch capability and retained-reference check, without execution.
 
     The owning contract still provides comparison_prelaunch and reference_bundle.
@@ -1120,7 +1212,8 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     """
     from .comparison_readiness import validate_comparison_prelaunch, validate_reference_bundle, reference_bundle_digest
     if type(plan) is dict and plan.get("format") == "molgap-family-same-run-acceptance-plan-v1":
-        return _check_same_run_acceptance_plan(spec, repo_root, plan)
+        return _check_same_run_acceptance_plan(spec, repo_root, plan,
+                                               require_training_targets=require_training_targets)
     declaration = spec.to_dict()
     expected_arms = {a["arm_id"]: a for a in declaration["arms"]}
     results = []

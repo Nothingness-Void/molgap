@@ -18,6 +18,16 @@ class RunReconciliationRequired(ValueError):
     """The original operation journal or launch still needs its owning adapter."""
 
 
+def _validate_strict_inputs(inputs, outputs):
+    if type(inputs) is not dict or set(inputs) - set(outputs):
+        raise ValueError("Strict inputs must name only frozen run arms")
+    for supplied in inputs.values():
+        if type(supplied) is not dict or set(supplied) - {
+                "native_root", "comparison_readiness_ref", "actual_resume_root",
+                "recovery_repair", "repair_source_root", "target_transform_asset"}:
+            raise ValueError("Unknown strict acceptance location override")
+
+
 def resolve_run_acceptance_inputs(*args, **kwargs):
     """Resolve frozen expectations and retained all-arm acceptance locations."""
     from .experiment_run_acceptance import resolve_run_acceptance_inputs as resolve
@@ -118,6 +128,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if continuation_receipt is not None:
         resolution["continuation_receipt"] = continuation_receipt
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
+    if strict_inputs is not None:
+        _validate_strict_inputs(strict_inputs, resolved["outputs"])
     if resume_prepared is not None:
         from .experiment_workflow_resume import resolve_terminal_resume
         resolved["continuations"] = resolve_terminal_resume(resolved, resume_prepared,
@@ -172,6 +184,14 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             canonical_inputs = True
             read_only_strict = read_only_strict or canonical_eligible
     resolved["mechanical_reports"] = result["arms"]
+    target_transforms = None
+    same_run = spec.to_dict().get("prospective", {}).get("same_run_replay")
+    if strict_inputs is not None and not read_only_strict and same_run is not None:
+        from .experiment_family_workflow import resolve_strict_target_transforms
+        target_transforms = resolve_strict_target_transforms(repo_root, resolved, strict_inputs)
+        if target_transforms["status"] == "BLOCKED":
+            return {**result, "status": "BLOCKED", "executed": False,
+                "strict_comparison": target_transforms, "blockers": target_transforms["blockers"]}
     native, native_cache = None, None
     if canonical_inputs and not read_only_strict:
         # Existing terminal evidence already owns continuation proof locations.
@@ -185,8 +205,6 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if strict_inputs is not None and not read_only_strict and native_cache is None:
         from .family_training_runner import inspect_retained_native_qualification
         from .experiment_family_workflow import _artifact_path, _json_bytes
-        if type(strict_inputs) is not dict or set(strict_inputs) - set(resolved["outputs"]):
-            raise ValueError("Strict inputs must name only frozen run arms")
         native = {}
         for arm_id, item in resolved["outputs"].items():
             output = Path(item["output_dir"])
@@ -269,7 +287,16 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if strict_inputs is not None:
         from .experiment_family_workflow import qualify_same_run_terminal_packages
         active_locations = result.get("terminal_staging", {}).get("locations", resolved["locations"])
-        qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native, reports=result["arms"])
+        if same_run is not None:
+            qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native,
+                reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms)
+        else:
+            # Historical references use their retained comparison bindings;
+            # they cannot be translated into a same-run reference declaration.
+            qualification = {"locations": active_locations, "qualification_mode": "RETAINED_REFERENCE"}
+        if qualification.get("status") == "BLOCKED":
+            return {**result, "status": "BLOCKED", "executed": False,
+                "strict_comparison": qualification, "blockers": qualification["blockers"]}
         qualified = {**resolved, "locations": qualification["locations"]}
         result["strict_comparison"] = qualification
         if qualification.get("canonical_reused"):
@@ -320,17 +347,12 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
     from .research_memory.schemas import validate_trace_manifest, validate_trajectory
     from .research_memory.trace import file_digest, load_canonical_trace, validate_manifest_trace
     from .v4_runtime import normalized_source_sha256
-    if type(inputs) is not dict or set(inputs) - set(resolved["outputs"]):
-        raise ValueError("Strict inputs must name only frozen run arms")
+    _validate_strict_inputs(inputs, resolved["outputs"])
     root = Path(repo_root).resolve()
     arms, blockers = {}, []
     records = {kind: [] for kind in ("trajectories", "evidence", "traces", "costs", "comparison_readiness")}
     for arm_id, item in sorted(resolved["outputs"].items()):
         supplied = inputs.get(arm_id, {})
-        if type(supplied) is not dict or set(supplied) - {
-                "native_root", "comparison_readiness_ref", "actual_resume_root",
-                "recovery_repair", "repair_source_root"}:
-            raise ValueError("Unknown strict acceptance location override")
         output = Path(item["output_dir"]).absolute()
         row = {"native_qualification": {"status": "BLOCKED"},
             "comparison": {"status": "BLOCKED"}, "replay": {"status": "BLOCKED"}, "blockers": []}

@@ -113,6 +113,7 @@ def test_missing_strict_evidence_cannot_execute_terminal_closure(tmp_path, monke
     from molgap import experiment_workflow as workflow
     from molgap import experiment_family_workflow as family
     spec = Mock(identity="f" * 64)
+    spec.to_dict.return_value = {"prospective": {}}
     resolved = {"spec": spec, "options": {}, "outputs": {}, "contexts": {}, "locations": {}}
     monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", Mock(return_value=resolved))
     mechanical = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}})
@@ -130,6 +131,7 @@ def test_missing_strict_evidence_cannot_execute_terminal_closure(tmp_path, monke
     assert result["executed"] is False
     assert mechanical.call_count == 1
     assert mechanical.call_args.kwargs["execute"] is False
+    qualify.assert_not_called()
     if read_only:
         qualify.assert_not_called()
         stage.assert_not_called()

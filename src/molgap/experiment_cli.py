@@ -500,7 +500,8 @@ def main(argv: list[str] | None = None) -> int:
             result = compact_operation_report(result, prepared=args.output)
         if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
                 and not args.verbose and ((args.command == "diagnose" and args.output is not None)
-                                         or "diagnosis" in result or "strict_validation" in result)):
+                                         or "diagnosis" in result or "strict_validation" in result
+                                         or "strict_comparison" in result)):
             result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
@@ -541,8 +542,14 @@ def _acceptance_summary(result):
         staging = result["terminal_staging"]
         summary["terminal_staging"] = {key: staging[key] for key in ("status", "paths", "blockers") if key in staging}
     if "strict_comparison" in result:
-        summary["strict_comparison"] = {key: result["strict_comparison"][key]
-            for key in ("directory", "locations", "reference_bundle_ref")}
+        comparison = result["strict_comparison"]
+        summary["strict_comparison"] = {key: comparison[key] for key in
+            ("status", "blockers", "directory", "locations", "reference_bundle_ref", "qualification_mode")
+            if key in comparison}
+        if comparison.get("status") == "BLOCKED":
+            summary["strict_comparison"]["arms"] = {arm: {key: row[key] for key in
+                ("required_evidence", "blockers") if key in row}
+                for arm, row in comparison.get("arms", {}).items()}
     return summary
 
 

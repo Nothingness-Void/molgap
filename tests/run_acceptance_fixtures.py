@@ -108,7 +108,7 @@ def frozen_acceptance_run(tmp_path, repo):
         generated=generated, original=(profile, repo, declaration["logical_run_id"], "v1"))
 
 
-def frozen_shared_acceptance_run(tmp_path, repo):
+def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True):
     """Freeze current shared-family contracts for the joined diagnostic path."""
     from molgap.experiment_package import build_experiment_source_package
     from molgap.experiment_spec import ExperimentSpec
@@ -178,7 +178,7 @@ def frozen_shared_acceptance_run(tmp_path, repo):
         return {"path": name, "sha256": hashlib.sha256(raw).hexdigest()}
 
     target = add(generated_root + "/target.json", canonical_json({
-        "training_float32_target_sha256": training_target_sha256,
+        **({"training_float32_target_sha256": training_target_sha256} if retain_training_target else {}),
         "development_target_sha256": contracts["k1_candidate"][0]["acceptance_requirements"]["target_sha256"],
         "target_encoding": "little-endian-float64-contiguous-raw-bytes"}).encode())
     for arm, binding in zip(declaration["arms"], declaration["prospective"]["arms"]):
@@ -237,4 +237,5 @@ def frozen_shared_acceptance_run(tmp_path, repo):
     return SimpleNamespace(profile=profile, paths=paths, repo=repo, run=run, prepared=run / "prepared",
         package=package, spec=spec, manifest=manifest, receipt=receipt,
         expected={arm["arm_id"]: item["expected"] for arm, item in zip(declaration["arms"], entries)},
+        training_target_sha256=training_target_sha256,
         generated=generated, original=(profile, repo, declaration["logical_run_id"], "v1"))

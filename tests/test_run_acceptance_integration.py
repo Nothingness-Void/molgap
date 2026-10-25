@@ -349,7 +349,7 @@ def _seed_reference_records(case):
 
 
 def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
-    case = frozen_shared_acceptance_run(tmp_path, repo)
+    case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
     reference_arm = declaration["prospective"]["same_run_replay"]["reference_arm_id"]
     for arm_id, where in locations.items():
@@ -567,12 +567,65 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
                 if key in {"artifact_bindings", "reference_bundle_id", "reference_bundle_sha256"}}}
         return assess(**kwargs)
     monkeypatch.setattr(comparison_owner, "assess_comparison_readiness", fixture_comparison)
+    # Legacy packages omitted the training digest. The actual frozen resolver
+    # must keep them mechanically readable and stop strict closure before writes.
+    package_before = {path.relative_to(case.package): path.read_bytes()
+        for path in case.package.rglob("*") if path.is_file()}
+    blocked = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
+        strict_inputs={}, execute=True)
+    assert blocked["status"] == "BLOCKED" and blocked["executed"] is False
+    assert all(row["required_evidence"] == ["target_transform_asset"]
+        for row in blocked["strict_comparison"]["arms"].values())
+    from molgap.experiment_cli import _acceptance_summary
+    assert _acceptance_summary(blocked)["strict_comparison"]["status"] == "BLOCKED"
+    assert not list((case.repo / "experiments").rglob("strict_qualification"))
+    from molgap.family_training_runner import read_recipe
+    supplements = {}
+    for arm_id, item in resolved["outputs"].items():
+        arm = arms[arm_id]
+        _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+        train = next(role for role in arm["data"]["roles"] if role["role"] == "train")
+        asset = {"format": "molgap-target-transform-asset-v1",
+            "asset_id": arm["training"]["transform"]["sha256"], "target_identity": arm["data"]["target"],
+            "mean": recipe.target_mean_eV, "std": recipe.target_std_eV, "ddof": 1,
+            "variance_convention": "sample", "source_row_manifest_sha256": train["membership_sha256"],
+            "target_sha256": case.training_target_sha256}
+        asset["asset_sha256"] = comparison_owner.target_transform_asset_digest(asset)
+        path = case.repo / "experiments/supplement" / (arm_id + ".json")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(canonical_json(asset).encode())
+        supplements[arm_id] = {"target_transform_asset": {
+            "path": path.relative_to(case.repo).as_posix(), "sha256": file_digest(path)}}
+    invalid = deepcopy(supplements)
+    invalid[next(iter(invalid))]["target_transform_asset"]["sha256"] = "0" * 64
+    rejected = family.qualify_same_run_terminal_packages(case.repo, resolved,
+        result["terminal_staging"]["locations"], native, reports=result["arms"], strict_inputs=invalid)
+    assert rejected["status"] == "BLOCKED"
+    assert not list((case.repo / "experiments").rglob("strict_qualification"))
+    # A self-consistent hash still cannot change the recipe normalization.
+    selected_arm = next(iter(supplements))
+    pointer = supplements[selected_arm]["target_transform_asset"]
+    path = case.repo / pointer["path"]
+    original_asset = path.read_bytes()
+    changed = json.loads(original_asset)
+    changed["mean"] += 1
+    changed["asset_sha256"] = comparison_owner.target_transform_asset_digest(changed)
+    path.write_bytes(canonical_json(changed).encode())
+    invalid[selected_arm]["target_transform_asset"]["sha256"] = file_digest(path)
+    rejected = family.resolve_strict_target_transforms(case.repo, resolved, invalid)
+    assert rejected["status"] == "BLOCKED"
+    assert any("frozen normalization/train identity" in reason for reason in rejected["blockers"])
+    path.write_bytes(original_asset)
     qualified = family.qualify_same_run_terminal_packages(case.repo, resolved,
-        result["terminal_staging"]["locations"], native, reports=result["arms"])
+        result["terminal_staging"]["locations"], native, reports=result["arms"], strict_inputs=supplements)
     for arm_id, where in qualified["locations"].items():
         package = json.loads((case.repo / where["terminal"]).read_bytes())
         assert package["supersedes_finalization_ref"] == receipts[arm_id].relative_to(case.repo).as_posix()
         assert package["artifact_hashes"][package["supersedes_finalization_ref"]] == file_digest(receipts[arm_id])
+        supplement = supplements[arm_id]["target_transform_asset"]
+        assert package["artifact_hashes"][supplement["path"]] == supplement["sha256"]
+    assert package_before == {path.relative_to(case.package): path.read_bytes()
+        for path in case.package.rglob("*") if path.is_file()}
     # Real custody can keep identical transforms under more than one question.
     transform = next((case.repo / "experiments").rglob("target_transform.json"))
     shared_copy = case.repo / "experiments/shared_transform/target_transform.json"

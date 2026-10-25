@@ -309,7 +309,7 @@ def _workflow_inputs(spec, repo_root, plan):
     dataset_manifests = {arm: str(_artifact_or_local_path(repo_root, value))
                          for arm, value in dataset_manifests.items()}
     acceptance_path = _artifact_path(repo_root, plan["acceptance_plan"])
-    acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path))
+    acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path), require_training_targets=True)
     if acceptance["status"] == "BLOCKED":
         return {"status": "BLOCKED", "stage": "acceptance_plan", "acceptance": acceptance,
                 "prospective_published": False, "submitted": False}

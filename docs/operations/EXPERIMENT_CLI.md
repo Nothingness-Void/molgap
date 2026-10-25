@@ -168,6 +168,25 @@ Unknown weight sources keep the conservative EMA trace requirement.
 `--strict-inputs` optionally supplies per-arm `native_root` and
 `comparison_readiness_ref` locations. Missing proof files report their pinned
 hashes and unknown missing-byte sizes; they cannot establish qualification.
+New same-run preparation requires `training_float32_target_sha256` in its
+target manifest. This is the ordered training-label FP32 byte identity; the
+development digest and complete dataset/shard digests cannot replace it.
+An already frozen run missing that field remains mechanically inspectable.
+Strict qualification returns `BLOCKED` before native reinspection or terminal
+staging, with the missing arm evidence. Do not edit its frozen manifest.
+For retained independent evidence, `--strict-inputs` accepts
+`{"<arm>": {"target_transform_asset": {"path": "<artifact locator>",
+"sha256": "<file SHA256>"}}}`. Supply the existing
+`molgap-target-transform-asset-v1`, including its canonical self-digest,
+actual training-label digest and frozen training membership/normalization.
+Both the supplied bytes and their binding enter the qualification; inherited
+warm-start mean/std remain the actual recipe values. This interface binds
+reviewed evidence; it does not prove how an arbitrary supplied digest was
+measured. Raw CSV labels alone do not prove executed shard bytes when the
+original graph acceptance allowed numeric tolerance.
+Already qualified canonical records retain their original bound evidence.
+Historical reference runs use their retained strict comparison inputs, rather
+than the same-run translator; missing comparison evidence stays `BLOCKED`.
 For a successor, supply `--continuation-receipt`, `--resume-prepared` (the existing
 `prepare-resume` directory), and `--resume-authority` with terminal staging.
 The entry derives each arm's original receipt, bundle/checkpoint, trace prefix,
