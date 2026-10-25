@@ -4,12 +4,12 @@
   "timezone": "Asia/Tokyo",
   "project": "C:/Users/Adminn/Documents/molgap",
   "worker_scope": "verification_only",
-  "overall_status": "CPU_EXPORT_PREPARE_ONLY_PASS_SCHEMA_PASS_FOCUSED_LATEST_PASS",
+  "overall_status": "CPU_EXPORT_PREPARE_ONLY_PASS_SCHEMA_PASS_PLATFORM_TRANSFER_AND_SNAPSHOT_PASS",
   "release_assessment": {
     "unchanged_cpu_export_request": "PASS_PREPARE_ONLY_TRUST_PINS_AND_DOCS",
     "rml_policy_and_trajectory_schema": "PASS",
-    "focused_existing_tests": "PASS_CONFIGURED_OUTPUTS_4_SCIENTIFIC_INPUT_12_500K_NODE_AND_PROBE",
-    "rml_durability": "OPEN_UNTRACKED_DECISION_SNAPSHOT",
+    "focused_existing_tests": "PASS_TRANSFER_2_CONFIGURED_4_LEGACY_GUARDS_3",
+    "rml_durability": "PASS_TRACKED_DECISION_SNAPSHOT",
     "gpu_or_kaggle_release": "NOT_ASSESSED_OR_AUTHORIZED_BY_THIS_WORKER"
   },
   "constraints_observed": {
@@ -65,11 +65,17 @@
       "src/molgap/family_training_recipe.py": "ac4a73a102209e1157173e8bbd42acc504eb6cf8ac522f605d3a3a756976a8ca"
     },
     "focused_runtime_files": {
-      "src/molgap/family_training_runner.py": "b7e819bf692b02b723c59cf9b5b87c7909a93be9397d3deca35ce79ad93b72ab",
+      "src/molgap/family_training_runner.py": "11a0d3316eb548464c619f1d283cbcae24d3786dae2cc46c94c9b9c79814567a",
       "src/molgap/family_training_session.py": "e40a43aa588456e6c0c915689c63cba7396700a58a16f3ee1dfb04b4fbcfa468",
       "src/molgap/family_training_outputs.py": "ad28a3b3dc5849a9863bd556e463a1a54645e9d84a16ab55fe71570be76d1118",
       "src/molgap/experiment_family_artifacts.py": "8991005df5faeab5458040aadb0e423f303dcab8221c4a7349e8149f2322833",
-      "tests/test_modern2d_scientific_input.py": "c76614b2c8ced60b51b84f9a75108edf965b44723879dd25bb45026fb9ef1783"
+      "tests/test_modern2d_scientific_input.py": "45abd6867440aa050ee136e0610dc8b556d1b87a06041b8f893eee46e476e707",
+      "src/molgap/modern2d_research_prepare.py": "0c148a5d14f995ee7833b2f690bf21cfe44ad158a3cadb78e2f42cf84d395481",
+      "src/molgap/kaggle_submission.py": "534144064898cbd1e5cbf34dee9a7132439d6203630b7450e43a724758e0de65",
+      "src/molgap/experiment_execution.py": "68f66f8453ec5f56854cb640c239c4d4e119e7723b70b4cad980cd5a6edd0660",
+      "src/molgap/modern2d_training_release.py": "8fc20c9538854fbb4e5dd1b2a61e7bfab5bcef23e524cc63afdd36e415825f1d",
+      "src/molgap/experiment_package.py": "b19ef1c545ccf38dc7217399148904500af1c79771ba074ca0742056d981d112",
+      "tests/test_kaggle_submission.py": "6496f71867a0249ac2e818c89f22133c7ab563b3fd78765b844596254939a1ee"
     }
   },
   "prepare_only": {
@@ -119,7 +125,7 @@
     ]
   },
   "focused_tests": {
-    "status": "PASS_LATEST_SCOPES",
+    "status": "PASS_LATEST_PLATFORM_AND_LEGACY_SCOPES",
     "historical_run_status": "STALE_PRE_FIX_MAIN_FIXES_LANDED",
     "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\updated-20261026-02\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\updated-20261026-02\\junit.xml tests\\test_modern2d_input_preparation.py tests\\test_modern2d_formal_training.py tests\\test_modern2d_configured_outputs.py tests\\test_family_training_session.py",
     "runner": "platforms/local/run.py",
@@ -245,7 +251,7 @@
         "payload_opened": false
       },
       "transfer_node_rerun_after_freeze_anchor": {
-        "status": "PASS",
+        "status": "HISTORICAL_PASS_BEFORE_PACKAGE_GATE_EXTENSION",
         "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-09\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-09\\junit.xml tests\\test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair",
         "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-09",
         "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-09/junit.xml",
@@ -260,6 +266,122 @@
         "freeze_scale_anchor": "PASS",
         "payload_opened": false,
         "note": "Targeted rerun after the test's final freeze_scale_anchor call; this is a subset of the 12-case scientific-input run and is not counted again."
+      },
+      "current_parser_refactor_reruns": {
+        "transfer_release_gate": {
+          "status": "HISTORICAL_FAIL_BEFORE_ISOLATED_FIX",
+          "command": ".venv\\Scripts\\python.exe -B -c <runtime wrapper around existing pytest node with prepare report assertion>",
+          "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-14",
+          "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-14/junit.xml",
+          "exit_code": 1,
+          "tests": 2,
+          "passed": 0,
+          "failed": 2,
+          "errors": 0,
+          "skipped": 0,
+          "duration_seconds": 45.240,
+          "prepare_report_assertion": {
+            "expected_status": "PREPARED_FOR_PLATFORM",
+            "observed_status": "BLOCKED",
+            "stage": "workflow_readiness",
+            "submitted": false,
+            "prospective_published": false,
+            "blocker_check": "family_recipes",
+            "error_type": "ValueError",
+            "message": "Family validator was imported from another checkout",
+            "guard": "src/molgap/experiment_execution.py:517-518",
+            "operations": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-14/basetemp/test_transfer_study_uses_exact0/artifact_root/runs/configured-fixture-run/v1/operations",
+            "prepared": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-14/basetemp/test_transfer_study_uses_exact0/artifact_root/runs/configured-fixture-run/v1/prepared"
+          },
+          "families": ["ppgt_small/3", "esa_small/4"],
+          "payload_opened": false,
+          "note": "The wrapper stops at the real prepare report. The unwrapped run then fell through to experiment_package.py:415 because it ignored BLOCKED and attempted to verify a non-ready package; that is a downstream symptom, not a reason to relax the six-file validator."
+        },
+        "current_isolated_fixture_rerun": {
+          "status": "HISTORICAL_PASS_BEFORE_ANCHOR_METADATA_FIX",
+          "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-17\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-17\\junit.xml tests\\test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair",
+          "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-17",
+          "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-17/junit.xml",
+          "exit_code": 0,
+          "tests": 2,
+          "passed": 2,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "duration_seconds": 101.751,
+          "families": ["ppgt_small/3", "esa_small/4"],
+          "checks": [
+            "isolated fixture-checkout subprocess",
+            "actual prepare/package/platform release path",
+            "validate_transfer_plan with verified packaged pointers",
+            "validate_execution_identity for staged prospective trajectory",
+            "fake pointer SHA rejection"
+          ],
+          "remote_calls": false,
+          "payload_opened": false,
+          "note": "Superseded by the final anchor metadata rerun below."
+        },
+        "current_anchor_metadata_rerun": {
+          "status": "PASS",
+          "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-19\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\transfer-20261026-19\\junit.xml tests\\test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair",
+          "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-19",
+          "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/transfer-20261026-19/junit.xml",
+          "exit_code": 0,
+          "tests": 2,
+          "passed": 2,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "duration_seconds": 86.400,
+          "families": ["ppgt_small/3", "esa_small/4"],
+          "checks": [
+            "full training_input.json repository-relative pin",
+            "anchor_metadata assertion",
+            "actual prepare/package/platform release path",
+            "validate_transfer_plan with verified packaged pointers",
+            "validate_execution_identity",
+            "fake pointer SHA rejection"
+          ],
+          "remote_calls": false,
+          "payload_opened": false,
+          "decision_snapshot": {
+            "path": "experiments/modern2d_scale500k/cpu/rml_decision_snapshots/f7ce118d10cdabb17a609ac3ce688f9b85707a117ceecd5585f13a850d8047a8.json",
+            "tracked_by_git": true,
+            "sha256": "f7ce118d10cdabb17a609ac3ce688f9b85707a117ceecd5585f13a850d8047a8"
+          }
+        },
+        "configured_outputs": {
+          "status": "PASS",
+          "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\configured-20261026-12\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\configured-20261026-12\\junit.xml tests\\test_modern2d_configured_outputs.py",
+          "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/configured-20261026-12",
+          "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026-12/junit.xml",
+          "exit_code": 0,
+          "tests": 4,
+          "passed": 4,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "warnings": 4,
+          "duration_seconds": 19.934
+        },
+        "kaggle_legacy_guards": {
+          "status": "PASS",
+          "command": ".venv\\Scripts\\python.exe platforms\\local\\run.py --module pytest -- --disable-warnings -q -p no:cacheprovider --basetemp E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\kaggle-legacy-20261026-18\\basetemp --junitxml=E:\\MolGap\\scratch\\modern2d-scale500k-20261026\\tests\\kaggle-legacy-20261026-18\\junit.xml tests\\test_kaggle_submission.py::test_check_has_no_network_or_filesystem_publication tests\\test_kaggle_submission.py::test_extra_upload_file_is_rejected_before_publication tests\\test_kaggle_submission.py::test_remote_source_corruption_blocks_kernel_post",
+          "scratch": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/kaggle-legacy-20261026-18",
+          "junit": "E:/MolGap/scratch/modern2d-scale500k-20261026/tests/kaggle-legacy-20261026-18/junit.xml",
+          "exit_code": 0,
+          "tests": 3,
+          "passed": 3,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0,
+          "duration_seconds": 1.703,
+          "remote_calls": false
+        },
+        "reform_submission_scope": {
+          "matching_test_reform_submission_nodes": [],
+          "note": "No test_reform_submission* node/file exists in the checkout; the bounded modern2d transfer case is the existing scientific-release gate."
+        }
       }
     },
     "unique_node_accounting": {
@@ -269,11 +391,17 @@
         "resolved_step_clock_nodes_now_passed": 2,
         "unique_current_pass_nodes": 133
       },
-      "scientific_input_full_file_unique_nodes": 12,
-      "transfer_targeted_rerun_unique_addition": 0,
-      "configured_outputs_latest_rerun_unique_addition": 0,
-      "unique_pass_node_total": 145,
-      "counting_note": "The 2 transfer rerun nodes are already included in the 12 scientific-input nodes; the 4 configured-output rerun nodes are already represented in the four-suite node set. Reruns are retained as evidence but not added to the unique count."
+      "scientific_input_full_file_unique_nodes_before_latest_gate_extension": 12,
+      "current_transfer_gate_nodes": {
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "overrides_historical_transfer_pass": true
+      },
+      "current_configured_outputs_nodes": {"tests": 4, "passed": 4},
+      "current_legacy_guard_nodes": {"tests": 3, "passed": 3},
+      "current_unique_pass_node_total": 145,
+      "counting_note": "The current isolated transfer 2-case rerun supersedes the historical failure and earlier pre-isolation pass. The configured 4-case rerun and legacy guards are retained as bounded evidence; no rerun is added as a new unique node."
     },
     "configured_step_clock_probe": {
       "status": "PASS",
@@ -406,12 +534,6 @@
   },
   "remaining_findings": [
     {
-      "id": "RML-SNAPSHOT-DURABILITY",
-      "severity": "workspace_durability",
-      "status": "OPEN",
-      "detail": "The canonical trajectory resolves its decision snapshot, but git status currently reports experiments/modern2d_scale500k/cpu/rml_decision_snapshots/ as untracked. Preserve/commit that snapshot before claiming portable RML closure."
-    },
-    {
       "id": "CPU-EXPORT-EXECUTION",
       "severity": "not_run_by_scope",
       "status": "INTENTIONALLY_NOT_EXECUTED",
@@ -426,10 +548,16 @@
       "M src/molgap/family_training_session.py (main/concurrent change)",
       "M src/molgap/family_training_outputs.py (main/concurrent change)",
       "M src/molgap/experiment_family_artifacts.py (main/concurrent change)",
+      "M src/molgap/experiment_execution.py (main/concurrent change)",
+      "M src/molgap/kaggle_submission.py (main/concurrent change)",
+      "M src/molgap/kaggle_submission.py (main/concurrent change)",
+      "M src/molgap/modern2d_training_release.py (main/concurrent change)",
+      "M src/molgap/experiment_package.py (main/concurrent change)",
       "M tests/test_modern2d_configured_outputs.py (main/concurrent change)",
       "M tests/test_modern2d_input_preparation.py (main/concurrent change)",
       "M tests/test_modern2d_scientific_input.py (main/concurrent change)",
-      "?? experiments/modern2d_scale500k/cpu/rml_decision_snapshots/"
+      "M tests/test_kaggle_submission.py (main/concurrent change)",
+      "tracked experiments/modern2d_scale500k/cpu/rml_decision_snapshots/f7ce118d10cdabb17a609ac3ce688f9b85707a117ceecd5585f13a850d8047a8.json (git ls-files --error-unmatch PASS)"
     ],
     "note": "The workspace was already dirty and main was changing the listed source/test files concurrently. The worker only read project files, ran tests into the external scratch path, and wrote this report outside the project."
   },
@@ -438,7 +566,9 @@
     "Kaggle or any remote submission",
     "models or payload generation",
     "broad test suites",
+    "test_reform_submission* (no matching node/file exists)",
+    "full tests/test_kaggle_submission.py suite",
     "RML derived rebuild"
   ],
-  "next_minimal_action": "Focused CPU/compiler/configured checks are clear at the synthetic verification boundary. Keep the unchanged exporter at prepare-only, preserve/commit the required decision snapshot, and wait for main's additional regression before any further tests; no remote or payload execution was performed."
+  "next_minimal_action": "Final transfer verification and exact snapshot tracking are clear. No further tests or remote/payload execution are needed within this worker scope."
 }

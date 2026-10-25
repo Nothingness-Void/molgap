@@ -34,8 +34,8 @@ evaluation update indices and selection opportunities with the original curve.
 The source schedules must not become four500K-pass warmups. Exact targets fall
 inside a500K pass; its3,906 full optimizer batches must not be confused with
 the100K role's781. Retain the real partial-pass cursor and optimizer/RNG state.
-The current integer-pass-only profile does not yet express this design; rounding
-steps, changing the target transform or bypassing a strict gate is not permitted.
+The shared configured profile was extended to express this exact-step design;
+rounding steps, changing the target transform or bypassing a strict gate is not permitted.
 
 If these bindings cannot be supported, retain a blocked plan. Do not quietly
 replace the design with a different recipe or claim an equal-update experiment.
