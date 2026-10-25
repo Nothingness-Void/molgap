@@ -141,7 +141,7 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
     import numpy as np
     import torch
     from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json, inspect_output
-    from .family_training_runner import INTERFACES, read_recipe
+    from .family_training_runner import read_recipe
 
     root = Path(arm_dir).absolute()
     _safe_local(root)
@@ -154,7 +154,7 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         raise ValueError("Family attribution requires a bound output manifest") from exc
     contract_raw, recipe = read_recipe(contract_path)
     _check_context(manifest["context"], context)
-    if INTERFACES.get(recipe.family) != (context.family_name, context.family_version):
+    if recipe.interface != (context.family_name, context.family_version):
         raise ValueError("Output family differs from its executable contract")
     if not recipe.dataset.development:
         raise ValueError("Attribution requires explicitly selected development outputs")

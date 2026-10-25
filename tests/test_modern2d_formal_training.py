@@ -167,6 +167,12 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
     assert len(resumed_audit["roles"]) == len(role_audit["roles"])
     assert resumed_audit["context"] == resumed_context.to_dict()
     assert resumed_report["observed"]["selected_weights"] == "live"
+    from molgap.experiment_attribution import _load_arm_artifacts
+    diagnosed = _load_arm_artifacts(resumed_outputs.root, context=resumed_context,
+                                   _inspection=resumed_report)
+    assert diagnosed["recipe"]["family_version"] == case.recipe.family_version
+    assert tuple(diagnosed["source_idx"]) == case.data.development_source_indices
+    assert diagnosed["selected_checkpoint"]["mae_eV"] == resumed_report["observed"]["development_mae_eV"]
     trace = json.loads((resumed_outputs.root / "canonical_trace.json").read_bytes())
     rows = [row for row in trace["observations"] if row["event"] == "observation"]
     assert [(row["optimizer_step"], row["sample_presentations"]) for row in rows] == [(2, 256), (4, 512)]
@@ -198,12 +204,26 @@ def test_formal_actual_session_resume_full_state_and_readonly_dev(case, tmp_path
     atomic_write(report_path, json_bytes(report))
     proof = pin(report_path.name)
     assert verify_repair_proof(proof_root, proof, case.recipe) == report
-    certificate = {"proofs": [pin("repeat-b.pt")]}
+    certificate = {"proofs": [pin("repeat-b.pt")], "execution_repair_proof": proof}
     compact_certificate(proof_root, certificate)
     atomic_write(proof_root / "runtime_certificate.json", json_bytes(certificate))
     retire_proof_sources(proof_root, certificate)
     assert not (proof_root / "repeat-b.pt").exists()
     assert verify_repair_proof(proof_root, proof, case.recipe) == report
+    provenance = {"context": resumed_context.to_dict(), "recipe_identity": case.recipe.identity}
+    atomic_write(proof_root / "runtime_provenance.json", json_bytes(provenance))
+    inventory_options = dict(recipe_path=resumed_outputs.root / "training_contract.json",
+        provenance=provenance, context=resumed_context, inventory_only=True)
+    witness = proof_root / "execution-reference.pt"
+    temporary = proof_root / "retained-reference.pt"
+    witness.rename(temporary)
+    inventory = runner.inspect_retained_native_qualification(proof_root, **inventory_options)
+    assert inventory["status"] == "BLOCKED"
+    assert [(item["path"], item["sha256"]) for item in inventory["missing"]] == [
+        ("execution-reference.pt", report["reference"]["sha256"])]
+    temporary.rename(witness)
+    assert runner.inspect_retained_native_qualification(
+        proof_root, **inventory_options)["status"] == "DEPENDENCIES_VERIFIED"
     altered = deepcopy(report)
     altered["candidate"]["sha256"] = "0" * 64
     atomic_write(report_path, json_bytes(altered))

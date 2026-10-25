@@ -899,6 +899,17 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
     add("runtime_certificate.json")
     add("runtime_provenance.json")
     walk(certificate)
+    repair = certificate.get("execution_repair_proof")
+    if isinstance(repair, dict):
+        report = add(repair["path"], repair["sha256"])
+        if report["present"]:
+            path = Path(report["local_path"])
+            if normalized_file_sha(path) != repair["sha256"]:
+                raise ValueError("Native execution repair report hash changed")
+            # The certificate pins the report, which in turn pins both states.
+            # Inventory must expose that next frontier before declaring the
+            # remote proof closure fully retrieved.
+            walk(_json(path))
     if "resource_qualification_sha256" in certificate:
         add("resource_qualification.json", certificate["resource_qualification_sha256"])
     profile = certificate.get("profile_proof")
