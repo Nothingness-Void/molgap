@@ -1,5 +1,24 @@
 # Submission state
 
+## Terminal acceptance:2026-10-27 JST
+
+Both exact version2 jobs completed30passes/117180 updates/14999040 sample
+presentations per arm. All four independent native and strict replay checks
+are VERIFIED without exclusions; both initialization comparisons are
+STRICT_CAUSAL. Shared terminal finalization completed for all four trajectories.
+The scratch controls close CLOSED; pretrained candidates close
+NEGATIVE_UNDER_CONTRACT. No adoption, retry, continuation or scale-up is released.
+
+| Slot | Scratch Clean-EMA MAE / selected pass | Pretrained / pass | Candidate minus scratch |
+| --- | --- | --- | --- |
+| single | 0.108103 /30 | 0.109027 /28 | +0.924meV |
+| mean2 | 0.105762 /18 | 0.107678 /16 | +1.916meV |
+
+[Decision](terminal_acceptance/decision.md),
+[attribution](terminal_acceptance/attribution.md) and
+[qualification](terminal_acceptance/qualification.md) own the terminal evidence.
+Below are historical submission and recovery observations, not active work.
+
 2026-10-26 JST: both exact Kaggle1 version1 jobs are ERROR. Native preflight
 completed and all four arms trained; the first10-pass portable resume export
 failed when tensor-bearing Clean-EMA cursor state entered a JSON manifest.

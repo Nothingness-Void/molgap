@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "4a2751877f8b56ef8cfa0eee48007b537f553277a7937d41fac66987817ab081",
+  "source_digest": "da22e6c76be18a6960d7acca3810b722f7e299ab04e7842adeb2b2d4ebe1f009",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -84,57 +84,65 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/decision.md",
       "family_id": "pcqm-k1-init-forward-500k-mean2-s42",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/decision.md",
       "family_id": "pcqm-k1-init-forward-500k-mean2-s42",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-mean2-s42-scratch"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/decision.md",
       "family_id": "pcqm-k1-init-forward-500k-single-s42",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-pretrained"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-pretrained"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/decision.md",
       "family_id": "pcqm-k1-init-forward-500k-single-s42",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
     },

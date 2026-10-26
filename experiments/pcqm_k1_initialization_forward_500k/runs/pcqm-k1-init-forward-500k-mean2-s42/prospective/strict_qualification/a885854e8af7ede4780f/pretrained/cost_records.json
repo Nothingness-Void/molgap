@@ -1,0 +1,34 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-init-forward-500k-mean2-s42-v2",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/terminal_staging/v1/b2ea3c1768364c36/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.557040992477778
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-init-forward-500k-mean2-s42:pretrained:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained"
+    }
+  ]
+}
