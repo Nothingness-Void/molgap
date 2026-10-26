@@ -6,6 +6,8 @@ mean2140826274. The question remains unresolved; no successor was submitted.
 selectively retrieved diagnostics under D:/molgap-artifacts/reconciliation/.
 No weights, prediction payloads or native-proof ZIPs were downloaded for this
 inspection. Scheduler reconciliation was performed by Luna.
+All four retained runtime-provenance contexts match their frozen package source
+commit/archive/package and Spec/run/arm IDs in a local JSON identity check.
 
 ## Confirmed failure
 
