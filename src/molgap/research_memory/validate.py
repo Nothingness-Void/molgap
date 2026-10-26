@@ -418,7 +418,7 @@ def validate_repository_records(
             raise ValueError(
                 f"{path}:trajectory_id references missing ID: {record['trajectory_id']}"
             )
-        if record["reference_id"] not in evidence_ids:
+        if record["reference_id"] is not None and record["reference_id"] not in evidence_ids:
             raise ValueError(
                 f"{path}:reference_id references missing ID: {record['reference_id']}"
             )
