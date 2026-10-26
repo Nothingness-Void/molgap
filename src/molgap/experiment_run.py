@@ -491,7 +491,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
         "training_executed": False, "inference_executed": False, "network_accessed": False}
 
 
-def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_output, output):
+def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_output, output, recovery_repair=None):
     """Export one already retrieved prefix through the original recovery owner."""
     from .experiment_workflow_resume import build_workflow_resume
     from .experiment_package import _PackageVerification
@@ -499,7 +499,7 @@ def build_run_resume(profile, repo_root, run_id, attempt_id, *, arm_id, source_o
                                            _verification=_PackageVerification())
     output = _resume_output(repo_root, prepared.parent, output)
     return build_workflow_resume(spec, prepared=prepared, arm_id=arm_id,
-                                 source_output=source_output, output=output, **options)
+                                 source_output=source_output, output=output, recovery_repair=recovery_repair, **options)
 
 
 def prepare_run_resume(profile, repo_root, run_id, attempt_id, *, plan, output):

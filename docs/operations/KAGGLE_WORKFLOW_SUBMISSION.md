@@ -59,6 +59,21 @@ to continue directly through the original journaled submitter when authorized.
 
 ## Platform operation
 
+For an authorized checkpoint continuation, pass the existing `prepare-resume`
+directory to the same adapter, retain `--authority` from the original immutable
+package, and add `--recovery-authority $retainedAuthorization
+--recovery-authority-sha256 $sha256 --source-version 2 --kernel-version 2`.
+The authorization is retained verbatim and SHA-bound; its content remains the
+owning contract's authority, not a new launcher schema. Source and kernel
+successor versions are independent explicit integers. Each must immediately
+follow its observed predecessor; the predecessor kernel must be terminal
+error/failed/cancelled. The adapter versions the same private source dataset,
+round-trips exact successor bytes, and binds a physical successor receipt over
+the original Spec/package/context. It shares the existing journal, release,
+quota, push and receipt owners. Unknown requests never cause another mutation;
+BOUND re-entry verifies locally without consulting a newer remote version.
+Default mode makes no API calls. This route grants no new training authority.
+
 The prepared source package must contain a bounded authority with
 `user_authorized: true`, the exact `arms` and `seeds`, and a positive
 `allocated_t4_hours_ceiling`. Credentials stay outside Git. The operations

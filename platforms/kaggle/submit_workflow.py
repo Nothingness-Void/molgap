@@ -19,6 +19,13 @@ def main(argv=None):
     parser.add_argument("--credentials",type=Path)
     parser.add_argument("--output",type=Path)
     parser.add_argument("--authority",help="Authority path inside the immutable source package")
+    parser.add_argument("--recovery-authority", type=Path,
+                        help="Explicit retained authorization for this checkpoint continuation")
+    parser.add_argument("--recovery-authority-sha256")
+    parser.add_argument("--source-version", type=int, default=1,
+                        help="Exact source successor version; continuation requires predecessor version minus one")
+    parser.add_argument("--kernel-version", type=int, default=1,
+                        help="Exact kernel successor version; continuation requires predecessor version minus one")
     parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--verbose", action="store_true", help="Print the full owner report")
@@ -27,6 +34,9 @@ def main(argv=None):
     try:
         if args.recover_prepared and not args.prepared:
             raise ValueError("--recover-prepared requires --prepared")
+        if args.experiment and (args.recovery_authority is not None or args.recovery_authority_sha256 is not None
+                                or args.source_version != 1 or args.kernel_version != 1):
+            raise ValueError("Continuation requires an existing --prepared resume workflow")
         if args.execute and not args.credentials:
             raise ValueError("--execute requires explicit credentials before preparation")
         from contextlib import nullcontext
@@ -63,6 +73,9 @@ def main(argv=None):
             stage="platform_operations"
             result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
                 authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute,
+                recovery_authority=args.recovery_authority,
+                recovery_authority_sha256=args.recovery_authority_sha256,
+                source_version=args.source_version, kernel_version=args.kernel_version,
                 _verification=verification)
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.

@@ -376,7 +376,7 @@ def test_publication_failure_preserves_bootstrap_error(entry, monkeypatch, capsy
 
 
 @pytest.mark.parametrize("scenario", ["success", "preflight_failure", "existing_output", "old_output_order"])
-def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_path, scenario):
+def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_path, scenario, entry):
     """Only pip/NVIDIA/worker processes are replaced inside a fresh interpreter.
 
     The archived launcher, extractor, package verifier, recipe/mount resolver,
@@ -399,6 +399,25 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
         target = repo / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(root / name, target)
+    repair_names = (
+        "src/molgap/experiment_resume.py",
+        "src/molgap/family_training_runner.py",
+    )
+    repair_originals, repair_payloads = {}, {}
+    if scenario == "success":
+        for name in repair_names:
+            target = repo / name
+            current = target.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            # The frozen package has a valid but deliberately unusable old
+            # module; the separately pinned overlay restores the actual source
+            # and checks that bootstrap attestation exists when it is imported.
+            repair_originals[name] = current + b"\nraise RuntimeError('pre-repair source imported')\n"
+            repair_payloads[name] = current + (
+                b"\nimport os as _recovery_order_probe_os\n"
+                b"if not _recovery_order_probe_os.environ.get('MOLGAP_RECOVERY_REPAIR_SHA256'):\n"
+                b"    raise RuntimeError('recovery overlay imported before bootstrap attestation')\n"
+            )
+            target.write_bytes(repair_originals[name])
     if scenario == "old_output_order":
         launcher = repo / "platforms/kaggle/run_experiment.py"
         # Reproduce the historical fault using a separately frozen source
@@ -437,6 +456,28 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
     package = tmp_path / "package"
     manifest = build_experiment_source_package(spec, repo,
         [*SHARED_SOURCE_FILES, "recipes/first.json", "recipes/second.json"], package)
+    repair_digest = None
+    if scenario == "success":
+        repair_files = {}
+        for name in repair_names:
+            (repo / name).write_bytes(repair_payloads[name])
+            repair_files[name] = {
+                "original_sha256": hashlib.sha256(repair_originals[name]).hexdigest(),
+                "repaired_sha256": hashlib.sha256(repair_payloads[name]).hexdigest(),
+            }
+        git(repo, "add", "--", *repair_names)
+        git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic pinned recovery overlay")
+        repair_record = {
+            "format": "molgap-recovery-repair-v1",
+            "spec_identity": manifest["spec_identity"],
+            "package_identity": manifest["package_identity"],
+            "archive_sha256": manifest["archive_sha256"],
+            "commit": git(repo, "rev-parse", "HEAD"),
+            "files": repair_files,
+        }
+        repair_raw = json.dumps(repair_record, sort_keys=True, separators=(",", ":"),
+                                ensure_ascii=True, allow_nan=False).encode("utf-8")
+        repair_digest = hashlib.sha256(repair_raw).hexdigest()
     source_mount = mounted / "source"
     initials = {arm: tmp_path / (arm + ".pt") for arm in ("first", "second")}
     for path in initials.values():
@@ -445,6 +486,30 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
     paths = ({arm: f"initial_states/{arm}.pt" for arm in initials}
              if scenario == "preflight_failure" else initial_state_paths(initials))
     stage_source_inputs(package, source_mount, initials, initial_paths=paths)
+    if repair_digest is not None:
+        (source_mount / "recovery_repair.json").write_bytes(repair_raw)
+        for name, payload in repair_payloads.items():
+            target = source_mount / "recovery_repair" / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(payload)
+
+        # The real verifier checks every replacement before changing any
+        # extracted source. A one-byte payload mutation must leave both
+        # originals intact, then the unmodified fixture proceeds through main.
+        probe_source = tmp_path / "repair-probe-source"
+        for name, original in repair_originals.items():
+            target = probe_source / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(original)
+        tampered_path = source_mount / "recovery_repair" / repair_names[0]
+        valid_payload = tampered_path.read_bytes()
+        try:
+            tampered_path.write_bytes(valid_payload + b"# mutated after pin\n")
+            with pytest.raises(ValueError, match="Recovery repair replacement mismatch"):
+                entry._recovery_repair(source_mount, probe_source, package, repair_digest)
+            assert {name: (probe_source / name).read_bytes() for name in repair_names} == repair_originals
+        finally:
+            tampered_path.write_bytes(valid_payload)
     jobs = [{**job, "initial_state": paths[job["arm_id"]]} for job in _jobs(spec)]
     assert len(list((source_mount / "initial_states").iterdir())) == (2 if scenario == "preflight_failure" else 1)
     launch = {"jobs": jobs, "expected_source_archive_sha256": manifest["archive_sha256"],
@@ -453,9 +518,15 @@ def test_frozen_package_launcher_reaches_actual_two_arm_preflight_barrier(tmp_pa
     launch_path = source_mount / "experiment_launch.json"
     launch_path.write_text(json.dumps(launch))
     launcher = tmp_path / "run.py"
-    launcher.write_text((repo / "platforms/kaggle/run_experiment.py").read_text(encoding="utf-8").replace(
+    launcher_text = (repo / "platforms/kaggle/run_experiment.py").read_text(encoding="utf-8")
+    launcher_text = launcher_text.replace(
         "EXPECTED_LAUNCH_SHA256 = None", "EXPECTED_LAUNCH_SHA256 = " +
-        repr(hashlib.sha256(launch_path.read_bytes()).hexdigest())), encoding="utf-8")
+        repr(hashlib.sha256(launch_path.read_bytes()).hexdigest()))
+    if repair_digest is not None:
+        launcher_text = launcher_text.replace(
+            "EXPECTED_RECOVERY_REPAIR_SHA256 = None",
+            "EXPECTED_RECOVERY_REPAIR_SHA256 = " + repr(repair_digest))
+    launcher.write_text(launcher_text, encoding="utf-8")
     output = tmp_path / "output"
     if scenario == "existing_output":
         output.mkdir()
@@ -510,9 +581,19 @@ class Worker:
         return self.returncode if self.returncode is not None else self.poll()
 subprocess.Popen = Worker
 error = None
+repair_imports = {}
 sys.setprofile(observe_package_check)
 try:
     entry.main()
+    if scenario == "success":
+        import importlib
+        for name in ("molgap.experiment_resume", "molgap.family_training_runner"):
+            module = importlib.import_module(name)
+            source_path = pathlib.Path(module.__file__)
+            repair_imports[name] = {
+                "path": str(source_path),
+                "sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+            }
 except BaseException as exc:
     error = {"type": type(exc).__name__, "message": str(exc)}
 finally:
@@ -520,6 +601,7 @@ finally:
 pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": error,
     "initial_paths": initial_paths,
     "package_checks": package_checks,
+    "repair_imports": repair_imports,
     "runtime_module": getattr(sys.modules.get("molgap.kaggle_pair_runtime"), "__file__", None)}))
 ''', encoding="utf-8")
     boundary = tmp_path / "worker_boundary.json"
@@ -534,6 +616,13 @@ pathlib.Path(boundary).write_text(json.dumps({"commands": commands, "error": err
         assert observed["error"] is None, observed
         assert observed["commands"] == [{"phase": phase, "arm": arm}
             for phase in ("preflight", "train") for arm in ("first", "second")]
+        assert set(observed["repair_imports"]) == {
+            "molgap.experiment_resume", "molgap.family_training_runner",
+        }
+        for name, payload in repair_payloads.items():
+            imported = observed["repair_imports"][name.removeprefix("src/").removesuffix(".py").replace("/", ".")]
+            assert Path(imported["path"]).is_relative_to(tmp_path / "work/source")
+            assert imported["sha256"] == hashlib.sha256(payload).hexdigest()
         assert json.loads((output / "execution_report.json").read_bytes())["status"] == "complete"
     elif scenario == "preflight_failure":
         assert set(observed["initial_paths"]) == {"initial_states/first.pt", "initial_states/second.pt"}
