@@ -22,6 +22,17 @@ Select its frozen cadence in the recipe; reuse its fields and relay instead of
 adding experiment-specific metric printers, progress polling or timers.
 Reuse navigation is not scientific, resource, role or submission authorization.
 
+## Simplicity Constraint
+
+优先采用满足当前需求的最简单实现。不要仅为推测性或极低概率的边缘情况增加抽象、依赖或额外流程。确有必要且会显著增加复杂性或扩大任务范围时，先向用户说明具体失败场景、发生依据和维护成本，再获得确认。
+
+This constraint also applies to tests: reproduce the observed failure in the
+nearest existing real workflow and strengthen or consolidate that coverage first.
+Do not automatically add test files, parameter combinations, validation layers or
+default required checks for each repair. Run the affected checks once; rerun only
+after a relevant change or failure. Any necessary expansion that significantly
+increases complexity or scope requires the explanation and confirmation above.
+
 ## Delegation Preference
 
 For simple, repetitive or bulk subtasks, use `gpt-6-luna` with `max` reasoning.
