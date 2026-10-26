@@ -115,3 +115,6 @@ platforms/_records/kaggle/training/structural_bias_norm_100k/** -text whitespace
 experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py whitespace=cr-at-eol,-blank-at-eof
 research_memory/policies/pcqm-k1-post-ln-100k-s42-20261020.1.json -text
 research_memory/policies/pcqm-gptrans-resistance-100k-s42-20261020.1.json -text
+
+experiments/pcqm_gptrans_bondlocal_pairnorm_100k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
+research_memory/policies/pcqm-gptrans-bondlocal-pairnorm-100k.1.json -text -filter -ident -working-tree-encoding
