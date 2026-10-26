@@ -30,6 +30,14 @@ another submission needs explicit authority. See [reference roles](models/REFERE
 
 User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 
+The retained-initialization500K question is terminally accepted. All four
+30-pass arms are independently strict replay-ready without exclusions.
+Pretrained initialization worsens the selected Clean-EMA endpoint by0.924meV
+in single-forward and1.916meV in mean2; both close negative. Its early advantage
+reverses during downstream training. [Decision and attribution](experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md)
+own the conditional findings and unresolved weight/buffer/seed mechanisms.
+No successor, adoption or universal rejection of pretraining follows.
+
 The [2026-10-25 scale synthesis](experiments/pcqm_k1_scale_attribution_20261025/analysis.md)
 and accepted [retained-tail discriminator](experiments/pcqm_k1_scale_attribution_20261025/README.md)
 take precedence for the next K1 research choice. Recent within-module100K gains

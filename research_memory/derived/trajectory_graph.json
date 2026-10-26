@@ -21,6 +21,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained:A001",
+      "target": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/pretrained/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-init-forward-500k-mean2-s42-scratch:A001",
+      "target": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/scratch/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-init-forward-500k-single-s42-pretrained:A001",
+      "target": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/pretrained/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-init-forward-500k-single-s42-scratch:A001",
+      "target": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/scratch/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed:A001",
       "target": "experiments/pcqm_k1_message_norm_100k/generated/3742a23cbde07931bf59d8a4b29ce20f73914f9c1a373ecc0b35bdf412d68bb1/msgnorm_fixed/recipe.json",
       "type": "action_produced_evidence"
@@ -2436,6 +2456,26 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "target": "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "target": "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "target": "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-scale-attribution-20261025-attempt002",
+      "target": "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-slot-readout-diagnostic-20261002",
       "target": "TB-k1-500k-bottleneck-diagnostic-20261007",
       "type": "prior_evidence"
@@ -3094,6 +3134,22 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "type": "evidence"
     },
@@ -3603,6 +3659,22 @@
     },
     {
       "id": "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-init-forward-500k-single-s42-scratch",
       "type": "trajectory"
     },
     {

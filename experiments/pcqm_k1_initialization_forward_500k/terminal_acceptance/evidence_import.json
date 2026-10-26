@@ -1,0 +1,1187 @@
+{
+  "format": "molgap-canonical-evidence-copy-v1",
+  "owner_tip": "c04ca076a57b17b55096510f032a8982b291042f",
+  "archive_commit": "d01eac748c602aa97764021092ee3cb9096cbd5a",
+  "excluded_implementation": [
+    "experiments/pcqm_k1_initialization_forward_500k/prepare_continuation.py",
+    "experiments/pcqm_k1_initialization_forward_500k/prepare_declarations.py"
+  ],
+  "shared_source_copied": false,
+  "files": [
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/README.md",
+      "bytes": 257,
+      "sha256": "317199b09980e31c795dbe6f9feb4d5dfd1c50b19beb47040eb0f9fb6101f7a3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/STATUS.md",
+      "bytes": 5922,
+      "sha256": "d59617338467cbe6acdff2357cfaf202a50e94aef50e5706c095ea2de0895104"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/launch_receipt.json",
+      "bytes": 3556,
+      "sha256": "148766d29a8e5956e2f1c54a12bac2be38507ccd661073e561a2f2ebfa3a8968"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/platform_response.json",
+      "bytes": 1324,
+      "sha256": "b9efc4e34974a78a5b8706b19fa9f973c89e2c57d9ac08224174fc2472f70abc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/recovery_repair.json",
+      "bytes": 770,
+      "sha256": "37f70f5c18351995a86c011831b4904e2f126076c707933ec6b7a5d28fd5c3d6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/source_upload_verification.json",
+      "bytes": 8249,
+      "sha256": "616de3e4d2f2e37e79eef65e39b0883190fddabbf7d5784511a508203addbe12"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/source_verification.json",
+      "bytes": 472,
+      "sha256": "a7e0de44d62a15b2fee283174df3b4414369ba099f39df6e03b7ee0fec54414e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/training_progress_observations.json",
+      "bytes": 16925,
+      "sha256": "106be47712a6600e155630785826a433b1782531ef3fab48b486d199234f555b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/mean2/workflow_report.json",
+      "bytes": 2137,
+      "sha256": "2cabdb56335e7b91524baca6af00c640fbcadfb29f867bb235148852ebe2ddef"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/launch_receipt.json",
+      "bytes": 3562,
+      "sha256": "aa734037853bbf2cfb1cf0a516e9fff98bc421e6ce34fb57dc643855013bb0ff"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/platform_response.json",
+      "bytes": 1329,
+      "sha256": "13aaf855f11799bf5bcf53b2ebcd9060fc5b11d7609f2f89ae501598892521b8"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/recovery_repair.json",
+      "bytes": 770,
+      "sha256": "591ffc6252c3bd04a415d591dad35d4e26512fa49ee3d67e48b883aa7cc7cf45"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/source_upload_verification.json",
+      "bytes": 8251,
+      "sha256": "0ae3508258bc60045a94aaa47a383369ab561ea46b12c30f6786e0e1a4396544"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/source_verification.json",
+      "bytes": 474,
+      "sha256": "91ccdf7ad273b1cced7680478501138627ec1ad53238693e3bde7ce4ffa66992"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/training_progress_observations.json",
+      "bytes": 10705,
+      "sha256": "f8af65b70bf388074b1084ed30293ad7f1cf0ad36ca98af82e8c9233eee72852"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation/v2/single/workflow_report.json",
+      "bytes": 2142,
+      "sha256": "701b233f4b8935c82491c4da93d700aa649f0a0f2a13aef2680321e21e10c08b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation_authority.md",
+      "bytes": 2742,
+      "sha256": "c9e03c3caca0cdfbc4d0fac4912d57c55e1a3f139e96369cccca29626250b661"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/continuation_checkpoint_verification.json",
+      "bytes": 2065,
+      "sha256": "9c3e979c98a1e4aeeb5c249c99b412f8fe74c0ef142ab21f21393082ddc96ecb"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/decision.md",
+      "bytes": 627,
+      "sha256": "269138c6a8ee6b650761d1a9de24cafaa22d5581cc7faba5b4ca5e78e6ae77a2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/failure_inspection/inspection.json",
+      "bytes": 14116,
+      "sha256": "c3827aefb040a81acd60b1c79d5997b0217fe6a14b28a3178c297cbe9ba29dee"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/failure_inspection/inspection.md",
+      "bytes": 3547,
+      "sha256": "bece716feed04cbf7737a70b78e57e99b4a5722a9210d37491b9a355c75d85cf"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/acceptance_plan.json",
+      "bytes": 1896,
+      "sha256": "fadc7eeefb5572f92d8b3add534d571321ee8c8cd96e61dcb75f602b4aa32562"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/pretrained/plan_input.json",
+      "bytes": 4256,
+      "sha256": "da342ffec72898d65285b2fc65a6a5cd283828bc588ad0bdf4036d2d2fafef3f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/pretrained/recipe.json",
+      "bytes": 2145,
+      "sha256": "5cf80ea94c5b6f047cf06ec0d9278b2d47a09d7dade2948b205ec3c461078a3b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/scratch/plan_input.json",
+      "bytes": 4223,
+      "sha256": "f11313ac24ac967a15604f86d43faa20cff22965fab82b6e333d44b56004b17b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/scratch/recipe.json",
+      "bytes": 2145,
+      "sha256": "2a5ac12388b1cb87448942f9aafc9b6f1bb650f0a121f6e9d608b4aa5b475861"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/acceptance_plan.json",
+      "bytes": 1895,
+      "sha256": "bbc4ffaf396cb95a97631197e7c2851fae928b7f4b18d2c1820d82606cd316e8"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/pretrained/plan_input.json",
+      "bytes": 4238,
+      "sha256": "bd9b6239d06e290d725f0c2b5f6296410daeea9842bb6f44c695a9120de261dc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/pretrained/recipe.json",
+      "bytes": 2141,
+      "sha256": "1dcd7591ef4c2ae90785c0d95e0b9b07a0e5ffd03ad27f51e9100a53f82cf581"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/scratch/plan_input.json",
+      "bytes": 4205,
+      "sha256": "64ceba271a319413c1ddfe0fdc4f8cdf376682edbd35506b9539f0d2fe489005"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/60ceedae9ef2bda9ff024def578d5a87ce7492e985e934630e6bc618eacb7c4c/scratch/recipe.json",
+      "bytes": 2141,
+      "sha256": "a6d3b7c021671248318e4841cbebdd13f9658413693d022071790d973b6db2d8"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/de9ad6a87816cf3282c1980d28bec44ba7072c539d777eea1bd5f2316b8485d8/acceptance_plan.json",
+      "bytes": 1896,
+      "sha256": "7d2462d21df4340e8ce9d6f4e7c4d0ecf42475bfa15f7b6f00c83cc60b025b9b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/de9ad6a87816cf3282c1980d28bec44ba7072c539d777eea1bd5f2316b8485d8/pretrained/plan_input.json",
+      "bytes": 4234,
+      "sha256": "1ce90681facb015849362eacb51b89f2dc2c089a933b0fc9c5159097d2e7097f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/de9ad6a87816cf3282c1980d28bec44ba7072c539d777eea1bd5f2316b8485d8/pretrained/recipe.json",
+      "bytes": 2145,
+      "sha256": "5cf80ea94c5b6f047cf06ec0d9278b2d47a09d7dade2948b205ec3c461078a3b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/de9ad6a87816cf3282c1980d28bec44ba7072c539d777eea1bd5f2316b8485d8/scratch/plan_input.json",
+      "bytes": 4201,
+      "sha256": "6e2d8f25c099a9d9159bab6b84f75e9d77ba5eef1cc666363f0f8c877335b465"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/generated/de9ad6a87816cf3282c1980d28bec44ba7072c539d777eea1bd5f2316b8485d8/scratch/recipe.json",
+      "bytes": 2145,
+      "sha256": "2a5ac12388b1cb87448942f9aafc9b6f1bb650f0a121f6e9d608b4aa5b475861"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/initialization_provenance.json",
+      "bytes": 1924,
+      "sha256": "2d6394902d022369119924d3c56a4562153a4bc222a7438f9261f21c3cbdf700"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/authority.json",
+      "bytes": 940,
+      "sha256": "887d180fae9845f159c240001234e04163f64ea82e2accca8a32dcb4106a7b62"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/experiment.json",
+      "bytes": 4069,
+      "sha256": "f6ae3a2a1e29b2bc1abe6005a367a89b63bd1cb2498d5c9d72c94a23d67f69c9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/pretrained/data_declaration.json",
+      "bytes": 4118,
+      "sha256": "1ae99832d5ff20e285495655d4e6c3cef5cbcd67c52db02b2626c1295659799a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/pretrained/recipe.json",
+      "bytes": 2532,
+      "sha256": "1c5fec8b41e82847127ffd438e1e9a2838d12870294c6a57eccf0f5965c0e00d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/scratch/data_declaration.json",
+      "bytes": 4106,
+      "sha256": "7e2a3358d057473cafd99a495d4cfc2f58d492fc5da61b53dad932c7e2f31d3e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/mean2/scratch/recipe.json",
+      "bytes": 2532,
+      "sha256": "2781cfd84f821bec13a8e29ac51f98a9194d416940c0d4bb8caa0a2b7ef2fd0f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+      "bytes": 6390,
+      "sha256": "2f69418acbd2d6bb5106a416f13b89476ce90880763c0e99b7cad50cc990bd06"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/role_plan.json",
+      "bytes": 1569,
+      "sha256": "71623990bb2022147ee08695ed326141f73df3229d3b96ededd84327f358854e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/comparison_assets/d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a/target_transform.json",
+      "bytes": 557,
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/costs/cost-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained-planned.json",
+      "bytes": 863,
+      "sha256": "3297f793ac8c0aa887e6b5e3f9677b65b1b8ec2457061d21a59e9b27d0beec31"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/costs/cost-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained-allocation-0.json",
+      "bytes": 990,
+      "sha256": "9b4b8a1dde60a95b52d7bf6a26cdacb7bc702ae8fd7b546dbfbf19f945e29c5d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/finalization.json",
+      "bytes": 9039,
+      "sha256": "d7362f1600ea87c055e91fc5b2f651eb12b1531f05216cabcfeb2b8da34e9909"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-pretrained-development-labels_read.json",
+      "bytes": 699,
+      "sha256": "2c72bb317df29426e4f4353387a09656fbfb8740931b9f56094401e4b58ecada"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-pretrained-development-metric_computed.json",
+      "bytes": 707,
+      "sha256": "5c48966bbe8c2c7ec7ca228361a63f050296c33ea171c8f11d9f8743d914867c"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-pretrained-development-prediction_input.json",
+      "bytes": 709,
+      "sha256": "04b4b422eae218b34e174c9944174fab7313a2e2dd3170e89c32e91bc3eb9a73"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-pretrained-development.json",
+      "bytes": 690,
+      "sha256": "2c55c412a257035f68b50138ff43c8156510d0072fbd18c4cb9da6fa89e63ff1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-pretrained-train.json",
+      "bytes": 684,
+      "sha256": "0a09a1cdf34a3e2016cbdfc504ebbc4266d886c4f4e8ccfa2561aa6dc4c9214c"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/terminal_input.json",
+      "bytes": 12535,
+      "sha256": "7b1da941cba04761d46b44238223e9fb5ffe717a83f6622a32d3252ea0904bbb"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/trace.json",
+      "bytes": 18993,
+      "sha256": "b20bcb19c615d79e7608904a07afa0d00274e6236fbe50e518bb76a9af132721"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/trace_manifest.json",
+      "bytes": 2538,
+      "sha256": "6400dc68b13f0d2b5c83f2bbbb03012de8e2b6d1bb486a5b471b016a14859694"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/trajectory.json",
+      "bytes": 5622,
+      "sha256": "015ff0e913a95f34e57fc67f34ce5cd9b7355d7fd5bd9fe69552e1a957ade5a6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/rml_finalized/v5_evidence.json",
+      "bytes": 4450,
+      "sha256": "c95ce6bdebd2dbc8486b0b1ab39bb689f478ba615a609f8b9739044bd55a59f0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/terminal_staging/continuations/2/continuation.json",
+      "bytes": 4367,
+      "sha256": "ff62cf201c533ebb857dcfe0b7e79ff6015530f5e8e6120b79656616627bbe8e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/terminal_staging/v1/b2ea3c1768364c36/acceptance.json",
+      "bytes": 932,
+      "sha256": "894a94c13de419879e2cd87d6e5ea1e8286ec2dee478aa0de4c870ebcf184e1c"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/terminal_staging/v1/b2ea3c1768364c36/observed.json",
+      "bytes": 7860,
+      "sha256": "6d42b556e146f4d98df905b7b3c8b2570a0dd5371feb6e0b4e81bba4565561b1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/terminal_staging/v1/b2ea3c1768364c36/terminal.json",
+      "bytes": 20116,
+      "sha256": "d10e3408e5f20fb39ff9e9560b082356c0d381c404d77055bc831a31a4b74770"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/pretrained/trajectory.json",
+      "bytes": 4934,
+      "sha256": "beb8be12a676068cf585343a958f25dba963efc182358ab52c4d4ede8084a69d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/rml_decision_snapshots/fbb84ee6bdd0325278517d81ec767f214521e6123ec833c4d4da40c39dea73dd.json",
+      "bytes": 70713,
+      "sha256": "fbb84ee6bdd0325278517d81ec767f214521e6123ec833c4d4da40c39dea73dd"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/costs/cost-T-pcqm-k1-init-forward-500k-mean2-s42-scratch-planned.json",
+      "bytes": 854,
+      "sha256": "653bece771276f2367e6ebfa76fd7cab8cd89967fe22e48c3377c1de1164e937"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/costs/cost-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch-allocation-0.json",
+      "bytes": 978,
+      "sha256": "26628bc8856ae8a59460a58d05490c3482cf1da3e776556ac897c508d0b50da8"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/finalization.json",
+      "bytes": 11593,
+      "sha256": "c52722d2d7dbebc0bab33e2b8c39798272d58b1eb6f9f2321819b638e35091c1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-labels_read.json",
+      "bytes": 687,
+      "sha256": "732bb691a064f933b6d8bf23a0a59e012276acaffdabf8bc0d4366989a756ba6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-metric_computed.json",
+      "bytes": 695,
+      "sha256": "8ba34eab295ff7efdd596b8aee2ae45dbd0a998cdaa1e93c07e29cb6e292fafc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-prediction_input.json",
+      "bytes": 697,
+      "sha256": "4019540460a1f8d866192ad4a5a718a03c84564a24310668683c4143617ee28a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development.json",
+      "bytes": 678,
+      "sha256": "1de37a9f52533a7c366a93be9562881c58c2eb8863c2be6f78d98ce9beeb06e0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-train.json",
+      "bytes": 672,
+      "sha256": "2af1f3c25b37e75788301c4187df1813082bbe3c051b6978c5f62fe38dbe0ef3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/terminal_input.json",
+      "bytes": 12586,
+      "sha256": "28eb4d7a685ad725b2403c45f5772bfb6915db7de712bf73643e24fc0a8b3089"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/trace.json",
+      "bytes": 18993,
+      "sha256": "1f40462430dbc372edc88415ca4fb65e319536e25c3a59a368ddf51754658da4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/trace_manifest.json",
+      "bytes": 2698,
+      "sha256": "b5d49c2f9383793b425c8448106dc48744a7af43a71c970282dc0f5947803b54"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/trajectory.json",
+      "bytes": 5266,
+      "sha256": "85671c950cf7bf120f1d7af9899b0202bd522d41df808f0dbd52784bca01a1d3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/qualification_revisions/334b73df9e4e5ab7ce81ad17ef9e18f98f8a3b01f42af21341f9a11f16eada9a/rml_finalized/v5_evidence.json",
+      "bytes": 4404,
+      "sha256": "1ae3f1be4b98f5e1f0a0340f3904f7507b30ad35da25f4980c0905e5f5e1da5a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/costs/cost-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch-allocation-0.json",
+      "bytes": 978,
+      "sha256": "26628bc8856ae8a59460a58d05490c3482cf1da3e776556ac897c508d0b50da8"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/finalization.json",
+      "bytes": 8683,
+      "sha256": "347db2e44ee65e724509b6e6dcb43e0174581374ab9f80e90fde80ab0b651966"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-labels_read.json",
+      "bytes": 687,
+      "sha256": "732bb691a064f933b6d8bf23a0a59e012276acaffdabf8bc0d4366989a756ba6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-metric_computed.json",
+      "bytes": 695,
+      "sha256": "8ba34eab295ff7efdd596b8aee2ae45dbd0a998cdaa1e93c07e29cb6e292fafc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development-prediction_input.json",
+      "bytes": 697,
+      "sha256": "4019540460a1f8d866192ad4a5a718a03c84564a24310668683c4143617ee28a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-development.json",
+      "bytes": 678,
+      "sha256": "1de37a9f52533a7c366a93be9562881c58c2eb8863c2be6f78d98ce9beeb06e0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-mean2-s42-scratch-train.json",
+      "bytes": 672,
+      "sha256": "2af1f3c25b37e75788301c4187df1813082bbe3c051b6978c5f62fe38dbe0ef3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/terminal_input.json",
+      "bytes": 11945,
+      "sha256": "e44730f8b990898184b9ced9cdadc83e84962b962b31e86d4e85a1f961e07ab2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/trace.json",
+      "bytes": 18993,
+      "sha256": "1f40462430dbc372edc88415ca4fb65e319536e25c3a59a368ddf51754658da4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/trace_manifest.json",
+      "bytes": 2520,
+      "sha256": "846c429db633a26f91de3d68c9bc459d3eafc21a3b0dec7bc7aa0cebe377a96e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/trajectory.json",
+      "bytes": 5177,
+      "sha256": "e018276f8a627d97d7e9a71c6fc4ca338031a83b0ed5532fc71517cab87a85d2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/rml_finalized/v5_evidence.json",
+      "bytes": 4404,
+      "sha256": "1ae3f1be4b98f5e1f0a0340f3904f7507b30ad35da25f4980c0905e5f5e1da5a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/terminal_staging/continuations/2/continuation.json",
+      "bytes": 4343,
+      "sha256": "2a86f2680b360e9f7acb5e85189ed9c45be2aa3690ed99b436ad2f8c4046b096"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/terminal_staging/v1/b555394172803658/acceptance.json",
+      "bytes": 892,
+      "sha256": "0560c50b3424f3f493060a6c861e1510993c3bf4aa727ae16f6808c69f7aed47"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/terminal_staging/v1/b555394172803658/observed.json",
+      "bytes": 7837,
+      "sha256": "0371a76762607715c1287f3a1951ab4e1dfbd37816fcf824c997c477741f614d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/terminal_staging/v1/b555394172803658/terminal.json",
+      "bytes": 19877,
+      "sha256": "7b80d6286541e64ac57ea7f3854516a8d3f9723e1838e310a2905c1a707e4a91"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/scratch/trajectory.json",
+      "bytes": 4907,
+      "sha256": "6f48e2a7c32bb9db910ebe40dc45fd5c35e14aa181f1ccf99022306e3f7afcb9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/bound_trace_manifest.json",
+      "bytes": 2643,
+      "sha256": "337da02a1dc6fe716927aeb83df9c6c08445e5b6f6f75418c64ea57a5c47e7f0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/comparison_readiness.json",
+      "bytes": 12255,
+      "sha256": "0215e80dd0acbc03b5ac128a15a7a773769054aa97a1c1cbb70cabe484cb32e2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/cost_records.json",
+      "bytes": 1131,
+      "sha256": "ff19f1f316f200617f0de7db2cbd3b02780b6a03659f47417c24d3e41d021c32"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/paired_analysis.json",
+      "bytes": 443,
+      "sha256": "a452f2dea240cbf1bc7bfc3802e7b1082507f455f5a9b514760844a708d2af2e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "6a334c239ab3fc5baa6649eb717881676acdd6c9cd4f2a894b99de736b9b0527"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/qualified_terminal.json",
+      "bytes": 20724,
+      "sha256": "91acdc11ffc585cbf876d6520c979daa91ee66ef67a00e07f6740494b2fb0293"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/role_history.json",
+      "bytes": 3898,
+      "sha256": "8bc99951a7dff340e15b542e61b22c9e53c22a461db7699747f9ba20086bf6e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/pretrained/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/bound_trace_manifest.json",
+      "bytes": 2523,
+      "sha256": "2db9e8342b84a2b120675d556d3e872ffb040175dcc6ae4a9c752bce4d6377b4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/cost_records.json",
+      "bytes": 1119,
+      "sha256": "17f88f39fa8a07f5654181caae109d81be26c2aae0b3059651fa4fb6fd6089f1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "37dbf9e972958db9bbf4988910883a81935977a8580eaaf3103d39b4c9fcf839"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/qualified_terminal.json",
+      "bytes": 20658,
+      "sha256": "c5775743f2e7f0a7664d5cac49cef7929084ec70a2ae4cd85795e8438963b837"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/reference_bundle.json",
+      "bytes": 5366,
+      "sha256": "4dff26825f293d1cc015b162cad0c74ca150c5dc6db7decdbc8132b418ca8e66"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/role_history.json",
+      "bytes": 3838,
+      "sha256": "4a05653490d3f40f6ab869c2484ba81b4f9e8720050718dab17b720ea4ce6b2b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/a885854e8af7ede4780f/scratch/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/bound_trace_manifest.json",
+      "bytes": 2643,
+      "sha256": "337da02a1dc6fe716927aeb83df9c6c08445e5b6f6f75418c64ea57a5c47e7f0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/comparison_readiness.json",
+      "bytes": 12255,
+      "sha256": "ad7dd7038f46b7e349a6cd7a84cd4a3c3f7dbf857d51e84495baccb93f80a41c"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/cost_records.json",
+      "bytes": 1131,
+      "sha256": "ff19f1f316f200617f0de7db2cbd3b02780b6a03659f47417c24d3e41d021c32"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/paired_analysis.json",
+      "bytes": 443,
+      "sha256": "a452f2dea240cbf1bc7bfc3802e7b1082507f455f5a9b514760844a708d2af2e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "6a334c239ab3fc5baa6649eb717881676acdd6c9cd4f2a894b99de736b9b0527"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/qualified_terminal.json",
+      "bytes": 20724,
+      "sha256": "6744071cae2b1dc731ae7c0da3190e4a7d301211c7726b9460c7d5ece645f188"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/role_history.json",
+      "bytes": 3898,
+      "sha256": "8bc99951a7dff340e15b542e61b22c9e53c22a461db7699747f9ba20086bf6e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/pretrained/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/bound_trace_manifest.json",
+      "bytes": 2625,
+      "sha256": "8c6243537582adfb33d090ce3742fc9284ebc56eb066b9d5fd34efd5eb81aa49"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/cost_records.json",
+      "bytes": 1119,
+      "sha256": "17f88f39fa8a07f5654181caae109d81be26c2aae0b3059651fa4fb6fd6089f1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "37dbf9e972958db9bbf4988910883a81935977a8580eaaf3103d39b4c9fcf839"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/qualified_terminal.json",
+      "bytes": 20017,
+      "sha256": "177399ffebaa509402b0948cd738fc61ac9b610900b7fee5e864e9b6c0e429f0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/reference_bundle.json",
+      "bytes": 5366,
+      "sha256": "43e7f7b149be63dff0607de147f03574b6823828abca83f9f17067f8b1e154fe"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/role_history.json",
+      "bytes": 3838,
+      "sha256": "4a05653490d3f40f6ab869c2484ba81b4f9e8720050718dab17b720ea4ce6b2b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-mean2-s42/prospective/strict_qualification/d5c3acd52a8ccecc0251/scratch/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/comparison_assets/d1ea09976a9be1d1d2df1dba56df6dbfa3759ba2e1f34658a4c79bc8d711ae4a/target_transform.json",
+      "bytes": 557,
+      "sha256": "96a42f14e33c1ab9c22c7b14bcf6ef6a8fbdf739ae03c9bfdaf7a5288904b6be"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/costs/cost-T-pcqm-k1-init-forward-500k-single-s42-pretrained-planned.json",
+      "bytes": 868,
+      "sha256": "4c0b792d6bca4c5d9728f0fd59f6785992e517b24d2e38077e227920af59c256"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/costs/cost-terminal-T-pcqm-k1-init-forward-500k-single-s42-pretrained-allocation-0.json",
+      "bytes": 996,
+      "sha256": "fb0ffa55f3007f013172cc7d8790244f655d981ef1f39a8f080684e7767b9982"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/finalization.json",
+      "bytes": 9077,
+      "sha256": "42a38338111a512562857cff180a8a1471add807b9bc0ba785bac75c1763f6ab"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-pretrained-development-labels_read.json",
+      "bytes": 703,
+      "sha256": "73d2ac0f050a3a19c43776a8c4d0fb266b73aed16c5ee1f935f81a132d80df7f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-pretrained-development-metric_computed.json",
+      "bytes": 711,
+      "sha256": "a5e8494a0860ee8f5284790cced3812cdb1f8cedc42ec4fc1bcf5f270636ee5b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-pretrained-development-prediction_input.json",
+      "bytes": 713,
+      "sha256": "93e14f31d344b6f3d696960b6c7e14ea827bc15204ff5380e853ace5c490243d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-pretrained-development.json",
+      "bytes": 694,
+      "sha256": "8f11f76d881c2d3f917a0933b95f23e91998971a950ca0182fb7219c7ff44165"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-pretrained-train.json",
+      "bytes": 688,
+      "sha256": "580e742b55f4c5c3fde56d9465c9015ef4705b574a897471365b60f897fc2e47"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/terminal_input.json",
+      "bytes": 12583,
+      "sha256": "fc659e4d38b6b00bfcfe41fdb31622edd7f49824ab7c007d06d3b6a82a73e1a0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/trace.json",
+      "bytes": 18992,
+      "sha256": "07fbde905659b0389f31c54d01c51e48e340d8f60c26fbc6db9abc7cb8587e73"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/trace_manifest.json",
+      "bytes": 2543,
+      "sha256": "49a1cf802098e3b9d992ab8b9f50b8f47ea3840a70dac6d934e9064b48eaf63a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/trajectory.json",
+      "bytes": 5644,
+      "sha256": "a2bc9741f51048c38b6688d68e7ae8ec68bb7892ed1e656abf619bb9a5f798a3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/rml_finalized/v5_evidence.json",
+      "bytes": 4463,
+      "sha256": "70d8846d37bd932805b5137d755c4f31a63c39bd0ef2f01fd0f691c59cb0f8c3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/continuations/2/continuation.json",
+      "bytes": 4385,
+      "sha256": "8a79dcc10c9c2590cb714f8f8c4c951e511373886540718f01ecfc4d7ba090af"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/41d0fb53e395f963/acceptance.json",
+      "bytes": 934,
+      "sha256": "4cae55784288b17b6bdc4f9c164a3a1da86cfaa791aa6541ee8880dd8766e019"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/41d0fb53e395f963/observed.json",
+      "bytes": 7878,
+      "sha256": "f5e578f7819c1a831b6fa1344ac7b9a6a940b282bde1ca31ef1db4068886bd8d"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/41d0fb53e395f963/terminal.json",
+      "bytes": 20194,
+      "sha256": "6d0976d6dc0fb3b7d62069868a1c1fc930f21ace6836da78d2f958a6986b9b74"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/e61200321f1baeea/acceptance.json",
+      "bytes": 934,
+      "sha256": "4cae55784288b17b6bdc4f9c164a3a1da86cfaa791aa6541ee8880dd8766e019"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/e61200321f1baeea/observed.json",
+      "bytes": 7878,
+      "sha256": "4f35131dd0296d8e29fc2ed1190d7b21b987bec155a10252b48b7e416544ac81"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/terminal_staging/v1/e61200321f1baeea/terminal.json",
+      "bytes": 17881,
+      "sha256": "ed6299de23a53ec347ebdf69fffde56e5e8a72e69368ef90e25eb08429c1fc94"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/pretrained/trajectory.json",
+      "bytes": 4951,
+      "sha256": "5fd87dc2ba74bb0d76b7040da5521403863d6995d832cae62e641a757153bb1b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/rml_decision_snapshots/2c3db5ed625556ccd955f5216a5d040c59ab741a2f3c23b3b76215f5ce5e63f5.json",
+      "bytes": 70191,
+      "sha256": "2c3db5ed625556ccd955f5216a5d040c59ab741a2f3c23b3b76215f5ce5e63f5"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/costs/cost-T-pcqm-k1-init-forward-500k-single-s42-scratch-planned.json",
+      "bytes": 859,
+      "sha256": "823309192bce5adfa3dd39389cc411656b2257a7b87f86d4cfdd85d4ae3904b4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/costs/cost-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch-allocation-0.json",
+      "bytes": 984,
+      "sha256": "db2bdd4731b993436cee9d28451ea20780d16dcd097a378af66e2743ffa2c6c2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/finalization.json",
+      "bytes": 8720,
+      "sha256": "d194ac99257714a9b21d392a428f60472b12d285aab4c47cc93561d6ee7fbe2a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-scratch-development-labels_read.json",
+      "bytes": 691,
+      "sha256": "003a4121bd468a3e7ec07928187c7f6665f90fa767a9769c570d187b9f04f482"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-scratch-development-metric_computed.json",
+      "bytes": 699,
+      "sha256": "96bd7e5ffb96d3fc2d72081bd0fc585f317bb12ac780914728e121b1ec38f007"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-scratch-development-prediction_input.json",
+      "bytes": 701,
+      "sha256": "662d1a549fc9f78b68d46bc52f0ca4743d264885d688b58e7eb8209f1f3bd1dc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-scratch-development.json",
+      "bytes": 682,
+      "sha256": "6cb2d173ebd0bbfab9fc24354ff1533352f4008040c5371ea6bd348354cab1de"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/roles/role-pcqm-k1-init-forward-500k-single-s42-scratch-train.json",
+      "bytes": 676,
+      "sha256": "28fa623d09268381fa2878683cb01f0e2f545b4266b8f7a87051b67e4b88a3ab"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/terminal_input.json",
+      "bytes": 11991,
+      "sha256": "62819c7087f5be243b50259ce6abd085ce52c19f84855b24905ce93c728ba5dc"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/trace.json",
+      "bytes": 18997,
+      "sha256": "d2395369d9088917ae7ae1467997cac6da01a744262a722951c8a10c6a63b63b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/trace_manifest.json",
+      "bytes": 2525,
+      "sha256": "c3254975e3827aa3bce3cbf9dcc8379d4f10e053a05e6b73ef785e74c991913f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/trajectory.json",
+      "bytes": 5197,
+      "sha256": "1397c39f6851d298e90edb408fd485899c5780b760d315586b9e36cebaaa2390"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/rml_finalized/v5_evidence.json",
+      "bytes": 4416,
+      "sha256": "c68bdfc3499fd019e72c22202ee3af2c6c2fbb52c25cc0760fe2b88095299836"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/continuations/2/continuation.json",
+      "bytes": 4361,
+      "sha256": "bc3c6dbddea01265096fc993763b31961cd0504b12de93e30b95cdbcea88117a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/ef7a6b698704ce2a/acceptance.json",
+      "bytes": 894,
+      "sha256": "f8e0be6d02b14a4bb1e61464d08bb4773060ee32b5823f37602bcd6d77dbcc3f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/ef7a6b698704ce2a/observed.json",
+      "bytes": 7854,
+      "sha256": "dd96ad339f3a4155cbff30001d945dfd6e9bb0f5f87a3fc5de5eccfae50fac98"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/ef7a6b698704ce2a/terminal.json",
+      "bytes": 17677,
+      "sha256": "c0ae02b083250559255044b0700f7e5ffe69152d97053d66058f2a910b195e24"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/f6683a762d3ddfac/acceptance.json",
+      "bytes": 894,
+      "sha256": "f8e0be6d02b14a4bb1e61464d08bb4773060ee32b5823f37602bcd6d77dbcc3f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/f6683a762d3ddfac/observed.json",
+      "bytes": 7854,
+      "sha256": "de2e18830bc2d87436d9781f6d8094011f01d5ca639360bdecb2acfc5ff5366e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/terminal_staging/v1/f6683a762d3ddfac/terminal.json",
+      "bytes": 19954,
+      "sha256": "7a3dfed698c8ba9ac9ea09237d7df2cf4f3e40d6cc12cdbf448b2a5afc7b6c90"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/trajectory.json",
+      "bytes": 4924,
+      "sha256": "56e1597a5a61ee209db3df129854c46358bc2ac0bdaf492cd2f0b1b7243a6970"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/bound_trace_manifest.json",
+      "bytes": 2648,
+      "sha256": "6029e93f5728af9d621a8c20a38af075e38a546566e78548a80db8d387f351c3"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/comparison_readiness.json",
+      "bytes": 12235,
+      "sha256": "794c616d39d6fbe6d47291ce94d01e7ce85749ba04ac68d917017bc8b59d02fa"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/cost_records.json",
+      "bytes": 1137,
+      "sha256": "ef45e5dd54c9bb00e740dc42afc627eac58a99aca93f0215bdc91439d2e17606"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/paired_analysis.json",
+      "bytes": 445,
+      "sha256": "60b2503572987d5ebb3e703edaf9421ce3a4830f44b69c96cc30c414ca94d2e1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "07f39dc595d13cb181e53deec638876dc65772bb010a46dc49aadf816de0a85b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/role_history.json",
+      "bytes": 1614,
+      "sha256": "6ec6f72ad2c8b6b46371fb4b9b95a0be691ebfb6be4d838b79820e4953fe6a14"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/pretrained/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/bound_trace_manifest.json",
+      "bytes": 2630,
+      "sha256": "6787f2c0b84361bdd93b3a51455cc19664f587d3c995e137a676098ba5e8ee32"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/cost_records.json",
+      "bytes": 1125,
+      "sha256": "196e11c1c01a5e7dac50a32c4013bbb772d5caf699922e3d61b8fdb2d6192372"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "fa9c1c4529604382e32459fc2c21753bf3c75af9fe5902e6f336b7dfe7e5d763"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/reference_bundle.json",
+      "bytes": 5377,
+      "sha256": "9564a74011c9e750bcbcf7a84fb8b7dbf12a417a65ccc8c453a129144607c68f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/role_history.json",
+      "bytes": 1590,
+      "sha256": "3af80092a479c7d417fd8605976fde26c2daa5de5088d6814b556f8290c58ed2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/6d219484a4c78cbc8d29/scratch/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/bound_trace_manifest.json",
+      "bytes": 2648,
+      "sha256": "0ef956ec7c600355281db857d3d5d75fc56a5e8138e564f2490c6db642266124"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/comparison_readiness.json",
+      "bytes": 12281,
+      "sha256": "884914c1340fd402b94ffb4317522bcb078cb15a4c0545d7bc003ebb4eeb36fa"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/cost_records.json",
+      "bytes": 1137,
+      "sha256": "911f602590143f43a35b76b6ac0cb0412b6a3fdfdb0479a8c2d9ea8b1e9db764"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/paired_analysis.json",
+      "bytes": 445,
+      "sha256": "60b2503572987d5ebb3e703edaf9421ce3a4830f44b69c96cc30c414ca94d2e1"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "07f39dc595d13cb181e53deec638876dc65772bb010a46dc49aadf816de0a85b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/qualified_terminal.json",
+      "bytes": 20805,
+      "sha256": "e35b4fc226b4e325a58e6d6b9739aa1b204f4f9bd16a90b1a1ef599cc2ed2697"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/role_history.json",
+      "bytes": 3918,
+      "sha256": "6b024b53ae273882b80ac49c0d5eebc03d3ec5888e51b1f3210ec29526bdd07a"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/pretrained/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/bound_trace_manifest.json",
+      "bytes": 2630,
+      "sha256": "0a7daef662cb2ae70d0c505264daafaca5f76c47e7dc8fc8e85f6f9b267548c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/cost_records.json",
+      "bytes": 1125,
+      "sha256": "7eb9ebf98626ea32b57ca688f60bae32e432697dc39f150e916c46518d2a7575"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "fa9c1c4529604382e32459fc2c21753bf3c75af9fe5902e6f336b7dfe7e5d763"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/qualified_terminal.json",
+      "bytes": 20095,
+      "sha256": "c77dae8e8d4d882b9d11040d3574e735ef192acd132c68fb149e722812ba5632"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/reference_bundle.json",
+      "bytes": 5377,
+      "sha256": "fb930d0cb9c20b39b07ff7fb7164cdfd4cc67b72d6570ee2309490b7b9b793b5"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/role_history.json",
+      "bytes": 3858,
+      "sha256": "e27e071e7b7c01a1ad769a275fcaecba6670e2bd84f5678f379e21d64f413a87"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/row_manifest.json",
+      "bytes": 654,
+      "sha256": "836bd6f25b57faadc7b72ebe3b5f50170612a4915bbb50fd8e05d0fdc12c3c0b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/strict_qualification/d3b34d283232ffdbe1da/scratch/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/authority.json",
+      "bytes": 941,
+      "sha256": "6f134b4be7f52ee6542fff3e22b8c58ec4803e1d6d1ab893b5702a907ed884a0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/experiment.json",
+      "bytes": 4047,
+      "sha256": "964b6a491f06300188a361879718f016cb181394afe8dc82409868ef5eea4366"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/pretrained/data_declaration.json",
+      "bytes": 3914,
+      "sha256": "0993d5f98dba7853b78ff7ce27113f06c2409726cbe545a0e0d1df9e9a0c568b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/pretrained/recipe.json",
+      "bytes": 2536,
+      "sha256": "2e19660f631e9940cbcd9530d8481f24926902b6ae994955083e5acfe12821f5"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/scratch/data_declaration.json",
+      "bytes": 3902,
+      "sha256": "11a938eff767c21502ff585992a847992d558105fa9c55174195c52d4c2a401f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/single/scratch/recipe.json",
+      "bytes": 2536,
+      "sha256": "ffd78815a7ca21ba08b0203f5406b0a354441d2ce41c6cdbb483e730ba4e685e"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json",
+      "bytes": 311,
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md",
+      "bytes": 5165,
+      "sha256": "35f6083e2791fe273194afc28b25decb983a9cce7865b17f8b90a678a86e2be9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/decision.md",
+      "bytes": 2384,
+      "sha256": "b16367362ffb7165791ec28d3983f742999fb6e70bd5575ecea7855497214e37"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/physical_allocation_summary.json",
+      "bytes": 6843,
+      "sha256": "56dbe3728f6f3efe41d6a5243077f7397e9d9d51bc3ac7766b51548a5e79c833"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/physical_runs.json",
+      "bytes": 1737,
+      "sha256": "a0623d4fbdc3690890e1b3621794a72f736c627fef69146cf5620c77b30a753f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/role_audits.json",
+      "bytes": 217,
+      "sha256": "27b2942820f5f3d25423f885da5b28673efdb42694f1ea3fd1c1a47b6de4d6bd"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/role_audits_complete.json",
+      "bytes": 235,
+      "sha256": "f93cfbf3f9f4454e5945921f7438ffc2ec6a9000aa2e97501edfe5ab843101f4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/roles_pretrained.json",
+      "bytes": 2779,
+      "sha256": "0831290693257c8bdb1482e96b4d0ce76225952c5faeffce6e9ca42c74ab0d3f"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/roles_pretrained_complete.json",
+      "bytes": 5103,
+      "sha256": "233f24d45379b3793dcda6ccf4b4ae81a299047c30a0cc7d724292c610ae8fd7"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/roles_scratch.json",
+      "bytes": 2752,
+      "sha256": "8575f91fb72e5c5cdb1a002941b72390eba6dce485d05a4ca9d62c03bb64b28c"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/mean2/roles_scratch_complete.json",
+      "bytes": 5040,
+      "sha256": "5f25ecbc9e73c04b6fe523951b054c1cd3b546ab6beaa3dec2d84ea9f32c411b"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/physical_allocation_summary.json",
+      "bytes": 11049,
+      "sha256": "707eee671fb7f032c8a7e4f12cd7b65f132e5a6b0120f00cf6b8450dee3f59b9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/qualification.md",
+      "bytes": 4204,
+      "sha256": "dc81c61bd2a32b8e8f60e9d25997aa59152a3a38cc8e0f00416cecbd05b465e0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/physical_allocation_summary.json",
+      "bytes": 6851,
+      "sha256": "d9f690da94e3eec7fa832adc732e1dabebea63d73d1262ede1149f11a09a9ed0"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/physical_runs.json",
+      "bytes": 1745,
+      "sha256": "b946b2d45b6d85635cf42525b2bac2fdcd53edd1626ea5d49d7674a3482f62b6"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/role_audits.json",
+      "bytes": 219,
+      "sha256": "f1b67cd780d480da56841cd07dd8d90c571e12306f91c006ae34b52185b5d954"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/role_audits_complete.json",
+      "bytes": 237,
+      "sha256": "d165db21097c4d8cd567597b34f2dfba43f642b47c88fca9fd72a65d0a03a3b2"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/roles_pretrained.json",
+      "bytes": 2789,
+      "sha256": "6a7be97ee2e671bb0b9816afe2b4aeb189bc8f8450aaadb101686e8a824a39a4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/roles_pretrained_complete.json",
+      "bytes": 5125,
+      "sha256": "d46298dd607bf194671f1f5294e9720bae0278d6551a2b49206a8dc17980ea33"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/roles_scratch.json",
+      "bytes": 2762,
+      "sha256": "af61d0f258b2705d810c89cd6d830290bf737fc615344922ce9a2b3768f1f1c4"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/single/roles_scratch_complete.json",
+      "bytes": 5062,
+      "sha256": "f6228baf7fb7293ba6929061f98e482aaf10277b78af0f4f77a681c0e86a2cd9"
+    },
+    {
+      "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_custody.md",
+      "bytes": 4028,
+      "sha256": "83754081b7314fdf857f4c70db93f8d5c3eb047e38a039feb86f1f6860b59eb9"
+    },
+    {
+      "path": "research_memory/policies/pcqm-k1-init-forward-500k-mean2-s42.1.json",
+      "bytes": 888,
+      "sha256": "d38e5d6f8f99691d985a90eda43c72d8b4aa815acccee95bc30d0c626b6c176c"
+    },
+    {
+      "path": "research_memory/policies/pcqm-k1-init-forward-500k-single-s42.1.json",
+      "bytes": 890,
+      "sha256": "528e0ed7dcaaf07030c0a2569bc4790fd505d734191e019f8c0aa23fd84e29b3"
+    }
+  ]
+}

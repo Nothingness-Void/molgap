@@ -1,0 +1,106 @@
+{
+  "arms": [
+    {
+      "arm_id": "scratch",
+      "data_ref": {
+        "arm_id": "scratch",
+        "spec_ref": "experiments/pcqm_k1_initialization_forward_500k/single/scratch/data_declaration.json"
+      },
+      "initial_state_ref": "D:/文档/molgap/experiments/pcqm_k1_flag/qualification/initial_state.pt",
+      "recipe_ref": "experiments/pcqm_k1_initialization_forward_500k/single/scratch/recipe.json"
+    },
+    {
+      "arm_id": "pretrained",
+      "data_ref": {
+        "arm_id": "pretrained",
+        "spec_ref": "experiments/pcqm_k1_initialization_forward_500k/single/pretrained/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-cleanup-retained-20261017/final-retirement/objects/9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+      "recipe_ref": "experiments/pcqm_k1_initialization_forward_500k/single/pretrained/recipe.json"
+    }
+  ],
+  "attempt_id": "v1",
+  "authority_ref": "experiments/pcqm_k1_initialization_forward_500k/single/authority.json",
+  "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+  "experiment_id": "pcqm_k1_initialization_forward_500k",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-k1-init-forward-500k-single-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "monitor_paths": [
+    "experiments/pcqm_k1_initialization_forward_500k/STATUS.md"
+  ],
+  "platform": {
+    "kaggle": {
+      "accelerator": "NvidiaTeslaT4",
+      "account": "nothingnessvoid",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "datasets": [
+        "nothingnessvoid/k1-init-500k-single-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "kernel": "nothingnessvoid/molgap-k1-init-500k-single-s42",
+      "source_dataset": "nothingnessvoid/k1-init-500k-single-src",
+      "title": "MolGap K1 Init 500K Single S42"
+    },
+    "platform": {
+      "accelerator": "NvidiaTeslaT4",
+      "atomic_checkpoints": true,
+      "cpu_cores": 4,
+      "device_count": 2,
+      "memory_gib": 29,
+      "name": "kaggle",
+      "retrievable_chunks": true
+    }
+  },
+  "profile": {
+    "cheapest_falsifier": "Matched scratch/pretrained pair within one forward mode at fixed500K30 passes; terminal acceptance before any successor.",
+    "estimated_device_hours": 18,
+    "estimated_wall_hours": 9,
+    "hardware": "Tesla T4 FP32",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_INITIALIZATION_PAIR_500K",
+    "alternatives": [
+      "Initial representation changes optimization",
+      "Development transfer fails",
+      "Single-seed training variability"
+    ],
+    "changed_mechanism": "retained-pretrained-initialization",
+    "closed_families": [
+      "K1 tail regularization500K",
+      "K1 consistency500K"
+    ],
+    "deficiency": "Retained100K pretraining has no strict matched500K initialization comparison under this forward mode.",
+    "negative_decision": "Close or retain inconclusive evidence under the frozen contract; no automatic retry or scale-up.",
+    "policy_id": "pcqm-k1-init-forward-500k-single-s42",
+    "positive_decision": "Nomination only after >=1meV gain and paired95%CI excludes zero within this slot; no automatic adoption.",
+    "prior_trajectories": [],
+    "question": "Does retained100K pretrained initialization improve fixed500K K1 single development versus scratch?",
+    "reference_ids": [],
+    "supporting_evidence": [
+      "pcqm-k1-scale-attribution-20261025-attempt002"
+    ]
+  },
+  "role_ref": "experiments/pcqm_k1_initialization_forward_500k/role_plan.json",
+  "same_run": {
+    "reference_arm_id": "scratch",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "addons": [],
+      "family": "neural_atom_k1",
+      "version": "3"
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "timestamp": "2026-10-26T00:00:00+09:00"
+}

@@ -1,0 +1,302 @@
+{
+  "observed_at": "2026-10-26T03:33:50.417356+00:00",
+  "frozen_source_commit": "64933302a449cd48961a610028a17bd6ae6d2e23",
+  "status": "FAILED_INFRASTRUCTURE",
+  "question_status": "unresolved",
+  "remote_resubmitted": false,
+  "checkpoint_bytes_locally_verified": false,
+  "root_cause": "Clean-EMA checkpoint cursor weight_state tensors copied into resume JSON manifest at first pass10 chunk export",
+  "slots": {
+    "single": {
+      "kernel_id": 140826099,
+      "version": 1,
+      "scheduler": {
+        "kernel": "nothingnessvoid/molgap-k1-init-500k-single-s42",
+        "kernel_id": 140826099,
+        "version": 1,
+        "status": "KernelWorkerStatus.ERROR",
+        "failure_message": "",
+        "observed_at": "2026-10-26T03:29:52.725434+00:00",
+        "credential_owner": "nothingnessvoid"
+      },
+      "allocation_scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+      "wall_seconds": 6545.8416824450005,
+      "allocated_T4_device_seconds": 13091.683364890001,
+      "arms": {
+        "scratch": {
+          "trace_completed_passes": 10,
+          "optimizer_steps": 39060,
+          "sample_presentations": 4999680,
+          "clean_ema_mae_eV": 0.11460525542497635,
+          "logged_completed_passes": 9,
+          "checkpoint_sha256_from_trace": "19dd7364be3d8fbc87c3734e6764835ce596639794adcde7919c8b717837e039",
+          "checkpoint_verification": "not_downloaded_or_inspected"
+        },
+        "pretrained": {
+          "trace_completed_passes": 10,
+          "optimizer_steps": 39060,
+          "sample_presentations": 4999680,
+          "clean_ema_mae_eV": 0.11349163949489594,
+          "logged_completed_passes": 9,
+          "checkpoint_sha256_from_trace": "d61125f9d3a89d9828b9cb997a1059e72ac294ebfabea118521facc207079547",
+          "checkpoint_verification": "not_downloaded_or_inspected"
+        }
+      }
+    },
+    "mean2": {
+      "kernel_id": 140826274,
+      "version": 1,
+      "scheduler": {
+        "kernel": "nothingnessvoid/molgap-k1-init-500k-mean2-s42",
+        "kernel_id": 140826274,
+        "version": 1,
+        "status": "KernelWorkerStatus.ERROR",
+        "failure_message": "",
+        "observed_at": "2026-10-26T03:29:53.371870+00:00",
+        "credential_owner": "nothingnessvoid"
+      },
+      "allocation_scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+      "wall_seconds": 10571.080998975,
+      "allocated_T4_device_seconds": 21142.16199795,
+      "arms": {
+        "scratch": {
+          "trace_completed_passes": 10,
+          "optimizer_steps": 39060,
+          "sample_presentations": 4999680,
+          "clean_ema_mae_eV": 0.11132827401161194,
+          "logged_completed_passes": 9,
+          "checkpoint_sha256_from_trace": "815fb4ed243792b9333e49a6898c457b4c6c9c80730f1bbda5b51546e09ac416",
+          "checkpoint_verification": "not_downloaded_or_inspected"
+        },
+        "pretrained": {
+          "trace_completed_passes": 10,
+          "optimizer_steps": 39060,
+          "sample_presentations": 4999680,
+          "clean_ema_mae_eV": 0.11064463108778,
+          "logged_completed_passes": 9,
+          "checkpoint_sha256_from_trace": "8f04c7ad3d06d39604b2624d0371e162d6e67f8f2cf80764299d1a6e5969f7c6",
+          "checkpoint_verification": "not_downloaded_or_inspected"
+        }
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\allocation_ledger.json",
+      "bytes": 1032,
+      "sha256": "9a3620731b8109c78bfe9f5f86cb4bf2de784a0683461c0ee851eb1afea6b5ef"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\execution_report.json",
+      "bytes": 2255,
+      "sha256": "305c8735a5e68ec6d91b064e6040b59b03e724e55947a3956d58d0766765bb0f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\execution_retention.json",
+      "bytes": 917,
+      "sha256": "0cd4fbfc9fb2ccca9a31f3a04d4f40672acb8daa677af324e09fe4cec481cd93"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pair_state.json",
+      "bytes": 2255,
+      "sha256": "305c8735a5e68ec6d91b064e6040b59b03e724e55947a3956d58d0766765bb0f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\canonical_trace.json",
+      "bytes": 6981,
+      "sha256": "aa1d6175b99d9edabfc6126384bc7928e78024ec5b9c13ed3ea7118e4c3198b7"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\canonical_trace.json.context.json",
+      "bytes": 952,
+      "sha256": "83a4511bd8f2a1df6d38ae1a71b0235ce21fc6d1e9b46fe949d847a0be61a8eb"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\preflight.log",
+      "bytes": 349,
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\runtime_certificate.json",
+      "bytes": 1943,
+      "sha256": "2b1ba4e47bd84f4fa77c5804bd277621d74542f798b49291f296d5dc76adb8ee"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\runtime_provenance.json",
+      "bytes": 1568,
+      "sha256": "277f1e13a255b75ccfafb386aabccd0ab95c92a57652eb23adf4e9b03681a905"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\train.log",
+      "bytes": 10535,
+      "sha256": "0e56953fd273b1862ad7a57bc2a8c51a166344b1501066205d83108dfe9d7623"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\pretrained\\training_progress.json",
+      "bytes": 813,
+      "sha256": "5b5b140d35460ed6de60ec447266cdeca89468389b172380590e9e218c50e47b"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\canonical_trace.json",
+      "bytes": 6976,
+      "sha256": "65309b1832fdc78c13cbaee901ac0302412bab6874da90e8f1a361cc71f4438b"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\canonical_trace.json.context.json",
+      "bytes": 949,
+      "sha256": "240154d376039a19773812a2da121f78008ca868f64579cbafca12f3cb9d3e61"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\preflight.log",
+      "bytes": 349,
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\runtime_certificate.json",
+      "bytes": 1943,
+      "sha256": "af9e8fdb7abb1909d18bb2327c5322a227f9e3091d30ce6e39f93a13c8214a24"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\runtime_provenance.json",
+      "bytes": 1565,
+      "sha256": "7c66b44ce22c8b9958367becef07ceaff6bc8e269cc9a6b22a1cc8e2e1e77f5a"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\train.log",
+      "bytes": 10533,
+      "sha256": "146f28ec361cc5d0e9db842d6ba50b65e2b075048dc126264c56f97efdeaafad"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\mean2\\experiment\\scratch\\training_progress.json",
+      "bytes": 814,
+      "sha256": "548934be09a79b8509580b6c61318cfe464393a58eabf55ffbe451f8e60ae6a3"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\output_listing_min_v1.json",
+      "bytes": 9303,
+      "sha256": "f923503dd037f06f2469f592315d0ab67f630a2704e22e20b3138564eda38ddf"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\scheduler_mean2_v1.json",
+      "bytes": 274,
+      "sha256": "8a69e13babe3394fb842008cc31d5a3dc0de27f1fa7c90ff5e8aff01928283df"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\scheduler_single_v1.json",
+      "bytes": 275,
+      "sha256": "8d2318af8f2bd116ae0758fa0a6a6a622e944ff7811cc021a7cd3eca7d3d1080"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\selected_retrieval_receipt.json",
+      "bytes": 3597,
+      "sha256": "2a4cb1afbb00403ef8528268e5a92735042eef366d76dbe4f06d0113a2ae61dc"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\allocation_ledger.json",
+      "bytes": 1045,
+      "sha256": "396ee56f983544972d88ddc41bc0ef15ee5f27791e598019b40c1f45f26fbbc4"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\execution_report.json",
+      "bytes": 2241,
+      "sha256": "6a40bdddcd3d1997867bed29b4eab51812e5be23d9e18aae680b932ce49745bb"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\execution_retention.json",
+      "bytes": 917,
+      "sha256": "f8eacb43ae94e10d72566272581596fd2968ecb732812b4c04afc2be2b4c4d15"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pair_state.json",
+      "bytes": 2241,
+      "sha256": "6a40bdddcd3d1997867bed29b4eab51812e5be23d9e18aae680b932ce49745bb"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\canonical_trace.json",
+      "bytes": 6985,
+      "sha256": "24f5c90bcdca3d4e51836f6d903306d98c1d4c0f550a6dbdd025c3ca7c922143"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\canonical_trace.json.context.json",
+      "bytes": 954,
+      "sha256": "307cc6be93746520d952e940c2c271258f0617dcb17b60169fe25aae6f8f604f"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\preflight.log",
+      "bytes": 349,
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\runtime_certificate.json",
+      "bytes": 1943,
+      "sha256": "9bc2583a5eeca98143b2d0852225031e993a6512daa2e9917bb3a57eeeee1aa0"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\runtime_provenance.json",
+      "bytes": 1570,
+      "sha256": "cb86e3603e2fa5d9a95dace0915ae855295b91a8b917a6307415bd5e16c378dc"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\train.log",
+      "bytes": 10542,
+      "sha256": "c25130e8a81ed9d37971ead8f0e46786d59db36d1a261adf67a612fe07dee27b"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\pretrained\\training_progress.json",
+      "bytes": 811,
+      "sha256": "a0ef4ee31a5a5c35b389dae1ea17d0805a639b89100351e7defb8fdb4758a4af"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\canonical_trace.json",
+      "bytes": 6980,
+      "sha256": "267311230cffb667997187a7e454616fe11180d8d345b18bb73ff23134e06d00"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\canonical_trace.json.context.json",
+      "bytes": 951,
+      "sha256": "87dd8ede22aef94f288f0bb2be8a385b1ae3530736def1238f5657aa862455c3"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\preflight.log",
+      "bytes": 349,
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\runtime_certificate.json",
+      "bytes": 1943,
+      "sha256": "7d7fe8b5691d98c79a244ac409caa533ce48d6b5d416b778638066cbeebdffec"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\runtime_provenance.json",
+      "bytes": 1567,
+      "sha256": "959c71e4df14ce737fee96f66e591e663a8d56f28d4952c8d5094caad18b5143"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\train.log",
+      "bytes": 10512,
+      "sha256": "8b1b120777bb7a36e9a63a8dc1494fb994c15e6343428e3c726f2a6681d869b6"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\single\\experiment\\scratch\\training_progress.json",
+      "bytes": 806,
+      "sha256": "dc9a6eb83ceb627b854a1f28b1609efa61e0bac474aa66d0a0ab99b094711ed4"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\startup_mean2_v1.json",
+      "bytes": 184,
+      "sha256": "966b933bead2b4172dc7bd969bbcf1668f848349ffbcd787fc41398ec4479ea0"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\startup_single_v1.json",
+      "bytes": 185,
+      "sha256": "8318bd935f00d2934fa83714a8f5a705a7a5222f7c2e8e9ce4ba846fb8e6eced"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\reconciliation\\k1-init-forward-500k-failure\\supplemental_metadata_receipt.json",
+      "bytes": 4233,
+      "sha256": "22b84973e8bae97aa5df5ed2b4ab73428a22a81d2c0bd73488f6590c7a797a32"
+    }
+  ],
+  "total_downloaded_or_diagnostic_file_bytes": 123486,
+  "allocated_T4_device_hours": 9.509401489677778
+}

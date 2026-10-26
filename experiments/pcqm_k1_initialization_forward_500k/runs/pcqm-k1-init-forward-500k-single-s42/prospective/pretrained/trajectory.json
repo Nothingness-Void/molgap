@@ -1,0 +1,111 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-init-forward-500k-single-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-init-forward-500k-single-s42-pretrained-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/pretrained/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-init-forward-500k-single-s42:pretrained:downstream"
+      ],
+      "source_commit": "64933302a449cd48961a610028a17bd6ae6d2e23",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_initialization_forward_500k/protocol.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_INITIALIZATION_PAIR_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_initialization_forward_500k/single/authority.json",
+    "chosen_action": "RUN_INITIALIZATION_PAIR_500K",
+    "policy_id": "pcqm-k1-init-forward-500k-single-s42",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_initialization_forward_500k/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/rml_decision_snapshots/2c3db5ed625556ccd955f5216a5d040c59ab741a2f3c23b3b76215f5ce5e63f5.json",
+    "snapshot_sha256": "2c3db5ed625556ccd955f5216a5d040c59ab741a2f3c23b3b76215f5ce5e63f5",
+    "state_timestamp": "2026-10-26T00:00:00+09:00"
+  },
+  "family_id": "pcqm-k1-init-forward-500k-single-s42",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Initial representation changes optimization",
+      "Development transfer fails",
+      "Single-seed training variability"
+    ],
+    "changed_mechanism": "retained-pretrained-initialization",
+    "cheapest_falsifier": "Matched scratch/pretrained pair within one forward mode at fixed500K30 passes; terminal acceptance before any successor.",
+    "decision_changed_if_negative": "Close or retain inconclusive evidence under the frozen contract; no automatic retry or scale-up.",
+    "decision_changed_if_positive": "Nomination only after >=1meV gain and paired95%CI excludes zero within this slot; no automatic adoption.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-init-forward-500k-single-s42-pretrained-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+    "observed_deficiency": "Retained100K pretraining has no strict matched500K initialization comparison under this forward mode.",
+    "related_closed_family_ids": [
+      "K1 tail regularization500K",
+      "K1 consistency500K"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-scale-attribution-20261025-attempt002"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does retained100K pretrained initialization improve fixed500K K1 single development versus scratch?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_initialization_forward_500k/single/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/pretrained/recipe.json",
+      "experiments/pcqm_k1_initialization_forward_500k/single/pretrained/data_declaration.json",
+      "experiments/pcqm_k1_initialization_forward_500k/single/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-scale-attribution-20261025-attempt002"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_initialization_forward_500k/role_plan.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "pretrained",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-init-forward-500k-single-s42",
+      "reference_arm_id": "scratch",
+      "reference_trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "reference_trajectory_ref": "experiments/pcqm_k1_initialization_forward_500k/runs/pcqm-k1-init-forward-500k-single-s42/prospective/scratch/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "acfa543e895189345f7dc3c177ceeffeb0e5c2c7e98a84dee2011e94f13cc2fe"
+    },
+    "source_commit": "64933302a449cd48961a610028a17bd6ae6d2e23",
+    "source_config_identity": "f844d58bceb4ba4fa89424bb6f330f98cd66273c8d0e8e336101e9649ab05bef"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-pretrained"
+}

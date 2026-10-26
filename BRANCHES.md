@@ -12,6 +12,16 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+K1 retained initialization/forward500K is terminally accepted without adoption.
+Full owner history through `c04ca076` is reachable from pushed archive
+`d01eac748c602aa97764021092ee3cb9096cbd5a`. Desktop retains the
+[four-arm strict qualification and attribution](experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/qualification.md)
+and byte-verified canonical evidence, excluding both preparation scripts and
+shared implementation. [Terminal custody](experiments/pcqm_k1_initialization_forward_500k/terminal_custody.md)
+owns original/continued source, receipts, native proofs and required pass10
+recovery prefixes. All four replay entries are complete; both pretrained
+initializations are negative under their frozen contracts.
+
 The [bounded K1 scale attribution](experiments/pcqm_k1_scale_attribution_20261025/README.md)
 is an accepted NO_TRAIN diagnostic. Reviewed source/evidence and reusable
 compatibility/guard repairs from `codex/exp/k1-scale-attribution-20261025` use

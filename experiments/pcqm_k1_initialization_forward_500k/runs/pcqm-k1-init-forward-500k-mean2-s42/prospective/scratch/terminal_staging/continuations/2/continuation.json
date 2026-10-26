@@ -1,0 +1,75 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-init-forward-500k/mean2/v2/experiment/_resume_preflight/scratch/actual_resume_certificate.json",
+    "sha256": "fcf2e4a3437bf8613add6e49543afa2f492ed5043472dfa22ed3b1f2a6c4b9f8"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_initialization_forward_500k/continuation_authority.md",
+    "sha256": "c9e03c3caca0cdfbc4d0fac4912d57c55e1a3f139e96369cccca29626250b661"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/prepared/source_dataset/resume/scratch/files/last_checkpoint.pt",
+    "sha256": "815fb4ed243792b9333e49a6898c457b4c6c9c80730f1bbda5b51546e09ac416"
+  },
+  "continued": {
+    "attempt_id": "pcqm-k1-init-forward-500k-mean2-s42-v2",
+    "logical_run_id": "pcqm-k1-init-forward-500k-mean2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-init-500k-mean2-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "64933302a449cd48961a610028a17bd6ae6d2e23",
+    "source_package_sha256": "d286174e03816a90280ddd32e6375f93dcd1c420963d971a57eab9a95fa2ff46",
+    "spec_identity": "20e8c2bf0278fdc1e9e7ece94ea4932c18250e04efd737f4bbcbe9e23419101c"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-init-forward-500k/mean2/v2/experiment/scratch/output_manifest.json",
+    "sha256": "c7db76a600fdb2c240f9bfad3724ac7a2b6f98fbcd3144552d2fe841cc4877d0"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/operations/launch_receipt.json",
+    "sha256": "148766d29a8e5956e2f1c54a12bac2be38507ccd661073e561a2f2ebfa3a8968"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-init-forward-500k/mean2/v2/experiment/scratch/canonical_trace.json",
+    "sha256": "1f40462430dbc372edc88415ca4fb65e319536e25c3a59a368ddf51754658da4"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-init-forward-500k/mean2/v2/experiment/_resume_preflight/scratch/runtime_certificate.json",
+    "sha256": "af9e8fdb7abb1909d18bb2327c5322a227f9e3091d30ce6e39f93a13c8214a24"
+  },
+  "origin": {
+    "attempt_id": "pcqm-k1-init-forward-500k-mean2-s42-v1",
+    "logical_run_id": "pcqm-k1-init-forward-500k-mean2-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-init-500k-mean2-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "64933302a449cd48961a610028a17bd6ae6d2e23",
+    "source_package_sha256": "d286174e03816a90280ddd32e6375f93dcd1c420963d971a57eab9a95fa2ff46",
+    "spec_identity": "20e8c2bf0278fdc1e9e7ece94ea4932c18250e04efd737f4bbcbe9e23419101c"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-mean2-s42/v1/operations/launch_receipt.json",
+    "sha256": "db7910a338e58ee3cb7bdfd5bd8e03fba8a3839d6fba0bbe1a64bde5f6ec4791"
+  },
+  "recovery_repair": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/prepared/source_dataset/recovery_repair.json",
+    "sha256": "37f70f5c18351995a86c011831b4904e2f126076c707933ec6b7a5d28fd5c3d6"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/prepared/source_dataset/resume/scratch/resume_bundle.json",
+    "sha256": "157f6bc34d154eab1664bd28b6c14357ff13726830fafbab535f1f13b500c904"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/prepared/source_dataset/resume/scratch/files/canonical_trace.json.context.json",
+    "sha256": "240154d376039a19773812a2da121f78008ca868f64579cbafca12f3cb9d3e61"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-mean2-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "639e5cc65307b6c1b23f520298de6289e33f274988ccb2287f539889c9e3d026"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/recovery/k1-init-forward-500k/mean2/v2/prepared/source_dataset/resume/scratch/files/canonical_trace.json",
+    "sha256": "65309b1832fdc78c13cbaee901ac0302412bab6874da90e8f1a361cc71f4438b"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_INITIALIZATION_PAIR_500K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-init-forward-500k-single-s42"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "2f69418acbd2d6bb5106a416f13b89476ce90880763c0e99b7cad50cc990bd06",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-init-forward-500k-single-s42",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}
