@@ -1,0 +1,58 @@
+{
+  "status": "EXACT_PACKAGED_POINTERS_VERIFIED",
+  "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+  "records": [
+    {
+      "path": "experiments/modern2d_scale500k/retry_v3/authority.json",
+      "sha256": "476c167ac16b3ef487898e361202be7de518c8713ae94f40e1cb046be9e83b33",
+      "bytes": 1736
+    },
+    {
+      "path": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/training_inputs.json",
+      "sha256": "c8866993d8de498a1af05de65945e82f02fd90b545d656ba0e09d907dc6d8337",
+      "bytes": 4501
+    },
+    {
+      "path": "experiments/modern2d_scale500k/anchors/ppgt/training_input.json",
+      "sha256": "20eeeaaebb165129681d689a266e462a026324e0eecc5522315596601eadca93",
+      "bytes": 3015
+    },
+    {
+      "path": "experiments/modern2d_scale500k/transfer_plan.json",
+      "sha256": "0deaaed1615cff50bef483daa96201d490df85568cfabe7e7c351be860d16d4d",
+      "bytes": 585
+    },
+    {
+      "path": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/ppgt_mean_500k/recipe.json",
+      "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025",
+      "bytes": 2767
+    },
+    {
+      "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+      "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2",
+      "bytes": 683
+    },
+    {
+      "path": "experiments/modern2d_scale500k/source_contracts/ppgt_mean_100k.json",
+      "sha256": "5a4de5d9a78a8b21f31154b63d6660b55d8bf8289a357a526647c746a107134a",
+      "bytes": 2737
+    },
+    {
+      "path": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/esa_count_500k/recipe.json",
+      "sha256": "fcd0cd86f5ffcb724ad2b8dca492c714fb713e3bd5de6e1ea27790ba922f3cb5",
+      "bytes": 2816
+    },
+    {
+      "path": "experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+      "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2",
+      "bytes": 683
+    },
+    {
+      "path": "experiments/modern2d_scale500k/source_contracts/esa_count_100k.json",
+      "sha256": "6d2508e133854339ff9bdae4a8eff2549763c9f8f06d8ed04b77bcf5d931ff80",
+      "bytes": 2784
+    }
+  ],
+  "model_executed": false,
+  "remote_job_submitted": false
+}

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "started_utc": "2026-10-26T06:10:28.7106499Z",
+  "finished_utc": "2026-10-26T06:12:23.5130271Z",
+  "interpreter": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+  "invocation": ".venv/Scripts/python.exe platforms/local/run.py --module pytest -- -q tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair --basetemp=.pytest_cache/m2d-packaged-pointers-retry/base --junitxml=.pytest_cache/m2d-packaged-pointers-retry/junit.xml",
+  "nodeids": [
+    "tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair"
+  ],
+  "expected_parameter_cases": [
+    "ppgt_small/3-lf",
+    "ppgt_small/3-crlf",
+    "esa_small/4-lf",
+    "esa_small/4-crlf"
+  ],
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "output": [
+    "{\"interpreter\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\.venv\\\\Scripts\\\\python.exe\", \"molgap_module\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\src\\\\molgap\\\\__init__.py\", \"source_root\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\src\", \"package_identity\": null}",
+    "....                                                                     [100%]",
+    "4 passed in 113.20s (0:01:53)"
+  ]
+}

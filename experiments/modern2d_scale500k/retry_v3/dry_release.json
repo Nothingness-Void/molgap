@@ -1,0 +1,14 @@
+{
+  "status": "READY_FOR_PLATFORM_OPERATIONS",
+  "binding": {
+    "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+    "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+    "dataset": "kaseichou/molgap-modern2d-scale500k-source-r3",
+    "authority_ref": "experiments/modern2d_scale500k/retry_v3/authority.json",
+    "authority_sha256": "476c167ac16b3ef487898e361202be7de518c8713ae94f40e1cb046be9e83b33",
+    "monitor_paths": [
+      "experiments/modern2d_scale500k/STATUS.md"
+    ]
+  },
+  "submitted": false
+}
