@@ -352,6 +352,21 @@ def _native_cursor(checkpoint: dict, trace: dict) -> dict:
     cursor = dict(checkpoint.get("cursor")) if isinstance(checkpoint.get("cursor"), dict) else {
         "epoch": checkpoint.get("epoch"), "next_batch": 0,
     }
+    if "pending_absolute" in cursor:
+        import math
+        import torch
+        values = []
+        for value in cursor["pending_absolute"]:
+            if isinstance(value, torch.Tensor):
+                if value.ndim != 0 or not value.is_floating_point():
+                    raise ValueError("Resume cursor metrics must be floating-point scalars")
+                value = value.item()
+            if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
+                raise ValueError("Resume cursor metrics must be finite nonnegative scalars")
+            values.append(value)
+        # The manifest summarizes metrics; the hash-bound native checkpoint
+        # retains their original tensor dtype and exact continuation state.
+        cursor["pending_absolute"] = values
     if type(trace.get("rows")) is list and trace["rows"]:
         rows = trace["rows"]
         last = rows[-1]

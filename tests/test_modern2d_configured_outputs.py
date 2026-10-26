@@ -21,11 +21,11 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path, st
         case.recipe = replace(case.recipe, optimizer_steps=3,
             schedule=replace(case.recipe.schedule, total_units=3),
             formal_training=Modern2DFormalTrainingProfile("configured-screen", horizon_passes=2,
-                horizon_steps=3, evaluation_every_steps=1))
+                horizon_steps=3, evaluation_every_steps=3))
         checkpoints = []
         prefix = actual_session(case, checkpoints)
         assert prefix.run(should_pause=lambda: True).optimizer_step == 1
-        assert checkpoints[-1]["cursor"]["selected_step"] == 1
+        assert checkpoints[-1]["cursor"]["selected_step"] is None
         resumed = actual_session(case, [])
         resumed.load_state_dict(deepcopy(checkpoints[-1]))
         assert resumed.run().optimizer_step == 3
@@ -45,9 +45,18 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path, st
     context = RunContext("fixture", "fixture-run", "candidate", "a" * 64, "b" * 64,
         recipe.family, recipe.family_version, "c" * 40, "d" * 64, "e" * 64,
         file_digest(path), "local", "fixture", "fixture/run", None)
+    trajectory = json.dumps(dict(trajectory_id="fixture-trajectory", record_mode="prospective",
+        state_at_start=dict(source_commit=context.source_commit, source_config_identity=context.arm_identity),
+        actions=[dict(action_id="A001", run_ids=[context.logical_run_id + ":candidate:downstream"],
+                      attempt_ids=["v1"])], decision=dict(outcome="ACTIVE"))).encode()
     output = SessionOutputs(tmp_path / "output", context, contract=path,
         adapter="modern2d-formal-session-v1", trajectory_id="fixture-trajectory",
-        train_role_identity=record["train_role_identity"])
+        train_role_identity=record["train_role_identity"],
+        resume_trajectory=trajectory if step_clock else None)
+    if step_clock:
+        # Shorten only the fixture's chunk clock to cover pending step-window
+        # metrics within the four-update synthetic safety bound.
+        output.policy = replace(output.policy, chunk_passes=1)
     session.loaders.attach_role_audit(output.role_audit)
     session.checkpoint, session.selected, session.pass_finished = output.checkpoint, output.selected, output.pass_finished
     progress = session.run()
@@ -66,8 +75,25 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path, st
     observed = [row for row in rows if row["event"] == "observation"]
     assert observed
     if step_clock:
-        assert [row["optimizer_step"] for row in observed] == [1, 2, 3]
-        assert [row["epoch_or_pass"] for row in observed] == [0.5, 1.0, 1.5]
+        assert [row["optimizer_step"] for row in observed] == [3]
+        assert [row["epoch_or_pass"] for row in observed] == [1.5]
+        from molgap.experiment_resume import validate_resume_bundle, restore_resume_bundle
+        chunk = output.root.parent / "checkpoint_chunks/candidate/pass_01"
+        manifest = validate_resume_bundle(chunk)["manifest"]
+        assert manifest["cursor"]["pass_index"] == 1
+        assert len(manifest["cursor"]["pending_absolute"]) == 2
+        assert all(type(value) is float for value in manifest["cursor"]["pending_absolute"])
+        restored = tmp_path / "restored-chunk"
+        restore_resume_bundle(chunk, restored)
+        state = torch.load(restored / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+        assert all(isinstance(value, torch.Tensor) for value in state["cursor"]["pending_absolute"])
+        state.pop("context")
+        state.setdefault("ema", None)
+        continuation = actual_session(case, [])
+        continuation.load_state_dict(state)
+        continuation.run()
+        assert_equal(session.state_dict(), continuation.state_dict())
+        continuation.close()
     assert all(row["wall_time_seconds"] is not None and
                row["cumulative_wall_time_seconds"] is not None and
                row["checkpoint_identity"] is not None and
