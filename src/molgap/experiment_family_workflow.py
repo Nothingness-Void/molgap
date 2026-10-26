@@ -13,7 +13,7 @@ from pathlib import Path
 
 from .experiment_family_artifacts import artifact_adapter
 from .experiment_launch import _safe_local, read_launch_receipt, publish_immutable_bytes, build_launch_receipt
-from .experiment_spec import ExperimentSpec, _digest, _identifier, _text
+from .experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, _digest, _identifier, _text
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import (
     RMLTraceRecorder, file_digest, json_bytes, validate_canonical_trace,
@@ -1524,7 +1524,8 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
             "context": RunContext.from_launch(spec, receipt_path, package_dir,
                 expected_package_identity=expected_package_identity, arm_id=arm_id,
                 **({"_verification": _verification} if _verification is not None else {})),
-            "expected": item["expected"], "output_dir": output_dir.absolute()}
+            "expected": item["expected"], "output_dir": output_dir.absolute(),
+            "package_dir": Path(package_dir).absolute()}
     return outputs
 
 
@@ -1565,7 +1566,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
             relative = artifact_locator(root, path)
             return {"status": "available", "locator": relative, "sha256": entry["sha256"], "missing_reason": None}
         progress = observation["progress"]
-        identity = _terminal_identity(spec, ctx)
+        identity = _terminal_identity(spec, ctx, package_dir=item.get("package_dir"), repo_root=root)
         # A contract binding is a declaration. Completion has independent file,
         # shape and exposure checks above; causal validity is still unevaluated.
         costs = [{"metric": c["metric"], "unit": c["unit"], "value": c["value"],
@@ -1597,21 +1598,51 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
     return descriptor
 
 
-def terminal_attempt_id(spec, arm_id, platform_version):
-    """A same-job pair shares an attempt; arm identity remains separate."""
+def terminal_attempt_id(spec, arm_id, platform_version, *, package_dir=None, repo_root=None, _verification=None):
+    """Local logical attempts come from the frozen plan, not process launch versions."""
+    declaration = spec.to_dict()
+    if (declaration["platform"]["name"] == "local" and package_dir is not None
+            and declaration["schema_version"] == SCHEMA_VERSION_V2):
+        from .experiment_package import (
+            _PackageVerification, read_packaged_text, verify_experiment_source_package,
+        )
+        verification = _verification or _PackageVerification()
+        manifest = verify_experiment_source_package(Path(package_dir), _verification=verification)
+        if manifest["spec_identity"] != spec.identity:
+            raise ValueError("Local terminal package Spec identity mismatch")
+        binding = next(item for item in declaration["prospective"]["arms"] if item["arm_id"] == arm_id)
+        # Preparation may publish the plan after the source archive was frozen.
+        raw = (repo_local_path(Path(repo_root), binding["plan_spec_ref"]).read_bytes()
+               if repo_root is not None else read_packaged_text(Path(package_dir), binding["plan_spec_ref"],
+                   _verification=verification).encode("utf-8"))
+        if hashlib.sha256(raw).hexdigest() != binding["plan_spec_sha256"]:
+            raise ValueError("Local terminal plan SHA mismatch")
+        trajectory = _json_bytes(raw).get("trajectory", {})
+        arm = next(item for item in declaration["arms"] if item["arm_id"] == arm_id)
+        if (trajectory.get("trajectory_id") != binding["trajectory_id"] or
+                trajectory.get("state_at_start", {}).get("source_config_identity") != canonical_fingerprint(arm)):
+            raise ValueError("Local terminal plan trajectory/arm identity mismatch")
+        run_id = declaration["logical_run_id"] + ":" + arm_id + ":downstream"
+        actions = [action for action in trajectory.get("actions", []) if run_id in action.get("run_ids", [])]
+        if len(actions) != 1 or len(actions[0].get("attempt_ids", [])) != 1:
+            raise ValueError("Local terminal plan requires one frozen downstream action/attempt")
+        attempt = actions[0]["attempt_ids"][0]
+        _identifier(attempt, "attempt_id")
+        return attempt
     if not platform_version:
         return None
-    declaration = spec.to_dict()
     prefix = declaration["logical_run_id"] if declaration["prospective"].get("same_run_replay") else arm_id
     return prefix + "-v" + platform_version
 
 
-def _terminal_identity(spec, context):
+def _terminal_identity(spec, context, *, package_dir=None, repo_root=None):
     """One translator owns identity fields for complete and incomplete runs."""
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == context.arm_id)
     if context.spec_identity != spec.identity or context.arm_identity != canonical_fingerprint(arm):
         raise ValueError("Terminal context/Spec mismatch")
     fact = lambda value: {"value": value, "missing_reason": None}
+    attempt = terminal_attempt_id(spec, context.arm_id, context.platform_version,
+                                  package_dir=package_dir, repo_root=repo_root)
     return {
         "experiment_id": context.experiment_id, "logical_run_id": context.logical_run_id,
         "arm_id": context.arm_id, "spec_identity": context.spec_identity,
@@ -1622,7 +1653,7 @@ def _terminal_identity(spec, context):
         "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
         "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
         "source_commit": fact(context.source_commit), "source_package_sha256": fact(context.source_archive_sha256),
-        "attempt_id": fact(terminal_attempt_id(spec, context.arm_id, context.platform_version)) if context.platform_version else
+        "attempt_id": fact(attempt) if attempt is not None else
             {"value": None, "missing_reason": "Platform attempt version not observed"},
         "platform": {"name": context.platform, "run_reference": fact(context.run_reference)},
     }

@@ -3,15 +3,17 @@ from __future__ import annotations
 
 import json
 import shutil
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
 
-from molgap.experiment_family_workflow import build_verified_terminal_descriptor, close_verified_outputs, inspect_terminal_output
+from molgap.experiment_family_workflow import (build_verified_terminal_descriptor, close_verified_outputs,
+    inspect_terminal_output, prepare_terminal_outputs, terminal_attempt_id)
 from molgap.experiment_terminal_staging import _cost_events, stage_verified_terminal_packages
 from molgap.research_memory.paths import artifact_locator, bound_artifact_path, repo_local_path, verify_bound_artifact
-from molgap.research_memory.trace import file_digest
-from test_experiment_family_workflow import _closure_descriptor, launch_contexts, payload, repo
+from molgap.research_memory.trace import file_digest, json_bytes
+from test_experiment_family_workflow import _closure_descriptor, _write_output, launch_contexts, payload, repo
 
 
 @pytest.fixture
@@ -102,6 +104,121 @@ def test_explicit_decision_and_observed_audit_enable_nonpositive_closure(staging
     assert closure["status"] == "COMPLETE", closure
     for where in resolved["locations"].values():
         assert (root / where["trajectory"]).parent.joinpath("rml_finalized/finalization.json").is_file()
+
+
+def local_staging_case(case, tmp_path, *, bad_plan=None):
+    from molgap import experiment_launch as launch
+    from molgap.experiment_package import build_experiment_source_package
+    from molgap.experiment_spec import ExperimentSpec
+    from test_experiment_package import git
+    from test_experiment_workflow import _spec_payload
+
+    root, resolved = case
+    original = resolved["spec"].to_dict()
+    declaration = _spec_payload(original["arms"])
+    declaration.update(experiment_id=original["experiment_id"], logical_run_id=original["logical_run_id"])
+    plans = []
+    for binding in declaration["prospective"]["arms"]:
+        arm_id = binding["arm_id"]
+        where = resolved["locations"][arm_id]
+        path = root / where["trajectory"]
+        trajectory = json.loads(path.read_bytes())
+        trajectory["state_at_start"]["source_config_identity"] = resolved["outputs"][arm_id]["context"].arm_identity
+        trajectory["actions"][0]["attempt_ids"] = [arm_id + "-v2"]
+        path.write_bytes(json_bytes(trajectory))
+        binding.update(trajectory_id=where["trajectory_id"], output=path.parent.relative_to(root).as_posix())
+        plan = json.loads(json.dumps(trajectory))
+        if bad_plan == "run":
+            plan["actions"][0]["run_ids"] = ["another-logical-run:" + arm_id + ":downstream"]
+        plan_path = root / binding["plan_spec_ref"]
+        plan_path.parent.mkdir(exist_ok=True)
+        plan_path.write_bytes(json_bytes({"trajectory": plan}))
+        binding["plan_spec_sha256"] = "f" * 64 if bad_plan == "sha" else file_digest(plan_path)
+        plans.append(binding["plan_spec_ref"])
+    git(root, "add", "--", *plans)
+    git(root, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic local frozen plans")
+    spec = ExperimentSpec(declaration)
+    package = tmp_path / "local-package"
+    manifest = build_experiment_source_package(spec, root, ["src/example.py", "README.md"], package)
+    known = lambda value: {"value": value, "missing_reason": None}
+    base = launch.build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"])
+    reference = "synthetic-host/" + declaration["logical_run_id"]
+    response = {"format": launch.RESPONSE_FORMAT, "version": 1, "mode": "observed",
+        "outcome": "accepted", "conflict_kind": None, "binding": base["binding"],
+        "canonical_platform_reference": known(reference), "platform_version": known("1"),
+        "physical_runs": known([{"run_identity": "synthetic-host/pid123/retained-start",
+            "canonical_reference": reference, "platform_version": known("1"),
+            "arm_ids": [arm["arm_id"] for arm in declaration["arms"]]}]),
+        "timestamp": {"value": None, "missing_reason": "not_observed"},
+        "monitor_paths": {"value": None, "missing_reason": "not_observed"}}
+    receipt = launch.reconcile_platform_response(spec, package, launch.canonical_json(response),
+        expected_package_identity=manifest["package_identity"])
+    receipt_dir = tmp_path / "local-receipt"
+    receipt_dir.mkdir()
+    receipt_path = launch.write_launch_receipt(launch.canonical_json(receipt), receipt_dir, spec, package,
+        expected_package_identity=manifest["package_identity"])
+    supplied = {}
+    parent = tmp_path / "local-outputs"
+    parent.mkdir()
+    for arm_id, item in resolved["outputs"].items():
+        context = replace(item["context"], spec_identity=spec.identity, source_commit=manifest["source_commit"],
+            source_archive_sha256=manifest["archive_sha256"], package_identity=manifest["package_identity"],
+            account="synthetic-host", run_reference=reference, platform_version=None)
+        trajectory_path = root / resolved["locations"][arm_id]["trajectory"]
+        trajectory = json.loads(trajectory_path.read_bytes())
+        trajectory["state_at_start"]["source_commit"] = context.source_commit
+        trajectory["actions"][0]["source_commit"] = context.source_commit
+        trajectory_path.write_bytes(json_bytes(trajectory))
+        folder, expected, _, _ = _write_output(parent, context, "gptrans-v1" if arm_id == "gptrans_t" else "k1-v1")
+        supplied[arm_id] = {"output_dir": str(folder), "expected": expected}
+    outputs = prepare_terminal_outputs(spec, root, supplied, receipt_path=receipt_path, package_dir=package,
+        expected_package_identity=manifest["package_identity"])
+    resolved.update(spec=spec, outputs=outputs, options={"package_dir": package})
+    return root, resolved, receipt_path
+
+
+def test_local_staging_uses_frozen_logical_attempt_without_relabeling_launch(staging_case, tmp_path):
+    from molgap.experiment_spec import ExperimentSpec
+
+    root, resolved, receipt_path = local_staging_case(staging_case, tmp_path)
+    originals = {path: path.read_bytes() for item in resolved["outputs"].values()
+                 for path in item["output_dir"].iterdir() if path.is_file()}
+    originals[receipt_path] = receipt_path.read_bytes()
+    for binding in resolved["spec"].to_dict()["prospective"]["arms"]:
+        path = root / binding["plan_spec_ref"]
+        originals[path] = path.read_bytes()
+    decision = root / "explicit_decision.md"
+    decision.write_text("Observed infrastructure-only closure.", encoding="utf-8")
+    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref="explicit_decision.md",
+                   role_audit=audit_files(staging_case))
+    assert result["status"] == "STAGED_CLOSURE_READY", result
+    descriptor = build_verified_terminal_descriptor(root, resolved["spec"], outputs=resolved["outputs"],
+                                                    locations=result["locations"])
+    for arm in descriptor.to_dict()["arms"]:
+        arm_id = arm["arm_id"]
+        assert arm["observed"]["identity"]["attempt_id"]["value"] == arm_id + "-v2"
+        assert resolved["outputs"][arm_id]["context"].platform_version == "1"
+        assert result["arms"][arm_id]["observed"]["producer_platform_version"] is None
+        terminal = json.loads(Path(result["paths"][arm_id]["terminal"]).read_bytes())
+        binding = next(b for b in resolved["spec"].to_dict()["prospective"]["arms"] if b["arm_id"] == arm_id)
+        assert terminal["artifact_hashes"][binding["plan_spec_ref"]] == binding["plan_spec_sha256"]
+        nonlocal_spec = resolved["spec"].to_dict()
+        nonlocal_spec["platform"]["name"] = "kaggle"
+        assert terminal_attempt_id(ExperimentSpec(nonlocal_spec), arm_id, "1", package_dir=tmp_path / "absent") == arm_id + "-v1"
+    changed = resolved["spec"].to_dict()
+    changed["logical_run_id"] = "different-logical-run"
+    with pytest.raises(ValueError, match="package Spec identity mismatch"):
+        terminal_attempt_id(ExperimentSpec(changed), arm_id, "1", package_dir=resolved["options"]["package_dir"])
+    closure = close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
+    assert closure["status"] == "COMPLETE", closure
+    assert all(path.read_bytes() == raw for path, raw in originals.items())
+
+
+@pytest.mark.parametrize("bad_plan,error", [("run", "frozen downstream action/attempt"), ("sha", "plan SHA mismatch")])
+def test_local_staging_rejects_wrong_logical_plan_or_hash(staging_case, tmp_path, bad_plan, error):
+    local_staging_case(staging_case, tmp_path, bad_plan=bad_plan)
+    with pytest.raises(ValueError, match=error):
+        stage(staging_case)
 
 
 @pytest.mark.parametrize("outcome,with_audit,expected_blocker", [

@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
+from .experiment_spec import SCHEMA_VERSION_V2
 from .research_memory.paths import artifact_locator, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
 from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
@@ -203,7 +204,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if len(actions) != 1:
             raise ValueError("Terminal run must bind exactly one frozen prospective action")
         action = actions[0]
-        observed_attempt = terminal_attempt_id(spec, arm_id, context.platform_version)
+        observed_attempt = terminal_attempt_id(spec, arm_id, context.platform_version,
+            package_dir=frozen_package, repo_root=root, _verification=verification)
         continuation = None
         if arm_id in resolved.get("continuations", {}):
             from .research_memory.paired import build_terminal_continuation
@@ -227,6 +229,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 or manifest.get("progress") != observed["progress"]):
             raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], dict(restored)
+        if (context.platform == "local" and frozen_package is not None
+                and spec.to_dict()["schema_version"] == SCHEMA_VERSION_V2):
+            binding = next(item for item in spec.to_dict()["prospective"]["arms"] if item["arm_id"] == arm_id)
+            verify_bound_artifact(root, binding["plan_spec_ref"], binding["plan_spec_sha256"])
+            hashes[binding["plan_spec_ref"]] = binding["plan_spec_sha256"]
         if continuation is not None:
             hashes.update(continuation["artifact_hashes"])
         allocation, allocation_costs = None, []
