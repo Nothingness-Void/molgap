@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "0bb83f0d005b3151e9ace5b8c58d2c8ffa4cb39cdec350cd27455d8984c8b36b",
+  "source_digest": "c43dc39f37c426650bb49e4d2ddf84ad5dd8f326ce0953f4b346222aa225c7e9",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -20,29 +20,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md",
       "family_id": "pcqm-gptrans-bondlocal-pairnorm-100k",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/decision.md",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md",
       "family_id": "pcqm-gptrans-bondlocal-pairnorm-100k",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
     },

@@ -1,0 +1,49 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-03317e40b937ca4c7dd215ee4b0fa959bade4e9c790eae744f4115e4f90756d0",
+  "finalized_at": "2026-10-26T18:16:06.480790+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/authority.json": "810dad6e6715a37ae30e785999ec10bf4262c91abfd86ad51186e165a41b1188",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/14524e09d662f2d4/acceptance.json": "68047715407f71ea495c6f8ffba0608d588f836d164e6fc91fc6152ce9133a35",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/14524e09d662f2d4/observed.json": "71a6579bdb0e748794e279c1e2d2170afe1fd240034fd36494fb5b2cb1626080",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/reference_bundle.json": "381177700c3ba072a2dfdf051527f8d7c6882b9499793b038c629d6683ca1819",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md": "000f1400e5b6c39b3688e11115889e4fe0c38a8ef5063adf86fdcbe9efff0c1e",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/roles_bond_local_complete.json": "b01087156ca5dd294a55081f9db13bcd7aa39fdd91835adf5fa0cf35af6cb5f0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/canonical_trace.json": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/development_predictions.pt": "f0807b29c21f6aefa1cffd761ea105d0b9bc99e91d2268e331c7237fa6655bfc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/last_checkpoint.pt": "5951f5e9741e9b8d0a49ea139211a0c555a8438ba84e0acff56987450aa731e3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/output_manifest.json": "4e44a4123db70997f38b26a07e3c6c55a40566be1fc710209821d63febac6cc5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/selected_model.pt": "5114ace2b3644fc292742f6b64ac77279266474fb2af38b3a59724b0f8ab50e3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/training_contract.json": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/allocation_ledger.json": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/bond_local/allocation_ledger.json": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/execution_retention.json": "b70c9bd56b327327e33d57f16fa63085abff6d4544fef39bfddbaf85ca77d233"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/trajectory.json",
+  "prospective_sha256": "783a4bf5876f36c68deb4fe1be1f57f07c68601c52d8045e8f7dbb3415749f4b",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-0.json": "9772d75de316dd83327451dd2488e6833cb9256de5cd073a931f795e39325223",
+    "costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-allocation-0.json": "a49c35f0fbed46b8b0c6797e16f0b49c62147f2ef422de0a52c12f8deb7fe95b",
+    "roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-labels_read.json": "24b0ea59dcd28c337b00b5aa2ecbffabc280b2a8526c1b34ee8abc78d585afa2",
+    "roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-metric_computed.json": "878ba5f776438186ffc1993c11fb25fea85fc88a0ddd2daadc571e8ea06b7c07",
+    "roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-prediction_input.json": "627143b403a04f093a7348c8e1770c577da00d1bb887f48aab9f735dbadb1836",
+    "roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-selection_used.json": "1d2b04c637eab4ad1b3f777ac00d8f832260ed9ec0ad43300ad45073a9402c73",
+    "roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-train-training_membership.json": "861c225b096f66094cd7a15c849fcb9b26f39e22f4aec8d8925116037d9e05d1",
+    "terminal_input.json": "405bbaa7c0dc79ee305cdaab00739eb38039fdac467bb44ef083b2c1fb056291",
+    "trace.json": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068",
+    "trace_manifest.json": "3f6479cd7a1ac813db2f413a3eb0e2e26863970f6832b3ec880609b7abe781a3",
+    "trajectory.json": "7f513ec3fb7eaaa032a83316e458c748915a243f6c204157d5ce9434e9291b1c",
+    "v5_evidence.json": "5f8aff3b803d37888a1f031ccb4e0cc5abc215a74911759d9a677843d06e6246"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "03317e40b937ca4c7dd215ee4b0fa959bade4e9c790eae744f4115e4f90756d0",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+}

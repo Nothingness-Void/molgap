@@ -1,5 +1,12 @@
 # Status
 
+## Terminal acceptance: 2026-10-27 JST
+
+Kaggle3 kernel `140232816` / version 1 is `COMPLETE`. `bond_local` is `CLOSED`; `pair_update_norm` is `POSITIVE_UNDER_CONTRACT`. Strict validation is `VERIFIED`, the candidate comparison is `STRICT_CAUSAL`, and both complete replay entries have no exclusions. See [qualification](qualification.md) and [terminal decision](terminal_acceptance/decision.md).
+
+Strict closure report: `D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/strict_closure_final.json`.
+
+
 ## Observation: 2026-10-23 JST
 
 Kaggle3 accepted kernel `140232816/version1`:

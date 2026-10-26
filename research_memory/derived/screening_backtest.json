@@ -22,6 +22,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
@@ -31,6 +37,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "family-topology-t4-100k-s42:k1_mean2:downstream",
@@ -262,6 +274,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:bn_long:downstream",
@@ -271,6 +289,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1:ln_long:downstream",
@@ -280,6 +304,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr:downstream",
@@ -289,6 +319,12 @@
       "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
       "run_id": "pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1:ln_low_lr_warmup:downstream",
@@ -350,6 +386,28 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"207be99dd3bf1dbc33f54173156a77a633ecd6b357855fbcaaeba232dab2daee\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local\"}",
+      "run_ids": [
+        "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
+        "pcqm-gptrans-bondlocal-pairnorm-100k-s42:pair_update_norm:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+        "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.9999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":\\\"per-optimizer-step\\\",\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema-decay-0.9999\\\"}\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\\\",\\\"row_membership_identity\\\":\\\"5fcf7589d020f94420fdad3d619e2c94510289c0757564bc508caff7543b0eb6\\\",\\\"row_order_identity\\\":\\\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\\\"}\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema9999-60epochs\\\",\\\"selection_role_identity\\\":\\\"best-development-ema9999-60epochs\\\"}\",\"strict_identity_sha256\":\"9234056be8ac8e36994be9953f10a6cfbaf94aa56870464c1842d0e08466a112\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"f92865c6a63393a03604d7e232cba5fbdda00f4d0fb9d888e8c5781b4e307feb\\\",\\\"target_transform_identity\\\":\\\"pcqm-local-bias-100k-a2-train-gap-transform\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-local-bias-rwse16-100k-s42-a2\"}",
+      "run_ids": [
+        "kaggle1-local-bias-rwse16-100k-s42-v2",
+        "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2"
+      ],
+      "trajectory_ids": [
+        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
+        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development_500000_549999\",\"lr_schedule_identity\":\"cosine60-epoch0-4e-4-epoch59-1e-6\",\"optimizer_identity\":\"adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"train[0:500000]-development[500000:550000]\",\"scientific_contract\":\"pcqm-fixed500k-dev50k-matched60-v4\",\"selection_role_identity\":\"best-development-raw-model-60epochs\",\"target_transform_identity\":\"45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834\",\"terminal_endpoint_identity\":\"optimizer_steps234360:sample_presentations29998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-matched-500k-v4-three-arm\"}",
       "run_ids": [
         "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
@@ -362,17 +420,6 @@
         "TB-gptrans-noisy-pair-norm-500k-s42",
         "TB-gptrans-pair-norm-500k-s42",
         "TB-matched-500k-v4-three-arm"
-      ]
-    },
-    {
-      "comparability_key": "{\"identity\":{\"dataset_identity\":\"e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d\",\"ema_semantics\":\"ema-decay-0.9999\",\"evaluation_role_identity\":\"f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"ogb-lsc-pcqm4mv2-gap-internal-100k-v4:seed42:normalized-gap-l1\",\"selection_role_identity\":\"best-development-ema9999-60epochs\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"optimizer_steps46860:sample_presentations5998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-local-bias-rwse16-100k-s42-a2\"}",
-      "run_ids": [
-        "kaggle1-local-bias-rwse16-100k-s42-v2",
-        "kaggle1-local-bias-rwse16-local-edge-100k-s42-v2"
-      ],
-      "trajectory_ids": [
-        "TB-gptrans-local-bias-rwse16-100k-s42-a2",
-        "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       ]
     },
     {
@@ -392,6 +439,8 @@
     }
   ],
   "included_trajectory_ids": [
+    "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+    "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
     "TB-gptrans-local-bias-rwse16-100k-s42-a2",
     "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
     "TB-gptrans-noisy-nodes-100k-s42",
@@ -409,5 +458,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 45
+  "trace_count": 47
 }
