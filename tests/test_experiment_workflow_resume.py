@@ -23,7 +23,7 @@ from molgap import experiment_workflow_resume as resume_workflow
 from molgap import kaggle_workflow
 from molgap import kaggle_pair_runtime
 from molgap.experiment_family_workflow import RunContext, incomplete_observations_from_execution
-from molgap.experiment_package import verify_experiment_source_package
+from molgap.experiment_package import read_packaged_text, verify_experiment_source_package
 from molgap.experiment_resume import RESUME_BUNDLE_FILE
 from molgap.experiment_workflow_resume import (
     RESUME_PLAN_FORMAT,
@@ -228,6 +228,34 @@ def _recovery_plan(case: dict, *, arms: dict | None = None) -> dict:
     }
 
 
+def _commit_recovery_repair(case: dict, names: tuple[str, ...]) -> dict:
+    """Commit the exact source overlay bytes against this fixture's frozen package."""
+    from test_experiment_package import git
+
+    repo = case["repo"]
+    files = {}
+    source_root = Path(__file__).resolve().parents[1]
+    for name in names:
+        original = read_packaged_text(case["package"], name).encode("utf-8")
+        target = repo / name
+        assert target.read_bytes() == original
+        repaired = (source_root / name).read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        target.write_bytes(repaired)
+        files[name] = {
+            "original_sha256": _sha(original),
+            "repaired_sha256": _sha(repaired),
+        }
+    # Recovery preparation reads the reviewed bootstrap template from the
+    # repair commit while the overlay manifest remains limited to its files.
+    entry_name = "platforms/kaggle/run_experiment.py"
+    entry_target = repo / entry_name
+    entry_payload = (source_root / entry_name).read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    entry_target.write_bytes(entry_payload)
+    git(repo, "add", "--", *names, entry_name)
+    git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic pinned recovery repair")
+    return {"commit": git(repo, "rev-parse", "HEAD"), "files": files}
+
+
 def _replace_active_trajectory(case: dict, arm_id: str, marker: str) -> Path:
     """Replace one canonical trajectory with another still-active valid record."""
     binding = next(item for item in case["spec"].to_dict()["prospective"]["arms"]
@@ -255,6 +283,12 @@ def test_build_then_prepare_resume_reuses_original_release_without_planning(
         raise AssertionError("resume preparation must not plan a new prospective action")
 
     monkeypatch.setattr(workflow, "plan_prospective", planning_is_forbidden)
+    repair = _commit_recovery_repair(case, (
+        "src/molgap/experiment_resume.py",
+        "src/molgap/common/io.py",
+    ))
+    plan = _recovery_plan(case)
+    plan["recovery_repair"] = repair
     resumed = prepare_resumed_workflow(
         case["spec"],
         case["repo"],
@@ -263,18 +297,62 @@ def test_build_then_prepare_resume_reuses_original_release_without_planning(
         case["package_identity"],
         case["receipt"],
         tmp_path / "resumed",
-        plan=_recovery_plan(case),
+        plan=plan,
     )
 
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
     assert resumed["prospective_published"] is False
     assert resumed["submitted"] is False
     for arm_id, expected in original_trajectories.items():
         staged = tmp_path / "resumed" / "source_dataset" / "prospective" / arm_id / "trajectory.json"
         assert staged.read_bytes() == expected
         assert (tmp_path / "resumed" / "source_dataset" / "resume" / arm_id / RESUME_BUNDLE_FILE).is_file()
-    launch_config = json.loads((tmp_path / "resumed" / "source_dataset" / "experiment_launch.json").read_bytes())
+    input_root = tmp_path / "resumed" / "source_dataset"
+    launch_config = json.loads((input_root / "experiment_launch.json").read_bytes())
     assert set(launch_config["resume"]) == set(original_trajectories)
+    repair_path = input_root / "recovery_repair.json"
+    repair_raw = repair_path.read_bytes()
+    repair_digest = _sha(repair_raw)
+    recovery_report = json.loads((tmp_path / "resumed" / "workflow_report.json").read_bytes())
+    bound_repair = recovery_report["recovery_repair"]
+    assert bound_repair["manifest_sha256"] == repair_digest
+    assert bound_repair["commit"] == repair["commit"]
+    assert bound_repair["files"] == repair["files"]
+    staged_repair = json.loads(repair_raw)
+    for name, binding in repair["files"].items():
+        payload = input_root / "recovery_repair" / name
+        assert _sha(payload.read_bytes()) == binding["repaired_sha256"]
+        assert payload.read_bytes() == (case["repo"] / name).read_bytes()
+
+    release = json.loads((tmp_path / "resumed" / "release_report.json").read_bytes())
+    entry_script = Path(release["inputs"]["entry_script"])
+    assert f"EXPECTED_RECOVERY_REPAIR_SHA256 = {repair_digest!r}" in entry_script.read_text(encoding="utf-8")
+    from molgap.experiment_launch_config import validate_recovery_repair
+
+    verified = validate_recovery_repair(
+        input_root,
+        expected_sha256=repair_digest,
+        manifest=verify_experiment_source_package(case["package"]),
+        package_dir=case["package"],
+        entry_script=entry_script,
+    )
+    assert verified == staged_repair
+
+    tampered_name = next(iter(repair["files"]))
+    tampered_path = input_root / "recovery_repair" / tampered_name
+    original_payload = tampered_path.read_bytes()
+    try:
+        tampered_path.write_bytes(original_payload + b"# changed after preparation\n")
+        with pytest.raises(ValueError, match="Recovery repair payload hash mismatch"):
+            validate_recovery_repair(
+                input_root,
+                expected_sha256=repair_digest,
+                manifest=verify_experiment_source_package(case["package"]),
+                package_dir=case["package"],
+                entry_script=entry_script,
+            )
+    finally:
+        tampered_path.write_bytes(original_payload)
 
 
 def test_build_resume_requires_a_reconciled_receipt(tmp_path, resume_case):
@@ -457,7 +535,7 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
         case["package_identity"], case["receipt"], resumed_root,
         plan=_recovery_plan(case),
     )
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
 
     runtime_root = tmp_path / "execution-root"
     commands: list[list[str]] = []
@@ -533,7 +611,7 @@ def test_failed_resumed_preflight_retains_training_started_and_unknown_progress(
         case["package_identity"], case["receipt"], resumed_root,
         plan=_recovery_plan(case),
     )
-    assert resumed["status"] == "PREPARED_FOR_PLATFORM", resumed
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
 
     commands: list[list[str]] = []
     _patch_pair_runtime(monkeypatch, commands, failed_phase="preflight")

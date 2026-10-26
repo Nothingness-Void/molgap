@@ -175,6 +175,37 @@ def _loaded_source(package_dir):
     verify_experiment_source_package(Path(package_dir))
     root = Path(__file__).resolve().parents[2]
     inventory = {item["path"]: item["sha256"] for item in _json(Path(package_dir) / "SOURCE_FILES.json")["files"]}
+    # Only an entrypoint-pinned infrastructure repair may differ from the
+    # scientific package. Preserve that package's original inventory unchanged.
+    repair_path = os.environ.get("MOLGAP_RECOVERY_REPAIR_MANIFEST")
+    if repair_path is not None:
+        import hashlib
+        import json
+        import re
+        raw = Path(repair_path).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != os.environ.get("MOLGAP_RECOVERY_REPAIR_SHA256"):
+            raise ValueError("Recovery repair attestation hash mismatch")
+        repair = json.loads(raw)
+        manifest = _json(Path(package_dir) / "package_manifest.json")
+        allowed = {"src/molgap/experiment_resume.py", "src/molgap/common/io.py",
+                   "src/molgap/family_training_runner.py"}
+        if (raw != json.dumps(repair, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+                              allow_nan=False).encode()
+                or set(repair) != {"format", "spec_identity", "package_identity", "archive_sha256", "commit", "files"}
+                or repair["format"] != "molgap-recovery-repair-v1"
+                or any(repair[key] != manifest[key] for key in ("spec_identity", "package_identity", "archive_sha256"))
+                or type(repair["commit"]) is not str or re.fullmatch(r"[0-9a-f]{40}", repair["commit"]) is None
+                or type(repair["files"]) is not dict or not repair["files"]
+                or not set(repair["files"]) <= allowed):
+            raise ValueError("Invalid recovery repair attestation")
+        for relative, binding in repair["files"].items():
+            if (type(binding) is not dict or set(binding) != {"original_sha256", "repaired_sha256"}
+                    or any(type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None
+                           for value in binding.values())
+                    or inventory.get(relative) != binding["original_sha256"]
+                    or normalized_source_sha256(root / relative) != binding["repaired_sha256"]):
+                raise ValueError("Recovery repair source binding mismatch")
+            inventory[relative] = binding["repaired_sha256"]
     for name, module in tuple(sys.modules.items()):
         if name != "molgap" and not name.startswith("molgap."):
             continue
@@ -663,6 +694,7 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
 
 def run_screen_resume_preflight(*, resume_output, **options):
     """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
+    import copy
     if options.get("qualification") is not None:
         raise ValueError("Qualification-only admission cannot resume formal work")
     import torch
@@ -698,7 +730,7 @@ def run_screen_resume_preflight(*, resume_output, **options):
         session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
             checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
             selected=lambda *args: None, pass_finished=lambda *args: None)
-        session.load_state_dict(retained)
+        session.load_state_dict(copy.deepcopy(retained))
         endpoint = session.run(should_pause=lambda: True)
         observed = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         if endpoint.optimizer_step != progress.optimizer_step + 1:
