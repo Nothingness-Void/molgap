@@ -357,6 +357,32 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
                                        comparison_purpose=comparison_purpose)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
+    # Legacy producers wrote the companion but omitted it from their manifest.
+    # Exercise real pinned retrieval before the same acceptance/closure journey.
+    from test_kaggle_family_retrieval import _module, _Api, _File, _ResponsePage, _Http
+    with monkeypatch.context() as network:
+        retriever = _module(network)
+        for arm_id, context in contexts.items():
+            output = case.paths.artifact_root / "retrieved" / arm_id
+            manifest_path = output / "output_manifest.json"
+            manifest = json.loads(manifest_path.read_bytes())
+            manifest["artifacts"].pop("trace_context")
+            manifest_path.write_bytes(canonical_json(manifest).encode())
+            companion = output / (manifest["artifacts"]["trace"]["path"] + ".context.json")
+            payload = companion.read_bytes()
+            companion.unlink()
+            remote = "experiment/" + arm_id + "/" + companion.name
+            url = "https://offline.invalid/" + remote
+            api, http = _Api(context.account, [_ResponsePage([_File(remote, url)])]), _Http({url: payload})
+            options = dict(context=context, remote_manifest_path="experiment/" + arm_id + "/output_manifest.json",
+                local_manifest=manifest_path, manifest_sha256=hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+                destination=output, http_session=http)
+            transferred = retriever.retrieve_family_outputs(api, **options)
+            assert transferred["downloaded_files"] == 1 and companion.read_bytes() == payload
+            repeated = retriever.retrieve_family_outputs(api, **options)
+            assert repeated["downloaded_files"] == 0 and repeated["network_accessed"] is False
+            assert [request.file_path for request in api.client.kernels.exact_requests] == [remote]
+            assert api.client.kernels.requests == []
     reference_arm = declaration["prospective"]["same_run_replay"]["reference_arm_id"]
     for arm_id, where in locations.items():
         trajectory = json.loads((case.repo / where["trajectory"]).read_bytes())
@@ -387,9 +413,32 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         (case.repo / name).unlink()
 
     retention_root = tmp_path / "execution-retention"
-    sealed = _seal_shared_retention(case, retention_root, prior_segments=[{
+    remote_retention = tmp_path / "remote-execution-retention"
+    sealed = _seal_shared_retention(case, remote_retention, prior_segments=[{
         "format": "molgap-allocation-ledger-v1", "spec_identity": case.spec.identity,
         "status": "running"}])
+    # Feed the real retention reader/transport into this existing closure path.
+    from molgap.kaggle_output_retrieval import retrieve_execution_retention
+    with monkeypatch.context() as network:
+        _module(network)
+        context = next(iter(contexts.values()))
+        names = ["execution_retention.json", "allocation_ledger.json",
+            *(arm + "/allocation_ledger.json" for arm in arms)]
+        files = [_File("experiment/" + name, "https://offline.invalid/" + name) for name in names]
+        http = _Http({item.url: (remote_retention / name).read_bytes() for item, name in zip(files, names)})
+        api = _Api(context.account, [_ResponsePage(files)])
+        transfer = dict(context=context, spec=case.spec, remote_manifest_path="experiment/execution_retention.json",
+            local_manifest=remote_retention / "execution_retention.json",
+            manifest_sha256=hashlib.sha256((remote_retention / "execution_retention.json").read_bytes()).hexdigest(),
+            destination=retention_root, http_session=http)
+        retrieved = retrieve_execution_retention(api, **transfer)
+        assert retrieved["status"] == "EXECUTION_RETENTION_RETRIEVED"
+        assert {request.file_path for request in api.client.kernels.exact_requests} == {item.file_name for item in files}
+        assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
+        assert api.client.kernels.requests == []
+        repeated = retrieve_execution_retention(api, **transfer)
+        assert repeated["downloaded_files"] == 0 and repeated["network_accessed"] is False
+        assert len(http.urls) == len(files)
     from molgap import experiment_retention as retention
     validations = []
     validate_retention = retention.validate_execution_retention

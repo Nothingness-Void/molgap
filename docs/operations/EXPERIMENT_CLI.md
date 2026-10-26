@@ -244,6 +244,13 @@ Retained certificate/provenance metadata is checked against the output manifest
 before reuse. Complete retained dependencies cause zero downloads; the retrieval
 report distinguishes retained files from actual network transfers.
 
+For older session manifests that omitted the trace companion role, retrieval
+pins the companion's canonical bytes from the bound producer context and stage.
+It downloads the real exact-version file; it never writes a substitute or edits
+the frozen manifest. Execution ledgers use the same exact-version transport.
+Small metadata failures report path, phase, status and exception type without
+including SDK messages or signed URLs; they do not trigger automatic retries.
+
 Retained Spec and recipe readers validate frozen declarations independently of
 the current Addon catalog. Package, receipt and artifact hash bindings still
 apply; reading retired metadata never imports its model implementation. New

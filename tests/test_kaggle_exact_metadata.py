@@ -38,6 +38,8 @@ class _Http:
         assert stream is True
         assert timeout == (30, 60)
         self.calls.append(url)
+        if isinstance(self.payloads[url], Exception):
+            raise self.payloads[url]
         return _Response(self.payloads[url])
 
 
@@ -49,6 +51,8 @@ class _KernelApi:
 
     def download_kernel_output(self, request):
         self.download_requests.append(request)
+        if isinstance(self.redirect_url, Exception):
+            raise self.redirect_url
         return SimpleNamespace(url=self.redirect_url)
 
     def list_kernel_session_output(self, request):
@@ -138,6 +142,22 @@ def test_downloads_exact_version_owner_and_path_without_listing(tmp_path, monkey
     }
     assert (tmp_path / "retained" / path).read_bytes() == payload
 
+    # Keep failures actionable without leaking SDK text or the signed URL.
+    kernel_api.redirect_url = RuntimeError(url)
+    with pytest.raises(RuntimeError, match="stage=redirect") as failed:
+        retrieve_exact_metadata(api, account="owning-account", kernel="owning-account/gptrans-ema-portability",
+            version=7, paths=[path], destination=tmp_path / "failed", http_session=http)
+    assert url not in str(failed.value) and path in str(failed.value)
+    kernel_api.redirect_url = url
+    monkeypatch.setattr(_Response, "status_code", 403)
+    with pytest.raises(RuntimeError, match="stage=http; status=403") as failed:
+        retrieve_exact_metadata(api, account="owning-account", kernel="owning-account/gptrans-ema-portability",
+            version=7, paths=[path], destination=tmp_path / "failed", http_session=http)
+    assert url not in str(failed.value)
+    assert kernel_api.list_calls == 0
+    assert not (tmp_path / "failed" / path).exists()
+    assert (tmp_path / "retained" / path).read_bytes() == payload
+
 
 @pytest.mark.parametrize("limit", [0, -1, True, 1.5, 16 * 1024 * 1024 + 1])
 def test_invalid_metadata_limit_rejected_before_network(tmp_path, limit):
@@ -157,7 +177,7 @@ def test_larger_diagnostic_requires_explicit_bound(tmp_path):
     http = _Http({url: payload})
     kwargs = dict(account="owning-account", kernel="owning-account/job",
         version=1, paths=["trace.json"], destination=tmp_path, http_session=http)
-    with pytest.raises(RuntimeError, match="no bulk fallback"):
+    with pytest.raises(RuntimeError, match="stage=byte_limit; status=200"):
         retrieve_exact_metadata(api, **kwargs)
     assert not (tmp_path / "trace.json").exists()
     result = retrieve_exact_metadata(api, **kwargs, max_bytes=2 * 1024 * 1024)

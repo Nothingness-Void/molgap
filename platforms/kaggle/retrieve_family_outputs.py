@@ -5,10 +5,12 @@ small manifest first. This adapter downloads manifest-bound required files and,
 with explicit strict retrieval, the native owner's certificate-bound dependencies.
 Numeric receipt versions use the existing exact-version transport. Legacy opaque
 session references retain the manifest-pinned listing path. Every downloaded byte
-is checked against the pinned manifest; signed URLs never appear in receipts.
+is checked against the pinned manifest or its canonical legacy stage context;
+signed URLs never appear in receipts.
 """
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path, PurePosixPath
 
 from molgap.experiment_family_workflow import RunContext, ROLES, _check_context, _json
@@ -21,7 +23,7 @@ from molgap.kaggle_output_retrieval import (
     retrieve_pinned_exact_files,
     retrieve_selected_kaggle_files,
 )
-from molgap.research_memory.trace import file_digest
+from molgap.research_memory.trace import file_digest, json_bytes
 
 
 def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path,
@@ -194,6 +196,16 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         if remote in required:
             raise ValueError("Aliased retention roles")
         required[remote] = (item["path"], item["sha256"])
+    if profile.protocol == "family-session" and "trace_context" not in manifest["artifacts"]:
+        # Older StageRecorder producers retained this immutable companion but
+        # omitted its role. Pin its exact canonical bytes from the bound producer
+        # context; transport must still retrieve and verify the real remote file.
+        relative = manifest["artifacts"]["trace"]["path"] + ".context.json"
+        remote = (prefix / relative).as_posix()
+        if remote in required:
+            raise ValueError("Aliased trace companion")
+        pin = hashlib.sha256(json_bytes({"context": manifest["context"], "stage_id": "downstream"})).hexdigest()
+        required[remote] = (relative, pin)
     return manifest, required
 
 
@@ -272,8 +284,6 @@ def main(argv=None):
             _path(args.remote_manifest_path)
             manifest, files = _family_files(context, args.remote_manifest_path,
                                            args.local_manifest, args.manifest_sha256)
-            if len(files) != len(manifest["artifacts"]) + 1:
-                raise ValueError("Remote manifest aliases an artifact")
             files = _selected_files(files)
             # _family_files checks known producer versions against the receipt.
             # A normal pre-launch producer has no version; retain that null and

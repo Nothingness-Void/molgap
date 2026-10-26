@@ -64,18 +64,30 @@ def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
             request = ApiDownloadKernelOutputRequest()
             request.owner_slug, request.kernel_slug = account, kernel.split("/")[1]
             request.version_number, request.file_path = version, path
+            phase, status = "redirect", None
             try:
                 redirect = client.kernels.kernels_api_client.download_kernel_output(request)
+                phase = "http"
                 with http_session.get(redirect.url, stream=True, timeout=(30, 60)) as response:
+                    status = response.status_code
                     if response.status_code != 200:
                         raise RuntimeError("Exact metadata response was not successful")
+                    phase = "body"
                     data = bytearray()
                     for chunk in response.iter_content(65536):
                         data.extend(chunk)
                         if len(data) > max_bytes:
+                            phase = "byte_limit"
                             raise ValueError("Exact metadata exceeds its explicit byte limit")
-            except Exception:
-                raise RuntimeError("Exact metadata retrieval failed; no bulk fallback") from None
+            except Exception as error:
+                if status is None:
+                    observed = getattr(error, "status_code", None)
+                    if observed is None:
+                        observed = getattr(getattr(error, "response", None), "status_code", None)
+                    status = observed if type(observed) is int else None
+                # Finite transport facts only; SDK text can contain signed URLs.
+                raise RuntimeError(f"Exact metadata retrieval failed; path={path}; stage={phase}; "
+                    f"status={status}; error_type={type(error).__name__}; no bulk fallback") from None
             import json
             json.loads(data)
             pin = hashlib.sha256(data).hexdigest()
@@ -303,7 +315,10 @@ def retrieve_execution_retention(
         remote = (prefix / report["path"]).as_posix()
         required[remote] = (EXECUTION_REPORT_FILENAME, report["sha256"])
 
-    result = retrieve_selected_kaggle_files(
+    version = context.platform_version
+    transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
+        and version.isdecimal() else retrieve_selected_kaggle_files)
+    result = transport(
         api,
         context=context,
         remote_manifest_path=remote_manifest_path,
