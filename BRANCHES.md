@@ -81,6 +81,10 @@ Desktop retains [qualification and attribution](experiments/pcqm_k1_message_drop
 and exact canonical metadata without the rejected addon/catalog implementation.
 [Custody](experiments/pcqm_k1_message_droppath_100k/terminal_custody.md)
 owns retained source, native proofs and actual artifact locations.
+The completed checkout and temporary ref were retired after100 canonical
+records and ignored artifact keepers were verified. The
+[retirement receipt](D:/molgap-artifacts/retirement/k1-message-droppath-100k/custody.json)
+has SHA256`974000e6ec468c4d96dec7f9bb7d4fea48cc22cf53e949138c87c82c749fd458`.
 
 BondLocal plus pair-update-normalization100K is terminally accepted with a
 positive100K nomination and no adoption. Keep the owner ref
@@ -91,6 +95,10 @@ Both arms are strictly replay-ready. Desktop retains byte-verified canonical
 [qualification](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md),
 decision and attribution. [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_custody.md)
 owns source restoration and external artifacts. No500K/full release follows.
+The completed checkout was retired after86 canonical records and ignored
+artifact keepers were verified; the positive owner ref remains. The
+[retirement receipt](D:/molgap-artifacts/retirement/gptrans-bondlocal-pairnorm-100k/custody.json)
+has SHA256`67c442cbfcfbd0e24f0d5f54f630b45d61691fe8658084c644ec45d445eb1ce0`.
 
 K1 normalization mechanisms is closed without model adoption. Full owner history
 through real automatic verification `48e4c6a5` is reachable from pushed archive
