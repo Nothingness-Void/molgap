@@ -11,6 +11,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3:A001",
+      "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr1e3/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4:A001",
+      "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr5e4/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
       "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
       "type": "action_produced_evidence"
@@ -1518,6 +1528,16 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
       "type": "prior_evidence"
     },
     {
@@ -3737,6 +3757,14 @@
     },
     {
       "id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
       "type": "trajectory"
     },
     {
