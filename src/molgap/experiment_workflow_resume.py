@@ -467,7 +467,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         observed_context = RunContext.from_launch(spec, Path(receipt_path), package,
             expected_package_identity=expected_package_identity, arm_id=arm_id, _verification=_verification)
         producer = RunContext.for_training(spec, package, expected_package_identity=expected_package_identity,
-            arm_id=arm_id, account=launch["account"], run_reference=launch["run_reference"], _verification=_verification)
+            arm_id=arm_id, account=launch["account"], run_reference=launch["run_reference"])
         _check_context(producer.to_dict(), observed_context)
         binding = next(b for b in spec.to_dict()["prospective"]["arms"] if b["arm_id"] == arm_id)
         trajectory = _artifact_path(root, binding["output"] + "/trajectory.json")
