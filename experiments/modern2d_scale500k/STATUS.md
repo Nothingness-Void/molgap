@@ -1,9 +1,10 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Kaggle2 kernel140822297/version1 is RUNNING. No automatic
-successor or protected role is released. Existing Luna B is bound to this exact
-job with the unchanged30-minute quiet-while-healthy rule.
+input/runtime release. Kaggle2 kernel140822297/version1 failed before training.
+An unchanged-science startup repair is in local preparation; the original
+terminal event remains separately traceable. No scientific successor or
+protected role is released.
 
 ## Selected input prerequisite
 
@@ -43,3 +44,13 @@ heartbeat, with idempotent terminal handoff to A. Run completion alone will not
 establish a winner, strict causality or Replay admission. Saved selected/final
 predictions, curves, actual role/cost evidence and qualified comparator identities
 must be checked per arm before interpretation.
+
+## Startup fault and repair
+
+The existing Luna B delivered event `evt-dde6ad29e11aedcf802b3bf4` once. Exact
+version1 logs show `Unknown Modern2D startup purpose` before environment
+installation: the bootstrap whitelist omitted the declared transfer purpose.
+No native or formal model execution was observed. [Failure](results/failed_v1/decision.json)
+retains original scheduler/cost observations and the raw log in retained storage.
+The [replacement decision](retry_v2/decision.md) links a new execution identity
+to this confirmed failure; it does not reopen any scientific candidate.

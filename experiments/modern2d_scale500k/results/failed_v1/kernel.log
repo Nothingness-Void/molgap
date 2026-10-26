@@ -1,0 +1,19 @@
+[{"stream_name":"stderr","time":1.174136817,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":1.17471144,"data":"  File \"/kaggle/src/script.py\", line 252, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":1.174729862,"data":"    main()\n"}
+,{"stream_name":"stderr","time":1.174732898,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":1.174735298,"data":"  File \"/kaggle/src/script.py\", line 220, in main\n"}
+,{"stream_name":"stderr","time":1.174737788,"data":"    _workload(started)\n"}
+,{"stream_name":"stderr","time":1.174740179,"data":"    ~~~~~~~~~^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":1.174742572,"data":"  File \"/kaggle/src/script.py\", line 140, in _workload\n"}
+,{"stream_name":"stderr","time":1.174744992,"data":"    modern2d_wall = _modern2d_wall_ceiling(declaration, source)\n"}
+,{"stream_name":"stderr","time":1.174747506,"data":"  File \"/kaggle/src/script.py\", line 66, in _modern2d_wall_ceiling\n"}
+,{"stream_name":"stderr","time":1.174749944,"data":"    raise ValueError(\"Unknown Modern2D startup purpose\")\n"}
+,{"stream_name":"stderr","time":1.174752494,"data":"ValueError: Unknown Modern2D startup purpose\n"}
+,{"stream_name":"stderr","time":3.429897351,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3.429928432,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3.7084600979999998,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3.708498524,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5.026603181,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5.930673306,"data":"[NbConvertApp] Writing 333425 bytes to __results__.html\n"}
+]
