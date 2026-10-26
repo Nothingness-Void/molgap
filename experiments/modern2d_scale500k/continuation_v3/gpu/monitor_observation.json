@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "remaining_physical_t4_hours": 13.437941584440555,
+      "remaining_session_hours": 6.7189707922202775
+    },
+    "campaign_id": "modern2d-scale500k",
+    "chain_id": "modern2d-scale500k-k2-s42-r3",
+    "decision_ref": "experiments/modern2d_scale500k/continuation_v3/decision.md",
+    "monitor_generation": 5,
+    "owner_scope": "server",
+    "reference_identity": null,
+    "release_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+      "kernel_id": 140916841,
+      "version": 3
+    },
+    "remote_platform": "kaggle",
+    "run_id": "kaseichou/molgap-modern2d-scale500k-s42-r3:v3"
+  },
+  "event_count": 0,
+  "healthy_action": "SILENT",
+  "observation": {
+    "detail": {
+      "api_status": "RUNNING",
+      "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+        "kernel_id": 140916841,
+        "version": 3
+      },
+      "version": 3
+    },
+    "observed_at": "2026-10-26T18:35:40Z",
+    "remote_state_version": null,
+    "status": "RUNNING"
+  }
+}

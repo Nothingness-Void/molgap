@@ -1,7 +1,7 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Kaggle2 kernel140916841/version3 is QUEUED as a pinned-runner checkpoint
+input/runtime release. Kaggle2 kernel140916841/version3 is RUNNING as a pinned-runner checkpoint
 continuation. The [version3 decision](continuation_v3/decision.md) owns actual
 receipts, original checkpoint hashes and cumulative budget. Version2 failed
 before new formal work; its diagnosis and cost remain retained. Native GPU

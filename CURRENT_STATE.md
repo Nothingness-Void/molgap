@@ -13,7 +13,7 @@ remote byte verification passed. Two pre-training startup faults were preserved
 and repaired without changing either scientific arm. Both500K arms entered
 training; a checkpoint-export serialization fault interrupted version1.
 The original checkpoints passed native-state validation. Kernel140916841/
-version3 is QUEUED as a checkpoint continuation with a pinned native-probe repair.
+version3 is RUNNING as a checkpoint continuation with a pinned native-probe repair.
 [Status](experiments/modern2d_scale500k/STATUS.md) owns exact receipts, preserved
 cursors and the cumulative remaining budget. Original science/endpoints remain
 fixed; native GPU resume and final outcomes are not yet accepted. Existing Luna B
