@@ -2,6 +2,7 @@
   "automatic_training_retry": false,
   "automatic_training_successor_authorized": false,
   "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
+  "budget_observation": "Both prior invocations are carried in each resume ledger and deduplicated at runtime; conservative accounting subtracts bootstrap maxima without adding overlapping ledgers.",
   "closed": false,
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
   "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
@@ -10,24 +11,21 @@
   "healthy_action": "SILENT",
   "jobs": [
     {
-      "closed": true,
+      "closed": false,
       "control_state": "E:/MolGap/artifacts/recovery/modern2d-scale500k-r3/monitor/control_state.json",
       "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
       "kernel_id": 140916841,
-      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v2",
-      "slot": "scale500k_pair_r3_resume",
-      "version": 2,
-      "decision_ref": "experiments/modern2d_scale500k/results/failed_r3_v2/decision.md"
+      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3",
+      "slot": "scale500k_pair_r3_resume_v3",
+      "version": 3
     }
   ],
-  "kaggle_session_quota_hours_ceiling": 8.992222222222223,
+  "kaggle_session_quota_hours_ceiling": 8.991666666666667,
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "owner": "server",
-  "physical_t4_hours_ceiling": 17.984444444444446,
+  "physical_t4_hours_ceiling": 17.983333333333334,
   "prior_allocation_wall_seconds": 8181.7051480069995,
-  "remaining_allocation_wall_seconds": 24190.294851993,
+  "remaining_allocation_wall_seconds": 24188.294851993,
   "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
-  "wall_ceiling_seconds": 32372,
-  "status": "RECOVERY_RELEASE_BLOCKED",
-  "budget_observation": "Conservative per-invocation bootstrap maxima; overlapping ledgers are not added again. No compute released."
+  "wall_ceiling_seconds": 32370
 }

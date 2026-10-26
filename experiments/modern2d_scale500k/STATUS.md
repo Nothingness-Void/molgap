@@ -1,13 +1,12 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Kaggle2 kernel140916841/version2 ended ERROR during actual-resume
-preflight; its [diagnosis](results/failed_r3_v2/decision.md) retains exact evidence
-and allocation cost. The missing disabled-EMA field has a local compatibility
-repair; reviewed recovery release remains blocked. No version3 was submitted.
-Version1 training progress and native checkpoints remain retained. Both earlier
-pre-training faults remain closed. No scientific successor or protected role
-is released.
+input/runtime release. Kaggle2 kernel140916841/version3 is QUEUED as a pinned-runner checkpoint
+continuation. The [version3 decision](continuation_v3/decision.md) owns actual
+receipts, original checkpoint hashes and cumulative budget. Version2 failed
+before new formal work; its diagnosis and cost remain retained. Native GPU
+resume qualification and final scientific acceptance remain pending. No
+scientific successor or protected role is released.
 
 ## Selected input prerequisite
 
@@ -108,3 +107,13 @@ allocation ledger carried into runtime. No fresh9h budget or fresh training was
 released. Existing Luna B uses binding generation4 for version2 only. Its
 actual-resume native proof, completed output and scientific acceptance remain
 unobserved; RUNNING is the last scheduler observation only.
+
+## Version3 continuation
+
+The human requested the repaired continuation. [Physical version3](continuation_v3/gpu/launch_receipt.json)
+was accepted after full source-dataset version3 byte verification. The pinned
+repair normalizes disabled EMA and isolates scratch next-step copies while
+retaining original package and science. Both prior allocations are debited
+within32370 seconds aggregate, including600 seconds retention reserve. Existing
+Luna B generation5 monitors only this exact job. Scheduler QUEUED establishes
+neither native acceptance nor a scientific winner.

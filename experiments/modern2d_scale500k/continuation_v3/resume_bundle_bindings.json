@@ -1,0 +1,72 @@
+{
+  "esa_count_500k": {
+    "checkpoint": {
+      "path": "files/last_checkpoint.pt",
+      "required": true,
+      "restore_path": "last_checkpoint.pt",
+      "sha256": "639244c33917c37797d654bdecf61f5a672aa423e8033ecd19e51d006299a121"
+    },
+    "cost_segments": [
+      {
+        "path": "files/allocation_ledger.json",
+        "required": true,
+        "restore_path": "allocation_ledger.json",
+        "sha256": "8a29898d1f5fcd797a21563d095d4f93d89867cab92941023356ec6efd63e0df"
+      },
+      {
+        "path": "files/invocation_cost_state.json",
+        "required": true,
+        "restore_path": "invocation_cost_state.json",
+        "sha256": "071ea52a6876b2f015e69711a87f9afe0cfc3a49d867d428d5d766792f38e2bb"
+      },
+      {
+        "path": "files/preflight_costs.json",
+        "required": true,
+        "restore_path": "preflight_costs.json",
+        "sha256": "ea916736c736fd278691ac1e15e76cd98e70fc38723693d60d2761165e036b50"
+      }
+    ],
+    "cursor": {
+      "next_batch": 0,
+      "pass_index": 10,
+      "status": "running"
+    },
+    "manifest": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3\\esa_count_500k\\resume_bundle.json",
+    "manifest_sha256": "983187c6ae39e0bd98e67cfd603f091e03fe3da070a7fb4b8bea764659eda349"
+  },
+  "ppgt_mean_500k": {
+    "checkpoint": {
+      "path": "files/last_checkpoint.pt",
+      "required": true,
+      "restore_path": "last_checkpoint.pt",
+      "sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83"
+    },
+    "cost_segments": [
+      {
+        "path": "files/allocation_ledger.json",
+        "required": true,
+        "restore_path": "allocation_ledger.json",
+        "sha256": "8a29898d1f5fcd797a21563d095d4f93d89867cab92941023356ec6efd63e0df"
+      },
+      {
+        "path": "files/invocation_cost_state.json",
+        "required": true,
+        "restore_path": "invocation_cost_state.json",
+        "sha256": "9e2a9cbf4ff8eff29d973b1f7de230ce872b25a3f7d8599ce504555227f966eb"
+      },
+      {
+        "path": "files/preflight_costs.json",
+        "required": true,
+        "restore_path": "preflight_costs.json",
+        "sha256": "099aad4715f6a04716f1eb9dc08975abecced76e2574047238a3e3b8389efcb7"
+      }
+    ],
+    "cursor": {
+      "next_batch": 141,
+      "pass_index": 1,
+      "status": "paused"
+    },
+    "manifest": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3\\ppgt_mean_500k\\resume_bundle.json",
+    "manifest_sha256": "6051a961b5a93908ab14e9418696741f2db6cf02ad4cbf32a9f33a2e65d22ac9"
+  }
+}

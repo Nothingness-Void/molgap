@@ -1,0 +1,38 @@
+{
+  "actual_source_roundtrip_files": 41,
+  "ast_boundary": {
+    "changed_seed_rejected": true,
+    "non_exact_ema_default_rejected": true,
+    "original_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+    "permitted_repair_accepted": true
+  },
+  "auxiliary_fake_worker_preflight_routing": {
+    "passed": 1,
+    "trainer_started": false
+  },
+  "executor": "Luna gpt-6-luna max",
+  "full_training_or_inference_executed_locally": false,
+  "isolated_checkout": "C:/Users/Adminn/.codex/worktrees/modern2d-resume-release/molgap",
+  "limitations": [
+    "Local workflow passes do not establish native GPU execution or scientific quality.",
+    "Original source/Spec retained with explicitly hash-pinned infrastructure overlay.",
+    "No STRICT_CAUSAL or Replay admission claimed for this unfinished transfer study."
+  ],
+  "native_gpu_resume_preflight": "NOT_YET_OBSERVED",
+  "operational_compatibility_commit": "2276ae293",
+  "physical_kernel_id": 140916841,
+  "physical_version": 3,
+  "prepared_release_status": "RESUME_INPUTS_PREPARED",
+  "repair_commit": "2c9022804ad78cfe0bcbccb92b561640dbbc2ad9",
+  "retained_real_model_executed_locally": false,
+  "selected_workflow_and_bootstrap": {
+    "failed": 0,
+    "nodes": [
+      "tests/test_experiment_workflow_resume.py::test_build_then_prepare_resume_reuses_original_release_without_planning",
+      "tests/test_kaggle_bootstrap_server.py"
+    ],
+    "passed": 9,
+    "seconds": 15.59
+  },
+  "source_branch": "codex/modern2d-resume-release"
+}

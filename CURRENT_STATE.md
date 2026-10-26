@@ -13,12 +13,12 @@ remote byte verification passed. Two pre-training startup faults were preserved
 and repaired without changing either scientific arm. Both500K arms entered
 training; a checkpoint-export serialization fault interrupted version1.
 The original checkpoints passed native-state validation. Kernel140916841/
-version2 ended ERROR in resume preflight because disabled EMA was omitted from
-the checkpoint wire format. The compatibility repair awaits verified recovery
-release; no version3 was submitted. [Diagnosis](experiments/modern2d_scale500k/results/failed_r3_v2/decision.md). [Status](experiments/modern2d_scale500k/STATUS.md)
-owns receipts, remaining budget and unaccepted resumed/final outcomes. Existing
-Luna B delivered the version2 failure; healthy-run monitoring awaits a verified
-replacement binding. No scientific successor or protected-role release.
+version3 is QUEUED as a checkpoint continuation with a pinned native-probe repair.
+[Status](experiments/modern2d_scale500k/STATUS.md) owns exact receipts, preserved
+cursors and the cumulative remaining budget. Original science/endpoints remain
+fixed; native GPU resume and final outcomes are not yet accepted. Existing Luna B
+monitors only version3, generation5; healthy status is silent. No scientific
+successor or protected-role release.
 
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
 completed both60-pass endpoints. Count readout passed its frozen within-family
