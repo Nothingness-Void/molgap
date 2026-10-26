@@ -144,6 +144,15 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             source_archive_sha256=context.source_archive_sha256)
     identity = {"run_id": run_id, "attempt_id": attempt_id, "spec_identity": spec.identity}
     automatic = diagnose or stage_terminal or outcome is not None or strict_inputs is not None
+    if physical_observation is not None:
+        if physical_runs is not None:
+            raise ValueError("Use either physical_runs or one physical_observation")
+        from .experiment_allocation import current_physical_allocation_records
+        physical_runs = current_physical_allocation_records(resolved, retention, physical_observation)
+    physical_costs = None
+    if physical_runs is not None:
+        from .experiment_allocation import aggregate_physical_allocation_costs
+        physical_costs = aggregate_physical_allocation_costs(physical_runs)
     # Ordinary inspection does not depend on a future terminal input package.
     result = accept_workflow(spec, supplied=resolved["outputs"],
         locations=None if automatic or locations is None else resolved["locations"],
@@ -151,14 +160,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         execution_root=execution_root, _retention=retention,
         target_identities=resolved.get("target_identities"), **options)
     result.update(identity)
-    if physical_observation is not None:
-        if physical_runs is not None:
-            raise ValueError("Use either physical_runs or one physical_observation")
-        from .experiment_allocation import current_physical_allocation_records
-        physical_runs = current_physical_allocation_records(resolved, retention, physical_observation)
-    if physical_runs is not None:
-        from .experiment_allocation import aggregate_physical_allocation_costs
-        result["physical_allocation_costs"] = aggregate_physical_allocation_costs(physical_runs)
+    if physical_costs is not None:
+        result["physical_allocation_costs"] = physical_costs
     if result["status"] == "BLOCKED":
         return result
     read_only_strict = (strict_inputs is not None and locations is not None

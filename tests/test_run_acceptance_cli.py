@@ -137,6 +137,15 @@ def test_missing_strict_evidence_cannot_execute_terminal_closure(tmp_path, monke
     assert result["executed"] is False
     assert mechanical.call_count == 1
     assert mechanical.call_args.kwargs["execute"] is False
+    mechanical.reset_mock()
+    with pytest.raises(ValueError, match="requires verified execution retention"):
+        runs.accept_run_workflow(None, tmp_path, "test", "v1", locations={}, execute=True,
+                                 physical_observation=tmp_path / "observation.json")
+    mechanical.assert_not_called()
+    with pytest.raises(ValueError, match="either physical_runs or one physical_observation"):
+        runs.accept_run_workflow(None, tmp_path, "test", "v1", locations={}, execute=True,
+                                 physical_runs=[], physical_observation=tmp_path / "observation.json")
+    mechanical.assert_not_called()
     qualify.assert_not_called()
     if read_only:
         qualify.assert_not_called()
