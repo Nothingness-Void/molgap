@@ -1,0 +1,97 @@
+{
+  "context": {
+    "experiment_id": "pcqm_k1_message_droppath_100k",
+    "logical_run_id": "pcqm-k1-message-droppath-100k-s42",
+    "arm_id": "message_droppath",
+    "arm_identity": "94c7c0bb53afbb719c60af8d2d60d1c29b1b2060dfca2f4c6d900890aed9b6f6",
+    "spec_identity": "e3b4c7959089c2a09a7cc0bae94006ae76d34f41d3bc4ba472ca70fde10d65d2",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "927783bab325dab85f311790c96b630011c21e21",
+    "source_archive_sha256": "708f538ca5b5f5f44ab50ed307802282313770db8bcae0a1a9f26e0da58a95b3",
+    "package_identity": "addb327609a4a8faf62329cb990e2a5b015ca9e66644935331fbd0ce68313b8d",
+    "training_recipe_sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-message-droppath-100k-s42",
+    "platform_version": "1"
+  },
+  "physical_inputs_ref": {
+    "path": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/physical_inputs.md",
+    "sha256": "518d17d23de1e95f246a52f483dbf538c0960d94bacc5b12eb1d65a5d12945f3"
+  },
+  "role_use": {
+    "train": "consumed",
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-message-droppath-100k-s42:message_droppath:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-message-droppath-100k-s42:message_droppath:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-message-droppath-100k-s42:message_droppath:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-message-droppath-100k-s42:message_droppath:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-message-droppath-100k-s42:message_droppath:downstream",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true
+    }
+  ]
+}

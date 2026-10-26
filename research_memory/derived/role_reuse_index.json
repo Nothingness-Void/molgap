@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 582,
+  "ambiguous_historical_role_record_count": 592,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -486,6 +486,76 @@
     },
     {
       "evidence_id": "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -4076,7 +4146,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 361,
+  "explicit_role_event_count": 371,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4105,6 +4175,62 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "metric_computed",
         "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
@@ -4717,6 +4843,20 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "training_membership",
         "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-train",
@@ -6752,6 +6892,8 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
@@ -6874,6 +7016,8 @@
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
@@ -6984,6 +7128,62 @@
   },
   "repeatedly_selected_role_identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "metric_computed",
         "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
@@ -8585,6 +8785,62 @@
   "reused_role_identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
         "access_kind": "metric_computed",
         "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
         "selection_used": false,
@@ -9166,6 +9422,20 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "training_membership",
         "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-train",

@@ -15,11 +15,9 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 90,
+      "count": 88,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-k1-message-droppath-100k-s42-baseline",
-        "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -264,11 +262,9 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 46,
+      "count": 44,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-k1-message-droppath-100k-s42-baseline",
-        "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -317,10 +313,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 14,
+      "count": 12,
       "items": [
-        "T-pcqm-k1-message-droppath-100k-s42-baseline",
-        "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

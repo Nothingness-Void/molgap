@@ -1,5 +1,12 @@
 # Status
 
+## Terminal acceptance: 2026-10-27 JST
+
+Kaggle1 kernel `140239597` / version 1 is `COMPLETE`. The baseline is `CLOSED`; `message_droppath` is `NEGATIVE_UNDER_CONTRACT`. Strict validation is `VERIFIED`, the candidate comparison is `STRICT_CAUSAL`, and both complete replay entries have no exclusions. See [qualification](qualification.md) and [terminal decision](terminal_acceptance/decision.md).
+
+Strict closure report: `D:/molgap-artifacts/reconciliation/k1-message-droppath-100k-20261027/acceptance/strict_closure_final.json`.
+
+
 ## Submission observation: 2026-10-23 JST
 
 Kaggle1 accepted kernel `140239597/version1`:

@@ -1,0 +1,94 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-droppath-100k-20261027/metadata/experiment/experiment/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "1ce1b2cf080002b6232cfa1fc0f63633fc92ec2fa3a95383ca06d2441492fd31"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-droppath-100k-20261027/metadata/experiment/experiment/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "f06f92c19184ce7fcfd363f102923a15c6af3ffb23a7cca2ee7db2c9e699fdb8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/reconciliation/k1-message-droppath-100k-20261027/metadata/experiment/experiment/message_droppath/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "f06f92c19184ce7fcfd363f102923a15c6af3ffb23a7cca2ee7db2c9e699fdb8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/training_contract.json",
+      "name": "contract",
+      "sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "cef05b94340f275cc55974e96eb115c8dd6091f16d68bc02f1b12554ac959697"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "0e11b57a0167d5f7a6e3c0b953ca6c62eade7973a1676093c052e13b86f36c2c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "d490f0ceab0f9f8fd70d76f1493f007eb86de44b238ebace6fd7a3dd61e0187d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "dacfa96dfff75888d34e5aa731b0dc45d447c33c968341e05e66ebae5c3a68e5"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14366748434484006,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/132a06e6f1d537b8/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}
