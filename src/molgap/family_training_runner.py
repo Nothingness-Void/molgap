@@ -676,6 +676,7 @@ def run_screen_resume_preflight(*, resume_output, **options):
     _, recipe, data, tuning, context, _, _ = _bootstrap(**bootstrap_options)
     retained = torch.load(Path(resume_output) / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     _check_context(retained.pop("context"), context)
+    retained.setdefault("ema", None)
     progress = validate_session_resume(recipe, retained)
     if progress.status == "complete":
         raise ValueError("Cannot resume a completed shared session")
