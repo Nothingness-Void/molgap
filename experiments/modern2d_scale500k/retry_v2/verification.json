@@ -1,0 +1,38 @@
+{
+  "status": "completed",
+  "cwd": "C:\\Users\\Adminn\\Documents\\molgap",
+  "command": ".venv/Scripts/python.exe platforms/local/run.py --module pytest -- -q tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount --basetemp=.pytest_cache/modern2d-startup-luna6/base --junitxml=.pytest_cache/modern2d-startup-luna6/junit.xml",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "process_exit_code": 0,
+  "pytest": {
+    "collected": 7,
+    "passed": 7,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 75.725
+  },
+  "nodeids": [
+    "tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair[ppgt_small/3]",
+    "tests/test_modern2d_scientific_input.py::test_transfer_study_uses_exact_source_clock_without_causal_pair[esa_small/4]",
+    "tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount[families0]",
+    "tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount[families1]",
+    "tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount[families2]",
+    "tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount[families3]",
+    "tests/test_modern2d_formal_release.py::test_formal_bootstrap_uses_family_shared_for_namespaced_mount[families4]"
+  ],
+  "artifacts": {
+    "junit_xml": ".pytest_cache/modern2d-startup-luna6/junit.xml",
+    "stdout": ".pytest_cache/modern2d-startup-luna6/stdout.txt",
+    "stderr": ".pytest_cache/modern2d-startup-luna6/stderr.txt",
+    "exit_code": ".pytest_cache/modern2d-startup-luna6/exit-code.txt",
+    "report": ".pytest_cache/modern2d-startup-luna6/report.json",
+    "basetemp": ".pytest_cache/modern2d-startup-luna6/base"
+  },
+  "stdout_summary": ".......                                                                  [100%]\r\n7 passed in 75.73s (0:01:15)",
+  "stderr_summary": "{\"interpreter\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\.venv\\\\Scripts\\\\python.exe\", \"molgap_module\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\src\\\\molgap\\\\__init__.py\", \"source_root\": \"C:\\\\Users\\\\Adminn\\\\Documents\\\\molgap\\\\src\", \"package_identity\": null}"
+}

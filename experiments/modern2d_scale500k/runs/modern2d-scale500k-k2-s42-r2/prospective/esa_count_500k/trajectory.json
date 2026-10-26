@@ -1,0 +1,100 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "esa_count_500k-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-modern2d-scale500k-k2-s42-r2-esa_count_500k-planned"
+      ],
+      "evidence_refs": [
+        "experiments/modern2d_scale500k/generated/0dec01509978f26bfebdf418cd4b5f8255194560545ed3fd597bbfa5b589a197/esa_count_500k/recipe.json"
+      ],
+      "run_ids": [
+        "modern2d-scale500k-k2-s42-r2:esa_count_500k:downstream"
+      ],
+      "source_commit": "4b475dfa3ce993c98ce7d8934098f73277620e5c",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_scale500k/retry_v2/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_SCALE_DUAL",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/modern2d_scale500k/retry_v2/authority.json",
+    "chosen_action": "RUN_SCALE_DUAL",
+    "policy_id": "modern2d-scale500k-family-rescue",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/modern2d_scale500k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r2/prospective/rml_decision_snapshots/945392dc60dbe6ad26866ec210fcf1fb3fc0c22b048c9832c0a9753ca8f7cdd0.json",
+    "snapshot_sha256": "945392dc60dbe6ad26866ec210fcf1fb3fc0c22b048c9832c0a9753ca8f7cdd0",
+    "state_timestamp": "2026-10-25T18:21:11.606785+00:00"
+  },
+  "family_id": "modern2d-scale500k-family-rescue",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Data diversity mayhelpbutthefamilyremainnoncompetitive.",
+      "Historicalstrongcomparatorsmaynotqualifyonthe sameCommonDev.",
+      "Runtime/loadercostmayexceedfrozenbudget."
+    ],
+    "changed_mechanism": "Training membership expands to500K; unchanged family models and source100K optimizer/LR/normalization/evaluation clocks.",
+    "cheapest_falsifier": "One500K model perT4; reuse source100K records, no baseline retraining",
+    "decision_changed_if_negative": "Retain negative/inconclusive evidence, separate cost failures from model limits, close covered task without furthercompute.",
+    "decision_changed_if_positive": "Retain perarm endpoint and curves; separately qualify comparison/competitive evidence; no automatic successor or fullpromotion.",
+    "expected_native_cost_ref": "cost-T-modern2d-scale500k-k2-s42-r2-esa_count_500k-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-modern2d-scale500k-k2-s42-r2-esa_count_500k",
+    "observed_deficiency": "Both new families lagged strong historical baselines; ESA longer100K training didnotclose its developmentgap, while PPGT ended20passesstillimproving.",
+    "related_closed_family_ids": [
+      "ppgt-content-conditioner-below-gate"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    ]
+  },
+  "owner": "server",
+  "question": "Can500K distinct training members rescue retained PPGT/ESA configurations at the original exact update clocks?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/modern2d_scale500k/retry_v2/authority.json",
+    "contract_refs": [
+      "experiments/modern2d_scale500k/generated/0dec01509978f26bfebdf418cd4b5f8255194560545ed3fd597bbfa5b589a197/esa_count_500k/recipe.json",
+      "experiments/modern2d_scale500k/anchors/esa/experiment_spec.json",
+      "experiments/modern2d_scale500k/retry_v2/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/modern2d_scale500k/roles.json"
+    ],
+    "source_commit": "4b475dfa3ce993c98ce7d8934098f73277620e5c",
+    "source_config_identity": "340f39759ae95da0546796166a1bcb7656c1af67c1093f408dc54d7ebc63abb5"
+  },
+  "track": "C",
+  "trajectory_id": "T-modern2d-scale500k-k2-s42-r2-esa_count_500k"
+}
