@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 155,
+    "trajectories_total": 159,
     "with_complete_native_measurement": 30,
-    "with_cost_event": 144,
-    "with_incomplete_native_measurement": 114,
+    "with_cost_event": 148,
+    "with_incomplete_native_measurement": 118,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,9 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 97,
+      "count": 101,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+        "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-single-s42-scratch",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -146,13 +150,17 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 114,
+      "count": 118,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
         "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+        "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-single-s42-scratch",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -285,9 +293,13 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 47,
+      "count": 51,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+        "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-single-s42-scratch",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -339,8 +351,12 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 16,
       "items": [
+        "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
+        "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
+        "T-pcqm-k1-init-forward-500k-single-s42-scratch",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

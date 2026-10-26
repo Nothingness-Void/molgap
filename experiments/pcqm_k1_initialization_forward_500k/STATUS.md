@@ -32,5 +32,35 @@ per-arm logs and canonical traces:10 completed observations/39060 steps per arm;
 the logger stopped at9. Full checkpoint validity and native-proof verification
 are pending; these are not complete replay-ready results.
 
-Next: repair the existing resume metadata export and verify retained checkpoint
-recovery before a separately authorized continuation. Keep these exact attempts.
+## Authorized version2 continuation
+
+The user authorized repair and continuation of both jobs. The
+[continuation authority](continuation_authority.md) retains the original30-pass
+target and lower per-slot allocation ceilings. All four real pass10 checkpoints
+passed the owning resume validator; see
+[checkpoint verification](continuation_checkpoint_verification.json).
+No initial state, optimizer, scheduler horizon or scientific recipe is reset.
+
+The existing resume preparation owner produced both successor payloads with a
+SHA-bound two-module repair overlay. The original source archive and Spec stay
+frozen. Both private source datasets are version2; all43 files per source passed
+the existing byte-level roundtrip. Both kernel continuations are SUBMISSION_BOUND.
+
+| Slot | Actual kernel / version | Accepted UTC | Retained receipt |
+| --- | --- | --- | --- |
+| single | 140826099 / 2 | 2026-10-26 05:16:54 | [receipt](continuation/v2/single/launch_receipt.json) |
+| mean2 | 140826274 / 2 | 2026-10-26 05:17:59 | [receipt](continuation/v2/mean2/launch_receipt.json) |
+
+The adjacent source verification records bind the actual remote entry bytes,
+private T4 configuration and source/data mounts. Recovery manifests bind the
+two reviewed replacement modules; original archive identities remain unchanged.
+A selected-file transport failure interrupted source verification before POST.
+Luna's exact-file probe succeeded; its cause remains unconfirmed. Sequential
+journal reentry reused hash-verified files and completed without another dataset
+version or kernel POST. The transport diagnostic is retained in single operations.
+
+Operations: `D:/molgap-artifacts/recovery/k1-init-forward-500k/{single,mean2}/v2/operations/`.
+Only Luna checks remote training progress. RUNNING alone will not establish
+successful continuation: every arm must demonstrate restored39060 steps and
+new formal updates. Terminal acceptance and strict replay qualification remain
+pending.
