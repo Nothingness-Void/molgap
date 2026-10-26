@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 90,
-  "event_count": 329,
+  "event_count": 332,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 291,
+  "measurement_missing_event_count": 294,
   "not_applicable_event_count": 99,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -2872,7 +2872,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "NVIDIA GeForce RTX 5060 8GiB:device_hours": {
         "estimated": {
@@ -2884,7 +2884,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "NVIDIA GeForce RTX 5060 8GiB:queue_hours": {
         "estimated": {
@@ -2896,7 +2896,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "NVIDIA GeForce RTX 5060 8GiB:wall_hours": {
         "estimated": {
@@ -2908,7 +2908,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "NVIDIA GeForce RTX 5060:cpu_hours": {
         "estimated": {
@@ -5562,7 +5562,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "device_hours": {
         "estimated": {
@@ -5574,7 +5574,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "queue_hours": {
         "estimated": {
@@ -5586,7 +5586,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       },
       "wall_hours": {
         "estimated": {
@@ -5598,7 +5598,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 6
       }
     },
     "NVIDIA GeForce RTX 5060; local desktop execution": {
@@ -19401,6 +19401,56 @@
         "unknown_records": 1
       }
     },
+    "TB-pcqm-k1-selective-100k-bn-reference-s42-r2": {
+      "NVIDIA GeForce RTX 5060 8GiB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
     "TB-pcqm-k1-selective-100k-ffn-rms-s42": {
       "NVIDIA GeForce RTX 5060 8GiB:cpu_hours": {
         "estimated": {
@@ -19451,7 +19501,107 @@
         "unknown_records": 1
       }
     },
+    "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2": {
+      "NVIDIA GeForce RTX 5060 8GiB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
     "TB-pcqm-k1-selective-100k-local-residual-gain-s42": {
+      "NVIDIA GeForce RTX 5060 8GiB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX 5060 8GiB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
+    "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2": {
       "NVIDIA GeForce RTX 5060 8GiB:cpu_hours": {
         "estimated": {
           "known_records": 0,

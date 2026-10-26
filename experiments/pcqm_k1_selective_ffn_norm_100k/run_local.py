@@ -12,6 +12,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from molgap.common.paths import MachinePaths
 from molgap.experiment_family_workflow import RunContext, inspect_output
+from molgap.experiment_package import read_packaged_text
+from molgap.experiment_spec import ExperimentSpec
 from molgap.router import paired_bootstrap_mean
 from molgap.training_reproducibility import atomic_json
 
@@ -36,8 +38,8 @@ def main():
     results, errors, truth, ids = {}, {}, None, None
     for item in config["arms"]:
         arm = item["arm_id"]
-        spec = read(declarations / arm / "experiment_spec.json")
-        run = spec["logical_run_id"]
+        spec = ExperimentSpec(read(declarations / arm / "experiment_spec.json"))
+        run = spec.to_dict()["logical_run_id"]
         prepared = paths.run_directory(run, args.attempt) / "prepared"
         execution = output / arm
         env = dict(os.environ, CUDA_VISIBLE_DEVICES="0", PYTHONUNBUFFERED="1")
@@ -49,8 +51,13 @@ def main():
             subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
         folder = execution / arm
         manifest = read(folder / "output_manifest.json")
-        contract = read(folder / "training_contract.json")
-        inspection = inspect_output(folder, context=RunContext(**manifest["context"]),
+        frozen = read(prepared / "prepared_training.json")
+        package = prepared / "package"
+        job, = frozen["jobs"]
+        context = RunContext.from_launch(spec, execution / "launch_receipt.json", package,
+            expected_package_identity=frozen["expected_package_identity"], arm_id=arm)
+        contract = json.loads(read_packaged_text(package, job["recipe"]))
+        inspection = inspect_output(folder, context=context,
                                     expected=contract["acceptance_requirements"])
         atomic_json(output / (arm + "_inspection.json"), inspection)
         if inspection.get("status") != "MECHANICALLY_VERIFIED":
