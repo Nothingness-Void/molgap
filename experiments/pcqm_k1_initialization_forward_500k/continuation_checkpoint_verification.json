@@ -1,0 +1,47 @@
+{
+  "status": "FOUR_REAL_CHECKPOINTS_RESUME_VERIFIED",
+  "validator": "molgap.experiment_cli build-resume -> owning shared family validate_screen_resume",
+  "new_training": false,
+  "arms": [
+    {
+      "slot": "single",
+      "arm_id": "scratch",
+      "bundle": "D:\\molgap-artifacts\\recovery\\k1-init-forward-500k\\single\\v2\\bundles\\scratch\\resume_bundle.json",
+      "bundle_sha256": "c22a76c1a999ef44c7cdd5fb2c580abdee9d2242ebd104dca2cc8e985c6d38d6",
+      "checkpoint_sha256": "19dd7364be3d8fbc87c3734e6764835ce596639794adcde7919c8b717837e039",
+      "optimizer_step": 39060,
+      "pass_index": 10,
+      "sample_presentations": 4999680
+    },
+    {
+      "slot": "single",
+      "arm_id": "pretrained",
+      "bundle": "D:\\molgap-artifacts\\recovery\\k1-init-forward-500k\\single\\v2\\bundles\\pretrained\\resume_bundle.json",
+      "bundle_sha256": "6fd5486c73af38ada3fe8950ffe74880ab5d721e5637b4c723259d044e60a6e9",
+      "checkpoint_sha256": "d61125f9d3a89d9828b9cb997a1059e72ac294ebfabea118521facc207079547",
+      "optimizer_step": 39060,
+      "pass_index": 10,
+      "sample_presentations": 4999680
+    },
+    {
+      "slot": "mean2",
+      "arm_id": "scratch",
+      "bundle": "D:\\molgap-artifacts\\recovery\\k1-init-forward-500k\\mean2\\v2\\bundles\\scratch\\resume_bundle.json",
+      "bundle_sha256": "157f6bc34d154eab1664bd28b6c14357ff13726830fafbab535f1f13b500c904",
+      "checkpoint_sha256": "815fb4ed243792b9333e49a6898c457b4c6c9c80730f1bbda5b51546e09ac416",
+      "optimizer_step": 39060,
+      "pass_index": 10,
+      "sample_presentations": 4999680
+    },
+    {
+      "slot": "mean2",
+      "arm_id": "pretrained",
+      "bundle": "D:\\molgap-artifacts\\recovery\\k1-init-forward-500k\\mean2\\v2\\bundles\\pretrained\\resume_bundle.json",
+      "bundle_sha256": "a12163c0c0ef6aff16d9403dbf5c95028cc1fb021242be72b65f9cd20b54f3dd",
+      "checkpoint_sha256": "8f04c7ad3d06d39604b2624d0371e162d6e67f8f2cf80764299d1a6e5969f7c6",
+      "optimizer_step": 39060,
+      "pass_index": 10,
+      "sample_presentations": 4999680
+    }
+  ]
+}
