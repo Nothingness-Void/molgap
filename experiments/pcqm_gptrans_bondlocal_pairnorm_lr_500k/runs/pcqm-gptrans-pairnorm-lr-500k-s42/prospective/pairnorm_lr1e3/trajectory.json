@@ -1,0 +1,113 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-pairnorm-lr-500k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr1e3/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream"
+      ],
+      "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRNORM_LR_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/authority.json",
+    "chosen_action": "RUN_PAIRNORM_LR_500K",
+    "policy_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/runs/pcqm-gptrans-pairnorm-lr-500k-s42/prospective/rml_decision_snapshots/9e39e7bd66917a92295139eb2579766734ffda4eec4166762c9c1f9602e0f21e.json",
+    "snapshot_sha256": "9e39e7bd66917a92295139eb2579766734ffda4eec4166762c9c1f9602e0f21e",
+    "state_timestamp": "2026-10-27T03:58:32.575123+09:00"
+  },
+  "family_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Late selection noise or EMA effects",
+      "Lower rate slows optimization or does not improve development",
+      "Single-seed training variation"
+    ],
+    "changed_mechanism": "peak-learning-rate",
+    "cheapest_falsifier": "One same-job GPTrans PairNorm500K pair with only peak LR changed and aligned development predictions.",
+    "decision_changed_if_negative": "Close the lower-rate variant under contract or retain incomplete evidence; no automatic adoption or retry.",
+    "decision_changed_if_positive": "Nominate lower-rate variant only if frozen 3 meV and paired interval gates pass; historical BondLocal comparison remains contextual.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+    "observed_deficiency": "The 100K combined model and historical 500K BondLocal select passes40 and45 and drift later; cause and combined-model 500K transfer are not established.",
+    "related_closed_family_ids": [
+      "gptrans-pair-norm-500k",
+      "gptrans-noisy-pair-norm-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "At fixed500K does halving learning rate improve the accepted BondLocal plus pair-update-normalization model under its 60-pass recipe?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr1e3/recipe.json",
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/data_declaration.json",
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "pairnorm_lr1e3",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-gptrans-pairnorm-lr-500k-s42",
+      "reference_arm_id": "pairnorm_lr1e3",
+      "reference_trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/runs/pcqm-gptrans-pairnorm-lr-500k-s42/prospective/pairnorm_lr1e3/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd"
+    },
+    "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+    "source_config_identity": "b59dd59ab89bf26abfbb03e349495dd0ebc26953a469cc24f46f404e4a09e6b9"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+}
