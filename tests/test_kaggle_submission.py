@@ -98,7 +98,7 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
     atomic_json(prepared / "release_report.json", {"inputs": {"recipe_files": {}, "required_modules": [],
         "initial_states": {"original": "a", "optimized": "b"}}})
     recovery = {}
-    if continuation:
+    if continuation and staged_source is None:
         from molgap.training_reproducibility import sha256_file
         original = tmp_path / "original"
         original.mkdir()
@@ -651,14 +651,17 @@ def test_crash_during_bound_source_retirement_recovers_without_reposting(release
     assert release.api.created == release.api.pushed == 1
 
 
-def _packaged_release(case, tmp_path, monkeypatch):
+def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, recovery_authority=None):
     """Run the compiled editable input through the platform entry with HTTP-only transport."""
     import requests
     from molgap.common.paths import MachinePaths
 
     paths = MachinePaths.from_file(case.value["machine_profile"])
     run = paths.run_directory(case.value["logical_run_id"], case.value["attempt_id"])
-    prepared, output = run / "prepared", run / "operations"
+    continuation = resume_prepared is not None
+    version = 2 if continuation else 1
+    prepared = Path(resume_prepared) if continuation else run / "prepared"
+    output = prepared.parent / "operations" if continuation else run / "operations"
     platform = json.loads((case.repo / case.value["platform_ref"]).read_bytes())
     account = platform["kaggle"]["account"]
     credentials = tmp_path / "outside-key.json"
@@ -670,7 +673,7 @@ def _packaged_release(case, tmp_path, monkeypatch):
     entry_spec.loader.exec_module(entry)
     transport_root = tmp_path / "fake-platform"
     transport_root.mkdir()
-    transport_state = {"transport": None, "tamper_before_push": True,
+    transport_state = {"transport": None, "tamper_before_push": not continuation,
                        "tampered_roundtrip": None, "lose_next_post": False}
 
     def transport():
@@ -679,7 +682,9 @@ def _packaged_release(case, tmp_path, monkeypatch):
             # submit_prepared_workflow asks for the first platform client.
             with monkeypatch.context() as stubs:
                 transport_state["transport"] = release.__wrapped__(
-                    transport_root, stubs, None, staged_source=prepared / "source_dataset")
+                    transport_root, stubs, NS(param=continuation), staged_source=prepared / "source_dataset")
+            if continuation:
+                transport_state["transport"].api.predecessor_status = "ERROR"
             shutil.copyfile(prepared / "kernel/run.py", transport_state["transport"].kernel / "run.py")
         return transport_state["transport"]
 
@@ -690,7 +695,7 @@ def _packaged_release(case, tmp_path, monkeypatch):
     monkeypatch.setattr(owner, "connect_kaggle", lambda *_: transport().api)
     monkeypatch.setattr(owner, "_kernel_source", lambda *_: transport().api.remote)
     monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
-                        NS(ref=ref, is_private=True, current_version_number=1))
+                        NS(ref=ref, is_private=True, current_version_number=transport().api.dataset_version))
     monkeypatch.setattr(requests, "Session", lambda: transport().http)
 
     real_push = owner.push_kernel_with_accelerator
@@ -720,7 +725,7 @@ def _packaged_release(case, tmp_path, monkeypatch):
         if transport_state["lose_next_post"]:
             transport_state["lose_next_post"] = False
             raise requests.Timeout("synthetic response loss after accepted POST")
-        return Response({"ref": metadata["id"], "kernelId": 77, "versionNumber": 1})
+        return Response({"ref": metadata["id"], "kernelId": 77, "versionNumber": version})
 
     import json as json_module
     monkeypatch.setattr("requests.post", post)
@@ -730,7 +735,18 @@ def _packaged_release(case, tmp_path, monkeypatch):
         from io import StringIO
         captured = StringIO()
         with redirect_stdout(captured):
-            code = entry.main(["--experiment", str(case.path), "--repo-root", str(case.repo),
+            if continuation:
+                from molgap.training_reproducibility import sha256_file
+                args = ["--prepared", str(prepared), "--output", str(output),
+                    "--authority", case.value["authority_ref"],
+                    "--recovery-authority", str(recovery_authority),
+                    "--recovery-authority-sha256", sha256_file(recovery_authority),
+                    "--source-version", str(version), "--kernel-version", str(version)]
+                for path in case.value["monitor_paths"]:
+                    args.extend(["--monitor-path", path])
+            else:
+                args = ["--experiment", str(case.path)]
+            code = entry.main([*args, "--repo-root", str(case.repo),
                 "--credentials", str(credentials), "--execute", "--verbose"])
         return code, json.loads(captured.getvalue())
 
@@ -748,7 +764,7 @@ def _packaged_release(case, tmp_path, monkeypatch):
 
 
 def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
-    """Continue the submitted identity through real CPU training and terminal owners."""
+    """Pause this submitted run, submit its actual bundles, restore and close it."""
     import time
     import torch
     from contextlib import redirect_stdout
@@ -758,7 +774,8 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     from molgap.experiment_family_workflow import RunContext
     from molgap.experiment_package import read_packaged_text
     from molgap.experiment_retention import seal_execution_retention
-    from molgap.experiment_run import accept_run_workflow
+    from molgap.experiment_run import accept_run_workflow, build_run_resume, prepare_run_resume
+    from molgap.experiment_resume import restore_resume_bundle
     from molgap.family_training_data import load_training_data
     from molgap.family_training_kernel import FamilyKernel
     from molgap.family_training_loaders import FamilyLoaders
@@ -775,14 +792,19 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     package = case.prepared / "package"
     frozen = json.loads((case.prepared.parent / "inputs/workflow_plan.json").read_bytes())
     launch = json.loads((case.prepared / "source_dataset/experiment_launch.json").read_bytes())
-    remote = paths.artifact_root / "offline-worker"
+    origin = paths.artifact_root / "offline-worker-v1"
+    remote = paths.artifact_root / "offline-worker-v2"
+    origin.mkdir()
     remote.mkdir()
-    contexts, decisions, audits, downloads = {}, {}, {}, []
+    contexts, decisions, audits, downloads, inputs, prefixes, bundles = {}, {}, {}, [], {}, {}, {}
+    prospective = {binding["arm_id"]: (case.repo / binding["output"] / "trajectory.json").read_bytes()
+                   for binding in spec.to_dict()["prospective"]["arms"]}
     for job in launch["jobs"]:
         arm_id = job["arm_id"]
-        context = RunContext.from_launch(spec, case.output / "launch_receipt.json", package,
-            expected_package_identity=manifest["package_identity"], arm_id=arm_id)
-        contexts[arm_id] = context
+        # The worker cannot observe its eventual receipt version. Keep that
+        # producer field unknown instead of manufacturing the reconciled value.
+        context = RunContext.for_training(spec, package, expected_package_identity=manifest["package_identity"],
+            arm_id=arm_id, account=launch["account"], run_reference=launch["run_reference"])
         contract = paths.scratch_root / (arm_id + "-contract.json")
         contract.parent.mkdir(parents=True, exist_ok=True)
         contract.write_text(read_packaged_text(package, job["recipe"]), encoding="utf-8")
@@ -792,13 +814,71 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         initial = next(item["initial_state"] for item in frozen["arms"] if item["arm_id"] == arm_id)
         initial = Path(initial) if Path(initial).is_absolute() else case.repo / initial
         configure_fp32_determinism(recipe.seed)
-        started = time.perf_counter()
-        output = SessionOutputs(remote / arm_id, context, contract=contract, adapter=PROFILES[recipe.family],
-            trajectory_id=job["trajectory_id"], train_role_identity=record["train_role_identity"])
+        trajectory = json.loads(prospective[arm_id])
+        output = SessionOutputs(origin / arm_id, context, contract=contract, adapter=PROFILES[recipe.family],
+            trajectory_id=job["trajectory_id"], train_role_identity=record["train_role_identity"],
+            resume_trajectory=trajectory)
         session = FamilyTrainingSession(FamilyKernel(recipe, initial, device="cpu"),
             FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0, development_workers=0)),
             checkpoint=output.checkpoint, selected=output.selected, pass_finished=output.pass_finished)
         session.batch_finished = output.batch_finished
+        try:
+            progress = session.run(should_pause=lambda: session.progress.optimizer_step >= 2)
+            assert progress.status == "paused" and progress.optimizer_step == 2
+            checkpoint = torch.load(output.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+            assert checkpoint["optimizer"]["state"]
+            prefixes[arm_id] = json.loads((output.root / "canonical_trace.json").read_bytes())["observations"]
+        finally:
+            session.close()
+        bundle = paths.artifact_root / "continuation" / "bundles" / arm_id
+        exported = build_run_resume(case.value["machine_profile"], case.repo, run_id, attempt,
+            arm_id=arm_id, source_output=origin / arm_id, output=bundle)
+        assert exported["status"] == "RESUME_VERIFIED", exported
+        assert exported["prospective_published"] is exported["submitted"] is False
+        bundles[arm_id] = str(bundle)
+        inputs[arm_id] = (context, contract, record, recipe, data, initial, trajectory)
+
+    resumed_prepared = paths.artifact_root / "continuation" / "prepared"
+    with monkeypatch.context() as preparation:
+        def no_new_question(*args, **kwargs):
+            pytest.fail("Checkpoint continuation must reuse the original prospective publication")
+        preparation.setattr("molgap.experiment_workflow.plan_prospective", no_new_question)
+        resumed = prepare_run_resume(case.value["machine_profile"], case.repo, run_id, attempt,
+            plan={"format": "molgap-workflow-resume-v1", "spec_identity": spec.identity, "arms": bundles,
+                  "allocation_wall_limit_seconds": 120, "cleanup_reserve_seconds": 5}, output=resumed_prepared)
+    assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
+    assert resumed["prospective_published"] is False
+    authority = paths.artifact_root / "continuation" / "authority.md"
+    authority.write_text("Explicit synthetic continuation authority; local transport and CPU fixture only.\n")
+    transport_tmp = paths.scratch_root / "continuation-transport"
+    transport_tmp.mkdir()
+    with monkeypatch.context() as transport:
+        continued = _packaged_release(NS(repo=case.repo, path=case.input_path, value=case.value),
+            transport_tmp, transport, resume_prepared=resumed_prepared, recovery_authority=authority)
+        code, submitted = continued.run()
+        assert code == 0 and submitted["status"] == "SUBMISSION_BOUND", submitted
+        continued_receipt = continued.output / "launch_receipt.json"
+        retained_receipt = continued_receipt.read_bytes()
+        code, repeated = continued.run()
+        assert code == 0 and repeated["status"] == "SUBMISSION_BOUND", repeated
+        assert continued_receipt.read_bytes() == retained_receipt
+        assert continued.transport().api.created == continued.transport().api.pushed == 1
+
+    resumed_launch = json.loads((resumed_prepared / "source_dataset/experiment_launch.json").read_bytes())
+    for arm_id, (context, contract, record, recipe, data, initial, trajectory) in inputs.items():
+        bundle = resumed_prepared / "source_dataset" / resumed_launch["resume"][arm_id]["manifest"]
+        restore_resume_bundle(bundle, remote / arm_id, spec, context=context, trajectory=trajectory)
+        output = SessionOutputs(remote / arm_id, context, contract=contract, adapter=PROFILES[recipe.family],
+            trajectory_id=trajectory["trajectory_id"], train_role_identity=record["train_role_identity"],
+            resume_trajectory=trajectory)
+        configure_fp32_determinism(recipe.seed)
+        session = FamilyTrainingSession(FamilyKernel(recipe, initial, device="cpu"),
+            FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0, development_workers=0)),
+            checkpoint=output.checkpoint, selected=output.selected, pass_finished=output.pass_finished)
+        session.batch_finished = output.batch_finished
+        session.load_state_dict(output.retained_state())
+        assert session.progress.optimizer_step == 2
+        started = time.perf_counter()
         try:
             progress = session.run()
             checked = output.complete(progress, runtime={"platform": context.platform, "account": context.account,
@@ -808,8 +888,14 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
                     "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"}])
             assert checked["status"] == "MECHANICALLY_VERIFIED", checked
             assert progress.optimizer_step == recipe.optimizer_steps
+            trace = json.loads((output.root / "canonical_trace.json").read_bytes())
+            assert trace["observations"][:len(prefixes[arm_id])] == prefixes[arm_id]
         finally:
             session.close()
+        context = RunContext.from_launch(spec, continued_receipt, package,
+            expected_package_identity=manifest["package_identity"], arm_id=arm_id)
+        assert context.platform_version == "2"
+        contexts[arm_id] = context
         decision = case.repo / "experiments/question" / (arm_id + "-disposition.md")
         decision.write_text("Synthetic infrastructure exercise only; no scientific conclusion.\n", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
@@ -833,7 +919,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             pinned = remote / arm_id / "output_manifest.json"
             value = json.loads(pinned.read_bytes())
             files = {"output_manifest.json", *(item["path"] for item in value["artifacts"].values())}
-            prefix = f"runs/kernel77/version1/{arm_id}"
+            prefix = f"runs/kernel77/version2/{arm_id}"
             payloads = {"https://offline.invalid/" + prefix + "/" + name: remote / arm_id / name for name in files}
             api = _Api(context.account, [_ResponsePage([_File(prefix + "/" + name, url)
                 for name, url in ((name, "https://offline.invalid/" + prefix + "/" + name) for name in files)])])
@@ -844,27 +930,55 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             transport.setattr(owner, "connect_kaggle", lambda *_: api)
             transport.setattr("requests.Session", Http)
             captured = StringIO()
-            with redirect_stdout(captured):
-                code = retriever.main(["--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
+            args = ["--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
                     "--run-id", run_id, "--attempt-id", attempt, "--arm", arm_id,
                     "--remote-manifest-path", prefix + "/output_manifest.json", "--local-manifest", str(pinned),
                     "--manifest-sha256", sha256_file(pinned), "--destination", str(paths.artifact_root / "retrieved" / arm_id),
-                    "--credentials", str(case.credentials), "--execute"])
+                    "--continuation-receipt", str(continued_receipt),
+                    "--credentials", str(case.credentials), "--execute"]
+            with redirect_stdout(captured):
+                code = retriever.main(args)
             assert code == 0, captured.getvalue()
             assert json.loads(captured.getvalue())["status"] == "RETRIEVED"
-    result = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt,
+            downloaded = len(downloads)
+            captured = StringIO()
+            with redirect_stdout(captured):
+                code = retriever.main(args)
+            assert code == 0, captured.getvalue()
+            assert len(downloads) == downloaded
+            # CPU transport exercises cannot produce native GPU qualification.
+            # Retain explicit missing-qualification observations at that boundary.
+            native = paths.artifact_root / "retrieved/_resume_preflight" / arm_id
+            native.mkdir(parents=True)
+            for name in ("runtime_certificate.json", "actual_resume_certificate.json"):
+                atomic_json(native / name, {"status": "NOT_QUALIFIED", "reason": "Synthetic CPU journey only"})
+    options = dict(
         diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
-        decision_ref=decisions, role_audit=audits, execution_root=remote)
+        decision_ref=decisions, role_audit=audits, execution_root=remote,
+        continuation_receipt=continued_receipt, resume_prepared=resumed_prepared, resume_authority=authority)
+    result = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt, **options)
     assert result["status"] == "COMPLETE", result
     assert result["diagnosis"]["status"] == "DIAGNOSED", result["diagnosis"]
     assert result["diagnosis"]["reference_arm_id"] == "baseline"
     assert not frozen_differences(case.repo)
+    finalizations = {}
     for binding in spec.to_dict()["prospective"]["arms"]:
         final = case.repo / binding["output"] / "rml_finalized"
         assert json.loads((final / "trajectory.json").read_bytes())["decision"]["outcome"] == "INCONCLUSIVE"
         assert (final / "finalization.json").is_file()
+        finalizations[final] = {path.relative_to(final).as_posix(): path.read_bytes()
+                                for path in final.rglob("*") if path.is_file()}
+        assert (case.prepared / "source_dataset/prospective" / binding["arm_id"] / "trajectory.json").read_bytes() == prospective[binding["arm_id"]]
+    repeated = accept_run_workflow(case.value["machine_profile"], case.repo, run_id, attempt, **options)
+    assert repeated["status"] == "COMPLETE", repeated
+    for final, original in finalizations.items():
+        assert {path.relative_to(final).as_posix(): path.read_bytes()
+                for path in final.rglob("*") if path.is_file()} == original
     return {"status": result["status"], "diagnosis": result["diagnosis"]["status"],
-            "downloaded_files": len(downloads), "source_identity": spec.identity}
+            "downloaded_files": len(downloads), "source_identity": spec.identity,
+            "continuation_version": "2", "paused_step": 2, "completed_step": progress.optimizer_step,
+            "repeat_downloads": 0, "repeat_finalization_changes": 0,
+            "native_qualification": "NOT_QUALIFIED"}
 
 
 def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, monkeypatch):
@@ -965,7 +1079,7 @@ def _assert_real_package_release_post_receipt_reuses_only_exact_content(case, mo
             "api_pushed": case.transport().api.pushed}
 
 
-def test_real_package_release_post_receipt_reuses_only_exact_content(scientific, tmp_path):
+def test_real_package_release_post_receipt_reuses_only_exact_content(scientific, tmp_path, record_testsuite_property):
     case = scientific
     import torch
     from molgap.family_training_data import load_training_data
@@ -1032,12 +1146,16 @@ print(json.dumps(summary))
 '''
     completed = subprocess.run([sys.executable, "-I", "-c", child,
         str(case.repo), str(input_path), str(tmp_path), str(Path(__file__).resolve().parent)],
-        cwd=case.repo, text=True, capture_output=True, timeout=240)
+        cwd=case.repo, text=True, capture_output=True, timeout=360)
     assert completed.returncode == 0, completed.stdout + completed.stderr
     observation = json.loads(completed.stdout.splitlines()[-1])
     assert observation["status"] == "SUBMISSION_BOUND"
     assert observation["verification_counts"] == [1, 1, 1, 1, 1]
     assert observation["api_created"] == observation["api_pushed"] == 1
+    assert observation["lifecycle"]["continuation_version"] == "2"
+    assert observation["lifecycle"]["paused_step"] == 2
+    assert observation["lifecycle"]["completed_step"] == 4
+    record_testsuite_property("journey_" + observation["family"], json.dumps(observation, sort_keys=True))
     assert observation["lifecycle"]["status"] == "COMPLETE"
 
 

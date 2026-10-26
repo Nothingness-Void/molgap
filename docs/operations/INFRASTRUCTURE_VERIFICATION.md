@@ -53,7 +53,7 @@ invariant; full-suite maintenance is an explicit separate operation.
 | `package` | Package binding plus isolated test distribution, node collection and registered family sandbox from extracted source |
 | `prepare` | K1/3 and GPTrans/2 scientific-input compilation, interrupted preparation and frozen-input reuse |
 | `train` | Real K1/GPTrans kernels, loaders, SessionOutputs, serialized continuation and scratch optimizer-state isolation on generated CPU graphs |
-| `submit` | One K1/3 or GPTrans/2 baseline/addon pair through frozen preparation, release, receipt, real CPU training, selective retrieval, diagnosis and terminal RML; pre-POST mutation, lost-response reconciliation and exact-content reuse with fake network |
+| `submit` | One K1/3 or GPTrans/2 baseline/addon pair through frozen preparation, release and receipt; pause real CPU training, export its checkpoints through run-ID resume preparation, submit v2, restore and finish, retrieve, diagnose and close terminal RML. Pre-POST mutation, lost-response reconciliation and repeat submission/retrieval/closure use fake network |
 | `accept` | Existing finalizer with frozen generated metadata removed and external traces; submission cleanup, retrieval and resume preparation with fake network and synthetic outputs |
 | `resume` | The same real-model continuation journey plus concurrent accounting-sidecar snapshot during real bundle creation |
 
@@ -61,8 +61,10 @@ These fixtures use bounded synthetic data and model configurations. The submit
 journey decodes hash-pinned generated PyG shards through the actual data loader;
 its allocation clock and external transport remain simulated. They do not execute
 the cloud bootstrap, decode a complete scientific shard, or qualify a new candidate
-archive. Source-closure import checks also do not execute the
-worker's training entry. `-k`, skips or other selection overrides must be
+archive. The submit continuation explicitly retains `NOT_QUALIFIED` native
+observations; terminal `COMPLETE` is not strict replay qualification.
+Source-closure import checks also do not execute the worker's training entry.
+`-k`, skips or other selection overrides must be
 reported as partial execution, not a completed workflow check.
 
 ## Keep the suite bounded
