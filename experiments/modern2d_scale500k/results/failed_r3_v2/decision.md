@@ -24,3 +24,7 @@ version3, fresh baseline, scientific successor, protected-role read or final
 scientific/Replay claim was released by this diagnosis.
 
 [Compact record](summary.json) pins the exact retrieved version2 evidence.
+
+The bounded [Luna verification](verification.json) passed7 existing checks and
+metadata-only inspection of both retained checkpoints. It did not directly
+execute the native resume-preflight entrypoint or qualify a GPU release.
