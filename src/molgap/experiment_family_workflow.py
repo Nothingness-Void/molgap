@@ -225,7 +225,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
-    from .family_training_runner import read_recipe
+    from .family_training_runner import read_recipe, comparison_objective_identity
     from .research_memory.finalize import (current_finalized_directory, load_terminal_input,
         verified_receipt, prospective_bytes, _qualification_amendment, _bindings)
     root = Path(repo_root).resolve()
@@ -368,7 +368,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
                 "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
             "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
-            "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": arm["training"]["objective"]["sha256"],
+            "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": comparison_objective_identity(arm, recipe),
             "target_transform_identity": arm["training"]["transform"]["sha256"], "target_transform_asset_sha256": transform["asset_sha256"],
             "sample_presentations": data["manifest"]["progress"]["sample_presentations"],
             "optimizer_steps": data["manifest"]["progress"]["optimizer_steps"], "checkpoint_selection_identity": recipe.selection,

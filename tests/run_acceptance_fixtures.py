@@ -128,12 +128,18 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
     for family, version, arm_id in (
             ("neural_atom_k1", "3", "k1_candidate"),
             ("gptrans_t", "2", "gptrans_candidate")):
-        if comparison_purpose == "initialization_comparison":
+        if comparison_purpose in {"initialization_comparison", "single_module_ablation"}:
             family, version = "neural_atom_k1", "3"
         session = make_session(family, development=True, schedule_kind="cosine_step", events=events())
         if comparison_purpose == "initialization_comparison" and arm_id == "gptrans_candidate":
             from dataclasses import replace
             session.recipe = replace(session.recipe, initialization_sha256="3" * 64)
+        if comparison_purpose == "single_module_ablation" and arm_id == "gptrans_candidate":
+            from dataclasses import replace
+            from molgap.experiment_execution import build_addon_declaration
+            addon = build_addon_declaration((family, version), "k1_readout_scale",
+                repo_root=Path(__file__).resolve().parents[1])
+            session.recipe = replace(session.recipe, mode="composed", addons=(addon,))
         try:
             contract_root = tmp_path / "native-contracts" / arm_id
             contract_root.mkdir(parents=True)
@@ -144,6 +150,11 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
             arm = _arm(family, version, arm_id,
                 recipe_sha256=hashlib.sha256(canonical_json(record).encode()).hexdigest(),
                 state_sha256=session.recipe.initialization_sha256)
+            if comparison_purpose == "single_module_ablation":
+                from molgap.family_training_runner import family_arm_bindings
+                arm["training"]["objective"] = family_arm_bindings(session.recipe)["objective"]
+                arm["addons"] = list(session.recipe.addons)
+                arm["addon_semantics"] = "ordered" if arm["addons"] else "baseline"
             arm["data"]["dataset"]["sha256"] = session.recipe.dataset.manifest_sha256
             roles = {item["role"]: item for item in arm["data"]["roles"]}
             roles["train"]["usage_sha256"] = record["train_role_identity"]

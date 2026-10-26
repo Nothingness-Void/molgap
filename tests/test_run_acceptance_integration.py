@@ -630,6 +630,11 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         for side in ("candidate", "reference"):
             original_side = kwargs[side]
             fixture_side = _side(side)
+            if comparison_purpose == "single_module_ablation":
+                # Preserve actual bound identities so a spurious loss mismatch
+                # cannot be hidden by the synthetic native/role boundary.
+                fixture_side["comparison_identity"] = original_side["comparison_identity"]
+                fixture_side["trace_field_availability"] = original_side["trace_field_availability"]
             if comparison_purpose == "optimizer_comparison":
                 # The identity substitute changes only its declared optimizer;
                 # the bindings still come from the saved CPU run.

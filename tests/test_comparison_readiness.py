@@ -380,6 +380,12 @@ def test_tracked_ema_requires_only_the_frozen_evaluation_weight_curve(source):
     else:
         with pytest.raises(ValueError, match="ema_dev_metric"):
             _assess(candidate=candidate, reference=reference)
+        if source == "EMA":
+            for side in (candidate, reference):
+                side["trace_field_availability"].update(ema_dev_metric=True, live_dev_metric=False)
+            result = _assess(candidate=candidate, reference=reference)
+            assert result["strict_ready"] is True
+            validate_comparison_readiness(result, evidence_verifier=lambda *_: None)
 
 
 def test_missing_predictions_leave_strict_pending():

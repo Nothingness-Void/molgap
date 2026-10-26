@@ -202,6 +202,10 @@ permit the architecture identity change. Unknown purposes and mixed groups fail
 closed; terminal identity differences never declare their own intervention.
 The frozen legacy name `single_module_ablation` resolves to mechanism comparison
 using its original `changed_mechanism`; its source declaration stays unchanged.
+Compiler and terminal comparison share the verified reference/composed default
+loss alias; original objective hashes remain frozen, and other losses stay distinct.
+Strict trace requirements follow the frozen evaluation weights: Live needs its
+Live development curve, EMA needs its EMA curve; unknown sources stay conservative.
 Historical `development_reports` and `initial_development_check` contracts retain
 their original reporting and predictor guard semantics. Additional EMA reporting
 does not change LIVE checkpoint selection; fresh warm starts verify the retained

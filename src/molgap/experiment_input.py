@@ -171,7 +171,7 @@ def _compile_scientific_input(path, root, value):
     from .experiment_launch import canonical_json
     from .experiment_source_inventory import runtime_source_files
     from .experiment_spec import FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
-    from .family_training_runner import INTERFACES, read_recipe, family_arm_bindings
+    from .family_training_runner import INTERFACES, read_recipe, family_arm_bindings, comparison_objective_identity
     from .v4_bundle import _assert_clean_paths, _payload, committed_payloads
     from .v4_runtime import inspect_frozen_state_artifact
     from .research_memory.trace import file_digest
@@ -466,9 +466,7 @@ def _compile_scientific_input(path, root, value):
         # The recipe owner's mode-tagged digest is still preserved in the Spec;
         # that label alone is not a changed scientific loss. Never alias an
         # unverified historical digest or a mode with a different objective.
-        default_loss_alias = (baseline.mode in {"reference", "composed"} and recipe.mode in {"reference", "composed"}
-            and previous["training"]["objective"] == family_arm_bindings(baseline)["objective"])
-        if arm["training"]["objective"] != previous["training"]["objective"] and not default_loss_alias:
+        if comparison_objective_identity(arm, recipe) != comparison_objective_identity(previous, baseline):
             identity["loss_identity"] = arm["training"]["objective"]["sha256"]
             changed.append("loss_identity")
         if not changed:
@@ -488,11 +486,8 @@ def _compile_scientific_input(path, root, value):
                 changed.append("architecture_config_identity")
             if row[1]["initialization"] != reference[1]["initialization"]:
                 changed.append("initialization_identity")
-            if row[1]["training"]["objective"] != reference[1]["training"]["objective"]:
-                # Historical reference/composed modes share the default loss.
-                if not (row[2]["mode"] in {"reference", "composed"}
-                        and reference[2]["mode"] in {"reference", "composed"}):
-                    changed.append("loss_identity")
+            if comparison_objective_identity(row[1], row[2]) != comparison_objective_identity(reference[1], reference[2]):
+                changed.append("loss_identity")
             scope = same_run_comparison_scope(value, row[1]["arm_id"], pair["reference_arm_id"],
                                               declared_fields=changed)
             if scope["experiment_purpose"] == "initialization_comparison":

@@ -50,6 +50,21 @@ def _recipe_configuration(record, *, _frozen_read=False):
         if key not in METADATA | OPTIONAL_METADATA}, _frozen_read=_frozen_read)
 
 
+def _objective_binding(family, gradient_clip, mode):
+    return {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
+        "mode": mode, "family": family, "gradient_clip": gradient_clip})}
+
+
+def comparison_objective_identity(arm, recipe):
+    """Project only verified reference/composed default-loss aliases for comparison."""
+    objective = arm["training"]["objective"]
+    fields = recipe if isinstance(recipe, dict) else vars(recipe)
+    family, clip, mode = (fields[key] for key in ("family", "gradient_clip", "mode"))
+    if mode in {"reference", "composed"} and objective == _objective_binding(family, clip, mode):
+        return _objective_binding(family, clip, "reference")["sha256"]
+    return objective["sha256"]
+
+
 def family_arm_bindings(recipe):
     """Static source/sampler/transform/objective bindings for a new Spec arm."""
     base_files = ("gps.py", "qm9_neural_atom.py") if recipe.family == "neural_atom_k1" else ("gptrans.py", "pcqm_gptrans_v4.py")
@@ -59,9 +74,8 @@ def family_arm_bindings(recipe):
             "algorithm": recipe.sampler, "seed": recipe.seed, "rows": recipe.train_rows, "drop_last": recipe.drop_last})},
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
-        "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode,
-            "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
+        "objective": _objective_binding(recipe.family, recipe.gradient_clip,
+            mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode)}
 
 
 def _requirements(recipe, source_idx_sha256, target_sha256):
