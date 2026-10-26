@@ -1,0 +1,14 @@
+{
+  "experiment_id": "pcqm-k1-selective-ffn-norm-100k",
+  "baseline_spec_ref": "experiments/pcqm_structural_bias_norm_100k/k1/attempt_002/experiment_spec.json",
+  "baseline_arm_id": "post_bn",
+  "baseline_recipe_ref": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+  "torch_version": "2.7.1",
+  "arms": [
+    {"arm_id": "bn_reference", "addon": null},
+    {"arm_id": "ffn_rms", "addon": "k1_ffn_node_rms"},
+    {"arm_id": "local_residual_gain", "addon": "k1_local_residual_gain"}
+  ]
+}

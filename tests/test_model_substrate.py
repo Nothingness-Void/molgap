@@ -291,3 +291,98 @@ def test_reserved_module_name_rejects_before_namespace_mutation():
 def test_slot_descriptors_fail_closed(binding, error):
     with pytest.raises(error):
         SlotBinding(*binding)
+
+
+def test_k1_residual_gain_preserves_accelerated_base_and_checkpoint():
+    from copy import deepcopy
+    from torch_geometric.data import Batch, Data
+    from molgap.k1_execution_backend import K1ExecutionConfig, execution_context
+    from molgap.k1_execution_layout import cpu_layout_context
+    from molgap.k1_residual_gain import apply_addon
+    from molgap.qm9_neural_atom import make_encoder
+
+    threads = torch.get_num_threads()
+    try:
+        torch.set_num_threads(1)
+        with torch.random.fork_rng(devices=[]):
+            torch.manual_seed(42)
+            base = make_encoder("neural_atom_k1")
+            candidate = deepcopy(base)
+            old_parameters = dict(candidate.named_parameters())
+            old_buffers = dict(candidate.named_buffers())
+            blocks = tuple(candidate.local_blocks)
+            owner = ModelSubstrate(candidate, "neural_atom_k1")
+            assert apply_addon(candidate, {}) is candidate
+            owner.seal()
+            assert owner.mutations == tuple((f"local_residual_gain_{i}",
+                f"local_blocks.{i}") for i in range(9))
+            parameters = dict(candidate.named_parameters())
+            for name, parameter in old_parameters.items():
+                assert parameters[name] is parameter
+            for name, buffer in old_buffers.items():
+                assert dict(candidate.named_buffers())[name] is buffer
+            gains = {name: value for name, value in parameters.items()
+                     if name not in old_parameters}
+            assert len(gains) == 18 and sum(p.numel() for p in gains.values()) == 3456
+            for gain in gains.values():
+                assert gain.shape == (192,) and torch.equal(gain, torch.ones_like(gain))
+            for original, wrapped in zip(blocks, candidate.local_blocks):
+                for name in ("conv", "norm1", "norm3", "mlp"):
+                    assert getattr(wrapped, name) is getattr(original, name)
+                assert wrapped.dropout == original.dropout
+                assert wrapped.norm_with_batch is original.norm_with_batch
+            batch = Batch.from_data_list([Data(
+                x=torch.zeros(3, 9, dtype=torch.long),
+                edge_index=torch.tensor([[0, 1, 1, 2], [1, 0, 2, 1]]),
+                edge_attr=torch.zeros(4, 3, dtype=torch.long),
+                random_walk_pe=torch.rand(3, 16)) for _ in range(2)])
+
+            def forward(model):
+                with cpu_layout_context(model, batch, "cpu"), execution_context(
+                        model, batch, "cpu", K1ExecutionConfig()):
+                    return model(batch.x, batch.edge_index, batch.edge_attr,
+                                 batch.batch, batch.random_walk_pe)
+
+            for training in (False, True):
+                base.train(training)
+                candidate.train(training)
+                rng = torch.get_rng_state()
+                with torch.no_grad():
+                    expected = forward(base)
+                    expected_rng = torch.get_rng_state()
+                    torch.set_rng_state(rng)
+                    actual = forward(candidate)
+                assert torch.equal(actual, expected)
+                assert torch.equal(torch.get_rng_state(), expected_rng)
+                for name, value in base.state_dict().items():
+                    assert torch.equal(candidate.state_dict()[name], value), name
+            optimizer = torch.optim.AdamW(candidate.parameters(), lr=.001)
+            forward(candidate).square().sum().backward()
+            optimized = [p for group in optimizer.param_groups for p in group["params"]]
+            assert len(optimized) == len({id(p) for p in optimized}) == len(parameters)
+            for name, gain in gains.items():
+                assert any(p is gain for p in optimized)
+                assert gain.grad is not None and torch.isfinite(gain.grad).all(), name
+                assert torch.count_nonzero(gain.grad), name
+            optimizer.step()
+            checkpoint = BytesIO()
+            torch.save({"model": candidate.state_dict(), "optimizer": optimizer.state_dict()}, checkpoint)
+            checkpoint.seek(0)
+            saved = torch.load(checkpoint, weights_only=True)
+            restored = apply_addon(make_encoder("neural_atom_k1"), {})
+            restored._molgap_substrate.seal()
+            restored.load_state_dict(saved["model"], strict=True)
+            restored_optimizer = torch.optim.AdamW(restored.parameters(), lr=.001)
+            restored_optimizer.load_state_dict(saved["optimizer"])
+            candidate.eval()
+            restored.eval()
+            with torch.no_grad():
+                assert torch.equal(forward(candidate), forward(restored))
+            for name, gain in restored.named_parameters():
+                if name in gains:
+                    assert torch.equal(restored_optimizer.state[gain]["exp_avg"],
+                                       optimizer.state[parameters[name]]["exp_avg"])
+            assert not hasattr(candidate, "_k1_execution_active")
+            assert not hasattr(candidate, "_execution_graph_count")
+    finally:
+        torch.set_num_threads(threads)

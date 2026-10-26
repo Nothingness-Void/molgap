@@ -144,7 +144,8 @@ def test_native_cosine_state_resume_matches_uninterrupted(kind):
 
 
 @pytest.mark.parametrize("family,prefix,cached", [("neural_atom_k1", "k1", False),
-    ("neural_atom_k1", "k1", True), ("gptrans_t", "gptrans", False)])
+    ("neural_atom_k1", "k1", True), ("gptrans_t", "gptrans", False),
+    ("neural_atom_k1", "k1_ffn", True)])
 def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initial_states, family, prefix, cached):
     from pathlib import Path
     from molgap.experiment_execution import build_addon_declaration
@@ -152,9 +153,14 @@ def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initi
     from molgap.substrate_scale_addon import SlotScale
     from molgap.k1_execution_backend import K1ExecutionConfig
     path, digest = initial_states[family]
-    interface = (family, "3" if prefix == "k1" else "2")
-    addons = tuple(build_addon_declaration(interface, prefix + "_" + slot + "_scale",
-        repo_root=Path(__file__).resolve().parents[1]) for slot in ("node", "aggregate", "readout"))
+    selective = prefix == "k1_ffn"
+    interface = (family, "3" if family == "neural_atom_k1" else "2")
+    if selective:
+        addons = (build_addon_declaration(interface, "k1_ffn_node_rms",
+            repo_root=Path(__file__).resolve().parents[1]),)
+    else:
+        addons = tuple(build_addon_declaration(interface, prefix + "_" + slot + "_scale",
+            repo_root=Path(__file__).resolve().parents[1]) for slot in ("node", "aggregate", "readout"))
     recipe = FamilyRecipe(family, "composed", 42, digest,
         DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 1,
         .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1,
@@ -174,10 +180,32 @@ def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initi
             owner = kernel.model._molgap_substrate
             assert owner.sealed
             expected_order = ["node_scale", "aggregate_scale", "readout_scale"]
-            assert [entry.name for entry in owner.bindings] == expected_order
             calls = []
-            for name, module in kernel.model._molgap_addons.items():
-                module.register_forward_hook(lambda module, args, output, name=name: calls.append(name))
+            if selective:
+                from molgap.k1_selective_norm import NodeRMSNorm
+                from molgap.v4_runtime import read_frozen_state_artifact
+                base, _ = read_frozen_state_artifact(path, expected_state_sha256=digest)
+                assert not owner.bindings
+                assert [target for _, target in owner.mutations] == [
+                    f"local_blocks.{i}.norm3" for i in range(9)]
+                for key, value in kernel.model.state_dict().items():
+                    if ".norm3." not in key:
+                        assert torch.equal(value, base[key]), key
+                for i, block in enumerate(kernel.model.local_blocks):
+                    assert isinstance(block.norm1.module, torch.nn.BatchNorm1d)
+                    assert isinstance(block.norm3, NodeRMSNorm)
+                    assert block.norm3.eps == block.norm1.module.eps
+                    for name in ("weight", "bias"):
+                        assert torch.equal(getattr(block.norm3, name), base[f"local_blocks.{i}.norm3.module.{name}"])
+                values = torch.arange(384.).reshape(2, 192)
+                norm = kernel.model.local_blocks[0].norm3
+                expected = values * torch.rsqrt(values.square().mean(-1, keepdim=True) + norm.eps)
+                assert torch.equal(norm(values), expected * norm.weight + norm.bias)
+                expected_order = []
+            else:
+                assert [entry.name for entry in owner.bindings] == expected_order
+                for name, module in kernel.model._molgap_addons.items():
+                    module.register_forward_hook(lambda module, args, output, name=name: calls.append(name))
             loss, _, _ = kernel.step(synthetic_batch(), check_finite=True)
             assert torch.isfinite(loss) and calls == expected_order
             optimized = {id(p) for group in kernel.optimizer.param_groups for p in group["params"]}
@@ -188,6 +216,20 @@ def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initi
                 assert parameter in kernel.optimizer.state
             with pytest.raises(RuntimeError, match="sealed"):
                 owner.attach("late", SlotScale("embedding"), SlotBinding(family, SlotName.PRE_READOUT))
+            if selective:
+                from io import BytesIO
+                from molgap.family_training_kernel import load_family_model
+                checkpoint = BytesIO()
+                torch.save(kernel.model.state_dict(), checkpoint)
+                checkpoint.seek(0)
+                restored, _ = load_family_model(recipe, path)
+                restored.load_state_dict(torch.load(checkpoint, weights_only=True), strict=True)
+                restored.eval()
+                kernel.model.eval()
+                batch = synthetic_batch()
+                with torch.no_grad():
+                    actual = restored(batch.x, batch.edge_index, batch.edge_attr, batch.batch, batch.random_walk_pe)
+                    assert torch.equal(actual.reshape(-1), kernel.forward(batch))
             kernel.close()
     finally:
         torch.set_num_threads(threads)
