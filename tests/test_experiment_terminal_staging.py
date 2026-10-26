@@ -91,12 +91,24 @@ def audit_files(case):
     return audits
 
 
-def test_explicit_decision_and_observed_audit_enable_nonpositive_closure(staging_case):
+def test_explicit_decision_and_observed_audit_enable_reviewed_closure(staging_case):
     root, resolved = staging_case
     decision = root / "explicit_decision.md"
-    decision.write_text("Explicit infrastructure-only terminal disposition.", encoding="utf-8")
-    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref="explicit_decision.md", role_audit=audit_files(staging_case))
+    decision.write_text("Explicit reviewed positive disposition for the synthetic contract.", encoding="utf-8")
+    result = stage(staging_case, outcome="POSITIVE_UNDER_CONTRACT", decision_ref="explicit_decision.md",
+        role_audit=audit_files(staging_case), _strict_transaction=True)
     assert result["status"] == "STAGED_CLOSURE_READY", result
+    for paths in result["paths"].values():
+        package = json.loads(Path(paths["terminal"]).read_bytes())
+        assert package["decision"]["outcome"] == "POSITIVE_UNDER_CONTRACT"
+        assert package["evidence"]["outcome"]["scientific_status"] == "POSITIVE_UNDER_CONTRACT"
+        assert package["trace_manifest"]["backtest_eligibility"]["eligible"] is False
+        assert package["artifact_hashes"]["explicit_decision.md"] == file_digest(decision)
+    ready = stage(staging_case, outcome="READY_FOR_DESKTOP", decision_ref="explicit_decision.md",
+        role_audit=audit_files(staging_case), _strict_transaction=True)
+    assert ready["status"] == "STAGED_DRAFT"
+    assert all("positive_or_ready_requires_owning_scientific_acceptance" in paths["blockers"]
+        for paths in ready["paths"].values())
     descriptor = build_verified_terminal_descriptor(root, resolved["spec"], outputs=resolved["outputs"], locations=result["locations"])
     closure = close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
     assert closure["status"] == "COMPLETE", closure
@@ -142,6 +154,12 @@ def test_staged_blockers_cannot_be_bypassed_by_terminal_execution(
     assert all("unresolved closure blockers" in arm["error"] for arm in closure["results"])
     assert all(not (root / where["trajectory"]).parent.joinpath("rml_finalized").exists()
                for where in resolved["locations"].values())
+    if with_audit:
+        # Reentry retains the original immutable draft and its rejected closure.
+        reviewed = stage(staging_case, **kwargs, _strict_transaction=True)
+        assert reviewed["status"] == "STAGED_CLOSURE_READY", reviewed
+        assert reviewed["paths"] != result["paths"]
+        assert stage(staging_case, **kwargs, _strict_transaction=True) == reviewed
 
 
 def test_staging_rechecks_observed_bytes_even_when_report_reused(staging_case):

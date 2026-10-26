@@ -269,6 +269,12 @@ its scientific decision, costs, roles and trace. An already qualified canonical
 tip is reused; repeating acceptance does not create another revision.
 Staging creates existing terminal-package metadata, not canonical finalization;
 explicit `--execute` delegates reviewed inputs to the existing terminal owner.
+Reviewed positive outcomes use the existing explicit `--outcome` and
+`--decision-ref` in a strict acceptance transaction, with the observed role audit.
+The strict owner must verify comparison/replay evidence before canonical closure;
+no extra hand-authored scientific-acceptance JSON is required. Scores never select
+the scientific outcome automatically. `READY_FOR_DESKTOP` retains its separate
+owning qualification and remains blocked by this staging shortcut.
 `executed=true` means that closure was attempted. `closure_complete` and the
 per-arm `closure` results distinguish successful closure from partial or failed
 transactions; strict replay status remains separate.

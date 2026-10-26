@@ -269,7 +269,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             retrieved_root=retrieved_root, supplied=supplied, locations=locations,
             outcome=outcome, decision_ref=decision_ref, role_audit=role_audit,
             diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
-            execution_root=execution_root, _retention=retention)
+            execution_root=execution_root, _retention=retention,
+            _strict_transaction=strict_inputs is not None)
         result["terminal_staging"] = staged
         if staged.get("blockers"):
             result.update(status="STAGED_DRAFT", blockers=staged["blockers"])
