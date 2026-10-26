@@ -1,30 +1,30 @@
 {
-  "format": "molgap-server-multi-job-monitor-v1",
-  "owner": "server",
-  "closed": false,
-  "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
-  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
-  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
-  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
-  "credential_owner": "kaseichou",
-  "healthy_action": "SILENT",
-  "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
   "automatic_training_retry": false,
   "automatic_training_successor_authorized": false,
-  "kaggle_session_quota_hours_ceiling": 8.992222222222223,
-  "physical_t4_hours_ceiling": 17.984444444444446,
-  "wall_ceiling_seconds": 32372,
+  "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "credential_owner": "kaseichou",
+  "format": "molgap-server-multi-job-monitor-v1",
+  "healthy_action": "SILENT",
   "jobs": [
     {
-      "slot": "scale500k_pair_r3_resume",
       "closed": false,
       "control_state": "E:/MolGap/artifacts/recovery/modern2d-scale500k-r3/monitor/control_state.json",
       "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
       "kernel_id": 140916841,
-      "version": 2,
-      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v2"
+      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v2",
+      "slot": "scale500k_pair_r3_resume",
+      "version": 2
     }
   ],
+  "kaggle_session_quota_hours_ceiling": 8.992222222222223,
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "owner": "server",
+  "physical_t4_hours_ceiling": 17.984444444444446,
   "prior_allocation_wall_seconds": 6877.277398151,
-  "remaining_allocation_wall_seconds": 25494.722601849
+  "remaining_allocation_wall_seconds": 25494.722601849,
+  "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
+  "wall_ceiling_seconds": 32372
 }
