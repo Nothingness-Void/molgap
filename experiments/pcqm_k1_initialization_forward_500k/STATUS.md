@@ -60,7 +60,16 @@ journal reentry reused hash-verified files and completed without another dataset
 version or kernel POST. The transport diagnostic is retained in single operations.
 
 Operations: `D:/molgap-artifacts/recovery/k1-init-forward-500k/{single,mean2}/v2/operations/`.
-Only Luna checks remote training progress. RUNNING alone will not establish
-successful continuation: every arm must demonstrate restored39060 steps and
-new formal updates. Terminal acceptance and strict replay qualification remain
-pending.
+Only Luna checked remote training progress. It confirmed formal TRAIN_LOG epoch11
+for all four arms:42966 optimizer steps,5499648 sample presentations, next_batch0,
+checkpoint_optimizer_steps42966 and full_pass timing. These are formal train-phase
+observations, excluding the scratch resume-proof updates. Single was observed
+at2026-10-26 05:36:30 UTC; mean2 at05:48:23 UTC. See the retained
+[single observations](continuation/v2/single/training_progress_observations.json)
+and [mean2 observations](continuation/v2/mean2/training_progress_observations.json).
+Both exact version2 jobs were RUNNING without failure messages at those checks.
+There was no separate restored-cursor log line; checkpoint validation and the
+SHA-bound resume inputs own the pass10 origin. No healthy training artifacts
+were downloaded. Luna stopped this startup check after all four confirmations.
+The30-pass target remains unfinished; terminal acceptance and four independent
+strict replay qualifications remain pending.
