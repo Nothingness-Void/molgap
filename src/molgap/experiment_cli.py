@@ -100,6 +100,8 @@ def _parser() -> argparse.ArgumentParser:
             if name == "build-resume":
                 command.add_argument("--arm", required=True)
                 command.add_argument("--source-output", required=True, type=_local)
+                command.add_argument("--recovery-repair", type=_local,
+                    help="Pinned repair declaration (commit/files), retaining the original package")
             else:
                 command.add_argument("--resume-plan", required=True, type=_local)
         elif name in {"prepare-release", "check-preparation"}:
@@ -305,7 +307,8 @@ def _dispatch(args) -> tuple[dict, int]:
                     return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
-                        source_output=args.source_output, output=args.output), 0
+                        source_output=args.source_output, output=args.output,
+                        recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
                 result = prepare_run_resume(*original, plan=_json(args.resume_plan), output=args.output)
                 return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
             except RunReconciliationRequired as exc:
@@ -352,7 +355,8 @@ def _dispatch(args) -> tuple[dict, int]:
                        package_dir=args.package, expected_package_identity=args.expected_package_identity,
                        receipt_path=args.receipt, output=args.output)
         if args.command == "build-resume":
-            return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output), 0
+            return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output,
+                recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
         result = prepare_resumed_workflow(**options, plan=_json(args.resume_plan))
         return result, 0 if result["status"] == "RESUME_INPUTS_PREPARED" else 1
     if args.command == "prepare-family-training":

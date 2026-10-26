@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import ast
+import subprocess
+import re
 import os
 from contextlib import contextmanager
 from pathlib import Path
@@ -11,7 +14,7 @@ from tempfile import TemporaryDirectory
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json
 from .experiment_launch import _safe_local
-from .experiment_launch_config import validate_launch_config
+from .experiment_launch_config import validate_launch_config, RECOVERY_REPAIR_PATHS, validate_recovery_repair
 from .experiment_package import _PackageVerification, verify_experiment_source_package, read_packaged_text
 from .experiment_preflight import check_release_inputs, _atomic
 from .experiment_resume import RESUME_BUNDLE_FILE, create_resume_bundle, validate_resume_bundle
@@ -19,6 +22,56 @@ from .experiment_workflow import _platform_adapter, _path
 
 
 RESUME_PLAN_FORMAT = "molgap-workflow-resume-v1"
+
+
+def _runner_repair_ast(raw, *, original=False):
+    """Allow the verifier and one exact scratch-probe isolation repair only."""
+    tree = ast.parse(raw)
+    owners = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+    if "_loaded_source" not in owners or "run_screen_resume_preflight" not in owners:
+        raise ValueError("Expected frozen verifier and resume-preflight owners")
+    owners["_loaded_source"].body = [ast.Pass()]
+    if original:
+        probe = owners["run_screen_resume_preflight"]
+        probe.body.insert(1, ast.Import(names=[ast.alias(name="copy")]))
+        calls = [node for node in ast.walk(probe) if isinstance(node, ast.Call)
+            and ast.dump(node, include_attributes=False) == ast.dump(ast.parse(
+                "session.load_state_dict(retained)", mode="eval").body, include_attributes=False)]
+        if len(calls) != 1:
+            raise ValueError("Expected exactly one retained-state scratch-probe restore")
+        calls[0].args = [ast.parse("copy.deepcopy(retained)", mode="eval").body]
+    return ast.dump(tree, include_attributes=False)
+
+
+def _repair_payloads(spec, root, package, manifest, declaration):
+    if declaration is None:
+        return None, {}
+    if (type(declaration) is not dict or set(declaration) != {"commit", "files"}
+            or type(declaration["commit"]) is not str or re.fullmatch(r"[0-9a-f]{40}", declaration["commit"]) is None
+            or type(declaration["files"]) is not dict or not declaration["files"]
+            or not set(declaration["files"]) <= RECOVERY_REPAIR_PATHS):
+        raise ValueError("Expected a pinned infrastructure repair subset")
+    payloads = {}
+    for name, binding in declaration["files"].items():
+        original = read_packaged_text(package, name).encode()
+        payload = subprocess.run(["git", "show", declaration["commit"] + ":" + name],
+            cwd=root, check=True, capture_output=True).stdout
+        from .v4_runtime import normalized_source_sha256
+        if (type(binding) is not dict or set(binding) != {"original_sha256", "repaired_sha256"}
+                or hashlib.sha256(original).hexdigest() != binding["original_sha256"]
+                or hashlib.sha256(payload).hexdigest() != binding["repaired_sha256"]):
+            raise ValueError("Committed recovery repair differs from its source pins")
+        if normalized_source_sha256(Path(root) / name) != binding["repaired_sha256"]:
+            raise ValueError("Local recovery validator differs from the committed repair")
+        compile(payload, name, "exec")
+        if name.endswith("family_training_runner.py"):
+            if (_runner_repair_ast(original) != _runner_repair_ast(payload)
+                    and _runner_repair_ast(original, original=True) != _runner_repair_ast(payload)):
+                raise ValueError("Runner repair permits only the verifier and exact resume-probe deepcopy")
+        payloads[name] = payload
+    return {"format": "molgap-recovery-repair-v1", "spec_identity": spec.identity,
+            "package_identity": manifest["package_identity"], "archive_sha256": manifest["archive_sha256"],
+            **declaration}, payloads
 
 
 def resolve_terminal_resume(resolved, prepared, authority=None, *, strict_inputs=None):
@@ -96,7 +149,7 @@ def _rebase_paths(value, source, destination):
 
 
 @contextmanager
-def _original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path, *, _verification):
+def _original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path, *, _verification, recovery_repair=None):
     """Keep retired release copies in a private view only for this operation."""
     root, prepared, package = (Path(path).absolute() for path in (repo_root, prepared, package_dir))
     for path in (root, prepared, package, Path(receipt_path).absolute()):
@@ -110,7 +163,7 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
                    if not Path(path).is_file())
     if not missing:
         yield _check_original(spec, root, prepared, package, expected_package_identity, receipt_path,
-                              _verification=_verification)
+                              _verification=_verification, recovery_repair=recovery_repair)
         return
     if staged != prepared / "source_dataset":
         raise ValueError("Retired recovery inputs must belong to the original source stage")
@@ -163,11 +216,12 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
             copy_immutable_file(source, view / relative, expected_sha256=record["sha256"])
         restored_release = _rebase_paths(release, staged, view)
         yield _check_original(spec, root, prepared, package, expected_package_identity, receipt_path,
-                              release=restored_release, original_staged=staged, _verification=_verification)
+                              release=restored_release, original_staged=staged, _verification=_verification,
+                              recovery_repair=recovery_repair)
 
 
 def _check_original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path,
-                    *, release=None, original_staged=None, _verification):
+                    *, release=None, original_staged=None, _verification, recovery_repair=None):
     root, prepared, package = map(lambda p: Path(p).absolute(), (repo_root, prepared, package_dir))
     for path in (root, prepared, package):
         _safe_local(path)
@@ -180,6 +234,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         raise ValueError("Recovery package identity mismatch")
     if "src/molgap/experiment_resume.py" not in manifest["relative_allowlist"]:
         raise ValueError("Original frozen package predates portable recovery support")
+    _, repairs = _repair_payloads(spec, root, package, manifest, recovery_repair)
     frozen_release = _json(prepared / "release_report.json")
     release = frozen_release if release is None else release
     inputs = release["inputs"]
@@ -213,7 +268,8 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         owner = import_module(owner_name)
         packaged_owner = read_packaged_text(package, "src/" + owner_name.replace(".", "/") + ".py",
                                            _verification=_verification)
-        if normalized_source_sha256(Path(owner.__file__)) != hashlib.sha256(packaged_owner.encode()).hexdigest():
+        expected_owner = repairs.get("src/" + owner_name.replace(".", "/") + ".py", packaged_owner.encode())
+        if normalized_source_sha256(Path(owner.__file__)) != hashlib.sha256(expected_owner).hexdigest():
             raise ValueError("Local resume validator differs from the frozen family owner")
         arm_id = arm["arm_id"]
         observed_context = RunContext.from_launch(spec, Path(receipt_path), package,
@@ -241,11 +297,12 @@ def _unchanged_prospectives(spec, repo_root, trajectories):
 
 
 def build_workflow_resume(spec, repo_root, prepared, package_dir, expected_package_identity,
-                          receipt_path, output, *, arm_id, source_output, _verification=None):
+                          receipt_path, output, *, arm_id, source_output, recovery_repair=None, _verification=None):
     """Export one incomplete owner-validated arm; never publish a new attempt."""
     verification = _verification or _PackageVerification()
     with _original(spec, repo_root, prepared, package_dir,
-                   expected_package_identity, receipt_path, _verification=verification) as original:
+                   expected_package_identity, receipt_path, _verification=verification,
+                   recovery_repair=recovery_repair) as original:
         manifest, _, _, contexts, trajectories = original
         if arm_id not in contexts:
             raise ValueError("Unknown recovery arm")
@@ -269,9 +326,10 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
     """Stage all incomplete arms using the original source and prospective bytes."""
     verification = _verification or _PackageVerification()
     with _original(spec, repo_root, prepared, package_dir,
-                   expected_package_identity, receipt_path, _verification=verification) as original:
+                   expected_package_identity, receipt_path, _verification=verification,
+                   recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original:
         manifest, release, launch, contexts, trajectories = original
-        if (type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms"}
+        if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
                 or type(plan["arms"]) is not dict or set(plan["arms"]) != set(contexts)):
             raise ValueError("Resume plan must bind every Spec arm exactly once")
@@ -291,6 +349,17 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
         platform_plan = {"account": launch["account"], "kernel": launch["run_reference"],
             "title": metadata["title"], "datasets": launch["dataset_sources"],
             "source_dataset": dataset["id"], "accelerator": launch["accelerator"]}
+        for key in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
+            if key in launch:
+                platform_plan[key] = launch[key]
+            if key in plan:
+                value = plan[key]
+                if type(value) is not int or value < (120 if key == "allocation_wall_limit_seconds" else 0):
+                    raise ValueError("Invalid recovery allocation budget")
+                original_limit = launch.get(key)
+                if key == "allocation_wall_limit_seconds" and original_limit is not None and value > original_limit:
+                    raise ValueError("Recovery allocation ceiling cannot increase")
+                platform_plan[key] = value
         backend.validate_plan(spec, platform_plan)
         output.mkdir(parents=True)
         report = {"format": "molgap-workflow-recovery-preparation-v1", "status": "PREPARING",
@@ -303,6 +372,23 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 manifest=manifest, spec=spec, platform_plan=platform_plan, metadata=metadata,
                 initial_states={k: Path(v) for k, v in release["inputs"]["initial_states"].items()}, jobs=launch["jobs"],
                 _verification=verification)
+            repair, payloads = _repair_payloads(spec, repo_root, package_dir, manifest, plan.get("recovery_repair"))
+            if repair is not None:
+                if spec.to_dict()["platform"]["name"] != "kaggle":
+                    raise ValueError("Infrastructure recovery repair supports only the reviewed Kaggle bootstrap")
+                entry = subprocess.run(["git", "show", repair["commit"] + ":platforms/kaggle/run_experiment.py"],
+                    cwd=repo_root, check=True, capture_output=True).stdout.decode()
+                marker = "EXPECTED_RECOVERY_REPAIR_SHA256 = None"
+                if entry.count(marker) != 1 or entry.count("EXPECTED_LAUNCH_SHA256 = None") != 1:
+                    raise ValueError("Repair commit lacks the reviewed recovery bootstrap")
+                for name, payload in payloads.items():
+                    target = stage["input_root"] / "recovery_repair" / name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(payload)
+                _atomic(stage["input_root"] / "recovery_repair.json", repair)
+                digest = hashlib.sha256((stage["input_root"] / "recovery_repair.json").read_bytes()).hexdigest()
+                stage["entry_text"] = entry.replace(marker, "EXPECTED_RECOVERY_REPAIR_SHA256 = " + repr(digest))
+                report["recovery_repair"] = {"manifest_sha256": digest, **repair}
             if "target_identity" in launch:
                 # Retain the original acceptance-input copy and binding on recovery.
                 source = staged_original / "acceptance"
@@ -325,6 +411,9 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                     "manifest": f"resume/{arm_id}/{RESUME_BUNDLE_FILE}",
                     "sha256": hashlib.sha256((destination / RESUME_BUNDLE_FILE).read_bytes()).hexdigest()}
             backend.freeze_inputs(stage, trajectories)
+            if repair is not None:
+                validate_recovery_repair(stage["input_root"], expected_sha256=digest, manifest=manifest,
+                                        package_dir=package_dir, entry_script=stage["entry_path"])
             _unchanged_prospectives(spec, repo_root, trajectories)
             result = check_release_inputs(spec, Path(package_dir), expected_package_identity=expected_package_identity,
                 recipe_files=frozen_inputs["recipe_files"],

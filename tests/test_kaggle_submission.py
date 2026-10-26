@@ -53,7 +53,9 @@ def _dispatch_before_post(kwargs):
 
 
 @pytest.fixture
-def release(tmp_path, monkeypatch, staged_source=None):
+def release(tmp_path, monkeypatch, request, staged_source=None):
+    continuation = getattr(request, "param", False)
+    version = 2 if continuation else 1
     prepared, output = tmp_path / "prepared", tmp_path / "operations"
     kernel, staged = prepared / "kernel", prepared / "source_dataset"
     kernel.mkdir(parents=True)
@@ -95,6 +97,35 @@ def release(tmp_path, monkeypatch, staged_source=None):
             (path / "trajectory.json").write_bytes(b"{}")
     atomic_json(prepared / "release_report.json", {"inputs": {"recipe_files": {}, "required_modules": [],
         "initial_states": {"original": "a", "optimized": "b"}}})
+    recovery = {}
+    if continuation:
+        from molgap.training_reproducibility import sha256_file
+        original = tmp_path / "original"
+        original.mkdir()
+        shutil.move(prepared / "package", original / "package")
+        receipt = original / "launch_receipt.json"
+        atomic_json(receipt, {"submission_state": "ACCEPTED",
+            "canonical_platform_reference": {"value": metadata["id"], "missing_reason": None}})
+        atomic_json(prepared / "workflow_report.json", {"format": "molgap-workflow-recovery-preparation-v1",
+            "status": "RESUME_INPUTS_PREPARED", **manifest,
+            "original_prepared": str(original), "original_receipt": str(receipt)})
+        launch_path = staged / "experiment_launch.json"
+        config = json.loads(launch_path.read_bytes())
+        config.update(allocation_wall_limit_seconds=18000, cleanup_reserve_seconds=180,
+                      device_count=spec.to_dict()["platform"]["device_count"])
+        config["resume"] = {}
+        for arm in ("original", "optimized"):
+            bundle_path = staged / "resume" / arm / "resume_bundle.json"
+            bundle_path.parent.mkdir(parents=True)
+            atomic_json(bundle_path, {"artifacts": {}, "runtime": [], "provenance": [], "context": [], "cost_segments": []})
+            config["resume"][arm] = {"manifest": bundle_path.relative_to(staged).as_posix(),
+                                     "sha256": sha256_file(bundle_path)}
+        atomic_json(launch_path, config)
+        authorization = tmp_path / "recovery_authority.md"
+        authorization.write_text("Explicit synthetic continuation authority; original arms and ceiling retained.")
+        recovery = dict(recovery_authority=authorization,
+                        recovery_authority_sha256=sha256_file(authorization),
+                        source_version=version, kernel_version=version)
     credentials = tmp_path / "outside-key.json"
     atomic_json(credentials, {"username": "owner", "key": "do-not-print"})
     monkeypatch.setattr(owner, "verify_experiment_source_package", lambda _, **kw: manifest)
@@ -106,14 +137,14 @@ def release(tmp_path, monkeypatch, staged_source=None):
     monkeypatch.setattr(owner, "build_launch_receipt", lambda *a, **k: {"binding": {"synthetic": True}})
     def reconcile(_spec, _package, raw, **kwargs):
         envelope = json.loads(raw)
-        assert envelope["physical_runs"]["value"][0]["run_identity"] == "kernel77/version1"
+        assert envelope["physical_runs"]["value"][0]["run_identity"] == f"kernel77/version{version}"
         assert envelope["canonical_platform_reference"]["value"] == "owner/new-kernel"
         return {"submission_state": "ACCEPTED", "binding": envelope["binding"],
                 "canonical_platform_reference": envelope["canonical_platform_reference"],
                 "platform_version": envelope["platform_version"], "physical_runs": envelope["physical_runs"]}
     monkeypatch.setattr(owner, "reconcile_platform_response", reconcile)
     import molgap.experiment_launch as launch
-    monkeypatch.setattr(launch, "read_launch_receipt", lambda path, *a, **k: json.loads(path.read_bytes()))
+    monkeypatch.setattr(launch, "read_launch_receipt", lambda path, *a, **k: json.loads(Path(path).read_bytes()))
 
     class Api:
         CONFIG_NAME_USER = "user"
@@ -122,6 +153,8 @@ def release(tmp_path, monkeypatch, staged_source=None):
         dataset = False
         ready = True
         remote = None
+        dataset_version = 1
+        predecessor_status = "RUNNING"
 
         def get_config_value(self, _name):
             return metadata["id"].split("/", 1)[0]
@@ -137,24 +170,38 @@ def release(tmp_path, monkeypatch, staged_source=None):
             self.dataset = True
             return NS(ref="/datasets/" + dataset_ref, error="")
 
+        def dataset_create_version(self, path, **kwargs):
+            assert continuation and self.dataset_version == version - 1
+            assert kwargs == dict(version_notes="Authorized frozen checkpoint continuation",
+                quiet=True, convert_to_csv=False, delete_old_versions=False, dir_mode="zip")
+            self.created += 1
+            self.dataset_version = version
+            return NS(ref="/datasets/" + dataset_ref, error="")
+
         def dataset_list_files(self, ref, page_size):
             return NS(files=[NS(name=p.relative_to(staged).as_posix(), total_bytes=p.stat().st_size)
                              for p in staged.rglob("*") if p.is_file() and p.name != "dataset-metadata.json"])
 
         def kernels_status(self, ref):
-            assert ref == metadata["id"] + "/1"
+            if continuation and ref == metadata["id"] + "/1":
+                return NS(status=self.predecessor_status, failure_message="")
+            assert ref == metadata["id"] + "/" + str(version)
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
     monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
-                        NS(ref=ref, is_private=True, current_version_number=1))
+                        NS(ref=ref, is_private=True, current_version_number=api.dataset_version))
     monkeypatch.setattr(owner, "_kernel_source", lambda _api, _ref: api.remote)
     def accepted():
-        api.remote = NS(metadata=NS(id=77, current_version_number=1, is_private=True,
+        api.remote = NS(metadata=NS(id=77, current_version_number=version, is_private=True,
             enable_gpu=True, machine_shape="NvidiaTeslaT4", dataset_data_sources=metadata["dataset_sources"]),
             blob=NS(source=(kernel / "run.py").read_text()))
         return {"status": "submitted", "kernel": metadata["id"], "kernel_id": 77,
-                "version_number": 1, "reconciliation_required": False}
+                "version_number": version, "reconciliation_required": False}
+    if continuation:
+        accepted()
+        api.remote.metadata.current_version_number = version - 1
+        api.dataset = True
     def push(**kwargs):
         _dispatch_before_post(kwargs)
         api.pushed += 1
@@ -174,7 +221,7 @@ def release(tmp_path, monkeypatch, staged_source=None):
             if "/logs/stream/" in url:
                 return Response()
             from urllib.parse import unquote
-            assert "datasetVersionNumber=1" in url
+            assert f"datasetVersionNumber={version}" in url
             dataset_path = "/datasets/download/" + dataset_ref + "/"
             name = unquote(url.split(dataset_path, 1)[1].split("?", 1)[0])
             self.downloads.append(name)
@@ -182,7 +229,7 @@ def release(tmp_path, monkeypatch, staged_source=None):
     http = Http()
     def run(execute=True):
         return owner.submit_prepared_workflow(prepared, credentials, output, authority_ref="authority.json",
-            monitor_paths=["experiments/example/STATUS.md"], execute=execute, api=api, http_session=http)
+            monitor_paths=["experiments/example/STATUS.md"], execute=execute, api=api, http_session=http, **recovery)
     return NS(run=run, api=api, http=http, output=output, staged=staged, kernel=kernel,
               prepared=prepared, accepted=accepted, credentials=credentials)
 
@@ -193,12 +240,25 @@ def test_check_has_no_network_or_filesystem_publication(release):
     assert release.api.created == release.api.pushed == 0
 
 
+@pytest.mark.parametrize("release", [False, True], indirect=True, ids=["fresh", "continuation"])
 def test_full_submission_and_repeated_call_never_duplicate(release):
+    continuation = release.api.remote is not None
+    if continuation:
+        with pytest.raises(ValueError, match="authoritatively terminal"):
+            release.run()
+        assert release.api.created == release.api.pushed == 0
+        release.api.predecessor_status = "ERROR"
     result = release.run()
-    assert result["status"] == "SUBMISSION_BOUND" and result["version"] == 1
+    assert result["status"] == "SUBMISSION_BOUND" and result["version"] == (2 if continuation else 1)
     receipt = (release.output / "launch_receipt.json").read_bytes()
     assert release.api.created == release.api.pushed == 1
-    assert len(release.http.downloads) == 11
+    assert len(release.http.downloads) == (13 if continuation else 11)
+    if continuation:
+        binding = json.loads((release.output / "submission_state.json").read_bytes())["binding"]["continuation"]
+        assert binding["source_version"] == binding["kernel_version"] == 2
+        from molgap.training_reproducibility import sha256_file
+        assert binding["authority_sha256"] == sha256_file(Path(binding["authority_path"]))
+        release.api.remote.metadata.current_version_number = 3
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
     assert (release.output / "launch_receipt.json").read_bytes() == receipt
@@ -618,7 +678,7 @@ def _packaged_release(case, tmp_path, monkeypatch):
             # submit_prepared_workflow asks for the first platform client.
             with monkeypatch.context() as stubs:
                 transport_state["transport"] = release.__wrapped__(
-                    transport_root, stubs, staged_source=prepared / "source_dataset")
+                    transport_root, stubs, None, staged_source=prepared / "source_dataset")
             shutil.copyfile(prepared / "kernel/run.py", transport_state["transport"].kernel / "run.py")
         return transport_state["transport"]
 

@@ -109,8 +109,10 @@ or uncertain journal/receipt identity requires platform reconciliation.
 Successful resume staging reports `RESUME_INPUTS_PREPARED`. It retains the original
 source, configuration, prospective records and producer context; it does not
 register a new attempt or produce a fresh-release submission. The owning
-continuation adapter must bind the physical successor identity. The fresh-release
-Kaggle submitter rejects these inputs before authentication or publication.
+continuation adapter must bind the physical successor identity. The
+[Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation)
+accepts these inputs only with explicit recovery authorization/SHA and exact
+successor versions; fresh-release defaults reject them before authentication.
 
 The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
 can reuse the original journal when separately authorized to execute. The
@@ -205,6 +207,21 @@ development predictor before their first update.
 Already qualified canonical records retain their original bound evidence.
 Historical reference runs use their retained strict comparison inputs, rather
 than the same-run translator; missing comparison evidence stays `BLOCKED`.
+An authorized infrastructure-only resume repair reuses `prepare-resume` with
+`recovery_repair: {commit, files}` in the existing resume plan. Each file entry
+contains its `original_sha256` from the frozen package and `repaired_sha256` from
+the named Git commit. `build-resume --recovery-repair <declaration.json>` accepts
+the same declaration when local owner verification needs that repair. Preparation
+stages a separate entrypoint-pinned overlay; it never edits the original archive,
+Spec, recipes or prospective records. Only a nonempty subset of the previously
+reviewed transport/IO/runner paths is supported; the runner may change its source
+verifier or the already accepted scratch-state isolation repair, not training.
+For the Tensor-to-JSON repair, include `experiment_resume.py` and the runner's
+attestation support; `common/io.py` needs no no-op overlay. Optional resumed
+allocation fields retain or lower the original ceiling. Physical publication uses
+the existing platform submitter's explicit continuation arguments described in
+[Kaggle submission](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation).
+
 For a successor, supply `--continuation-receipt`, `--resume-prepared` (the existing
 `prepare-resume` directory), and `--resume-authority` with terminal staging.
 The entry derives each arm's original receipt, bundle/checkpoint, trace prefix,
