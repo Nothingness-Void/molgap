@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local:A001",
+      "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm:A001",
+      "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/pair_update_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
       "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
       "type": "action_produced_evidence"
@@ -38,6 +48,16 @@
     {
       "source": "T-pcqm-k1-init-forward-500k-single-s42-scratch:A001",
       "target": "experiments/pcqm_k1_initialization_forward_500k/generated/50031a24799aaca0480a2b75fb5f9122ecf76424e01c2a739abd6324aeab0926/scratch/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-message-droppath-100k-s42-baseline:A001",
+      "target": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-message-droppath-100k-s42-message_droppath:A001",
+      "target": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json",
       "type": "action_produced_evidence"
     },
     {
@@ -1411,6 +1431,26 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal",
+      "target": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-r2-terminal",
+      "target": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "type": "prior_evidence"
+    },
+    {
       "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_ln-r2-terminal",
       "target": "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "type": "prior_evidence"
@@ -1813,6 +1853,16 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "type": "prior_evidence"
     },
     {
@@ -2302,6 +2352,16 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-saved-bn-rows-20261008",
       "type": "prior_evidence"
     },
@@ -2363,6 +2423,16 @@
     {
       "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-hop-fusion-qualification-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "target": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "type": "prior_evidence"
     },
     {
@@ -3118,6 +3188,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "type": "evidence"
     },
@@ -3147,6 +3225,14 @@
     },
     {
       "id": "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "type": "evidence"
     },
     {
@@ -3646,6 +3732,14 @@
       "type": "trajectory"
     },
     {
+      "id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
       "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "type": "trajectory"
     },
@@ -3675,6 +3769,14 @@
     },
     {
       "id": "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "type": "trajectory"
     },
     {

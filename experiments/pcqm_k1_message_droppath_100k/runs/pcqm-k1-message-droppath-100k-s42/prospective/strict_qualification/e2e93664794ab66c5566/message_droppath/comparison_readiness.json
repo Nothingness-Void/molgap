@@ -1,0 +1,236 @@
+{
+  "blocker_codes": [
+    "SCIENTIFIC_CONTRACT_MISMATCH"
+  ],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/132a06e6f1d537b8/acceptance.json",
+      "sha256": "51895632d22dcb522f50c3541324e9d6d5abee2e4e917c8ea5ce3bdcb18253f5"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/selected_model.pt",
+      "sha256": "d490f0ceab0f9f8fd70d76f1493f007eb86de44b238ebace6fd7a3dd61e0187d"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/cost_records.json",
+      "sha256": "fb545f1679c129d1b91d1fb0d77bfcbdf27b15f6d96580fb979847102b6f0061"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md",
+      "sha256": "f4b1f57940e4c7cda167dd532b2c3ca98dad014dff922560875abc1327e7b931"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/paired_analysis.json",
+      "sha256": "1cb50716fb6436da72dde0128f92791faf102297f190547b5b12ec2bc0f20458"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/prediction_manifest.json",
+      "sha256": "900d3b5cb5f63531b358df2cd79991bea2f8d1f322e057343427b7866e44c83d"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/role_history.json",
+      "sha256": "8f025710ec33cc14099b64694d8d10971cecac6e0ab15c987ceb41b7c3d38a35"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/runtime_certificate.json",
+      "sha256": "10ac3b3801ab3723df1aba093e0fbf7095fd6f1a2c8a3b9136e473bea24ff856"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/message_droppath/training_contract.json",
+      "sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/bound_trace_manifest.json",
+      "sha256": "a6cc20ae27a8435212cb6fa579ee6d4fe418035b46a03514b3a4dd4c91c3c065"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "PAIRED_ENDPOINT",
+  "decision_scope": [
+    "paired endpoint prediction comparison",
+    "row bootstrap",
+    "ensemble analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "causal attribution to architecture or mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "graph-wise-neighbor-aggregate-droppath",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "optimizer_fused": false,
+    "optimizer_identity": "f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c",
+    "optimizer_mode": "native-adamw",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "a2c521194604d5a98617fb7480271aabca910407a2e30ef494758e44aa769a37",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": "graph-wise-neighbor-aggregate-droppath",
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "f0f9d06349abf9bbfe163985cb6bbf2d6373d68fe63031867f90de9fabdfb021",
+      "reference": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d"
+    },
+    "loss_identity": {
+      "candidate": "91126c4ff1b4f6826593bb052fe5400c1e0144103055ea27ffeea2bb6841f63c",
+      "reference": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/d2a6685b47b36631/acceptance.json",
+      "sha256": "a7c86430523cdb97f149979f12edfc88a9f69ad8279f16cac114c7359a9225d0"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/baseline/selected_model.pt",
+      "sha256": "c5a21e011c350e41d88da79f07381eb23925e3521faeb94dc4a51e09f6e451ce"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/cost_records.json",
+      "sha256": "9511a7a82d8517d3c97c2d7561f4e69497481886d476714862ee00dd63f361df"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md",
+      "sha256": "f4b1f57940e4c7cda167dd532b2c3ca98dad014dff922560875abc1327e7b931"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/prediction_manifest.json",
+      "sha256": "9e3c053c15ad57ab243e2bcc55539537fa55c098b64c6bf4c7151d55d844cd28"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/role_history.json",
+      "sha256": "b5dfc63099b07772ab7f42c56228281aa15b9a1f7266bca068ff366be3efe310"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/baseline/runtime_certificate.json",
+      "sha256": "63135bc74f7a7dc9456174cad96067d1d8752742d26ba3ffbe7bd431d2227cca"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-message-droppath-100k-s42/v1/experiment/baseline/training_contract.json",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/bound_trace_manifest.json",
+      "sha256": "470dc4bfe4b798b7125858a8823f592e5cd19b58fd58d550f5801a526116a2d3"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline-e2e93664794ab66c5566",
+  "reference_bundle_sha256": "f41dce3e8a37bd5337c3ecf4e9e2acb05c916fd97675259541db5ce6e0cdd663",
+  "reference_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [
+    "SCIENTIFIC_CONTRACT_MISMATCH"
+  ],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": false,
+  "strict_status": "NOT_STRICT",
+  "trace_status": "complete"
+}

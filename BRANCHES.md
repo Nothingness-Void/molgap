@@ -21,6 +21,11 @@ shared implementation. [Terminal custody](experiments/pcqm_k1_initialization_for
 owns original/continued source, receipts, native proofs and required pass10
 recovery prefixes. All four replay entries are complete; both pretrained
 initializations are negative under their frozen contracts.
+After235 canonical records were verified against desktop Git and disk, its
+completed checkout and temporary experiment refs were removed on2026-10-27.
+The [external custody receipt](D:/molgap-artifacts/retirement/k1-initialization-forward-500k/custody.json)
+has SHA256`db2956234bbb4ca7eb2b38f4e164fd3ef14a3848e37db60d449d116e1d1fee76`;
+native/replay payloads and required continuation prefixes remain on D:.
 
 The [bounded K1 scale attribution](experiments/pcqm_k1_scale_attribution_20261025/README.md)
 is an accepted NO_TRAIN diagnostic. Reviewed source/evidence and reusable
@@ -68,18 +73,24 @@ Owner history through `4105cd3d` is reachable from pushed archive merge
 Its [custody record](experiments/pcqm_k1_message_norm_100k/terminal_custody.md)
 owns artifact locations and restoration; no MsgNorm implementation is adopted.
 
-K1 graph-wise message DropPath100K is owned by
-`codex/exp/k1-message-droppath-100k`, checkout
-`D:/molgap-worktrees/k1-message-droppath-100k`.
-[Owning status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-message-droppath-100k/experiments/pcqm_k1_message_droppath_100k/STATUS.md)
-retains its Kaggle1 comparison; no active implementation is adopted here.
+K1 graph-wise message DropPath100K is terminally accepted without adoption.
+Full owner history through `d54677b5a0e6620f8ee177d75cf275c13757dbe5`
+is reachable from pushed archive `d770ade4563667453bc94176445b2da51673785d`.
+Both arms are strictly replay-ready; DropPath is negative under its contract.
+Desktop retains [qualification and attribution](experiments/pcqm_k1_message_droppath_100k/qualification.md)
+and exact canonical metadata without the rejected addon/catalog implementation.
+[Custody](experiments/pcqm_k1_message_droppath_100k/terminal_custody.md)
+owns retained source, native proofs and actual artifact locations.
 
-BondLocal plus pair-update-normalization100K is owned by
-`codex/exp/gptrans-bondlocal-pairnorm-100k`, checkout
-`D:/molgap-worktrees/gptrans-bondlocal-pairnorm-100k`. Its
-[status](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-bondlocal-pairnorm-100k/experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md)
-owns Kaggle3 identity, receipts and reconciliation. Keep the unresolved question
-on its owner; no active model or implementation adoption is implied.
+BondLocal plus pair-update-normalization100K is terminally accepted with a
+positive100K nomination and no adoption. Keep the owner ref
+`codex/exp/gptrans-bondlocal-pairnorm-100k` at
+`3bad3811f876d344373139fa3f70e9263f42697b` while scale/adoption disposition
+is unresolved; do not merge its model/catalog implementation into desktop.
+Both arms are strictly replay-ready. Desktop retains byte-verified canonical
+[qualification](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md),
+decision and attribution. [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_custody.md)
+owns source restoration and external artifacts. No500K/full release follows.
 
 K1 normalization mechanisms is closed without model adoption. Full owner history
 through real automatic verification `48e4c6a5` is reachable from pushed archive

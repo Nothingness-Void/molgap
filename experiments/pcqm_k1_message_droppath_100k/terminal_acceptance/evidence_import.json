@@ -1,0 +1,509 @@
+{
+  "format": "molgap-canonical-evidence-copy-v1",
+  "owner_tip": "d54677b5a0e6620f8ee177d75cf275c13757dbe5",
+  "archive_commit": "d770ade4563667453bc94176445b2da51673785d",
+  "excluded_implementation": [],
+  "shared_source_copied": false,
+  "files": [
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/README.md",
+      "bytes": 345,
+      "sha256": "6190838c673ad10ccb1cf31e0da3ec10548e26beef8201c1d72700bca1972a12"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/STATUS.md",
+      "bytes": 2542,
+      "sha256": "631a8d65ae0cdae8b33b35246e368f4c0bdcef5e6538927f8cee52c7e9937b46"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/baseline_data_declaration.json",
+      "bytes": 2897,
+      "sha256": "2ec53b73e69183aa1b51bdd01aa4180e87ecba34398510aff6a27cbc25c870be"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/decision.md",
+      "bytes": 88,
+      "sha256": "288decb021dcbba14aaba795d44a482727b61143c23343e7596f460d1db3fbd7"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/experiment.json",
+      "bytes": 4281,
+      "sha256": "a0844dee4f7e326e3874c464fa41f4cfba0443fad6cd1c7323c2b8e0aa8fcd81"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/acceptance_plan.json",
+      "bytes": 1722,
+      "sha256": "a88ee1af06f79d9755de29eaaacbe7849d245007dd1dd963b768b4a72f0aea5b"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/authority.json",
+      "bytes": 552,
+      "sha256": "150b328db909754ea71dfad6d90ff2ebcecfa4493d7321850a378a3d1930234a"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/plan_input.json",
+      "bytes": 4694,
+      "sha256": "938af1ed944f1bb921e05def17aea682f22a67d2415c79189919a1d2fdd4b29b"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
+      "bytes": 1876,
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/plan_input.json",
+      "bytes": 4774,
+      "sha256": "93ab113fca6aeae74563305404f4b817740cd7592f288773542ad3cbd99e8873"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/message_droppath/recipe.json",
+      "bytes": 2044,
+      "sha256": "93b203cf600421a05a943cda81cd573377cd6ba5d3a6ca2af222a39ee90bcfea"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/protocol.md",
+      "bytes": 4272,
+      "sha256": "2dd1415b933e91bd7316efeaaf11bd1d5acd58327756c936ab785dee7f6d6334"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/qualification.md",
+      "bytes": 1236,
+      "sha256": "e2dc6240caea1b93c22ebe56eaece6024399d1ebba5aeba4670b6068e579c314"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/costs/cost-T-pcqm-k1-message-droppath-100k-s42-baseline-planned.json",
+      "bytes": 937,
+      "sha256": "34d568a0eef29ad82128fbbcc34bcd5500992ab7998c2ddc2314df221b8398c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/costs/cost-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline-0.json",
+      "bytes": 959,
+      "sha256": "8377d16e7c9864a8ecc3d9a80959e7591ba1637864837657337d9164ea6bea03"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/costs/cost-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline-allocation-0.json",
+      "bytes": 967,
+      "sha256": "23a170456410eaf48768b9e3c047861c705ad7b809fd170c4f508b937260ca36"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/finalization.json",
+      "bytes": 5852,
+      "sha256": "3ba3ad02149d2e9c07368033658c23831da3c138d8a063880b8a7c1818530d28"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read.json",
+      "bytes": 722,
+      "sha256": "50f348d0a0cf5f819e89f4da598a15247eda148444ebc2e360eb70a9af6b66a0"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed.json",
+      "bytes": 730,
+      "sha256": "2b6da9bc0f3e33f45e396341d014583bc9fe43640c80a8748725bca99f21e64e"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input.json",
+      "bytes": 732,
+      "sha256": "6f8da2cd6dda19b5da8c6e229cf7f07aef4fec6362faaf6eb7416f330abc0603"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used.json",
+      "bytes": 728,
+      "sha256": "7dbb40ddc5e4353c8c11849b3ce150e0b00eee4db2dc982d9dcaf4d3088cf842"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-baseline-train-training-membership.json",
+      "bytes": 727,
+      "sha256": "5c0233fc5f45a5018356387d96626bba6c5f6ba82a842450e4d30ca8898961ae"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/terminal_input.json",
+      "bytes": 9017,
+      "sha256": "68d4a13feded942351ce076a7d4ba12151cbe42a4a54c2ad36bd009736650e9b"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/trace.json",
+      "bytes": 24160,
+      "sha256": "f3402c00ff3a6e4e744eb7945e78691bd127b0819931af35f74edd5d84458d1b"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/trace_manifest.json",
+      "bytes": 2483,
+      "sha256": "abc0f038651b20b124fc75154b9aa6ab64a220d0818343490bef08e9a065db99"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/trajectory.json",
+      "bytes": 5698,
+      "sha256": "0ed7410fea1e499b35e25199bc2853a9c1d0c7dae828f54ec1df568af23c2721"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/v5_evidence.json",
+      "bytes": 4204,
+      "sha256": "3a6f4e3124a23f0421ca1cad070247cf235da65c069c975c1ae7bffaff54a019"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_acceptance/role_audit.json",
+      "bytes": 5235,
+      "sha256": "27838ccb1b8542d63169a8e0196f23e33c3531c0b2ce3d00bd8dd0906fa81f70"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/110f5e38d6820185/acceptance.json",
+      "bytes": 912,
+      "sha256": "9a627185c50cb6bc181fe49febbc13815987adb7dc86ff91c5ca202e384ce066"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/110f5e38d6820185/observed.json",
+      "bytes": 8859,
+      "sha256": "6ee733e28892bf25b20787a0e6b971b3b40046f1375d46023d9d08b08afa6b5e"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/110f5e38d6820185/terminal.json",
+      "bytes": 13738,
+      "sha256": "8c1084e0d5f0be234b5a67ed5b6ab787821a603eeaefb890c8e8f31500cbb795"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/d2a6685b47b36631/acceptance.json",
+      "bytes": 946,
+      "sha256": "a7c86430523cdb97f149979f12edfc88a9f69ad8279f16cac114c7359a9225d0"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/d2a6685b47b36631/observed.json",
+      "bytes": 8394,
+      "sha256": "5e7d3fb668cdbc5dde4b2621811339fc371c4d6652ca3e749aa3cc44d320520e"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/terminal_staging/v1/d2a6685b47b36631/terminal.json",
+      "bytes": 17790,
+      "sha256": "ce2b657ab4e38f647b1e054fafb326edeed75e67ed856f6d48997935c2aa57a2"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/trajectory.json",
+      "bytes": 5365,
+      "sha256": "74fc84432f69233f14f7889174139f8ddcbb2f1332df609f26b530a5bafd6caa"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "bytes": 559,
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/costs/cost-T-pcqm-k1-message-droppath-100k-s42-message_droppath-planned.json",
+      "bytes": 961,
+      "sha256": "1e3ccf48555bc1de4303aa3a2e9e66b028adddf1759c2499f969970c85cfbccd"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/costs/cost-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath-0.json",
+      "bytes": 991,
+      "sha256": "182a1398180afd8112aefb45f70be436c48f461dcc3967cf157010c1beb58f9f"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/costs/cost-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath-allocation-0.json",
+      "bytes": 999,
+      "sha256": "38381c0cca4b732f761803a21235014399f08ef5ff2aa1c8c03f2e80b114f962"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/finalization.json",
+      "bytes": 6290,
+      "sha256": "2d8e3bdf109f9e0180a4bb53164260b340a51c9d12d374c6f188f706ecc783ff"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read.json",
+      "bytes": 754,
+      "sha256": "4f808caf0e406cd7f8880c328ccd8268523cf4a5b8977cb72bc3fd0730d60e10"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed.json",
+      "bytes": 762,
+      "sha256": "4e3718dc6ecf65c12445fb7fe93700d0601f8db809298b24ab8bdb67e36742a1"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input.json",
+      "bytes": 764,
+      "sha256": "69ceaa96849a83a2ab3787e9ad1a3bb278f0c9e8eea5ffc506b19d23e0b45d75"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used.json",
+      "bytes": 760,
+      "sha256": "ed76699445c13daaa31d908713ed68c0c1ed54f08af976dd893987ff7154d2cc"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/roles/role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership.json",
+      "bytes": 759,
+      "sha256": "afb33957a004f8af861c35c02c1ec34d14bd10cc849ff4cd0a998db05d401e18"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/terminal_input.json",
+      "bytes": 9714,
+      "sha256": "e912f195dc51568fee131440ccafa6d6b94711310ba3c2baa8f213fa479e25ab"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/trace.json",
+      "bytes": 24170,
+      "sha256": "dacfa96dfff75888d34e5aa731b0dc45d447c33c968341e05e66ebae5c3a68e5"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/trace_manifest.json",
+      "bytes": 2531,
+      "sha256": "967aa1433923933f6efa1bf62fbf3cbacc790e8ecacfa28d087fddd68d003e03"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/trajectory.json",
+      "bytes": 6200,
+      "sha256": "6fada89c6054c9d12ff53aca3d1cc4f238877909e4f8de37209c6e183c62c9e3"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/v5_evidence.json",
+      "bytes": 4294,
+      "sha256": "afc661e1ab7eb1004e023f83e8f7d5bf2c1de004a5afe57f077104b4b16a0843"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_acceptance/role_audit.json",
+      "bytes": 5403,
+      "sha256": "c783f651f6822db0dc975aecde2d5368012d0ee468e3433b24ba87f87c5dbf89"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/132a06e6f1d537b8/acceptance.json",
+      "bytes": 996,
+      "sha256": "51895632d22dcb522f50c3541324e9d6d5abee2e4e917c8ea5ce3bdcb18253f5"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/132a06e6f1d537b8/observed.json",
+      "bytes": 8491,
+      "sha256": "695d30ab25aa567565eca1c93a29a0666c2979905e5b9898de701bf35f50f0a3"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/132a06e6f1d537b8/terminal.json",
+      "bytes": 18298,
+      "sha256": "c3a3d390486ad2670e6d5a10ed612e58350358a03f14934239768edf48ef9437"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/5b26e6de55b76022/acceptance.json",
+      "bytes": 928,
+      "sha256": "3485a0728cac8540380224e901a73731a3bc223c7fa38329d707864ed7c3c225"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/5b26e6de55b76022/observed.json",
+      "bytes": 8956,
+      "sha256": "09eb3cacd26e39dafa0e3459514ad8501ae380a962d4fdc9759f1cd78d751a0a"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/terminal_staging/v1/5b26e6de55b76022/terminal.json",
+      "bytes": 14035,
+      "sha256": "f96bc546c8b6eb90e71b9767d40f64cc2b4bf35c9fa599e84671aaeeb5e41bb6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/trajectory.json",
+      "bytes": 5429,
+      "sha256": "47a14114b48f648124897ff82484bf5542d0059ffe63f01bcaab22ed95d82cee"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/rml_decision_snapshots/26484c0a712e7611efd6290db92a85338fed8eb89480d6adb905169d37e342f6.json",
+      "bytes": 57804,
+      "sha256": "26484c0a712e7611efd6290db92a85338fed8eb89480d6adb905169d37e342f6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/bound_trace_manifest.json",
+      "bytes": 2598,
+      "sha256": "470dc4bfe4b798b7125858a8823f592e5cd19b58fd58d550f5801a526116a2d3"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/cost_records.json",
+      "bytes": 2188,
+      "sha256": "9511a7a82d8517d3c97c2d7561f4e69497481886d476714862ee00dd63f361df"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "9e3c053c15ad57ab243e2bcc55539537fa55c098b64c6bf4c7151d55d844cd28"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/qualified_terminal.json",
+      "bytes": 17923,
+      "sha256": "3b57be1dfd2891440526ef02b5541398911058f7c069541ffe247d196fc1c134"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/reference_bundle.json",
+      "bytes": 5180,
+      "sha256": "47d1fd99441b0f9e0401c68fa62de5de78daed1a130eb4a1f3ab7bf52529b641"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/role_history.json",
+      "bytes": 4110,
+      "sha256": "b5dfc63099b07772ab7f42c56228281aa15b9a1f7266bca068ff366be3efe310"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/row_manifest.json",
+      "bytes": 654,
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/bound_trace_manifest.json",
+      "bytes": 2646,
+      "sha256": "a6cc20ae27a8435212cb6fa579ee6d4fe418035b46a03514b3a4dd4c91c3c065"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/comparison_readiness.json",
+      "bytes": 12087,
+      "sha256": "6044f89725ca716373f95e246002013df5584c3e1de82058b9c89c3c2b9c5e2c"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/cost_records.json",
+      "bytes": 2252,
+      "sha256": "fb545f1679c129d1b91d1fb0d77bfcbdf27b15f6d96580fb979847102b6f0061"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/paired_analysis.json",
+      "bytes": 444,
+      "sha256": "1cb50716fb6436da72dde0128f92791faf102297f190547b5b12ec2bc0f20458"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "900d3b5cb5f63531b358df2cd79991bea2f8d1f322e057343427b7866e44c83d"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/qualified_terminal.json",
+      "bytes": 18895,
+      "sha256": "00857143fa4a6619cb34498c313240c0e092c8fe54d93974f6d20dfb350a8752"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/role_history.json",
+      "bytes": 4270,
+      "sha256": "8f025710ec33cc14099b64694d8d10971cecac6e0ab15c987ceb41b7c3d38a35"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/row_manifest.json",
+      "bytes": 654,
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/message_droppath/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/bound_trace_manifest.json",
+      "bytes": 2598,
+      "sha256": "470dc4bfe4b798b7125858a8823f592e5cd19b58fd58d550f5801a526116a2d3"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/cost_records.json",
+      "bytes": 2188,
+      "sha256": "9511a7a82d8517d3c97c2d7561f4e69497481886d476714862ee00dd63f361df"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "9e3c053c15ad57ab243e2bcc55539537fa55c098b64c6bf4c7151d55d844cd28"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/qualified_terminal.json",
+      "bytes": 17923,
+      "sha256": "17a4616b88433ac5c80eacd93b415516bb884de95b9a3c024f4355c31cc0094f"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/reference_bundle.json",
+      "bytes": 5180,
+      "sha256": "6137ad8d0dd6a2aa75bdc6010e4250d3cbbc9bfb4ade86807bd11b5f8e0ae1ab"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/role_history.json",
+      "bytes": 4110,
+      "sha256": "b5dfc63099b07772ab7f42c56228281aa15b9a1f7266bca068ff366be3efe310"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/row_manifest.json",
+      "bytes": 654,
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/baseline/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/bound_trace_manifest.json",
+      "bytes": 2646,
+      "sha256": "a6cc20ae27a8435212cb6fa579ee6d4fe418035b46a03514b3a4dd4c91c3c065"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/comparison_readiness.json",
+      "bytes": 12295,
+      "sha256": "9fca6bd0b775b167be5414b5c4cca172be4288e61d0062dfef0d569d9a0ee04f"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/cost_records.json",
+      "bytes": 2252,
+      "sha256": "fb545f1679c129d1b91d1fb0d77bfcbdf27b15f6d96580fb979847102b6f0061"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/paired_analysis.json",
+      "bytes": 444,
+      "sha256": "1cb50716fb6436da72dde0128f92791faf102297f190547b5b12ec2bc0f20458"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "900d3b5cb5f63531b358df2cd79991bea2f8d1f322e057343427b7866e44c83d"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/role_history.json",
+      "bytes": 4270,
+      "sha256": "8f025710ec33cc14099b64694d8d10971cecac6e0ab15c987ceb41b7c3d38a35"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/row_manifest.json",
+      "bytes": 654,
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/e2e93664794ab66c5566/message_droppath/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/submission/launch_receipt.json",
+      "bytes": 3580,
+      "sha256": "7445465413c8f259d8c973059dc2667364785a26e922c120da455b90bd08eefb"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/submission/record.json",
+      "bytes": 11518,
+      "sha256": "9368fcef57a02b97cd82307ea57225667f21aa3efe4766ad16680b6746f3663a"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/attribution.md",
+      "bytes": 2220,
+      "sha256": "0edac83ab4aed22f821adfc1fc16c71969abd92b170a015924aa6169697bd903"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md",
+      "bytes": 2456,
+      "sha256": "f4b1f57940e4c7cda167dd532b2c3ca98dad014dff922560875abc1327e7b931"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/physical_inputs.md",
+      "bytes": 4526,
+      "sha256": "518d17d23de1e95f246a52f483dbf538c0960d94bacc5b12eb1d65a5d12945f3"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/role_audits_complete.json",
+      "bytes": 329,
+      "sha256": "7e9c9f36e6b1e61db52706760e0bc3ffd547a88d5d0755f4c7899fb7b08e3b9a"
+    },
+    {
+      "path": "experiments/pcqm_k1_message_droppath_100k/terminal_custody.md",
+      "bytes": 2041,
+      "sha256": "f79ecd08b2a2396ef600749e92332b0e8070efe78fa5eb434264e238749cf7ca"
+    },
+    {
+      "path": "research_memory/policies/pcqm-k1-message-droppath-100k.1.json",
+      "bytes": 799,
+      "sha256": "fa3388a55863327ecc9055b64c1306e980f33f2bab74aa7276729a78eb0b8bd1"
+    }
+  ]
+}

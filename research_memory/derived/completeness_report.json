@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 159,
+    "trajectories_total": 163,
     "with_complete_native_measurement": 30,
-    "with_cost_event": 148,
-    "with_incomplete_native_measurement": 118,
+    "with_cost_event": 152,
+    "with_incomplete_native_measurement": 122,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -146,9 +146,11 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 118,
+      "count": 122,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+        "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
@@ -157,6 +159,8 @@
         "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
         "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
         "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+        "T-pcqm-k1-message-droppath-100k-s42-baseline",
+        "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
         "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
         "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",

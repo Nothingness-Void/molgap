@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "da22e6c76be18a6960d7acca3810b722f7e299ab04e7842adeb2b2d4ebe1f009",
+  "source_digest": "3f044fd5d8197a0fc0fb5a51e3eb4324e988e74b036f0ba555270cea32f2da8f",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -17,6 +17,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-gptrans-bondlocal-pairnorm-100k",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-gptrans-bondlocal-pairnorm-100k",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
     },
     {
       "completeness_status": "complete",
@@ -145,6 +177,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-k1-message-droppath-100k",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/baseline/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-k1-message-droppath-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/message_droppath/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
     },
     {
       "completeness_status": "complete",

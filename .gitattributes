@@ -133,3 +133,9 @@ research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json -text white
 experiments/pcqm_k1_initialization_forward_500k/** -text whitespace=cr-at-eol
 research_memory/policies/pcqm-k1-init-forward-500k-mean2-s42.1.json -text
 research_memory/policies/pcqm-k1-init-forward-500k-single-s42.1.json -text
+
+experiments/pcqm_k1_message_droppath_100k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
+research_memory/policies/pcqm-k1-message-droppath-100k.1.json -text -filter -ident -working-tree-encoding
+experiments/pcqm_gptrans_bondlocal_pairnorm_100k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
+research_memory/policies/pcqm-gptrans-bondlocal-pairnorm-100k.1.json -text -filter -ident -working-tree-encoding
+experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md whitespace=cr-at-eol,-blank-at-eol

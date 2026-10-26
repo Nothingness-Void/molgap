@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 737,
+  "ambiguous_historical_role_record_count": 753,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -534,6 +534,48 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "role_identity": null,
       "role_name": "development",
@@ -812,6 +854,76 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
@@ -5161,7 +5273,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 484,
+  "explicit_role_event_count": 504,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5208,6 +5320,62 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms-development-labels-read",
@@ -5837,6 +6005,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
@@ -6193,6 +6417,20 @@
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
       {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "role-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms-train-labels-read",
         "selection_used": false,
@@ -6527,6 +6765,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [
@@ -8720,6 +8972,8 @@
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
@@ -8728,6 +8982,8 @@
       "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
       "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-pretrained",
       "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -8868,6 +9124,8 @@
       "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023",
       "ev-failed-TB-local-k1-channel-gain-flow-20261023-r2",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
@@ -8876,6 +9134,8 @@
       "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
       "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-pretrained",
       "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-message_droppath",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
@@ -9002,6 +9262,62 @@
   },
   "repeatedly_selected_role_identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms-development-labels-read",
@@ -9631,6 +9947,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
@@ -11151,6 +11523,62 @@
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-labels-read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-metric-computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-prediction-input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms-development-labels-read",
         "selection_used": false,
         "semantics": "explicit",
@@ -11778,6 +12206,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
@@ -12087,6 +12571,20 @@
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-baseline-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-pcqm-k1-message-droppath-100k-s42-message_droppath-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-message-droppath-100k-s42-message_droppath"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms-train-labels-read",
@@ -12422,6 +12920,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [

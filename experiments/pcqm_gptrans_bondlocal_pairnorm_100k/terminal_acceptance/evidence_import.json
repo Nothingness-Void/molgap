@@ -1,0 +1,439 @@
+{
+  "format": "molgap-canonical-evidence-copy-v1",
+  "owner_tip": "3bad3811f876d344373139fa3f70e9263f42697b",
+  "archive_commit": null,
+  "excluded_implementation": [],
+  "shared_source_copied": false,
+  "files": [
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/README.md",
+      "bytes": 432,
+      "sha256": "08987396509d152ad83e46cddf323de79508b4585eb601daf37ae406c9ac64e7"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md",
+      "bytes": 2704,
+      "sha256": "541441dd8ce76cafdb0246e2bda5f29123643afccbf9ddcdd3041774a2b38bf5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/baseline_data_declaration.json",
+      "bytes": 3090,
+      "sha256": "c270d45fa4c4b120e1d42fee87aafb57a4af2f0cbcdebf7100317a34829d5817"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/decision.md",
+      "bytes": 88,
+      "sha256": "639f9de4d127c334b14cf51e7ce6f2a6754824b1e0d6fad977fb9bd446af0d17"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/experiment.json",
+      "bytes": 4670,
+      "sha256": "1edfb9c500aef5bb58fed212bffcca24de7f8ca60c60a7d171ee454888f4b702"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/acceptance_plan.json",
+      "bytes": 1750,
+      "sha256": "eefbed8680ba7b74ca2cb8e10c702b136d2031f60e5ca6d409f7fccb13466124"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/authority.json",
+      "bytes": 586,
+      "sha256": "810dad6e6715a37ae30e785999ec10bf4262c91abfd86ad51186e165a41b1188"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/plan_input.json",
+      "bytes": 4710,
+      "sha256": "18c88b206846b35842eaba9bd193f78bbec256643a3eb03cf715997774a878fc"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
+      "bytes": 1874,
+      "sha256": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/pair_update_norm/plan_input.json",
+      "bytes": 4770,
+      "sha256": "a4a43fc24101a1c9f7a6ef6eefb6c858700df946e624c12ecf5dcb35cccb5a49"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/pair_update_norm/recipe.json",
+      "bytes": 1891,
+      "sha256": "d0d2c4559dbb72958def4844a48cab7edb594f83726ec2b1dd1f10a8b05f2176"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/protocol.md",
+      "bytes": 3909,
+      "sha256": "7b187bac7907a8edf70071c3cd19e05f066ef456c319625b1b395b41471c73f2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md",
+      "bytes": 1410,
+      "sha256": "aff872454825feae20fcf59534fe7e339586a6cea3fc4a3087b5475b76d7c82f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/costs/cost-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-planned.json",
+      "bytes": 978,
+      "sha256": "cafdf4d28d83e0535d98873a0fce2d48333f71f345ffce96a77f9a21aefa8ab8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-0.json",
+      "bytes": 1008,
+      "sha256": "9772d75de316dd83327451dd2488e6833cb9256de5cd073a931f795e39325223"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-allocation-0.json",
+      "bytes": 1017,
+      "sha256": "a49c35f0fbed46b8b0c6797e16f0b49c62147f2ef422de0a52c12f8deb7fe95b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/finalization.json",
+      "bytes": 5936,
+      "sha256": "1ad92a8c53ffa80c0b1ed889025a0f384495ee8f246f6d4b80cf61bc6eb7a556"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-labels_read.json",
+      "bytes": 709,
+      "sha256": "24b0ea59dcd28c337b00b5aa2ecbffabc280b2a8526c1b34ee8abc78d585afa2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-metric_computed.json",
+      "bytes": 717,
+      "sha256": "878ba5f776438186ffc1993c11fb25fea85fc88a0ddd2daadc571e8ea06b7c07"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-prediction_input.json",
+      "bytes": 719,
+      "sha256": "627143b403a04f093a7348c8e1770c577da00d1bb887f48aab9f735dbadb1836"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-development-selection_used.json",
+      "bytes": 715,
+      "sha256": "1d2b04c637eab4ad1b3f777ac00d8f832260ed9ec0ad43300ad45073a9402c73"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-train-training_membership.json",
+      "bytes": 714,
+      "sha256": "861c225b096f66094cd7a15c849fcb9b26f39e22f4aec8d8925116037d9e05d1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/terminal_input.json",
+      "bytes": 9113,
+      "sha256": "405bbaa7c0dc79ee305cdaab00739eb38039fdac467bb44ef083b2c1fb056291"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/trace.json",
+      "bytes": 35818,
+      "sha256": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/trace_manifest.json",
+      "bytes": 2568,
+      "sha256": "3f6479cd7a1ac813db2f413a3eb0e2e26863970f6832b3ec880609b7abe781a3"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/trajectory.json",
+      "bytes": 5738,
+      "sha256": "7f513ec3fb7eaaa032a83316e458c748915a243f6c204157d5ce9434e9291b1c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/rml_finalized/v5_evidence.json",
+      "bytes": 4142,
+      "sha256": "5f8aff3b803d37888a1f031ccb4e0cc5abc215a74911759d9a677843d06e6246"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/14524e09d662f2d4/acceptance.json",
+      "bytes": 909,
+      "sha256": "68047715407f71ea495c6f8ffba0608d588f836d164e6fc91fc6152ce9133a35"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/14524e09d662f2d4/observed.json",
+      "bytes": 8468,
+      "sha256": "71a6579bdb0e748794e279c1e2d2170afe1fd240034fd36494fb5b2cb1626080"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/14524e09d662f2d4/terminal.json",
+      "bytes": 17792,
+      "sha256": "d2f138cf6e55eba206e44d23753f5da027f7556c13fd6234a8abf05cddf94b7d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/acceptance.json",
+      "bytes": 930,
+      "sha256": "170965929a0a752028adfaaf602cb60106fb8cb2b63ffc55899c3690c89b4d33"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json",
+      "bytes": 8947,
+      "sha256": "362a67c5d32facc281c2934f6e93f3bb7e3788deca0bf51a7240b6ef5107ab12"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/terminal.json",
+      "bytes": 13973,
+      "sha256": "9b4bea42b06679dc6253aa58bf08d09b59756200a715b6abbb4cbc1227480151"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/trajectory.json",
+      "bytes": 5362,
+      "sha256": "783a4bf5876f36c68deb4fe1be1f57f07c68601c52d8045e8f7dbb3415749f4b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/comparison_assets/acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a/target_transform.json",
+      "bytes": 559,
+      "sha256": "931ebb7d9942ce24c335a7a661874c832af4ec441a0e54bcc3d9bd41efeea3a6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/costs/cost-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-planned.json",
+      "bytes": 996,
+      "sha256": "74c94c5f13cd2ea2adcccbe262229e14d5cbfe9fccd1ed7cc6ae2fe402c8bd40"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-0.json",
+      "bytes": 1033,
+      "sha256": "904669662f76dcf46963dade66d5895ffecc974a0a2250cdcc612e3109141ab2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/costs/cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-allocation-0.json",
+      "bytes": 1041,
+      "sha256": "16dcc6cf3f50a5b7ff87db2460e0295fb39e3dc07a796499f73bd59b54b77201"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/finalization.json",
+      "bytes": 6346,
+      "sha256": "bf5f755a0a8c28021a8eaadd3111e04cc8c161aa3f5346049f811d4e1187ecbe"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-labels_read.json",
+      "bytes": 733,
+      "sha256": "23424fa7188bd1a80275da71413266a0ddfb20e2e8a496566a480e5483a2b126"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-metric_computed.json",
+      "bytes": 741,
+      "sha256": "65c251376739a4e852cb6ab44a88585ab02f2c837281d6c1c0dc7d3ad3323606"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-prediction_input.json",
+      "bytes": 743,
+      "sha256": "637d9f3ddc2b135ddcf0e4dae36a4cb3ee502e46b1c6988128d924fa4c1049e8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-development-selection_used.json",
+      "bytes": 739,
+      "sha256": "1b99e69a457a8e30712ffdfdf17503b4d00aa6c97443df96be3d367980f881cf"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/roles/role-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm-train-training_membership.json",
+      "bytes": 738,
+      "sha256": "fa3382e713b1e83945b43ce1cc810d50b5da8db2cc658f33068c12bd9c4d4f44"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/terminal_input.json",
+      "bytes": 9784,
+      "sha256": "eb754b251c255cbff79f2d60de430e97667f307b4e5e09757ab6b27794d5b178"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/trace.json",
+      "bytes": 35814,
+      "sha256": "03573b79d691d020333de714673dfb1f3d1222a76e5a8efefaaeb3bfa1438ce4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/trace_manifest.json",
+      "bytes": 2604,
+      "sha256": "28107fa56df6272796a940a92c2ce6e726a0a69461e5dae527932782910afa20"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/trajectory.json",
+      "bytes": 6239,
+      "sha256": "44cc073730cea811ddfe3e9d2c7fad601998d71d7459548d75a604c6de72d175"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/rml_finalized/v5_evidence.json",
+      "bytes": 4213,
+      "sha256": "c91f820d805fa104dd7423717d593956b7ec2c9b655427e1bf9d8bc156e6e5f8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/0d6e858b76159e3e/acceptance.json",
+      "bytes": 942,
+      "sha256": "f9f94d0ee66e1c8cfdcd4daa47a63b254a3631df754edbcbde263b7c358e2b97"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/0d6e858b76159e3e/observed.json",
+      "bytes": 9022,
+      "sha256": "eaee2d4953f530b49a1cf58d61c6f8ea957a3f18314920fe1d4b5950d336a62f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/0d6e858b76159e3e/terminal.json",
+      "bytes": 14196,
+      "sha256": "6947063c64b876413f7e26e38876fc80ed785552723fec384fc7ddada170175a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/a52dfd6d90ccb991/acceptance.json",
+      "bytes": 955,
+      "sha256": "21452a3bf14894422458fb65d2f636af9d87d53c50b0332e53dec3c98aa108c2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/a52dfd6d90ccb991/observed.json",
+      "bytes": 8543,
+      "sha256": "cd6b8915929ef28f0eb6fd329b4abd3992643cdc4edb27e6c2fbc5fc6be2fee5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/a52dfd6d90ccb991/terminal.json",
+      "bytes": 18186,
+      "sha256": "e960cfb27235b3388a84dc64712ccc7082d1898adf69597198fdc77abab8ee19"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/edf55da1b423ed20/acceptance.json",
+      "bytes": 994,
+      "sha256": "5649607399326e3e55a45b911ba62bce7eb3093e1fa8482e4f878920841b909e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/edf55da1b423ed20/observed.json",
+      "bytes": 8543,
+      "sha256": "8b6a07d3e9d3e442996cad37499281bfdb87c2b43ab0e34ea72692679021e764"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/terminal_staging/v1/edf55da1b423ed20/terminal.json",
+      "bytes": 18225,
+      "sha256": "918f6d6b92b8f52074f559e73cf4a8ae5ae2905ab2312457207f4a96746bc273"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/pair_update_norm/trajectory.json",
+      "bytes": 5410,
+      "sha256": "810b6962bee5cc84f29d5ac0ad42f2900c08acb590755020a5d86d5b11977232"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/rml_decision_snapshots/c2adaaec276ad217c6057dbea13f01c43baf2ae0e99d276caef3f53674c0591b.json",
+      "bytes": 57869,
+      "sha256": "c2adaaec276ad217c6057dbea13f01c43baf2ae0e99d276caef3f53674c0591b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/bound_trace_manifest.json",
+      "bytes": 2665,
+      "sha256": "e5f513002dab48fb1113f63f22bd4fe9af13e643d369b8de662673150e87e6d5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/cost_records.json",
+      "bytes": 2287,
+      "sha256": "4ec735666fac7bb7330e9817cd17250dd6a330b880b8a3390f0cd18c7e9ffb40"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "d27ac0e3387ff15efa45351381b40f3e2026d3f22816dfa5c2501a27392a1765"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/qualified_terminal.json",
+      "bytes": 17941,
+      "sha256": "3eb5c59f8eaf931e8ff03b2cd45e60b02fcf5fc62ce6cda089955a0b87268957"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/reference_bundle.json",
+      "bytes": 5309,
+      "sha256": "381177700c3ba072a2dfdf051527f8d7c6882b9499793b038c629d6683ca1819"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/role_history.json",
+      "bytes": 3983,
+      "sha256": "493f6037495249187f8bb643475c43b546f5e5d76c05a371ef921d46eee52887"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/row_manifest.json",
+      "bytes": 654,
+      "sha256": "1f2fce3c85c1b7f13455ec5b47c940091867df46fa4d6981cf48331ab8692cf4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/bond_local/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/bound_trace_manifest.json",
+      "bytes": 2701,
+      "sha256": "3b82a565bfe3dec8ea8ffd879fd8c92ce4e7d9c6d1a833f1fbd675686feaa8db"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/comparison_readiness.json",
+      "bytes": 12348,
+      "sha256": "e682c36cb03250d9177e2897b9bd7727710d3b4973d9107bc3dd756813037f4f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/cost_records.json",
+      "bytes": 2336,
+      "sha256": "f7b3561102ac5bc97603b767fa3bb72fbe79f4a82d9469ad3496443a77645a4b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/paired_analysis.json",
+      "bytes": 446,
+      "sha256": "b77d18801cc97e08234aa3965c5148e3ca1e81f40c557b3865f3d9bdd695dd15"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/prediction_manifest.json",
+      "bytes": 473,
+      "sha256": "2972dc5bd13f19e7449f19e3a057148d678923fc924c9bdfca056c7ed721154c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/qualified_terminal.json",
+      "bytes": 18827,
+      "sha256": "ae059943d4ae30159fa56db31132165ded82783104ce7f7d958c8c5e41a5a9a1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/role_history.json",
+      "bytes": 4103,
+      "sha256": "5be89963343e63d1aa10506ae58a05c21a35e4c742ad5d1328baf8bb474bb7a0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/row_manifest.json",
+      "bytes": 654,
+      "sha256": "1f2fce3c85c1b7f13455ec5b47c940091867df46fa4d6981cf48331ab8692cf4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/strict_qualification/a14d2c31a7ad5a524880/pair_update_norm/target_manifest.json",
+      "bytes": 430,
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/submission/launch_receipt.json",
+      "bytes": 3630,
+      "sha256": "5950a052a60472d1b95251b6d9a1845240ef91783e921dbc1c1ec7a68a37c1ca"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/submission/record.json",
+      "bytes": 12773,
+      "sha256": "87cad2fd99cb92534782e0084ec82e78daa47f9ce353ee918542aed714a3b213"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/attribution.md",
+      "bytes": 2612,
+      "sha256": "9ff4c051fa417eebaf5e93582d0906557578bccaaee228d64d94366be1748367"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md",
+      "bytes": 4402,
+      "sha256": "000f1400e5b6c39b3688e11115889e4fe0c38a8ef5063adf86fdcbe9efff0c1e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/role_audit_paths.json",
+      "bytes": 257,
+      "sha256": "eb73b87465fbcc6954535461aa18b0dfd83743ca0afb99f7703efe2f90e1a044"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/roles_bond_local_complete.json",
+      "bytes": 9950,
+      "sha256": "b01087156ca5dd294a55081f9db13bcd7aa39fdd91835adf5fa0cf35af6cb5f0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/roles_pair_update_norm_complete.json",
+      "bytes": 10118,
+      "sha256": "da19bf41c1d3c0ddedc7e21dcd4aecf4ad144ed278fb19691b2edcf750440eb6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_custody.md",
+      "bytes": 2107,
+      "sha256": "0799061b953866db889196ed5e5d58188b0d67cb7e31dfb7f484147f859c988e"
+    },
+    {
+      "path": "research_memory/policies/pcqm-gptrans-bondlocal-pairnorm-100k.1.json",
+      "bytes": 877,
+      "sha256": "39c2eb8e104c67598b30dc4e3ec51d8d6a88ccb9b4b5731b6e02bae7c60d8075"
+    }
+  ]
+}

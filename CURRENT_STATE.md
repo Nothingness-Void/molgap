@@ -113,17 +113,17 @@ includes the completed local selected-LIVE Clean-BN diagnostic: the disadvantage
 increases to14.0371meV. No adoption, retry or scale-up; complete history is archived,
 canonical evidence retained here. The requested Luna heartbeat ended on COMPLETE.
 
-User-authorized K1 graph-wise message DropPath100K belongs to
-`codex/exp/k1-message-droppath-100k`; resolve its checkout through BRANCHES.
-[Status and receipts](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-message-droppath-100k/experiments/pcqm_k1_message_droppath_100k/STATUS.md)
-own the one-slot Kaggle1 pair, separately from existing normalization work.
-No adoption, automatic continuation or scale-up follows.
+K1 graph-wise message DropPath100K is terminally accepted and negative, with
+two complete strict replay entries and no exclusions. Its
+[decision and attribution](experiments/pcqm_k1_message_droppath_100k/terminal_acceptance/attribution.md)
+own the endpoint/curve findings; no retry or scale-up is released. Full rejected
+history is archived, canonical evidence retained here.
 
-User-authorized BondLocal/pair-update-normalization100K belongs to
-`codex/exp/gptrans-bondlocal-pairnorm-100k`; BRANCHES owns checkout routing.
-Its [status and submission bindings](https://github.com/Nothingness-Void/molgap/blob/codex/exp/gptrans-bondlocal-pairnorm-100k/experiments/pcqm_gptrans_bondlocal_pairnorm_100k/STATUS.md)
-own the same-job Kaggle3 comparison. No K1 duplication, monitor,500K/full
-release or model adoption follows from this submission.
+GPTrans BondLocal plus pair-update-normalization100K is terminally accepted and
+passes its frozen nomination gate. Both arms have complete strict replay with
+no exclusions. [Decision and attribution](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/attribution.md)
+own the conditional signal and late-curve behavior. Keep this unadopted candidate
+on its owner ref;500K transfer remains untested. No new training is released.
 
 New user-authorized K1 normalization-mechanism work belongs to
 `codex/exp/k1-norm-mechanisms-100k`; resolve its checkout through BRANCHES.

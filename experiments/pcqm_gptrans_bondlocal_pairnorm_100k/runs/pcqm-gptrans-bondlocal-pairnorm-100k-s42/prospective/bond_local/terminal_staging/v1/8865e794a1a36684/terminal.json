@@ -1,0 +1,261 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/authority.json": "810dad6e6715a37ae30e785999ec10bf4262c91abfd86ad51186e165a41b1188",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/acceptance.json": "170965929a0a752028adfaaf602cb60106fb8cb2b63ffc55899c3690c89b4d33",
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json": "362a67c5d32facc281c2934f6e93f3bb7e3788deca0bf51a7240b6ef5107ab12",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/canonical_trace.json": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/development_predictions.pt": "f0807b29c21f6aefa1cffd761ea105d0b9bc99e91d2268e331c7237fa6655bfc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/last_checkpoint.pt": "5951f5e9741e9b8d0a49ea139211a0c555a8438ba84e0acff56987450aa731e3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/output_manifest.json": "4e44a4123db70997f38b26a07e3c6c55a40566be1fc710209821d63febac6cc5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/selected_model.pt": "5114ace2b3644fc292742f6b64ac77279266474fb2af38b3a59724b0f8ab50e3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/training_contract.json": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/allocation_ledger.json": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/bond_local/allocation_ledger.json": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/execution_retention.json": "b70c9bd56b327327e33d57f16fa63085abff6d4544fef39bfddbaf85ca77d233",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/reports/terminal_diagnostic_f68776b9442e1f7b83e01278059143bed12b7cdbff41c9d388d3ac8e4fd71703.json": "459b6e210b6c3dc552f4887f19770bb9ee0f8997e70236f3f2d2b653da2f0405"
+  },
+  "closure_blockers": [
+    "explicit_outcome_and_decision_ref_required",
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-0",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.741745235408333
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.7781198733966668
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+    }
+  ],
+  "decision": {
+    "decision_ref": null,
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "b70c9bd56b327327e33d57f16fa63085abff6d4544fef39bfddbaf85ca77d233"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/execution-root/bond_local/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "3826298311d999d8aade241b69dd10c5afe536ab4a7b3d016502536d84930b4d"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/training_contract.json",
+        "name": "contract",
+        "sha256": "8be68f858af357428b7e9dd076a57031daf30ea714b9b647487869894a39a24e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "f0807b29c21f6aefa1cffd761ea105d0b9bc99e91d2268e331c7237fa6655bfc"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "5951f5e9741e9b8d0a49ea139211a0c555a8438ba84e0acff56987450aa731e3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "5114ace2b3644fc292742f6b64ac77279266474fb2af38b3a59724b0f8ab50e3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.14286130827367305,
+      "missing_reason": null,
+      "selected_optimizer_step": 40612,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-26T17:57:42.392637+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": null,
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42-v1",
+    "logical_run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-gptrans-bondlocal-pairnorm-100k-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "32b96f619404160c9c685ba9bd8d1d79d77921f2",
+    "source_package_sha256": "dc3f82dc53c867bd561168d795c51962e70b8ecc34eb12992eabf0bf566c6ce0",
+    "spec_identity": "86b0ec8fd0e6ee380b93f5f6c0fb8f4041713699e3eb0489bce1514d2ddb8840"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+    "run_id": "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/runs/pcqm-gptrans-bondlocal-pairnorm-100k-s42/prospective/bond_local/terminal_staging/v1/8865e794a1a36684/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-bondlocal-pairnorm-100k-s42/v1/bond_local/canonical_trace.json",
+    "trace_artifact_sha256": "be5f075e65d814cda49d10572dc7b9dbb7f942ba778f99565f7f13cc30429068",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local"
+}
