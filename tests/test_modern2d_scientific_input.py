@@ -242,7 +242,8 @@ def test_configured_independent_arms_require_a_frozen_pair(configured):
         resolve_experiment_input(c.path, c.repo)
 
 
-def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured):
+@pytest.mark.parametrize("authority_line_endings", ["lf", "crlf"])
+def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured, authority_line_endings):
     c = configured
     value = deepcopy(c.value)
     value.pop("same_run")
@@ -304,6 +305,9 @@ def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured):
         "transfer_study_ref": _pointer(c.repo, study_path)}
     authority.pop("same_run_reference_arm_id")
     _write_json(c.repo / value["authority_ref"], authority)
+    if authority_line_endings == "crlf":
+        authority_path = c.repo / value["authority_ref"]
+        authority_path.write_bytes(authority_path.read_bytes().replace(b"\n", b"\r\n"))
     _write_json(c.path, value)
     _git(c.repo, "add", ".")
     _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Freeze noncausal scale fixture")
@@ -356,6 +360,15 @@ prepared=pathlib.Path(result['prepared'])
 manifest=verify_experiment_source_package(prepared/'package')
 spec=ExperimentSpec.from_json((prepared/'package/experiment_spec.json').read_text(encoding='utf-8'))
 authority=json.loads((repo/'experiments/question/authority.json').read_bytes())
+if sys.argv[3]=='crlf':
+    try:
+        _check_scientific_release(spec,prepared/'package',prepared/'source_dataset',authority,manifest)
+    except ValueError as error:
+        assert 'changed' in str(error).lower() or 'hash' in str(error).lower(),str(error)
+    else:
+        raise AssertionError('Normalized archive changed a frozen authority pointer but release passed')
+    print('PACKAGED_POINTER_MISMATCH_REJECTED_BEFORE_POST')
+    sys.exit(0)
 _check_scientific_release(spec,prepared/'package',prepared/'source_dataset',authority,manifest)
 # Execute the actual cloud entry's stdlib admission against the extracted
 # frozen archive: local release alone does not exercise startup routing.
@@ -375,7 +388,7 @@ else:
     raise AssertionError('Forged transfer pointer passed release')
 print(json.dumps({'status':'CPU_ACCEPTED','package_identity':manifest['package_identity'],'remote_calls':0}))
 '''
-    result = subprocess.run([sys.executable, "-I", "-c", program, str(c.repo), str(c.path)], cwd=c.repo,
+    result = subprocess.run([sys.executable, "-I", "-c", program, str(c.repo), str(c.path), authority_line_endings], cwd=c.repo,
         env={**os.environ, "CUDA_VISIBLE_DEVICES": "-1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"},
         text=True, capture_output=True, timeout=180)
     assert result.returncode == 0, result.stdout + result.stderr

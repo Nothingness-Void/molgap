@@ -207,6 +207,17 @@ def _check_scientific_release(spec, package, staged, authority, manifest):
     declaration = spec.to_dict()
     pair = declaration["prospective"].get("same_run_replay")
     plan = json.loads(read_packaged_text(package, plan_path(spec)))
+    # Runtime validates extracted bytes, while the compiler initially sees
+    # working-tree bytes. Reuse that gate before POST: text normalization must
+    # not invalidate a frozen metadata pointer only after allocating a GPU.
+    from tempfile import TemporaryDirectory
+    from .experiment_preflight import _unpack
+    from .modern2d_training_release import check_plan
+    with TemporaryDirectory(prefix="molgap-packaged-release-") as temporary:
+        source = Path(temporary) / "source"
+        source.mkdir()
+        _unpack(package, source)
+        check_plan(spec, source, plan)
     if authority.get("purpose") == TRANSFER_PURPOSE:
         def pinned(pointer):
             if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
