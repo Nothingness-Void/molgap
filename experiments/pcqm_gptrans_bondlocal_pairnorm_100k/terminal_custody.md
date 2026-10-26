@@ -3,7 +3,7 @@
 2026-10-27 JST. Owner `codex/exp/gptrans-bondlocal-pairnorm-100k`; frozen source
 `32b96f619404160c9c685ba9bd8d1d79d77921f2`. Candidate is POSITIVE under its100K
 gate; matched BondLocal reference closes CLOSED. This is an unadopted nomination,
-not500K/full transfer or a production change. [Qualification](terminal_acceptance/qualification.md)
+not500K/full transfer or a production change. [Qualification](qualification.md)
 and canonical finalizations own replay; [attribution](terminal_acceptance/attribution.md)
 owns the curve findings and unresolved mechanism.
 
