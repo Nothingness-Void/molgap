@@ -1,0 +1,82 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/training_contract.json",
+      "name": "contract",
+      "sha256": "ec767a3d02a8e6ad3f044033493359ffb5a8b13ea150488c9280fd8bcdc5ec41"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "93a21597cf829a6f03333d372e432ecd38aa02c45645116828ab10eb48e63071"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "8dd37074c4c8a9c967c2abcd56378befaf236c0e26d62a2833573563f7bd251f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "40da9340e28d3e50cbebb1516c2f55e953c0bbc29580672b1bbda6139e5f19f7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "6d4cabf069dc4505a9557ef5691165371ea51a62613be7bf15b7dc945b62afc0"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "341a977d995cf1a6ee1b945cc097c2acf8a8f6f9da9bd0ecab9dc4a903588d56"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_selective_ffn_norm_100k/closure_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13938670981824397,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/terminal_staging/v2/f42d24875c95450a/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "used"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

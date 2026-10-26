@@ -34857,6 +34857,54 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-selective-100k-bn-reference-s42-r2:bn_reference:downstream",
+      "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-selective-100k-ffn-rms-s42-r2:ffn_rms:downstream",
+      "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-k1-selective-100k-local-residual-gain-s42-r2:local_residual_gain:downstream",
+      "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -34864,5 +34912,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "d090e4126e9cfd3ad152f6ce31766cbc4565df04df9d4d28fde17ddfacd106c4"
+  "source_digest": "fb26a0e7daf115e95bd0979955981f9fdb4a77e2e79d3992eb52de690d9213b8"
 }

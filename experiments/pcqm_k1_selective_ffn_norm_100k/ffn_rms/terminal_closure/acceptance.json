@@ -1,0 +1,27 @@
+{
+  "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+  "outcome": {
+    "artifact_status": "incident_retained",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "not_launched",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "unavailable",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "unavailable"
+  },
+  "run_id": "pcqm-k1-selective-100k-ffn-rms-s42:ffn_rms:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": []
+  }
+}

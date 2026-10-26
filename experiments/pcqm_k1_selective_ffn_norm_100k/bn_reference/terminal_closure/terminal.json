@@ -1,0 +1,81 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/terminal_closure/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/experiment_spec.json": "a47deae73d7142c785b5ce8e3ac7355f38dbae71324d422fa54f4db3c3eb64b7",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/terminal_closure/acceptance.json": "d87f709787dc7e42f7f99b9eedf82695dcd0b5efc2d5c770d6c8729dbc83c0bc",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/failure_v1.md": "4a61e420391ab1bfb184677dc842cd22c050c2891a0a95edc191ebc82f7231a6",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md": "36ee56cede3ef2ae71aa083ed0ac098f8e33fd52328dc425d3052853fc9d6119",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/bn_reference/invocations/2026-10-26T09-18-30.481285%2B00-00-pid28852.json": "ed9e4e6eacf6f7ee66242ff1b7afb4d4928240d13bedee421115058722ec4fb9",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/bn_reference/launch_receipt.json": "2b65be4a4f6cebc389408abd3bdc0cee5190584f0f45d55eda053c28e448f812"
+  },
+  "costs": [],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "durable_local_verified",
+        "locator": "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md",
+        "name": "incident_disposition",
+        "sha256": "36ee56cede3ef2ae71aa083ed0ac098f8e33fd52328dc425d3052853fc9d6119"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/recipe.json",
+    "metrics": {
+      "missing_reason": "No formal training or scientific endpoint",
+      "source_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_closure",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained failure and explicit no-launch disposition"
+    },
+    "outcome": {
+      "artifact_status": "incident_retained",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "preflight_failed",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "INFRASTRUCTURE_ONLY",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "development": "unavailable",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "unavailable"
+    },
+    "scope": "local_preparation_incident",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-26T15:22:06.002729+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "unavailable",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "unavailable"
+  },
+  "roles": [],
+  "run_id": "pcqm-k1-selective-100k-bn-reference-s42:bn_reference:downstream",
+  "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42"
+}

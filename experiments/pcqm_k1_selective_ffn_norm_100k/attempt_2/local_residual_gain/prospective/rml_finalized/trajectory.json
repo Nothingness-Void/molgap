@@ -1,0 +1,107 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "local_residual_gain-v2"
+      ],
+      "cost_event_ids": [
+        "cost-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-planned",
+        "cost-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-selective-100k-local-residual-gain-s42-r2:local_residual_gain:downstream"
+      ],
+      "source_commit": "902e6a19062de6167e97a7e23036d0e7205f3e81",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/closure_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_LOCAL_100K_COMPARISON",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/authority.json",
+    "chosen_action": "RUN_LOCAL_100K_COMPARISON",
+    "policy_id": "pcqm-k1-selective-mechanisms-local-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_selective_ffn_norm_100k/role_scope.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/rml_decision_snapshots/0a87e1f37aedf2239d2aa05c7af73d45c07915b36520117e6174d58da3104beb.json",
+    "snapshot_sha256": "0a87e1f37aedf2239d2aa05c7af73d45c07915b36520117e6174d58da3104beb",
+    "state_timestamp": "2026-10-26T09:24:48.132766+00:00"
+  },
+  "family_id": "pcqm-k1-selective-mechanisms-local-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "No generalization gain",
+      "Changed optimization rather than improved capacity"
+    ],
+    "changed_mechanism": "k1_local_residual_gain",
+    "cheapest_falsifier": "Three sequential single-arm100K40pass runs; each candidate compared with the new local BN arm.",
+    "decision_changed_if_negative": "Reject this exact mechanism under this contract.",
+    "decision_changed_if_positive": "Review matched local evidence; no automatic adoption or scale-up.",
+    "expected_native_cost_ref": "cost-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+    "observed_deficiency": "Whole-block norm replacements did not establish selective FFN or local residual effects.",
+    "related_closed_family_ids": [
+      "Pre-Norm AdaRMS100K negative",
+      "Whole-block Post-LN100K negative"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does local_residual_gain improve the matched local original-BN reference at100K40passes?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json",
+      "experiments/pcqm_k1_selective_ffn_norm_100k/protocol.md",
+      "experiments/pcqm_k1_selective_ffn_norm_100k/input.json",
+      "experiments/pcqm_k1_selective_ffn_norm_100k/failure_v1.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"
+    ],
+    "prior_trajectory_ids": [
+      "TB-pcqm-k1-selective-100k-local-residual-gain-s42"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_selective_ffn_norm_100k/role_scope.json"
+    ],
+    "source_commit": "902e6a19062de6167e97a7e23036d0e7205f3e81",
+    "source_config_identity": "6a78db1b0c2ae99e3bbdc4fe977e170f88610524ac7817831d0d1eb589cec01d"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+}

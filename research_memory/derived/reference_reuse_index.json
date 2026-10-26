@@ -719,6 +719,132 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_use": {
+        "development": "unavailable",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "unavailable"
+      },
+      "scientific_scope": "local_preparation_incident",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_use": {
+        "development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "used"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/bn_reference/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_use": {
+        "development": "unavailable",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "unavailable"
+      },
+      "scientific_scope": "local_preparation_incident",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_use": {
+        "development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "used"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/ffn_rms/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_use": {
+        "development": "unavailable",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "unavailable"
+      },
+      "scientific_scope": "local_preparation_incident",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+      "role_use": {
+        "development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "used"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "locally_retained_hash_verified"
       ],
       "comparison_status": "matched_state_bytes_execution_only",

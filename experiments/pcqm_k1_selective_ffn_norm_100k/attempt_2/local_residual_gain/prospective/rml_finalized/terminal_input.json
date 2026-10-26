@@ -1,0 +1,132 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/terminal_staging/v2/f42d24875c95450a/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/observed_roles.json": "364cd740f44d53e89eec3423452f25c4ced20cf4d181135f72b7c2407cd3ebb6",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/plan_input.json": "facb5d609f4783ebf52ba7e33fcfde9662fb0b5b92f938333be2102132ab1d53",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/terminal_staging/v2/f42d24875c95450a/acceptance.json": "b8a9b7a28d3deb7b9cd9b4d7761c02d58cd0d6a6e82e08b0a7ba6c0bf17dba1b",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/terminal_staging/v2/f42d24875c95450a/observed.json": "110d164fa0f90a364915df80aaaaf768a85799e1568b15bca5a5bc4e5b026c6e",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/closure_decision.md": "5eaf564c16ec4ce1b0a598fc148a1c9ac56f54e7018779e184dc1a5ef49e7566",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/canonical_trace.json": "6d4cabf069dc4505a9557ef5691165371ea51a62613be7bf15b7dc945b62afc0",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/canonical_trace.json.context.json": "341a977d995cf1a6ee1b945cc097c2acf8a8f6f9da9bd0ecab9dc4a903588d56",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/development_predictions.pt": "93a21597cf829a6f03333d372e432ecd38aa02c45645116828ab10eb48e63071",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/last_checkpoint.pt": "8dd37074c4c8a9c967c2abcd56378befaf236c0e26d62a2833573563f7bd251f",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/output_manifest.json": "da20b010e2a0d60df66bbda6975db3cd3e1f84d9f12579f9742711dffca1e8c9",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/selected_model.pt": "40da9340e28d3e50cbebb1516c2f55e953c0bbc29580672b1bbda6139e5f19f7",
+    "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/training_contract.json": "ec767a3d02a8e6ad3f044033493359ffb5a8b13ea150488c9280fd8bcdc5ec41"
+  },
+  "closure_blockers": [],
+  "finalized_at": "2026-10-26T15:16:59.670349+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-0.json",
+        "sha256": "0e2946433b7e52874d9ef75011992961d86bef3b8acbea8af1fdbd1a20697ab6"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "f7a5de8df5210de83682e25605ed36d4d58ffe74ff6c20540d75497f10dcecf4"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "0aa9f2d060bdc08895b3c98b9138e9ba93d66ddc0c9ea3f826b8a93a7e92ce1c"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-training_membership.json",
+        "sha256": "2f9b48608e80e3b4d8f0371af005df179bb27d8b8770ff03fc602696ee56946c"
+      },
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-labels_read.json",
+        "sha256": "d81624cbd48a6212be63cd31bfa90a02446b4c3704a13621c8510a5690ecd182"
+      },
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-prediction_input.json",
+        "sha256": "24f1455faa212fcdfce167913c0aba2335db62a1c1392899c4339ec22e78f826"
+      },
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-labels_read.json",
+        "sha256": "8f470cfd1acae1563b6ac88d11321342b2018c947b361150c6457aa6bd3c8ee8"
+      },
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-metric_computed.json",
+        "sha256": "76d12028cd9accc2c071081a8c1dc80234837644469e3a10a7ea72cbda1d7154"
+      },
+      {
+        "ref": "roles/role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-selection_used.json",
+        "sha256": "332bb4f0d2c2b62509954dff563620fc764384dacf9928d2f3c521fedc0bf0d7"
+      }
+    ]
+  },
+  "requested_outcome": "INCONCLUSIVE",
+  "role_use": {
+    "development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "used"
+  },
+  "run_id": "pcqm-k1-selective-100k-local-residual-gain-s42-r2:local_residual_gain:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json",
+    "reference_id": null,
+    "run_id": "pcqm-k1-selective-100k-local-residual-gain-s42-r2:local_residual_gain:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/local_residual_gain/prospective/terminal_staging/v2/f42d24875c95450a/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/research/pcqm-k1-selective-ffn-norm-100k/attempt_2/local_residual_gain/local_residual_gain/canonical_trace.json",
+    "trace_artifact_sha256": "6d4cabf069dc4505a9557ef5691165371ea51a62613be7bf15b7dc945b62afc0",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+}

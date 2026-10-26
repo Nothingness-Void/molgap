@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 103,
+      "count": 100,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -104,11 +104,8 @@
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-selective-100k-bn-reference-s42",
-        "TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
         "TB-pcqm-k1-selective-100k-ffn-rms-s42",
-        "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
         "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
-        "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
         "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
@@ -297,7 +294,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 50,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -337,11 +334,8 @@
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-selective-100k-bn-reference-s42",
-        "TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
         "TB-pcqm-k1-selective-100k-ffn-rms-s42",
-        "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
         "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
-        "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
         "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
@@ -357,7 +351,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 12,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -368,12 +362,6 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-pcqm-k1-selective-100k-bn-reference-s42",
-        "TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
-        "TB-pcqm-k1-selective-100k-ffn-rms-s42",
-        "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
-        "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
-        "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
         "TB-pcqm-k1-single-true-ema-100k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"

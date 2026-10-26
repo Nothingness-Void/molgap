@@ -1,0 +1,29 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-a7d23127691dbd1371353844858060012321d37092f9237c9c9129819cad2d02",
+  "finalized_at": "2026-10-26T15:22:06.049557+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_selective_ffn_norm_100k/failure_v1.md": "4a61e420391ab1bfb184677dc842cd22c050c2891a0a95edc191ebc82f7231a6",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/experiment_spec.json": "53d1e58abdb12a4f1e180154713c1ba0097a8fd905bdbdd74ffb93f34d1a617d",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/terminal_closure/acceptance.json": "b58af57cf8fcfae90a6b7d9eaa197ad25f79aa5c0e12c57272164e3aabc52a94",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md": "36ee56cede3ef2ae71aa083ed0ac098f8e33fd52328dc425d3052853fc9d6119"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/prospective/trajectory.json",
+  "prospective_sha256": "2d1346f67965f141115e3261fe1c756e15177e43342363bb3c43e742940f2104",
+  "published_hashes": {
+    "costs/measurement_missing.json": "5d2d80037958707a90e596bad7cac06027867b8dce7abec6f5229e8c9938be11",
+    "terminal_input.json": "fb5da01318d4785894023eb6cdc52e7925f0b8138fc93c5ca349124a43b1c323",
+    "trajectory.json": "35069c1498df7667a67894e0444dc0bd8eb4ddd42d2394beea0581118fe1402b",
+    "v5_evidence.json": "67b9b817e4fcf7ee7a30529d2ee58b35e44f2047fe5597ad140ab0be6b602c93"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/prospective/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "a7d23127691dbd1371353844858060012321d37092f9237c9c9129819cad2d02",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42"
+}

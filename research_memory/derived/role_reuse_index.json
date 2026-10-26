@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 725,
+  "ambiguous_historical_role_record_count": 755,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1221,6 +1221,216 @@
     },
     {
       "evidence_id": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unavailable"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -5077,7 +5287,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 464,
+  "explicit_role_event_count": 482,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5571,6 +5781,90 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
       },
       {
         "access_kind": "labels_read",
@@ -6359,6 +6653,48 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
       },
       {
         "access_kind": "labels_read",
@@ -8509,6 +8845,12 @@
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-hop-fusion-qualification-100k-evidence",
@@ -8653,6 +8995,12 @@
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
       "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2",
+      "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2",
+      "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "ev-terminal-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-hop-fusion-qualification-100k-evidence",
@@ -9213,6 +9561,90 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
       },
       {
         "access_kind": "labels_read",
@@ -11249,6 +11681,90 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-brn_affine-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -11988,6 +12504,48 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-ffn-rms-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42-r2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42-r2"
       },
       {
         "access_kind": "labels_read",

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "bn_reference-v2",
+  "category": "training",
+  "cost_event_id": "cost-terminal-TB-pcqm-k1-selective-100k-bn-reference-s42-r2-0",
+  "evidence_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/attempt_2/bn_reference/prospective/terminal_staging/v2/f57db670e4eba1a8/observed.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.567109043972223
+    }
+  },
+  "platform": "local",
+  "run_id": "pcqm-k1-selective-100k-bn-reference-s42-r2:bn_reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-selective-100k-bn-reference-s42-r2"
+}

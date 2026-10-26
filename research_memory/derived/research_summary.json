@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 22,
-    "excluded": 36,
+    "excluded": 39,
     "status": "available"
   },
   "cost": {
@@ -1124,7 +1124,7 @@
             "known_total": 0.14588541666666668
           },
           "not_applicable_records": 0,
-          "unknown_records": 9
+          "unknown_records": 12
         },
         "device_hours": {
           "estimated": {
@@ -1136,7 +1136,7 @@
             "known_total": 0.1264233322500013
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 8
         },
         "queue_hours": {
           "estimated": {
@@ -1148,7 +1148,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 4
+          "unknown_records": 7
         },
         "wall_hours": {
           "estimated": {
@@ -1156,8 +1156,8 @@
             "known_total": 1.161111111111111
           },
           "measured": {
-            "known_records": 9,
-            "known_total": 0.1867357350277795
+            "known_records": 12,
+            "known_total": 1.8789394021666688
           },
           "not_applicable_records": 0,
           "unknown_records": 3
@@ -3224,7 +3224,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 18
         },
         "device_hours": {
           "estimated": {
@@ -3236,7 +3236,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 18
         },
         "queue_hours": {
           "estimated": {
@@ -3248,7 +3248,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 18
         },
         "wall_hours": {
           "estimated": {
@@ -3260,7 +3260,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 18
         }
       },
       "unknown-before-authorized-device-query": {
@@ -3314,17 +3314,17 @@
         }
       }
     },
-    "unknown_events": 294
+    "unknown_events": 300
   },
   "evidence": {
-    "validated": 143,
+    "validated": 149,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 103,
+      "count": 100,
       "severity": "INFO"
     },
     {
@@ -3344,30 +3344,30 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 50,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 12,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 725,
-    "explicit_events": 464,
+    "coarse_historical": 755,
+    "explicit_events": 482,
     "repeatedly_selected": 25
   },
-  "source_digest": "ffb29a13aefb161996afc407e153d3856573b80cd86c40ba781bbaa543d99d38",
+  "source_digest": "c6fe56d8e2a822167d1998fc7d80f386eba17aae398ad16da4b70f691f0165b0",
   "trajectories": {
     "count": 161,
     "outcomes": {
-      "ACTIVE": 7,
-      "CLOSED": 22,
-      "INCONCLUSIVE": 23,
-      "INFRASTRUCTURE_ONLY": 10,
+      "ACTIVE": 1,
+      "CLOSED": 23,
+      "INCONCLUSIVE": 25,
+      "INFRASTRUCTURE_ONLY": 11,
       "NEGATIVE_UNDER_CONTRACT": 36,
-      "NO_TRAIN": 55,
+      "NO_TRAIN": 57,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

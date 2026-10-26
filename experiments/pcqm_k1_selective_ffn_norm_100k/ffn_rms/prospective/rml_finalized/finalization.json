@@ -1,0 +1,29 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-bf45570704be5bf4cb59d9ca8b58d6ba94e9687af45aa1a579b9d1c85205e58b",
+  "finalized_at": "2026-10-26T15:22:06.028104+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_selective_ffn_norm_100k/failure_v1.md": "4a61e420391ab1bfb184677dc842cd22c050c2891a0a95edc191ebc82f7231a6",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/experiment_spec.json": "ad2550b609745db3e6f30ea1394c6b55357121ccc6fb7e1a83f18b1088cc7c9a",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/terminal_closure/acceptance.json": "3a13742fb96980a753e0a62398a00334f8e756112302aa0286cbdc9abd64a211",
+    "experiments/pcqm_k1_selective_ffn_norm_100k/v1_closure_decision.md": "36ee56cede3ef2ae71aa083ed0ac098f8e33fd52328dc425d3052853fc9d6119"
+  },
+  "outcome": "NO_TRAIN",
+  "prospective_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/prospective/trajectory.json",
+  "prospective_sha256": "48ee66b67170e944c5dd5f14876a9b9fc0d1d5112be0167b20811d1e68e6642b",
+  "published_hashes": {
+    "costs/measurement_missing.json": "fbb02fa1492bb47ef9b13a43cebb621b1e448e9692e198013e8d5791bf8f1ba9",
+    "terminal_input.json": "d125b18e17c61557c7decdeea7f78f904babe2b01e0902c990539bc0165d58dc",
+    "trajectory.json": "0890e8ca86bc8b94ba95a4f7b1d2fb7eb6b7e5b58716761ac46a3952a0ec476b",
+    "v5_evidence.json": "17fa92bc317aad64266e134ab35fa906a1ed43bfc1260acfa5f2db58ce31bf40"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/prospective/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "bf45570704be5bf4cb59d9ca8b58d6ba94e9687af45aa1a579b9d1c85205e58b",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-k1-selective-100k-ffn-rms-s42"
+}
