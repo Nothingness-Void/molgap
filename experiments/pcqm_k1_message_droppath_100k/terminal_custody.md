@@ -3,7 +3,7 @@
 2026-10-27 JST. Owner `codex/exp/k1-message-droppath-100k`; frozen source
 `927783bab325dab85f311790c96b630011c21e21`. The scientific decision is
 NEGATIVE_UNDER_CONTRACT for DropPath; the matched baseline closes CLOSED.
-[Qualification](terminal_acceptance/qualification.md) and canonical finalizations
+[Qualification](qualification.md) and canonical finalizations
 own strict replay status. [Attribution](terminal_acceptance/attribution.md)
 owns interpretation. BRANCHES.md records the final pushed owner/archive commits.
 
