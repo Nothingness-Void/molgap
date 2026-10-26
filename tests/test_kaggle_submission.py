@@ -500,7 +500,8 @@ def test_remote_source_corruption_blocks_kernel_post(release):
     assert release.api.pushed == 0
 
 
-def test_parallel_transport_starts_after_all_parent_directories_exist(release, monkeypatch):
+@pytest.mark.parametrize("source_version", [1, 2])
+def test_parallel_transport_starts_after_all_parent_directories_exist(release, monkeypatch, source_version):
     import molgap.kaggle_output_retrieval as transport
     real_download = transport._download_selected
     def checked(**kwargs):
@@ -509,7 +510,20 @@ def test_parallel_transport_starts_after_all_parent_directories_exist(release, m
                    ("initial_states", "prospective/original", "prospective/optimized"))
         return real_download(**kwargs)
     monkeypatch.setattr(transport, "_download_selected", checked)
-    assert release.run()["status"] == "SUBMISSION_BOUND"
+    if source_version == 1:
+        assert release.run()["status"] == "SUBMISSION_BOUND"
+    else:
+        release.api.dataset = release.api.ready = True
+        monkeypatch.setattr(owner, "_dataset_details", lambda api, ref: NS(current_version_number=2))
+        result = owner._roundtrip_source(release.api, release.http, release.staged,
+            release.output / "resume_roundtrip", "owner/new-source", expected_version=2)
+        assert result["version"] == 2
+        assert all(request.dataset_version_number == 2 for request in release.sdk.requests)
+        assert release.api.created == release.api.pushed == 0
+        monkeypatch.setattr(owner, "_dataset_details", lambda api, ref: NS(current_version_number=3))
+        with pytest.raises(ValueError, match="pinned immutable version"):
+            owner._roundtrip_source(release.api, release.http, release.staged,
+                release.output / "drift", "owner/new-source", expected_version=2)
 
 
 def test_unknown_remote_identity_is_not_absence(release, monkeypatch):
