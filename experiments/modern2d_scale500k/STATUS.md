@@ -1,9 +1,11 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Original-source checkpoint continuation Kaggle2
-kernel140916841/version2 is RUNNING. Version1 stopped during training after a
-resume-export serialization fault; its completed work is retained. Both earlier
+input/runtime release. Kaggle2 kernel140916841/version2 ended ERROR during actual-resume
+preflight; its [diagnosis](results/failed_r3_v2/decision.md) retains exact evidence
+and allocation cost. The missing disabled-EMA field has a local compatibility
+repair; reviewed recovery release remains blocked. No version3 was submitted.
+Version1 training progress and native checkpoints remain retained. Both earlier
 pre-training faults remain closed. No scientific successor or protected role
 is released.
 

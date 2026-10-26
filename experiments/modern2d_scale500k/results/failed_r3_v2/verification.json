@@ -1,0 +1,46 @@
+{
+  "duration_seconds": 19.87,
+  "executor": "Luna gpt-6-luna max",
+  "failed": 0,
+  "fix_commit": "6f4810fa46382e88d538732814447115b7fe9f96",
+  "limitations": [
+    "Selected checks did not directly execute run_screen_resume_preflight",
+    "No native GPU release qualification",
+    "No training or inference on retained real data"
+  ],
+  "nodes": [
+    "tests/test_family_resume_optional_ema.py::test_resume_hook_normalizes_only_disabled_wire_ema",
+    "tests/test_modern2d_formal_training.py::test_formal_actual_session_resume_full_state_and_readonly_dev"
+  ],
+  "passed": 7,
+  "retained_checkpoint_metadata": {
+    "checkpoints": {
+      "esa_count_500k": {
+        "all_original_state_preserved": true,
+        "cursor_optimizer_step": null,
+        "cursor_sample_presentations": null,
+        "ema": "missing",
+        "normalization_added_only_ema": true,
+        "optimizer_step": 39060,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v1\\experiment\\esa_count_500k\\last_checkpoint.pt",
+        "sample_presentations": 4999680,
+        "status": "LOADED",
+        "top_level_state_fields": 8
+      },
+      "ppgt_mean_500k": {
+        "all_original_state_preserved": true,
+        "cursor_optimizer_step": null,
+        "cursor_sample_presentations": null,
+        "ema": "missing",
+        "normalization_added_only_ema": true,
+        "optimizer_step": 4047,
+        "path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v1\\experiment\\ppgt_mean_500k\\last_checkpoint.pt",
+        "sample_presentations": 518016,
+        "status": "LOADED",
+        "top_level_state_fields": 8
+      }
+    },
+    "load_mode": "CPU, weights_only=True; metadata/state comparison only"
+  },
+  "scope": "disabled EMA wire normalization and existing actual-session resume tests"
+}

@@ -1,0 +1,73 @@
+{
+  "format": "molgap-allocation-ledger-v1",
+  "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+  "started_at": "2026-10-26T08:43:24.816457+00:00",
+  "observed_at": "2026-10-26T09:05:08.505916+00:00",
+  "status": "failed",
+  "allocation_device_count": 2,
+  "wall_seconds": 1303.6894501549998,
+  "allocated_device_seconds": 2607.3789003099996,
+  "unassigned_device_seconds": 0.0,
+  "devices": [
+    {
+      "device": 0,
+      "hardware": "Tesla T4",
+      "arm_id": "ppgt_mean_500k",
+      "allocated_seconds": 1303.6894501549998
+    },
+    {
+      "device": 1,
+      "hardware": "Tesla T4",
+      "arm_id": "esa_count_500k",
+      "allocated_seconds": 1303.6894501549998
+    }
+  ],
+  "scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+  "provisioning_before_python_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  },
+  "queue_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  },
+  "prior_segments": [
+    {
+      "format": "molgap-allocation-ledger-v1",
+      "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+      "started_at": "2026-10-26T06:15:04.047959+00:00",
+      "observed_at": "2026-10-26T08:09:41.325367+00:00",
+      "status": "failed",
+      "allocation_device_count": 2,
+      "wall_seconds": 6877.277398151,
+      "allocated_device_seconds": 13754.554796302,
+      "unassigned_device_seconds": 0.0,
+      "devices": [
+        {
+          "device": 0,
+          "hardware": "Tesla T4",
+          "arm_id": "ppgt_mean_500k",
+          "allocated_seconds": 6877.277398151
+        },
+        {
+          "device": 1,
+          "hardware": "Tesla T4",
+          "arm_id": "esa_count_500k",
+          "allocated_seconds": 6877.277398151
+        }
+      ],
+      "scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+      "provisioning_before_python_seconds": {
+        "value": null,
+        "status": "measurement_missing"
+      },
+      "queue_seconds": {
+        "value": null,
+        "status": "measurement_missing"
+      },
+      "prior_segments": [],
+      "prior_unobserved_intervals": false
+    }
+  ],
+  "prior_unobserved_intervals": false
+}

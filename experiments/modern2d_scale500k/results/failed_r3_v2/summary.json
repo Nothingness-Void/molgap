@@ -1,0 +1,26 @@
+{
+  "budget_policy": "Deduplicate overlapping ledgers/bootstrap observations; deduct every prior invocation before release. No fresh nine-hour budget.",
+  "cause": "disabled EMA key omitted by checkpoint wire format but required by resume-preflight validator",
+  "evidence": {
+    "bootstrap_allocation.json": "fabb75eb5221aab19bdc10cfa0c96bb8035a05bb5db20f02cc1be0e242d4f691",
+    "experiment/allocation_ledger.json": "8a29898d1f5fcd797a21563d095d4f93d89867cab92941023356ec6efd63e0df",
+    "experiment/execution_report.json": "0b4589749b9e4e80c8a93c0d43d593056d299d9310a40a75c17e0146d7db6b04",
+    "experiment/execution_retention.json": "c87c161545aa3e2d54c60eb17347cdf29d04b02a843144ab83714ac8cbfa659c"
+  },
+  "failure_stage": "actual_resume_preflight",
+  "formal_progress_retained_from_version1": {
+    "esa_count_500k": 39060,
+    "ppgt_mean_500k": 4047
+  },
+  "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+  "kernel_id": 140916841,
+  "new_formal_training_phase_entered": false,
+  "new_submission_executed": false,
+  "original_allocation_ceiling_seconds": 32372,
+  "release_status": "BLOCKED_PENDING_REVIEWED_RECOVERY_SOURCE",
+  "scheduler_status": "ERROR",
+  "scientific_status": "INCOMPLETE_NO_WINNER",
+  "version": 2,
+  "version2_allocation_ledger_wall_seconds": 1303.6894501549998,
+  "version2_bootstrap_wall_seconds": 1304.107362469
+}
