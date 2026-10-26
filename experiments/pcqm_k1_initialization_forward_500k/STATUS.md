@@ -1,13 +1,16 @@
 # Submission state
 
-2026-10-26 JST: both authorized Kaggle1 jobs are submitted and receipt-bound.
-Scheduler observations report RUNNING; native qualification and training progress
-are not established by these observations. No automatic successor or retry.
+2026-10-26 JST: both exact Kaggle1 version1 jobs are ERROR. Native preflight
+completed and all four arms trained; the first10-pass portable resume export
+failed when tensor-bearing Clean-EMA cursor state entered a JSON manifest.
+The [failure inspection](failure_inspection/inspection.md) owns observed progress,
+partial metrics, scope and costs. The scientific question remains unresolved.
+No successor or retry was submitted during inspection.
 
 | Slot | Kernel ID / version | Scheduler | Durable operations |
 | --- | --- | --- | --- |
-| single | 140826099 / 1 | RUNNING | [pcqm-k1-init-forward-500k-single-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-single-s42/v1/operations/) |
-| mean2 | 140826274 / 1 | RUNNING | [pcqm-k1-init-forward-500k-mean2-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-mean2-s42/v1/operations/) |
+| single | 140826099 / 1 | ERROR | [pcqm-k1-init-forward-500k-single-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-single-s42/v1/operations/) |
+| mean2 | 140826274 / 1 | ERROR | [pcqm-k1-init-forward-500k-mean2-s42](D:/molgap-artifacts/runs/pcqm-k1-init-forward-500k-mean2-s42/v1/operations/) |
 
 Frozen execution source remains `64933302a449cd48961a610028a17bd6ae6d2e23`.
 Both original v1 packages, run IDs, launch bytes and four published prospective
@@ -24,6 +27,10 @@ confirmed the same datasets ready before journal reentry. Neither dataset was re
 
 Upload/roundtrip copies were retired by the existing bound-submission cleaner.
 Canonical planning records and immutable source packages remain retained.
-Startup log requests timed out; no native admission or epoch completion is claimed.
+Initial startup log requests timed out. Subsequent terminal inspection retrieved
+per-arm logs and canonical traces:10 completed observations/39060 steps per arm;
+the logger stopped at9. Full checkpoint validity and native-proof verification
+are pending; these are not complete replay-ready results.
 
-Next: reconcile these exact versions and retain required evidence; do not resubmit.
+Next: repair the existing resume metadata export and verify retained checkpoint
+recovery before a separately authorized continuation. Keep these exact attempts.
