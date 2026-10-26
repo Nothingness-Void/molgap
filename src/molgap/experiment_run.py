@@ -111,7 +111,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                         retrieved_root=None, execute=False, execution_root=None,
                         diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
                         diagnostic_output=None, n_bootstrap=0, seed=42, role_audit=None,
-                        strict_inputs=None, continuation_receipt=None, physical_runs=None,
+                        strict_inputs=None, continuation_receipt=None, physical_runs=None, physical_observation=None,
                         resume_prepared=None, resume_authority=None):
     """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
     from .experiment_run_acceptance import resolve_run_acceptance_inputs
@@ -151,6 +151,11 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         execution_root=execution_root, _retention=retention,
         target_identities=resolved.get("target_identities"), **options)
     result.update(identity)
+    if physical_observation is not None:
+        if physical_runs is not None:
+            raise ValueError("Use either physical_runs or one physical_observation")
+        from .experiment_allocation import current_physical_allocation_records
+        physical_runs = current_physical_allocation_records(resolved, retention, physical_observation)
     if physical_runs is not None:
         from .experiment_allocation import aggregate_physical_allocation_costs
         result["physical_allocation_costs"] = aggregate_physical_allocation_costs(physical_runs)
@@ -243,11 +248,13 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                 "blockers": ["native_proof_dependencies_missing"]}
         native_cache = {arm: (value, resolved["contexts"][arm].to_dict())
                         for arm, value in native.items()}
+    paired_cache = {}
     if diagnose:
         from .experiment_attribution import diagnose_run, _write_run_diagnosis
         diagnostic = diagnose_run(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, output=diagnostic_output,
-            n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"])
+            n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"],
+            _paired_cache=paired_cache)
         if diagnostic_output is None:
             from .screen_policy import canonical_fingerprint
             path = resolved["run_directory"] / "reports" / ("diagnostic_" + canonical_fingerprint(diagnostic) + ".json")
@@ -290,7 +297,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         active_locations = result.get("terminal_staging", {}).get("locations", resolved["locations"])
         if same_run is not None:
             qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native,
-                reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms)
+                reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms,
+                _paired_cache=paired_cache)
         else:
             # Historical references use their retained comparison bindings;
             # they cannot be translated into a same-run reference declaration.

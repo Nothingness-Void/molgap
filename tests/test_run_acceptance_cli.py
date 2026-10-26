@@ -106,6 +106,12 @@ def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_
     visible = json.loads(capsys.readouterr().out)["strict_validation"]
     assert visible["status"] == "BLOCKED"
     assert visible["arms"]["arm"]["native_qualification"] == {"status": "VERIFIED"}
+    observation = tmp_path / "allocation_entry_observation.json"
+    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
+        "--execution-root", str(tmp_path / "execution"), "--physical-observation", str(observation)]) == 1
+    assert owner.call_args.kwargs["physical_observation"] == observation
+    capsys.readouterr()
 
 
 @pytest.mark.parametrize("read_only", [False, True])

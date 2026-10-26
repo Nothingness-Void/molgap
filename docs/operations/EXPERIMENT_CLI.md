@@ -237,9 +237,13 @@ continued proof directory is `<retrieved-root>/_resume_preflight/<arm>`;
 `--strict-inputs` can override `native_root`/`actual_resume_root` for older custody.
 Outcome, decision and observed role audit remain explicit scientific inputs.
 Use reviewed `--locations` for read-only checks of already finalized history.
-`--physical-runs` supplies the existing
-hash-bound physical-allocation observations, including failed attempts, counted
-once per physical job/version.
+For one physical job/version, `--execution-root` and an explicitly identified
+`--physical-observation PATH` bind its entry observation to the already resolved
+receipt and retained execution report, without hand-building allocation JSON.
+The observation's origin remains the caller's responsibility. `--physical-runs`
+accepts explicit hash-bound records for multiple jobs or failed attempts, counted
+once per physical job/version. The two options are alternatives; physical cost
+summary does not by itself make cumulative RML costs complete.
 
 `platforms/kaggle/retrieve_family_outputs.py` accepts the same continued receipt
 and `--strict --resume-prepared`. It retains a separate version-specific output

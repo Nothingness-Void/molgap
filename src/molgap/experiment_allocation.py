@@ -29,6 +29,35 @@ def _bound_json(reference):
     return value
 
 
+def current_physical_allocation_records(resolved, retention, observation_path):
+    """Bind one explicitly observed physical entry to the resolved run.
+
+    The caller identifies the observation; its origin is not inferred here.
+    Multi-job or historical allocation accounting still uses explicit records.
+    """
+    if retention is None:
+        raise ValueError("Physical observation requires verified execution retention")
+    receipt_path = Path(resolved["options"]["receipt_path"]).absolute()
+    receipt_bytes = receipt_path.read_bytes()
+    receipt = json.loads(receipt_bytes)
+    contexts = list(resolved["contexts"].values())
+    runs = receipt.get("physical_runs", {}).get("value") or []
+    matches = [run for run in runs if contexts and all(
+        context.platform == receipt.get("binding", {}).get("requested_logical_platform")
+        and context.run_reference == run.get("canonical_reference")
+        and context.platform_version == run.get("platform_version", {}).get("value")
+        and context.arm_id in run.get("arm_ids", []) for context in contexts)]
+    if len(matches) != 1:
+        raise ValueError("Physical observation requires one matching job/version for every arm")
+    observation = Path(observation_path).absolute()
+    report = retention["manifest"]["execution_report"]
+    report_path = Path(retention["manifest_path"]).parent / report["path"]
+    return [{"platform": contexts[0].platform, "physical_run": matches[0],
+        "receipt": {"path": str(receipt_path), "sha256": hashlib.sha256(receipt_bytes).hexdigest()},
+        "observation": {"path": str(observation), "sha256": hashlib.sha256(observation.read_bytes()).hexdigest()},
+        "execution_report": {"path": str(report_path), "sha256": report["sha256"]}}]
+
+
 def aggregate_physical_allocation_costs(records):
     """Count explicit physical job/version entry windows once, including failures.
 

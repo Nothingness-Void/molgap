@@ -211,7 +211,7 @@ def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
 
 
 def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports, strict_inputs=None,
-                                       _target_transforms=None):
+                                       _target_transforms=None, _paired_cache=None):
     """Translate verified family artifacts into the existing V5 comparison forms.
 
     Publishes new metadata and terminal inputs. Original terminal packages and
@@ -437,8 +437,15 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             left, right = loaded[reference_id], loaded[arm_id]
             if not np.array_equal(left["source_idx"], right["source_idx"]) or not np.array_equal(left["target_eV"], right["target_eV"]):
                 raise ValueError("Strict comparison predictions/targets are not aligned")
-            paired = _compare_paired_errors(np.abs(left["prediction_eV"] - left["target_eV"]),
-                np.abs(right["prediction_eV"] - right["target_eV"]), n_bootstrap=2000, seed=42)
+            cached = (_paired_cache or {}).get(arm_id, {})
+            paired = cached.get("paired", {})
+            if not (cached.get("reference_id") == reference_id
+                    and cached.get("hashes") == (left["hashes"], right["hashes"])
+                    and paired.get("n_bootstrap") == 2000 and paired.get("seed") == 42
+                    and paired.get("threshold_eV") == 0.003
+                    and paired.get("noninferiority_margin_eV") == 0.0005):
+                paired = _compare_paired_errors(np.abs(left["prediction_eV"] - left["target_eV"]),
+                    np.abs(right["prediction_eV"] - right["target_eV"]), n_bootstrap=2000, seed=42)
             paired_ref = publish(arm_id, "paired_analysis.json", paired)
             sides[arm_id]["artifacts"]["paired_analysis"] = "complete"
             sides[arm_id]["artifact_bindings"]["paired_analysis"] = binding(paired_ref)

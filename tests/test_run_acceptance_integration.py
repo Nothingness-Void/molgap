@@ -698,8 +698,35 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert rejected["status"] == "BLOCKED"
     assert any("frozen normalization/train identity" in reason for reason in rejected["blockers"])
     path.write_bytes(original_asset)
+    paired_cache = {}
+    if comparison_purpose == "single_module_ablation":
+        from molgap import experiment_attribution as attribution
+        compare = attribution._compare_paired_errors
+        comparisons = []
+        def count_comparison(*args, **kwargs):
+            comparisons.append((kwargs["n_bootstrap"], kwargs["seed"]))
+            return compare(*args, **kwargs)
+        monkeypatch.setattr(attribution, "_compare_paired_errors", count_comparison)
+        diagnostic = attribution.diagnose_run(*case.original,
+            retrieved_root=case.paths.artifact_root / "retrieved", resolved=resolved,
+            reports=result["arms"], n_bootstrap=2000, seed=42, _paired_cache=paired_cache)
+        assert diagnostic["status"] == "DIAGNOSED"
+        assert comparisons == [(2000, 42)]
     qualified = family.qualify_same_run_terminal_packages(case.repo, resolved,
-        result["terminal_staging"]["locations"], native, reports=result["arms"], strict_inputs=supplements)
+        result["terminal_staging"]["locations"], native, reports=result["arms"], strict_inputs=supplements,
+        _paired_cache=paired_cache)
+    if paired_cache:
+        assert comparisons == [(2000, 42)]
+        candidate = next(iter(paired_cache))
+        paired_path = Path(qualified["directory"]) / candidate / "paired_analysis.json"
+        assert json.loads(paired_path.read_bytes()) == paired_cache[candidate]["paired"]
+        # A result from a different bootstrap configuration must be recomputed.
+        wrong_seed = deepcopy(paired_cache)
+        wrong_seed[candidate]["paired"]["seed"] = 1
+        family.qualify_same_run_terminal_packages(case.repo, resolved,
+            result["terminal_staging"]["locations"], native, reports=result["arms"],
+            strict_inputs=supplements, _paired_cache=wrong_seed)
+        assert comparisons == [(2000, 42), (2000, 42)]
     for arm_id, where in qualified["locations"].items():
         package = json.loads((case.repo / where["terminal"]).read_bytes())
         assert package["supersedes_finalization_ref"] == receipts[arm_id].relative_to(case.repo).as_posix()

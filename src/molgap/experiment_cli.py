@@ -143,6 +143,8 @@ def _parser() -> argparse.ArgumentParser:
                 help="Per-arm local proof/comparison locations; recheck existing strict owners")
             command.add_argument("--physical-runs", type=_local,
                 help="Hash-bound physical allocation records; count each job/version once")
+            command.add_argument("--physical-observation", type=_local,
+                help="Observed entry for this one job/version; requires --execution-root")
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
@@ -292,6 +294,8 @@ def _dispatch(args) -> tuple[dict, int]:
                     if args.physical_runs is not None:
                         import json
                         options["physical_runs"] = json.loads(args.physical_runs.read_text(encoding="utf-8"))
+                    if args.physical_observation is not None:
+                        options["physical_observation"] = args.physical_observation
                     if args.retrieved_root is not None:
                         options["retrieved_root"] = args.retrieved_root
                     if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
@@ -319,7 +323,7 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
                     args.decision_ref, args.role_audit, args.output, args.strict_inputs,
-                    args.strict, args.continuation_receipt, args.physical_runs,
+                    args.strict, args.continuation_receipt, args.physical_runs, args.physical_observation,
                     args.resume_prepared, args.resume_authority)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:

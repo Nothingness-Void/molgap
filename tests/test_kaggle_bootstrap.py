@@ -37,7 +37,7 @@ def report(entry):
 @pytest.mark.parametrize("failure", [None, RuntimeError("preflight failed"),
                                     subprocess.TimeoutExpired("pip", 30), KeyboardInterrupt()])
 def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
-    from molgap.experiment_allocation import aggregate_physical_allocation_costs
+    from molgap.experiment_allocation import aggregate_physical_allocation_costs, current_physical_allocation_records
 
     ticks = iter([100.0, 145.0])
     monkeypatch.setattr(entry.time, "perf_counter", lambda: next(ticks))
@@ -87,6 +87,19 @@ def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
         "observation": bound("current-entry.json", value),
         "receipt": bound("current-receipt.json", receipt),
         "execution_report": bound("execution.json", execution)}
+    context = types.SimpleNamespace(platform="kaggle", run_reference="owner/question",
+                                    platform_version="2", arm_id="a")
+    resolved = {"options": {"receipt_path": current["receipt"]["path"]}, "contexts": {"a": context}}
+    retention = {"manifest_path": entry.OUTPUT_ROOT / "execution_retention.json",
+                 "manifest": {"execution_report": {"path": "execution.json",
+                     "sha256": current["execution_report"]["sha256"]}}}
+    automatic = current_physical_allocation_records(resolved, retention, current["observation"]["path"])
+    assert automatic == [current]
+    assert aggregate_physical_allocation_costs(automatic)["windows"][0]["status"] == value["status"]
+    context.platform_version = "3"
+    with pytest.raises(ValueError, match="one matching job/version"):
+        current_physical_allocation_records(resolved, retention, current["observation"]["path"])
+    context.platform_version = "2"
     prior_physical = {**physical, "run_identity": "kernel77/version1",
                       "platform_version": {"value": "1", "missing_reason": None}}
     prior = {**current, "physical_run": prior_physical,
