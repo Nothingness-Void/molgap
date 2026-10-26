@@ -1,0 +1,16 @@
+{
+  "execution_status": "FAILED",
+  "scientific_status": "NOT_EVALUATED",
+  "failure_stage": "stdlib_bootstrap_before_environment_and_training",
+  "error": "Unknown Modern2D startup purpose",
+  "kernel": "kaseichou/molgap-modern2d-scale500k-s42-v1",
+  "kernel_id": 140822297,
+  "version": 1,
+  "training_observed": false,
+  "account_quota_delta_seconds": 6.744000000000597,
+  "account_quota_delta_is_per_run_native_cost": false,
+  "bootstrap_allocation_ref": "experiments/modern2d_scale500k/results/failed_v1/bootstrap_allocation.json",
+  "repair": "Add explicit pinned500K transfer startup admission; unchanged scientific recipe",
+  "retry_wall_ceiling_seconds": 32390,
+  "prior_outputs_preserved": true
+}
