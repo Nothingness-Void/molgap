@@ -1,0 +1,91 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "blockers": [],
+  "context": {
+    "experiment_id": "pcqm-k1-selective-ffn-norm-100k",
+    "logical_run_id": "pcqm-k1-selective-100k-bn-reference-s42-r2",
+    "arm_id": "bn_reference",
+    "arm_identity": "2fdbf87c67d05e100c77be02e4929427ba4505145f805fea65c4a7440c1a5a95",
+    "spec_identity": "d798d6c3d3931687b80a43ec812fb864b4e2b7ec3bf4e378c09b5807a50f59a4",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "902e6a19062de6167e97a7e23036d0e7205f3e81",
+    "source_archive_sha256": "3fa5cab50363b874c43855ba9324418ebc1a868e66650b56338db30be409e927",
+    "package_identity": "fc59f5bda50e50a752d51dd3c6a4dfefa0c34f7157d43f91b4da17f88787f417",
+    "training_recipe_sha256": "535ccb3125de04c81aac1451e049fa4903e1a40b3cd1630fc00b49f30259d41c",
+    "platform": "local",
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-k1-selective-100k-bn-reference-s42-r2",
+    "platform_version": "1"
+  },
+  "observed": {
+    "target_identity": {
+      "encoding": "little-endian-float32-contiguous-raw-bytes",
+      "manifest": {
+        "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      },
+      "acceptance_plan_sha256": "2c5cfe6e414935fc4797bc85cb197b1d13378982f08fd3ad333591a018fcd7da"
+    },
+    "development_mae_eV": 0.13987629553258418,
+    "progress": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "completed_passes": 40,
+      "next_batch": 0,
+      "status": "complete"
+    },
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "535ccb3125de04c81aac1451e049fa4903e1a40b3cd1630fc00b49f30259d41c"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "9b9ce8ec0824c381fc8162a5dc21fa4e2019b09bfc2dfe954b53fc40afbf5edd"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "969fb5dd47c31f0d6fd2267bd67107b3efe050aa512d1c2f4ca09b92165b23c4"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "d8a999c6bedc68384abb32107b64572101a981dda41a9eb99d5fdc0fb81f6a82"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "cc3c65f078d1ff9806c76746a796adb3d2b142dc4ba6677b0f93be2921f43888"
+      },
+      "trace_context": {
+        "path": "canonical_trace.json.context.json",
+        "sha256": "49799495bf3340c60f64f66f0ac68caea9d744a1b58dd1077dcff4df42a009ba"
+      }
+    },
+    "costs": [
+      {
+        "hardware": "NVIDIA GeForce RTX 5060",
+        "metric": "wall_seconds",
+        "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 2041.5925583000026
+      },
+      {
+        "hardware": "NVIDIA GeForce RTX 5060",
+        "metric": "device_seconds",
+        "reason": "requires platform allocation accounting",
+        "semantics": "allocated_device",
+        "status": "missing",
+        "unit": "seconds",
+        "value": null
+      }
+    ],
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "producer_platform_version": null
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

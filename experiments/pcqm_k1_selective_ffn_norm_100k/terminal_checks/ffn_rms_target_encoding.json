@@ -1,0 +1,32 @@
+{
+  "format": "molgap-family-acceptance-plan-v1",
+  "spec_identity": "cd5c6ee026854f4677a6574843700146ff2961ca0568612a5698bf6cf3a26964",
+  "arms": [
+    {
+      "arm_id": "ffn_rms",
+      "adapter": "k1-session-v1",
+      "expected": {
+        "completed_passes": 40,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "precision": "fp32",
+        "sample_presentations": 3998720,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      },
+      "contract": {
+        "path": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/recipe.json",
+        "sha256": "f1afb831356362fe30495f5eec0a1348f4f250684990312914d73a0db263208a"
+      },
+      "comparison_prelaunch": null,
+      "reference_bundle": null,
+      "reference_artifacts": {
+        "target_manifest": {
+          "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        }
+      }
+    }
+  ]
+}
