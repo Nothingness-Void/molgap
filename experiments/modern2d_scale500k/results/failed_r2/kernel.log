@@ -1,0 +1,19 @@
+[{"stream_name":"stderr","time":6.442862956,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":6.443481023,"data":"  File \"/kaggle/src/script.py\", line 265, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":6.443500842,"data":"    main()\n"}
+,{"stream_name":"stderr","time":6.443505302,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":6.44350938,"data":"  File \"/kaggle/src/script.py\", line 233, in main\n"}
+,{"stream_name":"stderr","time":6.443513369,"data":"    _workload(started)\n"}
+,{"stream_name":"stderr","time":6.443517108,"data":"    ~~~~~~~~~^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":6.443520836,"data":"  File \"/kaggle/src/script.py\", line 153, in _workload\n"}
+,{"stream_name":"stderr","time":6.443524926,"data":"    modern2d_wall = _modern2d_wall_ceiling(declaration, source)\n"}
+,{"stream_name":"stderr","time":6.443528885,"data":"  File \"/kaggle/src/script.py\", line 44, in _modern2d_wall_ceiling\n"}
+,{"stream_name":"stderr","time":6.443533326,"data":"    raise ValueError(\"Modern2D startup authority hash differs\")\n"}
+,{"stream_name":"stderr","time":6.443537594,"data":"ValueError: Modern2D startup authority hash differs\n"}
+,{"stream_name":"stderr","time":9.522108562,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9.522152222999999,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10.196558608,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10.196582946,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":13.374162815,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15.010074123,"data":"[NbConvertApp] Writing 337454 bytes to __results__.html\n"}
+]
