@@ -1,0 +1,28 @@
+{
+  "format": "molgap-training-log-v1",
+  "event": "epoch",
+  "arm_id": "esa_count_500k",
+  "family": "esa_small",
+  "weight_state": "live",
+  "status": "running",
+  "completed_passes": 9,
+  "planned_passes": 11.996927803379416,
+  "next_batch": 3896,
+  "optimizer_steps": 39050,
+  "planned_optimizer_steps": 46860,
+  "sample_presentations": 4998400,
+  "train_live_mae_eV": 0.10310686704364716,
+  "development_mae_eV": 0.13842639327049255,
+  "best_development_mae_eV": 0.13842639327049255,
+  "metric_pass": 9,
+  "best_metric_pass": 9,
+  "learning_rates": [
+    2.391473221537152e-05
+  ],
+  "elapsed_seconds": 6403.332957479,
+  "updates_per_second": 6.098386615112708,
+  "eta_seconds": 1280.6665914957998,
+  "pass_wall_seconds": 129.84197117199983,
+  "pass_timing_scope": "full_pass",
+  "checkpoint_optimizer_steps": 39050
+}

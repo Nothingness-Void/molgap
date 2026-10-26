@@ -1,9 +1,11 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Replacement Kaggle2 kernel140916841/version1 is RUNNING.
-Both earlier pre-training startup faults and controller events are closed and
-separately traceable. No scientific successor or protected role is released.
+input/runtime release. Original-source checkpoint continuation Kaggle2
+kernel140916841/version2 is RUNNING. Version1 stopped during training after a
+resume-export serialization fault; its completed work is retained. Both earlier
+pre-training faults remain closed. No scientific successor or protected role
+is released.
 
 ## Selected input prerequisite
 
@@ -80,3 +82,27 @@ binding generation3 and the existing30-minute Luna B heartbeat own subsequent
 monitoring. Healthy status is silent; one new terminal event hands back to A.
 Neither a RUNNING scheduler nor this release establishes an accepted model,
 scientific superiority, strict causality or Replay admission.
+
+## Native checkpoint continuation
+
+Version1 completed both native preflights and performed formal training before
+ESA's tenth physical-pass checkpoint export failed to serialize pending scalar
+Tensors. The coordinator then stopped PPGT. The
+[partial evidence](results/interrupted_r3_v1/summary.json) binds actual checkpoint
+cursors, selected metrics and incomplete endpoints; it supports no final winner.
+
+Both checkpoints passed native state and original frozen-reader validation.
+[Recovery decision](continuation_v2/decision.md) preserves tensor bytes, RNG,
+optimizer/scheduler, pending metric windows, original source/Spec and endpoints.
+The local manifest writer projects finite scalar tensors to exact JSON numbers;
+it does not change training state. Existing preparation and transport owners
+qualified the continuation source dataset version2 and physical kernel version2.
+[Receipt](continuation_v2/gpu/launch_receipt.json),
+[source proof](continuation_v2/gpu/source_verification.json) and
+[bundle bindings](continuation_v2/resume_bundle_bindings.json) retain that mapping.
+
+The original aggregate wall ceiling still applies, with the deduplicated prior
+allocation ledger carried into runtime. No fresh9h budget or fresh training was
+released. Existing Luna B uses binding generation4 for version2 only. Its
+actual-resume native proof, completed output and scientific acceptance remain
+unobserved; RUNNING is the last scheduler observation only.

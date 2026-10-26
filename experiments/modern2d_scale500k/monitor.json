@@ -16,13 +16,15 @@
   "wall_ceiling_seconds": 32372,
   "jobs": [
     {
-      "slot": "scale500k_pair_r3",
+      "slot": "scale500k_pair_r3_resume",
       "closed": false,
-      "control_state": "E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/monitor/control_state.json",
+      "control_state": "E:/MolGap/artifacts/recovery/modern2d-scale500k-r3/monitor/control_state.json",
       "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
       "kernel_id": 140916841,
-      "version": 1,
-      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1"
+      "version": 2,
+      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v2"
     }
-  ]
+  ],
+  "prior_allocation_wall_seconds": 6877.277398151,
+  "remaining_allocation_wall_seconds": 25494.722601849
 }

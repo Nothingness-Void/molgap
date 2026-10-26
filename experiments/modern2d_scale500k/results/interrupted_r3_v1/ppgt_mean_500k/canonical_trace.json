@@ -1,0 +1,107 @@
+{
+  "device_time_semantics": "sum_over_devices",
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "f8e377df71fee3f21997b8001f08d7670ce3dd1108a1e838fcb0e0ea8f0e07cc",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "8e971a3ba52df86d90aa604a1eb158667c59edd7789ce889b132230ffd3fda5e",
+      "target": "Gap",
+      "unit": "normalized-Gap",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": "b551d3f1fc5ea0fe40a5e3fbb399fb0af29d638e9db6a940f5b638ce57f36dd0",
+      "cumulative_device_time_seconds": 1292.021562789,
+      "cumulative_wall_time_seconds": 1292.021562789,
+      "device_time_seconds": 1292.021562789,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.19994879672299026,
+      "event": "observation",
+      "learning_rate": 0.00025,
+      "live_dev_metric": 0.34619882702827454,
+      "live_train_metric": 0.38339352596279297,
+      "optimizer_step": 781,
+      "sample_presentations": 99968,
+      "sequence": 0,
+      "wall_time_seconds": 1292.021562789
+    },
+    {
+      "checkpoint_identity": "fd19655d491a01816ffe1e9a42400376368a1914f71b696470e71aa54a84efe1",
+      "cumulative_device_time_seconds": 2529.716417158,
+      "cumulative_wall_time_seconds": 2529.716417158,
+      "device_time_seconds": 1237.694854369,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.3998975934459805,
+      "event": "observation",
+      "learning_rate": 0.0005,
+      "live_dev_metric": 0.3211323320865631,
+      "live_train_metric": 0.2686374116684197,
+      "optimizer_step": 1562,
+      "sample_presentations": 199936,
+      "sequence": 1,
+      "wall_time_seconds": 1237.694854369
+    },
+    {
+      "checkpoint_identity": "ab48d15d4555ea039b8c50188cfa578e5912210a83d74524dd9b4b94770d63f5",
+      "cumulative_device_time_seconds": 3762.5896877839996,
+      "cumulative_wall_time_seconds": 3762.5896877839996,
+      "device_time_seconds": 1232.8732706259998,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.5998463901689708,
+      "event": "observation",
+      "learning_rate": 0.00075,
+      "live_dev_metric": 0.2927709221839905,
+      "live_train_metric": 0.2517988423073948,
+      "optimizer_step": 2343,
+      "sample_presentations": 299904,
+      "sequence": 2,
+      "wall_time_seconds": 1232.8732706259998
+    },
+    {
+      "checkpoint_identity": "ecfe094a984dd9a020e1583c8620568332a9e869c7657f3ea735fb877fc3d2e3",
+      "cumulative_device_time_seconds": 4988.184931052,
+      "cumulative_wall_time_seconds": 4988.184931052,
+      "device_time_seconds": 1225.5952432680006,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.799795186891961,
+      "event": "observation",
+      "learning_rate": 0.001,
+      "live_dev_metric": 0.28481653332710266,
+      "live_train_metric": 0.23082801758785101,
+      "optimizer_step": 3124,
+      "sample_presentations": 399872,
+      "sequence": 3,
+      "wall_time_seconds": 1225.5952432680006
+    },
+    {
+      "checkpoint_identity": "efe4faf6d4c42f1ff540405f72dad9c1b359ecc70ffa68a3f51fb35ccb41d0d5",
+      "cumulative_device_time_seconds": 6225.139035265,
+      "cumulative_wall_time_seconds": 6225.139035265,
+      "device_time_seconds": 1236.9541042129995,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 0.9997439836149513,
+      "event": "observation",
+      "learning_rate": 0.0009904022475614137,
+      "live_dev_metric": 0.26277536153793335,
+      "live_train_metric": 0.21702854818021747,
+      "optimizer_step": 3905,
+      "sample_presentations": 499840,
+      "sequence": 4,
+      "wall_time_seconds": 1236.9541042129995
+    }
+  ],
+  "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+}

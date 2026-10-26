@@ -1,0 +1,39 @@
+{
+  "execution_status": "INTERRUPTED",
+  "scientific_status": "INCONCLUSIVE",
+  "failure": "ESA10pass_resume_bundle_manifest_Tensor_JSON_serialization",
+  "other_arm": "PPGT_stopped_after_peer_failure",
+  "arms": {
+    "ppgt_mean_500k": {
+      "native_optimizer_step": 4047,
+      "native_sample_presentations": 518016,
+      "completed_passes": 1,
+      "next_batch": 141,
+      "selected_observation_step": 3905,
+      "selected_development_mae_eV": 0.26277536153793335,
+      "planned_optimizer_steps": 15620,
+      "pending_metric_scalars": 142,
+      "checkpoint_sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83",
+      "checkpoint_locator": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1/experiment/ppgt_mean_500k/last_checkpoint.pt",
+      "status": "INCOMPLETE_RESUME_VERIFIED"
+    },
+    "esa_count_500k": {
+      "native_optimizer_step": 39060,
+      "native_sample_presentations": 4999680,
+      "completed_passes": 10,
+      "next_batch": 0,
+      "selected_observation_step": 39050,
+      "selected_development_mae_eV": 0.13842639327049255,
+      "planned_optimizer_steps": 46860,
+      "pending_metric_scalars": 10,
+      "checkpoint_sha256": "639244c33917c37797d654bdecf61f5a672aa423e8033ecd19e51d006299a121",
+      "checkpoint_locator": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1/experiment/esa_count_500k/last_checkpoint.pt",
+      "status": "INCOMPLETE_RESUME_VERIFIED"
+    }
+  },
+  "native_whole_allocation_wall_seconds": 6877.277398151,
+  "bootstrap_cost_overlaps_ledger": true,
+  "model_inference_executed_locally": false,
+  "protected_role_access_authorized": false,
+  "transport_cursor_summary_is_not_native_progress": true
+}

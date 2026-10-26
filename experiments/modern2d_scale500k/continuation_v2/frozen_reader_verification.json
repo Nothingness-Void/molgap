@@ -1,0 +1,25 @@
+{
+  "qualification": "frozen_source_resume_bundle_reader",
+  "mode": "metadata_only",
+  "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+  "source_archive_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+  "frozen_module": {
+    "path": "src/molgap/experiment_resume.py",
+    "sha256": "a84863fad548ee5c2d81a8b799d488a0daeaec3d6ec2025813857d5a15718837"
+  },
+  "package_spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+  "results": [
+    {
+      "arm_id": "ppgt_mean_500k",
+      "status": "RESUME_VERIFIED",
+      "pass_index": 1,
+      "pending_absolute_count": 142
+    },
+    {
+      "arm_id": "esa_count_500k",
+      "status": "RESUME_VERIFIED",
+      "pass_index": 10,
+      "pending_absolute_count": 10
+    }
+  ]
+}

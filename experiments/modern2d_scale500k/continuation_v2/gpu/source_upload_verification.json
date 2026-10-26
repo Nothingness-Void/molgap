@@ -1,0 +1,202 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "kaseichou/molgap-modern2d-scale500k-source-r3",
+  "version": 2,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "3cc1f91a35a5b1250e0a7afba5e49d318777a8286a74e83b2554934560100ad5",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "e12fcfb684ba55e9f0c9295be97b9b825c1cd23e5586eeb520e580f29b820026",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "485a5dc4d68cabe9fdd65a18450d6c1e604913d5afc1d206bc5cb256345a8a7d",
+      "bytes": 79295
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "1cdfd4442069bd8cdab7888f14b79181eeaac2a0956694c283f0cf39edf86076",
+      "bytes": 1666
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+      "bytes": 5782
+    },
+    {
+      "path": "initial_states/esa_count_500k.pt",
+      "sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a",
+      "bytes": 20106251
+    },
+    {
+      "path": "initial_states/ppgt_mean_500k.pt",
+      "sha256": "5a57dbb8f5abeb843683cc8efe1e5954a102ea8b1bf7d23075abc5a5b79c2c02",
+      "bytes": 10376759
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "65753891d110631b6050433fa631c430f899616f7711ca074db1e92663e6aa08",
+      "bytes": 20320
+    },
+    {
+      "path": "prospective/esa_count_500k/trajectory.json",
+      "sha256": "9989e70621be13512ac1c36f0d494a64226ab13ee82378ec5ba4322bbe56218b",
+      "bytes": 4329
+    },
+    {
+      "path": "prospective/ppgt_mean_500k/trajectory.json",
+      "sha256": "209226afd9107d6e3244b354c2fdd6cdb841671815970e63b818ee768656fa68",
+      "bytes": 4330
+    },
+    {
+      "path": "resume/esa_count_500k/files/allocation_ledger.json",
+      "sha256": "5f9fd88c19986556f5c46e041ac84763a8961bdf72a80ef19e4beac17d8e0af6",
+      "bytes": 1041
+    },
+    {
+      "path": "resume/esa_count_500k/files/canonical_trace.json",
+      "sha256": "63798a235fe676a74b3e0c2ae0c0f15462839e3db9c686678ecce410f5adcb71",
+      "bytes": 33284
+    },
+    {
+      "path": "resume/esa_count_500k/files/canonical_trace.json.context.json",
+      "sha256": "9acf540fb4ca01a0f93269252a5272e0e9278c86bd7e8dda759e8d824e91a161",
+      "bytes": 918
+    },
+    {
+      "path": "resume/esa_count_500k/files/development_predictions.pt",
+      "sha256": "6017e23047b43c629c97f23222706f7179a86f9e411b1d1aca9f5636acd81346",
+      "bytes": 803285
+    },
+    {
+      "path": "resume/esa_count_500k/files/invocation_cost_state.json",
+      "sha256": "071ea52a6876b2f015e69711a87f9afe0cfc3a49d867d428d5d766792f38e2bb",
+      "bytes": 942
+    },
+    {
+      "path": "resume/esa_count_500k/files/last_checkpoint.pt",
+      "sha256": "639244c33917c37797d654bdecf61f5a672aa423e8033ecd19e51d006299a121",
+      "bytes": 60373381
+    },
+    {
+      "path": "resume/esa_count_500k/files/preflight_costs.json",
+      "sha256": "ea916736c736fd278691ac1e15e76cd98e70fc38723693d60d2761165e036b50",
+      "bytes": 1422
+    },
+    {
+      "path": "resume/esa_count_500k/files/role_audit.json",
+      "sha256": "3c0dd481a92a2408dffa2aca699324fa4119ff31882d0374e7540fa8b97b6a91",
+      "bytes": 6381
+    },
+    {
+      "path": "resume/esa_count_500k/files/runtime_certificate.json",
+      "sha256": "becc789167382398b0d747832785e8adbfb3209e5225cd9b6d501062ef71fdec",
+      "bytes": 2255
+    },
+    {
+      "path": "resume/esa_count_500k/files/runtime_provenance.json",
+      "sha256": "42521fe46abe5fca63185068cf015992f6fff96ebd41ba90dba8c4ea677b0a9f",
+      "bytes": 4360
+    },
+    {
+      "path": "resume/esa_count_500k/files/selected_model.pt",
+      "sha256": "fef724b7b5e54ef30a0461ef2d0e01c78a038c0c57f764deb4c605105a39532c",
+      "bytes": 20112357
+    },
+    {
+      "path": "resume/esa_count_500k/files/training_contract.json",
+      "sha256": "fcd0cd86f5ffcb724ad2b8dca492c714fb713e3bd5de6e1ea27790ba922f3cb5",
+      "bytes": 2816
+    },
+    {
+      "path": "resume/esa_count_500k/files/trajectory.json",
+      "sha256": "9989e70621be13512ac1c36f0d494a64226ab13ee82378ec5ba4322bbe56218b",
+      "bytes": 4329
+    },
+    {
+      "path": "resume/esa_count_500k/resume_bundle.json",
+      "sha256": "2f574e1fd9b4ca9444776c9e3b7ac1c92dd9f277b753c279e6f1b9cbac0716b7",
+      "bytes": 10756
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/allocation_ledger.json",
+      "sha256": "5f9fd88c19986556f5c46e041ac84763a8961bdf72a80ef19e4beac17d8e0af6",
+      "bytes": 1041
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/canonical_trace.json",
+      "sha256": "bba8a53ad909e61f874ee3d2b74ce71be00502b9b40c588ea8f237dfd27fe0b7",
+      "bytes": 3963
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/canonical_trace.json.context.json",
+      "sha256": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088",
+      "bytes": 919
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/development_predictions.pt",
+      "sha256": "f51f796735f7599ff2cee6721ad84da347188b74fb6b10ad19aa5a2264bc3022",
+      "bytes": 803285
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/invocation_cost_state.json",
+      "sha256": "9e2a9cbf4ff8eff29d973b1f7de230ce872b25a3f7d8599ce504555227f966eb",
+      "bytes": 943
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/last_checkpoint.pt",
+      "sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83",
+      "bytes": 31196437
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/preflight_costs.json",
+      "sha256": "099aad4715f6a04716f1eb9dc08975abecced76e2574047238a3e3b8389efcb7",
+      "bytes": 1423
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/role_audit.json",
+      "sha256": "f7203c91ee5e448b49809e5eda3d5275ee801f92aae16f31f1f5bcbbc23c8038",
+      "bytes": 6382
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/runtime_certificate.json",
+      "sha256": "03ceef9908c015c7134568d09b2359956e1b29c1485ddf1e3aa5d5145d5440d6",
+      "bytes": 2254
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/runtime_provenance.json",
+      "sha256": "ba5ac0c56c537592f8565bcdef0e3c0898743fef95a3ff4b60d386b3081e22e3",
+      "bytes": 4362
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/selected_model.pt",
+      "sha256": "ddefb6f03fe40817720c90a8feced33221b55daf71cb82063d2e64cfd80d5e2e",
+      "bytes": 10380143
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/training_contract.json",
+      "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025",
+      "bytes": 2767
+    },
+    {
+      "path": "resume/ppgt_mean_500k/files/trajectory.json",
+      "sha256": "209226afd9107d6e3244b354c2fdd6cdb841671815970e63b818ee768656fa68",
+      "bytes": 4330
+    },
+    {
+      "path": "resume/ppgt_mean_500k/resume_bundle.json",
+      "sha256": "5de5c71b43dc91e25d3e2f8c4337725de54604d420d08c293e412977f78542e3",
+      "bytes": 16100
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+      "bytes": 1452079
+    }
+  ]
+}

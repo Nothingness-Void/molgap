@@ -1,0 +1,24 @@
+{
+  "observed_at": "2026-10-26T08:43:13.082232+00:00",
+  "quota": {
+    "quotaRefreshTime": "2026-10-31 00:00:00",
+    "gpuQuota": {
+      "totalTimeAllowed": {
+        "seconds": 108000,
+        "nanos": 0
+      },
+      "timeUsed": {
+        "seconds": 13720,
+        "nanos": 551000000
+      },
+      "timeReserved": {
+        "seconds": 0,
+        "nanos": 0
+      }
+    }
+  },
+  "provider": "KaggleSdk.GetAcceleratorQuotaStatistics",
+  "quota_semantics": "platform_session_hours",
+  "available_gpu_hours": 26.188735833333332,
+  "authorized_ceiling_gpu_hours": 9
+}

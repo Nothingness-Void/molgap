@@ -10,11 +10,12 @@ The human requested one PPGT/ESA500K dual-arm task. The
 [owning protocol](experiments/modern2d_scale500k/protocol.md) combines both
 family questions in one T4x2 allocation. Selected input export, metadata and
 remote byte verification passed. Two pre-training startup faults were preserved
-and repaired without changing either scientific arm. Kaggle2 replacement
-kernel140916841/version1 is RUNNING; [status](experiments/modern2d_scale500k/STATUS.md)
-owns its exact receipt, remaining budget and unaccepted native/training outcome.
-Existing Luna B monitors only this replacement. No scientific successor or
-protected-role release is authorized.
+and repaired without changing either scientific arm. Both500K arms entered
+training; a checkpoint-export serialization fault interrupted version1.
+The original checkpoints passed native-state validation and kernel140916841/
+version2 is RUNNING as an immutable-source continuation. [Status](experiments/modern2d_scale500k/STATUS.md)
+owns receipts, remaining budget and unaccepted resumed/final outcomes. Existing
+Luna B monitors only version2. No scientific successor or protected-role release.
 
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
 completed both60-pass endpoints. Count readout passed its frozen within-family

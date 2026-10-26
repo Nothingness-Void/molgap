@@ -1,0 +1,20 @@
+{
+  "format": "molgap-workflow-recovery-preparation-v1",
+  "status": "PREPARED_FOR_PLATFORM",
+  "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+  "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+  "original_prepared": "E:\\MolGap\\artifacts\\runs\\modern2d-scale500k-k2-s42-r3\\v1\\prepared",
+  "original_receipt": "E:\\MolGap\\artifacts\\runs\\modern2d-scale500k-k2-s42-r3\\v1\\operations\\launch_receipt.json",
+  "prospective_published": false,
+  "submitted": false,
+  "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+  "release_report": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3\\prepared\\release_report.json",
+  "kernel_dir": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3\\prepared\\kernel",
+  "source_dataset_dir": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3\\prepared\\source_dataset",
+  "accelerator": "NvidiaTeslaT4",
+  "errors": [],
+  "limitations": [
+    "All arms must have incomplete owner-validated checkpoints.",
+    "Workload skill must reconcile the prior launch before submitting a successor."
+  ]
+}

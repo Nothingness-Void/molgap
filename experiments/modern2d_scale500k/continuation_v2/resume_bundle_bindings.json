@@ -1,0 +1,36 @@
+{
+  "ppgt_mean_500k": {
+    "manifest": "E:/MolGap/artifacts/recovery/modern2d-scale500k-r3/ppgt_mean_500k/resume_bundle.json",
+    "sha256": "5de5c71b43dc91e25d3e2f8c4337725de54604d420d08c293e412977f78542e3",
+    "native_progress": {
+      "native_optimizer_step": 4047,
+      "native_sample_presentations": 518016,
+      "completed_passes": 1,
+      "next_batch": 141,
+      "selected_observation_step": 3905,
+      "selected_development_mae_eV": 0.26277536153793335,
+      "planned_optimizer_steps": 15620,
+      "pending_metric_scalars": 142,
+      "checkpoint_sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83",
+      "checkpoint_locator": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1/experiment/ppgt_mean_500k/last_checkpoint.pt",
+      "status": "INCOMPLETE_RESUME_VERIFIED"
+    }
+  },
+  "esa_count_500k": {
+    "manifest": "E:/MolGap/artifacts/recovery/modern2d-scale500k-r3/esa_count_500k/resume_bundle.json",
+    "sha256": "2f574e1fd9b4ca9444776c9e3b7ac1c92dd9f277b753c279e6f1b9cbac0716b7",
+    "native_progress": {
+      "native_optimizer_step": 39060,
+      "native_sample_presentations": 4999680,
+      "completed_passes": 10,
+      "next_batch": 0,
+      "selected_observation_step": 39050,
+      "selected_development_mae_eV": 0.13842639327049255,
+      "planned_optimizer_steps": 46860,
+      "pending_metric_scalars": 10,
+      "checkpoint_sha256": "639244c33917c37797d654bdecf61f5a672aa423e8033ecd19e51d006299a121",
+      "checkpoint_locator": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1/experiment/esa_count_500k/last_checkpoint.pt",
+      "status": "INCOMPLETE_RESUME_VERIFIED"
+    }
+  }
+}
