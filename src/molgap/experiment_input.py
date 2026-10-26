@@ -601,7 +601,7 @@ def locate_run(profile, repo_root, run_id, attempt_id, *, _verification=None):
     run=paths.run_directory(run_id,attempt_id)
     inputs=run/"inputs"
     binding=_read(inputs/"input_binding.json")
-    spec=ExperimentSpec(_read(inputs/"experiment_spec.json"))
+    spec=ExperimentSpec.from_frozen_json((inputs/"experiment_spec.json").read_text(encoding="utf-8"))
     plan=_read(inputs/"workflow_plan.json")
     if type(binding) is not dict or type(plan) is not dict:
         raise ValueError("Original frozen run records must be objects")

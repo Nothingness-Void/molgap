@@ -159,7 +159,16 @@ def _repo_path(value, path: str, *, output: bool = False) -> None:
         raise ValueError(f"{path}: expected JSON plan input")
 
 
-def _arm(arm: dict, *, families, addons) -> None:
+def _addon_declaration(addon):
+    _object(addon, "name version config source_sha256", "addon")
+    _text(addon["name"], "addon.name")
+    _text(addon["version"], "addon.version")
+    if type(addon["config"]) is not dict:
+        raise ValueError("addon.config: expected an object")
+    _digest(addon["source_sha256"], "addon.source_sha256")
+
+
+def _arm(arm: dict, *, families, addons, _frozen=False) -> None:
     _object(arm, "arm_id scientific_role family base initialization data training addons addon_semantics", "arm")
     _identifier(arm["arm_id"], "arm.arm_id")
     _choice(arm["scientific_role"], ("reference", "candidate", "ablation"), "arm.scientific_role")
@@ -211,9 +220,10 @@ def _arm(arm: dict, *, families, addons) -> None:
     _choice(arm["addon_semantics"], (expected,), "addon_semantics")
     groups = set()
     for addon in arm["addons"]:
-        _object(addon, "name version config source_sha256", "addon")
-        _text(addon["name"], "addon.name")
-        _text(addon["version"], "addon.version")
+        _addon_declaration(addon)
+        if _frozen:
+            # Artifact identity survives retirement of its executable catalog entry.
+            continue
         extension = addons.get((addon["name"], addon["version"]))
         if extension is None:
             raise ValueError("Unknown addon/version")
@@ -225,10 +235,9 @@ def _arm(arm: dict, *, families, addons) -> None:
             raise ValueError("Addon requires its registered family/version and one extension")
         validate_addon_config(extension, addon["config"], name=addon["name"],
                               family_version=family["version"], initialization_seed=init["seed"])
-        _digest(addon["source_sha256"], "addon.source_sha256")
 
 
-def validate_experiment_spec(payload: dict, *, families, addons) -> dict:
+def validate_experiment_spec(payload: dict, *, families, addons, _frozen=False) -> dict:
     """Return a detached strict JSON declaration; never certify runtime/evidence."""
     spec = _object(payload, "schema_version experiment_id logical_run_id arms platform prospective evidence terminal_protocol", "spec")
     _choice(spec["schema_version"], (SCHEMA_VERSION, SCHEMA_VERSION_V2), "schema_version")
@@ -237,7 +246,7 @@ def validate_experiment_spec(payload: dict, *, families, addons) -> dict:
     _choice(spec["terminal_protocol"], (TERMINAL_PROTOCOL,), "terminal_protocol")
     _list(spec["arms"], "arms")
     for arm in spec["arms"]:
-        _arm(arm, families=families, addons=addons)
+        _arm(arm, families=families, addons=addons, _frozen=_frozen)
     ids = [arm["arm_id"] for arm in spec["arms"]]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate arm_id")

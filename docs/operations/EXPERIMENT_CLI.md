@@ -244,6 +244,11 @@ Retained certificate/provenance metadata is checked against the output manifest
 before reuse. Complete retained dependencies cause zero downloads; the retrieval
 report distinguishes retained files from actual network transfers.
 
+Retained Spec and recipe readers validate frozen declarations independently of
+the current Addon catalog. Package, receipt and artifact hash bindings still
+apply; reading retired metadata never imports its model implementation. New
+package preparation and model execution continue to require registered recipes.
+
 With reviewed `--locations`, or explicit decision/role inputs for staging,
 strict acceptance validates native/comparison evidence before invoking the
 original terminal finalizer. Without `--execute`, canonical replay remains

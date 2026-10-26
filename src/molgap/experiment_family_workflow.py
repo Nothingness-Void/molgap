@@ -153,7 +153,7 @@ def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
     for arm_id, item in sorted(resolved["outputs"].items()):
         try:
             arm = next(arm for arm in declaration["arms"] if arm["arm_id"] == arm_id)
-            _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+            _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json", _frozen_read=True)
             role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
             target_binding = resolved["target_identities"][arm_id]
             target_plan = target_binding._pinned_json(target_binding.plan_path, target_binding.plan_sha256)
@@ -292,7 +292,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     if target_report["status"] != "VERIFIED":
         return {**target_report, "executed": False}
     scopes = _frozen_same_run_scopes(resolved)
-    retained_recipes = {arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json")
+    retained_recipes = {arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json", _frozen_read=True)
                         for arm_id, item in resolved["outputs"].items()}
     by_arm = {arm["arm_id"]: arm for arm in declaration["arms"]}
     for arm_id, scope in scopes.items():

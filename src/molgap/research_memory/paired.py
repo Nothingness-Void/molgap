@@ -176,7 +176,7 @@ def validate_terminal_continuation(root: Path, terminal: Mapping[str, Any], *,
         if retained["source_package"].name != "package_manifest.json":
             raise ValueError("strict continuation source package must bind its manifest")
         package = verify_experiment_source_package(package_dir)
-        spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
+        spec = ExperimentSpec.from_frozen_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
         receipt_contexts = []
         for key, observation in (("origin_receipt", origin), ("continued_receipt", continued)):
             observed_context = RunContext.from_launch(spec, retained[key], package_dir,
@@ -278,7 +278,7 @@ def build_terminal_continuation(root: Path, *, package_dir: Path, origin_receipt
     from .trace import file_digest, json_bytes
 
     package = verify_experiment_source_package(package_dir)
-    spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
+    spec = ExperimentSpec.from_frozen_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
     checked = validate_resume_bundle(resume_bundle, spec)
     bundle, arm_id = checked["manifest"], checked["manifest"]["arm"]["id"]
     manifest = load_json_object(continued_output / "output_manifest.json")

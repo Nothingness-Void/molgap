@@ -157,7 +157,7 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         raise ValueError("Family attribution requires a bound output manifest") from exc
     contract_bytes = contract_path.read_bytes()
     contract_raw = _json_bytes(contract_bytes)
-    recipe = _recipe_configuration(contract_raw)
+    recipe = _recipe_configuration(contract_raw, _frozen_read=True)
     _check_context(manifest["context"], context)
     if INTERFACES.get(recipe.family) != (context.family_name, context.family_version):
         raise ValueError("Output family differs from its executable contract")

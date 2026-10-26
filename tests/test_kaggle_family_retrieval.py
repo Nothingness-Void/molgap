@@ -293,7 +293,6 @@ def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_valida
     tmp_path, monkeypatch, resumed, damage,
 ):
     from dataclasses import replace
-    from types import SimpleNamespace
     from unittest.mock import Mock
     from molgap import family_training_runner as owner
     from molgap.screen_policy import canonical_fingerprint
@@ -302,9 +301,20 @@ def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_valida
     destination = case["destination"]
     destination.mkdir()
     contract = destination / "training_contract.json"
-    contract.write_bytes(b"{}")
+    from test_family_training_session import make_session, events
+    from test_family_training_runner import contract_file
+    session = make_session("gptrans_t", development=True, schedule_kind="cosine_epoch", events=events())
+    try:
+        _, record = contract_file(destination, session)
+    finally:
+        session.close()
+    record["mode"] = "retired-branch-mode"
+    contract.write_text(json.dumps(record), encoding="utf-8")
+    with pytest.raises(ValueError, match="Unknown executable"):
+        owner.read_recipe(contract)
+    _, frozen = owner.read_recipe(contract, _frozen_read=True)
     context = replace(case["context"], platform_version="7", training_recipe_sha256=sha256_file(contract))
-    provenance = {"context": context.to_dict(), "recipe_identity": "fixture-recipe"}
+    provenance = {"context": context.to_dict(), "recipe_identity": frozen.identity}
     import io
     import torch
     buffer = io.BytesIO()
@@ -347,7 +357,6 @@ def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_valida
         files.append(_File(output_provenance_remote, url))
         payloads[url] = encode(provenance)
     api, http = _Api(context.account, [_ResponsePage(files)]), _Http(payloads)
-    monkeypatch.setattr(owner, "read_recipe", lambda _: ({}, SimpleNamespace(identity="fixture-recipe")))
     semantic = Mock(side_effect=AssertionError("Retrieval cannot claim native qualification"))
     monkeypatch.setattr(owner, "_verify_preflight", semantic)
     invoke = lambda: case["retrieve"].retrieve_native_dependencies(api, context=context,

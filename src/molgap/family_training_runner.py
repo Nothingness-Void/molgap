@@ -13,7 +13,7 @@ import sys
 import time
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
-from .family_training_recipe import FamilyRecipe
+from .family_training_recipe import FamilyRecipe, MODES
 from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
@@ -27,7 +27,7 @@ METADATA = {"acceptance_requirements", "train_role_identity", "development_role_
 OPTIONAL_METADATA = {"profiling", "logging", "resume_keep_count", "trace_manifest_plan", "initial_development_check"}
 
 
-def _recipe_configuration(record):
+def _recipe_configuration(record, *, _frozen_read=False):
     if "initial_development_check" in record:
         check = record["initial_development_check"]
         if (type(check) is not dict or set(check) != {"prediction_tolerance_eV", "mae_tolerance_eV"}
@@ -47,7 +47,7 @@ def _recipe_configuration(record):
         from .family_execution_profile import ProfileConfig
         ProfileConfig.from_dict(record["profiling"])
     return FamilyRecipe.from_dict({key: value for key, value in record.items()
-        if key not in METADATA | OPTIONAL_METADATA})
+        if key not in METADATA | OPTIONAL_METADATA}, _frozen_read=_frozen_read)
 
 
 def family_arm_bindings(recipe):
@@ -83,7 +83,8 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
                         target_sha256=None, train_role_identity=None, development_role_identity=None,
                         logging=None, resume_keep_count=None):
     from .training_logging import TrainingLogPolicy
-    if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
+    if (type(configuration) is not FamilyRecipe or configuration._frozen_read
+            or family != INTERFACES.get(configuration.family) or mode != configuration.mode):
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
     if configuration.clean_bn is not None and configuration.clean_bn.training_role_identity != train_role_identity:
@@ -100,11 +101,11 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
         **({"resume_keep_count": resume_keep_count} if resume_keep_count is not None else {})}
 
 
-def read_recipe(path):
+def read_recipe(path, *, _frozen_read=False):
     record = _json(Path(path))
     if not METADATA <= set(record):
         raise ValueError("Shared contract lacks frozen acceptance/role bindings")
-    recipe = _recipe_configuration(record)
+    recipe = _recipe_configuration(record, _frozen_read=_frozen_read)
     requirements = record["acceptance_requirements"]
     if type(requirements) is not dict:
         raise ValueError("Invalid shared acceptance requirements")
@@ -609,7 +610,10 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     if certificate.get("status") != "accepted":
         raise ValueError("Native preflight certificate is not accepted")
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+    resource_required = "resource_qualification_sha256" in certificate
+    if not recipe._frozen_read or recipe.mode in MODES[recipe.family]:
+        resource_required |= mode_policy(recipe.family, recipe.mode).qualify_resources is not None
+    if resource_required:
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
             raise ValueError("Missing or changed native resource qualification")
@@ -660,11 +664,11 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
     """
     from .experiment_launch import _safe_local
     from .research_memory.paths import repo_local_path
-    # The selected source owner parses its own frozen recipe extensions.
+    # Retained declarations do not require importing retired model extensions.
     from .family_training_runner import read_recipe as read_owned_recipe
     root = Path(directory).absolute()
     _safe_local(root)
-    record, recipe = read_owned_recipe(recipe_path)
+    record, recipe = read_owned_recipe(recipe_path, _frozen_read=True)
     _check_context(provenance.get("context"), context)
     if (normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256
             or provenance.get("recipe_identity") != recipe.identity):

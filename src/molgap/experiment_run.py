@@ -55,7 +55,7 @@ def _original_run(profile, repo_root, run_id, attempt_id, *, _verification=None)
             raise ValueError("Original run file changed during resolution: " + name)
         return path
 
-    spec = ExperimentSpec.from_json(original("inputs/experiment_spec.json").read_text(encoding="utf-8"))
+    spec = ExperimentSpec.from_frozen_json(original("inputs/experiment_spec.json").read_text(encoding="utf-8"))
     if spec.identity != located["spec_identity"]:
         raise ValueError("Original Spec changed during resolution")
     binding = _json(original("inputs/input_binding.json"))

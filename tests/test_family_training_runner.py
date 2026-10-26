@@ -19,22 +19,35 @@ from test_family_training_session import assert_equal, events, make_session
 
 @pytest.mark.parametrize("damage", ["missing", "changed", "complete"])
 def test_retained_native_dependency_inventory_fails_closed(tmp_path, monkeypatch, damage):
-    """Synthetic bytes test admission to the real verifier, never native truth."""
-    from types import SimpleNamespace
+    """Frozen recipe parsing and dependency bytes, never native tensor qualification."""
     from unittest.mock import Mock
     from molgap import family_training_runner as owner
     from molgap.v4_runtime import normalized_source_sha256
-    contract = tmp_path / "training_contract.json"
-    contract.write_bytes(b"{}\r\n")
+    session = make_session("neural_atom_k1", development=True, schedule_kind="cosine_epoch", events=events())
+    try:
+        contract, record = contract_file(tmp_path, session)
+    finally:
+        session.close()
+    record.update(mode="composed", addons=[{"name": "retired-branch-addon", "version": "1",
+        "config": {"probability": .05}, "source_sha256": "a" * 64}])
+    contract.write_text(json.dumps(record), encoding="utf-8")
+    with pytest.raises(ValueError):
+        read_recipe(contract)
+    _, frozen = read_recipe(contract, _frozen_read=True)
+    assert replace(frozen, optimizer_steps=frozen.optimizer_steps)._frozen_read is True
+    from molgap.family_training_kernel import FamilyKernel, load_family_model
+    with pytest.raises(ValueError, match="metadata cannot execute"):
+        FamilyKernel(frozen, tmp_path / "never-loaded.pt", device="cpu")
+    with pytest.raises(ValueError, match="metadata cannot execute"):
+        load_family_model(frozen, tmp_path / "never-loaded.pt")
     ctx = replace(context("neural_atom_k1", contract), training_recipe_sha256=normalized_source_sha256(contract))
-    provenance = {"context": ctx.to_dict(), "recipe_identity": "frozen-recipe"}
+    provenance = {"context": ctx.to_dict(), "recipe_identity": frozen.identity}
     (tmp_path / "runtime_provenance.json").write_text(json.dumps(provenance), encoding="utf-8")
     proof = tmp_path / "repeat-a.pt"
     proof.write_bytes(b"synthetic dependency, not a tensor qualification")
     digest = sha256_file(proof)
     (tmp_path / "runtime_certificate.json").write_text(json.dumps({"proofs": [
         {"path": proof.name, "sha256": digest}]}), encoding="utf-8")
-    monkeypatch.setattr(owner, "read_recipe", lambda _: ({}, SimpleNamespace(identity="frozen-recipe")))
     verifier = Mock()
     monkeypatch.setattr(owner, "_verify_preflight", verifier)
     if damage == "missing":
@@ -44,20 +57,20 @@ def test_retained_native_dependency_inventory_fails_closed(tmp_path, monkeypatch
     if damage == "changed":
         with pytest.raises(ValueError, match="hash mismatch"):
             owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
-                provenance=provenance, context=ctx)
+                provenance=provenance, context=ctx, inventory_only=True)
         verifier.assert_not_called()
         return
     result = owner.inspect_retained_native_qualification(tmp_path, recipe_path=contract,
-        provenance=provenance, context=ctx)
+        provenance=provenance, context=ctx, inventory_only=True)
     if damage == "missing":
         assert result["status"] == "BLOCKED"
         assert result["missing"] == ["repeat-a.pt"]
         assert result["missing_size_bytes"] is None
         verifier.assert_not_called()
     else:
-        assert result["status"] == "VERIFIED"
+        assert result["status"] == "DEPENDENCIES_VERIFIED"
         assert result["missing"] == []
-        verifier.assert_called_once()
+        verifier.assert_not_called()
     assert result["scientific_acceptance"] == result["replay_readiness"] == "NOT_EVALUATED"
 
 

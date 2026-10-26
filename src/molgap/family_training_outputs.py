@@ -344,7 +344,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             raise ValueError("Artifact roles alias each other")
         if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Unpinned session contract")
-        contract, recipe = read_recipe(paths["contract"])
+        contract, recipe = read_recipe(paths["contract"], _frozen_read=True)
         if expected != contract["acceptance_requirements"]:
             raise ValueError("Expectations differ from the frozen contract")
         roles = ROLES if recipe.dataset.development else ROLES - {"predictions"}

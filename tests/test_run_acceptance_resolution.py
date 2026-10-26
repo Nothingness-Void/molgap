@@ -17,12 +17,22 @@ def acceptance_run(tmp_path, repo):
     return frozen_acceptance_run(tmp_path, repo)
 
 
-def test_resolves_all_frozen_arms_after_source_records_disappear(acceptance_run):
+def test_resolves_all_frozen_arms_after_source_records_disappear(acceptance_run, monkeypatch):
     case = acceptance_run
+    from molgap import experiment_spec
+    from molgap.experiment_package import build_experiment_source_package
+    # The frozen package outlives the branch-local executable addon registry.
+    monkeypatch.setattr(experiment_spec, "ADDONS", {})
+    with pytest.raises(ValueError, match="Unknown addon"):
+        experiment_spec.ExperimentSpec.from_json(case.spec.to_json())
     root = case.paths.artifact_root / "retrieved"
     # Mutable checkout records are deliberately absent. The frozen archive owns them.
     assert not (case.repo / "plans/acceptance.json").exists()
     result = resolve_run_acceptance_inputs(*case.original, retrieved_root=root)
+    assert result["spec"].to_json() == case.spec.to_json()
+    # Reading old declarations is not permission to freeze a new executable.
+    with pytest.raises(ValueError, match="Unknown addon"):
+        build_experiment_source_package(result["spec"], case.repo, ["README.md"], case.paths.artifact_root / "refreeze")
     assert result["_canonical_finalizations"] == {}
     assert result["spec"].identity == case.spec.identity
     assert set(result["outputs"]) == {"k1_candidate", "gptrans_candidate"}
