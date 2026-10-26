@@ -661,6 +661,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-k1-selective-100k-bn-reference-s42:A001",
+      "target": "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-selective-100k-ffn-rms-s42:A001",
+      "target": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-selective-100k-local-residual-gain-s42:A001",
+      "target": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1508,6 +1523,36 @@
     {
       "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
+      "target": "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
       "type": "prior_evidence"
     },
     {
@@ -4151,6 +4196,18 @@
     },
     {
       "id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-selective-100k-bn-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-selective-100k-ffn-rms-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-selective-100k-local-residual-gain-s42",
       "type": "trajectory"
     },
     {

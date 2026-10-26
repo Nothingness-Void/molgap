@@ -1,5 +1,6 @@
 """Run frozen arms sequentially through the shared local adapter, then saved-row analysis."""
 from pathlib import Path
+import argparse
 import json
 import os
 import subprocess
@@ -21,16 +22,23 @@ def read(path):
 
 def main():
     import torch
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--attempt", choices=("v1", "v2"), default="v1")
+    args = parser.parse_args()
     config = read(HERE / "input.json")
     paths = MachinePaths.from_file(config["machine_profile"]).outside_checkout(ROOT)
     output = paths.artifact_root / "research" / config["experiment_id"]
+    declarations = HERE
+    if args.attempt == "v2":
+        output = output / "attempt_2"
+        declarations = HERE / "attempt_2"
     output.mkdir(parents=True, exist_ok=True)
     results, errors, truth, ids = {}, {}, None, None
     for item in config["arms"]:
         arm = item["arm_id"]
-        spec = read(HERE / arm / "experiment_spec.json")
+        spec = read(declarations / arm / "experiment_spec.json")
         run = spec["logical_run_id"]
-        prepared = paths.artifact_root / "runs" / run / "v1" / "prepared"
+        prepared = paths.run_directory(run, args.attempt) / "prepared"
         execution = output / arm
         env = dict(os.environ, CUDA_VISIBLE_DEVICES="0", PYTHONUNBUFFERED="1")
         command = [str(paths.python), str(ROOT / "platforms/local/train.py"),

@@ -1,0 +1,37 @@
+{
+  "arms": [
+    {
+      "arm_id": "bn_reference",
+      "logical_run_id": "pcqm-k1-selective-100k-bn-reference-s42",
+      "spec_identity": "9ef5fec6a027c422a16e7bb37928b8d696d7279527305b96f7c40d457d1b9039",
+      "spec_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/bn_reference/experiment_spec.json"
+    },
+    {
+      "arm_id": "ffn_rms",
+      "logical_run_id": "pcqm-k1-selective-100k-ffn-rms-s42",
+      "spec_identity": "a16b3d95a63626de95d8232f33c4b02dc11bdee80bedabc938a3fa88925b6148",
+      "spec_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/ffn_rms/experiment_spec.json"
+    },
+    {
+      "arm_id": "local_residual_gain",
+      "logical_run_id": "pcqm-k1-selective-100k-local-residual-gain-s42",
+      "spec_identity": "e9ddae519e823c334f0d7a2d9a74935dc9ccccb62492de27236ebf89597601c3",
+      "spec_ref": "experiments/pcqm_k1_selective_ffn_norm_100k/local_residual_gain/experiment_spec.json"
+    }
+  ],
+  "candidate_arm_ids": [
+    "ffn_rms",
+    "local_residual_gain"
+  ],
+  "historical_recipe_ref": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+  "initialization_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "local_runtime": {
+    "pyg": "2.7.0",
+    "torch": "2.7.1+cu128"
+  },
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "reference_arm_id": "bn_reference",
+  "runtime_changed_from_historical": "2.11.0 -> 2.7.1",
+  "status": "PENDING",
+  "strict_reference_bundle": null
+}

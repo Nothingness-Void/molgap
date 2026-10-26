@@ -42,18 +42,22 @@ def digest(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepare", choices=("bn_reference", "ffn_rms", "local_residual_gain"))
+    parser.add_argument("--attempt", choices=("v1", "v2"), default="v1")
     args = parser.parse_args()
+    attempt_root = HERE if args.attempt == "v1" else HERE / "attempt_2"
     config = read(HERE / "input.json")
     paths = MachinePaths.from_file(config["machine_profile"]).outside_checkout(ROOT)
     if args.prepare:
         from molgap.experiment_workflow import prepare_family_training
-        directory = HERE / args.prepare
+        directory = attempt_root / args.prepare
         spec = ExperimentSpec(read(directory / "experiment_spec.json"))
         plan = read(directory / "workflow_plan.json")
-        output = paths.artifact_root / "runs" / spec.to_dict()["logical_run_id"] / "v1" / "prepared"
+        output = paths.artifact_root / "runs" / spec.to_dict()["logical_run_id"] / args.attempt / "prepared"
         report = prepare_family_training(spec, ROOT, plan, output)
         print(json.dumps({"prepared": str(output), "report": report}))
         return
+    if any((attempt_root / item["arm_id"] / "prospective").exists() for item in config["arms"]):
+        raise ValueError("Published prospective inputs are immutable; do not regenerate this attempt")
     record, baseline = read_recipe(ROOT / config["baseline_recipe_ref"])
     original = read(ROOT / config["baseline_spec_ref"])
     source = next(a for a in original["arms"] if a["arm_id"] == config["baseline_arm_id"])
@@ -73,11 +77,17 @@ def main():
     policy["created_from_source_digest"] = digest(HERE / "protocol.md")
     from molgap.research_memory.policy import validate_policy
     validate_policy(policy)
-    atomic_json(HERE / "policy_registration.json", policy)
+    if args.attempt == "v1":
+        atomic_json(HERE / "policy_registration.json", policy)
+    elif read(HERE / "policy_registration.json") != policy:
+        raise ValueError("Frozen question policy changed; reconcile before generating v2")
     roles = {"allowed_roles": ["train", "development"], "role_bindings": source["data"]["roles"],
              "official_validation": False, "test_dev": False, "test_challenge": False,
              "authority_ref": prefix + "/authority.json", "observed_consumption": "not yet observed"}
-    atomic_json(HERE / "role_scope.json", roles)
+    if args.attempt == "v1":
+        atomic_json(HERE / "role_scope.json", roles)
+    elif read(HERE / "role_scope.json") != roles:
+        raise ValueError("Frozen role scope changed; reconcile before generating v2")
     context = {"status": "PENDING", "reference_arm_id": "bn_reference",
                "candidate_arm_ids": ["ffn_rms", "local_residual_gain"],
                "strict_reference_bundle": None, "runtime_changed_from_historical": "2.11.0 -> 2.7.1",
@@ -96,16 +106,23 @@ def main():
             target_sha256=record["acceptance_requirements"]["target_sha256"],
             train_role_identity=record["train_role_identity"], development_role_identity=record["development_role_identity"],
             logging=record["logging"])
-        directory = HERE / arm_id
-        base = prefix + "/" + arm_id
-        atomic_json(directory / "recipe.json", built)
+        directory = attempt_root / arm_id
+        base = directory.relative_to(ROOT).as_posix()
+        recipe_path = HERE / arm_id / "recipe.json"
+        recipe_ref = recipe_path.relative_to(ROOT).as_posix()
+        if args.attempt == "v1":
+            atomic_json(recipe_path, built)
+        elif read(recipe_path) != built:
+            raise ValueError("v2 must retain the unchanged frozen scientific recipe: " + arm_id)
         arm = copy.deepcopy(source)
         bindings = family_arm_bindings(recipe)
         arm.update(arm_id=arm_id, addons=list(addons), addon_semantics="ordered" if addons else "baseline",
                    scientific_role="candidate" if addons else "reference", base=bindings["base"])
         arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
-        arm["training"]["recipe"]["sha256"] = digest(directory / "recipe.json")
+        arm["training"]["recipe"]["sha256"] = digest(recipe_path)
         run = "pcqm-k1-selective-100k-" + arm_id.replace("_", "-") + "-s42"
+        if args.attempt == "v2":
+            run += "-r2"
         question = ExecutionQuestion(policy["policy_id"], policy["action_rule"]["action"],
             "Does " + arm_id + " improve the matched local original-BN reference at100K40passes?",
             "Whole-block norm replacements did not establish selective FFN or local residual effects.",
@@ -114,13 +131,15 @@ def main():
              "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"),
             ("No generalization gain", "Changed optimization rather than improved capacity"),
             ("Pre-Norm AdaRMS100K negative", "Whole-block Post-LN100K negative"),
-            "Review matched local evidence; no automatic adoption or scale-up.", "Reject this exact mechanism under this contract.")
+            "Review matched local evidence; no automatic adoption or scale-up.", "Reject this exact mechanism under this contract.",
+            prior_trajectories=(("TB-" + run.removesuffix("-r2"),) if args.attempt == "v2" else ()))
         profile = ExecutionProfile("desktop", "B", "local", "NVIDIA GeForce RTX 5060 8GiB",
             "Three sequential single-arm100K40pass runs; each candidate compared with the new local BN arm.", None, None)
         tid = "TB-" + run
         proposal = build_execution_proposal(question=question, arm=arm, trajectory_id=tid,
-            source_commit=commit, run=run, version="v1", contract_ref=base + "/recipe.json",
-            contract_refs=[base + "/recipe.json", prefix + "/protocol.md", prefix + "/input.json"],
+            source_commit=commit, run=run, version=args.attempt, contract_ref=recipe_ref,
+            contract_refs=[recipe_ref, prefix + "/protocol.md", prefix + "/input.json",
+                           *([prefix + "/failure_v1.md"] if args.attempt == "v2" else [])],
             authority_ref=prefix + "/authority.json", role_ref=prefix + "/role_scope.json",
             decision_ref=prefix + "/protocol.md", timestamp=timestamp, profile=profile, action_type="training")
         proposal["decision_state"]["policy_version"] = policy["version"]
@@ -135,16 +154,18 @@ def main():
             "evidence": original["evidence"], "terminal_protocol": original["terminal_protocol"]})
         atomic_json(directory / "experiment_spec.json", spec.to_dict())
         records = [prefix + "/input.json", prefix + "/authority.json", prefix + "/protocol.md",
-                   prefix + "/role_scope.json", prefix + "/policy_registration.json", base + "/recipe.json"]
+                   prefix + "/role_scope.json", prefix + "/policy_registration.json", recipe_ref,
+                   "src/molgap/local_training.py",
+                   *([prefix + "/failure_v1.md"] if args.attempt == "v2" else [])]
         plan = {"format": "molgap-family-training-preparation-v1", "spec_identity": spec.identity,
-                "arms": [{"arm_id": arm_id, "device": 0, "recipe": base + "/recipe.json",
+                "arms": [{"arm_id": arm_id, "device": 0, "recipe": recipe_ref,
                           "initial_state": config["initial_state_ref"]}],
                 "source_files": registered_source_files(spec, sorted(set(runtime_source_files(ROOT)) | set(records)))}
         atomic_json(directory / "workflow_plan.json", plan)
         context["arms"].append({"arm_id": arm_id, "logical_run_id": run, "spec_identity": spec.identity,
                                  "spec_ref": base + "/experiment_spec.json"})
         print(json.dumps({"arm": arm_id, "spec_identity": spec.identity, "status": "INPUT_DECLARED_NOT_PREPARED"}))
-    atomic_json(HERE / "comparison_context.json", context)
+    atomic_json(attempt_root / "comparison_context.json", context)
 
 
 if __name__ == "__main__":
