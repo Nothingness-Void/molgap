@@ -307,7 +307,10 @@ def test_transfer_study_uses_exact_source_clock_without_causal_pair(configured, 
     _write_json(c.repo / value["authority_ref"], authority)
     if authority_line_endings == "crlf":
         authority_path = c.repo / value["authority_ref"]
-        authority_path.write_bytes(authority_path.read_bytes().replace(b"\n", b"\r\n"))
+        # The canonical writer has no line breaks; deliberately create the
+        # multiline CRLF bytes emitted by the real failed Windows declaration.
+        raw = (json.dumps(authority, sort_keys=True, indent=2) + "\n").encode()
+        authority_path.write_bytes(raw.replace(b"\n", b"\r\n"))
     _write_json(c.path, value)
     _git(c.repo, "add", ".")
     _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Freeze noncausal scale fixture")
