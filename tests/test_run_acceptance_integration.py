@@ -352,8 +352,9 @@ def _seed_reference_records(case):
     costs.write_bytes(canonical_json(cost).encode())
 
 
-@pytest.mark.parametrize("comparison_purpose", ["architecture_comparison", "optimizer_comparison", "initialization_comparison"])
+@pytest.mark.parametrize("comparison_purpose", ["single_module_ablation", "optimizer_comparison", "initialization_comparison"])
 def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, comparison_purpose):
+    canonical_purpose = "mechanism_comparison" if comparison_purpose == "single_module_ablation" else comparison_purpose
     case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
                                        comparison_purpose=comparison_purpose)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
@@ -611,7 +612,10 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     configuration.write_text('{"format":"untrusted","arms":[]}', encoding="utf-8")
     scopes = family._frozen_same_run_scopes(resolved)
     configuration.write_bytes(archived)
-    assert all(scope["experiment_purpose"] == comparison_purpose for scope in scopes.values())
+    assert all(scope["experiment_purpose"] == canonical_purpose for scope in scopes.values())
+    if comparison_purpose == "single_module_ablation":
+        assert all(scope["mechanism_id"] == "synthetic-intervention" and
+                   scope["declared_intervention_fields"] == ["architecture_config_identity"] for scope in scopes.values())
     native = {}
     for arm_id, item in resolved["outputs"].items():
         directory = Path(item["output_dir"])
@@ -622,7 +626,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             "local_path": str(directory / "runtime_certificate.json")}], "synthetic_substitute": True}
     assess = comparison_owner.assess_comparison_readiness
     def fixture_comparison(**kwargs):
-        assert kwargs["experiment_purpose"] == comparison_purpose
+        assert kwargs["experiment_purpose"] == canonical_purpose
         for side in ("candidate", "reference"):
             original_side = kwargs[side]
             fixture_side = _side(side)

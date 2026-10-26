@@ -68,6 +68,9 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     purpose = candidate.get("purpose", "architecture_comparison")
     if purpose != reference.get("purpose", "architecture_comparison"):
         raise ValueError("Same-run arms declare different comparison purposes")
+    # Frozen single-Addon screens used this name before the common taxonomy.
+    if purpose == "single_module_ablation":
+        purpose = "mechanism_comparison"
     allowed = {"architecture_comparison": ["architecture_config_identity"],
                "mechanism_comparison": ["architecture_config_identity"],
                "optimizer_comparison": ["optimizer_identity"],
