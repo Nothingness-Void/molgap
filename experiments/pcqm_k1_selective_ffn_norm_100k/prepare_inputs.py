@@ -109,7 +109,9 @@ def main():
         question = ExecutionQuestion(policy["policy_id"], policy["action_rule"]["action"],
             "Does " + arm_id + " improve the matched local original-BN reference at100K40passes?",
             "Whole-block norm replacements did not establish selective FFN or local residual effects.",
-            item["addon"] or "Matched original BN, no MsgNorm; new local reference.", (),
+            item["addon"] or "Matched original BN, no MsgNorm; new local reference.",
+            ("ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
+             "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms"),
             ("No generalization gain", "Changed optimization rather than improved capacity"),
             ("Pre-Norm AdaRMS100K negative", "Whole-block Post-LN100K negative"),
             "Review matched local evidence; no automatic adoption or scale-up.", "Reject this exact mechanism under this contract.")
