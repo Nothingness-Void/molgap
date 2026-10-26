@@ -1,0 +1,308 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "allocation_observation_sha256": "cdd0877f1f7d83c60a194b0361e939e51d70a627c4bb7c11b6b5cd9e24732757",
+      "assigned_device_segments": {
+        "allocated_device_seconds": 19909.027493889,
+        "device_hours_from_source_seconds": 5.530285414969167,
+        "hardware": [
+          "Tesla T4"
+        ],
+        "segment_count": 3,
+        "segment_device_seconds": [
+          11728.060645583,
+          1303.6894501549998,
+          6877.277398151
+        ]
+      },
+      "blockers": [],
+      "checks": {
+        "all_package_checks_passed": true,
+        "allocation_observation_artifact_binding": true,
+        "artifact_hash_bindings": true,
+        "canonical_finalization_receipt_verified": true,
+        "cost_event_schema": true,
+        "decision_bytes_match_terminal_binding": true,
+        "decision_is_final_inconclusive": true,
+        "existing_cost_event_owner_translation": true,
+        "expected_device_hours_and_unknown_wall": true,
+        "frozen_trajectory_action_binding": true,
+        "no_closure_blockers": true,
+        "no_strict_or_replay_claim": true,
+        "outcome_is_inconclusive_context_only": true,
+        "role_event_schema_and_truth": true,
+        "root_allocation_ledger_sha_binding": true,
+        "terminal_format": true,
+        "three_assigned_device_rows_for_arm": true,
+        "three_deduplicated_segments_bound": true,
+        "trace_manifest_schema": true,
+        "v5_evidence_owner_schema": true
+      },
+      "comparison_role": "candidate",
+      "comparison_status": "CONTEXT_ONLY",
+      "cost_event": {
+        "action_id": "A001",
+        "attempt_id": "esa_count_500k-v1",
+        "category": "training",
+        "cost_event_id": "cost-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-0",
+        "evidence_ref": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/esa_count_500k/allocation_observation.json",
+        "hardware": "Tesla T4",
+        "measurement": {
+          "cpu_hours": {
+            "status": "measurement_missing",
+            "value": null
+          },
+          "device_hours": {
+            "status": "measured",
+            "value": 5.530285414969167
+          },
+          "queue_hours": {
+            "status": "measurement_missing",
+            "value": null
+          },
+          "wall_hours": {
+            "status": "measurement_missing",
+            "value": null
+          }
+        },
+        "platform": "kaggle",
+        "run_id": "modern2d-scale500k-k2-s42-r3:esa_count_500k:downstream",
+        "schema": "molgap-cost-event-v1",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      "cost_event_count": 1,
+      "decision_sha256": "41710264d282b527c39d68a6ec1896250b8970228206d5cd8311f6da5263e7f9",
+      "decision_sha256_in_terminal": "41710264d282b527c39d68a6ec1896250b8970228206d5cd8311f6da5263e7f9",
+      "device_hours": 5.530285414969167,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "finalization": {
+        "format": "molgap-rml-finalization-v1",
+        "outcome": "INCONCLUSIVE",
+        "source_artifact_digest": "8b67b8566269092d28314c36d3ef8ec3cd0c8962a69f2dc6e4c20153b6a5faa7"
+      },
+      "native_device_seconds": 19909.027493889,
+      "reference_id": null,
+      "run_id": "modern2d-scale500k-k2-s42-r3:esa_count_500k:downstream",
+      "scientific_status": "INCONCLUSIVE",
+      "source_allocation_ledger": {
+        "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/allocation_ledger.json",
+        "sha256": "183c216d2118d2fa11c60c0a473973281f8856a063480a5a58ab1061e40e17a3"
+      },
+      "status": "VERIFIED",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "wall_hours": {
+        "status": "measurement_missing",
+        "value": null
+      }
+    },
+    "ppgt_mean_500k": {
+      "allocation_observation_sha256": "7e1c3a1cea647db909712ae5468bac3efabd109b654dd4f36cd38de2aaebb2ba",
+      "assigned_device_segments": {
+        "allocated_device_seconds": 19909.027493889,
+        "device_hours_from_source_seconds": 5.530285414969167,
+        "hardware": [
+          "Tesla T4"
+        ],
+        "segment_count": 3,
+        "segment_device_seconds": [
+          11728.060645583,
+          1303.6894501549998,
+          6877.277398151
+        ]
+      },
+      "blockers": [],
+      "checks": {
+        "all_package_checks_passed": true,
+        "allocation_observation_artifact_binding": true,
+        "artifact_hash_bindings": true,
+        "canonical_finalization_receipt_verified": true,
+        "cost_event_schema": true,
+        "decision_bytes_match_terminal_binding": true,
+        "decision_is_final_inconclusive": true,
+        "existing_cost_event_owner_translation": true,
+        "expected_device_hours_and_unknown_wall": true,
+        "frozen_trajectory_action_binding": true,
+        "no_closure_blockers": true,
+        "no_strict_or_replay_claim": true,
+        "outcome_is_inconclusive_context_only": true,
+        "role_event_schema_and_truth": true,
+        "root_allocation_ledger_sha_binding": true,
+        "terminal_format": true,
+        "three_assigned_device_rows_for_arm": true,
+        "three_deduplicated_segments_bound": true,
+        "trace_manifest_schema": true,
+        "v5_evidence_owner_schema": true
+      },
+      "comparison_role": "candidate",
+      "comparison_status": "CONTEXT_ONLY",
+      "cost_event": {
+        "action_id": "A001",
+        "attempt_id": "ppgt_mean_500k-v1",
+        "category": "training",
+        "cost_event_id": "cost-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-0",
+        "evidence_ref": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/allocation_observation.json",
+        "hardware": "Tesla T4",
+        "measurement": {
+          "cpu_hours": {
+            "status": "measurement_missing",
+            "value": null
+          },
+          "device_hours": {
+            "status": "measured",
+            "value": 5.530285414969167
+          },
+          "queue_hours": {
+            "status": "measurement_missing",
+            "value": null
+          },
+          "wall_hours": {
+            "status": "measurement_missing",
+            "value": null
+          }
+        },
+        "platform": "kaggle",
+        "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+        "schema": "molgap-cost-event-v1",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      "cost_event_count": 1,
+      "decision_sha256": "41710264d282b527c39d68a6ec1896250b8970228206d5cd8311f6da5263e7f9",
+      "decision_sha256_in_terminal": "41710264d282b527c39d68a6ec1896250b8970228206d5cd8311f6da5263e7f9",
+      "device_hours": 5.530285414969167,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "finalization": {
+        "format": "molgap-rml-finalization-v1",
+        "outcome": "INCONCLUSIVE",
+        "source_artifact_digest": "9f71e195194cf3e3c9d6d5735bab22d16b6e276b6ac00469e8d145206e001cbf"
+      },
+      "native_device_seconds": 19909.027493889,
+      "reference_id": null,
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "scientific_status": "INCONCLUSIVE",
+      "source_allocation_ledger": {
+        "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/allocation_ledger.json",
+        "sha256": "183c216d2118d2fa11c60c0a473973281f8856a063480a5a58ab1061e40e17a3"
+      },
+      "status": "VERIFIED",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "wall_hours": {
+        "status": "measurement_missing",
+        "value": null
+      }
+    }
+  },
+  "cost_provenance": {
+    "allocation_ledger_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\allocation_ledger.json",
+    "allocation_ledger_sha256": "183c216d2118d2fa11c60c0a473973281f8856a063480a5a58ab1061e40e17a3",
+    "deduplicated_invocations": [
+      "2026-10-26T06:15:04.047959+00:00",
+      "2026-10-26T08:43:24.816457+00:00",
+      "2026-10-26T18:31:40.065370+00:00"
+    ],
+    "expected_summed_device_hours": 11.060570829938333,
+    "per_arm_device_hours": {
+      "esa_count_500k": 5.530285414969167,
+      "ppgt_mean_500k": 5.530285414969167
+    },
+    "segment_count": 3,
+    "shared_wall_time_retained_as_unknown_per_arm": true,
+    "sum_matches_expected": true,
+    "summed_device_hours_from_unrounded_seconds": 11.060570829938333,
+    "summed_device_seconds": 39818.054987778
+  },
+  "created_at_utc": "2026-10-26T22:57:14.449857+00:00",
+  "direct_trace_manifest_probes": {
+    "eligible_null_candidate": {
+      "accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "validator_result": "ValueError: unreferenced trace requires an explicitly ineligible candidate with exclusion reasons"
+    },
+    "ineligible_null_candidate": {
+      "accepted": true,
+      "expected_acceptance": true,
+      "passed": true,
+      "validator_result": "accepted"
+    },
+    "null_reference_no_exclusion_reasons": {
+      "accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "validator_result": "ValueError: unreferenced trace requires an explicitly ineligible candidate with exclusion reasons"
+    },
+    "null_reference_role": {
+      "accepted": false,
+      "expected_acceptance": false,
+      "passed": true,
+      "validator_result": "ValueError: unreferenced trace requires an explicitly ineligible candidate with exclusion reasons"
+    }
+  },
+  "format": "molgap-scale500k-v3-rml-validation-report-v1",
+  "nearest_existing_test": {
+    "cache_provider_disabled": true,
+    "duration_seconds": 15.98,
+    "nodeid": "tests/test_research_memory.py::test_dangling_evidence_is_rejected_with_source_and_field",
+    "passed": 1,
+    "status": "PASSED"
+  },
+  "nullable_reference_repair": {
+    "isolated_worktree": {
+      "changed_lines": [
+        "if record[\"reference_id\"] not in evidence_ids:",
+        "if record[\"reference_id\"] is not None and record[\"reference_id\"] not in evidence_ids:"
+      ],
+      "fixed_line_present": true,
+      "git_diff_exit_code": 0,
+      "only_change_is_nullable_reference_guard": true
+    },
+    "main": {
+      "changed_lines": [
+        "if record[\"reference_id\"] not in evidence_ids:",
+        "if record[\"reference_id\"] is not None and record[\"reference_id\"] not in evidence_ids:"
+      ],
+      "fixed_line_present": true,
+      "git_diff_exit_code": 0,
+      "only_change_is_nullable_reference_guard": true
+    }
+  },
+  "overall_status": "PASS",
+  "repository_rml_validation": {
+    "command": "python -m molgap.research_memory --repo-root <main-repo> validate",
+    "record_counts": {
+      "comparison_prelaunch": 62,
+      "comparison_readiness": 46,
+      "costs": 263,
+      "evidence": 134,
+      "ready": 0,
+      "reference_bundles": 19,
+      "roles": 549,
+      "target_transform_assets": 4,
+      "traces": 68,
+      "trajectories": 177
+    },
+    "return_code": 0,
+    "status": "PASS",
+    "stderr": "",
+    "stdout": "{\n  \"evidence\": 134,\n  \"trajectories\": 177,\n  \"costs\": 263,\n  \"roles\": 549,\n  \"traces\": 68,\n  \"ready\": 0,\n  \"comparison_prelaunch\": 62,\n  \"comparison_readiness\": 46,\n  \"reference_bundles\": 19,\n  \"target_transform_assets\": 4\n}"
+  },
+  "scope": {
+    "drafts_modified": false,
+    "frozen_or_portability_checks": false,
+    "migration_or_rebuild": false,
+    "model_execution": false,
+    "new_test_files_or_code": false,
+    "remote_calls": false
+  },
+  "source": {
+    "interpreter": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+    "isolated_worktree": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap",
+    "main_repo": "C:\\Users\\Adminn\\Documents\\molgap",
+    "main_src": "C:\\Users\\Adminn\\Documents\\molgap\\src"
+  }
+}

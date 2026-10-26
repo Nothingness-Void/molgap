@@ -9,3 +9,6 @@ allocation, not two paired100K/500K notebooks. The earlier
 [two-question draft](../esa_count_persistence_100k/scale_rescue_plan.md) remains
 history. Accepted graph tensors are exported on scheduled CPU before any GPU
 release. No100K control is retrained by this authority.
+
+[Completed transfer decision](results/completed_v3/decision.md) and
+[RML qualification](results/completed_v3/rml_status.json) own the terminal evidence.

@@ -6,19 +6,15 @@
 
 ## Server execution status
 
-The human requested one PPGT/ESA500K dual-arm task. The
-[owning protocol](experiments/modern2d_scale500k/protocol.md) combines both
-family questions in one T4x2 allocation. Selected input export, metadata and
-remote byte verification passed. Two pre-training startup faults were preserved
-and repaired without changing either scientific arm. Both500K arms entered
-training; a checkpoint-export serialization fault interrupted version1.
-The original checkpoints passed native-state validation. Kernel140916841/
-version3 is RUNNING as a checkpoint continuation with a pinned native-probe repair.
-[Status](experiments/modern2d_scale500k/STATUS.md) owns exact receipts, preserved
-cursors and the cumulative remaining budget. Original science/endpoints remain
-fixed; native GPU resume and final outcomes are not yet accepted. Existing Luna B
-monitors only version3, generation5; healthy status is silent. No scientific
-successor or protected-role release.
+The [PPGT/ESA500K task](experiments/modern2d_scale500k/STATUS.md) completed both
+frozen endpoints. Independent output and native-state acceptance passed; matched
+source100K selected-prediction contrasts improved substantially on Common-Dev.
+The [terminal decision](experiments/modern2d_scale500k/results/completed_v3/decision.md)
+retains those observations without incumbent nomination: final-live reference
+confidence and a qualified strong comparator remain unavailable. Both RML
+terminals are closed as CONTEXT_ONLY/INCONCLUSIVE, explicitly not Replay-Ready.
+The existing Luna heartbeat is paused; no active compute, scientific successor,
+extra seed, full training or protected-role evaluation remains on this chain.
 
 The [ESA count-persistence pair](experiments/esa_count_persistence_100k/STATUS.md)
 completed both60-pass endpoints. Count readout passed its frozen within-family

@@ -1,12 +1,12 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Kaggle2 kernel140916841/version3 is RUNNING as a pinned-runner checkpoint
-continuation. The [version3 decision](continuation_v3/decision.md) owns actual
-receipts, original checkpoint hashes and cumulative budget. Version2 failed
-before new formal work; its diagnosis and cost remain retained. Native GPU
-resume qualification and final scientific acceptance remain pending. No
-scientific successor or protected role is released.
+input/runtime release. Kaggle2 kernel140916841/version3 completed both frozen endpoints.
+[Terminal acceptance and interpretation](results/completed_v3/decision.md) retain
+independent saved-output/native qualification, observed roles and cumulative
+cost. [RML status](results/completed_v3/rml_status.json) records two contextual
+INCONCLUSIVE terminal trajectories, explicitly not Replay-Ready. The existing
+Luna heartbeat is paused and binding closed. No active job or automatic successor.
 
 ## Selected input prerequisite
 
@@ -117,3 +117,12 @@ retaining original package and science. Both prior allocations are debited
 within32370 seconds aggregate, including600 seconds retention reserve. Existing
 Luna B generation5 monitors only this exact job. Scheduler QUEUED establishes
 neither native acceptance nor a scientific winner.
+
+## Terminal acceptance
+
+[Selected/final metrics, matched curves and budget](results/completed_v3/summary.json)
+were accepted from version3 outputs. The original source/Spec and preserved
+checkpoint prefixes remain bound by continuation evidence. The terminal RML
+records use measured per-assigned-device allocation costs without duplicating
+shared wall time. No qualified incumbent comparison or final-live source100K
+confidence was reconstructed; no scientific promotion or successor follows.

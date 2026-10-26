@@ -11,10 +11,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
-Finish the human-requested [PPGT/ESA500K dual-arm task](experiments/modern2d_scale500k/protocol.md)
-through its original-source checkpoint continuation and independent saved-artifact
-acceptance. Keep the frozen exposure/transform/role boundaries and aggregate
-budget; no new baseline, seed, architecture or scientific successor is included.
+The [PPGT/ESA500K transfer decision](experiments/modern2d_scale500k/results/completed_v3/decision.md)
+closed both endpoints and contextual RML terminals. Preserve its substantial
+within-family transfer observations; any competitive nomination first needs a
+compatible strong comparator and separately bounded authority. No automatic
+baseline inference/training, extra seed, extension or scientific successor.
 
 The [ESA count-persistence decision](experiments/esa_count_persistence_100k/results/completed_v2/decision.md)
 retains a qualified within-family lead and one reusable accepted reference.

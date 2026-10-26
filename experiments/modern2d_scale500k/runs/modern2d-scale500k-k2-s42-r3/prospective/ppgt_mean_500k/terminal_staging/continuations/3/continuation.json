@@ -1,0 +1,75 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/_resume_preflight/ppgt_mean_500k/actual_resume_certificate.json",
+    "sha256": "2eda889a6b8b4df39478eee1e844eb88f8891dd46c6d45dc98d5c12723054bab"
+  },
+  "authority": {
+    "path": "experiments/modern2d_scale500k/retry_v3/authority.json",
+    "sha256": "476c167ac16b3ef487898e361202be7de518c8713ae94f40e1cb046be9e83b33"
+  },
+  "checkpoint": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/last_checkpoint.pt",
+    "sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83"
+  },
+  "continued": {
+    "attempt_id": "ppgt_mean_500k-v1-v3",
+    "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+    "source_package_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+    "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2"
+  },
+  "continued_manifest": {
+    "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/output_manifest.json",
+    "sha256": "4dc0abc5cdeb225be5c1b12dcba08f69c7385c51b421bbeddb07b66ca08fdd32"
+  },
+  "continued_receipt": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/operations/launch_receipt.canonical.json",
+    "sha256": "d8d7a546644cb7a657de6b142dcc1b0db3d67d7b984f6d216dae6a786118d302"
+  },
+  "continued_trace": {
+    "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json",
+    "sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/_resume_preflight/ppgt_mean_500k/runtime_certificate.json",
+    "sha256": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25"
+  },
+  "origin": {
+    "attempt_id": "ppgt_mean_500k-v1",
+    "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+    "source_package_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+    "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2"
+  },
+  "origin_receipt": {
+    "path": "external:///E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/operations/launch_receipt.json",
+    "sha256": "e94496a0d3769da1ffe87a482eef764df548ec4c793042124a3650c3fee1a25b"
+  },
+  "recovery_repair": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/recovery_repair.json",
+    "sha256": "9fd7c36cbac702351e2f018271e7e8bb2175ad8d8407f7a236ae26278d46cbab"
+  },
+  "resume_bundle": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/resume_bundle.json",
+    "sha256": "6051a961b5a93908ab14e9418696741f2db6cf02ad4cbf32a9f33a2e65d22ac9"
+  },
+  "source_context": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/canonical_trace.json.context.json",
+    "sha256": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088"
+  },
+  "source_package": {
+    "path": "external:///E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/prepared/package/package_manifest.json",
+    "sha256": "65753891d110631b6050433fa631c430f899616f7711ca074db1e92663e6aa08"
+  },
+  "source_trace": {
+    "path": "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/canonical_trace.json",
+    "sha256": "bba8a53ad909e61f874ee3d2b74ce71be00502b9b40c588ea8f237dfd27fe0b7"
+  }
+}

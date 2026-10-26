@@ -1,0 +1,296 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "blockers": [],
+      "canonical_trace": {
+        "observation_count": 60,
+        "path": "canonical_trace.json",
+        "run_id": "modern2d-scale500k-k2-s42-r3:esa_count_500k:downstream",
+        "sha256": "ce26da8ed0a66b353c2194a39551f9f682ae77c749b12800598de4fa55d4a56b",
+        "terminal_optimizer_steps": 46860,
+        "terminal_sample_presentations": 5998080,
+        "validated": true
+      },
+      "context": {
+        "account": "kaseichou",
+        "arm_id": "esa_count_500k",
+        "arm_identity": "340f39759ae95da0546796166a1bcb7656c1af67c1093f408dc54d7ebc63abb5",
+        "experiment_id": "modern2d_scale500k",
+        "family_name": "esa_small",
+        "family_version": "4",
+        "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+        "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+        "platform": "kaggle",
+        "platform_version": "3",
+        "run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+        "source_archive_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+        "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+        "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+        "training_recipe_sha256": "fcd0cd86f5ffcb724ad2b8dca492c714fb713e3bd5de6e1ea27790ba922f3cb5"
+      },
+      "endpoint": {
+        "checks_passed": true,
+        "completed_passes": 11,
+        "next_batch": 3894,
+        "optimizer_steps": 46860,
+        "physical_batch_size": 128,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "trace_counter_field_mapping": {
+          "optimizer_steps": "optimizer_step"
+        }
+      },
+      "frozen_expected": {
+        "completed_passes": 11,
+        "development_rows": 50000,
+        "next_batch": 3894,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "inspect_output": {
+        "artifact_bindings": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "fcd0cd86f5ffcb724ad2b8dca492c714fb713e3bd5de6e1ea27790ba922f3cb5"
+          },
+          "final_predictions": {
+            "path": "final_development_predictions.pt",
+            "sha256": "e5dc06e50437cef7a65b6f44628bdd64bf48d07e60bebc712697e89e4cbd8836"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "ae3410565667f200332d157cca0778e29a09b341acad0d56ef1d1831a35162f3"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "6a0be0d2565a881a908adb3bf5e98cde0d39ab43745c264aa3ae0ebfea1228a9"
+          },
+          "role_audit": {
+            "path": "role_audit.json",
+            "sha256": "48b98d4b0726111bcf7e9da54a79c210a57f86004f6e9b801ee55617310829ac"
+          },
+          "runtime_certificate": {
+            "path": "runtime_certificate.json",
+            "sha256": "371e5eeb64b4d97d36629b1219d96682f57ee6f29e5d68035726e452e737d38a"
+          },
+          "runtime_provenance": {
+            "path": "runtime_provenance.json",
+            "sha256": "42521fe46abe5fca63185068cf015992f6fff96ebd41ba90dba8c4ea677b0a9f"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "fb047931b237c11c68660a5475ac819d779cd208f921bbb675c48c56e9da4c6f"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "ce26da8ed0a66b353c2194a39551f9f682ae77c749b12800598de4fa55d4a56b"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "9acf540fb4ca01a0f93269252a5272e0e9278c86bd7e8dda759e8d824e91a161"
+          }
+        },
+        "blockers": [],
+        "producer_platform_version": null,
+        "selected_optimizer_step": 46860,
+        "selected_weights": "live",
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "mechanical_checks": {
+        "canonical_trace_validated": true,
+        "inspect_output_mechanically_verified": true,
+        "optimizer_steps_manifest_and_trace_match": true,
+        "pass_and_cursor_match": true,
+        "physical_batch_128_fp32": true,
+        "role_audit_scope_validated": true,
+        "sample_presentations_manifest_and_trace_match": true
+      },
+      "role_audit": {
+        "event_count": 8,
+        "observed_roles": [
+          "common_dev",
+          "train_500k"
+        ],
+        "path": "role_audit.json",
+        "protected_roles_untouched": true,
+        "role_use": {
+          "common_dev": "consumed",
+          "official_validation": "untouched",
+          "test_challenge": "untouched",
+          "test_dev": "untouched",
+          "train_500k": "consumed"
+        },
+        "sha256": "48b98d4b0726111bcf7e9da54a79c210a57f86004f6e9b801ee55617310829ac",
+        "validated_for_requested_scope": true
+      },
+      "status": "MECHANICALLY_VERIFIED"
+    },
+    "ppgt_mean_500k": {
+      "blockers": [],
+      "canonical_trace": {
+        "observation_count": 20,
+        "path": "canonical_trace.json",
+        "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+        "sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5",
+        "terminal_optimizer_steps": 15620,
+        "terminal_sample_presentations": 1999360,
+        "validated": true
+      },
+      "context": {
+        "account": "kaseichou",
+        "arm_id": "ppgt_mean_500k",
+        "arm_identity": "ec3e9ef9ab046dd4a25c5ba56bb28155eb9b9a6e8c53ffd1183fd45a7fc10b56",
+        "experiment_id": "modern2d_scale500k",
+        "family_name": "ppgt_small",
+        "family_version": "3",
+        "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+        "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+        "platform": "kaggle",
+        "platform_version": "3",
+        "run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+        "source_archive_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+        "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+        "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+        "training_recipe_sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+      },
+      "endpoint": {
+        "checks_passed": true,
+        "completed_passes": 3,
+        "next_batch": 3902,
+        "optimizer_steps": 15620,
+        "physical_batch_size": 128,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "trace_counter_field_mapping": {
+          "optimizer_steps": "optimizer_step"
+        }
+      },
+      "frozen_expected": {
+        "completed_passes": 3,
+        "development_rows": 50000,
+        "next_batch": 3902,
+        "optimizer_steps": 15620,
+        "precision": "fp32",
+        "sample_presentations": 1999360,
+        "source_idx_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+        "target_sha256": "0971904c41fe9f2abaa06f895bd4a7120b1fc92335010911862118bdb6ec4701"
+      },
+      "inspect_output": {
+        "artifact_bindings": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+          },
+          "final_predictions": {
+            "path": "final_development_predictions.pt",
+            "sha256": "aea55eadae9b50dc4645e11632a4109d3b56ed2fc8c6fb030dcd1660cc106efc"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "d5f90a1a030d08460b69bea6d2b424c0d152019b5c0e64f92cd2aa36d3a61754"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "a94a7d5da04ecdfc807001c659c701ecf29f2986c35ecc0ace2eee84c9e3e58f"
+          },
+          "role_audit": {
+            "path": "role_audit.json",
+            "sha256": "1906c3548430c9c33f5c8962ec0dc6b761f73ffd5f58ef3c3587a8d2aba19c32"
+          },
+          "runtime_certificate": {
+            "path": "runtime_certificate.json",
+            "sha256": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25"
+          },
+          "runtime_provenance": {
+            "path": "runtime_provenance.json",
+            "sha256": "ba5ac0c56c537592f8565bcdef0e3c0898743fef95a3ff4b60d386b3081e22e3"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "bc7ccbcde940f683b0ce5c4fb3c54667105493078b607fa3df1a8c6ebf4867be"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5"
+          },
+          "trace_context": {
+            "path": "canonical_trace.json.context.json",
+            "sha256": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088"
+          }
+        },
+        "blockers": [],
+        "producer_platform_version": null,
+        "selected_optimizer_step": 15620,
+        "selected_weights": "live",
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "mechanical_checks": {
+        "canonical_trace_validated": true,
+        "inspect_output_mechanically_verified": true,
+        "optimizer_steps_manifest_and_trace_match": true,
+        "pass_and_cursor_match": true,
+        "physical_batch_128_fp32": true,
+        "role_audit_scope_validated": true,
+        "sample_presentations_manifest_and_trace_match": true
+      },
+      "role_audit": {
+        "event_count": 8,
+        "observed_roles": [
+          "common_dev",
+          "train_500k"
+        ],
+        "path": "role_audit.json",
+        "protected_roles_untouched": true,
+        "role_use": {
+          "common_dev": "consumed",
+          "official_validation": "untouched",
+          "test_challenge": "untouched",
+          "test_dev": "untouched",
+          "train_500k": "consumed"
+        },
+        "sha256": "1906c3548430c9c33f5c8962ec0dc6b761f73ffd5f58ef3c3587a8d2aba19c32",
+        "validated_for_requested_scope": true
+      },
+      "status": "MECHANICALLY_VERIFIED"
+    }
+  },
+  "created_at_utc": "2026-10-26T22:41:08.734786+00:00",
+  "execution_limits": {
+    "model_construction": false,
+    "model_forward_or_inference": false,
+    "tensor_loads": "CPU only with weights_only=True through existing inspect_output",
+    "tests_run": false,
+    "training": false
+  },
+  "format": "molgap-scale500k-v3-saved-artifact-acceptance-v1",
+  "inputs": {
+    "acceptance_plan": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap\\experiments\\modern2d_scale500k\\generated\\60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309\\acceptance_plan.json",
+    "launch_receipt": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3\\operations\\launch_receipt.canonical.json",
+    "output_root": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment",
+    "package_dir": "E:\\MolGap\\artifacts\\runs\\modern2d-scale500k-k2-s42-r3\\v1\\prepared\\package",
+    "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+    "receipt_canonical_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+    "receipt_physical_arms": [
+      "ppgt_mean_500k",
+      "esa_count_500k"
+    ],
+    "receipt_platform_version": "3",
+    "receipt_submission_state": "ACCEPTED",
+    "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2"
+  },
+  "overall_status": "MECHANICALLY_VERIFIED",
+  "producer_context_note": "The retained output producer context records platform_version as null; the launch receipt binds version 3, and the existing context validator preserves the producer null without backfilling it.",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "scope": "bounded saved-artifact mechanical acceptance",
+  "source": {
+    "inspect_output_module": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap\\src\\molgap\\experiment_family_workflow.py",
+    "interpreter": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+    "worktree_src": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap\\src"
+  },
+  "supplemental_check_note": "Trace endpoint counter uses canonical field optimizer_step; manifest and frozen-plan field is optimizer_steps."
+}

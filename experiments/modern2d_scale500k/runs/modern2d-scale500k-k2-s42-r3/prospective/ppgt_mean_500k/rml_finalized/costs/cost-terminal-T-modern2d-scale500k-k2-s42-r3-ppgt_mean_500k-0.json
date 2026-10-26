@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "ppgt_mean_500k-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-0",
+  "evidence_ref": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/allocation_observation.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 5.530285414969167
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+}

@@ -1,0 +1,42 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "backtest_eligibility": {
+        "eligible": false,
+        "exclusion_reasons": [
+          "closure_synthesized_manifest_not_prelaunch_calibrated",
+          "missing_frozen_reference"
+        ]
+      },
+      "cost_event_count": "See finalization receipt",
+      "outcome": "INCONCLUSIVE",
+      "record": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/esa_count_500k/rml_finalized",
+      "reference_id": null,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+    },
+    "ppgt_mean_500k": {
+      "backtest_eligibility": {
+        "eligible": false,
+        "exclusion_reasons": [
+          "closure_synthesized_manifest_not_prelaunch_calibrated",
+          "missing_frozen_reference"
+        ]
+      },
+      "cost_event_count": "See finalization receipt",
+      "outcome": "INCONCLUSIVE",
+      "record": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/rml_finalized",
+      "reference_id": null,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    }
+  },
+  "canonical_terminal_closure": "COMPLETE",
+  "claim": "Two honest noncausal terminal trajectories, not two new replay-eligible pairs",
+  "cost_scope": "Assigned-device native allocation measurements for3 deduplicated R3 physical invocations; process/queue missing measurements stay unknown",
+  "independent_rml_validation": "PASS",
+  "new_training_submitted": false,
+  "owner_closure_result": "rml_closure_result.json",
+  "replay_ready": false,
+  "repository_derived_handling": "Lifecycle regenerated local derived views; existing unrelated pending infrastructure changes in those views were preserved and not included in this experiment commit.",
+  "strict_causal_claim": false,
+  "validation_report": "rml_validation.json"
+}

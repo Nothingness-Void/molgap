@@ -1,0 +1,392 @@
+{
+  "acceptance_ref": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/ppgt_mean_500k/recipe.json": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025",
+    "experiments/modern2d_scale500k/results/completed_v3/decision.md": "41710264d282b527c39d68a6ec1896250b8970228206d5cd8311f6da5263e7f9",
+    "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/acceptance.json": "df15dff6002cb2f5fd71fc19523f53d90e0bc6575eb1c4228d823da77068a1de",
+    "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/allocation_observation.json": "7e1c3a1cea647db909712ae5468bac3efabd109b654dd4f36cd38de2aaebb2ba",
+    "experiments/modern2d_scale500k/retry_v3/authority.json": "476c167ac16b3ef487898e361202be7de518c8713ae94f40e1cb046be9e83b33",
+    "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/continuations/3/continuation.json": "dff5112481a1836d79c199c6c161caeb76192f5bc5a32e613a2e193ef6263db1",
+    "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/e911ffd25a303d5f/acceptance.json": "cf712a10fa7c0d9045a96f00ad66bf76cbde3f8aa6c7de4fd3c886734861bc52",
+    "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/e911ffd25a303d5f/observed.json": "3163586165c28cb4e289c30d53f4a02bfc6fdfedf3ba5c9bc6c4a47140d1d428",
+    "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json": "bf2663ac6e2912a74aeecd5cc144d8dd9d08177d15d20bddb68c7171a22aa395",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/operations/launch_receipt.canonical.json": "d8d7a546644cb7a657de6b142dcc1b0db3d67d7b984f6d216dae6a786118d302",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/recovery_repair.json": "9fd7c36cbac702351e2f018271e7e8bb2175ad8d8407f7a236ae26278d46cbab",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/recovery_repair/src/molgap/family_training_runner.py": "5a2a895aa76222481cb5e45c164f75b122c387749412392151e42295b1062d42",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/canonical_trace.json": "bba8a53ad909e61f874ee3d2b74ce71be00502b9b40c588ea8f237dfd27fe0b7",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/canonical_trace.json.context.json": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/files/last_checkpoint.pt": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83",
+    "external:///E:/MolGap/artifacts/recovery/modern2d-scale500k-r3-v3/prepared/source_dataset/resume/ppgt_mean_500k/resume_bundle.json": "6051a961b5a93908ab14e9418696741f2db6cf02ad4cbf32a9f33a2e65d22ac9",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/_resume_preflight/ppgt_mean_500k/actual_resume_certificate.json": "2eda889a6b8b4df39478eee1e844eb88f8891dd46c6d45dc98d5c12723054bab",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/_resume_preflight/ppgt_mean_500k/runtime_certificate.json": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/allocation_ledger.json": "183c216d2118d2fa11c60c0a473973281f8856a063480a5a58ab1061e40e17a3",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json.context.json": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/development_predictions.pt": "d5f90a1a030d08460b69bea6d2b424c0d152019b5c0e64f92cd2aa36d3a61754",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/final_development_predictions.pt": "aea55eadae9b50dc4645e11632a4109d3b56ed2fc8c6fb030dcd1660cc106efc",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/last_checkpoint.pt": "a94a7d5da04ecdfc807001c659c701ecf29f2986c35ecc0ace2eee84c9e3e58f",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/output_manifest.json": "4dc0abc5cdeb225be5c1b12dcba08f69c7385c51b421bbeddb07b66ca08fdd32",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/role_audit.json": "1906c3548430c9c33f5c8962ec0dc6b761f73ffd5f58ef3c3587a8d2aba19c32",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/runtime_certificate.json": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/runtime_provenance.json": "ba5ac0c56c537592f8565bcdef0e3c0898743fef95a3ff4b60d386b3081e22e3",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/selected_model.pt": "bc7ccbcde940f683b0ce5c4fb3c54667105493078b607fa3df1a8c6ebf4867be",
+    "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/training_contract.json": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025",
+    "external:///E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/operations/launch_receipt.json": "e94496a0d3769da1ffe87a482eef764df548ec4c793042124a3650c3fee1a25b",
+    "external:///E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/prepared/package/package_manifest.json": "65753891d110631b6050433fa631c430f899616f7711ca074db1e92663e6aa08"
+  },
+  "closure_blockers": [],
+  "continuation_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/continuations/3/continuation.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_mean_500k-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-0",
+      "evidence_ref": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/allocation_observation.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.530285414969167
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/modern2d_scale500k/results/completed_v3/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/training_contract.json",
+        "name": "contract",
+        "role": "contract",
+        "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/final_development_predictions.pt",
+        "name": "final_predictions",
+        "role": "final_predictions",
+        "sha256": "aea55eadae9b50dc4645e11632a4109d3b56ed2fc8c6fb030dcd1660cc106efc"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/development_predictions.pt",
+        "name": "predictions",
+        "role": "predictions",
+        "sha256": "d5f90a1a030d08460b69bea6d2b424c0d152019b5c0e64f92cd2aa36d3a61754"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/last_checkpoint.pt",
+        "name": "resume",
+        "role": "resume",
+        "sha256": "a94a7d5da04ecdfc807001c659c701ecf29f2986c35ecc0ace2eee84c9e3e58f"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/role_audit.json",
+        "name": "role_audit",
+        "role": "role_audit",
+        "sha256": "1906c3548430c9c33f5c8962ec0dc6b761f73ffd5f58ef3c3587a8d2aba19c32"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/runtime_certificate.json",
+        "name": "runtime_certificate",
+        "role": "runtime_certificate",
+        "sha256": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/runtime_provenance.json",
+        "name": "runtime_provenance",
+        "role": "runtime_provenance",
+        "sha256": "ba5ac0c56c537592f8565bcdef0e3c0898743fef95a3ff4b60d386b3081e22e3"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/selected_model.pt",
+        "name": "selected_model",
+        "role": "selected_model",
+        "sha256": "bc7ccbcde940f683b0ce5c4fb3c54667105493078b607fa3df1a8c6ebf4867be"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json",
+        "name": "training_trace",
+        "role": "training_trace",
+        "sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "role": "trace_context",
+        "sha256": "20843558ed4f99e5b0b22406536f6ee5609cd71afdf9c5ebb09a8ffa83316088"
+      },
+      {
+        "availability": "durable_local_verified",
+        "locator": "experiments/modern2d_scale500k/results/completed_v3/terminal_inputs/ppgt_mean_500k/allocation_observation.json",
+        "name": "allocation_observation",
+        "role": "cost",
+        "sha256": "7e1c3a1cea647db909712ae5468bac3efabd109b654dd4f36cd38de2aaebb2ba"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/allocation_ledger.json",
+        "name": "shared_allocation_ledger",
+        "role": "cost_source",
+        "sha256": "183c216d2118d2fa11c60c0a473973281f8856a063480a5a58ab1061e40e17a3"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/modern2d_scale500k/results/completed_v3/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/ppgt_mean_500k/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.17147062527894974,
+      "missing_reason": null,
+      "selected_optimizer_step": 15620,
+      "selected_weights": "live",
+      "source_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/e911ffd25a303d5f/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "WITHIN_AUTHORIZED_CEILING_NO_SUCCESSOR",
+      "comparison_status": "CONTEXT_ONLY",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "OBSERVED_GAIN_NOT_FULLY_QUALIFIED"
+    },
+    "role_use": {
+      "common_dev": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_500k": "consumed"
+    },
+    "scope": "bounded500k_transfer_terminal_saved_output_native_and_allocated_cost",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-26T22:46:35.886285+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "INCONCLUSIVE",
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_500k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-training_membership",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-prediction_input",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-labels_read",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-metric_computed",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-selection_used",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/role_audit-ppgt_mean_500k-8432b244fcabe052.json",
+      "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-metric_computed",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    }
+  ],
+  "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+  "same_run_observation": {
+    "attempt_id": "ppgt_mean_500k-v1-v3",
+    "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+    "source_package_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+    "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_15620",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/ppgt_mean_500k/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 15620,
+      "sample_presentations": 1999360
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/modern2d_scale500k/generated/60df8c64a0897538973f03d1561b7d25f662db1ef79f1f3d28674ac8b4c2f309/ppgt_mean_500k/recipe.json",
+    "reference_id": null,
+    "run_id": "modern2d-scale500k-k2-s42-r3:ppgt_mean_500k:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/terminal_staging/v1/e911ffd25a303d5f/terminal.json",
+    "trace_artifact_ref": "external:///E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v3/experiment/ppgt_mean_500k/canonical_trace.json",
+    "trace_artifact_sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+}

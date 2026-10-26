@@ -1,0 +1,292 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "blockers": [],
+      "bundle_binding_checks": {
+        "arm_id": true,
+        "arm_identity": true,
+        "checkpoint_sha256": true,
+        "format": true,
+        "logical_run_id": true,
+        "recipe_sha256": true,
+        "spec_identity": true
+      },
+      "dependency_count": 9,
+      "dependency_hash_summary": {
+        "computed_sha256_count": 9,
+        "dependency_count": 9,
+        "expected_sha256_bound_count": 6,
+        "missing_count": 0,
+        "pinned_sha256_match_count": 6,
+        "present_count": 9
+      },
+      "known_local_bytes": 256951256,
+      "missing_dependencies": [],
+      "native_root": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k",
+      "provenance_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\esa_count_500k\\runtime_provenance.json",
+      "qualification": {
+        "blockers": [],
+        "dependencies": [
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\actual_resume_certificate.json",
+            "path": "actual_resume_certificate.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 1157,
+            "verified_sha256": "6687d614322aac85d0cf5fb9aa539f203c63740b4a91dc5c1c779a63b0578b2b"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\actual_resume_proofs.zip",
+            "path": "actual_resume_proofs.zip",
+            "present": true,
+            "sha256": "87502bb90acbaf2b6613e975dd91e16161bf9a8de77af1d12d305c7df3cfa252",
+            "size_bytes": 55982319,
+            "verified_sha256": "87502bb90acbaf2b6613e975dd91e16161bf9a8de77af1d12d305c7df3cfa252"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\execution-reference.pt",
+            "path": "execution-reference.pt",
+            "present": true,
+            "sha256": "6262c4d4cd1abc54533c62d7ebd63206567e51bdd1b66ae80deaf00276cd8607",
+            "size_bytes": 60374185,
+            "verified_sha256": "6262c4d4cd1abc54533c62d7ebd63206567e51bdd1b66ae80deaf00276cd8607"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\execution_repair.json",
+            "path": "execution_repair.json",
+            "present": true,
+            "sha256": "1573bcbdd03bd45f47cf2b2a47c8c5e89b64b291886fb6902fbedee003bc8628",
+            "size_bytes": 1413,
+            "verified_sha256": "1573bcbdd03bd45f47cf2b2a47c8c5e89b64b291886fb6902fbedee003bc8628"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\native_proofs.zip",
+            "path": "native_proofs.zip",
+            "present": true,
+            "sha256": "0ffe9aea21973aa2a6d54ad158b71f8d82e7418935b45dfd6790da84d3a92166",
+            "size_bytes": 113281512,
+            "verified_sha256": "0ffe9aea21973aa2a6d54ad158b71f8d82e7418935b45dfd6790da84d3a92166"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\profile_qualification\\profile.json",
+            "path": "profile_qualification/profile.json",
+            "present": true,
+            "sha256": "66a8d21d49dae1318e46b51727d2e043d727ce9c8e7fe98559c5b48cbf771655",
+            "size_bytes": 26603,
+            "verified_sha256": "66a8d21d49dae1318e46b51727d2e043d727ce9c8e7fe98559c5b48cbf771655"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\profile_qualification\\trace.json",
+            "path": "profile_qualification/trace.json",
+            "present": true,
+            "sha256": "50346f4ee470e403406e17a833d42db729a5038188869c5cfb3c5c2311b9ab42",
+            "size_bytes": 27277452,
+            "verified_sha256": "50346f4ee470e403406e17a833d42db729a5038188869c5cfb3c5c2311b9ab42"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\runtime_certificate.json",
+            "path": "runtime_certificate.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 2255,
+            "verified_sha256": "371e5eeb64b4d97d36629b1219d96682f57ee6f29e5d68035726e452e737d38a"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\esa_count_500k\\runtime_provenance.json",
+            "path": "runtime_provenance.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 4360,
+            "verified_sha256": "42521fe46abe5fca63185068cf015992f6fff96ebd41ba90dba8c4ea677b0a9f"
+          }
+        ],
+        "known_local_bytes": 256951256,
+        "missing": [],
+        "missing_size_bytes": 0,
+        "replay_readiness": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "VERIFIED"
+      },
+      "recipe_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\esa_count_500k\\training_contract.json",
+      "resume_bundle": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3\\esa_count_500k\\resume_bundle.json",
+      "resume_bundle_sha256": "983187c6ae39e0bd98e67cfd603f091e03fe3da070a7fb4b8bea764659eda349",
+      "resume_checkpoint_sha256": "639244c33917c37797d654bdecf61f5a672aa423e8033ecd19e51d006299a121",
+      "run_context": {
+        "account": "kaseichou",
+        "arm_id": "esa_count_500k",
+        "arm_identity": "340f39759ae95da0546796166a1bcb7656c1af67c1093f408dc54d7ebc63abb5",
+        "experiment_id": "modern2d_scale500k",
+        "family_name": "esa_small",
+        "family_version": "4",
+        "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+        "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+        "platform": "kaggle",
+        "platform_version": "1",
+        "run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+        "source_archive_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+        "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+        "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+        "training_recipe_sha256": "fcd0cd86f5ffcb724ad2b8dca492c714fb713e3bd5de6e1ea27790ba922f3cb5"
+      },
+      "status": "VERIFIED"
+    },
+    "ppgt_mean_500k": {
+      "blockers": [],
+      "bundle_binding_checks": {
+        "arm_id": true,
+        "arm_identity": true,
+        "checkpoint_sha256": true,
+        "format": true,
+        "logical_run_id": true,
+        "recipe_sha256": true,
+        "spec_identity": true
+      },
+      "dependency_count": 9,
+      "dependency_hash_summary": {
+        "computed_sha256_count": 9,
+        "dependency_count": 9,
+        "expected_sha256_bound_count": 6,
+        "missing_count": 0,
+        "pinned_sha256_match_count": 6,
+        "present_count": 9
+      },
+      "known_local_bytes": 277404943,
+      "missing_dependencies": [],
+      "native_root": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k",
+      "provenance_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\ppgt_mean_500k\\runtime_provenance.json",
+      "qualification": {
+        "blockers": [],
+        "dependencies": [
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\actual_resume_certificate.json",
+            "path": "actual_resume_certificate.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 1156,
+            "verified_sha256": "2eda889a6b8b4df39478eee1e844eb88f8891dd46c6d45dc98d5c12723054bab"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\actual_resume_proofs.zip",
+            "path": "actual_resume_proofs.zip",
+            "present": true,
+            "sha256": "e42355c241ab545abea915421ce59ffd03afd36955cdc75ea9ec6dc7716084f5",
+            "size_bytes": 29554566,
+            "verified_sha256": "e42355c241ab545abea915421ce59ffd03afd36955cdc75ea9ec6dc7716084f5"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\execution-reference.pt",
+            "path": "execution-reference.pt",
+            "present": true,
+            "sha256": "0a83f20b729208bbb2ad425de04dcd8b4b0f528abfcc9f04eb09539672046fdc",
+            "size_bytes": 31190553,
+            "verified_sha256": "0a83f20b729208bbb2ad425de04dcd8b4b0f528abfcc9f04eb09539672046fdc"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\execution_repair.json",
+            "path": "execution_repair.json",
+            "present": true,
+            "sha256": "5aba04a6d30254874cff5c317f439e73d76f14472a12e0475089ac4c47f32080",
+            "size_bytes": 1451,
+            "verified_sha256": "5aba04a6d30254874cff5c317f439e73d76f14472a12e0475089ac4c47f32080"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\native_proofs.zip",
+            "path": "native_proofs.zip",
+            "present": true,
+            "sha256": "d46f6fa22a642fa320a8b7dc73cffbfb2cdac6fb5fa787d26154ea96ef605d96",
+            "size_bytes": 58850212,
+            "verified_sha256": "d46f6fa22a642fa320a8b7dc73cffbfb2cdac6fb5fa787d26154ea96ef605d96"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\profile_qualification\\profile.json",
+            "path": "profile_qualification/profile.json",
+            "present": true,
+            "sha256": "e7d381bd9cc5780343ea50d5bb54af7e6d3e950693b6faf77f1ade281071eba6",
+            "size_bytes": 28883,
+            "verified_sha256": "e7d381bd9cc5780343ea50d5bb54af7e6d3e950693b6faf77f1ade281071eba6"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\profile_qualification\\trace.json",
+            "path": "profile_qualification/trace.json",
+            "present": true,
+            "sha256": "eabcd40206697283adfb437f8894b3ca3ab632de95a76e7a8b4985335d9644ea",
+            "size_bytes": 157771506,
+            "verified_sha256": "eabcd40206697283adfb437f8894b3ca3ab632de95a76e7a8b4985335d9644ea"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\runtime_certificate.json",
+            "path": "runtime_certificate.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 2254,
+            "verified_sha256": "10163c0f0dcbba9dcc7cacc81d2a9ed2c3dac63d91024f370dd29e6d796bfb25"
+          },
+          {
+            "local_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\_resume_preflight\\ppgt_mean_500k\\runtime_provenance.json",
+            "path": "runtime_provenance.json",
+            "present": true,
+            "sha256": null,
+            "size_bytes": 4362,
+            "verified_sha256": "ba5ac0c56c537592f8565bcdef0e3c0898743fef95a3ff4b60d386b3081e22e3"
+          }
+        ],
+        "known_local_bytes": 277404943,
+        "missing": [],
+        "missing_size_bytes": 0,
+        "replay_readiness": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "VERIFIED"
+      },
+      "recipe_path": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\ppgt_mean_500k\\training_contract.json",
+      "resume_bundle": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3\\ppgt_mean_500k\\resume_bundle.json",
+      "resume_bundle_sha256": "6051a961b5a93908ab14e9418696741f2db6cf02ad4cbf32a9f33a2e65d22ac9",
+      "resume_checkpoint_sha256": "dda6011eae3a85e76c29cb35adf998792a00d81684fcf2d60f2abd993afc0b83",
+      "run_context": {
+        "account": "kaseichou",
+        "arm_id": "ppgt_mean_500k",
+        "arm_identity": "ec3e9ef9ab046dd4a25c5ba56bb28155eb9b9a6e8c53ffd1183fd45a7fc10b56",
+        "experiment_id": "modern2d_scale500k",
+        "family_name": "ppgt_small",
+        "family_version": "3",
+        "logical_run_id": "modern2d-scale500k-k2-s42-r3",
+        "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+        "platform": "kaggle",
+        "platform_version": "1",
+        "run_reference": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+        "source_archive_sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+        "source_commit": "7b99147badb11836d9cfe44c788953212e4456e5",
+        "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+        "training_recipe_sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+      },
+      "status": "VERIFIED"
+    }
+  },
+  "created_at_utc": "2026-10-26T22:44:10.613382+00:00",
+  "execution_limits": {
+    "model_forward_or_inference": false,
+    "model_instantiation": false,
+    "packed_proof_members": "Resolved from bound ZIP storage; loose repeat-b.pt files are not required",
+    "proof_state_loading": "CPU only, weights_only=True through existing native proof loader",
+    "remote_calls": false,
+    "tests_run": false,
+    "training": false
+  },
+  "format": "molgap-scale500k-v3-native-qualification-report-v1",
+  "inputs": {
+    "original_package_dir": "E:\\MolGap\\artifacts\\runs\\modern2d-scale500k-k2-s42-r3\\v1\\prepared\\package",
+    "original_v1_receipt": "E:\\MolGap\\artifacts\\runs\\modern2d-scale500k-k2-s42-r3\\v1\\operations\\launch_receipt.json",
+    "package_identity": "cf62211067a5cace3481794d21ab29546432215ebf7d8f38d7fc4f8cabba237d",
+    "retained_output_root": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment",
+    "spec_identity": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+    "v3_recovery_root": "E:\\MolGap\\artifacts\\recovery\\modern2d-scale500k-r3-v3"
+  },
+  "overall_status": "VERIFIED",
+  "replay_readiness": "NOT_EVALUATED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "scope": "retained native proof dependency and CPU state recheck",
+  "source": {
+    "inspector_module": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap\\src\\molgap\\family_training_runner.py",
+    "interpreter": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+    "worktree_src": "C:\\Users\\Adminn\\.codex\\worktrees\\modern2d-resume-release\\molgap\\src"
+  }
+}

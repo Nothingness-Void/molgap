@@ -136,3 +136,4 @@ research_memory/policies/family-workflow-trial.v1.json text eol=lf
 # Native research evidence and staged terminal inputs bind literal bytes.
 experiments/modern2d_configured_100k/research_arms/*/results/** -text whitespace=cr-at-eol
 experiments/modern2d_configured_100k/runs/modern2d-*-research-*/prospective/*/terminal_staging/** -text whitespace=cr-at-eol
+experiments/modern2d_scale500k/results/completed_v3/decision.md text eol=lf
