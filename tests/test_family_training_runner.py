@@ -156,7 +156,10 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         target_mean_eV=3., target_std_eV=2., ema_decay=.999 if development else None,
         torch_version=str(torch.__version__).split("+", 1)[0])
     if family == "neural_atom_k1" and development:
-        recipe = replace(recipe, selection="best-development-live", development_reports=("ema",))
+        from molgap.family_training_state import CalibrationPolicy, source_order_sha256
+        recipe = replace(recipe, selection="best-development-clean-ema", development_reports=("live",),
+            clean_bn=CalibrationPolicy(selection.manifest_sha256, "3" * 64,
+                source_order_sha256(torch.arange(128)), 1))
     data = TrainingData([graph(i) for i in range(256)],
         [graph(256 + i) for i in range(2)] if development else None,
         selection.manifest_sha256, 256, 2 if development else 0,
@@ -239,6 +242,8 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     assert paused.status == "paused" and paused.optimizer_step == 2
     wire = torch.load(outputs.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
     assert ("ema" in wire) is development
+    if recipe.clean_bn is not None:
+        assert wire["cursor"]["weight_state"]["clean"] is not None
     assert wire["context"]["platform_version"] is None
     from molgap.experiment_family_workflow import terminal_attempt_id
     trace_run_id = ctx.logical_run_id + ":" + ctx.arm_id + ":downstream"
@@ -255,6 +260,8 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     create_resume_bundle(outputs.root, ctx, trajectory, bundle)
     verified = validate_resume_bundle(bundle, spec, context=ctx, trajectory=trajectory)
     assert verified["status"] == "RESUME_VERIFIED"
+    assert "weight_state" not in verified["manifest"]["cursor"]
+    assert "pending_absolute" not in verified["manifest"]["cursor"]
     assert verified["owner"]["optimizer_steps"] == 2
     assert len(verified["sidecars"]["context"]) == 1
     assert json.loads(verified["sidecars"]["context"][0].read_text(encoding="utf-8"))["context"]["platform_version"] is None
@@ -334,7 +341,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         if family == "neural_atom_k1":
             trace = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))
             assert trace["metric_semantics"]["live_dev_metric"]["weights"] == "live"
-            assert trace["metric_semantics"]["ema_dev_metric"]["weights"] == "ema"
+            assert trace["metric_semantics"]["ema_dev_metric"]["weights"] == "clean-ema"
             assert all(point["live_dev_metric"] is not None and point["ema_dev_metric"] is not None
                        for point in trace["observations"])
     else:

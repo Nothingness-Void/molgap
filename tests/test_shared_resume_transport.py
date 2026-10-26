@@ -37,7 +37,10 @@ def bundle_case(tmp_path):
     source, bundle = tmp_path / "source", tmp_path / "bundle"
     source.mkdir()
     torch.save({"context": context, "model": {"weight": torch.ones(1)},
-                "cursor": {"epoch": 1, "next_batch": 0}, "optimizer_step": 2,
+                "cursor": {"epoch": 1, "next_batch": 0,
+                           "pending_absolute": [torch.tensor(.25)],
+                           "weight_state": {"clean": {"buffers": {"running_mean": torch.ones(3)}}}},
+                "optimizer_step": 2,
                 "sample_presentations": 4}, source / "last_checkpoint.pt")
     (source / "canonical_trace.json").write_text(json.dumps({"observations": [
         {"event": "observation", "optimizer_step": 2, "sample_presentations": 4}]}))
@@ -50,6 +53,13 @@ def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_p
     before = {path.name: path.read_bytes() for path in source.iterdir()}
     report = transport.validate_resume_bundle(bundle, context=context, trajectory=trajectory)
     assert report["status"] == "TRANSPORT_VERIFIED"
+    assert "pending_absolute" not in report["manifest"]["cursor"]
+    assert "weight_state" not in report["manifest"]["cursor"]
+    # Pre-fix bundles retained this empty JSON field; remain readable unchanged.
+    legacy = json.loads((bundle / transport.RESUME_BUNDLE_FILE).read_bytes())
+    legacy["cursor"]["pending_absolute"] = []
+    (bundle / transport.RESUME_BUNDLE_FILE).write_bytes(transport._json_bytes(legacy))
+    assert transport.validate_resume_bundle(bundle, context=context)["status"] == "TRANSPORT_VERIFIED"
     destination = tmp_path / "restored"
     assert transport.restore_resume_bundle(bundle, destination)["status"] == "RESTORED"
     assert {path.name: path.read_bytes() for path in destination.iterdir()} == before
