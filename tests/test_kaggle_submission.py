@@ -144,7 +144,7 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
                 "platform_version": envelope["platform_version"], "physical_runs": envelope["physical_runs"]}
     monkeypatch.setattr(owner, "reconcile_platform_response", reconcile)
     import molgap.experiment_launch as launch
-    monkeypatch.setattr(launch, "read_launch_receipt", lambda path, *a, **k: json.loads(Path(path).read_bytes()))
+    monkeypatch.setattr(launch, "read_launch_receipt", lambda path, *a, **k: json.loads(path.read_bytes()))
 
     class Api:
         CONFIG_NAME_USER = "user"
@@ -244,6 +244,7 @@ def test_check_has_no_network_or_filesystem_publication(release):
 def test_full_submission_and_repeated_call_never_duplicate(release):
     continuation = release.api.remote is not None
     if continuation:
+        assert type(json.loads((release.prepared / "workflow_report.json").read_bytes())["original_receipt"]) is str
         with pytest.raises(ValueError, match="authoritatively terminal"):
             release.run()
         assert release.api.created == release.api.pushed == 0

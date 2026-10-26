@@ -321,7 +321,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     if continuation:
         from .experiment_family_workflow import _artifact_path
         from .experiment_launch import read_launch_receipt
-        origin = read_launch_receipt(report["original_receipt"], spec, package,
+        origin = read_launch_receipt(Path(report["original_receipt"]), spec, package,
             expected_package_identity=manifest["package_identity"], _verification=verification)
         if (origin["submission_state"] != "ACCEPTED"
                 or origin["canonical_platform_reference"]["value"] != ref
