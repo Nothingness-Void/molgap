@@ -11,18 +11,18 @@
   "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
   "automatic_training_retry": false,
   "automatic_training_successor_authorized": false,
-  "kaggle_session_quota_hours_ceiling": 9,
-  "physical_t4_hours_ceiling": 18,
-  "wall_ceiling_seconds": 32400,
+  "kaggle_session_quota_hours_ceiling": 8.992222222222223,
+  "physical_t4_hours_ceiling": 17.984444444444446,
+  "wall_ceiling_seconds": 32372,
   "jobs": [
     {
-      "slot": "scale500k_pair",
+      "slot": "scale500k_pair_r3",
       "closed": false,
-      "control_state": "E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-v1/v1/monitor/control_state.json",
-      "kernel": "kaseichou/molgap-modern2d-scale500k-s42-v1",
-      "kernel_id": 140822297,
+      "control_state": "E:/MolGap/artifacts/runs/modern2d-scale500k-k2-s42-r3/v1/monitor/control_state.json",
+      "kernel": "kaseichou/molgap-modern2d-scale500k-s42-r3",
+      "kernel_id": 140916841,
       "version": 1,
-      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-v1-v1"
+      "output_directory": "E:/MolGap/artifacts/retained/modern2d-scale500k-k2-s42-r3-v1"
     }
   ]
 }

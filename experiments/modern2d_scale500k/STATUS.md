@@ -1,10 +1,9 @@
 #500K two-family execution status
 
 Server-owned. The [protocol](protocol.md) reserves one T4x2 allocation after
-input/runtime release. Kaggle2 kernel140822297/version1 failed before training.
-An unchanged-science startup repair is in local preparation; the original
-terminal event remains separately traceable. No scientific successor or
-protected role is released.
+input/runtime release. Replacement Kaggle2 kernel140916841/version1 is RUNNING.
+Both earlier pre-training startup faults and controller events are closed and
+separately traceable. No scientific successor or protected role is released.
 
 ## Selected input prerequisite
 
@@ -54,3 +53,30 @@ No native or formal model execution was observed. [Failure](results/failed_v1/de
 retains original scheduler/cost observations and the raw log in retained storage.
 The [replacement decision](retry_v2/decision.md) links a new execution identity
 to this confirmed failure; it does not reopen any scientific candidate.
+
+Replacement140914428/version1 also stopped before environment/model execution:
+the authority pointer hashed CRLF source bytes, while its archive held LF bytes.
+Its [failure record](results/failed_r2/decision.json) retains both exact hashes,
+equal JSON semantics, terminal scheduler and independently retrieved allocation.
+The platform release now reuses complete `check_plan` against extracted archive
+bytes before POST. Genuine CRLF conflicts reject locally; canonical LF inputs
+pass. This extends the existing workflow and does not weaken a digest check.
+
+## Bound replacement
+
+[Third execution](https://www.kaggle.com/code/kaseichou/molgap-modern2d-scale500k-s42-r3)
+was accepted as kernel140916841/version1. [Receipt](retry_v3/gpu/launch_receipt.json),
+[source proof](retry_v3/gpu/source_verification.json),
+[actual archive audit](retry_v3/archive_pointer_audit.json),
+[verification](retry_v3/verification.json) and
+[budget reconciliation](retry_v3/budget_reconciliation.json) qualify the release.
+The original arm declarations, science and endpoints remained identical.
+Wall ceiling32372s deducts cumulative observed account debit and a margin from
+the original9h; account quota observations are not per-run native cost records.
+
+The scheduler observed RUNNING. The bounded startup-log snapshot was empty;
+native repeat/resume admission and formal training remain unverified. A new
+binding generation3 and the existing30-minute Luna B heartbeat own subsequent
+monitoring. Healthy status is silent; one new terminal event hands back to A.
+Neither a RUNNING scheduler nor this release establishes an accepted model,
+scientific superiority, strict causality or Replay admission.

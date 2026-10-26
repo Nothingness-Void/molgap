@@ -1,0 +1,62 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "kaseichou/molgap-modern2d-scale500k-source-r3",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "3cc1f91a35a5b1250e0a7afba5e49d318777a8286a74e83b2554934560100ad5",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "e12fcfb684ba55e9f0c9295be97b9b825c1cd23e5586eeb520e580f29b820026",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "485a5dc4d68cabe9fdd65a18450d6c1e604913d5afc1d206bc5cb256345a8a7d",
+      "bytes": 79295
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "7e2b507f11d6bd32ac0c75c95d8cfeec7fd749fa194ee5582a2ae3306cb7a88a",
+      "bytes": 1357
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "74b910540cf28e55258ddc3abace29a82cb514cd228c89d61e2c14a3e095d6c2",
+      "bytes": 5782
+    },
+    {
+      "path": "initial_states/esa_count_500k.pt",
+      "sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a",
+      "bytes": 20106251
+    },
+    {
+      "path": "initial_states/ppgt_mean_500k.pt",
+      "sha256": "5a57dbb8f5abeb843683cc8efe1e5954a102ea8b1bf7d23075abc5a5b79c2c02",
+      "bytes": 10376759
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "65753891d110631b6050433fa631c430f899616f7711ca074db1e92663e6aa08",
+      "bytes": 20320
+    },
+    {
+      "path": "prospective/esa_count_500k/trajectory.json",
+      "sha256": "9989e70621be13512ac1c36f0d494a64226ab13ee82378ec5ba4322bbe56218b",
+      "bytes": 4329
+    },
+    {
+      "path": "prospective/ppgt_mean_500k/trajectory.json",
+      "sha256": "209226afd9107d6e3244b354c2fdd6cdb841671815970e63b818ee768656fa68",
+      "bytes": 4330
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "e57d608034b6b7eb09ba15ca3cdab37a6558c235a2ab3532deaa667d0e133de7",
+      "bytes": 1452079
+    }
+  ]
+}
