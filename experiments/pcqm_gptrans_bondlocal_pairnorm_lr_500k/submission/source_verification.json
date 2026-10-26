@@ -1,0 +1,14 @@
+{
+  "kernel": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+  "kernel_id": 141037251,
+  "version": 1,
+  "entry_sha256": "eae6c80179bdee08e85e60c9e1333d0d2efd0557c4e17e020b0187db55ae7e1c",
+  "entry_bytes_equal": true,
+  "private": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/gptrans-pairnorm-lr-500k-src",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "observed_at": "2026-10-26T19:04:04.548256+00:00"
+}

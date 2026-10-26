@@ -1,0 +1,124 @@
+{
+  "binding": {
+    "package_identity": "9479db86fadf889d0706421d701e686400042fa49e476bcce8ac28c71fdf8cdd",
+    "kernel": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+    "dataset": "nothingnessvoid/gptrans-pairnorm-lr-500k-src",
+    "authority_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/authority.json",
+    "authority_sha256": "4bfd17c9d481cf29b9e65e940189f122e09192060571c1087bff0fb48d877269",
+    "monitor_paths": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 8.229323300001852,
+    "SOURCE_SUBMITTING": 20.623052200004167,
+    "SOURCE_PUBLISHED": 31.36254049999843,
+    "KERNEL_SUBMITTING": 2.669524500000989,
+    "KERNEL_ACCEPTED": 11.80765539999993
+  },
+  "observed_at": "2026-10-26T19:04:15.295812+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+    "kernel": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+    "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 141037251,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd",
+      "package_identity": "9479db86fadf889d0706421d701e686400042fa49e476bcce8ac28c71fdf8cdd",
+      "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+      "source_archive_sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad"
+    },
+    "platform_response": {
+      "ref": "/code/nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+      "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+      "versionNumber": 1,
+      "kernelId": 141037251,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  },
+  "source_copy_retirement": {
+    "uploaded": {
+      "initial_states/pairnorm_lr1e3.pt": {
+        "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+        "bytes": 23606979
+      },
+      "source_payload.bin": {
+        "sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+        "bytes": 918766
+      }
+    },
+    "roundtrip": {
+      "SOURCE_ARCHIVE_SHA256.txt": {
+        "sha256": "9d585ed11a14e6a1de9520c0e6920d8627dde23a47eb7f619c9da17f6855f118",
+        "bytes": 65
+      },
+      "SOURCE_COMMIT.txt": {
+        "sha256": "c37ec44b3d4f6c9773f2ac1411633fe3bbb82e9bba73df19916b2cbf8cb82d26",
+        "bytes": 41
+      },
+      "SOURCE_FILES.json": {
+        "sha256": "42475fd8777ea74c48cc8f9bab06f51ba461f823ecef2fcb8195977493230308",
+        "bytes": 48361
+      },
+      "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/acceptance_plan.json": {
+        "sha256": "04eb93fe49f6ce34991b05b473ebcd4a468fd075f479aa4a09580f94b915eb3d",
+        "bytes": 1758
+      },
+      "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr1e3/recipe.json": {
+        "sha256": "e0391c7b6317ca24801fd68708da13df513833c22a667b7ee9bec6869473f2d7",
+        "bytes": 1745
+      },
+      "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr5e4/recipe.json": {
+        "sha256": "4d89c419627d28ea818dba684fe975bd77003e0bb7a01437aba172458c5d107d",
+        "bytes": 1746
+      },
+      "acceptance/experiments/pcqm_k1_initialization_forward_500k/target_manifest.json": {
+        "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80",
+        "bytes": 311
+      },
+      "experiment_launch.json": {
+        "sha256": "a854bf478bab8e7aa30a0be6e022d958b054359c96f359bfe577f67487757616",
+        "bytes": 1755
+      },
+      "experiment_spec.json": {
+        "sha256": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd",
+        "bytes": 5934
+      },
+      "initial_states/pairnorm_lr1e3.pt": {
+        "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+        "bytes": 23606979
+      },
+      "package_manifest.json": {
+        "sha256": "e1fdf3a52e3c7bc9d2fab6599e9007c914e8967d9d9349bb0369b9b5df23976e",
+        "bytes": 13247
+      },
+      "prospective/pairnorm_lr1e3/trajectory.json": {
+        "sha256": "8daad002fef36842b70a6245ad9a59f1017f6d2aaa8a2be504e6dbaee809c2ab",
+        "bytes": 5364
+      },
+      "prospective/pairnorm_lr5e4/trajectory.json": {
+        "sha256": "b4f55aa591eeb91f3f9541416c68273ab84f3d82b93bc2aeb4cdc247a9b27cfd",
+        "bytes": 5364
+      },
+      "source_payload.bin": {
+        "sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+        "bytes": 918766
+      }
+    },
+    "status": "REMOVED"
+  }
+}
