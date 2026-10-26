@@ -357,6 +357,15 @@ manifest=verify_experiment_source_package(prepared/'package')
 spec=ExperimentSpec.from_json((prepared/'package/experiment_spec.json').read_text(encoding='utf-8'))
 authority=json.loads((repo/'experiments/question/authority.json').read_bytes())
 _check_scientific_release(spec,prepared/'package',prepared/'source_dataset',authority,manifest)
+# Execute the actual cloud entry's stdlib admission against the extracted
+# frozen archive: local release alone does not exercise startup routing.
+import runpy
+from molgap.experiment_preflight import _unpack
+source=prepared/'bootstrap_source'
+source.mkdir()
+_unpack(prepared/'package',source)
+startup=runpy.run_path(str(prepared/'kernel/run.py'))['_modern2d_wall_ceiling']
+assert startup(spec.to_dict(),source)==authority['gpu']['wall_ceiling_seconds']
 forged={**authority,'transfer_study_ref':{**authority['transfer_study_ref'],'sha256':'0'*64}}
 try:
     _check_scientific_release(spec,prepared/'package',prepared/'source_dataset',forged,manifest)

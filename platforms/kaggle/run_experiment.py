@@ -62,6 +62,19 @@ def _modern2d_wall_ceiling(declaration, source):
                 or [(a["family"]["name"], a["family"]["version"]) for a in arms]
                     != [("ppgt_small", "3"), ("esa_small", "4")]):
             raise ValueError("Execution repair startup requires two train-only reference probes within1 T4h")
+    elif purpose == "CONFIGURED_TRANSFER_STUDY":
+        pointer = authority.get("transfer_study_ref", {})
+        if (authority.get("scientific_training_authorized") is not True
+                or authority.get("scale_500k_authorized") is not True
+                or plan.get("transfer") != pointer or "comparison" in plan
+                or set(pointer) != {"path", "sha256"}):
+            raise ValueError("Transfer startup requires its explicit500K authority and pinned plan")
+        raw, study = small_json(pointer["path"])
+        if (hashlib.sha256(raw).hexdigest() != pointer["sha256"]
+                or study.get("format") != "molgap-modern2d-transfer-plan-v1"
+                or study.get("experiment_purpose") != "transfer_study"
+                or set(study.get("arms", {})) != {a["arm_id"] for a in arms}):
+            raise ValueError("Transfer startup declaration differs from frozen source")
     elif purpose not in {"CONFIGURED_SCREEN", "FORMAL_100K_TRAINING"} or authority.get("scientific_training_authorized") is not True:
         raise ValueError("Unknown Modern2D startup purpose")
     return wall
