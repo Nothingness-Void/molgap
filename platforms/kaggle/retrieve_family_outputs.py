@@ -10,6 +10,7 @@ signed URLs never appear in receipts.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 from pathlib import Path, PurePosixPath
 
@@ -225,12 +226,81 @@ def retrieve_execution_retention(api, *, context, spec, remote_manifest_path: st
     )
 
 
+class _FiniteParser(argparse.ArgumentParser):
+    def error(self, message):
+        # argparse's message may echo a credential-bearing argument.
+        raise ValueError("Invalid retrieval arguments")
+
+
+def _retrieve_all_arms(argv):
+    """Run the per-arm retriever for every manifest the platform step already pinned.
+
+    Reads <run>/operations/remote_manifest/**/output_manifest.json; it never fetches
+    a manifest and adds no trust of its own. Each arm lands in
+    retrieved/<run>/<attempt>/<arm>. The execution-retention bundle keeps its own
+    call (--execution-retention), because its pin is not stored in that directory.
+    """
+    from contextlib import redirect_stdout
+    import io
+    import json
+    from molgap.common.paths import MachinePaths
+    from molgap.experiment_launch import canonical_json
+
+    parser = _FiniteParser(allow_abbrev=False)
+    for name in ("run-id", "attempt-id"):
+        parser.add_argument("--" + name, required=True)
+    for name in ("profile", "repo-root"):
+        parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--credentials", type=Path)
+    parser.add_argument("--execute", action="store_true")
+    try:
+        args = parser.parse_args(argv)
+        paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
+        run = paths.run_directory(args.run_id, args.attempt_id)
+        pinned = run / "operations/remote_manifest"
+        calls, seen = [], set()
+        for local in sorted(pinned.rglob("output_manifest.json")):
+            arm = json.loads(local.read_bytes())["context"]["arm_id"]
+            if arm in seen:
+                raise ValueError("Two pinned manifests name the same arm")
+            seen.add(arm)
+            calls.append((arm, ["--arm", arm, "--local-manifest", str(local),
+                "--remote-manifest-path", local.relative_to(pinned).as_posix(),
+                "--destination", str(paths.artifact_root / "retrieved" / args.run_id / args.attempt_id / arm)]))
+        if not calls:
+            raise ValueError("No pinned manifests under operations/remote_manifest")
+        common = ["--run-id", args.run_id, "--attempt-id", args.attempt_id, "--profile", str(args.profile),
+                  "--repo-root", str(args.repo_root)]
+        if args.credentials:
+            common += ["--credentials", str(args.credentials)]
+        if args.execute:
+            common += ["--execute"]
+        results, code = {}, 0
+        for name, extra in calls:
+            digest = file_digest(Path(extra[extra.index("--local-manifest") + 1]))
+            buffer = io.StringIO()
+            with redirect_stdout(buffer):
+                status = main([*common, *extra, "--manifest-sha256", digest])
+            results[name] = json.loads(buffer.getvalue())
+            code = max(code, status)
+    except Exception:
+        # The per-arm path owns its own finite JSON; only wrapper-level failures land here.
+        print(canonical_json({"status": "BLOCKED", "stage": "arguments",
+                              "error": "Retrieval checks or operation failed"}))
+        return 2
+    print(canonical_json({"status": "BLOCKED" if code else (
+        "RETRIEVED" if args.execute else "READY_FOR_RETRIEVAL"), "arms": results}))
+    return code
+
+
 def main(argv=None):
     """Validate an original run locally, or explicitly retrieve its pinned files."""
-    import argparse
     from contextlib import redirect_stderr, redirect_stdout
     import io
     import sys
+    requested = list(sys.argv[1:] if argv is None else argv)
+    if "--all-arms" in requested:
+        return _retrieve_all_arms([item for item in requested if item != "--all-arms"])
     from molgap.common.paths import MachinePaths
     from molgap.experiment_launch import canonical_json
     from molgap.experiment_run import _original_run, RunReconciliationRequired
@@ -240,12 +310,7 @@ def main(argv=None):
     def announce(plan):
         print(canonical_json({"retrieval_plan": plan}), file=progress_stream, flush=True)
 
-    class Parser(argparse.ArgumentParser):
-        def error(self, message):
-            # argparse's message may echo a credential-bearing argument.
-            raise ValueError("Invalid retrieval arguments")
-
-    parser = Parser(description=main.__doc__, allow_abbrev=False)
+    parser = _FiniteParser(description=main.__doc__, allow_abbrev=False)
     for name in ("run-id", "attempt-id", "arm", "manifest-sha256", "remote-manifest-path"):
         parser.add_argument("--" + name, required=True)
     for name in ("profile", "local-manifest", "destination"):

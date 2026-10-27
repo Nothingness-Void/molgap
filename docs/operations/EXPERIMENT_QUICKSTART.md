@@ -186,7 +186,8 @@ expands it.
 ```
 
 The family-output retriever can resolve this run plus independently pinned
-manifest/arm identity. Without `--execute` it validates locally. Exact transport
+manifest/arm identity; `--all-arms` does that for every manifest already pinned
+under `<run>/operations/remote_manifest/` in one call. Without `--execute` it validates locally. Exact transport
 remains in the existing platform adapter; historical output protocols keep their
 own retrievers. `inspect-output`, `accept-workflow`, `build-resume` and
 `prepare-resume` can resolve the original Spec/package/receipt from the run ID.

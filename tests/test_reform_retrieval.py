@@ -143,6 +143,30 @@ def test_normal_unknown_producer_binds_exact_receipt_without_backfill(unknown_pr
     assert retained_run == original
 
 
+def test_all_arms_retrieves_every_pinned_manifest_from_the_run_directory(retrieval, capsys):
+    case = retrieval
+    pinned = case.run / "operations/remote_manifest" / case.remote
+    pinned.parent.mkdir(parents=True)
+    pinned.write_bytes(case.local.read_bytes())
+    base = ["--all-arms", "--run-id", "synthetic-run", "--attempt-id", "v1",
+            "--profile", str(case.profile), "--repo-root", str(case.repo)]
+    assert case.adapter.main(base) == 0
+    plan = json.loads(capsys.readouterr().out)
+    assert plan["status"] == "READY_FOR_RETRIEVAL" and set(plan["arms"]) == {"gptrans_t"}
+    case.auth.assert_not_called()
+    assert case.http.urls == []
+    credentials = str(case.profile.parent / "unread-credentials.json")
+    assert case.adapter.main([*base, "--execute", "--credentials", credentials]) == 0
+    done = json.loads(capsys.readouterr().out)
+    assert done["status"] == "RETRIEVED" and done["arms"]["gptrans_t"]["status"] == "RETRIEVED"
+    retrieved = case.run.parents[2] / "retrieved/synthetic-run/v1/gptrans_t"
+    assert (retrieved / "output_manifest.json").read_bytes() == case.local.read_bytes()
+    assert len(case.http.urls) == len(ROLES) + 1
+    (case.run / "operations/remote_manifest").joinpath(case.remote).unlink()
+    assert case.adapter.main(base) == 2
+    assert json.loads(capsys.readouterr().out)["status"] == "BLOCKED"
+
+
 @pytest.mark.parametrize("missing", ["physical", "all"])
 def test_unknown_producer_cannot_replace_missing_receipt_version(unknown_producer, capsys, missing):
     case = unknown_producer

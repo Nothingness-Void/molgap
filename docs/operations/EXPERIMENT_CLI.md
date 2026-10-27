@@ -286,6 +286,12 @@ For a separately pinned `execution_retention.json`, use the same retriever with
 and destination options. It retrieves the sealed root and arm ledgers and the
 bound execution report without replacing the arm output mapping. Obtaining the
 initial manifest pin and entry observation remains a separate platform step.
+Once the arm manifests sit under `<run>/operations/remote_manifest/`, one call with
+`--all-arms --run-id R --attempt-id A --profile P --repo-root .` (plus `--execute
+--credentials C` to download) runs this retriever for every pinned arm manifest. It
+takes each manifest and its digest from the pin and writes to `retrieved/R/A/<arm>`;
+context and remote bytes are still checked per arm. The execution-retention bundle
+keeps its own `--execution-retention` call.
 
 Retained Spec and recipe readers validate frozen declarations independently of
 the current Addon catalog. Package, receipt and artifact hash bindings still
