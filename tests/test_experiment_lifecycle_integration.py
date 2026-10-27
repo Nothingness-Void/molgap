@@ -159,8 +159,9 @@ def _install_synthetic_owner(repo: Path, monkeypatch):
         encoding="utf-8",
     )
     for name in ("training_reproducibility.py", "v4_runtime.py", "common/io.py"):
-        shutil.copyfile(Path(__file__).resolve().parents[1] / "src/molgap" / name,
-                        repo / "src/molgap" / name)
+        source = Path(__file__).resolve().parents[1] / "src/molgap" / name
+        # Packaged text is LF; a CRLF checkout copy would differ from its own package.
+        (repo / "src/molgap" / name).write_bytes(source.read_bytes().replace(b"\r\n", b"\n"))
     _git(repo, "add", "src/molgap/synthetic_trainer.py", "src/molgap/k1_screen_training.py",
          "src/molgap/training_reproducibility.py", "src/molgap/v4_runtime.py", "src/molgap/common/io.py")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic registered owner")
