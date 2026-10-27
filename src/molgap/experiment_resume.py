@@ -451,7 +451,12 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
             _share_bundle_file(retained, path, digest)
     # Manifest publication is last: an interrupted copy is never a complete bundle.
     for path, payload in reversed(metadata):
-        publish_immutable_bytes(path, payload)
+        # Captured sidecar bytes may still share an identical verified bundle file.
+        retained = shared.get(hashlib.sha256(payload).hexdigest())
+        if retained is None:
+            publish_immutable_bytes(path, payload)
+        else:
+            _share_bundle_file(retained, path, hashlib.sha256(payload).hexdigest())
     return manifest
 
 

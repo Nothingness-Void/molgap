@@ -206,6 +206,11 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
                         level = len(name.value) - len(name.value.lstrip("."))
                         package = node.args[1] if len(node.args) > 1 and not builtin else next(
                             (item.value for item in node.keywords if item.arg == "package"), None)
+                        # Compatibility aliases pass the importer's own ``__package__``.
+                        if isinstance(package, ast.Name) and package.id == "__package__":
+                            own = _module(importer)
+                            package = ast.Constant(own if importer.endswith("/__init__.py")
+                                                   else own.rsplit(".", 1)[0])
                         if (not isinstance(package, ast.Constant) or not isinstance(package.value, str) or
                                 level > len(package.value.split("."))):
                             unresolved(importer, node)

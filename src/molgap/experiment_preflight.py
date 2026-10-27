@@ -1123,7 +1123,9 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     if input_root:
         def layout():
             root = Path(input_root).absolute()
-            for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
+            # Every uploaded sidecar, including the package manifest the worker
+            # restores, must be the frozen package bytes.
+            for name in sorted(set(package_bytes) - {"source.tar.gz"}):
                 if _regular(root / name).read_bytes() != package_bytes[name]:
                     raise ValueError(f"Staged sidecar differs: {name}")
             if _file_sha(_regular(root / "source_payload.bin")) != manifest["archive_sha256"]:

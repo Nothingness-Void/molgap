@@ -15,6 +15,7 @@ from dataclasses import asdict
 from datetime import datetime, timezone
 from types import MappingProxyType
 
+from .common.io import replace_retrying
 from .experiment_spec import ExperimentSpec
 from .screen_policy import canonical_fingerprint
 
@@ -52,7 +53,7 @@ def _atomic(path: Path, value: dict) -> None:
             handle.write(payload)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary, path)
+        replace_retrying(temporary, path)
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)

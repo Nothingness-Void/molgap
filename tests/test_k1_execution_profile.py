@@ -83,10 +83,13 @@ def test_payload_binds_source_checkpoint_roles_and_bounded_fp32_profile():
     assert inputs["frozen_source_files"]
     for name, digest in inputs["frozen_source_files"].items():
         assert manifest["files"][name] == digest
+    assert manifest["files"]["selected.pt"] == checkpoint["sha256"]
+    if not PAYLOAD.is_dir():
+        pytest.skip("Staged A100 payload is git-ignored and was retired to cold custody; "
+                    "the manifest, role and checkpoint bindings above were checked")
     for name in ("selected.pt", "src/molgap/k1_execution_profile.py"):
         actual = hashlib.sha256((PAYLOAD / name).read_bytes()).hexdigest()
         assert actual == manifest["files"][name]
-    assert manifest["files"]["selected.pt"] == checkpoint["sha256"]
 
     worker_source = (PAYLOAD / "src/molgap/k1_execution_profile.py").read_text(encoding="utf-8")
     assert "sha256_file(root / name) != digest" in worker_source

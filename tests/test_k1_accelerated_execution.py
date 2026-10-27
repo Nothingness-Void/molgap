@@ -189,11 +189,12 @@ def test_default_mode_reaches_native_preflight_recipe_boundary(tmp_path):
 @pytest.mark.parametrize("observed,accepted", [("2.11.0+cu128", True), ("2.7.1", False)])
 def test_runtime_must_match_frozen_recipe(tmp_path, observed, accepted):
     from types import SimpleNamespace
-    from molgap.training_reproducibility import atomic_json, sha256_file
+    from molgap.training_reproducibility import atomic_json
+    from molgap.v4_runtime import normalized_source_sha256
     path, initial = tmp_path / "recipe.json", tmp_path / "initial.pt"
     atomic_json(path, recipe())
     initial.write_bytes(b"synthetic-file-hash-only")
-    context = SimpleNamespace(training_recipe_sha256=sha256_file(path), to_dict=lambda: {})
+    context = SimpleNamespace(training_recipe_sha256=normalized_source_sha256(path), to_dict=lambda: {})
     runtime = {"torch": observed, "runtime_fingerprint": "3" * 64}
     if accepted:
         assert owner._runtime_provenance(context, path, initial, runtime, "reference")["mode"] == "reference"

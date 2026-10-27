@@ -58,8 +58,10 @@ def test_generic_sources_include_explicit_serialization_owner(new_family, monkey
     spec = declaration.ExperimentSpec(_spec_payload([arm], platform="kaggle"))
     sources = registered_source_files(spec)
     assert "src/molgap/synthetic_graph_pickle.py" in sources
-    for name in ("pcqm_gptrans_v4", "qm9_neural_atom", "fast_sandbox"):
+    for name in ("pcqm_gptrans_v4", "qm9_neural_atom"):
         assert "src/molgap/" + name + ".py" not in sources
+    # The release preflight model probe is generic since 18589f1e.
+    assert "src/molgap/fast_sandbox.py" in sources
 
 
 @pytest.fixture

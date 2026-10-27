@@ -27,6 +27,19 @@ def _safe_local(path):
             raise ValueError("Symlink/junction/reparse paths are forbidden")
 
 
+def replace_retrying(source, target) -> None:
+    """os.replace that rides out Windows scanners briefly holding the target open."""
+    import time
+    for attempt in range(5):
+        try:
+            os.replace(source, target)
+            return
+        except PermissionError:
+            if attempt == 4:
+                raise
+            time.sleep(0.05 * (attempt + 1))
+
+
 def publish_immutable_bytes(path: Path, payload: bytes) -> Path:
     """Share the receipt's atomic no-overwrite publication with producer metadata."""
     _safe_local(path)

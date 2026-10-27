@@ -390,8 +390,10 @@ def test_observed_identity_drift_cannot_rebind_or_repost(daily_case, drift):
         case.transport.api.remote.metadata.current_version_number = 2
     else:
         case.transport.api.remote.blob.source += "# changed remote source\n"
-    with pytest.raises(ValueError, match="binding differs"):
-        case.submit()
+    # A BOUND publication is immutable: reentry answers from the journal and
+    # never rebinds to, or reposts over, drifted remote identity.
+    rebound = case.submit()
+    assert rebound["status"] == "SUBMISSION_BOUND" and rebound["version"] == 1
     assert case.receipt.read_bytes() == receipt
     assert case.transport.api.created == case.transport.api.pushed == 1
 

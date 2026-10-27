@@ -424,8 +424,10 @@ def test_unknown_remote_identity_is_not_absence(release, monkeypatch):
 def test_remote_version_drift_blocks_binding_and_never_reposts(release):
     assert release.run()["status"] == "SUBMISSION_BOUND"
     release.api.remote.metadata.current_version_number = 2
-    with pytest.raises(ValueError, match="binding differs"):
-        release.run()
+    # A BOUND publication is immutable: reentry keeps the journaled version
+    # and never rebinds to, or reposts over, a newer remote version.
+    rebound = release.run()
+    assert rebound["status"] == "SUBMISSION_BOUND" and rebound["version"] == 1
     assert release.api.pushed == 1
 
 
@@ -438,7 +440,7 @@ def test_other_process_lock_blocks_all_mutation(release):
 
 
 def test_frozen_authority_cannot_expand_arms_or_seeds(release, monkeypatch):
-    monkeypatch.setattr(owner, "read_packaged_text", lambda *_: json.dumps({"user_authorized": True,
+    monkeypatch.setattr(owner, "read_packaged_text", lambda *_, **kw: json.dumps({"user_authorized": True,
         "allocated_t4_hours_ceiling": 14, "arms": ["original", "optimized"], "seeds": [42, 43]}))
     with pytest.raises(ValueError, match="exactly these arms and seeds"):
         release.run()
@@ -545,7 +547,7 @@ def test_dataset_details_uses_sdk_request_and_checks_identity(ref, private):
 def test_source_version_drift_blocks_post(release, monkeypatch):
     monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
                         NS(ref=ref, is_private=True, current_version_number=2))
-    with pytest.raises(ValueError, match="version1"):
+    with pytest.raises(ValueError, match="exact requested version"):
         release.run()
     assert release.api.created == 1 and release.api.pushed == 0
 
@@ -616,6 +618,10 @@ def test_bound_cleanup_dry_check_validates_receipt_without_resubmitting(release,
     journal = release.output / "submission_state.json"
     state = json.loads(journal.read_bytes())
     state["kernel_response"]["version_number"] = 2
+    atomic_json(journal, state)
+    with pytest.raises(ValueError, match="no valid kernel response identity"):
+        release.run(execute=False)
+    state["kernel_response"].update(version_number=1, kernel_id=78)
     atomic_json(journal, state)
     with pytest.raises(ValueError, match="launch receipt differs"):
         release.run(execute=False)

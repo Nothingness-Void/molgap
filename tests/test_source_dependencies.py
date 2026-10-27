@@ -169,7 +169,9 @@ def test_python_io_owner_is_source_while_data_payload_and_secret_names_remain_bl
     _write(tmp_path, "src/molgap/my_data.py", "def load(): return None\n")
     report = discover_source_dependencies(tmp_path, ["src/molgap/plugin.py"])
     assert "src/molgap/my_data.py" in report.source_files
-    for path in ("src/molgap/data/payload.py", "src/molgap/my_data/payload.py",
+    # Python modules under src/molgap/data are reviewed source (339d6b1b);
+    # secret names inside that directory remain blocked.
+    for path in ("src/molgap/data/private_key.py", "src/molgap/my_data/payload.py",
                  "src/molgap/checkpoint_results/worker.py", "data/graphs.pt", "src/molgap/private_token.py"):
         _write(tmp_path, path, "FIXTURE = 0\n")
         with pytest.raises(ValueError):

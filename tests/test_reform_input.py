@@ -275,4 +275,5 @@ def test_execute_delegates_exact_frozen_bindings_to_original_journal(platform_en
     prepare.assert_called_once_with(Path("experiment.json"),Path.cwd(),_verification=verification)
     backend.assert_called_once_with(Path("prepared"),Path("private.json"),Path("operations"),
         authority_ref="authority.json",monitor_paths=["STATUS.md"],execute=True,
+        recovery_authority=None,recovery_authority_sha256=None,source_version=1,kernel_version=1,
         _verification=verification)

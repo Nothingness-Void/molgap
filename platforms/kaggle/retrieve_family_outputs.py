@@ -360,12 +360,15 @@ def main(argv=None):
                         not retained_manifest.is_file()
                         or file_digest(retained_manifest) != args.manifest_sha256):
                     raise ValueError("Existing retrieval must retain the original pinned manifest")
+            # Conflicts with already retained bytes must fail before authentication
+            # even when executing; the transport announces the plan itself then.
+            plan = plan_pinned_files(files, destination,
+                sizes={args.remote_manifest_path: args.local_manifest.stat().st_size})
             result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
                       "network_accessed": False, "scientific_acceptance": False,
                       "producer_version": producer_version,
                       "manifest_sha256": args.manifest_sha256,
-                      "retrieval_plan": None if args.execute else plan_pinned_files(files, destination,
-                          sizes={args.remote_manifest_path: args.local_manifest.stat().st_size})}
+                      "retrieval_plan": None if args.execute else plan}
             if args.strict:
                 result["native_dependencies"] = "resolved from pinned certificate before proof transfer"
             if args.execute:

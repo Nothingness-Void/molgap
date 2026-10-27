@@ -62,8 +62,14 @@ def test_real_package_release_and_mount_layout(staging):
     assert report["checks"]["recipe:gptrans_t"] == digest(staging["repo_root"] / "recipe.json")
     assert result["compute_released"] is result["submitted"] is False
     assert digest(root / "inputs/source_payload.bin") == result["package"]["archive_sha256"]
-    from molgap.gptrans_author_screen import restore_source_package
-    restored = restore_source_package(root / "inputs", root / "restored", result["package"]["archive_sha256"])
+    import shutil
+    from molgap.experiment_package import SIDECARS, verify_experiment_source_package
+    (root / "restored").mkdir()
+    for name in SIDECARS:
+        shutil.copyfile(root / "inputs" / ("source_payload.bin" if name == "source.tar.gz" else name),
+                        root / "restored" / name)
+    restored = verify_experiment_source_package(root / "restored")
+    assert restored["archive_sha256"] == result["package"]["archive_sha256"]
     assert restored["package_identity"] == result["package"]["package_identity"]
     assert digest(root / "inputs/optional.bin") == staging["artifacts"]["optional.bin"].sha256
     assert result["package"]["archive_sha256"] in (root / "kernel/run.py").read_text()

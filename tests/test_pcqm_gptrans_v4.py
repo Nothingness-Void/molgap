@@ -125,7 +125,8 @@ def test_remote_payload_requires_v4_guards():
     assert "configure_fp32_determinism" in runner
     assert "validate_runtime_certificate" in runner
     assert "LoopPlan(TRAIN_ROWS, PHYSICAL_BATCH" in runner
-    core = (ROOT / "src/molgap/family_training_core.py").read_text()
+    # family_training_core.py is a compatibility alias; the guard lives in its owner.
+    core = (ROOT / "src/molgap/training/core.py").read_text()
     assert "Training batch differs from the frozen physical batch" in core
 
 

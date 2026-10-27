@@ -476,7 +476,9 @@ def test_original_transport_rejects_bytes_from_another_attempt(retrieval, capsys
     assert case.adapter.main(arguments(case, execute=True)) == 2
     captured = capsys.readouterr()
     assert json.loads(captured.out)["stage"] == "platform_retrieval"
-    assert "SECRET" not in captured.out and captured.err == ""
+    # The transport announces its finite retrieval plan on stderr; no signed URL may appear.
+    assert "SECRET" not in captured.out + captured.err
+    assert json.loads(captured.err.splitlines()[0])["retrieval_plan"]["files"]
     case.retrieve.assert_called_once()
     assert (case.destination / "output_manifest.json").read_bytes() == case.local.read_bytes()
     assert not any(case.destination.rglob("*.bin"))

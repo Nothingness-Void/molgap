@@ -336,11 +336,14 @@ def test_single_plan_rejects_absolute_output_outside_experiments(planning_root):
 def test_validate_only_uses_real_batch_validators_without_publication(planning_root):
     root, _ = planning_root
     plans = [_item("a"), _item("b")]
-    before = {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    def tree():  # Git byte-preservation qualification may add an empty-tree object to .git.
+        return {p.relative_to(root): p.read_bytes() for p in root.rglob("*")
+                if p.is_file() and ".git" not in p.relative_to(root).parts}
+    before = tree()
     result = plan_module.plan_many(root, plans, validate_only=True)
     assert result["status"] == "VALIDATED"
     assert [r["status"] for r in result["results"]] == ["VALIDATED", "VALIDATED"]
-    assert before == {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    assert before == tree()
     assert not (root / "research_memory/.staging").exists()
     assert plan_module.plan_many(root, plans)["status"] == "PLANNED"
 
@@ -456,9 +459,12 @@ def test_formal_batch_still_rechecks_sources_before_each_publication(planning_ro
 
 def test_compact_batch_binds_one_policy_snapshot_and_keeps_actual_references(planning_root):
     root, _ = planning_root
-    before = {path for path in root.rglob("*") if path.is_file()}
+    def files():
+        return {path for path in root.rglob("*")
+                if path.is_file() and ".git" not in path.relative_to(root).parts}
+    before = files()
     result = plan_module.plan_many(root, [_item("a"), _item("b")])
-    published = {path for path in root.rglob("*") if path.is_file()} - before
+    published = files() - before
     assert len(published) == 5  # two trajectories, two costs, one common snapshot
     records = [json.loads((root / row["path"] / "trajectory.json").read_text()) for row in result["results"]]
     assert len({row["decision_state"]["snapshot_ref"] for row in records}) == 1

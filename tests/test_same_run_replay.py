@@ -303,6 +303,9 @@ def test_replay_eligible_same_run_reference_rejects_a_cross_job_continuation(tmp
     terminal["artifact_hashes"][continuation_pointer] = file_digest(continuation_path)
     _put(reference["terminal_path"], terminal)
 
-    with pytest.raises(ValueError, match="continued physical jobs remain excluded"):
+    # Eligible continuations must pass the strict continuation owner
+    # (research_memory/paired.py validate_terminal_continuation); an unbound
+    # synthetic record is rejected before it can authorize replay.
+    with pytest.raises(ValueError, match="invalid terminal continuation record"):
         close_terminal_arm(tmp_path, reference["traj_path"], reference["terminal_path"],
                            trace=trace_path)

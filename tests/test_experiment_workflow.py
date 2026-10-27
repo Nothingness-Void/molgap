@@ -483,7 +483,7 @@ def test_preparation_initialization_uses_selected_repo_from_other_cwd(
         monkeypatch.setattr(workflow, "check_family_recipes", lambda *a, **kw: {})
         class StagingObserved(Exception):
             pass
-        def stage(package, destination, initial_states):
+        def stage(package, destination, initial_states, *, initial_paths=None, _verification=None):
             assert initial_states == expected
             assert all(path.read_bytes() == b"selected repository initialization"
                        for path in initial_states.values())

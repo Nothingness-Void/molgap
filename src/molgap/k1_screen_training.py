@@ -535,7 +535,7 @@ def _step_identity(model, optimizer, loss, absolute, count):
 
 
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
-    if sha256_file(recipe_path) != context.training_recipe_sha256:
+    if normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256:
         raise ValueError("Runtime recipe bytes differ from Spec")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)

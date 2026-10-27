@@ -476,7 +476,8 @@ def test_staged_source_payload_is_bound_to_the_verified_archive(release, tmp_pat
     spec, package, options = release
     inputs = tmp_path / "input"
     inputs.mkdir()
-    for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
+    for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json",
+                 "experiment_spec.json", "package_manifest.json"):
         shutil.copyfile(package / name, inputs / name)
     shutil.copyfile(package / "source.tar.gz", inputs / "source_payload.bin")
     for arm, path in list(options["initial_states"].items()):

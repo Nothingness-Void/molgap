@@ -96,7 +96,7 @@ def lifecycle(tmp_path, monkeypatch):
         atomic_json(recipe_path, recipe)
         context = RunContext("synthetic-k1", "synthetic-run", mode, "a" * 64,
             "b" * 64, "neural_atom_k1", "2", "c" * 40, "d" * 64, "e" * 64,
-            sha256_file(recipe_path), "kaggle", "synthetic", "synthetic/kernel", None)
+            normalized_source_sha256(recipe_path), "kaggle", "synthetic", "synthetic/kernel", None)
         monkeypatch.setattr(RunContext, "for_training", lambda *args, **kwargs: context)
         addon_names = {"mean2": "k1_two_pass_mean", "mean2_clean_second": "k1_mean2_clean_second"}
         addon_source = Path(owner.__file__).with_name("k1_clean_second.py") if mode == "mean2_clean_second" else Path(owner.__file__)

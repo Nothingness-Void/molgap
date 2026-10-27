@@ -18,6 +18,8 @@ from typing import Any
 
 import numpy as np
 
+from .common.io import replace_retrying
+
 
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
@@ -391,7 +393,7 @@ def atomic_torch_save(path: Path, value) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     try:
         torch.save(value, temporary)
-        os.replace(temporary, path)
+        replace_retrying(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
 
@@ -406,7 +408,7 @@ def atomic_json(path: Path, value: Mapping | list) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     try:
         temporary.write_text(payload, encoding="utf-8")
-        os.replace(temporary, path)
+        replace_retrying(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
 
