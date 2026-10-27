@@ -144,6 +144,22 @@ apply the directory mode's descriptive thresholds as frozen scientific gates.
 `accept-workflow` Run mode adds `--diagnose`, `--stage-terminal`, `--outcome`,
 `--decision-ref`, `--role-audit`, and `--output`. The thin
 `platforms/local/accept_run.py` selects diagnosis and staging automatically.
+For different arm decisions, repeat `--arm-outcome ARM=OUTCOME` and
+`--arm-decision-ref ARM=PATH`, for example `--arm-outcome reference=CLOSED
+--arm-outcome candidate=NEGATIVE_UNDER_CONTRACT --arm-decision-ref
+reference=experiments/question/reference_decision.md --arm-decision-ref
+candidate=experiments/question/candidate_decision.md`.
+Decision paths must resolve inside the selected repository. Duplicate arm bindings
+are rejected. Each per-arm option is mutually exclusive with its singular option;
+singular values still apply to all arms, and one per-arm option can be combined
+with a shared singular value for the other field.
+`platforms/local/accept_run.py --closure-input FILE` supplies all per-arm decisions
+from one human-authored file, `{"arms": {ARM: {"outcome": ..., "decision_ref":
+...}}, "role_audit": PATH}` (`role_audit` optional), and expands to the options
+above. It cannot be combined with the individual outcome, decision or role-audit
+options, and the acceptance owner still validates every value. The closure file and
+`role_audit` paths resolve from the current directory; each `decision_ref` resolves
+from the repository root.
 Explicit reviewed `--locations` skips default staging; an explicit
 `--stage-terminal` still requests the stager.
 With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or

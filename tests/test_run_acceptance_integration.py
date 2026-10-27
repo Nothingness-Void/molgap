@@ -353,7 +353,7 @@ def _seed_reference_records(case):
 
 
 @pytest.mark.parametrize("comparison_purpose", ["single_module_ablation", "optimizer_comparison", "initialization_comparison"])
-def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, comparison_purpose):
+def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, capsys, comparison_purpose):
     canonical_purpose = "mechanism_comparison" if comparison_purpose == "single_module_ablation" else comparison_purpose
     case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
                                        comparison_purpose=comparison_purpose)
@@ -467,10 +467,27 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         return translate(*args, **kwargs)
 
     monkeypatch.setattr(terminal, "translate_terminal_descriptor", count_translation)
+    outcomes = {arm_id: "CLOSED" if arm_id == reference_arm else "INCONCLUSIVE" for arm_id in arms}
     options = dict(retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root,
-        stage_terminal=True, outcome="INCONCLUSIVE", decision_ref=decisions, role_audit=audits)
-    result = accept_run_workflow(*case.original, **options)
+        stage_terminal=True, outcome=outcomes, decision_ref=decisions, role_audit=audits)
+    for name, value in (("audits", audits), ("locations", locations)):
+        (tmp_path / (name + ".json")).write_text(json.dumps(value), encoding="utf-8")
+    capsys.readouterr()
+    arguments = ["accept-workflow", "--run-id", declaration["logical_run_id"],
+        "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
+        "--locations", str(tmp_path / "locations.json"), "--stage-terminal", "--execute",
+        "--execution-root", str(retention_root), "--role-audit", str(tmp_path / "audits.json"),
+        *[value for arm, outcome in outcomes.items() for value in ("--arm-outcome", arm + "=" + outcome)],
+        *[value for arm, decision in decisions.items() for value in ("--arm-decision-ref", arm + "=" + decision)]]
+    for bad in ({**options, "outcome": {reference_arm: "CLOSED"}},
+                {**options, "decision_ref": {**decisions, "unknown_arm": "unexpected.md"}}):
+        with pytest.raises(ValueError, match="must cover exactly the run arms"):
+            accept_run_workflow(*case.original, **bad)
+    assert not inspected and not translations and not validations
+    assert experiment_cli.main(arguments) == 0
+    result = json.loads(capsys.readouterr().out)
 
     assert result["status"] == "COMPLETE", result
     assert result["executed"] is True
@@ -478,8 +495,6 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert inspected == Counter({arm_id: 1 for arm_id in arms})
     assert len(translations) == 2
     assert len(validations) == 1
-    assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
-    assert result["execution_retention"]["manifest"] == sealed["manifest"]
     assert result["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
 
     trajectory_contracts = set()
@@ -512,6 +527,9 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         assert set(window["artifact_refs"]) == expected_allocations
         assert expected_allocations <= package["artifact_hashes"].keys()
         finalization = case.repo / where["trajectory"]
+        finalized_trajectory = json.loads(finalization.parent.joinpath("rml_finalized", "trajectory.json").read_bytes())
+        assert finalized_trajectory["decision"]["outcome"] == outcomes[arm_id]
+        assert finalized_trajectory["decision"]["decision_ref"] == decisions[arm_id]
         assert finalization.parent.joinpath("rml_finalized", "finalization.json").is_file()
         finalized_cost = finalization.parent / "rml_finalized/costs" / (allocation_cost["cost_event_id"] + ".json")
         assert json.loads(finalized_cost.read_bytes()) == allocation_cost
@@ -521,13 +539,18 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     receipts = {arm_id: (case.repo / where["trajectory"]).parent / "rml_finalized/finalization.json"
                 for arm_id, where in locations.items()}
     retained = {arm_id: path.read_bytes() for arm_id, path in receipts.items()}
-    repeated = accept_run_workflow(*case.original, **options)
+    assert experiment_cli.main([*arguments, "--verbose"]) == 0
+    repeated = json.loads(capsys.readouterr().out)
     assert repeated["status"] == "COMPLETE", repeated
-    assert repeated["terminal_staging"] == result["terminal_staging"]
+    assert all(repeated["terminal_staging"][key] == value for key, value in result["terminal_staging"].items())
+    assert repeated["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert repeated["execution_retention"]["manifest"] == sealed["manifest"]
+    assert all(path.read_bytes() == retained[arm_id] for arm_id, path in receipts.items())
     assert all(item["finalization_status"] == "ALREADY_FINALIZED" for item in repeated["results"])
     assert inspected == Counter({arm_id: 2 for arm_id in arms})
     assert len(translations) == 4
     assert len(validations) == 2
+    result = repeated
 
     # A native allocated-device observation can overlap this retained window.
     # Keep both sources, without adding a second device-hour event.

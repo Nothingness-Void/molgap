@@ -153,6 +153,8 @@ def test_existing_owner_receives_original_bindings_and_explicit_plan(frozen_run,
     before = snapshot(case.run)
     owner = Mock(return_value={"status": "OWNER_RESULT", "executed": False})
     if operation == "accept":
+        # The real acceptance owner always returns its per-arm mechanical reports.
+        owner.return_value["arms"] = {}
         original_run = Mock(wraps=runs._original_run)
 
         def resolve_acceptance(*args, supplied=None, locations=None, **kwargs):
@@ -319,6 +321,9 @@ def test_cli_old_and_run_id_delegate_same_original_bindings(frozen_run, tmp_path
     else:
         args += ["--resume-plan", str(tmp_path / "resume_plan.json"), "--output", str(tmp_path / "recovery")]
     owner = Mock(return_value={"status": status})
+    if command == "accept-workflow":
+        # The real acceptance owner always returns its per-arm mechanical reports.
+        owner.return_value["arms"] = {}
     monkeypatch.setattr(owner_path, owner)
     if identity == "run" and command == "accept-workflow":
         original_run = Mock(wraps=runs._original_run)
@@ -336,7 +341,7 @@ def test_cli_old_and_run_id_delegate_same_original_bindings(frozen_run, tmp_path
 
         monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", resolve_acceptance)
     assert cli.main(args) == 0
-    expected_result = {"status": status}
+    expected_result = {"status": status, **({"arms": {}} if command == "accept-workflow" else {})}
     if identity == "run" and command == "accept-workflow":
         expected_result.update(run_id="synthetic-run", attempt_id="v1", spec_identity=case.spec.identity)
     assert json.loads(capsys.readouterr().out) == expected_result

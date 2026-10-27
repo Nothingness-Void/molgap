@@ -128,6 +128,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if continuation_receipt is not None:
         resolution["continuation_receipt"] = continuation_receipt
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
+    for name, value in (("outcome", outcome), ("decision_ref", decision_ref)):
+        if isinstance(value, dict) and set(value) != set(resolved["outputs"]):
+            missing = sorted(set(resolved["outputs"]) - set(value))
+            unexpected = sorted(set(value) - set(resolved["outputs"]))
+            raise ValueError(f"Per-arm {name} bindings must cover exactly the run arms: "
+                             f"missing={missing}, unexpected={unexpected}")
     if strict_inputs is not None:
         _validate_strict_inputs(strict_inputs, resolved["outputs"])
     if resume_prepared is not None:

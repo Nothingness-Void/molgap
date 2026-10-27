@@ -43,6 +43,16 @@ def _read(path: Path) -> str:
     return path.read_bytes().decode("utf-8")
 
 
+def _bindings(values, local=False):
+    result = {}
+    for entry in values:
+        arm, separator, value = entry.partition("=")
+        if not separator or not arm or not value or arm in result:
+            raise ValueError("Expected unique ARM=VALUE bindings")
+        result[arm] = _local(value) if local else value
+    return result
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -124,8 +134,14 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--retrieved-root", type=_local)
             command.add_argument("--diagnose", action="store_true")
             command.add_argument("--stage-terminal", action="store_true")
-            command.add_argument("--outcome")
-            command.add_argument("--decision-ref", type=_local)
+            outcomes = command.add_mutually_exclusive_group()
+            outcomes.add_argument("--outcome")
+            outcomes.add_argument("--arm-outcome", action="append", metavar="ARM=OUTCOME",
+                help="Per-arm terminal outcome; repeat for each arm")
+            decisions = command.add_mutually_exclusive_group()
+            decisions.add_argument("--decision-ref", type=_local)
+            decisions.add_argument("--arm-decision-ref", action="append", metavar="ARM=PATH",
+                help="Per-arm repository-local decision path; repeat for each arm")
             command.add_argument("--role-audit", type=_local)
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
             command.add_argument("--bootstrap-samples", type=int)
@@ -302,9 +318,11 @@ def _dispatch(args) -> tuple[dict, int]:
                         options["physical_observation"] = args.physical_observation
                     if args.retrieved_root is not None:
                         options["retrieved_root"] = args.retrieved_root
-                    if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
+                    if (args.diagnose or args.stage_terminal or args.outcome is not None or args.arm_outcome is not None
+                            or args.decision_ref is not None or args.arm_decision_ref is not None):
                         options.update(diagnose=args.diagnose, stage_terminal=args.stage_terminal,
-                            outcome=args.outcome, decision_ref=args.decision_ref,
+                            outcome=_bindings(args.arm_outcome) if args.arm_outcome is not None else args.outcome,
+                            decision_ref=_bindings(args.arm_decision_ref) if args.arm_decision_ref is not None else args.decision_ref,
                             diagnostic_output=args.output, n_bootstrap=(args.bootstrap_samples if args.bootstrap_samples is not None
                                 else 2000 if args.diagnose and (args.strict or args.strict_inputs is not None) else 0), seed=args.seed)
                     elif args.output is not None or args.bootstrap_samples is not None or args.seed != 42:
@@ -327,8 +345,8 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.profile is not None or args.attempt_id is not None:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
-            if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
-                    args.decision_ref, args.role_audit, args.output, args.strict_inputs,
+            if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome, args.arm_outcome,
+                    args.decision_ref, args.arm_decision_ref, args.role_audit, args.output, args.strict_inputs,
                     args.strict, args.continuation_receipt, args.physical_runs, args.physical_observation,
                     args.resume_prepared, args.resume_authority)):
                 raise ValueError("Automatic acceptance requires --run-id")
@@ -440,20 +458,12 @@ def _dispatch(args) -> tuple[dict, int]:
             files = registered_source_files(spec, repo_root=args.repo_root, auto_dependencies=True)
         return build_experiment_source_package(spec, args.repo_root, files, args.output), 0
     if args.command == "check-release":
-        def bindings(values, local=False):
-            result = {}
-            for entry in values:
-                arm, separator, value = entry.partition("=")
-                if not separator or not arm or not value or arm in result:
-                    raise ValueError("Expected unique ARM=PATH bindings")
-                result[arm] = _local(value) if local else value
-            return result
         result = check_release_inputs(spec, args.package,
             expected_package_identity=args.expected_package_identity,
-            recipe_files=bindings(args.recipe_file), initial_states=bindings(args.initial_state, True),
+            recipe_files=_bindings(args.recipe_file), initial_states=_bindings(args.initial_state, True),
             required_modules=args.required_module, pickle_inputs=args.pickle_input,
             entry_script=args.entry_script, input_root=args.input_root,
-            dataset_manifests=bindings(args.dataset_manifest, True) if args.dataset_manifest else None)
+            dataset_manifests=_bindings(args.dataset_manifest, True) if args.dataset_manifest else None)
         if args.output_report:
             _atomic(args.output_report, result)
         return result, 1 if result["errors"] else 0
@@ -546,7 +556,7 @@ def _acceptance_summary(result):
             for arm, row in strict.get("arms", {}).items()}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
-    diagnostic = result.get("diagnosis", result)
+    diagnostic = result.get("diagnosis") or result
     if "comparisons" in diagnostic:
         summary["diagnosis"] = {"status": diagnostic["status"], "reports": diagnostic.get("written_files", {}),
             "comparisons": {arm: {"status": pair["status"], "blockers": pair.get("blockers", []),

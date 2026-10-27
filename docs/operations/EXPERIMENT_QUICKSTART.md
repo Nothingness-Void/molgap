@@ -219,7 +219,9 @@ it does not regenerate terminal drafts or close the same run again.
 
 Drafts preserve unknown role/cost/scientific facts. Add an explicit `--outcome`
 and repository-local `--decision-ref` to stage a decision; `--execute` alone
-cannot infer one. Where the producer lacks observed role truth, `--role-audit`
+cannot infer one. For several arms, `--closure-input FILE` carries each arm's
+outcome and decision path (and an optional role audit) in one human-authored file
+instead of repeated flags or hand-written code; see the CLI reference. Where the producer lacks observed role truth, `--role-audit`
 supplies a retained audit or an arm-to-audit-path JSON map. Audits bind the exact
 RunContext and existing role events, not merely the recipe's permissions. Closure
 uses the existing V5/RML validators and reports missing evidence; positive/READY
@@ -309,4 +311,6 @@ from the training `runtime-v1` inventory, which retains its worker boundary.
 
 The [desktop migration record](DESKTOP_INFRASTRUCTURE_UPGRADE.md) owns provenance
 and executed verification. [Storage retirement](LOCAL_STORAGE_RETIREMENT.md)
-owns payload and completed-worktree retirement.
+owns payload and completed-worktree retirement. After a run closes, its
+`--report` shows where `artifact_root` bytes sit and `--dedupe` hardlinks
+byte-identical copies without removing any path.
