@@ -23,6 +23,14 @@ and `docs/operations/SERVER_AGENT_HANDOFF_V5_FINAL.md`. They supersede older V3/
 handoff rules; this root file stays a short navigation and safety protocol.
 
 ## Hard constraints (do not break)
+- **Simplicity and bounded scope**: prefer the simplest implementation that meets
+  current requirements. Do not add abstractions, dependencies, extra workflows
+  or tests solely for speculative or extremely unlikely edge cases. If a
+  necessary change would significantly increase complexity or expand scope,
+  first explain the concrete failure scenario, evidence that it can occur and
+  maintenance cost, then obtain user approval before proceeding. A repair does
+  not automatically justify adding tests or expanding default test scopes;
+  apply the existing verification contract below.
 - **Python**: always `.venv\Scripts\python.exe` — system Python lacks torch/pyg.
 - **Train-inference consistency**: training and inference MUST use the same conformer
   method (ETKDG). Never mix PM6 training coords with ETKDG inference.
