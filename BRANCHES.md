@@ -70,7 +70,10 @@ Every tip is reachable from `origin/archive` or `molgap-desktop`, and the retire
 index records each retired tip SHA. The external manifest
 `D:/molgap-artifacts/retirement/deleted-local-refs-20261028.json` (SHA256
 `0c2ecd9dddfd8de67e562d8784ee5f524b748e5be753b4171e3c3c2e04fea716`) lists every
-ref with its tip; restore one with `git branch <name> <sha>`. Open owner refs stay:
+ref with its tip; restore one with `git branch <name> <sha>`. Thirty-one finished
+refs deleted earlier (2026-10-27/28) are listed the same way in
+`D:/molgap-artifacts/retirement/deleted-local-refs-20261027-earlier.json` (SHA256
+`b6339cda893f4c1a36c64c00efdbd2c2e5d88d65e9766ce727b6d634c065fc80`). Open owner refs stay:
 the pending-science owners named in CURRENT_STATE, `codex/exp/gptrans-bondlocal-pairnorm-100k`,
 and the two active worktree branches.
 
