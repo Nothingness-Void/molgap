@@ -12,123 +12,6 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
-GPTrans BondLocal plus PairNorm500K learning-rate pair is terminally accepted
-without adoption. Full owner history through `baedffc211490b1d0e805891c04a5628317908b9`
-is reachable from pushed archive `5565121bc2e63acb5eda6b98e6104600cd161ba7`.
-Both arms have complete strict replay; the lower-rate candidate is negative.
-Desktop retains canonical records and configuration without experimental model
-or catalog implementation. [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_custody.md)
-owns artifact locations and source restoration.
-
-K1 retained initialization/forward500K is terminally accepted without adoption.
-Full owner history through `c04ca076` is reachable from pushed archive
-`d01eac748c602aa97764021092ee3cb9096cbd5a`. Desktop retains the
-[four-arm strict qualification and attribution](experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/qualification.md)
-and byte-verified canonical evidence, excluding both preparation scripts and
-shared implementation. [Terminal custody](experiments/pcqm_k1_initialization_forward_500k/terminal_custody.md)
-owns original/continued source, receipts, native proofs and required pass10
-recovery prefixes. All four replay entries are complete; both pretrained
-initializations are negative under their frozen contracts.
-After235 canonical records were verified against desktop Git and disk, its
-completed checkout and temporary experiment refs were removed on2026-10-27.
-The [external custody receipt](D:/molgap-artifacts/retirement/k1-initialization-forward-500k/custody.json)
-has SHA256`db2956234bbb4ca7eb2b38f4e164fd3ef14a3848e37db60d449d116e1d1fee76`;
-native/replay payloads and required continuation prefixes remain on D:.
-
-The [bounded K1 scale attribution](experiments/pcqm_k1_scale_attribution_20261025/README.md)
-is an accepted NO_TRAIN diagnostic. Reviewed source/evidence and reusable
-compatibility/guard repairs from `codex/exp/k1-scale-attribution-20261025` use
-the diagnostic non-promotion route into desktop; the model recommendation
-is unchanged. Its [custody manifest](experiments/pcqm_k1_scale_attribution_20261025/artifact_custody.json)
-owns the small retained prediction matrix. The negative tail500K owner through
-`cda7921ac72bff68f3996e85335d3343ef1c9f5c` is durably reachable from pushed archive
-`373e276292ad9af50297638c178a1b0cb8503433`. Both arms are strictly replay-ready;
-their negative scientific decision is unchanged. Desktop receives canonical
-evidence/configuration only, excluding the preparation helper and rejected
-shared implementation. [Terminal custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md)
-owns recovery paths; the [byte-verified import](experiments/pcqm_k1_scale_attribution_20261025/tail_evidence_import.json)
-binds168 copied records to the archived owner.
-After primary Git/disk verification of those records and the25 diagnostic
-payloads, the completed attribution, tail and temporary archive checkouts were
-removed on2026-10-25. Their temporary local/remote experiment refs were deleted;
-the diagnostic source remains reachable from desktop merge`0593e09e`, and the
-negative source from archive`373e2762`. Other experiment checkouts were untouched.
-
-The [retained hop-fusion qualification](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md)
-is a completed NO_TRAIN saved-prediction diagnostic. Its evidence, thin
-reproduction wrapper and fixed predictions integrate into desktop through the
-diagnostic non-promotion route; no rejected model/catalog implementation is
-included. The source commit691bce0c remains bound by its prospective record.
-
-K1 equal-content hop-shell100K is terminally accepted without adoption.
-Full owner history through `499571f9` is reachable from pushed archive `9cca9524`.
-Desktop retains [strict qualification and attribution](experiments/pcqm_k1_hop_shell_100k/analysis_zh.md),
-including two complete replay entries and the completed local frozen-shell diagnostic.
-[Terminal custody](experiments/pcqm_k1_hop_shell_100k/terminal_custody.md) owns
-source restoration and artifact locations. No hop-shell model/catalog integration
-or experimental shared execution extension is adopted here.
-
-K1 Batch Renorm scale-versus-affine100K is terminally accepted without adoption.
-Full history through `c677aa45` is reachable from pushed archive `f92e4694`.
-Desktop retains [strict replay and final attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md)
-for both arms and the completed local Clean-BN diagnostic. The
-[custody record](experiments/pcqm_k1_batch_renorm_100k/terminal_custody.md) owns restoration and artifact locations;
-no rejected BatchRenorm implementation or catalog hook is adopted.
-
-K1 fixed-versus-learned MsgNorm100K is terminally accepted without adoption.
-Owner history through `4105cd3d` is reachable from pushed archive merge
-`548082d8`. Desktop retains the [decision and strict replay evidence](experiments/pcqm_k1_message_norm_100k/qualification_20261024.md).
-Its [custody record](experiments/pcqm_k1_message_norm_100k/terminal_custody.md)
-owns artifact locations and restoration; no MsgNorm implementation is adopted.
-
-K1 graph-wise message DropPath100K is terminally accepted without adoption.
-Full owner history through `d54677b5a0e6620f8ee177d75cf275c13757dbe5`
-is reachable from pushed archive `d770ade4563667453bc94176445b2da51673785d`.
-Both arms are strictly replay-ready; DropPath is negative under its contract.
-Desktop retains [qualification and attribution](experiments/pcqm_k1_message_droppath_100k/qualification.md)
-and exact canonical metadata without the rejected addon/catalog implementation.
-[Custody](experiments/pcqm_k1_message_droppath_100k/terminal_custody.md)
-owns retained source, native proofs and actual artifact locations.
-The completed checkout and temporary ref were retired after100 canonical
-records and ignored artifact keepers were verified. The
-[retirement receipt](D:/molgap-artifacts/retirement/k1-message-droppath-100k/custody.json)
-has SHA256`974000e6ec468c4d96dec7f9bb7d4fea48cc22cf53e949138c87c82c749fd458`.
-
-BondLocal plus pair-update-normalization100K is terminally accepted with a
-positive100K nomination and no adoption. Keep the owner ref
-`codex/exp/gptrans-bondlocal-pairnorm-100k` at
-`3bad3811f876d344373139fa3f70e9263f42697b` while scale/adoption disposition
-is unresolved; do not merge its model/catalog implementation into desktop.
-Both arms are strictly replay-ready. Desktop retains byte-verified canonical
-[qualification](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md),
-decision and attribution. [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_custody.md)
-owns source restoration and external artifacts. No500K/full release follows.
-The completed checkout was retired after86 canonical records and ignored
-artifact keepers were verified; the positive owner ref remains. The
-[retirement receipt](D:/molgap-artifacts/retirement/gptrans-bondlocal-pairnorm-100k/custody.json)
-has SHA256`67c442cbfcfbd0e24f0d5f54f630b45d61691fe8658084c644ec45d445eb1ce0`.
-
-K1 normalization mechanisms is closed without model adoption. Full owner history
-through real automatic verification `48e4c6a5` is reachable from pushed archive
-`aab98f69` (including original closure `710b8834`); desktop retains
-the [accepted evidence and strict qualification](experiments/pcqm_k1_norm_mechanisms_100k/qualification_20261023.md).
-Restore that owner only when its normalization implementation is needed; its
-ordinary read-only verification commands preserve the frozen training packages.
-The completed physical checkout was retired after verified external custody;
-the qualification method gives the exact restore command and custody pointer.
-
-The [single-model RTX5060 lifecycle exercise](experiments/local_k1_ten_epoch_flow/attempt_3/method.md)
-closed `INFRASTRUCTURE_ONLY`. Source history through `cd8b4b76` is reachable from
-the same archive commit. Desktop retains canonical evidence and shared execution
-infrastructure; the channel-gain Addon is not adopted. Its temporary C: checkout
-was archived and removed; retained execution artifacts stay under D:.
-
-Accepted local K1 execution-speed custody belongs to
-`codex/exp/k1-fused-layout-speed-100k`; its
-[decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md) owns
-diagnostic non-promotion routing. Physical checkout removal does not change
-production, remote jobs or that decision.
-
 New questions use a separate `codex/exp/<question>` worktree from verified desktop,
 never a retained experiment/archive/server tip. Verify upstream/worktree first.
 Query desktop routing/RML/evidence; inspect other branches only for their question or explicit integration.
@@ -151,13 +34,45 @@ Delete a temporary ref only after durable destination reachability. Archive merg
 may preserve ancestry without changing the tree or making old work live.
 Desktop-to-master promotion remains separate.
 
-## Closed K1 normalization exposure custody
+## Terminal custody table
 
-Full history of `codex/exp/k1-norm-exposure-100k` through `0567e679` is
-reachable from pushed archive commit `c6f0ee4b935069c2299f0a24200f4a525c96e9fa`.
-Desktop retains accepted canonical evidence; no rejected normalization model
-implementation is integrated. [Terminal custody](experiments/pcqm_k1_norm_exposure_100k/terminal_custody.md)
-owns source/evidence/artifact navigation and physical retirement status.
+Each custody doc owns source restoration, artifact locations, native proofs and
+retirement status. Desktop keeps accepted canonical evidence only; no rejected
+model or catalog implementation is integrated unless a row says so. Owner refs
+marked "retired via index" resolve through the
+[retirement index](docs/operations/LOCAL_RETIREMENT_INDEX.json). "Deleted" means
+the temporary ref was removed after the commits reached the destination shown.
+"Archive" commits are on pushed `origin/archive`.
+
+| Question and outcome | Owner ref | Archive or destination commit | Custody doc and receipt |
+|---|---|---|---|
+| GPTrans BondLocal plus PairNorm 500K learning-rate pair: accepted, not adopted; lower rate negative; both arms complete strict replay | No local ref | Owner history through `baedffc211490b1d0e805891c04a5628317908b9` in archive `5565121bc2e63acb5eda6b98e6104600cd161ba7` | [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_custody.md) |
+| K1 retained initialization/forward 500K: accepted, not adopted; four replay entries complete; both pretrained initializations negative | Deleted 2026-10-27 after 235 canonical records were verified | Owner history through `c04ca076` in archive `d01eac748c602aa97764021092ee3cb9096cbd5a` | [Custody](experiments/pcqm_k1_initialization_forward_500k/terminal_custody.md), [qualification](experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/qualification.md); receipt `D:/molgap-artifacts/retirement/k1-initialization-forward-500k/custody.json` SHA256 `db2956234bbb4ca7eb2b38f4e164fd3ef14a3848e37db60d449d116e1d1fee76`; required continuation prefixes stay on D: |
+| K1 scale attribution: accepted NO_TRAIN; model recommendation unchanged | Deleted 2026-10-25 after 25 payloads were verified | Diagnostic source via desktop merge `0593e09e` | [README](experiments/pcqm_k1_scale_attribution_20261025/README.md), [custody manifest](experiments/pcqm_k1_scale_attribution_20261025/artifact_custody.json) |
+| K1 tail regularization 500K: negative; both arms strictly replay-ready | Deleted 2026-10-25 | Owner through `cda7921ac72bff68f3996e85335d3343ef1c9f5c` in archive `373e276292ad9af50297638c178a1b0cb8503433` (short `373e2762`) | [Custody](experiments/pcqm_k1_tail_regularization_500k/terminal_custody.md), [import binding 168 records](experiments/pcqm_k1_scale_attribution_20261025/tail_evidence_import.json) |
+| K1 hop-fusion qualification: completed NO_TRAIN saved-prediction diagnostic; evidence and thin wrapper integrated, no rejected implementation | Retired via index | Source commit `691bce0c` bound by its prospective record | [Decision](experiments/pcqm_k1_hop_fusion_qualification/terminal_decision.md) |
+| K1 equal-content hop-shell 100K: accepted, not adopted; two complete replay entries; local frozen-shell diagnostic done | Retired via index | Owner through `499571f9` in archive `9cca9524` | [Custody](experiments/pcqm_k1_hop_shell_100k/terminal_custody.md), [attribution](experiments/pcqm_k1_hop_shell_100k/analysis_zh.md) |
+| K1 Batch Renorm scale versus affine 100K: accepted, not adopted; both arms strict replay; local Clean-BN diagnostic done | Retired via index | History through `c677aa45` in archive `f92e4694` | [Custody](experiments/pcqm_k1_batch_renorm_100k/terminal_custody.md), [attribution](experiments/pcqm_k1_batch_renorm_100k/final_attribution.md) |
+| K1 fixed-versus-learned MsgNorm 100K: accepted, not adopted | Retired via index | Owner through `4105cd3d` in archive merge `548082d8` | [Custody](experiments/pcqm_k1_message_norm_100k/terminal_custody.md), [qualification](experiments/pcqm_k1_message_norm_100k/qualification_20261024.md) |
+| K1 graph-wise message DropPath 100K: accepted, not adopted; DropPath negative; both arms replay-ready | Deleted after 100 canonical records were verified | Owner through `d54677b5a0e6620f8ee177d75cf275c13757dbe5` in archive `d770ade4563667453bc94176445b2da51673785d` | [Custody](experiments/pcqm_k1_message_droppath_100k/terminal_custody.md), [qualification](experiments/pcqm_k1_message_droppath_100k/qualification.md); receipt `D:/molgap-artifacts/retirement/k1-message-droppath-100k/custody.json` SHA256 `974000e6ec468c4d96dec7f9bb7d4fea48cc22cf53e949138c87c82c749fd458` |
+| BondLocal plus pair-update-normalization 100K: positive 100K nomination, no adoption, no 500K/full release; scale/adoption unresolved; both arms replay-ready | Kept: `codex/exp/gptrans-bondlocal-pairnorm-100k` at `3bad3811f876d344373139fa3f70e9263f42697b`; do not merge its model/catalog code | None; checkout retired after 86 canonical records were verified | [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_custody.md), [qualification](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md); receipt `D:/molgap-artifacts/retirement/gptrans-bondlocal-pairnorm-100k/custody.json` SHA256 `67c442cbfcfbd0e24f0d5f54f630b45d61691fe8658084c644ec45d445eb1ce0` |
+| K1 normalization mechanisms: closed without model adoption | Local ref deleted 2026-10-28 (tip `710b8834` is in `origin/archive`; the remote ref remains); checkout retired after verified external custody | Verification `48e4c6a5` (original closure `710b8834`) in archive `aab98f69` | [Qualification](experiments/pcqm_k1_norm_mechanisms_100k/qualification_20261023.md) gives the restore command; restore only when its implementation is needed |
+| Single-model RTX 5060 lifecycle exercise: `INFRASTRUCTURE_ONLY`; channel-gain Addon not adopted | No local ref (remote `origin/codex/exp/local-k1-ten-epoch-flow` remains) | Source through `cd8b4b76` in archive `aab98f69` | [Method](experiments/local_k1_ten_epoch_flow/attempt_3/method.md); retained execution artifacts stay on D: |
+| K1 execution-speed custody (accepted local) | Local ref `codex/exp/k1-fused-layout-speed-100k` deleted 2026-10-28; its tip `e54108b5` is reachable from `molgap-desktop` and `origin/archive` | Non-promotion route set by its decision | [Decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md) |
+| K1 normalization exposure 100K: closed | No local ref | Owner through `0567e679` in archive `c6f0ee4b935069c2299f0a24200f4a525c96e9fa` | [Custody](experiments/pcqm_k1_norm_exposure_100k/terminal_custody.md) |
+| Structural-bias/normalization 100K: complete negative history | No local ref | Owner tip `13c623721696c941cd1819d8be162a09029d08ca` in archive `ac7857565c4c84d9d70a56f003082a0ef8c4c290` | [Custody](experiments/pcqm_structural_bias_norm_100k/terminal_custody.md) |
+
+## Deleted local refs
+
+On 2026-10-28, 104 finished local refs were deleted: the 95 `codex/retired/*`
+recovery refs, six closed infrastructure refs and three closed experiment refs.
+Every tip is reachable from `origin/archive` or `molgap-desktop`, and the retirement
+index records each retired tip SHA. The external manifest
+`D:/molgap-artifacts/retirement/deleted-local-refs-20261028.json` (SHA256
+`0c2ecd9dddfd8de67e562d8784ee5f524b748e5be753b4171e3c3c2e04fea716`) lists every
+ref with its tip; restore one with `git branch <name> <sha>`. Open owner refs stay:
+the pending-science owners named in CURRENT_STATE, `codex/exp/gptrans-bondlocal-pairnorm-100k`,
+and the two active worktree branches.
 
 ## Retained Checkout Map
 
@@ -183,10 +98,6 @@ platform, role and scientific authority requirements.
 
 ## Historical Audit Pointer
 
-Structural-bias/normalization100K complete negative history is reachable from
-archive commit `ac7857565c4c84d9d70a56f003082a0ef8c4c290`, including owner tip
-`13c623721696c941cd1819d8be162a09029d08ca`. Desktop keeps accepted canonical
-evidence only; see [terminal custody](experiments/pcqm_structural_bias_norm_100k/terminal_custody.md).
 The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous
 audit and cleanup records intact, including dated commit/reachability claims.
 The [2026-09-30 reconciliation](docs/operations/LOCAL_RECONCILIATION_20260930.md)

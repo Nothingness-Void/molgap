@@ -35,17 +35,22 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does a prediction-only cross-fitted gate beat fixed K1 plus GPTrans averaging? | NO_TRAIN saved-prediction diagnostic; the gate misses its frozen 1 meV rule; models were already selected on this development role, no adoption or official role used | [Decision](pcqm_pairnorm_prediction_router_500k/decision.md) |
+| Does fixed-weight K1 plus GPTrans prediction fusion lower development MAE? | NO_TRAIN saved-prediction diagnostic on selection-used development rows; selection-set description only, no adoption or official role used | [Decision](pcqm_k1_gptrans_pairnorm_fusion_500k/decision.md) |
+| K1 MsgNorm fixed versus learned scale at 100K? | Learned scale 1.364 meV better but misses the 3 meV gate; fixed CLOSED, learned NEGATIVE_UNDER_CONTRACT; no adoption or scale-up | [Terminal decision](pcqm_k1_message_norm_100k/terminal_decision.md) |
+| K1 normalization mechanism screen (position, scope, gain) at 100K? | No arm clears the 3 meV nomination: Pre RMS and Post-Node AdaRMS NEGATIVE_UNDER_CONTRACT, Post-Graph RMS best at 1.645 meV; no adoption or scale-up | [Terminal disposition](pcqm_k1_norm_mechanisms_100k/terminal_decision_20261023.md) |
+| Local K1 ten-epoch pause and resume lifecycle exercise? | Infrastructure verification only, not a scientific comparison; failed preflight attempt closed as INFRASTRUCTURE_ONLY | [Entry](local_k1_ten_epoch_flow/README.md) |
 | Does halving the GPTrans BondLocal plus PairNorm learning rate improve500K? | Two60-pass arms strict replay-ready; lower rate worse0.515meV, negative; full history archived, no adoption | [Qualification and attribution](pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/qualification.md) |
 | Does graph-wise message DropPath improve K1 at100K? | Two40pass arms strict replay-ready; candidate worse2.373meV, negative; full history archived, no adoption | [Qualification and attribution](pcqm_k1_message_droppath_100k/qualification.md) |
 | Does fresh pair-update normalization improve BondLocal at100K? | Two60pass arms strict replay-ready;3.143meV gain passes the frozen gate; unadopted positive nomination, no500K/full release | [Qualification and attribution](pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md) |
 | Does retained pretraining initialization improve matched K1 500K single/mean2 recipes? | Four30pass arms strict replay-ready; pretrained endpoints worse0.924/1.916meV, both negative; complete history archived, no adoption | [Decision and attribution](pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md) |
 | Does detached mean correction improve beyond scale-only BatchRenorm in K1? | Two40pass arms strict replay-ready; affine worse1.6455meV, negative. Selected-LIVE Clean-BN increases gap to14.0371meV; no adoption, complete history archived | [Final attribution](pcqm_k1_batch_renorm_100k/final_attribution.md) |
-| K1 single-forward True EMA 100K screen? | Follow the retained decision and its evidence limits | [Decision](pcqm_k1_single_true_ema_100k/decision.md) |
-| Shared 100K operator profile? | Follow the owning protocol and retained evidence | [Entry](family_100k_operator_profile/README.md) |
-| Shared checkpoint efficiency? | Follow the bounded execution diagnostic | [Entry](family_checkpoint_efficiency/README.md) |
-| T4 topology reuse comparison? | Follow the execution comparison and attribution | [Entry](family_topology_t4_100k/README.md) |
-| K1 clean second training view at 100K? | Follow the owning decision and evidence | [Entry](pcqm_k1_clean_second_100k/README.md) |
-| K1 T4 cost-quality comparison? | Follow canonical custody and retained attempt evidence | [Entry](pcqm_k1_t4_cost_quality/README.md) |
+| K1 single-forward True EMA 100K screen? | Unresolved: canonical trajectory is still ACTIVE and the handwritten positive decision is not verified; no verified EMA benefit | [Decision](pcqm_k1_single_true_ema_100k/decision.md) |
+| Shared 100K operator profile? | Accepted execution diagnostic: K1 mean2 0.140257 eV and GPTrans local 0.142861 eV, descriptive only; no successor or promotion | [Entry](family_100k_operator_profile/README.md) |
+| Shared checkpoint efficiency? | NO_TRAIN synthetic diagnostic: batched finite check cuts check plus atomic save time 10.7-22.9% with identical saved bytes; no quality or model claim | [Entry](family_checkpoint_efficiency/README.md) |
+| T4 topology reuse comparison? | Worker wall down 15.0% (K1) and 15.7% (GPTrans) with bitwise-equal predictions; cause not isolated, INCONCLUSIVE, no promotion | [Entry](family_topology_t4_100k/README.md) |
+| K1 clean second training view at 100K? | NEGATIVE_UNDER_CONTRACT: candidate 0.763 meV worse than fresh mean2, interval crosses zero, misses 3 meV gate; no adoption or scale-up | [Entry](pcqm_k1_clean_second_100k/README.md) |
+| K1 T4 cost-quality comparison? | Seed43 attempt: both formal arms NO_TRAIN after qualification failure; no second-seed precision result, replay pair, retry or scale-up | [Entry](pcqm_k1_t4_cost_quality/README.md) |
 | Does K1 Post-LN catch up under a160-pass schedule, lower LR or warmup? | Four arms accepted and RML finalized; original-LR LN worse5.771meV, warmup gain2.973meV below3meV; negative candidates, strict replay excluded; history archived | [Decision and custody](pcqm_k1_norm_exposure_100k/terminal_custody.md) |
 | Do K1 Post-LN or GPTrans resistance improve matched100K controls? | Four trained arms accepted; both candidates NEGATIVE_UNDER_CONTRACT, controls CLOSED; four original bootstrap records NO_TRAIN. Complete history archived; strict replay excluded | [Decision and custody](pcqm_structural_bias_norm_100k/terminal_custody.md) |
 | Does Pre-Norm AdaRMSNorm improve K1 against matched Pre-Norm BN? | Accepted40/40-pass pair; Ada is2.182meV worse and closes NEGATIVE_UNDER_CONTRACT, control CLOSED. Complete history archived; terminal RML evidence retained with strict replay exclusions; no model adoption | [Decision and custody](pcqm_k1_prenorm_norm_100k/terminal_custody_decision.md) |
@@ -117,20 +122,20 @@ Track C.
 | Which SchNet compute shape is efficient? | `176/160/6` at 78% params and 48% time | `schnet_arch/` |
 | Does 1M continuation beat the 500K base? | Specialist only; no global promotion | `expansion_1m/` |
 
-| Frozen-initialization and cohort-transfer control? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_100k_transfer_control/` |
-| Noisy Nodes 100K screen? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_nodes_100k/` |
-| Noisy Nodes 500K transfer? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_nodes_500k/` |
-| Noisy Nodes plus Pair Update Norm 100K screen? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_pair_norm_100k/` |
-| Noisy Nodes plus Pair Update Norm 500K transfer? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_noisy_pair_norm_500k/` |
-| K1 and GPTrans residual reconciliation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_k1_residual_reconciliation/` |
-| Historical scale-transfer attribution? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_attribution/` |
-| Historical scale-transfer diagnostic? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_diagnostic/` |
-| Scale-transfer reassessment? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_reassessment/` |
-| Frozen 500K readout probe? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_500k_frozen_readout/` |
+| Frozen-initialization and cohort-transfer control? | Local paired 100K candidate 6.185 meV better, 5.792 meV on the 500K cohort without retraining; cohort change alone does not explain the later contraction; no 500K release | `pcqm_gptrans_100k_transfer_control/` |
+| Noisy Nodes 100K screen? | POSITIVE_UNDER_CONTRACT: 4.840 meV gain over the 0.156627 eV reference; the 500K transfer did not hold it | `pcqm_gptrans_noisy_nodes_100k/` |
+| Noisy Nodes 500K transfer? | NEGATIVE_UNDER_CONTRACT: 1.812 meV gain misses the 3 meV gate | `pcqm_gptrans_noisy_nodes_500k/` |
+| Noisy Nodes plus Pair Update Norm 100K screen? | POSITIVE_UNDER_CONTRACT: 9.382 meV gain over the 0.156627 eV reference; the 500K transfer retained 2.056 meV | `pcqm_gptrans_noisy_pair_norm_100k/` |
+| Noisy Nodes plus Pair Update Norm 500K transfer? | NEGATIVE_UNDER_CONTRACT: 2.056 meV gain misses the 3 meV gate and matches K1 only within 0.048 meV | `pcqm_gptrans_noisy_pair_norm_500k/` |
+| K1 and GPTrans residual reconciliation? | No training released: simple graph summaries explain little of the K1 versus GPTrans-T gain (largest correlation 0.026); coarse routing and added dense attention unsupported | `pcqm_k1_residual_reconciliation/` |
+| Historical scale-transfer attribution? | Both direct 100K winners lost the 3 meV gain at 500K; selection and horizon fragility is the strongest explanation; immediate 100K-to-full promotion rejected | `pcqm_scale_transfer_attribution/` |
+| Historical scale-transfer diagnostic? | NO_TRAIN, recorded POSITIVE_UNDER_CONTRACT; its 0.0078 eV projected 500K gain failed against the accepted 0.002056 eV, so the reassessment supersedes its claims | `pcqm_scale_transfer_diagnostic/` |
+| Scale-transfer reassessment? | NO_TRAIN: the matched 500K early advantage mostly erodes, cause not isolated; STQS is not a calibrated predictor; no promotion | `pcqm_scale_transfer_reassessment/` |
+| Frozen 500K readout probe? | INCONCLUSIVE for a readout-bottleneck cause: frozen mean-atom head shows no consistent advantage; no 500K retraining | `pcqm_gptrans_500k_frozen_readout/` |
 | Does retained joint-model training fit transfer equally to the same development prefix at 100K/500K? | Accepted NO_TRAIN diagnostic; follow [STATUS](pcqm_scale_fit_retained/STATUS.md) and terminal decision, not the frozen preparation README. No causal scale or promotion claim | `pcqm_scale_fit_retained/` |
-| Conditional-flow historical arm views? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_conditional_flow_history/` |
-| Historical flow ablation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_flow_ablation_100k/` |
-| Frozen 100K weights on the 500K development cohort? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_frozen_transfer_probe/` |
+| Conditional-flow historical arm views? | NEGATIVE_UNDER_CONTRACT: readback 4.309 meV and recurrence 3.251 meV worse than the reference; no scaling or seeds | `pcqm_gptrans_conditional_flow_history/` |
+| Historical flow ablation? | NEGATIVE_UNDER_CONTRACT: removing pair-to-node (2.657 meV) or pair recurrence (1.547 meV) worsens MAE; both paths are useful | `pcqm_gptrans_flow_ablation_100k/` |
+| Frozen 100K weights on the 500K development cohort? | INCONCLUSIVE as a general cutoff: frozen 100K candidate 5.109 meV better on the 500K cohort, yet its 500K retraining gain was 1.140 meV | `pcqm_gptrans_frozen_transfer_probe/` |
 
 `_closed/` holds branches that are settled and must not be rerun without a
 materially new hypothesis. `_scripts/` holds entrypoints shared by more than one

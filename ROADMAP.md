@@ -19,28 +19,30 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| Closed diagnostic | K1/GPTrans100K operator profile and topology reuse | [Terminal custody](experiments/family_100k_operator_profile/terminal_acceptance/closure.md) is finalized; no matched strict reference or native throughput gain. Further execution measurement needs separately bounded scope; no automatic training. |
 | Terminal custody pending | K1 execution pair closure | [Selected execution/evidence](docs/operations/K1_EXECUTION.md): preserve failed speed gates, finalize actual per-arm V5/RML custody without invented role/cost observations. No new training release; owner retained until routing. |
-| Closed diagnostic | Paired partial-stage curves and BN/late per-row attribution | Accepted saved-artifact NO_TRAIN; [trace interpretation](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) and [BN interpretation](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md). Follow the terminal consistency disposition below; no new training or stopping policy. |
-| Closed diagnostic | Complete K1 local module/state audit and sparse endpoint average | Accepted NO_TRAIN; use [consolidated route](experiments/pcqm_k1_complete_local_audit/analysis_zh.md#10-下一步一条主线两个问题分开验收) and its explicit remaining discriminators. No model adoption, new remote job or full release; follow terminal consistency disposition before conditional training-state/cost work. |
-| Terminal accepted | User-released two-slot100K batch | [Clean-second decision](experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md) fails the material gate. Seed43 qualification failure leaves precision replication unresolved on its mapped owner. Preserve terminal attribution/RML exclusions; no automatic retry/scale-up or threshold relaxation. |
 | Terminal custody pending | Original seed42 single/mean2 quality | Single failed its frozen noninferiority gate; preserve [decision and RML exclusions; owner `codex/exp/k1-t4-cost-quality-100k`](BRANCHES.md#retained-checkout-map). The new replication does not repair or relabel that realization. |
-| Closed | Consistency500K endpoint custody | Both60epoch arms finalized with real traces and missing-reference replay exclusions. Full negative history archived; [canonical desktop custody](experiments/pcqm_k1_consistency_ablation_500k/README.md), no adoption or reference retraining. |
-| Closed diagnostic | Retained500K clean train/development fit | [Accepted NO_TRAIN](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md); matched49/60 endpoints constrain tail-training interpretation, not a unique causal explanation or early-stop rule. |
-| Closed | K1 fixed-fusion output distillation | Both40epoch students independently finalized; weak/strong fail the frozen1meV compression criteria. Accepted evidence imported, full rejected history archived; no blind retry or scale-up. See `experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md` |
-| Closed | K1 dropout pair acceptance and attribution | Both40epoch arms finalized VALID/COMPLETE; canonical desktop RML retains the1.5288meV positive numerical benefit below3meV. Missing control native cost and resumed provenance remain explicit strict replay exclusions; no successor or scale-up |
-| Closed diagnostic | K1 fixed equal-blend transfer | Common-cohort frozen inference supports fusion nomination with measured two-pass cost; the separate distillation pair is closed below its compression gate, no model promotion. See `experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md` |
-| Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
+| Terminal accepted | User-released two-slot 100K batch | [Clean-second decision](experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md) fails the material gate. Seed43 qualification failure leaves precision replication unresolved on its mapped owner. Keep terminal attribution/RML exclusions; no automatic retry, scale-up or threshold relaxation. |
+| Closed diagnostic, conditional follow-up | Complete K1 local module/state audit and sparse endpoint average | Accepted NO_TRAIN; use the [consolidated route](experiments/pcqm_k1_complete_local_audit/analysis_zh.md#10-下一步一条主线两个问题分开验收) and its remaining discriminators. No model adoption, remote job or full release before conditional training-state/cost work. |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
-Centered-logit replay exclusions are closed evidence, not an active training queue.
-Server DSAR/DSMR drafts are not desktop tasks; incomplete job identity must not
-be replaced with stale RUNNING claims or automatic takeover.
+Closed questions need no queue action. Read their decision for evidence and replay
+exclusions; never reopen them by seed or schedule change, blind retry or scale-up:
+[operator profile](experiments/family_100k_operator_profile/terminal_acceptance/closure.md),
+[stage curves](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md),
+[BN row attribution](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md),
+[consistency 500K](experiments/pcqm_k1_consistency_ablation_500k/README.md),
+[clean fit](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md),
+`experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md`,
+[dropout pair](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md),
+`experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md` and
+[chemical auxiliary](experiments/pcqm_gptrans_chemical_aux/terminal_custody_decision.md).
+Centered-logit replay exclusions are closed evidence, not a training queue.
+Server DSAR/DSMR drafts are not desktop tasks; do not replace incomplete job identity
+with stale RUNNING claims or automatic takeover.
 Old pretraining/geometry/precision qualification work is administratively paused
 in archive, not an automatic active queue. See [custody routing](BRANCHES.md#retained-checkout-map);
 reopen only with explicit direction, preserving original scientific blockers.
 Completed evidence: [experiments](experiments/README.md), [RML](research_memory/README.md).
-Review canonical attribution first; never reopen through seed/schedule changes.
 
 New screens follow the [V4 reference](experiments/pcqm_gptrans_t_100k_v4/README.md)
 and [execution contract](platforms/V4_EXECUTION_CONTRACT.md): fixed data/row order,
