@@ -59,9 +59,9 @@ protected-role record, platform packaging, or runner semantics were migrated.
 
 ## Execution boundary
 
-The existing baseline checkpoint/resume owner is
-`molgap.pcqm_k1_full_runner`. Unified adapter checkpoint/resume is **not
-implemented**, and that runner is not extended to train or resume this addon.
+The metadata names `molgap.pcqm_k1_full_runner` as the historical checkpoint/resume
+owner; that module is archived and no longer in the tree. Unified adapter
+checkpoint/resume is **not implemented** for this addon.
 `initial_state_path=None` is accepted; every non-None path is rejected without
 loading. A `frozen_state` declaration remains prospective and does not cause a
 state load. A future runner must bind initialization bytes and enforce all

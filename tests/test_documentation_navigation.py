@@ -67,11 +67,9 @@ def test_local_navigation_links_resolve(relative):
 
 @pytest.mark.parametrize("module, callable_name", (
     ("src/molgap/pcqm_gptrans_v4.py", "run_training"),
-    ("src/molgap/pcqm_gptrans_full_runner.py", "train_full"),
     ("src/molgap/pcqm_official_edge_state.py", "train_official_edge_state"),
     ("src/molgap/edge_state_training_core.py", "save_checkpoint"),
     ("src/molgap/edge_state_training_core.py", "restore_checkpoint"),
-    ("src/molgap/pcqm_gptrans_full_acceptance.py", "accept"),
     ("experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py", "paired_metrics"),
 ))
 def test_named_reuse_callables_exist_without_importing_them(module, callable_name):

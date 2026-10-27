@@ -96,7 +96,6 @@ ownership index, not execution authority or a copy of scientific contracts.
 | `gap_specialization.py` | Gap-only graph caches, embedding parts, and specialist head training | Changing frozen-embedding Gap specialization |
 | `pubchemqc_architecture.py` | PubChemQC scaffold-screen SchNet training over one or two ETKDG views | Changing the 100K architecture-screen 3D protocol |
 | `pcqm_route_b_training.py` | Shard-streamed Gap continuation, checkpointing, and embedding export | Changing the Track B PCQM encoder protocol |
-| `pcqm_k1_full_runner.py` | Frozen K1 full-role preflight, exact-step training, atomic resume, and self-contained bundle | Changing the audited K1 desktop handoff contract |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG state, finite-state and atomic artifact primitives | Changing reusable remote execution provenance |
 | `screen_policy.py` | Historical paired guards plus v4 immutable-reference cross-platform comparison | Changing screen comparability or runtime-certificate rules |
 | `v5_common.py` | Machine-neutral V5 evidence-envelope and comparability exports shared by Desktop, Server, and RML | Changing shared V5 evidence semantics |
@@ -128,11 +127,10 @@ ownership index, not execution authority or a copy of scientific contracts.
 
 ## Loading Structure
 
-The desktop full-run implementation is indexed by
-`experiments/pcqm_k1_gptrans_full_fusion/README.md`: `pcqm_k1_full_runner.py`
-and `pcqm_gptrans_full_runner.py` own training; `pcqm_gptrans_full_acceptance.py`
-owns artifact acceptance; `pcqm_gptrans_official_eval.py` owns frozen scoring;
-`pcqm_k1_gptrans_fusion.py` owns the authorized calibration/holdout comparison.
+The September-2026 full-run line (K1 and GPTrans full runners, convergence,
+official scoring and full acceptance) is archived on `origin/archive` and is
+reference only; `experiments/pcqm_k1_gptrans_full_fusion/README.md` indexes its
+evidence. `pcqm_k1_gptrans_fusion.py` stays because canonical RML records bind it.
 Temporary worktree ownership is recorded only in `BRANCHES.md`.
 
 - `load_repaired_2m_2d(key=...)` loads a pure-2D multi-expert registry entry:

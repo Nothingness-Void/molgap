@@ -93,15 +93,11 @@ def test_midpass_full_budget_is_allowed_without_fake_development():
 
 
 def test_warmup_schedules_match_existing_frozen_formula_exactly():
-    from molgap import pcqm_gptrans_v4 as screen, pcqm_gptrans_full_runner as full
+    from molgap import pcqm_gptrans_v4 as screen
     epoch = ScheduleSpec("warmup_cosine_epoch", screen.EPOCHS,
         minimum_lr=screen.MIN_LEARNING_RATE, warmup_units=screen.WARMUP_EPOCHS)
     assert all(epoch.pre_update_lr(i, screen.LEARNING_RATE) == screen.FrozenEpochScheduler.learning_rate(i)
                for i in range(screen.EPOCHS))
-    step = ScheduleSpec("four_stage_warmup_cosine_step", full.TOTAL_STEPS,
-        minimum_lr=full.MINIMUM_LEARNING_RATE, warmup_units=4)
-    for i in (1, 2604, 2605, 5208, 5209, full.WARMUP_STEPS, full.WARMUP_STEPS + 1, full.TOTAL_STEPS):
-        assert step.pre_update_lr(i, full.LEARNING_RATE) == full._learning_rate(i)
 
 
 def test_freezing_recipe_does_not_share_nested_mutable_input():
