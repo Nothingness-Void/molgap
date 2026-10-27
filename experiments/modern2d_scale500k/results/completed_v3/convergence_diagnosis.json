@@ -1,0 +1,79 @@
+{
+  "arms": {
+    "esa_count_500k": {
+      "estimated_one_additional_500k_pass_seconds": 525.337655197414,
+      "estimation_limit": "Recent training/development/checkpoint cadence only; not a measured new run or raw kernel throughput",
+      "final_dev_mae_eV": 0.13765420019626617,
+      "final_lr": 1e-06,
+      "final_online_train_rescaled_eV": 0.09283303904727476,
+      "interval_steps": 781,
+      "median_last_five_interval_wall_seconds": 105.0406320300001,
+      "observations": 60,
+      "observed_physical_passes": 11.996927803379416,
+      "peak_lr": 0.0003,
+      "sample_presentations": 5998080,
+      "source_trace": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\esa_count_500k\\canonical_trace.json",
+      "source_trace_sha256": "ce26da8ed0a66b353c2194a39551f9f682ae77c749b12800598de4fa55d4a56b",
+      "tail": {
+        "additional_presentations": 499840,
+        "best_so_far_gain_eV": 2.3245811462402344e-05,
+        "end_dev_mae_eV": 0.13765420019626617,
+        "endpoint_gain_eV": 2.3245811462402344e-05,
+        "evaluation_intervals": 5,
+        "last_five_observation_dev_range_eV": 0.0001226663589477539,
+        "last_interval_dev_gain_eV": 2.3692846298217773e-05,
+        "online_train_end_rescaled_eV": 0.09283303904727476,
+        "online_train_gain_rescaled_eV": 0.004143498917123664,
+        "online_train_start_rescaled_eV": 0.09697653796439842,
+        "start_dev_mae_eV": 0.13767744600772858
+      },
+      "tail_start_lr": 6.8428603692076254e-06,
+      "total_optimizer_steps": 46860
+    },
+    "ppgt_mean_500k": {
+      "estimated_one_additional_500k_pass_seconds": 3754.9045406967066,
+      "estimation_limit": "Recent training/development/checkpoint cadence only; not a measured new run or raw kernel throughput",
+      "final_dev_mae_eV": 0.17147062718868256,
+      "final_lr": 1e-06,
+      "final_online_train_rescaled_eV": 0.16204614374998969,
+      "interval_steps": 781,
+      "median_last_five_interval_wall_seconds": 750.7886447219989,
+      "observations": 20,
+      "observed_physical_passes": 3.9989759344598053,
+      "peak_lr": 0.001,
+      "sample_presentations": 1999360,
+      "source_trace": "E:\\MolGap\\artifacts\\retained\\modern2d-scale500k-k2-s42-r3-v3\\experiment\\ppgt_mean_500k\\canonical_trace.json",
+      "source_trace_sha256": "c5666abb17d2214df0050b4b52510e3009f0157d85c3bfcbcc797b98734971d5",
+      "tail": {
+        "additional_presentations": 499840,
+        "best_so_far_gain_eV": 0.010026201605796814,
+        "end_dev_mae_eV": 0.17147062718868256,
+        "endpoint_gain_eV": 0.010026201605796814,
+        "evaluation_intervals": 5,
+        "last_five_observation_dev_range_eV": 0.0057883113622665405,
+        "last_interval_dev_gain_eV": 0.0003744363784790039,
+        "online_train_end_rescaled_eV": 0.16204614374998969,
+        "online_train_gain_rescaled_eV": 0.017403903455341763,
+        "online_train_start_rescaled_eV": 0.17945004720533145,
+        "start_dev_mae_eV": 0.18149682879447937
+      },
+      "tail_start_lr": 0.00022299266860670885,
+      "total_optimizer_steps": 15620
+    }
+  },
+  "conclusions": {
+    "allocation": "No continuation or successor released",
+    "esa": "Near plateau under the tested6M-presentation recipe; extra low-LR exposure has very low observed marginal return",
+    "learning_rate_confound": "Both schedules end at1e-6; tail shape does not separate low-LR saturation from architecture/generalization limits",
+    "ppgt": "Still improving at2M presentations; no intrinsic convergence ceiling shown, but expensive to extend"
+  },
+  "input_scope": "Accepted saved traces and frozen recipes only",
+  "limits": [
+    "Online train windows and fixed-weight development metrics differ even after conversion to eV",
+    "Different family learning rates and exposure budgets preclude causal head-to-head ranking",
+    "No future score extrapolation, matched incumbent claim or new scientific qualification"
+  ],
+  "model_inference_executed": false,
+  "new_submission_executed": false,
+  "training_executed": false
+}
