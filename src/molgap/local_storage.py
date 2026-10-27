@@ -413,20 +413,171 @@ def clean_local_storage(profile, repo_root, *, candidates=(), execute=False):
     return report
 
 
+_REPORT_ROOTS = ("retrieved", "reconciliation", "acceptance", "recovery",
+                 "research", "runs", "diagnostics")
+_MIN_DUPLICATE_BYTES = 1 << 20
+_NATIVE_PROOF_COPIES = frozenset({"repeat-a.pt", "repeat-b.pt", "resumed.pt",
+                                  "resumed-first.pt", "fill-enabled.pt"})
+
+
+def _category(name):
+    lower = name.lower()
+    if lower == "last_checkpoint.pt":
+        return "resume_state"
+    if lower in _NATIVE_PROOF_COPIES:
+        return "native_proof_copy"
+    if lower.endswith(".pt") and ("selected" in lower or "best" in lower):
+        return "selected_model"
+    if "prediction" in lower:
+        return "predictions"
+    if "trace" in lower and lower.endswith(".json"):
+        return "trace"
+    return "other"
+
+
+def _walk_files(root):
+    """Regular files only; links and reparse points are never followed."""
+    pending = [root]
+    while pending:
+        with os.scandir(pending.pop()) as entries:
+            for entry in entries:
+                # DirEntry.stat() leaves st_ino/st_dev zero on Windows, which would
+                # make every file look like a hardlink alias of every other.
+                info = os.lstat(entry.path)
+                if entry.is_symlink() or getattr(info, "st_file_attributes", 0) & 0x400:
+                    continue
+                if entry.name.endswith(".dedupe-tmp"):
+                    continue
+                if stat.S_ISDIR(info.st_mode):
+                    pending.append(entry.path)
+                elif stat.S_ISREG(info.st_mode):
+                    yield Path(entry.path), info
+
+
+def storage_report(profile, repo_root):
+    """Read-only bytes per run by file-name category, plus exact-SHA duplicates.
+
+    Categories come from file names and only describe the data; they decide
+    nothing. Hardlink aliases count once. Only files of equal size are hashed.
+    """
+    from datetime import datetime
+    from .training_reproducibility import sha256_file
+    paths = profile if type(profile) is MachinePaths else MachinePaths.from_file(profile)
+    paths.outside_checkout(repo_root)
+    runs, by_size = {}, {}
+    for top in _REPORT_ROOTS:
+        base = paths.artifact_root / top
+        _safe_local(base)
+        if not base.is_dir():
+            continue
+        for path, info in _walk_files(base):
+            parts = path.relative_to(base).parts
+            row = runs.setdefault(f"{top}/{parts[0] if len(parts) > 1 else ''}",
+                {"bytes": 0, "files": 0, "newest_mtime": 0, "by_category": {}})
+            row["bytes"] += info.st_size
+            row["files"] += 1
+            row["newest_mtime"] = max(row["newest_mtime"], info.st_mtime)
+            category = _category(path.name)
+            row["by_category"][category] = row["by_category"].get(category, 0) + info.st_size
+            if info.st_size >= _MIN_DUPLICATE_BYTES:
+                by_size.setdefault(info.st_size, {}).setdefault((info.st_dev, info.st_ino), path)
+    groups = []
+    for size, aliases in by_size.items():
+        if len(aliases) < 2:
+            continue
+        digests = {}
+        for path in aliases.values():
+            digests.setdefault(sha256_file(path), []).append(str(path))
+        groups.extend({"sha256": digest, "bytes": size, "copies": len(copies),
+                       "duplicate_bytes": size * (len(copies) - 1), "paths": sorted(copies)}
+                      for digest, copies in digests.items() if len(copies) > 1)
+    groups.sort(key=lambda group: group["duplicate_bytes"], reverse=True)
+    rows = [{"run": name, "bytes": row["bytes"], "files": row["files"],
+             "newest": datetime.fromtimestamp(row["newest_mtime"]).date().isoformat(),
+             "by_category": dict(sorted(row["by_category"].items()))}
+            for name, row in sorted(runs.items(), key=lambda item: item[1]["bytes"], reverse=True)]
+    return {"status": "REPORT", "executed": False,
+            "byte_basis": "logical_regular_files; hardlink aliases count once in duplicates",
+            "total_bytes": sum(row["bytes"] for row in rows), "runs": rows,
+            "duplicate_bytes": sum(group["duplicate_bytes"] for group in groups),
+            "duplicate_groups": groups}
+
+
+def dedupe_artifacts(profile, repo_root, *, execute=False):
+    """Replace byte-identical large copies under artifact_root with hardlinks.
+
+    Every path stays valid and no information is lost; only redundant bytes go.
+    Both files are rehashed immediately before a link is swapped in, and a link
+    is created under a temporary name so the original is replaced atomically.
+    Dry-run by default. Copies on another volume are reported and skipped.
+    """
+    from .training_reproducibility import sha256_file
+    report = storage_report(profile, repo_root)
+    # A resumable run may atomically replace last_checkpoint.pt between the rehash
+    # and the swap below, so resume states are never linked.
+    groups = []
+    for group in report["duplicate_groups"]:
+        paths = [p for p in group["paths"] if _category(Path(p).name) != "resume_state"]
+        if len(paths) > 1:
+            groups.append({**group, "paths": paths, "copies": len(paths),
+                           "duplicate_bytes": group["bytes"] * (len(paths) - 1)})
+    result = {"status": "DRY_RUN", "executed": False, "linked": [], "skipped": [],
+              "reclaimable_bytes": sum(group["duplicate_bytes"] for group in groups), "groups": len(groups)}
+    if not execute:
+        result["duplicate_groups"] = groups
+        return result
+    for group in groups:
+        keeper, *others = (Path(p) for p in group["paths"])
+        for other in others:
+            try:
+                _safe_local(keeper)
+                _safe_local(other)
+                if (keeper.stat().st_dev != other.stat().st_dev or keeper.stat().st_size != group["bytes"]
+                        or other.stat().st_size != group["bytes"]
+                        or sha256_file(keeper) != group["sha256"] or sha256_file(other) != group["sha256"]):
+                    result["skipped"].append(str(other))
+                    continue
+                staged = other.with_name(other.name + ".dedupe-tmp")
+                os.link(keeper, staged)
+                os.replace(staged, other)
+                result["linked"].append(str(other))
+            except (OSError, ValueError) as exc:
+                other.with_name(other.name + ".dedupe-tmp").unlink(missing_ok=True)
+                result.update(status="STOPPED", reason=f"{type(exc).__name__}: {exc}")
+                return result
+    result.update(status="DEDUPED", executed=True)
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument("--profile", required=True, type=Path)
     parser.add_argument("--repo-root", required=True, type=Path)
     parser.add_argument("--candidate", action="append", default=[], type=Path)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--report", action="store_true",
+                        help="Read-only bytes per run and exact-SHA duplicate groups")
+    parser.add_argument("--dedupe", action="store_true",
+                        help="Hardlink byte-identical large copies under artifact_root; dry-run unless --execute")
     args = parser.parse_args(argv)
     try:
-        report = clean_local_storage(args.profile, args.repo_root,
-                                     candidates=args.candidate, execute=args.execute)
+        if args.report and args.dedupe:
+            raise ValueError("Choose --report or --dedupe")
+        if args.dedupe:
+            if args.candidate:
+                raise ValueError("--dedupe takes no candidates")
+            report = dedupe_artifacts(args.profile, args.repo_root, execute=args.execute)
+        elif args.report:
+            if args.candidate or args.execute:
+                raise ValueError("--report is read-only and takes no candidates")
+            report = storage_report(args.profile, args.repo_root)
+        else:
+            report = clean_local_storage(args.profile, args.repo_root,
+                                         candidates=args.candidate, execute=args.execute)
     except (OSError, ValueError) as exc:
         report = {"status": "BLOCKED", "executed": False, "reason": str(exc)}
     print(json.dumps(report, sort_keys=True))
-    return 0 if report["status"] in {"DRY_RUN", "REMOVED"} else 1
+    return 0 if report["status"] in {"DRY_RUN", "REMOVED", "REPORT", "DEDUPED"} else 1
 
 
 if __name__ == "__main__":

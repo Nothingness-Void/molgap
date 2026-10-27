@@ -258,6 +258,56 @@ def test_cli_profile_dry_run_and_discovery_bound(tmp_path, capsys):
     assert json.loads(capsys.readouterr().out)["status"] == "BLOCKED" and target.exists()
 
 
+def test_storage_report_is_read_only_and_counts_exact_duplicates_once(tmp_path, capsys):
+    paths = profile(tmp_path)
+    block = b"p" * (1 << 20)
+    for arm in ("bond_local", "pair_update_norm"):
+        directory = paths.artifact_root / "retrieved/run-1/v1" / arm
+        directory.mkdir(parents=True)
+        (directory / "repeat-a.pt").write_bytes(block)
+    unique = paths.artifact_root / "retrieved/run-1/v1/bond_local/selected_model.pt"
+    unique.write_bytes(block + b"unique")
+    alias = paths.artifact_root / "acceptance/run-1/repeat-a.pt"
+    alias.parent.mkdir(parents=True)
+    os.link(paths.artifact_root / "retrieved/run-1/v1/bond_local/repeat-a.pt", alias)
+    profile_path = tmp_path / "profile.json"
+    profile_path.write_text(json.dumps({"format": "molgap-machine-paths-v1", **{
+        key: str(getattr(paths, key)) for key in ("python", "data_root", "artifact_root", "scratch_root")}}))
+    before = sorted(p.relative_to(tmp_path).as_posix() for p in paths.artifact_root.rglob("*"))
+    assert main(["--profile", str(profile_path), "--repo-root", str(tmp_path / "code"), "--report"]) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert before == sorted(p.relative_to(tmp_path).as_posix() for p in paths.artifact_root.rglob("*"))
+    assert report["status"] == "REPORT" and not report["executed"]
+    (group,) = report["duplicate_groups"]
+    assert group["copies"] == 2 and group["duplicate_bytes"] == len(block)
+    run = next(row for row in report["runs"] if row["run"] == "retrieved/run-1")
+    assert run["by_category"] == {"native_proof_copy": 2 * len(block), "selected_model": len(block) + 6}
+    assert main(["--profile", str(profile_path), "--repo-root", str(tmp_path / "code"),
+                 "--report", "--execute"]) == 1
+    capsys.readouterr()
+    # Dedupe is dry-run first, then swaps copies for hardlinks without losing any path.
+    resumable = [paths.artifact_root / "retrieved/run-1/v1" / arm / "last_checkpoint.pt"
+                 for arm in ("bond_local", "pair_update_norm")]
+    for path in resumable:  # Resume states may be replaced by a running job: never linked.
+        path.write_bytes(b"r" * (1 << 20) + b"state")
+    dry = [str(p) for p in ("--profile", profile_path, "--repo-root", tmp_path / "code", "--dedupe")]
+    assert main(dry) == 0
+    preview = json.loads(capsys.readouterr().out)
+    assert preview["status"] == "DRY_RUN" and preview["reclaimable_bytes"] == len(block)
+    twins = [paths.artifact_root / "retrieved/run-1/v1" / arm / "repeat-a.pt"
+             for arm in ("bond_local", "pair_update_norm")]
+    assert twins[0].stat().st_ino != twins[1].stat().st_ino
+    assert main([*dry, "--execute"]) == 0
+    done = json.loads(capsys.readouterr().out)
+    assert done["status"] == "DEDUPED" and len(done["linked"]) == 1
+    assert twins[0].stat().st_ino == twins[1].stat().st_ino
+    assert resumable[0].stat().st_ino != resumable[1].stat().st_ino
+    assert all(p.read_bytes() == block for p in twins) and unique.read_bytes() == block + b"unique"
+    assert not list(paths.artifact_root.rglob("*.dedupe-tmp"))
+    assert main([*dry, "--execute"]) == 0
+    assert json.loads(capsys.readouterr().out)["linked"] == []
+
+
 # Reuse the source-only package fixture; no scientific payload or remote work.
 from test_experiment_package import repo, package
 from test_experiment_spec import payload

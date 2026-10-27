@@ -33,6 +33,23 @@ opening payloads. To remove a reported `DISPOSABLE_RETIRED_CACHE`, add its exact
 only the generated files in an atomically retired `.incomplete-*` cache directory.
 An ineligible selection blocks the batch before deletion begins.
 
+Add `--report` instead for a read-only measurement of `artifact_root`: bytes per
+run directory by file-name category (resume state, native-proof copies, selected
+model, predictions, trace, other) and groups of byte-identical large files. It
+never deletes and takes no candidates. Categories describe data; they do not
+authorize removal, and a duplicate is not proof that either copy is unneeded.
+`--dedupe` (dry-run; add `--execute`) replaces byte-identical large copies on the
+same volume with hardlinks. Every path stays valid and nothing is deleted. Each
+pair is rehashed immediately before the swap, and the link is created under a
+temporary name so the original is replaced atomically. `last_checkpoint.pt` resume
+states are never linked, because a running job may replace them during the swap.
+A hardlink alias is not an independent backup, so this does not change what counts
+as durable custody. The repository's writers replace files atomically and so break
+a link; an in-place writer such as `shutil.copy2` onto an existing linked path
+would change both names. A crashed swap leaves a `*.dedupe-tmp` file that blocks
+the next run until it is deleted. Run `--dedupe --execute` only while no job writes
+under `artifact_root`.
+
 Normal invocation scratch still cleans itself on exit. Scratch of unknown
 ownership, package locks/staging directories and complete caches remain report-only;
 age alone is not proof that they are unused.
