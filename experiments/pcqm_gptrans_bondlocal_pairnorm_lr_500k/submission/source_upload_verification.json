@@ -1,0 +1,77 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nothingnessvoid/gptrans-pairnorm-lr-500k-src",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "9d585ed11a14e6a1de9520c0e6920d8627dde23a47eb7f619c9da17f6855f118",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "c37ec44b3d4f6c9773f2ac1411633fe3bbb82e9bba73df19916b2cbf8cb82d26",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "42475fd8777ea74c48cc8f9bab06f51ba461f823ecef2fcb8195977493230308",
+      "bytes": 48361
+    },
+    {
+      "path": "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/acceptance_plan.json",
+      "sha256": "04eb93fe49f6ce34991b05b473ebcd4a468fd075f479aa4a09580f94b915eb3d",
+      "bytes": 1758
+    },
+    {
+      "path": "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr1e3/recipe.json",
+      "sha256": "e0391c7b6317ca24801fd68708da13df513833c22a667b7ee9bec6869473f2d7",
+      "bytes": 1745
+    },
+    {
+      "path": "acceptance/experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/pairnorm_lr5e4/recipe.json",
+      "sha256": "4d89c419627d28ea818dba684fe975bd77003e0bb7a01437aba172458c5d107d",
+      "bytes": 1746
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_initialization_forward_500k/target_manifest.json",
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80",
+      "bytes": 311
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "a854bf478bab8e7aa30a0be6e022d958b054359c96f359bfe577f67487757616",
+      "bytes": 1755
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd",
+      "bytes": 5934
+    },
+    {
+      "path": "initial_states/pairnorm_lr1e3.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "bytes": 23606979
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "e1fdf3a52e3c7bc9d2fab6599e9007c914e8967d9d9349bb0369b9b5df23976e",
+      "bytes": 13247
+    },
+    {
+      "path": "prospective/pairnorm_lr1e3/trajectory.json",
+      "sha256": "8daad002fef36842b70a6245ad9a59f1017f6d2aaa8a2be504e6dbaee809c2ab",
+      "bytes": 5364
+    },
+    {
+      "path": "prospective/pairnorm_lr5e4/trajectory.json",
+      "sha256": "b4f55aa591eeb91f3f9541416c68273ab84f3d82b93bc2aeb4cdc247a9b27cfd",
+      "bytes": 5364
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+      "bytes": 918766
+    }
+  ]
+}

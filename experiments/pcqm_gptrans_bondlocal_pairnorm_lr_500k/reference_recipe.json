@@ -1,0 +1,68 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "gptrans_t",
+  "mode": "degree_bond_local_pair_update_norm_ema999",
+  "seed": 42,
+  "initialization_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
+  "dataset": {
+    "manifest": "pcqm_fixed_500k_v1/manifest.json",
+    "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "development": true
+  },
+  "train_rows": 500000,
+  "development_rows": 50000,
+  "optimizer_steps": 234360,
+  "learning_rate": 0.001,
+  "weight_decay": 0.05,
+  "schedule": {
+    "kind": "warmup_cosine_epoch",
+    "total_units": 60,
+    "minimum_lr": 1e-06,
+    "warmup_units": 4,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-ema",
+  "sampler": "torch-pass-randperm",
+  "checkpoint_every": 128,
+  "target_mean_eV": 5.413434769952119,
+  "target_std_eV": 1.176728647311213,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.11.0",
+  "resume_chunks": true,
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "gptrans_t",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "foreach-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.11.0"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080,
+    "completed_passes": 60,
+    "next_batch": 0,
+    "development_rows": 50000,
+    "source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+    "target_sha256": "5a8ef02a608f73dad257269d253d5c507b4e3aa480ce4c452b79e4384095b9a2",
+    "precision": "fp32"
+  },
+  "train_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+  "development_role_identity": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+  "logging": {
+    "mode": "epoch",
+    "interval": null
+  },
+  "resume_keep_count": 2
+}

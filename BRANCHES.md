@@ -12,6 +12,14 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+GPTrans BondLocal plus PairNorm500K learning-rate pair is terminally accepted
+without adoption. Full owner history through `baedffc211490b1d0e805891c04a5628317908b9`
+is reachable from pushed archive `5565121bc2e63acb5eda6b98e6104600cd161ba7`.
+Both arms have complete strict replay; the lower-rate candidate is negative.
+Desktop retains canonical records and configuration without experimental model
+or catalog implementation. [Custody](experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_custody.md)
+owns artifact locations and source restoration.
+
 K1 retained initialization/forward500K is terminally accepted without adoption.
 Full owner history through `c04ca076` is reachable from pushed archive
 `d01eac748c602aa97764021092ee3cb9096cbd5a`. Desktop retains the

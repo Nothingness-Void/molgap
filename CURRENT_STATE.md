@@ -90,6 +90,14 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+GPTrans BondLocal plus PairNorm500K learning-rate pair, Kaggle1
+`141037251`/v1, is terminally accepted. Both60-pass arms have complete strict
+replay without exclusions. The `1e-3` reference reaches0.099987378eV; the
+`5e-4` candidate is0.515189meV worse and negative under its frozen gate.
+[Decision and attribution](experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/attribution.md)
+own the late-curve findings and the limit on attributing PairNorm itself.
+No model adoption, retry, full training or protected-role use follows.
+
 Kaggle1 equal-content K1 hop-shell100K kernel140519502/version1 is terminally
 accepted with both40-pass arms strictly replay-ready and no exclusions.
 Mixed is CLOSED; ordered is NEGATIVE_UNDER_CONTRACT, with1.116meV numerical gain
@@ -123,7 +131,9 @@ GPTrans BondLocal plus pair-update-normalization100K is terminally accepted and
 passes its frozen nomination gate. Both arms have complete strict replay with
 no exclusions. [Decision and attribution](experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/attribution.md)
 own the conditional signal and late-curve behavior. Keep this unadopted candidate
-on its owner ref;500K transfer remains untested. No new training is released.
+on its owner ref. The combined model has been trained at500K, but the separate
+effect of PairNorm versus a qualified500K BondLocal reference remains untested.
+No new training is released.
 
 New user-authorized K1 normalization-mechanism work belongs to
 `codex/exp/k1-norm-mechanisms-100k`; resolve its checkout through BRANCHES.

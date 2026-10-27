@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "3f044fd5d8197a0fc0fb5a51e3eb4324e988e74b036f0ba555270cea32f2da8f",
+  "source_digest": "5eb9bb9d6d1e93493c163b215a5acdfdeb199837889d483867daa99885c17f5c",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -49,6 +49,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/runs/pcqm-gptrans-pairnorm-lr-500k-s42/prospective/pairnorm_lr1e3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/decision.md",
+      "family_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/runs/pcqm-gptrans-pairnorm-lr-500k-s42/prospective/pairnorm_lr5e4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4"
     },
     {
       "completeness_status": "complete",

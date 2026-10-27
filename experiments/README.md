@@ -35,6 +35,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does halving the GPTrans BondLocal plus PairNorm learning rate improve500K? | Two60-pass arms strict replay-ready; lower rate worse0.515meV, negative; full history archived, no adoption | [Qualification and attribution](pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/qualification.md) |
 | Does graph-wise message DropPath improve K1 at100K? | Two40pass arms strict replay-ready; candidate worse2.373meV, negative; full history archived, no adoption | [Qualification and attribution](pcqm_k1_message_droppath_100k/qualification.md) |
 | Does fresh pair-update normalization improve BondLocal at100K? | Two60pass arms strict replay-ready;3.143meV gain passes the frozen gate; unadopted positive nomination, no500K/full release | [Qualification and attribution](pcqm_gptrans_bondlocal_pairnorm_100k/qualification.md) |
 | Does retained pretraining initialization improve matched K1 500K single/mean2 recipes? | Four30pass arms strict replay-ready; pretrained endpoints worse0.924/1.916meV, both negative; complete history archived, no adoption | [Decision and attribution](pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md) |

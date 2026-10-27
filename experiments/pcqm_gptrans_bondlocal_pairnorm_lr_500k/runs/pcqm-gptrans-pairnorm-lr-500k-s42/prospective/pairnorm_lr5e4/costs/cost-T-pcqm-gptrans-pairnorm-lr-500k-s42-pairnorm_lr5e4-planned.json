@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-pairnorm-lr-500k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/generated/68756a96f1b29444e610ba40b14dd6f7006cae9b127a06e36f2a598147af6044/authority.json",
+  "hardware": "Tesla T4 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 23.1
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 11.56
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr5e4:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4"
+}

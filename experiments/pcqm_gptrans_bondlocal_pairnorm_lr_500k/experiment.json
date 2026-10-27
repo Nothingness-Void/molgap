@@ -1,0 +1,124 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_bondlocal_pairnorm_lr_500k",
+  "logical_run_id": "pcqm-gptrans-pairnorm-lr-500k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/STATUS.md"
+  ],
+  "timestamp": "2026-10-27T03:58:32.575123+09:00",
+  "question": {
+    "policy_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+    "action": "RUN_PAIRNORM_LR_500K",
+    "question": "At fixed500K does halving learning rate improve the accepted BondLocal plus pair-update-normalization model under its 60-pass recipe?",
+    "deficiency": "The 100K combined model and historical 500K BondLocal select passes40 and45 and drift later; cause and combined-model 500K transfer are not established.",
+    "changed_mechanism": "peak-learning-rate",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Late selection noise or EMA effects",
+      "Lower rate slows optimization or does not improve development",
+      "Single-seed training variation"
+    ],
+    "closed_families": [
+      "gptrans-pair-norm-500k",
+      "gptrans-noisy-pair-norm-500k"
+    ],
+    "positive_decision": "Nominate lower-rate variant only if frozen 3 meV and paired interval gates pass; historical BondLocal comparison remains contextual.",
+    "negative_decision": "Close the lower-rate variant under contract or retain incomplete evidence; no automatic adoption or retry.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4 FP32",
+    "cheapest_falsifier": "One same-job GPTrans PairNorm500K pair with only peak LR changed and aligned development predictions.",
+    "estimated_device_hours": 23.1,
+    "estimated_wall_hours": 11.56
+  },
+  "authority": {
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "pairnorm_lr1e3",
+      "pairnorm_lr5e4"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "pairnorm_lr1e3",
+    "allocated_t4_hours_ceiling": 23.8333333334,
+    "user_notebook_wall_ceiling_seconds": 43200,
+    "allocation_wall_limit_seconds": 42900,
+    "cleanup_reserve_seconds": 180,
+    "authority": "User requested Kaggle1 two-arm 500K submission on 2026-10-27; no full, protected roles or automatic successor.",
+    "scope": "Two 500K PairNorm optimizer variants only, selected train/development, no retry or promotion."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+      "title": "MolGap GPTrans PairNorm LR 500K",
+      "datasets": [
+        "nothingnessvoid/gptrans-pairnorm-lr-500k-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/gptrans-pairnorm-lr-500k-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 42900,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "role_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/decision.md",
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/reference_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/data_declaration.json",
+      "arm_id": "gptrans_local"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "pairnorm_lr1e3"
+    },
+    {
+      "arm_id": "pairnorm_lr5e4",
+      "training": {
+        "learning_rate": 0.0005
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "pairnorm_lr1e3",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
+}
