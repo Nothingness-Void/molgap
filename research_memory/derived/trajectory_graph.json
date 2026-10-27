@@ -491,6 +491,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-gptrans-pairnorm-fusion-500k-20261027:A001",
+      "target": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-hop-fusion-qualification-100k:A001",
       "target": "experiments/pcqm_k1_hop_fusion_qualification/inputs.json",
       "type": "action_produced_evidence"
@@ -2382,6 +2387,11 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "TB-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-saved-bn-rows-20261008",
       "type": "prior_evidence"
     },
@@ -3644,6 +3654,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-hop-shell-frozen-100k-20261024",
       "type": "evidence"
     },
@@ -4173,6 +4187,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-gptrans-pairnorm-fusion-500k-20261027",
       "type": "trajectory"
     },
     {

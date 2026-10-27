@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "audit",
+  "cost_event_id": "cost-k1-gptrans-pairnorm-fusion-observed",
+  "evidence_ref": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/acceptance.json",
+  "hardware": "CPU; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.0005946180555555556
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.0002083820833331629
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-gptrans-pairnorm-fusion-20261027",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-gptrans-pairnorm-fusion-500k-20261027"
+}

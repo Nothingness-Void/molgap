@@ -1,0 +1,85 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/protocol.md",
+      "name": "protocol.md",
+      "sha256": "02115621101d4ca1bb1d52ecaf150b9f0ce038c9d82346f263534feee46f99c1"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/decision.md",
+      "name": "decision.md",
+      "sha256": "02b36bdf1db71c91160ec7cad219a6c087412f5887362eb37eeda423b3dd17ff"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/attribution.md",
+      "name": "attribution.md",
+      "sha256": "125b21e67cd0bbb029bc8e9f45bd336b32c7d84b19b66605d67116b0c5803f51"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analysis.json",
+      "name": "analysis.json",
+      "sha256": "2e523cdbabb262d55a6e0fae0a585ac3a313faeec34e9b7a75533e77aa415971"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "62c8863b5813f756c565da9f846ac74d0145de5d09236cc9e19c2e70d92ba08c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analyze.py",
+      "name": "analyze.py",
+      "sha256": "21cdf542794e515072ad857e6b814af2e495bd95d77a10a3ee96b49e70be85a8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/protocol.md",
+      "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/decision.md",
+      "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/attribution.md",
+      "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/acceptance.json",
+      "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-gptrans-pairnorm-fusion-500k-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-27",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "CPU saved-prediction diagnostic"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analysis.json",
+    "inference_executed": false,
+    "training_executed": false,
+    "training_replay_ready": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "cpu_diagnostic_complete",
+    "comparison_status": "consumed_role_posthoc_description",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "internal_development_retained_predictions": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-k1-gptrans-pairnorm-fusion-500k",
+  "track": "B"
+}

@@ -1,0 +1,46 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/acceptance.json": "62c8863b5813f756c565da9f846ac74d0145de5d09236cc9e19c2e70d92ba08c",
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analysis.json": "2e523cdbabb262d55a6e0fae0a585ac3a313faeec34e9b7a75533e77aa415971",
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/analyze.py": "21cdf542794e515072ad857e6b814af2e495bd95d77a10a3ee96b49e70be85a8",
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/attribution.md": "125b21e67cd0bbb029bc8e9f45bd336b32c7d84b19b66605d67116b0c5803f51",
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/decision.md": "02b36bdf1db71c91160ec7cad219a6c087412f5887362eb37eeda423b3dd17ff",
+    "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/protocol.md": "02115621101d4ca1bb1d52ecaf150b9f0ce038c9d82346f263534feee46f99c1"
+  },
+  "finalized_at": "2026-10-27T06:41:07.404561+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-k1-gptrans-pairnorm-fusion-observed.json",
+        "sha256": "38ed6c49472d643f90c3ed0f1db3771f0a8bc0d5cc80e859ee58123c65a1d58a"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "6a83f01a1d368e36f9b58829892953d67f6685a206dfd2937ab0d9798832ad14"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "2675fd1f3a6d2b18f4410ff34e339a03249f7c1c828c73e7665dd77e68c37ba0"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-k1-gptrans-fusion-labels_read.json",
+        "sha256": "d7fca1a7d85760d25b92ebb032a04031f353510104e32aa8617160f807898979"
+      },
+      {
+        "ref": "roles/role-k1-gptrans-fusion-metric_computed.json",
+        "sha256": "6edb92892da98444ec18c877c89c1faea395939fea2b39a5b76cbcc9492a82ad"
+      }
+    ]
+  },
+  "run_id": "local-k1-gptrans-pairnorm-fusion-20261027",
+  "trajectory_id": "TB-k1-gptrans-pairnorm-fusion-500k-20261027"
+}

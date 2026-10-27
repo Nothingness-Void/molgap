@@ -1,0 +1,69 @@
+{
+  "schema": "molgap-fixed-prediction-fusion-analysis-v1",
+  "role": "selection-used internal development",
+  "rows": 50000,
+  "inputs": {
+    "k1": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_500k_bn_calibration\\results\\calibrated.pt",
+      "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a"
+    },
+    "gptrans_1e3": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\development_predictions.pt",
+      "sha256": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2"
+    },
+    "gptrans_5e4": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr5e4\\development_predictions.pt",
+      "sha256": "bbb4d17c985bfd59634e98901170cefc377f69b245d3b64383eca364d8872873"
+    }
+  },
+  "mae_eV": {
+    "k1": 0.10365894827842713,
+    "gptrans_1e3": 0.09998737781524658,
+    "gptrans_5e4": 0.10050256658554077,
+    "k1_gptrans_1e3_equal": 0.09758017794132233,
+    "k1_gptrans_5e4_equal": 0.0977475392627716,
+    "gptrans_pair_equal": 0.09752486560821533,
+    "three_equal": 0.09630135476589202,
+    "oracle_k1_gptrans_1e3": 0.07818338795661926,
+    "oracle_three": 0.06941832352638244
+  },
+  "paired_row_bootstrap": {
+    "k1_gptrans_1e3_equal_minus_gptrans_1e3": {
+      "delta": -0.0024071998739242555,
+      "ci95": [
+        -0.0027419886336922644,
+        -0.002077119376242161
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 20261027
+    },
+    "k1_gptrans_1e3_equal_minus_gptrans_pair_equal": {
+      "delta": 5.5312333106994626e-05,
+      "ci95": [
+        -0.00026591910517215726,
+        0.0003868120037913322
+      ],
+      "probability_better": 0.375,
+      "n_bootstrap": 1000,
+      "seed": 20261027
+    },
+    "three_equal_minus_gptrans_pair_equal": {
+      "delta": -0.0012235108423233043,
+      "ci95": [
+        -0.0014182936105728175,
+        -0.0010299839485883742
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 20261027
+    }
+  },
+  "k1_vs_gptrans1e3_residual_correlation": 0.8602251917423365,
+  "k1_wins_fraction": 0.48068,
+  "oracle_warning": "Uses ground truth per row; not a deployable router or independent score",
+  "training_executed": false,
+  "inference_executed": false,
+  "wall_seconds": 0.7501754999993864,
+  "cpu_seconds": 2.140625
+}
