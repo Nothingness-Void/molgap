@@ -4,6 +4,20 @@ MolGap predicts HOMO/LUMO/Gap (eV) for organic electronic molecules.
 This file owns navigation and operating boundaries, not history or evidence.
 One fact has one authoritative owner: follow pointers rather than copy facts.
 
+## Clear Writing
+
+Apply these Orwell-inspired rules to responses and project documentation:
+
+1. Avoid stale metaphors, stock phrases and jargon.
+2. Prefer short, familiar words.
+3. Cut words that add nothing.
+4. Prefer active voice.
+5. Prefer everyday language to foreign words or technical terms when clear.
+6. Break these rules rather than write something unnatural or unclear.
+
+Lead with the answer. State a limitation once when it affects the decision;
+avoid repetitive disclaimers. Be concise without hiding uncertainty or results.
+
 ## Reuse First
 
 Start with the [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
