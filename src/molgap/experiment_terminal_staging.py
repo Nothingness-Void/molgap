@@ -111,6 +111,76 @@ def _roles(root, audit_ref, context, where, action_id):
     return role_use, events, blockers, audit_ref
 
 
+def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None):
+    """Draft one arm's role audit for a family-session screen from retained artifacts.
+
+    Events are drafted from the frozen Spec data roles and the arm's retained,
+    digest-checked training contract; terminal inspection verifies the run itself.
+    Protected-role states are never derived: they stay ``unknown`` (which blocks
+    closure) unless the human passes them.
+    """
+    states = {role: "unknown" for role in PROTECTED_ROLES}
+    for role, state in (protected_role_use or {}).items():
+        if role not in states or state not in {"untouched", "consumed", "not_applicable", "unknown"}:
+            raise ValueError("Invalid protected-role use: " + str(role) + "=" + str(state))
+        states[role] = state
+    output_dir = Path(output_dir)
+    manifest = _json(output_dir / "output_manifest.json")
+    artifacts = manifest.get("artifacts", {})
+    for name in ("contract", "predictions", "trace"):
+        if name not in artifacts:
+            raise ValueError("Output manifest lacks the " + name + " artifact needed for a role audit")
+        if file_digest(_artifact_path(output_dir, artifacts[name]["path"])) != artifacts[name]["sha256"]:
+            raise ValueError("Retained " + name + " differs from its output manifest digest")
+    if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
+        raise ValueError("Retained training contract differs from the frozen recipe identity")
+    contract = _json(_artifact_path(output_dir, artifacts["contract"]["path"]))
+    roles = {item["role"]: item for item in spec_arm["data"]["roles"]}
+    if set(roles) != {"train", "development"} or not contract["dataset"]["development"]:
+        raise ValueError("Role audit drafting covers only train and development session screens")
+    if not contract["selection"].startswith("best-development"):
+        raise ValueError("Role audit drafting needs development-based selection in the training contract")
+    train, development = roles["train"]["membership_sha256"], roles["development"]["membership_sha256"]
+    dataset = spec_arm["data"]["dataset"]["sha256"]
+    required = contract["acceptance_requirements"]
+    if (contract["dataset"]["manifest_sha256"] != dataset
+            or required.get("source_idx_sha256") != development or "target_sha256" not in required):
+        raise ValueError("Training contract differs from the frozen Spec data roles")
+    prefix = "role-" + context.logical_run_id + "-" + context.arm_id + "-"
+    events = [{"schema": "molgap-role-event-v1", "role_event_id": prefix + role + "-" + kind,
+        "trajectory_id": where["trajectory_id"], "action_id": action_id, "run_id": where["run_id"],
+        "dataset_identity": dataset, "row_manifest_hash": rows, "role_name": role,
+        "access_kind": kind, "selection_used": role == "development", "evidence_ref": evidence_ref}
+        for role, rows, kinds in (("train", train, ("training_membership",)),
+            ("development", development, ("prediction_input", "labels_read", "metric_computed", "selection_used")))
+        for kind in kinds]
+    return {"context": context.to_dict(), "role_use": states, "roles": events}
+
+
+def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
+                          protected_role_use=None):
+    """Write ``roles_<arm>.json`` for every arm of a run; return {arm: repo-relative path}."""
+    from .experiment_run import resolve_run_acceptance_inputs
+    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+                                             retrieved_root=retrieved_root)
+    root, drafted = Path(repo_root).resolve(), {}
+    arms = {arm["arm_id"]: arm for arm in resolved["spec"].to_dict()["arms"]}
+    for arm_id, arm in arms.items():
+        where = resolved["locations"][arm_id]
+        trajectory = _json(repo_local_path(root, where["trajectory"]))
+        actions = [item for item in trajectory["actions"] if where["run_id"] in item["run_ids"]]
+        if len(actions) != 1:
+            raise ValueError("Run must bind exactly one frozen prospective action: " + arm_id)
+        path = repo_local_path(root, Path(output_dir) / ("roles_" + arm_id + ".json"))
+        ref = path.relative_to(root).as_posix()
+        drafted[arm_id] = (path, ref, draft_role_audit(arm, resolved["contexts"][arm_id], where,
+            actions[0]["action_id"], resolved["outputs"][arm_id]["output_dir"], ref, protected_role_use))
+    # Every arm validated first, so one bad arm never leaves a partial set behind.
+    for path, _, audit in drafted.values():
+        publish_immutable_bytes(path, json_bytes(audit))
+    return {arm_id: ref for arm_id, (_, ref, _) in drafted.items()}
+
+
 def _diagnostic_binding(root, resolved, report):
     if report is None:
         return None

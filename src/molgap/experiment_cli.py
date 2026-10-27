@@ -65,6 +65,13 @@ def _parser() -> argparse.ArgumentParser:
     locate.add_argument("--repo-root",required=True,type=_local)
     locate.add_argument("--run-id",required=True)
     locate.add_argument("--attempt-id",required=True)
+    draft=commands.add_parser("draft-role-audit")
+    for flag in ("--profile","--repo-root","--output-dir"):
+        draft.add_argument(flag,required=True,type=_local)
+    draft.add_argument("--run-id",required=True)
+    draft.add_argument("--attempt-id",required=True)
+    draft.add_argument("--retrieved-root",type=_local)
+    draft.add_argument("--protected-role-use",action="append",default=[],metavar="ROLE=STATE")
     diagnose=commands.add_parser("diagnose")
     diagnose.add_argument("--control",type=_local)
     diagnose.add_argument("--candidate",type=_local)
@@ -247,6 +254,11 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "locate-run":
         from .experiment_input import locate_run
         return locate_run(args.profile,args.repo_root,args.run_id,args.attempt_id),0
+    if args.command == "draft-role-audit":
+        from .experiment_terminal_staging import draft_run_role_audits
+        return draft_run_role_audits(args.profile, args.repo_root, args.run_id, args.attempt_id,
+            retrieved_root=args.retrieved_root, output_dir=args.output_dir,
+            protected_role_use=_bindings(args.protected_role_use)), 0
     if args.command == "catalog":
         from dataclasses import asdict
         from .experiment_execution import TRAINING_ADAPTERS

@@ -161,6 +161,9 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
             roles.setdefault("development", {"role": "development", "membership_sha256": "a" * 64,
                 "row_order_sha256": "b" * 64, "usage_sha256": record["development_role_identity"]})
             roles["development"]["usage_sha256"] = record["development_role_identity"]
+            # Real Specs freeze the development membership as the contract's source-index digest.
+            roles["development"]["membership_sha256"] = roles["development"]["row_order_sha256"] = (
+                record["acceptance_requirements"]["source_idx_sha256"])
             arm["data"]["roles"] = [roles["train"], roles["development"]]
             arm_specs.append(arm)
             contracts[arm_id] = (record, canonical_json(record).encode("utf-8"))

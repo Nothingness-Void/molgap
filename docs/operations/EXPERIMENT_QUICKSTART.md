@@ -224,7 +224,9 @@ cannot infer one. For several arms, `--closure-input FILE` carries each arm's
 outcome and decision path (and an optional role audit) in one human-authored file
 instead of repeated flags or hand-written code; see the CLI reference. Where the producer lacks observed role truth, `--role-audit`
 supplies a retained audit or an arm-to-audit-path JSON map. Audits bind the exact
-RunContext and existing role events, not merely the recipe's permissions. Closure
+RunContext and existing role events, not merely the recipe's permissions.
+`draft-role-audit` drafts those files from retained artifacts; protected-role
+states are never derived and stay `unknown` (blocking closure) unless you pass them. Closure
 uses the existing V5/RML validators and reports missing evidence; positive/READY
 claims still require their owning scientific acceptance. The CLI reference owns
 the advanced explicit-location path.

@@ -396,17 +396,21 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             "reference_trajectory_ref": locations[reference_arm]["trajectory"]}
         (case.repo / where["trajectory"]).write_bytes(canonical_json(trajectory).encode())
     _seed_reference_records(case)
-    decisions, audits = {}, {}
-    for arm_id, context in contexts.items():
+    decisions = {}
+    for arm_id in contexts:
         decision = case.repo / (arm_id + "-decision.md")
         decision.write_text("Infrastructure-only terminal disposition.", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
-        audit = case.repo / "audits" / (arm_id + "-roles.json")
-        audit.parent.mkdir(parents=True, exist_ok=True)
-        audit.write_bytes(canonical_json({"context": context.to_dict(), "roles": [],
-            "role_use": {role: "untouched" for role in
-                ("official_validation", "test_dev", "test_challenge")}}).encode())
-        audits[arm_id] = audit.relative_to(case.repo).as_posix()
+    # Draft the role audits from the retained artifacts; protected-role states are human input.
+    capsys.readouterr()
+    assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
+        "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved"), "--output-dir", str(case.repo / "audits"),
+        *[value for role in ("official_validation", "test_dev", "test_challenge")
+          for value in ("--protected-role-use", role + "=untouched")]]) == 0
+    audits = json.loads(capsys.readouterr().out)
+    assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
+    assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
 
     # Acceptance must recover only the metadata frozen by the package and
     # trajectories after those generated checkout files have been lost.

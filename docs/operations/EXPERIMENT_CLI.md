@@ -323,6 +323,15 @@ Incomplete staging returns top-level `STAGED_DRAFT` and a nonzero CLI status.
 `role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown
 role use blocks closure rather than becoming an untouched claim. No script
 promotes a numerical diagnosis to positive scientific acceptance.
+`draft-role-audit --profile $profile --repo-root $repoRoot --run-id $run
+--attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
+`roles_<arm>.json` per arm (repository-local `$dir`) for a train/development
+family-session screen and prints the arm-to-path map that `--role-audit` takes.
+Events are drafted from the frozen Spec data roles and each arm's digest-checked
+training contract; terminal inspection verifies the run itself. A missing or
+mismatched source is an error and no file is written until every arm validates. Protected-role states
+are never derived: they stay `unknown`, which blocks closure, unless you pass
+`--protected-role-use ROLE=STATE` (repeat per role) from observed facts.
 
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot
