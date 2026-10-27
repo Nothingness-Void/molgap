@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 166,
-    "with_complete_native_measurement": 31,
-    "with_cost_event": 155,
+    "trajectories_total": 167,
+    "with_complete_native_measurement": 32,
+    "with_cost_event": 156,
     "with_incomplete_native_measurement": 124,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 98,
+      "count": 99,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -105,6 +105,7 @@
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
+        "TB-pcqm-pairnorm-prediction-router-500k-20261027",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",

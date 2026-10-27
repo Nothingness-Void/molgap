@@ -1,0 +1,50 @@
+{
+  "acceptance_ref": "experiments/pcqm_pairnorm_prediction_router_500k/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_pairnorm_prediction_router_500k/acceptance.json": "37f751aaa4d10503da1e36b2ce8ed76e8da4ea2cafae11a6804bb64eeb97855c",
+    "experiments/pcqm_pairnorm_prediction_router_500k/analysis.json": "bf1b3692345d9c39da81d2491c5395240c291f7a10130661d49422c0b737058d",
+    "experiments/pcqm_pairnorm_prediction_router_500k/analyze.py": "c47b869b60de7babe7ecd11cf805620abe6b152775b4b627c0c1af4937e21a9e",
+    "experiments/pcqm_pairnorm_prediction_router_500k/attribution.md": "68b23b5b8e18f91b22799d3cbf89de88b15834099aa1167c012f0721de4e60f7",
+    "experiments/pcqm_pairnorm_prediction_router_500k/decision.md": "d58ad9f2903737b924d4ac179546283d5c4b1f79673b759b8d2236c4d0989042",
+    "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md": "d4ee78dce677d76fa421bb027edd7a0d78590d72feecb70548c832349b66385d"
+  },
+  "finalized_at": "2026-10-27T07:14:53.370498+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-pcqm-pairnorm-prediction-router-observed.json",
+        "sha256": "ee609bbdbeb9f2be70098f0ae40ee4b7884a06b214d6b65c48c020b39a33a59c"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "0f7ca232169ef5f2a25fbbf7503ecdf254e8ee341756e117624694093e370616"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "2f69430606a82897c16dd2934fae79123416bc28e9e84c4bc20df5b293ca991b"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pairnorm-prediction-router-labels_read.json",
+        "sha256": "47760b7643afb88b5adda4b1003fa9d82a3210455f44818b3be8f3763432d993"
+      },
+      {
+        "ref": "roles/role-pairnorm-prediction-router-metric_computed.json",
+        "sha256": "bd5656e806b5c12c0b4fa2d6afce418bb11683519b0f15edeed1d87b608f2a32"
+      },
+      {
+        "ref": "roles/role-pairnorm-prediction-router-selection_used.json",
+        "sha256": "f7066c588ff6052101bd467d9b47986e919827f01d8a3a0f862ecdb79f5b1cd4"
+      }
+    ]
+  },
+  "run_id": "local-pcqm-pairnorm-prediction-router-20261027",
+  "trajectory_id": "TB-pcqm-pairnorm-prediction-router-500k-20261027"
+}

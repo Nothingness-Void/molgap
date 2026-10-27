@@ -1,0 +1,221 @@
+{
+  "format": "molgap-pairnorm-prediction-router-diagnostic-v1",
+  "rows": 50000,
+  "interpretation": "Five-fold gate OOF on development-selected backbone outputs; not independent model validation",
+  "inputs": {
+    "k1": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_500k_bn_calibration\\results\\calibrated.pt",
+      "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a"
+    },
+    "gptrans_1e3": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\development_predictions.pt",
+      "sha256": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2"
+    },
+    "gptrans_5e4": {
+      "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr5e4\\development_predictions.pt",
+      "sha256": "bbb4d17c985bfd59634e98901170cefc377f69b245d3b64383eca364d8872873"
+    }
+  },
+  "groups": {
+    "pair": {
+      "mae_eV": {
+        "global": 0.09735137754692683,
+        "hard": 0.09998739910602569,
+        "soft": 0.09709743084026307,
+        "fixed": 0.09758017794132233
+      },
+      "oracle_select_between_k1_and_second_mae_eV": 0.07818338795661926,
+      "model_passes": 2,
+      "hard_winner_auc": 0.5203041999776551,
+      "gates": {
+        "hard": {
+          "candidate_minus_global": {
+            "delta": 0.0026360215590988537,
+            "ci95": [
+              0.002377296531937449,
+              0.002918479804294486
+            ],
+            "probability_better": 0.0,
+            "n_bootstrap": 2000,
+            "seed": 20261027
+          },
+          "improving_folds": 0,
+          "nomination_pass": false
+        },
+        "soft": {
+          "candidate_minus_global": {
+            "delta": -0.00025394670666378365,
+            "ci95": [
+              -0.00034950717941734284,
+              -0.00015394789201270606
+            ],
+            "probability_better": 1.0,
+            "n_bootstrap": 2000,
+            "seed": 20261027
+          },
+          "improving_folds": 5,
+          "nomination_pass": false
+        }
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "rows": 10000,
+          "global_weight_k1": 0.37980619108860064,
+          "mae_eV": {
+            "global": 0.09843421011376918,
+            "hard": 0.10126108531951904,
+            "soft": 0.09804484336099135
+          }
+        },
+        {
+          "fold": 1,
+          "rows": 10000,
+          "global_weight_k1": 0.3855220373177645,
+          "mae_eV": {
+            "global": 0.09521136538227107,
+            "hard": 0.09782545325756073,
+            "soft": 0.09507419625021388
+          }
+        },
+        {
+          "fold": 2,
+          "rows": 10000,
+          "global_weight_k1": 0.38411599825059684,
+          "mae_eV": {
+            "global": 0.09896729663909257,
+            "hard": 0.1014945818066597,
+            "soft": 0.09883276311696058
+          }
+        },
+        {
+          "fold": 3,
+          "rows": 10000,
+          "global_weight_k1": 0.374239915332687,
+          "mae_eV": {
+            "global": 0.09706426795652214,
+            "hard": 0.09996416424512863,
+            "soft": 0.0967437598444761
+          }
+        },
+        {
+          "fold": 4,
+          "rows": 10000,
+          "global_weight_k1": 0.39162819825504436,
+          "mae_eV": {
+            "global": 0.09707974764297925,
+            "hard": 0.09939171090126038,
+            "soft": 0.09679159162867339
+          }
+        }
+      ]
+    },
+    "three": {
+      "mae_eV": {
+        "global": 0.09627783038425412,
+        "hard": 0.09752467301845551,
+        "soft": 0.09611788358147251,
+        "fixed": 0.09630135476589201
+      },
+      "oracle_select_between_k1_and_second_mae_eV": 0.07866752796649933,
+      "model_passes": 3,
+      "hard_winner_auc": 0.5316544810179554,
+      "gates": {
+        "hard": {
+          "candidate_minus_global": {
+            "delta": 0.0012468426342013862,
+            "ci95": [
+              0.0010718698658487135,
+              0.0014335510037459987
+            ],
+            "probability_better": 0.0,
+            "n_bootstrap": 2000,
+            "seed": 20261027
+          },
+          "improving_folds": 0,
+          "nomination_pass": false
+        },
+        "soft": {
+          "candidate_minus_global": {
+            "delta": -0.00015994680278163444,
+            "ci95": [
+              -0.0002388124360974393,
+              -8.629581752250172e-05
+            ],
+            "probability_better": 0.9995,
+            "n_bootstrap": 2000,
+            "seed": 20261027
+          },
+          "improving_folds": 5,
+          "nomination_pass": false
+        }
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "rows": 10000,
+          "global_weight_k1": 0.28180295060186095,
+          "mae_eV": {
+            "global": 0.09717111844063733,
+            "hard": 0.09858870950937271,
+            "soft": 0.09701996584283501
+          }
+        },
+        {
+          "fold": 1,
+          "rows": 10000,
+          "global_weight_k1": 0.28644008694717016,
+          "mae_eV": {
+            "global": 0.09436515923805809,
+            "hard": 0.09554237960577011,
+            "soft": 0.09422178624831715
+          }
+        },
+        {
+          "fold": 2,
+          "rows": 10000,
+          "global_weight_k1": 0.2930626841235048,
+          "mae_eV": {
+            "global": 0.09760015885613658,
+            "hard": 0.0988105447769165,
+            "soft": 0.09754656521803722
+          }
+        },
+        {
+          "fold": 3,
+          "rows": 10000,
+          "global_weight_k1": 0.28308810741243173,
+          "mae_eV": {
+            "global": 0.095952377078757,
+            "hard": 0.09733355425596237,
+            "soft": 0.09573324751043459
+          }
+        },
+        {
+          "fold": 4,
+          "rows": 10000,
+          "global_weight_k1": 0.29869016061125836,
+          "mae_eV": {
+            "global": 0.09630033830768156,
+            "hard": 0.09734817694425583,
+            "soft": 0.09606785308773845
+          }
+        }
+      ]
+    }
+  },
+  "retained_oof": {
+    "path": "D:\\molgap-artifacts\\diagnostics\\pcqm-pairnorm-prediction-router-500k-20261027\\gate_oof_predictions.npz",
+    "sha256": "2f38765889eb8f42fef8f2ca3b6e4efcc2223a1bd8de022326070f11efe420b6"
+  },
+  "training_executed": false,
+  "backbone_inference_executed": false,
+  "gate_fit": true,
+  "official_validation_read": false,
+  "test_read": false,
+  "cpu_threads": 4,
+  "wall_seconds": 4.528453599999921,
+  "cpu_seconds": 9.015625,
+  "source_sha256": "c47b869b60de7babe7ecd11cf805620abe6b152775b4b627c0c1af4937e21a9e",
+  "helper_sha256": "6ef56c2fb6971c88548eaa6453567ef29eaf7cc43887d735658e71aa078bcded"
+}

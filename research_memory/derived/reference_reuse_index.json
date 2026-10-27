@@ -3201,6 +3201,28 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_crossfit_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pairnorm-prediction-router-500k-20261027",
+      "role_use": {
+        "common": "untouched",
+        "internal_development_retained_predictions": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "pcqm-pairnorm-prediction-router-500k",
+      "source_envelope": "experiments/pcqm_pairnorm_prediction_router_500k/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "archive_commit_pointer",
         "committed_launch_record"
       ],

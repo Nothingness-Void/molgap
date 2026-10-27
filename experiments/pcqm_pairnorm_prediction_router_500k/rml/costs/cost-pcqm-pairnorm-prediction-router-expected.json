@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "audit",
+  "cost_event_id": "cost-pcqm-pairnorm-prediction-router-expected",
+  "evidence_ref": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+  "hardware": "CPU; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 2.0
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-pcqm-pairnorm-prediction-router-20261027",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-pairnorm-prediction-router-500k-20261027"
+}

@@ -1,0 +1,107 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "attempt-001"
+      ],
+      "cost_event_ids": [
+        "cost-pcqm-pairnorm-prediction-router-expected",
+        "cost-pcqm-pairnorm-prediction-router-observed"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md"
+      ],
+      "run_ids": [
+        "local-pcqm-pairnorm-prediction-router-20261027"
+      ],
+      "source_commit": "50fd36b3bf566f4b31ec9c65ea5fa0da967ac37b",
+      "type": "local_crossfit_prediction_router"
+    }
+  ],
+  "comparison_blockers": [
+    "Model-selection-used development role",
+    "Cross-fit gate is not independent model validation"
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_pairnorm_prediction_router_500k/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "New input features or independent role with separately prospective authorization"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-pairnorm-prediction-router-500k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_pairnorm_prediction_router_500k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_pairnorm_prediction_router_500k/rml_decision_snapshots/8833468386ea6f8b1e557ef4e40233d3071284bec4db8a51ea847a4434e34fb4.json",
+    "snapshot_sha256": "8833468386ea6f8b1e557ef4e40233d3071284bec4db8a51ea847a4434e34fb4",
+    "state_timestamp": "2026-10-27T07:12:57.502725+00:00"
+  },
+  "family_id": "pcqm-pairnorm-prediction-router-500k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "New predictions retain the old gate's limited learnability",
+      "Cross-fitted gain does not transfer beyond repeatedly consumed development"
+    ],
+    "changed_mechanism": "Existing hard and convex soft cross-fitted gates on retained model predictions",
+    "cheapest_falsifier": "Five-fold OOF fixed/global/gate comparison on the pinned 50K role",
+    "decision_changed_if_negative": "Close prediction-only routing for this pair under this diagnostic",
+    "decision_changed_if_positive": "Consider separately authorized independent-role evaluation only",
+    "expected_native_cost_ref": "cost-pcqm-pairnorm-prediction-router-expected",
+    "hypothesis_id": "H-pcqm-pairnorm-prediction-router-500k-20261027",
+    "observed_deficiency": "New K1/PairNorm fixed fusion has a large label-informed oracle gap; old prediction-only gate failed its 1 meV nomination.",
+    "related_closed_family_ids": [
+      "pcqm-prediction-disagreement-expert-routing"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "pcqm-expert-oracle-feasibility-no-train-20260930"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can prediction-only routing beat cross-fitted global fusion for the new PairNorm checkpoints?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [
+      "pcqm-pairnorm-prediction-router-500k-20261027"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_pairnorm_prediction_router_500k/rml/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "pcqm-expert-oracle-feasibility-no-train-20260930"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_pairnorm_prediction_router_500k/roles.json"
+    ],
+    "source_commit": "50fd36b3bf566f4b31ec9c65ea5fa0da967ac37b",
+    "source_config_identity": "d4ee78dce677d76fa421bb027edd7a0d78590d72feecb70548c832349b66385d"
+  },
+  "track": "B",
+  "trajectory_id": "TB-pcqm-pairnorm-prediction-router-500k-20261027"
+}

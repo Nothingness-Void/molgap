@@ -1,0 +1,86 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+      "name": "protocol.md",
+      "sha256": "d4ee78dce677d76fa421bb027edd7a0d78590d72feecb70548c832349b66385d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/decision.md",
+      "name": "decision.md",
+      "sha256": "d58ad9f2903737b924d4ac179546283d5c4b1f79673b759b8d2236c4d0989042"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/attribution.md",
+      "name": "attribution.md",
+      "sha256": "68b23b5b8e18f91b22799d3cbf89de88b15834099aa1167c012f0721de4e60f7"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/analysis.json",
+      "name": "analysis.json",
+      "sha256": "bf1b3692345d9c39da81d2491c5395240c291f7a10130661d49422c0b737058d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "37f751aaa4d10503da1e36b2ce8ed76e8da4ea2cafae11a6804bb64eeb97855c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_pairnorm_prediction_router_500k/analyze.py",
+      "name": "analyze.py",
+      "sha256": "c47b869b60de7babe7ecd11cf805620abe6b152775b4b627c0c1af4937e21a9e"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+      "experiments/pcqm_pairnorm_prediction_router_500k/decision.md",
+      "experiments/pcqm_pairnorm_prediction_router_500k/attribution.md",
+      "experiments/pcqm_pairnorm_prediction_router_500k/acceptance.json",
+      "experiments/pcqm_pairnorm_prediction_router_500k/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-pairnorm-prediction-router-500k-20261027",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-pairnorm-prediction-router-500k-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-27",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "CPU gate fit and prediction-only cross-fit"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_pairnorm_prediction_router_500k/analysis.json",
+    "gate_fit": true,
+    "inference_executed": false,
+    "training_executed": false,
+    "training_replay_ready": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "cpu_diagnostic_complete",
+    "comparison_status": "consumed_role_crossfit_diagnostic",
+    "execution_status": "complete_gate_fit_no_backbone_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "common": "untouched",
+    "internal_development_retained_predictions": "consumed",
+    "official_validation": "untouched",
+    "ood": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "pcqm-pairnorm-prediction-router-500k",
+  "track": "B"
+}

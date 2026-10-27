@@ -716,6 +716,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-pairnorm-prediction-router-500k-20261027:A001",
+      "target": "experiments/pcqm_pairnorm_prediction_router_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1706,6 +1711,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-expert-oracle-feasibility-no-train-20260930",
+      "target": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-geometry-component-attribution-no-train-20260928",
       "target": "TB-pcqm-geometry-reliability-screen-20260928",
       "type": "prior_evidence"
@@ -2513,6 +2523,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "target": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
       "type": "prior_evidence"
     },
     {
@@ -3742,6 +3757,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-pairnorm-prediction-router-500k-20261027",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-recurrent-graph-state-100k-seed42",
       "type": "evidence"
     },
@@ -4383,6 +4402,10 @@
     },
     {
       "id": "TB-pcqm-k1-single-true-ema-100k",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
       "type": "trajectory"
     },
     {
