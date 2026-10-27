@@ -1,5 +1,14 @@
 # Status
 
+## Terminal acceptance: 2026-10-27 JST
+
+Kaggle1 kernel `141037251` / version `1` completed. Both arms completed
+60 passes and strict native and replay checks with no exclusions. The
+lower-learning-rate candidate is `NEGATIVE_UNDER_CONTRACT`; the same-run
+reference is `CLOSED`. See [qualification](terminal_acceptance/qualification.md),
+[decision](terminal_acceptance/decision.md) and [attribution](terminal_acceptance/attribution.md).
+Neither model is adopted or released for full training by this decision.
+
 ## Submission: 2026-10-27 JST
 
 Kaggle1 `nothingnessvoid/molgap-gptrans-pairnorm-lr-500k`, kernel ID

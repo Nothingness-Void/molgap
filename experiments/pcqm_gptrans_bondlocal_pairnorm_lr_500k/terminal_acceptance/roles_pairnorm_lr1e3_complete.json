@@ -1,0 +1,210 @@
+{
+  "audit_basis": {
+    "train_rows": 500000,
+    "development_rows": 50000,
+    "observed_training_passes": 60,
+    "observed_optimizer_steps": 234360,
+    "observed_sample_presentations": 29998080,
+    "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "reader": "src/molgap/family_training_data.py::load_training_data (source commit a95883ab2a9e28ac08f7832bc428be43e826ae37)",
+    "reader_scope": "The exact frozen Kaggle entrypoint binds the prepared source and two dataset sources. Its version-1 input_resolution names this exact manifest and records 11 selected shard paths present for this arm (shards_decoded=false, so this is path-resolution evidence only). The exact frozen loader selects only train and development when recipe.dataset.development=true; it validates those contiguous ranges inside official_train_rows and its source docstring explicitly excludes official validation/test selection. The local manifest with this SHA contains only the train [0,500000) and development [500000,550000) shard roles and records all three protected role-read flags false. Actual train/development use is independently confirmed by the complete 60-pass trace (train/dev metric role identities and exposure) and aligned 50000-row development predictions with the pinned labels.",
+    "selection": "best-development-ema",
+    "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+    "source_archive_sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+    "input_mount_root": "/kaggle/input",
+    "dataset_source_id": "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+    "dataset_manifest_relative_path": "pcqm_fixed_500k_v1/manifest.json",
+    "observed_mounted_manifest_path": "datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json",
+    "role_bindings": {
+      "train": {
+        "rows": 500000,
+        "membership_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+        "row_order_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+        "usage_sha256": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88"
+      },
+      "development": {
+        "rows": 50000,
+        "membership_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+        "row_order_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+        "usage_sha256": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+        "prediction_source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+        "target_sha256": "5a8ef02a608f73dad257269d253d5c507b4e3aa480ce4c452b79e4384095b9a2",
+        "target_encoding": "little-endian-float32-contiguous-raw-bytes"
+      }
+    },
+    "runtime_identity": {
+      "account": "nothingnessvoid",
+      "arm_id": "pairnorm_lr1e3",
+      "arm_identity": "b59dd59ab89bf26abfbb03e349495dd0ebc26953a469cc24f46f404e4a09e6b9",
+      "experiment_id": "pcqm_gptrans_bondlocal_pairnorm_lr_500k",
+      "family_name": "gptrans_t",
+      "family_version": "2",
+      "logical_run_id": "pcqm-gptrans-pairnorm-lr-500k-s42",
+      "package_identity": "9479db86fadf889d0706421d701e686400042fa49e476bcce8ac28c71fdf8cdd",
+      "platform": "kaggle",
+      "platform_version": "1",
+      "run_reference": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+      "source_archive_sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+      "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+      "spec_identity": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd",
+      "training_recipe_sha256": "e0391c7b6317ca24801fd68708da13df513833c22a667b7ee9bec6869473f2d7"
+    },
+    "artifact_identity": [
+      {
+        "kind": "prepared_kernel_metadata_dataset_sources",
+        "path": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-pairnorm-lr-500k-s42\\v1\\prepared\\kernel\\kernel-metadata.json",
+        "sha256": "0a8dea764880b728a80330d17d95f43a2ad8a71c87b41b163f2e66f0dde766c3"
+      },
+      {
+        "kind": "prepared_kernel_entrypoint_mount",
+        "path": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-pairnorm-lr-500k-s42\\v1\\prepared\\kernel\\run.py",
+        "sha256": "eae6c80179bdee08e85e60c9e1333d0d2efd0557c4e17e020b0187db55ae7e1c"
+      },
+      {
+        "kind": "frozen_source_archive",
+        "path": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-pairnorm-lr-500k-s42\\v1\\prepared\\package\\source.tar.gz",
+        "sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad"
+      },
+      {
+        "kind": "pinned_train_development_dataset_manifest",
+        "path": "D:\\molgap-data\\pcqm_fixed_500k_v1\\manifest.json",
+        "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+      },
+      {
+        "kind": "exact_v1_input_resolution",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\metadata\\experiment\\input_resolution.json",
+        "sha256": "8032be5a5b881fa8726f8f93898d67b2bfa815821fdca05551eb4ce9687583a0"
+      },
+      {
+        "kind": "frozen_recipe_and_role_identities",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\training_contract.json",
+        "sha256": "e0391c7b6317ca24801fd68708da13df513833c22a667b7ee9bec6869473f2d7"
+      },
+      {
+        "kind": "runtime_and_dataset_identity",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\runtime_provenance.json",
+        "sha256": "32d81342294c7684f36da20b87e5e4fc8c364549592c5305e137e28ac7dff364"
+      },
+      {
+        "kind": "verified_output_bindings",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\output_manifest.json",
+        "sha256": "99a3ace230934798e551e3cfc01a2af943d6c0366b255186cbde87a0e42d1ab1"
+      },
+      {
+        "kind": "prospective_trajectory",
+        "path": "D:\\molgap-worktrees\\gptrans-bondlocal-pairnorm-500k-20261027\\experiments\\pcqm_gptrans_bondlocal_pairnorm_lr_500k\\runs\\pcqm-gptrans-pairnorm-lr-500k-s42\\prospective\\pairnorm_lr1e3\\trajectory.json",
+        "sha256": "8daad002fef36842b70a6245ad9a59f1017f6d2aaa8a2be504e6dbaee809c2ab"
+      },
+      {
+        "kind": "full_canonical_trace",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\canonical_trace.json",
+        "sha256": "18a71afd7fcc6bcaf39fbc554a94a9ba4c62ed02e07700f3aabc6964fe9d4b34"
+      },
+      {
+        "kind": "trace_context",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\canonical_trace.json.context.json",
+        "sha256": "9a7c64920793afa90d50904bfe59d753aefd08f9b97819fb6c41e1b3dd7b194e"
+      },
+      {
+        "kind": "50000_development_predictions_with_labels",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\development_predictions.pt",
+        "sha256": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2"
+      },
+      {
+        "kind": "selected_model",
+        "path": "D:\\molgap-artifacts\\reconciliation\\gptrans-bondlocal-pairnorm-lr-500k\\v1\\manifest\\experiment\\pairnorm_lr1e3\\selected_model.pt",
+        "sha256": "df11c90ed348d90da91e2cbe299475427fa47836c65b01b70a56eaeda45292a4"
+      }
+    ],
+    "protected_role_basis": "The pinned manifest contains no protected-role shard and declares official_validation_role_read/test_dev_role_read/test_challenge_role_read=false. The version-1 input-resolution record points to this manifest and only its 11 train/development shard paths. Frozen source commit and submitted entrypoint are hash-bound; load_training_data only selects declared train/development roles and never selects official-validation/test roles. No protected-role events were observed in trace or prediction artifacts."
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "pairnorm_lr1e3",
+    "arm_identity": "b59dd59ab89bf26abfbb03e349495dd0ebc26953a469cc24f46f404e4a09e6b9",
+    "experiment_id": "pcqm_gptrans_bondlocal_pairnorm_lr_500k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-pairnorm-lr-500k-s42",
+    "package_identity": "9479db86fadf889d0706421d701e686400042fa49e476bcce8ac28c71fdf8cdd",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-gptrans-pairnorm-lr-500k",
+    "source_archive_sha256": "137c71f5942a4c24f45784b0b34609cdfc94e026ffe6b8089b4157a5e88837ad",
+    "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+    "spec_identity": "ea83cd218696c6d7f5204f49a4dd149b9f1b2a1e35aee8b3b4e28b939bd2adbd",
+    "training_recipe_sha256": "e0391c7b6317ca24801fd68708da13df513833c22a667b7ee9bec6869473f2d7"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/roles_pairnorm_lr1e3_complete.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-train-training_membership",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/roles_pairnorm_lr1e3_complete.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-development-prediction_input",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/roles_pairnorm_lr1e3_complete.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-development-labels_read",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "labels_read",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/roles_pairnorm_lr1e3_complete.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-development-metric_computed",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": true
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "action_id": "A001",
+      "run_id": "pcqm-gptrans-pairnorm-lr-500k-s42:pairnorm_lr1e3:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/roles_pairnorm_lr1e3_complete.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3-development-selection_used",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true
+    }
+  ]
+}

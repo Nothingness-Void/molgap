@@ -15,11 +15,9 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 99,
+      "count": 97,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -297,11 +295,9 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 49,
+      "count": 47,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -353,10 +349,8 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 14,
+      "count": 12,
       "items": [
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
-        "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
