@@ -38,7 +38,39 @@ An already published prospective declaration is immutable; do not rerun its
 fresh-declaration checker or create another plan to recover an existing job.
 Use its prepared package and the operation journal below.
 
+Acceptance staging, upload allowlists and recovery derive their dependencies
+from the same typed artifact references in the acceptance plan. The source
+archive remains a source/configuration package, not a copy of all retained data.
+
+If preparation failed after complete prospective publication and its immutable
+launch was written, use `submit_workflow.py --recover-prepared --prepared
+$prepared` to finish the original final binding. Recovery requires the original
+successful release checks and verifies the frozen package and staged prospective
+bytes; it restores only missing acceptance attachments available under their
+frozen package hashes.
+Changed existing files, partial publication and any submission owner/journal
+require reconciliation. It never replans, repackages or rewrites the launch, and
+retains failure/recovery facts in `workflow_report.json`. Successful recovery
+uses the existing retirement owner for earlier unpublished failed copies.
+Repeating completed recovery is read-only. Append the existing submission arguments and `--execute`
+to continue directly through the original journaled submitter when authorized.
+
 ## Platform operation
+
+For an authorized checkpoint continuation, pass the existing `prepare-resume`
+directory to the same adapter, retain `--authority` from the original immutable
+package, and add `--recovery-authority $retainedAuthorization
+--recovery-authority-sha256 $sha256 --source-version 2 --kernel-version 2`.
+The authorization is retained verbatim and SHA-bound; its content remains the
+owning contract's authority, not a new launcher schema. Source and kernel
+successor versions are independent explicit integers. Each must immediately
+follow its observed predecessor; the predecessor kernel must be terminal
+error/failed/cancelled. The adapter versions the same private source dataset,
+round-trips exact successor bytes, and binds a physical successor receipt over
+the original Spec/package/context. It shares the existing journal, release,
+quota, push and receipt owners. Unknown requests never cause another mutation;
+BOUND re-entry verifies locally without consulting a newer remote version.
+Default mode makes no API calls. This route grants no new training authority.
 
 The prepared source package must contain a bounded authority with
 `user_authorized: true`, the exact `arms` and `seeds`, and a positive
@@ -86,6 +118,28 @@ active before cleanup; locks never expire into permission for another POST.
 The journal retains phase timings. `RUNNING`, `SUBMISSION_BOUND` and startup
 messages do not imply native, scientific or terminal acceptance. Existing
 [retrieval and acceptance](REGISTERED_EXPERIMENT_WORKFLOW.md) owners still apply.
+
+### HTTP observations and uncertain source recovery
+
+Source/kernel publication failures retain `platform_error` in the same journal
+and compact CLI output: error type, operation stage, endpoint class, observed
+HTTP status and a bounded response request ID when available. The SDK can raise
+an HTTPError for a JSON API error with HTTP200; its numeric `api_status` is kept
+separate. Missing fields stay absent. URLs, response bodies, exception messages,
+authorization/cookie headers and credentials are not retained. Read-only SDK
+identity wrappers carry these safe details through their generic RuntimeError.
+No observation adds a retry or turns an uncertain response into proven absence.
+
+For `SOURCE_UNKNOWN`, reuse the original `--prepared`, `--output`, authority and
+monitor arguments in the platform command above. Do not regenerate the package,
+remove the journal, change the dataset slug or call dataset creation separately.
+If the exact source remains absent/unobservable, the existing journal stops at
+reconciliation. A ready private version1 must still pass the existing complete
+allowlist, size and byte-hash roundtrip plus release checks. An authorized
+`--execute` reentry can then submit the kernel, so that command belongs to the
+experiment's submitting owner; it is not a read-only status query. Default mode
+checks local inputs only. A `BOUND` reentry verifies its retained receipt rather
+than posting again.
 
 ## Declaration reuse
 

@@ -241,6 +241,8 @@ def main(argv=None):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--credentials", type=Path)
+    parser.add_argument("--continuation-receipt", type=Path)
+    parser.add_argument("--resume-prepared", type=Path)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--execute", action="store_true")
     stage = "arguments"
@@ -248,6 +250,9 @@ def main(argv=None):
         args = parser.parse_args(argv)
         if bool(args.credentials) != args.execute:
             raise ValueError("Explicit credentials are required only with --execute")
+        if (args.resume_prepared is not None and (not args.strict or args.continuation_receipt is None)
+                or args.strict and args.continuation_receipt is not None and args.resume_prepared is None):
+            raise ValueError("Strict continuation retrieval requires its original resume preparation")
         # SDK diagnostics may contain credentials or signed URLs. Only the
         # adapter's finite JSON receipt is allowed on either output stream.
         # Plans belong in that receipt, not an outer progress stream which
@@ -257,6 +262,8 @@ def main(argv=None):
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
             spec, options, prepared = _original_run(
                 args.profile, args.repo_root, args.run_id, args.attempt_id)
+            from molgap.experiment_run_acceptance import _continuation_options
+            options = _continuation_options(spec, options, args.continuation_receipt, args.repo_root)
             context = RunContext.from_launch(spec, options["receipt_path"], options["package_dir"],
                 expected_package_identity=options["expected_package_identity"], arm_id=args.arm)
             if context.platform != "kaggle":
@@ -298,6 +305,15 @@ def main(argv=None):
             version = context.platform_version
             if args.strict and (not isinstance(version, str) or not version.isascii() or not version.isdecimal()):
                 raise ValueError("Strict dependency retrieval requires an exact numeric version")
+            resume_checkpoint = None
+            if args.resume_prepared is not None:
+                from molgap.experiment_spec import _digest
+                from molgap.experiment_workflow_resume import resolve_terminal_resume
+                bindings = resolve_terminal_resume({"spec": spec, "options": options, "prepared": prepared,
+                    "outputs": {arm["arm_id"]: {"output_dir": str(args.destination.parent / arm["arm_id"])}
+                                for arm in spec.to_dict()["arms"]}}, args.resume_prepared, None)
+                resume_checkpoint = _json(bindings[args.arm]["resume_bundle"])["artifacts"]["checkpoint"]["sha256"]
+                _digest(resume_checkpoint, "resume checkpoint.sha256")
             retrieval_plan = None
             if isinstance(version, str) and version.isascii() and version.isdecimal():
                 retrieval_plan = plan_pinned_files(files, destination,
@@ -320,13 +336,14 @@ def main(argv=None):
                     stage = "native_dependencies"
                     result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
                         manifest=manifest, remote_manifest_path=args.remote_manifest_path,
-                        destination=destination)
+                        destination=destination, resume_checkpoint_sha256=resume_checkpoint)
                     result["network_accessed"] = (result.get("network_accessed", False)
                         or result["native_dependencies"]["network_accessed"])
                 stage = "retrieval_mapping"
                 from molgap.experiment_run_acceptance import record_run_retrieval
                 mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
-                    context=context, destination=destination, manifest_sha256=args.manifest_sha256)
+                    context=context, destination=destination, manifest_sha256=args.manifest_sha256,
+                    continuation_receipt=args.continuation_receipt)
                 result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)

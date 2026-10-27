@@ -81,8 +81,11 @@ def test_configured_addon_outputs_are_independently_inspected(case, tmp_path, st
         chunk = output.root.parent / "checkpoint_chunks/candidate/pass_01"
         manifest = validate_resume_bundle(chunk)["manifest"]
         assert manifest["cursor"]["pass_index"] == 1
-        assert len(manifest["cursor"]["pending_absolute"]) == 2
-        assert all(type(value) is float for value in manifest["cursor"]["pending_absolute"])
+        # Partial-pass tensors and Clean-BN calibration state are checkpoint
+        # ownership, never a second JSON cursor copy. Legacy manifests with
+        # scalarized fields remain readable through the transport validator.
+        assert "pending_absolute" not in manifest["cursor"]
+        assert "weight_state" not in manifest["cursor"]
         restored = tmp_path / "restored-chunk"
         restore_resume_bundle(chunk, restored)
         state = torch.load(restored / "last_checkpoint.pt", map_location="cpu", weights_only=True)

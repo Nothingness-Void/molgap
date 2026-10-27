@@ -108,7 +108,8 @@ def frozen_acceptance_run(tmp_path, repo):
         generated=generated, original=(profile, repo, declaration["logical_run_id"], "v1"))
 
 
-def frozen_shared_acceptance_run(tmp_path, repo):
+def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
+                                 comparison_purpose="architecture_comparison"):
     """Freeze current shared-family contracts for the joined diagnostic path."""
     from molgap.experiment_package import build_experiment_source_package
     from molgap.experiment_spec import ExperimentSpec
@@ -125,7 +126,12 @@ def frozen_shared_acceptance_run(tmp_path, repo):
     for family, version, arm_id in (
             ("neural_atom_k1", "3", "k1_candidate"),
             ("gptrans_t", "2", "gptrans_candidate")):
+        if comparison_purpose == "initialization_comparison":
+            family, version = "neural_atom_k1", "3"
         session = make_session(family, development=True, schedule_kind="cosine_step", events=events())
+        if comparison_purpose == "initialization_comparison" and arm_id == "gptrans_candidate":
+            from dataclasses import replace
+            session.recipe = replace(session.recipe, initialization_sha256="3" * 64)
         try:
             contract_root = tmp_path / "native-contracts" / arm_id
             contract_root.mkdir(parents=True)
@@ -152,7 +158,9 @@ def frozen_shared_acceptance_run(tmp_path, repo):
     config_source = repo / "experiments/synthetic/config.json"
     config_source.parent.mkdir(parents=True, exist_ok=True)
     config_bytes = canonical_json({"format": "molgap-scientific-experiment-v1",
-        "experiment_id": declaration["experiment_id"], "question": "synthetic acceptance fixture"}).encode()
+        "experiment_id": declaration["experiment_id"], "question": {"changed_mechanism": "synthetic-intervention"},
+        "arms": [{"arm_id": arm["arm_id"], "purpose": comparison_purpose}
+                 for arm in declaration["arms"]]}).encode()
     config_source.write_bytes(config_bytes)
     subprocess.run(["git", "add", "experiments/synthetic/config.json"], cwd=repo, check=True)
     subprocess.run(["git", "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic acceptance config"],
@@ -172,7 +180,9 @@ def frozen_shared_acceptance_run(tmp_path, repo):
         path.write_bytes(raw)
         return {"path": name, "sha256": hashlib.sha256(raw).hexdigest()}
 
+    training_target_sha256 = hashlib.sha256(struct.pack("<3f", -1., 0., 1.)).hexdigest()
     target = add(generated_root + "/target.json", canonical_json({
+        **({"training_float32_target_sha256": training_target_sha256} if retain_training_target else {}),
         "development_target_sha256": contracts["k1_candidate"][0]["acceptance_requirements"]["target_sha256"],
         "target_encoding": "little-endian-float64-contiguous-raw-bytes"}).encode())
     for arm, binding in zip(declaration["arms"], declaration["prospective"]["arms"]):
@@ -188,7 +198,7 @@ def frozen_shared_acceptance_run(tmp_path, repo):
                 "attempt_ids": [declaration["logical_run_id"] + "-v7"],
                 "source_commit": source}]}}
         binding["plan_spec_sha256"] = add(binding["plan_spec_ref"], canonical_json(proposal).encode())["sha256"]
-        entries.append({"arm_id": arm_id, "adapter": "k1-session-v1" if arm_id == "k1_candidate" else "gptrans-session-v1",
+        entries.append({"arm_id": arm_id, "adapter": "k1-session-v1" if arm["family"]["name"] == "neural_atom_k1" else "gptrans-session-v1",
             "expected": record["acceptance_requirements"], "contract": contract,
             "reference_artifacts": {"target_manifest": target}})
 
@@ -231,4 +241,5 @@ def frozen_shared_acceptance_run(tmp_path, repo):
     return SimpleNamespace(profile=profile, paths=paths, repo=repo, run=run, prepared=run / "prepared",
         package=package, spec=spec, manifest=manifest, receipt=receipt,
         expected={arm["arm_id"]: item["expected"] for arm, item in zip(declaration["arms"], entries)},
+        training_target_sha256=training_target_sha256,
         generated=generated, original=(profile, repo, declaration["logical_run_id"], "v1"))

@@ -439,5 +439,6 @@ def test_real_release_check_and_kaggle_report_reject_launch_rebindings(real_rele
 
     # The old verified receipt cannot be replayed after the launch bytes move.
     _write(case["launch_path"], {**original, "expected_source_archive_sha256": "c" * 64})
-    with pytest.raises(ValueError, match="changed after verification"):
+    with pytest.raises(kaggle_accelerator_push.ReleaseRecheckError,
+                       match="checks failed during recheck"):
         kaggle_accelerator_push._verify_release_report(report_path, case["entry_path"])

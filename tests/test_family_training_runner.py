@@ -15,7 +15,8 @@ from molgap.family_training_runner import (
     INTERFACES, PROFILES, _assert_target_statistics, family_arm_bindings, read_recipe,
 )
 from molgap.training_reproducibility import sha256_file, validate_accelerator_request
-from test_family_training_session import events, make_session
+from test_family_training_kernel import initial_states
+from test_family_training_session import assert_equal, events, make_session
 
 
 def contract_file(tmp_path, session):
@@ -60,8 +61,11 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
 @pytest.mark.parametrize("development", [False, True])
-def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_path, family, development):
-    session = make_session(family, development=development, schedule_kind="cosine_step", events=events())
+def test_actual_session_output_translation_and_cpu_mechanical_inspection(
+        tmp_path, family, development, initial_states):
+    report_ema = family == "neural_atom_k1" and development
+    session = make_session(family, development=development, schedule_kind="cosine_step", events=events(),
+        report_ema=report_ema)
     path, record = contract_file(tmp_path, session)
     ctx = context(family, path)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
@@ -80,6 +84,12 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
     assert (outputs.root / "development_predictions.pt").is_file() == development
     assert ("development_mae_eV" in report["observed"]) == development
+    if report_ema:
+        trace = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))
+        assert trace["metric_semantics"]["live_dev_metric"]["weights"] == "live"
+        assert trace["metric_semantics"]["ema_dev_metric"]["weights"] == "ema"
+        assert all(point["live_dev_metric"] is not None and point["ema_dev_metric"] is not None
+                   for point in trace["observations"])
     manifest_path = outputs.root / "output_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     resume_path = outputs.root / manifest["artifacts"]["resume"]["path"]
@@ -92,12 +102,195 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     assert blocked["status"] == "BLOCKED"
     assert any("exposure" in error for error in blocked["blockers"])
 
+    if family == "neural_atom_k1" and development:
+        # Exercise the real K1 checkpoint/bundle journey with Clean-EMA state.
+        # The fixture is CPU-only and makes no native qualification claim.
+        from molgap.experiment_resume import (create_resume_bundle,
+            restore_resume_bundle, validate_resume_bundle)
+        from molgap.family_training_data import DatasetSelection, TrainingData
+        from molgap.family_training_kernel import FamilyKernel
+        from molgap.family_training_loaders import FamilyLoaders
+        from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
+        from molgap.family_training_session import FamilyTrainingSession
+        from molgap.family_training_state import CalibrationPolicy, source_order_sha256
+        from molgap.gptrans_execution_tuning import ExecutionTuning
+        from test_family_training_kernel import synthetic_batch
+
+        initial, digest = initial_states[family]
+        template = synthetic_batch().to_data_list()[0]
+        def graph(index):
+            item = template.clone()
+            item.source_idx = torch.tensor([index])
+            item.y = torch.tensor([3. + (index % 7 - 3) * .1])
+            return item
+
+        selection = DatasetSelection("synthetic.json", "2" * 64, True)
+        clean_recipe = FamilyRecipe(family, "reference", 42, digest, selection, 256, 2, 4,
+            .001, .01, ScheduleSpec("cosine_step", 4), "best-development-clean-ema",
+            "torch-pass-randperm", 1, target_mean_eV=3., target_std_eV=2., ema_decay=.999,
+            clean_bn=CalibrationPolicy(selection.manifest_sha256, "3" * 64,
+                source_order_sha256(torch.arange(128)), 1), development_reports=("live",),
+            torch_version=str(torch.__version__).split("+", 1)[0])
+        data = TrainingData([graph(i) for i in range(256)],
+            [graph(256 + i) for i in range(2)], selection.manifest_sha256, 256, 2,
+            0, 256, 3., 2., synthetic=True)
+
+        def actual_session():
+            from molgap.training_reproducibility import configure_fp32_determinism
+            configure_fp32_determinism(42)
+            return FamilyTrainingSession(FamilyKernel(clean_recipe, initial, device="cpu"),
+                FamilyLoaders(clean_recipe, data, ExecutionTuning(training_workers=0, development_workers=0)),
+                checkpoint=lambda *args: None, selected=lambda *args: None,
+                pass_finished=lambda *args: None)
+
+        contract_dir = tmp_path / "clean-contract"
+        contract_dir.mkdir()
+        contract_session = actual_session()
+        clean_path, clean_record = contract_file(contract_dir, contract_session)
+        contract_session.close()
+        clean_ctx = context(family, clean_path)
+        baseline = actual_session()
+        endpoint = baseline.run()
+        expected_state = deepcopy(baseline.state_dict())
+
+        split = actual_session()
+        clean_output = SessionOutputs(tmp_path / "clean-output", clean_ctx,
+            contract=clean_path, adapter=PROFILES[family], trajectory_id="synthetic-trajectory",
+            train_role_identity=clean_record["train_role_identity"])
+        split.loaders.attach_role_audit(clean_output.role_audit)
+        split.checkpoint, split.selected, split.pass_finished = (
+            clean_output.checkpoint, clean_output.selected, clean_output.pass_finished)
+        split.batch_finished = clean_output.batch_finished
+        clean_output.logger.start(split.progress)
+        paused = split.run(should_pause=lambda: split.progress.optimizer_step >= 2)
+        assert paused.status == "paused" and paused.optimizer_step == 2
+        wire = torch.load(clean_output.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+        assert wire["cursor"]["weight_state"]["clean"] is not None
+        assert all(isinstance(value, torch.Tensor) for value in wire["cursor"]["pending_absolute"])
+        checkpoint_bytes = (clean_output.root / "last_checkpoint.pt").read_bytes()
+
+        trajectory = {"trajectory_id": "synthetic-trajectory", "record_mode": "prospective",
+            "state_at_start": {"source_commit": clean_ctx.source_commit,
+                                "source_config_identity": clean_ctx.arm_identity},
+            "actions": [{"action_id": "A001", "run_ids": [clean_ctx.logical_run_id],
+                         "attempt_ids": ["v1"]}], "decision": {"outcome": "ACTIVE"}}
+        bundle = tmp_path / "clean-bundle"
+        create_resume_bundle(clean_output.root, clean_ctx, trajectory, bundle)
+        verified = validate_resume_bundle(bundle, context=clean_ctx, trajectory=trajectory)
+        assert "weight_state" not in verified["manifest"]["cursor"]
+        assert "pending_absolute" not in verified["manifest"]["cursor"]
+        restored = tmp_path / "clean-restored"
+        restore_resume_bundle(bundle, restored, context=clean_ctx, trajectory=trajectory)
+        assert (restored / "last_checkpoint.pt").read_bytes() == checkpoint_bytes
+
+        resumed = actual_session()
+        restored_output = SessionOutputs(restored, clean_ctx, contract=clean_path,
+            adapter=PROFILES[family], trajectory_id="synthetic-trajectory",
+            train_role_identity=clean_record["train_role_identity"])
+        resumed.loaders.attach_role_audit(restored_output.role_audit)
+        resumed.checkpoint, resumed.selected, resumed.pass_finished = (
+            restored_output.checkpoint, restored_output.selected, restored_output.pass_finished)
+        resumed.batch_finished = restored_output.batch_finished
+        resumed.load_state_dict(restored_output.retained_state())
+        restored_output.logger.start(resumed.progress)
+        assert resumed.run() == endpoint
+        assert_equal(expected_state, resumed.state_dict())
+
+
+def test_worker_startup_failure_closes_kernel_and_session(tmp_path, monkeypatch):
+    import signal
+    from molgap import family_training_kernel as kernels
+    from molgap import family_training_runner as worker
+    from molgap import family_training_session as sessions
+    from molgap.gptrans_execution_tuning import ExecutionTuning
+    from test_family_training_session import SyntheticKernel, FamilyTrainingSession
+
+    template = make_session("neural_atom_k1", development=False,
+        schedule_kind="cosine_step", events=events())
+    path, record = contract_file(tmp_path, template)
+    ctx = context("neural_atom_k1", path)
+    failed_root = tmp_path / "startup-failure"
+    failed_root.mkdir()
+    worker._begin_cost_interval(failed_root, ctx, had_checkpoint=False)
+    initial = tmp_path / "initial.pt"
+    initial.write_bytes(b"synthetic initial state")
+    package_dir = tmp_path / "package"
+    package_dir.mkdir()
+    created, kernel_closes = [], []
+
+    def cpu_kernel(configuration, state_path, *, device, **_):
+        assert device == "cuda"
+        kernel = SyntheticKernel(configuration)
+        close = kernel.close
+        def close_kernel():
+            kernel_closes.append(True)
+            close()
+        kernel.close = close_kernel
+        return kernel
+
+    def retained_session(*args, **kwargs):
+        value = FamilyTrainingSession(*args, **kwargs)
+        created.append(value)
+        return value
+
+    previous_signal = signal.getsignal(signal.SIGTERM)
+    original_signal = signal.signal
+
+    def interrupt_startup(number, handler):
+        result = original_signal(number, handler)
+        if handler is not previous_signal:
+            raise OSError("startup interrupted before session.run")
+        return result
+
+    with monkeypatch.context() as boundary:
+        boundary.setattr(worker, "_bootstrap", lambda **_: (
+            record, template.recipe, template.loaders.data,
+            ExecutionTuning(training_workers=0, development_workers=0),
+            ctx, {"accelerator": "synthetic-cpu"}, tmp_path))
+        boundary.setattr(worker, "_verify_preflight", lambda *a, **k: {})
+        boundary.setattr(worker, "_loaded_source", lambda _: tmp_path)
+        boundary.setattr("molgap.family_workflow_trial.is_trial", lambda _: False)
+        boundary.setattr("molgap.k1_infrastructure_comparison.is_comparison", lambda _: False)
+        boundary.setattr("molgap.gptrans_infrastructure_comparison.is_comparison", lambda _: False)
+        boundary.setattr(kernels, "FamilyKernel", cpu_kernel)
+        boundary.setattr(sessions, "FamilyTrainingSession", retained_session)
+        boundary.setattr(signal, "signal", interrupt_startup)
+        with pytest.raises(OSError, match="startup interrupted"):
+            worker.run_screen_arm(output=failed_root, recipe_path=path,
+                initial_state_path=initial, package_dir=package_dir,
+                trajectory_id="synthetic-trajectory", spec=object())
+
+    assert signal.getsignal(signal.SIGTERM) is previous_signal
+    assert len(created) == len(kernel_closes) == 1
+    failed = created[0]
+    assert failed.closed and failed.loaders.closed
+    assert failed.progress.optimizer_step == failed.progress.sample_presentations == 0
+    assert not failed.kernel.optimizer.state
+    assert not (failed_root / "last_checkpoint.pt").exists()
+    assert not (failed_root / "output_manifest.json").exists()
+
 
 def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
     session = make_session("neural_atom_k1", development=False, schedule_kind="cosine_step", events=events())
     try:
         path, original = contract_file(tmp_path, session)
         assert read_recipe(path)[1] == session.recipe
+        retained = deepcopy(original)
+        retained["initial_development_check"] = {
+            "prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
+        path.write_text(json.dumps(retained), encoding="utf-8")
+        assert read_recipe(path)[1] == session.recipe
+        reported = deepcopy(original)
+        reported["development_reports"] = ["ema"]
+        path.write_text(json.dumps(reported), encoding="utf-8")
+        assert read_recipe(path)[1] == replace(session.recipe, development_reports=("ema",))
+        for invalid in ({"prediction_tolerance_eV": 1e-4},
+                        {"prediction_tolerance_eV": float("nan"), "mae_tolerance_eV": 1e-6},
+                        {"prediction_tolerance_eV": True, "mae_tolerance_eV": 1e-6}):
+            retained["initial_development_check"] = invalid
+            path.write_text(json.dumps(retained), encoding="utf-8")
+            with pytest.raises(ValueError):
+                read_recipe(path)
         for change in ("counter", "unknown", "development"):
             record = deepcopy(original)
             if change == "counter":

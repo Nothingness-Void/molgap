@@ -24,8 +24,54 @@ BASE_COMPARABILITY_FIELDS = (
 )
 
 
+BOUND_REPLAY_INTERVENTIONS = {
+    "optimizer_comparison": (
+        "optimizer_identity", "bound_optimizer_intervention",
+        "molgap-bound-replay-optimizer-intervention-v1",
+    ),
+    "initialization_comparison": (
+        "initialization_identity", "bound_initialization_intervention",
+        "molgap-bound-replay-initialization-intervention-v1",
+    ),
+}
+
+
 def _comparison_key(trace: dict[str, Any]) -> str:
     identity = trace["comparability_identity"]
+    scope_fields = {
+        key for key in identity
+        if key.startswith("bound_") and key.endswith("_intervention")
+    }
+    supported = {
+        key: (purpose, field, format_name)
+        for purpose, (field, key, format_name) in BOUND_REPLAY_INTERVENTIONS.items()
+    }
+    if len(scope_fields) > 1 or scope_fields - supported.keys():
+        raise ValueError("Replay requires one supported bound intervention")
+    intervention_field = intervention_key = None
+    if scope_fields:
+        scope_name = next(iter(scope_fields))
+        purpose, intervention_field, format_name = supported[scope_name]
+        scope = identity[scope_name]
+        side = trace["comparison_role"]
+        expected = scope.get("expected", {})
+        strict = identity.get("strict_group_identity", identity.get("strict_identity", {}))
+        if (
+            scope.get("format") != format_name
+            or scope.get("experiment_purpose") != purpose
+            or scope.get("declared_intervention_fields") != [intervention_field]
+            or side not in {"candidate", "reference"}
+            or scope.get("reference_id") != trace["reference_id"]
+            or scope.get(side + "_id") != scope.get("evidence_id")
+            or set(expected) != {"candidate", "reference"}
+            or identity.get(intervention_field) != expected[side]
+            or strict.get(intervention_field) != expected[side]
+        ):
+            raise ValueError("Replay intervention variant differs from its bound comparison")
+        intervention_key = json.dumps(
+            {key: value for key, value in scope.items() if key != "evidence_id"},
+            sort_keys=True, separators=(",", ":"),
+        )
     fields = list(BASE_COMPARABILITY_FIELDS)
     if identity["matched_architecture_required"]:
         fields.append("architecture_identity")
@@ -36,13 +82,17 @@ def _comparison_key(trace: dict[str, Any]) -> str:
     # Strict evidence may distinguish runs even when the coarse manifest
     # labels happen to match.  Architecture remains intentionally omitted from
     # this digest when the comparison does not require a matched architecture.
+    if intervention_key is not None:
+        key["identity"][intervention_field] = intervention_key
     strict_projection = identity.get("strict_group_identity", identity.get("strict_identity"))
     if strict_projection is not None:
         strict = {
             key: value
             for key, value in strict_projection.items()
-            if key != "architecture_config_identity"
-            or identity["matched_architecture_required"]
+            if (key != "architecture_config_identity"
+                or identity["matched_architecture_required"]
+                or intervention_field == "initialization_identity")
+            and (key != intervention_field or intervention_key is None)
         }
         key["identity"]["strict_identity_sha256"] = hashlib.sha256(
             json.dumps(strict, sort_keys=True, separators=(",", ":")).encode("utf-8")

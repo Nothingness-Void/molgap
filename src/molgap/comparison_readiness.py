@@ -217,6 +217,7 @@ CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
 )
 
 INTERVENTION_FIELDS_BY_PURPOSE = {
+    "initialization_comparison": frozenset({"initialization_identity"}),
     "architecture_comparison": frozenset({"architecture_config_identity"}),
     "mechanism_comparison": frozenset({"architecture_config_identity"}),
     "optimizer_comparison": frozenset(
@@ -272,6 +273,23 @@ def _sha(value: Any, label: str) -> str:
     if not isinstance(value, str) or not _SHA256.fullmatch(value):
         raise ValueError(f"{label} must be a lowercase SHA-256")
     return value
+
+
+def _comparison_identity_fields(
+    experiment_purpose: str | None, *identities: Mapping[str, Any]
+) -> tuple[str, ...]:
+    # Frozen v1 records predate initialization identity. Initialization
+    # questions require it; once supplied it must never disappear from a pair.
+    initialization_required = (
+        experiment_purpose == "initialization_comparison"
+        or any("initialization_identity" in identity for identity in identities)
+    )
+    for identity in identities:
+        if "initialization_identity" in identity:
+            _sha(identity["initialization_identity"], "initialization_identity")
+    return STRICT_IDENTITY_FIELDS + (
+        ("initialization_identity",) if initialization_required else ()
+    )
 
 
 def _validate_intervention_scope(
@@ -529,6 +547,7 @@ def validate_reference_bundle(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("reference prediction source_idx values are not unique")
 
     identity = _mapping(record.get("comparison_identity"), "reference bundle.comparison_identity")
+    _comparison_identity_fields(None, identity)
     missing = [field for field in STRICT_IDENTITY_FIELDS if field not in identity]
     if missing:
         raise ValueError(f"reference comparison identity is incomplete: {missing}")
@@ -621,6 +640,23 @@ def _identity_from_comparison_maps(
     return identity
 
 
+def _validate_initialization_identity_maps(record: Mapping[str, Any]) -> None:
+    matched, mismatched = record["matched_fields"], record["mismatched_fields"]
+    field = "initialization_identity"
+    if field in matched:
+        _sha(matched[field], field)
+        if field in mismatched:
+            raise ValueError("initialization_identity cannot be both matched and mismatched")
+    if field in mismatched:
+        values = _mapping(mismatched[field], "initialization identity mismatch")
+        if set(values) != {"candidate", "reference"}:
+            raise ValueError("initialization identity mismatch requires candidate and reference")
+        for side, value in values.items():
+            _sha(value, f"{side}.{field}")
+        if values["candidate"] == values["reference"]:
+            raise ValueError("initialization identity mismatch must contain different identities")
+
+
 def assess_comparison_readiness(
     *,
     candidate_id: str,
@@ -645,7 +681,9 @@ def assess_comparison_readiness(
         declared_intervention_fields=declared_intervention_fields,
         require_nonempty=experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE,
     )
-    unknown_declared = sorted(set(declared) - set(STRICT_IDENTITY_FIELDS))
+    unknown_declared = sorted(
+        set(declared) - set(_comparison_identity_fields(experiment_purpose))
+    )
     if unknown_declared:
         raise ValueError(f"unknown declared intervention fields: {unknown_declared}")
 
@@ -727,7 +765,9 @@ def assess_comparison_readiness(
     missing_fields: list[str] = []
     matched: dict[str, Any] = {}
     mismatched: dict[str, Any] = {}
-    for field in STRICT_IDENTITY_FIELDS:
+    for field in _comparison_identity_fields(
+        experiment_purpose, candidate_identity, reference_identity
+    ):
         candidate_has = field in candidate_identity
         reference_has = field in reference_identity
         if not candidate_has:
@@ -956,6 +996,7 @@ def validate_comparison_readiness(
         _texts(record.get(field), f"comparison readiness.{field}")
     for field in ("matched_fields", "mismatched_fields"):
         _mapping(record.get(field), f"comparison readiness.{field}")
+    _validate_initialization_identity_maps(record)
     for field in (
         "strict_status",
         "reference_prediction_status",
@@ -973,8 +1014,18 @@ def validate_comparison_readiness(
             raise ValueError("STRICT_CAUSAL requires a causal comparison purpose")
         if record["missing_fields"] or record["missing_artifacts"] or record["blocker_codes"]:
             raise ValueError("strict_ready cannot contain missing evidence or blockers")
+        candidate_identity = _identity_from_comparison_maps(
+            record, side="candidate", label="comparison readiness"
+        )
+        reference_identity = _identity_from_comparison_maps(
+            record, side="reference", label="comparison readiness"
+        )
         accounted = set(record["matched_fields"]) | set(record["mismatched_fields"])
-        if accounted != set(STRICT_IDENTITY_FIELDS):
+        if accounted != set(
+            _comparison_identity_fields(
+                record["experiment_purpose"], candidate_identity, reference_identity
+            )
+        ):
             raise ValueError("strict_ready must account for every strict identity field")
         undeclared_mismatches = set(record["mismatched_fields"]) - set(
             declared
@@ -1023,12 +1074,6 @@ def validate_comparison_readiness(
         )
         if candidate_roles["status"] != "complete" or reference_roles["status"] != "complete":
             raise ValueError("strict_ready requires complete applicable role events")
-        candidate_identity = _identity_from_comparison_maps(
-            record, side="candidate", label="comparison readiness"
-        )
-        reference_identity = _identity_from_comparison_maps(
-            record, side="reference", label="comparison readiness"
-        )
         validate_trace_plan(
             record.get("candidate_trace_field_availability"),
             experiment_purpose=record["experiment_purpose"],
@@ -1108,16 +1153,9 @@ def assess_comparison_prelaunch(
     blockers: list[str] = []
     causal = experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE
     # A noncausal plan makes no matched-identity claim against a comparator.
-    missing_fields = [
-        f"candidate.{field}"
-        for field in STRICT_IDENTITY_FIELDS
-        if causal and field not in candidate_identity
-    ]
+    missing_fields = []
     if source_status != "frozen" or not isinstance(source_identity, str) or not source_identity:
         blockers.append("CANDIDATE_SOURCE_CONFIG_NOT_FROZEN")
-    if missing_fields:
-        blockers.append("PLANNED_IDENTITY_INCOMPLETE")
-
     reference_identity: Mapping[str, Any] = {}
     reference_bundle_id: str | None = None
     reference_bundle_sha256: str | None = None
@@ -1134,8 +1172,19 @@ def assess_comparison_prelaunch(
 
     matched: dict[str, Any] = {}
     mismatched: dict[str, Any] = {}
+    identity_fields = _comparison_identity_fields(
+        experiment_purpose, candidate_identity, reference_identity
+    )
+    if causal:
+        missing_fields.extend(
+            f"candidate.{field}"
+            for field in identity_fields
+            if field not in candidate_identity
+        )
+    if missing_fields:
+        blockers.append("PLANNED_IDENTITY_INCOMPLETE")
     if reference_identity:
-        for field in STRICT_IDENTITY_FIELDS:
+        for field in identity_fields:
             if field not in reference_identity:
                 missing_fields.append(f"reference.{field}")
             elif field in candidate_identity:
@@ -1216,6 +1265,7 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
     )
     for field in ("matched_fields", "mismatched_fields"):
         _mapping(record.get(field), f"comparison prelaunch.{field}")
+    _validate_initialization_identity_maps(record)
     for field in ("missing_fields", "blocker_codes"):
         _texts(record.get(field), f"comparison prelaunch.{field}")
     planned_identity = _identity_from_comparison_maps(
@@ -1256,7 +1306,14 @@ def validate_comparison_prelaunch(record: Mapping[str, Any]) -> dict[str, Any]:
             raise ValueError("prelaunch_ready requires a reusable reference bundle")
         if causal:
             accounted = set(record["matched_fields"]) | set(record["mismatched_fields"])
-            if accounted != set(STRICT_IDENTITY_FIELDS):
+            reference_identity = _identity_from_comparison_maps(
+                record, side="reference", label="comparison prelaunch"
+            )
+            if accounted != set(
+                _comparison_identity_fields(
+                    record["experiment_purpose"], planned_identity, reference_identity
+                )
+            ):
                 raise ValueError("prelaunch_ready must account for every planned identity field")
         undeclared = set(record["mismatched_fields"]) - set(declared)
         if undeclared:

@@ -519,10 +519,8 @@ def terminal_reference_evidence(root: Path, trajectory: Mapping[str, Any]) -> tu
     if not manifest_path.is_file():
         raise ValueError("same-run reference has no canonical trace manifest")
     manifest = load_json_object(manifest_path)
-    if manifest["comparison_role"] != "reference" or manifest["reference_id"] != evidence_id or (
-        not manifest["backtest_eligibility"]["eligible"] or manifest["backtest_eligibility"]["exclusion_reasons"]
-    ):
-        raise ValueError("same-run reference trace is not eligible")
+    if manifest["comparison_role"] != "reference" or manifest["reference_id"] != evidence_id:
+        raise ValueError("same-run reference trace differs from its accepted evidence")
     observation = validate_pair_observation(load_terminal_input(destination).get("same_run_observation"))
     if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
         binding["spec_identity"], binding["logical_run_id"], reference["state_at_start"]["source_commit"]

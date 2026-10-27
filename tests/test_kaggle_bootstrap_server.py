@@ -43,6 +43,10 @@ def test_real_pair_freshness_guard_is_reached_without_entry_receipts(tmp_path, m
         info = tarfile.TarInfo("src/molgap/experiment_preflight.py")
         info.size = len(extractor)
         archive.addfile(info, io.BytesIO(extractor))
+        original_repair = b"VALUE = 0\n"
+        info = tarfile.TarInfo("src/molgap/experiment_resume.py")
+        info.size = len(original_repair)
+        archive.addfile(info, io.BytesIO(original_repair))
     (mount / "source_payload.bin").write_bytes(payload.getvalue())
     config = {"expected_source_archive_sha256": hashlib.sha256(payload.getvalue()).hexdigest(),
         "expected_package_identity": "package", "spec_identity": "spec"}
@@ -54,6 +58,26 @@ def test_real_pair_freshness_guard_is_reached_without_entry_receipts(tmp_path, m
     (mount / "experiment_spec.json").write_text(json.dumps(declaration))
     for name in ("package_manifest.json", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
         (mount / name).write_text("{}")
+    repaired = b"VALUE = 1\n"
+    if pinned and not existing_output:
+        name = "src/molgap/experiment_resume.py"
+        manifest = {"spec_identity": "spec", "package_identity": "package",
+                    "archive_sha256": config["expected_source_archive_sha256"]}
+        (mount / "package_manifest.json").write_text(json.dumps(manifest))
+        (mount / "SOURCE_FILES.json").write_text(json.dumps({"files": [
+            {"path": name, "sha256": hashlib.sha256(original_repair).hexdigest()}]}))
+        repair = {"format": "molgap-recovery-repair-v1", **manifest, "commit": "a" * 40,
+            "files": {name: {"original_sha256": hashlib.sha256(original_repair).hexdigest(),
+                             "repaired_sha256": hashlib.sha256(repaired).hexdigest()}}}
+        raw = json.dumps(repair, sort_keys=True, separators=(",", ":"),
+                         ensure_ascii=True, allow_nan=False).encode()
+        (mount / "recovery_repair.json").write_bytes(raw)
+        target = mount / "recovery_repair" / name
+        target.parent.mkdir(parents=True)
+        target.write_bytes(repaired)
+        entry.EXPECTED_RECOVERY_REPAIR_SHA256 = hashlib.sha256(raw).hexdigest()
+        monkeypatch.setenv("MOLGAP_RECOVERY_REPAIR_MANIFEST", "unset")
+        monkeypatch.setenv("MOLGAP_RECOVERY_REPAIR_SHA256", "unset")
     class ReachedParser(RuntimeError):
         pass
     monkeypatch.setattr(pair, "_json", lambda path: (_ for _ in ()).throw(ReachedParser("freshness passed")))
@@ -63,6 +87,9 @@ def test_real_pair_freshness_guard_is_reached_without_entry_receipts(tmp_path, m
         (output / "last_checkpoint.pt").write_bytes(b"existing checkpoint")
     real_pair = pair.run_two_phase_pair
     def invoke_pair(**kwargs):
+        if pinned and not existing_output:
+            assert (paths["temp"] / "workflow/source/src/molgap/experiment_resume.py").read_bytes() == repaired
+            assert entry.os.environ["MOLGAP_RECOVERY_REPAIR_SHA256"] == entry.EXPECTED_RECOVERY_REPAIR_SHA256
         if not existing_output:
             assert not output.exists() or not any(output.iterdir())
         return real_pair(**kwargs)

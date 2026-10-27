@@ -1,6 +1,69 @@
 """One SDK compatibility boundary for explicit-account, read-only operations."""
 import json
 from pathlib import Path
+import re
+from urllib.parse import urlsplit
+
+
+def platform_error_details(error, *, stage, endpoint_class):
+    """Retain bounded transport metadata without request URLs or SDK messages."""
+    def label(value, fallback):
+        return value if isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,80}", value) else fallback
+
+    def status(value):
+        return value if type(value) is int and 100 <= value <= 599 else None
+
+    def request_id(value):
+        return value if isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9._:/=;+\-]{1,256}", value) else None
+
+    details = {"error_type": label(type(error).__name__, "Exception"),
+               "stage": label(stage, "unknown"), "endpoint_class": label(endpoint_class, "other_http")}
+    response = getattr(error, "response", None)
+    if response is not None:
+        url = getattr(response, "url", None)
+        if isinstance(url, str):
+            try:
+                host = (urlsplit(url).hostname or "").lower()
+            except ValueError:
+                host = ""
+            details["endpoint_class"] = ("kaggle_api" if host == "kaggle.com" or host.endswith(".kaggle.com")
+                else "google_storage" if host == "storage.googleapis.com" or host.endswith(".storage.googleapis.com")
+                else "other_http")
+    for value in (getattr(response, "status_code", None), getattr(error, "status", None),
+                  getattr(error, "status_code", None), getattr(error, "code", None)):
+        if status(value) is not None:
+            details["http_status"] = value
+            break
+    headers = getattr(response, "headers", None)
+    if headers is not None:
+        for name in ("X-Request-Id", "X-Kaggle-Request-Id", "X-Goog-Request-Id",
+                     "X-GUploader-UploadID", "X-Cloud-Trace-Context"):
+            value = request_id(headers.get(name))
+            if value is None:
+                value = request_id(headers.get(name.lower()))
+            if value is not None:
+                details["request_id"] = value
+                break
+    if details.get("http_status") == 200:
+        content = getattr(response, "content", None)
+        if isinstance(content, (bytes, str)) and len(content) <= 16 * 1024:
+            try:
+                body = json.loads(content)
+            except (ValueError, UnicodeError, RecursionError):
+                body = None
+            if type(body) is dict and status(body.get("code")) is not None:
+                details["api_status"] = body["code"]
+    retained = getattr(error, "platform_error", None)
+    if type(retained) is dict:
+        for key in ("error_type", "stage", "endpoint_class"):
+            if key in retained:
+                details[key] = label(retained[key], details[key])
+        for key in ("http_status", "api_status"):
+            if status(retained.get(key)) is not None:
+                details[key] = retained[key]
+        if request_id(retained.get("request_id")) is not None:
+            details["request_id"] = retained["request_id"]
+    return details
 
 
 def api_for_credentials(path: Path):
@@ -73,7 +136,9 @@ def dataset_status(api, ref):
     except Exception as error:
         if is_not_found(error) or owned_absence(api, ref, "dataset", error):
             return None
-        raise RuntimeError("Dataset status is unknown; no publication retry") from None
+        wrapped = RuntimeError("Dataset status is unknown; no publication retry")
+        wrapped.platform_error = platform_error_details(error, stage="dataset_status", endpoint_class="kaggle_api")
+        raise wrapped from None
     if type(value) is not str or not value:
         raise ValueError("Malformed dataset status; no publication retry")
     return {"status": value.lower()}
@@ -119,4 +184,6 @@ def kernel_source(api, ref):
     except Exception as error:
         if is_not_found(error) or owned_absence(api, ref, "kernel", error):
             return None
-        raise RuntimeError("Kernel identity is unknown; no submission retry") from None
+        wrapped = RuntimeError("Kernel identity is unknown; no submission retry")
+        wrapped.platform_error = platform_error_details(error, stage="kernel_source", endpoint_class="kaggle_api")
+        raise wrapped from None

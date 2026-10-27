@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -48,7 +49,76 @@ def _observed_identity(result: dict, owner: str) -> dict:
             "kernel_id": result.get("kernelId") or None, "identity_conflicts": conflicts}
 
 
-def _verify_release_report(path: Path, code_path: Path) -> dict:
+class ReleaseRecheckError(ValueError):
+    """A local release check failed before the kernel POST could run."""
+
+    @staticmethod
+    def _failure(check, cause):
+        failure = {"check": check, "error_type": type(cause).__name__}
+        for name in ("errno", "winerror"):
+            value = getattr(cause, name, None)
+            if isinstance(value, int):
+                failure[name] = value
+        cleanup = getattr(cause, "cleanup_error", None)
+        if isinstance(cleanup, OSError):
+            failure["cleanup_error"] = {"error_type": type(cleanup).__name__, **{
+                name: getattr(cleanup, name) for name in ("errno", "winerror")
+                if isinstance(getattr(cleanup, name, None), int)}}
+        return failure
+
+    @classmethod
+    def from_io(cls, cause, expected_report=None):
+        failure = cls._failure("release_input_read", cause)
+        error = cls("Release input checks failed during recheck: release_input_read ("
+                    + type(cause).__name__ + ")")
+        error.expected_report, error.observed_report = expected_report, None
+        error.changed_checks, error.recheck_kind = [], "check_failed"
+        error.release_recheck = {"category": "check_failed", "changed_checks": [], "changed_fields": [],
+            "failures": [failure]}
+        return error
+
+    @classmethod
+    def from_report(cls, expected_report, observed_report):
+        report, observed = expected_report, observed_report
+        if report is None:
+            changed = sorted({item["check"] for item in observed["errors"]})
+            changed_fields = []
+        else:
+            expected_checks = report.get("checks", {})
+            observed_checks = observed.get("checks", {})
+            changed = sorted(key for key in expected_checks.keys() | observed_checks.keys()
+                             if key not in expected_checks or key not in observed_checks
+                             or expected_checks[key] != observed_checks[key])
+            known_fields = {"status", "spec_identity", "package_identity", "source_commit",
+                            "source_archive_sha256", "inputs", "limitations", "errors"}
+            changed_fields = sorted(key for key in known_fields
+                if key not in report or key not in observed or report[key] != observed[key])
+            if any(key not in report or key not in observed or report[key] != observed[key]
+                   for key in (report.keys() | observed.keys()) - known_fields - {"checks"}):
+                changed_fields.append("report_shape")
+        errors = observed.get("errors", [])
+        if errors:
+            owners = sorted({item.get("check", "unknown") + " (" + item.get("error_type", "unknown") + ")"
+                             for item in errors})
+            error = cls("Release input checks failed during recheck: " + ", ".join(owners[:8]))
+        else:
+            error = cls("Release inputs changed after verification: " + ", ".join(changed[:8]))
+        error.expected_report, error.observed_report = report, observed
+        error.changed_checks = changed
+        error.recheck_kind = "check_failed" if errors else "binding_mismatch"
+        error.release_recheck = {
+            "category": error.recheck_kind,
+            "changed_checks": sorted({key.partition(":")[0] for key in changed}
+                                     | {item.get("check", "unknown") for item in errors})[:8],
+            "changed_fields": changed_fields,
+            "failures": [{key: item[key] for key in ("check", "error_type", "errno", "winerror", "cleanup_error")
+                          if key in item} for item in errors[:8]],
+        }
+        return error
+
+
+def _verify_release_report(path: Path, code_path: Path, *, _verification=None,
+                           _entry_bytes=None, _metadata_bytes=None) -> dict:
     from .experiment_preflight import check_release_inputs
     from .experiment_spec import ExperimentSpec
     from .training_reproducibility import sha256_file
@@ -67,15 +137,35 @@ def _verify_release_report(path: Path, code_path: Path) -> dict:
     inputs = report["inputs"]
     package = Path(inputs["package"])
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
-    observed = check_release_inputs(spec, package, expected_package_identity=report["package_identity"],
-        recipe_files=inputs["recipe_files"], initial_states=inputs["initial_states"],
-        required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
-        entry_script=inputs["entry_script"], input_root=inputs["input_root"],
-        launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"))
+    try:
+        observed = check_release_inputs(spec, package, expected_package_identity=report["package_identity"],
+            recipe_files=inputs["recipe_files"], initial_states=inputs["initial_states"],
+            required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
+            entry_script=inputs["entry_script"], input_root=inputs["input_root"],
+            launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"),
+            _verification=_verification)
+    except OSError as cause:
+        raise ReleaseRecheckError.from_io(cause, expected_report=report) from cause
     if observed != report or observed["errors"]:
-        raise ValueError("Release inputs changed after verification")
-    if report["checks"].get("entry_script:kernel") != sha256_file(code_path):
-        raise ValueError("Kernel entry script is not bound to the release check")
+        raise ReleaseRecheckError.from_report(report, observed)
+    entry_sha = sha256_file(code_path) if _entry_bytes is None else hashlib.sha256(_entry_bytes).hexdigest()
+    changed = []
+    if report["checks"].get("entry_script:kernel") != entry_sha:
+        if _entry_bytes is None:
+            raise ValueError("Kernel entry script is not bound to the release check")
+        changed.append("entry_script:kernel")
+    metadata_sha = report["checks"].get("workflow:launch", {}).get("metadata_sha256")
+    if (_metadata_bytes is not None and metadata_sha is not None
+            and hashlib.sha256(_metadata_bytes).hexdigest() != metadata_sha):
+        changed.append("workflow:launch")
+    if changed:
+        error = ReleaseRecheckError("Submission snapshot differs from the verified release")
+        error.expected_report, error.observed_report = report, None
+        error.changed_checks, error.recheck_kind = changed, "binding_mismatch"
+        error.release_recheck = {"category": "binding_mismatch",
+            "changed_checks": sorted({key.partition(":")[0] for key in changed}),
+            "changed_fields": [], "failures": []}
+        raise error
     return {k: report[k] for k in ("spec_identity", "package_identity", "source_commit", "source_archive_sha256")}
 
 
@@ -87,6 +177,8 @@ def push_kernel_with_accelerator(
     timeout_seconds: int = 120,
     release_report_path: Path | None = None,
     api=None,
+    _verification=None,
+    _before_post=None,
 ) -> dict[str, Any]:
     if accelerator in UNSUPPORTED_BATCH_ACCELERATORS:
         raise ValueError(
@@ -97,7 +189,8 @@ def push_kernel_with_accelerator(
     if accelerator not in ALLOWED_ACCELERATORS:
         raise ValueError(f"Unsupported accelerator: {accelerator}")
     package = package_dir.resolve()
-    metadata = json.loads((package / "kernel-metadata.json").read_text(encoding="utf-8"))
+    metadata_bytes = (package / "kernel-metadata.json").read_bytes()
+    metadata = json.loads(metadata_bytes.decode("utf-8"))
     if accelerator == "CPU-only" and str(metadata.get("enable_gpu", False)).lower() == "true":
         raise ValueError("CPU-only publication requires GPU-disabled metadata")
     code_path = package / metadata["code_file"]
@@ -105,9 +198,13 @@ def push_kernel_with_accelerator(
         raise FileNotFoundError(code_path)
     if not code_path.resolve().is_relative_to(package):
         raise ValueError("Kernel entry script is outside the package")
-    if "EXPECTED_LAUNCH_SHA256" in code_path.read_text(encoding="utf-8") and release_report_path is None:
+    code_bytes = code_path.read_bytes()
+    code_text = code_bytes.decode("utf-8")
+    if "EXPECTED_LAUNCH_SHA256" in code_text and release_report_path is None:
         raise ValueError("Prepared workflow entry requires its verified release report")
-    release_binding = _verify_release_report(release_report_path, code_path) if release_report_path else None
+    release_binding = (_verify_release_report(release_report_path, code_path,
+        _verification=_verification, _entry_bytes=code_bytes, _metadata_bytes=metadata_bytes)
+        if release_report_path else None)
     if release_report_path:
         report_inputs = json.loads(release_report_path.read_text(encoding="utf-8"))["inputs"]
         if report_inputs.get("metadata") and Path(report_inputs["metadata"]).resolve() != (package / "kernel-metadata.json").resolve():
@@ -129,7 +226,7 @@ def push_kernel_with_accelerator(
     request = {
         "slug": metadata["id"],
         "newTitle": metadata["title"],
-        "text": code_path.read_text(encoding="utf-8"),
+        "text": code_text,
         "language": metadata["language"],
         "kernelType": metadata["kernel_type"],
         "isPrivate": str(metadata.get("is_private", "true")).lower() == "true",
@@ -145,6 +242,8 @@ def push_kernel_with_accelerator(
     }
     if accelerator != "CPU-only":
         request["machineShape"] = accelerator
+    if _before_post is not None:
+        _before_post()
     try:
         if api is not None:
             from kagglesdk.kernels.types.kernels_api_service import ApiSaveKernelRequest

@@ -1,10 +1,13 @@
 """Shared human declarations feed existing same-run and attempt owners."""
 from copy import deepcopy
+import hashlib
 import json
+from pathlib import Path
+import struct
 
 import pytest
 
-from molgap.experiment_input import resolve_experiment_input
+from molgap.experiment_input import resolve_experiment_input, freeze_experiment_input
 from molgap.experiment_family_workflow import check_acceptance_plan
 from molgap.common.identity import validate_execution_identity
 from test_scientific_input import scientific
@@ -23,6 +26,7 @@ def _pair(case):
     target = "experiments/compact/target.json"
     recipe = json.loads((case.repo / shared["recipe_ref"]).read_bytes())
     _write_json(case.repo / target, {
+        "training_float32_target_sha256": hashlib.sha256(struct.pack("<3f", -1., 0., 1.)).hexdigest(),
         "development_target_sha256": recipe["acceptance_requirements"]["target_sha256"],
         "target_encoding": "little-endian-float32-contiguous-raw-bytes"})
     value["same_run"] = {"reference_arm_id": "baseline", "target_manifest_ref": target}
@@ -40,19 +44,141 @@ def _commit(case, value, authority, path):
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "--allow-empty", "-m", "Synthetic pair input")
 
 
-def test_shared_same_job_pair_uses_existing_acceptance(scientific):
+@pytest.mark.parametrize("purpose", ["optimizer_comparison", "initialization_comparison"])
+def test_shared_same_job_pair_uses_existing_acceptance(scientific, purpose, tmp_path):
     case = scientific
     value, authority, path = _pair(case)
+    if purpose == "initialization_comparison":
+        value["logical_run_id"] = "compact-initialization-pair"
+    recipe_path = case.repo / value["shared"]["recipe_ref"]
+    guarded_recipe = json.loads(recipe_path.read_bytes())
+    guard = {"prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
+    guarded_recipe["initial_development_check"] = guard
+    _write_json(recipe_path, guarded_recipe)
+    data_path = case.repo / value["shared"]["data_ref"]["spec_ref"]
+    data_spec = json.loads(data_path.read_bytes())
+    source_arm = next(arm for arm in data_spec["arms"]
+        if arm["arm_id"] == value["shared"]["data_ref"]["arm_id"])
+    source_arm["training"]["recipe"]["sha256"] = hashlib.sha256(recipe_path.read_bytes()).hexdigest()
+    _write_json(data_path, data_spec)
+    if purpose == "initialization_comparison":
+        import torch
+        from molgap.v4_runtime import state_dict_sha256
+        value["shared"].update(purpose=purpose, training={})
+        initial = torch.load(value["shared"]["initial_state_ref"], weights_only=True)
+        first = next(key for key, tensor in initial.items() if tensor.is_floating_point())
+        initial[first] = initial[first] + .01
+        candidate_initial = path.parent / "candidate-initial.pt"
+        candidate_initial.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(initial, candidate_initial)
+        candidate_recipe = json.loads(recipe_path.read_bytes())
+        candidate_recipe["initialization_sha256"] = state_dict_sha256(initial)
+        candidate_recipe.pop("initial_development_check", None)
+        recipe_name = "experiments/compact/candidate-recipe.json"
+        _write_json(case.repo / recipe_name, candidate_recipe)
+        candidate_spec = deepcopy(data_spec)
+        candidate_arm = next(a for a in candidate_spec["arms"]
+            if a["arm_id"] == source_arm["arm_id"])
+        candidate_arm["initialization"]["state_sha256"] = candidate_recipe["initialization_sha256"]
+        candidate_arm["training"]["recipe"]["sha256"] = hashlib.sha256(
+            (case.repo / recipe_name).read_bytes()).hexdigest()
+        spec_name = "experiments/compact/candidate-spec.json"
+        _write_json(case.repo / spec_name, candidate_spec)
+        value["arms"][1].update(recipe_ref=recipe_name, initial_state_ref=str(candidate_initial),
+            data_ref={"spec_ref": spec_name, "arm_id": source_arm["arm_id"]})
     _commit(case, value, authority, path)
     _, spec, plan, _ = resolve_experiment_input(path, case.repo)
+    assert all(json.loads((case.repo / arm["recipe"]).read_bytes())["initial_development_check"] == guard
+               for arm in plan["arms"]
+               if purpose != "initialization_comparison" or arm["arm_id"] == "baseline")
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["reference", "candidate"]
     acceptance = json.loads((case.repo / plan["acceptance_plan"]).read_bytes())
-    assert check_acceptance_plan(spec, case.repo, acceptance)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    target_path = case.repo / value["same_run"]["target_manifest_ref"]
+    retained = target_path.read_bytes()
+    targets = json.loads(retained)
+    targets.pop("training_float32_target_sha256")
+    _write_json(target_path, targets)
+    missing = deepcopy(acceptance)
+    for entry in missing["arms"]:
+        entry["target_manifest"]["sha256"] = hashlib.sha256(target_path.read_bytes()).hexdigest()
+    assert check_acceptance_plan(spec, case.repo, missing)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    blocked = check_acceptance_plan(spec, case.repo, missing, require_training_targets=True)
+    assert blocked["status"] == "BLOCKED"
+    assert all(any("training_float32_target_sha256" in reason for reason in arm["blockers"])
+               for arm in blocked["arms"])
+    target_path.write_bytes(retained)
+    assert check_acceptance_plan(spec, case.repo, acceptance, require_training_targets=True)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    from molgap.kaggle_workflow import stage_acceptance_inputs
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+    staged = tmp_path / "acceptance"
+    staged_binding = stage_acceptance_inputs(spec, case.repo, plan["acceptance_plan"], staged)
+    assert TargetIdentityBinding.from_acceptance_plan(
+        spec, staged, staged_binding["plan_path"], plan_sha256=staged_binding["plan_sha256"]
+    ).repo_root == staged.absolute()
     for binding in spec.to_dict()["prospective"]["arms"]:
         proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
         commit = proposal["trajectory"]["state_at_start"]["source_commit"]
-        assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v1"
+        assert validate_execution_identity(spec, binding["arm_id"], proposal["trajectory"], commit) == f"{value['logical_run_id']}-v1"
     assert not any("comparison_prelaunch" in name for name in plan["generated_records"])
+    from molgap.experiment_family_workflow import same_run_comparison_scope
+    scope = same_run_comparison_scope(value, "candidate", "baseline")
+    assert scope["experiment_purpose"] == purpose
+    assert scope["declared_intervention_fields"] == [
+        "initialization_identity" if purpose == "initialization_comparison" else "optimizer_identity"]
+    for invalid_purpose in ("architecture_comparison", "unknown"):
+        invalid = deepcopy(value)
+        invalid["shared"]["purpose"] = invalid_purpose
+        with pytest.raises(ValueError):
+            same_run_comparison_scope(invalid, "candidate", "baseline", declared_fields=["optimizer_identity"])
+    if purpose == "initialization_comparison":
+        ordinary = deepcopy(value)
+        ordinary["logical_run_id"] = "undeclared-initialization-pair"
+        ordinary["shared"]["purpose"] = "architecture_comparison"
+        _commit(case, ordinary, authority, path)
+        with pytest.raises(ValueError, match="outside one logical group"):
+            resolve_experiment_input(path, case.repo)
+        mixed = deepcopy(value)
+        mixed["logical_run_id"] = "mixed-initialization-pair"
+        mixed["arms"][1]["training"] = {"learning_rate": .007}
+        _commit(case, mixed, authority, path)
+        with pytest.raises(ValueError, match="outside one logical group"):
+            resolve_experiment_input(path, case.repo)
+        no_scope = deepcopy(acceptance)
+        no_scope.pop("comparison_source")
+        assert check_acceptance_plan(spec, case.repo, no_scope)["status"] == "BLOCKED"
+        _commit(case, value, authority, path)
+        return
+    freeze_experiment_input(path, case.repo)
+    previous = spec.identity
+    value["attempt_id"] = "v2"
+    value["retry_of"] = {"logical_run_id": "compact-pair", "attempt_id": "v1",
+                         "spec_identity": previous, "decision_ref": "experiments/compact/retry.json"}
+    _write_json(case.repo / value["retry_of"]["decision_ref"], {
+        "retry_authorized": True, "retry_of": {k: value["retry_of"][k] for k in
+            ("logical_run_id", "attempt_id", "spec_identity")},
+        "remote_state": "NOT_SUBMITTED", "evidence_ref": value["authority_ref"]})
+    authority.update(attempt_ids=["v2"], retry_of=value["retry_of"])
+    _commit(case, value, authority, path)
+    _, retry_spec, retry_plan, _ = resolve_experiment_input(path, case.repo)
+    assert retry_spec.identity != previous
+    assert retry_spec.to_dict()["arms"] == spec.to_dict()["arms"]
+    assert all("/compact-pair-v2/prospective/" in b["output"]
+               for b in retry_spec.to_dict()["prospective"]["arms"])
+    assert {a["recipe"] for a in retry_plan["arms"]}.isdisjoint(a["recipe"] for a in plan["arms"])
+    for binding in retry_spec.to_dict()["prospective"]["arms"]:
+        proposal = json.loads((case.repo / binding["plan_spec_ref"]).read_bytes())
+        commit = proposal["trajectory"]["state_at_start"]["source_commit"]
+        assert validate_execution_identity(retry_spec, binding["arm_id"], proposal["trajectory"], commit) == "compact-pair-v2"
+    incompatible = deepcopy(value)
+    incompatible.update(logical_run_id="guarded-architecture-change", attempt_id="v1")
+    incompatible.pop("retry_of")
+    incompatible["shared"]["purpose"] = "architecture_comparison"
+    model = deepcopy(incompatible["shared"]["model"])
+    model["addons"] = ["k1_readout_scale" if model["family"] == "neural_atom_k1" else "gptrans_readout_scale"]
+    incompatible["arms"][1].update(model=model, training={})
+    _commit(case, incompatible, authority, path)
+    with pytest.raises(ValueError, match="guard cannot be inherited"):
+        resolve_experiment_input(path, case.repo)
 
 
 def test_reference_cannot_infer_authority(scientific):
@@ -62,6 +188,16 @@ def test_reference_cannot_infer_authority(scientific):
     authority.pop("same_run_reference_arm_id")
     _commit(case, value, authority, path)
     with pytest.raises(ValueError, match="explicitly release"):
+        resolve_experiment_input(path, case.repo)
+    authority["same_run_reference_arm_id"] = "baseline"
+    value["attempt_id"] = "v2"
+    _commit(case, value, authority, path)
+    with pytest.raises(ValueError):
+        resolve_experiment_input(path, case.repo)
+    value["attempt_id"] = "v1"
+    value["shared"]["purpose"] = "architecture_comparison"
+    _commit(case, value, authority, path)
+    with pytest.raises(ValueError, match="outside one logical group"):
         resolve_experiment_input(path, case.repo)
 
 

@@ -30,10 +30,52 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
+
+
+RECOVERY_REPAIR_PATHS = frozenset({"src/molgap/experiment_resume.py",
+    "src/molgap/common/io.py", "src/molgap/family_training_runner.py"})
+RECOVERY_REPAIR_FILE = "recovery_repair.json"
+
+
+def validate_recovery_repair(root, *, expected_sha256, manifest, package_dir, source_root=None,
+                             entry_script=None):
+    """Verify a separately entrypoint-pinned infrastructure overlay."""
+    root = Path(root)
+    raw = (root / RECOVERY_REPAIR_FILE).read_bytes()
+    if _sha(raw) != _digest(expected_sha256, "recovery repair pin"):
+        raise ValueError("Recovery repair manifest hash mismatch")
+    if entry_script is not None:
+        import ast
+        tree = ast.parse(Path(entry_script).read_bytes())
+        pins = [node.value.value for node in tree.body if isinstance(node, ast.Assign)
+            and any(isinstance(target, ast.Name) and target.id == "EXPECTED_RECOVERY_REPAIR_SHA256" for target in node.targets)
+            and isinstance(node.value, ast.Constant)]
+        if pins != [expected_sha256]:
+            raise ValueError("Entrypoint does not pin the recovery repair manifest")
+    record = _load_launch(root / RECOVERY_REPAIR_FILE)
+    if (set(record) != {"format", "spec_identity", "package_identity", "archive_sha256", "commit", "files"}
+            or record["format"] != "molgap-recovery-repair-v1"
+            or any(record[key] != manifest[key] for key in ("spec_identity", "package_identity", "archive_sha256"))
+            or type(record["commit"]) is not str or re.fullmatch(r"[0-9a-f]{40}", record["commit"]) is None
+            or type(record["files"]) is not dict or not record["files"]
+            or not set(record["files"]) <= RECOVERY_REPAIR_PATHS):
+        raise ValueError("Invalid recovery repair binding or allowlist")
+    for name, binding in record["files"].items():
+        if type(binding) is not dict or set(binding) != {"original_sha256", "repaired_sha256"}:
+            raise ValueError("Invalid recovery repair file binding")
+        for key in binding:
+            _digest(binding[key], "recovery repair " + key)
+        payload = root / "recovery_repair" / name
+        if payload.is_symlink() or _file_sha(payload) != binding["repaired_sha256"]:
+            raise ValueError("Recovery repair payload hash mismatch")
+        _verified_archive_member(package_dir, name, binding["original_sha256"])
+        if source_root is not None and _file_sha(Path(source_root) / name) != binding["original_sha256"]:
+            raise ValueError("Recovery repair original source mismatch")
+    return record
 
 
 def validate_allocation_budget(config: dict) -> None:
@@ -283,6 +325,14 @@ def validate_launch_config(
         raise ValueError("Launch staged input root is missing")
     if launch_path.parent.resolve() != root.resolve():
         raise ValueError("Launch configuration must live at the staged input root")
+
+    if "target_identity" in config:
+        from .experiment_family_workflow import TargetIdentityBinding
+        binding = config["target_identity"]
+        if type(binding) is not dict or set(binding) != {"plan_path", "plan_sha256"}:
+            raise ValueError("Expected explicit producer target identity binding")
+        TargetIdentityBinding.from_acceptance_plan(spec, root / "acceptance",
+            binding["plan_path"], plan_sha256=binding["plan_sha256"])
 
     # Job paths are checked against the release's maps when available and
     # always against the frozen source archive/staged bytes.

@@ -90,6 +90,10 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     record = json.loads(contract_path.read_bytes())
     session = make_session(arm["family"]["name"], development=True,
         schedule_kind="cosine_step", events=events())
+    from molgap.family_training_runner import read_recipe
+    session.recipe = read_recipe(contract_path)[1]
+    session.kernel.recipe = session.recipe
+    session.loaders.recipe = session.recipe
     action_id = "action-" + arm_id.replace("_", "-")
     producer_context = replace(context, platform_version=None)
     outputs = SessionOutputs(directory, producer_context, contract=contract_path, adapter=entry["adapter"],
@@ -296,8 +300,10 @@ def test_acceptance_without_diagnosis_preserves_execution_retention(tmp_path, re
     assert result["execution_retention"]["manifest"] == sealed["manifest"]
 
 
-def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch):
-    case = frozen_shared_acceptance_run(tmp_path, repo)
+@pytest.mark.parametrize("comparison_purpose", ["architecture_comparison", "optimizer_comparison", "initialization_comparison"])
+def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, monkeypatch, comparison_purpose):
+    case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
+                                       comparison_purpose=comparison_purpose)
     # Keep the local recovery attempt at v2 while the observed launch receipt
     # records physical platform version 1. The action attempt must come from
     # the frozen trajectory, independently of the receipt version.
@@ -380,3 +386,13 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         assert observed["context"]["platform_version"] == "1"
     validated = validate_repository_records(case.repo)
     assert validated["root"] == case.repo.resolve()
+
+    # The shared fixture deliberately omits ordered training-label evidence.
+    # Strict qualification must stop before any qualification publication.
+    blocked = accept_run_workflow(*case.original,
+        retrieved_root=case.paths.artifact_root / "retrieved",
+        strict_inputs={}, execute=True)
+    assert blocked["status"] == "BLOCKED" and blocked["executed"] is False, blocked
+    assert blocked["strict_comparison"]["status"] == "BLOCKED"
+    assert all(row["required_evidence"] == ["target_transform_asset"]
+        for row in blocked["strict_comparison"]["arms"].values())

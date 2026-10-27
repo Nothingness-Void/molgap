@@ -643,6 +643,40 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
     return path.relative_to(repo).as_posix()
 
 
+def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path):
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+
+    repo, spec = workflow_case["repo"], workflow_case["spec"]
+    plan_path = workflow_case["plan"]["acceptance_plan"]
+    destination = tmp_path / "staged-acceptance"
+    binding = kaggle_backend.stage_acceptance_inputs(spec, repo, plan_path, destination)
+    plan = json.loads((repo / plan_path).read_bytes())
+    pointers = {plan_path: _sha((repo / plan_path).read_bytes())}
+    for arm in plan["arms"]:
+        for pointer in [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"],
+                        *arm["reference_artifacts"].values()]:
+            pointers[pointer["path"]] = pointer["sha256"]
+    assert binding == {"plan_path": plan_path, "plan_sha256": pointers[plan_path]}
+    assert {path.relative_to(destination).as_posix() for path in destination.rglob("*") if path.is_file()} == set(pointers)
+    for relative, digest in pointers.items():
+        assert (destination / relative).read_bytes() == (repo / relative).read_bytes()
+        assert _sha((destination / relative).read_bytes()) == digest
+    assert TargetIdentityBinding.from_acceptance_plan(
+        spec, destination, plan_path, plan_sha256=binding["plan_sha256"]
+    ).repo_root == destination.absolute()
+    from molgap.experiment_family_workflow import acceptance_dependency_pins
+    # The transport projection follows typed pointers, including optional fields,
+    # rather than a second list of schema-specific field names.
+    projected = {"arms": plan["arms"], "optional_source": {"path": "nested/source.json", "sha256": "a" * 64}}
+    assert acceptance_dependency_pins(projected) == {
+        **{key: value for key, value in pointers.items() if key != plan_path},
+        "nested/source.json": "a" * 64,
+    }
+    projected["conflicting_source"] = {"path": "nested/source.json", "sha256": "b" * 64}
+    with pytest.raises(ValueError, match="Conflicting acceptance artifact pins"):
+        acceptance_dependency_pins(projected)
+
+
 def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates(
     workflow_case, tmp_path, monkeypatch,
 ):

@@ -26,7 +26,7 @@ from .research_memory.trace import atomic_write
 INTERFACES = SESSION_INTERFACES
 PROFILES = {name: adapter.artifact_adapter for name, adapter in shared_training_adapters().items()}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
-OPTIONAL_METADATA = {"profiling", "logging"}
+OPTIONAL_METADATA = {"profiling", "logging", "initial_development_check"}
 
 
 def _formal_pause_deadline():
@@ -42,6 +42,12 @@ def _formal_pause_deadline():
 
 
 def _recipe_configuration(record):
+    if "initial_development_check" in record:
+        check = record["initial_development_check"]
+        if (type(check) is not dict or set(check) != {"prediction_tolerance_eV", "mae_tolerance_eV"}
+                or any(type(value) not in (int, float) or not 0 < value <= 1e-4
+                       for value in check.values())):
+            raise ValueError("Invalid frozen initialization prediction check")
     if "logging" in record:
         from .training_logging import TrainingLogPolicy
         if record["logging"] is None:
@@ -175,6 +181,37 @@ def _loaded_source(package_dir):
     verify_experiment_source_package(Path(package_dir))
     root = Path(__file__).resolve().parents[2]
     inventory = {item["path"]: item["sha256"] for item in _json(Path(package_dir) / "SOURCE_FILES.json")["files"]}
+    # Only an entrypoint-pinned infrastructure repair may differ from the
+    # scientific package. Preserve that package's original inventory unchanged.
+    repair_path = os.environ.get("MOLGAP_RECOVERY_REPAIR_MANIFEST")
+    if repair_path is not None:
+        import hashlib
+        import json
+        import re
+        raw = Path(repair_path).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != os.environ.get("MOLGAP_RECOVERY_REPAIR_SHA256"):
+            raise ValueError("Recovery repair attestation hash mismatch")
+        repair = json.loads(raw)
+        manifest = _json(Path(package_dir) / "package_manifest.json")
+        allowed = {"src/molgap/experiment_resume.py", "src/molgap/common/io.py",
+                   "src/molgap/family_training_runner.py"}
+        if (raw != json.dumps(repair, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+                              allow_nan=False).encode()
+                or set(repair) != {"format", "spec_identity", "package_identity", "archive_sha256", "commit", "files"}
+                or repair["format"] != "molgap-recovery-repair-v1"
+                or any(repair[key] != manifest[key] for key in ("spec_identity", "package_identity", "archive_sha256"))
+                or type(repair["commit"]) is not str or re.fullmatch(r"[0-9a-f]{40}", repair["commit"]) is None
+                or type(repair["files"]) is not dict or not repair["files"]
+                or not set(repair["files"]) <= allowed):
+            raise ValueError("Invalid recovery repair attestation")
+        for relative, binding in repair["files"].items():
+            if (type(binding) is not dict or set(binding) != {"original_sha256", "repaired_sha256"}
+                    or any(type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None
+                           for value in binding.values())
+                    or inventory.get(relative) != binding["original_sha256"]
+                    or normalized_source_sha256(root / relative) != binding["repaired_sha256"]):
+                raise ValueError("Recovery repair source binding mismatch")
+            inventory[relative] = binding["repaired_sha256"]
     for name, module in tuple(sys.modules.items()):
         if name != "molgap" and not name.startswith("molgap."):
             continue
@@ -1118,8 +1155,47 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         raise
     pause = [False]
     previous_signal = signal.getsignal(signal.SIGTERM)
-    signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
     try:
+        signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
+        if not had_checkpoint and "initial_development_check" in record:
+            # A warm start qualifies its retained predictor before any update.
+            from .v4_runtime import torch_load_compat
+            retained = torch_load_compat(Path(options["initial_state_path"]), map_location="cpu", weights_only=True)
+            reference = retained["reference_development"]
+            before = state_dict_sha256(kernel.model.state_dict())
+            observed = kernel.evaluate(session.loaders, weights="live")
+            check = record["initial_development_check"]
+            for view in (reference, observed):
+                if type(view) is not dict or not {"source_idx", "target_eV", "prediction_eV", "mae_eV"} <= set(view):
+                    raise ValueError("Initial predictor requires complete retained prediction fields")
+                vectors = [view[key] for key in ("source_idx", "target_eV", "prediction_eV")]
+                if (any(not isinstance(value, torch.Tensor) or value.ndim != 1 for value in vectors)
+                        or vectors[0].numel() != recipe.development_rows
+                        or any(value.shape != vectors[0].shape for value in vectors)
+                        or vectors[0].dtype != torch.int64
+                        or any(not value.is_floating_point() or not torch.isfinite(value).all()
+                               for value in vectors[1:])):
+                    raise ValueError("Initial predictor requires finite, equally shaped development vectors")
+                mae = view["mae_eV"]
+                if type(mae) not in (int, float) or not math.isfinite(mae) or mae < 0:
+                    raise ValueError("Initial predictor requires finite nonnegative MAE")
+                recomputed = float((view["prediction_eV"] - view["target_eV"]).abs().mean())
+                if not math.isfinite(recomputed) or abs(recomputed - mae) > check["mae_tolerance_eV"]:
+                    raise ValueError("Initial predictor retained MAE differs from prediction bytes")
+            if (not torch.equal(observed["source_idx"], reference["source_idx"])
+                    or not torch.equal(observed["target_eV"], reference["target_eV"])):
+                raise ValueError("Initial predictor development rows/targets differ")
+            delta = float((observed["prediction_eV"] - reference["prediction_eV"]).abs().max())
+            mae_delta = abs(observed["mae_eV"] - float(reference["mae_eV"]))
+            if (delta > check["prediction_tolerance_eV"] or mae_delta > check["mae_tolerance_eV"]
+                    or before != state_dict_sha256(kernel.model.state_dict())):
+                raise ValueError("Initial predictor does not reproduce its retained prediction")
+            atomic_json(root / "initial_development_check.json", {"context": context.to_dict(),
+                "status": "VERIFIED", "weights": "live", "optimizer_steps": 0,
+                "initialization_sha256": before, "development_rows": len(observed["source_idx"]),
+                "mae_eV": observed["mae_eV"], "maximum_prediction_difference_eV": delta,
+                "mae_difference_eV": mae_delta, "tolerances": check})
+            print("INITIAL_DEVELOPMENT_VERIFIED " + str(observed["mae_eV"]), flush=True)
         # A completed physical ten-pass segment makes work externally retrievable.
         # The scientific horizon, scheduler and selected-state policy remain60.
         segment = mode_policy(recipe.family, recipe.mode).segment_passes
@@ -1141,7 +1217,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
             else:
                 progress = session.run(should_pause=should_pause)
     finally:
-        signal.signal(signal.SIGTERM, previous_signal)
+        # run() closes itself, but admission/observer setup can fail before it.
+        # The same idempotent owner also covers those in-process exits.
+        try:
+            session.close()
+        finally:
+            signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began
     total = _finish_cost_interval(root, context, prior_cost, elapsed)
     if progress.status != "complete":

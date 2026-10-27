@@ -11,12 +11,10 @@ from molgap.family_training_data import DatasetSelection, PassBatchSampler, load
 from molgap.training_reproducibility import sha256_file
 
 
-@pytest.fixture
-def pinned_data(tmp_path):
-    root = tmp_path / "platform-one"
-    root.mkdir()
+def write_pinned_data(root, *, train_rows=4, development_rows=2):
+    root.mkdir(parents=True, exist_ok=True)
     records = []
-    for role, start, rows in (("train", 0, 4), ("development", 4, 2)):
+    for role, start, rows in (("train", 0, train_rows), ("development", train_rows, development_rows)):
         graphs = [Data(x=torch.zeros(1, 9, dtype=torch.long),
             edge_index=torch.empty(2, 0, dtype=torch.long),
             edge_attr=torch.empty(0, 3, dtype=torch.long),
@@ -28,15 +26,20 @@ def pinned_data(tmp_path):
         records.append(dict(role=role, file=path.name, rows=rows, source_idx_min=start,
             source_idx_max=start + rows - 1, sha256=sha256_file(path)))
     manifest = {"format": "molgap-pcqm4mv2-fixed-subset-v1", "status": "complete",
-        "source": {"external_data_used": False, "official_train_rows": 6},
+        "source": {"external_data_used": False, "official_train_rows": train_rows + development_rows},
         "graph_contract": {"feature_schema": "ogb", "node_feature_dim": 9,
                            "edge_feature_dim": 3, "rwse_dim": 16},
-        "roles": {"train": {"source_idx_start": 0, "source_idx_stop": 4, "rows": 4},
-                  "development": {"source_idx_start": 4, "source_idx_stop": 6, "rows": 2}},
+        "roles": {"train": {"source_idx_start": 0, "source_idx_stop": train_rows, "rows": train_rows},
+                  "development": {"source_idx_start": train_rows, "source_idx_stop": train_rows + development_rows, "rows": development_rows}},
         "assets": {"topology": records}}
     path = root / "manifest.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
     return root, DatasetSelection(path.name, sha256_file(path), True), manifest
+
+
+@pytest.fixture
+def pinned_data(tmp_path):
+    return write_pinned_data(tmp_path / "platform-one")
 
 
 def test_mount_path_is_not_dataset_identity(pinned_data, tmp_path):

@@ -314,7 +314,7 @@ def _workflow_inputs(spec, repo_root, plan):
     jobs, recipes, initial_states = _arm_inputs(repo_root, plan["arms"], bindings)
     validated_jobs = validate_execution_plan(spec, jobs)
     acceptance_path = _artifact_path(repo_root, plan["acceptance_plan"])
-    acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path))
+    acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path), require_training_targets=True)
     if acceptance["status"] == "BLOCKED":
         return {"status": "BLOCKED", "stage": "acceptance_plan", "acceptance": acceptance,
                 "prospective_published": False, "submitted": False}
@@ -413,7 +413,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("package", manifest)
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
-            initial_states=initial_states, jobs=jobs, _verification=verification)
+            initial_states=initial_states, jobs=jobs, _verification=verification,
+            **({"acceptance_plan_path": plan["acceptance_plan"]} if platform_name == "kaggle" else {}))
         staged, kernel = stage["input_root"], stage["kernel_dir"]
         release = check_release_inputs(spec, package,
             expected_package_identity=manifest["package_identity"], recipe_files=recipes,

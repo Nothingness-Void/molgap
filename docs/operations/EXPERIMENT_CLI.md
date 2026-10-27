@@ -114,6 +114,34 @@ rechecks their bound artifacts read-only; it does not stage or close them again.
 Missing historical roles or scientific decisions remain explicit inputs.
 Runtime role sidecars are consumed automatically when available.
 
+For a scratch/pretrained pair, declare `purpose: initialization_comparison` and
+one reference and one candidate with their own frozen recipes, data declarations
+and initial states. Only the initial state and optional initial-development check
+may differ; the downstream model, data, seed and training contract must match.
+Pretraining provenance and cost remain separate from the matched budget.
+
+New same-run target manifests require `training_float32_target_sha256`, the
+ordered training-label FP32 digest. An older frozen run missing it remains
+mechanically inspectable but strict qualification is blocked. Retained independent
+evidence can be bound through `--strict-inputs` as
+`{"<arm>": {"target_transform_asset": {"path": "<artifact locator>",
+"sha256": "<file SHA256>"}}}`. The existing target-transform asset must bind the
+actual label digest and frozen membership/normalization; supplying it does not
+prove how the digest was measured. Never rewrite the frozen target manifest.
+
+Same-run intervention purpose and fields come from the pinned scientific input.
+Additional EMA reporting preserves LIVE checkpoint selection, and a declared
+initial-development check verifies the retained predictor before the first update.
+Historical reference runs retain their own strict comparison evidence.
+
+For an authorized infrastructure-only continuation, `prepare-resume` accepts
+`recovery_repair: {commit, files}`. Each file binds `original_sha256` and
+`repaired_sha256`; `build-resume --recovery-repair` accepts the same declaration.
+The separately pinned overlay supports the reviewed transport/IO/runner paths;
+it preserves the original archive, Spec and prospective records. Resumed
+allocation fields retain or lower the original ceiling. Physical publication
+uses the [Kaggle adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation).
+
 Closed continuations resolve their shared successor receipt from every arm's
 hash-bound canonical record. An unclosed continuation requires
 `--continuation-receipt`; staging also needs `--resume-prepared` and

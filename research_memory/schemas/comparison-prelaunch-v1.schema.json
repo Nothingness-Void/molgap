@@ -18,14 +18,30 @@
     "reference_id": {"type": ["string", "null"]},
     "reference_bundle_id": {"type": ["string", "null"]},
     "reference_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
-    "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "training_objective_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
+    "experiment_purpose": {"enum": ["initialization_comparison", "architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "training_objective_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
     "intervention_group_id": {"type": "string", "minLength": 1},
     "mechanism_id": {"type": ["string", "null"]},
     "planned_status": {"enum": ["PRELAUNCH_STRICT_PLANNED", "PRELAUNCH_NONCAUSAL_PLANNED", "PRELAUNCH_BLOCKED"]},
     "prelaunch_ready": {"type": "boolean"},
     "declared_intervention_fields": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
-    "matched_fields": {"type": "object"},
-    "mismatched_fields": {"type": "object"},
+    "matched_fields": {
+      "type": "object",
+      "properties": {"initialization_identity": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+    },
+    "mismatched_fields": {
+      "type": "object",
+      "properties": {
+        "initialization_identity": {
+          "type": "object",
+          "required": ["candidate", "reference"],
+          "properties": {
+            "candidate": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "reference": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          },
+          "additionalProperties": false
+        }
+      }
+    },
     "missing_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "blocker_codes": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "candidate_source_config_status": {"type": "string", "minLength": 1},
@@ -70,5 +86,19 @@
     },
     "terminal_candidate_artifacts_required": {"const": false}
   },
+  "allOf": [
+    {
+      "if": {"properties": {"experiment_purpose": {"const": "initialization_comparison"}}},
+      "then": {
+        "properties": {"declared_intervention_fields": {"items": {"const": "initialization_identity"}, "minItems": 1}},
+        "allOf": [
+          {
+            "if": {"properties": {"prelaunch_ready": {"const": true}}},
+            "then": {"properties": {"mismatched_fields": {"required": ["initialization_identity"]}}}
+          }
+        ]
+      }
+    }
+  ],
   "additionalProperties": false
 }

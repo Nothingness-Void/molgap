@@ -163,7 +163,7 @@ def test_only_one_human_parameter_edit_compiles_and_recovers_actual_single_entry
     _git(case.repo, "add", "--", case.path.relative_to(case.repo).as_posix())
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Change only human learning rate")
     program = r'''
-import contextlib, importlib.util, io, json, pathlib, sys
+import contextlib, hashlib, importlib.util, io, json, pathlib, sys
 repo=pathlib.Path(sys.argv[1]);config=pathlib.Path(sys.argv[2]);sys.path.insert(0,str(repo/"src"))
 from molgap import kaggle_workflow
 from molgap.experiment_input import resolve_experiment_input
@@ -202,25 +202,132 @@ assert failed==(run/"prepared/workflow_report.json").read_bytes()
 assert not (run/"local_preparation_failures").exists()
 subprocess.run(["git","switch","--detach",original_commit],cwd=repo,check=True,capture_output=True)
 kaggle_workflow.stage_inputs=original
+original_freeze=kaggle_workflow.freeze_inputs
+interrupted_attachment={}
+def fail_final_binding(stage,trajectories):
+    original_freeze(stage,trajectories)
+    plan_path=stage["launch"]["target_identity"]["plan_path"]
+    acceptance=json.loads((stage["input_root"] / "acceptance" / plan_path).read_bytes())
+    contract_path=acceptance["arms"][0]["contract"]["path"]
+    attachment=stage["input_root"] / "acceptance" / contract_path
+    assert attachment.is_file()
+    interrupted_attachment.update(path=contract_path,staged=str(attachment))
+    attachment.unlink()
+kaggle_workflow.freeze_inputs=fail_final_binding
 out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
-result=json.loads(out.getvalue());assert code==0,result
-assert result["status"]=="PREPARED_FOR_PLATFORM" and result["submitted"] is False
-workflow_report=json.loads((run/"prepared/workflow_report.json").read_bytes())
+binding_failure=json.loads(out.getvalue())
+assert code==2 and binding_failure["status"]=="BLOCKED",binding_failure
+kaggle_workflow.freeze_inputs=original_freeze
+prepared=run/"prepared"
+binding_failure_report=(prepared/"workflow_report.json").read_bytes()
+workflow_failure=json.loads(binding_failure_report)
+assert workflow_failure["status"]=="ERROR_REQUIRES_RECONCILIATION"
+assert workflow_failure["prospective_published"] is True
+assert interrupted_attachment["staged"]
+contract_path=interrupted_attachment["path"]
+contract_staged=prepared/"source_dataset"/"acceptance"/contract_path
+assert not contract_staged.exists()
+manifest=verify_experiment_source_package(prepared/"package",repo)
+from molgap.experiment_package import read_packaged_text
+contract_bytes=read_packaged_text(prepared/"package",contract_path).encode()
+from molgap.experiment_family_workflow import acceptance_dependency_pins
+acceptance_plan=json.loads(read_packaged_text(prepared/"package",
+    json.loads((prepared/"source_dataset/experiment_launch.json").read_bytes())
+        ["target_identity"]["plan_path"]))
+acceptance_pins=acceptance_dependency_pins(acceptance_plan)
+assert hashlib.sha256(contract_bytes).hexdigest()==acceptance_pins[contract_path]
+from molgap import experiment_workflow
+experiment_workflow.plan_prospective=forbidden
+experiment_workflow.build_experiment_source_package=forbidden
+kaggle_workflow.freeze_inputs=forbidden
+def recover_prepared():
+    recovery_output=io.StringIO()
+    with contextlib.redirect_stdout(recovery_output):
+        recovery_code=entry.main(["--recover-prepared","--prepared",str(prepared),"--repo-root",str(repo)])
+    return recovery_code,json.loads(recovery_output.getvalue())
+owner=prepared.with_name(prepared.name+".submission_owner.json")
+journal=run/"operations/submission_state.json"
+for marker in (owner,journal):
+    marker.parent.mkdir(parents=True,exist_ok=True)
+    marker.write_bytes(b"{}")
+    recovery_code,blocked=recover_prepared()
+    assert recovery_code==2 and blocked["status"]=="BLOCKED",blocked
+    marker.unlink()
+    if marker.parent==journal.parent:
+        marker.parent.rmdir()
+partial=json.loads(binding_failure_report)
+prospective_stage=next(row for row in partial["stages"] if row["stage"]=="prospective")
+prospective_stage["result"]["status"]="PROSPECTIVE_PUBLICATION_PARTIAL"
+(prepared/"workflow_report.json").write_bytes(json.dumps(partial,sort_keys=True,separators=(",",":")).encode())
+recovery_code,blocked=recover_prepared()
+assert recovery_code==2 and blocked["status"]=="BLOCKED",blocked
+(prepared/"workflow_report.json").write_bytes(binding_failure_report)
+other_path=next(path for path in acceptance_pins if path!=contract_path and path!=
+    json.loads((prepared/"source_dataset/experiment_launch.json").read_bytes())
+        ["target_identity"]["plan_path"])
+other_staged=prepared/"source_dataset"/"acceptance"/other_path
+other_bytes=other_staged.read_bytes()
+other_staged.write_bytes(other_bytes+b"changed fixture bytes")
+recovery_code,blocked=recover_prepared()
+assert recovery_code==2 and blocked["status"]=="BLOCKED",blocked
+other_staged.write_bytes(other_bytes)
+renamed=[]
+try:
+    # Recovery must use the original verified package when all compiler sources are unavailable.
+    sources=[repo/"experiments/reference",repo/"experiments/scientific-fixture/generated",
+             pathlib.Path(value["arms"][0]["initial_state_ref"])]
+    for source in sources:
+        target=source.with_name(source.name+"-retained")
+        assert source.resolve().is_relative_to(repo.parent) and target.resolve().is_relative_to(repo.parent)
+        source.rename(target);renamed.append((source,target))
+    recovery_code,recovered=recover_prepared()
+    assert recovery_code==0 and recovered["status"]=="PREPARED_FOR_PLATFORM",recovered
+    assert contract_staged.read_bytes()==contract_bytes
+    workflow_report=json.loads((prepared/"workflow_report.json").read_bytes())
+    assert workflow_report["status"]=="PREPARED_FOR_PLATFORM"
+    recovery=next(row["result"] for row in workflow_report["stages"]
+                  if row["stage"]=="preparation_recovery")
+    assert recovery["status"]=="RECOVERED"
+    assert recovery["restored_acceptance_paths"]==[contract_path]
+    release=json.loads((prepared/"release_report.json").read_bytes())
+    from molgap.experiment_preflight import check_workflow_binding
+    actual_binding=check_workflow_binding(spec,
+        launch_config=prepared/"source_dataset/experiment_launch.json",
+        kernel_metadata=prepared/"kernel/kernel-metadata.json",
+        entry_script=prepared/"kernel/run.py",
+        package_dir=release["inputs"]["package"],
+        expected_package_identity=release["package_identity"],
+        recipe_files=release["inputs"]["recipe_files"],
+        initial_states=release["inputs"]["initial_states"],
+        input_root=prepared/"source_dataset")
+    assert actual_binding==release["checks"]["workflow:launch"]
+    def prepared_snapshot():
+        return {str(path.relative_to(prepared)):hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in prepared.rglob("*") if path.is_file()}
+    recovered_snapshot=prepared_snapshot()
+    recovery_code,no_op=recover_prepared()
+    assert recovery_code==0 and no_op["status"]=="PREPARED_FOR_PLATFORM",no_op
+    assert recovered_snapshot==prepared_snapshot()
+finally:
+    for source,target in reversed(renamed):target.rename(source)
+workflow_report=json.loads((prepared/"workflow_report.json").read_bytes())
 planned=next(row["result"] for row in workflow_report["stages"] if row["stage"]=="prospective")
 assert planned["rml_rebuild_pending"] is True and planned["rml_rebuilt"] is False
 assert not (repo/"research_memory/derived").exists()
 assert not (repo/"experiments/history/unavailable-checkpoint.pt").exists()
 trajectory_path=next(repo.glob("experiments/scientific-fixture/runs/*/prospective/*/trajectory.json"))
 trajectory=json.loads(trajectory_path.read_bytes())
-decision_state=json.loads((trajectory_path.parent/"decision_state.json").read_bytes())
-policy_snapshot=json.loads((trajectory_path.parent/"policy_snapshot.json").read_bytes())
-assert trajectory["decision_state"]==decision_state
+from molgap.research_memory.plan import resolve_decision_state
+decision_state=resolve_decision_state(repo, trajectory)["decision_state"]
 assert "evidence-common-test" in decision_state["known_evidence_ids"]
-assert policy_snapshot["schema"]=="molgap-policy-v1"
+assert decision_state["policy_snapshot"]["schema"]=="molgap-policy-v1"
 assert binding==(run/"inputs/input_binding.json").read_bytes()
-retained=list((run/"local_preparation_failures").glob("*/workflow_report.json"))
-assert len(retained)==1 and retained[0].read_bytes()==failed
+retained=list((run/"local_preparation_failures").glob("prepared-*.json"))
+assert len(retained)==1
+receipt=json.loads(retained[0].read_bytes())
+assert receipt["workflow_report"]==json.loads(failed)
+assert receipt["local_payload_retirement"]["status"]=="REMOVED"
 out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
 assert code==0 and json.loads(out.getvalue())["reused_preparation"]

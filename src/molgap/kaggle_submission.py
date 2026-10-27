@@ -19,13 +19,13 @@ from urllib.parse import quote
 
 from .experiment_family_workflow import _json
 from .experiment_launch import (_safe_local, build_launch_receipt, canonical_json,
-                                reconcile_platform_response)
+                                publish_immutable_bytes, reconcile_platform_response)
 from .experiment_package import read_packaged_text, verify_experiment_source_package
 from .experiment_spec import ExperimentSpec
 from .common.kaggle import (dataset_status as _dataset_status,
     dataset_details as _dataset_details, kernel_source as _kernel_source,
-    owned_absence as _owned_absence)
-from .kaggle_accelerator_push import _verify_release_report, push_kernel_with_accelerator
+    owned_absence as _owned_absence, platform_error_details)
+from .kaggle_accelerator_push import ReleaseRecheckError, _verify_release_report, push_kernel_with_accelerator
 from .research_memory.trace import atomic_write
 from .training_reproducibility import atomic_json, sha256_file
 
@@ -266,27 +266,48 @@ def _check_scientific_release(spec, package, staged, authority, manifest):
 
 def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              monitor_paths, execute=False, api=None, http_session=None,
-                             reconcile_retired_push=False, reconcile_sdk_transport=False):
+                             reconcile_retired_push=False, reconcile_sdk_transport=False,
+                             recovery_authority=None, recovery_authority_sha256=None,
+                             source_version=1, kernel_version=1,
+                             _verification=None):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
     _safe_local(output)
+    report_path = prepared / "workflow_report.json"
+    _safe_local(report_path)
+    report = _json(report_path)
+    continuation = report.get("format") == "molgap-workflow-recovery-preparation-v1"
+    if continuation:
+        if (recovery_authority is None or recovery_authority_sha256 is None
+                or type(source_version) is not int or source_version < 2
+                or type(kernel_version) is not int or kernel_version < 2):
+            raise ValueError("Continuation requires explicit recovery authority/SHA and successor source/kernel versions")
+        recovery_authority = Path(recovery_authority).absolute()
+        _safe_local(recovery_authority)
+        if sha256_file(recovery_authority) != recovery_authority_sha256:
+            raise ValueError("Recovery authority bytes differ from the explicit SHA256")
+    elif (recovery_authority is not None or recovery_authority_sha256 is not None
+          or source_version != 1 or kernel_version != 1):
+        raise ValueError("Continuation arguments require a prepared resume workflow")
     values = _credentials(credentials)
     package, kernel, staged = prepared / "package", prepared / "kernel", prepared / "source_dataset"
+    if continuation:
+        package = Path(report["original_prepared"]) / "package"
     for path in (kernel / "kernel-metadata.json", kernel / "run.py", staged / "dataset-metadata.json",
                  staged / "experiment_launch.json", prepared / "workflow_report.json"):
         _safe_local(path)
-    manifest = verify_experiment_source_package(package)
+    from .experiment_package import _PackageVerification
+    verification = _verification if _verification is not None else _PackageVerification()
+    manifest = verify_experiment_source_package(package, _verification=verification)
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
-    report = _json(prepared / "workflow_report.json")
-    if report.get("status") != "PREPARED_FOR_PLATFORM" or report.get("package_identity") != manifest["package_identity"]:
+    if (report.get("status") not in ({"RESUME_INPUTS_PREPARED", "PREPARED_FOR_PLATFORM"} if continuation else {"PREPARED_FOR_PLATFORM"})
+            or report.get("package_identity") != manifest["package_identity"]):
         raise ValueError("Use the completed prepared workflow and its exact package")
     metadata = _json(kernel / "kernel-metadata.json")
     source_metadata = _json(staged / "dataset-metadata.json")
     account, ref, dataset = values["username"], metadata["id"], source_metadata["id"]
     launch = _json(staged / "experiment_launch.json")
-    if "resume" in launch:
-        raise ValueError("Resumed workflow staging is local-only here; use the owning platform continuation adapter after reconciling the original run")
     from .experiment_execution import validate_execution_plan
     initial_paths = {job["arm_id"]: job["initial_state"]
                      for job in validate_execution_plan(spec, launch["jobs"])}
@@ -301,16 +322,60 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     allowed.update(initial_paths.values())
     for arm in spec.to_dict()["arms"]:
         allowed.add("prospective/" + arm["arm_id"] + "/trajectory.json")
+    if continuation:
+        from .experiment_family_workflow import _artifact_path
+        from .experiment_launch import read_launch_receipt
+        origin = read_launch_receipt(Path(report["original_receipt"]), spec, package,
+            expected_package_identity=manifest["package_identity"], _verification=verification)
+        if (origin["submission_state"] != "ACCEPTED"
+                or origin["canonical_platform_reference"]["value"] != ref
+                or set(launch.get("resume", {})) != set(initial_paths)):
+            raise ValueError("Continuation must retain the original launch and resume every frozen arm")
+        for arm, pointer in launch["resume"].items():
+            bundle_path = _artifact_path(staged, pointer["manifest"])
+            if sha256_file(bundle_path) != pointer["sha256"]:
+                raise ValueError("Continuation resume bundle differs from its launch pin")
+            bundle = _json(bundle_path)
+            pointers = [p for p in bundle["artifacts"].values() if p is not None]
+            for group in ("runtime", "provenance", "context", "cost_segments"):
+                pointers.extend(bundle[group])
+            allowed.add(pointer["manifest"])
+            allowed.update((bundle_path.parent / p["path"]).relative_to(staged).as_posix() for p in pointers)
+        if report.get("recovery_repair") is not None:
+            from .experiment_launch_config import validate_recovery_repair
+            repair = validate_recovery_repair(staged, expected_sha256=report["recovery_repair"]["manifest_sha256"],
+                manifest=manifest, package_dir=package, entry_script=kernel / "run.py")
+            allowed.add("recovery_repair.json")
+            allowed.update("recovery_repair/" + name for name in repair["files"])
+    if "target_identity" in launch:
+        from .kaggle_workflow import acceptance_input_pins
+        from .experiment_family_workflow import _artifact_path
+        binding = launch["target_identity"]
+        acceptance_root = staged / "acceptance"
+        plan_path = _artifact_path(acceptance_root, binding["plan_path"])
+        if sha256_file(plan_path) != binding["plan_sha256"]:
+            raise ValueError("Staged acceptance plan differs from frozen launch")
+        allowed.update("acceptance/" + path for path in
+                       acceptance_input_pins(spec, acceptance_root, binding["plan_path"]))
+    # A completed upload can have retired its bulky local copies. Only the
+    # journal-bound names may be absent; active/unknown attempts keep all bytes.
+    journal_path = output / "submission_state.json"
+    _safe_local(journal_path)
+    retained_state = _json(journal_path) if journal_path.exists() else {}
+    retired = (retained_state.get("source_copy_retirement", {}).get("uploaded", {})
+               if retained_state.get("phase") == "BOUND" else {})
+    if set(retired) - {"source_payload.bin", *initial_paths.values()}:
+        raise ValueError("Retired upload names differ from the prepared allowlist")
     observed = set()
     for path in staged.rglob("*"):
         _safe_local(path)
         if path.is_file():
             observed.add(path.relative_to(staged).as_posix())
-    if observed != allowed:
+    if observed - allowed or allowed - observed - set(retired):
         raise ValueError("Source upload contains missing or unbound files")
     if output.is_relative_to(prepared) or prepared.is_relative_to(output):
         raise ValueError("Keep operation records separate from immutable prepared inputs")
-    authority = json.loads(read_packaged_text(package, authority_ref))
+    authority = json.loads(read_packaged_text(package, authority_ref, _verification=verification))
     budget = authority.get("allocated_t4_hours_ceiling")
     if (authority.get("user_authorized") is not True or type(budget) not in {int, float}
             or not math.isfinite(budget) or budget <= 0):
@@ -328,6 +393,16 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     if (authority.get("arms") != [arm["arm_id"] for arm in arms]
             or authority.get("seeds") != sorted({arm["initialization"]["seed"] for arm in arms})):
         raise ValueError("Packaged authority does not cover exactly these arms and seeds")
+    if continuation:
+        from .experiment_launch_config import validate_allocation_budget
+        validate_allocation_budget(launch)
+        wall, devices = launch.get("allocation_wall_limit_seconds"), launch.get("device_count")
+        if (type(wall) is not int or type(devices) is not int
+                or devices != spec.to_dict()["platform"]["device_count"] or devices <= 0
+                or wall * devices / 3600 > budget):
+            raise ValueError("Continuation allocation must be explicit and within the packaged authority ceiling")
+        budget = wall * devices / 3600
+        quota_budget = wall / 3600
     from .experiment_terminal import _path
     if not monitor_paths or len(monitor_paths) != len(set(monitor_paths)):
         raise ValueError("Expected explicit unique monitor pointers")
@@ -336,21 +411,38 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     binding = {"package_identity": manifest["package_identity"], "kernel": ref, "dataset": dataset,
                "authority_ref": authority_ref, "authority_sha256": hashlib.sha256(canonical_json(authority).encode()).hexdigest(),
                "monitor_paths": list(monitor_paths)}
+    if continuation:
+        binding["continuation"] = {"source_version": source_version, "kernel_version": kernel_version,
+            "authority_path": str(recovery_authority), "authority_sha256": recovery_authority_sha256,
+            "original_receipt_sha256": sha256_file(Path(report["original_receipt"])),
+            "launch_sha256": sha256_file(staged / "experiment_launch.json"),
+            "entry_sha256": sha256_file(kernel / "run.py")}
+    _bind_operation_directory(prepared, output, binding)
     if not execute:
-        _check_scientific_release(spec, package, staged, authority, manifest)
-        _verify_release_report(prepared / "release_report.json", kernel / "run.py")
+        already_bound = _bound_submission_status(
+            output, spec, package, manifest["package_identity"], binding, _verification=verification)
+        if already_bound is not None:
+            return already_bound
+        if not continuation:
+            _check_scientific_release(spec, package, staged, authority, manifest)
+        _verify_release_report(prepared / "release_report.json", kernel / "run.py", _verification=verification)
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
     output.mkdir(parents=True, exist_ok=True)
     with _exclusive(output):
+        _bind_operation_directory(prepared, output, binding, publish=True)
         journal = output / "submission_state.json"
         _safe_local(journal)
         state = _json(journal) if journal.exists() else {"binding": binding, "phase": "NEW", "timings": {}}
         if state["binding"] != binding:
             raise ValueError("Preserve the journal; submission inputs or authority changed")
-        scientific_checked = False
-        if "kernel_response" not in state and state["phase"] not in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
-            _check_scientific_release(spec, package, staged, authority, manifest)
-            scientific_checked = True
+        if state["phase"] == "BOUND":
+            # A completed publication is immutable. Reentry may finish local
+            # cleanup; a newer remote version must not rebind this receipt.
+            result = _bound_submission_status(output, spec, package, manifest["package_identity"],
+                                              binding, _verification=verification)
+            if state.get("source_copy_retirement", {}).get("status") != "REMOVED":
+                result["source_copy_retirement"] = _retire_source_copies(prepared, output, state, journal)
+            return result
         phase_start = perf_counter()
         def save(phase, **fields):
             nonlocal phase_start
@@ -358,6 +450,22 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             phase_start = perf_counter()
             state.update(phase=phase, observed_at=datetime.now(timezone.utc).isoformat(), **fields)
             atomic_json(journal, state)
+        def retain_release_failure(error, phase):
+            try:
+                save(phase, release_recheck=error.release_recheck,
+                     release_observation=error.observed_report)
+            except OSError as persistence_error:
+                error.journal_error = persistence_error
+                raise error
+        def retain_platform_failure(error, phase, *, stage, endpoint_class):
+            detail = platform_error_details(error, stage=stage, endpoint_class=endpoint_class)
+            try:
+                save(phase, error_type=type(error).__name__, platform_error=detail)
+            except OSError as persistence_error:
+                error.platform_error = detail
+                error.journal_error = persistence_error
+                raise error from None
+            return detail
         api = api or connect_kaggle(credentials)
         if api.get_config_value(api.CONFIG_NAME_USER) != account:
             raise ValueError("Authenticated SDK account differs from prepared owner")
@@ -397,36 +505,60 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             else:
                 response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
                             "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
-                if response["version_number"] != 1:
-                    raise ValueError("Lost-response reconciliation requires the first physical version")
+                if response["version_number"] != kernel_version:
+                    raise ValueError("Lost-response reconciliation requires the exact physical version")
                 _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
                 save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
-            # Reconciliation remains available for historical jobs, but a
-            # confirmed-absence recovery cannot bypass a new compute release.
-            if not scientific_checked:
+            if not continuation:
                 _check_scientific_release(spec, package, staged, authority, manifest)
-            _verify_release_report(prepared / "release_report.json", kernel / "run.py")
+            try:
+                _verify_release_report(prepared / "release_report.json", kernel / "run.py",
+                                       _verification=verification)
+            except ReleaseRecheckError as error:
+                retain_release_failure(error, state["phase"])
+                raise
             atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_budget, api=api))
-            if _kernel_source(api, ref) is not None:
-                raise ValueError("Target kernel already exists; reconcile its owning journal")
+            def check_predecessor():
+                prior_kernel = _kernel_source(api, ref)
+                if not continuation:
+                    if prior_kernel is not None:
+                        raise ValueError("Target kernel already exists; reconcile its owning journal")
+                    return
+                if prior_kernel is None or prior_kernel.metadata.current_version_number != kernel_version - 1:
+                    raise ValueError("Continuation requires the exact predecessor kernel version")
+                prior_status = api.kernels_status(ref + "/" + str(kernel_version - 1))
+                if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled"}:
+                    raise ValueError("Continuation predecessor must be authoritatively terminal")
+                atomic_json(output / "predecessor_scheduler_observation.json", {
+                    "kernel": ref, "version": kernel_version - 1, "status": str(prior_status.status),
+                    "observed_at": datetime.now(timezone.utc).isoformat()})
+            check_predecessor()
             source_status = _dataset_status(api, dataset)
-            if source_status is None:
+            if continuation and state["phase"] == "NEW":
+                if (source_status is None
+                        or _dataset_details(api, dataset).current_version_number != source_version - 1):
+                    raise ValueError("Continuation requires the exact predecessor source dataset version")
+            if source_status is None or (continuation and state["phase"] == "NEW"):
                 if state["phase"] != "NEW":
                     return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": False}
                 save("SOURCE_SUBMITTING")
                 try:
-                    response = api.dataset_create_new(str(staged), public=False, quiet=True,
-                        convert_to_csv=False, dir_mode="zip")
+                    if continuation:
+                        response = api.dataset_create_version(str(staged),
+                            version_notes="Authorized frozen checkpoint continuation",
+                            quiet=True, convert_to_csv=False, delete_old_versions=False, dir_mode="zip")
+                    else:
+                        response = api.dataset_create_new(str(staged), public=False, quiet=True,
+                            convert_to_csv=False, dir_mode="zip")
                     actual = str(response.ref).removeprefix("/datasets/")
                     if actual != dataset or response.error:
                         raise ValueError("Source publication identity differs")
                 except Exception as error:
-                    try:
-                        save("SOURCE_UNKNOWN", error_type=type(error).__name__)
-                    except Exception as publication_error:
-                        raise error from publication_error
-                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN", "submitted": False}
+                    detail = retain_platform_failure(error, "SOURCE_UNKNOWN",
+                        stage="source_publication", endpoint_class="dataset_create_version" if continuation else "dataset_create_new")
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN",
+                            "submitted": False, "platform_error": detail}
                 save("SOURCE_PUBLISHED")
                 source_status = _dataset_status(api, dataset)
             elif state["phase"] == "NEW":
@@ -434,49 +566,86 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             if not source_status or source_status.get("status") != "ready":
                 save("SOURCE_PENDING")
                 return {"status": "WAIT_SOURCE_READY", "submitted": False}
-            proof = _roundtrip_source(api, http_session, staged, output / "source_roundtrip", dataset)
+            proof = _roundtrip_source(api, http_session, staged, output / "source_roundtrip", dataset,
+                                      expected_version=source_version)
             atomic_json(output / "source_upload_verification.json", proof)
             from .experiment_preflight import check_release_inputs
             prior = _json(prepared / "release_report.json")
             remote_root = output / "source_roundtrip"
-            release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
-                recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
-                initial_states={arm: remote_root / relative for arm, relative in initial_paths.items()},
-                input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
-                kernel_metadata=kernel / "kernel-metadata.json")
+            if continuation and report.get("recovery_repair") is not None:
+                validate_recovery_repair(remote_root,
+                    expected_sha256=report["recovery_repair"]["manifest_sha256"], manifest=manifest,
+                    package_dir=package, entry_script=kernel / "run.py")
+            try:
+                release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
+                    recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
+                    pickle_inputs=prior["inputs"].get("pickle_inputs", ()),
+                    initial_states={arm: remote_root / relative for arm, relative in initial_paths.items()},
+                    input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
+                    kernel_metadata=kernel / "kernel-metadata.json",
+                    _verification=verification)
+            except OSError as cause:
+                error = ReleaseRecheckError.from_io(cause, expected_report=prior)
+                error.__cause__ = cause
+                retain_release_failure(error, state["phase"])
+                raise error from cause
             if release["errors"]:
-                raise ValueError("Remote source failed existing release checks")
+                error = ReleaseRecheckError.from_report(None, release)
+                retain_release_failure(error, state["phase"])
+                raise error
             atomic_json(output / "remote_release_report.json", release)
             atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_budget, api=api))
-            if _kernel_source(api, ref) is not None:
-                raise ValueError("Target kernel appeared before POST; reconcile")
-            from .kaggle_accelerator_push import KAGGLE_KERNEL_PUSH_URL
-            save("KERNEL_SUBMITTING", error_type=None, submission_endpoint=KAGGLE_KERNEL_PUSH_URL)
+            check_predecessor()
+            if continuation and _dataset_details(api, dataset).current_version_number != source_version:
+                raise ValueError("Source dataset version changed before POST; reconcile")
+            dispatch_started = False
+            def before_post():
+                nonlocal dispatch_started
+                if continuation and sha256_file(recovery_authority) != recovery_authority_sha256:
+                    raise ValueError("Recovery authority changed before POST")
+                if continuation and report.get("recovery_repair") is not None:
+                    validate_recovery_repair(remote_root,
+                        expected_sha256=report["recovery_repair"]["manifest_sha256"], manifest=manifest,
+                        package_dir=package, entry_script=kernel / "run.py")
+                from .kaggle_accelerator_push import KAGGLE_KERNEL_PUSH_URL
+                save("KERNEL_SUBMITTING", error_type=None, submission_endpoint=KAGGLE_KERNEL_PUSH_URL)
+                dispatch_started = True
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
-                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json", api=api)
+                    accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json",
+                    _verification=verification,
+                    _before_post=before_post, api=api)
+            except ReleaseRecheckError as error:
+                # This typed failure originates before POST. Source publication
+                # is durable, but this invocation has not submitted a kernel.
+                retain_release_failure(error, "SOURCE_PUBLISHED")
+                return {"status": "BLOCKED", "stage": "release_recheck", "submitted": False,
+                        "release_recheck": error.release_recheck,
+                        "next_action": "Inspect the retained release observation before continuing"}
             except Exception as error:
-                try:
-                    received = getattr(error, "response", None)
-                    try:
-                        detail = received.json().get("message") if received is not None else None
-                    except (ValueError, AttributeError):
-                        detail = None
-                    detail = str(detail).replace(values["key"], "[REDACTED]")[:1000] if detail else None
-                    save("SUBMIT_UNKNOWN", error_type=type(error).__name__,
-                        http_status=getattr(received, "status_code", None), api_error_message=detail)
-                except Exception as publication_error:
-                    raise error from publication_error
-                return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
+                if not dispatch_started:
+                    detail = {"error_type": type(error).__name__}
+                    if isinstance(error, OSError):
+                        detail.update(errno=error.errno, winerror=getattr(error, "winerror", None))
+                    save("SOURCE_PUBLISHED", **detail)
+                    return {"status": "BLOCKED", "stage": "kernel_preparation", "submitted": False,
+                            **detail,
+                            "next_action": "Resolve the local preparation error before continuing"}
+                detail = retain_platform_failure(error, "SUBMIT_UNKNOWN",
+                    stage="kernel_publication", endpoint_class="kernel_push")
+                return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN",
+                        "submitted": "UNKNOWN", "platform_error": detail}
             atomic_json(output / "platform_response.json", response)
-            if response["status"] != "submitted" or response.get("reconciliation_required"):
-                save("SUBMIT_UNKNOWN", error_type=response.get("error_type", "unconfirmed_response"))
+            if (response["status"] != "submitted" or response.get("reconciliation_required")
+                    or response.get("kernel") != ref or response.get("version_number") != kernel_version):
+                save("SUBMIT_UNKNOWN")
                 return {"status": "RECONCILIATION_REQUIRED", "phase": "SUBMIT_UNKNOWN", "submitted": "UNKNOWN"}
             save("KERNEL_ACCEPTED", kernel_response=response)
         response = state["kernel_response"]
         verified = _verify_remote_kernel(_kernel_source(api, response["kernel"]), response, metadata, (kernel / "run.py").read_bytes())
         atomic_json(output / "source_verification.json", verified)
-        unsubmitted = build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"])
+        unsubmitted = build_launch_receipt(spec, package, expected_package_identity=manifest["package_identity"],
+                                          _verification=verification)
         fact = lambda v: {"value": v, "missing_reason": None}
         envelope = {"format": "molgap-platform-response", "version": 1, "mode": "observed", "outcome": "accepted",
             "binding": unsubmitted["binding"], "conflict_kind": None,
@@ -485,7 +654,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 "canonical_reference": response["kernel"], "platform_version": fact(str(response["version_number"])),
                 "run_identity": f"kernel{response['kernel_id']}/version{response['version_number']}"}]),
             "timestamp": fact(state["observed_at"]), "monitor_paths": fact(list(monitor_paths))}
-        receipt = reconcile_platform_response(spec, package, canonical_json(envelope), expected_package_identity=manifest["package_identity"])
+        receipt = reconcile_platform_response(spec, package, canonical_json(envelope),
+            expected_package_identity=manifest["package_identity"], _verification=verification)
         if receipt["submission_state"] != "ACCEPTED":
             raise ValueError("Observed physical run was not accepted by the receipt owner")
         receipt_path = output / "launch_receipt.json"
@@ -493,7 +663,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             atomic_write(receipt_path, canonical_json(receipt).encode())
         else:
             from .experiment_launch import read_launch_receipt
-            retained = read_launch_receipt(receipt_path, spec, package, expected_package_identity=manifest["package_identity"])
+            retained = read_launch_receipt(receipt_path, spec, package,
+                expected_package_identity=manifest["package_identity"], _verification=verification)
             if (retained["canonical_platform_reference"] != fact(response["kernel"])
                     or retained["platform_version"] != fact(str(response["version_number"]))
                     or retained["physical_runs"] != envelope["physical_runs"]):
@@ -504,6 +675,100 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         if not (output / "startup_observation.json").exists():
             atomic_json(output / "startup_observation.json", _startup(http_session, response["kernel"]))
         save("BOUND")
-        return {"status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
+        retirement = _retire_source_copies(prepared, output, state, journal)
+        return {"source_copy_retirement": retirement, "status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
                 "version": response["version_number"], "scheduler_status": str(status.status), "submitted": True,
                 "native_qualification": "NOT_EVALUATED", "timings": state["timings"]}
+
+
+
+def _bind_operation_directory(prepared, output, binding, *, publish=False):
+    """One immutable prepared release owns one recovery journal location."""
+    pointer = prepared.with_name(prepared.name + ".submission_owner.json")
+    _safe_local(pointer)
+    payload = canonical_json({"prepared": os.path.normcase(str(prepared.resolve())),
+                              "operations": os.path.normcase(str(output.resolve())),
+                              "binding": binding}).encode("utf-8")
+    # An output-local lock alone permits concurrent callers to choose two fresh
+    # journals, both observe platform absence, and both dispatch a mutation.
+    if pointer.exists() and pointer.read_bytes() != payload:
+        raise ValueError("Prepared release owns another submission journal; reconcile its operation directory")
+    if publish:
+        publish_immutable_bytes(pointer, payload)
+
+
+def _retire_source_copies(prepared, output, state, journal):
+    """The bound upload stage owns these copies; the package/receipts remain."""
+    from .local_storage import _remove_verified_files
+    if state.get("phase") != "BOUND" or not (output / "launch_receipt.json").is_file():
+        return {"status": "REPORT_ONLY", "reason": "Submission is not durably bound"}
+    proof = _json(output / "source_upload_verification.json")
+    if (proof.get("status") != "REMOTE_SOURCE_BYTES_VERIFIED"
+            or proof.get("dataset") != state["binding"]["dataset"]
+            or proof.get("version") != state["binding"].get("continuation", {}).get("source_version", 1)):
+        raise ValueError("Source retirement requires its bound upload verification")
+    expected = {item["path"]: {key: item[key] for key in ("sha256", "bytes")}
+                for item in proof["files"]}
+    # Keep compact launch/metadata/prospective records at their original paths.
+    # The source archive and initial weights remain in their durable owners.
+    uploaded = {name: record for name, record in expected.items()
+                if name == "source_payload.bin" or name.startswith("initial_states/")}
+    retirement = {"uploaded": uploaded, "roundtrip": expected, "status": "PENDING"}
+    prior = state.get("source_copy_retirement")
+    if prior is not None and any(prior[key] != retirement[key] for key in ("uploaded", "roundtrip")):
+        raise ValueError("Source copy retirement binding changed")
+    state["source_copy_retirement"] = retirement
+    atomic_json(journal, state)  # Recover a crash between any pair of unlinks.
+    try:
+        _remove_verified_files(output / "source_roundtrip", expected, whole_tree=True)
+        _remove_verified_files(prepared / "source_dataset", uploaded)
+    except (OSError, ValueError) as exc:
+        retirement.update(status="BLOCKED", reason=str(exc))
+    else:
+        retirement["status"] = "REMOVED"
+    atomic_json(journal, state)
+    return {"status": retirement["status"], "reason": retirement.get("reason")}
+
+
+def _bound_submission_status(output, spec, package, package_identity, binding, *, _verification=None):
+    """Return a locally verified bound receipt without consulting or mutating Kaggle."""
+    journal = output / "submission_state.json"
+    _safe_local(journal)
+    if not journal.is_file():
+        return None
+    state = _json(journal)
+    if state.get("phase") != "BOUND":
+        return None
+    if state.get("binding") != binding:
+        raise ValueError("BOUND submission journal identity differs from prepared inputs")
+    response = state.get("kernel_response")
+    if (type(response) is not dict or response.get("status") != "submitted"
+            or response.get("reconciliation_required") is not False
+            or response.get("kernel") != binding["kernel"]
+            or type(response.get("kernel_id")) is not int or response["kernel_id"] <= 0
+            or type(response.get("version_number")) is not int or response["version_number"] <= 0
+            or response["version_number"] != binding.get("continuation", {}).get("kernel_version", 1)):
+        raise ValueError("BOUND submission journal has no valid kernel response identity")
+
+    from .experiment_launch import read_launch_receipt
+    receipt = read_launch_receipt(output / "launch_receipt.json", spec, package,
+                                  expected_package_identity=package_identity, _verification=_verification)
+    expected = build_launch_receipt(spec, package,
+                                   expected_package_identity=package_identity, _verification=_verification)
+    fact = lambda value: {"value": value, "missing_reason": None}
+    arms = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
+    expected_runs = fact([{"arm_ids": arms, "canonical_reference": response["kernel"],
+        "platform_version": fact(str(response["version_number"])),
+        "run_identity": f"kernel{response['kernel_id']}/version{response['version_number']}"}])
+    if (receipt["submission_state"] != "ACCEPTED"
+            or receipt["binding"] != expected["binding"]
+            or receipt["canonical_platform_reference"] != fact(response["kernel"])
+            or receipt["platform_version"] != fact(str(response["version_number"]))
+            or receipt["physical_runs"] != expected_runs):
+        raise ValueError("BOUND launch receipt differs from the journaled kernel identity")
+    retirement = state.get("source_copy_retirement", {"status": "NOT_REQUESTED"})
+    return {"status": "SUBMISSION_BOUND", "binding": binding,
+            "kernel": response["kernel"], "kernel_id": response["kernel_id"],
+            "version": response["version_number"], "submitted": True,
+            "native_qualification": "NOT_EVALUATED",
+            "source_copy_retirement": {"status": retirement.get("status", "PENDING")}}

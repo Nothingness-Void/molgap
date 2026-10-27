@@ -135,6 +135,8 @@ def _parser() -> argparse.ArgumentParser:
             if name == "build-resume":
                 command.add_argument("--arm", required=True)
                 command.add_argument("--source-output", required=True, type=_local)
+                command.add_argument("--recovery-repair", type=_local,
+                    help="Pinned repair declaration (commit/files), retaining the original package")
             else:
                 command.add_argument("--resume-plan", required=True, type=_local)
         elif name in {"prepare-release", "check-preparation"}:
@@ -361,7 +363,8 @@ def _dispatch(args) -> tuple[dict, int]:
                     return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
-                        source_output=args.source_output, output=args.output), 0
+                        source_output=args.source_output, output=args.output,
+                        recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
                 result = prepare_run_resume(*original, plan=_json(args.resume_plan), output=args.output)
                 return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
             except RunReconciliationRequired as exc:
@@ -408,7 +411,8 @@ def _dispatch(args) -> tuple[dict, int]:
                        package_dir=args.package, expected_package_identity=args.expected_package_identity,
                        receipt_path=args.receipt, output=args.output)
         if args.command == "build-resume":
-            return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output), 0
+            return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output,
+                recovery_repair=_json(args.recovery_repair) if args.recovery_repair else None), 0
         result = prepare_resumed_workflow(**options, plan=_json(args.resume_plan))
         return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
     if args.command == "prepare-family-training":
@@ -553,7 +557,7 @@ def main(argv: list[str] | None = None) -> int:
         if (args.command in {"diagnose", "accept-workflow"} and args.run_id is not None
                 and not args.verbose and ((args.command == "diagnose" and args.output is not None)
                                          or "diagnosis" in result or "terminal_staging" in result
-                                         or "strict_validation" in result or "closure_complete" in result)):
+                                         or "strict_validation" in result or "closure_complete" in result or "strict_comparison" in result)):
             result = _acceptance_summary(result)
         print(canonical_json(result))
         return code
@@ -577,10 +581,6 @@ def _acceptance_summary(result):
         summary["strict_validation"]["arms"] = {
             arm: {key: row[key] for key in ("comparison", "replay", "blockers") if key in row}
             for arm, row in strict.get("arms", {}).items()}
-    if "strict_comparison" in result:
-        summary["strict_comparison"] = {key: result["strict_comparison"][key]
-            for key in ("directory", "locations", "reference_bundle_ref")
-            if key in result["strict_comparison"]}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}
     diagnostic = result.get("diagnosis") or result
@@ -596,6 +596,15 @@ def _acceptance_summary(result):
         summary["closure"] = [{key: row[key] for key in
             ("trajectory_id", "trajectory", "pipeline_status", "finalization_status", "error")
             if key in row} for row in result["results"]]
+    if "strict_comparison" in result:
+        comparison = result["strict_comparison"]
+        summary["strict_comparison"] = {key: comparison[key] for key in
+            ("status", "blockers", "directory", "locations", "reference_bundle_ref", "qualification_mode")
+            if key in comparison}
+        if comparison.get("status") == "BLOCKED":
+            summary["strict_comparison"]["arms"] = {arm: {key: row[key] for key in
+                ("required_evidence", "blockers") if key in row}
+                for arm, row in comparison.get("arms", {}).items()}
     return summary
 
 

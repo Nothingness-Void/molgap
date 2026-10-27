@@ -353,9 +353,11 @@ def _native_cursor(checkpoint: dict, trace: dict) -> dict:
         "epoch": checkpoint.get("epoch"), "next_batch": 0,
     }
     if "pending_absolute" in cursor:
+        # Keep the server-side scalar normalization as a validation step for
+        # old manifests, but never duplicate tensor-bearing partial-pass state
+        # in JSON. The checkpoint bytes remain the sole continuation source.
         import math
         import torch
-        values = []
         for value in cursor["pending_absolute"]:
             if isinstance(value, torch.Tensor):
                 if value.ndim != 0 or not value.is_floating_point():
@@ -363,10 +365,10 @@ def _native_cursor(checkpoint: dict, trace: dict) -> dict:
                 value = value.item()
             if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
                 raise ValueError("Resume cursor metrics must be finite nonnegative scalars")
-            values.append(value)
-        # The manifest summarizes metrics; the hash-bound native checkpoint
-        # retains their original tensor dtype and exact continuation state.
-        cursor["pending_absolute"] = values
+        cursor.pop("pending_absolute", None)
+    # Clean-BN calibration state is also tensor-bearing and stays byte-preserved
+    # in the checkpoint rather than being copied into the JSON manifest.
+    cursor.pop("weight_state", None)
     if type(trace.get("rows")) is list and trace["rows"]:
         rows = trace["rows"]
         last = rows[-1]
@@ -582,7 +584,9 @@ def _validate_manifest(root: Path, manifest: dict) -> dict[str, Any]:
     checkpoint_payload = safe_cpu_torch_load(pointers["checkpoint"])
     trace_payload = _strict_json(pointers["trace"])
     expected_cursor = _native_cursor(checkpoint_payload, trace_payload)
-    if manifest["cursor"] != expected_cursor:
+    # Older bundles embedded partial-pass state in their cursor. Compare the
+    # same metadata projection while the artifact SHA binds the full state.
+    if _native_cursor({"cursor": manifest["cursor"]}, {}) != expected_cursor:
         raise ValueError("Resume manifest cursor/checkpoint/trace mismatch")
     all_bundle_paths = {pointers[role].as_posix().casefold() for role in pointers if pointers[role] is not None}
     all_restore = {manifest["artifacts"][role]["restore_path"].casefold()

@@ -116,6 +116,7 @@ class FamilyRecipe:
     k1_execution: K1ExecutionConfig | None = None
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
+    development_reports: tuple[str, ...] = ()
     model_config: object | None = None
     family_version: str | None = None
     qualification: object | None = None
@@ -197,6 +198,13 @@ class FamilyRecipe:
             raise ValueError("Unsupported EMA decay")
         if self.selection.endswith("ema") and self.ema_decay is None:
             raise ValueError("EMA weight selection requires EMA state")
+        if (type(self.development_reports) is not tuple
+                or len(set(self.development_reports)) != len(self.development_reports)
+                or any(value not in {"live", "ema"} for value in self.development_reports)
+                or ("ema" in self.development_reports and self.ema_decay is None)):
+            raise ValueError("Development reporting requires distinct available weight states")
+        if self.selection.endswith("clean-ema") and "ema" in self.development_reports:
+            raise ValueError("Raw EMA reporting cannot overwrite the selected Clean-EMA trace field")
         if (self.clean_bn is not None) != self.selection.endswith("clean-ema"):
             raise ValueError("Clean selection requires an explicit calibration policy")
         if self.clean_bn is not None and (type(self.clean_bn) is not CalibrationPolicy or
@@ -329,6 +337,10 @@ class FamilyRecipe:
             values.pop("clean_bn")
         else:
             values["clean_bn"] = self.clean_bn.to_dict()
+        if not self.development_reports:
+            values.pop("development_reports")
+        else:
+            values["development_reports"] = list(self.development_reports)
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -342,7 +354,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "model_config", "family_version", "qualification", "formal_training"):
+        for name in ("addons", "clean_bn", "development_reports", "model_config", "family_version", "qualification", "formal_training"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
@@ -373,6 +385,10 @@ class FamilyRecipe:
                 values["addons"] = tuple(values["addons"])
             if "clean_bn" in values:
                 values["clean_bn"] = CalibrationPolicy.from_dict(values["clean_bn"])
+            if "development_reports" in values:
+                if type(values["development_reports"]) is not list:
+                    raise ValueError("Development reports must be a list")
+                values["development_reports"] = tuple(values["development_reports"])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
         recipe = cls(**values)
