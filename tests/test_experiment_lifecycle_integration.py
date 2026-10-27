@@ -158,11 +158,11 @@ def _install_synthetic_owner(repo: Path, monkeypatch):
         "    return safe_cpu_torch_load(path)\n",
         encoding="utf-8",
     )
-    for name in ("training_reproducibility.py", "v4_runtime.py"):
+    for name in ("training_reproducibility.py", "v4_runtime.py", "common/io.py"):
         shutil.copyfile(Path(__file__).resolve().parents[1] / "src/molgap" / name,
                         repo / "src/molgap" / name)
     _git(repo, "add", "src/molgap/synthetic_trainer.py", "src/molgap/k1_screen_training.py",
-         "src/molgap/training_reproducibility.py", "src/molgap/v4_runtime.py")
+         "src/molgap/training_reproducibility.py", "src/molgap/v4_runtime.py", "src/molgap/common/io.py")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic registered owner")
 
     module_spec = importlib.util.spec_from_file_location(
