@@ -98,7 +98,7 @@ def daily_case(tmp_path, workflow_case, monkeypatch):
     # Extract the existing fake transport, without inheriting that fixture's
     # package/release/receipt stubs. All those owners below remain real.
     with monkeypatch.context() as stubs:
-        transport = fake_release.__wrapped__(transport_root, stubs,
+        transport = fake_release.__wrapped__(transport_root, stubs, NS(param=False),
             staged_source=prepared / "source_dataset")
         fake_push = submission.push_kernel_with_accelerator
     shutil.copyfile(prepared / "kernel/run.py", transport.kernel / "run.py")
@@ -312,9 +312,9 @@ def test_offline_daily_roundtrip_preserves_original_run(daily_case, tmp_path, mo
     assert recovery["status"] == "RESUME_INPUTS_PREPARED", recovery
     assert "owning continuation adapter" in recovery["next_action"]
     # This payload retains the original producer identity. A physical successor
-    # is a separate owning-platform operation, not another fresh-release POST.
+    # requires explicit recovery authority and source/kernel version bindings.
     for execute in (False, True):
-        with pytest.raises(ValueError, match="owning continuation adapter"):
+        with pytest.raises(ValueError, match="Continuation requires explicit recovery authority/SHA"):
             submission.submit_prepared_workflow(attempt2, tmp_path / "absent-credentials.json",
                 attempt2.parent / "unsupported-operations", authority_ref="authority.json",
                 monitor_paths=MONITORS, execute=execute,

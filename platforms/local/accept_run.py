@@ -20,7 +20,7 @@ def main(argv=None):
     read_only = reviewed_locations and strict and not any(
         a in {"--execute", "--stage-terminal", "--outcome"} or a.startswith("--outcome=") for a in arguments)
     defaults = ["accept-workflow"]
-    new_science = any(a in {"--outcome", "--decision-ref", "--role-audit"}
+    new_science = any(a in {"--outcome", "--decision-ref", "--role-audit", "--stage-terminal"}
         or a.startswith(("--outcome=", "--decision-ref=", "--role-audit=")) for a in arguments)
     if not read_only and not (strict and not new_science):
         defaults.append("--diagnose")

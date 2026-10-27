@@ -213,14 +213,21 @@ def test_explicit_mutable_diagnostic_is_bound_through_immutable_copy(staging_cas
 
 
 def test_role_audit_must_bind_actual_context(staging_case):
-    root, _ = staging_case
+    root, resolved = staging_case
     audits = audit_files(staging_case)
-    audit = root / next(iter(audits.values()))
-    obj = json.loads(audit.read_bytes())
-    obj["context"]["source_commit"] = "f" * 40
-    audit.write_text(json.dumps(obj), encoding="utf-8")
+    mapping = {arm: json.loads((root / path).read_bytes()) for arm, path in audits.items()}
+    audit = root / "audits" / "by_arm.json"
+    audit.write_text(json.dumps(mapping), encoding="utf-8")
+    result = stage(staging_case, role_audit=audit)
+    for arm, paths in result["paths"].items():
+        terminal = json.loads(Path(paths["terminal"]).read_bytes())
+        assert set(terminal["role_use"].values()) == {"untouched"}
+        assert terminal["artifact_hashes"]["audits/by_arm.json"] == file_digest(audit)
+    assert set(mapping) == set(resolved["outputs"])
+    mapping[next(iter(mapping))]["context"]["source_commit"] = "f" * 40
+    audit.write_text(json.dumps(mapping), encoding="utf-8")
     with pytest.raises(ValueError, match="role audit differs"):
-        stage(staging_case, role_audit=audits)
+        stage(staging_case, role_audit=audit)
 
 
 def test_cost_conversion_requires_measured_native_hardware_and_exact_semantics():

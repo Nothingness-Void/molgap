@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from datetime import datetime, timezone, timedelta
 import hashlib
-import json
 import math
 from pathlib import Path
 import time
@@ -19,14 +18,14 @@ def _bound_json(reference):
     path = Path(reference["path"])
     if not path.is_absolute():
         raise ValueError("Physical allocation evidence paths must be absolute")
+    from .common.io import _safe_local
+    _safe_local(path)
     expected = _digest(reference["sha256"], "physical allocation evidence SHA256")
     payload = path.read_bytes()
     if hashlib.sha256(payload).hexdigest() != expected:
         raise ValueError(f"Physical allocation evidence SHA mismatch: {path}")
-    value = json.loads(payload)
-    if type(value) is not dict:
-        raise ValueError("Physical allocation evidence must be an object")
-    return value
+    from .experiment_family_workflow import _json_bytes
+    return _json_bytes(payload)
 
 
 def current_physical_allocation_records(resolved, retention, observation_path):
@@ -37,9 +36,15 @@ def current_physical_allocation_records(resolved, retention, observation_path):
     """
     if retention is None:
         raise ValueError("Physical observation requires verified execution retention")
-    receipt_path = Path(resolved["options"]["receipt_path"]).absolute()
+    receipt = resolved["options"].get("receipt_path")
+    if receipt is None:
+        raise ValueError("Physical observation requires a retained launch receipt")
+    from .common.io import _safe_local
+    from .experiment_family_workflow import _json_bytes
+    receipt_path = Path(receipt).absolute()
+    _safe_local(receipt_path)
     receipt_bytes = receipt_path.read_bytes()
-    receipt = json.loads(receipt_bytes)
+    receipt = _json_bytes(receipt_bytes)
     contexts = list(resolved["contexts"].values())
     runs = receipt.get("physical_runs", {}).get("value") or []
     matches = [run for run in runs if contexts and all(
@@ -50,8 +55,12 @@ def current_physical_allocation_records(resolved, retention, observation_path):
     if len(matches) != 1:
         raise ValueError("Physical observation requires one matching job/version for every arm")
     observation = Path(observation_path).absolute()
-    report = retention["manifest"]["execution_report"]
+    _safe_local(observation)
+    report = retention["manifest"].get("execution_report")
+    if report is None:
+        raise ValueError("Physical observation requires a retained execution report")
     report_path = Path(retention["manifest_path"]).parent / report["path"]
+    _safe_local(report_path.absolute())
     return [{"platform": contexts[0].platform, "physical_run": matches[0],
         "receipt": {"path": str(receipt_path), "sha256": hashlib.sha256(receipt_bytes).hexdigest()},
         "observation": {"path": str(observation), "sha256": hashlib.sha256(observation.read_bytes()).hexdigest()},

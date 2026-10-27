@@ -128,7 +128,7 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--decision-ref", type=_local)
             command.add_argument("--role-audit", type=_local)
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
-            command.add_argument("--bootstrap-samples", type=int, default=0)
+            command.add_argument("--bootstrap-samples", type=int)
             command.add_argument("--seed", type=int, default=42)
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
@@ -293,7 +293,11 @@ def _dispatch(args) -> tuple[dict, int]:
                         options["strict_inputs"] = {}
                     if args.physical_runs is not None:
                         import json
-                        options["physical_runs"] = json.loads(args.physical_runs.read_text(encoding="utf-8"))
+                        from .experiment_launch import _unique
+                        _safe_local(args.physical_runs.absolute())
+                        options["physical_runs"] = json.loads(args.physical_runs.read_text(encoding="utf-8"),
+                            object_pairs_hook=_unique,
+                            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
                     if args.physical_observation is not None:
                         options["physical_observation"] = args.physical_observation
                     if args.retrieved_root is not None:
@@ -301,12 +305,14 @@ def _dispatch(args) -> tuple[dict, int]:
                     if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
                         options.update(diagnose=args.diagnose, stage_terminal=args.stage_terminal,
                             outcome=args.outcome, decision_ref=args.decision_ref,
-                            diagnostic_output=args.output, n_bootstrap=args.bootstrap_samples, seed=args.seed)
-                    elif args.output is not None or args.bootstrap_samples or args.seed != 42:
+                            diagnostic_output=args.output, n_bootstrap=(args.bootstrap_samples if args.bootstrap_samples is not None
+                                else 2000 if args.diagnose and (args.strict or args.strict_inputs is not None) else 0), seed=args.seed)
+                    elif args.output is not None or args.bootstrap_samples is not None or args.seed != 42:
                         raise ValueError("Diagnostic options require --diagnose or --stage-terminal")
                     if args.role_audit is not None:
                         audit = _json(args.role_audit)
-                        options["role_audit"] = args.role_audit if "context" in audit else audit
+                        options["role_audit"] = (args.role_audit if "context" in audit
+                            or all(isinstance(value, dict) for value in audit.values()) else audit)
                     result = accept_run_workflow(*original, **options)
                     return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
                 if args.command == "build-resume":

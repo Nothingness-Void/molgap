@@ -110,7 +110,7 @@ def inspect_run_output(profile, repo_root, run_id, attempt_id, *, arm_id, artifa
 def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None, locations=None,
                         retrieved_root=None, execute=False, execution_root=None,
                         diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
-                        diagnostic_output=None, n_bootstrap=0, seed=42, role_audit=None,
+                        diagnostic_output=None, n_bootstrap=None, seed=42, role_audit=None,
                         strict_inputs=None, continuation_receipt=None, physical_runs=None, physical_observation=None,
                         resume_prepared=None, resume_authority=None):
     """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
@@ -254,6 +254,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     paired_cache = {}
     if diagnose:
         from .experiment_attribution import diagnose_run, _write_run_diagnosis
+        if n_bootstrap is None:
+            n_bootstrap = 2000 if strict_inputs is not None else 0
         diagnostic = diagnose_run(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, output=diagnostic_output,
             n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"],

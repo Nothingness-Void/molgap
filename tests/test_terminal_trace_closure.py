@@ -657,7 +657,7 @@ def create_candidate_arm(
 # =========================================================================
 # Test A: Retained raw trace auto-resolves and finalizes available
 # =========================================================================
-def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
+def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path, monkeypatch):
     setup_mock_repo(tmp_path)
     arm = create_candidate_arm(
         tmp_path,
@@ -667,6 +667,30 @@ def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
         "ev-auto-1",
         include_trace_artifact=True,
     )
+
+    # An interrupted manifest publication must preserve a previous input and
+    # clean its private staging file before any finalization can consume it.
+    import os
+    manifest_terminal = arm["exp_dir"] / "terminal_with_manifest_TB-auto-trace.json"
+    previous_terminal = b"retained previous terminal input\n"
+    manifest_terminal.write_bytes(previous_terminal)
+    replace = os.replace
+    interrupted_staging = []
+
+    def interrupted_replace(source, destination):
+        if Path(destination) == manifest_terminal:
+            interrupted_staging.append(Path(source))
+            raise OSError("interrupted terminal publication")
+        return replace(source, destination)
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(os, "replace", interrupted_replace)
+        with pytest.raises(OSError, match="interrupted terminal publication"):
+            close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    assert interrupted_staging
+    assert not any(path.exists() for path in interrupted_staging)
+    assert manifest_terminal.read_bytes() == previous_terminal
+    assert not (arm["exp_dir"] / "rml_finalized").exists()
 
     def git(*args, input=None):
         return subprocess.run(["git", *args], cwd=tmp_path, input=input,

@@ -236,6 +236,11 @@ existing continuation record without editing the prospective plan. The default
 continued proof directory is `<retrieved-root>/_resume_preflight/<arm>`;
 `--strict-inputs` can override `native_root`/`actual_resume_root` for older custody.
 Outcome, decision and observed role audit remain explicit scientific inputs.
+When diagnosis and strict same-run qualification are requested together, the
+default is 2,000 bootstrap samples with seed 42 so their identical numerical
+comparison can be reused. `--bootstrap-samples` still overrides this default;
+standalone diagnosis defaults remain unchanged. A strict read-only recheck does
+not automatically publish another diagnosis.
 Use reviewed `--locations` for read-only checks of already finalized history.
 For one physical job/version, `--execution-root` and an explicitly identified
 `--physical-observation PATH` bind its entry observation to the already resolved
@@ -260,6 +265,11 @@ It downloads the real exact-version file; it never writes a substitute or edits
 the frozen manifest. Execution ledgers use the same exact-version transport.
 Small metadata failures report path, phase, status and exception type without
 including SDK messages or signed URLs; they do not trigger automatic retries.
+For a separately pinned `execution_retention.json`, use the same retriever with
+`--execution-retention` and the existing manifest path, digest, exact run/arm
+and destination options. It retrieves the sealed root and arm ledgers and the
+bound execution report without replacing the arm output mapping. Obtaining the
+initial manifest pin and entry observation remains a separate platform step.
 
 Retained Spec and recipe readers validate frozen declarations independently of
 the current Addon catalog. Package, receipt and artifact hash bindings still

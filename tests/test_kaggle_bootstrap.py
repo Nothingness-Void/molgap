@@ -37,7 +37,7 @@ def report(entry):
 @pytest.mark.parametrize("failure", [None, RuntimeError("preflight failed"),
                                     subprocess.TimeoutExpired("pip", 30), KeyboardInterrupt()])
 def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
-    from molgap.experiment_allocation import aggregate_physical_allocation_costs, current_physical_allocation_records
+    from molgap.experiment_allocation import aggregate_physical_allocation_costs, current_physical_allocation_records, _bound_json
 
     ticks = iter([100.0, 145.0])
     monkeypatch.setattr(entry.time, "perf_counter", lambda: next(ticks))
@@ -100,6 +100,14 @@ def test_entry_finally_measures_complete_window(entry, monkeypatch, failure):
     with pytest.raises(ValueError, match="one matching job/version"):
         current_physical_allocation_records(resolved, retention, current["observation"]["path"])
     context.platform_version = "2"
+    with pytest.raises(ValueError, match="retained execution report"):
+        current_physical_allocation_records(resolved, {**retention, "manifest": {"execution_report": None}}, current["observation"]["path"])
+    with pytest.raises(ValueError, match="retained launch receipt"):
+        current_physical_allocation_records({**resolved, "options": {"receipt_path": None}}, retention, current["observation"]["path"])
+    malformed = entry.OUTPUT_ROOT / "malformed.json"
+    malformed.write_text('{"key":1,"key":2}', encoding="utf-8")
+    with pytest.raises(ValueError, match="Duplicate JSON key"):
+        _bound_json({"path": str(malformed), "sha256": hashlib.sha256(malformed.read_bytes()).hexdigest()})
     prior_physical = {**physical, "run_identity": "kernel77/version1",
                       "platform_version": {"value": "1", "missing_reason": None}}
     prior = {**current, "physical_run": prior_physical,
@@ -212,6 +220,7 @@ def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch,
 
     def run(**kwargs):
         calls.append(("runtime", kwargs["maximum_wall_seconds"]))
+        assert kwargs["allocation_started"] == 100.0
         clock[0] += 20
         if phase_failure == "runtime":
             raise RuntimeError("runtime failed")

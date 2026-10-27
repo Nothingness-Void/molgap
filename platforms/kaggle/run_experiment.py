@@ -238,7 +238,8 @@ def _bootstrap(allocation_started, state):
         state["input_resolution"] = resolution
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
                        launch_path=launch, output=OUTPUT_ROOT,
-                       maximum_wall_seconds=remaining(), manifest=manifest)
+                       maximum_wall_seconds=remaining(), allocation_started=allocation_started,
+                       manifest=manifest)
 
 
 if __name__ == "__main__":

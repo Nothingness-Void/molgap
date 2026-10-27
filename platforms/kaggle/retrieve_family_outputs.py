@@ -255,10 +255,14 @@ def main(argv=None):
     parser.add_argument("--continuation-receipt", type=Path)
     parser.add_argument("--resume-prepared", type=Path)
     parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--execution-retention", action="store_true",
+        help="Retrieve the execution bundle from an independently pinned execution_retention.json; --arm selects its frozen run context")
     parser.add_argument("--execute", action="store_true")
     stage = "arguments"
     try:
         args = parser.parse_args(argv)
+        if args.execution_retention and (args.strict or args.resume_prepared is not None):
+            raise ValueError("Execution retention does not use native dependency retrieval")
         if bool(args.credentials) != args.execute:
             raise ValueError("Explicit credentials are required only with --execute")
         if (args.resume_prepared is not None and (not args.strict or args.continuation_receipt is None)
@@ -282,8 +286,44 @@ def main(argv=None):
                 raise ValueError("Expected an original Kaggle run")
             stage = "manifest"
             _path(args.remote_manifest_path)
-            manifest, files = _family_files(context, args.remote_manifest_path,
-                                           args.local_manifest, args.manifest_sha256)
+            if args.execution_retention:
+                from molgap.experiment_retention import (
+                    RETENTION_FILENAME, _load_json, _manifest_bytes,
+                    validate_execution_retention_manifest,
+                )
+                if PurePosixPath(args.remote_manifest_path).name != RETENTION_FILENAME:
+                    raise ValueError("Expected the execution retention manifest path")
+                _safe_local(args.local_manifest.absolute())
+                if file_digest(args.local_manifest) != args.manifest_sha256:
+                    raise ValueError("Pinned remote manifest hash mismatch")
+                manifest = _load_json(args.local_manifest, "execution retention manifest")
+                if _manifest_bytes(manifest) != args.local_manifest.read_bytes():
+                    raise ValueError("Execution retention manifest must use canonical JSON bytes")
+                if spec.identity != context.spec_identity:
+                    raise ValueError("Execution retention Spec identity mismatch")
+                validate_execution_retention_manifest(manifest, spec,
+                    package_identity=context.package_identity, source_commit=context.source_commit,
+                    source_archive_sha256=context.source_archive_sha256)
+                if (not isinstance(context.platform_version, str)
+                        or not context.platform_version.isascii()
+                        or not context.platform_version.isdecimal()
+                        or int(context.platform_version) < 1):
+                    raise ValueError("Execution retention requires an exact numeric version")
+                prefix = PurePosixPath(args.remote_manifest_path).parent
+                references = [manifest["allocation_ledger"]["root"],
+                    *manifest["allocation_ledger"]["arms"].values()]
+                if manifest["execution_report"] is not None:
+                    references.append(manifest["execution_report"])
+                files = {args.remote_manifest_path: (RETENTION_FILENAME, args.manifest_sha256),
+                    **{(prefix / item["path"]).as_posix(): (item["path"], item["sha256"])
+                        for item in references}}
+                manifest_name = RETENTION_FILENAME
+                producer_version = context.platform_version
+            else:
+                manifest, files = _family_files(context, args.remote_manifest_path,
+                                               args.local_manifest, args.manifest_sha256)
+                manifest_name = "output_manifest.json"
+                producer_version = manifest["context"]["platform_version"]
             files = _selected_files(files)
             # _family_files checks known producer versions against the receipt.
             # A normal pre-launch producer has no version; retain that null and
@@ -314,7 +354,7 @@ def main(argv=None):
             if destination.exists():
                 if not destination.is_dir():
                     raise ValueError("Destination must be a directory")
-                retained_manifest = destination / "output_manifest.json"
+                retained_manifest = destination / manifest_name
                 _safe_local(retained_manifest)
                 if next(destination.iterdir(), None) is not None and (
                         not retained_manifest.is_file()
@@ -322,7 +362,7 @@ def main(argv=None):
                     raise ValueError("Existing retrieval must retain the original pinned manifest")
             result = {"status": "READY_FOR_RETRIEVAL", "executed": False,
                       "network_accessed": False, "scientific_acceptance": False,
-                      "producer_version": manifest["context"]["platform_version"],
+                      "producer_version": producer_version,
                       "manifest_sha256": args.manifest_sha256,
                       "retrieval_plan": None if args.execute else plan_pinned_files(files, destination,
                           sizes={args.remote_manifest_path: args.local_manifest.stat().st_size})}
@@ -332,9 +372,11 @@ def main(argv=None):
                 stage = "platform_retrieval"
                 from molgap.kaggle_submission import connect_kaggle
                 api = connect_kaggle(args.credentials)
-                result = retrieve_family_outputs(api, context=context,
+                retriever = retrieve_execution_retention if args.execution_retention else retrieve_family_outputs
+                result = retriever(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
-                    manifest_sha256=args.manifest_sha256, destination=destination, on_plan=announce)
+                    manifest_sha256=args.manifest_sha256, destination=destination,
+                    **({"spec": spec} if args.execution_retention else {"on_plan": announce}))
                 if args.strict:
                     stage = "native_dependencies"
                     result["native_dependencies"] = retrieve_native_dependencies(api, context=context,
@@ -342,13 +384,14 @@ def main(argv=None):
                         destination=destination, resume_checkpoint_sha256=resume_checkpoint, on_plan=announce)
                     result["network_accessed"] = (result.get("network_accessed", False)
                         or result["native_dependencies"]["network_accessed"])
-                stage = "retrieval_mapping"
-                from molgap.experiment_run_acceptance import record_run_retrieval
-                mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
-                    context=context, destination=destination, manifest_sha256=args.manifest_sha256,
-                    continuation_receipt=args.continuation_receipt,
-                    _verification=verification)
-                result["retrieval_mapping"] = str(mapping)
+                if not args.execution_retention:
+                    stage = "retrieval_mapping"
+                    from molgap.experiment_run_acceptance import record_run_retrieval
+                    mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
+                        context=context, destination=destination, manifest_sha256=args.manifest_sha256,
+                        continuation_receipt=args.continuation_receipt,
+                        _verification=verification)
+                    result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)
     except Exception as error:

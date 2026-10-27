@@ -12,6 +12,7 @@ from types import ModuleType
 import pytest
 
 from molgap.experiment_family_workflow import ROLES, RunContext
+from test_experiment_spec import payload
 
 
 _REPO = Path(__file__).resolve().parents[1]
@@ -481,7 +482,7 @@ def test_identical_retained_files_retry_without_http_downloads(tmp_path, monkeyp
     assert {entry["state"] for entry in result["files"]} == {"ALREADY_RETAINED"}
 
 
-def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch):
+def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch, capsys, payload):
     case = _case(tmp_path, monkeypatch)
     relative = case["artifacts"]["predictions"]["path"]
     target = case["destination"] / relative
@@ -493,6 +494,93 @@ def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch):
 
     assert target.read_bytes() == b"local conflicting content"
     assert case["files"][f"runs/session-7/{relative}"].url not in case["http"].urls
+    _execution_retention_cli_journey(tmp_path, monkeypatch, capsys, payload)
+
+
+def _execution_retention_cli_journey(tmp_path, monkeypatch, capsys, payload):
+    from dataclasses import replace
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap import experiment_run, experiment_run_acceptance, kaggle_submission
+    from molgap.experiment_allocation import AllocationLedger
+    from molgap.experiment_retention import seal_execution_retention
+    import requests
+
+    entry = _module(monkeypatch)
+    payload["arms"] = payload["arms"][:1]
+    payload["platform"].update(name="kaggle", accelerator="Tesla T4")
+    spec = ExperimentSpec(payload)
+    context = replace(_context(), platform_version="7", spec_identity=spec.identity,
+        arm_id=payload["arms"][0]["arm_id"])
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    artifact_root = tmp_path / "artifacts"
+    prepared = artifact_root / "runs/synthetic-run/v1/prepared"
+    prepared.mkdir(parents=True)
+    profile = tmp_path / "profile.json"
+    profile.write_text(json.dumps({"format": "molgap-machine-paths-v1",
+        "python": sys.executable, "data_root": str(tmp_path / "data"),
+        "artifact_root": str(artifact_root), "scratch_root": str(tmp_path / "scratch")}), encoding="utf-8")
+    # Frozen-run/package resolution is substituted; retention validators,
+    # allocation serialization, CLI and exact transport are exercised together.
+    monkeypatch.setattr(experiment_run, "_original_run", lambda *a, **k: (spec,
+        {"receipt_path": "receipt", "package_dir": "package", "expected_package_identity": context.package_identity},
+        prepared))
+    monkeypatch.setattr(experiment_run_acceptance, "_continuation_options", lambda s, o, *a: o)
+    monkeypatch.setattr(entry.RunContext, "from_launch", lambda *a, **k: context)
+    monkeypatch.setattr(experiment_run_acceptance, "record_run_retrieval",
+        lambda *a, **k: pytest.fail("Execution roots must not replace arm retrieval mapping"))
+    remote = tmp_path / "remote"
+    remote.mkdir()
+    clock = [0.0]
+    ledger = AllocationLedger(spec_identity=spec.identity, hardware=["Tesla T4"],
+        assignments={context.arm_id: 0}, started=0.0, clock=lambda: clock[0])
+    clock[0] = 1.0
+    arm_root = remote / context.arm_id
+    ledger.write(remote, "complete", arm_roots=[arm_root])
+    (remote / "execution_report.json").write_text('{"status":"complete"}', encoding="utf-8")
+    seal_execution_retention(remote, spec, package_identity=context.package_identity,
+        source_commit=context.source_commit, source_archive_sha256=context.source_archive_sha256,
+        arm_roots={context.arm_id: arm_root})
+    manifest = remote / "execution_retention.json"
+    pin = hashlib.sha256(manifest.read_bytes()).hexdigest()
+    names = ["execution_retention.json", "allocation_ledger.json",
+        context.arm_id + "/allocation_ledger.json", "execution_report.json"]
+    files = [_File(name, "https://offline.invalid/" + name) for name in names]
+    api = _Api(context.account, [])
+    api.client.kernels.exact_files = {item.file_name: item for item in files}
+    http = _Http({item.url: (remote / item.file_name).read_bytes() for item in files})
+    monkeypatch.setattr(kaggle_submission, "connect_kaggle", lambda p: api)
+    monkeypatch.setattr(requests, "Session", lambda: http)
+    destination = artifact_root / "retrieved/execution"
+    args = ["--execution-retention", "--profile", str(profile), "--repo-root", str(repo),
+        "--run-id", "synthetic-run", "--attempt-id", "v1", "--arm", context.arm_id,
+        "--local-manifest", str(manifest), "--manifest-sha256", pin,
+        "--remote-manifest-path", "execution_retention.json", "--destination", str(destination)]
+    assert entry.main(args) == 0
+    assert json.loads(capsys.readouterr().out)["network_accessed"] is False
+    assert not destination.exists() and api.client_builds == 0
+    context = replace(context, platform_version="session-version-7")
+    assert entry.main(args) == 2
+    assert json.loads(capsys.readouterr().out)["stage"] == "manifest"
+    assert api.client_builds == 0
+    context = replace(context, platform_version="7")
+    execute = [*args, "--execute", "--credentials", str(tmp_path / "credentials.json")]
+    assert entry.main(execute) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert "retrieval_mapping" not in result
+    assert {request.file_path for request in api.client.kernels.exact_requests} == set(names)
+    assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
+    assert not api.client.kernels.requests
+    assert entry.main(execute) == 0
+    assert json.loads(capsys.readouterr().out)["network_accessed"] is False
+    assert len(http.urls) == len(names)
+    conflict = destination / "allocation_ledger.json"
+    conflict.write_bytes(b"local conflict")
+    assert entry.main(execute) == 2
+    assert json.loads(capsys.readouterr().out)["status"] == "BLOCKED"
+    assert conflict.read_bytes() == b"local conflict"
+    assert len(http.urls) == len(names)
 
 
 @pytest.mark.parametrize("exception_type", [RuntimeError, ValueError])

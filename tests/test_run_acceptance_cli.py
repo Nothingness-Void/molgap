@@ -112,6 +112,24 @@ def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_
         "--execution-root", str(tmp_path / "execution"), "--physical-observation", str(observation)]) == 1
     assert owner.call_args.kwargs["physical_observation"] == observation
     capsys.readouterr()
+    for extra, expected in [([], 2000), (["--bootstrap-samples", "0"], 0)]:
+        assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+            "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
+            "--strict", "--diagnose", *extra]) == 1
+        assert owner.call_args.kwargs["n_bootstrap"] == expected
+        capsys.readouterr()
+    physical.write_text('[{"platform":"kaggle","platform":"other"}]', encoding="utf-8")
+    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
+        "--physical-runs", str(physical)]) == 2
+    assert "Duplicate JSON key" in capsys.readouterr().out
+    audit = tmp_path / "roles.json"
+    audit.write_text(json.dumps({"arm": {"context": {}, "roles": [], "role_use": {}}}), encoding="utf-8")
+    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
+        "--stage-terminal", "--role-audit", str(audit)]) == 1
+    assert owner.call_args.kwargs["role_audit"] == audit
+    capsys.readouterr()
 
 
 @pytest.mark.parametrize("read_only", [False, True])

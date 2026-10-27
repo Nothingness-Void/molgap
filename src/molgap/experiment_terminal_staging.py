@@ -88,6 +88,10 @@ def _roles(root, audit_ref, context, where, action_id):
     audit_path = repo_local_path(root, audit_ref)
     audit_ref = audit_path.relative_to(root).as_posix()
     audit = _json(audit_path)
+    if isinstance(audit, dict) and "context" not in audit:
+        audit = audit.get(context.arm_id)
+    if not isinstance(audit, dict):
+        raise ValueError("Observed role audit requires an audit object for the frozen arm")
     if audit.get("context") != context.to_dict():
         raise ValueError("Observed role audit differs from the frozen run/source/attempt context")
     role_use, events = audit.get("role_use"), audit.get("roles")
@@ -290,6 +294,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             allocation["event_status"] = ("not_aggregated_existing_device_measurement" if existing_allocation
                                            else "recorded_current_window")
             if not existing_allocation:
+                # The bootstrap/runtime window includes preflight and idle
+                # allocation; it does not establish training-only device time.
                 costs.extend(_cost_events(allocation_costs,
                     {"attempt_id": observed_attempt, "platform": context.platform}, where, action["action_id"],
                     objective_ref, category="other", suffix="allocation-"))
