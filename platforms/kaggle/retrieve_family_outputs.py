@@ -142,7 +142,7 @@ def retrieve_native_dependencies(api, *, context, manifest, remote_manifest_path
 
 def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: str,
                             local_manifest: Path, manifest_sha256: str,
-                            destination: Path, http_session=None, on_plan=None) -> dict:
+                            destination: Path, http_session=None, on_plan=None, _plan=None) -> dict:
     """Use an already authenticated owning-account KaggleApi.
 
     This function is called by the platform adapter/skill, not experiment_cli.
@@ -154,7 +154,7 @@ def retrieve_family_outputs(api, *, context: RunContext, remote_manifest_path: s
     version = context.platform_version
     transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
                  and version.isdecimal() else retrieve_selected_kaggle_files)
-    options = {"on_plan": on_plan, "sizes": {remote_manifest_path: local_manifest.stat().st_size}}
+    options = {"on_plan": on_plan, "sizes": {remote_manifest_path: local_manifest.stat().st_size}, "_plan": _plan}
     result = transport(
         api, context=context, remote_manifest_path=remote_manifest_path,
         files=required, destination=destination, http_session=http_session,
@@ -212,7 +212,7 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
 
 def retrieve_execution_retention(api, *, context, spec, remote_manifest_path: str,
                                  local_manifest: Path, manifest_sha256: str,
-                                 destination: Path, http_session=None) -> dict:
+                                 destination: Path, http_session=None, _plan=None) -> dict:
     """Thin Kaggle adapter for the shared execution-retention retriever."""
     return _retrieve_execution_retention(
         api,
@@ -223,6 +223,7 @@ def retrieve_execution_retention(api, *, context, spec, remote_manifest_path: st
         manifest_sha256=manifest_sha256,
         destination=destination,
         http_session=http_session,
+        _plan=_plan,
     )
 
 
@@ -349,7 +350,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
                     publish_immutable_bytes(destination / arm / "output_manifest.json", local.read_bytes())
             buffer = io.StringIO()
             with redirect_stdout(buffer):
-                status = main([*common, *extra])
+                status = main([*common, *extra], _verification=verification)
             results[arm] = json.loads(buffer.getvalue())
             code = max(code, status)
     except Exception as error:
@@ -363,7 +364,7 @@ def _retrieve_all_arms(argv, *, status_only=False):
     return code
 
 
-def main(argv=None):
+def main(argv=None, *, _verification=None):
     """Validate an original run locally, or explicitly retrieve its pinned files."""
     from contextlib import redirect_stderr, redirect_stdout
     import io
@@ -413,7 +414,7 @@ def main(argv=None):
         # adapter's finite JSON receipt is allowed on either output stream.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             stage = "original_run"
-            verification = _PackageVerification()
+            verification = _verification if _verification is not None else _PackageVerification()
             paths = MachinePaths.from_file(args.profile).outside_checkout(args.repo_root)
             spec, options, prepared = _original_run(
                 args.profile, args.repo_root, args.run_id, args.attempt_id, _verification=verification)
@@ -520,6 +521,7 @@ def main(argv=None):
                 result = retriever(api, context=context,
                     remote_manifest_path=args.remote_manifest_path, local_manifest=args.local_manifest,
                     manifest_sha256=args.manifest_sha256, destination=destination,
+                    _plan=plan,
                     **({"spec": spec} if args.execution_retention else {"on_plan": announce}))
                 if args.strict:
                     stage = "native_dependencies"
@@ -534,7 +536,7 @@ def main(argv=None):
                     mapping = record_run_retrieval(args.profile, args.repo_root, args.run_id, args.attempt_id,
                         context=context, destination=destination, manifest_sha256=args.manifest_sha256,
                         continuation_receipt=args.continuation_receipt,
-                        _verification=verification)
+                        _verification=verification, _retained_files=result["files"])
                     result["retrieval_mapping"] = str(mapping)
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)

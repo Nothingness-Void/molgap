@@ -327,6 +327,8 @@ promotes a numerical diagnosis to positive scientific acceptance.
 --attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
 `roles_<arm>.json` per arm (repository-local `$dir`) for a train/development
 family-session screen, and writes `audit_map.json` beside them (also printed) for `--role-audit` to take directly.
+For continued outputs, add the same `--continuation-receipt` used for retrieval
+so the draft binds the successor before its first terminal closure.
 Events are drafted from the frozen Spec data roles and each arm's digest-checked
 training contract; terminal inspection verifies the run itself. A missing or
 mismatched source is an error and no file is written until every arm validates. Protected-role states

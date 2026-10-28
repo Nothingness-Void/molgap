@@ -156,6 +156,9 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
         dataset_version = 1
         predecessor_status = "RUNNING"
 
+        def __init__(self):
+            self.status_calls = []
+
         def get_config_value(self, _name):
             return metadata["id"].split("/", 1)[0]
 
@@ -183,9 +186,11 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
                              for p in staged.rglob("*") if p.is_file() and p.name != "dataset-metadata.json"])
 
         def kernels_status(self, ref):
-            if continuation and ref == metadata["id"] + "/1":
+            self.status_calls.append(ref)
+            # Like the installed SDK, the endpoint ignores any third segment.
+            assert "/".join(ref.split("/")[:2]) == metadata["id"]
+            if continuation and self.remote.metadata.current_version_number == version - 1:
                 return NS(status=self.predecessor_status, failure_message="")
-            assert ref == metadata["id"] + "/" + str(version)
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
@@ -251,10 +256,17 @@ def test_full_submission_and_repeated_call_never_duplicate(release):
         release.api.predecessor_status = "ERROR"
     result = release.run()
     assert result["status"] == "SUBMISSION_BOUND" and result["version"] == (2 if continuation else 1)
+    assert result["scheduler_scope"] == "latest"
+    scheduler = json.loads((release.output / "scheduler_observation.json").read_bytes())
+    assert scheduler["scheduler_scope"] == "latest" and "version" not in scheduler
+    assert set(release.api.status_calls) == {"owner/new-kernel"}
     receipt = (release.output / "launch_receipt.json").read_bytes()
     assert release.api.created == release.api.pushed == 1
     assert len(release.http.downloads) == (13 if continuation else 11)
     if continuation:
+        predecessor = json.loads((release.output / "predecessor_scheduler_observation.json").read_bytes())
+        assert predecessor["scheduler_scope"] == "latest"
+        assert predecessor["observed_latest_version"] == 1 and "version" not in predecessor
         binding = json.loads((release.output / "submission_state.json").read_bytes())["binding"]["continuation"]
         assert binding["source_version"] == binding["kernel_version"] == 2
         from molgap.training_reproducibility import sha256_file
@@ -754,7 +766,13 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
                 args = ["--experiment", str(case.path)]
             code = entry.main([*args, "--repo-root", str(case.repo),
                 "--credentials", str(credentials), "--execute", "--verbose"])
-        return code, json.loads(captured.getvalue())
+        result = json.loads(captured.getvalue())
+        if result.get("status") == "SUBMISSION_BOUND":
+            scheduler = json.loads((output / "scheduler_observation.json").read_bytes())
+            assert scheduler["scheduler_scope"] == "latest" and "version" not in scheduler
+            kernel_ref = json.loads((prepared / "kernel/kernel-metadata.json").read_bytes())["id"]
+            assert set(transport().api.status_calls) == {kernel_ref}
+        return code, result
 
     def restore_roundtrip():
         path, original = transport_state["tampered_roundtrip"]
@@ -802,7 +820,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     remote = paths.artifact_root / "offline-worker-v2"
     origin.mkdir()
     remote.mkdir()
-    contexts, decisions, audits, downloads, inputs, prefixes, bundles = {}, {}, {}, [], {}, {}, {}
+    contexts, decisions, downloads, inputs, prefixes, bundles = {}, {}, [], {}, {}, {}
     prospective = {binding["arm_id"]: (case.repo / binding["output"] / "trajectory.json").read_bytes()
                    for binding in spec.to_dict()["prospective"]["arms"]}
     for job in launch["jobs"]:
@@ -905,10 +923,6 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         decision = case.repo / "experiments/question" / (arm_id + "-disposition.md")
         decision.write_text("Synthetic infrastructure exercise only; no scientific conclusion.\n", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
-        audit = case.repo / "audits" / (arm_id + ".json")
-        atomic_json(audit, {"context": context.to_dict(), "roles": [],
-            "role_use": {role: "untouched" for role in ("official_validation", "test_dev", "test_challenge")}})
-        audits[arm_id] = audit.relative_to(case.repo).as_posix()
 
     # A deterministic fixture clock describes a simulated allocation, not measured GPU time.
     clock = [0.]
@@ -958,6 +972,24 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             native.mkdir(parents=True)
             for name in ("runtime_certificate.json", "actual_resume_certificate.json"):
                 atomic_json(native / name, {"status": "NOT_QUALIFIED", "reason": "Synthetic CPU journey only"})
+    # Draft the first role audit against the reconciled successor before any
+    # terminal pointer exists to discover that receipt automatically.
+    from molgap import experiment_cli
+    captured = StringIO()
+    with redirect_stdout(captured):
+        code = experiment_cli.main(["draft-role-audit", "--profile", case.value["machine_profile"],
+            "--repo-root", str(case.repo), "--run-id", run_id, "--attempt-id", attempt,
+            "--continuation-receipt", str(continued_receipt), "--output-dir", str(case.repo / "audits"),
+            *[value for role in ("official_validation", "test_dev", "test_challenge")
+              for value in ("--protected-role-use", role + "=untouched")]])
+    assert code == 0, captured.getvalue()
+    audits = json.loads(captured.getvalue())
+    assert json.loads((case.repo / "audits/audit_map.json").read_bytes()) == audits
+    assert set(audits) == set(contexts)
+    for arm_id, ref in audits.items():
+        audit = json.loads((case.repo / ref).read_bytes())
+        assert audit["context"] == contexts[arm_id].to_dict()
+        assert len(audit["roles"]) == 5
     options = dict(
         diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
         decision_ref=decisions, role_audit=audits, execution_root=remote,
@@ -1109,6 +1141,10 @@ def test_real_package_release_post_receipt_reuses_only_exact_content(scientific,
     declaration = json.loads(data_path.read_bytes())
     base = declaration["arms"][0]
     base["data"]["dataset"]["sha256"] = selection.manifest_sha256
+    for role in base["data"]["roles"]:
+        graphs = data.train if role["role"] == "train" else data.development
+        digest = tensor_digest(torch.cat([g.source_idx for g in graphs]), role="source_idx")
+        role["membership_sha256"] = role["row_order_sha256"] = digest
     base["training"]["recipe"]["sha256"] = __import__("hashlib").sha256(recipe_path.read_bytes()).hexdigest()
     from molgap.family_training_runner import _recipe_configuration
     bindings = family_arm_bindings(_recipe_configuration(record))

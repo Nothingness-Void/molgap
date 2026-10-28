@@ -456,17 +456,35 @@ def test_execute_delegates_original_auth_and_retriever_and_is_idempotent(
     assert set(requested_paths) <= {item.file_name for item in case.remote_files}
     retained = snapshot(case.destination)
     assert retained["output_manifest.json"] == case.local.read_bytes()
+    from molgap import kaggle_output_retrieval, experiment_run_acceptance
+    from molgap.common import transport
+    reads = []
+    real_digest = kaggle_output_retrieval.file_digest
+    def counted_digest(path):
+        reads.append(Path(path))
+        return real_digest(path)
+    for owner in (case.adapter, kaggle_output_retrieval, experiment_run_acceptance, transport):
+        monkeypatch.setattr(owner, "file_digest", counted_digest)
     assert case.adapter.main(arguments(case, execute=True)) == 0
     assert verified.call_count == 3
     retry = json.loads(capsys.readouterr().out)
     assert all(item["state"] == "ALREADY_RETAINED" for item in retry["files"])
     assert len(case.http.urls) == retained_before_retry + 1
     assert snapshot(case.destination) == retained
+    assert all(reads.count(case.destination / item["path"]) == 1
+               for item in case.output["artifacts"].values())
     retained_run = snapshot(case.run)
     mapping = json.loads(retained_run.pop("operations/retrieved_outputs/gptrans_t.json"))
     assert mapping["context"] == case.context.to_dict()
     assert mapping["output_dir"] == str(case.destination)
     assert retained_run == before
+    # A new invocation must still reject changed retained bytes before auth.
+    damaged = case.destination / next(iter(case.output["artifacts"].values()))["path"]
+    damaged.write_bytes(b"changed after the completed call")
+    auth_calls = case.auth.call_count
+    assert case.adapter.main(arguments(case, execute=True)) == 2
+    assert json.loads(capsys.readouterr().out)["stage"] == "destination"
+    assert case.auth.call_count == auth_calls and len(case.http.urls) == retained_before_retry + 1
 
 
 def test_execute_without_credentials_fails_before_any_local_owner(retrieval, monkeypatch, capsys):

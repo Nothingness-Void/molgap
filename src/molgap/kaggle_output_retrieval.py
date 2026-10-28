@@ -184,7 +184,7 @@ def retrieve_selected_kaggle_files(api, *, context, remote_manifest_path: str,
 
 def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                                files: Mapping[str, Any], destination: Path,
-                               http_session=None, sizes=None, on_plan=None) -> dict:
+                               http_session=None, sizes=None, on_plan=None, _plan=None) -> dict:
     """Stream manifest-bound files at one physical version, without directory scans.
 
     A retained environment can contain thousands of unrelated files; enumerating
@@ -202,7 +202,9 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
     required = _selected_files(files)
     if len(required) > 4096:
         raise ValueError("Exact artifact allowlist exceeds the bounded request budget")
-    plan = plan_pinned_files(required, destination, sizes=sizes)
+    # Only the synchronous adapter can supply its already checked plan.
+    # Independent calls always inspect the retained bytes again.
+    plan = _plan if _plan is not None else plan_pinned_files(required, destination, sizes=sizes)
     if on_plan is not None:
         on_plan(plan)
     reused = {row["remote_path"] for row in plan["files"] if row["state"] == "ALREADY_RETAINED"}
@@ -262,6 +264,7 @@ def retrieve_execution_retention(
     manifest_sha256: str,
     destination: Path,
     http_session=None,
+    _plan=None,
 ) -> dict:
     """Retrieve and verify one compact execution-retention manifest.
 
@@ -325,6 +328,7 @@ def retrieve_execution_retention(
         files=required,
         destination=destination,
         http_session=http_session,
+        **({"_plan": _plan} if transport is retrieve_pinned_exact_files else {}),
     )
     checked = validate_execution_retention(
         Path(destination),

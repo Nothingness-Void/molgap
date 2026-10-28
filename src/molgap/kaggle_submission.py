@@ -490,11 +490,14 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return
                 if prior_kernel is None or prior_kernel.metadata.current_version_number != kernel_version - 1:
                     raise ValueError("Continuation requires the exact predecessor kernel version")
-                prior_status = api.kernels_status(ref + "/" + str(kernel_version - 1))
+                # The SDK status endpoint addresses only owner/slug. The source
+                # check above observes the predecessor as the latest version.
+                prior_status = api.kernels_status(ref)
                 if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled"}:
                     raise ValueError("Continuation predecessor must be authoritatively terminal")
                 atomic_json(output / "predecessor_scheduler_observation.json", {
-                    "kernel": ref, "version": kernel_version - 1, "status": str(prior_status.status),
+                    "kernel": ref, "scheduler_scope": "latest", "observed_latest_version": kernel_version - 1,
+                    "status": str(prior_status.status),
                     "observed_at": datetime.now(timezone.utc).isoformat()})
             check_predecessor()
             source_status = _dataset_status(api, dataset)
@@ -632,13 +635,13 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     or retained["platform_version"] != fact(str(response["version_number"]))
                     or retained["physical_runs"] != envelope["physical_runs"]):
                 raise ValueError("Retained launch receipt differs from observed physical run")
-        status = api.kernels_status(response["kernel"] + "/" + str(response["version_number"]))
-        atomic_json(output / "scheduler_observation.json", {"kernel": response["kernel"], "version": response["version_number"],
+        status = api.kernels_status(response["kernel"])
+        atomic_json(output / "scheduler_observation.json", {"kernel": response["kernel"], "scheduler_scope": "latest",
             "status": str(status.status), "failure_message": status.failure_message, "observed_at": datetime.now(timezone.utc).isoformat()})
         if not (output / "startup_observation.json").exists():
             atomic_json(output / "startup_observation.json", _startup(http_session, response["kernel"]))
         save("BOUND")
         retirement = _retire_source_copies(prepared, output, state, journal)
         return {"source_copy_retirement": retirement, "status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
-                "version": response["version_number"], "scheduler_status": str(status.status), "submitted": True,
+                "version": response["version_number"], "scheduler_status": str(status.status), "scheduler_scope": "latest", "submitted": True,
                 "native_qualification": "NOT_EVALUATED", "timings": state["timings"]}

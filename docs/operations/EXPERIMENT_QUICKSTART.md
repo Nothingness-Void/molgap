@@ -197,8 +197,9 @@ expands it.
 The Kaggle retriever's `--all-arms --execute` resolves the exact receipt version,
 fetches missing small manifests, then retrieves every arm and execution-cost
 records through the existing transport. It returns `execution_root` for acceptance
-and records per-arm destinations. `--status` observes that same exact version
-without downloads or submission. No manual manifest/SHA file is needed for the
+and records per-arm destinations. `--status` observes the latest scheduler state,
+labelled separately from the receipt version, without downloads or submission.
+No manual manifest/SHA file is needed for the
 registered `experiment/<arm>` layout. Strict continuation also supplies
 `--continuation-receipt` and `--resume-prepared`; historical layouts may set
 `--remote-root`. Without `--execute`, all-arm retrieval only plans locally.
@@ -215,7 +216,7 @@ expectations and prospective locations, inspects the artifacts, diagnoses the
 available pairs and stages terminal drafts:
 
 ```powershell
-& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root D:/molgap-artifacts/retrieved/$runId
+& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId
 ```
 
 Omit `--retrieved-root` after the retriever has recorded verified per-arm
@@ -244,6 +245,10 @@ states are never derived and stay `unknown` (blocking closure) unless you pass t
 uses the existing V5/RML validators and reports missing evidence; positive/READY
 claims still require their owning scientific acceptance. The CLI reference owns
 the advanced explicit-location path.
+
+For first closure after continuation, pass the same `--continuation-receipt`
+to retrieval, `draft-role-audit` and acceptance. Acceptance also takes the existing
+`--resume-prepared` and applicable recovery authority; the original run identity stays unchanged.
 
 When the execution-retention bundle was retrieved, pass `--execution-root` to
 bind its verified allocation ledger into terminal evidence and cost events.

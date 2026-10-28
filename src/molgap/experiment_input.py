@@ -173,7 +173,6 @@ def _compile_scientific_input(path, root, value):
     from .experiment_spec import FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
     from .family_training_runner import INTERFACES, read_recipe, family_arm_bindings, comparison_objective_identity
     from .v4_bundle import _assert_clean_paths, _payload, committed_payloads
-    from .v4_runtime import inspect_frozen_state_artifact
     from .research_memory.trace import file_digest
 
     optional = {"shared", "same_run", "retry_of"} & set(value)
@@ -411,7 +410,6 @@ def _compile_scientific_input(path, root, value):
         initial = Path(item["initial_state_ref"])
         initial = initial if initial.is_absolute() else local(item["initial_state_ref"], packaged=False)
         _safe_local(initial.absolute())
-        inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
         if pair is not None:
             if preset is not None and target_pin != preset["target_manifest"]:
                 raise ValueError("Same-run target differs from its frozen baseline preset")
