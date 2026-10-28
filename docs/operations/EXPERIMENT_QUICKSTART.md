@@ -176,7 +176,14 @@ preflight and trainer, and supports one arm on one device. It does not submit a
 remote job. After completion, the same entry with `--accept-only --outcome
 INFRASTRUCTURE_ONLY --decision-ref <decision.md> --role-audit <audit.json>
 --execute` uses mechanical inspection, terminal staging and the existing RML
-finalizer. The decision and role audit must describe observed facts; this route
+finalizer. `--closure-input FILE` (same shape as the run-keyed one, a single arm,
+outcome `INFRASTRUCTURE_ONLY`) replaces the three terminal flags, and
+`--draft-role-audit <repo-dir>` drafts the audit from the retained artifacts
+(`--protected-role-use ROLE=STATE` only from observed facts; unknown blocks closure).
+The drafted audit is published immutably, so a rerun with different role states
+needs a new `--draft-role-audit` directory.
+The run-keyed `accept_run.py`, `draft-role-audit` and `diagnose` need an
+`inputs/input_binding.json` that a local run does not have, so use these flags here. The decision and role audit must describe observed facts; this route
 does not establish scientific comparison or replay eligibility. Durable outputs
 stay outside the checkout. Default output points to the report; `--verbose`
 expands it.

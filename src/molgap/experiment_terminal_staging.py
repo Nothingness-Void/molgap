@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import hashlib
+import json
 from pathlib import Path
 
 from .common.io import publish_immutable_bytes
@@ -157,12 +158,32 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
     return {"context": context.to_dict(), "role_use": states, "roles": events}
 
 
+def load_closure_input(path):
+    """Read the one human closure file; return ({arm: {outcome, decision_ref}}, role_audit or None)."""
+    from .experiment_launch import _unique
+    closure = json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=_unique)
+    arms = closure.get("arms") if type(closure) is dict else None
+    if (type(closure) is not dict or set(closure) - {"arms", "role_audit"} or type(arms) is not dict or not arms
+            or any(type(item) is not dict or set(item) != {"outcome", "decision_ref"}
+                   or not all(type(value) is str and value for value in item.values())
+                   for item in arms.values())
+            or not all(type(arm) is str and arm and "=" not in arm for arm in arms)
+            or ("role_audit" in closure and (type(closure["role_audit"]) is not str or not closure["role_audit"]))):
+        raise ValueError("Closure input must be {arms: {arm: {outcome, decision_ref}}, role_audit?}")
+    return arms, closure.get("role_audit")
+
+
 def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
                           protected_role_use=None):
     """Write ``roles_<arm>.json`` for every arm of a run; return {arm: repo-relative path}."""
     from .experiment_run import resolve_run_acceptance_inputs
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
                                              retrieved_root=retrieved_root)
+    return write_role_audits(repo_root, resolved, output_dir, protected_role_use)
+
+
+def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None):
+    """Draft and publish one audit per resolved arm (``spec``, ``contexts``, ``locations``, ``outputs``)."""
     root, drafted = Path(repo_root).resolve(), {}
     arms = {arm["arm_id"]: arm for arm in resolved["spec"].to_dict()["arms"]}
     for arm_id, arm in arms.items():

@@ -138,16 +138,51 @@ def main(argv=None):
     parser.add_argument("--outcome", choices=("INFRASTRUCTURE_ONLY",))
     parser.add_argument("--decision-ref")
     parser.add_argument("--role-audit")
+    parser.add_argument("--closure-input", type=Path,
+        help="One human file {arms: {ARM: {outcome, decision_ref}}, role_audit?}; replaces --outcome/--decision-ref/--role-audit")
+    parser.add_argument("--draft-role-audit", metavar="REPO_DIR",
+        help="Draft the arm's role audit from retained artifacts into this repository-local directory")
+    parser.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
     if args.accept_only:
+        closure_arm = None
+        if args.closure_input is not None:
+            if any((args.outcome, args.decision_ref, args.role_audit)):
+                parser.error("--closure-input replaces --outcome, --decision-ref and --role-audit")
+            from .experiment_terminal_staging import load_closure_input
+            try:
+                arms, args.role_audit = load_closure_input(args.closure_input)
+            except (OSError, ValueError) as exc:
+                parser.error(str(exc))
+            if len(arms) != 1:
+                parser.error("The local adapter runs exactly one arm; name only that arm in --closure-input")
+            (closure_arm, item), = arms.items()
+            args.outcome, args.decision_ref = item["outcome"], item["decision_ref"]
+            if args.outcome != "INFRASTRUCTURE_ONLY":
+                parser.error("The local adapter closes only INFRASTRUCTURE_ONLY")
+        if args.draft_role_audit and args.role_audit:
+            parser.error("Choose --draft-role-audit or an existing role audit")
+        if args.draft_role_audit and args.outcome is None:
+            parser.error("--draft-role-audit needs --outcome/--decision-ref or --closure-input")
+        protected = {}
+        for entry in args.protected_role_use:
+            role, separator, state = entry.partition("=")
+            if not separator or role in protected:
+                parser.error("Expected unique ROLE=STATE values")
+            protected[role] = state
+        if protected and not args.draft_role_audit:
+            parser.error("--protected-role-use needs --draft-role-audit")
         result = accept_local_training(args.prepared, args.repo_root, args.output,
             acceptance_plan=args.acceptance_plan, outcome=args.outcome,
-            decision_ref=args.decision_ref, role_audit=args.role_audit, execute=args.execute)
+            decision_ref=args.decision_ref, role_audit=args.role_audit, execute=args.execute,
+            draft_role_audit_dir=args.draft_role_audit, protected_role_use=protected,
+            closure_arm=closure_arm)
         path = args.output / "local_acceptance_report.json"
     else:
-        if any((args.outcome, args.decision_ref, args.role_audit, args.execute)):
+        if any((args.outcome, args.decision_ref, args.role_audit, args.execute, args.closure_input,
+                args.draft_role_audit, args.protected_role_use)):
             parser.error("Terminal inputs require --accept-only")
         result = run_local_training(args.prepared, args.repo_root, args.data_root, args.output,
             pause_after_step=args.pause_after_step, acceptance_plan=args.acceptance_plan)
@@ -160,7 +195,8 @@ def main(argv=None):
 
 
 def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
-                          outcome=None, decision_ref=None, role_audit=None, execute=False):
+                          outcome=None, decision_ref=None, role_audit=None, execute=False,
+                          draft_role_audit_dir=None, protected_role_use=None, closure_arm=None):
     """Use the existing mechanical inspector, terminal staging and RML closure."""
     from .experiment_family_workflow import prepare_terminal_outputs, TargetIdentityBinding
     from .experiment_package import read_packaged_text
@@ -180,6 +216,8 @@ def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
         raise ValueError("Local acceptance preparation/Spec mismatch")
     if declaration["platform"]["name"] != "local" or len(declaration["arms"]) != 1:
         raise ValueError("Expected a prepared single-arm local run")
+    if closure_arm is not None and closure_arm != declaration["arms"][0]["arm_id"]:
+        raise ValueError("The closure input names a different arm than the prepared run")
     options = dict(package_dir=package, receipt_path=output / "launch_receipt.json",
                    expected_package_identity=report["expected_package_identity"])
     supplied = {}
@@ -202,6 +240,10 @@ def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
         resolved = {"spec": spec, "options": options, "outputs": outputs,
             "contexts": {arm_id: item["context"] for arm_id, item in outputs.items()},
             "locations": locations, "target_identities": targets, "run_directory": output}
+        if draft_role_audit_dir is not None:
+            from .experiment_terminal_staging import write_role_audits
+            # Protected-role states stay unknown unless the human passes them.
+            role_audit = write_role_audits(root, resolved, draft_role_audit_dir, protected_role_use)
         staged = stage_verified_terminal_packages(None, root, declaration["logical_run_id"], "v1",
             resolved=resolved, reports=mechanical["arms"], outcome=outcome,
             decision_ref=decision_ref, role_audit=role_audit)

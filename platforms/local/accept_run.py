@@ -16,8 +16,7 @@ def _expand_closure_input(arguments):
     The file is {"arms": {arm: {"outcome": ..., "decision_ref": ...}}, "role_audit": path?}.
     It only carries human decisions; the acceptance owner still validates them.
     """
-    import json
-    from molgap.experiment_launch import _unique
+    from molgap.experiment_terminal_staging import load_closure_input
 
     index = next((i for i, a in enumerate(arguments)
                   if a == "--closure-input" or a.startswith("--closure-input=")), None)
@@ -31,21 +30,13 @@ def _expand_closure_input(arguments):
         path, rest = arguments[index].split("=", 1)[1], arguments[:index] + arguments[index + 1:]
     if any(a.split("=", 1)[0] in _CLOSURE_REPLACES for a in rest):
         raise ValueError("--closure-input replaces the individual outcome, decision and role-audit options")
-    closure = json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=_unique)
-    arms = closure.get("arms") if type(closure) is dict else None
-    if (type(closure) is not dict or set(closure) - {"arms", "role_audit"} or type(arms) is not dict or not arms
-            or any(type(item) is not dict or set(item) != {"outcome", "decision_ref"}
-                   or not all(type(value) is str and value for value in item.values())
-                   for item in arms.values())
-            or not all(type(arm) is str and arm and "=" not in arm for arm in arms)
-            or ("role_audit" in closure and (type(closure["role_audit"]) is not str or not closure["role_audit"]))):
-        raise ValueError("Closure input must be {arms: {arm: {outcome, decision_ref}}, role_audit?}")
+    arms, role_audit = load_closure_input(path)
     expanded = []
     for arm, item in arms.items():
         expanded += ["--arm-outcome", f"{arm}={item['outcome']}",
                      "--arm-decision-ref", f"{arm}={item['decision_ref']}"]
-    if "role_audit" in closure:
-        expanded += ["--role-audit", closure["role_audit"]]
+    if role_audit is not None:
+        expanded += ["--role-audit", role_audit]
     return [*rest, *expanded]
 
 
