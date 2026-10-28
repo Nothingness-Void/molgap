@@ -47,6 +47,15 @@ of the same family. A single arm needs an explicit reason for leaving the other
 allocated T4 idle. Each worker retains its independent state and assigned GPU.
 Mature fixed-data and Modern2D indexed-data families use separate workflows.
 
+A separately frozen same-run architecture pair may also use the existing
+explicit update/evaluation clock. Both arms declare `horizon_steps` and
+`evaluation_every_steps`; authority must set
+`step_clock_architecture_authorized=true`. `horizon_passes` in the editable
+input preserves the schedule reference clock; the compiler derives physical
+pass count separately. Both arms must match endpoint, evaluation cadence and
+all non-architecture identities. This reuses the Session step clock; it does
+not turn a historical transfer study into a causal comparison.
+
 The compiler generates the Spec, recipes, prospective inputs, feature bindings
 and acceptance plan. The human does not write those envelopes or compute their
 hashes. Feature identity binds topology/role/transform parameters separately

@@ -10,7 +10,8 @@ from pathlib import Path
 
 
 def freeze_anchor(repo_root, *, base, family, model_config, initialization_sha256,
-                  horizon_passes=20, execution_mode="original"):
+                  horizon_passes=20, execution_mode="original", source_base=None,
+                  horizon_steps=None, evaluation_every_steps=None):
     from .common.io import publish_immutable_bytes
     from .common.wire import canonical_fingerprint
     from .experiment_input import _read_scientific_recipe
@@ -22,7 +23,7 @@ def freeze_anchor(repo_root, *, base, family, model_config, initialization_sha25
     from .research_memory.trace import file_digest
 
     root = Path(repo_root).absolute()
-    old = "experiments/modern2d_100k_formal_screen/retry_v2"
+    old = source_base or "experiments/modern2d_100k_formal_screen/retry_v2"
     old_id = "ppgt_author_v2" if family == "ppgt_small" else "esa_native_v3"
     interface = (family, "3" if family == "ppgt_small" else "4")
     load = lambda name: json.loads(repo_local_path(root, name).read_bytes())
@@ -33,23 +34,30 @@ def freeze_anchor(repo_root, *, base, family, model_config, initialization_sha25
             json.dumps(record, sort_keys=True, separators=(",", ":"), allow_nan=False).encode())
         pins[name] = dict(path=base + "/" + name, sha256=file_digest(target))
         return pins[name]
-    old_record, baseline = _read_scientific_recipe(repo_local_path(root, old + "/" + old_id + "/contract.json"),
+    contract_ref = old + ("/contract.json" if source_base else "/" + old_id + "/contract.json")
+    old_record, baseline = _read_scientific_recipe(repo_local_path(root, contract_ref),
         interface, dict(purpose="CONFIGURED_SCREEN", scientific_training_authorized=True,
                         source_reissue_authorized=True))
-    steps = horizon_passes * (baseline.train_rows // baseline.batch_size)
+    if (horizon_steps is None) != (evaluation_every_steps is None):
+        raise ValueError("Explicit anchor clock requires both endpoint and evaluation interval")
+    steps_per_pass = baseline.train_rows // baseline.batch_size
+    steps = horizon_passes * steps_per_pass if horizon_steps is None else horizon_steps
+    physical_passes = horizon_passes if horizon_steps is None else (steps + steps_per_pass - 1) // steps_per_pass
     recipe = replace(baseline, initialization_sha256=initialization_sha256,
         model_config=model_config, optimizer_steps=steps,
         schedule=replace(baseline.schedule, total_units=steps, reference_epochs=horizon_passes),
         checkpoint_every=128, formal_training=Modern2DFormalTrainingProfile(
-            purpose="configured-screen", horizon_passes=horizon_passes,
-            horizon_steps=steps, execution_mode=execution_mode))
-    record = build_screen_recipe("reference", family=interface, configuration=recipe,
+            purpose="configured-screen", horizon_passes=physical_passes,
+            horizon_steps=steps, execution_mode=execution_mode,
+            evaluation_every_steps=evaluation_every_steps))
+    record = build_screen_recipe(recipe.mode, family=interface, configuration=recipe,
         source_idx_sha256=old_record["acceptance_requirements"]["source_idx_sha256"],
         target_sha256=old_record["acceptance_requirements"]["target_sha256"],
         train_role_identity=old_record["train_role_identity"],
         development_role_identity=old_record["development_role_identity"])
     save("contract.json", record)
     save("training_input.json", raw=repo_local_path(root, old + "/training_input.json").read_bytes())
+    old_plan = load(old + "/acceptance_plan.json")
     metadata = load(old + "/training_inputs.json")
     model = deepcopy(metadata["models"][old_id])
     model["model_config"] = record["model_config"]
@@ -58,7 +66,10 @@ def freeze_anchor(repo_root, *, base, family, model_config, initialization_sha25
         feature["transform_config_sha"] = canonical_fingerprint(transform_configuration(interface, model_config))
         model["feature_binding_sha256"][role] = canonical_fingerprint(feature)
     metadata["models"] = {old_id: model}
-    metadata["training_input"] = dict(path="training_input.json", sha256=pins["training_input.json"]["sha256"])
+    from .modern2d_training_release import CONFIGURED_PLAN_FORMAT
+    metadata["training_input"] = (dict(pins["training_input.json"])
+        if old_plan["format"] == CONFIGURED_PLAN_FORMAT else
+        dict(path="training_input.json", sha256=pins["training_input.json"]["sha256"]))
     save("training_inputs.json", metadata)
     prior = load(old + "/experiment_spec.json")
     arm = deepcopy(next(a for a in prior["arms"] if a["arm_id"] == old_id))
@@ -72,7 +83,6 @@ def freeze_anchor(repo_root, *, base, family, model_config, initialization_sha25
     prior["prospective"]["arms"] = [a for a in prior["prospective"]["arms"] if a["arm_id"] == old_id]
     spec = ExperimentSpec(prior)
     save("experiment_spec.json", spec.to_dict())
-    old_plan = load(old + "/acceptance_plan.json")
     target = next(a for a in old_plan["arms"] if a["arm_id"] == old_id)["target_manifest"]
     save("acceptance_plan.json", dict(format=old_plan["format"], spec_identity=spec.identity,
         inputs=pins["training_inputs.json"], arms=[dict(arm_id=old_id,

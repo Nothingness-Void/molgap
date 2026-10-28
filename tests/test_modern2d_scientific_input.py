@@ -148,8 +148,19 @@ def configured(case, tmp_path):
     return SimpleNamespace(repo=repo, path=path, value=value, authority=authority, initial=case.initial)
 
 
-def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch):
+@pytest.mark.parametrize("step_clock", [False, True])
+def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch, step_clock):
     c = configured
+    if step_clock:
+        value = deepcopy(c.value)
+        for arm in value["arms"]:
+            arm["training"].update(horizon_passes=20, horizon_steps=15600, evaluation_every_steps=780)
+        authority = {**c.authority, "step_clock_architecture_authorized": True,
+            "recipes": {a["arm_id"]: dict(horizon_passes=20, horizon_steps=15600) for a in value["arms"]}}
+        _write_json(c.path, value)
+        _write_json(c.repo / value["authority_ref"], authority)
+        _git(c.repo, "add", ".")
+        _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Freeze paired partial-pass clock")
     value, spec, workflow, paths = resolve_experiment_input(c.path, c.repo)
     plan = json.loads((c.repo / workflow["acceptance_plan"]).read_bytes())
     assert plan["format"] == CONFIGURED_PLAN_FORMAT
@@ -158,7 +169,15 @@ def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch
     assert checked["reference_status"] == "SAME_RUN_REFERENCE_PLANNED"
     assert plan["comparison"]["declared_intervention_fields"] == ["architecture_config_identity"]
     _, recipe = read_recipe(c.repo / workflow["arms"][0]["recipe"])
-    assert recipe.mode == "reference" and recipe.optimizer_steps == 15620
+    assert recipe.mode == "reference" and recipe.optimizer_steps == (15600 if step_clock else 15620)
+    if step_clock:
+        from molgap.modern2d_training_release import validate_configured_authority
+        recipes = {j["arm_id"]: read_recipe(c.repo / j["recipe"])[1] for j in workflow["arms"]}
+        with pytest.raises(ValueError, match="paired architecture authority"):
+            validate_configured_authority({**authority, "step_clock_architecture_authorized": False},
+                spec.to_dict(), recipes)
+        assert recipe.formal_training.evaluation_every_steps == 780
+        assert recipe.schedule.reference_epochs == 20
     assert recipe.learning_rate == .001 and recipe.formal_training.configured
     # Source identity checks require imports from the fixture checkout itself.
     program = r'''

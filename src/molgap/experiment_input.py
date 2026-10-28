@@ -485,7 +485,7 @@ def _compile_scientific_input(path, root, value):
         if is_reference and addons != previous["addons"]:
             raise ValueError("Same-run reference must retain its frozen recipe and addons")
         if is_reference and modern and set(item["training"]) - {
-                "horizon_passes", "execution_mode", "profiling"}:
+                "horizon_passes", "execution_mode", "profiling", "horizon_steps", "evaluation_every_steps"}:
             raise ValueError("Same-run reference only permits its shared horizon and execution fields")
         if is_reference and not modern and item["training"]:
             raise ValueError("Same-run reference must retain its frozen recipe and addons")
@@ -499,8 +499,12 @@ def _compile_scientific_input(path, root, value):
             passes = edits.pop("horizon_passes", baseline.formal_training.horizon_passes)
             exact_steps = edits.pop("horizon_steps", None)
             evaluation_every = edits.pop("evaluation_every_steps", None)
-            if (exact_steps is None) != (evaluation_every is None) or (exact_steps is not None and not transfer_study):
-                raise ValueError("Explicit step clock requires an authorized transfer study")
+            paired_step_clock = (pair is not None and item["purpose"] == "architecture_comparison"
+                and authority.get("purpose") == "CONFIGURED_SCREEN"
+                and authority.get("step_clock_architecture_authorized") is True)
+            if ((exact_steps is None) != (evaluation_every is None)
+                    or (exact_steps is not None and not (transfer_study or paired_step_clock))):
+                raise ValueError("Explicit step clock requires transfer or paired architecture authority")
             execution_mode = edits.pop("execution_mode", "original")
             if type(passes) is not int or passes < 1:
                 raise ValueError("Modern2D horizon_passes must be a positive integer")
@@ -817,7 +821,8 @@ def _compile_scientific_input(path, root, value):
     if modern and pair is not None:
         from .comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE, STRICT_IDENTITY_FIELDS
         horizons = {(entry[3].formal_training.horizon_passes,
-                     entry[3].formal_training.horizon_steps)
+                     entry[3].formal_training.horizon_steps,
+                     entry[3].formal_training.evaluation_every_steps)
                     for entry in modern_inputs.values()}
         if len(horizons) != 1:
             raise ValueError("Same-run Modern2D reference and candidate must share one explicit horizon")

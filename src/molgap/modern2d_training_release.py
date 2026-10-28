@@ -242,10 +242,14 @@ def validate_configured_authority(authority, declaration, recipes=None):
             "horizon_steps": recipe.formal_training.horizon_steps} for name, recipe in recipes.items()}
         if authority.get("recipes") != expected:
             raise ValueError("Configured authority recipe/horizon binding changed")
+        paired_step_clock = (authority.get("purpose") == "CONFIGURED_SCREEN"
+            and authority.get("step_clock_architecture_authorized") is True
+            and len(arms) == 2 and authority.get("same_run_reference_arm_id") in recipes
+            and declaration.get("prospective", {}).get("same_run_replay") is not None)
         for recipe in recipes.values():
             if (recipe.formal_training.evaluation_every_steps is not None and
-                    authority.get("purpose") != TRANSFER_PURPOSE):
-                raise ValueError("Exact step-clock recipes require explicit transfer authority")
+                    authority.get("purpose") != TRANSFER_PURPOSE and not paired_step_clock):
+                raise ValueError("Exact step-clock recipes require transfer or paired architecture authority")
             if recipe.formal_training.execution_mode == "prepared-v2" and (
                     authority.get("execution_mode") != "prepared-v2"
                     or authority.get("fresh_native_execution_gate") is not True):
@@ -641,7 +645,8 @@ def check_plan(spec, root, plan):
                     raise ValueError("Bounded PPGT profile requires explicit lightweight phase capture")
     if configured and pair is not None and comparison is not None:
         horizons = {(recipe.formal_training.horizon_passes,
-                     recipe.formal_training.horizon_steps)
+                     recipe.formal_training.horizon_steps,
+                     recipe.formal_training.evaluation_every_steps)
                     for recipe in recipes.values()}
         if len(horizons) != 1:
             raise ValueError("Same-run Modern2D reference and candidate must share one explicit horizon")
