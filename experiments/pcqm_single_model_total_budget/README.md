@@ -54,6 +54,20 @@ test file or platform infrastructure was added.
 
 ## Objective and accounting
 
+### First cloud allocation
+
+Submitted on2026-10-28 through the existing journaled Kaggle owner:
+`nothingnessvoid/molgap-single-model-total-budget-500k`, kernel141313409/version1.
+The [scheduler observation](submission/scheduler_observation.json) recorded
+RUNNING at submission; this is not native qualification or scientific acceptance.
+[Launch receipt](submission/launch_receipt.json) and
+[original platform response](submission/platform_response.json) retain exact
+source/package/run bindings. Training source commit is `1380d186`.
+The source dataset was verified private. Full operation journal and byte-verification
+reports remain under the external run directory in the machine profile.
+First segment is capped at7h wall/14 T4-device-hours; overall authority remains30,
+including all later continuations. Reconcile this job before considering resume.
+
 Find a single pure-2D Gap predictor that matches or exceeds the ensemble with no
 higher total cost to train from scratch on the full dataset, submit and deploy.
 Existing 500K weights are useful research assets, not free future full training.

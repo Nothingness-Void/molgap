@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "fa4d83ed0a722f1f0652efa29bae2cfc4fcaee59edefd8bdf9b20069df03884b",
+  "source_digest": "0e503faf2f2c9564ada2a7116910d1d9202a63c514158c15bb9a2a58dc95c015",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -369,6 +369,34 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+      "family_id": "pcqm-single-model-total-budget-500k",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+      "family_id": "pcqm-single-model-total-budget-500k",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/b_16x256/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
     },
     {
       "completeness_status": "complete",
