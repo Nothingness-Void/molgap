@@ -11,6 +11,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
+Review the [family-retention challenge prerequisites](experiments/family_retention_challenge_500k/protocol.md)
+before any successor: reference identity/establishment, complete GRIT fidelity,
+shared feature/weight semantics and bounded native feasibility. This is an
+unsubmitted two-arm proposal, not a released job or automatic continuation.
+
 The [PPGT/ESA500K transfer decision](experiments/modern2d_scale500k/results/completed_v3/decision.md)
 closed both endpoints and contextual RML terminals. Preserve its substantial
 within-family transfer observations; any competitive nomination first needs a

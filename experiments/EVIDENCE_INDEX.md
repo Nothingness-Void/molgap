@@ -1,5 +1,9 @@
 # Experiment evidence index
 
+The2026-10-28 [family-retention review](family_retention_challenge_500k/research_review.md)
+proposed a qualified Common-Dev reference and compact complete GRIT challenge.
+It supplied no trained result; historical PPGT/ESA claims were not upgraded.
+
 The2026-10-25 [two-family500K design](modern2d_scale500k/decision.md) reserved
 one PPGT/ESA dual-arm task. Input/runtime qualification remained prerequisites;
 this planning record supplied no trained result or Replay claim.

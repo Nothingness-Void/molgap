@@ -6,6 +6,11 @@
 
 ## Server execution status
 
+The [family-retention and GRIT challenge](experiments/family_retention_challenge_500k/README.md)
+is a research proposal only. It recommends parking PPGT expansion, retaining ESA
+as an efficiency reserve, and qualifying one strong Common-Dev reference before
+a complete compact-GRIT comparison. No new compute or Replay claim follows.
+
 The [PPGT/ESA500K task](experiments/modern2d_scale500k/STATUS.md) completed both
 frozen endpoints. Independent output and native-state acceptance passed; matched
 source100K selected-prediction contrasts improved substantially on Common-Dev.
