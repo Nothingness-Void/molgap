@@ -1,0 +1,162 @@
+{
+  "context": {
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "arm_id": "channel_gain",
+    "arm_identity": "621d025bc34bc8c32647e5ee962b978ead4a20d15dc5ab07bc2162d6e1889b24",
+    "experiment_id": "infra-rehearsal-20261028",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "infra-rehearsal-k1-lr5e-4-20261028",
+    "package_identity": "4c2df7a8dfb74e99091dbe9cb7567a5e7c482fc856d6b78b26b9ee4d1dd0e29f",
+    "platform": "local",
+    "platform_version": "1",
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/infra-rehearsal-k1-lr5e-4-20261028",
+    "source_archive_sha256": "da86ae2d1e622598a1b97777c29fcadc8febf0067a3f69337b1acd05fa2b7b34",
+    "source_commit": "83f7049dc67dae1f8e20ab2677cda194da6fce7b",
+    "spec_identity": "5d9d3e933f2b0d41bcce6645504e7ee652b6775be32a21f49ec5291fdae1cdf7",
+    "training_recipe_sha256": "9b634235bc978d4ccf913f75f990d96a836ed9c6fcc67b8fb05ce82675e53a15"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "channel_gain-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-TB-infra-rehearsal-20261028-0",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/observed.json",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.008173289277781604
+        }
+      },
+      "platform": "local",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    }
+  ],
+  "diagnostic_report": null,
+  "mechanical_verification": {
+    "blockers": [],
+    "context": {
+      "account": "xn--tiq369bpxdruio7k22f89w",
+      "arm_id": "channel_gain",
+      "arm_identity": "621d025bc34bc8c32647e5ee962b978ead4a20d15dc5ab07bc2162d6e1889b24",
+      "experiment_id": "infra-rehearsal-20261028",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "infra-rehearsal-k1-lr5e-4-20261028",
+      "package_identity": "4c2df7a8dfb74e99091dbe9cb7567a5e7c482fc856d6b78b26b9ee4d1dd0e29f",
+      "platform": "local",
+      "platform_version": "1",
+      "run_reference": "xn--tiq369bpxdruio7k22f89w/infra-rehearsal-k1-lr5e-4-20261028",
+      "source_archive_sha256": "da86ae2d1e622598a1b97777c29fcadc8febf0067a3f69337b1acd05fa2b7b34",
+      "source_commit": "83f7049dc67dae1f8e20ab2677cda194da6fce7b",
+      "spec_identity": "5d9d3e933f2b0d41bcce6645504e7ee652b6775be32a21f49ec5291fdae1cdf7",
+      "training_recipe_sha256": "9b634235bc978d4ccf913f75f990d96a836ed9c6fcc67b8fb05ce82675e53a15"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "9b634235bc978d4ccf913f75f990d96a836ed9c6fcc67b8fb05ce82675e53a15"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "066288be9104d665fa16cab9aa41ffaefbaeb60c8a5a4b391e00d233c907bfd9"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "5a2d42570fa779c6365e4410e912c3d72e9514102a6a3406903c83a6d0f847a6"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "f2a0c2a1b8f8c31d07189084635ffd4a18aaa34f43b4f1bd4cd25a209bd56446"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "27f0f8a2b6dd35f2c00c476fbc57c682aa9ddde81f8a9103be2ee5a7af3cfc7f"
+        },
+        "trace_context": {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "c53fc1ba71e5a333a9a70b926166195b086b0cfa5d4159c7c96d14d2f3937985"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 29.42384140001377
+        },
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.4800838897936046,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 10,
+        "next_batch": 0,
+        "optimizer_steps": 160,
+        "sample_presentations": 20480,
+        "status": "complete"
+      },
+      "selected_optimizer_step": 160,
+      "selected_weights": "live"
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "missing_evidence": [
+    "scientific_comparison_not_evaluated",
+    "runtime_qualification_not_evaluated",
+    "replay_readiness_not_evaluated",
+    "observed_protected_role_audit_incomplete"
+  ],
+  "native_costs": [
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 29.42384140001377
+    },
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "roles": []
+}

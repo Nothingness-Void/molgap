@@ -1,0 +1,271 @@
+{
+  "acceptance_ref": "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/acceptance.json": "2b49f38491137f89acba32f3f67abe98b7b8402e2b9e7368c1fe091837b8fa2d",
+    "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/observed.json": "cfa2cf35b94a1af23ed1a66777c80b59815cf964b1a04110a107e949a52ba328",
+    "experiments/infra_rehearsal_20261028/roles_channel_gain.json": "44813a6cf57251380a3b5b0c41c87e1443150eb955e221de82f28d8fde69c112",
+    "experiments/infra_rehearsal_20261028/terminal_decision.md": "d106f0f8de9364df0d68ac21ad05f47761224d780855738310a861fe5a0c6191",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/canonical_trace.json": "27f0f8a2b6dd35f2c00c476fbc57c682aa9ddde81f8a9103be2ee5a7af3cfc7f",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/canonical_trace.json.context.json": "c53fc1ba71e5a333a9a70b926166195b086b0cfa5d4159c7c96d14d2f3937985",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/development_predictions.pt": "066288be9104d665fa16cab9aa41ffaefbaeb60c8a5a4b391e00d233c907bfd9",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/last_checkpoint.pt": "5a2d42570fa779c6365e4410e912c3d72e9514102a6a3406903c83a6d0f847a6",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/output_manifest.json": "d1d1a08b4876e6f77dcb03ff55919817dfd7ed6149f6c97b5159dc26852b2404",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/selected_model.pt": "f2a0c2a1b8f8c31d07189084635ffd4a18aaa34f43b4f1bd4cd25a209bd56446",
+    "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/training_contract.json": "9b634235bc978d4ccf913f75f990d96a836ed9c6fcc67b8fb05ce82675e53a15"
+  },
+  "closure_blockers": [
+    "observed_protected_role_audit_incomplete"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "channel_gain-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-TB-infra-rehearsal-20261028-0",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/observed.json",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.008173289277781604
+        }
+      },
+      "platform": "local",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/infra_rehearsal_20261028/terminal_decision.md",
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/training_contract.json",
+        "name": "contract",
+        "sha256": "9b634235bc978d4ccf913f75f990d96a836ed9c6fcc67b8fb05ce82675e53a15"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "066288be9104d665fa16cab9aa41ffaefbaeb60c8a5a4b391e00d233c907bfd9"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "5a2d42570fa779c6365e4410e912c3d72e9514102a6a3406903c83a6d0f847a6"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "f2a0c2a1b8f8c31d07189084635ffd4a18aaa34f43b4f1bd4cd25a209bd56446"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "27f0f8a2b6dd35f2c00c476fbc57c682aa9ddde81f8a9103be2ee5a7af3cfc7f"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "c53fc1ba71e5a333a9a70b926166195b086b0cfa5d4159c7c96d14d2f3937985"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/infra_rehearsal_20261028/terminal_decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-TB-infra-rehearsal-20261028",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/infra_rehearsal_20261028/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.4800838897936046,
+      "missing_reason": null,
+      "selected_optimizer_step": 160,
+      "selected_weights": "live",
+      "source_ref": "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-28T03:07:59.438416+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "INFRASTRUCTURE_ONLY",
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/roles_channel_gain.json",
+      "role_event_id": "role-infra-rehearsal-k1-lr5e-4-20261028-channel_gain-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/roles_channel_gain.json",
+      "role_event_id": "role-infra-rehearsal-k1-lr5e-4-20261028-channel_gain-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/roles_channel_gain.json",
+      "role_event_id": "role-infra-rehearsal-k1-lr5e-4-20261028-channel_gain-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/roles_channel_gain.json",
+      "role_event_id": "role-infra-rehearsal-k1-lr5e-4-20261028-channel_gain-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "174b27f12b1622a0d249a666b47262b5c8945cbc04eaf5e70260c461a321de88",
+      "evidence_ref": "experiments/infra_rehearsal_20261028/roles_channel_gain.json",
+      "role_event_id": "role-infra-rehearsal-k1-lr5e-4-20261028-channel_gain-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-infra-rehearsal-20261028"
+    }
+  ],
+  "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_160",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/infra_rehearsal_20261028/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 160,
+      "sample_presentations": 20480
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/infra_rehearsal_20261028/recipe.json",
+    "reference_id": null,
+    "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/infra_rehearsal_20261028/prospective/terminal_staging/v1/4680c98b31fc6d7d/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/infra-rehearsal-20261028/output/channel_gain/canonical_trace.json",
+    "trace_artifact_sha256": "27f0f8a2b6dd35f2c00c476fbc57c682aa9ddde81f8a9103be2ee5a7af3cfc7f",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-infra-rehearsal-20261028",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-infra-rehearsal-20261028"
+}
