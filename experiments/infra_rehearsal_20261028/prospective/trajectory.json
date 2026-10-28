@@ -1,0 +1,102 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "channel_gain-v1"
+      ],
+      "cost_event_ids": [
+        "cost-TB-infra-rehearsal-20261028-planned"
+      ],
+      "evidence_refs": [
+        "experiments/infra_rehearsal_20261028/recipe.json"
+      ],
+      "run_ids": [
+        "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream"
+      ],
+      "source_commit": "83f7049dc67dae1f8e20ab2677cda194da6fce7b",
+      "type": "execution_diagnostic"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/infra_rehearsal_20261028/decision.md",
+    "next_allowed_actions": [
+      "one authorized execution diagnostic"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/infra_rehearsal_20261028/authority.json",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "local-k1-ten-epoch-flow",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/infra_rehearsal_20261028/role_scope.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/infra_rehearsal_20261028/rml_decision_snapshots/4e6e1f2e6341a25b2b79fd3d9c07396f3259d56e8773177ea620d91bf0283a70.json",
+    "snapshot_sha256": "4e6e1f2e6341a25b2b79fd3d9c07396f3259d56e8773177ea620d91bf0283a70",
+    "state_timestamp": "2026-10-28T03:02:11.095731+00:00"
+  },
+  "family_id": "local-k1-ten-epoch-flow",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The model may be correct while adapter, process lifecycle or terminal binding fails."
+    ],
+    "changed_mechanism": "Learning rate 0.0005 instead of 0.001 on the K1 reference recipe; exercise only.",
+    "cheapest_falsifier": "One real model,160 updates,pause at 80,new-process restore,run-keyed acceptance and INFRASTRUCTURE_ONLY closure.",
+    "decision_changed_if_negative": "Report the failing owner; repair only with user approval.",
+    "decision_changed_if_positive": "Record the exercised flow and glue ledger only; no adoption.",
+    "expected_native_cost_ref": "cost-TB-infra-rehearsal-20261028-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-TB-infra-rehearsal-20261028",
+    "observed_deficiency": "Run-keyed acceptance, draft-role-audit and closure-input have not been exercised end to end on a local run.",
+    "related_closed_family_ids": [
+      "K1 normalization and DropPath are separate existing questions; no transfer claim."
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-slot-readout-diagnostic-20261002"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Infrastructure rehearsal of the run-keyed flow: can one K1 model with a typed learning-rate change pass prepare, local train with pause/resume, run-keyed acceptance and INFRASTRUCTURE_ONLY closure, and how much glue does it need?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/infra_rehearsal_20261028/authority.json",
+    "contract_refs": [
+      "experiments/infra_rehearsal_20261028/recipe.json",
+      "experiments/infra_rehearsal_20261028/README.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-slot-readout-diagnostic-20261002"
+    ],
+    "prior_trajectory_ids": [
+      "TB-k1-slot-readout-diagnostic-20261002",
+      "TB-local-k1-channel-gain-flow-20261023",
+      "TB-local-k1-channel-gain-flow-20261023-r2",
+      "TB-local-k1-channel-gain-flow-20261023-r3"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/infra_rehearsal_20261028/role_scope.json"
+    ],
+    "source_commit": "83f7049dc67dae1f8e20ab2677cda194da6fce7b",
+    "source_config_identity": "621d025bc34bc8c32647e5ee962b978ead4a20d15dc5ab07bc2162d6e1889b24"
+  },
+  "track": "B",
+  "trajectory_id": "TB-infra-rehearsal-20261028"
+}

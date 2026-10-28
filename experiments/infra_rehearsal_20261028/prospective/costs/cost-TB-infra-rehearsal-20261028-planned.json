@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "channel_gain-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-infra-rehearsal-20261028-planned",
+  "evidence_ref": "experiments/infra_rehearsal_20261028/authority.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local",
+  "run_id": "infra-rehearsal-k1-lr5e-4-20261028:channel_gain:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-infra-rehearsal-20261028"
+}
