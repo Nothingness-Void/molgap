@@ -1,0 +1,22 @@
+{
+  "kaggle": {
+    "accelerator": "NvidiaTeslaT4",
+    "account": "kaseichou",
+    "datasets": [
+      "kaseichou/molgap-ppgt-capacity500k-source-v1",
+      "kaseichou/molgap-modern2d-500k-commondev-v1"
+    ],
+    "kernel": "kaseichou/molgap-ppgt-capacity500k-s42-v1",
+    "source_dataset": "kaseichou/molgap-ppgt-capacity500k-source-v1",
+    "title": "MolGap PPGT Capacity500K S42 V1"
+  },
+  "platform": {
+    "accelerator": "NvidiaTeslaT4",
+    "atomic_checkpoints": true,
+    "cpu_cores": 4,
+    "device_count": 2,
+    "memory_gib": 29,
+    "name": "kaggle",
+    "retrievable_chunks": true
+  }
+}

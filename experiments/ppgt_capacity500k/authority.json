@@ -1,0 +1,65 @@
+{
+  "allocated_t4_hours_ceiling": 18,
+  "arms": [
+    "ppgt_w192",
+    "ppgt_w384"
+  ],
+  "authorization_basis": "Human2026-10-29 JST authorized PPGT width-capacity500K dual-arm on Kaggle2 after raising model ceiling to10M. Bound to one9h T4x2 job and identical15620-step endpoints; no automatic successor.",
+  "automatic_successor_authorized": false,
+  "execution_mode": "prepared-v2",
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-configured-authority-v1",
+  "fresh_native_execution_gate": true,
+  "full_training_authorized": false,
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 18,
+    "owner": "kaseichou",
+    "wall_ceiling_seconds": 32400
+  },
+  "interfaces": [
+    [
+      "ppgt_small",
+      "3"
+    ],
+    [
+      "ppgt_small",
+      "3"
+    ]
+  ],
+  "kaggle_quota_hours_ceiling": 9,
+  "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "protected_role_access_authorized": false,
+  "purpose": "CONFIGURED_SCREEN",
+  "recipes": {
+    "ppgt_w192": {
+      "horizon_passes": 4,
+      "horizon_steps": 15620
+    },
+    "ppgt_w384": {
+      "horizon_passes": 4,
+      "horizon_steps": 15620
+    }
+  },
+  "research_design": {
+    "protocol_ref": "experiments/ppgt_capacity500k/protocol.md",
+    "reference_status": "Prospective same-run reference; old completed transfer is contextual and not a qualified bundle."
+  },
+  "roles": [
+    "train_500k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-ppgt-capacity500k-s42-v1",
+  "same_run_reference_arm_id": "ppgt_w192",
+  "scale_500k_authorized": true,
+  "scientific_training_authorized": true,
+  "seeds": [
+    42
+  ],
+  "source_reissue_authorized": true,
+  "step_clock_architecture_authorized": true,
+  "user_authorized": true
+}
