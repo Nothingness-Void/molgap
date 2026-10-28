@@ -63,6 +63,12 @@ ADDONS = MappingProxyType({
         for suffix, slot in (("node", "pre_message"), ("aggregate", "post_aggregation"),
                              ("readout", "pre_readout"))
     },
+    ("k1_initial_residual", "1"): AddonContract(
+        "neural_atom_k1", "slot-initial-residual", "molgap.k1_initial_residual",
+        family_versions=("3",),
+        execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_initial_residual:apply_addon",
+    ),
     ("gptrans_degree_bond_local", "1"): AddonContract(
         "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
         family_versions=("2",), single_addon=True,
