@@ -1,0 +1,25 @@
+{
+  "allowed_roles": [
+    "train",
+    "development"
+  ],
+  "authority_ref": "experiments/infra_rehearsal_20261028/authority.json",
+  "official_validation": false,
+  "purpose": "infrastructure-only",
+  "role_bindings": {
+    "development": {
+      "membership_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "role": "development",
+      "row_order_sha256": "bea49f46dcaa0093de640eb537128dea4da987b1df9efb56e21003181a4bf41c",
+      "usage_sha256": "197ee384a94f6734f730067b85de48270eda4270b268cf7819cc3bdb7c5c5584"
+    },
+    "train": {
+      "membership_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+      "role": "train",
+      "row_order_sha256": "5ccf19f4f2c0424bb9636387a42e899d136172cb5e410c08d271cedf5925f25d",
+      "usage_sha256": "dde483f3e167ff7a755cf458dce50e0784d5eb2bed53f9578c80c522f90edfb7"
+    }
+  },
+  "test_challenge": false,
+  "test_dev": false
+}
