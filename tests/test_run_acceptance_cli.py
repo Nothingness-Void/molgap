@@ -10,40 +10,54 @@ from molgap import experiment_cli as cli
 from molgap import experiment_run as runs
 
 
-def test_run_acceptance_cli_needs_no_outputs_or_locations(tmp_path, monkeypatch, capsys):
+def test_accept_workflow_cli_rejects_ambiguous_options_and_forwards_unexercised_ones(tmp_path, monkeypatch, capsys):
+    # Per-arm outcome/decision, --retrieved-root, --role-audit and the execute=False
+    # default go through the real CLI in test_run_acceptance_integration. The strict
+    # owner runs there directly, so --strict forwarding is still checked here, together
+    # with parser-level rejection and the options no real CLI flow passes.
     owner = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}, "executed": False})
     monkeypatch.setattr(runs, "accept_run_workflow", owner)
-    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--retrieved-root", str(tmp_path / "retrieved")]) == 0
-    assert json.loads(capsys.readouterr().out)["status"] == "MECHANICALLY_VERIFIED"
-    assert owner.call_args.kwargs["supplied"] is None
-    assert owner.call_args.kwargs["locations"] is None
-    assert owner.call_args.kwargs["retrieved_root"] == tmp_path / "retrieved"
-    assert owner.call_args.kwargs["execute"] is False
     arguments = ["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
         "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json")]
-    outcomes = {"reference": "CLOSED", "candidate": "NEGATIVE_UNDER_CONTRACT"}
-    decisions = {arm: "experiments/question/" + arm + "_decision.md" for arm in outcomes}
-    assert cli.main([*arguments, *[value for arm, outcome in outcomes.items()
-        for value in ("--arm-outcome", arm + "=" + outcome)],
-        *[value for arm, decision in decisions.items() for value in ("--arm-decision-ref", arm + "=" + decision)]]) == 0
-    assert owner.call_args.kwargs["outcome"] == outcomes
-    assert owner.call_args.kwargs["decision_ref"] == decisions
-    capsys.readouterr()
-    assert cli.main([*arguments, "--outcome", "INCONCLUSIVE",
-        "--decision-ref", str(tmp_path / "decision.md")]) == 0
-    assert owner.call_args.kwargs["outcome"] == "INCONCLUSIVE"
-    assert owner.call_args.kwargs["decision_ref"] == tmp_path / "decision.md"
-    capsys.readouterr()
+    physical = tmp_path / "physical.json"
+    physical.write_text('[{"platform":"kaggle","platform":"other"}]', encoding="utf-8")
     for extra in (["--outcome", "CLOSED", "--arm-outcome", "reference=CLOSED"],
                   ["--decision-ref", "decision.md", "--arm-decision-ref", "reference=decision.md"],
                   ["--arm-outcome", "reference=CLOSED", "--arm-outcome", "reference=INCONCLUSIVE"],
-                  ["--arm-decision-ref", "reference=one.md", "--arm-decision-ref", "reference=two.md"]):
-        owner.reset_mock()
+                  ["--arm-decision-ref", "reference=one.md", "--arm-decision-ref", "reference=two.md"],
+                  ["--physical-runs", str(physical)]):
         assert cli.main([*arguments, *extra]) == 2
-        assert json.loads(capsys.readouterr().out)["status"] == "ERROR"
+        output = json.loads(capsys.readouterr().out)
+        assert output["status"] == "ERROR"
         owner.assert_not_called()
+    assert "Duplicate JSON key" in output["error"]["message"]
+    physical.write_text(json.dumps([{"physical_run": "bound-by-owner"}]), encoding="utf-8")
+    receipt, recovery, authority = tmp_path / "v3.json", tmp_path / "recovery", tmp_path / "decision.md"
+    observation = tmp_path / "allocation_entry_observation.json"
+    assert cli.main([*arguments, "--continuation-receipt", str(receipt), "--physical-runs", str(physical),
+        "--resume-prepared", str(recovery), "--resume-authority", str(authority), "--stage-terminal"]) == 0
+    kwargs = owner.call_args.kwargs
+    assert (kwargs["continuation_receipt"], kwargs["resume_prepared"], kwargs["resume_authority"]) == (
+        receipt, recovery, authority)
+    assert kwargs["physical_runs"] == [{"physical_run": "bound-by-owner"}]
+    assert cli.main([*arguments, "--outcome", "INCONCLUSIVE", "--decision-ref", str(authority)]) == 0
+    assert owner.call_args.kwargs["outcome"] == "INCONCLUSIVE"
+    assert owner.call_args.kwargs["decision_ref"] == authority
+    assert cli.main([*arguments, "--execution-root", str(tmp_path / "execution"),
+                     "--physical-observation", str(observation)]) == 0
+    assert owner.call_args.kwargs["physical_observation"] == observation
+    capsys.readouterr()
+    owner.return_value = {"status": "BLOCKED", "arms": {}, "executed": False,
+        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"],
+            "arms": {"arm": {"native_qualification": {"status": "VERIFIED", "dependencies": ["large inventory"]}}}}}
+    for extra, expected in [([], 2000), (["--bootstrap-samples", "0"], 0)]:
+        assert cli.main([*arguments, "--strict", "--diagnose", *extra]) == 1
+        assert owner.call_args.kwargs["n_bootstrap"] == expected
+        assert owner.call_args.kwargs["strict_inputs"] == {}
+        # Stdout keeps the strict verdict but not the large native-proof inventory.
+        visible = json.loads(capsys.readouterr().out)["strict_validation"]
+        assert visible["status"] == "BLOCKED"
+        assert visible["arms"]["arm"]["native_qualification"] == {"status": "VERIFIED"}
 
 
 @pytest.mark.parametrize("extra,stage,diagnose", [([], True, True), (["--locations", "reviewed.json"], False, True),
@@ -98,20 +112,6 @@ def test_closure_input_expands_to_per_arm_options_and_rejects_mixing(tmp_path, m
     owner.assert_not_called()
 
 
-def test_diagnose_run_routes_json_output_and_defaults_no_bootstrap(tmp_path, monkeypatch, capsys):
-    from molgap import experiment_attribution as attribution
-    owner = Mock(return_value={"status": "DIAGNOSED", "arms": {}, "comparisons": {},
-                              "scientific_acceptance": "NOT_EVALUATED"})
-    monkeypatch.setattr(attribution, "diagnose_run", owner)
-    assert cli.main(["diagnose", "--run-id", "test", "--attempt-id", "v1",
-        "--profile", str(tmp_path / "machine.json"), "--repo-root", str(tmp_path),
-        "--retrieved-root", str(tmp_path / "retrieved"), "--output", str(tmp_path / "diagnosis.json")]) == 0
-    result = json.loads(capsys.readouterr().out)
-    assert result["scientific_acceptance"] == "NOT_EVALUATED"
-    assert owner.call_args.kwargs["n_bootstrap"] == 0
-    assert owner.call_args.kwargs["output"] == tmp_path / "diagnosis.json"
-
-
 @pytest.mark.parametrize("extra", [["--control", "unused"], ["--threshold-ev", "0.1"]])
 def test_run_diagnosis_rejects_ambiguous_or_unfrozen_policy(extra, tmp_path, capsys):
     assert cli.main(["diagnose", "--run-id", "test", "--attempt-id", "v1",
@@ -122,67 +122,6 @@ def test_run_diagnosis_rejects_ambiguous_or_unfrozen_policy(extra, tmp_path, cap
 def test_outcome_cannot_be_supplied_without_decision(tmp_path):
     with pytest.raises(ValueError, match="provided together"):
         runs.accept_run_workflow(None, tmp_path, "test", "v1", outcome="INCONCLUSIVE")
-
-
-def test_workflow_inspection_does_not_build_a_terminal_package(tmp_path, monkeypatch):
-    from molgap import experiment_family_workflow as family
-    from molgap import experiment_workflow as workflow
-    monkeypatch.setattr(workflow, "prepare_terminal_outputs", lambda *a, **k: {"arm": {}})
-    monkeypatch.setattr(family, "inspect_terminal_output", lambda item: {"status": "MECHANICALLY_VERIFIED"})
-    descriptor = Mock(side_effect=AssertionError("Mechanical inspection must not need terminal.json"))
-    monkeypatch.setattr(workflow, "build_verified_terminal_descriptor", descriptor)
-    result = workflow.accept_workflow(None, tmp_path, {}, receipt_path=None, package_dir=None,
-        expected_package_identity="f" * 64)
-    assert result["status"] == "MECHANICALLY_VERIFIED"
-    assert result["scientific_outcome"] == "NOT_EVALUATED"
-    descriptor.assert_not_called()
-
-
-def test_strict_acceptance_cli_preserves_continuation_and_physical_evidence(tmp_path, monkeypatch, capsys):
-    owner = Mock(return_value={"status": "BLOCKED", "arms": {}, "executed": False,
-        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"],
-            "arms": {"arm": {"native_qualification": {"status": "VERIFIED", "dependencies": ["large inventory"]}}}}})
-    monkeypatch.setattr(runs, "accept_run_workflow", owner)
-    physical = tmp_path / "physical.json"
-    physical.write_text(json.dumps([{"physical_run": "bound-by-owner"}]), encoding="utf-8")
-    receipt = tmp_path / "v3.json"
-    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--strict", "--continuation-receipt", str(receipt), "--physical-runs", str(physical),
-        "--resume-prepared", str(tmp_path / "recovery"),
-        "--resume-authority", str(tmp_path / "decision.md"), "--stage-terminal"]) == 1
-    assert owner.call_args.kwargs["strict_inputs"] == {}
-    assert owner.call_args.kwargs["continuation_receipt"] == receipt
-    assert owner.call_args.kwargs["resume_prepared"] == tmp_path / "recovery"
-    assert owner.call_args.kwargs["resume_authority"] == tmp_path / "decision.md"
-    assert owner.call_args.kwargs["physical_runs"] == [{"physical_run": "bound-by-owner"}]
-    visible = json.loads(capsys.readouterr().out)["strict_validation"]
-    assert visible["status"] == "BLOCKED"
-    assert visible["arms"]["arm"]["native_qualification"] == {"status": "VERIFIED"}
-    observation = tmp_path / "allocation_entry_observation.json"
-    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--execution-root", str(tmp_path / "execution"), "--physical-observation", str(observation)]) == 1
-    assert owner.call_args.kwargs["physical_observation"] == observation
-    capsys.readouterr()
-    for extra, expected in [([], 2000), (["--bootstrap-samples", "0"], 0)]:
-        assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-            "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-            "--strict", "--diagnose", *extra]) == 1
-        assert owner.call_args.kwargs["n_bootstrap"] == expected
-        capsys.readouterr()
-    physical.write_text('[{"platform":"kaggle","platform":"other"}]', encoding="utf-8")
-    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--physical-runs", str(physical)]) == 2
-    assert "Duplicate JSON key" in capsys.readouterr().out
-    audit = tmp_path / "roles.json"
-    audit.write_text(json.dumps({"arm": {"context": {}, "roles": [], "role_use": {}}}), encoding="utf-8")
-    assert cli.main(["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
-        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json"),
-        "--stage-terminal", "--role-audit", str(audit)]) == 1
-    assert owner.call_args.kwargs["role_audit"] == audit
-    capsys.readouterr()
 
 
 @pytest.mark.parametrize("read_only", [False, True])

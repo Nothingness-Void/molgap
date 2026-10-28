@@ -175,6 +175,11 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
             retrieved_root=case.paths.artifact_root / "retrieved",
             continuation_receipt=case.run / "operations/launch_receipt.json")
 
+    # Plain inspection needs no terminal package: none exists before staging.
+    plain = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved")
+    assert plain["status"] == "MECHANICALLY_VERIFIED" and plain["scientific_outcome"] == "NOT_EVALUATED"
+    assert not any((case.repo / item["terminal"]).exists() for item in locations.values())
+
     result = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         diagnose=True, stage_terminal=True)
     assert result["status"] == "STAGED_DRAFT", result
@@ -198,6 +203,19 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert exit_code == 1, cli_result
     assert cli_result["diagnosis"]["status"] == "DIAGNOSED", cli_result
     assert cli_result["terminal_staging"]["status"] == "STAGED_DRAFT", cli_result
+    assert cli_result.get("executed", False) is False, cli_result
+    # The standalone run diagnosis defaults to no bootstrap and writes only to --output.
+    assert experiment_cli.main(["diagnose", "--run-id", case.spec.to_dict()["logical_run_id"],
+        "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
+        "--output", str(tmp_path / "standalone-diagnosis")]) == 0
+    standalone = json.loads(capsys.readouterr().out)
+    assert standalone["diagnosis"]["status"] == "DIAGNOSED", standalone
+    summary_path = Path(standalone["diagnosis"]["reports"]["analysis_summary"])
+    assert summary_path.is_relative_to(tmp_path / "standalone-diagnosis"), summary_path
+    written = json.loads(summary_path.read_bytes())
+    assert all(item["primary_comparison"]["n_bootstrap"] == 0 for item in written["comparisons"].values())
+    # Neither CLI call, including the standalone diagnosis, wrote into the frozen run tree.
     after = sorted(path.relative_to(case.run).as_posix() for path in case.run.rglob("*") if path.is_file())
     assert after == before
 
@@ -247,7 +265,6 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
         assert diagnosis["arms"][candidate]["analysis_blockers"] == [blocker]
 
     # Replacement after a read must not change the already verified snapshot.
-    from pathlib import Path
     predictions = candidate_root / manifest["artifacts"]["predictions"]["path"]
     retained = predictions.read_bytes()
     read_bytes = Path.read_bytes
