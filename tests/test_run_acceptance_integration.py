@@ -492,14 +492,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     options = dict(retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root,
         stage_terminal=True, outcome=outcomes, decision_ref=decisions, role_audit=audits)
-    for name, value in (("audits", audits), ("locations", locations)):
-        (tmp_path / (name + ".json")).write_text(json.dumps(value), encoding="utf-8")
+    audit_map = case.repo / "audits" / "audit_map.json"
+    assert json.loads(audit_map.read_bytes()) == audits
+    (tmp_path / "locations.json").write_text(json.dumps(locations), encoding="utf-8")
     capsys.readouterr()
     arguments = ["accept-workflow", "--run-id", declaration["logical_run_id"],
         "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
         "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
         "--locations", str(tmp_path / "locations.json"), "--stage-terminal", "--execute",
-        "--execution-root", str(retention_root), "--role-audit", str(tmp_path / "audits.json"),
+        "--execution-root", str(retention_root), "--role-audit", str(audit_map),
         *[value for arm, outcome in outcomes.items() for value in ("--arm-outcome", arm + "=" + outcome)],
         *[value for arm, decision in decisions.items() for value in ("--arm-decision-ref", arm + "=" + decision)]]
     for bad in ({**options, "outcome": {reference_arm: "CLOSED"}},

@@ -179,7 +179,10 @@ def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_r
     from .experiment_run import resolve_run_acceptance_inputs
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
                                              retrieved_root=retrieved_root)
-    return write_role_audits(repo_root, resolved, output_dir, protected_role_use)
+    drafted = write_role_audits(repo_root, resolved, output_dir, protected_role_use)
+    root = Path(repo_root).resolve()
+    publish_immutable_bytes(repo_local_path(root, Path(output_dir) / "audit_map.json"), json_bytes(drafted))
+    return drafted
 
 
 def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None):

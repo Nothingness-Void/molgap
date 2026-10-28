@@ -326,7 +326,7 @@ promotes a numerical diagnosis to positive scientific acceptance.
 `draft-role-audit --profile $profile --repo-root $repoRoot --run-id $run
 --attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
 `roles_<arm>.json` per arm (repository-local `$dir`) for a train/development
-family-session screen and prints the arm-to-path map that `--role-audit` takes.
+family-session screen, and writes `audit_map.json` beside them (also printed) for `--role-audit` to take directly.
 Events are drafted from the frozen Spec data roles and each arm's digest-checked
 training contract; terminal inspection verifies the run itself. A missing or
 mismatched source is an error and no file is written until every arm validates. Protected-role states
