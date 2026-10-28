@@ -198,6 +198,109 @@ def test_reference_and_retry_cannot_infer_authority(scientific):
         resolve_experiment_input(path, case.repo)
 
 
+def test_delivery_pair_keeps_distinct_frozen_states_noncausal(scientific):
+    import torch
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.family_training_runner import family_arm_bindings
+    from molgap.gptrans_bond_local import make_bond_local_model
+    from molgap.v4_runtime import state_dict_sha256
+    from molgap.experiment_family_workflow import same_run_comparison_scope
+    case = scientific
+    value, authority, path = _pair(case)
+    if value["shared"]["model"]["family"] != "gptrans_t":
+        pytest.skip("This delivery release is limited to GPTrans/2 approved shapes")
+    value["logical_run_id"] = "package-delivery-pair"
+    record_template = json.loads((case.repo / value["shared"]["recipe_ref"]).read_bytes())
+    record_template.pop("initial_development_check", None)
+    source_template = deepcopy(value["shared"]["data_ref"])
+    spec_template = json.loads((case.repo / source_template["spec_ref"]).read_bytes())
+    value["shared"] = {"purpose": "delivery_experiment", "training": {}}
+    from molgap.common.paths import MachinePaths
+    inputs = MachinePaths.from_file(value["machine_profile"]).run_directory(
+        value["logical_run_id"], value["attempt_id"]) / "inputs"
+    inputs.mkdir(parents=True, exist_ok=True)
+    for item, shape, layers, nodes, pairs, heads in (
+            (value["arms"][0], "12x384", 12, 384, 48, 12),
+            (value["arms"][1], "16x256", 16, 256, 32, 8)):
+        record = deepcopy(record_template)
+        model = make_bond_local_model(num_layers=layers, node_channels=nodes,
+            pair_channels=pairs, num_heads=heads, pair_update_norm=True)
+        state = model.state_dict()
+        initial = inputs / (shape + ".pt")
+        torch.save(state, initial)
+        record.update(mode="degree_bond_local_pairnorm_" + shape + "_ema999",
+                      initialization_sha256=state_dict_sha256(state))
+        recipe_name = "experiments/compact/" + shape + "-recipe.json"
+        _write_json(case.repo / recipe_name, record)
+        source = deepcopy(source_template)
+        spec = deepcopy(spec_template)
+        arm = next(a for a in spec["arms"] if a["arm_id"] == source["arm_id"])
+        arm["initialization"]["state_sha256"] = record["initialization_sha256"]
+        addon = "gptrans_bondlocal_pairnorm_" + shape
+        arm["addons"] = [build_addon_declaration(("gptrans_t", "2"), addon, repo_root=case.repo)]
+        arm["addon_semantics"] = "ordered"
+        from molgap.family_training_runner import read_recipe
+        _, typed = read_recipe(case.repo / recipe_name)
+        bindings = family_arm_bindings(typed)
+        arm["base"] = bindings["base"]
+        arm["training"].update({k: bindings[k] for k in ("objective", "sampler", "transform")})
+        arm["training"]["recipe"]["sha256"] = hashlib.sha256((case.repo / recipe_name).read_bytes()).hexdigest()
+        source["spec_ref"] = "experiments/compact/" + shape + "-data.json"
+        _write_json(case.repo / source["spec_ref"], spec)
+        item.update(model={"family": "gptrans_t", "version": "2", "addons": [addon]},
+                    recipe_ref=recipe_name, data_ref=source, initial_state_ref=str(initial))
+    _commit(case, value, authority, path)
+    _, compiled, plan, _ = resolve_experiment_input(path, case.repo)
+    acceptance = json.loads((case.repo / plan["acceptance_plan"]).read_bytes())
+    assert "comparison_source" in acceptance
+    assert check_acceptance_plan(compiled, case.repo, acceptance)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    scope = same_run_comparison_scope(value, "candidate", "baseline")
+    assert scope["experiment_purpose"] == "delivery_experiment"
+    assert scope["declared_intervention_fields"] == []
+    from test_comparison_readiness import _assess, _side, _reference_side
+    candidate_side, reference_side = _side("deep"), _reference_side()
+    candidate_side["comparison_identity"].update(initialization_identity="d" * 64,
+        runtime_certificate_scope="actual-candidate-runtime")
+    reference_side["comparison_identity"]["initialization_identity"] = "c" * 64
+    observed = _assess(candidate=candidate_side, reference=reference_side, **scope)
+    assert observed["strict_ready"] is False
+    assert observed["comparison_class"] == "PAIRED_ENDPOINT"
+    assert {"architecture_config_identity", "initialization_identity", "runtime_certificate_scope"} <= set(observed["mismatched_fields"])
+    assert not any("promot" in action.lower() for action in observed["decision_scope"])
+    candidate_side["terminal_complete"] = False
+    incomplete = _assess(candidate=candidate_side, reference=reference_side, **scope)
+    assert incomplete["strict_ready"] is False
+    assert incomplete["comparison_class"] != "PAIRED_ENDPOINT"
+    unexpected = inputs / "unbound.json"
+    unexpected.write_text("{}")
+    with pytest.raises(FileNotFoundError, match="input_binding"):
+        resolve_experiment_input(path, case.repo)
+    unexpected.unlink()
+    with pytest.raises(ValueError, match="only shape and initialization"):
+        same_run_comparison_scope(value, "candidate", "baseline", declared_fields=["optimizer_identity"])
+    bad = deepcopy(acceptance)
+    bad.pop("comparison_source")
+    assert check_acceptance_plan(compiled, case.repo, bad)["status"] == "BLOCKED"
+    from molgap.experiment_spec import ExperimentSpec
+    bad_spec = compiled.to_dict()
+    bad_spec["arms"][1]["initialization"]["seed"] = 43
+    bad_spec = ExperimentSpec(bad_spec)
+    bad_plan = deepcopy(acceptance)
+    bad_plan["spec_identity"] = bad_spec.identity
+    blocked = check_acceptance_plan(bad_spec, case.repo, bad_plan)
+    assert blocked["status"] == "BLOCKED"
+    assert any("kind and seed" in reason for row in blocked["arms"] for reason in row["blockers"])
+    invalid = deepcopy(value)
+    invalid["arms"][1]["model"]["addons"] = ["gptrans_readout_scale"]
+    with pytest.raises(ValueError, match="approved wide/deep"):
+        same_run_comparison_scope(invalid, "candidate", "baseline")
+    strict = deepcopy(value)
+    strict["shared"]["purpose"] = "architecture_comparison"
+    with pytest.raises(ValueError, match="outside one logical group"):
+        same_run_comparison_scope(strict, "candidate", "baseline",
+            declared_fields=["architecture_config_identity", "initialization_identity"])
+
+
 @pytest.mark.parametrize("arm", [None, [], "candidate", {"training": {}}])
 def test_arm_override_shape_is_checked_before_arm_id_access(scientific, arm, request):
     case = scientific

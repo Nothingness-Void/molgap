@@ -1,0 +1,49 @@
+{
+  "development_labels_read": false,
+  "device": "NVIDIA GeForce RTX 5060",
+  "gpu_allocation_wall_seconds": 9.51119020000624,
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "quality_evaluation": false,
+  "source_snapshot": "D:\\molgap-artifacts\\local_profiles\\single_model_total_budget\\candidate_b\\source.zip",
+  "status": "COMPLETE",
+  "torch_version": "2.7.1+cu128",
+  "training_shard_sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+  "windows": [
+    {
+      "batch": 128,
+      "heads": 8,
+      "layers": 16,
+      "mean_step_seconds": 0.1164683850001893,
+      "measured_steps": 20,
+      "median_step_seconds": 0.1094040500029223,
+      "memory_scope": "Complete model + AdamW + EMA + measured training activations; excludes other processes",
+      "molecules_per_second": 1099.0106886069723,
+      "pair_channels": 32,
+      "parameters": 7700481,
+      "peak_allocated_bytes": 1442234368,
+      "peak_reserved_bytes": 1497366528,
+      "timing_scope": "Synchronized collation/layout/H2D/forward/backward/clip/optimizer/EMA; no checkpoint/evaluation",
+      "warmup": 3,
+      "weight_bytes": 30801924,
+      "width": 256
+    },
+    {
+      "batch": 128,
+      "heads": 8,
+      "layers": 16,
+      "mean_step_seconds": 0.09421697000288987,
+      "measured_steps": 20,
+      "median_step_seconds": 0.09334935000515543,
+      "memory_scope": "Complete model + AdamW + EMA + measured training activations; excludes other processes",
+      "molecules_per_second": 1358.5662964545975,
+      "pair_channels": 32,
+      "parameters": 7700481,
+      "peak_allocated_bytes": 1442234368,
+      "peak_reserved_bytes": 1497366528,
+      "timing_scope": "Synchronized collation/layout/H2D/forward/backward/clip/optimizer/EMA; no checkpoint/evaluation",
+      "warmup": 3,
+      "weight_bytes": 30801924,
+      "width": 256
+    }
+  ]
+}

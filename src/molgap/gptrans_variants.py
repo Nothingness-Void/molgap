@@ -89,9 +89,9 @@ def apply_variant(model, variant: str):
         for index, block in enumerate(model.blocks):
             if variant in {"pair_update_norm", "pair_post_norm"}:
                 replacement = PairStateNormalizationBlock(
-                    256,
-                    32,
-                    8,
+                    model.node_channels,
+                    model.pair_channels,
+                    block.attention.num_heads,
                     block.attention.attention_dropout.p,
                     block.drop_path.probability,
                     float(block.attention_scale.detach()[0]),

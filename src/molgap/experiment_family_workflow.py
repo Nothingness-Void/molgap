@@ -52,6 +52,14 @@ def _verify_canonical_output(root, spec, context, package, observed, output_dir)
             raise ValueError("Canonical qualification differs from the observed output artifacts")
 
 
+def _delivery_shape(addons, shape):
+    expected = "gptrans_bondlocal_pairnorm_" + shape
+    return (type(addons) is list and len(addons) == 1 and (
+        addons[0] == expected or (type(addons[0]) is dict
+        and addons[0].get("name") == expected and addons[0].get("version", "1") == "1"
+        and addons[0].get("config", {}) == {})))
+
+
 def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_fields=None):
     """Read the intervention group declared before training, never infer it from results."""
     from .comparison_readiness import _validate_intervention_scope
@@ -74,13 +82,24 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     allowed = {"architecture_comparison": ["architecture_config_identity"],
                "mechanism_comparison": ["architecture_config_identity"],
                "optimizer_comparison": ["optimizer_identity"],
-               "initialization_comparison": ["initialization_identity"]}
+               "initialization_comparison": ["initialization_identity"],
+               "delivery_experiment": []}
     if purpose not in allowed:
         raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
     question = configuration.get("question", {})
     group = question.get("changed_mechanism") if type(question) is dict else None
     if group is None:
         group = "architecture-config" if purpose == "architecture_comparison" else None
+    if purpose == "delivery_experiment":
+        for side, shape in ((reference, "12x384"), (candidate, "16x256")):
+            model = side.get("model", {})
+            if (model.get("family") != "gptrans_t" or model.get("version") != "2"
+                    or not _delivery_shape(model.get("addons"), shape)):
+                raise ValueError("Architecture delivery supports only approved wide/deep PairNorm shapes")
+        if declared_fields is not None and set(declared_fields) - {
+                "architecture_config_identity", "initialization_identity"}:
+            raise ValueError("Architecture delivery peers may change only shape and initialization")
+        declared_fields = []
     scope = {"experiment_purpose": purpose, "intervention_group_id": group,
              "mechanism_id": group if purpose == "mechanism_comparison" else None,
              "declared_intervention_fields": allowed[purpose] if declared_fields is None else declared_fields}
@@ -1264,6 +1283,9 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
     initialization_pair = configuration is not None and all(
         same_run_comparison_scope(configuration, candidate, pair["reference_arm_id"])["experiment_purpose"]
         == "initialization_comparison" for candidate in pair["candidate_arm_ids"])
+    delivery_pair = configuration is not None and all(
+        same_run_comparison_scope(configuration, candidate, pair["reference_arm_id"])["experiment_purpose"]
+        == "delivery_experiment" for candidate in pair["candidate_arm_ids"])
     if initialization_pair and len(arms) != 2:
         raise ValueError("Initialization comparison requires one exact same-run pair")
     results, contracts, expectations = [], [], []
@@ -1274,7 +1296,7 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                 raise ValueError("Missing or unknown same-run acceptance fields")
             arm = arms[entry["arm_id"]]
             artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            for key in ("family", "base", "data", *(("initialization",) if not initialization_pair else ())):
+            for key in ("family", "base", "data", *(("initialization",) if not (initialization_pair or delivery_pair) else ())):
                 if arm[key] != reference[key]:
                     raise ValueError("Same-run peer identity differs: " + key)
             if initialization_pair:
@@ -1282,6 +1304,15 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                     raise ValueError("Initialization comparison must retain architecture and loss")
                 if arm is not reference and arm["initialization"] == reference["initialization"]:
                     raise ValueError("Initialization comparison requires distinct initial states")
+            if delivery_pair and arm["training"]["objective"] != reference["training"]["objective"]:
+                raise ValueError("Architecture delivery peers must retain the loss")
+            if delivery_pair:
+                shape = "12x384" if arm is reference else "16x256"
+                if not _delivery_shape(arm["addons"], shape):
+                    raise ValueError("Architecture delivery supports only approved wide/deep PairNorm shapes")
+                if ({k: v for k, v in arm["initialization"].items() if k != "state_sha256"}
+                        != {k: v for k, v in reference["initialization"].items() if k != "state_sha256"}):
+                    raise ValueError("Architecture delivery must retain initialization kind and seed")
             for key in ("sampler", "transform", "overrides"):
                 if arm["training"][key] != reference["training"][key]:
                     raise ValueError("Same-run peer training identity differs: " + key)
@@ -1309,7 +1340,7 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                     raise ValueError("Plan artifact hash mismatch")
                 return _json(path)
             contract = pinned(entry["contract"])
-            if initialization_pair and contract.get("initialization_sha256") != arm["initialization"]["state_sha256"]:
+            if (initialization_pair or delivery_pair) and contract.get("initialization_sha256") != arm["initialization"]["state_sha256"]:
                 raise ValueError("Initialization contract differs from frozen Spec")
             if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != expected:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
@@ -1341,6 +1372,12 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
         except ValueError as exc:
             for row in results:
                 row.update(status="BLOCKED", blockers=[str(exc)])
+    if delivery_pair and len(contracts) == len(entries):
+        fixed = [{k: v for k, v in contract.items() if k not in {"mode", "initialization_sha256"}}
+                 for contract in contracts]
+        if any(contract != fixed[0] for contract in fixed):
+            for row in results:
+                row.update(status="BLOCKED", blockers=["Architecture delivery recipes differ outside approved shape and state"])
     return {"status": "BLOCKED" if any(row["blockers"] for row in results) else "ACCEPTANCE_INPUTS_AVAILABLE",
         "spec_identity": spec.identity, "arms": results, "trainer_execution": "NOT_VERIFIED",
         "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}

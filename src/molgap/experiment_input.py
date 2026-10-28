@@ -79,6 +79,18 @@ def _existing_scientific_input(value, root):
     _safe_local(frozen)
     if not frozen.exists() or not any(frozen.iterdir()):
         return None
+    # CPU scratch initialization may precede the first freeze. Binding is
+    # published first by _freeze; never mistake other partial state for this case.
+    if (not (frozen / "input_binding.json").exists()
+            and not (frozen.parent / "prepared").exists()
+            and not (frozen.parent / "operations").exists()):
+        shared = value.get("shared", {})
+        initials = {Path(item.get("initial_state_ref", shared.get("initial_state_ref", ""))).absolute()
+                    for item in value.get("arms", []) if type(item) is dict}
+        present = set(frozen.iterdir())
+        if present == initials and all(path.parent == frozen and path.suffix == ".pt" and path.is_file()
+                                       for path in present):
+            return None
     # An incomplete original freeze cannot be safely replaced by today's HEAD.
     binding = _read(frozen / "input_binding.json")
     if binding.get("format") != value["format"] or binding.get("input_identity") != canonical_fingerprint(value):
@@ -563,7 +575,7 @@ def _compile_scientific_input(path, root, value):
         "molgap-family-same-run-acceptance-plan-v1" if pair is not None else "molgap-family-acceptance-plan-v1"),
         "spec_identity": spec.identity, "arms": acceptance,
         **({"comparison_source": {"path": config_name, "sha256": input_sha}}
-           if pair is not None and any(item[0]["purpose"] == "initialization_comparison" for item in compiled)
+           if pair is not None and any(item[0]["purpose"] in {"initialization_comparison", "delivery_experiment"} for item in compiled)
            else {})})
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",

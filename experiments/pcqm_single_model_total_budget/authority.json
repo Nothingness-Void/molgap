@@ -1,0 +1,16 @@
+{
+  "user_authorized": true,
+  "account": "nothingnessvoid",
+  "arms": ["a_12x384", "b_16x256"],
+  "seeds": [42],
+  "same_run_reference_arm_id": "a_12x384",
+  "allocated_t4_hours_ceiling": 14,
+  "cumulative_t4_device_hours_ceiling": 30,
+  "user_notebook_wall_ceiling_seconds": 25200,
+  "allocation_wall_limit_seconds": 25200,
+  "cleanup_reserve_seconds": 180,
+  "authority": "Human user approval on 2026-10-28 in this chat: Kaggle1 two-arm fixed500K, each60 passes/234360 steps, total30 T4-device-hours including continuation. This is user authority, not a scheduler observation.",
+  "scope": "A12x384/48/12 and B16x256/32/8 only; scratch seed42, BondLocal local64 freshPairUpdateNorm EMA.999, FP32 BS128 LR.001 WD.05 warm4 cosine60 clip1. No protected roles, full training, promotion or automatic extra budget.",
+  "first_session": {"devices": 2, "wall_hours_ceiling": 7, "t4_device_hours_ceiling": 14},
+  "continuation": {"requires_actual_cost_reconciliation": true, "remaining_t4_device_hours_formula": "min(8, 30 - actual_cumulative_t4_device_hours)", "wall_hours_ceiling": 4, "automatic_trigger": false, "automatic_extra_budget": false}
+}

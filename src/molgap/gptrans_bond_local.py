@@ -55,28 +55,47 @@ class BondLocalGPTrans(OGBGPTransTiny):
         return self.readout(torch.cat((node[:, 0], pair[:, :, 0, 0]), -1))
 
 
-def make_bond_local_model():
-    """Construct the retained seed42 shape; the family loader supplies frozen tensors."""
+def make_bond_local_model(*, node_channels=256, pair_channels=32, num_layers=12,
+                          num_heads=8, pair_update_norm=False):
+    """Default tensors stay frozen-compatible; explicit sizes support bounded profiles."""
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(42)
-        model = OGBGPTransTiny()
+        model = OGBGPTransTiny(node_channels=node_channels, pair_channels=pair_channels,
+                              num_layers=num_layers, num_heads=num_heads)
         with torch.no_grad():
             model.in_degree_encoder.weight.mul_(.0897)
             model.out_degree_encoder.weight.mul_(.0897)
+        if pair_update_norm:
+            from .gptrans_variants import apply_variant
+            apply_variant(model, "pair_update_norm")
         model.__class__ = BondLocalGPTrans
-        model.blocks = nn.ModuleList(BondLocalBlock(block) for block in model.blocks)
-    if sum(p.numel() for p in model.parameters()) != 5_871_201:
+        model.blocks = nn.ModuleList(BondLocalBlock(block, node_channels, pair_channels)
+                                     for block in model.blocks)
+    retained_shape = (node_channels, pair_channels, num_layers, num_heads) == (256, 32, 12, 8)
+    if retained_shape and sum(p.numel() for p in model.parameters()) != 5_871_201:
         raise ValueError("Retained local-bond parameter count differs")
     return model
 
 
 def construct_family_model(recipe, state):
     """Keep the retained architecture; the shared kernel loads frozen tensors."""
+    if recipe.mode in APPROVED_SHAPES:
+        layers, nodes, pairs, heads = APPROVED_SHAPES[recipe.mode]
+        return make_bond_local_model(num_layers=layers, node_channels=nodes,
+                                     pair_channels=pairs, num_heads=heads,
+                                     pair_update_norm=True)
     return make_bond_local_model()
+
+
+APPROVED_SHAPES = {
+    "degree_bond_local_pairnorm_12x384_ema999": (12, 384, 48, 12),
+    "degree_bond_local_pairnorm_16x256_ema999": (16, 256, 32, 8),
+}
 
 
 def policy(mode):
     from .family_training_policy import FamilyModePolicy
-    if mode != "degree_bond_local_ema999":
+    if mode != "degree_bond_local_ema999" and mode not in APPROVED_SHAPES:
         raise ValueError("Unknown retained local-bond mode")
-    return FamilyModePolicy(construct=construct_family_model)
+    return FamilyModePolicy(construct=construct_family_model,
+                            objective_name="reference" if mode in APPROVED_SHAPES else None)

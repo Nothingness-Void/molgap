@@ -1,0 +1,25 @@
+{
+  "arms": {
+    "a_12x384": {
+      "device": "cpu",
+      "file_sha256": "cbf4d51c7213a032da0be0d5b7ce59b8a74f3ce75681a3ecea6aee94ddb13a87",
+      "parameters": 12478993,
+      "path": "D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/inputs/a_12x384.pt",
+      "recipe_sha256": "bdd784ff01a1ae6f053a7c9c02c48cb08af04ddf95b908fc6fe16bf1de7fc330",
+      "state_sha256": "2bac45861bb472908f78067a8fd55ebd5231c49f20276d56fef458f48cca2b72",
+      "tensor_count": 337
+    },
+    "b_16x256": {
+      "device": "cpu",
+      "file_sha256": "e650c285f5147274dcc4b4d3a8857832f7646239ef2612b8c662631910964ed7",
+      "parameters": 7700481,
+      "path": "D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/inputs/b_16x256.pt",
+      "recipe_sha256": "e608b81e3e937d63796258f807763775dbf1b40c55598393f413a47cc9b80ad0",
+      "state_sha256": "1d43071c3d357fa3734610adb18264ff3b0619edd2649bbacd37304d8f718734",
+      "tensor_count": 441
+    }
+  },
+  "device": "cpu",
+  "kind": "scratch",
+  "seed": 42
+}
