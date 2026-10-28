@@ -2,6 +2,7 @@
 from datetime import datetime, timezone
 import importlib.util
 from pathlib import Path
+import pytest
 
 
 def _load_module():
@@ -40,3 +41,12 @@ def test_parse_quota_payload_and_table_formatting():
     assert "kaseichou" in table
     assert "19.50 h (19h 30m)" in table
     assert "ERROR: FileNotFoundError" in table
+
+    # Missing observations must not be displayed as measured zero usage.
+    with pytest.raises(ValueError, match="Missing Kaggle GPU quota"):
+        mod.parse_quota_payload("kaggle2", "kaseichou", {}, now=now)
+    del payload["gpuQuota"]["timeUsed"]
+    with pytest.raises(ValueError, match="Missing Kaggle quota duration"):
+        mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)
+    payload["gpuQuota"]["timeUsed"] = {"seconds": 0}
+    assert mod.parse_quota_payload("kaggle2", "kaseichou", payload, now=now)["used_hours"] == 0

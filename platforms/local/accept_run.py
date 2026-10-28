@@ -46,6 +46,23 @@ def main(argv=None):
     from molgap.experiment_cli import main as experiment_main
 
     arguments = list(sys.argv[1:] if argv is None else argv)
+    if any(a in {"-h", "--help"} for a in arguments):
+        from contextlib import redirect_stdout
+        import io
+        import json
+        output = io.StringIO()
+        with redirect_stdout(output):
+            try:
+                experiment_main(["accept-workflow", "--help"])
+            except SystemExit as exc:
+                if exc.code:
+                    raise
+        help_output = json.loads(output.getvalue())
+        help_output["help"] += (
+            "\nWrapper option:\n  --closure-input FILE  JSON with arms: {ARM: {outcome, decision_ref}} "
+            "and optional role_audit; replaces individual outcome, decision and role-audit options.\n")
+        print(json.dumps(help_output))
+        return 0
     try:
         arguments = _expand_closure_input(arguments)
     except (OSError, ValueError) as exc:

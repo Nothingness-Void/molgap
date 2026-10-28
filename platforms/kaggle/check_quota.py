@@ -21,7 +21,7 @@ QUOTA_URL = "https://www.kaggle.com/api/v1/kernels/quota"
 
 def _duration_seconds(entry: dict | None) -> float:
     if not isinstance(entry, dict):
-        return 0.0
+        raise ValueError("Missing Kaggle quota duration")
     seconds = float(entry.get("seconds", 0)) + float(entry.get("nanos", 0)) / 1e9
     if not math.isfinite(seconds) or seconds < 0:
         raise ValueError("Malformed Kaggle quota duration")
@@ -36,7 +36,9 @@ def _format_hm(hours: float) -> str:
 
 def parse_quota_payload(label: str, username: str, payload: dict, *, now: datetime | None = None) -> dict:
     now = now or datetime.now(timezone.utc)
-    gpu = payload.get("gpuQuota") or {}
+    gpu = payload.get("gpuQuota")
+    if not isinstance(gpu, dict):
+        raise ValueError("Missing Kaggle GPU quota")
     total_s = _duration_seconds(gpu.get("totalTimeAllowed"))
     used_s = _duration_seconds(gpu.get("timeUsed"))
     reserved_s = _duration_seconds(gpu.get("timeReserved"))

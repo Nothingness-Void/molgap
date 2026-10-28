@@ -418,6 +418,10 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         decision = case.repo / (arm_id + "-decision.md")
         decision.write_text("Infrastructure-only terminal disposition.", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
+    # Both drafting and acceptance must work after generated checkout metadata
+    # has been lost, using the original frozen package and retained outputs.
+    for name in case.generated:
+        (case.repo / name).unlink()
     # Draft the role audits from the retained artifacts; protected-role states are human input.
     capsys.readouterr()
     assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
@@ -428,11 +432,6 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     audits = json.loads(capsys.readouterr().out)
     assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
     assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
-
-    # Acceptance must recover only the metadata frozen by the package and
-    # trajectories after those generated checkout files have been lost.
-    for name in case.generated:
-        (case.repo / name).unlink()
 
     retention_root = tmp_path / "execution-retention"
     remote_retention = tmp_path / "remote-execution-retention"

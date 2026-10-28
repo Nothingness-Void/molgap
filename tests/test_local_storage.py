@@ -285,27 +285,34 @@ def test_storage_report_is_read_only_and_counts_exact_duplicates_once(tmp_path, 
     assert main(["--profile", str(profile_path), "--repo-root", str(tmp_path / "code"),
                  "--report", "--execute"]) == 1
     capsys.readouterr()
-    # Dedupe is dry-run first, then swaps copies for hardlinks without losing any path.
+    # Matching artifacts may be overwritten by resume copy2 writers. No broad
+    # dedupe mutation is safe, including names other than last_checkpoint.pt.
     resumable = [paths.artifact_root / "retrieved/run-1/v1" / arm / "last_checkpoint.pt"
                  for arm in ("bond_local", "pair_update_norm")]
-    for path in resumable:  # Resume states may be replaced by a running job: never linked.
+    for path in resumable:
         path.write_bytes(b"r" * (1 << 20) + b"state")
     dry = [str(p) for p in ("--profile", profile_path, "--repo-root", tmp_path / "code", "--dedupe")]
     assert main(dry) == 0
     preview = json.loads(capsys.readouterr().out)
-    assert preview["status"] == "DRY_RUN" and preview["reclaimable_bytes"] == len(block)
+    assert preview["status"] == "DRY_RUN" and preview["reclaimable_bytes"] is None
+    assert preview["duplicate_bytes"] == len(block) + resumable[0].stat().st_size
     twins = [paths.artifact_root / "retrieved/run-1/v1" / arm / "repeat-a.pt"
              for arm in ("bond_local", "pair_update_norm")]
     assert twins[0].stat().st_ino != twins[1].stat().st_ino
-    assert main([*dry, "--execute"]) == 0
+    staged = twins[1].with_name(twins[1].name + ".dedupe-tmp")
+    staged.write_bytes(b"preexisting recovery bytes")
+    assert main([*dry, "--execute"]) == 1
     done = json.loads(capsys.readouterr().out)
-    assert done["status"] == "DEDUPED" and len(done["linked"]) == 1
-    assert twins[0].stat().st_ino == twins[1].stat().st_ino
+    assert done["status"] == "BLOCKED" and not done["executed"]
+    assert twins[0].stat().st_ino != twins[1].stat().st_ino
     assert resumable[0].stat().st_ino != resumable[1].stat().st_ino
     assert all(p.read_bytes() == block for p in twins) and unique.read_bytes() == block + b"unique"
-    assert not list(paths.artifact_root.rglob("*.dedupe-tmp"))
-    assert main([*dry, "--execute"]) == 0
-    assert json.loads(capsys.readouterr().out)["linked"] == []
+    assert staged.read_bytes() == b"preexisting recovery bytes"
+    import shutil
+    # Existing resume-style in-place writes cannot modify another independent copy.
+    shutil.copy2(unique, twins[1])
+    assert twins[0].read_bytes() == block
+    assert twins[1].read_bytes() == block + b"unique"
 
 
 # Reuse the source-only package fixture; no scientific payload or remote work.

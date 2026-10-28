@@ -1,7 +1,9 @@
 # Experiment infrastructure quickstart
 
-Use this entry for new infrastructure work; read the owning question and query
-RML before new science. Open the linked API references only for the operation
+For routine operations on an already declared, authorized run, start with its
+platform skill and supplied contract/attempt records; use only the relevant
+commands and references. Use this entry for new infrastructure work; read the
+owning question and query RML before new science. Open the linked API references only for the operation
 being changed. A configuration or successful preparation does not grant compute,
 protected roles, scientific acceptance or production promotion.
 
@@ -192,12 +194,17 @@ expands it.
 & $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
 ```
 
-The family-output retriever can resolve this run plus independently pinned
-manifest/arm identity; `--all-arms` does that for every manifest already pinned
-under `<run>/operations/remote_manifest/` in one call. Without `--execute` it validates locally. Exact transport
-remains in the existing platform adapter; historical output protocols keep their
-own retrievers. `inspect-output`, `accept-workflow`, `build-resume` and
-`prepare-resume` can resolve the original Spec/package/receipt from the run ID.
+The Kaggle retriever's `--all-arms --execute` resolves the exact receipt version,
+fetches missing small manifests, then retrieves every arm and execution-cost
+records through the existing transport. It returns `execution_root` for acceptance
+and records per-arm destinations. `--status` observes that same exact version
+without downloads or submission. No manual manifest/SHA file is needed for the
+registered `experiment/<arm>` layout. Strict continuation also supplies
+`--continuation-receipt` and `--resume-prepared`; historical layouts may set
+`--remote-root`. Without `--execute`, all-arm retrieval only plans locally.
+Per-arm retrieval remains available for explicit historical pins.
+`inspect-output`, `accept-workflow`, `build-resume` and `prepare-resume` resolve
+the original Spec/package/receipt from the run ID.
 Supply the actual output/evidence inputs required by the existing owners.
 `prepare-resume` returns `RESUME_INPUTS_PREPARED` for local continuation inputs.
 The owning continuation adapter must bind a physical successor; this result is
@@ -256,10 +263,12 @@ or document line-count checks.
 New RML plans share an immutable decision-time knowledge/policy snapshot. Arm
 records bind its digest; legacy inline records remain readable. Preparation validates
 the question's references and publishes canonical plans without rebuilding the
-whole repository's indexes or requiring unrelated historical weights. Use the
-existing RML `rebuild` at handoff/accepted milestones. Multi-arm closure
-persists each independent terminal outcome and updates derived indexes once.
-If that update fails, use the RML CLI `terminal-rebuild --trajectory <path>` to
+whole repository's indexes or requiring unrelated historical weights. Multi-arm
+closure persists each independent terminal outcome and updates derived indexes
+once; do not run another rebuild after successful closure. Standalone canonical
+edits or imports use one RML `rebuild` after the accepted milestone.
+Only if closure's derived update actually fails, use the RML CLI
+`terminal-rebuild --trajectory <path>` to
 recover from canonical receipts without repeating training or submission.
 
 Canonical pass curves record the actual last-update learning rate separately
@@ -322,5 +331,5 @@ from the training `runtime-v1` inventory, which retains its worker boundary.
 The [desktop migration record](DESKTOP_INFRASTRUCTURE_UPGRADE.md) owns provenance
 and executed verification. [Storage retirement](LOCAL_STORAGE_RETIREMENT.md)
 owns payload and completed-worktree retirement. After a run closes, its
-`--report` shows where `artifact_root` bytes sit and `--dedupe` hardlinks
-byte-identical copies without removing any path.
+`--report` shows where `artifact_root` bytes sit. `--dedupe` is also read-only;
+hardlink mutation is disabled because resume writers may overwrite shared bytes.
