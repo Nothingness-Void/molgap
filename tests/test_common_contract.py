@@ -145,10 +145,13 @@ def test_single_plan_validation_has_explicit_owner_and_no_publication(planning_r
     root, _ = planning_root
     item = _item("a")
     item["spec"]["trajectory"]["owner"] = owner
-    before = {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    def tree():  # Git byte-preservation qualification may add an empty-tree object to .git.
+        return {p.relative_to(root): p.read_bytes() for p in root.rglob("*")
+                if p.is_file() and ".git" not in p.relative_to(root).parts}
+    before = tree()
     result = plan_module.plan(root, item["spec"], item["output"], validate_only=True)
     assert result["status"] == "VALIDATED"
-    assert before == {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    assert before == tree()
     assert not (root / "research_memory/.staging").exists()
 
 
@@ -160,7 +163,7 @@ def test_single_plan_never_infers_owner(planning_root, owner):
         item["spec"]["trajectory"].pop("owner")
     else:
         item["spec"]["trajectory"]["owner"] = owner
-    with pytest.raises(ValueError, match="explicit desktop/server owner"):
+    with pytest.raises(plan_module.PlanBatchError, match="explicit desktop/server owner"):
         plan_module.plan(root, item["spec"], item["output"], validate_only=True)
     assert not (root / "experiments/arm-a").exists()
 

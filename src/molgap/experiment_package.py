@@ -437,7 +437,7 @@ def _verify_package_snapshot(raw, repo_root=None, *, _members=None):
     manifest = _load(raw["package_manifest.json"])
     if type(manifest) is not dict or raw["package_manifest.json"] != _json_bytes(manifest):
         raise ValueError("Manifest must be a canonical JSON object")
-    spec = _spec(ExperimentSpec.from_json(raw["experiment_spec.json"].decode("utf-8")))
+    spec = ExperimentSpec.from_frozen_json(raw["experiment_spec.json"].decode("utf-8"))
     if raw["experiment_spec.json"] != spec.to_json().encode("utf-8"):
         raise ValueError("Spec sidecar must be the canonical snapshot")
     names = _allowlist(manifest.get("relative_allowlist", []))

@@ -13,6 +13,7 @@ from types import ModuleType
 import pytest
 
 from molgap.experiment_family_workflow import ROLES, RunContext
+from test_experiment_spec import payload
 
 
 _REPO = Path(__file__).resolve().parents[1]
@@ -58,7 +59,11 @@ def _module(monkeypatch):
     class ApiListKernelSessionOutputRequest:
         pass
 
+    class ApiDownloadKernelOutputRequest:
+        pass
+
     service.ApiListKernelSessionOutputRequest = ApiListKernelSessionOutputRequest
+    service.ApiDownloadKernelOutputRequest = ApiDownloadKernelOutputRequest
     monkeypatch.setitem(sys.modules, names[-1], service)
 
     module_name = "_molgap_test_retrieve_family_outputs"
@@ -76,6 +81,11 @@ class _ResponsePage:
         self.next_page_token = next_page_token
 
 
+class _Redirect:
+    def __init__(self, url):
+        self.url = url
+
+
 class _File:
     def __init__(self, file_name, url):
         self.file_name = file_name
@@ -86,11 +96,21 @@ class _KernelsClient:
     def __init__(self, pages):
         self.pages = list(pages)
         self.requests = []
+        self.exact_requests = []
+        self.exact_files = {
+            item.file_name: item
+            for page in self.pages
+            for item in page.files
+        }
         self.kernels_api_client = self
 
     def list_kernel_session_output(self, request):
         self.requests.append(request)
         return self.pages[len(self.requests) - 1]
+
+    def download_kernel_output(self, request):
+        self.exact_requests.append(request)
+        return _Redirect(self.exact_files[request.file_path].url)
 
 
 class _Client:
@@ -134,20 +154,23 @@ class _HttpResponse:
         return False
 
     def iter_content(self, chunk_size):
-        assert chunk_size == 1024 * 1024
+        assert chunk_size in (65536, 1024 * 1024)
         for offset in range(0, len(self.payload), 7):
             yield self.payload[offset : offset + 7]
 
 
 class _Http:
-    def __init__(self, payloads):
+    def __init__(self, payloads, *, fail_once=None):
         self.payloads = payloads
+        self.fail_once = dict(fail_once or {})
         self.urls = []
 
     def get(self, url, *, stream, timeout):
         assert stream is True
         assert timeout == (30, 60)
         self.urls.append(url)
+        if url in self.fail_once:
+            raise self.fail_once.pop(url)
         payload = self.payloads[url]
         if isinstance(payload, Exception):
             raise payload
@@ -269,6 +292,144 @@ def test_downloads_only_five_manifest_artifacts_and_manifest_with_full_paths(
     ).read_bytes() == case["local_manifest"].read_bytes()
 
 
+@pytest.mark.parametrize("resumed", [False, True])
+@pytest.mark.parametrize("damage", [None, "certificate", "proof"])
+def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_validation(
+    tmp_path, monkeypatch, resumed, damage,
+):
+    from dataclasses import replace
+    from unittest.mock import Mock
+    from molgap import family_training_runner as owner
+    from molgap.screen_policy import canonical_fingerprint
+    from molgap.training_reproducibility import sha256_file
+    case = _case(tmp_path, monkeypatch)
+    destination = case["destination"]
+    destination.mkdir()
+    contract = destination / "training_contract.json"
+    from test_family_training_session import make_session, events
+    from test_family_training_runner import contract_file
+    session = make_session("gptrans_t", development=True, schedule_kind="cosine_epoch", events=events())
+    try:
+        _, record = contract_file(destination, session)
+    finally:
+        session.close()
+    record["mode"] = "retired-branch-mode"
+    contract.write_text(json.dumps(record), encoding="utf-8")
+    with pytest.raises(ValueError, match="Unknown executable"):
+        owner.read_recipe(contract)
+    _, frozen = owner.read_recipe(contract, _frozen_read=True)
+    context = replace(case["context"], platform_version="7", training_recipe_sha256=sha256_file(contract))
+    provenance = {"context": context.to_dict(), "recipe_identity": frozen.identity}
+    import io
+    import torch
+    buffer = io.BytesIO()
+    torch.save({"synthetic_transport_tensor": torch.arange(4)}, buffer)
+    proof = buffer.getvalue()  # Transport fixture, never native qualification.
+    profile_trace = b"{}"
+    report = {"trace_sha256": hashlib.sha256(profile_trace).hexdigest()}
+    encode = lambda value: json.dumps(value, sort_keys=True).encode()
+    report_bytes = encode(report)
+    certificate = {"provenance_sha256": canonical_fingerprint(provenance),
+        "proofs": [{"path": "repeat-a.pt", "sha256": hashlib.sha256(proof).hexdigest()}],
+        "profile_proof": {"report": "profile_qualification/profile.json",
+            "sha256": hashlib.sha256(report_bytes).hexdigest()}}
+    manifest = {"runtime": {"runtime_certificate_id": canonical_fingerprint(certificate)},
+        "artifacts": {"contract": {"path": contract.name}}}
+    prefix = "runs/session-7/_resume_preflight/" + context.arm_id if resumed else "runs/session-7"
+    metadata = {"runtime_certificate.json": encode(certificate), "runtime_provenance.json": encode(provenance),
+        "profile_qualification/profile.json": report_bytes, "profile_qualification/trace.json": profile_trace,
+        "repeat-a.pt": proof}
+    checkpoint = "1" * 64 if resumed else None
+    if resumed:
+        metadata["actual_resume_certificate.json"] = encode({"status": "accepted", "formal_training_exposure": 0,
+            "checkpoint_sha256": checkpoint, "resume_step": 1, "proofs": [
+            {"path": "actual-resume-a.pt", "sha256": hashlib.sha256(proof).hexdigest()},
+            {"path": "actual-resume-b.pt", "sha256": hashlib.sha256(proof).hexdigest()}]})
+        metadata.update({"actual-resume-a.pt": proof, "actual-resume-b.pt": proof})
+    if damage == "certificate":
+        metadata["runtime_certificate.json"] = encode({**certificate, "changed": True})
+    if damage == "proof":
+        metadata["repeat-a.pt"] = b"corrupt proof bytes"
+    files, payloads = [], {}
+    for name, payload_bytes in metadata.items():
+        remote = prefix + "/" + name
+        url = "https://offline.invalid/" + remote
+        files.append(_File(remote, url))
+        payloads[url] = payload_bytes
+    output_provenance_remote = "runs/session-7/arm/runtime_provenance.json"
+    if resumed:
+        url = "https://offline.invalid/" + output_provenance_remote
+        files.append(_File(output_provenance_remote, url))
+        payloads[url] = encode(provenance)
+    api, http = _Api(context.account, [_ResponsePage(files)]), _Http(payloads)
+    semantic = Mock(side_effect=AssertionError("Retrieval cannot claim native qualification"))
+    monkeypatch.setattr(owner, "_verify_preflight", semantic)
+    invoke = lambda: case["retrieve"].retrieve_native_dependencies(api, context=context,
+        manifest=manifest, remote_manifest_path=("runs/session-7/arm/output_manifest.json" if resumed
+            else case["remote_manifest"]), destination=destination,
+        resume_checkpoint_sha256=checkpoint, http_session=http)
+    if damage is not None:
+        with pytest.raises((ValueError, RuntimeError)):
+            invoke()
+    else:
+        result = invoke()
+        assert result["status"] == "DEPENDENCIES_VERIFIED"
+        assert result["native_qualification"] == "NOT_EVALUATED"
+        retained = Path(result["native_root"])
+        assert (retained / "repeat-a.pt").read_bytes() == proof
+        assert (retained / "profile_qualification/trace.json").read_bytes() == profile_trace
+        if resumed:
+            assert retained == destination.parent / "_resume_preflight" / context.arm_id
+            assert (retained / "actual-resume-b.pt").read_bytes() == proof
+        prior_requests = len(api.client.kernels.exact_requests)
+        assert invoke()["network_accessed"] is False
+        assert len(api.client.kernels.exact_requests) == prior_requests
+
+        # The same transport journey consumes producer-packed proofs, without
+        # fetching their uncompressed logical members or invoking tensor checks.
+        from molgap.native_proof_storage import compact_certificate, retire_proof_sources
+        from molgap.research_memory.trace import atomic_write, json_bytes
+        packed_certificate = dict(certificate)
+        compact_certificate(retained, packed_certificate)
+        atomic_write(retained / "runtime_certificate.json", json_bytes(packed_certificate))
+        retire_proof_sources(retained, packed_certificate)
+        metadata["runtime_certificate.json"] = encode(packed_certificate)
+        metadata["native_proofs.zip"] = (retained / "native_proofs.zip").read_bytes()
+        metadata.pop("repeat-a.pt")
+        manifest["runtime"]["runtime_certificate_id"] = canonical_fingerprint(packed_certificate)
+        if resumed:
+            actual = json.loads(metadata["actual_resume_certificate.json"])
+            compact_certificate(retained, actual, actual_resume=True)
+            atomic_write(retained / "actual_resume_certificate.json", json_bytes(actual))
+            retire_proof_sources(retained, actual)
+            metadata["actual_resume_certificate.json"] = encode(actual)
+            metadata["actual_resume_proofs.zip"] = (retained / "actual_resume_proofs.zip").read_bytes()
+            metadata.pop("actual-resume-a.pt")
+            metadata.pop("actual-resume-b.pt")
+        destination = tmp_path / "packed-download" / "arm"
+        destination.mkdir(parents=True)
+        (destination / contract.name).write_bytes(contract.read_bytes())
+        files = [_File(prefix + "/" + name, "https://offline.invalid/" + prefix + "/" + name) for name in metadata]
+        payloads = {item.url: metadata[item.file_name[len(prefix)+1:]] for item in files}
+        if resumed:
+            files.append(_File(output_provenance_remote, "https://offline.invalid/output-provenance"))
+            payloads[files[-1].url] = encode(provenance)
+        api, http = _Api(context.account, [_ResponsePage(files)]), _Http(payloads)
+        result = invoke()
+        assert result["status"] == "DEPENDENCIES_VERIFIED"
+        assert not any(request.file_path.endswith(".pt") for request in api.client.kernels.exact_requests)
+        assert any(plan["known_download_bytes"] > 0 for plan in result["retrieval_plans"])
+        prior_requests = len(api.client.kernels.exact_requests)
+        assert invoke()["network_accessed"] is False
+        assert len(api.client.kernels.exact_requests) == prior_requests
+    semantic.assert_not_called()
+    assert api.client.kernels.requests == []
+    assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
+    assert all(request.file_path.startswith(prefix + "/") or resumed
+        and request.file_path == output_provenance_remote for request in api.client.kernels.exact_requests)
+    assert not any("last_checkpoint" in url or "selected_model" in url for url in http.urls)
+
+
 def test_wrong_authenticated_account_publishes_nothing(tmp_path, monkeypatch):
     case = _case(tmp_path, monkeypatch, username="different-account")
 
@@ -325,7 +486,7 @@ def test_identical_retained_files_retry_without_http_downloads(tmp_path, monkeyp
     assert {entry["state"] for entry in result["files"]} == {"ALREADY_RETAINED"}
 
 
-def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch):
+def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch, capsys, payload):
     case = _case(tmp_path, monkeypatch)
     relative = case["artifacts"]["predictions"]["path"]
     target = case["destination"] / relative
@@ -337,6 +498,93 @@ def test_conflicting_retained_file_is_never_overwritten(tmp_path, monkeypatch):
 
     assert target.read_bytes() == b"local conflicting content"
     assert case["files"][f"runs/session-7/{relative}"].url not in case["http"].urls
+    _execution_retention_cli_journey(tmp_path, monkeypatch, capsys, payload)
+
+
+def _execution_retention_cli_journey(tmp_path, monkeypatch, capsys, payload):
+    from dataclasses import replace
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap import experiment_run, experiment_run_acceptance, kaggle_submission
+    from molgap.experiment_allocation import AllocationLedger
+    from molgap.experiment_retention import seal_execution_retention
+    import requests
+
+    entry = _module(monkeypatch)
+    payload["arms"] = payload["arms"][:1]
+    payload["platform"].update(name="kaggle", accelerator="Tesla T4")
+    spec = ExperimentSpec(payload)
+    context = replace(_context(), platform_version="7", spec_identity=spec.identity,
+        arm_id=payload["arms"][0]["arm_id"])
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    artifact_root = tmp_path / "artifacts"
+    prepared = artifact_root / "runs/synthetic-run/v1/prepared"
+    prepared.mkdir(parents=True)
+    profile = tmp_path / "profile.json"
+    profile.write_text(json.dumps({"format": "molgap-machine-paths-v1",
+        "python": sys.executable, "data_root": str(tmp_path / "data"),
+        "artifact_root": str(artifact_root), "scratch_root": str(tmp_path / "scratch")}), encoding="utf-8")
+    # Frozen-run/package resolution is substituted; retention validators,
+    # allocation serialization, CLI and exact transport are exercised together.
+    monkeypatch.setattr(experiment_run, "_original_run", lambda *a, **k: (spec,
+        {"receipt_path": "receipt", "package_dir": "package", "expected_package_identity": context.package_identity},
+        prepared))
+    monkeypatch.setattr(experiment_run_acceptance, "_continuation_options", lambda s, o, *a: o)
+    monkeypatch.setattr(entry.RunContext, "from_launch", lambda *a, **k: context)
+    monkeypatch.setattr(experiment_run_acceptance, "record_run_retrieval",
+        lambda *a, **k: pytest.fail("Execution roots must not replace arm retrieval mapping"))
+    remote = tmp_path / "remote"
+    remote.mkdir()
+    clock = [0.0]
+    ledger = AllocationLedger(spec_identity=spec.identity, hardware=["Tesla T4"],
+        assignments={context.arm_id: 0}, started=0.0, clock=lambda: clock[0])
+    clock[0] = 1.0
+    arm_root = remote / context.arm_id
+    ledger.write(remote, "complete", arm_roots=[arm_root])
+    (remote / "execution_report.json").write_text('{"status":"complete"}', encoding="utf-8")
+    seal_execution_retention(remote, spec, package_identity=context.package_identity,
+        source_commit=context.source_commit, source_archive_sha256=context.source_archive_sha256,
+        arm_roots={context.arm_id: arm_root})
+    manifest = remote / "execution_retention.json"
+    pin = hashlib.sha256(manifest.read_bytes()).hexdigest()
+    names = ["execution_retention.json", "allocation_ledger.json",
+        context.arm_id + "/allocation_ledger.json", "execution_report.json"]
+    files = [_File(name, "https://offline.invalid/" + name) for name in names]
+    api = _Api(context.account, [])
+    api.client.kernels.exact_files = {item.file_name: item for item in files}
+    http = _Http({item.url: (remote / item.file_name).read_bytes() for item in files})
+    monkeypatch.setattr(kaggle_submission, "connect_kaggle", lambda p: api)
+    monkeypatch.setattr(requests, "Session", lambda: http)
+    destination = artifact_root / "retrieved/execution"
+    args = ["--execution-retention", "--profile", str(profile), "--repo-root", str(repo),
+        "--run-id", "synthetic-run", "--attempt-id", "v1", "--arm", context.arm_id,
+        "--local-manifest", str(manifest), "--manifest-sha256", pin,
+        "--remote-manifest-path", "execution_retention.json", "--destination", str(destination)]
+    assert entry.main(args) == 0
+    assert json.loads(capsys.readouterr().out)["network_accessed"] is False
+    assert not destination.exists() and api.client_builds == 0
+    context = replace(context, platform_version="session-version-7")
+    assert entry.main(args) == 2
+    assert json.loads(capsys.readouterr().out)["stage"] == "manifest"
+    assert api.client_builds == 0
+    context = replace(context, platform_version="7")
+    execute = [*args, "--execute", "--credentials", str(tmp_path / "credentials.json")]
+    assert entry.main(execute) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["execution_retention"]["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert "retrieval_mapping" not in result
+    assert {request.file_path for request in api.client.kernels.exact_requests} == set(names)
+    assert all(request.version_number == 7 for request in api.client.kernels.exact_requests)
+    assert not api.client.kernels.requests
+    assert entry.main(execute) == 0
+    assert json.loads(capsys.readouterr().out)["network_accessed"] is False
+    assert len(http.urls) == len(names)
+    conflict = destination / "allocation_ledger.json"
+    conflict.write_bytes(b"local conflict")
+    assert entry.main(execute) == 2
+    assert json.loads(capsys.readouterr().out)["status"] == "BLOCKED"
+    assert conflict.read_bytes() == b"local conflict"
+    assert len(http.urls) == len(names)
 
 
 @pytest.mark.parametrize("exception_type", [RuntimeError, ValueError])

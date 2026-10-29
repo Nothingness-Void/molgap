@@ -23,7 +23,9 @@ def contract_file(tmp_path, session):
     data, recipe = session.loaders.data, session.recipe
     source = torch.cat([graph.source_idx for graph in data.development]) if data.development else None
     target = torch.cat([graph.y for graph in data.development]) if data.development else None
+    addons = tuple(item["name"] for item in recipe.addons)
     record = build_family_recipe(INTERFACES[recipe.family], configuration=recipe,
+        addon=addons[0] if len(addons) == 1 else addons or None,
         train_role_identity="3" * 64, development_role_identity="4" * 64 if data.development else None,
         source_idx_sha256=tensor_digest(source, role="source_idx") if source is not None else None,
         target_sha256=tensor_digest(target, role="target") if target is not None else None)
@@ -55,6 +57,19 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
         assert "platform" not in recipe.to_dict()
         assert family_arm_bindings(recipe)["transform"]["sha256"] != family_arm_bindings(
             replace(recipe, target_mean_eV=recipe.target_mean_eV + .01))["transform"]["sha256"]
+        from molgap.family_training_runner import comparison_objective_identity
+        from molgap.screen_policy import canonical_fingerprint
+        reference = {"training": {"objective": family_arm_bindings(recipe)["objective"]}}
+        composed = {**vars(recipe), "mode": "composed"}
+        candidate = deepcopy(reference)
+        candidate["training"]["objective"]["sha256"] = canonical_fingerprint({
+            "mode": "composed", "family": family, "gradient_clip": recipe.gradient_clip})
+        assert comparison_objective_identity(candidate, composed) == comparison_objective_identity(reference, recipe)
+        candidate["training"]["objective"]["sha256"] = "f" * 64
+        assert comparison_objective_identity(candidate, composed) == "f" * 64
+        candidate["training"]["objective"]["sha256"] = canonical_fingerprint({
+            "mode": "composed", "family": family, "gradient_clip": 2.})
+        assert comparison_objective_identity(candidate, {**composed, "gradient_clip": 2.}) != comparison_objective_identity(reference, recipe)
     finally:
         session.close()
 

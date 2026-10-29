@@ -405,7 +405,7 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
 
 
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
-    if sha256_file(recipe_path) != context.training_recipe_sha256:
+    if normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256:
         raise ValueError("Runtime recipe bytes differ from Spec")
     return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
         "mode": mode, "recipe_sha256": sha256_file(recipe_path),

@@ -1,5 +1,6 @@
 """Compatibility namespace; one shared parser consumes explicit catalog data."""
 from dataclasses import dataclass
+import json
 
 from .common.spec import (
     ExperimentSpec as _Spec, FamilyContract, AddonContract, AddonConfigField,
@@ -30,3 +31,15 @@ class ExperimentSpec(_Spec):
 
     def family_contract(self, arm_id):
         return self._family_contract(arm_id, FAMILIES)
+
+    @classmethod
+    def from_frozen_json(cls, text):
+        """Read retained declaration data; package/receipt owners bind its bytes.
+
+        This does not register an addon or admit a new package or execution.
+        """
+        payload = json.loads(text, object_pairs_hook=_unique_object)
+        spec = object.__new__(cls)
+        object.__setattr__(spec, "_canonical_json", _canonical(
+            _validate(payload, families=FAMILIES, addons=ADDONS, _frozen=True)))
+        return spec

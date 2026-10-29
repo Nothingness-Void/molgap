@@ -1,6 +1,7 @@
 # Experiment infrastructure quickstart
 
-This is the normal entry for new work. Read `AGENTS.md`, `CURRENT_STATE.md`, the
+For an already declared, authorized run, start with its platform skill.
+This is the entry for authoring new work. Read `AGENTS.md`, `CURRENT_STATE.md`, the
 relevant `ROADMAP.md` section and the question's decision first. Query existing
 RML before proposing a new experiment. This guide grants no compute, role,
 scientific acceptance or cross-machine custody.
@@ -145,6 +146,18 @@ Addon names alone select version `1` and reviewed literal defaults. Inline
 live in `shared`; a pinned `preset_ref` supplies an existing baseline definition.
 These shorthands preserve the same recipe and authority checks.
 
+For inputs at `experiments/<experiment_id>/experiment.json`, omitted mechanical
+fields resolve to `STATUS.md`, `protocol.md` and `decision.md` in that directory.
+The compiler can derive the Kaggle block for the fixed 100K mount and a candidate
+policy only when its ID matches the experiment ID with dashes. Review and commit
+the generated policy. Scientific questions, authority and budgets remain explicit.
+The pinned [K1 post-BN preset](../../experiments/presets/k1-post-bn-100k-v1.json)
+reuses compact recipe/data/target contracts; supply the matching local initial state.
+`supporting_evidence` contains RML evidence IDs; cite papers in the protocol.
+A readiness result of `BLOCKED` before freeze leaves the logical run ID editable.
+After preparation, `sandbox --spec SPEC --arm ARM --plan WORKFLOW --repo-root .`
+uses the frozen initialization to inspect step-0 equality, gradients and serialization.
+
 Commit human/source inputs before formal preparation. The tool generates only
 bounded canonical JSON under `experiments/<question>/generated/<input+commit>/`;
 these are compact definition metadata, not training payloads. Do not hand-edit
@@ -229,13 +242,12 @@ The run directory locates its frozen inputs, package and operation journal.
 & $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
 ```
 
-For the family output protocol, the existing
-`platforms/kaggle/retrieve_family_outputs.py` adapter accepts the same run ID,
-profile, attempt and arm plus an independently pinned local/remote manifest and
-an external artifact-root destination. Without `--execute` it validates locally
-without authentication or creating the destination. Explicit credentials and
-`--execute` call the original exact-file transport; unsupported historical
-protocols still use their owning retriever. This is not scientific acceptance.
+For registered runs, `platforms/kaggle/retrieve_family_outputs.py --all-arms
+--execute` retrieves the exact receipt version's manifests, required artifacts
+and execution-cost records; existing hash-matching files are reused. Its returned
+`execution_root` is passed to acceptance. Without `--execute`, it plans locally.
+Continuations use the original `--continuation-receipt` and `--resume-prepared`.
+`--status` labels the latest scheduler observation separately from receipt identity.
 
 After retrieval, the local entry resolves frozen expectations and closure
 locations, inspects each arm, writes attribution and stages terminal drafts:
@@ -316,6 +328,23 @@ Removal requires an exact `--candidate` and `--execute`. Only atomically retired
 `.incomplete-*` source caches with known generated files are eligible; scratch of
 unknown ownership, live caches and run evidence remain report-only. Interrupted
 removal reports `STOPPED`. Age alone never establishes that a file is disposable.
+`--report` summarizes artifact sizes and `--dedupe` reports identical-file groups;
+hardlink mutation is disabled because resume writers can overwrite shared bytes.
 
 Migration evidence and remaining capabilities route through the
 [cumulative reform record](REFORM_MIGRATION.md).
+
+## Local execution and closure inputs
+
+`platforms/local/train.py` runs one prepared local arm through the registered
+trainer; `--pause-after-step` and reentry use its existing checkpoint. Its
+`--accept-only` route supports `--closure-input FILE` and `--draft-role-audit DIR`,
+and closes only `INFRASTRUCTURE_ONLY`. It grants no scientific or compute authority.
+
+For run-keyed acceptance, `draft-role-audit` writes immutable per-arm drafts and
+`audit_map.json`. New outputs may bind observed `data_open` evidence; old outputs
+without it keep protected-role use unknown. This observation covers Python file
+opens in the worker process only, not native IO, subprocesses or network access.
+`--closure-input FILE` supplies `{arms: {ARM: {outcome, decision_ref}}, role_audit?}`
+to `accept_run.py --strict --execute`; the decision remains an explicit judgment.
+See the [CLI reference](EXPERIMENT_CLI.md) for the exact arguments.

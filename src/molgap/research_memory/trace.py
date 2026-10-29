@@ -11,6 +11,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from molgap.common.io import replace_retrying
+
 from .schemas import validate_id
 
 TRACE_FORMAT = "molgap-trace-v1"
@@ -43,7 +45,7 @@ def atomic_write(path: str | Path, payload: bytes) -> None:
             stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(temporary, path)
+        replace_retrying(temporary, path)
         sync_directory(path.parent)
     finally:
         if temporary is not None:

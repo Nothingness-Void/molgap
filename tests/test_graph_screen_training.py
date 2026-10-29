@@ -316,7 +316,9 @@ def test_shared_owner_real_cpu_train_resume_and_inspect(tmp_path, synthetic_case
     runtime_path = partial / "runtime_manifest.json"
     runtime_bytes = runtime_path.read_bytes()
     runtime_with_cuda = json.loads(runtime_bytes)
-    runtime_with_cuda["accelerator"] = {"name": "Tesla T4", "device_count_visible": 1}
+    # One more visible device than the captured RNG state, on CPU or CUDA hosts.
+    runtime_with_cuda["accelerator"] = {"name": "Tesla T4",
+                                        "device_count_visible": torch.cuda.device_count() + 1}
     _write_json(runtime_path, runtime_with_cuda)
     with pytest.raises(ValueError, match="CUDA RNG schema"):
         validate_partial()

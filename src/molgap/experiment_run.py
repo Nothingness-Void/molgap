@@ -55,7 +55,7 @@ def _original_run(profile, repo_root, run_id, attempt_id, *, _verification=None)
             raise ValueError("Original run file changed during resolution: " + name)
         return path
 
-    spec = ExperimentSpec.from_json(original("inputs/experiment_spec.json").read_text(encoding="utf-8"))
+    spec = ExperimentSpec.from_frozen_json(original("inputs/experiment_spec.json").read_text(encoding="utf-8"))
     if spec.identity != located["spec_identity"]:
         raise ValueError("Original Spec changed during resolution")
     binding = _json(original("inputs/input_binding.json"))
@@ -110,9 +110,9 @@ def inspect_run_output(profile, repo_root, run_id, attempt_id, *, arm_id, artifa
 def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None, locations=None,
                         retrieved_root=None, execute=False, execution_root=None,
                         diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
-                        diagnostic_output=None, n_bootstrap=0, seed=42, role_audit=None,
+                        diagnostic_output=None, n_bootstrap=None, seed=42, role_audit=None,
                         scientific_acceptance=None, strict_inputs=None,
-                        continuation_receipt=None, physical_runs=None,
+                        continuation_receipt=None, physical_runs=None, physical_observation=None,
                         resume_prepared=None, resume_authority=None):
     """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
     from .experiment_run_acceptance import resolve_run_acceptance_inputs
@@ -140,6 +140,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if continuation_receipt is not None:
         resolution["continuation_receipt"] = continuation_receipt
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, **resolution)
+    for name, value in (("outcome", outcome), ("decision_ref", decision_ref)):
+        if isinstance(value, dict) and set(value) != set(resolved["outputs"]):
+            missing = sorted(set(resolved["outputs"]) - set(value))
+            unexpected = sorted(set(value) - set(resolved["outputs"]))
+            raise ValueError(f"Per-arm {name} bindings must cover exactly the run arms: "
+                             f"missing={missing}, unexpected={unexpected}")
     if strict_inputs is not None:
         _validate_strict_inputs(strict_inputs, resolved["outputs"])
     if resume_prepared is not None:
@@ -147,18 +153,34 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         resolved["continuations"] = resolve_terminal_resume(resolved, resume_prepared,
             resume_authority, strict_inputs=strict_inputs)
     spec, options = resolved["spec"], resolved["options"]
+    retention = None
+    if execution_root is not None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(resolved["contexts"].values()))
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=options["expected_package_identity"], source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
     identity = {"run_id": run_id, "attempt_id": attempt_id, "spec_identity": spec.identity}
     # Ordinary inspection does not depend on a future terminal input package.
     inspections = {}
+    automatic = diagnose or stage_terminal or outcome is not None or strict_inputs is not None
+    if physical_observation is not None:
+        if physical_runs is not None:
+            raise ValueError("Use either physical_runs or one physical_observation")
+        from .experiment_allocation import current_physical_allocation_records
+        physical_runs = current_physical_allocation_records(resolved, retention, physical_observation)
+    physical_costs = None
+    if physical_runs is not None:
+        from .experiment_allocation import aggregate_physical_allocation_costs
+        physical_costs = aggregate_physical_allocation_costs(physical_runs)
     result = accept_workflow(spec, supplied=resolved["outputs"],
         locations=None if automatic or locations is None else resolved["locations"],
         execute=False if automatic or locations is None else execute,
         execution_root=execution_root, target_identities=resolved.get("target_identities"),
         _inspections=inspections, **options)
     result.update(identity)
-    if physical_runs is not None:
-        from .experiment_allocation import aggregate_physical_allocation_costs
-        result["physical_allocation_costs"] = aggregate_physical_allocation_costs(physical_runs)
+    if physical_costs is not None:
+        result["physical_allocation_costs"] = physical_costs
     if result["status"] == "BLOCKED":
         return result
     read_only_strict = (strict_inputs is not None and locations is not None
@@ -260,11 +282,15 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         # checked separately by validate_terminal_continuation.
         native_cache = {arm: (value, native_contexts[arm].to_dict())
                         for arm, value in native.items()}
+    paired_cache = {}
     if diagnose:
         from .experiment_attribution import diagnose_run, _write_run_diagnosis
+        if n_bootstrap is None:
+            n_bootstrap = 2000 if strict_inputs is not None else 0
         diagnostic = diagnose_run(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, output=diagnostic_output,
-            n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"])
+            n_bootstrap=n_bootstrap, seed=seed, resolved=resolved, reports=result["arms"],
+            _paired_cache=paired_cache)
         if diagnostic_output is None:
             from .screen_policy import canonical_fingerprint
             path = resolved["run_directory"] / "reports" / ("diagnostic_" + canonical_fingerprint(diagnostic) + ".json")
@@ -286,6 +312,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             retrieved_root=retrieved_root, supplied=supplied, locations=locations,
             outcome=outcome, decision_ref=decision_ref, role_audit=role_audit,
             diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
+            execution_root=execution_root, _retention=retention,
             **({"scientific_acceptance": scientific_acceptance} if scientific_acceptance is not None else {}))
         result["terminal_staging"] = staged
         if execute:
@@ -309,7 +336,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         active_locations = (result.get("terminal_staging", {}).get("locations") or resolved["locations"])
         if same_run is not None:
             qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native,
-                reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms)
+                reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms,
+                _paired_cache=paired_cache)
         else:
             # Historical references use their retained comparison bindings;
             # they cannot be translated into a same-run reference declaration.

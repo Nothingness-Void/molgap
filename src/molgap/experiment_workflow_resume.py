@@ -327,7 +327,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 required_modules=release["inputs"]["required_modules"], input_root=stage["input_root"],
                 entry_script=stage["entry_path"], launch_config=stage["launch_path"],
                 kernel_metadata=stage["metadata_path"],
-                _verification=verification)
+                dataset_manifests=frozen_inputs.get("dataset_manifests"), _verification=verification)
             _atomic(output / "release_report.json", result)
             report.update(status="BLOCKED" if result["errors"] else "RESUME_INPUTS_PREPARED",
                 source_commit=manifest["source_commit"], release_report=str(output / "release_report.json"),
@@ -434,6 +434,7 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
         entry_script=inputs["entry_script"], input_root=inputs["input_root"],
         launch_config=inputs["launch_config"], kernel_metadata=inputs["kernel_metadata"],
+        dataset_manifests=inputs.get("dataset_manifests"),
         _verification=_verification)
     compared = (_rebase_paths(observed, Path(inputs["input_root"]), original_staged)
                 if original_staged is not None else observed)

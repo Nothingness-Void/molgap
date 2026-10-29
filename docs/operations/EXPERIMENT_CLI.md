@@ -100,8 +100,8 @@ Positive/ready outcomes retain their owning scientific acceptance gate.
 role facts. Inline facts are bound to the resolved run and retained as metadata;
 protected-role use is never inferred from permission. `--stage-terminal` alone
 stages evidence without running diagnosis; `--diagnose` is independent.
-Run diagnosis uses the frozen policy; bootstrap defaults to zero, leaving
-confidence intervals unknown. Directory-only `diagnose --control DIR
+Run diagnosis uses the frozen policy; strict diagnosis defaults to 2000 bootstrap
+samples. Non-strict diagnosis defaults to zero, leaving confidence intervals unknown. Directory-only `diagnose --control DIR
 --candidate DIR` remains available for descriptive comparisons.
 Recovery output must be fresh and outside the checkout and original
 inputs/prepared/operations. The existing owner validates checkpoint/native
@@ -113,6 +113,32 @@ locates per-arm proof roots. With canonical accepted tips, `--strict --execute`
 rechecks their bound artifacts read-only; it does not stage or close them again.
 Missing historical roles or scientific decisions remain explicit inputs.
 Runtime role sidecars are consumed automatically when available.
+
+`--closure-input FILE` supplies one reviewed JSON object:
+`{"arms":{"ARM":{"outcome":"OUTCOME","decision_ref":"experiments/Q/decision.md"}},
+"role_audit":"experiments/Q/audits/audit_map.json"}`. It replaces the separate
+outcome/decision/audit flags; each frozen arm keeps its own decision.
+`--arm-outcome ARM=OUTCOME` and `--arm-decision-ref ARM=PATH` remain available.
+
+`draft-role-audit --profile PROFILE --repo-root ROOT --run-id RUN --attempt-id V
+--output-dir REPO_DIR` writes per-arm drafts and `audit_map.json`; add the bound
+`--continuation-receipt` for continued outputs. Optional
+`--protected-role-use ROLE=STATE` must describe observed facts. Hash-bound
+`data_open` records can establish protected-role non-use only within their stated
+coverage: Python file opens in the worker process, excluding native IO,
+subprocesses and network. Missing old records keep states unknown.
+Drafts are immutable; changed facts require a new output directory.
+
+`--execution-root DIR` consumes retained allocation records. Explicit
+`--physical-runs` observations override inferred runtime durations; invalid
+allocation evidence blocks closure before finalization. Strict continuation
+still requires its original receipt, resume preparation and authority.
+
+Frozen Specs and recipes are read independently of retired Addon catalog entries.
+This permits retained-artifact inspection only; execution continues to require
+registered model/addon implementations. Frozen evaluation-weight selection
+controls which live/EMA curve is required.
+
 
 For a scratch/pretrained pair, declare `purpose: initialization_comparison` and
 one reference and one candidate with their own frozen recipes, data declarations

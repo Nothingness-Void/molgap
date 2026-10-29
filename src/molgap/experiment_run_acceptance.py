@@ -135,7 +135,7 @@ def _accepted_continuation_receipt(spec, options, repo_root):
 
 def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
                          destination, manifest_sha256, continuation_receipt=None,
-                         _verification=None):
+                         _verification=None, _retained_files=None):
     """Record only successfully retained manifest-bound bytes; never copy outputs."""
     from .experiment_run import _original_run
     spec, options, prepared = _original_run(profile, repo_root, run_id, attempt_id,
@@ -157,11 +157,14 @@ def record_run_retrieval(profile, repo_root, run_id, attempt_id, *, context,
         raise ValueError("Retrieved output manifest differs from its pinned bytes")
     manifest = _json(manifest_path)
     _check_context(manifest["context"], context)
-    # Recheck all downloaded artifact bytes before advertising the destination.
+    # Reuse the synchronous transport's verified files. Standalone registration
+    # still reads every artifact; saved reports are never passed as this input.
+    retained = {item["path"]: item["sha256"] for item in (_retained_files or [])
+                if item["state"] in {"RETAINED", "ALREADY_RETAINED"}}
     for item in manifest["artifacts"].values():
         path = repo_local_path(destination, item["path"])
         _safe_local(path)
-        if file_digest(path) != item["sha256"]:
+        if retained.get(item["path"]) != item["sha256"] and file_digest(path) != item["sha256"]:
             raise ValueError("Retrieved output artifact differs from its pinned bytes")
     value = {"format": "molgap-run-retrieved-output-v1", "context": context.to_dict(),
              "output_dir": str(destination), "manifest_sha256": manifest_sha256}

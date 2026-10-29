@@ -146,7 +146,24 @@ def _install_synthetic_owner(repo: Path, monkeypatch):
         "    return {'recipe': 'synthetic_recipe_verified', 'arm_id': arm_id}\n",
         encoding="utf-8",
     )
-    _git(repo, "add", "src/molgap/synthetic_trainer.py")
+    # Desktop's release worker also probes this legacy initialization ABI.
+    # This temp-repo owner is explicitly synthetic, just like synthetic_trainer;
+    # reuse the actual CPU loader/writer rather than claiming native K1 admission.
+    (repo / "src/molgap/k1_screen_training.py").write_text(
+        "from molgap.training_reproducibility import atomic_json\n"
+        "from molgap.v4_runtime import torch_load_compat\n"
+        "def _load_initial_state(path, recipe):\n"
+        "    if recipe.get('format') != 'synthetic-screen-recipe-v1':\n"
+        "        raise ValueError('synthetic recipe format mismatch')\n"
+        "    return torch_load_compat(path, map_location='cpu', weights_only=True)\n",
+        encoding="utf-8",
+    )
+    for name in ("training_reproducibility.py", "v4_runtime.py", "common/io.py"):
+        source = Path(__file__).resolve().parents[1] / "src/molgap" / name
+        # Packaged text is LF; a CRLF checkout copy would differ from its own package.
+        (repo / "src/molgap" / name).write_bytes(source.read_bytes().replace(b"\r\n", b"\n"))
+    _git(repo, "add", "src/molgap/synthetic_trainer.py", "src/molgap/k1_screen_training.py",
+         "src/molgap/training_reproducibility.py", "src/molgap/v4_runtime.py", "src/molgap/common/io.py")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic registered owner")
 
     module_spec = importlib.util.spec_from_file_location(
@@ -168,7 +185,7 @@ def _install_synthetic_owner(repo: Path, monkeypatch):
             "molgap.synthetic_trainer",
             "k1-screen-v1",
             (TrainingAddon("k1_joint_aggregation", "1", "ssma"),),
-            source_files=("src/molgap/synthetic_trainer.py",),
+            source_files=("src/molgap/synthetic_trainer.py", "src/molgap/k1_screen_training.py"),
         ),
         ("gptrans_t", "1"): TrainingAdapter(
             ("gptrans_t", "1"),
@@ -218,7 +235,7 @@ def _rewrite_case(case, repo: Path, module_path: Path) -> tuple[ExperimentSpec, 
                 "direction": "minimize", "role_identity": "synthetic-development",
             },
         }
-        recipe_bytes = json_bytes(recipe)
+        recipe_bytes = launch.canonical_json(recipe).encode("utf-8")
         recipe_path.write_bytes(recipe_bytes)
         recipes[arm_id] = recipe_path.relative_to(repo).as_posix()
         arm["training"]["recipe"]["sha256"] = _sha(recipe_bytes)

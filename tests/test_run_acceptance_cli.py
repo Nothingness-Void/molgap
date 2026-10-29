@@ -27,6 +27,32 @@ def test_run_acceptance_cli_needs_no_outputs_or_locations(tmp_path, monkeypatch,
     assert owner.call_args.kwargs["execute"] is False
 
 
+def test_accept_workflow_cli_forwards_per_arm_bindings_and_rejects_ambiguous_flags(tmp_path, monkeypatch, capsys):
+    owner = Mock(return_value={"status": "MECHANICALLY_VERIFIED", "arms": {}, "executed": False})
+    monkeypatch.setattr(runs, "accept_run_workflow", owner)
+    base = ["accept-workflow", "--run-id", "test", "--attempt-id", "v1",
+        "--repo-root", str(tmp_path), "--profile", str(tmp_path / "profile.json")]
+    assert cli.main([*base, "--arm-outcome", "reference=CLOSED",
+        "--arm-decision-ref", "reference=decision.md"]) == 0
+    kwargs = owner.call_args.kwargs
+    assert kwargs["outcome"] == {"reference": "CLOSED"}
+    assert kwargs["decision_ref"] == {"reference": "decision.md"}
+    capsys.readouterr()
+    for extra in (["--outcome", "CLOSED", "--arm-outcome", "reference=CLOSED"],
+                  ["--decision-ref", "decision.md", "--arm-decision-ref", "reference=decision.md"],
+                  ["--arm-outcome", "reference=CLOSED", "--arm-outcome", "reference=INCONCLUSIVE"]):
+        assert cli.main([*base, *extra]) == 2
+        assert json.loads(capsys.readouterr().out)["status"] == "ERROR"
+    owner.reset_mock()
+    owner.return_value = {"status": "BLOCKED", "arms": {}, "executed": False,
+        "strict_validation": {"status": "BLOCKED", "blockers": ["strict_reference_missing"],
+            "arms": {"arm": {"native_qualification": {"status": "VERIFIED", "dependencies": ["inventory"]}}}}}
+    assert cli.main([*base, "--strict", "--diagnose"]) == 1
+    assert owner.call_args.kwargs["n_bootstrap"] == 2000
+    visible = json.loads(capsys.readouterr().out)["strict_validation"]
+    assert visible["arms"]["arm"]["native_qualification"] == {"status": "VERIFIED"}
+
+
 def test_acceptance_script_selects_checkout_and_analysis_defaults(monkeypatch):
     root = Path(__file__).resolve().parents[1]
     module_spec = importlib.util.spec_from_file_location("local_accept_run", root / "platforms/local/accept_run.py")
@@ -39,6 +65,30 @@ def test_acceptance_script_selects_checkout_and_analysis_defaults(monkeypatch):
     assert arguments[:3] == ["accept-workflow", "--diagnose", "--stage-terminal"]
     assert arguments[arguments.index("--repo-root") + 1] == str(root)
     assert "--execute" not in arguments
+
+
+def test_closure_input_expands_to_per_arm_options_and_rejects_mixing(tmp_path, monkeypatch, capsys):
+    root = Path(__file__).resolve().parents[1]
+    module_spec = importlib.util.spec_from_file_location("local_accept_run_closure", root / "platforms/local/accept_run.py")
+    entry = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(entry)
+    owner = Mock(return_value=0)
+    monkeypatch.setattr(cli, "main", owner)
+    closure = tmp_path / "closure.json"
+    closure.write_text(json.dumps({"arms": {
+        "reference": {"outcome": "CLOSED", "decision_ref": "reference.md"},
+        "candidate": {"outcome": "INCONCLUSIVE", "decision_ref": "candidate.md"}},
+        "role_audit": str(tmp_path / "roles.json")}), encoding="utf-8")
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 0
+    arguments = owner.call_args.args[0]
+    assert "--closure-input" not in arguments and "--stage-terminal" in arguments
+    assert arguments[arguments.index("reference=CLOSED") - 1] == "--arm-outcome"
+    assert arguments[arguments.index("candidate=candidate.md") - 1] == "--arm-decision-ref"
+    owner.reset_mock()
+    closure.write_text(json.dumps({"arms": {"reference": {"outcome": "CLOSED"}}}), encoding="utf-8")
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 2
+    assert json.loads(capsys.readouterr().out)["status"] == "ERROR"
+    assert not owner.called
 
 
 def test_diagnose_run_routes_json_output_and_defaults_no_bootstrap(tmp_path, monkeypatch, capsys):

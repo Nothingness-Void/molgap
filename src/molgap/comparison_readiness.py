@@ -401,7 +401,12 @@ def validate_trace_plan(
         # Tracked EMA is training identity even when the frozen endpoint uses
         # Live weights exclusively. Unknown evaluation sources retain the
         # conservative historical requirement.
-        if ema_enabled is True and evaluation_weight_source != "live":
+        ema_endpoint = (isinstance(evaluation_weight_source, str)
+            and evaluation_weight_source.lower() in {"ema", "clean-ema"})
+        if ema_endpoint:
+            required.discard("live_dev_metric")
+            required.add("ema_dev_metric")
+        elif ema_enabled is True and evaluation_weight_source != "live":
             required.add("ema_dev_metric")
         missing_required = sorted(field for field in required if plan[field] is not True)
         if missing_required:

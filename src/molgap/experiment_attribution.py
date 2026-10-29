@@ -152,7 +152,7 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         contract_path = _artifact_path(root, manifest["artifacts"]["contract"]["path"])
     except (KeyError, TypeError) as exc:
         raise ValueError("Family attribution requires a bound output manifest") from exc
-    contract_raw, recipe = read_recipe(contract_path)
+    contract_raw, recipe = read_recipe(contract_path, _frozen_read=True)
     _check_context(manifest["context"], context)
     if recipe.interface != (context.family_name, context.family_version):
         raise ValueError("Output family differs from its executable contract")
@@ -973,7 +973,7 @@ def _write_run_diagnosis(report, output, resolved):
 
 def diagnose_run(profile, repo_root, run_id, attempt_id, *, retrieved_root=None,
                  n_bootstrap=0, seed=42, supplied=None, output=None,
-                 resolved=None, reports=None):
+                 resolved=None, reports=None, _paired_cache=None):
     """Diagnose all frozen run pairs from retained artifacts without remote work.
 
     ``resolved``/``reports`` are internal, same-call owner caches for workflow
@@ -1041,6 +1041,12 @@ def diagnose_run(profile, repo_root, run_id, attempt_id, *, retrieved_root=None,
                     repo_root=Path(repo_root).absolute(), candidate=loaded[candidate_id], inputs=inputs[candidate_id]))
                 result = _analyze_loaded_pair(reference, loaded[candidate_id],
                     n_bootstrap=n_bootstrap, seed=seed, compare_recipes=bool(pair))
+                if pair and _paired_cache is not None:
+                    _paired_cache[candidate_id] = {
+                        "reference_id": reference_id,
+                        "hashes": (reference["hashes"], loaded[candidate_id]["hashes"]),
+                        "paired": dict(result["primary_comparison"]),
+                    }
                 report["comparisons"][candidate_id] = _posthoc_run_pair(result, retained_reference=not pair)
             except (ValueError, TypeError, KeyError, OSError, RuntimeError, EOFError, pickle.UnpicklingError) as exc:
                 blockers = [str(exc)]

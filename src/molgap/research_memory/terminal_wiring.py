@@ -776,7 +776,7 @@ def close_terminal_arm(
             target_term_path = (
                 term_path.parent / f"terminal_with_manifest_{traj_obj['trajectory_id']}.json"
             )
-            target_term_path.write_bytes(json_bytes(term_obj_copy))
+            atomic_write(target_term_path, json_bytes(term_obj_copy))
             terminal_to_use = target_term_path
     else:
         final_trace = trace

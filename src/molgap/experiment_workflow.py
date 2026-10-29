@@ -302,7 +302,10 @@ def _workflow_inputs(spec, repo_root, plan):
     generated = runtime and "generated_records" in plan
     if generated:
         fields |= {"generated_records", "configuration_source"}
-    if type(plan) is not dict or set(plan) != fields or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
+    if (type(plan) is not dict or not fields <= set(plan)
+            or set(plan) - fields - {"dataset_manifests"}
+            or plan["format"] != "molgap-experiment-workflow-v1"
+            or plan["spec_identity"] != spec.identity):
         raise ValueError("Workflow plan/Spec mismatch")
     if type(plan["source_records"] if runtime else plan["source_files"]) is not list:
         raise ValueError("Workflow source_files must be an explicit path list")
@@ -313,6 +316,11 @@ def _workflow_inputs(spec, repo_root, plan):
     bindings = {b["arm_id"]: b for b in declaration["prospective"].get("arms", [])}
     jobs, recipes, initial_states = _arm_inputs(repo_root, plan["arms"], bindings)
     validated_jobs = validate_execution_plan(spec, jobs)
+    dataset_manifests = plan.get("dataset_manifests", {})
+    if type(dataset_manifests) is not dict or set(dataset_manifests) - set(recipes):
+        raise ValueError("Dataset manifest bindings must name known workflow arms")
+    dataset_manifests = {arm: str(_artifact_or_local_path(repo_root, value))
+                         for arm, value in dataset_manifests.items()}
     acceptance_path = _artifact_path(repo_root, plan["acceptance_plan"])
     acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path), require_training_targets=True)
     if acceptance["status"] == "BLOCKED":
@@ -335,12 +343,37 @@ def _workflow_inputs(spec, repo_root, plan):
     else:
         source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
     return dict(metadata=metadata, bindings=bindings, jobs=jobs, initial_states=initial_states,
-                recipes=recipes, validated_jobs=validated_jobs, source_files=source_files)
+                recipes=recipes, validated_jobs=validated_jobs, source_files=source_files,
+                dataset_manifests=dataset_manifests)
+
+
+def _artifact_or_local_path(repo_root, value):
+    if type(value) is not str:
+        raise ValueError("Expected a local dataset manifest path")
+    path = Path(value)
+    path = path if path.is_absolute() else Path(repo_root) / path
+    _safe_local(path.absolute())
+    if not path.is_file():
+        raise ValueError("Missing frozen dataset manifest")
+    return path.absolute()
 
 
 def _workflow_checks(spec, repo_root, inputs):
+    def manifest_bindings():
+        # Modern2D formal families use the neutral family-training owner for
+        # execution, but consume indexed metadata rather than fixed family
+        # dataset mounts.  Only the mature shared K1/GPTrans releases require
+        # explicit dataset manifest bindings here.
+        mature = {("neural_atom_k1", "3"), ("gptrans_t", "2")}
+        required = {arm["arm_id"] for arm in spec.to_dict()["arms"]
+                    if (arm["family"]["name"], arm["family"]["version"]) in mature}
+        if required - set(inputs["dataset_manifests"]):
+            raise ValueError("Shared family release requires explicit dataset_manifests bindings")
+        return {"bound_arms": sorted(inputs["dataset_manifests"])}
+
     observations, blockers = {}, []
     for name, check in (("family_recipes", lambda: check_family_recipes(spec, repo_root, inputs["recipes"])),
+                        ("dataset_manifests", manifest_bindings),
                         ("prospective", lambda: check_prospective(spec, Path(repo_root).absolute()))):
         try:
             observations[name] = check()
@@ -363,11 +396,12 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None,
+                     _content_verification=None, _verification=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     from .experiment_package import _PackageVerification
 
-    verification = _PackageVerification()
+    verification = _verification if _verification is not None else _PackageVerification()
     started = perf_counter()
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
     _safe_local(output)
@@ -378,9 +412,9 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     inputs = _workflow_inputs(spec, repo_root, plan)
     if inputs.get("status") == "BLOCKED":
         return inputs
-    metadata, bindings, jobs, initial_states, recipes, validated_jobs, source_files = (
+    metadata, bindings, jobs, initial_states, recipes, validated_jobs, source_files, dataset_manifests = (
         inputs[key] for key in ("metadata", "bindings", "jobs", "initial_states", "recipes",
-                               "validated_jobs", "source_files"))
+                                "validated_jobs", "source_files", "dataset_manifests"))
     # All cheap owner/policy checks precede the staging directory and package.
     observations, blockers = _workflow_checks(spec, repo_root, inputs)
     if blockers:
@@ -421,7 +455,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             initial_states={job["arm_id"]: staged / job["initial_state"] for job in stage["launch"]["jobs"]},
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
-            input_root=staged, _verification=verification)
+            input_root=staged, dataset_manifests=dataset_manifests or None,
+            _verification=verification, _content_verification=_content_verification)
         _atomic(output / "release_report.json", release)
         record("check_release", release)
         if release["errors"]:

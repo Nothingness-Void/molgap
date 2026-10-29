@@ -24,6 +24,9 @@ from .experiment_inspection import InspectionSnapshot, validate_snapshot
 
 OUTPUT_FORMAT = "molgap-family-output-v1"
 ROLES = frozenset({"predictions", "selected_model", "resume", "trace", "contract"})
+# Optional provenance role: files opened by the frozen worker's Python process.
+DATA_OPEN_FILE = "data_open_provenance.json"
+DATA_OPEN_FORMAT = "molgap-data-open-record-v1"
 EXPECTED = frozenset({"epochs", "optimizer_steps", "sample_presentations",
                       "development_rows", "source_idx_sha256", "target_sha256", "precision"})
 EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps", "sample_presentations",
@@ -80,6 +83,9 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     purpose = candidate.get("purpose", "architecture_comparison")
     if purpose != reference.get("purpose", "architecture_comparison"):
         raise ValueError("Same-run arms declare different comparison purposes")
+    # Frozen single-addon screens used this name before the common taxonomy.
+    if purpose == "single_module_ablation":
+        purpose = "mechanism_comparison"
     allowed = {
         "architecture_comparison": ["architecture_config_identity"],
         "mechanism_comparison": ["architecture_config_identity"],
@@ -179,7 +185,7 @@ def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
     for arm_id, item in sorted(resolved["outputs"].items()):
         try:
             arm = next(arm for arm in declaration["arms"] if arm["arm_id"] == arm_id)
-            _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json")
+            _, recipe = read_recipe(Path(item["output_dir"]) / "training_contract.json", _frozen_read=True)
             role_by_name = {role["role"]: role for role in arm["data"]["roles"]}
             target_binding = resolved["target_identities"][arm_id]
             target_plan = target_binding._pinned_json(
@@ -252,7 +258,7 @@ def resolve_strict_target_transforms(repo_root, resolved, strict_inputs=None):
 
 
 def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_reports, *, reports,
-                                       strict_inputs=None, _target_transforms=None):
+                                       strict_inputs=None, _target_transforms=None, _paired_cache=None):
     """Translate verified family artifacts into the existing V5 comparison forms.
 
     Publishes new metadata and terminal inputs. Original terminal packages and
@@ -266,7 +272,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
-    from .family_training_runner import read_recipe
+    from .family_training_runner import read_recipe, comparison_objective_identity
     from .research_memory.finalize import (current_finalized_directory, load_terminal_input,
         verified_receipt, prospective_bytes, _qualification_amendment, _bindings)
     root = Path(repo_root).resolve()
@@ -337,7 +343,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
         return {**target_report, "executed": False}
     scopes = _frozen_same_run_scopes(resolved)
     retained_recipes = {
-        arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json")
+        arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json", _frozen_read=True)
         for arm_id, item in resolved["outputs"].items()
     }
     by_arm = {arm["arm_id"]: arm for arm in declaration["arms"]}
@@ -416,7 +422,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
                 "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
             "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
-            "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": arm["training"]["objective"]["sha256"],
+            "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": comparison_objective_identity(arm, recipe),
             "target_transform_identity": arm["training"]["transform"]["sha256"], "target_transform_asset_sha256": transform["asset_sha256"],
             "sample_presentations": data["manifest"]["progress"]["sample_presentations"],
             "optimizer_steps": data["manifest"]["progress"]["optimizer_steps"], "checkpoint_selection_identity": recipe.selection,
@@ -493,8 +499,16 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             left, right = loaded[reference_id], loaded[arm_id]
             if not np.array_equal(left["source_idx"], right["source_idx"]) or not np.array_equal(left["target_eV"], right["target_eV"]):
                 raise ValueError("Strict comparison predictions/targets are not aligned")
-            paired = _compare_paired_errors(np.abs(left["prediction_eV"] - left["target_eV"]),
-                np.abs(right["prediction_eV"] - right["target_eV"]), n_bootstrap=2000, seed=42)
+            cached = (_paired_cache or {}).get(arm_id, {})
+            paired = cached.get("paired", {})
+            if not (cached.get("reference_id") == reference_id
+                    and cached.get("hashes") == (left["hashes"], right["hashes"])
+                    and paired.get("n_bootstrap") == 2000
+                    and paired.get("seed") == 42
+                    and paired.get("threshold_eV") == 0.003
+                    and paired.get("noninferiority_margin_eV") == 0.0005):
+                paired = _compare_paired_errors(np.abs(left["prediction_eV"] - left["target_eV"]),
+                    np.abs(right["prediction_eV"] - right["target_eV"]), n_bootstrap=2000, seed=42)
             paired_ref = publish(arm_id, "paired_analysis.json", paired)
             sides[arm_id]["artifacts"]["paired_analysis"] = "complete"
             sides[arm_id]["artifact_bindings"]["paired_analysis"] = binding(paired_ref)
@@ -731,6 +745,8 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
         roles = roles | {"trace_context"}
         if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
             raise ValueError("Session trace companion must match the declared trace")
+    if profile.protocol == "family-session" and "data_open" in artifacts:
+        roles = roles | {"data_open"}
     if profile.protocol == "family-session":
         from .experiment_family_artifacts import SESSION_OPTIONAL_ARTIFACTS
         roles = roles | (set(artifacts) & SESSION_OPTIONAL_ARTIFACTS)

@@ -44,6 +44,16 @@ def _read(path: Path) -> str:
     return path.read_bytes().decode("utf-8")
 
 
+def _bindings(values, local=False):
+    result = {}
+    for entry in values:
+        arm, separator, value = entry.partition("=")
+        if not separator or not arm or not value or arm in result:
+            raise ValueError("Expected unique ARM=VALUE bindings")
+        result[arm] = _local(value) if local else value
+    return result
+
+
 def _evidence_argument(value):
     """Keep a single audit's custody path; decode only maps or inline objects."""
     from .experiment_family_workflow import _json
@@ -90,6 +100,14 @@ def _parser() -> argparse.ArgumentParser:
     locate.add_argument("--repo-root",required=True,type=_local)
     locate.add_argument("--run-id",required=True)
     locate.add_argument("--attempt-id",required=True)
+    draft=commands.add_parser("draft-role-audit")
+    for flag in ("--profile", "--repo-root", "--output-dir"):
+        draft.add_argument(flag, required=True, type=_local)
+    draft.add_argument("--run-id", required=True)
+    draft.add_argument("--attempt-id", required=True)
+    draft.add_argument("--retrieved-root", type=_local)
+    draft.add_argument("--continuation-receipt", type=_local)
+    draft.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE")
     diagnose=commands.add_parser("diagnose")
     diagnose.add_argument("--control",type=_local)
     diagnose.add_argument("--candidate",type=_local)
@@ -159,14 +177,20 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--retrieved-root", type=_local)
             command.add_argument("--diagnose", action="store_true")
             command.add_argument("--stage-terminal", action="store_true")
-            command.add_argument("--outcome")
-            command.add_argument("--decision-ref", type=_local)
+            outcomes = command.add_mutually_exclusive_group()
+            outcomes.add_argument("--outcome")
+            outcomes.add_argument("--arm-outcome", action="append", metavar="ARM=OUTCOME",
+                help="Per-arm terminal outcome; repeat for each arm")
+            decisions = command.add_mutually_exclusive_group()
+            decisions.add_argument("--decision-ref", type=_local)
+            decisions.add_argument("--arm-decision-ref", action="append", metavar="ARM=PATH",
+                help="Per-arm repository-local decision path; repeat for each arm")
             command.add_argument("--role-audit", type=_evidence_argument,
                 help="Observed audit JSON file, per-arm path-map file, or inline JSON map")
             command.add_argument("--scientific-acceptance", type=_evidence_argument,
                 help="Owning scientific terminal package, or per-arm path map")
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
-            command.add_argument("--bootstrap-samples", type=int, default=0)
+            command.add_argument("--bootstrap-samples", type=int)
             command.add_argument("--seed", type=int, default=42)
             command.add_argument("--execute", action="store_true")
             command.add_argument("--execution-root", type=_local)
@@ -181,6 +205,8 @@ def _parser() -> argparse.ArgumentParser:
                 help="Per-arm strict proof/comparison locations")
             command.add_argument("--physical-runs", type=_local,
                 help="Hash-bound physical allocation records")
+            command.add_argument("--physical-observation", type=_local,
+                help="Observed entry for this one job/version; requires --execution-root")
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
@@ -226,6 +252,9 @@ def _parser() -> argparse.ArgumentParser:
     selected.add_argument("--spec", type=_local)
     selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))
     sandbox.add_argument("--arm")
+    sandbox.add_argument("--plan", type=_local,
+        help="Frozen workflow_plan.json: check the arm on its real frozen initial state against the reference arm")
+    sandbox.add_argument("--repo-root", type=_local, default=Path.cwd())
     commands.choices["accept-workflow"].add_argument("--verbose", action="store_true",
         help="Print the full owner report rather than its summary")
     return parser
@@ -283,6 +312,12 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "locate-run":
         from .experiment_input import locate_run
         return locate_run(args.profile,args.repo_root,args.run_id,args.attempt_id),0
+    if args.command == "draft-role-audit":
+        from .experiment_terminal_staging import draft_run_role_audits
+        return draft_run_role_audits(args.profile, args.repo_root, args.run_id, args.attempt_id,
+            retrieved_root=args.retrieved_root, output_dir=args.output_dir,
+            protected_role_use=_bindings(args.protected_role_use),
+            continuation_receipt=args.continuation_receipt), 0
     if args.command == "catalog":
         from dataclasses import asdict
         from .experiment_execution import TRAINING_ADAPTERS
@@ -307,10 +342,22 @@ def _dispatch(args) -> tuple[dict, int]:
             spec = ExperimentSpec.from_json(raw)
             if raw != spec.to_json():
                 raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
-            result = run_arm_sandbox(spec, args.arm)
+            frozen = None
+            if args.plan is not None:
+                import json
+                from .family_training_runner import read_recipe
+                declaration = spec.to_dict()
+                reference = declaration["prospective"].get("same_run_replay", {}).get("reference_arm_id", args.arm)
+                plan = json.loads(_read(args.plan))
+                if plan["spec_identity"] != spec.identity:
+                    raise ValueError("The frozen plan belongs to a different Spec")
+                jobs = {job["arm_id"]: job for job in plan["arms"]}
+                recipes = {name: read_recipe(args.repo_root / jobs[name]["recipe"])[1] for name in {args.arm, reference}}
+                frozen = (recipes[reference], recipes[args.arm], jobs[args.arm]["initial_state"])
+            result = run_arm_sandbox(spec, args.arm, frozen=frozen)
         else:
-            if args.arm is not None:
-                raise ValueError("--arm is only used with a Spec")
+            if args.arm is not None or args.plan is not None:
+                raise ValueError("--arm and --plan are only used with a Spec")
             result = run_family_sandbox(args.family)
         return result, 0 if result["status"] == "PASSED" else 1
     if args.command in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}:
@@ -345,15 +392,25 @@ def _dispatch(args) -> tuple[dict, int]:
                     elif args.strict:
                         options["strict_inputs"] = {}
                     if args.physical_runs is not None:
-                        options["physical_runs"] = json.loads(
-                            args.physical_runs.read_text(encoding="utf-8"))
+                        from .experiment_launch import _unique
+                        _safe_local(args.physical_runs.absolute())
+                        options["physical_runs"] = json.loads(args.physical_runs.read_text(encoding="utf-8"),
+                            object_pairs_hook=_unique,
+                            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
+                    if args.physical_observation is not None:
+                        options["physical_observation"] = args.physical_observation
                     if args.retrieved_root is not None:
                         options["retrieved_root"] = args.retrieved_root
-                    if args.diagnose or args.stage_terminal or args.outcome is not None or args.decision_ref is not None:
+                    if (args.diagnose or args.stage_terminal or args.outcome is not None or args.arm_outcome is not None
+                            or args.decision_ref is not None or args.arm_decision_ref is not None):
                         options.update(diagnose=args.diagnose, stage_terminal=args.stage_terminal,
-                            outcome=args.outcome, decision_ref=args.decision_ref,
-                            diagnostic_output=args.output, n_bootstrap=args.bootstrap_samples, seed=args.seed)
-                    elif args.output is not None or args.bootstrap_samples or args.seed != 42:
+                            outcome=_bindings(args.arm_outcome) if args.arm_outcome is not None else args.outcome,
+                            decision_ref=_bindings(args.arm_decision_ref) if args.arm_decision_ref is not None else args.decision_ref,
+                            diagnostic_output=args.output,
+                            n_bootstrap=(args.bootstrap_samples if args.bootstrap_samples is not None
+                                else 2000 if args.diagnose and (args.strict or args.strict_inputs is not None) else 0),
+                            seed=args.seed)
+                    elif args.output is not None or args.bootstrap_samples is not None or args.seed != 42:
                         raise ValueError("Diagnostic options require --diagnose")
                     if args.role_audit is not None:
                         options["role_audit"] = args.role_audit
@@ -373,10 +430,10 @@ def _dispatch(args) -> tuple[dict, int]:
         if args.profile is not None or args.attempt_id is not None:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
-            if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome,
-                    args.decision_ref, args.role_audit, args.scientific_acceptance, args.output,
+            if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome, args.arm_outcome,
+                    args.decision_ref, args.arm_decision_ref, args.role_audit, args.scientific_acceptance, args.output,
                     args.continuation_receipt, args.resume_prepared, args.resume_authority,
-                    args.strict_inputs, args.strict, args.physical_runs)):
+                    args.strict_inputs, args.strict, args.physical_runs, args.physical_observation)):
                 raise ValueError("Automatic acceptance requires --run-id")
             if args.outputs is None:
                 raise ValueError("Explicit Spec acceptance requires --outputs")
@@ -579,7 +636,9 @@ def _acceptance_summary(result):
         summary["strict_validation"] = {key: strict[key] for key in
             ("status", "blockers", "replay_readiness", "ready_for_desktop") if key in strict}
         summary["strict_validation"]["arms"] = {
-            arm: {key: row[key] for key in ("comparison", "replay", "blockers") if key in row}
+            arm: {**{key: row[key] for key in ("comparison", "replay", "blockers") if key in row},
+                  **({"native_qualification": {"status": row["native_qualification"].get("status")}}
+                     if isinstance(row.get("native_qualification"), dict) else {})}
             for arm, row in strict.get("arms", {}).items()}
     summary["arms"] = {arm: {key: row[key] for key in ("status", "blockers") if key in row}
                        for arm, row in result.get("arms", {}).items()}

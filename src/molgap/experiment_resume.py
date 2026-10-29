@@ -13,6 +13,7 @@ Public transport API:
 """
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
 import os
@@ -22,6 +23,7 @@ import stat
 from pathlib import Path
 from typing import Any, Mapping
 
+from .common.io import copy_immutable_file
 from .experiment_launch import _safe_local, publish_immutable_bytes
 from .training_reproducibility import sha256_file
 from .v4_runtime import torch_load_compat
@@ -404,7 +406,8 @@ def _reject_completed(source: Path) -> None:
 def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
                          output: Path | str, *, run_id: str | None = None,
                          action_id: str | None = None,
-                         attempt_id: str | None = None) -> dict:
+                         attempt_id: str | None = None,
+                         reuse_bundle: Path | str | None = None) -> dict:
     """Freeze an incomplete native output into a portable per-arm bundle.
 
     The destination may be retried only with byte-identical content.  Source
@@ -464,6 +467,7 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     for role in _OPTIONAL_ARTIFACTS:
         pointers.setdefault(role, None)
     sidecar_pointers = {}
+    sidecar_snapshots = {}
     for group, paths in sidecars.items():
         sidecar_pointers[group] = []
         for item in paths:
@@ -471,7 +475,10 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
             # Allocation accounting is atomically refreshed by the parent while
             # a worker exports a chunk. Bind the bytes we captured, not a later
             # read of the same path (which may already name another generation).
-            source_bytes[item] = item.read_bytes()
+            payload = item.read_bytes()
+            _strict_json_bytes(payload)
+            source_bytes[item] = payload
+            sidecar_snapshots[item] = payload
             sidecar_pointers[group].append(_pointer(
                 item, item.name, payload=source_bytes[item], required=True))
     manifest = {
@@ -496,30 +503,93 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
         "cost_segments": sidecar_pointers["cost_segments"],
     }
     manifest_bytes = _json_bytes(manifest)
+    shared = {}
+    if reuse_bundle is not None:
+        previous = validate_resume_bundle(reuse_bundle, context=context_value,
+                                          trajectory=trajectory_bytes)
+        if previous["root"] == bundle or any(previous["manifest"][key] != manifest[key]
+                                               for key in ("source", "spec", "arm", "run")):
+            raise ValueError("Resume sharing requires a distinct bundle of the same owner and attempt")
+        for pointer in _bundle_pointers(previous["manifest"]):
+            shared[pointer["sha256"]] = previous["root"] / pointer["path"]
     # Validate every destination before publishing any byte, so one conflict
     # cannot leave a partially overwritten recovery package.
-    destinations = [(bundle / RESUME_BUNDLE_FILE, manifest_bytes)]
-    for role, pointer in pointers.items():
-        if pointer is None:
-            continue
-        payload = trajectory_bytes if role == "trajectory" else source_bytes[next(
-            item for item in source_bytes if item.name == Path(pointer["restore_path"]).name)]
-        destinations.append((bundle / pointer["path"], payload))
-    for group in sidecar_pointers.values():
-        for pointer in group:
-            payload = source_bytes[next(item for item in source_bytes if item.name == Path(pointer["restore_path"]).name)]
-            destinations.append((bundle / pointer["path"], payload))
+    metadata = [(bundle / RESUME_BUNDLE_FILE, manifest_bytes),
+                (bundle / "files/trajectory.json", trajectory_bytes)]
+    metadata.extend((bundle / "files" / item.name, payload)
+                    for item, payload in sidecar_snapshots.items())
+    sources = {item.name: item for role, (item, _, _) in artifact_sources.items()
+               if role != "trajectory"}
+    for paths in sidecars.values():
+        for item in paths:
+            if item.name in sources and item != sources[item.name]:
+                raise ValueError("Resume bundle artifact paths alias each other")
+            sources[item.name] = item
+    copies = []
+    for pointer in [*pointers.values(), *(item for group in sidecar_pointers.values() for item in group)]:
+        if pointer is not None and pointer["path"] != "files/trajectory.json":
+            source_path = sources[Path(pointer["restore_path"]).name]
+            if source_path not in sidecar_snapshots:
+                copies.append((bundle / pointer["path"], source_path, pointer["sha256"]))
     seen = set()
-    for path, payload in destinations:
+    for path, digest in [(path, hashlib.sha256(payload).hexdigest())
+                         for path, payload in metadata] + [
+                             (path, digest) for path, _, digest in copies]:
+        _safe_local(path.absolute())
         if path.as_posix().casefold() in seen:
             raise ValueError("Resume bundle artifact paths alias each other")
         seen.add(path.as_posix().casefold())
-        if path.exists():
-            if not path.is_file() or path.read_bytes() != payload:
-                raise ValueError(f"Resume bundle publication conflict; refusing overwrite: {path}")
-    for path, payload in destinations:
-        publish_immutable_bytes(path, payload)
+        if path.exists() and (not path.is_file() or sha256_file(path) != digest):
+            raise ValueError("Resume bundle publication conflict; refusing overwrite")
+    for path, source_path, digest in copies:
+        retained = shared.get(digest)
+        if retained is None:
+            copy_immutable_file(source_path, path, expected_sha256=digest)
+        else:
+            _share_bundle_file(retained, path, digest)
+    # Manifest publication is last: an interrupted copy is never a complete bundle.
+    for path, payload in reversed(metadata):
+        digest = hashlib.sha256(payload).hexdigest()
+        retained = shared.get(digest)
+        if retained is None:
+            publish_immutable_bytes(path, payload)
+        else:
+            _share_bundle_file(retained, path, digest)
     return manifest
+
+
+def _bundle_pointers(manifest):
+    return [pointer for pointer in manifest["artifacts"].values() if pointer is not None] + [
+        pointer for group in ("runtime", "provenance", "context", "cost_segments")
+        for pointer in manifest[group]]
+
+
+def _share_bundle_file(source, destination, digest):
+    """Link only previously verified bundle bytes, never the mutable producer."""
+    _safe_local(Path(source).absolute())
+    _safe_local(Path(destination).absolute())
+    destination = Path(destination).absolute()
+    source = Path(source).absolute()
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        if sha256_file(destination) != digest:
+            raise ValueError("Resume bundle sharing conflict")
+        return
+    try:
+        os.link(source, destination)
+    except FileExistsError:
+        if sha256_file(destination) != digest:
+            raise ValueError("Concurrent resume bundle sharing conflict")
+        return
+    except OSError as exc:
+        if exc.errno not in {errno.EXDEV, errno.EPERM, errno.EACCES, errno.ENOTSUP,
+                             errno.ENOSYS, errno.EINVAL}:
+            raise
+        copy_immutable_file(source, destination, expected_sha256=digest)
+        return
+    if sha256_file(destination) != digest:
+        destination.unlink()
+        raise ValueError("Resume sharing source changed during publication")
 
 
 def _bundle_root(path: Path | str) -> tuple[Path, Path, dict]:

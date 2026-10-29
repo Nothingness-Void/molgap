@@ -1,129 +1,92 @@
-# Reuse entrypoints
+# MolGap experiment entrypoints
 
-Paths below are relative to the selected checkout. This is a routing index,
-not a second copy of contracts, dataset identities, thresholds or live jobs.
-Verify APIs against the checkout; missing capabilities remain unsupported.
+These are routes in the **selected checkout**, not frozen APIs for every model
+family. For implementation changes, inspect the selected callable and nearest real
+caller/test. Routine command use needs only its documented inputs. Do not
+import an experiment-local implementation as a universal model adapter.
 
-For a new family or addon, start with the [experiment quickstart](../../../../docs/operations/EXPERIMENT_QUICKSTART.md),
-then use this file to select the smallest existing callable. Read only the
-relevant detailed contract after the owner is selected.
-For standard runtime slots, explicit Clean-EMA actions and one-batch source-free
-checks, use the [four-module interface](../../../../docs/operations/MODULAR_EXPERIMENT_RUNTIME.md).
+## New training or an addon
 
-## Common experiment plumbing
+- For registered Kaggle work, use `submit_workflow.py --experiment` and
+  `platforms/local/accept_run.py`. The platform skill supplies commands. Read
+  `EXPERIMENT_ADDON_GUIDE.md` only when changing a family/addon; reuse the registry.
+  Check current support rather than treating model/Spec support as executable
+  training. Family trainers own loading, optimizer, selection and resume.
+  Unsupported families/platforms use their existing owners, not copied plumbing.
+- `src/molgap/pcqm_gptrans_v4.py` supplies the GPTrans V4 family training and
+  preflight entrypoints. `src/molgap/edge_state_training_core.py` supplies
+  reusable EdgeState target statistics, sampler, step, evaluation, and
+  checkpoint primitives. `src/molgap/v4_runtime.py` supplies shared runtime
+  compatibility and state-identity helpers. Use only the relevant family.
+- Read that module's owning test, such as `tests/test_pcqm_gptrans_v4.py` or
+  `tests/test_experiment_preflight.py`, before extending it.
 
-Start with the [addon guide](../../../../docs/operations/EXPERIMENT_ADDON_GUIDE.md)
-and read the [CLI reference](../../../../docs/operations/EXPERIMENT_CLI.md) only
-for the operation needed. A direct call to the same library is equivalent.
+## Retained predictions or frozen-checkpoint work
 
-| Need | Existing owner / callable | Boundary |
-|---|---|---|
-| Identity | [experiment_spec.py](../../../../src/molgap/experiment_spec.py): `ExperimentSpec` | Static registry; do not invent compatible family/mode names. |
-| Prospective plan | [experiment_prospective.py](../../../../src/molgap/experiment_prospective.py): `plan_prospective`; [RML plan](../../../../src/molgap/research_memory/plan.py): `plan` | Spec-bound path when supported; existing direct RML API for scoped adapters. Freeze actual authority and source, not placeholder hashes. |
-| Source archive | [experiment_package.py](../../../../src/molgap/experiment_package.py): `build_experiment_source_package` | Explicit source allowlist; retained checkpoint/prediction input bundles are not automatically source packages. |
-| Variant preparation | [experiment_workflow.py](../../../../src/molgap/experiment_workflow.py): `prepare_experiment_release`; [experiment_staging.py](../../../../src/molgap/experiment_staging.py): `stage_release_inputs`, `UploadArtifact` | Shared local plan/package/layout/release path; read [configuration](../../../../docs/operations/EXPERIMENT_WORKFLOW.md). No platform POST or compute authority. |
-| Release inputs | [experiment_preflight.py](../../../../src/molgap/experiment_preflight.py): `check_release_inputs` | Selected imports, packaged recipe hashes, finite frozen CPU initialization and optional upload bindings; no model execution or scientific release. |
-| Local receipt | [experiment_launch.py](../../../../src/molgap/experiment_launch.py): `build_launch_receipt`, `reconcile_platform_response` | No network submission or automatic platform authentication. |
-| New-protocol family outputs | [experiment_family_workflow.py](../../../../src/molgap/experiment_family_workflow.py): `RunContext`, `FamilyOutputSession`, `inspect_output`, `check_acceptance_plan`, `build_verified_terminal_descriptor`, `close_verified_outputs` | Read [output integration](../../../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md); one-time owning-trainer hooks, frozen metric/endpoint requirements and receipt binding. Mechanical verification is not scientific acceptance or replay readiness. |
-| IO / digest | [RML trace](../../../../src/molgap/research_memory/trace.py): `atomic_write`, `file_digest`, `json_bytes` | Integrity primitives, not scientific acceptance. |
-| Terminal translation | [experiment_terminal.py](../../../../src/molgap/experiment_terminal.py): `translate_terminal_descriptor`, `execute_terminal_descriptor` | Translation alone does not finalize evidence. |
-| RML closure | [terminal_wiring.py](../../../../src/molgap/research_memory/terminal_wiring.py): `close_terminal_multi_arm` | Existing per-arm transactions; no fabricated missing evidence. |
-| Monitor state | [server_control.py](../../../../src/molgap/server_control.py): `LocalServerControlStore` | Server-owned exact job identity, durable idempotent event; not candidate selection. |
+- For saved predictions, follow the owning acceptance and row-alignment code.
+  `src/molgap/comparison_readiness.py` checks V5 comparison readiness; it does
+  not generate new predictions. For a paired GPTrans example, inspect
+  `experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py` and
+  `tests/test_gptrans_local_pair_analysis.py` for the actual row-alignment
+  contract. Treat the experiment code as an example until identities match.
+- For frozen-checkpoint inference, locate the **accepted checkpoint's**
+  matching loader and model factory in its owning experiment or public
+  `src/molgap/inference.py` route. `src/molgap/conformer_ab.py` has one specific
+  accepted frozen-route example. Confirm checkpoint bytes, architecture,
+  transform, role, and source-index semantics before an intervention.
+- `python -m molgap.experiment_cli run-diagnostic` and
+  `src/molgap/experiment_runner.py:run_experiment` only probe metadata or
+  construct a random model. They do not load a frozen checkpoint, perform a
+  forward pass, or provide inference authority.
 
-## Training / construction
+## Execution profiling
 
-Shared K1/GPTrans telemetry uses [standard training logs](../../../../docs/operations/TRAINING_LOGGING.md).
-Configure `build_family_recipe(..., logging=...)`; reuse epoch/seconds/batches
-cadence, fixed fields and worker relay instead of writing a new printer/timer.
+- Use the owning profile adapter and its frozen equivalence criteria. The
+  training-only example is
+  `experiments/pcqm_gptrans_pair_norm_500k_profile/run_profile.py` with
+  `tests/test_gptrans_pair_norm_500k_profile.py`.
+- `src/molgap/inference_benchmark.py` benchmarks specific public inference
+  routes; it is not a generic training profiler. Keep profiling cost and
+  scientific comparison evidence separate.
 
-For new K1/GPTrans training declarations, start with the
-[shared core](../../../../docs/operations/FAMILY_TRAINING_CORE.md):
-`FamilyRecipe` -> `build_family_recipe(configuration=...)` ->
-`prepare-family-training` -> owning platform release/submission -> shared
-worker/session -> `inspect_output` -> existing V5/RML closure.
-The new interface versions are K1/3 and GPTrans/2, not scientific contracts.
-Keep historical entrypoints/source pins for retained experiments. Read the
-[server integration](../../../../docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
-before extending modes; mechanical inspection never implies Replay-Ready.
+## Identity, package, preflight, and launch binding
 
+- Start at `docs/operations/EXPERIMENT_CLI.md`, then read only the relevant
+  detailed `EXPERIMENT_*` contract. Use `python -m molgap.experiment_cli`
+  commands `validate-spec`, `plan-prospective`, `package`, `preflight`, and
+  `launch-receipt` when their declared capability fits. `plan-prospective`
+  publishes RML and may partially publish on failure; inspect its result.
+- The normal submitter already calls `experiment_preflight.check_release_inputs`.
+  Only a direct low-level adapter needs a separate `check-release` call. Bind each arm's recipe
+  to its actual LF-normalized archive bytes. Supply the frozen initialization
+  artifact for each pinned state SHA, not a locally constructed model as a
+  cross-runtime substitute. Declare loader/trainer imports and inspect selected
+  trusted training pickle dependencies; a trainer import alone can miss a
+  serialized graph class. This check does not execute a model or qualify a GPU.
+  The owning recipe and role contract still determine permitted inputs.
+- Library owners are `src/molgap/experiment_spec.py`,
+  `experiment_prospective.py`, `experiment_package.py`,
+  `experiment_preflight.py`, and `experiment_launch.py`. Package source must be
+  an explicit tracked allowlist. The preflight mode must support the family;
+  loader-only does not certify model execution. A launch receipt is a local
+  observation, not a platform submission.
+- For a real remote submit, use the applicable Kaggle, IMS, or SCNet adapter
+  and workload skill. Verify the returned run and source identity separately.
 
-For repeated GPTrans or EdgeState variants, read only the selected family
-section of [the standard workflow](../../../../docs/operations/EXPERIMENT_WORKFLOW.md).
-Use `gptrans_screen_adapter.gptrans_screen_arguments` for its explicitly
-supported V5 input arms, or `edge_state_screen_adapter.bind_edge_state_screen`
-for base/depth/K1 primitive wiring. Neither creates a new scientific recipe,
-qualifies an arbitrary registered addon or redirects historical trainers.
+## Terminal acceptance and RML
 
-Read the relevant [EdgeState adapter](../../../../docs/operations/EDGE_STATE_ADAPTER.md)
-or [K1 compatibility](../../../../docs/operations/K1_ADAPTER.md), then the owning
-experiment's actual trainer and tests. Reuse
-[edge_state_training_core.py](../../../../src/molgap/edge_state_training_core.py)
-where its recipe applies. Do not migrate a frozen scientific implementation to
-a newer factory merely because they share a family name. The
-[integration review](../../../../docs/operations/shared_experiment_verification.md)
-separates construction/loader coverage from training qualification.
-
-## Frozen checkpoints and saved artifacts
-
-The shared [experiment_runner.py](../../../../src/molgap/experiment_runner.py)
-is **not** a frozen-inference runner. These retained implementations are useful
-patterns with experiment-specific assumptions, not generic launch commands:
-
-- [k1_portability_audit.py](../../../../src/molgap/k1_portability_audit.py):
-  hash-bound checkpoint/model and accepted-role graph loading.
-- [k1_relation_intervention.py](../../../../src/molgap/k1_relation_intervention.py):
-  temporary intervention hooks, inference chunks and unchanged-weight checks.
-- [k1_relation_audit.py](../../../../src/molgap/k1_relation_audit.py):
-  independent acceptance of retained prediction chunks.
-- [k1_relation_intervention_records.py](../../../../src/molgap/k1_relation_intervention_records.py):
-  saved-tensor comparisons and observed/logical identity reconciliation.
-- [k1_relation_audit_records.py](../../../../src/molgap/k1_relation_audit_records.py):
-  `prepare_no_train_terminal` translates the accepted two-role relation audits;
-  reuse only when its fixed role/cost scope matches, then use RML finalization.
-
-Inspect modes, checkpoint layout, transform, role ranges and helper signatures.
-Reuse compatible functions; when values are hardcoded, parameterize the small
-shared behavior without changing the original caller. Never execute these old
-entries against their bound paths just to start a different experiment.
-
-## Platform operations
-
-Actual submission stays outside the common CLI. Read the selected platform's
-workload skill and [platform routing](../../../../platforms/README.md).
-For a prepared bounded T4 workflow, use the journaled
-[Kaggle submission entry](../../../../docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md)
-instead of writing per-experiment upload, verification or receipt scripts.
-For Kaggle, use the [owning adapter](../../../../platforms/kaggle/README.md).
-For new ExperimentSpec source packages, run `check-release` with the actual
-entry script and staged inputs; pass the report as `--release-report` to the
-platform adapter and retain `--response-output`. The adapter repeats selected
-checks before POST. Bind the returned ref/URL and version; `submission_unknown`
-requires authoritative reconciliation before retrying.
-Do not read all platform instructions or credentials when only one is needed.
-For the new family output protocol, the Kaggle retriever in
-`platforms/kaggle/retrieve_family_outputs.py` streams only manifest-bound files.
-Reconcile the actual attempt and pin its small manifest first; historical
-formats still use their owning retriever, not this profile as a fallback.
-
-Use explicit authorized credentials without printing them. Check installed SDK
-signatures before making a new wrapper. In the tested Kaggle SDK, status accepts
-a version-suffixed identity but code pull uses the slug; do not assume every
-endpoint accepts the same syntax. Verify the version separately, and reconcile
-the returned identity with the frozen release rather than resubmitting.
-
-## Cheap verification
-
-From the repository root, using its configured Python:
-
-```powershell
-.venv\Scripts\python.exe -m molgap.experiment_cli --help
-.venv\Scripts\python.exe -m pytest -q --noconftest tests/test_experiment_reuse_skill.py
-```
-
-Choose the owning component's focused tests for actual code changes. Do not
-rerun every historical suite or a model smoke test to validate documentation.
-For an evidence change, also run the existing `molgap.research_memory validate`
-and `check --frozen`; rebuild only when the source evidence changed. Help/schema
-success, intact links and synthetic tests are not release authorization.
-The terminal-wiring entry accepts explicit `trajectory.json` and `terminal.json`
-paths; do not pass a plan directory to `terminal-pipeline`.
+- Start with `platforms/local/accept_run.py` for a run-keyed workflow or
+  `platforms/local/train.py --accept-only` for a local single-model run. Read
+  `research_memory/LIFECYCLE.md` when changing RML implementation. The adapter validates observed artifacts and exports the accepted
+  evidence inputs; RML finalization does not rerun predictions.
+- `python -m molgap.experiment_cli terminal` translates a validated descriptor
+  read-only by default. `--execute` invokes
+  `src/molgap/experiment_terminal.py:execute_terminal_descriptor`, which uses
+  `src/molgap/research_memory/terminal_wiring.py:close_terminal_multi_arm`.
+  Translation is not an acceptance dry run. Inspect
+  `tests/test_experiment_terminal.py` for the binding contract.
+- `python -m molgap.research_memory` exposes `recover-trace`,
+  `terminal-pipeline`, `validate`, `rebuild`, `check --frozen`, and
+  `replay-pool`. `research_memory/LIFECYCLE.md` owns their role, cost, trace,
+  minimal-retention, and replay limits. Each arm needs its own accepted
+  terminal evidence before claiming two replay-ready entries.

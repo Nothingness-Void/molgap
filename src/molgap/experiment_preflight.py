@@ -131,6 +131,7 @@ def _under(root, name):
 
 def _atomic(path, value):
     temporary = None
+    failure = None
     try:
         with tempfile.NamedTemporaryFile(dir=path.parent, prefix=".preflight-", delete=False) as handle:
             temporary = Path(handle.name)
@@ -138,9 +139,19 @@ def _atomic(path, value):
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)
+    except BaseException as error:
+        failure = error
+        raise
     finally:
         if temporary is not None:
-            temporary.unlink(missing_ok=True)
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as cleanup:
+                if failure is None:
+                    raise
+                failure.cleanup_error = cleanup
+                if hasattr(failure, "add_note"):
+                    failure.add_note("Temporary preflight cleanup failed: " + type(cleanup).__name__)
 
 
 def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
@@ -362,7 +373,7 @@ def _model_smoke(runtime, arm, batch, stats, path, generator, result):
     result["initial_state_checked"] = True
     optimizer = runtime.make_adamw_compat(
         model.parameters(), lr=runtime.LEARNING_RATE,
-        weight_decay=runtime.WEIGHT_DECAY, fused=False)
+        weight_decay=runtime.WEIGHT_DECAY, fused=False, foreach=True)
     scheduler = runtime.FrozenEpochScheduler(optimizer)
     scheduler.step(0)
     model.train()
@@ -370,7 +381,9 @@ def _model_smoke(runtime, arm, batch, stats, path, generator, result):
     mean, std = stats
     if not math.isfinite(mean) or not math.isfinite(std) or std <= 0:
         raise ValueError("Invalid real training target statistics")
-    prediction = runtime._forward(model, batch)
+    execution = importlib.import_module("molgap.gptrans_execution_backend")
+    execution.bind_model_layout(model)
+    prediction = execution.prepared_forward(model, batch)
     target = (batch.y.view(-1).float() - mean) / std
     if prediction.shape != target.shape or not bool(torch.isfinite(prediction).all()):
         raise ValueError("Nonfinite or incorrectly shaped model output")
@@ -708,6 +721,21 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
     return summary
 
 
+def _release_error(check, item, error):
+    record = {"check": check, "item": item, "message": str(error),
+              "error_type": type(error).__name__}
+    for name in ("errno", "winerror"):
+        value = getattr(error, name, None)
+        if isinstance(value, int):
+            record[name] = value
+    cleanup = getattr(error, "cleanup_error", None)
+    if isinstance(cleanup, OSError):
+        record["cleanup_error"] = {"error_type": type(cleanup).__name__,
+            **{name: getattr(cleanup, name) for name in ("errno", "winerror")
+               if isinstance(getattr(cleanup, name, None), int)}}
+    return record
+
+
 def _release_imports(request):
     root = Path(request["source_root"])
     sys.path[:] = [str(root / "src"), *request["dependency_paths"], *sys.path]
@@ -717,37 +745,202 @@ def _release_imports(request):
         try:
             importlib.import_module(name)
         except Exception as exc:
-            errors.append({"check": "import", "item": name, "message": str(exc)})
+            errors.append(_release_error("import", name, exc))
     for module, symbol in request["pickle_globals"]:
         try:
             value = importlib.import_module(module)
             for part in symbol.split("."):
                 value = getattr(value, part)
         except Exception as exc:
-            errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
-    initialization_checks = {}
+            errors.append(_release_error("pickle_symbol", f"{module}.{symbol}", exc))
+    dataset_checks = {}
+    for item in request.get("dataset_manifests", []):
+        try:
+            data = importlib.import_module("molgap.family_training_data")
+            record = json.loads(Path(item["recipe_path"]).read_bytes())
+            selection = data.DatasetSelection(**record["dataset"])
+            source_manifest = _regular(Path(item["path"]))
+            if _file_sha(source_manifest) != selection.manifest_sha256:
+                raise ValueError("Release dataset manifest differs from frozen recipe")
+            layouts = {"flat": Path(selection.manifest),
+                       "nested": Path("datasets/release-owner") / selection.manifest}
+            for relative in layouts.values():
+                with tempfile.TemporaryDirectory(dir=root.parent, prefix="dataset-mount-") as temporary:
+                    mounted = Path(temporary)
+                    target = mounted / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(source_manifest, target)
+                    resolved = data.resolve_training_manifest(mounted, selection)
+                    if resolved != target.resolve():
+                        raise ValueError("Packaged loader resolved a different dataset mount")
+            dataset_checks[item["arm_id"]] = {
+                "manifest_sha256": selection.manifest_sha256,
+                "declared_path": selection.manifest,
+                "layouts": list(layouts), "scope": "metadata_only_no_shard_decode"}
+        except Exception as exc:
+            errors.append(_release_error("dataset_mount_resolution", item["arm_id"], exc))
+    initialization_checks, output_io_checks = {}, {}
     for item in request.get("initializations", []):
         try:
-            trainer = importlib.import_module("molgap.family_training_runner")
-            factory = importlib.import_module("molgap.family_training_kernel")
-            _, recipe = trainer.read_recipe(Path(item["recipe_path"]))
-            model, initialization = factory.load_family_model(recipe, Path(item["path"]))
-            initialization_checks[item["arm_id"]] = initialization
+            if item.get("family") not in (
+                    ["neural_atom_k1", "2"], ["neural_atom_k1", "3"], ["gptrans_t", "2"]):
+                raise ValueError("Unsupported family initialization check")
+            runtime = importlib.import_module("molgap.v4_runtime")
+            if item["family"] == ["neural_atom_k1", "2"]:
+                trainer = importlib.import_module("molgap.k1_screen_training")
+                recipe = _load(Path(item["recipe_path"]).read_bytes())
+                loader = getattr(trainer, "_load_initial_state", None)
+                if callable(loader):
+                    state = loader(Path(item["path"]), recipe)
+                else:
+                    state, _ = runtime.read_frozen_state_artifact(
+                        Path(item["path"]), expected_state_sha256=recipe["initialization_sha256"])
+                initialization_checks[item["arm_id"]] = {
+                    "state_sha256": runtime.state_dict_sha256(state),
+                    "tensor_count": len(state), "device": "cpu"}
+            else:
+                trainer = importlib.import_module("molgap.family_training_runner")
+                _, recipe = trainer.read_recipe(Path(item["recipe_path"]))
+                factory = importlib.import_module("molgap.family_training_kernel")
+                model, initialization = factory.load_family_model(recipe, Path(item["path"]))
+                if (root / "src/molgap/fast_sandbox.py").is_file():
+                    sandbox = importlib.import_module("molgap.fast_sandbox")
+                    sandbox.verify_loaded_family_model(recipe, model, seed=recipe.seed, threads=1)
+                initialization_checks[item["arm_id"]] = {
+                    "state_sha256": initialization["state_sha256"],
+                    "tensor_count": initialization["tensor_count"], "device": "cpu"}
         except Exception as exc:
-            errors.append({"check": "family_initialization", "item": item["arm_id"], "message": str(exc)})
-    return {"errors": errors, "import_origins": _origins(root), "initialization_checks": initialization_checks}
+            errors.append(_release_error("family_initialization", item["arm_id"], exc))
+            continue
+        try:
+            trainer = locals().get("trainer")
+            if trainer is None or not callable(getattr(trainer, "atomic_json", None)):
+                raise ValueError("Packaged trainer lacks atomic_json writer")
+            with tempfile.TemporaryDirectory(dir=root.parent, prefix="output-io-") as temporary:
+                path = Path(temporary) / "nested" / "fixture.json"
+                record = {"epoch": 1, "optimizer_steps": 1, "sample_presentations": 1,
+                          "train_seconds": 1.0, "development_seconds": 1.0,
+                          "epoch_pipeline_seconds": 2.0, "scope": "CPU release fixture"}
+                trainer.atomic_json(path, record)
+                if json.loads(path.read_text(encoding="utf-8")) != record:
+                    raise ValueError("Packaged object writer changed payload")
+                trainer.atomic_json(path, [record])
+                if json.loads(path.read_text(encoding="utf-8")) != [record]:
+                    raise ValueError("Packaged timing array writer changed payload")
+            output_io_checks[item["arm_id"]] = {
+                "object_roundtrip": True, "timing_array_roundtrip": True, "device": "cpu"}
+        except Exception as exc:
+            errors.append(_release_error("family_output_io", item["arm_id"], exc))
+    return {"errors": errors, "import_origins": _origins(root),
+            "dataset_checks": dataset_checks,
+            "initialization_checks": initialization_checks,
+            "output_io_checks": output_io_checks}
+
+
+def _run_release_import_worker(workspace, request):
+    bootstrap = workspace / "bootstrap.py"
+    shutil.copyfile(Path(__file__), bootstrap)
+    request_path, response_path = workspace / "request.json", workspace / "response.json"
+    _atomic(request_path, request)
+    env = {key: value for key, value in os.environ.items()
+           if not key.upper().startswith("PYTHON")}
+    env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+    with (workspace / "worker.log").open("wb") as log:
+        subprocess.run([sys.executable, "-I", "-S", str(bootstrap), str(request_path), str(response_path)],
+            cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
+    return _load(response_path.read_bytes())
+
+
+def _recheck_cached_dataset_mounts(package_bytes, recipe_files, dataset_manifests, arm_ids):
+    """Re-run only the packaged manifest resolver for each cached use."""
+    if not arm_ids:
+        return {}, []
+    errors = []
+    try:
+        with tempfile.TemporaryDirectory(prefix="molgap-release-mount-") as temporary:
+            workspace = Path(temporary)
+            source = workspace / "source"
+            source.mkdir()
+            _unpack(Path("."), source, archive_bytes=package_bytes["source.tar.gz"])
+            bindings = []
+            for arm_id in arm_ids:
+                try:
+                    if arm_id not in dataset_manifests or arm_id not in recipe_files:
+                        raise ValueError("Current dataset manifest or recipe binding is missing")
+                    recipe_path = _under(source, _relative(recipe_files[arm_id]))
+                    recipe = json.loads(_regular(recipe_path).read_bytes())
+                    if recipe.get("format") != "molgap-family-training-recipe-v1":
+                        raise ValueError("Packaged recipe no longer declares a family dataset")
+                    bindings.append({"arm_id": arm_id,
+                        "path": str(_regular(Path(dataset_manifests[arm_id]).absolute())),
+                        "recipe_path": str(recipe_path)})
+                except Exception as exc:
+                    errors.append(_release_error("dataset_mount_resolution", arm_id, exc))
+            checks = {}
+            if bindings:
+                result = _run_release_import_worker(workspace, {
+                    "mode": "release-imports", "source_root": str(source),
+                    "modules": [], "pickle_globals": [], "initializations": [],
+                    "dataset_manifests": bindings,
+                    "dependency_paths": sorted({sysconfig.get_path("purelib"), sysconfig.get_path("platlib")}),
+                })
+                checks = result["dataset_checks"]
+                errors.extend(result["errors"])
+            return checks, errors
+    except Exception as exc:
+        return {}, errors + [_release_error("dataset_mount_resolution", arm_id, exc)
+                             for arm_id in arm_ids]
+
+
+from contextlib import contextmanager
+from contextvars import ContextVar
+
+_ACTIVE_CONTENT_VERIFICATION: ContextVar["_ReleaseContentVerification | None"] = ContextVar(
+    "_ACTIVE_CONTENT_VERIFICATION", default=None)
+
+
+class _ReleaseContentVerification:
+    """One caller-owned transaction; persisted reports never seed this cache."""
+
+    def __init__(self):
+        self.results = {}
+
+
+@contextmanager
+def _shared_release_verification():
+    token = _ACTIVE_CONTENT_VERIFICATION.set(_ReleaseContentVerification())
+    try:
+        yield _ACTIVE_CONTENT_VERIFICATION.get()
+    finally:
+        _ACTIVE_CONTENT_VERIFICATION.reset(token)
+
+
+def _release_content_key(package_bytes, recipe_files, initial_states,
+                         required_modules, pickle_inputs, dataset_manifests, *, final_release):
+    def hashes(values):
+        return {name: _file_sha(_regular(Path(path).absolute()))
+                for name, path in values.items()}
+    return _sha(_canonical({
+        "package": {name: _sha(raw) for name, raw in package_bytes.items()},
+        "recipe_files": dict(recipe_files), "initial_states": hashes(initial_states),
+        "required_modules": sorted(required_modules),
+        "pickle_inputs": [_file_sha(_regular(Path(path).absolute())) for path in pickle_inputs],
+        "dataset_manifests": hashes(dataset_manifests or {}),
+        "final_release": bool(final_release and set(dataset_manifests or {}) != set(recipe_files)),
+    }))
 
 
 def check_release_inputs(spec, package_dir, *, expected_package_identity,
                          recipe_files, initial_states, required_modules,
                          pickle_inputs=(), entry_script=None, input_root=None,
-                         launch_config=None, kernel_metadata=None, _verification=None):
+                         launch_config=None, kernel_metadata=None, dataset_manifests=None,
+                         _verification=None, _content_verification=None):
     """Collect source/recipe/serialization/init defects before platform publication.
 
     Only caller-selected trusted training shards are inspected. Pickle opcodes
-    are read, never executed. Selected modules are imported in the existing
-    package-only CPU bootstrap. New shared interfaces additionally construct a CPU
-    model to check initialization keys/shape/dtype; no forward pass is executed.
+    are read, never executed. The package-only CPU bootstrap checks selected
+    imports and frozen initialization, including a synthetic model probe when
+    the packaged family exposes it. No real data or accelerator is consumed.
     """
     import ast
     import pickletools
@@ -770,102 +963,180 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     if launch_config is not None or kernel_metadata is not None:
         inputs.update(launch_config=str(Path(launch_config).absolute()) if launch_config else None,
                       kernel_metadata=str(Path(kernel_metadata).absolute()) if kernel_metadata else None)
+    if dataset_manifests is not None:
+        inputs["dataset_manifests"] = {arm: str(Path(path).absolute())
+                                       for arm, path in dataset_manifests.items()}
 
     def check(kind, item, operation):
         try:
             checked[f"{kind}:{item}"] = operation()
         except Exception as exc:
-            errors.append({"check": kind, "item": item, "message": str(exc)})
+            errors.append(_release_error(kind, item, exc))
 
     modules = set(required_modules)
     pickle_globals = set()
     family_initializations = []
+    dataset_bindings = []
+    inspected_initializations = {}
     if not modules:
         errors.append({"check": "import", "item": "required_modules", "message": "Declare the family loader/trainer modules"})
-    with tempfile.TemporaryDirectory(prefix="molgap-release-") as temporary:
-        workspace = Path(temporary)
-        source = workspace / "source"
-        source.mkdir()
-        _unpack(package, source, archive_bytes=package_bytes["source.tar.gz"])
-        for path in source.rglob("*.py"):
-            check("syntax", path.relative_to(source).as_posix(),
-                  lambda p=path: bool(ast.parse(p.read_bytes(), filename=str(p))))
-        for arm_id, arm in arms.items():
-            def recipe(a=arm_id, declaration=arm):
-                if a not in recipe_files:
-                    raise ValueError("Missing packaged recipe binding")
-                p = _under(source, _relative(recipe_files[a]))
-                observed = _file_sha(_regular(p))
-                if observed != declaration["training"]["recipe"]["sha256"]:
-                    raise ValueError(f"Recipe SHA differs from packaged LF bytes: {observed}")
-                return observed
-            check("recipe", arm_id, recipe)
-            if arm["initialization"]["state_sha256"] is not None:
-                def initialization(a=arm_id, declaration=arm):
-                    if a not in initial_states:
-                        raise ValueError("Missing frozen initialization artifact; a constructor seed is insufficient")
-                    p = _regular(Path(initial_states[a]).absolute())
-                    result = inspect_frozen_state_artifact(p,
-                        expected_state_sha256=declaration["initialization"]["state_sha256"])
-                    if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
+    memo = _content_verification
+    if memo is None:
+        memo = _ACTIVE_CONTENT_VERIFICATION.get()
+    if memo is not None and type(memo) is not _ReleaseContentVerification:
+        raise TypeError("Expected caller-owned release content verification")
+    key = (_release_content_key(package_bytes, recipe_files, initial_states,
+        required_modules, pickle_inputs, dataset_manifests,
+        final_release=launch_config is not None or entry_script is not None) if memo is not None else None)
+    cached = memo.results.get(key) if memo is not None else None
+    if cached is not None:
+        from copy import deepcopy
+        checked = deepcopy(cached)
+        cached_mounts = [arm_id for arm_id in arms
+                         if f"dataset_mount_resolution:{arm_id}" in checked]
+        if cached_mounts:
+            mount_checks, mount_errors = _recheck_cached_dataset_mounts(
+                package_bytes, recipe_files, dataset_manifests or {}, cached_mounts)
+            for arm_id in cached_mounts:
+                check_name = f"dataset_mount_resolution:{arm_id}"
+                if arm_id in mount_checks:
+                    checked[check_name] = mount_checks[arm_id]
+                else:
+                    checked.pop(check_name, None)
+            errors.extend(mount_errors)
+            if not mount_errors:
+                memo.results[key] = deepcopy(checked)
+        if input_root:
+            for arm_id, supplied in initial_states.items():
+                def mounted(p=Path(supplied).absolute()):
+                    if not p.resolve().is_relative_to(Path(input_root).resolve()):
                         raise ValueError("Initialization is outside the staged input root")
-                    if (declaration["family"]["name"], declaration["family"]["version"]) in {
-                            ("neural_atom_k1", "3"), ("gptrans_t", "2")}:
-                        modules.update({"molgap.family_training_runner", "molgap.family_training_kernel"})
-                        family_initializations.append({"arm_id": a,
-                            "path": str(p), "recipe_path": str(_under(source, _relative(recipe_files[a])))})
-                    return result
-                check("initialization", arm_id, initialization)
-        for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states)):
-            for unknown in set(supplied) - set(arms):
-                errors.append({"check": kind, "item": unknown, "message": "Unknown arm"})
-        for path in pickle_inputs:
-            def serialization(p=Path(path).absolute()):
-                with zipfile.ZipFile(_regular(p)) as archive:
-                    members = [m for m in archive.infolist() if m.filename.endswith("/data.pkl")]
-                    if len(members) != 1 or members[0].file_size > 128 * 1024 * 1024:
-                        raise ValueError("Expected one bounded PyTorch data.pkl")
-                    globals_seen = []
-                    for opcode, arg, _ in pickletools.genops(archive.read(members[0])):
-                        if opcode.name == "STACK_GLOBAL":
-                            raise ValueError("STACK_GLOBAL dependency inspection unsupported; use owning loader preflight")
-                        if opcode.name == "GLOBAL":
-                            name, symbol = arg.split(" ", 1)
-                            if name == "molgap" or name.startswith("molgap."):
-                                modules.add(name)
-                                pickle_globals.add((name, symbol))
-                                globals_seen.append(f"{name}.{symbol}")
-                    return {"file_sha256": _file_sha(p), "globals": sorted(set(globals_seen))}
-            check("pickle_dependencies", str(path), serialization)
-        for name in sorted(modules):
-            def present(n=name):
-                if not re.fullmatch(r"molgap(?:\.[A-Za-z_]\w*)*", n):
-                    raise ValueError("Only selected molgap modules are supported")
-                base = source / "src" / Path(*n.split("."))
-                if not base.with_suffix(".py").is_file() and not (base / "__init__.py").is_file():
-                    raise ValueError("Required module is absent from frozen source package")
-                return True
-            check("module", name, present)
-        if not any(e["check"] in {"syntax", "module"} for e in errors):
-            def imports():
-                bootstrap = workspace / "bootstrap.py"
-                shutil.copyfile(Path(__file__), bootstrap)
-                request, response = workspace / "request.json", workspace / "response.json"
-                _atomic(request, {"mode": "release-imports", "source_root": str(source),
-                    "modules": sorted(modules), "pickle_globals": sorted(pickle_globals),
-                    "initializations": family_initializations, "dependency_paths": sorted({
-                        sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
-                env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
-                env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
-                with (workspace / "worker.log").open("wb") as log:
-                    subprocess.run([sys.executable, "-I", "-S", str(bootstrap), str(request), str(response)],
-                        cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
-                result = _load(response.read_bytes())
-                errors.extend(result["errors"])
-                for arm_id, report in result.get("initialization_checks", {}).items():
-                    checked[f"family_initialization:{arm_id}"] = report
-                return result["import_origins"]
-            check("clean_import", "package", imports)
+                    return checked.get(f"initialization:{arm_id}")
+                check("initialization", arm_id, mounted)
+    with tempfile.TemporaryDirectory(prefix="molgap-release-") as temporary:
+        if cached is None:
+            workspace = Path(temporary)
+            source = workspace / "source"
+            source.mkdir()
+            _unpack(package, source, archive_bytes=package_bytes["source.tar.gz"])
+            for path in source.rglob("*.py"):
+                check("syntax", path.relative_to(source).as_posix(),
+                      lambda p=path: bool(ast.parse(p.read_bytes(), filename=str(p))))
+            for arm_id, arm in arms.items():
+                def recipe(a=arm_id, declaration=arm):
+                    if a not in recipe_files:
+                        raise ValueError("Missing packaged recipe binding")
+                    p = _under(source, _relative(recipe_files[a]))
+                    observed = _file_sha(_regular(p))
+                    if observed != declaration["training"]["recipe"]["sha256"]:
+                        raise ValueError(f"Recipe SHA differs from packaged LF bytes: {observed}")
+                    return observed
+                check("recipe", arm_id, recipe)
+                def dataset_binding(a=arm_id, declaration=arm):
+                    family = (declaration["family"]["name"], declaration["family"]["version"])
+                    # Modern2D also uses family_training_runner as a neutral
+                    # execution owner, but its indexed input is not a fixed
+                    # family-training dataset mount.
+                    if family not in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
+                        return None
+                    if a not in recipe_files:
+                        return None
+                    recipe_path = _under(source, _relative(recipe_files[a]))
+                    record = json.loads(_regular(recipe_path).read_bytes())
+                    if record.get("format") != "molgap-family-training-recipe-v1":
+                        return None
+                    supplied = (dataset_manifests or {}).get(a)
+                    if supplied is None:
+                        if launch_config is not None or entry_script is not None:
+                            raise ValueError("Final family release requires a pinned dataset manifest binding")
+                        return None
+                    path = _regular(Path(supplied).absolute())
+                    if _file_sha(path) != record["dataset"]["manifest_sha256"]:
+                        raise ValueError("Release dataset manifest differs from frozen recipe")
+                    modules.add("molgap.family_training_data")
+                    dataset_bindings.append({"arm_id": a, "path": str(path),
+                                             "recipe_path": str(recipe_path)})
+                    return _file_sha(path)
+                check("dataset_manifest", arm_id, dataset_binding)
+                if arm["initialization"]["state_sha256"] is not None:
+                    def initialization(a=arm_id, declaration=arm):
+                        if a not in initial_states:
+                            raise ValueError("Missing frozen initialization artifact; a constructor seed is insufficient")
+                        p = _regular(Path(initial_states[a]).absolute())
+                        state_key = (p.resolve(), declaration["initialization"]["state_sha256"])
+                        if state_key not in inspected_initializations:
+                            inspected_initializations[state_key] = inspect_frozen_state_artifact(p,
+                                expected_state_sha256=state_key[1])
+                        result = inspected_initializations[state_key]
+                        if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
+                            raise ValueError("Initialization is outside the staged input root")
+                        if (declaration["family"]["name"], declaration["family"]["version"]) in {
+                                ("neural_atom_k1", "2"), ("neural_atom_k1", "3"), ("gptrans_t", "2")}:
+                            modules.update({"molgap.k1_screen_training", "molgap.v4_runtime"})
+                            family_initializations.append({"arm_id": a,
+                                "family": [declaration["family"]["name"], declaration["family"]["version"]],
+                                "path": str(p), "recipe_path": str(_under(source, _relative(recipe_files[a])))})
+                        return result
+                    check("initialization", arm_id, initialization)
+            for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states),
+                                   ("dataset_manifest", dataset_manifests or {})):
+                for unknown in set(supplied) - set(arms):
+                    errors.append({"check": kind, "item": unknown, "message": "Unknown arm"})
+            for path in pickle_inputs:
+                def serialization(p=Path(path).absolute()):
+                    with zipfile.ZipFile(_regular(p)) as archive:
+                        members = [m for m in archive.infolist() if m.filename.endswith("/data.pkl")]
+                        if len(members) != 1 or members[0].file_size > 128 * 1024 * 1024:
+                            raise ValueError("Expected one bounded PyTorch data.pkl")
+                        globals_seen = []
+                        for opcode, arg, _ in pickletools.genops(archive.read(members[0])):
+                            if opcode.name == "STACK_GLOBAL":
+                                raise ValueError("STACK_GLOBAL dependency inspection unsupported; use owning loader preflight")
+                            if opcode.name == "GLOBAL":
+                                name, symbol = arg.split(" ", 1)
+                                if name == "molgap" or name.startswith("molgap."):
+                                    modules.add(name)
+                                    pickle_globals.add((name, symbol))
+                                    globals_seen.append(f"{name}.{symbol}")
+                        return {"file_sha256": _file_sha(p), "globals": sorted(set(globals_seen))}
+                check("pickle_dependencies", str(path), serialization)
+            for name in sorted(modules):
+                def present(n=name):
+                    if not re.fullmatch(r"molgap(?:\.[A-Za-z_]\w*)*", n):
+                        raise ValueError("Only selected molgap modules are supported")
+                    base = source / "src" / Path(*n.split("."))
+                    if not base.with_suffix(".py").is_file() and not (base / "__init__.py").is_file():
+                        raise ValueError("Required module is absent from frozen source package")
+                    return True
+                check("module", name, present)
+            if not any(e["check"] in {"syntax", "module"} for e in errors):
+                def imports():
+                    bootstrap = workspace / "bootstrap.py"
+                    shutil.copyfile(Path(__file__), bootstrap)
+                    request, response = workspace / "request.json", workspace / "response.json"
+                    _atomic(request, {"mode": "release-imports", "source_root": str(source),
+                        "modules": sorted(modules), "pickle_globals": sorted(pickle_globals),
+                        "initializations": family_initializations, "dataset_manifests": dataset_bindings,
+                        "dependency_paths": sorted({
+                            sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
+                    env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
+                    env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+                    with (workspace / "worker.log").open("wb") as log:
+                        subprocess.run([sys.executable, "-I", "-S", str(bootstrap), str(request), str(response)],
+                            cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
+                    result = _load(response.read_bytes())
+                    errors.extend(result["errors"])
+                    for arm_id, report in result.get("initialization_checks", {}).items():
+                        checked[f"family_initialization:{arm_id}"] = report
+                    for arm_id, report in result.get("dataset_checks", {}).items():
+                        checked[f"dataset_mount_resolution:{arm_id}"] = report
+                    for arm_id, report in result.get("output_io_checks", {}).items():
+                        checked[f"family_output_io:{arm_id}"] = report
+                    return result["import_origins"]
+                check("clean_import", "package", imports)
+            if memo is not None and not errors:
+                from copy import deepcopy
+                memo.results[key] = deepcopy(checked)
     if entry_script:
         check("entry_script", "kernel", lambda: _file_sha(_regular(Path(entry_script).absolute())))
     if launch_config is not None or kernel_metadata is not None:

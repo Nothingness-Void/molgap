@@ -11,10 +11,14 @@ import math
 import os
 import signal
 import sys
+import threading
 import time
 
-from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
-from .family_training_recipe import FamilyRecipe
+from .experiment_family_workflow import (
+    DATA_OPEN_FILE, DATA_OPEN_FORMAT, RunContext, _artifact_path, _check_context, _digest, _json, _text,
+    tensor_digest,
+)
+from .family_training_recipe import FamilyRecipe, MODES
 from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
@@ -41,7 +45,7 @@ def _formal_pause_deadline():
     return deadline
 
 
-def _recipe_configuration(record):
+def _recipe_configuration(record, *, _frozen_read=False):
     if "initial_development_check" in record:
         check = record["initial_development_check"]
         if (type(check) is not dict or set(check) != {"prediction_tolerance_eV", "mae_tolerance_eV"}
@@ -57,7 +61,22 @@ def _recipe_configuration(record):
         from .family_execution_profile import ProfileConfig
         ProfileConfig.from_dict(record["profiling"])
     return FamilyRecipe.from_dict({key: value for key, value in record.items()
-        if key not in METADATA | OPTIONAL_METADATA})
+        if key not in METADATA | OPTIONAL_METADATA}, _frozen_read=_frozen_read)
+
+
+def _objective_binding(family, gradient_clip, mode):
+    return {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
+        "mode": mode, "family": family, "gradient_clip": gradient_clip})}
+
+
+def comparison_objective_identity(arm, recipe):
+    """Project equivalent reference/composed default-loss declarations."""
+    objective = arm["training"]["objective"]
+    fields = recipe if isinstance(recipe, dict) else vars(recipe)
+    family, clip, mode = (fields[key] for key in ("family", "gradient_clip", "mode"))
+    if mode in {"reference", "composed"} and objective == _objective_binding(family, clip, mode):
+        return _objective_binding(family, clip, "reference")["sha256"]
+    return objective["sha256"]
 
 
 def family_arm_bindings(recipe):
@@ -74,9 +93,8 @@ def family_arm_bindings(recipe):
             "algorithm": recipe.sampler, "seed": recipe.seed, "rows": recipe.train_rows, "drop_last": recipe.drop_last})},
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
-        "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode,
-            "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
+        "objective": _objective_binding(recipe.family, recipe.gradient_clip,
+            mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode)}
 
 
 def _requirements(recipe, source_idx_sha256, target_sha256):
@@ -98,7 +116,8 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
                         target_sha256=None, train_role_identity=None, development_role_identity=None,
                         logging=None):
     from .training_logging import TrainingLogPolicy
-    if type(configuration) is not FamilyRecipe or family != configuration.interface or mode != configuration.mode:
+    if (type(configuration) is not FamilyRecipe or configuration._frozen_read
+            or family != configuration.interface or mode != configuration.mode):
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
     if configuration.clean_bn is not None and configuration.clean_bn.training_role_identity != train_role_identity:
@@ -112,15 +131,15 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
         "logging": TrainingLogPolicy.from_dict(logging).to_dict()}
 
 
-def read_recipe(path):
-    return parse_recipe_record(_json(Path(path)))
+def read_recipe(path, *, _frozen_read=False):
+    return parse_recipe_record(_json(Path(path)), _frozen_read=_frozen_read)
 
 
-def parse_recipe_record(record):
+def parse_recipe_record(record, *, _frozen_read=False):
     """Validate the same recipe from a file or verified immutable package bytes."""
     if not METADATA <= set(record):
         raise ValueError("Shared contract lacks frozen acceptance/role bindings")
-    recipe = _recipe_configuration(record)
+    recipe = _recipe_configuration(record, _frozen_read=_frozen_read)
     requirements = record["acceptance_requirements"]
     if type(requirements) is not dict:
         raise ValueError("Invalid shared acceptance requirements")
@@ -244,6 +263,92 @@ def _assert_target_statistics(recipe, data):
         )
 
 
+_DATA_OPEN = {"installed": False, "bases": (), "files": None, "path": None,
+              "document": None, "pid": None}
+_DATA_OPEN_LOCK = threading.Lock()
+_DATA_OPEN_BUSY = threading.local()
+_DATA_OPEN_FAMILIES = frozenset(("neural_atom_k1", "gptrans_t"))
+
+
+def _observe_data_open(event, args):
+    """Observe Python-level dataset opens without changing the open operation."""
+    state = _DATA_OPEN
+    if (event != "open" or not state["bases"] or getattr(_DATA_OPEN_BUSY, "on", False)
+            or os.getpid() != state["pid"]):
+        return
+    target = args[0] if args else None
+    if not isinstance(target, (str, bytes, os.PathLike)):
+        return
+    try:
+        absolute = os.path.abspath(os.fsdecode(target))
+    except (TypeError, ValueError, OSError):
+        return
+    for base in state["bases"]:
+        if os.path.normcase(absolute).startswith(os.path.normcase(base)):
+            relative = absolute[len(base):].replace(os.sep, "/")
+            break
+    else:
+        return
+    _DATA_OPEN_BUSY.on = True
+    try:
+        with _DATA_OPEN_LOCK:
+            if relative not in state["files"]:
+                state["files"].append(relative)
+                atomic_json(state["path"], state["document"])
+    finally:
+        _DATA_OPEN_BUSY.on = False
+
+
+def _begin_data_open_record(root, input_root, selection, context):
+    """Start an append-only record of dataset files opened by this Python process.
+
+    The audit intentionally covers only Python-level opens in the worker process;
+    native code, child processes and network reads remain outside its claim.
+    """
+    from .family_training_data import resolve_pinned_manifest
+    from .pcqm_fixed_records import graph_records
+    manifest_path = resolve_pinned_manifest(Path(input_root), selection)
+    manifest = _json(manifest_path)
+    records = graph_records(manifest, selection.manifest_sha256)
+    path = Path(root) / DATA_OPEN_FILE
+    if path.is_file():
+        document = _json(path)
+        _check_context(document.get("context"), context)
+        if (document.get("format") != DATA_OPEN_FORMAT
+                or document.get("dataset_manifest_sha256") != selection.manifest_sha256):
+            raise ValueError("Retained data-open record differs from this run")
+    else:
+        document = {
+            "format": DATA_OPEN_FORMAT,
+            "context": context.to_dict(),
+            "dataset_manifest_sha256": selection.manifest_sha256,
+            "manifest": manifest_path.name,
+            "manifest_protected_role_flags": {
+                name: manifest.get(name) for name in (
+                    "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")},
+            "shards": [{"file": item["file"], "role": item["role"], "sha256": item["sha256"]}
+                       for item in records],
+            "invocations": [],
+        }
+    opened = []
+    document["invocations"].append({
+        "had_checkpoint": (Path(root) / "last_checkpoint.pt").is_file(),
+        "opened": opened,
+    })
+    directory = manifest_path.parent
+    bases = {str(directory.absolute()) + os.sep, str(directory.resolve()) + os.sep}
+    atomic_json(path, document)
+    _DATA_OPEN.update(bases=tuple(sorted(bases)), files=opened, path=path,
+                     document=document, pid=os.getpid())
+    if not _DATA_OPEN["installed"]:
+        sys.addaudithook(_observe_data_open)
+        _DATA_OPEN["installed"] = True
+
+
+def _end_data_open_record():
+    _DATA_OPEN["bases"] = ()
+
+
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
                training_only=False, cost_root=None, formal_training=None, authority_path=None):
@@ -298,6 +403,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         torch.set_num_threads(tuning.cpu_threads)
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
+    if cost_root is not None and recipe.family in _DATA_OPEN_FAMILIES:
+        _begin_data_open_record(Path(cost_root).absolute(), input_root, selection, context)
     data = load_training_data(Path(input_root), selection)
     if recipe.formal_interface:
         formal_training.validate_loaded_data(recipe, data, training_only=training_only)
@@ -550,7 +657,8 @@ def _run_screen_preflight(prepared, *, output, options, device="cuda", qualifica
             source_idx_path=output / "execution-evaluation-source-idx.pt")
         _verify_execution_proof(output, probe, execution_proof, required=True)
     resource = None
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+    resource_required = mode_policy(recipe.family, recipe.mode).qualify_resources is not None
+    if resource_required:
         resource = mode_policy(recipe.family, recipe.mode).qualify_resources(recipe, data, tuning, Path(options["initial_state_path"]))
         atomic_json(output / "resource_qualification.json", resource)
     atomic_json(output / "runtime_provenance.json", provenance)
@@ -826,7 +934,8 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     if certificate.get("status") != "accepted":
         raise ValueError("Native preflight certificate is not accepted")
-    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+    if ((not recipe._frozen_read or recipe.mode in MODES[recipe.family])
+            and mode_policy(recipe.family, recipe.mode).qualify_resources is not None):
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
             raise ValueError("Missing or changed native resource qualification")
@@ -891,7 +1000,7 @@ def inspect_retained_native_qualification(directory, *, recipe_path, provenance,
     from .research_memory.paths import repo_local_path
     root = Path(directory).absolute()
     _safe_local(root)
-    record, recipe = read_recipe(recipe_path)
+    record, recipe = read_recipe(recipe_path, _frozen_read=True)
     _check_context(provenance.get("context"), context)
     if (normalized_source_sha256(Path(recipe_path)) != context.training_recipe_sha256
             or provenance.get("recipe_identity") != recipe.identity):
@@ -1222,6 +1331,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         try:
             session.close()
         finally:
+            _end_data_open_record()
             signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began
     total = _finish_cost_interval(root, context, prior_cost, elapsed)

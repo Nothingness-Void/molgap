@@ -22,6 +22,10 @@ class Missing(Exception):
     status = 404
 
 
+class Denied(Exception):
+    response = NS(status_code=403, headers=None)
+
+
 class Response:
     def __init__(self, payload=None, content=b""):
         self.payload, self.content = payload, content
@@ -173,6 +177,10 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
 
         dataset_version = 1
         predecessor_status = "RUNNING"
+        denied = 0  # upcoming dataset_status calls that answer 403
+
+        def __init__(self):
+            self.slept = []
 
         def get_config_value(self, _name):
             return metadata["id"].split("/", 1)[0]
@@ -180,7 +188,13 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
         def dataset_status(self, ref):
             if not self.dataset:
                 raise Missing()
+            if self.denied > 0:
+                self.denied -= 1
+                raise Denied()
             return "ready" if self.ready else "processing"
+
+        def dataset_list(self, mine, page):
+            return [NS(ref=dataset_ref)]
 
         def dataset_create_new(self, path, **kwargs):
             assert kwargs == dict(public=False, quiet=True, convert_to_csv=False, dir_mode="zip")
@@ -212,6 +226,10 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
             return self.owned_kernels
 
     api = Api()
+    clock = [0.0]
+    monkeypatch.setattr(owner, "_poll_clock", lambda: clock[0])
+    monkeypatch.setattr(owner, "_poll_sleep", lambda seconds: (
+        api.slept.append(seconds), clock.__setitem__(0, clock[0] + seconds)))
     sdk = NS(requests=[], responses=[], client_exits=[])
     signed_payloads = {}
 
@@ -422,11 +440,15 @@ print(json.dumps(summary))
     assert observation["lifecycle"]["status"] == "COMPLETE"
 
 
-def test_source_processing_resumes_without_second_create(release):
+@pytest.mark.parametrize("forbidden", [False, True], ids=["processing", "forbidden"])
+def test_source_processing_resumes_without_second_create(release, forbidden):
     release.api.ready = False
-    assert release.run()["status"] == "WAIT_SOURCE_READY"
+    release.api.denied = float("inf") if forbidden else 0
+    assert release.run()["status"] == ("RECONCILIATION_REQUIRED" if forbidden else "WAIT_SOURCE_READY")
     assert release.api.created == 1 and release.api.pushed == 0
-    release.api.ready = True
+    assert sum(release.api.slept) == owner.SOURCE_POLL_BUDGET_SECONDS
+    assert json.loads((release.output / "submission_state.json").read_bytes())["phase"] == "SOURCE_PENDING"
+    release.api.ready, release.api.denied = True, 0
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
 

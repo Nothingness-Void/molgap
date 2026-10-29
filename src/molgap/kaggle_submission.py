@@ -14,7 +14,7 @@ import json
 import math
 import os
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 from urllib.parse import quote
 
 from .experiment_family_workflow import _json
@@ -97,10 +97,42 @@ def _exclusive(output):
         lock.unlink()
 
 
-def _roundtrip_source(api, http, staged, remote, ref, *, expected_version=1):
+SOURCE_POLL_FIRST_SECONDS, SOURCE_POLL_MAX_SECONDS, SOURCE_POLL_BUDGET_SECONDS = 5, 60, 300
+_poll_sleep, _poll_clock = sleep, perf_counter
+
+
+def _poll_source_ready(api, dataset):
+    """Poll a newly published source inside one bounded submit call.
+
+    A short-lived missing/forbidden status is transport lag, not permission to
+    publish a duplicate version. Persistent forbidden status is returned to the
+    caller for reconciliation after the bounded budget expires.
+    """
+    began, delay = _poll_clock(), SOURCE_POLL_FIRST_SECONDS
+    while True:
+        forbidden = None
+        try:
+            status = _dataset_status(api, dataset)
+        except RuntimeError as error:
+            detail = getattr(error, "platform_error", None)
+            if not isinstance(detail, dict) or detail.get("http_status") != 403:
+                raise
+            status, forbidden = None, detail
+        remaining = SOURCE_POLL_BUDGET_SECONDS - (_poll_clock() - began)
+        if (status or {}).get("status") == "ready" or remaining <= 0:
+            return status, forbidden
+        _poll_sleep(min(delay, remaining))
+        delay = min(delay * 2, SOURCE_POLL_MAX_SECONDS)
+
+
+def _roundtrip_source(api, http, staged, remote, ref, *, version=1, expected_version=None):
     """Reuse the bounded hash-checking transport; never download graph datasets."""
     from .kaggle_output_retrieval import _download_selected
-    if type(expected_version) is not int or expected_version < 1:
+    if expected_version is not None:
+        if version != 1 and version != expected_version:
+            raise ValueError("Source roundtrip version aliases disagree")
+        version = expected_version
+    if type(version) is not int or version < 1:
         raise ValueError("Source roundtrip requires an explicit positive version")
     expected = {}
     for path in staged.rglob("*"):
@@ -110,7 +142,7 @@ def _roundtrip_source(api, http, staged, remote, ref, *, expected_version=1):
     status = _dataset_status(api, ref)
     details = _dataset_details(api, ref)
     if (not isinstance(status, dict) or status.get("status") != "ready"
-            or type(details.current_version_number) is not int or details.current_version_number != expected_version):
+            or type(details.current_version_number) is not int or details.current_version_number != version):
         raise ValueError("Source dataset must be ready at its pinned immutable version")
     listing = api.dataset_list_files(ref, page_size=100)
     files = listing.files
@@ -137,18 +169,18 @@ def _roundtrip_source(api, http, staged, remote, ref, *, expected_version=1):
         if callable(getattr(api, "build_kaggle_client", None)):
             from .common.kaggle import dataset_file_url
             import requests
-            url = dataset_file_url(api, ref, name, expected_version)
+            url = dataset_file_url(api, ref, name, version)
             # Never forward account Basic auth to a signed storage URL.
             with requests.Session() as anonymous:
                 _download_selected(urls={name: url}, required={name: (name, item["sha256"])},
                                    destination=remote, http_session=anonymous)
         else:
-            url = "https://www.kaggle.com/api/v1/datasets/download/" + ref + "/" + quote(name, safe="") + "?datasetVersionNumber=" + str(expected_version)
+            url = "https://www.kaggle.com/api/v1/datasets/download/" + ref + "/" + quote(name, safe="") + "?datasetVersionNumber=" + str(version)
             _download_selected(urls={name: url}, required={name: (name, item["sha256"])},
                                destination=remote, http_session=http)
     with ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(download, records))
-    return {"status": "REMOTE_SOURCE_BYTES_VERIFIED", "dataset": ref, "version": expected_version, "files": records}
+    return {"status": "REMOTE_SOURCE_BYTES_VERIFIED", "dataset": ref, "version": version, "files": records}
 
 
 def _verify_remote_kernel(remote, response, metadata, entry):
@@ -156,7 +188,8 @@ def _verify_remote_kernel(remote, response, metadata, entry):
         raise ValueError("Submitted kernel is not yet observable")
     m = remote.metadata
     payload = remote.blob.source.encode("utf-8")
-    if (type(response.get("kernel_id")) is not int or response["kernel_id"] <= 0
+    if (response.get("kernel") != metadata["id"]
+            or type(response.get("kernel_id")) is not int or response["kernel_id"] <= 0
             or type(response.get("version_number")) is not int or response["version_number"] <= 0
             or m.id != response["kernel_id"] or m.current_version_number != response["version_number"]
             or not m.is_private or not m.enable_gpu or m.machine_shape != "NvidiaTeslaT4"
@@ -269,7 +302,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              reconcile_retired_push=False, reconcile_sdk_transport=False,
                              recovery_authority=None, recovery_authority_sha256=None,
                              source_version=1, kernel_version=1,
-                             _verification=None):
+                             _content_verification=None, _verification=None):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
     _safe_local(prepared)
@@ -427,6 +460,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             _check_scientific_release(spec, package, staged, authority, manifest)
         _verify_release_report(prepared / "release_report.json", kernel / "run.py", _verification=verification)
         return {"status": "READY_FOR_PLATFORM_OPERATIONS", "binding": binding, "submitted": False}
+    from .experiment_preflight import _ACTIVE_CONTENT_VERIFICATION, _ReleaseContentVerification
+    content_verification = (
+        _content_verification
+        or _ACTIVE_CONTENT_VERIFICATION.get()
+        or _ReleaseContentVerification()
+    )
     output.mkdir(parents=True, exist_ok=True)
     with _exclusive(output):
         _bind_operation_directory(prepared, output, binding, publish=True)
@@ -514,7 +553,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 _check_scientific_release(spec, package, staged, authority, manifest)
             try:
                 _verify_release_report(prepared / "release_report.json", kernel / "run.py",
-                                       _verification=verification)
+                                       _content_verification=content_verification, _verification=verification)
             except ReleaseRecheckError as error:
                 retain_release_failure(error, state["phase"])
                 raise
@@ -560,14 +599,20 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN",
                             "submitted": False, "platform_error": detail}
                 save("SOURCE_PUBLISHED")
-                source_status = _dataset_status(api, dataset)
+                source_status, source_forbidden = _poll_source_ready(api, dataset)
             elif state["phase"] == "NEW":
                 raise ValueError("Source dataset already exists; use its owning publication journal")
+            else:
+                source_forbidden = None
+            if source_status is None and source_forbidden is not None:
+                save("SOURCE_PENDING", source_poll_error=source_forbidden)
+                return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_PENDING",
+                        "submitted": False, "platform_error": source_forbidden}
             if not source_status or source_status.get("status") != "ready":
                 save("SOURCE_PENDING")
                 return {"status": "WAIT_SOURCE_READY", "submitted": False}
             proof = _roundtrip_source(api, http_session, staged, output / "source_roundtrip", dataset,
-                                      expected_version=source_version)
+                                      version=source_version)
             atomic_json(output / "source_upload_verification.json", proof)
             from .experiment_preflight import check_release_inputs
             prior = _json(prepared / "release_report.json")
@@ -581,8 +626,10 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     recipe_files=prior["inputs"]["recipe_files"], required_modules=prior["inputs"]["required_modules"],
                     pickle_inputs=prior["inputs"].get("pickle_inputs", ()),
                     initial_states={arm: remote_root / relative for arm, relative in initial_paths.items()},
+                    dataset_manifests=prior["inputs"].get("dataset_manifests"),
                     input_root=remote_root, entry_script=kernel / "run.py", launch_config=remote_root / "experiment_launch.json",
                     kernel_metadata=kernel / "kernel-metadata.json",
+                    _content_verification=content_verification,
                     _verification=verification)
             except OSError as cause:
                 error = ReleaseRecheckError.from_io(cause, expected_report=prior)
@@ -613,6 +660,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             try:
                 response = push_kernel_with_accelerator(package_dir=kernel, credential_path=Path(credentials),
                     accelerator="NvidiaTeslaT4", release_report_path=output / "remote_release_report.json",
+                    _content_verification=content_verification,
                     _verification=verification,
                     _before_post=before_post, api=api)
             except ReleaseRecheckError as error:

@@ -9,7 +9,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from .experiment_family_workflow import (
-    OUTPUT_FORMAT, ROLES, StageRecorder, _artifact_path, _check_context, _costs, _digest,
+    DATA_OPEN_FILE, OUTPUT_FORMAT, ROLES, StageRecorder, _artifact_path, _check_context, _costs, _digest,
     _finite_tree, _inspect_predictions, _json, _runtime, tensor_digest,
     write_output_manifest, write_resume_state,
 )
@@ -552,6 +552,11 @@ class SessionOutputs:
             artifacts["predictions"] = "development_predictions.pt"
             if getattr(self.recipe.formal_training, "evaluation_every_steps", None) is not None:
                 artifacts["final_predictions"] = "final_development_predictions.pt"
+        # Bind the recorder's sidecar only when this worker created it for the
+        # current output root; an arbitrary file must never become evidence.
+        from .family_training_runner import _DATA_OPEN
+        if _DATA_OPEN["path"] == self.root / DATA_OPEN_FILE and (self.root / DATA_OPEN_FILE).is_file():
+            artifacts["data_open"] = DATA_OPEN_FILE
         artifacts["role_audit"] = "role_audit.json"
         native_names = ("runtime_certificate.json", "runtime_provenance.json")
         native_present = tuple((self.root / name).is_file() for name in native_names)
@@ -598,7 +603,10 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             raise ValueError("Artifact roles alias each other")
         if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Unpinned session contract")
-        contract, recipe = read_recipe(paths["contract"])
+        # A retained output may reference an addon retired from the active
+        # catalog.  It is parsed for identity/receipt checks only and never
+        # executed by this inspection path.
+        contract, recipe = read_recipe(paths["contract"], _frozen_read=True)
         if recipe.interface != (context.family_name, context.family_version):
             raise ValueError("Session contract family/version differs from context")
         if recipe.formal_interface:
@@ -629,6 +637,9 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             required_roles = required_roles | {"trace_context"}
             if artifacts["trace_context"]["path"] != artifacts["trace"]["path"] + ".context.json":
                 raise ValueError("Trace companion path differs from its bound trace")
+        if "data_open" in paths:
+            required_roles = required_roles | {"data_open"}
+            _check_context(_json(paths["data_open"]).get("context"), context)
         if set(paths) != required_roles | (set(paths) & optional_roles):
             raise ValueError("Artifact roles differ from selected data roles")
         _runtime(manifest["runtime"], context, "fp32")

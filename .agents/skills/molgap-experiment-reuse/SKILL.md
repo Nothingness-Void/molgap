@@ -1,84 +1,60 @@
 ---
 name: molgap-experiment-reuse
-description: Reuse MolGap experiment infrastructure when adding or changing runners, frozen-checkpoint diagnostics, packaging, submission preparation, acceptance, or RML closure. Select existing components before writing plumbing. Not for ordinary result reading or a healthy monitor tick.
+description: Reuse existing MolGap owners when changing trainers, packaging, submission preparation, acceptance or RML closure. Not needed for routine command execution or healthy monitoring.
 ---
 
 # MolGap experiment reuse
 
-Use the selected MolGap checkout and its project Python. Follow its
-[AGENTS](../../../AGENTS.md) and live state first. This skill routes implementation;
-it grants no training, inference, submission, retry, role access or promotion.
-Do not transfer custody of desktop jobs to server.
+Use the selected checkout and its project Python. Follow its `AGENTS.md` for
+ownership and authority. Reuse is not permission to train, retry, consume a
+protected role or promote a model.
 
-## Before writing plumbing
+## Choose the existing entry
 
-State a short reuse plan in the work update (not another evidence schema):
+| Task | Existing entry |
+| --- | --- |
+| Prepare/submit a registered Kaggle experiment | Platform skill's `platforms/kaggle/submit_workflow.py --experiment ...` |
+| Recover interrupted preparation | Same submitter with `--prepared ... --recover-prepared`; retain original identity |
+| Retrieve known Kaggle outputs | `platforms/kaggle/retrieve_family_outputs.py --all-arms`; it pins the receipt version's manifests itself |
+| Diagnose/accept a retrieved run | `platforms/local/accept_run.py`; run identity, reviewed closure input and `--strict` where applicable |
+| Local single-model exercise or closure | `platforms/local/train.py`; its `--accept-only` route handles local prepared runs |
+| IMS / SCNet workload | Its platform skill and existing adapter, not Kaggle's front door |
+| Change a model or Addon | Existing family trainer, catalog and output owners; read the applicable section of `docs/operations/EXPERIMENT_ADDON_GUIDE.md` |
 
-- **Task:** training, saved-artifact analysis, frozen-checkpoint inference,
-  execution-only profiling, or infrastructure maintenance.
-- **Reuse:** existing callable/CLI and the owning contract.
-- **Gap:** the exact unsupported behavior and smallest new adapter/hook.
-- **Check:** focused static/synthetic tests and the authorized execution boundary.
+Routine use does not require inspecting Python signatures or reading tests.
+Read `docs/operations/EXPERIMENT_QUICKSTART.md` only for a missing input shape;
+read the matching CLI section for advanced options. Do not chain low-level
+validation commands before a front door that already performs them.
 
-Read only the applicable section of [entrypoints](references/entrypoints.md).
-Inspect the named function's signature and its nearest caller/test before use.
-Calling a shared library directly counts as reuse; routing everything through
-the CLI is not required. A legacy script is an example, not a new run template
-whose credentials, model modes, run IDs or paths may be copied unchanged.
+Prior art for a new idea (innovation layer): besides RML replay, grep
+`experiments/**/*.md` audit tables (e.g. `experiments/pcqm_gap_architecture/architecture_route_audit.md`),
+since RML has no by-mechanism query; if WebSearch fails, WebFetch the arXiv abstract.
 
-## Pick the right operation
+## When implementation is required
 
-| User needs | Implementation route |
-|---|---|
-| Train a candidate | Owning family trainer + shared training primitives; freeze only the scientific delta. A model constructor is not a trainer. |
-| Compare retained predictions | Owning saved-artifact acceptance/analysis; no checkpoint loading or model execution. |
-| Ablate a frozen checkpoint | Matching accepted loader/factory + inference intervention hooks; separate NO_TRAIN planning, role/cost records and terminal acceptance. |
-| Profile execution | Owning profile adapter and frozen equivalence criteria; do not relabel profiling as a scientific comparison. |
-| Package, bind or close a run | Existing source/receipt/RML APIs where compatible; a thin adapter for genuine schema differences. |
+Name the existing owner and the specific unsupported behaviour in the work
+update. Inspect that callable and its nearest real caller/test, then make the
+smallest change there. Use [entrypoints](references/entrypoints.md) only when the
+owner is unclear. This is navigation, not another mandatory report or checklist.
 
-The shared `run-diagnostic` only probes metadata or constructs a random model.
-It does not load checkpoints or run inference. Do not alter a scientific recipe
-to fit an unsupported registry entry, or declare a fallback supported because
-syntax/schema tests pass. Document the precise capability gap before extending
-the owning shared module; keep preserved model/source identities unchanged.
+Shared code belongs in `src/molgap/`; experiment wrappers stay thin. Reuse
+identity, atomic IO, packaging, family training, saved-prediction analysis and
+terminal helpers. Do not copy a whole experiment or create a parallel framework.
+Keep active frozen payloads unchanged. Tests follow the repository's affected
+fixed nodes; strengthen an existing flow instead of adding a default test gate.
 
-## Keep the extension small
+## Important capability limits
 
-- Add only the new scientific mechanism, intervention or evidence translation.
-  Reuse identity, atomic IO, hashing, source packaging, role/cost semantics,
-  receipt reconciliation and terminal closure from their existing owners.
-- If the same plumbing needs another experiment-specific copy, extract a small
-  shared helper at its existing owner and test compatibility. Do not copy a
-  whole experiment, or build a replacement framework for one missing hook.
-- Put reusable behavior in `src/molgap/`; experiment CLIs remain thin. A skill
-  does not contain another model implementation, scheduler or RML validator.
-- Do not refactor a frozen remote payload while it is running. Record required
-  infrastructure changes separately; preserve active jobs and user edits.
+- `run-diagnostic` only probes metadata or constructs a random model. For saved
+  predictions use `diagnose`; for frozen-checkpoint inference use the accepted
+  loader and matching factory. Neither command grants role access.
+- A prepared directory is not a submission; a receipt or scheduler completion
+  is not scientific acceptance. Resolve unknown remote effects in the original
+  platform journal before a successor.
+- Acceptance generates objective evidence. Outcomes, decisions and observed
+  protected-role use must be supplied from actual facts; missing evidence stays
+  pending. RML entry alone does not establish strict replay qualification.
 
-## Before any authorized remote submission
-
-Use the owning platform workload skill if available; otherwise follow its
-repository adapter documentation and state missing capability. The shared
-experiment CLI is not a submitter. Verify executable inputs/mounts, entrypoint,
-explicit accelerator request and account identity before uploading. Check
-title/slug consistency and local artifact shape; avoid discovering packaging
-mistakes after provisioning an accelerator.
-For new ExperimentSpec source packages, reuse `check-release` with the actual
-entry script and staged input root, then pass its report to the owning adapter
-for a pre-submission recheck. Retain the platform response observation.
-
-After submission, bind the actual returned job ID/version and pulled source,
-not an assumed slug. A logical ID may differ only with an explicit receipt
-mapping. Reconcile an unknown submit outcome before retrying. Reuse the existing
-server A/B monitor binding; do not create a new conversation or cron per run.
-
-## Finish honestly
-
-Report reused components, genuinely added code, tests and unresolved gaps.
-Preserve prospective -> trace/artifacts -> role/cost -> acceptance -> terminal
-RML evidence for the applicable task. NO_TRAIN may have no training trace; do
-not fabricate one or claim training replay readiness. Apply the owning V5/RML
-validators rather than introducing a skill-specific scientific gate.
-
-This skill is an operating instruction, not a security-enforced release gate.
-Use the repository's actual fail-closed validators and platform receipts.
+Report the executed path, any substitutes and remaining blockers. Do not claim
+completeness from test counts. Follow the repository's terminal-attribution rule
+before selecting another unrelated scientific module.

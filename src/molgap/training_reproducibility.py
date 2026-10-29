@@ -17,6 +17,8 @@ from pathlib import Path
 
 import numpy as np
 
+from .common.io import replace_retrying
+
 
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
@@ -353,8 +355,11 @@ def atomic_torch_save(path: Path, value) -> None:
 
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    torch.save(value, temporary)
-    os.replace(temporary, path)
+    try:
+        torch.save(value, temporary)
+        replace_retrying(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def atomic_json(path: Path, value: Mapping | list) -> None:
@@ -362,8 +367,12 @@ def atomic_json(path: Path, value: Mapping | list) -> None:
         raise ValueError("Atomic JSON requires a mapping or list")
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value) if isinstance(value, Mapping) else value, indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
+    payload = json.dumps(dict(value) if isinstance(value, Mapping) else value, indent=2) + "\n"
+    try:
+        temporary.write_text(payload, encoding="utf-8")
+        replace_retrying(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def sha256_file(path: Path) -> str:

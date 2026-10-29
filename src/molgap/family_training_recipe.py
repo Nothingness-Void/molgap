@@ -5,7 +5,7 @@ resource/role release. Platform names and mount paths do not select algorithms.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, fields
+from dataclasses import InitVar, asdict, dataclass, fields
 import math
 
 from .family_training_core import LoopPlan
@@ -121,10 +121,15 @@ class FamilyRecipe:
     family_version: str | None = None
     qualification: object | None = None
     formal_training: object | None = None
+    # Retained packages may outlive the executable addon catalog.  This is a
+    # read-only parsing mode; it is deliberately excluded from the serialized
+    # recipe identity and cannot be used to construct a trainer.
+    _frozen_read: InitVar[bool] = False
 
-    def __post_init__(self):
+    def __post_init__(self, _frozen_read):
         from .experiment_spec import _digest
-        if self.family not in MODES or self.mode not in MODES[self.family]:
+        object.__setattr__(self, "_frozen_read", _frozen_read)
+        if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
         if self.cpu_synthetic_only or self.integration_preview or self.formal_interface:
             from copy import deepcopy
@@ -157,8 +162,13 @@ class FamilyRecipe:
         if type(self.addons) is not tuple or (self.mode == "composed") != bool(self.addons):
             raise ValueError("Ordered slot addons require the explicit composed mode")
         if self.addons:
-            from .shared_model_adapter import validate_family_addons
-            validate_family_addons(self.family, self.addons, interface=self.interface)
+            if _frozen_read:
+                from .common.spec import _addon_declaration
+                for addon in self.addons:
+                    _addon_declaration(addon)
+            else:
+                from .shared_model_adapter import validate_family_addons
+                validate_family_addons(self.family, self.addons, interface=self.interface)
         if self.k1_execution is not None and (self.family != "neural_atom_k1" or
                 type(self.k1_execution) is not K1ExecutionConfig):
             raise ValueError("K1 execution options require the typed K1 family")
@@ -168,8 +178,8 @@ class FamilyRecipe:
         _digest(self.initialization_sha256, "initialization_sha256")
         if type(self.dataset) is not DatasetSelection or type(self.schedule) is not ScheduleSpec:
             raise TypeError("Typed dataset and schedule are required")
-        cycle = mode_policy(self.family, self.mode).input_sidecar_required
-        if cycle != (self.input_sidecar is not None):
+        cycle = None if _frozen_read else mode_policy(self.family, self.mode).input_sidecar_required
+        if cycle is not None and cycle != (self.input_sidecar is not None):
             raise ValueError("Only the common-cycle mode requires a pinned input sidecar")
         if self.input_sidecar is not None and (type(self.input_sidecar) is not DatasetSelection or
                 self.input_sidecar.development != self.dataset.development):
@@ -348,7 +358,7 @@ class FamilyRecipe:
         return canonical_fingerprint(self.to_dict())
 
     @classmethod
-    def from_dict(cls, record):
+    def from_dict(cls, record, *, _frozen_read=False):
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
         if type(record) is dict and "input_sidecar" not in record:
             expected.remove("input_sidecar")
@@ -391,7 +401,7 @@ class FamilyRecipe:
                 values["development_reports"] = tuple(values["development_reports"])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
-        recipe = cls(**values)
+        recipe = cls(**values, _frozen_read=_frozen_read)
         if canonical_fingerprint(record["execution_policy"]) != canonical_fingerprint(recipe.execution_policy):
             raise ValueError("Execution policy differs from the accelerated family default")
         return recipe

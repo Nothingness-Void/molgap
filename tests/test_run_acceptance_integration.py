@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import importlib.util
 import shutil
 from dataclasses import replace
 from pathlib import Path
@@ -102,6 +103,27 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     session.loaders.attach_role_audit(outputs.role_audit)
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
+    # Exercise the real worker data-open provenance sidecar. The synthetic fixture
+    # substitutes only the pinned Spec dataset hash; shard bytes remain disposable.
+    from molgap import family_training_runner as worker
+    from molgap.experiment_family_workflow import DATA_OPEN_FILE
+    from molgap.family_training_data import DatasetSelection, load_training_data
+    from molgap.training_reproducibility import sha256_file
+    from test_family_training_data import write_pinned_data
+    data_root, _, manifest = write_pinned_data(case.paths.scratch_root / (arm_id + "-data"))
+    manifest.update(dict.fromkeys(
+        ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"), False))
+    (data_root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    selection = DatasetSelection("manifest.json", sha256_file(data_root / "manifest.json"), True)
+    worker._begin_data_open_record(directory, data_root, selection, producer_context)
+    try:
+        load_training_data(data_root, selection)
+    finally:
+        worker._end_data_open_record()
+    data_open = directory / DATA_OPEN_FILE
+    record = json.loads(data_open.read_bytes())
+    record["dataset_manifest_sha256"] = session.recipe.dataset.manifest_sha256
+    data_open.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     progress = session.run()
     report = outputs.complete(progress, runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
@@ -189,6 +211,11 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
             retrieved_root=case.paths.artifact_root / "retrieved",
             continuation_receipt=case.run / "operations/launch_receipt.json")
 
+    plain = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved")
+    assert plain["status"] == "MECHANICALLY_VERIFIED"
+    assert plain["scientific_outcome"] == "NOT_EVALUATED"
+    assert not any((case.repo / item["terminal"]).exists() for item in locations.values())
+
     result = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
         diagnose=True, stage_terminal=True)
     assert result["status"] == "MECHANICALLY_VERIFIED", result
@@ -202,6 +229,39 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert set(result["terminal_staging"]["paths"]) == set(arms)
     assert all(result["terminal_staging"]["paths"][arm]["closure_ready"] is False for arm in arms)
     assert all(result["terminal_staging"]["locations"][arm]["trace"].startswith("external://") for arm in arms)
+
+    audit_dir = case.repo / "audits"
+    capsys.readouterr()
+    assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
+        "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"],
+        "--attempt-id", "v1", "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
+        "--output-dir", str(audit_dir)]) == 0
+    audits = json.loads(capsys.readouterr().out)
+    assert set(audits) == set(arms)
+    for arm_id, reference in audits.items():
+        audit = json.loads((case.repo / reference).read_bytes())
+        assert set(audit["role_use"].values()) == {"untouched"}
+        assert audit["protected_role_evidence"]["status"] == "untouched"
+
+    decision_refs = {}
+    for arm_id in arms:
+        decision = case.repo / (arm_id + "-closure.md")
+        decision.write_text("Synthetic infrastructure-only disposition.\n", encoding="utf-8")
+        decision_refs[arm_id] = decision.relative_to(case.repo).as_posix()
+    closure = case.repo / "closure_input.json"
+    closure.write_bytes(canonical_json({"arms": {
+        arm_id: {"outcome": "INCONCLUSIVE", "decision_ref": decision_refs[arm_id]}
+        for arm_id in arms}, "role_audit": str(audit_dir / "audit_map.json")}).encode())
+    module_spec = importlib.util.spec_from_file_location("local_accept_run_integration",
+        Path(__file__).resolve().parents[1] / "platforms/local/accept_run.py")
+    local_accept = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(local_accept)
+    assert local_accept.main(["--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
+        "--profile", str(case.profile), "--repo-root", str(case.repo),
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
+        "--closure-input", str(closure)]) == 0
+    closed_from_input = json.loads(capsys.readouterr().out)
+    assert closed_from_input["terminal_staging"]["status"] == "STAGED_CLOSURE_READY"
 
     before = sorted(path.relative_to(case.run).as_posix() for path in case.run.rglob("*") if path.is_file())
     capsys.readouterr()

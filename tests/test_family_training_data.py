@@ -55,11 +55,35 @@ def test_mount_path_is_not_dataset_identity(pinned_data, tmp_path):
     assert [int(row.source_idx) for row in moved.train] == [0, 1, 2, 3]
 
 
-def test_full_train_selection_never_reads_unselected_development(pinned_data):
+def test_full_train_selection_never_reads_unselected_development(pinned_data, tmp_path):
+    from types import SimpleNamespace
+    from molgap import family_training_runner as worker
     root, selection, _ = pinned_data
+    context = SimpleNamespace(to_dict=lambda: {"arm_id": "synthetic"})
+    # The worker's open record is the evidence for "unselected development was never read".
+    train_only = replace(selection, development=False)
+    shutil.copytree(root, tmp_path / "second")
     (root / "development.pt").unlink()
-    data = load_training_data(root, replace(selection, development=False))
+    output = tmp_path / "out"
+    worker._begin_data_open_record(output, root, train_only, context)
+    try:
+        data = load_training_data(root, train_only)
+    finally:
+        worker._end_data_open_record()
     assert data.development is None and data.development_rows == 0
+    record = json.loads((output / "data_open_provenance.json").read_text(encoding="utf-8"))
+    assert [item["opened"] for item in record["invocations"]] == [["manifest.json", "train.pt"]]
+    assert {item["file"]: item["role"] for item in record["shards"]} == {
+        "train.pt": "train", "development.pt": "development"}
+    # A resumed invocation appends to the same record and reloads every selected shard.
+    worker._begin_data_open_record(output, tmp_path / "second", selection, context)
+    try:
+        load_training_data(tmp_path / "second", selection)
+    finally:
+        worker._end_data_open_record()
+    record = json.loads((output / "data_open_provenance.json").read_text(encoding="utf-8"))
+    assert [item["opened"] for item in record["invocations"]] == [
+        ["manifest.json", "train.pt"], ["manifest.json", "train.pt", "development.pt"]]
 
 
 @pytest.mark.parametrize("change", ["overlap", "protected", "missing", "reorder", "bad_features"])

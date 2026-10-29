@@ -15,7 +15,6 @@ from molgap.common.declarations import ExecutionProfile, ExecutionQuestion
 from molgap.experiment_input import resolve_experiment_input
 from molgap.experiment_spec import ExperimentSpec
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
-from molgap.family_training_data import DatasetSelection
 from molgap.family_training_runner import build_screen_recipe, family_arm_bindings
 from molgap.v4_runtime import state_dict_sha256
 from test_experiment_workflow import (_arm, _spec_payload, _write_strict_retained_reference_plan,
@@ -32,6 +31,13 @@ def scientific(tmp_path_factory, request):
     family, version = request.param
     repo = tmp_path / "checkout"
     repo.mkdir()
+    # Use the same tiny pinned PyG view as the family-data tests.  Scientific
+    # input compilation resolves the frozen manifest before staging, so the
+    # fixture must provide a real mounted manifest rather than a placeholder
+    # digest that could never be found.
+    from test_family_training_data import write_pinned_data
+    data_root, selection, _ = write_pinned_data(
+        tmp_path / "data_root", train_rows=256, development_rows=3)
     (repo / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
     # Copy active code, then commit the independent fixture repository. This
     # tests genuine isolated imports without locking live files to old history.
@@ -55,7 +61,7 @@ def scientific(tmp_path_factory, request):
     state_sha = state_dict_sha256(model.state_dict())
     del model
     recipe = FamilyRecipe(family, "reference", 42, state_sha,
-        DatasetSelection("synthetic-manifest.json", "a" * 64, True),
+        selection,
         256, 3, 4, .001, .01, ScheduleSpec("cosine_epoch", 2),
         "best-development-live", "python-epoch-shuffle" if family == "neural_atom_k1" else "torch-pass-randperm",
         checkpoint_every=2, target_mean_eV=3., target_std_eV=2., torch_version=torch.__version__.split("+")[0])
@@ -66,6 +72,9 @@ def scientific(tmp_path_factory, request):
     _write_json(repo / recipe_name, record)
     arm = _arm(family, version, "reference", recipe_sha256=hashlib.sha256((repo / recipe_name).read_bytes()).hexdigest(),
                state_sha256=state_sha)
+    # The source spec is checked against the recipe's pinned manifest bytes;
+    # keep the synthetic declaration internally consistent with that fixture.
+    arm["data"]["dataset"]["sha256"] = selection.manifest_sha256
     bindings = family_arm_bindings(recipe)
     arm["base"] = bindings["base"]
     arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
@@ -126,7 +135,8 @@ def scientific(tmp_path_factory, request):
     _write_json(repo / "research_memory/policies/fixture.json", policy)
     profile_path = tmp_path / "machine.json"
     _write_json(profile_path, {"format": "molgap-machine-paths-v1", "python": sys.executable,
-        **{key: str(tmp_path / key) for key in ("data_root", "artifact_root", "scratch_root")}})
+        "data_root": str(data_root),
+        **{key: str(tmp_path / key) for key in ("artifact_root", "scratch_root")}})
     question = ExecutionQuestion(policy["policy_id"], policy["action_rule"]["action"],
         "Does an optimizer parameter change alter a bounded screen?", "Untested optimizer sensitivity",
         "optimizer", ("evidence-common-test",), ("No effect",), ("fixture-closed",),
@@ -453,6 +463,19 @@ def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_proper
     arm["model"]["addons"] = [{"name": name, "version": "1", "config": None}]
     value["question"].update(changed_mechanism="readout-scale", question="Does this ordinary addon integrate faithfully?")
     path = case.repo / "experiments/addon-fixture/experiment.json"
+    _write_json(path, value)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    # An unknown evidence id is BLOCKED before the logical run id is frozen;
+    # the corrected input below then prepares under that same run id.
+    from molgap.experiment_input import prepare_experiment_input
+    bad = deepcopy(value)
+    bad["question"]["supporting_evidence"] = ["evidence-unknown-test"]
+    _write_json(path, bad)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Unknown evidence id")
+    blocked = prepare_experiment_input(path, case.repo)
+    run = resolve_experiment_input(path, case.repo)[3].run_directory(value["logical_run_id"], value["attempt_id"])
+    assert blocked["status"] == "BLOCKED" and blocked["blockers"] and not (run / "inputs").exists()
     _write_json(path, value)
     _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "One registered ordinary addon input")

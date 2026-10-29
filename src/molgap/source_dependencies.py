@@ -90,6 +90,7 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
     root = Path(repo_root).resolve()
     seeds = tuple(sorted(_allowlist(roots)))
     pending, seen, external, dynamic, edges = list(seeds), set(), set(), set(), set()
+    missing = set()
     for seed in seeds:
         module = _module(seed)
         if module is not None:
@@ -163,7 +164,7 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
         relative = _module_path(root, name)
         if relative is None:
             if required:
-                raise ValueError(f"Missing internal dependency {name!r} imported by {importer}")
+                missing.add((name, importer))
             return
         _allowlist([relative])
         _source(root, relative)
@@ -229,6 +230,12 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
                         level = len(name.value) - len(name.value.lstrip("."))
                         package = node.args[1] if len(node.args) > 1 and not builtin else next(
                             (item.value for item in node.keywords if item.arg == "package"), None)
+                        # Compatibility aliases pass the importer's own
+                        # ``__package__`` rather than a literal package name.
+                        if isinstance(package, ast.Name) and package.id == "__package__":
+                            own = _module(importer)
+                            package = ast.Constant(own if importer.endswith("/__init__.py")
+                                                   else own.rsplit(".", 1)[0])
                         if (not isinstance(package, ast.Constant) or not isinstance(package.value, str) or
                                 level > len(package.value.split("."))):
                             unresolved(importer, node)
@@ -264,6 +271,9 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
     if require_static and dynamic:
         raise ValueError("Dynamic import requires reviewed registry roots and runtime checks: " +
                          "; ".join(sorted(dynamic)))
+    if missing:
+        raise ValueError("Missing internal dependencies: " + "; ".join(
+            f"{name!r} imported by {importer}" for name, importer in sorted(missing)))
     return DependencyClosure(seeds, tuple(_allowlist(sorted(seen))), tuple(sorted(external)),
                              tuple(sorted(dynamic)), tuple(sorted(edges)))
 

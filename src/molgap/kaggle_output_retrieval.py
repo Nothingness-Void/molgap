@@ -64,18 +64,32 @@ def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
             request = ApiDownloadKernelOutputRequest()
             request.owner_slug, request.kernel_slug = account, kernel.split("/")[1]
             request.version_number, request.file_path = version, path
+            phase, status = "redirect", None
             try:
                 redirect = client.kernels.kernels_api_client.download_kernel_output(request)
+                phase = "http"
                 with http_session.get(redirect.url, stream=True, timeout=(30, 60)) as response:
+                    status = response.status_code
                     if response.status_code != 200:
                         raise RuntimeError("Exact metadata response was not successful")
+                    phase = "body"
                     data = bytearray()
                     for chunk in response.iter_content(65536):
                         data.extend(chunk)
                         if len(data) > max_bytes:
+                            phase = "byte_limit"
                             raise ValueError("Exact metadata exceeds its explicit byte limit")
-            except Exception:
-                raise RuntimeError("Exact metadata retrieval failed; no bulk fallback") from None
+            except Exception as error:
+                if status is None:
+                    observed = getattr(error, "status_code", None)
+                    if observed is None:
+                        observed = getattr(getattr(error, "response", None), "status_code", None)
+                    status = observed if type(observed) is int else None
+                # Keep transport errors finite; SDK text can contain signed URLs.
+                raise RuntimeError(
+                    f"Exact metadata retrieval failed; path={path}; stage={phase}; "
+                    f"status={status}; error_type={type(error).__name__}; no bulk fallback"
+                ) from None
             import json
             json.loads(data)
             pin = hashlib.sha256(data).hexdigest()
@@ -172,7 +186,7 @@ def retrieve_selected_kaggle_files(api, *, context, remote_manifest_path: str,
 
 def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                                files: Mapping[str, Any], destination: Path,
-                               http_session=None, sizes=None, on_plan=None) -> dict:
+                               http_session=None, sizes=None, on_plan=None, _plan=None) -> dict:
     """Stream manifest-bound files at one physical version, without directory scans.
 
     A retained environment can contain thousands of unrelated files; enumerating
@@ -185,14 +199,16 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
     version = context.platform_version
     # Launch receipts canonically retain versions as text; the SDK download
     # request requires an integer. Reject aliases rather than guessing a label.
-    if type(version) is str and version.isascii() and version.isdecimal() and not version.startswith("0"):
+    if type(version) is str and version.isascii() and version.isdecimal():
         version = int(version)
     if type(version) is not int or version < 1:
         raise ValueError("Exact artifact retrieval requires a physical version number")
     required = _selected_files(files)
     if len(required) > 4096:
         raise ValueError("Exact artifact allowlist exceeds the bounded request budget")
-    plan = plan_pinned_files(required, destination, sizes=sizes)
+    # The synchronous adapter may pass its already checked plan. Standalone
+    # callers still inspect the retained bytes before making any request.
+    plan = _plan if _plan is not None else plan_pinned_files(required, destination, sizes=sizes)
     if on_plan is not None:
         on_plan(plan)
     reused = {row["remote_path"] for row in plan["files"] if row["state"] == "ALREADY_RETAINED"}
@@ -251,6 +267,7 @@ def retrieve_execution_retention(
     manifest_sha256: str,
     destination: Path,
     http_session=None,
+    _plan=None,
 ) -> dict:
     """Retrieve and verify one compact execution-retention manifest.
 
@@ -304,13 +321,17 @@ def retrieve_execution_retention(
         remote = (prefix / report["path"]).as_posix()
         required[remote] = (EXECUTION_REPORT_FILENAME, report["sha256"])
 
-    result = retrieve_selected_kaggle_files(
+    version = context.platform_version
+    transport = (retrieve_pinned_exact_files if isinstance(version, str) and version.isascii()
+        and version.isdecimal() else retrieve_selected_kaggle_files)
+    result = transport(
         api,
         context=context,
         remote_manifest_path=remote_manifest_path,
         files=required,
         destination=destination,
         http_session=http_session,
+        **({"_plan": _plan} if transport is retrieve_pinned_exact_files else {}),
     )
     checked = validate_execution_retention(
         Path(destination),

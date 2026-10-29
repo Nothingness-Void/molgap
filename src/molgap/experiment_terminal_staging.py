@@ -7,7 +7,10 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from collections.abc import Mapping
+import hashlib
+import json
 from pathlib import Path
+import sys
 
 from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import (
@@ -22,6 +25,12 @@ from .screen_policy import canonical_fingerprint
 
 
 PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
+DATA_OPEN_BOUNDARY = (
+    "This record covers only Python-level file opens in the training main process. It does not "
+    "cover native code or child processes, nor network access (the Kaggle kernel has internet), "
+    "nor opens of files outside the directory that holds the frozen dataset manifest. "
+    "'untouched' means that process did not open protected-role files through Python; it does not "
+    "prove the data was unreachable.")
 
 
 def _per_arm(value, arm_id):
@@ -87,7 +96,7 @@ def _materialize_inline_role_audit(root: Path, value, context, trajectory_path: 
     return target.relative_to(root).as_posix()
 
 
-def _cost_events(native, context, where, action_id, source_ref):
+def _cost_events(native, context, where, action_id, source_ref, *, category="training", suffix=""):
     """Translate only measured native seconds; retain everything else as unknown."""
     events = []
     for index, cost in enumerate(native):
@@ -104,13 +113,44 @@ def _cost_events(native, context, where, action_id, source_ref):
                        for name in ("device_hours", "cpu_hours", "wall_hours", "queue_hours")}
         measurement[field] = {"value": cost["value"] / 3600, "status": "measured"}
         event = {"schema": "molgap-cost-event-v1",
-            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{index}",
+            "cost_event_id": f"cost-terminal-{where['trajectory_id']}-{suffix}{index}",
             "trajectory_id": where["trajectory_id"], "action_id": action_id, "run_id": where["run_id"],
             "attempt_id": context["attempt_id"] or "unknown", "platform": context["platform"],
-            "hardware": cost["hardware"], "category": "training", "evidence_ref": source_ref,
+            "hardware": cost["hardware"], "category": category, "evidence_ref": source_ref,
             "measurement": measurement}
         events.append(validate_cost_event(event))
     return events
+
+
+def _allocation_observation(root, retention, arm_id):
+    """Bind the retained allocation window and per-arm ledger as terminal evidence."""
+    from .experiment_retention import _manifest_bytes
+    manifest = retention["manifest"]
+    manifest_path = Path(retention["manifest_path"])
+    directory = manifest_path.parent
+    refs = {"execution_retention": {
+        "path": manifest_path.name,
+        "sha256": hashlib.sha256(_manifest_bytes(manifest)).hexdigest()},
+        "allocation_ledger": manifest["allocation_ledger"]["root"],
+        "arm_allocation_ledger": manifest["allocation_ledger"]["arms"][arm_id]}
+    bindings, artifacts = {}, []
+    for name, reference in refs.items():
+        locator = artifact_locator(root, directory / reference["path"])
+        verify_bound_artifact(root, locator, reference["sha256"])
+        bindings[locator] = reference["sha256"]
+        artifacts.append({"name": name, "locator": locator, "sha256": reference["sha256"],
+            "availability": "machine_local_verified" if locator.startswith("external://") else "durable_local_verified"})
+    ledger = retention["ledgers"]["root"]
+    devices = [device for device in ledger["devices"] if device["arm_id"] == arm_id]
+    observation = {"scope": ledger["scope"], "started_at": ledger["started_at"],
+        "observed_at": ledger["observed_at"], "status": ledger["status"], "devices": devices,
+        "prior_segments_recorded": len(ledger["prior_segments"]),
+        "prior_unobserved_intervals": ledger["prior_unobserved_intervals"],
+        "cumulative_costs_evaluated": False, "artifact_refs": sorted(bindings)}
+    native = [{"metric": "device_seconds", "unit": "seconds", "value": device["allocated_seconds"],
+        "status": "measured", "semantics": "allocated_device", "hardware": device["hardware"]}
+        for device in devices]
+    return observation, native, bindings, artifacts
 
 
 def _roles(root, audit_ref, context, where, action_id):
@@ -139,6 +179,151 @@ def _roles(root, audit_ref, context, where, action_id):
     blockers = (["observed_protected_role_audit_incomplete"]
                 if any(role_use[role] == "unknown" for role in PROTECTED_ROLES) else [])
     return role_use, events, blockers, audit_ref
+
+
+def _protected_roles_from_data_open(output_dir, artifacts, context, dataset, selected_roles):
+    """Derive protected-role truth from the hash-bound worker open record."""
+    from .experiment_family_workflow import DATA_OPEN_FORMAT
+    if "data_open" not in artifacts:
+        return None
+    entry = artifacts["data_open"]
+    try:
+        path = _artifact_path(output_dir, entry["path"])
+        if file_digest(path) != entry["sha256"]:
+            raise ValueError("Retained data-open record differs from its output manifest digest")
+        record = _json(path)
+        _check_context(record.get("context"), context)
+        if record.get("format") != DATA_OPEN_FORMAT or record.get("dataset_manifest_sha256") != dataset:
+            raise ValueError("Data-open record differs from the frozen dataset identity")
+        shards = {item["file"]: item["role"] for item in record["shards"]}
+        invocations = record["invocations"]
+        flags = record["manifest_protected_role_flags"]
+        manifest_name = record["manifest"]
+    except (ValueError, TypeError, KeyError, OSError) as exc:
+        return {"status": "record_unverified", "record": entry, "reason": str(exc)}
+    selected = {name for name, role in shards.items() if role in selected_roles}
+    opened = set()
+    for invocation in invocations:
+        opened.update(invocation["opened"])
+    consumed = sorted({shards[name] for name in opened if shards.get(name) in PROTECTED_ROLES})
+    if consumed:
+        return {"status": "protected_role_file_opened", "record": entry, "roles": consumed}
+    if (set(flags) != {role + "_role_read" for role in PROTECTED_ROLES}
+            or any(value is not False for value in flags.values())
+            or any(role not in {*selected_roles, *PROTECTED_ROLES} for role in shards.values())):
+        return {"status": "unattributable_dataset_manifest", "record": entry}
+    stray = opened - set(shards) - {manifest_name}
+    if invocations and invocations[0]["had_checkpoint"]:
+        return {"status": "positive_control_failed", "record": entry, "unobserved_earlier_invocation": True}
+    missing = (sorted(selected - set.intersection(*(set(item["opened"]) for item in invocations)))
+               if invocations else sorted(selected))
+    if stray or missing or not invocations:
+        return {"status": "positive_control_failed", "record": entry,
+                "missing_selected_shards": missing, "unattributed_opens": sorted(stray)}
+    text = ("Hash-bound record " + entry["path"] + " (sha256 " + entry["sha256"] + ", listed in output_manifest.json) "
+            "shows the frozen training process opened " + str(len(opened & set(shards))) + " dataset shard file(s): every selected "
+            + "/".join(sorted(selected_roles)) + " shard in each of " + str(len(invocations)) + " invocation(s), and no "
+            "official_validation, test_dev or test_challenge file. " + DATA_OPEN_BOUNDARY)
+    return {"status": "untouched", "record": entry, "text": text}
+
+
+def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None):
+    """Draft one arm's role audit from retained, digest-checked session artifacts."""
+    states = {role: "unknown" for role in PROTECTED_ROLES}
+    for role, state in (protected_role_use or {}).items():
+        if role not in states or state not in {"untouched", "consumed", "not_applicable", "unknown"}:
+            raise ValueError("Invalid protected-role use: " + str(role) + "=" + str(state))
+        states[role] = state
+    output_dir = Path(output_dir)
+    manifest = _json(output_dir / "output_manifest.json")
+    artifacts = manifest.get("artifacts", {})
+    for name in ("contract", "predictions", "trace"):
+        if name not in artifacts:
+            raise ValueError("Output manifest lacks the " + name + " artifact needed for a role audit")
+        if file_digest(_artifact_path(output_dir, artifacts[name]["path"])) != artifacts[name]["sha256"]:
+            raise ValueError("Retained " + name + " differs from its output manifest digest")
+    if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
+        raise ValueError("Retained training contract differs from the frozen recipe identity")
+    contract = _json(_artifact_path(output_dir, artifacts["contract"]["path"]))
+    roles = {item["role"]: item for item in spec_arm["data"]["roles"]}
+    if set(roles) != {"train", "development"} or not contract["dataset"]["development"]:
+        raise ValueError("Role audit drafting covers only train and development session screens")
+    if not contract["selection"].startswith("best-development"):
+        raise ValueError("Role audit drafting needs development-based selection in the training contract")
+    train, development = roles["train"]["membership_sha256"], roles["development"]["membership_sha256"]
+    dataset = spec_arm["data"]["dataset"]["sha256"]
+    derived = _protected_roles_from_data_open(output_dir, artifacts, context, dataset, set(roles))
+    if derived is not None and derived["status"] == "untouched":
+        for role in PROTECTED_ROLES:
+            if role not in (protected_role_use or {}):
+                states[role] = "untouched"
+    elif derived is not None and derived["status"] == "protected_role_file_opened":
+        print("WARNING: data-open record shows protected-role file(s) opened for "
+              + ", ".join(derived["roles"]) + "; states stay unknown", file=sys.stderr)
+        if any((protected_role_use or {}).get(role) in {"untouched", "not_applicable"} for role in PROTECTED_ROLES):
+            raise ValueError("Data-open record shows a protected-role file was opened; it contradicts an explicit untouched/not_applicable state")
+    required = contract["acceptance_requirements"]
+    if (contract["dataset"]["manifest_sha256"] != dataset
+            or required.get("source_idx_sha256") != development or "target_sha256" not in required):
+        raise ValueError("Training contract differs from the frozen Spec data roles")
+    prefix = "role-" + context.logical_run_id + "-" + context.arm_id + "-"
+    events = [{"schema": "molgap-role-event-v1", "role_event_id": prefix + role + "-" + kind,
+        "trajectory_id": where["trajectory_id"], "action_id": action_id, "run_id": where["run_id"],
+        "dataset_identity": dataset, "row_manifest_hash": rows, "role_name": role,
+        "access_kind": kind, "selection_used": role == "development", "evidence_ref": evidence_ref}
+        for role, rows, kinds in (("train", train, ("training_membership",)),
+            ("development", development, ("prediction_input", "labels_read", "metric_computed", "selection_used")))
+        for kind in kinds]
+    audit = {"context": context.to_dict(), "role_use": states, "roles": events}
+    if derived is not None:
+        audit["protected_role_evidence"] = derived
+    return audit
+
+
+def load_closure_input(path):
+    """Read the one human closure file and return arm decisions plus role-audit path."""
+    from .experiment_launch import _unique
+    closure = json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=_unique)
+    arms = closure.get("arms") if type(closure) is dict else None
+    if (type(closure) is not dict or set(closure) - {"arms", "role_audit"} or type(arms) is not dict or not arms
+            or any(type(item) is not dict or set(item) != {"outcome", "decision_ref"}
+                   or not all(type(value) is str and value for value in item.values())
+                   for item in arms.values())
+            or not all(type(arm) is str and arm and "=" not in arm for arm in arms)
+            or ("role_audit" in closure and (type(closure["role_audit"]) is not str or not closure["role_audit"]))):
+        raise ValueError("Closure input must be {arms: {arm: {outcome, decision_ref}}, role_audit?}")
+    return arms, closure.get("role_audit")
+
+
+def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
+                          protected_role_use=None, continuation_receipt=None):
+    """Write roles_<arm>.json for every arm and publish audit_map.json."""
+    from .experiment_run import resolve_run_acceptance_inputs
+    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+        retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
+    drafted = write_role_audits(repo_root, resolved, output_dir, protected_role_use)
+    root = Path(repo_root).resolve()
+    publish_immutable_bytes(repo_local_path(root, Path(output_dir) / "audit_map.json"), json_bytes(drafted))
+    return drafted
+
+
+def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None):
+    """Draft and publish one audit per resolved arm, after validating every arm."""
+    root, drafted = Path(repo_root).resolve(), {}
+    arms = {arm["arm_id"]: arm for arm in resolved["spec"].to_dict()["arms"]}
+    for arm_id, arm in arms.items():
+        where = resolved["locations"][arm_id]
+        trajectory = _json(repo_local_path(root, where["trajectory"]))
+        actions = [item for item in trajectory["actions"] if where["run_id"] in item["run_ids"]]
+        if len(actions) != 1:
+            raise ValueError("Run must bind exactly one frozen prospective action: " + arm_id)
+        path = repo_local_path(root, Path(output_dir) / ("roles_" + arm_id + ".json"))
+        ref = path.relative_to(root).as_posix()
+        drafted[arm_id] = (path, ref, draft_role_audit(arm, resolved["contexts"][arm_id], where,
+            actions[0]["action_id"], resolved["outputs"][arm_id]["output_dir"], ref, protected_role_use))
+    for path, _, audit in drafted.values():
+        publish_immutable_bytes(path, json_bytes(audit))
+    return {arm_id: ref for arm_id, (_, ref, _) in drafted.items()}
 
 
 def _runtime_role_audit(output_root: Path, observed: Mapping):
@@ -303,7 +488,7 @@ def _diagnostic_binding(root, resolved, report, attempt_id):
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
         diagnostic_report=None, role_audit=None, resolved=None, reports=None,
-        package_dir=None, scientific_acceptance=None):
+        package_dir=None, scientific_acceptance=None, execution_root=None, _retention=None):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -331,6 +516,13 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                   if isinstance(acceptance_plan, Mapping) else None)
     frozen_package = package_dir or frozen_options.get("package_dir")
     verification = frozen_options.get("_verification")
+    retention = _retention
+    if execution_root is not None and retention is None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(resolved["contexts"].values()))
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=frozen_options["expected_package_identity"], source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
     arm_ids = {arm["arm_id"] for arm in spec.to_dict()["arms"]}
     if set(outputs) != arm_ids or set(locations) != arm_ids:
         raise ValueError("Terminal staging requires every independent frozen arm")
@@ -395,6 +587,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         hashes.update(restored)
         if continuation is not None:
             hashes.update(continuation["artifact_hashes"])
+        allocation, allocation_costs = None, []
+        if retention is not None:
+            allocation, allocation_costs, bindings, retained_artifacts = _allocation_observation(root, retention, arm_id)
+            hashes.update(bindings)
+            artifacts.extend(retained_artifacts)
         for name, binding in observed["artifacts"].items():
             path = _artifact_path(output_root, binding["path"])
             locator = artifact_locator(root, path)
@@ -474,10 +671,21 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         # same_run_observation, never substituted into cost/action evidence.
         costs = _cost_events(observed["costs"], {"attempt_id": action_attempt_id, "platform": context.platform},
             where, action["action_id"], objective_ref)
+        if allocation is not None:
+            existing_allocation = any(event["measurement"]["device_hours"]["status"] == "measured"
+                                      for event in costs)
+            allocation["event_status"] = ("not_aggregated_existing_device_measurement"
+                                           if existing_allocation else "recorded_current_window")
+            if not existing_allocation:
+                costs.extend(_cost_events(allocation_costs,
+                    {"attempt_id": action_attempt_id, "platform": context.platform}, where,
+                    action["action_id"], objective_ref, category="other", suffix="allocation-"))
         objective = {"context": context.to_dict(), "mechanical_verification": report,
             "native_costs": observed["costs"], "costs": costs, "roles": [],
             "missing_evidence": ["scientific_comparison_not_evaluated", "runtime_qualification_not_evaluated",
                 "replay_readiness_not_evaluated", *role_blockers], "diagnostic_report": diagnostic_binding}
+        if allocation is not None:
+            objective["allocation_observation"] = allocation
         publish_immutable_bytes(directory / "observed.json", json_bytes(objective))
         hashes[objective_ref] = file_digest(directory / "observed.json")
         closure_ready = not blockers

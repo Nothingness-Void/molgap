@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path, PureWindowsPath
 from typing import Any
 
+from molgap.common.io import replace_retrying
 from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .discovery import DiscoveredRecords, discover_records
@@ -277,7 +278,7 @@ def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
             if file_digest(resolve_repo_pointer(root, pointer)) != digest:
                 raise ValueError("decision source changed during planning")
         destination.parent.mkdir(parents=True, exist_ok=True)
-        os.rename(staging, destination)
+        replace_retrying(staging, destination)
         sync_directory(destination.parent)
     finally:
         if staging.exists():

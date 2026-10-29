@@ -225,10 +225,9 @@ ordering, exact stop boundaries and cleanup. `test_family_training_data.py`
 checks mount-independent identity, selected-role confinement, unchanged sampler
 orders, hash failures and train-only normalization. Native hardware speed,
 quality, role release and replay readiness require their own existing gates.
-`test_family_full_lifecycle.py` exercises both real full-run wrappers with
-synthetic CPU kernels and explicitly substituted release gates, including exact
-checkpoint/model/optimizer/EMA/RNG restoration. It does not qualify native source
-or turn the historical full-source pins into current valid declarations.
+The September full-run wrappers and their dedicated tests were removed after their
+frozen source-hash guards stopped matching later model-source edits; their history
+stays on the archive ref and is reference only.
 `test_family_training_loaders.py` covers persistent CPU worker order/resume,
 tail policies, role omission, bounded cache overflow and input preservation.
 `test_family_training_session.py` covers synthetic dropout/AdamW/EMA replay,

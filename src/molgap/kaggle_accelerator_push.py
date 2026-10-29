@@ -117,7 +117,8 @@ class ReleaseRecheckError(ValueError):
         return error
 
 
-def _verify_release_report(path: Path, code_path: Path, *, _verification=None,
+def _verify_release_report(path: Path, code_path: Path, *, _content_verification=None,
+                           _verification=None,
                            _entry_bytes=None, _metadata_bytes=None) -> dict:
     from .experiment_preflight import check_release_inputs
     from .experiment_spec import ExperimentSpec
@@ -143,6 +144,7 @@ def _verify_release_report(path: Path, code_path: Path, *, _verification=None,
             required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
             entry_script=inputs["entry_script"], input_root=inputs["input_root"],
             launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"),
+            dataset_manifests=inputs.get("dataset_manifests"), _content_verification=_content_verification,
             _verification=_verification)
     except OSError as cause:
         raise ReleaseRecheckError.from_io(cause, expected_report=report) from cause
@@ -177,6 +179,7 @@ def push_kernel_with_accelerator(
     timeout_seconds: int = 120,
     release_report_path: Path | None = None,
     api=None,
+    _content_verification=None,
     _verification=None,
     _before_post=None,
 ) -> dict[str, Any]:
@@ -203,7 +206,8 @@ def push_kernel_with_accelerator(
     if "EXPECTED_LAUNCH_SHA256" in code_text and release_report_path is None:
         raise ValueError("Prepared workflow entry requires its verified release report")
     release_binding = (_verify_release_report(release_report_path, code_path,
-        _verification=_verification, _entry_bytes=code_bytes, _metadata_bytes=metadata_bytes)
+        _content_verification=_content_verification, _verification=_verification,
+        _entry_bytes=code_bytes, _metadata_bytes=metadata_bytes)
         if release_report_path else None)
     if release_report_path:
         report_inputs = json.loads(release_report_path.read_text(encoding="utf-8"))["inputs"]

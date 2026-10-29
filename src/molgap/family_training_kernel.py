@@ -14,6 +14,8 @@ from .family_training_policy import mode_policy
 
 def load_family_model(recipe, initial_state):
     """One CPU factory/transport path for release checks and native execution."""
+    if recipe._frozen_read:
+        raise ValueError("Retained recipe metadata cannot execute; use the registered recipe reader")
     from .v4_runtime import read_frozen_state_artifact
     import torch
     if torch.get_default_dtype() != torch.float32:
@@ -89,6 +91,8 @@ class FamilyKernel:
 
         if type(recipe) is not FamilyRecipe:
             raise TypeError("Expected a frozen FamilyRecipe")
+        if recipe._frozen_read:
+            raise ValueError("Retained recipe metadata cannot execute; use the registered recipe reader")
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)

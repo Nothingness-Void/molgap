@@ -105,9 +105,14 @@ authorization, append `--execute` to advance the same operation journal:
 5. Pull actual API source, verify kernel ID/version, private/T4/mounts/bytes,
    reconcile the canonical launch receipt, and retain scheduler/startup evidence.
 
-`WAIT_SOURCE_READY` means rerun the identical command with the same operations
-directory after processing. The journal resumes without another dataset create.
-A repeated completed invocation observes the same run and preserves its receipt.
+After creating the source, the same invocation polls its status for up to 300 s
+(5 s backoff growing to 60 s; 403/404 count as not ready yet). If the dataset is
+still not ready, `WAIT_SOURCE_READY` means wait, then rerun the identical command
+with the same operations directory. A 403 that never clears returns
+`RECONCILIATION_REQUIRED`. The journal resumes without another dataset create.
+A repeated completed invocation verifies the bound local receipt and finishes
+pending local cleanup without querying the latest kernel or submitting again.
+Fresh scheduler observations remain a separate reconciliation action.
 An uncertain create/POST is recorded before any reconciliation. A matching
 first-version source can resolve a lost kernel response; an unobserved or
 conflicting outcome stays `RECONCILIATION_REQUIRED` and never triggers a retry.

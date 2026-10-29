@@ -21,14 +21,14 @@ def test_explicit_model_forward_is_independent_of_live_weights(monkeypatch, fami
     seen = []
     if family == "neural_atom_k1":
         import molgap.k1_execution_layout as layout
-        import molgap.k1_screen_training as owning
+        import molgap.family_model_ops as owning
         @contextmanager
         def bound(model, batch, device):
             seen.append(model)
             yield
         monkeypatch.setattr(layout, "cpu_layout_context", bound)
-        monkeypatch.setattr(owning, "_model_batch_to_device", lambda batch, *args, **kwargs: batch)
-        monkeypatch.setattr(owning, "_forward", lambda model, batch: model(batch.x))
+        monkeypatch.setattr(owning, "k1_batch_to_device", lambda batch, *args, **kwargs: batch)
+        monkeypatch.setattr(owning, "k1_forward", lambda model, batch: model(batch.x))
     else:
         import molgap.gptrans_execution_backend as owning
         kernel._gptrans_batch = lambda batch, **kwargs: batch

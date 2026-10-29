@@ -117,7 +117,7 @@ def _binding(spec, package_dir, expected_package_identity, *, _verification=None
         raise TypeError("Expected exactly ExperimentSpec")
     if set(vars(spec)) != {"_canonical_json"} or type(spec._canonical_json) is not str:
         raise ValueError("Invalid ExperimentSpec snapshot")
-    rebuilt = ExperimentSpec.from_json(spec._canonical_json)
+    rebuilt = ExperimentSpec.from_frozen_json(spec._canonical_json)
     if rebuilt.to_json() != spec.to_json() or rebuilt.identity != spec.identity:
         raise ValueError("Noncanonical ExperimentSpec")
     _digest(expected_package_identity)
