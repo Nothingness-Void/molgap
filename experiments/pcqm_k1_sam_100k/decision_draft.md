@@ -88,3 +88,20 @@ it does not show SAM is useless at other rho.
 4. Reference digest (6-step CPU state, reference mode) before and after the shared-code edits:
    `439913965b931a23b7c11d7066d3372a1cff03f40615dcbba769d23b548cf77d`, identical; re-verified at
    submission.
+
+## Reviewer notes (2026-10-30, Opus decision under the user's delegation)
+
+- Protected roles stay `unknown` and this run stays a staged draft. Closure accepts only
+  observed role states, and the rules have no "inferred from mounted inputs" level. The
+  dataset manifest declares only train and development roles and the kernel mounted only that
+  dataset plus the source package, but the kernel had internet access, so these are inferences
+  and are not role evidence. Runs submitted after the data-file read record is merged can close
+  mechanically; this run predates it.
+- Authorization provenance: the user directed these real Kaggle runs in conversation on the
+  accounts in their key folder and delegated the remaining closure decisions to Opus on
+  2026-10-30, with the condition that the experiment contract is not changed sweepingly.
+  Use of the 50K development labels for metrics is the ordinary train/development role use. The
+  `experiment.json` authority text is unchanged because it is part of the frozen input.
+- Outcome word stays `NEGATIVE_UNDER_CONTRACT` (draft). No merge to molgap-desktop now; when
+  the run is eventually closed, the decision and evidence go to RML and the rejected
+  implementation is archived (docs/operations/BRANCHES.md).
