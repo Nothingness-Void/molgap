@@ -87,7 +87,7 @@ def test_inline_declarations_freeze_original_identity_across_head_changes(compac
 
 
 @pytest.mark.parametrize("fault", ["both_authority", "both_platform", "missing_authority", "invalid_authority",
-                                  "missing_platform", "invalid_platform", "missing_role", "empty_decision"])
+                                  "derived_platform_non_fixed_mount", "invalid_platform", "missing_role", "empty_decision"])
 def test_inline_forms_do_not_waive_existing_validation_or_publish_early(compact, fault):
     case = compact
     inline(case)
@@ -95,7 +95,7 @@ def test_inline_forms_do_not_waive_existing_validation_or_publish_early(compact,
     if fault == "both_authority": case.value["authority_ref"] = "experiments/question/authority.json"
     elif fault == "both_platform": case.value["platform_ref"] = "experiments/question/platform.json"
     elif fault == "missing_authority": del case.value["authority"]
-    elif fault == "missing_platform": del case.value["platform"]
+    elif fault == "derived_platform_non_fixed_mount": del case.value["platform"]
     elif fault == "invalid_authority": case.value["authority"]["user_authorized"] = False
     elif fault == "invalid_platform": del case.value["platform"]["kaggle"]["account"]
     elif fault == "missing_role": case.value["role_ref"] = "experiments/no-role.json"
@@ -211,13 +211,17 @@ def test_mechanical_pointers_and_candidate_policy_are_derived_when_absent(compac
         (folder / name).parent.mkdir(parents=True, exist_ok=True)
         (folder / name).write_text("Retained " + name + "\n", encoding="utf-8")
     relative = folder.relative_to(case.repo).as_posix()
-    policy_id = case.value["question"]["policy_id"]
-    case.value["question"]["policy_id"] = policy_id + "-fresh"
+    policy_id = case.value["experiment_id"].replace("_", "-")
+    case.value["question"]["policy_id"] = policy_id + "-typo"
     for key in ("monitor_paths", "role_ref", "decision_ref"): case.value.pop(key)
     commit(case, relative + "/protocol.md", relative + "/decision.md")
+    with pytest.raises(ValueError, match="registered version"):
+        resolve_experiment_input(case.path, case.repo)
+    case.value["question"]["policy_id"] = policy_id
+    commit(case)
     value, _, _, _ = resolve_experiment_input(case.path, case.repo)
     assert value["monitor_paths"] == [relative + "/STATUS.md"]
     assert (value["role_ref"], value["decision_ref"]) == (relative + "/protocol.md", relative + "/decision.md")
-    policy = json.loads((case.repo / "research_memory/policies" / (policy_id + "-fresh.1.json")).read_bytes())
+    policy = json.loads((case.repo / "research_memory/policies" / (policy_id + ".1.json")).read_bytes())
     assert policy["status"] == "candidate" and policy["approval"]["approved_by"] is None
     assert policy["created_from_source_digest"] == hashlib.sha256((folder / "protocol.md").read_bytes()).hexdigest()

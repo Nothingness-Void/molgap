@@ -75,7 +75,7 @@ parameters, authority and budget. Put the file at
   "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
   "timestamp": "2026-10-29T00:00:00Z",
-  "question": { "policy_id": "...", "action": "RUN_PAIRED_100K", "question": "...",
+  "question": { "policy_id": "pcqm-k1-my-question-100k", "action": "RUN_PAIRED_100K", "question": "...",
     "deficiency": "...", "changed_mechanism": "...", "supporting_evidence": ["..."],
     "alternatives": ["..."], "closed_families": ["..."],
     "positive_decision": "...", "negative_decision": "..." },
@@ -106,7 +106,7 @@ experiment directory: `monitor_paths` (`STATUS.md`), `role_ref` (`protocol.md`),
 `decision_ref` (`decision.md`), the Kaggle block (kernel, title and source dataset
 from the authority `account` and the experiment ID, plus the fixed read-only
 `<account>/pcqm4mv2-ogb-fixed-100k-v1` mount) and, when `policy_id` is not
-registered, a candidate `research_memory/policies/<policy_id>.1.json` whose
+registered and equals the experiment ID with dashes, a candidate `research_memory/policies/<policy_id>.1.json` whose
 source digest is the `protocol.md` digest. Review and commit that policy file.
 Any of these fields written explicitly in the input wins. The question, arms,
 addon, authority, scope and budget have no default and are never invented.

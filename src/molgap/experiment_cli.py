@@ -294,7 +294,10 @@ def _dispatch(args) -> tuple[dict, int]:
                 from .family_training_runner import read_recipe
                 declaration = spec.to_dict()
                 reference = declaration["prospective"].get("same_run_replay", {}).get("reference_arm_id", args.arm)
-                jobs = {job["arm_id"]: job for job in json.loads(_read(args.plan))["arms"]}
+                plan = json.loads(_read(args.plan))
+                if plan["spec_identity"] != spec.identity:
+                    raise ValueError("The frozen plan belongs to a different Spec")
+                jobs = {job["arm_id"]: job for job in plan["arms"]}
                 recipes = {name: read_recipe(args.repo_root / jobs[name]["recipe"])[1] for name in {args.arm, reference}}
                 frozen = (recipes[reference], recipes[args.arm], jobs[args.arm]["initial_state"])
             result = run_arm_sandbox(spec, args.arm, frozen=frozen)

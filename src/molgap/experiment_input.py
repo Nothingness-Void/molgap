@@ -293,7 +293,7 @@ def _compile_scientific_input(path, root, value):
     from .research_memory.policy import load_policy_registry
     policies = [item for item in load_policy_registry(root) if item["policy_id"] == question.policy_id]
     derived_policy = None
-    if not policies:
+    if not policies and question.policy_id == value["experiment_id"].replace("_", "-"):
         from .research_memory.policy import validate_policy
         derived_policy = validate_policy(_derived_policy(question, file_digest(local(value["role_ref"]))))
         policies = [derived_policy]
