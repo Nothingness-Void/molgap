@@ -215,6 +215,9 @@ def _parser() -> argparse.ArgumentParser:
     selected.add_argument("--spec", type=_local)
     selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))
     sandbox.add_argument("--arm")
+    sandbox.add_argument("--plan", type=_local,
+        help="Frozen workflow_plan.json: check the arm on its real frozen initial state against the reference arm")
+    sandbox.add_argument("--repo-root", type=_local, default=Path.cwd())
     for name in ("prepare-workflow", "prepare-family-training", "prepare-release", "accept-workflow"):
         commands.choices[name].add_argument("--verbose", action="store_true",
             help="Print the full owner report rather than its summary")
@@ -285,10 +288,19 @@ def _dispatch(args) -> tuple[dict, int]:
             spec = ExperimentSpec.from_json(raw)
             if raw != spec.to_json():
                 raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
-            result = run_arm_sandbox(spec, args.arm)
+            frozen = None
+            if args.plan is not None:
+                import json
+                from .family_training_runner import read_recipe
+                declaration = spec.to_dict()
+                reference = declaration["prospective"].get("same_run_replay", {}).get("reference_arm_id", args.arm)
+                jobs = {job["arm_id"]: job for job in json.loads(_read(args.plan))["arms"]}
+                recipes = {name: read_recipe(args.repo_root / jobs[name]["recipe"])[1] for name in {args.arm, reference}}
+                frozen = (recipes[reference], recipes[args.arm], jobs[args.arm]["initial_state"])
+            result = run_arm_sandbox(spec, args.arm, frozen=frozen)
         else:
-            if args.arm is not None:
-                raise ValueError("--arm is only used with a Spec")
+            if args.arm is not None or args.plan is not None:
+                raise ValueError("--arm and --plan are only used with a Spec")
             result = run_family_sandbox(args.family)
         return result, 0 if result["status"] == "PASSED" else 1
     if args.command in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}:

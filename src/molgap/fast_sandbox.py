@@ -252,10 +252,29 @@ def run_sandbox(factory, *, forward=None, batch=None, addon_parameters=None, see
     return report
 
 
+def _family_forward(family, k1_execution=None, prepare=None):
+    """The one accelerated-CPU forward shared by every family sandbox and loaded-model probe."""
+    from copy import copy
+    from .family_model_ops import k1_forward
+
+    def forward(model, batch):
+        if family == "neural_atom_k1":
+            from .k1_execution_layout import cpu_layout_context
+            from .k1_execution_backend import execution_context
+            borrowed = copy(batch)
+            with cpu_layout_context(model, borrowed, "cpu"), execution_context(model, borrowed, "cpu", k1_execution):
+                return k1_forward(model, borrowed)
+        from .gptrans_execution_backend import prepare_layout, prepared_forward
+        prepared = prepare_layout(copy(batch))
+        if prepare is not None:
+            prepared = prepare(prepared, training=model.training)
+        return prepared_forward(model, prepared)
+    return forward
+
+
 def run_family_sandbox(family: str, *, addons=(), k1_execution=None, addon_parameters=None, seed=42, threads=1):
     """Random baseline plus reviewed slots through the accelerated CPU forwards."""
-    from copy import copy
-    from .family_model_ops import make_gptrans_backbone, k1_forward
+    from .family_model_ops import make_gptrans_backbone
     from .shared_model_adapter import apply_reviewed_addons, validate_family_addons
     if family not in {"neural_atom_k1", "gptrans_t"}:
         raise ValueError("No reviewed baseline sandbox forward for family")
@@ -274,23 +293,106 @@ def run_family_sandbox(family: str, *, addons=(), k1_execution=None, addon_param
         if hasattr(model, "_molgap_substrate"):
             model._molgap_substrate.seal()
         return model
-    def forward(model, batch):
-        if family == "neural_atom_k1":
-            from .k1_execution_layout import cpu_layout_context
-            from .k1_execution_backend import execution_context
-            borrowed = copy(batch)
-            with cpu_layout_context(model, borrowed, "cpu"), execution_context(model, borrowed, "cpu", k1_execution):
-                return k1_forward(model, borrowed)
-        from .gptrans_execution_backend import prepare_layout, prepared_forward
-        return prepared_forward(model, prepare_layout(copy(batch)))
-    result = run_sandbox(factory, forward=forward, addon_parameters=addon_parameters, seed=seed, threads=threads)
+    result = run_sandbox(factory, forward=_family_forward(family, k1_execution), addon_parameters=addon_parameters, seed=seed, threads=threads)
     result.update(family=family, model_identity="random baseline with reviewed slots",
                   frozen_initialization_loaded=False)
     return result
 
 
-def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, threads=1):
-    """Use the source-pinned generic graph ABI without data/initial-state loading."""
+def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, threads=1):
+    """Check one candidate on the real frozen initial state against its baseline, on CPU.
+
+    Step-0 outputs must be bitwise equal to the baseline (eval and train, same RNG).
+    Every substrate-owned addon parameter needs a finite non-zero gradient after
+    one backward (through verify_loaded_family_model, the single gradient probe).
+    Every attached addon module must fire in a forward, and a strict save, fresh
+    load roundtrip must reproduce predictions bitwise after moving the addon
+    parameters off their start. No dataset rows, optimizer continuation or
+    accelerator is involved.
+    """
+    from io import BytesIO
+    import torch
+    from .family_training_kernel import load_family_model
+    from .shared_model_adapter import validate_model_output
+    report = {"format": FORMAT, "status": "FAILED", "seed": seed, "device": "cpu", "synthetic_data": True,
+        "family": recipe.family, "model_identity": "frozen initialization",
+        "frozen_initialization_loaded": True, "checks": {}, "addons": {}, "limitations": list(LIMITATIONS)}
+    bits = lambda t: t.detach().contiguous().view(torch.int32)
+    try:
+        model = _module(load_family_model(recipe, initial_state)[0])
+        probe = verify_loaded_family_model(recipe, model, seed=seed, threads=threads)
+        report["addons"] = probe["addon_reports"]
+        for result in report["addons"].values():
+            if result["zero_gradients"] or result["nonfinite_gradients"] or result["missing_gradients"]:
+                result["status"] = "FAILED"
+        with _cpu_scope(seed, threads):
+            forward = _family_forward(recipe.family, getattr(recipe, "k1_execution", None))
+            base = _module(load_family_model(baseline_recipe, initial_state)[0])
+            batch = synthetic_batch()
+            rows = batch.y.numel()
+            predict = lambda m: validate_model_output(forward(m, batch), rows=rows, device=batch.y.device)
+            parameters = dict(model.named_parameters())
+            added = sorted(set(parameters) - set(base.state_dict()))
+            owned = {name for result in report["addons"].values()
+                     for name in (*result["connected_nonzero"], *result["missing_gradients"],
+                                  *result["zero_gradients"], *result["nonfinite_gradients"])}
+            if set(added) - owned:
+                raise ValueError("Candidate has parameters absent from the baseline that no attached addon owns")
+            fired = {}
+            modules = dict(getattr(model, "_molgap_addons", {}))
+            hooks = [m.register_forward_hook(lambda _m, _i, _o, key=k: fired.__setitem__(key, fired.get(key, 0) + 1))
+                     for k, m in modules.items()]
+            try:
+                model.eval()
+                with torch.no_grad():
+                    predict(model)
+            finally:
+                for hook in hooks:
+                    hook.remove()
+            silent = sorted(set(modules) - set(fired))
+            report["checks"]["addon_taps_fire"] = {"status": "FAILED" if silent or not modules else "PASSED",
+                "attached": len(modules), "silent": silent}
+            for mode in ("eval", "train"):
+                getattr(base, mode)(), getattr(model, mode)()
+                with torch.enable_grad() if mode == "train" else torch.no_grad():
+                    torch.manual_seed(7)
+                    expected = predict(base)
+                    torch.manual_seed(7)
+                    observed = predict(model)
+                same = bool(torch.equal(bits(expected), bits(observed)))
+                report["checks"]["step0_bitwise_" + mode] = {"status": "PASSED" if same else "FAILED"}
+            with torch.no_grad():
+                for name in added:
+                    parameters[name].add_(torch.linspace(-0.3, 0.3, parameters[name].numel()).reshape(parameters[name].shape))
+            model.eval()
+            with torch.no_grad():
+                moved = predict(model).clone()
+            buffer = BytesIO()
+            torch.save(_tensor_state(model), buffer)
+            buffer.seek(0)
+            fresh = _module(load_family_model(recipe, initial_state)[0])
+            fresh.load_state_dict(torch.load(buffer, map_location="cpu", weights_only=True), strict=True)
+            fresh.eval()
+            with torch.no_grad():
+                roundtrip = bool(torch.equal(bits(moved), bits(predict(fresh))))
+                changed = not added or not torch.equal(bits(moved), bits(predict(base.eval())))
+            report["checks"]["save_fresh_load_bitwise"] = {"status": "PASSED" if roundtrip and changed else "FAILED",
+                "predictions_bitwise_equal": roundtrip, "moved_parameters_change_output": changed}
+        failed = [k for k, v in {**report["checks"], **report["addons"]}.items() if v["status"] == "FAILED"]
+        report["status"] = "FAILED" if failed else "PASSED"
+        if failed:
+            report["error"] = {"type": "SandboxCheckFailed", "message": "Failed: " + ", ".join(failed)}
+    except Exception as exc:
+        report["error"] = {"type": type(exc).__name__, "message": str(exc)}
+    return report
+
+
+def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, threads=1, frozen=None):
+    """Use the source-pinned generic graph ABI without data/initial-state loading.
+
+    ``frozen=(baseline_recipe, recipe, initial_state)`` selects the frozen-state
+    candidate checks of run_frozen_arm_sandbox for a shared-family arm.
+    """
     from .experiment_spec import ExperimentSpec
     from .experiment_execution import training_adapter
     from .shared_model_adapter import build_graph_model, forward_normalized_gap
@@ -301,6 +403,10 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
     if arm is None:
         raise ValueError("Unknown sandbox arm")
     adapter = training_adapter(arm)
+    if adapter.module == "molgap.family_training_runner" and frozen is not None:
+        result = run_frozen_arm_sandbox(*frozen, seed=seed, threads=threads)
+        result.update(spec_identity=spec.identity, arm_id=arm_id)
+        return result
     if adapter.module == "molgap.family_training_runner":
         result = run_family_sandbox(arm["family"]["name"], addons=tuple(arm["addons"]),
             addon_parameters=addon_parameters, seed=seed, threads=threads)
@@ -336,26 +442,14 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
 
 def verify_loaded_family_model(recipe, model, *, seed=42, threads=1):
     """Probe a loaded CPU model, restoring its tensors, gradients and modes on exit."""
-    from copy import copy
     import torch
     from .shared_model_adapter import validate_model_output
-
-    def call(current_model, batch):
-        if recipe.family == "neural_atom_k1":
-            from .k1_execution_layout import cpu_layout_context
-            from .k1_execution_backend import execution_context
-            from .family_model_ops import k1_forward
-            borrowed = copy(batch)
-            with cpu_layout_context(current_model, borrowed, "cpu"), execution_context(
-                    current_model, borrowed, "cpu", getattr(recipe, "k1_execution", None)):
-                return k1_forward(current_model, borrowed)
-        from .gptrans_execution_backend import prepare_layout, prepared_forward
+    prepare = None
+    if recipe.family != "neural_atom_k1":
         from .family_training_policy import mode_policy
-        prepared = prepare_layout(copy(batch))
         prepare = mode_policy(recipe.family, recipe.mode).prepare_batch
-        if prepare is not None:
-            prepared = prepare(prepared, training=current_model.training)
-        return prepared_forward(current_model, prepared)
+    forward = _family_forward(recipe.family, getattr(recipe, "k1_execution", None), prepare)
+    call = lambda current_model, batch: forward(current_model, batch)
 
     model = _module(model)
     original_modes = _modes(model)
@@ -392,6 +486,7 @@ def verify_loaded_family_model(recipe, model, *, seed=42, threads=1):
                 "rows": int(target.numel()),
                 "backbone_gradients": backbone_report["status"],
                 "addons": {name: item["status"] for name, item in addon_reports.items()},
+                "addon_reports": addon_reports,
             }
         finally:
             with torch.no_grad():
@@ -406,6 +501,7 @@ __all__ = [
     "run_sandbox",
     "run_family_sandbox",
     "run_arm_sandbox",
+    "run_frozen_arm_sandbox",
     "synthetic_batch",
     "verify_loaded_family_model",
 ]
