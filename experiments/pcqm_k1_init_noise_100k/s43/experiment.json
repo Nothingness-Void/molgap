@@ -1,0 +1,78 @@
+{
+  "arms": [
+    {
+      "arm_id": "ref_s42",
+      "data_ref": {
+        "arm_id": "post_bn",
+        "spec_ref": "experiments/presets/k1-post-bn-100k-data.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+      "recipe_ref": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json"
+    },
+    {
+      "arm_id": "init_s43",
+      "data_ref": {
+        "arm_id": "init_s43",
+        "spec_ref": "experiments/pcqm_k1_init_noise_100k/s43/init_s43/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s43.pt",
+      "recipe_ref": "experiments/pcqm_k1_init_noise_100k/s43/init_s43/recipe.json"
+    }
+  ],
+  "attempt_id": "v1",
+  "authority_ref": "experiments/pcqm_k1_init_noise_100k/s43/authority.json",
+  "experiment_id": "pcqm_k1_init_noise_100k",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-k1-init-noise-100k-s43",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "D<1 meV and E<1.5 meV falsifies noise/variance as the cause of null screens.",
+    "estimated_device_hours": 6.6,
+    "estimated_wall_hours": 3.3,
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "Near misses are real small gains",
+      "Data order or dropout noise dominates init noise",
+      "K1 is capacity or data limited so noise is irrelevant"
+    ],
+    "changed_mechanism": "initialization-seed-noise",
+    "closed_families": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "deficiency": "Every K1 100K screen uses one seed, so the 1-3 meV near misses cannot be separated from initialization noise; no multi-seed 100K K1 result exists (the only attempt, seed 43, ended NO_TRAIN).",
+    "negative_decision": "E < 1.5 meV: same-architecture ensembling has low value at 100K. Falsifier: if D < 1 meV and E < 1.5 meV, the explanation that noise and variance hide gains is wrong, and the limit is capacity, data or contract. Close the init-noise question without retry, continuation, 500K, full training or adoption.",
+    "policy_id": "pcqm-k1-init-noise-100k",
+    "positive_decision": "Spread D = max pairwise |MAE difference| among the s42 mean, s43 and s44. D <= 1.0 meV: init noise is small; the past 2-3 meV near misses (typed pair token 2.80, combined simplification 2.16) deserve a 2-init confirmation. 1.0 < D < 2.5 meV: keep the 3 meV gate; any confirmation needs 2 inits per arm. D >= 2.5 meV: single-seed 3 meV screens are underpowered; past near misses become unresolved, not positive, and future screens need >=2 inits per arm. Ensemble gain E = MAE of the 3-init mean prediction against the mean single-run MAE, from saved 50K dev predictions. E >= 3 meV: ensembling beats every module tried and becomes the leading 500K/full candidate for the owner to decide. Rerun drift R = |ref_s42(A) - ref_s42(B)|; R > 0.5 meV means hardware nondeterminism is material. If only one kernel finishes, report one |delta| as a single noise sample and apply no D threshold. No automatic adoption or scale-up.",
+    "question": "How much does K1 post-BN 100K dev MAE change with the initial weights alone (torch seed 43 against the frozen seed 42), and what does a 3-init mean prediction gain over a single run?",
+    "supporting_evidence": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "ref_s42",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "addons": [],
+      "family": "neural_atom_k1",
+      "version": "3"
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "timestamp": "2026-10-29T19:10:00+00:00"
+}
