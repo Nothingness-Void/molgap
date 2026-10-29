@@ -99,17 +99,27 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
         trajectory_id=binding["trajectory_id"], train_role_identity=record["train_role_identity"])
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
+    # The real recorder and loader write the record of opened dataset files. Only the frozen
+    # Spec's dataset hash is substituted: the synthetic shards cannot reproduce that pinned hash.
+    from molgap import family_training_runner as worker
+    from molgap.experiment_family_workflow import DATA_OPEN_FILE
+    from molgap.family_training_data import DatasetSelection, load_training_data
+    from molgap.training_reproducibility import sha256_file
+    from test_family_training_data import write_pinned_data
+    data_root, _, manifest = write_pinned_data(case.paths.scratch_root / (arm_id + "-data"))
+    manifest.update(dict.fromkeys(
+        ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"), False))
+    (data_root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    selection = DatasetSelection("manifest.json", sha256_file(data_root / "manifest.json"), True)
+    worker._begin_data_open_record(directory, data_root, selection, context)
+    try:
+        load_training_data(data_root, selection)
+    finally:
+        worker._end_data_open_record()
+    record = json.loads((directory / DATA_OPEN_FILE).read_bytes())
+    record["dataset_manifest_sha256"] = session.recipe.dataset.manifest_sha256
+    (directory / DATA_OPEN_FILE).write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     progress = session.run()
-    # The worker's record of the dataset files it opened (real writer: run_screen_arm).
-    from molgap.experiment_family_workflow import DATA_OPEN_FILE, DATA_OPEN_FORMAT
-    shards = [{"file": "train/shard_0.pt", "role": "train", "sha256": "1" * 64},
-              {"file": "train/shard_1.pt", "role": "development", "sha256": "2" * 64}]
-    (directory / DATA_OPEN_FILE).write_text(json.dumps({"format": DATA_OPEN_FORMAT, "context": context.to_dict(),
-        "dataset_manifest_sha256": session.recipe.dataset.manifest_sha256, "manifest": "manifest.json",
-        "manifest_protected_role_flags": dict.fromkeys(
-            ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"), False),
-        "shards": shards, "invocations": [{"had_checkpoint": False,
-            "opened": ["manifest.json", "train/shard_0.pt", "train/shard_1.pt"]}]}), encoding="utf-8")
     report = outputs.complete(progress, runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
         "source_archive_sha256": context.source_archive_sha256},
@@ -444,16 +454,25 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     for damage in ("tampered", "missing_selected_shard", "protected_file_opened"):
         broken = json.loads(intact)
         if damage == "missing_selected_shard":
-            broken["invocations"][0]["opened"].remove("train/shard_1.pt")
+            broken["invocations"][0]["opened"].remove("development.pt")
         elif damage == "protected_file_opened":
-            broken["invocations"][0]["opened"].append("train/official_validation_0.pt")
-            broken["shards"].append({"file": "train/official_validation_0.pt", "role": "official_validation", "sha256": "3" * 64})
+            broken["invocations"][0]["opened"].append("official_validation_0.pt")
+            broken["shards"].append({"file": "official_validation_0.pt", "role": "official_validation", "sha256": "3" * 64})
         record_path.write_text(json.dumps(broken) if damage != "tampered" else json.dumps(broken) + " ", encoding="utf-8")
+        if damage == "protected_file_opened":
+            # A hash-consistent record that lists a protected file: the only path to the warning.
+            manifest_path = record_path.with_name("output_manifest.json")
+            manifest_bytes = manifest_path.read_bytes()
+            rebound = json.loads(manifest_bytes)
+            rebound["artifacts"]["data_open"]["sha256"] = hashlib.sha256(record_path.read_bytes()).hexdigest()
+            manifest_path.write_text(json.dumps(rebound), encoding="utf-8")
         assert experiment_cli.main([*draft, "--output-dir", str(case.repo / ("audits_" + damage))]) == 0
-        capsys.readouterr()
+        warning = capsys.readouterr().err
+        assert ("protected-role file(s) opened for official_validation" in warning) == (damage == "protected_file_opened")
         first = json.loads((case.repo / ("audits_" + damage) / ("roles_" + next(iter(contexts)) + ".json")).read_bytes())
         assert set(first["role_use"].values()) == {"unknown"}, damage
     record_path.write_bytes(intact)
+    manifest_path.write_bytes(manifest_bytes)
     assert experiment_cli.main([*draft, "--output-dir", str(case.repo / "audits")]) == 0
     audits = json.loads(capsys.readouterr().out)
     drafted = json.loads((case.repo / audits[next(iter(contexts))]).read_bytes())

@@ -306,7 +306,9 @@ class SessionOutputs:
             "contract": "training_contract.json"}
         if self.recipe.dataset.development:
             artifacts["predictions"] = "development_predictions.pt"
-        if (self.root / DATA_OPEN_FILE).is_file():
+        # Only the worker's own recorder may vouch for the file; a file that merely exists is not enough.
+        from .family_training_runner import _DATA_OPEN
+        if _DATA_OPEN["path"] == self.root / DATA_OPEN_FILE and (self.root / DATA_OPEN_FILE).is_file():
             artifacts["data_open"] = DATA_OPEN_FILE
         write_output_manifest(self.root, self.context, adapter=self.adapter, artifacts=artifacts,
             progress={"optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,

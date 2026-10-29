@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
@@ -22,7 +23,8 @@ from .screen_policy import canonical_fingerprint
 PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
 DATA_OPEN_BOUNDARY = (
     "This record covers only Python-level file opens in the training main process. It does not "
-    "cover native code or child processes, nor network access (the Kaggle kernel has internet). "
+    "cover native code or child processes, nor network access (the Kaggle kernel has internet), "
+    "nor opens of files outside the directory that holds the frozen dataset manifest. "
     "'untouched' means that process did not open protected-role files through Python; it does not "
     "prove the data was unreachable.")
 
@@ -207,10 +209,12 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
         for role in PROTECTED_ROLES:
             if role not in (protected_role_use or {}):
                 states[role] = "untouched"
-    elif derived is not None and derived["status"] == "protected_role_file_opened" and any(
-            (protected_role_use or {}).get(role) in {"untouched", "not_applicable"} for role in PROTECTED_ROLES):
-        raise ValueError("Data-open record shows a protected-role file was opened; "
-                         "it contradicts an explicit untouched/not_applicable state")
+    elif derived is not None and derived["status"] == "protected_role_file_opened":
+        print("WARNING: data-open record shows protected-role file(s) opened for "
+              + ", ".join(derived["roles"]) + "; states stay unknown", file=sys.stderr)
+        if any((protected_role_use or {}).get(role) in {"untouched", "not_applicable"} for role in PROTECTED_ROLES):
+            raise ValueError("Data-open record shows a protected-role file was opened; "
+                             "it contradicts an explicit untouched/not_applicable state")
     required = contract["acceptance_requirements"]
     if (contract["dataset"]["manifest_sha256"] != dataset
             or required.get("source_idx_sha256") != development or "target_sha256" not in required):
