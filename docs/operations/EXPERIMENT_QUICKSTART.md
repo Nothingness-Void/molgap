@@ -61,61 +61,68 @@ part of this migration.
 
 ## Supply one human input
 
-`molgap-scientific-experiment-v1` describes the question, existing authority,
-reference recipe/data, initialization, supported delta, seed, platform and local
-profile. The compiler generates Spec/workflow/prospective definitions and hashes
-through existing owners. See the supported shape in
-[`_compile_scientific_input`](../../src/molgap/experiment_input.py) and the
-[synthetic fixture](../../tests/test_scientific_input.py); fixture identities
-are examples, never real authorization or evidence.
-
-`authority` and `platform` may be inline objects instead of `authority_ref` and
-`platform_ref` (choose one form for each). Authority still names the exact arms,
-seed and budget. Role and decision references retain real content. Addons accept
-`"addon_name"` or `{"name":"addon_name"}` when the existing catalog supplies
-version 1 defaults; required parameters still need explicit values.
-
-An arm or `shared` may use `preset_ref: {"path":".../baseline-v1.json",
-"sha256":"<frozen hash>"}` to reuse a reviewed versioned baseline. Its existing
-compiler owner pins the recipe, data Spec/arm, target manifest and initialization
-identity. `initial_state_ref` remains the explicit machine location. See the
-[preset reader](../../src/molgap/experiment_presets.py) and
-[executable examples](../../tests/test_scientific_input_ergonomics.py).
-There is no mutable latest preset, implicit account/hardware template or automatic
-weight download. Existing historical runtimes are not silently relabeled as new
-K1/GPTrans presets.
-
-For an explicitly authorized baseline/candidate job, `shared` supplies common arm
-fields and each `arms` entry overrides whole fields. `same_run` binds
-`reference_arm_id` and `target_manifest_ref`; authority must name that reference
-arm in `same_run_reference_arm_id`. The reference keeps its frozen recipe and
-the candidate supplies the scientific delta. This uses the existing same-run
-acceptance owner; it does not require inventing a previously accepted reference.
-See the executable [pair fixture](../../tests/test_scientific_pair_input.py).
-
-A new `vN` attempt requires `retry_of` (logical run, predecessor attempt, Spec
-identity and decision pointer), matching authority and an explicit authorized
-terminal disposition. Submitted predecessors require an exact reconciled job
-observation. Unknown publication cannot be retried through this input.
-
-Already authored declarations can use this reference-only envelope:
+The infrastructure holds the framework. For a K1 post-BN 100K pair you fill in
+only the experiment's own details: question, arms, the catalog addon and its
+parameters, authority and budget. Put the file at
+`experiments/<experiment_id>/experiment.json`, commit it with a non-empty
+`protocol.md` and `decision.md` beside it, and run `submit_workflow.py` (below).
 
 ```json
 {
-  "format": "molgap-experiment-input-v1",
-  "spec_ref": "experiments/question/experiment_spec.json",
-  "workflow_ref": "experiments/question/workflow_plan.json",
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_my_question_100k",
+  "logical_run_id": "pcqm-k1-my-question-100k-s42",
+  "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
-  "authority_ref": "experiments/question/authority.json",
-  "monitor_paths": ["experiments/question/STATUS.md"],
-  "attempt_id": "v1"
+  "timestamp": "2026-10-29T00:00:00Z",
+  "question": { "policy_id": "...", "action": "RUN_PAIRED_100K", "question": "...",
+    "deficiency": "...", "changed_mechanism": "...", "supporting_evidence": ["..."],
+    "alternatives": ["..."], "closed_families": ["..."],
+    "positive_decision": "...", "negative_decision": "..." },
+  "profile": { "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "...", "estimated_device_hours": 3.7, "estimated_wall_hours": 1.85 },
+  "authority": { "format": "molgap-execution-authority-v1", "user_authorized": true,
+    "account": "<kaggle account>", "arms": ["baseline", "candidate"], "seeds": [42],
+    "same_run_reference_arm_id": "baseline", "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400, "cleanup_reserve_seconds": 180,
+    "authority": "<who authorized what>", "scope": "<exact scope>",
+    "development_role_label_use": true, "protected_roles_authorized": [] },
+  "seeds": [42],
+  "shared": {
+    "preset_ref": { "path": "experiments/presets/k1-post-bn-100k-v1.json",
+                    "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61" },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {}, "purpose": "single_module_ablation" },
+  "arms": [ { "arm_id": "baseline" },
+            { "arm_id": "candidate", "model": { "addons": [ { "name": "<catalog addon>", "config": {} } ] } } ],
+  "same_run": { "reference_arm_id": "baseline" }
 }
 ```
 
-The referenced authority must already cover the requested work. Missing reference,
-dataset manifest or target identity blocks preparation; no baseline is retrained.
-Commit human/source inputs before formal preparation. Generated definitions are
-compact metadata, not weights or training data. Do not hand-edit them.
+The preset pins the post-BN recipe, data declaration, target manifest,
+initialization digest and model family. The compiler derives the rest from the
+experiment directory: `monitor_paths` (`STATUS.md`), `role_ref` (`protocol.md`),
+`decision_ref` (`decision.md`), the Kaggle block (kernel, title and source dataset
+from the authority `account` and the experiment ID, plus the fixed read-only
+`<account>/pcqm4mv2-ogb-fixed-100k-v1` mount) and, when `policy_id` is not
+registered, a candidate `research_memory/policies/<policy_id>.1.json` whose
+source digest is the `protocol.md` digest. Review and commit that policy file.
+Any of these fields written explicitly in the input wins. The question, arms,
+addon, authority, scope and budget have no default and are never invented.
+Check an addon on the real frozen state before submitting:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- sandbox --spec $run/inputs/experiment_spec.json --arm candidate --plan $run/inputs/workflow_plan.json --repo-root .
+```
+
+Known limits: Kaggle T4x2 only; seed 42 only; one reference plus one candidate;
+typed edits limited to `learning_rate` and `weight_decay`; the derived Kaggle
+block supports only the fixed 100K mount (write `platform` explicitly otherwise);
+a new `vN` attempt needs `retry_of` with matching authority and a reconciled
+terminal disposition. Fixture identities in
+[`tests/test_scientific_input_ergonomics.py`](../../tests/test_scientific_input_ergonomics.py)
+are examples, never authorization or evidence.
 
 ## Prepare through the owning platform
 
