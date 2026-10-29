@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-sam-100k",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-sam-100k"
+  },
+  "action_rule": {
+    "action": "RUN_PAIRED_100K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "d77a84598b75efee9ddf54d009c41a9f00e20ec8f64c5d6b91dba32d1da7c3ad"
+}
