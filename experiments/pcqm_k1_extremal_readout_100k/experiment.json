@@ -1,0 +1,44 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_extremal_readout_100k",
+  "logical_run_id": "pcqm-k1-extremal-readout-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-10-29T15:00:00Z",
+  "question": {
+    "policy_id": "pcqm-k1-extremal-readout-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does a zero-initialised branch that adds per-graph max, min and std of the final node states to the mean-pooled embedding improve the unchanged post-BN K1 at fixed 100K?",
+    "deficiency": "Mean pooling keeps only first-moment information of the final node states; no K1 endpoint has tested extremal or spread statistics beside the mean. Frozen-state probes bound the usable signal at about 1.25 meV, so the prior is low.",
+    "changed_mechanism": "zero-init-max-min-std-branch-added-to-pooled-embedding",
+    "supporting_evidence": ["pcqm-k1-complete-module-audit-20261008"],
+    "alternatives": ["Final node states carry no extremal signal beyond the mean", "Train-versus-development gap rather than readout information limits accuracy", "Gains below the 3 meV gate are seed variation", "The branch stays near zero and is unused"],
+    "closed_families": ["K1-initial-residual100K", "K1-dropout-consistency100K", "K1-message-droppath100K", "K1-normalization100K", "K1-FLAG100K"],
+    "positive_decision": "Nominate only for independently authorized seed replication and a 500K transfer question after complete paired acceptance",
+    "negative_decision": "Close the K1 extremal and second-order readout family without adoption, retry or scale-up"
+  },
+  "profile": {
+    "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "One same-job 40-pass 100K pair; same tensors, data and recipe, only the extremal readout addon",
+    "estimated_device_hours": 3.7, "estimated_wall_hours": 1.85
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1", "user_authorized": true,
+    "account": "nvoid912", "arms": ["baseline", "candidate"], "seeds": [42],
+    "same_run_reference_arm_id": "baseline", "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400, "cleanup_reserve_seconds": 180,
+    "authority": "Relayed by the coordinating agent (not received directly from the user): the user authorized a third real kaggle3 submission that spends quota and the reading of 50K development role labels for metrics. The ceiling of 8 T4 hours and 14400 s were set by the coordinator; the user gave no specific numbers.",
+    "scope": "One paired Notebook only on kaggle3 T4x2; train and development roles only; no official validation, test-dev, test-challenge, common/OOD/P8-hard or other protected role; no automatic retry/continuation/monitor/500K/full/adoption",
+    "development_role_label_use": true, "protected_roles_authorized": []
+  },
+  "seeds": [42],
+  "shared": {
+    "preset_ref": { "path": "experiments/presets/k1-post-bn-100k-v1.json",
+                    "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61" },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {}, "purpose": "single_module_ablation" },
+  "arms": [ { "arm_id": "baseline" },
+            { "arm_id": "candidate", "model": { "addons": [ { "name": "k1_extremal_readout", "config": {} } ] } } ],
+  "same_run": { "reference_arm_id": "baseline" }
+}
