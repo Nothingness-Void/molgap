@@ -109,6 +109,12 @@ ADDONS = MappingProxyType({
         family_versions=("2", "3"), single_addon=True,
         execution_modes=(("2", "mean2_clean_second"), ("3", "mean2_clean_second")),
     ),
+    ("k1_sam", "1"): AddonContract(
+        "neural_atom_k1", "k1-training-objective", "molgap.family_model_ops",
+        (AddonConfigField("rho", value=0.05),),
+        ("3",), True,
+        execution_modes=(("3", "sam"),),
+    ),
     # Historical declaration compatibility only; live training dispatch retires these.
     ("k1_fused_layout", "1"): AddonContract(
         "neural_atom_k1", "k1-execution", "molgap.k1_screen_training",

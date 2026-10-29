@@ -1,0 +1,44 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_sam_100k",
+  "logical_run_id": "pcqm-k1-sam-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-10-29T08:35:00Z",
+  "question": {
+    "policy_id": "pcqm-k1-sam-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does sharpness-aware minimization (rho 0.05) on the unchanged post-BN K1 improve fixed-100K development Gap MAE?",
+    "deficiency": "Online train MAE (0.098 eV) is far below development MAE (0.141 eV) and input, capacity and activation regularisers at 100K were negative or below gate; no weight-space sharpness method has been run on K1.",
+    "changed_mechanism": "sharpness-aware-weight-perturbation-step",
+    "supporting_evidence": ["pcqm-k1-complete-module-audit-20261008", "arXiv:2010.01412"],
+    "alternatives": ["No effect on the generalisation gap", "BatchNorm interaction harms", "Double gradient work does not change the endpoint", "Gain is single-seed variation"],
+    "closed_families": ["K1-dropout-consistency100K", "K1-message-droppath100K", "K1-FLAG100K", "K1-initial-residual100K", "K1-normalization100K"],
+    "positive_decision": "Nominate only for independently authorized replication or transfer after complete paired acceptance",
+    "negative_decision": "Close without adoption, retry, rho sweep or scale-up"
+  },
+  "profile": {
+    "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "One same-job 40-pass 100K pair; same tensors, data and recipe, only the SAM step (rho 0.05)",
+    "estimated_device_hours": 6.7, "estimated_wall_hours": 3.4
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1", "user_authorized": true,
+    "account": "nvoid912", "arms": ["baseline", "sam"], "seeds": [42],
+    "same_run_reference_arm_id": "baseline", "allocated_t4_hours_ceiling": 10,
+    "allocation_wall_limit_seconds": 18000, "cleanup_reserve_seconds": 180,
+    "authority": "Relayed by the coordinating agent (not received directly from the user): the user authorized real kaggle3 submissions that spend quota and reading 50K development role labels for metrics. The ceiling of 10 T4 hours and 18000 s were set by the coordinator from a measured local SAM/baseline step-time ratio of 2.34; the user gave no specific numbers.",
+    "scope": "One paired Notebook only; train/development roles; no automatic retry/continuation/monitor/protected roles/500K/full/adoption",
+    "development_role_label_use": true, "protected_roles_authorized": []
+  },
+  "seeds": [42],
+  "shared": {
+    "preset_ref": { "path": "experiments/presets/k1-post-bn-100k-v1.json",
+                    "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61" },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {}, "purpose": "single_module_ablation" },
+  "arms": [ { "arm_id": "baseline" },
+            { "arm_id": "sam", "model": { "addons": [ { "name": "k1_sam", "config": { "rho": 0.05 } } ] } } ],
+  "same_run": { "reference_arm_id": "baseline" }
+}

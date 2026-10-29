@@ -299,6 +299,35 @@ def run_family_sandbox(family: str, *, addons=(), k1_execution=None, addon_param
     return result
 
 
+def _sam_step_checks(recipe, initial_state, forward, batch):
+    """Perturbed-second-pass checks for mode sam: determinism, BN buffers, weight restore."""
+    import torch
+    from .family_model_ops import k1_optimizer_step
+    from .family_training_kernel import load_family_model
+
+    def run(mode, lr):
+        model = _module(load_family_model(recipe, initial_state)[0]).train()
+        optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=0.0)
+        before = {key: value.detach().clone() for key, value in model.state_dict().items()}
+        torch.manual_seed(7)
+        k1_optimizer_step(model, optimizer, batch, -2.5, 1.0, mode, clip_norm=1.0,
+                          check_finite=True, forward=forward)
+        return before, {key: value.detach().clone() for key, value in model.state_dict().items()}
+
+    same = lambda a, b, keys: all(torch.equal(a[key], b[key]) for key in keys)
+    _, first = run("sam", 4e-4)
+    _, second = run("sam", 4e-4)
+    _, plain = run("reference", 4e-4)
+    buffers = [key for key in first if key.endswith(("running_mean", "running_var", "num_batches_tracked"))]
+    before, frozen_lr = run("sam", 0.0)  # lr 0: any change to a weight is a restore failure
+    weights = [key for key, _ in _module(load_family_model(recipe, initial_state)[0]).named_parameters()]
+    status = lambda ok: {"status": "PASSED" if ok else "FAILED"}
+    return {"sam_first_step_deterministic": status(same(first, second, first)),
+            "sam_bn_buffers_match_unperturbed_step": {**status(bool(buffers) and same(first, plain, buffers)),
+                                                       "buffers": len(buffers)},
+            "sam_weights_restored_bitwise": status(same(before, frozen_lr, weights))}
+
+
 def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, threads=1):
     """Check one candidate on the real frozen initial state against its baseline, on CPU.
 
@@ -352,6 +381,10 @@ def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, t
             silent = sorted(set(modules) - set(fired))
             report["checks"]["addon_taps_fire"] = {"status": "FAILED" if silent or not modules else "PASSED",
                 "attached": len(modules), "silent": silent}
+            if recipe.mode == "sam" and not modules:
+                # SAM is an optimizer-step mode with no forward taps; its own checks follow.
+                report["checks"]["addon_taps_fire"] = {"status": "NOT_APPLICABLE", "attached": 0, "silent": []}
+                report["checks"].update(_sam_step_checks(recipe, initial_state, forward, batch))
             for mode in ("eval", "train"):
                 getattr(base, mode)(), getattr(model, mode)()
                 with torch.enable_grad() if mode == "train" else torch.no_grad():

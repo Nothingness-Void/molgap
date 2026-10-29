@@ -283,7 +283,7 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second", "sam")
 ACCELERATED_EXECUTION_POLICY = {"name": "k1-accelerated", "version": "1",
     "adamw_fused": False, "adamw_foreach": None,
     "cpu_layout": True, "fill_uninitialized_memory": False,
@@ -327,7 +327,7 @@ def _recipe_seed(recipe: dict) -> int:
 
 def _maximum_overhead(mode):
     # The two-pass control intentionally doubles forwards; it is not an SSMA extension.
-    return 1.0 if mode in ("mean2", "mean2_clean_second") else 0.25
+    return 1.6 if mode == "sam" else 1.0 if mode in ("mean2", "mean2_clean_second") else 0.25
 
 
 def _state_digest(state: dict) -> str:
@@ -396,7 +396,7 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     if execution_torch_version is not None and (type(execution_torch_version) is not str
             or execution_torch_version not in ACCELERATED_RUNTIME_PINS):
         raise ValueError("Unsupported accelerated K1 runtime pin")
-    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second"}:
+    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second", "sam"}:
         raise ValueError("No executable screen recipe for this K1 addon")
     recipe = {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
         "initialization_sha256": initialization_sha256,
@@ -648,7 +648,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext, tensor_safe_rng_state
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second") or label_cache is not None:
+    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second", "sam") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
