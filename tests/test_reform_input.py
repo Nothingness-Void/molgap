@@ -202,6 +202,7 @@ def test_prepare_once_then_reuse_existing_owner_and_package(editable,monkeypatch
         return {"status":"PREPARED_FOR_PLATFORM"}
     owner=Mock(side_effect=original_owner)
     monkeypatch.setattr("molgap.experiment_workflow.prepare_workflow",owner)
+    monkeypatch.setattr("molgap.experiment_workflow.check_workflow_readiness",Mock(return_value={"status":"WORKFLOW_INPUTS_READY"}))
     verify=Mock(return_value={"spec_identity":ExperimentSpec(editable.payload).identity,"package_identity":"a"*64})
     monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",verify)
     a=prepare_experiment_input(editable.path,editable.repo)
