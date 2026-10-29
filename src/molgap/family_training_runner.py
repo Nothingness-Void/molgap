@@ -232,7 +232,7 @@ def _assert_target_statistics(recipe, data):
         observed = tuple(float(torch.tensor(value, dtype=torch.float32).item())
                          for value in observed)
     expected = (float(recipe.target_mean_eV), float(recipe.target_std_eV))
-    if observed != expected:
+    if not all(math.isclose(o, e, rel_tol=0.0, abs_tol=1e-12) for o, e in zip(observed, expected)):
         raise ValueError(
             "Decoded train target statistics differ from frozen recipe: "
             f"observed={observed!r}, expected={expected!r}"
