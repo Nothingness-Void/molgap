@@ -113,7 +113,7 @@ ADDONS = MappingProxyType({
         "neural_atom_k1", "k1-training-objective", "molgap.family_model_ops",
         (AddonConfigField("rho", value=0.05),),
         ("3",), True,
-        execution_modes=(("3", "sam"),),
+        execution_modes=(("3", "sam"),), policy_hook="molgap.family_model_ops:policy",
     ),
     # Historical declaration compatibility only; live training dispatch retires these.
     ("k1_fused_layout", "1"): AddonContract(

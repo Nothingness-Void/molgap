@@ -144,3 +144,15 @@ def k1_optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
     loss, (absolute, rows) = optimizer_update(model, optimizer, loss_builder,
         clip_norm=clip_norm, check_finite=check_finite, clip_parameters=clip_parameters, observer=observer)
     return loss, absolute, rows
+
+
+def policy(mode):
+    """Registered mode policy: SAM keeps the reference normalized-L1 objective identity.
+
+    Only the update rule (see _k1_sam_step) differs, so same-run comparison must not
+    report a loss change.
+    """
+    from .family_training_policy import FamilyModePolicy
+    if mode != "sam":
+        raise ValueError("No family_model_ops policy for mode " + str(mode))
+    return FamilyModePolicy(objective_name="reference")
