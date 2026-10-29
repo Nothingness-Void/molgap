@@ -332,8 +332,14 @@ so the draft binds the successor before its first terminal closure.
 Events are drafted from the frozen Spec data roles and each arm's digest-checked
 training contract; terminal inspection verifies the run itself. A missing or
 mismatched source is an error and no file is written until every arm validates. Protected-role states
-are never derived: they stay `unknown`, which blocks closure, unless you pass
-`--protected-role-use ROLE=STATE` (repeat per role) from observed facts.
+stay `unknown`, which blocks closure, unless you pass `--protected-role-use ROLE=STATE`
+(repeat per role) from observed facts, or the arm's output manifest lists
+`data_open_provenance.json`. New runs write that record: the shared worker logs each dataset
+file its Python process opens, and the draft sets all three protected roles to `untouched` only
+when the record's hash matches the manifest, every selected train/development shard appears in
+it, and no protected-role file does (a protected file leaves the states `unknown`). The record
+does not cover native code, child processes or network access, and the draft says so. Old runs
+have no record, so they still need `--protected-role-use` from observed facts.
 
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot

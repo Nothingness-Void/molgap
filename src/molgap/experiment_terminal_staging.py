@@ -20,6 +20,11 @@ from .screen_policy import canonical_fingerprint
 
 
 PROTECTED_ROLES = ("official_validation", "test_dev", "test_challenge")
+DATA_OPEN_BOUNDARY = (
+    "This record covers only Python-level file opens in the training main process. It does not "
+    "cover native code or child processes, nor network access (the Kaggle kernel has internet). "
+    "'untouched' means that process did not open protected-role files through Python; it does not "
+    "prove the data was unreachable.")
 
 
 def _per_arm(value, arm_id):
@@ -112,13 +117,67 @@ def _roles(root, audit_ref, context, where, action_id):
     return role_use, events, blockers, audit_ref
 
 
+def _protected_roles_from_data_open(output_dir, artifacts, context, dataset, selected_roles):
+    """Derive protected-role truth from the hash-bound record of files the worker opened.
+
+    Returns None when the arm has no record. Otherwise an evidence dict whose ``status``
+    is ``untouched``; any other status (unverified record, failed positive control,
+    protected file opened) leaves the states ``unknown``. Consumption is never filled in
+    silently: it needs a role event and an explicit ``--protected-role-use``.
+    """
+    from .experiment_family_workflow import DATA_OPEN_FORMAT
+    if "data_open" not in artifacts:
+        return None
+    entry = artifacts["data_open"]
+    try:
+        path = _artifact_path(output_dir, entry["path"])
+        if file_digest(path) != entry["sha256"]:
+            raise ValueError("Retained data-open record differs from its output manifest digest")
+        record = _json(path)
+        _check_context(record.get("context"), context)
+        if record.get("format") != DATA_OPEN_FORMAT or record.get("dataset_manifest_sha256") != dataset:
+            raise ValueError("Data-open record differs from the frozen dataset identity")
+        shards = {item["file"]: item["role"] for item in record["shards"]}
+        invocations = record["invocations"]
+        flags = record["manifest_protected_role_flags"]
+        manifest_name = record["manifest"]
+    except (ValueError, TypeError, KeyError, OSError) as exc:
+        return {"status": "record_unverified", "record": entry, "reason": str(exc)}
+    selected = {name for name, role in shards.items() if role in selected_roles}
+    opened = set()
+    for invocation in invocations:
+        opened.update(invocation["opened"])
+    consumed = sorted({shards[name] for name in opened if shards.get(name) in PROTECTED_ROLES})
+    if consumed:
+        return {"status": "protected_role_file_opened", "record": entry, "roles": consumed}
+    if (set(flags) != {role + "_role_read" for role in PROTECTED_ROLES}
+            or any(value is not False for value in flags.values())
+            or any(role not in {*selected_roles, *PROTECTED_ROLES} for role in shards.values())):
+        return {"status": "unattributable_dataset_manifest", "record": entry}
+    stray = opened - set(shards) - {manifest_name}
+    if invocations and invocations[0]["had_checkpoint"]:
+        # Work before this record's first invocation was not observed.
+        return {"status": "positive_control_failed", "record": entry, "unobserved_earlier_invocation": True}
+    # Each invocation loads the data again, so each must show every selected shard.
+    missing = sorted(selected - set.intersection(*(set(item["opened"]) for item in invocations))) if invocations else sorted(selected)
+    if stray or missing or not invocations:
+        return {"status": "positive_control_failed", "record": entry,
+                "missing_selected_shards": missing, "unattributed_opens": sorted(stray)}
+    text = ("Hash-bound record " + entry["path"] + " (sha256 " + entry["sha256"] + ", listed in output_manifest.json) "
+            "shows the frozen training process opened " + str(len(opened & set(shards))) + " dataset shard file(s): every selected "
+            + "/".join(sorted(selected_roles)) + " shard in each of " + str(len(invocations)) + " invocation(s), and no "
+            "official_validation, test_dev or test_challenge file. " + DATA_OPEN_BOUNDARY)
+    return {"status": "untouched", "record": entry, "text": text}
+
+
 def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None):
     """Draft one arm's role audit for a family-session screen from retained artifacts.
 
     Events are drafted from the frozen Spec data roles and the arm's retained,
     digest-checked training contract; terminal inspection verifies the run itself.
-    Protected-role states are never derived: they stay ``unknown`` (which blocks
-    closure) unless the human passes them.
+    Protected-role states stay ``unknown`` (which blocks closure) unless the human
+    passes them, or the arm retained a hash-bound record of the dataset files its
+    worker opened that shows only train/development files (``untouched``).
     """
     states = {role: "unknown" for role in PROTECTED_ROLES}
     for role, state in (protected_role_use or {}).items():
@@ -143,6 +202,15 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
         raise ValueError("Role audit drafting needs development-based selection in the training contract")
     train, development = roles["train"]["membership_sha256"], roles["development"]["membership_sha256"]
     dataset = spec_arm["data"]["dataset"]["sha256"]
+    derived = _protected_roles_from_data_open(output_dir, artifacts, context, dataset, set(roles))
+    if derived is not None and derived["status"] == "untouched":
+        for role in PROTECTED_ROLES:
+            if role not in (protected_role_use or {}):
+                states[role] = "untouched"
+    elif derived is not None and derived["status"] == "protected_role_file_opened" and any(
+            (protected_role_use or {}).get(role) in {"untouched", "not_applicable"} for role in PROTECTED_ROLES):
+        raise ValueError("Data-open record shows a protected-role file was opened; "
+                         "it contradicts an explicit untouched/not_applicable state")
     required = contract["acceptance_requirements"]
     if (contract["dataset"]["manifest_sha256"] != dataset
             or required.get("source_idx_sha256") != development or "target_sha256" not in required):
@@ -155,7 +223,10 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
         for role, rows, kinds in (("train", train, ("training_membership",)),
             ("development", development, ("prediction_input", "labels_read", "metric_computed", "selection_used")))
         for kind in kinds]
-    return {"context": context.to_dict(), "role_use": states, "roles": events}
+    audit = {"context": context.to_dict(), "role_use": states, "roles": events}
+    if derived is not None:
+        audit["protected_role_evidence"] = derived
+    return audit
 
 
 def load_closure_input(path):

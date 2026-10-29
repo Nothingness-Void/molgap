@@ -100,6 +100,16 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
     progress = session.run()
+    # The worker's record of the dataset files it opened (real writer: run_screen_arm).
+    from molgap.experiment_family_workflow import DATA_OPEN_FILE, DATA_OPEN_FORMAT
+    shards = [{"file": "train/shard_0.pt", "role": "train", "sha256": "1" * 64},
+              {"file": "train/shard_1.pt", "role": "development", "sha256": "2" * 64}]
+    (directory / DATA_OPEN_FILE).write_text(json.dumps({"format": DATA_OPEN_FORMAT, "context": context.to_dict(),
+        "dataset_manifest_sha256": session.recipe.dataset.manifest_sha256, "manifest": "manifest.json",
+        "manifest_protected_role_flags": dict.fromkeys(
+            ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"), False),
+        "shards": shards, "invocations": [{"had_checkpoint": False,
+            "opened": ["manifest.json", "train/shard_0.pt", "train/shard_1.pt"]}]}), encoding="utf-8")
     report = outputs.complete(progress, runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
         "source_archive_sha256": context.source_archive_sha256},
@@ -422,14 +432,35 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     # has been lost, using the original frozen package and retained outputs.
     for name in case.generated:
         (case.repo / name).unlink()
-    # Draft the role audits from the retained artifacts; protected-role states are human input.
+    # Draft the role audits from the retained artifacts. Protected roles come from the
+    # hash-bound record of opened dataset files; without a usable record they stay unknown.
     capsys.readouterr()
-    assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
+    draft = ["draft-role-audit", "--profile", str(case.profile),
         "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
-        "--retrieved-root", str(case.paths.artifact_root / "retrieved"), "--output-dir", str(case.repo / "audits"),
-        *[value for role in ("official_validation", "test_dev", "test_challenge")
-          for value in ("--protected-role-use", role + "=untouched")]]) == 0
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved")]
+    record_path = case.paths.artifact_root / "retrieved" / next(iter(contexts)) / "data_open_provenance.json"
+    intact = record_path.read_bytes()
+
+    for damage in ("tampered", "missing_selected_shard", "protected_file_opened"):
+        broken = json.loads(intact)
+        if damage == "missing_selected_shard":
+            broken["invocations"][0]["opened"].remove("train/shard_1.pt")
+        elif damage == "protected_file_opened":
+            broken["invocations"][0]["opened"].append("train/official_validation_0.pt")
+            broken["shards"].append({"file": "train/official_validation_0.pt", "role": "official_validation", "sha256": "3" * 64})
+        record_path.write_text(json.dumps(broken) if damage != "tampered" else json.dumps(broken) + " ", encoding="utf-8")
+        assert experiment_cli.main([*draft, "--output-dir", str(case.repo / ("audits_" + damage))]) == 0
+        capsys.readouterr()
+        first = json.loads((case.repo / ("audits_" + damage) / ("roles_" + next(iter(contexts)) + ".json")).read_bytes())
+        assert set(first["role_use"].values()) == {"unknown"}, damage
+    record_path.write_bytes(intact)
+    assert experiment_cli.main([*draft, "--output-dir", str(case.repo / "audits")]) == 0
     audits = json.loads(capsys.readouterr().out)
+    drafted = json.loads((case.repo / audits[next(iter(contexts))]).read_bytes())
+    assert set(drafted["role_use"].values()) == {"untouched"}, drafted.get("protected_role_evidence")
+    evidence = drafted["protected_role_evidence"]
+    assert evidence["status"] == "untouched" and evidence["record"]["sha256"] == hashlib.sha256(intact).hexdigest()
+    assert "network" in evidence["text"] and "child processes" in evidence["text"]
     assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
     assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
 
