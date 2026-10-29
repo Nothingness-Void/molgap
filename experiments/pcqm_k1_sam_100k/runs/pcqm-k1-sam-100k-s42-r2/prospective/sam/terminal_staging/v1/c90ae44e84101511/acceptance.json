@@ -1,0 +1,29 @@
+{
+  "closure_blockers": [
+    "observed_protected_role_audit_incomplete"
+  ],
+  "evidence_id": "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NOT_EVALUATED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_sam_100k/decision_draft.md",
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  }
+}
