@@ -8,11 +8,14 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 import math
+import os
 import signal
 import sys
+import threading
 import time
 
-from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
+from .experiment_family_workflow import (
+    DATA_OPEN_FILE, DATA_OPEN_FORMAT, RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest)
 from .family_training_recipe import FamilyRecipe, MODES
 from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
@@ -239,6 +242,80 @@ def _assert_target_statistics(recipe, data):
         )
 
 
+_DATA_OPEN = {"installed": False, "bases": (), "files": None, "path": None, "document": None, "pid": None}
+_DATA_OPEN_LOCK = threading.Lock()
+_DATA_OPEN_BUSY = threading.local()
+
+
+def _observe_data_open(event, args):
+    """Observe only: append dataset files this process opens; never alter an open."""
+    state = _DATA_OPEN
+    if (event != "open" or not state["bases"] or getattr(_DATA_OPEN_BUSY, "on", False)
+            or os.getpid() != state["pid"]):
+        return  # a forked worker must never rewrite the parent's record
+    target = args[0] if args else None
+    if not isinstance(target, (str, bytes, os.PathLike)):
+        return
+    try:
+        absolute = os.path.abspath(os.fsdecode(target))
+    except (TypeError, ValueError, OSError):
+        return
+    for base in state["bases"]:
+        if os.path.normcase(absolute).startswith(os.path.normcase(base)):
+            relative = absolute[len(base):].replace(os.sep, "/")
+            break
+    else:
+        return
+    _DATA_OPEN_BUSY.on = True
+    try:
+        with _DATA_OPEN_LOCK:
+            if relative not in state["files"]:
+                state["files"].append(relative)
+                atomic_json(state["path"], state["document"])
+    finally:
+        _DATA_OPEN_BUSY.on = False
+
+
+def _begin_data_open_record(root, input_root, selection, context):
+    """Start this invocation's append-only record of dataset files opened by Python.
+
+    The record is a plain output sidecar; resume keeps earlier invocations. It
+    covers only this process's Python-level opens, not native code, child
+    processes or the network.
+    """
+    from .family_training_data import resolve_pinned_manifest
+    from .pcqm_fixed_records import graph_records
+    manifest_path = resolve_pinned_manifest(Path(input_root), selection)
+    manifest = _json(manifest_path)
+    records = graph_records(manifest, selection.manifest_sha256)
+    path = Path(root) / DATA_OPEN_FILE
+    if path.is_file():
+        document = _json(path)
+        _check_context(document.get("context"), context)
+        if document.get("format") != DATA_OPEN_FORMAT or document.get("dataset_manifest_sha256") != selection.manifest_sha256:
+            raise ValueError("Retained data-open record differs from this run")
+    else:
+        document = {"format": DATA_OPEN_FORMAT, "context": context.to_dict(),
+            "dataset_manifest_sha256": selection.manifest_sha256, "manifest": manifest_path.name,
+            "manifest_protected_role_flags": {name: manifest.get(name) for name in (
+                "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")},
+            "shards": [{"file": item["file"], "role": item["role"], "sha256": item["sha256"]} for item in records],
+            "invocations": []}
+    opened = []
+    document["invocations"].append({"had_checkpoint": (Path(root) / "last_checkpoint.pt").is_file(), "opened": opened})
+    directory = manifest_path.parent
+    bases = {str(directory.absolute()) + os.sep, str(directory.resolve()) + os.sep}
+    atomic_json(path, document)
+    _DATA_OPEN.update(bases=tuple(sorted(bases)), files=opened, path=path, document=document, pid=os.getpid())
+    if not _DATA_OPEN["installed"]:
+        sys.addaudithook(_observe_data_open)
+        _DATA_OPEN["installed"] = True
+
+
+def _end_data_open_record():
+    _DATA_OPEN["bases"] = ()
+
+
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
                training_only=False, cost_root=None):
@@ -270,6 +347,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     initial = inspect_frozen_state_artifact(Path(initial_state_path), expected_state_sha256=recipe.initialization_sha256)
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
+    if cost_root is not None:
+        _begin_data_open_record(Path(cost_root).absolute(), input_root, selection, context)
     data = load_training_data(Path(input_root), selection)
     if recipe.input_sidecar is not None:
         data = mode_policy(recipe.family, recipe.mode).attach_inputs(Path(input_root), recipe.input_sidecar, data)
@@ -980,6 +1059,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
         try:
             session.close()
         finally:
+            _end_data_open_record()
             signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began
     total = _finish_cost_interval(root, context, prior_cost, elapsed)

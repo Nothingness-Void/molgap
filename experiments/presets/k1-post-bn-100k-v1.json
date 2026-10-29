@@ -1,0 +1,11 @@
+{
+  "format": "molgap-scientific-baseline-preset-v1",
+  "name": "k1-post-bn-100k",
+  "version": "v1",
+  "model": {"family": "neural_atom_k1", "version": "3"},
+  "recipe": {"path": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json", "sha256": "e606d0597b5026d6aef42cc079f6cd1b40baf96cc12d89a00600c977ead5121e"},
+  "data": {"path": "experiments/presets/k1-post-bn-100k-data.json", "sha256": "2ec53b73e69183aa1b51bdd01aa4180e87ecba34398510aff6a27cbc25c870be", "arm_id": "post_bn"},
+  "target_manifest": {"path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json", "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"},
+  "initialization_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "reference": null
+}

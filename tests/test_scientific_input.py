@@ -456,6 +456,19 @@ def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_proper
     path = case.repo / "experiments/addon-fixture/experiment.json"
     _write_json(path, value)
     _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    # An unknown evidence id is BLOCKED before the logical run id is frozen;
+    # the corrected input below then prepares under that same run id.
+    from molgap.experiment_input import prepare_experiment_input
+    bad = deepcopy(value)
+    bad["question"]["supporting_evidence"] = ["evidence-unknown-test"]
+    _write_json(path, bad)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Unknown evidence id")
+    blocked = prepare_experiment_input(path, case.repo)
+    run = resolve_experiment_input(path, case.repo)[3].run_directory(value["logical_run_id"], value["attempt_id"])
+    assert blocked["status"] == "BLOCKED" and blocked["blockers"] and not (run / "inputs").exists()
+    _write_json(path, value)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "One registered ordinary addon input")
     program = r'''
 import contextlib, importlib.util, io, json, pathlib, sys

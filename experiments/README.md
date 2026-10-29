@@ -22,6 +22,9 @@ and local frozen-shell attribution are closed without adoption.
 is accepted NO_TRAIN CPU arithmetic. Fixed four-expert output complementarity
 does not establish module stacking, strict fusion replay or500K transfer.
 
+[Baseline presets](presets/README.md) hold hash-pinned recipe, data and target pins that scientific
+inputs reuse instead of copying.
+
 One directory per **question**, never per calendar phase. A phase number ages;
 a question does not. Anything whose output does not enter the model registry or
 change the recommended predictor belongs here rather than in `production/`.

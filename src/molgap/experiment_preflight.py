@@ -969,6 +969,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
 
     modules = set(required_modules)
     family_initializations = []
+    inspected_initializations = {}
     dataset_bindings = []
     pickle_globals = set()
     if not modules:
@@ -1048,8 +1049,11 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                         if a not in initial_states:
                             raise ValueError("Missing frozen initialization artifact; a constructor seed is insufficient")
                         p = _regular(Path(initial_states[a]).absolute())
-                        result = inspect_frozen_state_artifact(p,
-                            expected_state_sha256=declaration["initialization"]["state_sha256"])
+                        state_key = (p.resolve(), declaration["initialization"]["state_sha256"])
+                        if state_key not in inspected_initializations:
+                            inspected_initializations[state_key] = inspect_frozen_state_artifact(p,
+                                expected_state_sha256=state_key[1])
+                        result = inspected_initializations[state_key]
                         if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
                             raise ValueError("Initialization is outside the staged input root")
                         if (declaration["family"]["name"], declaration["family"]["version"]) in {

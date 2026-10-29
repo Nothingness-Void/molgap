@@ -170,13 +170,25 @@ def test_generic_inspector_pass_cannot_hide_broken_packaged_k1_loader(release):
 
 
 @pytest.mark.parametrize("release", ["repaired"], indirect=True)
-def test_packaged_k1_loader_accepts_real_wrapper_without_model_construction(release):
+def test_packaged_k1_loader_accepts_real_wrapper_without_model_construction(release, monkeypatch):
+    from molgap import v4_runtime
     spec, package, options = release
+    shared_state = next(iter(options["initial_states"].values()))
+    options["initial_states"] = {arm: shared_state for arm in options["initial_states"]}
+    inspections = []
+    original = v4_runtime.inspect_frozen_state_artifact
+    def inspect(path, **kwargs):
+        inspections.append((path.resolve(), kwargs["expected_state_sha256"]))
+        return original(path, **kwargs)
+    monkeypatch.setattr(v4_runtime, "inspect_frozen_state_artifact", inspect)
     report = check_release_inputs(spec, package, **options)
     assert report["status"] == "LOCAL_RELEASE_INPUTS_VERIFIED"
     assert report["errors"] == []
     checks = report["checks"]
     digest = spec.to_dict()["arms"][1]["initialization"]["state_sha256"]
+    assert inspections == [(shared_state.resolve(), digest)]
+    assert all(checks["initialization:" + arm]["state_sha256"] == digest
+               for arm in options["initial_states"])
     assert checks["family_initialization:neural_atom_k1"] == {
         "state_sha256": digest, "tensor_count": 1, "device": "cpu"}
     assert checks["family_output_io:neural_atom_k1"] == {

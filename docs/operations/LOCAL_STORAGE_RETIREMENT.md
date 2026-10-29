@@ -38,17 +38,17 @@ run directory by file-name category (resume state, native-proof copies, selected
 model, predictions, trace, other) and groups of byte-identical large files. It
 never deletes and takes no candidates. Categories describe data; they do not
 authorize removal, and a duplicate is not proof that either copy is unneeded.
-`--dedupe` (dry-run; add `--execute`) replaces byte-identical large copies on the
-same volume with hardlinks. Every path stays valid and nothing is deleted. Each
-pair is rehashed immediately before the swap, and the link is created under a
-temporary name so the original is replaced atomically. `last_checkpoint.pt` resume
-states are never linked, because a running job may replace them during the swap.
-A hardlink alias is not an independent backup, so this does not change what counts
-as durable custody. The repository's writers replace files atomically and so break
-a link; an in-place writer such as `shutil.copy2` onto an existing linked path
-would change both names. A crashed swap leaves a `*.dedupe-tmp` file that blocks
-the next run until it is deleted. Run `--dedupe --execute` only while no job writes
-under `artifact_root`.
+`--dedupe` remains a read-only duplicate report; `--dedupe --execute` is blocked
+before scanning or changing files. Equal bytes and file-name categories do not
+establish immutability. Existing resume code uses `shutil.copy2` for selected
+models, predictions and initial states; linked outputs could change together or
+raise `SameFileError`. Stopping jobs during a swap does not make later writes safe.
+Duplicate bytes describe distinct observed file identities, not reclaimable disk
+space: aliases may exist elsewhere, and logical size is not physical allocation.
+The report leaves `reclaimable_bytes` unknown. Existing `*.dedupe-tmp` files are
+preserved and excluded from reporting; this command does not clean them up.
+Hardlinks already created by earlier invocations remain shared and require
+owner-specific review before future writes. This command does not split them.
 
 Normal invocation scratch still cleans itself on exit. Scratch of unknown
 ownership, package locks/staging directories and complete caches remain report-only;

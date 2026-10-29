@@ -20,6 +20,10 @@ class Missing(Exception):
     status = 404
 
 
+class Denied(Exception):
+    response = NS(status_code=403, headers=None)
+
+
 class Response:
     def __init__(self, payload=None, content=b""):
         self.payload, self.content = payload, content
@@ -155,6 +159,11 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
         remote = None
         dataset_version = 1
         predecessor_status = "RUNNING"
+        denied = 0  # upcoming dataset_status calls that answer 403
+
+        def __init__(self):
+            self.status_calls = []
+            self.slept = []
 
         def get_config_value(self, _name):
             return metadata["id"].split("/", 1)[0]
@@ -162,7 +171,13 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
         def dataset_status(self, ref):
             if not self.dataset:
                 raise Missing()
+            if self.denied > 0:
+                self.denied -= 1
+                raise Denied()
             return "ready" if self.ready else "processing"
+
+        def dataset_list(self, mine, page):
+            return [NS(ref=dataset_ref)]
 
         def dataset_create_new(self, path, **kwargs):
             assert kwargs == dict(public=False, quiet=True, convert_to_csv=False, dir_mode="zip")
@@ -183,12 +198,17 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
                              for p in staged.rglob("*") if p.is_file() and p.name != "dataset-metadata.json"])
 
         def kernels_status(self, ref):
-            if continuation and ref == metadata["id"] + "/1":
+            self.status_calls.append(ref)
+            # Like the installed SDK, the endpoint ignores any third segment.
+            assert "/".join(ref.split("/")[:2]) == metadata["id"]
+            if continuation and self.remote.metadata.current_version_number == version - 1:
                 return NS(status=self.predecessor_status, failure_message="")
-            assert ref == metadata["id"] + "/" + str(version)
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
+    clock = [0.0]
+    monkeypatch.setattr(owner, "_poll_clock", lambda: clock[0])
+    monkeypatch.setattr(owner, "_poll_sleep", lambda seconds: (api.slept.append(seconds), clock.__setitem__(0, clock[0] + seconds)))
     monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
                         NS(ref=ref, is_private=True, current_version_number=api.dataset_version))
     monkeypatch.setattr(owner, "_kernel_source", lambda _api, _ref: api.remote)
@@ -249,12 +269,22 @@ def test_full_submission_and_repeated_call_never_duplicate(release):
             release.run()
         assert release.api.created == release.api.pushed == 0
         release.api.predecessor_status = "ERROR"
+    else:
+        release.api.denied = 1  # Right after creation the status endpoint may answer 403 once.
     result = release.run()
     assert result["status"] == "SUBMISSION_BOUND" and result["version"] == (2 if continuation else 1)
+    assert result["scheduler_scope"] == "latest"
+    scheduler = json.loads((release.output / "scheduler_observation.json").read_bytes())
+    assert scheduler["scheduler_scope"] == "latest" and "version" not in scheduler
+    assert set(release.api.status_calls) == {"owner/new-kernel"}
     receipt = (release.output / "launch_receipt.json").read_bytes()
     assert release.api.created == release.api.pushed == 1
+    assert release.api.slept == ([] if continuation else [owner.SOURCE_POLL_FIRST_SECONDS])
     assert len(release.http.downloads) == (13 if continuation else 11)
     if continuation:
+        predecessor = json.loads((release.output / "predecessor_scheduler_observation.json").read_bytes())
+        assert predecessor["scheduler_scope"] == "latest"
+        assert predecessor["observed_latest_version"] == 1 and "version" not in predecessor
         binding = json.loads((release.output / "submission_state.json").read_bytes())["binding"]["continuation"]
         assert binding["source_version"] == binding["kernel_version"] == 2
         from molgap.training_reproducibility import sha256_file
@@ -266,11 +296,17 @@ def test_full_submission_and_repeated_call_never_duplicate(release):
     assert "do-not-print" not in ''.join(p.read_text(errors="replace") for p in release.output.glob("*.json"))
 
 
-def test_source_processing_resumes_without_second_create(release):
+@pytest.mark.parametrize("forbidden", [False, True], ids=["processing", "forbidden"])
+def test_source_processing_resumes_without_second_create(release, forbidden):
     release.api.ready = False
-    assert release.run()["status"] == "WAIT_SOURCE_READY"
+    release.api.denied = float("inf") if forbidden else 0
+    # The poll stays inside one call; a 403 that never clears is not a plain wait.
+    assert release.run()["status"] == ("RECONCILIATION_REQUIRED" if forbidden else "WAIT_SOURCE_READY")
     assert release.api.created == 1 and release.api.pushed == 0
-    release.api.ready = True
+    assert sum(release.api.slept) == owner.SOURCE_POLL_BUDGET_SECONDS
+    assert json.loads((release.output / "submission_state.json").read_bytes())["phase"] == (
+        "SOURCE_PUBLISHED" if forbidden else "SOURCE_PENDING")
+    release.api.ready, release.api.denied = True, 0
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
 
@@ -754,7 +790,13 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
                 args = ["--experiment", str(case.path)]
             code = entry.main([*args, "--repo-root", str(case.repo),
                 "--credentials", str(credentials), "--execute", "--verbose"])
-        return code, json.loads(captured.getvalue())
+        result = json.loads(captured.getvalue())
+        if result.get("status") == "SUBMISSION_BOUND":
+            scheduler = json.loads((output / "scheduler_observation.json").read_bytes())
+            assert scheduler["scheduler_scope"] == "latest" and "version" not in scheduler
+            kernel_ref = json.loads((prepared / "kernel/kernel-metadata.json").read_bytes())["id"]
+            assert set(transport().api.status_calls) == {kernel_ref}
+        return code, result
 
     def restore_roundtrip():
         path, original = transport_state["tampered_roundtrip"]
@@ -802,7 +844,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     remote = paths.artifact_root / "offline-worker-v2"
     origin.mkdir()
     remote.mkdir()
-    contexts, decisions, audits, downloads, inputs, prefixes, bundles = {}, {}, {}, [], {}, {}, {}
+    contexts, decisions, downloads, inputs, prefixes, bundles = {}, {}, [], {}, {}, {}
     prospective = {binding["arm_id"]: (case.repo / binding["output"] / "trajectory.json").read_bytes()
                    for binding in spec.to_dict()["prospective"]["arms"]}
     for job in launch["jobs"]:
@@ -905,10 +947,6 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         decision = case.repo / "experiments/question" / (arm_id + "-disposition.md")
         decision.write_text("Synthetic infrastructure exercise only; no scientific conclusion.\n", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
-        audit = case.repo / "audits" / (arm_id + ".json")
-        atomic_json(audit, {"context": context.to_dict(), "roles": [],
-            "role_use": {role: "untouched" for role in ("official_validation", "test_dev", "test_challenge")}})
-        audits[arm_id] = audit.relative_to(case.repo).as_posix()
 
     # A deterministic fixture clock describes a simulated allocation, not measured GPU time.
     clock = [0.]
@@ -958,6 +996,24 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             native.mkdir(parents=True)
             for name in ("runtime_certificate.json", "actual_resume_certificate.json"):
                 atomic_json(native / name, {"status": "NOT_QUALIFIED", "reason": "Synthetic CPU journey only"})
+    # Draft the first role audit against the reconciled successor before any
+    # terminal pointer exists to discover that receipt automatically.
+    from molgap import experiment_cli
+    captured = StringIO()
+    with redirect_stdout(captured):
+        code = experiment_cli.main(["draft-role-audit", "--profile", case.value["machine_profile"],
+            "--repo-root", str(case.repo), "--run-id", run_id, "--attempt-id", attempt,
+            "--continuation-receipt", str(continued_receipt), "--output-dir", str(case.repo / "audits"),
+            *[value for role in ("official_validation", "test_dev", "test_challenge")
+              for value in ("--protected-role-use", role + "=untouched")]])
+    assert code == 0, captured.getvalue()
+    audits = json.loads(captured.getvalue())
+    assert json.loads((case.repo / "audits/audit_map.json").read_bytes()) == audits
+    assert set(audits) == set(contexts)
+    for arm_id, ref in audits.items():
+        audit = json.loads((case.repo / ref).read_bytes())
+        assert audit["context"] == contexts[arm_id].to_dict()
+        assert len(audit["roles"]) == 5
     options = dict(
         diagnose=True, stage_terminal=True, execute=True, outcome="INCONCLUSIVE",
         decision_ref=decisions, role_audit=audits, execution_root=remote,
@@ -1109,6 +1165,10 @@ def test_real_package_release_post_receipt_reuses_only_exact_content(scientific,
     declaration = json.loads(data_path.read_bytes())
     base = declaration["arms"][0]
     base["data"]["dataset"]["sha256"] = selection.manifest_sha256
+    for role in base["data"]["roles"]:
+        graphs = data.train if role["role"] == "train" else data.development
+        digest = tensor_digest(torch.cat([g.source_idx for g in graphs]), role="source_idx")
+        role["membership_sha256"] = role["row_order_sha256"] = digest
     base["training"]["recipe"]["sha256"] = __import__("hashlib").sha256(recipe_path.read_bytes()).hexdigest()
     from molgap.family_training_runner import _recipe_configuration
     bindings = family_arm_bindings(_recipe_configuration(record))

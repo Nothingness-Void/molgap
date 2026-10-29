@@ -20,7 +20,10 @@ avoid repetitive disclaimers. Be concise without hiding uncertainty or results.
 
 ## Reuse First
 
-Start with the [infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
+For routine operations on an already declared, authorized run, start with the
+platform skill and supplied run contract. Read only the instructions relevant to
+that operation. For infrastructure changes, start with the
+[infrastructure quickstart](docs/operations/EXPERIMENT_QUICKSTART.md).
 Use the [workflow reference](docs/operations/EXPERIMENT_WORKFLOW.md),
 [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
 [local CLI](docs/operations/EXPERIMENT_CLI.md) for the operation being changed;
@@ -55,17 +58,24 @@ the user specifies otherwise. Do not silently substitute the older `gpt-6-sol`;
 report unavailable model/effort combinations instead. The parent owns integration
 and acceptance; delegation does not release training or protected-role access.
 
-## Read in This Order
+## Read for the Task
 
-1. This file: navigation and hard boundaries.
-2. [BRANCHES.md](BRANCHES.md) before edits, submission, integration or another branch.
-3. [CURRENT_STATE.md](CURRENT_STATE.md): recommendation, blockers, routing, queue state.
-4. [ROADMAP.md](ROADMAP.md): only the relevant priorities and triggers.
-5. [TRACKS.md](TRACKS.md) only for a Track A/B/C task.
-6. [ARCHITECTURE.md](ARCHITECTURE.md): code ownership; [NAMING.md](NAMING.md): naming.
-7. The modified tree's README: production, experiments, platforms or research_memory.
-8. Owning experiment protocol, decision, acceptance, evidence and artifact records.
-9. Only code required by the task.
+This file's hard boundaries apply to every task. Routine submission, recovery,
+retrieval or mechanical acceptance of an already declared, authorized run starts
+with its platform skill and supplied contract/attempt records. Follow their
+relevant commands and pointers; do not load the whole bootstrap document set.
+Resolve the exact owning branch and attempt before acting. Read
+[BRANCHES.md](BRANCHES.md) when custody is unclear or before source edits,
+integration or switching branches; read [CURRENT_STATE.md](CURRENT_STATE.md)
+when project routing, authority or queue state needs resolution. The remote
+scheduler and durable artifacts remain authoritative for the actual attempt.
+
+For a new research question or a changed scientific contract, read BRANCHES and
+CURRENT_STATE, the relevant [ROADMAP.md](ROADMAP.md) priorities and
+[TRACKS.md](TRACKS.md) for Track A/B/C work, then the owning research records.
+For implementation changes, read the modified tree's README and only the needed
+code/caller/test. Use [ARCHITECTURE.md](ARCHITECTURE.md) to resolve code ownership
+and [NAMING.md](NAMING.md) when naming is being changed.
 
 Read [Research Protocol](docs/operations/RESEARCH_PROTOCOL.md) when designing
 research, accepting/interpreting terminal results, comparing/promoting models,
@@ -100,8 +110,11 @@ Generated summaries are navigation, not primary scientific evidence.
 - A trajectory does not authorize training. NO_TRAIN, NEGATIVE_UNDER_CONTRACT,
   INCONCLUSIVE, STOP_FOR_COST and DUPLICATE_EVIDENCE are valid contract outcomes.
   Advance diagnostic/100K/500K/full gates only when required and authorized.
-- Update canonical records and rebuild RML after accepted research milestones,
-  not each epoch/heartbeat. Verify derived state before handoff or commit.
+- Shared terminal closure updates derived RML once after persisting arm outcomes;
+  do not rebuild it again after successful closure. Standalone canonical edits
+  or imports need one RML rebuild after the accepted milestone, not each
+  epoch/heartbeat. Use `terminal-rebuild` only to recover an actual failed
+  closure index update. Verify derived state before handoff or commit.
 - Import `retrospective_partial` only from pre-existing authoritative records.
   Missing hardware, cost, roles, rationale, traces and conclusions stay unknown;
   never invent retrospective hypotheses or evidence to justify launched work.
@@ -203,7 +216,9 @@ owner leases, fallback polling or automatic conversation bridges.
 Exchange asynchronously through reviewed Git, canonical records, RML/V5
 indexes, durable artifacts and user-directed integration.
 Read the [V5 common contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md)
-and [desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md) at bootstrap.
+and [desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md) when
+establishing or changing ownership/topology, not for routine operations on an
+already authorized run.
 Changing V5 architectural invariants requires explicit user approval of a future
 contract version; implementation difficulty never grants redesign authority.
 
@@ -214,7 +229,8 @@ After downtime or stale context, before acting:
 2. Query authoritative remote state under the platform boundary.
 3. Verify source/config/release identity and retrieve/verify durable artifacts.
 4. Separate infrastructure failure from science; perform applicable acceptance.
-5. Update canonical evidence/decision/cost/roles; rebuild RML for accepted milestones.
+5. Update canonical evidence/decision/cost/roles; shared closure owns its RML update.
+   Rebuild once only for standalone accepted canonical edits or imports.
 6. Only then choose zero or one next justified action.
 
 Never submit a successor just because local status is stale.
