@@ -317,9 +317,20 @@ def _retrieve_all_arms(argv, *, status_only=False):
             print(canonical_json(result))
             return 0
         if missing and not args.execute:
+            # Hashes of the remote manifests are unknown until fetched; the journal binds only
+            # kernel and version. The human runs this command, which pins and then retrieves.
+            command = ["--all-arms", "--profile", str(args.profile),
+                "--repo-root", str(args.repo_root), "--run-id", args.run_id, "--attempt-id", args.attempt_id,
+                "--remote-root", args.remote_root, "--credentials", "<CREDENTIALS_FILE>", "--execute"]
+            if args.strict:
+                command.insert(1, "--strict")
             print(canonical_json({"status": "READY_FOR_RETRIEVAL", "version": version,
-                "missing_manifests": missing, "execution_root": str(destination / "_execution"),
-                "next_action": "Repeat with --credentials FILE --execute to fetch exact-version manifests and outputs"}))
+                "kernel": context.run_reference, "missing_manifests": missing,
+                "pin_directory": str(pinned), "execution_root": str(destination / "_execution"),
+                "pin_command": "python platforms/local/run.py --profile " + str(args.profile)
+                    + " --script platforms/kaggle/retrieve_family_outputs.py -- " + " ".join(command),
+                "next_action": "Human runs pin_command with a credentials file: it fetches these exact-version "
+                    "manifests (including execution_retention.json) into pin_directory, then retrieves every arm"}))
             return 0
         common = ["--run-id", args.run_id, "--attempt-id", args.attempt_id, "--profile", str(args.profile),
                   "--repo-root", str(args.repo_root)]

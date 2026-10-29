@@ -245,6 +245,7 @@ def test_all_arms_retrieves_every_pinned_manifest_from_the_run_directory(retriev
     assert set(plan["missing_manifests"]) == {
         *(f"runs/version8/{arm}/output_manifest.json" for arm in manifests),
         "runs/version8/execution_retention.json"}
+    assert "--remote-root runs/version8" in plan["pin_command"] and "--execute" in plan["pin_command"]
     case.auth.assert_not_called()
     native.assert_not_called()
     resolve_resume.assert_not_called()
