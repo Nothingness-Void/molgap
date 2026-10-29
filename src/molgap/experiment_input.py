@@ -30,6 +30,7 @@ def resolve_experiment_input(path, repo_root):
     _safe_local(root)
     value = _read(path)
     if type(value) is dict and value.get("format") == "molgap-scientific-experiment-v1":
+        value = _with_mechanical_defaults(value, root)
         existing = _existing_scientific_input(value, root)
         return existing if existing is not None else _compile_scientific_input(path, root, value)
     _object(value,"format spec_ref workflow_ref machine_profile authority_ref monitor_paths attempt_id","experiment input")
@@ -68,6 +69,59 @@ def resolve_experiment_input(path, repo_root):
         raise ValueError("New editable workflow requires the fixed runtime source profile")
     plan["source_records"] = sorted(set([*plan["source_records"],value["authority_ref"]]))
     return value,spec,plan,paths
+
+
+_KAGGLE_T4X2 = {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2, "cpu_cores": 4,
+                "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True}
+_FIXED_100K = ("pcqm_fixed_100k_v1/manifest.json", "pcqm4mv2-ogb-fixed-100k-v1")
+
+
+def _with_mechanical_defaults(value, root):
+    """Fill only pointers fixed by the experiment directory; explicit values win.
+
+    Scientific fields (question, arms, addons, authority, budget) are never defaulted.
+    """
+    result = dict(value)
+    if type(result.get("experiment_id")) is not str:
+        return result
+    _identifier(result["experiment_id"], "experiment_id")
+    folder = "experiments/" + result["experiment_id"] + "/"
+    result.setdefault("monitor_paths", [folder + "STATUS.md"])
+    for key, name in (("role_ref", "protocol.md"), ("decision_ref", "decision.md")):
+        if key not in result and repo_local_path(root, folder + name).is_file():
+            result[key] = folder + name
+    return result
+
+
+def _derived_kaggle(value, authority, manifests):
+    """Kaggle mount names from account and experiment ID; the fixed dataset is only referenced."""
+    account = authority.get("account")
+    if type(account) is not str:
+        raise ValueError("A derived Kaggle platform requires authority.account")
+    if manifests != {_FIXED_100K[0]}:
+        raise ValueError("A derived Kaggle platform supports the fixed 100K mount only; supply platform explicitly")
+    stem = value["experiment_id"].removeprefix("pcqm_").replace("_", "-")
+    words = ["MolGap", *(w.upper() if any(c.isdigit() for c in w) else w.capitalize() for w in stem.split("-")), "S42"]
+    source = account + "/" + stem + "-src"
+    kaggle = {"account": account, "kernel": account + "/molgap-" + stem + "-s42", "title": " ".join(words),
+              "datasets": [source, account + "/" + _FIXED_100K[1]], "source_dataset": source,
+              "accelerator": "NvidiaTeslaT4"}
+    kaggle.update({k: authority[k] for k in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds") if k in authority})
+    return kaggle
+
+
+def _derived_policy(question, protocol_digest):
+    """Candidate research-action policy in the shape of the registered ones; no approval."""
+    return {"schema": "molgap-policy-v1", "policy_id": question.policy_id, "version": "1",
+        "policy_type": "research_action", "status": "candidate",
+        "required_observable_fields": ["user_requested_scope_reviewed"], "observation_point": None,
+        "comparability_selector": {"scientific_contract": question.policy_id},
+        "action_rule": {"action": question.action, "field": "user_requested_scope_reviewed",
+                        "operator": "eq", "threshold": 1},
+        "borderline_action": "NO_TRAIN", "early_stop_rule": None, "promotion_rule": None,
+        "cost_model": {"kind": "measured_only", "assumptions": []},
+        "approval": {"approved_by": None, "approved_at": None, "authority_ref": None},
+        "created_from_source_digest": protocol_digest}
 
 
 def _existing_scientific_input(value, root):
@@ -177,8 +231,11 @@ def _compile_scientific_input(path, root, value):
 
     optional = {"shared", "same_run", "retry_of"} & set(value)
     declaration_fields = []
+    derive_kaggle = not {"platform", "platform_ref"} & set(value)
     for name in ("authority", "platform"):
         selected = {name, name + "_ref"} & set(value)
+        if name == "platform" and derive_kaggle:
+            continue
         if len(selected) != 1 or (name in selected and type(value[name]) is not dict):
             raise ValueError("Supply exactly one explicit " + name + " or " + name + "_ref")
         declaration_fields.extend(selected)
@@ -229,13 +286,19 @@ def _compile_scientific_input(path, root, value):
     for key in ("role_ref", "decision_ref"):
         if not local(value[key]).read_bytes().strip():
             raise ValueError("Scientific input requires retained role and decision content")
-    platform = _read(local(value["platform_ref"])) if "platform_ref" in value else deepcopy(value["platform"])
+    platform = ({"platform": dict(_KAGGLE_T4X2), "kaggle": None} if derive_kaggle else
+                _read(local(value["platform_ref"])) if "platform_ref" in value else deepcopy(value["platform"]))
     _object(platform, "platform kaggle", "platform input")
     question = ExecutionQuestion(**value["question"])
     from .research_memory.policy import load_policy_registry
     policies = [item for item in load_policy_registry(root) if item["policy_id"] == question.policy_id]
+    derived_policy = None
+    if not policies:
+        from .research_memory.policy import validate_policy
+        derived_policy = validate_policy(_derived_policy(question, file_digest(local(value["role_ref"]))))
+        policies = [derived_policy]
     if len(policies) != 1:
-        raise ValueError("Scientific policy ID must identify one existing registered version")
+        raise ValueError("Scientific policy ID must identify one registered version")
     policy_version = policies[0]["version"]
     profile = ExecutionProfile(**value["profile"])
     if platform["platform"]["name"] != "kaggle" or profile.platform != "kaggle":
@@ -331,7 +394,7 @@ def _compile_scientific_input(path, root, value):
                 raise ValueError("Retry predecessor terminal observation differs from its exact job")
     elif retry is not None:
         raise ValueError("A retry must use a new attempt version")
-    compiled, data_specs, dataset_manifests = [], set(), {}
+    compiled, data_specs, dataset_manifests, selected_manifests = [], set(), {}, set()
     for item in items:
         preset = presets.get(item["arm_id"])
         _object(item, "arm_id model recipe_ref data_ref initial_state_ref training purpose" +
@@ -346,6 +409,7 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Preset initialization differs from its frozen recipe")
         from .family_training_data import resolve_training_manifest
         dataset_manifests[item["arm_id"]] = str(resolve_training_manifest(paths.data_root, baseline.dataset))
+        selected_manifests.add(baseline.dataset.manifest)
         if INTERFACES.get(baseline.family) != family or baseline.seed != 42 or not baseline.dataset.development:
             raise ValueError("Frozen screen recipe does not match model, seed or development contract")
         _object(item["data_ref"], "spec_ref arm_id", "data_ref")
@@ -471,6 +535,8 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Scientific candidate has no change from the retained reference")
         compiled.append((item, arm, new_record, reference, bundle, context, identity, changed, str(initial.absolute()), source["evidence"]))
 
+    if derive_kaggle:
+        platform["kaggle"] = _derived_kaggle(value, authority, selected_manifests)
     if pair is not None:
         from .experiment_family_workflow import same_run_comparison_scope, validate_initialization_peer
         reference = next(row for row in compiled if row[1]["arm_id"] == pair["reference_arm_id"])
@@ -576,6 +642,9 @@ def _compile_scientific_input(path, root, value):
         raise ValueError("Scientific source HEAD changed during compilation")
     for name, raw in generated.items():
         publish_immutable_bytes(repo_local_path(root, name), raw)
+    if derived_policy is not None:
+        publish_immutable_bytes(repo_local_path(root, "research_memory/policies/" + question.policy_id + ".1.json"),
+                                (json.dumps(derived_policy, indent=2) + "\n").encode())
     return value, spec, plan, paths
 
 

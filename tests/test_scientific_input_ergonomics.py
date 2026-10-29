@@ -202,3 +202,22 @@ def test_presets_reject_changed_or_missing_frozen_bindings(compact, fault):
     with pytest.raises((ValueError, FileNotFoundError)):
         resolve_experiment_input(case.path, case.repo)
     assert not (case.path.parent / "generated").exists()
+
+
+def test_mechanical_pointers_and_candidate_policy_are_derived_when_absent(compact):
+    case = compact
+    folder = case.path.parent
+    for name in ("protocol.md", "decision.md"):
+        (folder / name).parent.mkdir(parents=True, exist_ok=True)
+        (folder / name).write_text("Retained " + name + "\n", encoding="utf-8")
+    relative = folder.relative_to(case.repo).as_posix()
+    policy_id = case.value["question"]["policy_id"]
+    case.value["question"]["policy_id"] = policy_id + "-fresh"
+    for key in ("monitor_paths", "role_ref", "decision_ref"): case.value.pop(key)
+    commit(case, relative + "/protocol.md", relative + "/decision.md")
+    value, _, _, _ = resolve_experiment_input(case.path, case.repo)
+    assert value["monitor_paths"] == [relative + "/STATUS.md"]
+    assert (value["role_ref"], value["decision_ref"]) == (relative + "/protocol.md", relative + "/decision.md")
+    policy = json.loads((case.repo / "research_memory/policies" / (policy_id + "-fresh.1.json")).read_bytes())
+    assert policy["status"] == "candidate" and policy["approval"]["approved_by"] is None
+    assert policy["created_from_source_digest"] == hashlib.sha256((folder / "protocol.md").read_bytes()).hexdigest()
