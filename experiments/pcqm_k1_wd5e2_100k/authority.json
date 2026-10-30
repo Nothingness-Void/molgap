@@ -1,0 +1,23 @@
+{
+  "account": "kaseichou",
+  "allocated_t4_hours_ceiling": 8,
+  "allocation_wall_limit_seconds": 14400,
+  "arms": [
+    "wd5e2_i43",
+    "wd5e2_i44"
+  ],
+  "authorized_at": "2026-10-30T17:20:00+09:00",
+  "automatic_retry": false,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "format": "molgap-execution-authority-v1",
+  "protected_roles_authorized": [],
+  "protocol_ref": "experiments/pcqm_k1_wd5e2_100k/protocol.md",
+  "reference_semantics": "wd5e2_i43 is the reference arm of the in-kernel contrast only; both arms use weight_decay 0.05 and differ only in initial weights. The lever test compares each arm with its retained init-noise baseline offline.",
+  "same_run_reference_arm_id": "wd5e2_i43",
+  "scope": "one 100K two-arm K1 kernel testing decoupled-weight-decay-strength on inits 43 and 44; no retry, continuation, 500K, full or adoption",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}
