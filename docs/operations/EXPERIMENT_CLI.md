@@ -344,9 +344,9 @@ stderr warning. A manifest with the `data_open` role is rejected by older strict
 new runs with this version's `retrieve_family_outputs.py`. A run whose frozen package predates the
 recorder has no record. If that package's `family_training_runner.py` and `family_training_data.py` are reviewed legacy blobs, the pinned
 dataset manifest (read under the profile's `data_root`) declares only train/development with all protected-read
-flags False, and `kernel-metadata.json` mounts exactly the run's source dataset and the fixed mirror with no competition
+flags False, and `kernel-metadata.json` mounts exactly the run's source dataset (from the frozen plan, checked against the submission journal) and the fixed mirror with no competition
 source, the draft sets `untouched` with evidence status `structural_untouched`. That is structural, not observed:
-it says the protected roles were not among the run's inputs, not that opens were watched. `draft-role-audit` reads
+it says the protected roles were not among the run's declared mounted inputs, not that opens were watched. `draft-role-audit` reads
 the machine profile for `data_root`; local-training drafts pass none and stay `unknown`. A package that has the
 recorder but no record stays `unknown` (`recorder_expected_record_missing`). Otherwise pass `--protected-role-use`
 from observed facts.

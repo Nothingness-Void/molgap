@@ -29,7 +29,7 @@ DATA_OPEN_BOUNDARY = (
     "prove the data was unreachable.")
 
 
-STRUCTURAL_BOUNDARY = "'untouched' means the protected roles were not among this run's inputs."
+STRUCTURAL_BOUNDARY = "'untouched' means the protected roles were not among this run's declared mounted inputs."
 # Normalized sha256 of src/molgap/family_training_data.py (git blob 6c6bc503) as frozen into legacy packages.
 LEGACY_TRAINING_DATA_SHA256 = "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31"
 # Normalized sha256 of the two reviewed pre-recorder family_training_runner.py blobs (717b0548, 4d4feff8):
@@ -224,7 +224,12 @@ def _protected_roles_from_frozen_inputs(package_dir, contract, dataset, data_roo
             return unverified("pinned dataset manifest does not declare only train/development with protected reads False")
         mirror = next((item for item in FIXED_MIRRORS.values() if item["manifest_sha256"] == dataset), None)
         metadata_path = package.parent / "kernel" / "kernel-metadata.json"
-        source_id = _json(package.parent / "source_dataset" / "dataset-metadata.json")["id"]
+        run = package.parent.parent
+        plan = _json(run / "inputs" / "workflow_plan.json")
+        source_id = (plan.get("platform") or plan["kaggle"])["source_dataset"]
+        journal = run / "operations" / "submission_state.json"
+        if journal.is_file() and _json(journal)["binding"]["dataset"] != source_id:
+            return unverified("the submission journal binds a different source dataset than the frozen plan")
         if mirror is None or not metadata_path.is_file():
             return unverified("no fixed mirror for the pinned manifest, or kernel metadata missing")
         metadata = _json(metadata_path)
@@ -235,6 +240,10 @@ def _protected_roles_from_frozen_inputs(package_dir, contract, dataset, data_roo
                 or sorted(sources) != sorted([mounted, source_id])):
             return unverified("kernel mounts are not exactly the source dataset and the fixed mirror")
         metadata_sha = sha256_file(metadata_path)
+        # A staged release records the kernel metadata hash; legacy Kaggle-route runs have no such record.
+        staging = package.parent / "release" / "staging.json"
+        if staging.is_file() and _json(staging).get("kernel_metadata_sha256") != metadata_sha:
+            return unverified("kernel-metadata.json differs from the hash recorded at release staging")
         commit = (package / "SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
     except (ValueError, TypeError, KeyError, AttributeError, OSError) as exc:
         return unverified("structural inputs unreadable: " + str(exc))
