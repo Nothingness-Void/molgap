@@ -61,6 +61,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-initial-residual-100k-s42-baseline:A001",
+      "target": "experiments/pcqm_k1_initial_residual_100k/generated/66a454eb2a458fe4534980654ad6fe34cfbf64849fd01f2df70ac8f19a3a4391/baseline/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-initial-residual-100k-s42-initial_residual:A001",
+      "target": "experiments/pcqm_k1_initial_residual_100k/generated/66a454eb2a458fe4534980654ad6fe34cfbf64849fd01f2df70ac8f19a3a4391/initial_residual/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-message-droppath-100k-s42-baseline:A001",
       "target": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
       "type": "action_produced_evidence"
@@ -1462,6 +1472,16 @@
     },
     {
       "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-initial-residual-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
+      "target": "T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "EV-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2-terminal",
       "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
       "type": "prior_evidence"
     },
@@ -2387,6 +2407,16 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-initial-residual-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
       "type": "prior_evidence"
     },
@@ -3281,6 +3311,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
       "type": "evidence"
     },
@@ -3838,6 +3876,14 @@
     },
     {
       "id": "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-initial-residual-100k-s42-baseline",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-initial-residual-100k-s42-initial_residual",
       "type": "trajectory"
     },
     {
