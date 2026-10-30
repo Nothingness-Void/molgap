@@ -416,7 +416,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         budget = wall * devices / 3600
         quota_hours = wall / 3600
     else:
-        quota_hours = budget
+        # Kaggle charges session wall hours, so an explicit wall cap bounds the quota draw.
+        wall = launch.get("allocation_wall_limit_seconds")
+        quota_hours = min(budget, wall / 3600) if type(wall) is int and wall > 0 else budget
     from .experiment_terminal import _path
     if not monitor_paths or len(monitor_paths) != len(set(monitor_paths)):
         raise ValueError("Expected explicit unique monitor pointers")

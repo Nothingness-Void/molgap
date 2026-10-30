@@ -411,7 +411,7 @@ def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch, ca
 
 
 def test_quota_shortfall_stops_before_publication(release):
-    release.http.quota_hours = 13
+    release.http.quota_hours = 4  # Below the 5 h wall cap; the 14 T4-h ceiling is not the quota draw.
     with pytest.raises(ValueError, match="quota"):
         release.run()
     assert release.api.created == release.api.pushed == 0
