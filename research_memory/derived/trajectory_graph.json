@@ -11,6 +11,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3:A001",
+      "target": "experiments/pcqm_k1_norm_regularization_100k/generated/8c88f0b517b105f9d004f4a8885aa7948f62b4c2a3c02511716ff1853dea8097/ln_wd1e3/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4:A001",
+      "target": "experiments/pcqm_k1_norm_regularization_100k/generated/8c88f0b517b105f9d004f4a8885aa7948f62b4c2a3c02511716ff1853dea8097/ln_wd1e4/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-distance-angle-triangle-500k-20260911:A000",
       "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
       "type": "action_produced_evidence"
@@ -1321,6 +1331,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "target": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e3",
       "type": "prior_evidence"
@@ -1328,6 +1348,16 @@
     {
       "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
       "target": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4",
       "type": "prior_evidence"
     },
     {
@@ -1341,6 +1371,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "target": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e3",
       "type": "prior_evidence"
@@ -1348,6 +1388,16 @@
     {
       "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
       "target": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "target": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4",
       "type": "prior_evidence"
     },
     {
@@ -3152,6 +3202,14 @@
     },
     {
       "id": "T-pcqm-k1-bn-wd-160ep-100k-s42-20261022-bn_wd1e4",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e3",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-ln-wd-160ep-100k-s42-20261022-ln_wd1e4",
       "type": "trajectory"
     },
     {
