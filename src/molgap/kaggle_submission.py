@@ -48,21 +48,27 @@ def connect_kaggle(credentials):
     return api_for_credentials(credentials)
 
 
+def sdk_quota_payload(api):
+    observed = api.quota_view()
+    # SDK duration serialization can discard whole days. Preserve total
+    # seconds explicitly, and never fall back after an uncertain SDK call.
+    quota = observed.gpu_quota
+    def duration(value):
+        total = value.total_seconds()
+        if not math.isfinite(total) or total < 0:
+            raise ValueError("Malformed Kaggle quota")
+        seconds = int(total)
+        return {"seconds": seconds, "nanos": round((total - seconds) * 1e9)}
+    # The refresh time is a naive UTC datetime; it is recorded as str() in the
+    # submission journal, so readers attach UTC themselves.
+    return {"quotaRefreshTime": str(observed.quota_refresh_time), "gpuQuota": {
+        "totalTimeAllowed": duration(quota.total_time_allowed),
+        "timeUsed": duration(quota.time_used), "timeReserved": duration(quota.time_reserved)}}
+
+
 def _quota(http, budget, *, api=None):
     if callable(getattr(api, "quota_view", None)):
-        observed = api.quota_view()
-        # SDK duration serialization can discard whole days. Preserve total
-        # seconds explicitly, and never fall back after an uncertain SDK call.
-        quota = observed.gpu_quota
-        def duration(value):
-            total = value.total_seconds()
-            if not math.isfinite(total) or total < 0:
-                raise ValueError("Malformed Kaggle quota")
-            seconds = int(total)
-            return {"seconds": seconds, "nanos": round((total - seconds) * 1e9)}
-        raw = {"quotaRefreshTime": str(observed.quota_refresh_time), "gpuQuota": {
-            "totalTimeAllowed": duration(quota.total_time_allowed),
-            "timeUsed": duration(quota.time_used), "timeReserved": duration(quota.time_reserved)}}
+        raw = sdk_quota_payload(api)
         provider = "KaggleSdk.GetAcceleratorQuotaStatistics"
     else:
         response = http.get("https://www.kaggle.com/api/v1/kernels/quota", timeout=(10, 30))

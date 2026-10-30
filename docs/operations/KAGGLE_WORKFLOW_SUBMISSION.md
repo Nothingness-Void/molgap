@@ -83,9 +83,9 @@ Kaggle quota hours are session wall hours, not the sum of physical devices
 ([official T4x2 announcement](https://www.kaggle.com/product-feedback/361104)).
 For an explicit T4x2 wall-bound authority, `kaggle_quota_hours_ceiling` equals
 `gpu.wall_ceiling_seconds / 3600`; `allocated_t4_hours_ceiling` still covers both
-physical devices. These are separate quantities. The adapter checks available
-session quota through the official SDK, preserving total duration seconds;
-uncertain quota is not permission to submit. Historical declarations without
+physical devices. These are separate quantities. The adapter and `platforms/kaggle/check_quota.py` read session quota through the
+official SDK `quota_view` (`kaggle_submission.sdk_quota_payload`), preserving total
+duration seconds and UTC refresh time; uncertain quota is not permission to submit. Historical declarations without
 the explicit quota field retain their conservative budget check.
 
 ```powershell

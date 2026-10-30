@@ -654,6 +654,17 @@ def test_sdk_quota_uses_total_duration_and_subtracts_reservations():
     assert quota["timeReserved"] == {"seconds": 20219, "nanos": 400_000_000}
     assert result["available_gpu_hours"] == pytest.approx(12.3835)
     assert result["authorized_ceiling_gpu_hours"] == 9
+    # The monitor reads the same SDK payload; the naive UTC refresh time must parse as UTC.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "platforms/kaggle"))
+    try:
+        import check_quota
+    finally:
+        sys.path.pop(0)
+    naive = NS(quota_refresh_time=datetime(2026, 10, 31), gpu_quota=_sdk_quota_observation().gpu_quota)
+    row = check_quota.parse_quota_payload("a", "u", owner.sdk_quota_payload(NS(quota_view=lambda: naive)),
+                                          now=datetime(2026, 10, 30, tzinfo=timezone.utc))
+    assert row["remaining_hours"] == 12.38
+    assert row["refresh_time_utc"].endswith("00:00 UTC") and row["reset_in_hours"] == 24.0
 
 
 def test_sdk_quota_unknown_fails_closed_without_rest_fallback():

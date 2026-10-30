@@ -7,7 +7,9 @@ import json
 import math
 import os
 from pathlib import Path
-import requests
+
+from molgap.common.kaggle import api_for_credentials
+from molgap.kaggle_submission import sdk_quota_payload
 
 
 # There is intentionally no desktop-specific credential directory fallback.
@@ -17,7 +19,6 @@ DEFAULT_ACCOUNTS = (
     ("kaggle2", ".kaggle2_cli/kaggle.json"),
     ("kaggle3", ".kaggle3_cli/kaggle.json"),
 )
-QUOTA_URL = "https://www.kaggle.com/api/v1/kernels/quota"
 
 
 def _duration_seconds(entry: dict | None) -> float:
@@ -52,6 +53,9 @@ def parse_quota_payload(label: str, username: str, payload: dict, *, now: dateti
     reset_in_hours = None
     if isinstance(refresh_raw, str) and refresh_raw:
         refresh_dt = datetime.fromisoformat(refresh_raw.replace("Z", "+00:00"))
+        if refresh_dt.tzinfo is None:
+            # Kaggle reports the refresh time as naive UTC.
+            refresh_dt = refresh_dt.replace(tzinfo=timezone.utc)
         refresh_utc_str = refresh_dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
         local_dt = refresh_dt.astimezone()
         tz_off = local_dt.strftime("%z")
@@ -77,17 +81,13 @@ def parse_quota_payload(label: str, username: str, payload: dict, *, now: dateti
     }
 
 
-def fetch_account_quota(label: str, cred_path: Path, *, session: requests.Session | None = None,
-                        timeout=(10, 20)) -> dict:
+def fetch_account_quota(label: str, cred_path: Path) -> dict:
     raw = json.loads(Path(cred_path).read_text(encoding="utf-8"))
     username = raw.get("username", "")
     key = raw.get("key", "")
     if not username or not key:
         raise ValueError(f"Incomplete credentials for {label}")
-    http = session or requests.Session()
-    response = http.get(QUOTA_URL, auth=(username, key), timeout=timeout)
-    response.raise_for_status()
-    return parse_quota_payload(label, username, response.json())
+    return parse_quota_payload(label, username, sdk_quota_payload(api_for_credentials(cred_path)))
 
 
 def format_table(rows: list[dict]) -> str:
@@ -161,13 +161,12 @@ def main(argv=None) -> int:
         return 2
 
     results = []
-    with requests.Session() as session:
-        for label, path in targets:
-            try:
-                results.append(fetch_account_quota(label, path, session=session))
-            except Exception as exc:
-                # Never serialize credential contents, paths, or HTTP bodies.
-                results.append({"account": label, "error": type(exc).__name__})
+    for label, path in targets:
+        try:
+            results.append(fetch_account_quota(label, path))
+        except Exception as exc:
+            # Never serialize credential contents, paths, or HTTP bodies.
+            results.append({"account": label, "error": type(exc).__name__})
 
     if args.json:
         print(json.dumps({"accounts": results, "observed_at": datetime.now(timezone.utc).isoformat()},
