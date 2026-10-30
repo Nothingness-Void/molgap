@@ -56,6 +56,12 @@ pass count separately. Both arms must match endpoint, evaluation cadence and
 all non-architecture identities. This reuses the Session step clock; it does
 not turn a historical transfer study into a causal comparison.
 
+For a same-family configuration change with unchanged addons, different frozen
+initial-state hashes may follow from different tensor shapes. The compiler
+verifies both states against their actual FP32 seed42 model factories before
+treating this as one architecture intervention. An arbitrary warm start still
+requires its separate initialization-comparison scope.
+
 The compiler generates the Spec, recipes, prospective inputs, feature bindings
 and acceptance plan. The human does not write those envelopes or compute their
 hashes. Feature identity binds topology/role/transform parameters separately

@@ -25,6 +25,29 @@ def _read(path):
                       parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite JSON")))
 
 
+def _validate_fresh_architecture_initializations(*rows):
+    """Different tensor shapes may retain the same seeded initialization rule."""
+    import torch
+    from .experiment_execution import TRAINING_ADAPTERS
+    from .shared_model_adapter import resolve_model_factory, validate_factory_source
+    from .v4_runtime import model_state_sha256
+
+    declarations = [row[1]["initialization"] for row in rows]
+    if (any(item.get("kind") != "frozen_state" or item.get("seed") != 42
+            for item in declarations) or torch.get_default_dtype() != torch.float32):
+        raise ValueError("Architecture initialization requires fresh FP32 seed42 states")
+    for row in rows:
+        arm, record = row[1], row[2]
+        adapter = TRAINING_ADAPTERS[(arm["family"]["name"], arm["family"]["version"])]
+        validate_factory_source(adapter, arm)
+        factory = resolve_model_factory(adapter)
+        with torch.random.fork_rng(devices=[]), torch.device("cpu"):
+            torch.random.default_generator.manual_seed(42)
+            model = factory({"model_config": record["model_config"]})
+        if model_state_sha256(model) != arm["initialization"]["state_sha256"]:
+            raise ValueError("Architecture initialization is not the fresh seed42 factory state")
+
+
 def resolve_experiment_input(path, repo_root):
     """Resolve references, not host defaults; no RML publication or network IO."""
     root = Path(repo_root).absolute()
@@ -863,11 +886,18 @@ def _compile_scientific_input(path, root, value):
             if any(row[2][key] != reference[2][key]
                    for key in ("learning_rate", "weight_decay")):
                 changed.append("optimizer_identity")
-            if any(row[1][key] != reference[1][key]
-                   for key in ("base", "addons")):
+            configuration_changed = row[2].get("model_config") != reference[2].get("model_config")
+            if configuration_changed or any(row[1][key] != reference[1][key]
+                                            for key in ("base", "addons")):
                 changed.append("architecture_config_identity")
             if row[1]["initialization"] != reference[1]["initialization"]:
-                changed.append("initialization_identity")
+                if (modern and configuration_changed
+                        and row[0]["purpose"] == "architecture_comparison"
+                        and row[1]["family"] == reference[1]["family"]
+                        and row[1]["addons"] == reference[1]["addons"]):
+                    _validate_fresh_architecture_initializations(reference, row)
+                else:
+                    changed.append("initialization_identity")
             if comparison_objective_identity(row[1], row[2]) != comparison_objective_identity(reference[1], reference[2]):
                 changed.append("loss_identity")
             scope = same_run_comparison_scope(value, row[1]["arm_id"], pair["reference_arm_id"],

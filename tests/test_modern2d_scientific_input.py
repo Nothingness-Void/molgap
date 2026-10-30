@@ -145,12 +145,136 @@ def configured(case, tmp_path):
     _git(repo, "config", "core.autocrlf", "false")
     _git(repo, "add", ".")
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic configured fixture")
-    return SimpleNamespace(repo=repo, path=path, value=value, authority=authority, initial=case.initial)
+    return SimpleNamespace(repo=repo, path=path, value=value, authority=authority,
+        recipe=recipe, initial=case.initial)
 
 
-@pytest.mark.parametrize("step_clock", [False, True])
-def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch, step_clock):
+def _configure_ppgt_width_candidate(configured, width):
+    import torch
+    from molgap.experiment_execution import TRAINING_ADAPTERS
+    from molgap.modern2d_feature_binding import transform_configuration
+    from molgap.shared_model_adapter import resolve_model_factory
+    from molgap.training_reproducibility import atomic_torch_save
+    from molgap.v4_runtime import inspect_frozen_state_artifact, model_state_sha256
+
     c = configured
+    family = c.recipe.interface
+    assert family[0] == "ppgt_small" and c.recipe.model_config.hidden == 8
+    reference_item = c.value["arms"][0]
+    reference_spec_path = c.repo / reference_item["data_ref"]["spec_ref"]
+    reference_spec = ExperimentSpec(json.loads(reference_spec_path.read_bytes()))
+    reference_spec_payload = reference_spec.to_dict()
+    reference_arm = deepcopy(reference_spec_payload["arms"][0])
+    reference_record = json.loads((c.repo / reference_item["recipe_ref"]).read_bytes())
+    reference_plan = json.loads((c.repo / reference_item["reference_ref"]["plan_ref"]).read_bytes())
+    reference_metadata = json.loads((c.repo / reference_plan["inputs"]["path"]).read_bytes())
+    reference_model = deepcopy(reference_metadata["models"]["reference"])
+
+    reference_config = asdict(c.recipe.model_config)
+    candidate_config = {**reference_config, "hidden": width}
+    assert {key: value for key, value in candidate_config.items() if key != "hidden"} == {
+        key: value for key, value in reference_config.items() if key != "hidden"}
+    adapter = TRAINING_ADAPTERS[family]
+    factory = resolve_model_factory(adapter)
+    with torch.random.fork_rng(devices=[]), torch.device("cpu"):
+        torch.random.default_generator.manual_seed(42)
+        candidate_model = factory({"model_config": candidate_config})
+    assert all(parameter.device.type == "cpu" for parameter in candidate_model.parameters())
+    candidate_state_sha256 = model_state_sha256(candidate_model)
+    candidate_initial = Path(c.initial).with_name("ppgt-width-initial.pt")
+    candidate_initial.parent.mkdir(parents=True, exist_ok=True)
+    atomic_torch_save(candidate_initial, candidate_model.state_dict())
+    del candidate_model
+    frozen_candidate = inspect_frozen_state_artifact(
+        candidate_initial, expected_state_sha256=candidate_state_sha256)
+    assert frozen_candidate["state_sha256"] == candidate_state_sha256
+    assert candidate_state_sha256 != c.recipe.initialization_sha256
+
+    candidate_recipe = replace(c.recipe, initialization_sha256=candidate_state_sha256,
+        model_config=replace(c.recipe.model_config, hidden=width))
+    requirements = reference_record["acceptance_requirements"]
+    candidate_record = build_screen_recipe("reference", configuration=candidate_recipe,
+        family=family, source_idx_sha256=requirements["source_idx_sha256"],
+        target_sha256=requirements["target_sha256"],
+        train_role_identity=reference_record["train_role_identity"],
+        development_role_identity=reference_record["development_role_identity"])
+    candidate_dir = c.repo / "experiments/candidate"
+    candidate_contract_path = candidate_dir / "contract.json"
+    _write_json(candidate_contract_path, candidate_record)
+    candidate_contract_ref = candidate_contract_path.relative_to(c.repo).as_posix()
+
+    reference_binding_path = c.repo / "experiments/reference/training_input.json"
+    candidate_binding_path = candidate_dir / "training_input.json"
+    candidate_binding_path.write_bytes(reference_binding_path.read_bytes())
+    candidate_model_record = reference_model
+    candidate_model_record["model_config"] = candidate_config
+    transform_config_sha = canonical_fingerprint(
+        transform_configuration(family, candidate_recipe.model_config))
+    for role, feature in candidate_model_record["feature_bindings"].items():
+        feature["transform_config_sha"] = transform_config_sha
+        candidate_model_record["feature_binding_sha256"][role] = canonical_fingerprint(feature)
+    candidate_metadata = deepcopy(reference_metadata)
+    candidate_metadata["models"] = {"reference": candidate_model_record}
+    candidate_metadata["training_input"] = {
+        "path": "training_input.json", "sha256": file_digest(candidate_binding_path)}
+    candidate_metadata_path = candidate_dir / "training_inputs.json"
+    _write_json(candidate_metadata_path, candidate_metadata)
+
+    candidate_target_ref = reference_plan["arms"][0]["target_manifest"]["path"]
+
+    candidate_arm = deepcopy(reference_arm)
+    candidate_arm["initialization"]["state_sha256"] = candidate_state_sha256
+    candidate_arm["training"]["recipe"]["sha256"] = file_digest(candidate_contract_path)
+    bindings = family_arm_bindings(candidate_recipe)
+    candidate_arm["base"] = bindings["base"]
+    candidate_arm["training"].update({key: bindings[key] for key in ("sampler", "transform", "objective")})
+    candidate_arm["data"]["feature_sha256"] = canonical_fingerprint(
+        candidate_model_record["feature_binding_sha256"])
+    candidate_spec_payload = deepcopy(reference_spec_payload)
+    candidate_spec_payload["arms"] = [candidate_arm]
+    candidate_spec = ExperimentSpec(candidate_spec_payload)
+    candidate_spec_ref = "experiments/candidate/experiment_spec.json"
+    _write_json(c.repo / candidate_spec_ref, candidate_spec.to_dict())
+
+    candidate_metadata_ref = candidate_metadata_path.relative_to(c.repo).as_posix()
+    candidate_plan_ref = "experiments/candidate/acceptance_plan.json"
+    _write_json(c.repo / candidate_plan_ref, {
+        "format": reference_plan["format"],
+        "spec_identity": candidate_spec.identity,
+        "inputs": _pointer(c.repo, candidate_metadata_path),
+        "arms": [{"arm_id": "reference",
+            "contract": _pointer(c.repo, candidate_contract_path),
+            "target_manifest": _pointer(c.repo, c.repo / candidate_target_ref)}],
+    })
+    candidate_item = c.value["arms"][1]
+    candidate_item["model"]["addons"] = deepcopy(reference_item["model"]["addons"])
+    candidate_item["recipe_ref"] = candidate_contract_ref
+    candidate_item["data_ref"] = {"spec_ref": candidate_spec_ref, "arm_id": "reference"}
+    candidate_item["initial_state_ref"] = str(candidate_initial)
+    candidate_item["reference_ref"] = {"plan_ref": candidate_plan_ref, "arm_id": "reference"}
+    _write_json(c.path, c.value)
+    _git(c.repo, "add", ".")
+    _git(c.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Freeze width-only candidate input anchor")
+
+    from molgap.experiment_input import _validate_fresh_architecture_initializations
+    reference_row = (None, reference_arm, reference_record)
+    altered_arm = deepcopy(candidate_arm)
+    altered_arm["initialization"]["state_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="Architecture initialization is not the fresh seed42 factory state"):
+        _validate_fresh_architecture_initializations(reference_row, (None, altered_arm, candidate_record))
+
+    assert candidate_metadata_ref != reference_plan["inputs"]["path"]
+    assert candidate_item["data_ref"]["spec_ref"] != reference_item["data_ref"]["spec_ref"]
+
+
+@pytest.mark.parametrize(("step_clock", "candidate_width"),
+    [(False, None), (True, None), (False, 16)], ids=["False", "True", "ppgt-width-16"])
+def test_configured_compile_prepare_and_cross_head_reuse(configured, monkeypatch, step_clock, candidate_width):
+    c = configured
+    if candidate_width is not None:
+        if c.recipe.family != "ppgt_small":
+            pytest.skip("The width-only model case is scoped to the PPGT family factory")
+        _configure_ppgt_width_candidate(c, candidate_width)
     if step_clock:
         value = deepcopy(c.value)
         for arm in value["arms"]:
@@ -198,10 +322,13 @@ assert prepared['status']=='PREPARED_FOR_PLATFORM',prepared
 assert prepared['submitted'] is False
 context=RunContext.for_training(spec,pathlib.Path(prepared['prepared'])/'package',
     expected_package_identity=prepared['package_identity'],arm_id='candidate',account='fixture',run_reference='fixture/configured')
+input_root=(repo/'experiments/candidate' if job['arm_id']=='candidate'
+    and (repo/'experiments/candidate/training_input.json').is_file()
+    else repo/'experiments/reference')
 native,authority_path=build_formal_context(spec=spec,job=job,source_root=repo,
-    staged_root=pathlib.Path(prepared['prepared']),input_root=repo/'experiments/reference',run_context=context)
+    staged_root=pathlib.Path(prepared['prepared']),input_root=input_root,run_context=context)
 native.validate_before_payload(recipe=recipe,context=context,spec=spec,authority_path=authority_path,
-    input_root=repo/'experiments/reference')
+    input_root=input_root)
 assert native.configured and native.max_wall_seconds==1800
 assert execution_extension(spec,repo).wall_ceiling_seconds==1800
 (repo/'unrelated.md').write_text('unrelated\n')
