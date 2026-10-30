@@ -72,21 +72,20 @@ def test_prepared_v2_configured_authority_requires_fresh_native_gate(configured)
 
     c = configured
     _, spec, workflow, _ = resolve_experiment_input(c.path, c.repo)
-    recipe = read_recipe(c.repo / workflow["arms"][0]["recipe"])[1]
-    recipe = replace(recipe, formal_training=replace(
+    recipes = {job["arm_id"]: replace(recipe, formal_training=replace(
         recipe.formal_training, execution_mode="prepared-v2"))
+        for job in workflow["arms"] for recipe in [read_recipe(c.repo / job["recipe"])[1]]}
     authority = {**c.authority, "execution_mode": "prepared-v2",
         "fresh_native_execution_gate": True}
 
-    assert validate_configured_authority(authority, spec.to_dict(),
-        {"candidate": recipe}) == 1800
+    assert validate_configured_authority(authority, spec.to_dict(), recipes) == 1800
     missing_gate = {key: value for key, value in authority.items()
         if key != "fresh_native_execution_gate"}
     for rejected in (missing_gate,
             {**authority, "fresh_native_execution_gate": False},
             {**authority, "execution_mode": "original"}):
         with pytest.raises(ValueError, match="Prepared execution requires fresh native"):
-            validate_configured_authority(rejected, spec.to_dict(), {"candidate": recipe})
+            validate_configured_authority(rejected, spec.to_dict(), recipes)
 
 
 @pytest.mark.parametrize("with_repair_proof,repair_report", [

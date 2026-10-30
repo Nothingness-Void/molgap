@@ -42,9 +42,13 @@ def test_profile_only_compilation_and_phase_gate(configured):
     if c.value["arms"][0]["model"]["family"] != "ppgt_small":
         pytest.skip("PPGT-only diagnostic; ESA has no release through this gate")
     value, authority = deepcopy(c.value), deepcopy(c.authority)
+    # The profile phase permits one context_only arm and no same-run pair.
+    value["arms"] = [dict(value["arms"][1], purpose="context_only")]
+    value.pop("same_run")
     value["arms"][0]["model"]["addons"] = []
     value["arms"][0]["training"]["profiling"] = dict(ppgt_phases=True, record_shapes=False)
-    authority.update(purpose=PROFILE_PURPOSE, scientific_training_authorized=False,
+    authority.update(purpose=PROFILE_PURPOSE, scientific_training_authorized=False, arms=["candidate"],
+                     interfaces=authority["interfaces"][:1], recipes={"candidate": authority["recipes"]["candidate"]},
                      scratch_optimizer_updates_per_model=6)
     _write_json(c.path, value)
     _write_json(c.repo / value["authority_ref"], authority)
