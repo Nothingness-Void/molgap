@@ -1,0 +1,19 @@
+{
+  "format": "ppgt-local-preparation-disposition-v1",
+  "attempt_id": "v2",
+  "remote_submission": "NOT_SUBMITTED",
+  "source_published": false,
+  "native_training_executed": false,
+  "cause": "CRLF authority bytes were pinned in local metadata while source archives normalize text to LF; exact packaged release rejected before publication.",
+  "prepared_status": "PREPARED_FOR_PLATFORM",
+  "package_identity": "86c3ca347297c7143e4b73697a5d050d9ce1470c40788fb220878373a8c873e8",
+  "source_commit": "c0c1cfe6ba6e5e927c6c5f4de1af442a076b9f585",
+  "evidence_path": "E:\\MolGap\\artifacts\\runs\\ppgt-capacity500k-k2-s42-v1\\v2\\prepared\\workflow_report.json",
+  "diagnostic_frames": [
+    "kaggle_submission._check_scientific_release",
+    "modern2d_training_release.check_plan",
+    "modern2d_training_release._pinned"
+  ],
+  "superseded_by_attempt": "v3",
+  "scientific_reinterpretation": false
+}

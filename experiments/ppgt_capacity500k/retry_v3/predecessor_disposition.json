@@ -1,0 +1,28 @@
+{
+  "aggregate_authorized_wall_seconds": 32400,
+  "cause": "SHA-identical indexed input metadata was mounted both as source evidence and next to accepted indexed payloads; old resolver rejected both.",
+  "evidence_ref": "experiments/ppgt_capacity500k/retry_v3/predecessor_execution.json",
+  "format": "ppgt-capacity-infrastructure-disposition-v1",
+  "full_platform_billing": "MEASUREMENT_MISSING",
+  "native_qualification": "NOT_REACHED",
+  "observed_allocated_device_seconds": 188.79005837000005,
+  "observed_allocation_wall_seconds": 94.39502918500003,
+  "optimizer_updates": 0,
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "remote_state": "ERROR",
+  "repair": "Retain all frozen SHA/role checks; choose only one indexed binding with its adjacent data_root; reject multiple data-backed mounts.",
+  "replay_ready": false,
+  "retained_original_decision_ref": "experiments/ppgt_capacity500k/results/attempt_v1/disposition.json",
+  "retry_authorized": true,
+  "retry_budget_debit_wall_seconds": 120,
+  "retry_of": {
+    "attempt_id": "v1",
+    "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+    "spec_identity": "4c693064339586e581ab00afbd0f74044efed6b69007a4ca234ca4703a4d41a0"
+  },
+  "retry_remaining_wall_seconds": 32280,
+  "rml_terminal_finalization": "PENDING_ADAPTER_NO_FAMILY_OUTPUT_MANIFEST",
+  "scientific_result": "NOT_EVALUATED",
+  "standing_authorization": "Human instruction to repair execution failures and resubmit unchanged scientific requests; no new architecture or extra seed.",
+  "training_started": false
+}

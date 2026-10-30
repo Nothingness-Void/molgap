@@ -1,0 +1,17 @@
+{
+  "arms": {
+    "ppgt_w192": {
+      "remote_path": "experiment/ppgt_w192/preflight.log",
+      "sha256": "dac02f545b1d456029ddcc901a54a39e861a872006f96af6a255418003aa8e64",
+      "traceback": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py\", line 40, in <module>\n    main()\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py\", line 26, in main\n    result = execute_training_phase(spec=spec, job=job, phase=args.phase,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py\", line 639, in execute_training_phase\n    formal_training, authority_path = build_formal_context(spec=spec, job=job,\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_training_release.py\", line 680, in build_formal_context\n    binding = _json(resolve_pinned_manifest(input_root, recipe.dataset))\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_data.py\", line 67, in resolve_pinned_manifest\n    raise ValueError(\"Expected one uniquely mounted pinned manifest\")\nValueError: Expected one uniquely mounted pinned manifest\n"
+    },
+    "ppgt_w384": {
+      "remote_path": "experiment/ppgt_w384/preflight.log",
+      "sha256": "dac02f545b1d456029ddcc901a54a39e861a872006f96af6a255418003aa8e64",
+      "traceback": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py\", line 40, in <module>\n    main()\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py\", line 26, in main\n    result = execute_training_phase(spec=spec, job=job, phase=args.phase,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py\", line 639, in execute_training_phase\n    formal_training, authority_path = build_formal_context(spec=spec, job=job,\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/modern2d_training_release.py\", line 680, in build_formal_context\n    binding = _json(resolve_pinned_manifest(input_root, recipe.dataset))\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/temp/molgap-workflow/source/src/molgap/family_training_data.py\", line 67, in resolve_pinned_manifest\n    raise ValueError(\"Expected one uniquely mounted pinned manifest\")\nValueError: Expected one uniquely mounted pinned manifest\n"
+    }
+  },
+  "format": "ppgt-preflight-traceback-observation-v1",
+  "kernel_id": 141690617,
+  "version": 1
+}
