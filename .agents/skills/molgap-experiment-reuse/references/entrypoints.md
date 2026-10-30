@@ -25,10 +25,7 @@ import an experiment-local implementation as a universal model adapter.
 
 - For saved predictions, follow the owning acceptance and row-alignment code.
   `src/molgap/comparison_readiness.py` checks V5 comparison readiness; it does
-  not generate new predictions. For a paired GPTrans example, inspect
-  `experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py` and
-  `tests/test_gptrans_local_pair_analysis.py` for the actual row-alignment
-  contract. Treat the experiment code as an example until identities match.
+  not generate new predictions.
 - For frozen-checkpoint inference, locate the **accepted checkpoint's**
   matching loader and model factory in its owning experiment or public
   `src/molgap/inference.py` route. `src/molgap/conformer_ab.py` has one specific
@@ -43,8 +40,8 @@ import an experiment-local implementation as a universal model adapter.
 
 - Use the owning profile adapter and its frozen equivalence criteria. The
   training-only example is
-  `experiments/pcqm_gptrans_pair_norm_500k_profile/run_profile.py` with
-  `tests/test_gptrans_pair_norm_500k_profile.py`.
+  `experiments/pcqm_gptrans_step_profile_v5/run_profile.py` with
+  `experiments/pcqm_gptrans_step_profile_v5/test_static.py`.
 - `src/molgap/inference_benchmark.py` benchmarks specific public inference
   routes; it is not a generic training profiler. Keep profiling cost and
   scientific comparison evidence separate.
