@@ -12,7 +12,7 @@
   "execution_mode": "prepared-v2",
   "execution_repair": {
     "aggregate_wall_seconds": 32400,
-    "decision_ref": "experiments/ppgt_capacity500k/results/attempt_v1/disposition.json",
+    "decision_ref": "experiments/ppgt_capacity500k/retry_v2/predecessor_disposition.json",
     "per_job_billing_status": "MEASUREMENT_MISSING",
     "prior_debit_wall_seconds": 120,
     "prior_observed_wall_seconds": 94.39502918500003,
@@ -62,7 +62,7 @@
   "retry_authorized": true,
   "retry_of": {
     "attempt_id": "v1",
-    "decision_ref": "experiments/ppgt_capacity500k/results/attempt_v1/disposition.json",
+    "decision_ref": "experiments/ppgt_capacity500k/retry_v2/predecessor_disposition.json",
     "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
     "spec_identity": "4c693064339586e581ab00afbd0f74044efed6b69007a4ca234ca4703a4d41a0"
   },

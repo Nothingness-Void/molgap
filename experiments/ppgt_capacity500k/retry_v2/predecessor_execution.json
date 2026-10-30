@@ -1,0 +1,51 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "4c693064339586e581ab00afbd0f74044efed6b69007a4ca234ca4703a4d41a0",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "ppgt_w192",
+          "device": 0,
+          "returncode": 1,
+          "worker_wall_seconds": 2.5021424760000173
+        },
+        {
+          "arm_id": "ppgt_w384",
+          "device": 1,
+          "returncode": 1,
+          "worker_wall_seconds": 2.5010520990000487
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "arms": {
+    "ppgt_w192": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 2.5021424760000173,
+      "exit_reason": "preflight_worker_exit_1"
+    },
+    "ppgt_w384": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 2.5010520990000487,
+      "exit_reason": "preflight_worker_exit_1"
+    }
+  },
+  "prior_allocation_budget_debit_wall_seconds": 0,
+  "budget_scope": "aggregate authorization; prior debit is not added to the current invocation's measured ledger",
+  "pair_process_wall_seconds": 2.532368746999964,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}
