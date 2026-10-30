@@ -5,6 +5,38 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:b_16x256:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -603,5 +635,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 68
+  "trace_count": 70
 }

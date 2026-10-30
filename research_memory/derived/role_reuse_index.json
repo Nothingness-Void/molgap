@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 771,
+  "ambiguous_historical_role_record_count": 777,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1302,6 +1302,48 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
@@ -5399,7 +5441,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 519,
+  "explicit_role_event_count": 529,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -7193,6 +7235,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
@@ -7341,6 +7439,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157:internal_development": [
@@ -9225,6 +9337,8 @@
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+      "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
       "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
@@ -9381,6 +9495,8 @@
       "ev-terminal-T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+      "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256",
       "ev-terminal-TB-local-k1-channel-gain-flow-20261023-r3",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
       "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
@@ -10672,6 +10788,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
@@ -13543,6 +13715,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development": [
@@ -13661,6 +13889,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-a_12x384-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-single-model-total-budget-500k-s42-b_16x256-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [

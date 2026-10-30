@@ -1,0 +1,158 @@
+{
+  "acceptance_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/5e74e196c772e592/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json": "f20a47e80362206b72ee1d759ec070e1c662ba35fa4122e4d8d2e98f5ea80ebe",
+    "experiments/pcqm_single_model_total_budget/roles_v4_structural/roles_a_12x384.json": "f33c355263415d6d33d1b35c47f018e13579aab8f03efa9639e246aaf61768a2",
+    "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/continuations/3/continuation.json": "d664f3c624ae441acc5e5529fcc54ec08c666892bfdb4fdd0fc6e58b798a5132",
+    "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/5e74e196c772e592/acceptance.json": "b83cedb6c8eb2260a2e4cec6e458e05a9fda0ae3f0dce1f14388df062b9de1b2",
+    "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/5e74e196c772e592/observed.json": "1ae2a42082bb45587e391e373037f81e350525d8f393135313dca540e753c320",
+    "experiments/pcqm_single_model_total_budget/terminal_decision.md": "60afdddbb9e6a185fe532e822f1530af69dab48909591cf1efcb5e41117f6436",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/continuation_authority_v3.md": "714c587ff61793827dfa23b020da6db8708c121a86d3188d555445de3dc9fcbc",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/operations_v3/launch_receipt.json": "3cc053676b24e075829e147bcc5bb9840427b486d1cf46342436532944bf8d9b",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/recovery_repair.json": "f44b82029638b7209adef7a2d0c6538431c6e82f26395ac914a4c37f7c442822",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/recovery_repair/src/molgap/family_training_runner.py": "fe382d03a98067f5b3a6a184ff511f21fb5799c30bab568e36b46ff4d8b4065e",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/a_12x384/files/canonical_trace.json": "10ae4d66efedeee2247d094b1583c5ae860b4a0079894814220967bbba75a348",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/a_12x384/files/canonical_trace.json.context.json": "a594be45753c56921cf5fe22964690cff04003a56471e51a96fe1f69f22afaca",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/a_12x384/files/last_checkpoint.pt": "7372d3ab83de2d64514c0b007453c357659604a8f8b57e44e7cb5ccfe0730f41",
+    "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/a_12x384/resume_bundle.json": "9dcbcae9b04a2288af8148df75dc8fa010a98ab80b5959a5affffcdbda9133d0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/a_12x384/allocation_ledger.json": "af66010192c8f63933b16250cd8bdbc68f5902ca5c3fa56decaf8a737d99eeb9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/allocation_ledger.json": "af66010192c8f63933b16250cd8bdbc68f5902ca5c3fa56decaf8a737d99eeb9",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/execution_retention.json": "d724a3f40432734dc545b10f35ad60193e9eaaa2ccb7ce8a199590f6e9ff43f1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_resume_preflight/a_12x384/actual_resume_certificate.json": "8207fdc6053826639551756fd218812e6e2fb01f094e1dd01552450e394eb454",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_resume_preflight/a_12x384/runtime_certificate.json": "d54e486cfbbb3ea5a4c0856bf2d21683f0442eb59bba83dd7732c505a232ddf3",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json": "772d378dc3534ef0a84299b3cdcbb6f3d05a1458f9fd25e773b9f042cd67c460",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json.context.json": "a594be45753c56921cf5fe22964690cff04003a56471e51a96fe1f69f22afaca",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/development_predictions.pt": "ce6954b4474693b34cb3aab79b351887ee568673003f6f006400da69df3d7fa1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/last_checkpoint.pt": "f4dfabae1a9f0075798591c0c7620e6a81a1dd7a07ff37a486318c23379fcd2a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/output_manifest.json": "e2612da0618d457fe836a1de3e108c3a2257a00f217ee67601aa1f07bcc8dffe",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/selected_model.pt": "862d7b0916c5d6b90791600eaf0ecfa796512a800f13c94523e4169d6bca7c68",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/training_contract.json": "f20a47e80362206b72ee1d759ec070e1c662ba35fa4122e4d8d2e98f5ea80ebe",
+    "external:///D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/operations/launch_receipt.json": "91b31fee3c4beb55db175dc405e551eb388ffa5ee0472e6866e6e0cb23cb1589",
+    "external:///D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/prepared/package/package_manifest.json": "893c4cd8fd75a0ac80f76d460f751ac4154dd9fac56d5c88d25ac76e4077245d",
+    "external:///D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/reports/diagnostic_5bf2765e609df33db6bb3f13a3ab40e8b7d7cbc410259a8df1a7edf4ac4f0c6d.json": "c88b08ab563946bfc745761a0d012b06ea2ef1f9614b55af67afea54d7f46e32"
+  },
+  "closure_blockers": [],
+  "continuation_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/continuations/3/continuation.json",
+  "finalized_at": "2026-10-30T08:07:11.281911+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384-0.json",
+        "sha256": "fd2872b32fe80f18c1c60c31201ff4a3707d2f2e1c17ee06c6be6486d134e9e4"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384-allocation-0.json",
+        "sha256": "398d2dc70d618e3ca8abe0229db14b18683bdfd5250dd79341528bf1755a759a"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "a506c61820223faadaaf997678f4931e95f50f958527b4dcc73c8958bf65aee8"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "10fd0fbf4ffd1b751c1ba36f0f6c4d5c0af3253902eae785cb0bce6c736c9404"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-single-model-total-budget-500k-s42-a_12x384-train-training_membership.json",
+        "sha256": "9802fd4c1a18445324d680283c801e74a220ab9903bd203b071b8f057a36c999"
+      },
+      {
+        "ref": "roles/role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-prediction_input.json",
+        "sha256": "594f46dfd3dc305ef0afaf557fa1cacd99e891a1889b22131aab11ac639a24a2"
+      },
+      {
+        "ref": "roles/role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-labels_read.json",
+        "sha256": "7034a76bcc9ced2324fd286573ae077e62040b2cfab209cd5a580c02cc33954d"
+      },
+      {
+        "ref": "roles/role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-metric_computed.json",
+        "sha256": "d9afba722921183fffd68dbb76a4c9878ce2faca9bc6a0dc1603294dc25f6e4b"
+      },
+      {
+        "ref": "roles/role-pcqm-single-model-total-budget-500k-s42-a_12x384-development-selection_used.json",
+        "sha256": "62fe1dfb79a8ee9d86751ee1405471c37abce796d3d4934e0d71ede42934147d"
+      }
+    ]
+  },
+  "requested_outcome": "CLOSED",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-single-model-total-budget-500k-s42-v3",
+    "logical_run_id": "pcqm-single-model-total-budget-500k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-single-model-total-budget-500k",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "1380d1865879edf69c3c328ece398893089e2ce9",
+    "source_package_sha256": "84917adab188a5ac34fcfd502806cabf808d61ecd3d792b50bd2f7dfebf213b2",
+    "spec_identity": "7b5dffa92666621c6aa2d61a7970382eb2c3faeb7d4edfea6f92992965cbc91f"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_234360",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+    "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/5e74e196c772e592/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json",
+    "trace_artifact_sha256": "772d378dc3534ef0a84299b3cdcbb6f3d05a1458f9fd25e773b9f042cd67c460",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+}

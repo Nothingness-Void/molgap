@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "0e503faf2f2c9564ada2a7116910d1d9202a63c514158c15bb9a2a58dc95c015",
+  "source_digest": "4b3e6b3d036e3bcad25a799e6d58e202a38a8fa8c05d3cce23cd181d5ed5b7a5",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -372,29 +372,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+      "decision_ref": "experiments/pcqm_single_model_total_budget/terminal_decision.md",
       "family_id": "pcqm-single-model-total-budget-500k",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+      "decision_ref": "experiments/pcqm_single_model_total_budget/terminal_decision.md",
       "family_id": "pcqm-single-model-total-budget-500k",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/b_16x256/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/b_16x256/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
     },

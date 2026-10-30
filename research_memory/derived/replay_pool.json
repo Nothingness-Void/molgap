@@ -49252,6 +49252,38 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:b_16x256:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -49641,5 +49673,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "a04ef1b1bfef2a6d386f4279def249b10da512bafde2f2380edefeda720fd691"
+  "source_digest": "cf6bde146d97ded4fbce3444e88d4a7df947e7d638d7674d41aa4be34d87514a"
 }
