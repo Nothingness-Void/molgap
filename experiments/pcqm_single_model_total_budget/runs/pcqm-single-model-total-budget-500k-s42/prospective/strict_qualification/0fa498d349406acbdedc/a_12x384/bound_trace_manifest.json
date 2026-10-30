@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_234360",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+  "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/d8f5811b657e623a/terminal.json",
+  "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json",
+  "trace_artifact_sha256": "772d378dc3534ef0a84299b3cdcbb6f3d05a1458f9fd25e773b9f042cd67c460",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "optimizer_steps"
+}
