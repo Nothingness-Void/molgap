@@ -6,6 +6,7 @@ from pathlib import Path
 from molgap.constants import REPO_ROOT
 from molgap.documentation_check import (
     ENTRYPOINT_LINE_LIMITS,
+    TEST_SUITE_LIMITS,
     audit_repository,
     main,
     markdown_anchors,
@@ -123,4 +124,16 @@ def test_graph_screen_extension_is_auditable_when_supplied_explicitly() -> None:
     )
     assert result.ok, "graph screen contract issues: " + "; ".join(
         f"{issue.line}:{issue.kind}:{issue.pointer}" for issue in result.issues
+    )
+
+
+def test_test_suite_stays_within_ceiling() -> None:
+    files = sorted((REPO_ROOT / "tests").glob("test_*.py"))
+    lines = sum(len(p.read_text(encoding="utf-8").splitlines()) for p in files)
+    cap = TEST_SUITE_LIMITS
+    assert len(files) <= cap["files"] and lines <= cap["lines"], (
+        f"tests/test_*.py has {len(files)} files, {lines} lines; ceiling is "
+        f"{cap['files']} files, {cap['lines']} lines (TEST_SUITE_LIMITS in "
+        "src/molgap/documentation_check.py). Extend an existing workflow test or "
+        "remove a superseded one; raising the ceiling needs a commit that states why."
     )
