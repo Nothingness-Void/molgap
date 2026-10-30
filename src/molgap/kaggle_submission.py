@@ -64,7 +64,7 @@ def _quota(http, budget):
     if remaining < budget * 3600:
         raise ValueError("Available Kaggle GPU quota is below the frozen allocation ceiling")
     return {"observed_at": datetime.now(timezone.utc).isoformat(), "quota": raw,
-            "available_gpu_hours": remaining / 3600, "authorized_ceiling_gpu_hours": budget}
+            "available_gpu_hours": remaining / 3600, "checked_quota_hours": budget}
 
 
 @contextmanager
@@ -414,6 +414,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 or wall * devices / 3600 > budget):
             raise ValueError("Continuation allocation must be explicit and within the packaged authority ceiling")
         budget = wall * devices / 3600
+        quota_hours = wall / 3600
+    else:
+        quota_hours = budget
     from .experiment_terminal import _path
     if not monitor_paths or len(monitor_paths) != len(set(monitor_paths)):
         raise ValueError("Expected explicit unique monitor pointers")
@@ -506,7 +509,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             except ReleaseRecheckError as error:
                 retain_release_failure(error, state["phase"])
                 raise
-            atomic_json(output / "quota_before_publication.json", _quota(http_session, budget))
+            atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_hours))
             def check_predecessor():
                 prior_kernel = _kernel_source(api, ref)
                 if not continuation:
@@ -590,7 +593,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 retain_release_failure(error, state["phase"])
                 raise error
             atomic_json(output / "remote_release_report.json", release)
-            atomic_json(output / "quota_before_submit.json", _quota(http_session, budget))
+            atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_hours))
             check_predecessor()
             if continuation and _dataset_details(api, dataset).current_version_number != source_version:
                 raise ValueError("Source dataset version changed before POST; reconcile")

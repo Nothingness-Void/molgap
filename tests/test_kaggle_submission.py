@@ -269,6 +269,7 @@ def test_full_submission_and_repeated_call_never_duplicate(release):
             release.run()
         assert release.api.created == release.api.pushed == 0
         release.api.predecessor_status = "ERROR"
+        release.http.quota_hours = 7  # Kaggle charges wall hours: 5 h wall fits, 10 device-hours would not.
     else:
         release.api.denied = 1  # Right after creation the status endpoint may answer 403 once.
     result = release.run()
