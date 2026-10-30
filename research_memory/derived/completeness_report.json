@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 167,
+    "trajectories_total": 169,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 156,
-    "with_incomplete_native_measurement": 124,
+    "with_cost_event": 158,
+    "with_incomplete_native_measurement": 126,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -148,7 +148,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 124,
+      "count": 126,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -173,6 +173,8 @@
         "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
         "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
         "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+        "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
+        "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
