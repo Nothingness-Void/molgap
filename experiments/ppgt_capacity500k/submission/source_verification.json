@@ -1,0 +1,14 @@
+{
+  "kernel": "kaseichou/molgap-ppgt-capacity500k-s42-v1",
+  "kernel_id": 141690617,
+  "version": 1,
+  "entry_sha256": "e55bbf6a3b692051aad8e8b698f969cdb4f1293a5862d6b44495e0237b54d620",
+  "entry_bytes_equal": true,
+  "private": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-modern2d-500k-commondev-v1",
+    "kaseichou/molgap-ppgt-capacity500k-source-v1"
+  ],
+  "observed_at": "2026-10-30T09:52:28.031114+00:00"
+}

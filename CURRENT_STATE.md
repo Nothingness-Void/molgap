@@ -7,10 +7,11 @@
 ## Server execution status
 
 The human authorized a separate [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/README.md)
-on Kaggle2. Its [status](experiments/ppgt_capacity500k/STATUS.md) is preparation
-only; no new remote job is bound. Preserve the frozen width-only intervention,
-matched update clock and bounded allocation. Native qualification, completed
-outputs and Replay admission remain unobserved.
+on Kaggle2. Its [first attempt](experiments/ppgt_capacity500k/STATUS.md) failed
+before training because source evidence duplicated a pinned data manifest.
+The minimal data-backed mount repair is CPU-verified; an unchanged retry is
+being prepared with the failed window debited from the aggregate budget.
+Native qualification, completed outputs and Replay admission remain unobserved.
 
 The [family-retention and GRIT challenge](experiments/family_retention_challenge_500k/README.md)
 is a research proposal only. It recommends parking PPGT expansion, retaining ESA

@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "ppgt-capacity500k-k2-s42-v1-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-ppgt-capacity500k-k2-s42-v1-ppgt_w384-planned"
+      ],
+      "evidence_refs": [
+        "experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/ppgt_w384/recipe.json"
+      ],
+      "run_ids": [
+        "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream"
+      ],
+      "source_commit": "d2cc79b435a4dbe58e91671dec83f2696235613c",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/ppgt_capacity500k/protocol.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_CAPACITY_PAIR",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/ppgt_capacity500k/authority.json",
+    "chosen_action": "RUN_CAPACITY_PAIR",
+    "policy_id": "ppgt-capacity500k",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/ppgt_capacity500k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1/prospective/rml_decision_snapshots/2758314940abde2894445e5e05ed2ab46933477b795240389a4d71bd5f5b6001.json",
+    "snapshot_sha256": "2758314940abde2894445e5e05ed2ab46933477b795240389a4d71bd5f5b6001",
+    "state_timestamp": "2026-10-28T16:38:28.656938+00:00"
+  },
+  "family_id": "ppgt-capacity500k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Only training fit improves.",
+      "Wider model needs longer optimization.",
+      "FP32 throughput or memory exceeds budget."
+    ],
+    "changed_mechanism": "PPGT-hidden-width-only-192-to384",
+    "cheapest_falsifier": "One matched exposure width pair; no extra layers, PE, geometry or seeds.",
+    "decision_changed_if_negative": "Close this width under the exact exposure/recipe; distinguish cost or execution failures.",
+    "decision_changed_if_positive": "Retain material capacity lead only after reference-first RML/replay acceptance; no automatic scale/seed/full.",
+    "expected_native_cost_ref": "cost-T-ppgt-capacity500k-k2-s42-v1-ppgt_w384-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-ppgt-capacity500k-k2-s42-v1-ppgt_w384",
+    "observed_deficiency": "Compact PPGT still improved late at2M exposure; increasing hidden capacity remains untested with matched evidence.",
+    "related_closed_family_ids": [
+      "ppgt-content-conditioner-below-gate"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    ]
+  },
+  "owner": "server",
+  "question": "Does hidden width192 to384 improve fixed500K prediction at identical15620 optimizer updates?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/ppgt_capacity500k/authority.json",
+    "contract_refs": [
+      "experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/ppgt_w384/recipe.json",
+      "experiments/ppgt_capacity500k/anchors/ppgt_w384/experiment_spec.json",
+      "experiments/ppgt_capacity500k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    ],
+    "prior_trajectory_ids": [
+      "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/ppgt_capacity500k/roles.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "ppgt_w384",
+      "comparison_role": "candidate",
+      "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+      "reference_arm_id": "ppgt_w192",
+      "reference_trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-ppgt_w192",
+      "reference_trajectory_ref": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1/prospective/ppgt_w192/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "4c693064339586e581ab00afbd0f74044efed6b69007a4ca234ca4703a4d41a0"
+    },
+    "source_commit": "d2cc79b435a4dbe58e91671dec83f2696235613c",
+    "source_config_identity": "c25c1e797578b0c307be4267034d95fa594895958e631b923787ad852f9aabc3"
+  },
+  "track": "C",
+  "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-ppgt_w384"
+}

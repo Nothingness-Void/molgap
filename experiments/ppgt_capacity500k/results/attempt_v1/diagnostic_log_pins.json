@@ -1,0 +1,17 @@
+{
+  "kernel": "kaseichou/molgap-ppgt-capacity500k-s42-v1",
+  "version": 1,
+  "scope": "Exact-version bounded preflight logs, observed-byte pins only, not scientific acceptance",
+  "files": [
+    {
+      "path": "experiment/ppgt_w192/preflight.log",
+      "sha256": "dac02f545b1d456029ddcc901a54a39e861a872006f96af6a255418003aa8e64",
+      "bytes": 1296
+    },
+    {
+      "path": "experiment/ppgt_w384/preflight.log",
+      "sha256": "dac02f545b1d456029ddcc901a54a39e861a872006f96af6a255418003aa8e64",
+      "bytes": 1296
+    }
+  ]
+}

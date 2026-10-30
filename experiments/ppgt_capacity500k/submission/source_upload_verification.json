@@ -1,0 +1,97 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "kaseichou/molgap-ppgt-capacity500k-source-v1",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "fa59b93044c2f0f19fd237c083ccc0ab5d8884302014ece9b774a7041498a6f3",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "5b750bb5ec27587a8e7e3bb55ab28dc5ebb546fe814f1f7edbfb6ecbfa87f137",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "6f0c23a29c0c1141050f5728ad5d7e244f66c20abe50abb692e4e797599db2b1",
+      "bytes": 78664
+    },
+    {
+      "path": "acceptance/experiments/modern2d_100k_formal_screen/retry_v2/target_manifest.json",
+      "sha256": "ffd82b664024b068726d803fc2d971865f5b551efafcaeedf7393ad4b08c1bb2",
+      "bytes": 683
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/anchors/ppgt_w192/training_input.json",
+      "sha256": "20eeeaaebb165129681d689a266e462a026324e0eecc5522315596601eadca93",
+      "bytes": 3015
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/authority.json",
+      "sha256": "64fbef38872a6b5095a96990965d1979529fb08123d7c4a87490449aee2229c0",
+      "bytes": 1825
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/acceptance_plan.json",
+      "sha256": "12a7b681087d24ea19331aefaf1914324cb7baa8835c876bce88308747054cdf",
+      "bytes": 7489
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/ppgt_w192/recipe.json",
+      "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025",
+      "bytes": 2767
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/ppgt_w384/recipe.json",
+      "sha256": "3e8dae5bf31dc886b5b5538d5bdd5e64a4050ffa551825b6f8ba276d7924c0e1",
+      "bytes": 2767
+    },
+    {
+      "path": "acceptance/experiments/ppgt_capacity500k/generated/c1b42e0b50a6d0fca74bd5a025ceea9242c3fa14d372291adc91ef553b5e972d/training_inputs.json",
+      "sha256": "fdccd4e0203fffdfd71a7b7564a60cec9c0e39fd53800afb41fca5b3d7410e30",
+      "bytes": 4409
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "988d495f8c26a8e7abd501c7952f205c53242fcd786193fd6f777356a11a6a58",
+      "bytes": 1542
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "4c693064339586e581ab00afbd0f74044efed6b69007a4ca234ca4703a4d41a0",
+      "bytes": 5806
+    },
+    {
+      "path": "initial_states/ppgt_w192.pt",
+      "sha256": "5a57dbb8f5abeb843683cc8efe1e5954a102ea8b1bf7d23075abc5a5b79c2c02",
+      "bytes": 10376759
+    },
+    {
+      "path": "initial_states/ppgt_w384.pt",
+      "sha256": "f73461f3801926f3a95272e72d4136eb4268305ea22e0934f1cfb917a64a29d6",
+      "bytes": 39800683
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "86d99c36707e48cfe498e5ad392dcd3cf67911643204256aa045fb38935f848f",
+      "bytes": 20035
+    },
+    {
+      "path": "prospective/ppgt_w192/trajectory.json",
+      "sha256": "6b92208ccae8ff4e31e8c0b3e16c5a0050199c9b308d0a9b47d244dadbd7b5c0",
+      "bytes": 4601
+    },
+    {
+      "path": "prospective/ppgt_w384/trajectory.json",
+      "sha256": "a0f8be66a789791516940650a54a36be9a2569aac756cee3e532637ef9eae68e",
+      "bytes": 4601
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "9399566b1c06ecc98c9f1835f118537908056eacb4e43e4a829e54e448eff0f5",
+      "bytes": 1479015
+    }
+  ]
+}

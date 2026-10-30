@@ -1,0 +1,30 @@
+{
+  "automatic_training_retry": false,
+  "automatic_training_successor_authorized": false,
+  "automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
+  "closed": true,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "credential_file": "C:/Users/Adminn/Downloads/Key/kaggle_2.json",
+  "credential_owner": "kaseichou",
+  "format": "molgap-server-multi-job-monitor-v1",
+  "healthy_action": "SILENT",
+  "jobs": [
+    {
+      "closed": true,
+      "control_state": "E:/MolGap/artifacts/runs/ppgt-capacity500k-k2-s42-v1/v1/monitor/control_state.json",
+      "kernel": "kaseichou/molgap-ppgt-capacity500k-s42-v1",
+      "kernel_id": 141690617,
+      "output_directory": "E:/MolGap/artifacts/runs/ppgt-capacity500k-k2-s42-v1/v1/remote_outputs",
+      "slot": "ppgt_capacity_pair",
+      "version": 1
+    }
+  ],
+  "kaggle_session_quota_hours_ceiling": 9,
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "owner": "server",
+  "physical_t4_hours_ceiling": 18,
+  "terminal_action": "One durable idempotent event and handoff to existing A; no model/thinking override",
+  "wall_ceiling_seconds": 32400,
+  "terminal_status": "ERROR_PRE_TRAIN",
+  "terminal_decision_ref": "experiments/ppgt_capacity500k/results/attempt_v1/disposition.json"
+}
