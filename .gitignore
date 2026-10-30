@@ -177,6 +177,10 @@ platforms/_records/ims/pcqm_unified_roles_v2/rml_backtest.json
 .tmp/
 artifacts/
 .codex/
+# Local test and preparation scratch workspaces at the repository root.
+/.tmp-kaggle-*/
+/.pytest-*/
+/.codex-pytest-*/
 
 # Presentation outputs live on the dedicated presentation-assets branch. Keep
 # source diagrams and the builder in the main branch without accumulating
