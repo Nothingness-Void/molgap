@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "fa4d83ed0a722f1f0652efa29bae2cfc4fcaee59edefd8bdf9b20069df03884b",
+  "source_digest": "e843b51b12b5a82cb348bef46a0cff60a82e1565ab96c59e2fd2db7cad4c200a",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -209,6 +209,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-init-forward-500k-single-s42-scratch"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_lr8e4_warmup_100k/terminal_decision.md",
+      "family_id": "pcqm-k1-lr8e4-warmup-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i43/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_lr8e4_warmup_100k/terminal_decision.md",
+      "family_id": "pcqm-k1-lr8e4-warmup-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44"
     },
     {
       "completeness_status": "complete",
