@@ -59,22 +59,26 @@ zero mean. Branch of the pre-registration reached: gates grew, gain is below the
 
 ## Items that block closure and need a reviewer
 
-1. `role_use` for `official_validation`, `test_dev`, `test_challenge` is `unknown` in the drafted
-   audits (`role_audit_v1/`). The fixed 100K dataset manifest declares those roles unread, and the
-   kernel mounted only that dataset plus the source package, but I did not observe the run's role
-   access directly, so I did not write `untouched`.
-2. Native proof inspection (`--strict`) and the strict comparison pin are not done.
+1. Resolved 2026-10-30: `role_audit_v2/` records `untouched` for all three protected roles with
+   status `structural_untouched` (structural, not observed; see the reviewer notes). `role_audit_v1/`
+   stays as the earlier `unknown` draft.
+2. Native proof inspection (`--strict`) and the strict comparison pin are not done. The local retrieval
+   has no `native_proofs.zip` or `runtime_provenance.json` for either arm, so strict closure stops with
+   `Missing artifact: runtime_provenance.json` until they are retrieved. The role audit is no longer a blocker.
 3. The relayed authorization (coordinator message, not the user directly) is recorded in
    `experiment.json`; the reviewer decides whether that provenance is sufficient.
 
 ## Reviewer notes (2026-10-30, Opus decision under the user's delegation)
 
-- Protected roles stay `unknown` and this run stays a staged draft. Closure accepts only
-  observed role states, and the rules have no "inferred from mounted inputs" level. The
-  dataset manifest declares only train and development roles and the kernel mounted only that
-  dataset plus the source package, but the kernel had internet access, so these are inferences
-  and are not role evidence. Runs submitted after the data-file read record is merged can close
-  mechanically; this run predates it.
+- Protected roles: structural, not observed. Frozen source 0b62ae0451a9f543c3854a86346667ff12393a7d
+  loads data only through load_training_data (blob 6c6bc503), which selects only train and
+  development. Pinned manifest 1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d
+  declares only those roles, with all protected-read flags False. The kernel mounted only
+  nvoid912/k1-initial-residual-100k-src and nvoid912/pcqm4mv2-ogb-fixed-100k-v1 (kernel-metadata
+  sha 084da7c681c6f4dcdc8de738eee6ad496ef81c44797cf5c7e5d6cd54201d8e15). `untouched` means the
+  protected roles were not among this run's inputs. File opens were not observed, and the draft
+  makes no claim about what the process could reach or about network access (the kernel had
+  internet). The check is `_protected_roles_from_frozen_inputs` in `experiment_terminal_staging.py`.
 - Authorization provenance: the user directed these real Kaggle runs in conversation on the
   accounts in their key folder and delegated the remaining closure decisions to Opus on
   2026-10-30, with the condition that the experiment contract is not changed sweepingly.
