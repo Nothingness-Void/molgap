@@ -86,8 +86,14 @@ def _rewrite_binding(path, selection, payload):
     return replace(selection, manifest_sha256=file_digest(path))
 
 
-def test_indexed_training_data_returns_explicit_source_indices_and_train_only_normalization(tmp_path):
-    root, _, selection, _, _ = _binding(tmp_path)
+@pytest.mark.parametrize("source_attachment", [False, True])
+def test_indexed_training_data_returns_explicit_source_indices_and_train_only_normalization(tmp_path, source_attachment):
+    root, binding_path, selection, _, _ = _binding(tmp_path)
+    if source_attachment:
+        attachment = tmp_path / "source/acceptance" / binding_path.name
+        attachment.parent.mkdir(parents=True)
+        attachment.write_bytes(binding_path.read_bytes())
+        selection = replace(selection, manifest=binding_path.name)
     data = load_indexed_training_data(tmp_path, selection)
 
     assert data.indexed is True
@@ -110,6 +116,12 @@ def test_indexed_training_data_returns_explicit_source_indices_and_train_only_no
     all_targets = torch.cat([train_targets, torch.cat(list(data.development.selected_targets()))])
     assert data.target_mean_eV != pytest.approx(float(all_targets.mean()))
     assert root.exists()
+    if source_attachment:
+        from molgap.family_training_data import resolve_pinned_manifest
+        import shutil
+        shutil.copytree(root, attachment.parent / root.name)
+        with pytest.raises(ValueError, match="uniquely mounted pinned manifest"):
+            resolve_pinned_manifest(tmp_path, selection)
 
 
 def test_indexed_loader_does_not_read_audit_or_identity_files(tmp_path):

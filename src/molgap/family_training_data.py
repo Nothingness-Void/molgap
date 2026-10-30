@@ -63,6 +63,20 @@ def resolve_pinned_manifest(root, selection):
         path = _artifact_path(root, candidate.relative_to(root).as_posix())
         if sha256_file(path) == selection.manifest_sha256:
             candidates.append(path)
+    if len(candidates) > 1:
+        # Source attachments retain the binding for evidence, but do not carry
+        # its indexed payloads. Only a uniquely data-backed mount may execute.
+        from .research_memory.paths import repo_local_path
+        from .common.io import _safe_local
+        backed = []
+        for path in candidates:
+            binding = _json(path)
+            if binding.get("format") == "molgap-indexed-training-input-v1":
+                data_root = repo_local_path(path.parent, binding["data_root"])
+                _safe_local(data_root)
+                if data_root.is_dir():
+                    backed.append(path)
+        candidates = backed
     if len(candidates) != 1:
         raise ValueError("Expected one uniquely mounted pinned manifest")
     return _artifact_path(root, candidates[0].relative_to(root).as_posix())
