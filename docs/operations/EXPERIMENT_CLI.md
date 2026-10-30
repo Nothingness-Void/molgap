@@ -237,7 +237,8 @@ the same declaration when local owner verification needs that repair. Preparatio
 stages a separate entrypoint-pinned overlay; it never edits the original archive,
 Spec, recipes or prospective records. Only a nonempty subset of the previously
 reviewed transport/IO/runner paths is supported; the runner may change its source
-verifier or the already accepted scratch-state isolation repair, not training.
+verifier (including an absolute 1e-12 tolerance in the target-statistics check, which
+must not depend on CPU thread count) or the already accepted scratch-state isolation repair, not training.
 For the Tensor-to-JSON repair, include `experiment_resume.py` and the runner's
 attestation support; `common/io.py` needs no no-op overlay. Optional resumed
 allocation fields retain or lower the original ceiling. Physical publication uses
