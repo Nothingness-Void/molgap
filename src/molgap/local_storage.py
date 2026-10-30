@@ -504,49 +504,17 @@ def storage_report(profile, repo_root):
 
 
 def dedupe_artifacts(profile, repo_root, *, execute=False):
-    """Replace byte-identical large copies under artifact_root with hardlinks.
+    """Report duplicates; broad artifact hardlink mutation is disabled.
 
-    Every path stays valid and no information is lost; only redundant bytes go.
-    Both files are rehashed immediately before a link is swapped in, and a link
-    is created under a temporary name so the original is replaced atomically.
-    Dry-run by default. Copies on another volume are reported and skipped.
+    Equal bytes and file names do not establish immutability. Resume writers
+    can copy onto existing outputs, mutating every alias or raising SameFileError.
     """
-    from .training_reproducibility import sha256_file
+    reason = "Artifact immutability is unverified; hardlink deduplication is disabled"
+    if execute:
+        return {"status": "BLOCKED", "executed": False, "reason": reason}
     report = storage_report(profile, repo_root)
-    # A resumable run may atomically replace last_checkpoint.pt between the rehash
-    # and the swap below, so resume states are never linked.
-    groups = []
-    for group in report["duplicate_groups"]:
-        paths = [p for p in group["paths"] if _category(Path(p).name) != "resume_state"]
-        if len(paths) > 1:
-            groups.append({**group, "paths": paths, "copies": len(paths),
-                           "duplicate_bytes": group["bytes"] * (len(paths) - 1)})
-    result = {"status": "DRY_RUN", "executed": False, "linked": [], "skipped": [],
-              "reclaimable_bytes": sum(group["duplicate_bytes"] for group in groups), "groups": len(groups)}
-    if not execute:
-        result["duplicate_groups"] = groups
-        return result
-    for group in groups:
-        keeper, *others = (Path(p) for p in group["paths"])
-        for other in others:
-            try:
-                _safe_local(keeper)
-                _safe_local(other)
-                if (keeper.stat().st_dev != other.stat().st_dev or keeper.stat().st_size != group["bytes"]
-                        or other.stat().st_size != group["bytes"]
-                        or sha256_file(keeper) != group["sha256"] or sha256_file(other) != group["sha256"]):
-                    result["skipped"].append(str(other))
-                    continue
-                staged = other.with_name(other.name + ".dedupe-tmp")
-                os.link(keeper, staged)
-                os.replace(staged, other)
-                result["linked"].append(str(other))
-            except (OSError, ValueError) as exc:
-                other.with_name(other.name + ".dedupe-tmp").unlink(missing_ok=True)
-                result.update(status="STOPPED", reason=f"{type(exc).__name__}: {exc}")
-                return result
-    result.update(status="DEDUPED", executed=True)
-    return result
+    return {**report, "status": "DRY_RUN", "reason": reason,
+            "reclaimable_bytes": None, "groups": len(report["duplicate_groups"])}
 
 
 def main(argv=None):
@@ -558,7 +526,7 @@ def main(argv=None):
     parser.add_argument("--report", action="store_true",
                         help="Read-only bytes per run and exact-SHA duplicate groups")
     parser.add_argument("--dedupe", action="store_true",
-                        help="Hardlink byte-identical large copies under artifact_root; dry-run unless --execute")
+                        help="Read-only duplicate report; --execute is blocked until immutability is established")
     args = parser.parse_args(argv)
     try:
         if args.report and args.dedupe:
@@ -577,7 +545,7 @@ def main(argv=None):
     except (OSError, ValueError) as exc:
         report = {"status": "BLOCKED", "executed": False, "reason": str(exc)}
     print(json.dumps(report, sort_keys=True))
-    return 0 if report["status"] in {"DRY_RUN", "REMOVED", "REPORT", "DEDUPED"} else 1
+    return 0 if report["status"] in {"DRY_RUN", "REMOVED", "REPORT"} else 1
 
 
 if __name__ == "__main__":

@@ -99,6 +99,26 @@ def _write_shared_output_for_arm(case, arm, binding, entry):
         trajectory_id=binding["trajectory_id"], train_role_identity=record["train_role_identity"])
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
     session.batch_finished = outputs.batch_finished
+    # The real recorder and loader write the record of opened dataset files. Only the frozen
+    # Spec's dataset hash is substituted: the synthetic shards cannot reproduce that pinned hash.
+    from molgap import family_training_runner as worker
+    from molgap.experiment_family_workflow import DATA_OPEN_FILE
+    from molgap.family_training_data import DatasetSelection, load_training_data
+    from molgap.training_reproducibility import sha256_file
+    from test_family_training_data import write_pinned_data
+    data_root, _, manifest = write_pinned_data(case.paths.scratch_root / (arm_id + "-data"))
+    manifest.update(dict.fromkeys(
+        ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"), False))
+    (data_root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    selection = DatasetSelection("manifest.json", sha256_file(data_root / "manifest.json"), True)
+    worker._begin_data_open_record(directory, data_root, selection, context)
+    try:
+        load_training_data(data_root, selection)
+    finally:
+        worker._end_data_open_record()
+    record = json.loads((directory / DATA_OPEN_FILE).read_bytes())
+    record["dataset_manifest_sha256"] = session.recipe.dataset.manifest_sha256
+    (directory / DATA_OPEN_FILE).write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     progress = session.run()
     report = outputs.complete(progress, runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
@@ -418,21 +438,59 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         decision = case.repo / (arm_id + "-decision.md")
         decision.write_text("Infrastructure-only terminal disposition.", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
-    # Draft the role audits from the retained artifacts; protected-role states are human input.
-    capsys.readouterr()
-    assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
-        "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
-        "--retrieved-root", str(case.paths.artifact_root / "retrieved"), "--output-dir", str(case.repo / "audits"),
-        *[value for role in ("official_validation", "test_dev", "test_challenge")
-          for value in ("--protected-role-use", role + "=untouched")]]) == 0
-    audits = json.loads(capsys.readouterr().out)
-    assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
-    assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
-
-    # Acceptance must recover only the metadata frozen by the package and
-    # trajectories after those generated checkout files have been lost.
+    # Both drafting and acceptance must work after generated checkout metadata
+    # has been lost, using the original frozen package and retained outputs.
     for name in case.generated:
         (case.repo / name).unlink()
+    # Draft the role audits from the retained artifacts. Protected roles come from the
+    # hash-bound record of opened dataset files; without a usable record they stay unknown.
+    capsys.readouterr()
+    draft = ["draft-role-audit", "--profile", str(case.profile),
+        "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved")]
+    record_path = case.paths.artifact_root / "retrieved" / next(iter(contexts)) / "data_open_provenance.json"
+    intact = record_path.read_bytes()
+    manifest_path = record_path.with_name("output_manifest.json")
+    manifest_bytes = manifest_path.read_bytes()
+
+    # "record_absent": the package has the recorder (it is current) but no record was kept.
+    # Legacy packages without the recorder are covered by structural evidence instead;
+    # a current one must stay unknown.
+    for damage in ("tampered", "missing_selected_shard", "protected_file_opened", "record_absent"):
+        broken = json.loads(intact)
+        if damage == "missing_selected_shard":
+            broken["invocations"][0]["opened"].remove("development.pt")
+        elif damage == "protected_file_opened":
+            broken["invocations"][0]["opened"].append("official_validation_0.pt")
+            broken["shards"].append({"file": "official_validation_0.pt", "role": "official_validation", "sha256": "3" * 64})
+        record_path.write_text(json.dumps(broken) if damage != "tampered" else json.dumps(broken) + " ", encoding="utf-8")
+        if damage == "protected_file_opened":
+            # A hash-consistent record that lists a protected file: the only path to the warning.
+            rebound = json.loads(manifest_bytes)
+            rebound["artifacts"]["data_open"]["sha256"] = hashlib.sha256(record_path.read_bytes()).hexdigest()
+            manifest_path.write_text(json.dumps(rebound), encoding="utf-8")
+        elif damage == "record_absent":
+            rebound = json.loads(manifest_bytes)
+            del rebound["artifacts"]["data_open"]
+            manifest_path.write_text(json.dumps(rebound), encoding="utf-8")
+        assert experiment_cli.main([*draft, "--output-dir", str(case.repo / ("audits_" + damage))]) == 0
+        warning = capsys.readouterr().err
+        assert ("protected-role file(s) opened for official_validation" in warning) == (damage == "protected_file_opened")
+        first = json.loads((case.repo / ("audits_" + damage) / ("roles_" + next(iter(contexts)) + ".json")).read_bytes())
+        assert set(first["role_use"].values()) == {"unknown"}, damage
+        if damage == "record_absent":
+            assert first["protected_role_evidence"]["status"] == "recorder_expected_record_missing"
+    record_path.write_bytes(intact)
+    manifest_path.write_bytes(manifest_bytes)
+    assert experiment_cli.main([*draft, "--output-dir", str(case.repo / "audits")]) == 0
+    audits = json.loads(capsys.readouterr().out)
+    drafted = json.loads((case.repo / audits[next(iter(contexts))]).read_bytes())
+    assert set(drafted["role_use"].values()) == {"untouched"}, drafted.get("protected_role_evidence")
+    evidence = drafted["protected_role_evidence"]
+    assert evidence["status"] == "untouched" and evidence["record"]["sha256"] == hashlib.sha256(intact).hexdigest()
+    assert "network" in evidence["text"] and "child processes" in evidence["text"]
+    assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
+    assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
 
     retention_root = tmp_path / "execution-retention"
     remote_retention = tmp_path / "remote-execution-retention"
@@ -492,14 +550,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     options = dict(retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
         execute=True, execution_root=retention_root,
         stage_terminal=True, outcome=outcomes, decision_ref=decisions, role_audit=audits)
-    for name, value in (("audits", audits), ("locations", locations)):
-        (tmp_path / (name + ".json")).write_text(json.dumps(value), encoding="utf-8")
+    audit_map = case.repo / "audits" / "audit_map.json"
+    assert json.loads(audit_map.read_bytes()) == audits
+    (tmp_path / "locations.json").write_text(json.dumps(locations), encoding="utf-8")
     capsys.readouterr()
     arguments = ["accept-workflow", "--run-id", declaration["logical_run_id"],
         "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
         "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
         "--locations", str(tmp_path / "locations.json"), "--stage-terminal", "--execute",
-        "--execution-root", str(retention_root), "--role-audit", str(tmp_path / "audits.json"),
+        "--execution-root", str(retention_root), "--role-audit", str(audit_map),
         *[value for arm, outcome in outcomes.items() for value in ("--arm-outcome", arm + "=" + outcome)],
         *[value for arm, decision in decisions.items() for value in ("--arm-decision-ref", arm + "=" + decision)]]
     for bad in ({**options, "outcome": {reference_arm: "CLOSED"}},

@@ -14,7 +14,7 @@ import json
 import math
 import os
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 from urllib.parse import quote
 
 from .experiment_family_workflow import _json
@@ -94,6 +94,31 @@ def _bind_operation_directory(prepared, output, binding, *, publish=False):
         raise ValueError("Prepared release owns another submission journal; reconcile its operation directory")
     if publish:
         publish_immutable_bytes(pointer, payload)
+
+
+# A new source dataset is usually ready within a minute; its status endpoint can
+# answer 403/404 for a short time after creation. Poll inside the one submit call.
+SOURCE_POLL_FIRST_SECONDS, SOURCE_POLL_MAX_SECONDS, SOURCE_POLL_BUDGET_SECONDS = 5, 60, 300
+_poll_sleep, _poll_clock = sleep, perf_counter
+
+
+def _poll_source_ready(api, dataset):
+    """Return (status, forbidden_error); 403/404/None mean not ready yet until the budget ends."""
+    began, delay = _poll_clock(), SOURCE_POLL_FIRST_SECONDS
+    while True:
+        forbidden = None
+        try:
+            status = _dataset_status(api, dataset)
+        except RuntimeError as error:
+            detail = getattr(error, "platform_error", None)
+            if not isinstance(detail, dict) or detail.get("http_status") != 403:
+                raise
+            status, forbidden = None, detail
+        remaining = SOURCE_POLL_BUDGET_SECONDS - (_poll_clock() - began)
+        if (status or {}).get("status") == "ready" or remaining <= 0:
+            return status, forbidden
+        _poll_sleep(min(delay, remaining))
+        delay = min(delay * 2, SOURCE_POLL_MAX_SECONDS)
 
 
 def _roundtrip_source(api, http, staged, remote, ref, *, version=1):
@@ -490,11 +515,14 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return
                 if prior_kernel is None or prior_kernel.metadata.current_version_number != kernel_version - 1:
                     raise ValueError("Continuation requires the exact predecessor kernel version")
-                prior_status = api.kernels_status(ref + "/" + str(kernel_version - 1))
+                # The SDK status endpoint addresses only owner/slug. The source
+                # check above observes the predecessor as the latest version.
+                prior_status = api.kernels_status(ref)
                 if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled"}:
                     raise ValueError("Continuation predecessor must be authoritatively terminal")
                 atomic_json(output / "predecessor_scheduler_observation.json", {
-                    "kernel": ref, "version": kernel_version - 1, "status": str(prior_status.status),
+                    "kernel": ref, "scheduler_scope": "latest", "observed_latest_version": kernel_version - 1,
+                    "status": str(prior_status.status),
                     "observed_at": datetime.now(timezone.utc).isoformat()})
             check_predecessor()
             source_status = _dataset_status(api, dataset)
@@ -523,7 +551,11 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN",
                             "submitted": False, "platform_error": detail}
                 save("SOURCE_PUBLISHED")
-                source_status = _dataset_status(api, dataset)
+                source_status, forbidden = _poll_source_ready(api, dataset)
+                if forbidden:
+                    # A 403 that never clears is a permission problem, not a plain wait.
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_PUBLISHED",
+                            "submitted": False, "platform_error": forbidden}
             elif state["phase"] == "NEW":
                 raise ValueError("Source dataset already exists; use its owning publication journal")
             if not source_status or source_status.get("status") != "ready":
@@ -632,13 +664,13 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     or retained["platform_version"] != fact(str(response["version_number"]))
                     or retained["physical_runs"] != envelope["physical_runs"]):
                 raise ValueError("Retained launch receipt differs from observed physical run")
-        status = api.kernels_status(response["kernel"] + "/" + str(response["version_number"]))
-        atomic_json(output / "scheduler_observation.json", {"kernel": response["kernel"], "version": response["version_number"],
+        status = api.kernels_status(response["kernel"])
+        atomic_json(output / "scheduler_observation.json", {"kernel": response["kernel"], "scheduler_scope": "latest",
             "status": str(status.status), "failure_message": status.failure_message, "observed_at": datetime.now(timezone.utc).isoformat()})
         if not (output / "startup_observation.json").exists():
             atomic_json(output / "startup_observation.json", _startup(http_session, response["kernel"]))
         save("BOUND")
         retirement = _retire_source_copies(prepared, output, state, journal)
         return {"source_copy_retirement": retirement, "status": "SUBMISSION_BOUND", "kernel": response["kernel"], "kernel_id": response["kernel_id"],
-                "version": response["version_number"], "scheduler_status": str(status.status), "submitted": True,
+                "version": response["version_number"], "scheduler_status": str(status.status), "scheduler_scope": "latest", "submitted": True,
                 "native_qualification": "NOT_EVALUATED", "timings": state["timings"]}

@@ -50,8 +50,11 @@ the pinned manifest's required files through an authenticated owning account.
 Numeric receipt versions use exact-version downloads without listing newer
 sessions. The manifest is retained first, so interrupted downloads can reuse
 verified files on reentry; legacy opaque session references retain pinned listing.
-Source/job/version reconciliation and obtaining the small manifest belong to
-the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
+For registered runs, `retrieve_family_outputs.py --all-arms --execute` resolves
+the receipt version and fetches missing manifests plus execution-cost records;
+`--status` labels the latest scheduler state separately from the receipt version,
+without downloading. The returned `execution_root`
+feeds acceptance. The skill supplies the commands; no manual pinning is required. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
 
 New native preflight producers retain `native_proofs.zip` (and
 `actual_resume_proofs.zip` for continuation probes). This is lossless storage of

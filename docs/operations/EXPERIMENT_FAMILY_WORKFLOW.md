@@ -233,8 +233,10 @@ Executable family registration and the same-family addon boundary are owned by
 the [modular workflow](EXPERIMENT_WORKFLOW.md). This section owns the output
 profile and event interface.
 
-The platform skill first reconciles the job/source/version and retrieves/pins
-the small manifest. Kaggle's adapter receives an authenticated owning account,
+For registered Kaggle runs, `retrieve_family_outputs.py --all-arms --execute`
+resolves the original receipt and pins the exact version's missing manifests.
+It also retrieves execution-cost retention and returns its local path.
+The following per-arm API remains available for explicit historical pins. Kaggle's adapter receives an authenticated owning account,
 receipt context, that manifest/path/hash and a dedicated destination. It lists
 metadata with pagination, then streams only the five required files and manifest.
 Missing files, wrong accounts and hash conflicts fail closed. A diagnostic log

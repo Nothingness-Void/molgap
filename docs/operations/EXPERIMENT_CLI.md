@@ -326,12 +326,30 @@ promotes a numerical diagnosis to positive scientific acceptance.
 `draft-role-audit --profile $profile --repo-root $repoRoot --run-id $run
 --attempt-id $attempt --retrieved-root $retrieved --output-dir $dir` writes
 `roles_<arm>.json` per arm (repository-local `$dir`) for a train/development
-family-session screen and prints the arm-to-path map that `--role-audit` takes.
+family-session screen, and writes `audit_map.json` beside them (also printed) for `--role-audit` to take directly.
+For continued outputs, add the same `--continuation-receipt` used for retrieval
+so the draft binds the successor before its first terminal closure.
 Events are drafted from the frozen Spec data roles and each arm's digest-checked
 training contract; terminal inspection verifies the run itself. A missing or
 mismatched source is an error and no file is written until every arm validates. Protected-role states
-are never derived: they stay `unknown`, which blocks closure, unless you pass
-`--protected-role-use ROLE=STATE` (repeat per role) from observed facts.
+stay `unknown`, which blocks closure, unless you pass `--protected-role-use ROLE=STATE`
+(repeat per role) from observed facts, or the arm's output manifest lists
+`data_open_provenance.json`. New runs write that record: the shared worker logs each dataset
+file its Python process opens, and the draft sets all three protected roles to `untouched` only
+when the record's hash matches the manifest, every selected train/development shard appears in
+it, and no protected-role file does (a protected file leaves the states `unknown`). The record
+does not cover native code, child processes, network access or opens outside the dataset manifest's
+directory, and the draft says so. A protected file in the record keeps the states `unknown` and prints a
+stderr warning. A manifest with the `data_open` role is rejected by older strict readers, so retrieve
+new runs with this version's `retrieve_family_outputs.py`. A run whose frozen package predates the
+recorder has no record. If that package's `family_training_runner.py` and `family_training_data.py` are reviewed legacy blobs, the pinned
+dataset manifest (read under the profile's `data_root`) declares only train/development with all protected-read
+flags False, and `kernel-metadata.json` mounts exactly the run's source dataset and the fixed mirror with no competition
+source, the draft sets `untouched` with evidence status `structural_untouched`. That is structural, not observed:
+it says the protected roles were not among the run's inputs, not that opens were watched. `draft-role-audit` reads
+the machine profile for `data_root`; local-training drafts pass none and stay `unknown`. A package that has the
+recorder but no record stays `unknown` (`recorder_expected_record_missing`). Otherwise pass `--protected-role-use`
+from observed facts.
 
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot

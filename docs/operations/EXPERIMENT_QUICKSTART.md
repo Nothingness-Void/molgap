@@ -1,7 +1,9 @@
 # Experiment infrastructure quickstart
 
-Use this entry for new infrastructure work; read the owning question and query
-RML before new science. Open the linked API references only for the operation
+For routine operations on an already declared, authorized run, start with its
+platform skill and supplied contract/attempt records; use only the relevant
+commands and references. Use this entry for new infrastructure work; read the
+owning question and query RML before new science. Open the linked API references only for the operation
 being changed. A configuration or successful preparation does not grant compute,
 protected roles, scientific acceptance or production promotion.
 
@@ -59,61 +61,72 @@ part of this migration.
 
 ## Supply one human input
 
-`molgap-scientific-experiment-v1` describes the question, existing authority,
-reference recipe/data, initialization, supported delta, seed, platform and local
-profile. The compiler generates Spec/workflow/prospective definitions and hashes
-through existing owners. See the supported shape in
-[`_compile_scientific_input`](../../src/molgap/experiment_input.py) and the
-[synthetic fixture](../../tests/test_scientific_input.py); fixture identities
-are examples, never real authorization or evidence.
-
-`authority` and `platform` may be inline objects instead of `authority_ref` and
-`platform_ref` (choose one form for each). Authority still names the exact arms,
-seed and budget. Role and decision references retain real content. Addons accept
-`"addon_name"` or `{"name":"addon_name"}` when the existing catalog supplies
-version 1 defaults; required parameters still need explicit values.
-
-An arm or `shared` may use `preset_ref: {"path":".../baseline-v1.json",
-"sha256":"<frozen hash>"}` to reuse a reviewed versioned baseline. Its existing
-compiler owner pins the recipe, data Spec/arm, target manifest and initialization
-identity. `initial_state_ref` remains the explicit machine location. See the
-[preset reader](../../src/molgap/experiment_presets.py) and
-[executable examples](../../tests/test_scientific_input_ergonomics.py).
-There is no mutable latest preset, implicit account/hardware template or automatic
-weight download. Existing historical runtimes are not silently relabeled as new
-K1/GPTrans presets.
-
-For an explicitly authorized baseline/candidate job, `shared` supplies common arm
-fields and each `arms` entry overrides whole fields. `same_run` binds
-`reference_arm_id` and `target_manifest_ref`; authority must name that reference
-arm in `same_run_reference_arm_id`. The reference keeps its frozen recipe and
-the candidate supplies the scientific delta. This uses the existing same-run
-acceptance owner; it does not require inventing a previously accepted reference.
-See the executable [pair fixture](../../tests/test_scientific_pair_input.py).
-
-A new `vN` attempt requires `retry_of` (logical run, predecessor attempt, Spec
-identity and decision pointer), matching authority and an explicit authorized
-terminal disposition. Submitted predecessors require an exact reconciled job
-observation. Unknown publication cannot be retried through this input.
-
-Already authored declarations can use this reference-only envelope:
+The infrastructure holds the framework. For a K1 post-BN 100K pair you fill in
+only the experiment's own details: question, arms, the catalog addon and its
+parameters, authority and budget. Put the file at
+`experiments/<experiment_id>/experiment.json`, commit it with a non-empty
+`protocol.md` and `decision.md` beside it, and run `submit_workflow.py` (below).
 
 ```json
 {
-  "format": "molgap-experiment-input-v1",
-  "spec_ref": "experiments/question/experiment_spec.json",
-  "workflow_ref": "experiments/question/workflow_plan.json",
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_my_question_100k",
+  "logical_run_id": "pcqm-k1-my-question-100k-s42",
+  "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
-  "authority_ref": "experiments/question/authority.json",
-  "monitor_paths": ["experiments/question/STATUS.md"],
-  "attempt_id": "v1"
+  "timestamp": "2026-10-29T00:00:00Z",
+  "question": { "policy_id": "pcqm-k1-my-question-100k", "action": "RUN_PAIRED_100K", "question": "...",
+    "deficiency": "...", "changed_mechanism": "...", "supporting_evidence": ["..."],
+    "alternatives": ["..."], "closed_families": ["..."],
+    "positive_decision": "...", "negative_decision": "..." },
+  "profile": { "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "...", "estimated_device_hours": 3.7, "estimated_wall_hours": 1.85 },
+  "authority": { "format": "molgap-execution-authority-v1", "user_authorized": true,
+    "account": "<kaggle account>", "arms": ["baseline", "candidate"], "seeds": [42],
+    "same_run_reference_arm_id": "baseline", "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400, "cleanup_reserve_seconds": 180,
+    "authority": "<who authorized what>", "scope": "<exact scope>",
+    "development_role_label_use": true, "protected_roles_authorized": [] },
+  "seeds": [42],
+  "shared": {
+    "preset_ref": { "path": "experiments/presets/k1-post-bn-100k-v1.json",
+                    "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61" },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {}, "purpose": "single_module_ablation" },
+  "arms": [ { "arm_id": "baseline" },
+            { "arm_id": "candidate", "model": { "addons": [ { "name": "<catalog addon>", "config": {} } ] } } ],
+  "same_run": { "reference_arm_id": "baseline" }
 }
 ```
 
-The referenced authority must already cover the requested work. Missing reference,
-dataset manifest or target identity blocks preparation; no baseline is retrained.
-Commit human/source inputs before formal preparation. Generated definitions are
-compact metadata, not weights or training data. Do not hand-edit them.
+The preset pins the post-BN recipe, data declaration, target manifest,
+initialization digest and model family. The compiler derives the rest from the
+experiment directory: `monitor_paths` (`STATUS.md`), `role_ref` (`protocol.md`),
+`decision_ref` (`decision.md`), the Kaggle block (kernel, title and source dataset
+from the authority `account` and the experiment ID, plus the fixed read-only
+`<account>/pcqm4mv2-ogb-fixed-100k-v1` mount) and, when `policy_id` is not
+registered and equals the experiment ID with dashes, a candidate `research_memory/policies/<policy_id>.1.json` whose
+source digest is the `protocol.md` digest. Review and commit that policy file.
+Any of these fields written explicitly in the input wins. The question, arms,
+addon, authority, scope and budget have no default and are never invented.
+`supporting_evidence` takes RML evidence ids only; cite papers in `protocol.md`.
+A prepare that fails after the run is frozen needs a new `logical_run_id`
+(`...-r2`) for any corrected input. `sandbox` reads the frozen inputs, so run it
+after prepare and before submitting.
+Check an addon on the real frozen state before submitting:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- sandbox --spec $run/inputs/experiment_spec.json --arm candidate --plan $run/inputs/workflow_plan.json --repo-root .
+```
+
+Known limits: Kaggle T4x2 only; seed 42 only; one reference plus one candidate;
+typed edits limited to `learning_rate` and `weight_decay`; the derived Kaggle
+block supports only the fixed 100K mount (write `platform` explicitly otherwise);
+a new `vN` attempt needs `retry_of` with matching authority and a reconciled
+terminal disposition. Fixture identities in
+[`tests/test_scientific_input_ergonomics.py`](../../tests/test_scientific_input_ergonomics.py)
+are examples, never authorization or evidence.
 
 ## Prepare through the owning platform
 
@@ -192,12 +205,18 @@ expands it.
 & $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
 ```
 
-The family-output retriever can resolve this run plus independently pinned
-manifest/arm identity; `--all-arms` does that for every manifest already pinned
-under `<run>/operations/remote_manifest/` in one call. Without `--execute` it validates locally. Exact transport
-remains in the existing platform adapter; historical output protocols keep their
-own retrievers. `inspect-output`, `accept-workflow`, `build-resume` and
-`prepare-resume` can resolve the original Spec/package/receipt from the run ID.
+The Kaggle retriever's `--all-arms --execute` resolves the exact receipt version,
+fetches missing small manifests, then retrieves every arm and execution-cost
+records through the existing transport. It returns `execution_root` for acceptance
+and records per-arm destinations. `--status` observes the latest scheduler state,
+labelled separately from the receipt version, without downloads or submission.
+No manual manifest/SHA file is needed for the
+registered `experiment/<arm>` layout. Strict continuation also supplies
+`--continuation-receipt` and `--resume-prepared`; historical layouts may set
+`--remote-root`. Without `--execute`, all-arm retrieval only plans locally.
+Per-arm retrieval remains available for explicit historical pins.
+`inspect-output`, `accept-workflow`, `build-resume` and `prepare-resume` resolve
+the original Spec/package/receipt from the run ID.
 Supply the actual output/evidence inputs required by the existing owners.
 `prepare-resume` returns `RESUME_INPUTS_PREPARED` for local continuation inputs.
 The owning continuation adapter must bind a physical successor; this result is
@@ -208,7 +227,7 @@ expectations and prospective locations, inspects the artifacts, diagnoses the
 available pairs and stages terminal drafts:
 
 ```powershell
-& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root D:/molgap-artifacts/retrieved/$runId
+& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId
 ```
 
 Omit `--retrieved-root` after the retriever has recorded verified per-arm
@@ -238,6 +257,10 @@ uses the existing V5/RML validators and reports missing evidence; positive/READY
 claims still require their owning scientific acceptance. The CLI reference owns
 the advanced explicit-location path.
 
+For first closure after continuation, pass the same `--continuation-receipt`
+to retrieval, `draft-role-audit` and acceptance. Acceptance also takes the existing
+`--resume-prepared` and applicable recovery authority; the original run identity stays unchanged.
+
 When the execution-retention bundle was retrieved, pass `--execution-root` to
 bind its verified allocation ledger into terminal evidence and cost events.
 Only each arm's assigned, observed window is counted; prior segments and unknown
@@ -256,10 +279,12 @@ or document line-count checks.
 New RML plans share an immutable decision-time knowledge/policy snapshot. Arm
 records bind its digest; legacy inline records remain readable. Preparation validates
 the question's references and publishes canonical plans without rebuilding the
-whole repository's indexes or requiring unrelated historical weights. Use the
-existing RML `rebuild` at handoff/accepted milestones. Multi-arm closure
-persists each independent terminal outcome and updates derived indexes once.
-If that update fails, use the RML CLI `terminal-rebuild --trajectory <path>` to
+whole repository's indexes or requiring unrelated historical weights. Multi-arm
+closure persists each independent terminal outcome and updates derived indexes
+once; do not run another rebuild after successful closure. Standalone canonical
+edits or imports use one RML `rebuild` after the accepted milestone.
+Only if closure's derived update actually fails, use the RML CLI
+`terminal-rebuild --trajectory <path>` to
 recover from canonical receipts without repeating training or submission.
 
 Canonical pass curves record the actual last-update learning rate separately
@@ -322,5 +347,5 @@ from the training `runtime-v1` inventory, which retains its worker boundary.
 The [desktop migration record](DESKTOP_INFRASTRUCTURE_UPGRADE.md) owns provenance
 and executed verification. [Storage retirement](LOCAL_STORAGE_RETIREMENT.md)
 owns payload and completed-worktree retirement. After a run closes, its
-`--report` shows where `artifact_root` bytes sit and `--dedupe` hardlinks
-byte-identical copies without removing any path.
+`--report` shows where `artifact_root` bytes sit. `--dedupe` is also read-only;
+hardlink mutation is disabled because resume writers may overwrite shared bytes.

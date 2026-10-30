@@ -134,11 +134,35 @@ def test_missing_recursive_manifest_is_rejected(pinned_data, tmp_path):
         resolve_training_manifest(tmp_path / "empty-mount", selection)
 
 
-def test_full_train_selection_never_reads_unselected_development(pinned_data):
+def test_full_train_selection_never_reads_unselected_development(pinned_data, tmp_path):
+    from types import SimpleNamespace
+    from molgap import family_training_runner as worker
     root, selection, _ = pinned_data
+    context = SimpleNamespace(to_dict=lambda: {"arm_id": "synthetic"})
+    # The worker's open record is the evidence for "unselected development was never read".
+    # The development shard is deleted, so only train.pt can possibly appear.
+    train_only = replace(selection, development=False)
+    shutil.copytree(root, tmp_path / "second")
     (root / "development.pt").unlink()
-    data = load_training_data(root, replace(selection, development=False))
+    output = tmp_path / "out"
+    worker._begin_data_open_record(output, root, train_only, context)
+    try:
+        data = load_training_data(root, train_only)
+    finally:
+        worker._end_data_open_record()
     assert data.development is None and data.development_rows == 0
+    record = json.loads((output / "data_open_provenance.json").read_text(encoding="utf-8"))
+    assert [item["opened"] for item in record["invocations"]] == [["manifest.json", "train.pt"]]
+    assert {item["file"]: item["role"] for item in record["shards"]} == {"train.pt": "train", "development.pt": "development"}
+    # A resumed invocation appends to the same record and reloads every selected shard.
+    worker._begin_data_open_record(output, tmp_path / "second", selection, context)
+    try:
+        load_training_data(tmp_path / "second", selection)
+    finally:
+        worker._end_data_open_record()
+    record = json.loads((output / "data_open_provenance.json").read_text(encoding="utf-8"))
+    assert [item["opened"] for item in record["invocations"]] == [
+        ["manifest.json", "train.pt"], ["manifest.json", "train.pt", "development.pt"]]
 
 
 @pytest.mark.parametrize("development", [False, True])
