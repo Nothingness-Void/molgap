@@ -29,6 +29,15 @@ DATA_OPEN_BOUNDARY = (
     "prove the data was unreachable.")
 
 
+STRUCTURAL_BOUNDARY = "'untouched' means the protected roles were not among this run's inputs."
+# Normalized sha256 of src/molgap/family_training_data.py (git blob 6c6bc503) as frozen into legacy packages.
+LEGACY_TRAINING_DATA_SHA256 = "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31"
+# Normalized sha256 of the two reviewed pre-recorder family_training_runner.py blobs (717b0548, 4d4feff8):
+# each calls load_training_data once and opens no other dataset file.
+LEGACY_RUNNER_SHA256 = frozenset({"1711486e74211f7a430ef9814000f1bdbf27208ee9e00a4c54499db3107175fb",
+                                  "fe382d03a98067f5b3a6a184ff511f21fb5799c30bab568e36b46ff4d8b4065e"})
+
+
 def _per_arm(value, arm_id):
     return value.get(arm_id) if isinstance(value, dict) else value
 
@@ -172,14 +181,83 @@ def _protected_roles_from_data_open(output_dir, artifacts, context, dataset, sel
     return {"status": "untouched", "record": entry, "text": text}
 
 
-def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None):
+def _protected_roles_from_frozen_inputs(package_dir, contract, dataset, data_root=None):
+    """Structural (not observed) protected-role evidence for a legacy package.
+
+    Applies only to packages frozen before the data-open recorder existed, whose
+    data loader, pinned dataset manifest and kernel mounts show that protected roles
+    were not among the run's inputs. A package that has the recorder never uses
+    this path: its missing record keeps the states ``unknown``.
+    """
+    from .experiment_package import read_packaged_text
+    from .family_training_data import DatasetSelection, resolve_pinned_manifest
+    from .kaggle_fixed_mirror import FIXED_MIRRORS, sha256_file
+    if package_dir is None:
+        return None
+    package = Path(package_dir)
+
+    def unverified(reason):
+        return {"status": "structural_unverified", "reason": reason}
+
+    def normalized(text):
+        text = text.replace(chr(13) + chr(10), chr(10)).replace(chr(13), chr(10))
+        return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+    try:
+        runner = read_packaged_text(package, "src/molgap/family_training_runner.py")
+        if "_begin_data_open_record" in runner:
+            return {"status": "recorder_expected_record_missing"}
+        if normalized(runner) not in LEGACY_RUNNER_SHA256:
+            return unverified("packaged family_training_runner.py is not a reviewed legacy runner")
+        loader_sha = normalized(read_packaged_text(package, "src/molgap/family_training_data.py"))
+        if loader_sha != LEGACY_TRAINING_DATA_SHA256:
+            return unverified("packaged family_training_data.py is not the reviewed legacy loader")
+        if data_root is None:
+            return unverified("no data root to read the pinned dataset manifest")
+        manifest_path = resolve_pinned_manifest(Path(data_root), DatasetSelection(
+            contract["dataset"]["manifest"], dataset, contract["dataset"]["development"]))
+        manifest_sha = sha256_file(manifest_path)
+        manifest = _json(manifest_path)
+        if (manifest_sha != dataset or set(manifest["roles"]) != {"train", "development"}
+                or {item["role"] for item in manifest["geometry_shards"]} - {"train", "development"}
+                or any(manifest.get(role + "_role_read") is not False for role in PROTECTED_ROLES)):
+            return unverified("pinned dataset manifest does not declare only train/development with protected reads False")
+        mirror = next((item for item in FIXED_MIRRORS.values() if item["manifest_sha256"] == dataset), None)
+        metadata_path = package.parent / "kernel" / "kernel-metadata.json"
+        source_id = _json(package.parent / "source_dataset" / "dataset-metadata.json")["id"]
+        if mirror is None or not metadata_path.is_file():
+            return unverified("no fixed mirror for the pinned manifest, or kernel metadata missing")
+        metadata = _json(metadata_path)
+        sources = metadata["dataset_sources"]
+        mounted = next((item for item in sources if item.endswith("/" + mirror["slug"])), None)
+        if (metadata["competition_sources"] != [] or metadata.get("kernel_sources", []) != []
+                or type(sources) is not list or len(sources) != 2 or mounted is None
+                or sorted(sources) != sorted([mounted, source_id])):
+            return unverified("kernel mounts are not exactly the source dataset and the fixed mirror")
+        metadata_sha = sha256_file(metadata_path)
+        commit = (package / "SOURCE_COMMIT.txt").read_text(encoding="utf-8").strip()
+    except (ValueError, TypeError, KeyError, AttributeError, OSError) as exc:
+        return unverified("structural inputs unreadable: " + str(exc))
+    text = ("Structural, not observed. Frozen source " + commit + " loads data only through load_training_data "
+            "(blob 6c6bc503), which selects only train and development. Pinned manifest " + manifest_sha
+            + " declares only those roles, with all protected-read flags False. The kernel mounted only "
+            + source_id + ", " + mounted + " (kernel-metadata sha " + metadata_sha + "). " + STRUCTURAL_BOUNDARY)
+    return {"status": "structural_untouched", "text": text, "bindings": {
+        "source_commit": commit, "family_training_data_sha256": loader_sha, "dataset_manifest_sha256": manifest_sha,
+        "kernel_metadata_sha256": metadata_sha, "dataset_sources": sources}}
+
+
+def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None,
+                     frozen_package=None, data_root=None):
     """Draft one arm's role audit for a family-session screen from retained artifacts.
 
     Events are drafted from the frozen Spec data roles and the arm's retained,
     digest-checked training contract; terminal inspection verifies the run itself.
     Protected-role states stay ``unknown`` (which blocks closure) unless the human
     passes them, or the arm retained a hash-bound record of the dataset files its
-    worker opened that shows only train/development files (``untouched``).
+    worker opened that shows only train/development files (``untouched``), or a legacy
+    package without that recorder passes the structural check (``structural_untouched``:
+    evidence about the run's inputs, not an observation of file opens).
     """
     states = {role: "unknown" for role in PROTECTED_ROLES}
     for role, state in (protected_role_use or {}).items():
@@ -205,7 +283,9 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
     train, development = roles["train"]["membership_sha256"], roles["development"]["membership_sha256"]
     dataset = spec_arm["data"]["dataset"]["sha256"]
     derived = _protected_roles_from_data_open(output_dir, artifacts, context, dataset, set(roles))
-    if derived is not None and derived["status"] == "untouched":
+    if derived is None:
+        derived = _protected_roles_from_frozen_inputs(frozen_package, contract, dataset, data_root)
+    if derived is not None and derived["status"] in {"untouched", "structural_untouched"}:
         for role in PROTECTED_ROLES:
             if role not in (protected_role_use or {}):
                 states[role] = "untouched"
@@ -254,13 +334,15 @@ def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_r
     from .experiment_run import resolve_run_acceptance_inputs
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
         retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
-    drafted = write_role_audits(repo_root, resolved, output_dir, protected_role_use)
+    from .common.paths import MachinePaths
+    drafted = write_role_audits(repo_root, resolved, output_dir, protected_role_use,
+                                MachinePaths.from_file(profile).data_root)
     root = Path(repo_root).resolve()
     publish_immutable_bytes(repo_local_path(root, Path(output_dir) / "audit_map.json"), json_bytes(drafted))
     return drafted
 
 
-def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None):
+def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None, data_root=None):
     """Draft and publish one audit per resolved arm (``spec``, ``contexts``, ``locations``, ``outputs``)."""
     root, drafted = Path(repo_root).resolve(), {}
     arms = {arm["arm_id"]: arm for arm in resolved["spec"].to_dict()["arms"]}
@@ -273,7 +355,8 @@ def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None):
         path = repo_local_path(root, Path(output_dir) / ("roles_" + arm_id + ".json"))
         ref = path.relative_to(root).as_posix()
         drafted[arm_id] = (path, ref, draft_role_audit(arm, resolved["contexts"][arm_id], where,
-            actions[0]["action_id"], resolved["outputs"][arm_id]["output_dir"], ref, protected_role_use))
+            actions[0]["action_id"], resolved["outputs"][arm_id]["output_dir"], ref, protected_role_use,
+            resolved.get("options", {}).get("package_dir"), data_root))
     # Every arm validated first, so one bad arm never leaves a partial set behind.
     for path, _, audit in drafted.values():
         publish_immutable_bytes(path, json_bytes(audit))
