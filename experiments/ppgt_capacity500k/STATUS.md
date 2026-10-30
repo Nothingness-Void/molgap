@@ -1,11 +1,15 @@
 # Execution status
 
-SUBMITTED: unchanged scientific retry
-[`retry_v3/experiment.json`](retry_v3/experiment.json) was submitted once on
-2026-10-30 at 19:22 JST. Its last observation is RUNNING at 22:55 JST
-(13:55:55Z); this is not a terminal result. Attemptv1 was confirmed
-ERROR before either trainer started; [the disposition](results/attempt_v1/disposition.json)
-retains the cause, no-result boundary and debited aggregate budget.
+COMPLETE; strict acceptance BLOCKED. The exact retry_v3 kernel
+ID141694880/version1 completed both15,620-update endpoints; Luna B delivered
+event `evt-755356fa5eeb2f59595d4dae` at2026-10-31 00:56 JST and paused its
+heartbeat. Both arms are mechanically verified. The
+[terminal analysis](results/completed_v3/decision.md) records the negative
+width result, original artifacts and strict reference/role-evidence blockers.
+RML terminal closure and Replay admission remain pending; no successor was
+submitted. Attemptv1 was confirmed ERROR before either trainer started;
+[its disposition](results/attempt_v1/disposition.json) retains the no-result
+boundary and debited aggregate budget.
 
 ## Attemptv1 history
 
@@ -52,8 +56,8 @@ record written 19:25 JST).
   `monitor\binding.json` and `monitor\control_state.json`.
 
 [Protocol](protocol.md) owns both matched15620-update endpoints, width-only
-intervention and aggregate9h wall ceiling. Native qualification, complete
-terminal evidence and actual Replay admission are pending. The repaired attempt
+intervention and aggregate9h wall ceiling. The terminal decision above separates
+verified native/mechanical outputs from blocked strict qualification. The repaired attempt
 is an execution retry with120s debited from the aggregate budget; it is not a
 new architecture, extra seed or scientific successor. The original failure's
 canonical RML closure remains pending; it has no family output manifest or

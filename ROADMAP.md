@@ -11,10 +11,10 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
-Accept the separately authorized [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/protocol.md)
-after its exact bound Kaggle2 job terminates; existing Luna B owns monitoring.
-Establish its same-run reference, exact native qualification and reference-first
-terminal evidence; submission is not a result or Replay admission.
+Preserve the completed [PPGT width-capacity500K analysis](experiments/ppgt_capacity500k/results/completed_v3/decision.md).
+Resolve the recorded strict reference/role-evidence qualification gap through
+the owning workflow before claiming RML terminal or Replay admission; no width
+extension or automatic scientific successor follows from mechanical completion.
 
 Review the [family-retention challenge prerequisites](experiments/family_retention_challenge_500k/protocol.md)
 before any successor: reference identity/establishment, complete GRIT fidelity,

@@ -10,3 +10,7 @@ actual package. This is distinct from the unsubmitted GRIT proposal.
 Two seed42 models differ only in hidden width192 versus384. Reuse PPGT/3,
 mean-readout addon, prepared-v2, TrainingSession and the configured same-run
 reference/RML workflow. No new model class or training loop is required.
+
+The [2026-10-31 endpoint decision](results/completed_v3/decision.md) retained a
+negative width result and documented the strict reference/role-evidence gap;
+mechanical completion did not establish Replay admission.

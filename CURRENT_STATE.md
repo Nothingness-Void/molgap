@@ -6,14 +6,12 @@
 
 ## Server execution status
 
-The human authorized a separate [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/README.md)
-on Kaggle2. Its [first attempt](experiments/ppgt_capacity500k/STATUS.md) failed
-before training because source evidence duplicated a pinned data manifest.
-The minimal data-backed mount repair is CPU-verified; the unchanged retry
-(retry_v3) was submitted once, with the failed window debited from the aggregate
-budget, and was last observed RUNNING at 2026-10-30 22:55 JST (details in
-[STATUS](experiments/ppgt_capacity500k/STATUS.md)).
-Native qualification, completed outputs and Replay admission remain unobserved.
+The [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/STATUS.md)
+completed both endpoints on Kaggle2. Its
+[terminal analysis](experiments/ppgt_capacity500k/results/completed_v3/decision.md)
+rejected width expansion under the frozen recipe. Both outputs are mechanically
+verified; strict reference/role evidence and RML terminal/Replay qualification
+remain blocked. Luna B is paused and no successor is authorized or active.
 
 The [family-retention and GRIT challenge](experiments/family_retention_challenge_500k/README.md)
 is a research proposal only: park PPGT expansion, retain ESA as an efficiency reserve, and qualify
