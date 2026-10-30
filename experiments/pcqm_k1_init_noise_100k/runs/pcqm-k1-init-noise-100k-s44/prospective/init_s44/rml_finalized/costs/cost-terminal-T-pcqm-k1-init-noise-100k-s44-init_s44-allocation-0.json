@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-init-noise-100k-s44-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44-allocation-0",
+  "evidence_ref": "experiments/pcqm_k1_init_noise_100k/runs/pcqm-k1-init-noise-100k-s44/prospective/init_s44/terminal_staging/v1/f02c68649d6986ef/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.661197689354167
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-init-noise-100k-s44:init_s44:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-init-noise-100k-s44-init_s44"
+}

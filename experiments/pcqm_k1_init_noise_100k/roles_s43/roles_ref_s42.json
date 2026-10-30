@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ref_s42",
+    "arm_identity": "78600b01e493b617e96b020e72b83796882d548842a1b6d2dedc530c0ba210c8",
+    "experiment_id": "pcqm_k1_init_noise_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-init-noise-100k-s43",
+    "package_identity": "65b0454828b66a0150d3dcd0755e56c256af8dcbedd9a0e0bb4cdb328c99e27e",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-k1-init-noise-100k-s42",
+    "source_archive_sha256": "34f10c9d7c5b9663d79ad1cb799d642218055fc28b2f519b25017ca99af847df",
+    "source_commit": "f4e9bcef0e53f07b289082156abdd81ff92c550f",
+    "spec_identity": "8a1ec6753f400c43a540ada1034cf45baea54e3ceb9308097b475efed97fa55e",
+    "training_recipe_sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "c861904f446167d3bdf4db99a8397b79f18be9b20357ab7547bb4be26ec71a05"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 c861904f446167d3bdf4db99a8397b79f18be9b20357ab7547bb4be26ec71a05, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/roles_s43/roles_ref_s42.json",
+      "role_event_id": "role-pcqm-k1-init-noise-100k-s43-ref_s42-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-init-noise-100k-s43:ref_s42:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/roles_s43/roles_ref_s42.json",
+      "role_event_id": "role-pcqm-k1-init-noise-100k-s43-ref_s42-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-init-noise-100k-s43:ref_s42:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/roles_s43/roles_ref_s42.json",
+      "role_event_id": "role-pcqm-k1-init-noise-100k-s43-ref_s42-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-init-noise-100k-s43:ref_s42:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/roles_s43/roles_ref_s42.json",
+      "role_event_id": "role-pcqm-k1-init-noise-100k-s43-ref_s42-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-init-noise-100k-s43:ref_s42:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/roles_s43/roles_ref_s42.json",
+      "role_event_id": "role-pcqm-k1-init-noise-100k-s43-ref_s42-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-init-noise-100k-s43:ref_s42:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    }
+  ]
+}
