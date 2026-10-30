@@ -450,8 +450,13 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         "--retrieved-root", str(case.paths.artifact_root / "retrieved")]
     record_path = case.paths.artifact_root / "retrieved" / next(iter(contexts)) / "data_open_provenance.json"
     intact = record_path.read_bytes()
+    manifest_path = record_path.with_name("output_manifest.json")
+    manifest_bytes = manifest_path.read_bytes()
 
-    for damage in ("tampered", "missing_selected_shard", "protected_file_opened"):
+    # "record_absent": the package has the recorder (it is current) but no record was kept.
+    # Legacy packages without the recorder are covered by structural evidence instead;
+    # a current one must stay unknown.
+    for damage in ("tampered", "missing_selected_shard", "protected_file_opened", "record_absent"):
         broken = json.loads(intact)
         if damage == "missing_selected_shard":
             broken["invocations"][0]["opened"].remove("development.pt")
@@ -461,16 +466,20 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         record_path.write_text(json.dumps(broken) if damage != "tampered" else json.dumps(broken) + " ", encoding="utf-8")
         if damage == "protected_file_opened":
             # A hash-consistent record that lists a protected file: the only path to the warning.
-            manifest_path = record_path.with_name("output_manifest.json")
-            manifest_bytes = manifest_path.read_bytes()
             rebound = json.loads(manifest_bytes)
             rebound["artifacts"]["data_open"]["sha256"] = hashlib.sha256(record_path.read_bytes()).hexdigest()
+            manifest_path.write_text(json.dumps(rebound), encoding="utf-8")
+        elif damage == "record_absent":
+            rebound = json.loads(manifest_bytes)
+            del rebound["artifacts"]["data_open"]
             manifest_path.write_text(json.dumps(rebound), encoding="utf-8")
         assert experiment_cli.main([*draft, "--output-dir", str(case.repo / ("audits_" + damage))]) == 0
         warning = capsys.readouterr().err
         assert ("protected-role file(s) opened for official_validation" in warning) == (damage == "protected_file_opened")
         first = json.loads((case.repo / ("audits_" + damage) / ("roles_" + next(iter(contexts)) + ".json")).read_bytes())
         assert set(first["role_use"].values()) == {"unknown"}, damage
+        if damage == "record_absent":
+            assert first["protected_role_evidence"]["status"] == "recorder_expected_record_missing"
     record_path.write_bytes(intact)
     manifest_path.write_bytes(manifest_bytes)
     assert experiment_cli.main([*draft, "--output-dir", str(case.repo / "audits")]) == 0
