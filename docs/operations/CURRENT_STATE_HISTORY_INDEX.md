@@ -100,6 +100,8 @@ cost and custody evidence; this table does not duplicate their conclusions.
   only unchanged-contract infrastructure failures may retry.
 - Failed CPU attempts and accepted CPU NO_TRAIN preparation were RML-closed;
   the dated reconciliation is routed by the tracked [`research_memory/README.md`](../../research_memory/README.md).
+- Closed-chain paragraphs moved verbatim from `CURRENT_STATE.md` on 2026-10-30 are in the
+  [2026-10 archive](CURRENT_STATE_ARCHIVE_2026-10.md).
 
 Read [`CURRENT_STATE.md`](../../CURRENT_STATE.md) for active jobs, live blockers,
 and the recommended model. Read the experiment decision before using any row
