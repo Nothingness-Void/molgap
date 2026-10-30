@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "97f24d2dc41bd9a3178c9765012077853629812d77263f9d14e58a8e4ae63585"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "ace6e9e9db87a5ec12b5d7cc866cac0ed48b93159c3c76f3cc8dbfcff3867742"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/lr8e4w3_i44/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "ace6e9e9db87a5ec12b5d7cc866cac0ed48b93159c3c76f3cc8dbfcff3867742"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/training_contract.json",
+      "name": "contract",
+      "sha256": "c66f7b3dd0b28654175cc91c9029c4f877b33a9363b5bfff618dd9113d161518"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "223f4275eb6439e8a3974f15d956f1777f23e752ca80a7e20f50f7a849515c00"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "56f873233b00e6a8133910574410bbadf8c6a371bbbff9e1261a3462a68c0127"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "180199461ff31274dadb6fb0162168b591aef2ebc2305cc90443a8966088de8b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "d2f3c2cc5cfeac187e48c69743adb1d246ce264c586648ee05a1e05e60e0632b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "c0c3728c47c9bc11d6af640eeecdfccd6fb32e82375d8dd420cbfb8c37a184a7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "0730a031bf53c19777ab104a8ebc7a14e011a90b14081dc28769621692689ef7"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_lr8e4_warmup_100k/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_lr8e4_warmup_100k/generated/4ebe5dddfe1cc956dfe32454777716894fb8d3433953dcedb512b5ef83bbcb6c/lr8e4w3_i44/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1401938381141424,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/terminal_staging/v1/e5391b7853df00e3/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

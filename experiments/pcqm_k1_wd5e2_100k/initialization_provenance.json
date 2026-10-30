@@ -1,0 +1,30 @@
+{
+  "arms": [
+    {
+      "arm_id": "wd5e2_i43",
+      "builder": "molgap.k1_screen_training.build_initial_state",
+      "builder_source": "src/molgap/k1_screen_training.py",
+      "format": "molgap-initialization-provenance-v1",
+      "note": "spec seed label stays 42 because the compiler permits only seed 42; sampler/data order are seed 42",
+      "reference_seed_42_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "state_file": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s43.pt",
+      "state_file_sha256": "7bc20285e649bc1b527961b4ed492e271d486fe2b72c1badf7ed4ae5670698f4",
+      "state_sha256": "5b8b6b565b7e73a662091c4265df326d41833559b9a24c391e7ddd28f4b097fd",
+      "torch_seed": 43
+    },
+    {
+      "arm_id": "wd5e2_i44",
+      "builder": "molgap.k1_screen_training.build_initial_state",
+      "builder_source": "src/molgap/k1_screen_training.py",
+      "format": "molgap-initialization-provenance-v1",
+      "note": "spec seed label stays 42 because the compiler permits only seed 42; sampler/data order are seed 42",
+      "reference_seed_42_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "state_file": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s44.pt",
+      "state_file_sha256": "91d78d813f6df121fcff4f63b381ad29c074a2b9f4860cbf8a12806a114a30f8",
+      "state_sha256": "7990bcf38530e56f596283f65a404d97dfa7efa0063481e2260d364df3d196c7",
+      "torch_seed": 44
+    }
+  ],
+  "format": "molgap-initialization-provenance-v1",
+  "note": "spec seed label stays 42 because the compiler permits only seed 42; sampler/data order are seed 42"
+}

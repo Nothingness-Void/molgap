@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-init-noise-100k-s44-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42-0",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/runs/pcqm-k1-init-noise-100k-s44/prospective/ref_s42/terminal_staging/v1/ba3c1218534aea28/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.5693856780530557
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-init-noise-100k-s44:ref_s42:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s44-ref_s42"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-init-noise-100k-s44-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_init_noise_100k/runs/pcqm-k1-init-noise-100k-s44/prospective/ref_s42/terminal_staging/v1/ba3c1218534aea28/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.661197689354167
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-init-noise-100k-s44:ref_s42:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-init-noise-100k-s44-ref_s42"
+    }
+  ]
+}

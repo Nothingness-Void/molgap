@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-single-model-total-budget-500k",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "observation_point": null,
+  "comparability_selector": {"scientific_contract": "pcqm-single-model-total-budget-500k"},
+  "action_rule": {"action": "RUN_ARCHITECTURE_PACKAGE_500K", "field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1},
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []},
+  "approval": {"approved_by": null, "approved_at": null, "authority_ref": null},
+  "created_from_source_digest": "bf686cf7f7255a1efc9dc8a4bc219560fdbf7aec579301519ce2a62a4034af72"
+}

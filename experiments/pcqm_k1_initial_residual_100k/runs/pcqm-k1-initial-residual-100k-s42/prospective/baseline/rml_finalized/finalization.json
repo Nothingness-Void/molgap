@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-c1806bd36983030927aaa5cb44ba2319ec169d266a4dfc53fe3a2fd152777e0b",
+  "finalized_at": "2026-10-30T07:57:36.829563+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_initial_residual_100k/decision.md": "768d556b15015b72136bca9282e314933f20b6e1e5d843940efb4be5c4ced7bc",
+    "experiments/pcqm_k1_initial_residual_100k/generated/66a454eb2a458fe4534980654ad6fe34cfbf64849fd01f2df70ac8f19a3a4391/authority.json": "8a63997e407adb0059fc81720ac440d242b2c87d1db015ed8407322498dcc367",
+    "experiments/pcqm_k1_initial_residual_100k/generated/66a454eb2a458fe4534980654ad6fe34cfbf64849fd01f2df70ac8f19a3a4391/baseline/recipe.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "experiments/pcqm_k1_initial_residual_100k/role_audit_v2/roles_baseline.json": "65f31006c7ec49649ffd8bb0e2830e22213d28e34823fe44cb02f67e3062cbef",
+    "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/baseline/terminal_staging/v1/e4f30e8138430195/acceptance.json": "3ecea13e2513056a16b367f7fcdf11236338c8d9450d99e0f594d0a0ce098e98",
+    "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/baseline/terminal_staging/v1/e4f30e8138430195/observed.json": "13807c4ebb6e42ba45d43095abc884897da9010602bd9fe31639299e4cad6de7",
+    "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/reference_bundle.json": "410664e0c2cf4fc856c1fd400179dbd873bb58f3cf093d98d80c21bcf1eef36c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/_execution/allocation_ledger.json": "77297e2b20f07f7f6748fb7dd0f3288b6045dd3ebcfbe459292a3a83dfbe0aad",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/_execution/baseline/allocation_ledger.json": "77297e2b20f07f7f6748fb7dd0f3288b6045dd3ebcfbe459292a3a83dfbe0aad",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/_execution/execution_retention.json": "e4b9494f1278bf2d3819fd3da7340292dd3bbaa361946019a519fdbfdf682cd4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/canonical_trace.json": "3ac92675fc43b699fb1a0e8f92e1a9116f1abf21e03f68a3c5ffc17e61e99624",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/canonical_trace.json.context.json": "9b0d089f1571c650385db28973e61d2931ab86f44bdeb3703151905206f882b1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/development_predictions.pt": "7865740f13e64d296ccb1623936b199f0fe385a6d1ec691bffcd4d02e689b3d4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/last_checkpoint.pt": "08bfb4bd6d57275c042fee38e55ae1b510e96b190859e70bf543d4590f4b4a09",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/output_manifest.json": "da6f36b02b19fd6fdbd5dbcea94ed28a00130b5b89b3c99f3a15daa77f2d27be",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/selected_model.pt": "8b26148c08374f60bd9edcf9ff63ea8cf06d628fb093d7d1a5dc32891df1b113",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/training_contract.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-initial-residual-100k-s42/v1/reports/diagnostic_0391464e49776fd69c046a0277942cebdb6b0a792dae3e150b2eee6d457cd4cb.json": "f3738f8ba8476a2afc81ea56ffc5d2c552b6f25504611bc667d044ff203d6d17"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/baseline/trajectory.json",
+  "prospective_sha256": "10b108ca8b17c7c2ef8687974137d243af17b1f6c47c2f0bd6785085a70a35a1",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline-0.json": "9d1553198a5e420d4c32b0a81341912a3a6c1c09ee14cc1918b097843c6d73e5",
+    "costs/cost-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline-allocation-0.json": "25d11f533d9a2029f415b873fbef2f93b5cfe0e0369f45b6dbe2e77337fb0ebd",
+    "roles/role-pcqm-k1-initial-residual-100k-s42-baseline-development-labels_read.json": "61191230813180ea1a3c69c5e6a2c81d99b10838802d201f599555a4082f989f",
+    "roles/role-pcqm-k1-initial-residual-100k-s42-baseline-development-metric_computed.json": "d2ea976f0d8367ac44d90d5b4bb953b3858276747f495d5f4037c92579b2673c",
+    "roles/role-pcqm-k1-initial-residual-100k-s42-baseline-development-prediction_input.json": "217c201ff3e51e1a2a05e90f87f1199f158e483b2d69e24161aac9bbae57d6d3",
+    "roles/role-pcqm-k1-initial-residual-100k-s42-baseline-development-selection_used.json": "25634ba9cee4b789362db84d9f8c6c516b06a4fc6f60dd18ef1c45be1c63dfbb",
+    "roles/role-pcqm-k1-initial-residual-100k-s42-baseline-train-training_membership.json": "f609dd36a60401860de958842a38c63684949f85d46571e831fc1a819136e505",
+    "terminal_input.json": "97c0f05760ce3295e4f385a29b7db433c9f70740f96b34ab077c0b230d5de4f7",
+    "trace.json": "3ac92675fc43b699fb1a0e8f92e1a9116f1abf21e03f68a3c5ffc17e61e99624",
+    "trace_manifest.json": "d46f500e48cf6ddd2f3117cf905c6dee194120e0196a5af7bb4e34a46f0c3ca5",
+    "trajectory.json": "31b6924fc1a953c141aa5a627baf756fefd72a2414de6c8668222d0666eb28f4",
+    "v5_evidence.json": "119e32ee092711494fbe2332c5f2e94e2902f9c9a00ae053a45243759678a610"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/baseline/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "c1806bd36983030927aaa5cb44ba2319ec169d266a4dfc53fe3a2fd152777e0b",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-initial-residual-100k-s42-baseline"
+}

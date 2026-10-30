@@ -1,0 +1,22 @@
+{
+  "account": "nvoid912",
+  "allocated_t4_hours_ceiling": 8,
+  "allocation_wall_limit_seconds": 14400,
+  "arms": [
+    "lr2e4_i43",
+    "lr2e4_i44"
+  ],
+  "authorized_at": "2026-10-30T04:00:00+09:00",
+  "automatic_retry": false,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "format": "molgap-execution-authority-v1",
+  "protected_roles_authorized": [],
+  "protocol_ref": "experiments/pcqm_k1_lr2e4_100k/protocol.md",
+  "same_run_reference_arm_id": "lr2e4_i43",
+  "scope": "one 100K two-arm K1 kernel testing lower-peak-lr on inits 43 and 44; no retry, continuation, 500K, full or adoption",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}

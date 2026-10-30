@@ -1,0 +1,23 @@
+{
+  "account": "kaseichou",
+  "allocated_t4_hours_ceiling": 8,
+  "allocation_wall_limit_seconds": 14400,
+  "arms": [
+    "ref_s42",
+    "init_s43"
+  ],
+  "authorized_at": "2026-10-30T04:00:00+09:00",
+  "automatic_retry": false,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "format": "molgap-execution-authority-v1",
+  "protected_roles_authorized": [],
+  "protocol_ref": "experiments/pcqm_k1_init_noise_100k/protocol.md",
+  "reference_semantics": "ref_s42 is the frozen preset recipe and initialization retrained in the same job; init_s43 changes only the initial weights (torch seed 43).",
+  "same_run_reference_arm_id": "ref_s42",
+  "scope": "one 100K two-arm init-noise kernel; no retry, continuation, 500K, full or adoption",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}

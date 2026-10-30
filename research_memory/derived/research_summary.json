@@ -1,15 +1,15 @@
 {
   "backtest": {
-    "eligible": 32,
-    "excluded": 36,
+    "eligible": 48,
+    "excluded": 38,
     "status": "available"
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 167,
+      "trajectories_total": 185,
       "with_complete_native_measurement": 32,
-      "with_cost_event": 156,
-      "with_incomplete_native_measurement": 124,
+      "with_cost_event": 174,
+      "with_incomplete_native_measurement": 142,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1574,7 +1574,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 79
+          "unknown_records": 115
         },
         "device_hours": {
           "estimated": {
@@ -1582,11 +1582,11 @@
             "known_total": 55.0
           },
           "measured": {
-            "known_records": 41,
-            "known_total": 133.42088345215026
+            "known_records": 59,
+            "known_total": 175.8815594424192
           },
           "not_applicable_records": 0,
-          "unknown_records": 30
+          "unknown_records": 48
         },
         "queue_hours": {
           "estimated": {
@@ -1598,7 +1598,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 79
+          "unknown_records": 115
         },
         "wall_hours": {
           "estimated": {
@@ -1606,11 +1606,11 @@
             "known_total": 55.0
           },
           "measured": {
-            "known_records": 33,
-            "known_total": 109.68384057927136
+            "known_records": 51,
+            "known_total": 161.35466261793331
           },
           "not_applicable_records": 0,
-          "unknown_records": 38
+          "unknown_records": 56
         }
       },
       "Tesla T4 FP32": {
@@ -1624,12 +1624,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 8
+          "unknown_records": 10
         },
         "device_hours": {
           "estimated": {
-            "known_records": 8,
-            "known_total": 127.2
+            "known_records": 10,
+            "known_total": 155.2
           },
           "measured": {
             "known_records": 0,
@@ -1648,12 +1648,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 8
+          "unknown_records": 10
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 8,
-            "known_total": 68.12
+            "known_records": 10,
+            "known_total": 82.12
           },
           "measured": {
             "known_records": 0,
@@ -2824,12 +2824,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 20
         },
         "device_hours": {
           "estimated": {
-            "known_records": 4,
-            "known_total": 9.8
+            "known_records": 20,
+            "known_total": 86.00000000000001
           },
           "measured": {
             "known_records": 0,
@@ -2848,12 +2848,12 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 4
+          "unknown_records": 20
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 4,
-            "known_total": 9.8
+            "known_records": 20,
+            "known_total": 47.999999999999986
           },
           "measured": {
             "known_records": 0,
@@ -3314,10 +3314,10 @@
         }
       }
     },
-    "unknown_events": 316
+    "unknown_events": 370
   },
   "evidence": {
-    "validated": 155,
+    "validated": 173,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -3334,7 +3334,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 124,
+      "count": 142,
       "severity": "WARN"
     },
     {
@@ -3354,19 +3354,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 771,
-    "explicit_events": 519,
+    "coarse_historical": 825,
+    "explicit_events": 609,
     "repeatedly_selected": 26
   },
-  "source_digest": "fa4d83ed0a722f1f0652efa29bae2cfc4fcaee59edefd8bdf9b20069df03884b",
+  "source_digest": "c852002f2ab39c6ed9c38544b8b6c2d43c82a2bb63299f89564927e52a59049d",
   "trajectories": {
-    "count": 167,
+    "count": 185,
     "outcomes": {
       "ACTIVE": 1,
-      "CLOSED": 27,
+      "CLOSED": 33,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 10,
-      "NEGATIVE_UNDER_CONTRACT": 40,
+      "NEGATIVE_UNDER_CONTRACT": 52,
       "NO_TRAIN": 57,
       "POSITIVE_UNDER_CONTRACT": 9
     }

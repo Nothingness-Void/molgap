@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-2f9906f6bf85c08e7e569109d5ab137907ff78638ae5a86b1b869f251b230234",
+  "finalized_at": "2026-10-30T10:31:18.968671+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_lr8e4_warmup_100k/generated/4ebe5dddfe1cc956dfe32454777716894fb8d3433953dcedb512b5ef83bbcb6c/lr8e4w3_i44/recipe.json": "c66f7b3dd0b28654175cc91c9029c4f877b33a9363b5bfff618dd9113d161518",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/roles_v1/roles_lr8e4w3_i44.json": "9f6c2d7d8d4e98573c1256bb7b83a97a761c8d1023084a4110af7d7075c23a31",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/terminal_staging/v1/e5391b7853df00e3/acceptance.json": "5fb40ee8510737ca6a5027b0b9411500a377d5db623651c20703144a84f162d1",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/terminal_staging/v1/e5391b7853df00e3/observed.json": "083a474c85d922cafdec9e2f8fb848b297e52578bc0612be702ce4ee3539d15a",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/strict_qualification/2fecc89b735d6738891e/lr8e4w3_i43/reference_bundle.json": "927e7fa3f56f1cbd31ea826ff8ee4348f4fb751bb9bc50637b417ce456590c1a",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/strict_qualification/2fecc89b735d6738891e/lr8e4w3_i44/comparison_readiness.json": "ee057fba4405e3e1fa91a60cd723cf5424adac35285472ab73bb0fcec2f5ceb5",
+    "experiments/pcqm_k1_lr8e4_warmup_100k/terminal_decision.md": "93700d9ecbaed488d947a951e5296d4bf3e9d92f0abeb292d66da40c0d8d32de",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/allocation_ledger.json": "ace6e9e9db87a5ec12b5d7cc866cac0ed48b93159c3c76f3cc8dbfcff3867742",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/execution_retention.json": "97f24d2dc41bd9a3178c9765012077853629812d77263f9d14e58a8e4ae63585",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/_execution/lr8e4w3_i44/allocation_ledger.json": "ace6e9e9db87a5ec12b5d7cc866cac0ed48b93159c3c76f3cc8dbfcff3867742",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/canonical_trace.json": "c0c3728c47c9bc11d6af640eeecdfccd6fb32e82375d8dd420cbfb8c37a184a7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/canonical_trace.json.context.json": "0730a031bf53c19777ab104a8ebc7a14e011a90b14081dc28769621692689ef7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/data_open_provenance.json": "223f4275eb6439e8a3974f15d956f1777f23e752ca80a7e20f50f7a849515c00",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/development_predictions.pt": "56f873233b00e6a8133910574410bbadf8c6a371bbbff9e1261a3462a68c0127",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/last_checkpoint.pt": "180199461ff31274dadb6fb0162168b591aef2ebc2305cc90443a8966088de8b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/output_manifest.json": "7fe64408af4d4c08f68b92f2ef3cefe29d82c87d4a470adea1a6a447de202960",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/selected_model.pt": "d2f3c2cc5cfeac187e48c69743adb1d246ce264c586648ee05a1e05e60e0632b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-lr8e4-warmup-100k-s42/v1/version1/lr8e4w3_i44/training_contract.json": "c66f7b3dd0b28654175cc91c9029c4f877b33a9363b5bfff618dd9113d161518",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-lr8e4-warmup-100k-s42/v1/reports/diagnostic_6c07b3097cc02168ddf62bdfe47e54039d24220573d26f270de7536793aa17d9.json": "884a4c4e3284732d4fd927b1d14a6b77fcde3a99359af3078b2045c5df1d0324"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/trajectory.json",
+  "prospective_sha256": "8a64df2cb1c7d35ce947e8dea4a23d26ae66e70bec069378d572e5794d10d16e",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-0.json": "513dc29cfc8e56d47c2f14e0b5eb307604d8488c749c1062a5b041c18aa2835b",
+    "costs/cost-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-allocation-0.json": "076444d8bf4e6ca028bb5c6e0bdedb7582db7a3557eb9bc15a113c15ea389c5f",
+    "roles/role-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-development-labels_read.json": "095819f68cb766aa2b54a2da4b6033303609d2c49f0cdc66eec399e0210d41c0",
+    "roles/role-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-development-metric_computed.json": "bee02688675df68537b6e25a79024244e3ae537fb013d769c342f945e26cc0b9",
+    "roles/role-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-development-prediction_input.json": "b52e3de1296ff7e9e5c78f3fd094676e7cc9255b4b09022416035b48b9ecc9c1",
+    "roles/role-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-development-selection_used.json": "44bcc274782a78297ba057674b5db63b85ccef376b3aba253e2c731fcb15874e",
+    "roles/role-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44-train-training_membership.json": "37377a508700385b531b0bf473009736e6f0ce4f854e718092ad9633262ff91c",
+    "terminal_input.json": "4d6ad8c17349136df99a95ffd9a9d76eee2cd4ebd60f404f345b7afc3099c137",
+    "trace.json": "c0c3728c47c9bc11d6af640eeecdfccd6fb32e82375d8dd420cbfb8c37a184a7",
+    "trace_manifest.json": "6e9b8b2a97b603ed4e0109b57ff86d872e4405bce2a452b1b17002c2baa8cdfe",
+    "trajectory.json": "9bd089fa828b4ea2d5234255b4ab874cd054134b5367190fee054d33f5d59bd0",
+    "v5_evidence.json": "7672df115d362c1e7cfc73476a116cf8183d4073cce7edb07ad0c7d7d2e4b1d7"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_lr8e4_warmup_100k/runs/pcqm-k1-lr8e4-warmup-100k-s42/prospective/lr8e4w3_i44/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "2f9906f6bf85c08e7e569109d5ab137907ff78638ae5a86b1b869f251b230234",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44"
+}

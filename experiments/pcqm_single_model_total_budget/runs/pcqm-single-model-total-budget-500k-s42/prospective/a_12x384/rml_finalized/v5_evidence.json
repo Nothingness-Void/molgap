@@ -1,0 +1,98 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "d724a3f40432734dc545b10f35ad60193e9eaaa2ccb7ce8a199590f6e9ff43f1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "af66010192c8f63933b16250cd8bdbc68f5902ca5c3fa56decaf8a737d99eeb9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_execution/a_12x384/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "af66010192c8f63933b16250cd8bdbc68f5902ca5c3fa56decaf8a737d99eeb9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/training_contract.json",
+      "name": "contract",
+      "sha256": "f20a47e80362206b72ee1d759ec070e1c662ba35fa4122e4d8d2e98f5ea80ebe"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "ce6954b4474693b34cb3aab79b351887ee568673003f6f006400da69df3d7fa1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "f4dfabae1a9f0075798591c0c7620e6a81a1dd7a07ff37a486318c23379fcd2a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "862d7b0916c5d6b90791600eaf0ecfa796512a800f13c94523e4169d6bca7c68"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "772d378dc3534ef0a84299b3cdcbb6f3d05a1458f9fd25e773b9f042cd67c460"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/a_12x384/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "a594be45753c56921cf5fe22964690cff04003a56471e51a96fe1f69f22afaca"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_single_model_total_budget/terminal_decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.10072190727710724,
+    "missing_reason": null,
+    "selected_optimizer_step": 183582,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/terminal_staging/v1/5e74e196c772e592/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_wd5e2_100k/generated/efe3b9636f4e702d0da93b65bddef96c3ca68754664f38b51e02c7bbe2112c8b/wd5e2_i44/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_k1_wd5e2_100k/generated/efe3b9636f4e702d0da93b65bddef96c3ca68754664f38b51e02c7bbe2112c8b/wd5e2_i44/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
+  "run_id": "pcqm-k1-wd5e2-100k-s42:wd5e2_i44:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_wd5e2_100k/runs/pcqm-k1-wd5e2-100k-s42/prospective/wd5e2_i44/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_wd5e2_100k/runs/pcqm-k1-wd5e2-100k-s42/prospective/wd5e2_i44/rml_finalized/trace.json",
+  "trace_artifact_sha256": "ad397a457b60936b25e8857c2598d7ff75b623090d5f32266abce92b55f34da7",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

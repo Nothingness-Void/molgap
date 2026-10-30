@@ -5,6 +5,38 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "pcqm-single-model-total-budget-500k-s42:b_16x256:downstream",
+      "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -412,6 +444,94 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43\\\",\\\"comparison_sha256\\\":\\\"661c00101460870a2c1b8137fc8a354d1661f25fefd514a409d486abba9fcc71\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"f1aa244c2b0339e74e6e85c8029208abb48823f1808bbcf5c90cfcf397c5ae62\\\",\\\"reference\\\":\\\"e292fc617908b84cc40cf3125e7b3a5c5836bca96678f905dd909462d9f68e9d\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"initialization-seed-noise\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42\\\"}\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"07c3f7b7eea65649d36101b773e610995a3889581831e666791066a28da5dcc4\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42\"}",
+      "run_ids": [
+        "pcqm-k1-init-noise-100k-s43:init_s43:downstream",
+        "pcqm-k1-init-noise-100k-s43:ref_s42:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-init-noise-100k-s43-init_s43",
+        "T-pcqm-k1-init-noise-100k-s43-ref_s42"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44\\\",\\\"comparison_sha256\\\":\\\"ee1cec85a243e578293347d53053f97b74ae51b06b7e5c248dc29c588cd4282a\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"8f00d5b307be4110da7f72fcaae6568d87dbc9c89cf32ed68e1d28693c56a966\\\",\\\"reference\\\":\\\"e292fc617908b84cc40cf3125e7b3a5c5836bca96678f905dd909462d9f68e9d\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"initialization-seed-noise\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42\\\"}\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"07c3f7b7eea65649d36101b773e610995a3889581831e666791066a28da5dcc4\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-init-noise-100k-s44-ref_s42\"}",
+      "run_ids": [
+        "pcqm-k1-init-noise-100k-s44:init_s44:downstream",
+        "pcqm-k1-init-noise-100k-s44:ref_s42:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-init-noise-100k-s44-init_s44",
+        "T-pcqm-k1-init-noise-100k-s44-ref_s42"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i44\\\",\\\"comparison_sha256\\\":\\\"b64f4561fe126842d4643f22ae4739585874849f973282c503691644f442d870\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"8f00d5b307be4110da7f72fcaae6568d87dbc9c89cf32ed68e1d28693c56a966\\\",\\\"reference\\\":\\\"f1aa244c2b0339e74e6e85c8029208abb48823f1808bbcf5c90cfcf397c5ae62\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"lower-peak-lr\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43\\\"}\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"70cc42c3e5e69c973c80f9bec6f134851f8073ae89c6d8018b9766f052591738\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"870da25586b93e00e871f25ffa4084097b07578a09bd06b90f1f758afc2a6170\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43\"}",
+      "run_ids": [
+        "pcqm-k1-lr2e4-100k-s42:lr2e4_i43:downstream",
+        "pcqm-k1-lr2e4-100k-s42:lr2e4_i44:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
+        "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i44"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44\\\",\\\"comparison_sha256\\\":\\\"ee057fba4405e3e1fa91a60cd723cf5424adac35285472ab73bb0fcec2f5ceb5\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"8f00d5b307be4110da7f72fcaae6568d87dbc9c89cf32ed68e1d28693c56a966\\\",\\\"reference\\\":\\\"f1aa244c2b0339e74e6e85c8029208abb48823f1808bbcf5c90cfcf397c5ae62\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"higher-peak-lr-with-warmup\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43\\\"}\",\"lr_schedule_identity\":\"08a13af32bb9a716303be37d5f2f691fc9e13af24584a534b68bf742ed6e29d5\",\"optimizer_identity\":\"470019a000bd9ac7f8c0f86c522fc2d7acb8c632cd9e87c3ceb5443a01bd0260\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"f394eb749c1f71ecc40f0eabb8a9cbacee9710f40c252626e41bb239775af9f2\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43\"}",
+      "run_ids": [
+        "pcqm-k1-lr8e4-warmup-100k-s42:lr8e4w3_i43:downstream",
+        "pcqm-k1-lr8e4-warmup-100k-s42:lr8e4w3_i44:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43",
+        "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44\\\",\\\"comparison_sha256\\\":\\\"7239c9ff9b8c2148cf225aecfe122948e511f55db154828b4f91ce14f927bab0\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"8f00d5b307be4110da7f72fcaae6568d87dbc9c89cf32ed68e1d28693c56a966\\\",\\\"reference\\\":\\\"f1aa244c2b0339e74e6e85c8029208abb48823f1808bbcf5c90cfcf397c5ae62\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"decoupled-weight-decay-strength\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43\\\"}\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"691ec1a42461aef90768626bc62b9049b1acadba6708b2ef8c71fdb6a92ff587\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"3ee6947cb5fde8006b234d25b8c2ae9108218337b59e03cbee928d022d416943\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43\"}",
+      "run_ids": [
+        "pcqm-k1-wd5e2-100k-s42:wd5e2_i43:downstream",
+        "pcqm-k1-wd5e2-100k-s42:wd5e2_i44:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
+        "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"2fc13c12f0489ec75b4cca17d2d9fa02b1c2471e0057e9be9bef72c3f39b5faf\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline\"}",
+      "run_ids": [
+        "pcqm-k1-extremal-readout-100k-s42:baseline:downstream",
+        "pcqm-k1-extremal-readout-100k-s42:candidate:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-extremal-readout-100k-s42-baseline",
+        "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"2fc13c12f0489ec75b4cca17d2d9fa02b1c2471e0057e9be9bef72c3f39b5faf\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline\"}",
+      "run_ids": [
+        "pcqm-k1-initial-residual-100k-s42:baseline:downstream",
+        "pcqm-k1-initial-residual-100k-s42:initial_residual:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-initial-residual-100k-s42-baseline",
+        "T-pcqm-k1-initial-residual-100k-s42-initial_residual"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"2fc13c12f0489ec75b4cca17d2d9fa02b1c2471e0057e9be9bef72c3f39b5faf\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline\"}",
+      "run_ids": [
+        "pcqm-k1-sam-100k-s42-r2:baseline:downstream",
+        "pcqm-k1-sam-100k-s42-r2:sam:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-k1-sam-100k-s42-r2-baseline",
+        "T-pcqm-k1-sam-100k-s42-r2-sam"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"366ed199adf32966e52266044b8be3564c30103c28ac000bc886966aa27f24fc\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale\"}",
       "run_ids": [
         "pcqm-k1-batch-renorm-100k-s42:brn_affine:downstream",
@@ -570,12 +690,24 @@
     "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+    "T-pcqm-k1-extremal-readout-100k-s42-baseline",
+    "T-pcqm-k1-extremal-readout-100k-s42-candidate",
     "T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
     "T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
     "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
     "T-pcqm-k1-init-forward-500k-mean2-s42-scratch",
     "T-pcqm-k1-init-forward-500k-single-s42-pretrained",
     "T-pcqm-k1-init-forward-500k-single-s42-scratch",
+    "T-pcqm-k1-init-noise-100k-s43-init_s43",
+    "T-pcqm-k1-init-noise-100k-s43-ref_s42",
+    "T-pcqm-k1-init-noise-100k-s44-init_s44",
+    "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+    "T-pcqm-k1-initial-residual-100k-s42-baseline",
+    "T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+    "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
+    "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i44",
+    "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i43",
+    "T-pcqm-k1-lr8e4-warmup-100k-s42-lr8e4w3_i44",
     "T-pcqm-k1-message-droppath-100k-s42-baseline",
     "T-pcqm-k1-message-droppath-100k-s42-message_droppath",
     "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
@@ -584,8 +716,12 @@
     "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-pre_node_rms",
     "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_graph_rms",
     "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+    "T-pcqm-k1-sam-100k-s42-r2-baseline",
+    "T-pcqm-k1-sam-100k-s42-r2-sam",
     "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
     "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
+    "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
+    "T-pcqm-k1-wd5e2-100k-s42-wd5e2_i44",
     "TB-gptrans-local-bias-rwse16-100k-s42-a2",
     "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
     "TB-gptrans-noisy-nodes-100k-s42",
@@ -603,5 +739,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 68
+  "trace_count": 86
 }

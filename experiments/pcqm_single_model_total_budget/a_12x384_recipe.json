@@ -1,0 +1,68 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 60,
+    "development_rows": 50000,
+    "next_batch": 0,
+    "optimizer_steps": 234360,
+    "precision": "fp32",
+    "sample_presentations": 29998080,
+    "source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+    "target_sha256": "5a8ef02a608f73dad257269d253d5c507b4e3aa480ce4c452b79e4384095b9a2"
+  },
+  "batch_size": 128,
+  "checkpoint_every": 128,
+  "dataset": {
+    "development": true,
+    "manifest": "pcqm_fixed_500k_v1/manifest.json",
+    "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+  },
+  "development_role_identity": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+  "development_rows": 50000,
+  "drop_last": true,
+  "ema_decay": 0.999,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": true,
+    "ema": "bound-foreach",
+    "family": "gptrans_t",
+    "name": "shared-family-accelerated",
+    "optimizer": "foreach-adamw",
+    "precision": "fp32",
+    "tf32": false,
+    "torch_version": "2.11.0"
+  },
+  "family": "gptrans_t",
+  "finite_check_every": 50,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "2bac45861bb472908f78067a8fd55ebd5231c49f20276d56fef458f48cca2b72",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": null,
+    "mode": "epoch"
+  },
+  "mode": "degree_bond_local_pairnorm_12x384_ema999",
+  "optimizer_steps": 234360,
+  "resume_chunks": true,
+  "resume_keep_count": 2,
+  "sampler": "torch-pass-randperm",
+  "schedule": {
+    "kind": "warmup_cosine_epoch",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 60,
+    "warmup_units": 4
+  },
+  "seed": 42,
+  "selection": "best-development-ema",
+  "target_mean_eV": 5.413434769952119,
+  "target_std_eV": 1.176728647311213,
+  "torch_version": "2.11.0",
+  "train_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+  "train_rows": 500000,
+  "weight_decay": 0.05
+}

@@ -1,0 +1,112 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-single-model-total-budget-500k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-single-model-total-budget-500k-s42-a_12x384-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-single-model-total-budget-500k-s42:a_12x384:downstream"
+      ],
+      "source_commit": "1380d1865879edf69c3c328ece398893089e2ce9",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_ARCHITECTURE_PACKAGE_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_single_model_total_budget/authority.json",
+    "chosen_action": "RUN_ARCHITECTURE_PACKAGE_500K",
+    "policy_id": "pcqm-single-model-total-budget-500k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_single_model_total_budget/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/rml_decision_snapshots/816b944a891146b5872ee2c094a9c36aff976d90a2cdd5aebb75ceadeacf6a1a.json",
+    "snapshot_sha256": "816b944a891146b5872ee2c094a9c36aff976d90a2cdd5aebb75ceadeacf6a1a",
+    "state_timestamp": "2026-10-28T17:56:42.600458+09:00"
+  },
+  "family_id": "pcqm-single-model-total-budget-500k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Capacity mismatch",
+      "Different optimization trajectories",
+      "Single-seed variation"
+    ],
+    "changed_mechanism": "architecture-package-system-performance",
+    "cheapest_falsifier": "Bounded same-job architecture-package pair with aligned development predictions and actual native allocation costs.",
+    "decision_changed_if_negative": "Retain negative or cost-limited evidence without automatic extra budget, retry or full release.",
+    "decision_changed_if_positive": "Review complete package accuracy and actual cost descriptively; no causal winner or automatic promotion.",
+    "expected_native_cost_ref": "cost-T-pcqm-single-model-total-budget-500k-s42-a_12x384-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+    "observed_deficiency": "Local speed and parameter counts do not establish T4 cost, 500K completion or development quality.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ]
+  },
+  "owner": "desktop",
+  "question": "How do wide12x384 and deep16x256 single-model packages compare in 500K development accuracy and actual native cost under a cumulative30 T4-device-hour ceiling?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_single_model_total_budget/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_single_model_total_budget/generated/77530ca353d83af50ddaa56ffc26e42bd8f1c2d2151cca7488af759176f6f999/a_12x384/recipe.json",
+      "experiments/pcqm_single_model_total_budget/a_12x384_data_declaration.json",
+      "experiments/pcqm_single_model_total_budget/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "prior_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_single_model_total_budget/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "a_12x384",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-single-model-total-budget-500k-s42",
+      "reference_arm_id": "a_12x384",
+      "reference_trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384",
+      "reference_trajectory_ref": "experiments/pcqm_single_model_total_budget/runs/pcqm-single-model-total-budget-500k-s42/prospective/a_12x384/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "7b5dffa92666621c6aa2d61a7970382eb2c3faeb7d4edfea6f92992965cbc91f"
+    },
+    "source_commit": "1380d1865879edf69c3c328ece398893089e2ce9",
+    "source_config_identity": "d889d4820f6adb79bb9f0a5f3331d6702fcb0aefda4eccbc3ca9aa530c9b7405"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-single-model-total-budget-500k-s42-a_12x384"
+}

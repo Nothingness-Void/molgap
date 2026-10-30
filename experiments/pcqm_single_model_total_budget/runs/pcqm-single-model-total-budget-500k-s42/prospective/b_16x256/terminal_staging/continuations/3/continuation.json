@@ -1,0 +1,75 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_resume_preflight/b_16x256/actual_resume_certificate.json",
+    "sha256": "c898b2cd5e2a2ad307c90bd6ff18fd387a4a14b2067beeb2134803c2eca173c6"
+  },
+  "authority": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/continuation_authority_v3.md",
+    "sha256": "714c587ff61793827dfa23b020da6db8708c121a86d3188d555445de3dc9fcbc"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/b_16x256/files/last_checkpoint.pt",
+    "sha256": "a1dab2ab35a4547cf7dfa57c2fd62a844ccc408af89f6a20303a9c0f34ca23ca"
+  },
+  "continued": {
+    "attempt_id": "pcqm-single-model-total-budget-500k-s42-v3",
+    "logical_run_id": "pcqm-single-model-total-budget-500k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-single-model-total-budget-500k",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "1380d1865879edf69c3c328ece398893089e2ce9",
+    "source_package_sha256": "84917adab188a5ac34fcfd502806cabf808d61ecd3d792b50bd2f7dfebf213b2",
+    "spec_identity": "7b5dffa92666621c6aa2d61a7970382eb2c3faeb7d4edfea6f92992965cbc91f"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/b_16x256/output_manifest.json",
+    "sha256": "acba9f9fb8d969432334d13ab8cc687f595775f51d390313266f07b55910f824"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/operations_v3/launch_receipt.json",
+    "sha256": "3cc053676b24e075829e147bcc5bb9840427b486d1cf46342436532944bf8d9b"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/b_16x256/canonical_trace.json",
+    "sha256": "fdb9cae9b84935eace19c94cffdcda7113557abf3a059048ca26d851917ad4e0"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-single-model-total-budget-500k-s42/v1/version3/_resume_preflight/b_16x256/runtime_certificate.json",
+    "sha256": "e50aded4b78476aaaa5e5a4db0b11d6853a1c6e67bba8f333cdf02d09915154c"
+  },
+  "origin": {
+    "attempt_id": "pcqm-single-model-total-budget-500k-s42-v1",
+    "logical_run_id": "pcqm-single-model-total-budget-500k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-single-model-total-budget-500k",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "1380d1865879edf69c3c328ece398893089e2ce9",
+    "source_package_sha256": "84917adab188a5ac34fcfd502806cabf808d61ecd3d792b50bd2f7dfebf213b2",
+    "spec_identity": "7b5dffa92666621c6aa2d61a7970382eb2c3faeb7d4edfea6f92992965cbc91f"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/operations/launch_receipt.json",
+    "sha256": "91b31fee3c4beb55db175dc405e551eb388ffa5ee0472e6866e6e0cb23cb1589"
+  },
+  "recovery_repair": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/recovery_repair.json",
+    "sha256": "f44b82029638b7209adef7a2d0c6538431c6e82f26395ac914a4c37f7c442822"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/b_16x256/resume_bundle.json",
+    "sha256": "cc0fa915359e8fb21b319098a3e5529071947c4804b77f498dcce66f182fef16"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/b_16x256/files/canonical_trace.json.context.json",
+    "sha256": "babf3cd09cbc2d6fb0ccd28b22fac50a76bff2727dccbdcfb3643df27f624068"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "893c4cd8fd75a0ac80f76d460f751ac4154dd9fac56d5c88d25ac76e4077245d"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/recovery/total-budget/v1/prepared_v3/source_dataset/resume/b_16x256/files/canonical_trace.json",
+    "sha256": "eedb0795d677f326bbf4cb2d7e6a0020246239b8bd832b9d0f460f9e4df54c23"
+  }
+}

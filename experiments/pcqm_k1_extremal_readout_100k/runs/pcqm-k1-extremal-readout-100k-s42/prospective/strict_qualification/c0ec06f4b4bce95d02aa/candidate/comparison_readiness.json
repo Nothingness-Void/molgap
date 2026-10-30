@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/candidate/terminal_staging/v1/93044ee760873527/acceptance.json",
+      "sha256": "23dc74adc519bab3c108ce1c7d5f2fb4f152467602f1eaae593baec81ab69a7c"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/candidate/selected_model.pt",
+      "sha256": "4a26d0247569e53186712b6867c898833ab3bf4a7f4e41a8867d08c89bed0851"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/cost_records.json",
+      "sha256": "1a979b635518c66fa67171b2d177b2a9fa72181eb17c473d61d8a5e15ff0708e"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/decision.md",
+      "sha256": "46549f40a3084d96dc35a7ca8f4b6abe549b949fe5cb59e6ad2e5369b62d5691"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/paired_analysis.json",
+      "sha256": "cdfea166a71e13b03e0d02e4b9ba7131324f64cdf73a37059cc0201bae6bca7e"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/prediction_manifest.json",
+      "sha256": "d3afc74e1fac389278deb0d4590763edf8bf5afa48dcb669d6c49cd73ac3aa31"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/role_history.json",
+      "sha256": "8ee4f55e4abb9a3982ce3be5816522954b5d6bf942af9972ecba11fa7fbda38b"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/candidate/runtime_certificate.json",
+      "sha256": "895cde8b63d7babbb1d6b8b6d09e7034c7f1a71f44c59e2159587a0d56d04706"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/candidate/training_contract.json",
+      "sha256": "dc317a187ef67e86cb52f75612fbcea5aa29dc2dc48b0e7e8acb2b8573f3df17"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/candidate/bound_trace_manifest.json",
+      "sha256": "88a235ce87c9eebe713db545585253b27c7bc5e21d88e74051ea83b5b0e3def4"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "zero-init-max-min-std-branch-added-to-pooled-embedding",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058",
+    "optimizer_fused": false,
+    "optimizer_identity": "f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c",
+    "optimizer_mode": "native-adamw",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "60677044cd34a634c634235baae7da7f5c0c0c2163b1587a901e9b4405772b7f",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": "zero-init-max-min-std-branch-added-to-pooled-embedding",
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "3dfae4312fa49be337798c074df21ca0c0a34a691c57a3fc8aa05a30213a2b6d",
+      "reference": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/baseline/terminal_staging/v1/8ba3a65982e831c3/acceptance.json",
+      "sha256": "4822cee0f2556ba7975ea93004146fd89ea99b8b69642ac3a6f5dbb6d49d33f3"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/baseline/selected_model.pt",
+      "sha256": "8cada7e25f60897f6fdc0d7bd1c8e7adc65f835a04c332455f37ac36224e1b73"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/cost_records.json",
+      "sha256": "637454a8d3cdeaa2bab3cc62c8f229131fe9dff8ee478cbf1adfcfaff8fe7f23"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/decision.md",
+      "sha256": "46549f40a3084d96dc35a7ca8f4b6abe549b949fe5cb59e6ad2e5369b62d5691"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/prediction_manifest.json",
+      "sha256": "074c828197af16050fe7fad780842e515025b1aa561e7717d4af8d0128c24d71"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/role_history.json",
+      "sha256": "deb0aedb73e636852bc7de60bd41804ee0c5a8b13410c64cec010be130f8df48"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/baseline/runtime_certificate.json",
+      "sha256": "5a843885a4a41882516dcc2b47624d5bc89d2e71cef405bb71feea640eb85239"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/baseline/training_contract.json",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/strict_qualification/c0ec06f4b4bce95d02aa/baseline/bound_trace_manifest.json",
+      "sha256": "c4ebd01ebcb346af98137576fe19c34f77cd40d3e37c36bcf5403f4add0f864f"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline-c0ec06f4b4bce95d02aa",
+  "reference_bundle_sha256": "64ee81cb9650b80323395738129afc1006db38ae4e49225e5f2bd17c66417b4f",
+  "reference_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

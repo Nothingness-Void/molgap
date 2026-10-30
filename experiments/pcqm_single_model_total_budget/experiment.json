@@ -1,0 +1,71 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_single_model_total_budget",
+  "logical_run_id": "pcqm-single-model-total-budget-500k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "monitor_paths": ["experiments/pcqm_single_model_total_budget/protocol.md"],
+  "timestamp": "2026-10-28T17:56:42.600458+09:00",
+  "question": {
+    "policy_id": "pcqm-single-model-total-budget-500k",
+    "action": "RUN_ARCHITECTURE_PACKAGE_500K",
+    "question": "How do wide12x384 and deep16x256 single-model packages compare in 500K development accuracy and actual native cost under a cumulative30 T4-device-hour ceiling?",
+    "deficiency": "Local speed and parameter counts do not establish T4 cost, 500K completion or development quality.",
+    "changed_mechanism": "architecture-package-system-performance",
+    "supporting_evidence": ["ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"],
+    "alternatives": ["Capacity mismatch", "Different optimization trajectories", "Single-seed variation"],
+    "closed_families": ["pcqm-gptrans-bondlocal-pairnorm-lr-500k"],
+    "positive_decision": "Review complete package accuracy and actual cost descriptively; no causal winner or automatic promotion.",
+    "negative_decision": "Retain negative or cost-limited evidence without automatic extra budget, retry or full release.",
+    "reference_ids": [],
+    "prior_trajectories": ["T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"]
+  },
+  "profile": {
+    "owner": "desktop", "track": "B", "platform": "kaggle",
+    "hardware": "Tesla T4 FP32",
+    "cheapest_falsifier": "Bounded same-job architecture-package pair with aligned development predictions and actual native allocation costs.",
+    "estimated_device_hours": 14,
+    "estimated_wall_hours": 7
+  },
+  "authority_ref": "experiments/pcqm_single_model_total_budget/authority.json",
+  "platform": {
+    "platform": {
+      "name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2,
+      "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": true, "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-single-model-total-budget-500k",
+      "title": "MolGap Single Model Total Budget 500K",
+      "datasets": ["nothingnessvoid/single-model-total-budget-500k-src", "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"],
+      "source_dataset": "nothingnessvoid/single-model-total-budget-500k-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 25200,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "role_ref": "experiments/pcqm_single_model_total_budget/protocol.md",
+  "decision_ref": "experiments/pcqm_single_model_total_budget/decision.md",
+  "seeds": [42],
+  "shared": {"training": {}, "purpose": "delivery_experiment"},
+  "arms": [
+    {
+      "arm_id": "a_12x384",
+      "model": {"family": "gptrans_t", "version": "2", "addons": ["gptrans_bondlocal_pairnorm_12x384"]},
+      "recipe_ref": "experiments/pcqm_single_model_total_budget/a_12x384_recipe.json",
+      "data_ref": {"spec_ref": "experiments/pcqm_single_model_total_budget/a_12x384_data_declaration.json", "arm_id": "a_12x384"},
+      "initial_state_ref": "D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/inputs/a_12x384.pt"
+    },
+    {
+      "arm_id": "b_16x256",
+      "model": {"family": "gptrans_t", "version": "2", "addons": ["gptrans_bondlocal_pairnorm_16x256"]},
+      "recipe_ref": "experiments/pcqm_single_model_total_budget/b_16x256_recipe.json",
+      "data_ref": {"spec_ref": "experiments/pcqm_single_model_total_budget/b_16x256_data_declaration.json", "arm_id": "b_16x256"},
+      "initial_state_ref": "D:/molgap-artifacts/runs/pcqm-single-model-total-budget-500k-s42/v1/inputs/b_16x256.pt"
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "a_12x384",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
+}

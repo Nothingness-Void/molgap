@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/initial_residual/terminal_staging/v1/17dcb703b8fede47/acceptance.json",
+      "sha256": "e582757cff3ccbdfa7cf644f0f6d511298dad58b5198662913bbd4899fa7c9bc"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/initial_residual/selected_model.pt",
+      "sha256": "a3d46a51c160bd5345f3c7fd6241bc2efe05d0f5402cd740e1f1237e0748361b"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/cost_records.json",
+      "sha256": "88dd9470b562323bb557e2b4ab11e8f175fec51ab8ac83233d90351546a92896"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/decision.md",
+      "sha256": "768d556b15015b72136bca9282e314933f20b6e1e5d843940efb4be5c4ced7bc"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/paired_analysis.json",
+      "sha256": "b9fbb0f98bf1ae415225ab0f2670af5c659caf10e3552574d49c4f85cdad1462"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/prediction_manifest.json",
+      "sha256": "f4e27a9df3b1476ad24afb016a8d0ca4fc5dbc8b67fd4e6b35ea0025eb1eed66"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/role_history.json",
+      "sha256": "c6305253d3f29ed50025ff9b11e887b8fee05eda576f019bdc155a782860c81f"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/initial_residual/runtime_certificate.json",
+      "sha256": "9cc10d4294eaf223e24fc2de9b7c84cb3ff4232384f78902be7e8d79cdaa35fb"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/initial_residual/training_contract.json",
+      "sha256": "2354bbd1b95c66886884c1cdbaa4513ef51f623c558a38fbdd7b47b966a2c171"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/initial_residual/bound_trace_manifest.json",
+      "sha256": "a24fc2086ab6e5567a46b0d08d0035c8d9952f428f616ed1cd0a73812ffb81f8"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-initial_residual",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "gated-initial-residual-h0-into-conv-input-blocks-2-to-9",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058",
+    "optimizer_fused": false,
+    "optimizer_identity": "f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c",
+    "optimizer_mode": "native-adamw",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "60677044cd34a634c634235baae7da7f5c0c0c2163b1587a901e9b4405772b7f",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": "gated-initial-residual-h0-into-conv-input-blocks-2-to-9",
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "ca95f49209becf9cf4c412ca970d7959f893c4e0ad5def5d243fe6a8ab2b569d",
+      "reference": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/baseline/terminal_staging/v1/e4f30e8138430195/acceptance.json",
+      "sha256": "3ecea13e2513056a16b367f7fcdf11236338c8d9450d99e0f594d0a0ce098e98"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/selected_model.pt",
+      "sha256": "8b26148c08374f60bd9edcf9ff63ea8cf06d628fb093d7d1a5dc32891df1b113"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/cost_records.json",
+      "sha256": "cb69af5655df411abd71c55a4fea3ac6f37b22ffe6ea77f49c3f96fc5650332e"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/decision.md",
+      "sha256": "768d556b15015b72136bca9282e314933f20b6e1e5d843940efb4be5c4ced7bc"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/prediction_manifest.json",
+      "sha256": "45ba085b96ba31488fb9c9ddda4b02de650f156b166ce6bb8b23d002abf83f28"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/role_history.json",
+      "sha256": "772689fa834a074d2a293a33d7ce9043ce47ae6b8b752e148e7c940d639a3e23"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/runtime_certificate.json",
+      "sha256": "f59e2483a49476895be41d51d29601f66a4bda9b015b63687c40efe26a1722bf"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-initial-residual-100k-s42/v1/version1/baseline/training_contract.json",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_initial_residual_100k/runs/pcqm-k1-initial-residual-100k-s42/prospective/strict_qualification/fdf87144467f3cc8e3b5/baseline/bound_trace_manifest.json",
+      "sha256": "f2d4642dad6378c44ed1b065a35fcc48491aabb343884d727eec901e2c0e5496"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline-fdf87144467f3cc8e3b5",
+  "reference_bundle_sha256": "064f0ccb7e96beb38a67ab72c753728bc07388b3d6fde5419e04f5d4bd0486e8",
+  "reference_id": "ev-terminal-T-pcqm-k1-initial-residual-100k-s42-baseline",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

@@ -1,0 +1,123 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-lr2e4-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43-planned",
+        "cost-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43-0",
+        "cost-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_lr2e4_100k/generated/1aa1a06cfead5a0a74c37ad76d985fb79e92ec9cb45fea63b86985ec3642811e/lr2e4_i43/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-lr2e4-100k-s42:lr2e4_i43:downstream"
+      ],
+      "source_commit": "4f26ab63fd05193fc399df3c2bee3962d5ff1992",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_lr2e4_100k/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_lr2e4_100k/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-lr2e4-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_lr2e4_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_lr2e4_100k/runs/pcqm-k1-lr2e4-100k-s42/prospective/rml_decision_snapshots/9ec3ed78ddba8bbec43a6f124092c0c6f3b0cd12021762a5e8cdd710a384781f.json",
+    "snapshot_sha256": "9ec3ed78ddba8bbec43a6f124092c0c6f3b0cd12021762a5e8cdd710a384781f",
+    "state_timestamp": "2026-10-30T08:30:00+00:00"
+  },
+  "family_id": "pcqm-k1-lr2e4-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The baseline setting is near optimal",
+      "Init noise (SD ~0.8 meV) masks a 1-3 meV effect",
+      "K1 100K is data-limited so optimizer settings cannot move it 3 meV"
+    ],
+    "changed_mechanism": "lower-peak-lr",
+    "cheapest_falsifier": "m > -1.5 meV means lr 2e-4 is not a K1 100K lever at 40 epochs.",
+    "decision_changed_if_negative": "NULL or HARM closes this setting NEGATIVE_UNDER_CONTRACT for K1 100K at 40 epochs. This run releases no retry, other dose or scale-up.",
+    "decision_changed_if_positive": "Retained baselines: init_s43 139.6632 meV and init_s44 140.6475 meV (50K development, runs pcqm-k1-init-noise-100k-s43/-s44 v1). d43 = MAE(lr2e4_i43) - 139.6632, d44 = MAE(lr2e4_i44) - 140.6475, m = (d43 + d44)/2. POSITIVE: m <= -3.0 and both d < 0. INCONCLUSIVE_SMALL: -3.0 < m <= -1.5 and both d < 0 (a third init is needed before any claim). HARM: m >= +1.5 and both d > 0. INCONCLUSIVE_NOISE: the signs differ and |m| >= 3. NULL: any other outcome. Falsifier: m > -1.5 meV means this setting is not a K1 100K lever at 40 epochs. The paired row bootstrap is reported but does not measure training variance. Secondary, with no gate: s = |MAE(lr2e4_i43) - MAE(lr2e4_i44)| is one more init-noise sample, and s > 3 meV flags the noise estimate as too low. Exploratory ensembles from saved predictions: the lever pair; the cross pairs (lr2e4_i43 + baseline s44) and (lr2e4_i44 + baseline s43) against the same-recipe pair at 134.4781 meV; and the 5-member mean against the 3-init 132.852 meV. No adoption, 500K, full training or continuation.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
+    "observed_deficiency": "K1 100K has never varied this optimizer setting; module screens are mostly null and the model is variance-limited (3-init ensemble gain 7.7 meV).",
+    "related_closed_family_ids": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K",
+      "K1 LN/RMS norm variants",
+      "K1 DropPath",
+      "K1 SAM",
+      "K1 FLAG"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does halving K1 post-BN 100K peak LR to 2e-4 (cosine over 40 epochs, no warmup) lower 50K development MAE against the same init's retained 4e-4 baseline?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_lr2e4_100k/runs/pcqm-k1-lr2e4-100k-s42/prospective/lr2e4_i43/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_lr2e4_100k/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_lr2e4_100k/generated/1aa1a06cfead5a0a74c37ad76d985fb79e92ec9cb45fea63b86985ec3642811e/lr2e4_i43/recipe.json",
+      "experiments/pcqm_k1_lr2e4_100k/lr2e4_i43/data_declaration.json",
+      "experiments/pcqm_k1_lr2e4_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_lr2e4_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "lr2e4_i43",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-lr2e4-100k-s42",
+      "reference_arm_id": "lr2e4_i43",
+      "reference_trajectory_id": "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43",
+      "reference_trajectory_ref": "experiments/pcqm_k1_lr2e4_100k/runs/pcqm-k1-lr2e4-100k-s42/prospective/lr2e4_i43/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "c145a7bfd91683ca51dd9b9beb250257db0043616913a457c8fdb8d8c0ad5e23"
+    },
+    "source_commit": "4f26ab63fd05193fc399df3c2bee3962d5ff1992",
+    "source_config_identity": "4f624723864a8aec96812fee20961f5666466a3124fa8a8d7d33817683a2f5b2"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-lr2e4-100k-s42-lr2e4_i43"
+}
