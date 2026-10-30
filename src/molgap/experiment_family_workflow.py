@@ -23,6 +23,9 @@ from .screen_policy import canonical_fingerprint
 
 OUTPUT_FORMAT = "molgap-family-output-v1"
 ROLES = frozenset({"predictions", "selected_model", "resume", "trace", "contract"})
+# Optional sixth role: files the frozen worker opened from the dataset (see run_screen_arm).
+DATA_OPEN_FILE = "data_open_provenance.json"
+DATA_OPEN_FORMAT = "molgap-data-open-record-v1"
 EXPECTED = frozenset({"epochs", "optimizer_steps", "sample_presentations",
                       "development_rows", "source_idx_sha256", "target_sha256", "precision"})
 EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps", "sample_presentations",
@@ -648,6 +651,8 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
         roles = roles | {"trace_context"}
         if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
             raise ValueError("Trace companion must bind the declared trace")
+    if profile.protocol == "family-session" and "data_open" in artifacts:
+        roles = roles | {"data_open"}
     if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}

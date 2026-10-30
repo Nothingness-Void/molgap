@@ -181,7 +181,11 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
         "arms": [{"arm_id": arm["arm_id"], "purpose": comparison_purpose}
                  for arm in declaration["arms"]]}).encode()
     config_source.write_bytes(config_bytes)
-    subprocess.run(["git", "add", "experiments/synthetic/config.json"], cwd=repo, check=True)
+    # A current package carries the real runner (with the data-open recorder) for the role-audit path.
+    runner = repo / "src/molgap/family_training_runner.py"
+    runner.write_bytes((Path(__file__).resolve().parents[1] / "src/molgap/family_training_runner.py").read_bytes())
+    subprocess.run(["git", "add", "experiments/synthetic/config.json", "src/molgap/family_training_runner.py"],
+                   cwd=repo, check=True)
     subprocess.run(["git", "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic acceptance config"],
                    cwd=repo, check=True, capture_output=True)
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
@@ -229,7 +233,8 @@ def frozen_shared_acceptance_run(tmp_path, repo, *, retain_training_target=True,
     run = paths.run_directory(declaration["logical_run_id"], "v1")
     package = run / "prepared/package"
     manifest = build_experiment_source_package(spec, repo,
-        ["src/example.py", "README.md", "experiments/synthetic/config.json", *generated],
+        ["src/example.py", "README.md", "experiments/synthetic/config.json",
+         "src/molgap/family_training_runner.py", *generated],
         package, generated_records=generated,
         configuration_source={"path": "experiments/synthetic/config.json",
             "sha256": hashlib.sha256(config_source.read_bytes()).hexdigest(),
