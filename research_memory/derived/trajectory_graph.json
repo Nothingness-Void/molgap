@@ -101,6 +101,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-sam-100k-s42-r2-baseline:A001",
+      "target": "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/baseline/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-sam-100k-s42-r2-sam:A001",
+      "target": "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/sam/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2:A001",
       "target": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
       "type": "action_produced_evidence"
@@ -2397,6 +2407,16 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-sam-100k-s42-r2-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-sam-100k-s42-r2-sam",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-gptrans-pairnorm-fusion-500k-20261027",
       "type": "prior_evidence"
     },
@@ -3313,6 +3333,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "type": "evidence"
     },
@@ -3870,6 +3898,14 @@
     },
     {
       "id": "T-pcqm-k1-rms-scope-gain-160ep-100k-s42-20261022-post_node_ada",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-sam-100k-s42-r2-baseline",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-sam-100k-s42-r2-sam",
       "type": "trajectory"
     },
     {

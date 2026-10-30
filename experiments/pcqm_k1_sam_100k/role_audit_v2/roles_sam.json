@@ -1,0 +1,105 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "sam",
+    "arm_identity": "aa88be8b257277cb0ed5d3eb26869e16b7bbf27132156348f07797c5cac2bdbe",
+    "experiment_id": "pcqm_k1_sam_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-sam-100k-s42-r2",
+    "package_identity": "2202298de878bc573708d76c9943b49014e8b19198f4f7ed7cb5d766cbc2a851",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-k1-sam-100k-s42",
+    "source_archive_sha256": "89ebb35010ed629fef3e568b9f33dff2d814f1acdc6ce8ea11b67c048b4e8003",
+    "source_commit": "376dfaaa28f92848f0a04a712085f29df409421b",
+    "spec_identity": "534b7bb44b72bbd83c61ade7c925907b6f0a5538ed8f02a1253288aab97a5154",
+    "training_recipe_sha256": "510948f044c24ee93299c0de59905ffe8a893eb882bcd095f946f5992193cdff"
+  },
+  "protected_role_evidence": {
+    "bindings": {
+      "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "dataset_sources": [
+        "nvoid912/k1-sam-100k-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "family_training_data_sha256": "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31",
+      "kernel_metadata_sha256": "6fce8f70c7953b091dc3b27fff7bac3c98182da9544528dbca2a216417439e60",
+      "source_commit": "376dfaaa28f92848f0a04a712085f29df409421b"
+    },
+    "status": "structural_untouched",
+    "text": "Structural, not observed. Frozen source 376dfaaa28f92848f0a04a712085f29df409421b loads data only through load_training_data (blob 6c6bc503), which selects only train and development. Pinned manifest 1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d declares only those roles, with all protected-read flags False. The kernel mounted only nvoid912/k1-sam-100k-src, nvoid912/pcqm4mv2-ogb-fixed-100k-v1 (kernel-metadata sha 6fce8f70c7953b091dc3b27fff7bac3c98182da9544528dbca2a216417439e60). 'untouched' means the protected roles were not among this run's inputs."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json",
+      "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-sam-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json",
+      "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-sam-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json",
+      "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-sam-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json",
+      "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-sam-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json",
+      "role_event_id": "role-pcqm-k1-sam-100k-s42-r2-sam-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    }
+  ]
+}

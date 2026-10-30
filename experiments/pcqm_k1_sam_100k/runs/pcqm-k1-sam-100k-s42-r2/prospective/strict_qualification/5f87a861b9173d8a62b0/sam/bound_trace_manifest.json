@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/sam/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/sam/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-baseline",
+  "run_id": "pcqm-k1-sam-100k-s42-r2:sam:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/sam/terminal_staging/v1/d2514f540cd60aaa/terminal.json",
+  "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/canonical_trace.json",
+  "trace_artifact_sha256": "449d713f8220177a52e4611dd1c7324e1cf22c9148c9cbeee12579802b47b961",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

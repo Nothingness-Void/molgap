@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-be59930aeb241fd4780b4a885dd7a7d8d036d63ab84c78ccbbb41c54c940bd9e",
+  "finalized_at": "2026-10-30T07:30:09.144248+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_sam_100k/decision.md": "279b2d3a57aa8bab0d3f8e7e016bc7f05edf43e2dda243d2df7a812c6188dbae",
+    "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/authority.json": "90c676ddebf21254dd3e1e71263e8a8a21f271114d07cf64d924970f1a31a9e1",
+    "experiments/pcqm_k1_sam_100k/generated/235449e6ed11ece2046c0eede3617a18e04a0c5026559e553ceceb4ade6c2332/sam/recipe.json": "510948f044c24ee93299c0de59905ffe8a893eb882bcd095f946f5992193cdff",
+    "experiments/pcqm_k1_sam_100k/role_audit_v2/roles_sam.json": "a01ae390fd605d2b1c612e9a4921c644fa18b77ee56b1d901b7af821d13c54c9",
+    "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/sam/terminal_staging/v1/d2514f540cd60aaa/acceptance.json": "710583b705d77c5a856dcc569408375c888a2f3dece7dfca89ab6aeca542683c",
+    "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/sam/terminal_staging/v1/d2514f540cd60aaa/observed.json": "547cdb0e7d1f180334fceb28541f6c3564eb83539fa74de8292a7f5c9abdcb8b",
+    "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/strict_qualification/5f87a861b9173d8a62b0/baseline/reference_bundle.json": "2b0944437304c746014e0824dae607672d52ff184638ae845769bc040edf54f6",
+    "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/strict_qualification/5f87a861b9173d8a62b0/sam/comparison_readiness.json": "08ea606067d183f7696fba183089769d5fccbd2a15ba0ed2cd3139a3e5ffad51",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/_execution/allocation_ledger.json": "c98cf3a9f9f0931911e840506c6313dc82a636622c94b9a8e41c9bbbfff0295a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/_execution/execution_retention.json": "031072efb2dab7da906d9eb316015d2d7b66b2277bd2c873659e30299678f9c8",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/_execution/sam/allocation_ledger.json": "c98cf3a9f9f0931911e840506c6313dc82a636622c94b9a8e41c9bbbfff0295a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/canonical_trace.json": "449d713f8220177a52e4611dd1c7324e1cf22c9148c9cbeee12579802b47b961",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/canonical_trace.json.context.json": "4163a76fe8a96e343a6d409b0a78b925ab1c7a40da5b965b886ff244485fe30d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/development_predictions.pt": "fbeb07247c3baf3ddf956b204a698469b2f42153af99a9484a28ad6cbfa65040",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/last_checkpoint.pt": "34594a2ac676f7ab591f095310ffb40d1070f06c09d4df2d7507595315e15eee",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/output_manifest.json": "645b13ee38c5c260613b9f861d86c644cd7fce104a2ab49545f436d75e5479c7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/selected_model.pt": "b1d0ffa39cdeef16fbc3be49b377c95e69ff7dd0ab7696968ff63aa8b22f7698",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-sam-100k-s42-r2/v1/version1/sam/training_contract.json": "510948f044c24ee93299c0de59905ffe8a893eb882bcd095f946f5992193cdff",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-sam-100k-s42-r2/v1/reports/diagnostic_34a7f29e76321bfbb83f69e7d096a9265b0516a91bbee5023da78ada036ab746.json": "dddf4a52a2a56c55b3d1f7183a984b3beb3d5d030cac258b8e5c72a453de7413"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/sam/trajectory.json",
+  "prospective_sha256": "92825663e614738d2343d01f1ec6e2f68ba503a517cd38a411753c1030e21f53",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-sam-100k-s42-r2-sam-0.json": "690fa57e28f2a2039d2528d759b8cd6a945eec77dcdf1d952f1100475e0abe76",
+    "costs/cost-terminal-T-pcqm-k1-sam-100k-s42-r2-sam-allocation-0.json": "a26e956a267375c7905257837d3157c317bcfed9322dbda78ebe343ef3703adc",
+    "roles/role-pcqm-k1-sam-100k-s42-r2-sam-development-labels_read.json": "8f812e062b9a4cd9d72ee822985132149641e634ce9447f6900accfdee1ed40b",
+    "roles/role-pcqm-k1-sam-100k-s42-r2-sam-development-metric_computed.json": "ac6dee9ee69efb35c7ee5fad688f17ced5635703e05a80438aedbdca433cac06",
+    "roles/role-pcqm-k1-sam-100k-s42-r2-sam-development-prediction_input.json": "b3fac44ecd1b3b934ef2219d5985ec68f9cc3ff99f4ae8f75387fdea96bb8f71",
+    "roles/role-pcqm-k1-sam-100k-s42-r2-sam-development-selection_used.json": "c22c1123e2137983ff79071dc2a6bfce9b0bea042a8e35079336d0a90fbbd498",
+    "roles/role-pcqm-k1-sam-100k-s42-r2-sam-train-training_membership.json": "2b3490d99341240f3d0b1f6d04046bb44fec77d51b553b990ddbb3d04fb26afc",
+    "terminal_input.json": "62eef095150837385c6c9ea5e70aad4441e83406dfb31360ef696178c650062e",
+    "trace.json": "449d713f8220177a52e4611dd1c7324e1cf22c9148c9cbeee12579802b47b961",
+    "trace_manifest.json": "1b0ed22333845e13c6c73375c0cfab03479ed34150e1c3f492acf0ea75a023cd",
+    "trajectory.json": "b7156206e99e35916e8d9fcf2db13ad741292b21ce6ab9bfff139791dfaccf77",
+    "v5_evidence.json": "5287592321880a6e5cc7e120e5e924b73f3617ff6ed158ab3ad4bd17ee9c1ee0"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_sam_100k/runs/pcqm-k1-sam-100k-s42-r2/prospective/sam/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "be59930aeb241fd4780b4a885dd7a7d8d036d63ab84c78ccbbb41c54c940bd9e",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+}
