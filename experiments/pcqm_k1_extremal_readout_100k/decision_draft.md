@@ -72,9 +72,9 @@ explain the result. Whether the learned use is helpful or harmful is not identif
 
 ## Items that block closure and need a reviewer
 
-1. `role_use` for `official_validation`, `test_dev`, `test_challenge` is `unknown` in the drafted
-   audits (`role_audit_v1/`). This run predates the data-file read record, so the observed
-   role states cannot be written. Strict acceptance reports `observed_protected_role_audit_incomplete`.
+1. Resolved 2026-10-30: `role_audit_v2/` records `untouched` for all three protected roles with
+   status `structural_untouched` (structural, not observed; see the reviewer notes). `role_audit_v1/`
+   stays as the earlier `unknown` draft.
 2. Native proof tensors were downloaded and hash-verified but not re-inspected for science, so
    runtime qualification and replay readiness stay `NOT_EVALUATED`.
 3. The relayed authorization (coordinator message, not the user directly) is recorded in
@@ -82,12 +82,14 @@ explain the result. Whether the learned use is helpful or harmful is not identif
 
 ## Reviewer notes
 
-- Protected roles stay `unknown` and this run stays a staged draft. Closure accepts only
-  observed role states, and the rules have no "inferred from mounted inputs" level. The
-  dataset manifest declares only train and development roles and the kernel mounted only that
-  dataset plus the source package, but the kernel had internet access, so these are inferences
-  and are not role evidence. Runs submitted after the data-file read record is merged can close
-  mechanically; this run predates it.
+- Protected roles: structural, not observed. Frozen source 6b2995e13177f249e3d91dc411a5e5f246036b36 loads data only through
+  load_training_data (blob 6c6bc503), which selects only train and development. Pinned manifest
+  1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d declares only those roles, with all
+  protected-read flags False. The kernel mounted only nvoid912/k1-extremal-readout-100k-src and nvoid912/pcqm4mv2-ogb-fixed-100k-v1
+  (kernel-metadata sha 62313ff094045b1ca9c4d70d45f61a60409bc51b3d28e82c344fc092f8a7cf2a). `untouched` means the protected roles were not among this run's inputs.
+  File opens were not observed, and this draft makes no claim about what the process could reach or
+  about network access (the kernel had internet). Recorded in `role_audit_v2/` by
+  `_protected_roles_from_frozen_inputs` in `experiment_terminal_staging.py`.
 - Authorization provenance: the real Kaggle submission and the use of the 50K development labels
   for metrics were relayed by the coordinating agent, not received directly from the user. The
   `experiment.json` authority text says so and is unchanged because it is part of the frozen

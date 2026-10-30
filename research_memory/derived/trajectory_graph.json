@@ -31,6 +31,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-extremal-readout-100k-s42-baseline:A001",
+      "target": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/baseline/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-extremal-readout-100k-s42-candidate:A001",
+      "target": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/candidate/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-hop-shell-100k-s42-hop_mixed:A001",
       "target": "experiments/pcqm_k1_hop_shell_100k/generated/d1f1d49a8ca8ecf9906cbbcd3122509dc1c72fcec4b67bfdfa2aa1940100a984/hop_mixed/recipe.json",
       "type": "action_produced_evidence"
@@ -2387,6 +2397,16 @@
     },
     {
       "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "T-pcqm-k1-extremal-readout-100k-s42-candidate",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "T-pcqm-k1-message-droppath-100k-s42-baseline",
       "type": "prior_evidence"
     },
@@ -3257,6 +3277,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
       "type": "evidence"
     },
@@ -3814,6 +3842,14 @@
     },
     {
       "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-extremal-readout-100k-s42-candidate",
       "type": "trajectory"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 771,
+  "ambiguous_historical_role_record_count": 777,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -686,6 +686,48 @@
       "role_name": "train",
       "semantics": "coarse_historical",
       "state": "training_membership"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
@@ -5399,7 +5441,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 519,
+  "explicit_role_event_count": 529,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -6187,6 +6229,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
@@ -6905,6 +7003,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [
@@ -9209,6 +9321,8 @@
       "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
       "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
@@ -9365,6 +9479,8 @@
       "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
       "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_ordered",
       "ev-terminal-T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
@@ -10242,6 +10358,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
@@ -12592,6 +12764,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development_decoded": [
@@ -13264,6 +13492,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-candidate-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [

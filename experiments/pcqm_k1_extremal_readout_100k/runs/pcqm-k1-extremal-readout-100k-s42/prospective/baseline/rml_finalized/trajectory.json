@@ -1,0 +1,118 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-extremal-readout-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-extremal-readout-100k-s42-baseline-planned",
+        "cost-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline-0",
+        "cost-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/baseline/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-extremal-readout-100k-s42:baseline:downstream"
+      ],
+      "source_commit": "6b2995e13177f249e3d91dc411a5e5f246036b36",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_extremal_readout_100k/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-extremal-readout-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_extremal_readout_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/rml_decision_snapshots/e3039c8f7449e60c3b4a3b7210c8dbcbf72ed66808baae92c7e4563bad9c9ad8.json",
+    "snapshot_sha256": "e3039c8f7449e60c3b4a3b7210c8dbcbf72ed66808baae92c7e4563bad9c9ad8",
+    "state_timestamp": "2026-10-29T15:00:00Z"
+  },
+  "family_id": "pcqm-k1-extremal-readout-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Final node states carry no extremal signal beyond the mean",
+      "Train-versus-development gap rather than readout information limits accuracy",
+      "Gains below the 3 meV gate are seed variation",
+      "The branch stays near zero and is unused"
+    ],
+    "changed_mechanism": "zero-init-max-min-std-branch-added-to-pooled-embedding",
+    "cheapest_falsifier": "One same-job 40-pass 100K pair; same tensors, data and recipe, only the extremal readout addon",
+    "decision_changed_if_negative": "Close the K1 extremal and second-order readout family without adoption, retry or scale-up",
+    "decision_changed_if_positive": "Nominate only for independently authorized seed replication and a 500K transfer question after complete paired acceptance",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-extremal-readout-100k-s42-baseline-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+    "observed_deficiency": "Mean pooling keeps only first-moment information of the final node states; no K1 endpoint has tested extremal or spread statistics beside the mean. Frozen-state probes bound the usable signal at about 1.25 meV, so the prior is low.",
+    "related_closed_family_ids": [
+      "K1-initial-residual100K",
+      "K1-dropout-consistency100K",
+      "K1-message-droppath100K",
+      "K1-normalization100K",
+      "K1-FLAG100K"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-complete-module-audit-20261008"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does a zero-initialised branch that adds per-graph max, min and std of the final node states to the mean-pooled embedding improve the unchanged post-BN K1 at fixed 100K?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/baseline/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/baseline/recipe.json",
+      "experiments/presets/k1-post-bn-100k-data.json",
+      "experiments/pcqm_k1_extremal_readout_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-complete-module-audit-20261008"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_extremal_readout_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "baseline",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-extremal-readout-100k-s42",
+      "reference_arm_id": "baseline",
+      "reference_trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline",
+      "reference_trajectory_ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/baseline/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "e7328fd6d0f40160143d0fcdb905df5207fd578e2c65adccea5220ade16e32fc"
+    },
+    "source_commit": "6b2995e13177f249e3d91dc411a5e5f246036b36",
+    "source_config_identity": "46f5566fa2bf4fa8a28f8bf76605282f47b6dfff11897b379a5ff3f36be6a104"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+}

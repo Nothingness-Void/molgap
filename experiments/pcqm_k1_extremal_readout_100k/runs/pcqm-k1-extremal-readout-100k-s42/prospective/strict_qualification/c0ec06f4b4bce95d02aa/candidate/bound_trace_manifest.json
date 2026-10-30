@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/candidate/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/candidate/recipe.json",
+  "reference_id": "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
+  "run_id": "pcqm-k1-extremal-readout-100k-s42:candidate:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/candidate/terminal_staging/v1/93044ee760873527/terminal.json",
+  "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-extremal-readout-100k-s42/v1/version1/candidate/canonical_trace.json",
+  "trace_artifact_sha256": "b9e9a76a4dfb73db3c7a71cde0066aac268c777e100aba51b332c56844a65484",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

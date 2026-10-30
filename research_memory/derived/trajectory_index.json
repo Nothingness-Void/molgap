@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "fa4d83ed0a722f1f0652efa29bae2cfc4fcaee59edefd8bdf9b20069df03884b",
+  "source_digest": "32e30f9fe7bf4c69cdd826b2cec8852b2495a605378ac69668335a2c07b72963",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -113,6 +113,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_extremal_readout_100k/decision.md",
+      "family_id": "pcqm-k1-extremal-readout-100k",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/baseline/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-baseline"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_extremal_readout_100k/decision.md",
+      "family_id": "pcqm-k1-extremal-readout-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_extremal_readout_100k/runs/pcqm-k1-extremal-readout-100k-s42/prospective/candidate/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-candidate"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-extremal-readout-100k-s42-candidate"
     },
     {
       "completeness_status": "complete",
