@@ -6,6 +6,12 @@
 
 ## Server execution status
 
+The human authorized a separate [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/README.md)
+on Kaggle2. Its [status](experiments/ppgt_capacity500k/STATUS.md) is preparation
+only; no new remote job is bound. Preserve the frozen width-only intervention,
+matched update clock and bounded allocation. Native qualification, completed
+outputs and Replay admission remain unobserved.
+
 The [family-retention and GRIT challenge](experiments/family_retention_challenge_500k/README.md)
 is a research proposal only. It recommends parking PPGT expansion, retaining ESA
 as an efficiency reserve, and qualifying one strong Common-Dev reference before

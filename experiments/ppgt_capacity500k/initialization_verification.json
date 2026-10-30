@@ -1,0 +1,56 @@
+{
+  "format": "ppgt-capacity-initial-state-check-v1",
+  "checkout": "C:\\Users\\Adminn\\Documents\\molgap",
+  "branch": "molgap-server",
+  "head": "8100ed3257e0f2760faf9b1ec5b853bd911a8ea1",
+  "interpreter": "C:\\Users\\Adminn\\Documents\\molgap\\.venv\\Scripts\\python.exe",
+  "scope": "fresh CPU PPGTAuthor seed-42 initialization and frozen model-state artifact identity; no forward, inference, training, or dataset access",
+  "cuda_initialized": false,
+  "arms": [
+    {
+      "arm_id": "ppgt_w192",
+      "initial_state_ref": "E:/MolGap/artifacts/modern2d-research-campaign-20261022/initial_states/ppgt_compact_s42.pt",
+      "status": "MATCH",
+      "seed": 42,
+      "hidden": 192,
+      "parameter_count": 2577729,
+      "tensor_count": 190,
+      "fresh_state_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "declared_state_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "artifact_state_sha256": "2574ae6e0079deb0e2ba3846fc07f14cdb464f47071d838164e0b7494f03987a",
+      "artifact_file_sha256": "5a57dbb8f5abeb843683cc8efe1e5954a102ea8b1bf7d23075abc5a5b79c2c02",
+      "artifact_device": "cpu",
+      "declaration_checks": {
+        "recipe_ref_matches_arm": true,
+        "anchor_spec_matches_arm": true,
+        "model_config_matches_training_input": true,
+        "family_matches": true,
+        "addon_is_frozen_mean_readout": true,
+        "recipe_spec_manifest_hashes_match": true
+      }
+    },
+    {
+      "arm_id": "ppgt_w384",
+      "initial_state_ref": "E:\\MolGap\\artifacts\\ppgt-capacity500k-s42-v1\\initial_states\\ppgt_w384_s42.pt",
+      "status": "MATCH",
+      "seed": 42,
+      "hidden": 384,
+      "parameter_count": 9933825,
+      "tensor_count": 190,
+      "fresh_state_sha256": "70a5ddca1152b5cf98d71847da5b86f7ab622347ec92b7e84f4d3e7afcc6f411",
+      "declared_state_sha256": "70a5ddca1152b5cf98d71847da5b86f7ab622347ec92b7e84f4d3e7afcc6f411",
+      "artifact_state_sha256": "70a5ddca1152b5cf98d71847da5b86f7ab622347ec92b7e84f4d3e7afcc6f411",
+      "artifact_file_sha256": "f73461f3801926f3a95272e72d4136eb4268305ea22e0934f1cfb917a64a29d6",
+      "artifact_device": "cpu",
+      "declaration_checks": {
+        "recipe_ref_matches_arm": true,
+        "anchor_spec_matches_arm": true,
+        "model_config_matches_training_input": true,
+        "family_matches": true,
+        "addon_is_frozen_mean_readout": true,
+        "recipe_spec_manifest_hashes_match": true
+      }
+    }
+  ],
+  "errors_verbatim": []
+}

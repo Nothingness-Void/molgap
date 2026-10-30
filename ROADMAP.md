@@ -11,6 +11,11 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 ## Active queue
 
+Finish the separately authorized [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/protocol.md)
+through the registered Kaggle2 entry and existing Luna monitor. Establish its
+same-run reference, exact native qualification and reference-first terminal
+evidence; do not claim a result or Replay admission from preparation.
+
 Review the [family-retention challenge prerequisites](experiments/family_retention_challenge_500k/protocol.md)
 before any successor: reference identity/establishment, complete GRIT fidelity,
 shared feature/weight semantics and bounded native feasibility. This is an
