@@ -1,0 +1,82 @@
+{
+  "arms": [
+    {
+      "arm_id": "lr2e4_i43",
+      "data_ref": {
+        "arm_id": "lr2e4_i43",
+        "spec_ref": "experiments/pcqm_k1_lr2e4_100k/lr2e4_i43/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s43.pt",
+      "recipe_ref": "experiments/pcqm_k1_lr2e4_100k/lr2e4_i43/recipe.json"
+    },
+    {
+      "arm_id": "lr2e4_i44",
+      "data_ref": {
+        "arm_id": "lr2e4_i44",
+        "spec_ref": "experiments/pcqm_k1_lr2e4_100k/lr2e4_i44/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s44.pt",
+      "recipe_ref": "experiments/pcqm_k1_lr2e4_100k/lr2e4_i44/recipe.json"
+    }
+  ],
+  "attempt_id": "v1",
+  "authority_ref": "experiments/pcqm_k1_lr2e4_100k/authority.json",
+  "experiment_id": "pcqm_k1_lr2e4_100k",
+  "format": "molgap-scientific-experiment-v1",
+  "logical_run_id": "pcqm-k1-lr2e4-100k-s42",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "profile": {
+    "cheapest_falsifier": "m > -1.5 meV means lr 2e-4 is not a K1 100K lever at 40 epochs.",
+    "estimated_device_hours": 3.6,
+    "estimated_wall_hours": 1.8,
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "owner": "desktop",
+    "platform": "kaggle",
+    "track": "B"
+  },
+  "question": {
+    "action": "RUN_PAIRED_100K",
+    "alternatives": [
+      "The baseline setting is near optimal",
+      "Init noise (SD ~0.8 meV) masks a 1-3 meV effect",
+      "K1 100K is data-limited so optimizer settings cannot move it 3 meV"
+    ],
+    "changed_mechanism": "lower-peak-lr",
+    "closed_families": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K",
+      "K1 LN/RMS norm variants",
+      "K1 DropPath",
+      "K1 SAM",
+      "K1 FLAG"
+    ],
+    "deficiency": "K1 100K has never varied this optimizer setting; module screens are mostly null and the model is variance-limited (3-init ensemble gain 7.7 meV).",
+    "negative_decision": "NULL or HARM closes this setting NEGATIVE_UNDER_CONTRACT for K1 100K at 40 epochs. This run releases no retry, other dose or scale-up.",
+    "policy_id": "pcqm-k1-lr2e4-100k",
+    "positive_decision": "Retained baselines: init_s43 139.6632 meV and init_s44 140.6475 meV (50K development, runs pcqm-k1-init-noise-100k-s43/-s44 v1). d43 = MAE(lr2e4_i43) - 139.6632, d44 = MAE(lr2e4_i44) - 140.6475, m = (d43 + d44)/2. POSITIVE: m <= -3.0 and both d < 0. INCONCLUSIVE_SMALL: -3.0 < m <= -1.5 and both d < 0 (a third init is needed before any claim). HARM: m >= +1.5 and both d > 0. INCONCLUSIVE_NOISE: the signs differ and |m| >= 3. NULL: any other outcome. Falsifier: m > -1.5 meV means this setting is not a K1 100K lever at 40 epochs. The paired row bootstrap is reported but does not measure training variance. Secondary, with no gate: s = |MAE(lr2e4_i43) - MAE(lr2e4_i44)| is one more init-noise sample, and s > 3 meV flags the noise estimate as too low. Exploratory ensembles from saved predictions: the lever pair; the cross pairs (lr2e4_i43 + baseline s44) and (lr2e4_i44 + baseline s43) against the same-recipe pair at 134.4781 meV; and the 5-member mean against the 3-init 132.852 meV. No adoption, 500K, full training or continuation.",
+    "question": "Does halving K1 post-BN 100K peak LR to 2e-4 (cosine over 40 epochs, no warmup) lower 50K development MAE against the same init's retained 4e-4 baseline?",
+    "supporting_evidence": [
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-bn_long",
+      "ev-terminal-TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
+      "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2"
+    ]
+  },
+  "same_run": {
+    "reference_arm_id": "lr2e4_i43",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "addons": [],
+      "family": "neural_atom_k1",
+      "version": "3"
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "timestamp": "2026-10-30T08:30:00+00:00"
+}
