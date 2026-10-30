@@ -1,0 +1,98 @@
+{
+  "adapter": "modern2d-formal-session-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+    },
+    "final_predictions": {
+      "path": "final_development_predictions.pt",
+      "sha256": "62daa73e6a6a91a060759532ed1fdec661c588d30357c6ff1daf95508bbb8b1e"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "6025c2b5fd7a47ce6c8aa0ec728a72e4c75e66d25d7cc3a2d4068c4b8a715ee3"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "f053646b69cfca78d073aeec3483c92e9ce443206ad14461a05aa4a09ded20f3"
+    },
+    "role_audit": {
+      "path": "role_audit.json",
+      "sha256": "0a51a3aae7e6730c64da619195254400a4a4d28b88675d1cfa9f6798bee7037f"
+    },
+    "runtime_certificate": {
+      "path": "runtime_certificate.json",
+      "sha256": "5582b0b6bb4fb8ef50fabebd8886a4250b9cba5b02f906d6d04dc3a50501f230"
+    },
+    "runtime_provenance": {
+      "path": "runtime_provenance.json",
+      "sha256": "eb3c466f46375bccfb892a280c8c23cabdb8bb523ac74f3939a6fde1d928a7aa"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "38bab37c6088adc0823715fff9125fbaef7ee0710ece5ee5024b804371279ee8"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "31314b7fae722e9014e102e5c38351c57da97ea23eecdcf3446edd9fc48da200"
+    },
+    "trace_context": {
+      "path": "canonical_trace.json.context.json",
+      "sha256": "3e22dd5e418547ec533407be5a36d5be851797f3881033c999f4336f7d3e5710"
+    }
+  },
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ppgt_w192",
+    "arm_identity": "1914b3bafc4876f01b4090f43583132ce7cd464f8d11c2f08c80861646839e13",
+    "experiment_id": "ppgt_capacity500k",
+    "family_name": "ppgt_small",
+    "family_version": "3",
+    "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+    "package_identity": "c01522732479e2250cbc98baa3dd1e92fefabdc32af128df6f904ff299e6213b",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "kaseichou/molgap-ppgt-capacity500k-s42-r2",
+    "source_archive_sha256": "5c88a25219a498558e03215c297de5ddea6d057caf36c8f586773398886c216d",
+    "source_commit": "bde4d279a9764e1ff834b4aff69e6f89cf3170db",
+    "spec_identity": "4194527df9f844cba4f4cb0a68ba607b2e8381a6f39cf1c07f1cfb5d773c5f30",
+    "training_recipe_sha256": "07fd43857a70512c74dff457423ac29723e773366fcb721b878e1fb395eba025"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 18781.757836707002
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "completed_passes": 3,
+    "next_batch": 3902,
+    "optimizer_steps": 15620,
+    "sample_presentations": 1999360,
+    "status": "complete"
+  },
+  "runtime": {
+    "account": "kaseichou",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "c1834dd582713d3be73f99180428842a2294976e52d4dd3822721a3af2ffd215",
+    "source_archive_sha256": "5c88a25219a498558e03215c297de5ddea6d057caf36c8f586773398886c216d",
+    "source_commit": "bde4d279a9764e1ff834b4aff69e6f89cf3170db"
+  }
+}

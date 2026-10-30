@@ -1,0 +1,30 @@
+{
+  "format": "molgap-terminal-acceptance-disposition-v1",
+  "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+  "attempt_id": "v3",
+  "event_id": "evt-755356fa5eeb2f59595d4dae",
+  "observed_scheduler_status": "COMPLETE",
+  "mechanical_status": {
+    "ppgt_w192": "MECHANICALLY_VERIFIED",
+    "ppgt_w384": "MECHANICALLY_VERIFIED"
+  },
+  "strict_comparison_status": "BLOCKED",
+  "strict_blockers": [
+    "ppgt_w192: 'reference_artifacts'",
+    "ppgt_w384: 'reference_artifacts'"
+  ],
+  "required_evidence": [
+    "target_transform_asset"
+  ],
+  "generated_protected_role_states": "unknown",
+  "research_interpretation": "negative width result under frozen recipe; strict causal claim not qualified",
+  "terminal_rml_status": "PENDING_EVIDENCE",
+  "replay_ready": false,
+  "acceptance_checkout_head": "e6d9ea88da9276d852f77e9d453fc3376a4f9ffb",
+  "decision_ref": "experiments/ppgt_capacity500k/results/completed_v3/decision.md",
+  "evidence_review_ref": "experiments/ppgt_capacity500k/results/completed_v3/reference_evidence_review.md",
+  "infrastructure_modified": false,
+  "new_training_submitted": false,
+  "model_inference_executed": false,
+  "tests_run": false
+}

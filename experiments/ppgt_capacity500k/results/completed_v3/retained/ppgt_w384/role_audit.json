@@ -1,0 +1,132 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ppgt_w384",
+    "arm_identity": "c25c1e797578b0c307be4267034d95fa594895958e631b923787ad852f9aabc3",
+    "experiment_id": "ppgt_capacity500k",
+    "family_name": "ppgt_small",
+    "family_version": "3",
+    "logical_run_id": "ppgt-capacity500k-k2-s42-v1",
+    "package_identity": "c01522732479e2250cbc98baa3dd1e92fefabdc32af128df6f904ff299e6213b",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "kaseichou/molgap-ppgt-capacity500k-s42-r2",
+    "source_archive_sha256": "5c88a25219a498558e03215c297de5ddea6d057caf36c8f586773398886c216d",
+    "source_commit": "bde4d279a9764e1ff834b4aff69e6f89cf3170db",
+    "spec_identity": "4194527df9f844cba4f4cb0a68ba607b2e8381a6f39cf1c07f1cfb5d773c5f30",
+    "training_recipe_sha256": "3e8dae5bf31dc886b5b5538d5bdd5e64a4050ffa551825b6f8ba276d7924c0e1"
+  },
+  "role_use": {
+    "common_dev": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_500k": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-train_500k-training_membership",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-train_500k-prediction_input",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-train_500k-labels_read",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-common_dev-prediction_input",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-common_dev-labels_read",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-common_dev-metric_computed",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-common_dev-selection_used",
+      "role_name": "common_dev",
+      "row_manifest_hash": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "role_audit.json",
+      "role_event_id": "role-T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384-train_500k-metric_computed",
+      "role_name": "train_500k",
+      "row_manifest_hash": "26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40",
+      "run_id": "ppgt-capacity500k-k2-s42-v1:ppgt_w384:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    }
+  ]
+}

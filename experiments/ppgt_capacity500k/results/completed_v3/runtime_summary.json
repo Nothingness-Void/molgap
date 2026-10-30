@@ -1,0 +1,81 @@
+{
+  "format": "molgap-ppgt-capacity-saved-artifact-analysis-v1",
+  "analysis_only": true,
+  "training_executed": false,
+  "model_inference_executed": false,
+  "remote": {
+    "kernel": "kaseichou/molgap-ppgt-capacity500k-s42-r2",
+    "kernel_id": 141694880,
+    "version": 1
+  },
+  "arms": {
+    "ppgt_w192": {
+      "declared_factory_verified_parameters": 2577729,
+      "selected_state_tensor_elements": 2577729,
+      "optimizer_steps": 15620,
+      "sample_presentations": 1999360,
+      "development_evaluations": 20,
+      "selected_step": 15620,
+      "selected_mae_eV": 0.17147062718868256,
+      "final_mae_eV": 0.17147062718868256,
+      "final_online_train_mae_normalized": 0.1270860233624369,
+      "last_five_interval_dev_gain_eV": 0.010026201605796814,
+      "last_interval_dev_gain_eV": 0.0003744363784790039,
+      "process_wall_seconds": 18781.757836707002,
+      "sample_presentations_per_process_second_including_eval_io": 106.45222973179102,
+      "native_profile_peak_allocated_MiB": 547.32373046875,
+      "native_profile_peak_reserved_MiB": 568.0,
+      "native_profile_updates": 2
+    },
+    "ppgt_w384": {
+      "declared_factory_verified_parameters": 9933825,
+      "selected_state_tensor_elements": 9933825,
+      "optimizer_steps": 15620,
+      "sample_presentations": 1999360,
+      "development_evaluations": 20,
+      "selected_step": 15620,
+      "selected_mae_eV": 0.3680307865142822,
+      "final_mae_eV": 0.3680307865142822,
+      "final_online_train_mae_normalized": 0.2859581091110899,
+      "last_five_interval_dev_gain_eV": 0.017113596200942993,
+      "last_interval_dev_gain_eV": 0.00038298964500427246,
+      "process_wall_seconds": 19089.694729697,
+      "sample_presentations_per_process_second_including_eval_io": 104.73504308529793,
+      "native_profile_peak_allocated_MiB": 881.50439453125,
+      "native_profile_peak_reserved_MiB": 904.0,
+      "native_profile_updates": 2
+    }
+  },
+  "limitations": [
+    "Reported process times include evaluation and IO, not exclusive train throughput.",
+    "Native two-update profiling peaks are not full-training memory peaks.",
+    "Moving-weight online training MAE is not fixed-checkpoint training-set evaluation.",
+    "Structural atom/ring/degree metadata was not part of retrieved endpoint payloads.",
+    "Reference artifacts and protected-role file-open qualification remain unresolved."
+  ],
+  "cost": {
+    "measured_retry_session_seconds": 19507.062730614,
+    "measured_retry_physical_device_seconds": 39014.125461228,
+    "prior_failed_attempt_reserved_wall_debit_seconds": 120,
+    "authorization_wall_ceiling_seconds": 32400,
+    "observed_retry_plus_conservative_debit_seconds": 19627.062730614,
+    "queue_and_provisioning_before_python": "measurement_missing",
+    "platform_billed_hours": "not_verified"
+  },
+  "parameter_ratio": 3.8537119301524716,
+  "candidate_minus_reference_best_mae_eV": 0.19656017819404603,
+  "strict_release": {
+    "mechanical_per_arm": "MECHANICALLY_VERIFIED",
+    "comparison": "BLOCKED",
+    "blockers": [
+      "ppgt_w192: 'reference_artifacts'",
+      "ppgt_w384: 'reference_artifacts'"
+    ],
+    "required_evidence": [
+      "target_transform_asset"
+    ],
+    "protected_role_draft_state": "unknown; native audit declares untouched but file-open proof not retained",
+    "rml_terminal": "PENDING",
+    "replay_ready": false
+  }
+}
