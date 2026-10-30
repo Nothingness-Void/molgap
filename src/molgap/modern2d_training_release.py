@@ -279,8 +279,18 @@ def _pinned(root, pointer):
     if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
         raise ValueError("Formal release requires a pinned metadata pointer")
     path = _artifact_path(Path(root).absolute(), pointer["path"])
-    if path.stat().st_size > 1024 ** 2 or file_digest(path) != pointer["sha256"]:
-        raise ValueError("Formal release metadata changed or exceeds the size ceiling")
+    size = path.stat().st_size
+    if size > 1024 ** 2:
+        raise ValueError(
+            f"Formal release metadata exceeds the size ceiling: {pointer['path']} "
+            f"is {size} bytes, over 1 MiB")
+    # Packaged bytes are LF-normalized by v4_bundle.py while local metadata may be CRLF,
+    # so path plus both digests is the first thing needed to diagnose a pin mismatch.
+    actual = file_digest(path)
+    if actual != pointer["sha256"]:
+        raise ValueError(
+            f"Formal release metadata changed: {pointer['path']} pinned sha256 "
+            f"{pointer['sha256']}, actual {actual}")
     return path
 
 
