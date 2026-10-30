@@ -184,6 +184,8 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         roles = roles | {"trace_context"}
         if manifest["artifacts"]["trace_context"]["path"] != manifest["artifacts"]["trace"]["path"] + ".context.json":
             raise ValueError("Trace companion is not bound to the declared trace")
+    if profile.protocol == "family-session" and "data_open" in manifest["artifacts"]:
+        roles = roles | {"data_open"}
     if set(manifest["artifacts"]) != roles:
         raise ValueError("Incomplete retention manifest")
     prefix = PurePosixPath(remote_manifest_path).parent

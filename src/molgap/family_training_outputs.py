@@ -8,7 +8,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from .experiment_family_workflow import (
-    OUTPUT_FORMAT, ROLES, StageRecorder, _artifact_path, _check_context, _costs, _digest,
+    DATA_OPEN_FILE, OUTPUT_FORMAT, ROLES, StageRecorder, _artifact_path, _check_context, _costs, _digest,
     _finite_tree, _inspect_predictions, _json, _publish, _runtime, write_output_manifest,
     write_resume_state,
 )
@@ -306,6 +306,10 @@ class SessionOutputs:
             "contract": "training_contract.json"}
         if self.recipe.dataset.development:
             artifacts["predictions"] = "development_predictions.pt"
+        # Only the worker's own recorder may vouch for the file; a file that merely exists is not enough.
+        from .family_training_runner import _DATA_OPEN
+        if _DATA_OPEN["path"] == self.root / DATA_OPEN_FILE and (self.root / DATA_OPEN_FILE).is_file():
+            artifacts["data_open"] = DATA_OPEN_FILE
         write_output_manifest(self.root, self.context, adapter=self.adapter, artifacts=artifacts,
             progress={"optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,
                 "completed_passes": progress.pass_index, "next_batch": progress.next_batch, "status": progress.status},
@@ -352,6 +356,9 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             roles = roles | {"trace_context"}
             if artifacts["trace_context"]["path"] != artifacts["trace"]["path"] + ".context.json":
                 raise ValueError("Trace companion differs from the declared trace")
+        if "data_open" in paths:
+            roles = roles | {"data_open"}
+            _check_context(_json(paths["data_open"]).get("context"), context)
         if set(paths) != roles:
             raise ValueError("Artifact roles differ from selected data roles")
         _runtime(manifest["runtime"], context, "fp32")

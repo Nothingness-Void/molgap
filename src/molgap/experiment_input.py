@@ -747,6 +747,16 @@ def prepare_experiment_input(path, repo_root, *, _content_verification=None, _ve
     from .experiment_workflow import prepare_workflow
     started=perf_counter()
     value,spec,plan,paths=resolve_experiment_input(path,repo_root)
+    first=paths.run_directory(spec.to_dict()["logical_run_id"],value["attempt_id"])/"inputs/input_binding.json"
+    _safe_local(first)
+    if not first.exists():
+        # A blocked first attempt must not freeze its run id with an input that
+        # can never prepare; the corrected input then reuses the same run id.
+        from .experiment_workflow import check_workflow_readiness
+        readiness=check_workflow_readiness(spec,Path(repo_root).absolute(),plan)
+        if readiness["status"]=="BLOCKED":
+            return {**readiness,"inputs_frozen":False,"submitted":False,
+                    "local_call_seconds":perf_counter()-started}
     frozen=_freeze(value,spec,plan,paths,repo_root=repo_root)
     run=Path(frozen["run_directory"]);prepared=run/"prepared"
     retained=None

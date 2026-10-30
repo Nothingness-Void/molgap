@@ -14,7 +14,7 @@ import json
 import math
 import os
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 from urllib.parse import quote
 
 from .experiment_family_workflow import _json
@@ -94,6 +94,31 @@ def _bind_operation_directory(prepared, output, binding, *, publish=False):
         raise ValueError("Prepared release owns another submission journal; reconcile its operation directory")
     if publish:
         publish_immutable_bytes(pointer, payload)
+
+
+# A new source dataset is usually ready within a minute; its status endpoint can
+# answer 403/404 for a short time after creation. Poll inside the one submit call.
+SOURCE_POLL_FIRST_SECONDS, SOURCE_POLL_MAX_SECONDS, SOURCE_POLL_BUDGET_SECONDS = 5, 60, 300
+_poll_sleep, _poll_clock = sleep, perf_counter
+
+
+def _poll_source_ready(api, dataset):
+    """Return (status, forbidden_error); 403/404/None mean not ready yet until the budget ends."""
+    began, delay = _poll_clock(), SOURCE_POLL_FIRST_SECONDS
+    while True:
+        forbidden = None
+        try:
+            status = _dataset_status(api, dataset)
+        except RuntimeError as error:
+            detail = getattr(error, "platform_error", None)
+            if not isinstance(detail, dict) or detail.get("http_status") != 403:
+                raise
+            status, forbidden = None, detail
+        remaining = SOURCE_POLL_BUDGET_SECONDS - (_poll_clock() - began)
+        if (status or {}).get("status") == "ready" or remaining <= 0:
+            return status, forbidden
+        _poll_sleep(min(delay, remaining))
+        delay = min(delay * 2, SOURCE_POLL_MAX_SECONDS)
 
 
 def _roundtrip_source(api, http, staged, remote, ref, *, version=1):
@@ -526,7 +551,11 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                     return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_UNKNOWN",
                             "submitted": False, "platform_error": detail}
                 save("SOURCE_PUBLISHED")
-                source_status = _dataset_status(api, dataset)
+                source_status, forbidden = _poll_source_ready(api, dataset)
+                if forbidden:
+                    # A 403 that never clears is a permission problem, not a plain wait.
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": "SOURCE_PUBLISHED",
+                            "submitted": False, "platform_error": forbidden}
             elif state["phase"] == "NEW":
                 raise ValueError("Source dataset already exists; use its owning publication journal")
             if not source_status or source_status.get("status") != "ready":

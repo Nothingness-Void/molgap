@@ -110,6 +110,10 @@ registered and equals the experiment ID with dashes, a candidate `research_memor
 source digest is the `protocol.md` digest. Review and commit that policy file.
 Any of these fields written explicitly in the input wins. The question, arms,
 addon, authority, scope and budget have no default and are never invented.
+`supporting_evidence` takes RML evidence ids only; cite papers in `protocol.md`.
+A prepare that fails after the run is frozen needs a new `logical_run_id`
+(`...-r2`) for any corrected input. `sandbox` reads the frozen inputs, so run it
+after prepare and before submitting.
 Check an addon on the real frozen state before submitting:
 
 ```powershell
