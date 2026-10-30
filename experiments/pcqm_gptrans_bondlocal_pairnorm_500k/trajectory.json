@@ -1,0 +1,91 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "reuse-audit-001"
+      ],
+      "cost_event_ids": [],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/README.md"
+      ],
+      "run_ids": [
+        "138717853-v1",
+        "141037251-v1"
+      ],
+      "source_commit": "0945f0e5e9461f862c0187428ee490aff01315f7",
+      "type": "local_saved_artifact_analysis"
+    }
+  ],
+  "audit_started_at": "2026-10-28T06:52:13.727730+00:00",
+  "comparison_blockers": [
+    "Different runtime certificate scopes",
+    "No prospective norm-only comparison for the two historical runs"
+  ],
+  "comparison_class": "CONTEXT_ONLY",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/README.md",
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/README.md",
+    "next_allowed_actions": [
+      "Review completed reuse_report.json; preserve unresolved strict cross-run comparison conditions; no training release"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "family_id": "gptrans-retained-500k-reuse",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Targets differ only in storage encoding",
+      "Runtime and execution changes confound the norm intervention",
+      "Retired checkpoint bytes prevent resume reuse"
+    ],
+    "changed_mechanism": "No model intervention: retained artifact and comparison eligibility audit only.",
+    "cheapest_falsifier": "Verify pinned prediction bytes, original target digests, row alignment and runtime scopes on CPU.",
+    "decision_changed_if_negative": "Retain exact blockers; do not automatically train a replacement reference.",
+    "decision_changed_if_positive": "Reuse verified outputs for allowed analysis without retraining; strict eligibility remains separate.",
+    "expected_native_cost_ref": "README.md; CPU-only audit, no accelerator allocation",
+    "hypothesis_id": "H-gptrans-retained-500k-reuse-20261028",
+    "observed_deficiency": "Both endpoints exist but their runtime scopes and target encodings differ.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Can the retained no-norm and pair-update-norm 500K outputs be reused without repeat training?",
+  "record_mode": "prospective",
+  "reference_bundle_id": null,
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/reuse_report.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "source_script_sha256": "eb4362075118a9ed7e449880af1222131257a7a83abcf7d586e5e58ffa8c3188",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/README.md",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_500k/README.md",
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/reference_recipe.json"
+    ],
+    "parent_trajectory_ids": [
+      "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/protocol.md"
+    ],
+    "source_commit": "0945f0e5e9461f862c0187428ee490aff01315f7",
+    "source_config_identity": "eb4362075118a9ed7e449880af1222131257a7a83abcf7d586e5e58ffa8c3188"
+  },
+  "track": "B",
+  "trajectory_id": "TB-gptrans-bondlocal-pairnorm-500k-reuse-20261028"
+}
