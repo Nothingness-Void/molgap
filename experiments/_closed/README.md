@@ -3,6 +3,8 @@
 These experiments are closed and are not candidates for the production model.
 Their code and complete results remain available for reproducibility. Do not
 rerun them unless the experiment is explicitly reopened with a new hypothesis.
+Run their scripts from an `origin/archive` checkout, which keeps the
+`src/molgap` modules they import.
 
 | Experiment | Decision | Evidence |
 |---|---|---|
