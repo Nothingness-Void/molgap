@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c852002f2ab39c6ed9c38544b8b6c2d43c82a2bb63299f89564927e52a59049d",
+  "source_digest": "be20d86940b4d4905d82f390226bc1e489bf44cf09f3e0120f18fa57abbf9840",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -561,6 +561,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-sam-100k-s42-r2-sam"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_short_ensemble_100k/decision.md",
+      "family_id": "pcqm-k1-short-ensemble-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_short_ensemble_100k/runs/pcqm-k1-short-ensemble-100k-k2-r2/prospective/short_s43/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_short_ensemble_100k/decision.md",
+      "family_id": "pcqm-k1-short-ensemble-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_short_ensemble_100k/runs/pcqm-k1-short-ensemble-100k-k2-r2/prospective/short_s44/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
     },
     {
       "completeness_status": "complete",

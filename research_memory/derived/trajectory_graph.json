@@ -171,6 +171,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43:A001",
+      "target": "experiments/pcqm_k1_short_ensemble_100k/generated/78b3a2145316fc77d78dd6d84682f28022237b9d8b1c8c5df285f0b4ccd790a7/short_s43/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44:A001",
+      "target": "experiments/pcqm_k1_short_ensemble_100k/generated/78b3a2145316fc77d78dd6d84682f28022237b9d8b1c8c5df285f0b4ccd790a7/short_s44/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2:A001",
       "target": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
       "type": "action_produced_evidence"
@@ -1718,6 +1728,36 @@
     {
       "source": "ev-terminal-T-pcqm-k1-init-forward-500k-single-s42-scratch",
       "target": "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44",
+      "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
       "type": "prior_evidence"
     },
     {
@@ -3659,6 +3699,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "type": "evidence"
     },
@@ -4288,6 +4336,14 @@
     },
     {
       "id": "T-pcqm-k1-sam-100k-s42-r2-sam",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
       "type": "trajectory"
     },
     {
