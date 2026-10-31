@@ -23,29 +23,22 @@ def _keywords(*texts) -> list[str]:
                     and not re.fullmatch(r"s\d+|\d+k|pcqm|r\d", w)})
 
 
-def _paired_effects(root: Path) -> dict:
-    """(experiment dir, arm) -> measured paired delta from retained paired_analysis.json files."""
-    found = {}
-    for path in root.glob("experiments/**/paired_analysis.json"):
-        d = json.loads(path.read_text(encoding="utf-8"))
-        if "mean_delta_eV" in d:
-            found[(path.relative_to(root).parts[1], path.parent.name)] = {
-                "effect_meV": d["mean_delta_eV"] * 1000,
-                "ci_meV": [d["lower_95_eV"] * 1000, d["upper_95_eV"] * 1000]}
-    return found
-
-
-def _evidence(root: Path, row: dict, record: dict, effects: dict) -> dict:
+def _evidence(root: Path, row: dict, record: dict, outcomes: dict) -> dict:
     """Effect and failure mode only where a record states them; each carries its source."""
-    parts = Path(row["record_path"]).parts
-    arm = parts[parts.index("prospective") + 1] if "prospective" in parts else None
     facts = (record.get("decision") or {}).get("facts") or {}
-    out = {"effect_meV": None, "ci_meV": None, "effect_source": None,
+    out = {"effect_meV": facts.get("effect_meV"), "ci_meV": facts.get("ci_meV"), "effect_source": facts.get("source"),
            "failure_mode": facts.get("failure_mode"),
            "failure_mode_source": "closure_facts" if facts.get("failure_mode") else None,
            "search_terms": facts.get("search_terms") or []}
-    if (parts[1], arm) in effects:
-        out.update(effects[(parts[1], arm)], effect_source="paired_analysis.json")
+    # Only this trajectory's own bound paired file, and only against a reference arm that closed CLOSED:
+    # two lever arms differing by seed measure seed noise, not the lever, so their effect stays None.
+    ready = root / (record.get("comparison_readiness_ref") or "-")
+    ready = json.loads(ready.read_text(encoding="utf-8")) if ready.suffix == ".json" and ready.is_file() else {}
+    pair = (ready.get("candidate_artifact_bindings") or {}).get("paired_analysis")
+    d = json.loads((root / pair["ref"]).read_text(encoding="utf-8")) if pair else {}
+    if outcomes.get(ready.get("reference_id")) == "CLOSED" and "mean_delta_eV" in d:
+        out.update(effect_meV=d["mean_delta_eV"] * 1000, ci_meV=[d["lower_95_eV"] * 1000, d["upper_95_eV"] * 1000],
+                   effect_source=pair["ref"])
     ref = row.get("decision_ref")
     label = root / Path(ref).parent / "attribution_label.json" if ref else None
     if out["failure_mode"] is None and label is not None and label.is_file():
@@ -60,10 +53,10 @@ def _scale(card: dict):
     return int(m.group(1)) if m else None
 
 
-def build_cards(repo_root, *, with_effects: bool = False) -> list[dict]:
+def build_cards(repo_root) -> list[dict]:
     root = Path(repo_root).resolve()
     index = json.loads((root / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))
-    effects = _paired_effects(root) if with_effects else {}
+    outcomes = {e: row["outcome"] for row in index["trajectories"] for e in row.get("result_evidence_ids") or []}
     cards = []
     for row in index["trajectories"]:
         record = json.loads((root / row["record_path"]).read_text(encoding="utf-8"))
@@ -80,22 +73,23 @@ def build_cards(repo_root, *, with_effects: bool = False) -> list[dict]:
             "keywords": _keywords(mechanism, row["family_id"]),
             "decision_ref": row.get("decision_ref"),
             "reopen_conditions": (record.get("decision") or {}).get("reopen_conditions"),
-            **_evidence(root, row, record, effects),
+            **_evidence(root, row, record, outcomes),
         })
     return cards
 
 
 def select(cards, *, outcome=None, term=None) -> list[dict]:
-    term = term.lower() if term else None
+    """--term is one whole word (letters/digits), case-insensitive, anywhere in the card."""
+    word = term and re.compile(r"(?<![a-z0-9])" + re.escape(term.lower()) + r"(?![a-z0-9])")
     return [c for c in cards
             if (outcome is None or c["outcome"] == outcome)
-            and (term is None or term in json.dumps(c, ensure_ascii=False).lower())]
+            and (not word or word.search(json.dumps(c, ensure_ascii=False).lower()))]
 
 
 def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) -> dict:
     """Related closed work, why it failed (with source), open directions and search terms."""
     hit = [c for c in select(cards, term=term)
-           if (mechanism is None or mechanism.lower() in " ".join(c["keywords"] + [c["mechanism"] or "", c["family_id"]]).lower())
+           if (mechanism is None or mechanism.lower() in (c["mechanism"] or "").lower())
            and (failure_mode is None or c["failure_mode"] == failure_mode)
            and (family is None or family.lower() in c["family_id"].lower())]
     by_family = defaultdict(list)
