@@ -94,15 +94,24 @@ def test_closure_input_expands_to_per_arm_options_and_rejects_mixing(tmp_path, m
     closure = tmp_path / "closure.json"
     closure.write_text(json.dumps({"arms": {
         "reference": {"outcome": "CLOSED", "decision_ref": "experiments/q/reference.md"},
-        "candidate": {"outcome": "NEGATIVE_UNDER_CONTRACT", "decision_ref": "experiments/q/candidate.md"}},
+        "candidate": {"outcome": "NEGATIVE_UNDER_CONTRACT", "decision_ref": "experiments/q/candidate.md",
+                      "facts_ref": "experiments/q/closure_facts_candidate.json"}},
         "role_audit": str(tmp_path / "roles.json")}), encoding="utf-8")
-    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 0
+    (tmp_path / "roles.json").write_text("{}", encoding="utf-8")
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--profile", str(tmp_path / "p.json"),
+                       "--closure-input", str(closure)]) == 0
     arguments = owner.call_args.args[0]
     assert "--closure-input" not in arguments
     for flag, value in (("--arm-outcome", "reference=CLOSED"), ("--arm-outcome", "candidate=NEGATIVE_UNDER_CONTRACT"),
                         ("--arm-decision-ref", "candidate=experiments/q/candidate.md"),
+                        ("--arm-facts-ref", "candidate=experiments/q/closure_facts_candidate.json"),
                         ("--role-audit", str(tmp_path / "roles.json"))):
         assert arguments[arguments.index(value) - 1] == flag
+    assert arguments.count("--arm-facts-ref") == 1
+    options = Mock(return_value={"status": "MECHANICALLY_VERIFIED"})
+    monkeypatch.setattr(runs, "accept_run_workflow", options)
+    assert cli._dispatch(cli._parser().parse_args(arguments))[1] == 0
+    assert options.call_args.kwargs["facts_ref"] == {"candidate": "experiments/q/closure_facts_candidate.json"}
     assert "--stage-terminal" in arguments
     owner.reset_mock()
     closure.write_text(json.dumps({"arms": {"reference": {"outcome": "CLOSED"}}}), encoding="utf-8")

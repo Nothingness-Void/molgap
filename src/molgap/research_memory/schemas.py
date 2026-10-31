@@ -59,6 +59,23 @@ SHA256_PATTERN = re.compile(r"^[0-9a-fA-F]{64}$")
 MEASUREMENT_STATUSES = frozenset(
     {"measured", "estimated", "measurement_missing", "not_applicable"}
 )
+CLOSURE_FACTS_FORMAT = "molgap-closure-facts-v1"
+FAILURE_MODES = frozenset({"infra_failure", "gate_or_cost_stop", "lost_at_scale", "early_gain_fades", "endpoint_regression",
+    "below_gate", "confounded_change", "comparator_missing", "discriminator_missing", "boundary_pass"})
+
+
+def validate_closure_facts(facts: Any) -> dict[str, Any]:
+    """Optional per-arm closure facts: interpretation by enum, numbers only from a measured file."""
+    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool)
+    ci = _mapping(facts, "closure_facts").get("ci_meV")
+    if (facts.get("format") != CLOSURE_FACTS_FORMAT or facts.get("failure_mode") not in FAILURE_MODES | {None}
+            or set(facts) - {"format", "failure_mode", "search_terms", "effect_meV", "ci_meV", "source"}
+            or facts.get("search_terms") is not None and len(_texts(facts, "search_terms", "closure_facts")) > 8
+            or not (facts.get("effect_meV") is None or num(facts["effect_meV"]))
+            or not (ci is None or isinstance(ci, list) and len(ci) == 2 and all(map(num, ci)))
+            or not isinstance(facts.get("source"), (str, type(None)))):
+        raise ValueError(f"closure facts must be {CLOSURE_FACTS_FORMAT}: known failure_mode, <= 8 search_terms, numbers")
+    return dict(facts)
 
 def _mapping(value: Any, label: str) -> Mapping[str, Any]:
     if not isinstance(value, Mapping):
@@ -107,11 +124,7 @@ def _measurement(value: Any, label: str) -> dict[str, Any]:
     if status not in MEASUREMENT_STATUSES:
         raise ValueError(f"{label}.status is invalid")
     if status in {"measured", "estimated"}:
-        if (
-            not isinstance(number, (int, float))
-            or isinstance(number, bool)
-            or number < 0
-        ):
+        if not isinstance(number, (int, float)) or isinstance(number, bool) or number < 0:
             raise ValueError(f"{label}.value must be non-negative for {status}")
     elif number is not None:
         raise ValueError(f"{label}.value must be null for {status}")
@@ -135,28 +148,15 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
 
     hypothesis = _mapping(record.get("hypothesis"), "trajectory.hypothesis")
     _id(hypothesis, "hypothesis_id", "trajectory.hypothesis")
-    for field in (
-        "supporting_evidence_ids",
-        "alternative_explanations",
-        "related_closed_family_ids",
-    ):
+    for field in ("supporting_evidence_ids", "alternative_explanations", "related_closed_family_ids"):
         _texts(hypothesis, field, "trajectory.hypothesis")
 
     state = _mapping(record.get("state_at_start"), "trajectory.state_at_start")
     _text(state, "source_commit", "trajectory.state_at_start")
-    for field in (
-        "contract_refs",
-        "reference_ids",
-        "parent_trajectory_ids",
-        "prior_evidence_ids",
-        "role_snapshot_refs",
-    ):
+    for field in ("contract_refs", "reference_ids", "parent_trajectory_ids", "prior_evidence_ids", "role_snapshot_refs"):
         _texts(state, field, "trajectory.state_at_start")
-    prior_trajectory_ids = (
-        _texts(state, "prior_trajectory_ids", "trajectory.state_at_start")
-        if "prior_trajectory_ids" in state
-        else []
-    )
+    prior_trajectory_ids = (_texts(state, "prior_trajectory_ids", "trajectory.state_at_start")
+                            if "prior_trajectory_ids" in state else [])
     if "same_run_replay" in state:
         from .paired import validate_pair_binding
 
@@ -188,6 +188,7 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError(f"unsupported trajectory outcome: {outcome}")
     _texts(decision, "next_allowed_actions", "trajectory.decision")
     _texts(decision, "reopen_conditions", "trajectory.decision")
+    if "facts" in decision: validate_closure_facts(decision["facts"])
 
     for field in ("supporting_evidence_ids",):
         for value in hypothesis[field]:
@@ -207,20 +208,11 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
         readiness = _mapping(readiness, "trajectory.readiness")
         for field in ("candidate_evidence_id", "compatible_reference_id"):
             _id(readiness, field, "trajectory.readiness")
-        for field in (
-            "qualification_100k_evidence_ids",
-            "qualification_500k_evidence_ids",
-            "native_cost_event_ids",
-        ):
+        for field in ("qualification_100k_evidence_ids", "qualification_500k_evidence_ids", "native_cost_event_ids"):
             for value in _texts(readiness, field, "trajectory.readiness"):
                 validate_id(value, f"trajectory.readiness.{field}")
 
-    comparison_fields = (
-        "comparison_class",
-        "comparison_readiness_ref",
-        "comparison_blockers",
-        "reference_bundle_id",
-    )
+    comparison_fields = ("comparison_class", "comparison_readiness_ref", "comparison_blockers", "reference_bundle_id")
     present_comparison_fields = [field for field in comparison_fields if field in record]
     if present_comparison_fields and len(present_comparison_fields) != len(comparison_fields):
         raise ValueError("trajectory comparison metadata must be complete when present")
@@ -234,15 +226,8 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
             validate_id(reference_bundle_id, "trajectory.reference_bundle_id")
 
     if record["record_mode"] == "prospective":
-        prospective_text = (
-            "observed_deficiency",
-            "changed_mechanism",
-            "cheapest_falsifier",
-            "expected_native_cost_ref",
-            "decision_changed_if_positive",
-            "decision_changed_if_negative",
-        )
-        for field in prospective_text:
+        for field in ("observed_deficiency", "changed_mechanism", "cheapest_falsifier", "expected_native_cost_ref",
+                      "decision_changed_if_positive", "decision_changed_if_negative"):
             _text(hypothesis, field, "prospective trajectory.hypothesis")
         if not hypothesis["supporting_evidence_ids"]:
             raise ValueError("prospective trajectory requires supporting evidence")
@@ -271,13 +256,7 @@ def validate_cost_event(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("unsupported cost-event schema")
     for field in ("cost_event_id", "trajectory_id", "action_id"):
         _id(record, field, "cost event")
-    for field in (
-        "run_id",
-        "attempt_id",
-        "platform",
-        "hardware",
-        "evidence_ref",
-    ):
+    for field in ("run_id", "attempt_id", "platform", "hardware", "evidence_ref"):
         _text(record, field, "cost event")
     if record.get("category") not in COST_CATEGORIES:
         raise ValueError("unsupported cost-event category")
@@ -295,13 +274,7 @@ def validate_role_event(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("unsupported role-event schema")
     for field in ("role_event_id", "trajectory_id", "action_id"):
         _id(record, field, "role event")
-    for field in (
-        "run_id",
-        "dataset_identity",
-        "row_manifest_hash",
-        "role_name",
-        "evidence_ref",
-    ):
+    for field in ("run_id", "dataset_identity", "row_manifest_hash", "role_name", "evidence_ref"):
         _text(record, field, "role event")
     if record.get("access_kind") not in ROLE_ACCESS_KINDS:
         raise ValueError("unsupported role access_kind")
@@ -344,19 +317,9 @@ def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
         _id(record, "reference_id", "trace manifest")
     if record.get("comparison_role") not in {"candidate", "reference"}:
         raise ValueError("trace manifest.comparison_role must be candidate or reference")
-    for field in (
-        "run_id",
-        "contract_ref",
-        "model_identity",
-        "x_axis",
-        "presentation_semantics_ref",
-        "weight_semantics",
-        "metric_semantics",
-        "evaluation_role_identity",
-        "selection_semantics",
-        "trace_artifact_ref",
-        "terminal_evidence_ref",
-    ):
+    for field in ("run_id", "contract_ref", "model_identity", "x_axis", "presentation_semantics_ref", "weight_semantics",
+                  "metric_semantics", "evaluation_role_identity", "selection_semantics", "trace_artifact_ref",
+                  "terminal_evidence_ref"):
         _text(record, field, "trace manifest")
     eligibility = _mapping(record.get("backtest_eligibility"), "trace manifest.backtest_eligibility")
     if not isinstance(eligibility.get("eligible"), bool):
@@ -367,21 +330,10 @@ def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
     ):
         raise ValueError("unreferenced trace requires an explicitly ineligible candidate with exclusion reasons")
     identity = _mapping(record.get("comparability_identity"), "trace manifest.comparability_identity")
-    for field in (
-        "scientific_contract",
-        "dataset_identity",
-        "row_split_identity",
-        "architecture_identity",
-        "optimizer_identity",
-        "lr_schedule_identity",
-        "target_transform_identity",
-        "precision_identity",
-        "ema_semantics",
-        "evaluation_role_identity",
-        "selection_role_identity",
-        "x_axis_semantics",
-        "terminal_endpoint_identity",
-    ):
+    for field in ("scientific_contract", "dataset_identity", "row_split_identity", "architecture_identity",
+                  "optimizer_identity", "lr_schedule_identity", "target_transform_identity", "precision_identity",
+                  "ema_semantics", "evaluation_role_identity", "selection_role_identity", "x_axis_semantics",
+                  "terminal_endpoint_identity"):
         _text(identity, field, "trace manifest.comparability_identity")
     if not isinstance(identity.get("matched_architecture_required"), bool):
         raise ValueError(
