@@ -57,6 +57,11 @@ def main(argv: list[str] | None = None) -> None:
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
     recovery.add_argument("--output", required=True)
+    analyze = commands.add_parser("analyze")
+    analyze.add_argument("--op", required=True, choices=("paired", "ensemble-curve", "residual-corr"))
+    analyze.add_argument("--predictions", nargs="+", required=True)
+    analyze.add_argument("--role-id", required=True)
+    analyze.add_argument("--out", required=True)
     commands.add_parser("replay-pool")
     policy = commands.add_parser("backtest-policy")
     policy.add_argument("--policy-id")
@@ -97,6 +102,12 @@ def main(argv: list[str] | None = None) -> None:
             raise SystemExit(1)
         return
 
+    if args.command == "analyze":
+        from .saved_analysis import run, write_output
+        result = run(args.op, args.predictions, role_id=args.role_id)
+        write_output(result, args.out, root)
+        print(json.dumps({"op": args.op, "rows": result["row_count"], "out": args.out, "posthoc": True}))
+        return
     if args.command == "validate":
         validated = validate_repository_records(root)
         summary = {key: len(value) for key, value in validated["records"].items()}
