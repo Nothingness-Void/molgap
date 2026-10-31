@@ -1,16 +1,16 @@
 {
   "measured": "2026-10-31",
-  "note": "Limits equal the baseline. Lower a limit whenever infrastructure shrinks; raising one needs user approval.",
+  "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval features; lowered by merging 27 duplicate hash helpers.",
   "limits": {
-    "src_py_files": 302,
-    "src_py_lines": 97826,
-    "research_memory_lines": 6463,
-    "src_hashlib_files": 99,
+    "src_py_files": 303,
+    "src_py_lines": 97800,
+    "research_memory_lines": 6616,
+    "src_hashlib_files": 88,
     "gitattributes_text_rules": 134,
     "test_files": 208,
     "test_files_mentioning_hash": 114,
-    "format_version_strings": 250,
+    "format_version_strings": 251,
     "docs_operations_files": 44,
-    "docs_operations_lines": 7562
+    "docs_operations_lines": 7565
   }
 }
