@@ -30,6 +30,9 @@ def main(argv: list[str] | None = None) -> None:
     commands.add_parser("validate")
     commands.add_parser("rebuild")
     commands.add_parser("status")
+    cards = commands.add_parser("cards")
+    cards.add_argument("--outcome")
+    cards.add_argument("--term")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
@@ -155,6 +158,11 @@ def main(argv: list[str] | None = None) -> None:
             )
         else:
             print("RML derived outputs are frozen and current")
+        return
+    if args.command == "cards":
+        from .cards import build_cards, select
+        for card in select(build_cards(root), outcome=args.outcome, term=args.term):
+            print(json.dumps(card, ensure_ascii=False))
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"

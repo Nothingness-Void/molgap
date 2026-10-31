@@ -802,3 +802,15 @@ def test_invalid_derived_output_is_rejected(compiled_payloads):
     outputs["cost_ledger.json"]["cross_hardware_total"] = 0
     with pytest.raises(ValueError, match="must not aggregate across hardware"):
         validate_derived_outputs(outputs)
+
+
+def test_cards_filter_by_outcome_and_term(tmp_path):
+    from molgap.research_memory.cards import select
+
+    cards = [
+        {"outcome": "NEGATIVE_UNDER_CONTRACT", "mechanism": "sharpness-aware step", "keywords": ["sharpness"]},
+        {"outcome": "POSITIVE_UNDER_CONTRACT", "mechanism": "pair norm", "keywords": ["pair"]},
+    ]
+    assert select(cards, outcome="NEGATIVE_UNDER_CONTRACT", term="sharp") == cards[:1]
+    assert select(cards, term="PAIR") == cards[1:]
+    assert select(cards) == cards
