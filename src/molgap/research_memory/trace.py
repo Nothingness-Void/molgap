@@ -13,6 +13,7 @@ from typing import Any
 
 from molgap.common.io import replace_retrying
 
+from .paths import file_digest  # noqa: F401  re-exported for existing callers
 from .schemas import validate_id
 
 TRACE_FORMAT = "molgap-trace-v1"
@@ -25,14 +26,6 @@ FIELDS = (*NUMBERS, "checkpoint_identity")
 
 def json_bytes(value: Any) -> bytes:
     return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()
-
-
-def file_digest(path: str | Path) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def atomic_write(path: str | Path, payload: bytes) -> None:

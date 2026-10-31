@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import subprocess
 from functools import lru_cache
 from pathlib import Path, PureWindowsPath
 from urllib.parse import quote, unquote, urlparse
@@ -83,18 +84,24 @@ def artifact_locator(root: str | Path, path: str | Path) -> str:
         return locator
 
 
-def file_digest(path: Path) -> str:
+def file_digest(path: str | Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as stream:
+    with Path(path).open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
 
 
 def verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
-    path = (bound_artifact_path(root, pointer) if pointer.startswith("external://")
-            else resolve_repo_pointer(root, pointer))
+    external = pointer.startswith("external://")
+    path = bound_artifact_path(root, pointer) if external else resolve_repo_pointer(root, pointer)
     if path is None:
         raise ValueError(f"bound artifact must be repository-local: {pointer}")
-    if file_digest(path) != expected_sha256:
+    if file_digest(path) == expected_sha256:
+        return
+    # autocrlf checkouts of Git-tracked text hold LF or CRLF; other bytes stay exact.
+    lf = b"\0" if external else path.read_bytes().replace(b"\r\n", b"\n")
+    if b"\0" in lf or expected_sha256 not in {hashlib.sha256(f).hexdigest() for f in (lf, lf.replace(b"\n", b"\r\n"))} \
+            or not subprocess.run(["git", "ls-files", "--eol", "--", path.relative_to(_resolved_root(str(root))).as_posix()],
+                                  cwd=root, capture_output=True).stdout.startswith((b"i/lf", b"i/crlf", b"i/mixed")):
         raise ValueError(f"bound artifact SHA mismatch: {pointer}")
