@@ -1959,3 +1959,13 @@ def test_malformed_middle_arm_preserves_batch_publication_and_rebuild(
         assert result["validation_status"] == "VALID"
     payloads = compile_research_memory(tmp_path)
     assert all((tmp_path / "research_memory/derived" / name).read_bytes() == raw for name, raw in payloads.items())
+
+
+def test_unreadable_unrelated_record_does_not_block_closing_a_new_arm(tmp_path):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory.finalize import finalize
+    bystander, new = (create_candidate_arm(tmp_path, f"isolation_{label}", f"T-isolation-{label}",
+        f"run-isolation-{label}", f"ev-isolation-{label}", include_trace_artifact=False) for label in "ab")
+    # An unrelated historical trajectory that no longer parses must not stop this closure.
+    bystander["traj_path"].write_bytes(b"{not json")
+    assert finalize(tmp_path, new["traj_path"], new["terminal_path"])["status"] != "ALREADY_FINALIZED"
