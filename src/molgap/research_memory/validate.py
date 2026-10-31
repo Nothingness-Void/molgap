@@ -70,13 +70,15 @@ def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
 
 
 def _load_errata(root: Path) -> dict[tuple[str, str], dict[str, Any]]:
-    """Known narrative gaps: (locator, recorded digest) -> erratum. Narrative class only."""
+    """Known narrative gaps: (locator, recorded digest) -> erratum, for a .md file in the erratum's experiment."""
     found = {}
     for path in sorted(root.glob("experiments/**/errata/*.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
+        target = Path(str(record.get("target_locator", "")))
         if (record.get("format") != "molgap-erratum-v1" or record.get("artifact_class") != "narrative"
-                or record.get("effect") != "narrative_only"):
-            raise ValueError(f"{path}: an erratum may only excuse a narrative-only mismatch")
+                or record.get("effect") != "narrative_only" or target.suffix != ".md"
+                or target.parts[:2] != path.relative_to(root).parts[:2]):
+            raise ValueError(f"{path}: an erratum may only excuse a narrative .md file in its own experiment")
         found[(record["target_locator"], record["recorded_sha256"])] = record
     return found
 
@@ -182,9 +184,7 @@ def validate_repository_records(repo_root: str | Path, *, verify_comparison_arti
         try:
             verify_bound_artifact(root, pointer, digest)
         except ValueError:
-            # Only a narrative file whose recorded and observed digests are
-            # exactly the pair written in an erratum is tolerated. Everything
-            # else (data, state, result, code, contract) still fails.
+            # Only an exact digest pair from an in-experiment .md erratum (_load_errata) is tolerated.
             erratum = errata.get((pointer, digest))
             if erratum is None:
                 raise

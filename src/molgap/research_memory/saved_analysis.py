@@ -113,7 +113,7 @@ def discover_predictions(repo_root):
 
 
 def run(op, paths, *, role_id, n_bootstrap=2000, seed=42, pairs=None):
-    if role_id in PROTECTED_ROLES or not role_id:
+    if not role_id or str(role_id).strip().lower().replace("-", "_") in PROTECTED_ROLES:
         raise ValueError("Refusing protected or missing role: pass an unprotected --role-id")
     if op not in OPS:
         raise ValueError(f"Unknown op {op!r}")

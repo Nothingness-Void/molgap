@@ -413,9 +413,9 @@ def atomic_json(path: Path, value: Mapping | list) -> None:
         temporary.unlink(missing_ok=True)
 
 
-def sha256_file(path: Path) -> str:
+def sha256_file(path: str | Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
+    with Path(path).open("rb") as handle:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
