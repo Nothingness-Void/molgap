@@ -1,0 +1,15 @@
+{
+  "trajectory_ids": [
+    "TB-family-topology-t4-100k-gptrans_local-s42",
+    "TB-family-topology-t4-100k-k1_mean2-s42"
+  ],
+  "failure_mode": null,
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/family_topology_t4_100k/terminal_acceptance/attribution.md",
+    "sha256": "b8a2328cac37b12313fa4a2f080b229be29d1ab747fa70187e2dfd7ad2067be9"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Topology reuse speed result; causal wall attribution lacks a control. Not a model failure."
+}

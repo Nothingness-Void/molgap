@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+  ],
+  "failure_mode": "boundary_pass",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/attribution.md",
+    "sha256": "9ff4c051fa417eebaf5e93582d0906557578bccaaee228d64d94366be1748367"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Attribution states the gate passes with margin 0.143 meV above the 3 meV threshold."
+}

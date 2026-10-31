@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-slot-width96-kaggle3-100k-s42-v1"
+  ],
+  "failure_mode": "below_gate",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_slot_width96/reconciliation_v1/attribution.md",
+    "sha256": "dec6d9e8086aff7aebd140205bf3b0f87dafedf320ab6a75c95118e6ae273c75"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Widening gives insufficient gain under the 3 meV gate. Basis is reconciliation_v1/attribution.md."
+}

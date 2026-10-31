@@ -1,0 +1,16 @@
+{
+  "trajectory_ids": [
+    "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+  ],
+  "failure_mode": "below_gate",
+  "secondary_modes": [
+    "comparator_missing"
+  ],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_message_norm_100k/attribution.md",
+    "sha256": "96f58115249332d740d38ddac70ce9bdb5393b842fa7a09c620d73c658c8bea1"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Learned scales favorable but below gate; no qualified original-K1 comparator for an absolute claim."
+}

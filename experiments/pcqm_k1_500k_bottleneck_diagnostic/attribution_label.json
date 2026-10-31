@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-500k-bottleneck-diagnostic-20261007"
+  ],
+  "failure_mode": "discriminator_missing",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_500k_bottleneck_diagnostic/attribution.md",
+    "sha256": "e855212e2e0abf1c8603f7fb6e850e8d480d5431f2853652b7ff5ba6aa5985ba"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Attribution lists the candidate causes as unidentified; single-variable training discriminators not run."
+}

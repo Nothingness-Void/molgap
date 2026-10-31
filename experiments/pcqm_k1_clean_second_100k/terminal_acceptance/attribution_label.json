@@ -1,0 +1,15 @@
+{
+  "trajectory_ids": [
+    "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+    "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+  ],
+  "failure_mode": null,
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/attribution.md",
+    "sha256": "70bab1e2b642a21e0a560d8ddaca0bb4cfdb1cac8b1086c3be39358511749ecb"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Candidate point slightly worse with interval crossing zero; neither below_gate nor endpoint_regression."
+}

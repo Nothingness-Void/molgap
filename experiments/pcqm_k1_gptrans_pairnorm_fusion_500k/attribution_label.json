@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-gptrans-pairnorm-fusion-500k-20261027"
+  ],
+  "failure_mode": "comparator_missing",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_gptrans_pairnorm_fusion_500k/attribution.md",
+    "sha256": "125b21e67cd0bbb029bc8e9f45bd336b32c7d84b19b66605d67116b0c5803f51"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Three-way gain was not compared against a third GPTrans pass."
+}

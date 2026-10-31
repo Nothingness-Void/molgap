@@ -1,0 +1,18 @@
+{
+  "trajectory_ids": [
+    "T-pcqm-k1-init-forward-500k-mean2-s42-pretrained",
+    "T-pcqm-k1-init-forward-500k-single-s42-pretrained"
+  ],
+  "failure_mode": "early_gain_fades",
+  "secondary_modes": [
+    "endpoint_regression",
+    "confounded_change"
+  ],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_initialization_forward_500k/terminal_acceptance/attribution.md",
+    "sha256": "35f6083e2791fe273194afc28b25decb983a9cce7865b17f8b90a678a86e2be9"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Pretrained arms lead early (pass 5) and lose by the endpoint; weights and buffers are not isolated."
+}

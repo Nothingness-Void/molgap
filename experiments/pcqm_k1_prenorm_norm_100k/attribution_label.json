@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+  ],
+  "failure_mode": "endpoint_regression",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/attribution.md",
+    "sha256": "0ba82cb787df0352daaa4dfaeb14c2ea0e07dff9ac248eda44db0477ed02284c"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Same-job Ada candidate worse; paired interval excludes zero. Basis is terminal_acceptance/attribution.md."
+}
