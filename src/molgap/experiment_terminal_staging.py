@@ -399,7 +399,7 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
     facts_refs, rel = {}, lambda name: repo_local_path(root, out / name).relative_to(root).as_posix()
     for arm in drafted:
         # Measured numbers are copied verbatim; interpretation stays null for the closure author.
-        pair = next((p for p in (measured or {}).get("results", {}).get("pairs", []) if p["candidate"] == arm), None)
+        pair = next((p for p in (measured or {}).get("results", {}).get("pairs", []) if p["candidate"] == arm), None) if pairs else None
         facts = {"format": CLOSURE_FACTS_FORMAT, "failure_mode": None, "search_terms": None,
                  "effect_meV": pair and pair["delta"], "ci_meV": pair and pair["ci95"],
                  "source": rel(f"measured_{run_id}.json") if pair else None}
