@@ -222,6 +222,31 @@ def _original(spec, repo_root, prepared, package_dir, expected_package_identity,
                               recovery_repair=recovery_repair)
 
 
+def _check_frozen_release_bytes(frozen, inputs, package, verification):
+    """Resume needs the released bytes, not today's verifier agreeing with yesterday's report."""
+    from .training_reproducibility import sha256_file
+    checks = frozen["checks"]
+    if frozen["errors"] or frozen["status"] != "LOCAL_RELEASE_INPUTS_VERIFIED":
+        raise ValueError("The frozen release report did not pass verification")
+
+    def same(label, observed, recorded):
+        if observed != recorded:
+            raise ValueError(f"Original release input changed: {label}")
+
+    same("source archive", sha256_file(package / "source.tar.gz"), frozen["source_archive_sha256"])
+    launch = checks["workflow:launch"]
+    same("launch", sha256_file(Path(inputs["launch_config"])), launch["launch_sha256"])
+    same("kernel metadata", sha256_file(Path(inputs["kernel_metadata"])), launch["metadata_sha256"])
+    same("entry script", sha256_file(Path(inputs["entry_script"])), checks["entry_script:kernel"])
+    for arm_id, path in inputs["initial_states"].items():
+        same("initial state " + arm_id, sha256_file(Path(path)), checks["initialization:" + arm_id]["file_sha256"])
+    for arm_id, name in inputs["recipe_files"].items():
+        recipe = read_packaged_text(package, name, _verification=verification).encode()
+        same("recipe " + arm_id, hashlib.sha256(recipe).hexdigest(), checks["recipe:" + arm_id])
+    for arm_id, path in (inputs.get("dataset_manifests") or {}).items():
+        same("dataset manifest " + arm_id, sha256_file(Path(path)), checks["dataset_manifest:" + arm_id])
+
+
 def _check_original(spec, repo_root, prepared, package_dir, expected_package_identity, receipt_path,
                     *, release=None, original_staged=None, _verification, recovery_repair=None):
     root, prepared, package = map(lambda p: Path(p).absolute(), (repo_root, prepared, package_dir))
@@ -244,22 +269,11 @@ def _check_original(spec, repo_root, prepared, package_dir, expected_package_ide
         raise ValueError("Recovery of extra pickled input staging requires the owning preparation adapter")
     if Path(inputs["package"]).resolve() != package.resolve():
         raise ValueError("Recovery release points to another package")
-    observed = check_release_inputs(spec, package, expected_package_identity=expected_package_identity,
-        recipe_files=inputs["recipe_files"], initial_states=inputs["initial_states"],
-        required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
-        entry_script=inputs["entry_script"], input_root=inputs["input_root"],
-        launch_config=inputs["launch_config"], kernel_metadata=inputs["kernel_metadata"],
-        dataset_manifests=inputs.get("dataset_manifests"), _verification=_verification)
-    compared = (_rebase_paths(observed, Path(inputs["input_root"]), original_staged)
-                if original_staged is not None else observed)
-    if compared != frozen_release or observed["errors"] or observed["status"] != "LOCAL_RELEASE_INPUTS_VERIFIED":
-        raise ValueError("Original release changed or did not pass verification")
+    _check_frozen_release_bytes(frozen_release, inputs, package, _verification)
     staged = Path(inputs["launch_config"]).parent
     validate_launch_config(spec, Path(inputs["launch_config"]), manifest=manifest,
                            package_dir=package, staged_root=staged)
     launch_raw = Path(inputs["launch_config"]).read_bytes()
-    if hashlib.sha256(launch_raw).hexdigest() != observed["checks"]["workflow:launch"]["launch_sha256"]:
-        raise ValueError("Original launch changed after verification")
     launch = json.loads(launch_raw)
     contexts, trajectories = {}, {}
     for arm in spec.to_dict()["arms"]:
