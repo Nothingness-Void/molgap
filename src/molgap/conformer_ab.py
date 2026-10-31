@@ -17,6 +17,7 @@ from .pubchemqc_architecture import MODEL_CONFIG, evaluate_view
 from .route_b_fusion import build_fusion_head
 from .schnet import SchNetWrapper
 from .utils import compute_gasteiger_charges
+from .training_reproducibility import sha256_file as _sha256
 
 PROTOCOLS = {
     "bare_etkdg": 0,
@@ -38,14 +39,6 @@ def _atomic_torch(path: Path, value: object) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def select_aligned_rows(

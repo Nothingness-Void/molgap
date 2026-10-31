@@ -10,7 +10,6 @@ import copy
 import csv
 import gc
 import gzip
-import hashlib
 import io
 import json
 import math
@@ -41,6 +40,7 @@ from .ogb_features import (
     bond_to_ogb_feature_vector,
 )
 from .structural_encoding import add_random_walk_pe
+from .training_reproducibility import sha256_file
 
 
 CSV_MEMBER = "pcqm4m-v2/raw/data.csv.gz"
@@ -105,14 +105,6 @@ class PackedGraphDataset(InMemoryDataset):
         self.data, self.slices = torch.load(
             path, map_location="cpu", weights_only=False
         )
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, payload: object) -> None:
