@@ -124,6 +124,14 @@ Track C.
 | Can a student compress the expert ensemble? | No; external retention fails | `distillation/` |
 | Which SchNet compute shape is efficient? | `176/160/6` at 78% params and 48% time | `schnet_arch/` |
 | Does 1M continuation beat the 500K base? | Specialist only; no global promotion | `expansion_1m/` |
+| How large is K1 100K initialization noise? | Init spread D 1.631 meV (keep the 3 meV gate; confirming a 1-3 meV result needs at least 2 inits per arm); 3-init ensemble gain 7.683 meV | [Terminal decision](pcqm_k1_init_noise_100k/terminal_decision.md) |
+| Does peak LR 2e-4 help K1 100K? | NULL: mean change +1.295 meV against the init-noise baselines; closed NEGATIVE_UNDER_CONTRACT, no retry | [Terminal decision](pcqm_k1_lr2e4_100k/terminal_decision.md) |
+| Does peak LR 8e-4 with 3-epoch warmup help K1 100K? | NULL: mean change +0.388 meV; closed NEGATIVE_UNDER_CONTRACT, no retry | [Terminal decision](pcqm_k1_lr8e4_warmup_100k/terminal_decision.md) |
+| Does AdamW weight decay 0.05 help K1 100K? | NULL: mean change +0.616 meV; closed NEGATIVE_UNDER_CONTRACT, no retry | [Terminal decision](pcqm_k1_wd5e2_100k/terminal_decision.md) |
+| Does bounded extremal readout improve K1 at 100K? | Candidate 3.333 meV worse, interval [+2.303, +4.320] meV excludes zero; NEGATIVE_UNDER_CONTRACT | [Decision](pcqm_k1_extremal_readout_100k/decision.md) |
+| Does initial residual improve K1 at 100K? | Candidate 0.708 meV worse, misses the 3 meV gate; NEGATIVE_UNDER_CONTRACT | [Decision](pcqm_k1_initial_residual_100k/decision.md) |
+| Does SAM improve K1 at 100K? | Candidate 2.834 meV worse, interval excludes zero; NEGATIVE_UNDER_CONTRACT, no rho sweep | [Decision](pcqm_k1_sam_100k/decision.md) |
+| Does a 16x256 model beat 12x384 at a matched total budget (500K)? | 16x256 is 0.71 meV better, below the 3 meV gate; noncausal delivery experiment, no adoption | [Terminal decision](pcqm_single_model_total_budget/terminal_decision.md) |
 
 | Frozen-initialization and cohort-transfer control? | Local paired 100K candidate 6.185 meV better, 5.792 meV on the 500K cohort without retraining; cohort change alone does not explain the later contraction; no 500K release | `pcqm_gptrans_100k_transfer_control/` |
 | Noisy Nodes 100K screen? | POSITIVE_UNDER_CONTRACT: 4.840 meV gain over the 0.156627 eV reference; the 500K transfer did not hold it | `pcqm_gptrans_noisy_nodes_100k/` |
