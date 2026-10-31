@@ -814,3 +814,19 @@ def test_cards_filter_by_outcome_and_term(tmp_path):
     assert select(cards, outcome="NEGATIVE_UNDER_CONTRACT", term="sharp") == cards[:1]
     assert select(cards, term="PAIR") == cards[1:]
     assert select(cards) == cards
+
+
+def test_lookup_and_gaps_are_read_only_views():
+    from molgap.research_memory.cards import gaps, lookup
+
+    def card(fam, outcome, effect=None):
+        return {"trajectory_id": fam, "family_id": fam, "outcome": outcome, "mechanism": "norm", "keywords": ["norm"],
+                "falsifier": "f", "reopen_conditions": None, "effect_meV": effect, "search_terms": []}
+
+    cards = [card("a-100k", "NEGATIVE_UNDER_CONTRACT", 1.0), card("b-100k", "NEGATIVE_UNDER_CONTRACT"),
+             card("b-500k", "POSITIVE_UNDER_CONTRACT")]
+    found = lookup(cards, mechanism="norm")
+    assert [u["family_id"] for u in found["unfalsified"]] == ["b-100k", "b-500k"]
+    assert lookup(cards, family="a-")["matches"] == cards[:1]
+    flagged = gaps(cards)["contradictions"]
+    assert len(flagged) == 2 and flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
