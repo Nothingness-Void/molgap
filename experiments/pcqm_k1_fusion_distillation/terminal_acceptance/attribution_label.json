@@ -1,0 +1,15 @@
+{
+  "trajectory_ids": [
+    "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+    "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+  ],
+  "failure_mode": null,
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/attribution.md",
+    "sha256": "b87ed7d0577f0fb32dddce8caf2e4217f83e565792f5961ebd991a776d4f93ef"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Arms differ: weak regresses against consistency2, strong is favorable within noise. Two labels, not one."
+}

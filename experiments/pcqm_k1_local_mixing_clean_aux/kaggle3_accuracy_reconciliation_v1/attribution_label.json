@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+  ],
+  "failure_mode": "endpoint_regression",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/attribution.md",
+    "sha256": "3d0ba20c26bf4e5004616eea3a6b18956d8814ad1d01e69da50e69518d795ee9"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "SSMA regresses at matched exposure; decision interval excludes zero."
+}

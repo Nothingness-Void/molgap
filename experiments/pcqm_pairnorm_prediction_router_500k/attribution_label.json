@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-pcqm-pairnorm-prediction-router-500k-20261027"
+  ],
+  "failure_mode": "below_gate",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_pairnorm_prediction_router_500k/attribution.md",
+    "sha256": "68b23b5b8e18f91b22799d3cbf89de88b15834099aa1167c012f0721de4e60f7"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Soft gate gains 0.254 and 0.160 meV, below the frozen 1 meV rule."
+}

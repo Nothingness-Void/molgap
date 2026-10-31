@@ -1,0 +1,16 @@
+{
+  "trajectory_ids": [
+    "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4"
+  ],
+  "failure_mode": "early_gain_fades",
+  "secondary_modes": [
+    "endpoint_regression"
+  ],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/terminal_acceptance/attribution.md",
+    "sha256": "6dc7baa78247f971253cdf220db63278900f82cdfbc70d0f68b537818ff0de52"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Lower rate leads at 40 of 60 evaluations but fades late; selected endpoint worse with interval above 0."
+}

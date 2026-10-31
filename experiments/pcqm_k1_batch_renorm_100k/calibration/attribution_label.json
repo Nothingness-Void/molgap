@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-brn-clean-bn-100k-20261024"
+  ],
+  "failure_mode": "infra_failure",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_batch_renorm_100k/calibration/attribution.md",
+    "sha256": "b7f34eedbbcadaed90b4f5b977943716eb5ef1234c6cd01e083cb3d220184541"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Runtime incompatibility detected before the first forward; no predictions."
+}

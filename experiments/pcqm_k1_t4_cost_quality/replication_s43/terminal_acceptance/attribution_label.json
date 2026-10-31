@@ -1,0 +1,15 @@
+{
+  "trajectory_ids": [
+    "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
+    "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+  ],
+  "failure_mode": "gate_or_cost_stop",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/attribution.md",
+    "sha256": "3117891b577bfbee81d41829121635734db99f11a10a78818ce3989ae946af41"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Frozen optimizer-inclusive overhead gate stopped formal training."
+}

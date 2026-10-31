@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+  ],
+  "failure_mode": "below_gate",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/attribution.md",
+    "sha256": "a6b92b1a0bba45fca341d77a76098ae29ad7d2502a6bb130ee5050182cf363ae"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Consistency increment 0.119 meV raw and 0.293 meV calibrated, favorable but not material."
+}

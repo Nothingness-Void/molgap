@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "T-pcqm-k1-batch-renorm-100k-s42-brn_affine"
+  ],
+  "failure_mode": "endpoint_regression",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_batch_renorm_100k/attribution.md",
+    "sha256": "93b95521372c865346c44779eac1471193745086e206eb9cdc50f8af18c6595f"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Same-job candidate worse at selected endpoint; attribution states the paired interval is positive."
+}

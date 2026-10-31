@@ -1,0 +1,14 @@
+{
+  "trajectory_ids": [
+    "TB-k1-hop-shell-frozen-100k-20261024"
+  ],
+  "failure_mode": "infra_failure",
+  "secondary_modes": [],
+  "source": "agent_interpretation",
+  "basis": {
+    "path": "experiments/pcqm_k1_hop_shell_100k/frozen_shell/attribution.md",
+    "sha256": "587e1066d750e0ca8e7463d93db591d4de98ef41dc513833d52a60c3ee0e4415"
+  },
+  "labeled_at": "2026-10-31",
+  "note": "Wrapper implementation failure before k1_forward; no model prediction."
+}
