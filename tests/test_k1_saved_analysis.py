@@ -335,6 +335,11 @@ def test_research_memory_analyze_ensemble_and_refusals(tmp_path):
     assert result["posthoc"] is True and result["row_count"] == 8
     assert result["results"]["mae_by_n_members_meV"]["1"] == pytest.approx(100.)
     assert result["results"]["mae_by_n_members_meV"]["3"] == pytest.approx(100. / 3)
+    named = {f"m{i}": path for i, path in enumerate(paths)}
+    summary = run("summary", named, role_id="internal_development", pairs=[("m1", "m0")])["results"]
+    assert summary["D_meV"] == pytest.approx(0.) and summary["ensemble_gain_meV"] == pytest.approx(200. / 3)
+    assert summary["fit"] is not None and summary["m_meV"] == pytest.approx(0.)
+    assert run("floor", named, role_id="internal_development")["results"]["members_used"] == 2
     with pytest.raises(ValueError, match="protected"):
         run("paired", paths, role_id="test_dev")
     torch.save({"source_idx": ids + 1, "target_eV": target, "prediction_eV": target}, tmp_path / "x.pt")
