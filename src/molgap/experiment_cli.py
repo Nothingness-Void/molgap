@@ -158,6 +158,8 @@ def _parser() -> argparse.ArgumentParser:
             decisions.add_argument("--decision-ref", type=_local)
             decisions.add_argument("--arm-decision-ref", action="append", metavar="ARM=PATH",
                 help="Per-arm repository-local decision path; repeat for each arm")
+            command.add_argument("--arm-facts-ref", action="append", metavar="ARM=PATH",
+                help="Optional per-arm closure_facts JSON, hash-bound into the decision")
             command.add_argument("--role-audit", type=_local)
             command.add_argument("--output", type=_local, help="Optional diagnostic JSON file or report directory")
             command.add_argument("--bootstrap-samples", type=int)
@@ -370,6 +372,8 @@ def _dispatch(args) -> tuple[dict, int]:
                                 else 2000 if args.diagnose and (args.strict or args.strict_inputs is not None) else 0), seed=args.seed)
                     elif args.output is not None or args.bootstrap_samples is not None or args.seed != 42:
                         raise ValueError("Diagnostic options require --diagnose or --stage-terminal")
+                    if args.arm_facts_ref is not None:
+                        options["facts_ref"] = _bindings(args.arm_facts_ref)
                     if args.role_audit is not None:
                         audit = _json(args.role_audit)
                         options["role_audit"] = (args.role_audit if "context" in audit
@@ -389,7 +393,7 @@ def _dispatch(args) -> tuple[dict, int]:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome, args.arm_outcome,
-                    args.decision_ref, args.arm_decision_ref, args.role_audit, args.output, args.strict_inputs,
+                    args.decision_ref, args.arm_decision_ref, args.arm_facts_ref, args.role_audit, args.output, args.strict_inputs,
                     args.strict, args.continuation_receipt, args.physical_runs, args.physical_observation,
                     args.resume_prepared, args.resume_authority)):
                 raise ValueError("Automatic acceptance requires --run-id")

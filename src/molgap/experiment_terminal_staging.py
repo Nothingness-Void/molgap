@@ -15,7 +15,8 @@ from .common.io import publish_immutable_bytes
 from .experiment_family_workflow import _artifact_path, _check_context, _json, _runtime, inspect_terminal_output, terminal_attempt_id
 from .research_memory.paths import artifact_locator, repo_local_path, verify_bound_artifact
 from .research_memory.roles import validate_observed_role_truth
-from .research_memory.schemas import TRAJECTORY_OUTCOMES, validate_cost_event, validate_role_event, validate_trajectory
+from .research_memory.schemas import (CLOSURE_FACTS_FORMAT, TRAJECTORY_OUTCOMES, validate_closure_facts,
+    validate_cost_event, validate_role_event, validate_trajectory)
 from .research_memory.trace import file_digest, json_bytes, load_canonical_trace
 from .screen_policy import canonical_fingerprint
 
@@ -323,18 +324,33 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
 
 
 def load_closure_input(path):
-    """Read the one human closure file; return ({arm: {outcome, decision_ref}}, role_audit or None)."""
+    """Read the one human closure file; return ({arm: {outcome, decision_ref, facts_ref?}}, role_audit or None)."""
     from .experiment_launch import _unique
     closure = json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=_unique)
     arms = closure.get("arms") if type(closure) is dict else None
     if (type(closure) is not dict or set(closure) - {"arms", "role_audit"} or type(arms) is not dict or not arms
-            or any(type(item) is not dict or set(item) != {"outcome", "decision_ref"}
+            or any(type(item) is not dict or not {"outcome", "decision_ref"} <= set(item) <= {"outcome", "decision_ref", "facts_ref"}
                    or not all(type(value) is str and value for value in item.values())
                    for item in arms.values())
             or not all(type(arm) is str and arm and "=" not in arm for arm in arms)
             or ("role_audit" in closure and (type(closure["role_audit"]) is not str or not closure["role_audit"]))):
-        raise ValueError("Closure input must be {arms: {arm: {outcome, decision_ref}}, role_audit?}")
+        raise ValueError("Closure input must be {arms: {arm: {outcome, decision_ref, facts_ref?}}, role_audit?}")
     return arms, closure.get("role_audit")
+
+
+def _closure_facts(root, ref, arm_id, hashes):
+    """Bind one optional facts file; its effect must be the measured file's own pair delta."""
+    ref =repo_local_path(root, ref).relative_to(root).as_posix()
+    hashes[ref] = file_digest(root / ref)
+    facts = validate_closure_facts(_json(root / ref))
+    if facts.get("effect_meV") is not None or facts.get("ci_meV") is not None:
+        source = repo_local_path(root, facts.get("source") or "").relative_to(root).as_posix()
+        hashes[source] = file_digest(root / source)
+        pairs = (json.loads((root / source).read_text(encoding="utf-8")) or {}).get("results", {}).get("pairs", [])
+        if not any(p["candidate"] == arm_id and [p["delta"], p["ci95"]] == [facts["effect_meV"], facts.get("ci_meV")]
+                   for p in pairs):
+            raise ValueError("Closure facts effect must be copied from the measured file: " + arm_id)
+    return facts
 
 
 def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
@@ -376,7 +392,17 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
     out = Path(output_dir)
     publish_immutable_bytes(repo_local_path(root, out / f"measured_{run_id}.json"), json_bytes(measured))
     audit_map = (out / "audit_map.json").as_posix()
-    draft = {"arms": {arm: {"outcome": "", "decision_ref": ""} for arm in drafted}, "role_audit": audit_map}
+    facts_refs, rel = {}, lambda name: repo_local_path(root, out / name).relative_to(root).as_posix()
+    for arm in drafted:
+        # Measured numbers are copied verbatim; interpretation stays null for the closure author.
+        pair = next((p for p in (measured or {}).get("results", {}).get("pairs", []) if p["candidate"] == arm), None)
+        facts = {"format": CLOSURE_FACTS_FORMAT, "failure_mode": None, "search_terms": None,
+                 "effect_meV": pair and pair["delta"], "ci_meV": pair and pair["ci95"],
+                 "source": rel(f"measured_{run_id}.json") if pair else None}
+        facts_refs[arm] = rel(f"closure_facts_{arm}.json")
+        publish_immutable_bytes(root / facts_refs[arm], json_bytes(facts))
+    draft = {"arms": {arm: {"outcome": "", "decision_ref": "", "facts_ref": facts_refs[arm]} for arm in drafted},
+             "role_audit": audit_map}
     publish_immutable_bytes(repo_local_path(root, out / "closure_input.draft.json"), json_bytes(draft))
     return {"status": "DRAFT", "measured": measured is not None, "roles": drafted,
             "draft": (out / "closure_input.draft.json").as_posix(), "outcome_required_from_human": True}
@@ -436,7 +462,7 @@ def _diagnostic_binding(root, resolved, report):
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
         diagnostic_report=None, role_audit=None, resolved=None, reports=None,
-        execution_root=None, _retention=None, _strict_transaction=False):
+        execution_root=None, _retention=None, _strict_transaction=False, facts_ref=None):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -557,6 +583,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if explicit_decision is not None:
             explicit_decision = repo_local_path(root, explicit_decision).relative_to(root).as_posix()
             hashes[explicit_decision] = file_digest(root / explicit_decision)
+        facts = ((facts_ref or {}).get(arm_id) and _closure_facts(root, facts_ref[arm_id], arm_id, hashes))
         role_use, roles, role_blockers, audit_ref = _roles(root, _per_arm(role_audit, arm_id), context, where, action["action_id"])
         blockers.extend(role_blockers)
         if audit_ref is not None:
@@ -601,7 +628,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         hashes[objective_ref] = file_digest(directory / "observed.json")
         closure_ready = not blockers
         final_decision = {"outcome": explicit_outcome if closure_ready else "ACTIVE", "final": closure_ready,
-            "decision_ref": explicit_decision, "next_allowed_actions": [], "reopen_conditions": []}
+            "decision_ref": explicit_decision, "next_allowed_actions": [], "reopen_conditions": [],
+            **({"facts": facts} if facts else {})}
         dimensions = {"execution_status": "complete", "artifact_status": "mechanically_verified",
             "comparison_status": "NOT_EVALUATED", "scientific_status": explicit_outcome if closure_ready else "NOT_EVALUATED",
             "transfer_status": "NOT_EVALUATED", "budget_decision": "NOT_EVALUATED", "full_handoff_status": "NOT_EVALUATED"}

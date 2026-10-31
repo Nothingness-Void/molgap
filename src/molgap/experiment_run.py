@@ -112,14 +112,14 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                         diagnose=False, stage_terminal=False, outcome=None, decision_ref=None,
                         diagnostic_output=None, n_bootstrap=None, seed=42, role_audit=None,
                         strict_inputs=None, continuation_receipt=None, physical_runs=None, physical_observation=None,
-                        resume_prepared=None, resume_authority=None):
+                        resume_prepared=None, resume_authority=None, facts_ref=None):
     """Inspect saved outputs and optionally diagnose, draft or explicitly close RML."""
     from .experiment_run_acceptance import resolve_run_acceptance_inputs
     from .experiment_workflow import accept_workflow
     if (outcome is None) != (decision_ref is None):
         raise ValueError("A scientific outcome and decision reference must be provided together")
-    if role_audit is not None and not (stage_terminal or outcome is not None):
-        raise ValueError("A role audit requires terminal staging")
+    if (role_audit is not None or facts_ref is not None) and not (stage_terminal or outcome is not None):
+        raise ValueError("A role audit or closure facts require terminal staging")
     if (resume_prepared is None) != (resume_authority is None):
         raise ValueError("Resume preparation and explicit recovery authority are required together")
     if resume_prepared is not None and (continuation_receipt is None or not (stage_terminal or outcome is not None)):
@@ -285,7 +285,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         from .experiment_terminal_staging import stage_verified_terminal_packages
         staged = stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id,
             retrieved_root=retrieved_root, supplied=supplied, locations=locations,
-            outcome=outcome, decision_ref=decision_ref, role_audit=role_audit,
+            outcome=outcome, decision_ref=decision_ref, role_audit=role_audit, facts_ref=facts_ref,
             diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
             execution_root=execution_root, _retention=retention,
             _strict_transaction=strict_inputs is not None)

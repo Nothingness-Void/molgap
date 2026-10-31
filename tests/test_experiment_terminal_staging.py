@@ -95,12 +95,30 @@ def test_explicit_decision_and_observed_audit_enable_reviewed_closure(staging_ca
     root, resolved = staging_case
     decision = root / "explicit_decision.md"
     decision.write_text("Explicit reviewed positive disposition for the synthetic contract.", encoding="utf-8")
+    measured = root / "measured_synthetic-run.json"
+    measured.write_text(json.dumps({"results": {"pairs": [{"candidate": arm, "delta": -1.5, "ci95": [-2.0, -1.0]}
+        for arm in resolved["outputs"]]}}), encoding="utf-8")
+    facts = {"format": "molgap-closure-facts-v1", "failure_mode": "below_gate", "search_terms": ["synthetic"],
+             "effect_meV": -1.5, "ci_meV": [-2.0, -1.0], "source": measured.name}
+    facts_ref = {}
+    for arm in resolved["outputs"]:
+        (root / f"closure_facts_{arm}.json").write_text(json.dumps(facts), encoding="utf-8")
+        facts_ref[arm] = f"closure_facts_{arm}.json"
+    first = next(iter(facts_ref.values()))
+    for bad in ({"effect_meV": -1.4}, {"failure_mode": "harmful"}):
+        (root / first).write_text(json.dumps({**facts, **bad}), encoding="utf-8")
+        with pytest.raises(ValueError, match="closure facts|measured file"):
+            stage(staging_case, outcome="POSITIVE_UNDER_CONTRACT", decision_ref="explicit_decision.md",
+                role_audit=audit_files(staging_case), _strict_transaction=True, facts_ref=facts_ref)
+    (root / first).write_text(json.dumps(facts), encoding="utf-8")
     result = stage(staging_case, outcome="POSITIVE_UNDER_CONTRACT", decision_ref="explicit_decision.md",
-        role_audit=audit_files(staging_case), _strict_transaction=True)
+        role_audit=audit_files(staging_case), _strict_transaction=True, facts_ref=facts_ref)
     assert result["status"] == "STAGED_CLOSURE_READY", result
-    for paths in result["paths"].values():
+    for arm, paths in result["paths"].items():
         package = json.loads(Path(paths["terminal"]).read_bytes())
         assert package["decision"]["outcome"] == "POSITIVE_UNDER_CONTRACT"
+        assert package["decision"]["facts"] == facts
+        assert package["artifact_hashes"][facts_ref[arm]] == file_digest(root / facts_ref[arm])
         assert package["evidence"]["outcome"]["scientific_status"] == "POSITIVE_UNDER_CONTRACT"
         assert package["trace_manifest"]["backtest_eligibility"]["eligible"] is False
         assert package["artifact_hashes"]["explicit_decision.md"] == file_digest(decision)
@@ -110,6 +128,11 @@ def test_explicit_decision_and_observed_audit_enable_reviewed_closure(staging_ca
     assert all("positive_or_ready_requires_owning_scientific_acceptance" in paths["blockers"]
         for paths in ready["paths"].values())
     descriptor = build_verified_terminal_descriptor(root, resolved["spec"], outputs=resolved["outputs"], locations=result["locations"])
+    # Finalization re-verifies every bound hash, so an edited facts file cannot close.
+    (root / first).write_text(json.dumps({**facts, "failure_mode": "endpoint_regression"}), encoding="utf-8")
+    tampered = close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
+    assert tampered["status"] != "COMPLETE" and "SHA mismatch" in json.dumps(tampered), tampered
+    (root / first).write_text(json.dumps(facts), encoding="utf-8")
     closure = close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
     assert closure["status"] == "COMPLETE", closure
     for where in resolved["locations"].values():

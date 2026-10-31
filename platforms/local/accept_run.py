@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 
-_CLOSURE_REPLACES = {"--outcome", "--arm-outcome", "--decision-ref", "--arm-decision-ref", "--role-audit"}
+_CLOSURE_REPLACES = {"--outcome", "--arm-outcome", "--decision-ref", "--arm-decision-ref", "--arm-facts-ref", "--role-audit"}
 
 
 def _expand_closure_input(arguments):
@@ -34,7 +34,8 @@ def _expand_closure_input(arguments):
     expanded = []
     for arm, item in arms.items():
         expanded += ["--arm-outcome", f"{arm}={item['outcome']}",
-                     "--arm-decision-ref", f"{arm}={item['decision_ref']}"]
+                     "--arm-decision-ref", f"{arm}={item['decision_ref']}",
+                     *(["--arm-facts-ref", f"{arm}={item['facts_ref']}"] if "facts_ref" in item else [])]
     if role_audit is not None:
         expanded += ["--role-audit", role_audit]
     return [*rest, *expanded]
