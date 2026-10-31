@@ -351,6 +351,37 @@ def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_r
     return drafted
 
 
+def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
+                  protected_role_use=None, continuation_receipt=None, role_id="internal_development"):
+    """Draft the mechanical parts of a closure: role audits, measured numbers, closure_input.draft.json.
+
+    The draft leaves outcome and decision_ref empty, so the closure loader rejects it until a
+    human fills them in. Numbers come from the run's saved development predictions only.
+    """
+    from .experiment_run import resolve_run_acceptance_inputs
+    from .research_memory.saved_analysis import run as analyze
+    drafted = draft_run_role_audits(profile, repo_root, run_id, attempt_id, retrieved_root=retrieved_root,
+        output_dir=output_dir, protected_role_use=protected_role_use, continuation_receipt=continuation_receipt)
+    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+        retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
+    root = Path(repo_root).resolve()
+    arms = resolved["spec"].to_dict()["arms"]
+    paths = {arm["arm_id"]: Path(resolved["outputs"][arm["arm_id"]]["output_dir"]) / "development_predictions.pt"
+             for arm in arms}
+    references = [a["arm_id"] for a in arms if a.get("scientific_role") == "reference"]
+    pairs = [(a["arm_id"], references[0]) for a in arms
+             if a.get("scientific_role") == "candidate" and len(references) == 1]
+    measured = (analyze("summary", paths, role_id=role_id, pairs=pairs or None)
+                if len(paths) > 1 and all(p.is_file() for p in paths.values()) else None)
+    out = Path(output_dir)
+    publish_immutable_bytes(repo_local_path(root, out / f"measured_{run_id}.json"), json_bytes(measured))
+    audit_map = (out / "audit_map.json").as_posix()
+    draft = {"arms": {arm: {"outcome": "", "decision_ref": ""} for arm in drafted}, "role_audit": audit_map}
+    publish_immutable_bytes(repo_local_path(root, out / "closure_input.draft.json"), json_bytes(draft))
+    return {"status": "DRAFT", "measured": measured is not None, "roles": drafted,
+            "draft": (out / "closure_input.draft.json").as_posix(), "outcome_required_from_human": True}
+
+
 def write_role_audits(repo_root, resolved, output_dir, protected_role_use=None, data_root=None):
     """Draft and publish one audit per resolved arm (``spec``, ``contexts``, ``locations``, ``outputs``)."""
     root, drafted = Path(repo_root).resolve(), {}
