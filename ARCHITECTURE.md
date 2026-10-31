@@ -79,9 +79,7 @@ ownership index, not execution authority or a copy of scientific contracts.
 | `hierarchical_external_eval.py` | Paired same-molecule external evaluation of the hierarchical Fusion | Changing how a hierarchical candidate is compared against its own 2D base |
 | `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set fed to a 3D encoder |
 | `model_reporting.py` | Evidence-backed comparison tables | Changing production-model reporting layout |
-| `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `fusion.py` | `FusionHead` | Changing embedding-level fusion |
-| `hybrid.py` | `EndToEndHybrid` | Jointly training 2D, 3D, and fusion components |
 | `inference.py` | Model loading, batch prediction, routing, embeddings, UQ API | Changing prediction behavior |
 | `inference_benchmark.py` | Warm new-SMILES latency, throughput, and checkpoint-hash evidence | Changing how inference cost is measured |
 | `__init__.py` | Lazy package-level public exports | Changing the public import surface |
@@ -121,9 +119,7 @@ ownership index, not execution authority or a copy of scientific contracts.
 | `router.py` | Router losses, descriptors, policies, projectors | Changing learned routing research code |
 | `router_sampling.py` | Diverse selection and scaffold keys | Changing Router sampling |
 | `utils.py` | Shared splits, metrics, SMILES, fingerprints, and IO | Changing cross-cutting utilities |
-| `tensornet.py`, `visnet.py` | Vendored closed 3D A/B implementations | Reproducing `experiments/_closed/ab3d/comparison.md` only |
-| `late_router.py` | Conservative late blending between frozen predictors | Reproducing the closed late-blend branch only |
-| `archive/phase8_*` | Closed reusable experiment snapshots | Reproducing the linked archive branch only |
+| `tensornet.py` | Vendored closed 3D A/B implementation | Reproducing `experiments/_closed/ab3d/comparison.md` only |
 
 ## Loading Structure
 
