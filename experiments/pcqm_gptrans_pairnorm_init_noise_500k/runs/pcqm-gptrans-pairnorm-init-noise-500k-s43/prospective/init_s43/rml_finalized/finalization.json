@@ -1,0 +1,51 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-e1cd9dc91ed5e6dc5378249e6c74b7d8bd34982a118808e998ac50ed21bd7e7c",
+  "finalized_at": "2026-10-31T04:14:16.880449+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md": "0aded9ffedc215ff2fd41d865f22beb3449538e79076d46708370eb840237dda",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/generated/0da5c6fb61b8845f69dc4b3b7cb5707fac8af08eb2ca078f7af76fb79724b520/init_s43/recipe.json": "471ad2fb6785a1af128fbb5cccbb9a81c56c0b1c90064b692d82a098285bbc28",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s43/roles_init_s43.json": "c5681d60658fa003d5b015456ab1610238c26aee3a3d8f29cf83137be09cfac7",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/terminal_staging/v1/c36ab3202bb6a387/acceptance.json": "e02c8e091bfdf47b20b564ed7ba985127465290f7d0e6bf82177578265cbf5f4",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/terminal_staging/v1/c36ab3202bb6a387/observed.json": "020ffe25128b0e19cbb547c9ed06b21dd31a76fef14774764b7cb18fb1925a24",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/strict_qualification/01674f002e108000c6cc/init_s43/reference_bundle.json": "3ad13b525b2ec9af4de23dea350846eb8e9741ad9938ab427913eb6cfb02de0a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/allocation_ledger.json": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/execution_retention.json": "83dfc6785129a962e3ea1d6eefe9cac519c1f5e62693a82c76696b4bb10d1332",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/init_s43/allocation_ledger.json": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/canonical_trace.json": "722f43effa1ffe856ba2ce72b81e5be06f7231703a4c92247011f9954d1ff4c5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/canonical_trace.json.context.json": "33eefee62d5c6dea7419e6a14afd3c04964c2f99eb33c1c939f5ed15e84b4948",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/data_open_provenance.json": "73ad1b245aba6e65f328d5ab47daa8ea4254a37278a8a0e11b011ea0ee1c5803",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/development_predictions.pt": "818b0b041919f53e31667c201ad926d56bf7d8e59c352056c912a2d63e6f6a62",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/last_checkpoint.pt": "af709cc655cbcbd33ede294f09576dca78caad1385e91d61520850ceb4b9c52a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/output_manifest.json": "9f5131f307df7ee373e066c36afa96f17c84767c8712ead844b8073ce77457ac",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/selected_model.pt": "13369b0ac07b71177f8d4a7a4c29f98c4ad9b892ac65fbb6e93b97a1a24a06ba",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s43/training_contract.json": "471ad2fb6785a1af128fbb5cccbb9a81c56c0b1c90064b692d82a098285bbc28",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/reports/diagnostic_be5fc0fefd811f87880ddf02f1884931c599fa88c914345be08cdd33d89f9e30.json": "ebe30d9c7a94b95c40a291d9a8afb246c916bdf82b1691037b9a0e144e5680cc"
+  },
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "prospective_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/trajectory.json",
+  "prospective_sha256": "9ff2e91e80a6acf4fde13c45aab5dc50cddf2c5aec67d86954737a9cc27f7382",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-0.json": "2830378d848a7b2539261379429721aa0bfdb5fc1c3189b4c26d1712108e6122",
+    "costs/cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-allocation-0.json": "6b7e840a1d8d2d5cec79161319a0cb9919afc0aad72064e98cf461d6bb524f6e",
+    "roles/role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-labels_read.json": "437e5ae5aae10185cbebe7a39225d4365b06cf11929b25e8ceddc04f02d9362b",
+    "roles/role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-metric_computed.json": "290b3293ea0c44665e36ea6199251db1455ec86ae4f5e0d439f1bf1ce0940b95",
+    "roles/role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-prediction_input.json": "f2fbeb4aed720c5674469afe89ee9bc3a4b74b0ba8fbeb4cbb9559524343328f",
+    "roles/role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-development-selection_used.json": "3b1fe7d42b3b594cd0e5d0fcbd7d64680e2c7e6cb6442ed22713302dc6efcd27",
+    "roles/role-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43-train-training_membership.json": "bd9bdbf60c9f10de0b55f75609bcc43b704dbe864aba7de4df0f5680c3953569",
+    "terminal_input.json": "3003f394243052bb881397b52656262cba6a1c7e107503c8ed8057c27bcc3a7b",
+    "trace.json": "722f43effa1ffe856ba2ce72b81e5be06f7231703a4c92247011f9954d1ff4c5",
+    "trace_manifest.json": "e0da162b5a5721ac71886fafdb63df6bda0db3d3427f09197651ec87a3a391bd",
+    "trajectory.json": "b2d10e84bb34693ef8c953e29f0bc7e7bf681b7e49d7d4bd41e238e2f1500fbe",
+    "v5_evidence.json": "f2c85c103f33b5f730614fd40b9b7db1a9582a1239ab012fd958e2426cc1b2c4"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s43/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "e1cd9dc91ed5e6dc5378249e6c74b7d8bd34982a118808e998ac50ed21bd7e7c",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43"
+}
