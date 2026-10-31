@@ -3,15 +3,21 @@
 from __future__ import annotations
 
 import hashlib
+from functools import lru_cache
 from pathlib import Path, PureWindowsPath
 from urllib.parse import quote, unquote, urlparse
 
 from molgap.evidence_pointers import ALLOWED_REMOTE_SCHEMES
 
 
+@lru_cache(maxsize=16)
+def _resolved_root(repo_root: str) -> Path:
+    return Path(repo_root).resolve()
+
+
 def repo_local_path(repo_root: str | Path, value: str | Path) -> Path:
     """Reject traversal before normalization and escapes through existing links."""
-    root = Path(repo_root).resolve()
+    root = _resolved_root(str(repo_root))
     raw = str(value)
     if not raw or "://" in raw:
         raise ValueError("a local filesystem path is required, not a metadata URI")
