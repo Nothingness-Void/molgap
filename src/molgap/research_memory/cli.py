@@ -99,7 +99,9 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.command == "validate":
         validated = validate_repository_records(root)
-        print(json.dumps({key: len(value) for key, value in validated["records"].items()}, indent=2))
+        summary = {key: len(value) for key, value in validated["records"].items()}
+        summary["known_gaps"] = validated["known_gaps"]
+        print(json.dumps(summary, indent=2))
         return
     if args.command == "rebuild":
         payloads = rebuild_research_memory(root)
