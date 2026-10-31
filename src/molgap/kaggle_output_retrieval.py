@@ -102,7 +102,7 @@ def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
         unselected_outputs_downloaded=False)
 
 
-def _selected_files(files: Mapping[str, Any]) -> dict[str, tuple[str, str]]:
+def _selected_files(files: Mapping[str, Any], *, observe: bool = False) -> dict[str, tuple[str, str | None]]:
     if not isinstance(files, Mapping) or not files:
         raise ValueError("Selected output files must be a non-empty mapping")
     selected: dict[str, tuple[str, str]] = {}
@@ -114,7 +114,8 @@ def _selected_files(files: Mapping[str, Any]) -> dict[str, tuple[str, str]]:
             raise ValueError("Selected output binding must contain a local path and SHA256")
         local, digest = value
         _path(local)
-        _digest(digest, str(local))
+        if digest is not None or not observe:
+            _digest(digest, str(local))
         if remote in selected or local.casefold() in local_paths:
             raise ValueError("Selected output paths are aliased")
         selected[remote] = (local, digest)
@@ -184,7 +185,8 @@ def retrieve_selected_kaggle_files(api, *, context, remote_manifest_path: str,
 
 def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                                files: Mapping[str, Any], destination: Path,
-                               http_session=None, sizes=None, on_plan=None, _plan=None) -> dict:
+                               http_session=None, sizes=None, on_plan=None, _plan=None,
+                               observe: bool = False) -> dict:
     """Stream manifest-bound files at one physical version, without directory scans.
 
     A retained environment can contain thousands of unrelated files; enumerating
@@ -199,12 +201,12 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
         version = int(version)
     if type(version) is not int or version < 1:
         raise ValueError("Exact artifact retrieval requires a physical version number")
-    required = _selected_files(files)
+    required = _selected_files(files, observe=observe)
     if len(required) > 4096:
         raise ValueError("Exact artifact allowlist exceeds the bounded request budget")
     # Only the synchronous adapter can supply its already checked plan.
     # Independent calls always inspect the retained bytes again.
-    plan = _plan if _plan is not None else plan_pinned_files(required, destination, sizes=sizes)
+    plan = _plan if _plan is not None else plan_pinned_files(required, destination, sizes=sizes, observe=observe)
     if on_plan is not None:
         on_plan(plan)
     reused = {row["remote_path"] for row in plan["files"] if row["state"] == "ALREADY_RETAINED"}
@@ -223,8 +225,8 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
                 redirect = client.kernels.kernels_api_client.download_kernel_output(request)
             except Exception:
                 raise RuntimeError("Exact artifact redirect failed; no list/bulk fallback") from None
-            retained.extend(_download_selected(urls={remote: redirect.url},
-                required={remote: (local, pin)}, destination=destination, http_session=http_session))
+            retained.extend(_download_selected(urls={remote: redirect.url}, required={remote: (local, pin)},
+                destination=destination, http_session=http_session, observe=observe))
     downloaded = sum(item["state"] != "ALREADY_RETAINED" for item in retained)
     return dict(kernel=context.run_reference, receipt_version=context.platform_version, files=retained,
         retrieval_plan=plan,
@@ -233,14 +235,14 @@ def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
         platform_version_verified_by_output_api=bool(downloaded))
 
 
-def plan_pinned_files(files, destination, *, sizes=None):
+def plan_pinned_files(files, destination, *, sizes=None, observe=False):
     """Exact allowlist and known/unknown transfer bytes, before payload requests."""
     rows = []
-    for remote, (local, pin) in _selected_files(files).items():
+    for remote, (local, pin) in _selected_files(files, observe=observe).items():
         target = repo_local_path(Path(destination).absolute(), local)
         _safe_local(target)
         present = target.is_file()
-        if target.exists() and (not present or file_digest(target) != pin):
+        if target.exists() and (not present or (pin is not None and file_digest(target) != pin)):
             raise ValueError("Retained exact output conflicts with pinned artifact")
         size = target.stat().st_size if present else (sizes or {}).get(remote)
         if size is not None and (type(size) is not int or size < 0):

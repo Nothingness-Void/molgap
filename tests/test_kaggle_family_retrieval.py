@@ -288,6 +288,38 @@ def test_downloads_only_five_manifest_artifacts_and_manifest_with_full_paths(
     ).read_bytes() == case["local_manifest"].read_bytes()
 
 
+def test_paused_arm_records_digests_at_download_and_binds_the_receipt(tmp_path, monkeypatch):
+    retrieve = _module(monkeypatch)
+    context = RunContext(**{**_context().to_dict(), "platform_version": "1"})
+    prefix = f"experiment/{context.arm_id}/"
+    checkpoint = b"synthetic-last-checkpoint"
+    payloads = {name: f"synthetic-{name}".encode() for name in retrieve.PAUSED_ARM_FILES}
+    payloads["last_checkpoint.pt"] = checkpoint
+    payloads["pause_receipt.json"] = json.dumps({"context": context.to_dict(), "status": "PAUSED",
+        "checkpoint_sha256": hashlib.sha256(checkpoint).hexdigest()}).encode()
+    files = {prefix + n: _File(prefix + n, f"https://signed.example/{n}?token=secret") for n in payloads}
+    api = _Api("owning-account", [_ResponsePage(list(files.values()))])
+    http = _Http({files[prefix + n].url: payloads[n] for n in payloads})
+    destination = tmp_path / "paused"
+
+    result = retrieve.retrieve_paused_arm(api, context=context, remote_root="experiment",
+                                          destination=destination, http_session=http)
+
+    assert result["status"] == "PAUSED_RETRIEVED" and result["digest_basis"] == "observed_at_download"
+    for name, data in payloads.items():
+        assert (destination / name).read_bytes() == data
+        assert result["files_observed"][name] == {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+    assert len(http.urls) == len(payloads) and all("secret" not in str(item) for item in result["files"])
+
+    # A receipt for another checkpoint is refused, and the files stay inspectable.
+    payloads["pause_receipt.json"] = json.dumps({"context": context.to_dict(), "status": "PAUSED",
+        "checkpoint_sha256": "0" * 64}).encode()
+    http = _Http({files[prefix + n].url: payloads[n] for n in payloads})
+    with pytest.raises(ValueError, match="Pause receipt"):
+        retrieve.retrieve_paused_arm(api, context=context, remote_root="experiment",
+                                     destination=tmp_path / "paused-bad", http_session=http)
+
+
 @pytest.mark.parametrize("resumed", [False, True])
 @pytest.mark.parametrize("damage", [None, "certificate", "proof"])
 def test_strict_retrieval_uses_native_dependency_inventory_without_tensor_validation(

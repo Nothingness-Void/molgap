@@ -293,6 +293,9 @@ Once the arm manifests sit under `<run>/operations/remote_manifest/`, one call w
 takes each manifest and its digest from the pin and writes to `retrieved/R/A/<arm>`;
 context and remote bytes are still checked per arm. The execution-retention bundle
 keeps its own `--execution-retention` call.
+A STOP_FOR_COST run has no `output_manifest.json`; `--all-arms --paused` fetches its declared paused files and records each
+digest and byte count at download (`observed_at_download`, integrity from receipt only), then checks the pause receipt's run
+context and checkpoint digest. It is unstrict and not an acceptance.
 
 Retained Spec and recipe readers validate frozen declarations independently of
 the current Addon catalog. Package, receipt and artifact hash bindings still
