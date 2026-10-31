@@ -107,7 +107,7 @@ experiment directory: `monitor_paths` (`STATUS.md`), `role_ref` (`protocol.md`),
 from the authority `account` and the experiment ID, plus the fixed read-only
 `<account>/pcqm4mv2-ogb-fixed-100k-v1` mount) and, when `policy_id` is not
 registered and equals the experiment ID with dashes, a candidate `research_memory/policies/<policy_id>.1.json` whose
-source digest is the `protocol.md` digest. Review and commit that policy file.
+source digest is the `protocol.md` digest. Review it; commit it after submission (a freeze binds HEAD).
 Any of these fields written explicitly in the input wins. The question, arms,
 addon, authority, scope and budget have no default and are never invented.
 `supporting_evidence` takes RML evidence ids only; cite papers in `protocol.md`.

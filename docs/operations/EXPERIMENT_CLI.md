@@ -76,8 +76,8 @@ import, training shortcut, platform submit command or authority override exists.
 The [quickstart](EXPERIMENT_QUICKSTART.md) is the default human-input path.
 `catalog` lists declared family/addon capabilities and their derived execution
 support. `freeze-input --experiment $experiment --repo-root $repoRoot` freezes
-the editable input locally; it is optional because the platform preparation
-entry performs the same operation. The scientific compiler currently supports
+the editable input locally; it is optional (a commit between freeze and prepare needs a new
+`logical_run_id`); preparation performs the same operation. The scientific compiler currently supports
 shared K1/3 and GPTrans/2 parameter/addon deltas; unsupported recipe changes use
 their existing typed builders. Missing authority/reference/target/data identity
 remains a blocker.
