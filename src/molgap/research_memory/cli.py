@@ -34,9 +34,8 @@ def main(argv: list[str] | None = None) -> None:
     cards.add_argument("--outcome")
     cards.add_argument("--term")
     lookup = commands.add_parser("lookup")
-    lookup.add_argument("--mechanism")
-    lookup.add_argument("--failure-mode")
-    lookup.add_argument("--family")
+    for flag in ("--mechanism", "--failure-mode", "--family", "--term"):
+        lookup.add_argument(flag)
     commands.add_parser("gaps")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
@@ -171,7 +170,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.command in {"lookup", "gaps"}:
         from . import cards as _cards
         built = _cards.build_cards(root, with_effects=True)
-        result = (_cards.lookup(built, mechanism=args.mechanism, failure_mode=args.failure_mode, family=args.family)
+        result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
                   if args.command == "lookup" else _cards.gaps(built))
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return

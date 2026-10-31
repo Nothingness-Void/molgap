@@ -805,8 +805,9 @@ def test_invalid_derived_output_is_rejected(compiled_payloads):
 
 
 def test_cards_filter_by_outcome_and_term(tmp_path):
-    from molgap.research_memory.cards import select
+    from molgap.research_memory.cards import _keywords, select
 
+    assert _keywords("training mean of all two atom pair norm", "pcqm-k1-sam-100k") == ["norm", "pair", "sam"]
     cards = [
         {"outcome": "NEGATIVE_UNDER_CONTRACT", "mechanism": "sharpness-aware step", "keywords": ["sharpness"]},
         {"outcome": "POSITIVE_UNDER_CONTRACT", "mechanism": "pair norm", "keywords": ["pair"]},
@@ -828,5 +829,8 @@ def test_lookup_and_gaps_are_read_only_views():
     found = lookup(cards, mechanism="norm")
     assert [u["family_id"] for u in found["unfalsified"]] == ["b-100k", "b-500k"]
     assert lookup(cards, family="a-")["matches"] == cards[:1]
-    flagged = gaps(cards)["contradictions"]
-    assert len(flagged) == 2 and flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
+    assert lookup(cards, mechanism="b-5")["matches"] == cards[2:]  # family_id is part of the mechanism match
+    assert lookup(cards, term="1.0", mechanism="norm")["matches"] == cards[:1]
+    flagged = gaps(cards)["contradictions"]  # same arm "b" across scales; "a" has no 500K partner
+    assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
+    assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
