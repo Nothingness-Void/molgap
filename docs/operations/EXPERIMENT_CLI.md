@@ -160,6 +160,8 @@ above. It cannot be combined with the individual outcome, decision or role-audit
 options, and the acceptance owner still validates every value. The closure file and
 `role_audit` paths resolve from the current directory; each `decision_ref` resolves
 from the repository root.
+`experiment_cli draft-closure` (flags of `draft-role-audit` plus `--output-dir`) drafts
+that file, the role audits and `measured_<run>.json`; fill `outcome` and `decision_ref`.
 Explicit reviewed `--locations` skips default staging; an explicit
 `--stage-terminal` still requests the stager.
 With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or
