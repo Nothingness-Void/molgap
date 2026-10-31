@@ -24,6 +24,7 @@ from torch_geometric.data import Data, InMemoryDataset
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import global_add_pool, global_mean_pool
 from torch_geometric.nn.conv import MessagePassing
+from .training_reproducibility import sha256_file
 
 SEED = 42
 OFFICIAL_TRAIN_ROWS = 3_378_606
@@ -71,14 +72,6 @@ def atomic_csv(path: Path, rows: list[dict]) -> None:
         writer.writeheader()
         writer.writerows(rows)
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def selected_train_indices(seed: int = SEED) -> np.ndarray:

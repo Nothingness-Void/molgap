@@ -28,6 +28,7 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
 from .pair_gps_2d import PairGPS2DWrapper
+from .training_reproducibility import sha256_file
 
 
 TARGET_NAMES = ("homo", "lumo", "gap")
@@ -36,14 +37,6 @@ EDGE_DIM = 4
 NODE_DIM = len(ATOM_LIST) + 3
 SHARD_RE = re.compile(r"^graphs_(\d{7})_(\d{7})\.pt$")
 FORMAT = "molgap-pubchemqc-pair-gps-2d-v1"
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _atomic_json(value: object, path: Path) -> None:

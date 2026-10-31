@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 
 import numpy as np
+from .training_reproducibility import sha256_file
 
 
 TRAINING_ROOT = Path("/lustre/home/users/sm2/chou/molgap-k1-gpttrans-full")
@@ -25,14 +26,6 @@ OFFICIAL_ARCHIVE_SHA256 = (
 )
 CALIBRATION_MODULUS = 5
 CALIBRATION_REMAINDER = 0
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, value: dict) -> None:
