@@ -77,14 +77,18 @@ def artifact_locator(root: str | Path, path: str | Path) -> str:
         return locator
 
 
+def file_digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
     path = (bound_artifact_path(root, pointer) if pointer.startswith("external://")
             else resolve_repo_pointer(root, pointer))
     if path is None:
         raise ValueError(f"bound artifact must be repository-local: {pointer}")
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    if digest.hexdigest() != expected_sha256:
+    if file_digest(path) != expected_sha256:
         raise ValueError(f"bound artifact SHA mismatch: {pointer}")

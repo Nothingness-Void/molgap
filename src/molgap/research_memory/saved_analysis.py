@@ -13,17 +13,11 @@ from pathlib import Path
 
 import numpy as np
 
+from .paths import file_digest
+
 PROTECTED_ROLES = frozenset({"official_validation", "test_dev", "test_challenge"})
 OPS = ("paired", "ensemble-curve", "residual-corr")
 _MEV = 1000.0
-
-
-def _sha(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def load_aligned(paths):
@@ -82,7 +76,7 @@ def run(op, paths, *, role_id, n_bootstrap=2000, seed=42):
         pairs = {f"{i}-{j}": float(corr[i, j]) for i, j in itertools.combinations(range(len(names)), 2)}
         results = {"members": names, "pair_correlation": pairs,
                    "mean_pair_correlation": float(np.mean(list(pairs.values())))}
-    return {"op": op, "role_id": role_id, "inputs": [{"path": n, "sha256": _sha(Path(n))} for n in names],
+    return {"op": op, "role_id": role_id, "inputs": [{"path": n, "sha256": file_digest(Path(n))} for n in names],
             "row_count": int(len(ids)), "source_idx_sha256": hashlib.sha256(ids.astype("<i8").tobytes()).hexdigest(),
             "results": results, "posthoc": True}
 

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 from collections.abc import Iterable, Mapping
 from pathlib import Path
@@ -11,7 +10,7 @@ from typing import Any
 from molgap.evidence_pointers import (
     load_json_object as load_json,
 )
-from .paths import resolve_repo_pointer, verify_bound_artifact
+from .paths import file_digest, resolve_repo_pointer, verify_bound_artifact
 from .paired import pair_binding, reference_trajectory
 from molgap.v5_common import (
     reference_bundle_digest,
@@ -189,7 +188,7 @@ def validate_repository_records(repo_root: str | Path, *, verify_comparison_arti
             erratum = errata.get((pointer, digest))
             if erratum is None:
                 raise
-            observed = hashlib.sha256(resolve_repo_pointer(root, pointer).read_bytes()).hexdigest()
+            observed = file_digest(resolve_repo_pointer(root, pointer))
             if erratum["observed_sha256"] != observed:
                 raise
             known_gaps.append(pointer)
