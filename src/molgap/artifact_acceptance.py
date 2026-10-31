@@ -14,14 +14,7 @@ from torch_geometric.loader import DataLoader
 
 from .pubchemqc_architecture import MODEL_CONFIG
 from .schnet import SchNetWrapper
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+from .training_reproducibility import sha256_file
 
 
 def _atomic_json(path: Path, value: object) -> None:

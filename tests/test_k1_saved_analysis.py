@@ -321,3 +321,24 @@ def test_adapter_finalized_retry_delegates_without_overwriting(tmp_path, monkeyp
     atomic_json.assert_not_called()
     git.assert_not_called()
     assert {path: path.read_bytes() for path in experiment.rglob("*") if path.is_file()} == before
+
+
+def test_research_memory_analyze_ensemble_and_refusals(tmp_path):
+    from molgap.research_memory.saved_analysis import run, write_output
+    ids, target = torch.arange(100, 108), torch.linspace(-1, 1, 8)
+    paths = []
+    for i, offset in enumerate((.1, -.1, .1)):
+        path = tmp_path / f"p{i}.pt"
+        torch.save({"source_idx": ids, "target_eV": target, "prediction_eV": target + offset}, path)
+        paths.append(path)
+    result = run("ensemble-curve", paths, role_id="internal_development")
+    assert result["posthoc"] is True and result["row_count"] == 8
+    assert result["results"]["mae_by_n_members_meV"]["1"] == pytest.approx(100.)
+    assert result["results"]["mae_by_n_members_meV"]["3"] == pytest.approx(100. / 3)
+    with pytest.raises(ValueError, match="protected"):
+        run("paired", paths, role_id="test_dev")
+    torch.save({"source_idx": ids + 1, "target_eV": target, "prediction_eV": target}, tmp_path / "x.pt")
+    with pytest.raises(ValueError, match="differ"):
+        run("paired", [paths[0], tmp_path / "x.pt"], role_id="internal_development")
+    with pytest.raises(ValueError, match="scratch"):
+        write_output(result, tmp_path / "research_memory" / "derived" / "o.json", tmp_path)

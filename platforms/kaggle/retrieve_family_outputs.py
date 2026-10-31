@@ -212,6 +212,37 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
     return manifest, required
 
 
+# What a paused (STOP_FOR_COST) arm retains; matches experiment_resume's required/sidecar files.
+PAUSED_ARM_FILES = ("pause_receipt.json", "last_checkpoint.pt", "canonical_trace.json",
+    "canonical_trace.json.context.json", "selected_model.pt", "development_predictions.pt",
+    "runtime_certificate.json", "runtime_provenance.json", "training_contract.json",
+    "allocation_costs.json", "allocation_ledger.json", "invocation_cost_state.json", "preflight_costs.json")
+
+
+def retrieve_paused_arm(api, *, context: RunContext, remote_root: str, destination: Path,
+                        http_session=None, on_plan=None) -> dict:
+    """Fetch a paused arm's declared files at the receipt version; digests are observed at download.
+
+    A paused run has no output_manifest.json, so nothing pre-pins these bytes. The
+    pause receipt is read back and must carry this exact run context and the
+    checkpoint digest of the bytes just received. Integrity holds from receipt only.
+    """
+    version = context.platform_version
+    prefix = PurePosixPath(remote_root) / context.arm_id
+    files = {(prefix / name).as_posix(): (name, None) for name in PAUSED_ARM_FILES}
+    result = retrieve_pinned_exact_files(api, context=context, remote_manifest_path=(prefix / "pause_receipt.json").as_posix(),
+        files=files, destination=destination, http_session=http_session, on_plan=on_plan, observe=True)
+    receipt = _json(destination / "pause_receipt.json")
+    _check_context(receipt["context"], context)
+    if (receipt.get("status") != "PAUSED"
+            or receipt.get("checkpoint_sha256") != file_digest(destination / "last_checkpoint.pt")):
+        raise ValueError("Pause receipt does not match the retrieved checkpoint")
+    result.update(status="PAUSED_RETRIEVED", producer_version=version, digest_basis="observed_at_download",
+                  files_observed={item["path"]: {k: item[k] for k in ("sha256", "bytes") if k in item}
+                                  for item in result["files"]})
+    return result
+
+
 def retrieve_execution_retention(api, *, context, spec, remote_manifest_path: str,
                                  local_manifest: Path, manifest_sha256: str,
                                  destination: Path, http_session=None, _plan=None) -> dict:
@@ -261,6 +292,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
     parser.add_argument("--remote-root", default="experiment",
                         help="Registered bootstrap output prefix; override only for a known legacy layout")
     parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--paused", action="store_true",
+                        help="Retrieve a STOP_FOR_COST run's paused files; digests are observed at download")
     parser.add_argument("--execute", action="store_true",
                         help="Download missing manifests, arm outputs and execution costs; default is local planning")
     stage = "arguments"
@@ -268,6 +301,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
         args = parser.parse_args(argv)
         if bool(args.credentials) != (args.execute or status_only):
             raise ValueError("Use credentials with --execute or --status")
+        if args.paused and (args.strict or args.resume_prepared is not None):
+            raise ValueError("A paused run has no strict evidence; retrieve it unstrict")
         _path(args.remote_root)
         if args.resume_prepared is not None and (not args.strict or args.continuation_receipt is None):
             raise ValueError("Resume retrieval needs strict mode and its receipt")
@@ -288,37 +323,53 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 raise ValueError("A reconciled numeric Kaggle version is required")
             pinned = prepared.parent / "operations/remote_manifest" / ("version" + version)
             destination = paths.artifact_root / "retrieved" / args.run_id / args.attempt_id / ("version" + version)
-            names = {arm: args.remote_root + "/" + arm + "/output_manifest.json" for arm in contexts}
-            names["_execution"] = args.remote_root + "/execution_retention.json"
-            missing = [name for name in names.values() if not (pinned / name).is_file()]
-            stage = "scheduler"
-            if status_only or (args.execute and missing):
-                api = connect_kaggle(args.credentials)
-                if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
-                    raise ValueError("Credential owner differs from original receipt")
-                source = kernel_source(api, context.run_reference)
-                latest_version = source.metadata.current_version_number if source is not None else None
-                # Kaggle status has no version parameter. Only output downloads
-                # bind an exact version; a newer active run must not block them.
-                observed = api.kernels_status(context.run_reference)
-                scheduler = str(observed.status).lower().split(".")[-1]
-                if status_only or (latest_version == int(version)
-                        and scheduler not in {"complete", "error", "failed", "cancelled", "canceled", "cancel_acknowledged"}):
-                    result = {"status": "OBSERVED" if status_only else "WAIT_REMOTE_TERMINAL",
-                        "kernel": context.run_reference, "version": version, "scheduler": scheduler,
-                        "scheduler_scope": "latest", "observed_latest_version": latest_version,
-                        "submitted": False, "downloaded_files": 0}
+            if args.paused:
+                stage = "paused_retrieval"
+                _safe_local(destination)
+                if not args.execute:
+                    result = {"status": "READY_FOR_RETRIEVAL", "paused": True, "version": version,
+                              "files": list(PAUSED_ARM_FILES), "arms": sorted(contexts)}
+                else:
+                    api = connect_kaggle(args.credentials)
+                    if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
+                        raise ValueError("Credential owner differs from original receipt")
+                    paused = {arm: retrieve_paused_arm(api, context=contexts[arm], remote_root=args.remote_root,
+                                                       destination=destination / arm) for arm in contexts}
+                    result = {"status": "PAUSED_RETRIEVED", "version": version, "scientific_acceptance": False,
+                              "arms": {arm: {"digest_basis": item["digest_basis"], "files": item["files_observed"]}
+                                       for arm, item in paused.items()}}
+            else:
+                names = {arm: args.remote_root + "/" + arm + "/output_manifest.json" for arm in contexts}
+                names["_execution"] = args.remote_root + "/execution_retention.json"
+                missing = [name for name in names.values() if not (pinned / name).is_file()]
+                stage = "scheduler"
+                if status_only or (args.execute and missing):
+                    api = connect_kaggle(args.credentials)
+                    if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
+                        raise ValueError("Credential owner differs from original receipt")
+                    source = kernel_source(api, context.run_reference)
+                    latest_version = source.metadata.current_version_number if source is not None else None
+                    # Kaggle status has no version parameter. Only output downloads
+                    # bind an exact version; a newer active run must not block them.
+                    observed = api.kernels_status(context.run_reference)
+                    scheduler = str(observed.status).lower().split(".")[-1]
+                    if status_only or (latest_version == int(version)
+                            and scheduler not in {"complete", "error", "failed", "cancelled", "canceled", "cancel_acknowledged"}):
+                        result = {"status": "OBSERVED" if status_only else "WAIT_REMOTE_TERMINAL",
+                            "kernel": context.run_reference, "version": version, "scheduler": scheduler,
+                            "scheduler_scope": "latest", "observed_latest_version": latest_version,
+                            "submitted": False, "downloaded_files": 0}
+                    else:
+                        result = None
+                        stage = "remote_manifests"
+                        retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
+                            version=int(version), paths=missing, destination=pinned)
                 else:
                     result = None
-                    stage = "remote_manifests"
-                    retrieve_exact_metadata(api, account=context.account, kernel=context.run_reference,
-                        version=int(version), paths=missing, destination=pinned)
-            else:
-                result = None
         if result is not None:
             print(canonical_json(result))
             return 0
-        if missing and not args.execute:
+        if not args.paused and missing and not args.execute:
             # Hashes of the remote manifests are unknown until fetched; the journal binds only
             # kernel and version. The human runs this command, which pins and then retrieves.
             command = ["--all-arms", "--profile", str(args.profile),

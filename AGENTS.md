@@ -170,6 +170,15 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   debugging or infrastructure tests. Explicit applicable role authority is required.
 - **No fabrication:** missing reference, cost, role, artifact or comparison stays
   missing/pending. No silent reference retraining or synthetic bookkeeping evidence.
+- **Infrastructure budget:** `python platforms/local/infra_budget.py` compares size
+  with [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json); run it before an
+  infrastructure commit. Over a limit blocks that commit, never an experiment. One
+  fact has one owner; bind a hash only to an artifact something consumes. A new
+  experiment adds files under `experiments/<q>/`, one recipe/spec and, if it needs
+  new model code, one self-contained addon module plus its catalog entry; it does not
+  edit shared trainers, verifiers, `.gitattributes` or tests. Those changes need their
+  own approved infrastructure commit. A fix deletes at least what it adds or cites an
+  observed failure. A new format version names the removal date of the one it replaces.
 
 ## Branch Ownership
 

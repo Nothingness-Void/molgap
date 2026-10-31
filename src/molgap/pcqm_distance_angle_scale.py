@@ -14,6 +14,7 @@ import random
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
+from .training_reproducibility import sha256_file
 
 
 SUBSET_FORMAT = "molgap-pcqm-edgestate304-500k-subset-v1"
@@ -74,14 +75,6 @@ def atomic_torch_save(path: Path, payload: object) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     torch.save(payload, temporary)
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def state_sha256(model) -> str:
