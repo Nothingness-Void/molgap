@@ -33,6 +33,11 @@ def main(argv: list[str] | None = None) -> None:
     cards = commands.add_parser("cards")
     cards.add_argument("--outcome")
     cards.add_argument("--term")
+    lookup = commands.add_parser("lookup")
+    lookup.add_argument("--mechanism")
+    lookup.add_argument("--failure-mode")
+    lookup.add_argument("--family")
+    commands.add_parser("gaps")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
@@ -61,8 +66,10 @@ def main(argv: list[str] | None = None) -> None:
     recovery.add_argument("--spec", required=True)
     recovery.add_argument("--output", required=True)
     analyze = commands.add_parser("analyze")
-    analyze.add_argument("--op", required=True, choices=("paired", "ensemble-curve", "residual-corr"))
-    analyze.add_argument("--predictions", nargs="+", required=True)
+    from .saved_analysis import OPS
+    analyze.add_argument("--op", required=True, choices=OPS)
+    analyze.add_argument("--predictions", nargs="+", required=True, help="PATH... or ARM=PATH...")
+    analyze.add_argument("--pair", action="append", default=[], help="CAND=REF arm names (summary op)")
     analyze.add_argument("--role-id", required=True)
     analyze.add_argument("--out", required=True)
     commands.add_parser("replay-pool")
@@ -107,7 +114,9 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.command == "analyze":
         from .saved_analysis import run, write_output
-        result = run(args.op, args.predictions, role_id=args.role_id)
+        named = [p.partition("=")[::2] for p in args.predictions]
+        paths = dict(named) if all(path for _, path in named) else args.predictions
+        result = run(args.op, paths, role_id=args.role_id, pairs=[tuple(p.split("=", 1)) for p in args.pair] or None)
         write_output(result, args.out, root)
         print(json.dumps({"op": args.op, "rows": result["row_count"], "out": args.out, "posthoc": True}))
         return
@@ -158,6 +167,13 @@ def main(argv: list[str] | None = None) -> None:
             )
         else:
             print("RML derived outputs are frozen and current")
+        return
+    if args.command in {"lookup", "gaps"}:
+        from . import cards as _cards
+        built = _cards.build_cards(root, with_effects=True)
+        result = (_cards.lookup(built, mechanism=args.mechanism, failure_mode=args.failure_mode, family=args.family)
+                  if args.command == "lookup" else _cards.gaps(built))
+        print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "cards":
         from .cards import build_cards, select
