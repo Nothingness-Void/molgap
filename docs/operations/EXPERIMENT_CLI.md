@@ -155,13 +155,14 @@ singular values still apply to all arms, and one per-arm option can be combined
 with a shared singular value for the other field.
 `platforms/local/accept_run.py --closure-input FILE` supplies all per-arm decisions
 from one human-authored file, `{"arms": {ARM: {"outcome": ..., "decision_ref":
-...}}, "role_audit": PATH}` (`role_audit` optional), and expands to the options
-above. It cannot be combined with the individual outcome, decision or role-audit
+..., "facts_ref": PATH}}, "role_audit": PATH}` (`facts_ref`, `role_audit` optional), and
+expands to the options above; `facts_ref` becomes `--arm-facts-ref ARM=PATH`
+([closure facts](../../research_memory/README.md#query-analysis-and-corrections)). It cannot be combined with the individual outcome, decision, facts or role-audit
 options, and the acceptance owner still validates every value. The closure file and
 `role_audit` paths resolve from the current directory; each `decision_ref` resolves
 from the repository root.
 `experiment_cli draft-closure` (flags of `draft-role-audit` plus `--output-dir`) drafts
-that file, the role audits and `measured_<run>.json`; fill `outcome` and `decision_ref`.
+that file, the role audits, `measured_<run>.json` and `closure_facts_<arm>.json`; fill `outcome` and `decision_ref`.
 Explicit reviewed `--locations` skips default staging; an explicit
 `--stage-terminal` still requests the stager.
 With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or
@@ -509,6 +510,10 @@ $incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
   adapter, which repeats these checks before POST. This complements real-shard
   and GPU qualification; it grants no training or submission authority. Dynamic
   imports and unselected data/model paths remain outside this local scope.
+- `check-preparation --spec --repo-root --workflow` is a read-only Spec v2 input/plan check
+  (prospective semantics, selected source, upload SHA); it does not replace `check-release`.
+- `prepare-release --spec --repo-root --workflow --output` runs that check, publishes prospective
+  records and stages release inputs into a fresh `--output`; it never selects an account or POSTs.
 - `preflight` reads the fixed `shard_manifest.json` under `--shard-root` and
   passes its path and both independent pins to `run_experiment_preflight`.
   Missing manifests are passed as absent, producing core nonpass reports, never
@@ -562,11 +567,7 @@ READY evidence or replay-ready specs. The prospective fields are declarations,
 not canonical trajectory records. No experiment directory, trajectory or
 evidence package is created for either example.
 
-This CLI has no platform submit command (`SUBMIT_UNIMPLEMENTED`).
-`prepare-workflow` stages the registered Kaggle payload; the platform skill and
-existing adapter publish and submit it. Family/platform-specific legacy
-adapters remain available for their owning contracts.
-K1 and EdgeState now have selected-topology-shard CPU loader-only preflight
+This CLI has no platform submit command (`SUBMIT_UNIMPLEMENTED`). K1 and EdgeState now have selected-topology-shard CPU loader-only preflight
 under the accepted fixed manifests; the result is explicitly partial, not a
 full-role or model check. Their model smoke remains unsupported. See
 [EXPERIMENT_PREFLIGHT.md](EXPERIMENT_PREFLIGHT.md) for the family-specific
