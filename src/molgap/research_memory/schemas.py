@@ -66,7 +66,7 @@ FAILURE_MODES = frozenset({"infra_failure", "gate_or_cost_stop", "lost_at_scale"
 
 def validate_closure_facts(facts: Any) -> dict[str, Any]:
     """Optional per-arm closure facts: interpretation by enum, numbers only from a measured file."""
-    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool)
+    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool) and abs(x) < float("inf")  # no NaN/inf
     ci = _mapping(facts, "closure_facts").get("ci_meV")
     if (facts.get("format") != CLOSURE_FACTS_FORMAT or facts.get("failure_mode") not in FAILURE_MODES | {None}
             or set(facts) - {"format", "failure_mode", "search_terms", "effect_meV", "ci_meV", "source"}
