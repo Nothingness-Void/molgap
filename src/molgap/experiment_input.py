@@ -870,7 +870,7 @@ def local_preparation_error(error,stage):
         "Frozen scientific input changed; create an explicit new run instead of overwriting":("logical_run_id","Scientific input changed; create an explicit new run rather than overwrite this run"),
         "Original frozen inputs are incomplete; reconcile the original freeze":("run.inputs","Original freeze is incomplete; reconcile it without recompiling under a new HEAD"),
     }
-    field,reason=known.get(str(error),("configuration","Local validation failed; check configuration fields and referenced files"))
+    field,reason=known.get(str(error),("configuration","Local validation failed: "+str(error)[:300]))
     if isinstance(error,FileNotFoundError):
         field,reason="referenced_file","A required local file is missing"
     elif isinstance(error,PermissionError):
@@ -903,7 +903,7 @@ def compact_operation_report(result, *, prepared=None, operations=None):
     prepared = result.get("prepared", prepared)
     operations = result.get("operations", operations)
     if prepared is not None and result.get("stage") not in {"workflow_readiness", "acceptance_plan"}:
-        summary["report"] = str(Path(prepared) / "workflow_report.json")
+        summary["report"] = str(Path(prepared) / "workflow_report.json") if (Path(prepared) / "workflow_report.json").is_file() else None
     if operations is not None:
         summary["journal"] = str(Path(operations) / "submission_state.json")
     status = result.get("status", "")
