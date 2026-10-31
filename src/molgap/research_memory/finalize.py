@@ -196,19 +196,36 @@ def current_finalized_directory(repo_root: str | Path, trajectory_or_directory: 
     return current
 
 
-def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
-    """Validate the staged records and cross-links against their eventual view."""
-    from .validate import _trajectory_pointers, validate_repository_records
+def _validate_staged(root: Path, staging: Path, destination: Path) -> list[str]:
+    """Validate the staged records and cross-links against their eventual view.
+
+    Only the IDs of existing records are needed (duplicate and reference checks), so
+    an unrelated historical record that is unreadable never blocks this closure; it is
+    returned for separate reporting instead.
+    """
+    from .discovery import discover_records
+    from .validate import _trajectory_pointers
 
     receipt = verified_receipt(staging)
-    baseline = validate_repository_records(root, verify_comparison_artifacts=False)
-    discovered = baseline["discovered"]
+    discovered = discover_records(root)
     replacements = set(receipt["replacements"].values())
-    ids = {}
+    ids, unreadable = {}, []
+
+    def existing(kind, field):
+        found = set()
+        for p in getattr(discovered, kind):
+            if p.relative_to(root).as_posix() in replacements:
+                continue
+            try:
+                found.add(load_json_object(p)[field])
+            except (OSError, ValueError, KeyError) as exc:
+                unreadable.append(f"{p.relative_to(root).as_posix()}: {type(exc).__name__}")
+        return found
+
     for kind, field in (("trajectories", "trajectory_id"), ("evidence", "evidence_id"),
                          ("costs", "cost_event_id"), ("roles", "role_event_id")):
-        ids[field] = {load_json_object(p)[field] for p in getattr(discovered, kind)
-                      if p.relative_to(root).as_posix() not in replacements}
+        ids[field] = existing(kind, field)
+    bundle_ids = existing("reference_bundles", "reference_bundle_id")
     validators = {"trajectory.json": (validate_trajectory, "trajectory_id"),
                   "v5_evidence.json": (validate_v5_evidence_envelope, "evidence_id"),
                   "trace_manifest.json": (validate_trace_manifest, None)}
@@ -245,8 +262,7 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
         pointer(value)
     state = trajectory["state_at_start"]
     bundle_id = trajectory.get("reference_bundle_id")
-    bundles = {b["reference_bundle_id"]: b for _, b in baseline["records"]["reference_bundles"]}
-    if bundle_id is not None and bundle_id not in bundles:
+    if bundle_id is not None and bundle_id not in bundle_ids:
         raise ValueError("staged trajectory references unknown reference bundle")
     for field, values in (
         ("trajectory_id", state["parent_trajectory_ids"] + state.get("prior_trajectory_ids", [])),
@@ -264,6 +280,7 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
             pointer(manifest[field])
         if manifest["reference_id"] is not None and manifest["reference_id"] not in ids["evidence_id"]:
             raise ValueError("unresolved trace reference")
+    return unreadable
 
 
 def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path,
