@@ -30,11 +30,14 @@ def main(argv: list[str] | None = None) -> None:
     commands.add_parser("validate")
     commands.add_parser("rebuild")
     commands.add_parser("status")
+    term_help = "whole word, case-insensitive, anywhere in the card"
     cards = commands.add_parser("cards")
     cards.add_argument("--outcome")
-    cards.add_argument("--term")
+    cards.add_argument("--term", help=term_help)
     lookup = commands.add_parser("lookup")
-    for flag in ("--mechanism", "--failure-mode", "--family", "--term"):
+    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism field")
+    lookup.add_argument("--term", help=term_help)
+    for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
     commands.add_parser("gaps")
     doctor = commands.add_parser("doctor")
@@ -167,17 +170,15 @@ def main(argv: list[str] | None = None) -> None:
         else:
             print("RML derived outputs are frozen and current")
         return
-    if args.command in {"lookup", "gaps"}:
+    if args.command in {"lookup", "gaps", "cards"}:
         from . import cards as _cards
-        built = _cards.build_cards(root, with_effects=True)
+        built = _cards.build_cards(root)
+        if args.command == "cards":
+            print("\n".join(json.dumps(c, ensure_ascii=False) for c in _cards.select(built, outcome=args.outcome, term=args.term)))
+            return
         result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
                   if args.command == "lookup" else _cards.gaps(built))
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return
-    if args.command == "cards":
-        from .cards import build_cards, select
-        for card in select(build_cards(root), outcome=args.outcome, term=args.term):
-            print(json.dumps(card, ensure_ascii=False))
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"

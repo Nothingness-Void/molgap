@@ -338,18 +338,22 @@ def load_closure_input(path):
     return arms, closure.get("role_audit")
 
 
-def _closure_facts(root, ref, arm_id, hashes):
-    """Bind one optional facts file; its effect must be the measured file's own pair delta."""
-    ref =repo_local_path(root, ref).relative_to(root).as_posix()
+def _closure_facts(root, ref, arm_id, hashes, predictions, outcome):
+    """Bind optional facts; an effect must be a measured pair over this run's predictions vs a CLOSED control arm."""
+    ref = repo_local_path(root, ref).relative_to(root).as_posix()
     hashes[ref] = file_digest(root / ref)
     facts = validate_closure_facts(_json(root / ref))
     if facts.get("effect_meV") is not None or facts.get("ci_meV") is not None:
         source = repo_local_path(root, facts.get("source") or "").relative_to(root).as_posix()
         hashes[source] = file_digest(root / source)
-        pairs = (json.loads((root / source).read_text(encoding="utf-8")) or {}).get("results", {}).get("pairs", [])
+        measured = json.loads((root / source).read_text(encoding="utf-8")) or {}
+        bound = {item.get("sha256") for item in measured.get("inputs") or []} - {None}
         if not any(p["candidate"] == arm_id and [p["delta"], p["ci95"]] == [facts["effect_meV"], facts.get("ci_meV")]
-                   for p in pairs):
-            raise ValueError("Closure facts effect must be copied from the measured file: " + arm_id)
+                   and _per_arm(outcome, p["reference"]) == "CLOSED"
+                   and {predictions.get(arm_id), predictions.get(p["reference"])} <= bound
+                   for p in measured.get("results", {}).get("pairs", [])):
+            raise ValueError("Closure facts effect must be a measured pair over this run's predictions against a "
+                             "reference arm closing CLOSED; set effect_meV, ci_meV and source to null otherwise: " + arm_id)
     return facts
 
 
@@ -583,7 +587,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if explicit_decision is not None:
             explicit_decision = repo_local_path(root, explicit_decision).relative_to(root).as_posix()
             hashes[explicit_decision] = file_digest(root / explicit_decision)
-        facts = ((facts_ref or {}).get(arm_id) and _closure_facts(root, facts_ref[arm_id], arm_id, hashes))
+        facts = ((facts_ref or {}).get(arm_id) and _closure_facts(root, facts_ref[arm_id], arm_id, hashes, {
+            a: r["observed"]["artifacts"].get("predictions", {}).get("sha256") for a, r in reports.items()}, outcome))
         role_use, roles, role_blockers, audit_ref = _roles(root, _per_arm(role_audit, arm_id), context, where, action["action_id"])
         blockers.extend(role_blockers)
         if audit_ref is not None:

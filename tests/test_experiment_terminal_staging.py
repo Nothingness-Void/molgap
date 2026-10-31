@@ -95,31 +95,39 @@ def test_explicit_decision_and_observed_audit_enable_reviewed_closure(staging_ca
     root, resolved = staging_case
     decision = root / "explicit_decision.md"
     decision.write_text("Explicit reviewed positive disposition for the synthetic contract.", encoding="utf-8")
+    ref, cand = sorted(resolved["outputs"])
+    inputs = [{"sha256": file_digest(resolved["outputs"][a]["output_dir"] / "predictions.pt")} for a in (cand, ref)]
+    pair = {"candidate": cand, "reference": ref, "delta": -1.5, "ci95": [-2.0, -1.0]}
     measured = root / "measured_synthetic-run.json"
-    measured.write_text(json.dumps({"results": {"pairs": [{"candidate": arm, "delta": -1.5, "ci95": [-2.0, -1.0]}
-        for arm in resolved["outputs"]]}}), encoding="utf-8")
+    measured.write_text(json.dumps({"inputs": inputs, "results": {"pairs": [pair]}}), encoding="utf-8")
     facts = {"format": "molgap-closure-facts-v1", "failure_mode": "below_gate", "search_terms": ["synthetic"],
              "effect_meV": -1.5, "ci_meV": [-2.0, -1.0], "source": measured.name}
-    facts_ref = {}
-    for arm in resolved["outputs"]:
-        (root / f"closure_facts_{arm}.json").write_text(json.dumps(facts), encoding="utf-8")
-        facts_ref[arm] = f"closure_facts_{arm}.json"
-    first = next(iter(facts_ref.values()))
-    for bad in ({"effect_meV": -1.4}, {"failure_mode": "harmful"}):
-        (root / first).write_text(json.dumps({**facts, **bad}), encoding="utf-8")
-        with pytest.raises(ValueError, match="closure facts|measured file"):
-            stage(staging_case, outcome="POSITIVE_UNDER_CONTRACT", decision_ref="explicit_decision.md",
-                role_audit=audit_files(staging_case), _strict_transaction=True, facts_ref=facts_ref)
-    (root / first).write_text(json.dumps(facts), encoding="utf-8")
-    result = stage(staging_case, outcome="POSITIVE_UNDER_CONTRACT", decision_ref="explicit_decision.md",
-        role_audit=audit_files(staging_case), _strict_transaction=True, facts_ref=facts_ref)
+    expected = {cand: facts, ref: {**facts, "effect_meV": None, "ci_meV": None, "source": None}}
+    facts_ref = {arm: f"closure_facts_{arm}.json" for arm in expected}
+    outcome = {ref: "CLOSED", cand: "POSITIVE_UNDER_CONTRACT"}
+    write = lambda arm, value: (root / facts_ref[arm]).write_text(json.dumps(value), encoding="utf-8")
+    for arm, value in expected.items():
+        write(arm, value)
+    first = facts_ref[cand]
+    kwargs = dict(decision_ref="explicit_decision.md", _strict_transaction=True, facts_ref=facts_ref)
+    # A hand-written source, a pair whose reference is a lever arm (not CLOSED) and a copy error all fail.
+    for bad, out in (({"effect_meV": -1.4}, outcome), ({"failure_mode": "harmful"}, outcome),
+                     ({}, {ref: "NEGATIVE_UNDER_CONTRACT", cand: "NEGATIVE_UNDER_CONTRACT"}), ("hand", outcome)):
+        if bad == "hand":
+            measured.write_text(json.dumps({"results": {"pairs": [pair]}}), encoding="utf-8")
+        write(cand, {**facts, **(bad if isinstance(bad, dict) else {})})
+        with pytest.raises(ValueError, match="closure facts|measured pair"):
+            stage(staging_case, outcome=out, role_audit=audit_files(staging_case), **kwargs)
+    measured.write_text(json.dumps({"inputs": inputs, "results": {"pairs": [pair]}}), encoding="utf-8")
+    write(cand, facts)
+    result = stage(staging_case, outcome=outcome, role_audit=audit_files(staging_case), **kwargs)
     assert result["status"] == "STAGED_CLOSURE_READY", result
     for arm, paths in result["paths"].items():
         package = json.loads(Path(paths["terminal"]).read_bytes())
-        assert package["decision"]["outcome"] == "POSITIVE_UNDER_CONTRACT"
-        assert package["decision"]["facts"] == facts
+        assert package["decision"]["outcome"] == outcome[arm]
+        assert package["decision"]["facts"] == expected[arm]
         assert package["artifact_hashes"][facts_ref[arm]] == file_digest(root / facts_ref[arm])
-        assert package["evidence"]["outcome"]["scientific_status"] == "POSITIVE_UNDER_CONTRACT"
+        assert package["evidence"]["outcome"]["scientific_status"] == outcome[arm]
         assert package["trace_manifest"]["backtest_eligibility"]["eligible"] is False
         assert package["artifact_hashes"]["explicit_decision.md"] == file_digest(decision)
     ready = stage(staging_case, outcome="READY_FOR_DESKTOP", decision_ref="explicit_decision.md",
