@@ -1,149 +1,67 @@
 # Scientific evidence and RML outputs must preserve bytes across checkouts.
-experiments/pcqm_k1_prenorm_norm_100k/** -text
-research_memory/policies/pcqm-k1-prenorm-norm-100k-s42.1.json -text
+# experiments/ and research_memory/policies/ disable text conversion in
+# their own .gitattributes; add no per-experiment conversion rules here.
 platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/** -text
 platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/** -text
-experiments/pcqm_k1_clean_second_100k/** -text
-experiments/pcqm_k1_t4_cost_quality/replication_s43/** -text
-research_memory/policies/pcqm-k1-clean-second-100k.1.json -text
-research_memory/policies/pcqm-k1-cost-quality-s43.1.json -text
 platforms/kaggle/resume_frozen_k1_arm.py -text
-experiments/pcqm_expert_oracle_feasibility/** -text
-research_memory/policies/pcqm-expert-oracle-feasibility.1.json -text
-experiments/**/*.json -text
-experiments/pcqm_k1_dropout_consistency/** -text
-experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/protocol.md -text
-experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/launch_decision.md -text
-experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/decision.md -text
-experiments/pcqm_gptrans_memory_value_100k_kaggle1_pair/prospective/*/decision_no_train.md -text
-experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/protocol.md -text
-experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/launch_decision.md -text
-experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/decision.md -text
-experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/*/decision_no_train.md -text
 platforms/_records/kaggle/training/**/stage_manifest.json -text
 platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/** -text
 research_memory/derived/** -text
 platforms/_records/**/family_outputs/** -text
-experiments/pcqm_gptrans_feature_denoising_100k/decision.md -text
 platforms/_records/ims/convergence_resume_20260919/remote_outputs/**/*.json -text
-experiments/pcqm_distance_angle_500k/results/*.json -text
 platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/** -text
-experiments/pcqm_xian_determinism/results/initial_probe/model-replay/** -text
 platforms/_records/kaggle/training/k1_pair_value_s42_v2/** -text
 platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/** -text
-experiments/pcqm_gptrans_local_inductive_bias_100k_kaggle1/*.md -text
 platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/** -text
 platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/canonical_trace/** -text
 platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/paired_comparison.json -text
 platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/mechanical_acceptance/raw_inventory.json -text
 platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/** -text
 platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/** -text
-experiments/pcqm_scale_fit_retained/** -text
-research_memory/policies/pcqm-scale-fit-retained-diagnostic.1.json -text
 tests/test_scale_fit_retained.py -text
-experiments/pcqm_k1_slot_readout_diagnostic/** -text
-research_memory/policies/pcqm-k1-slot-readout-diagnostic.1.json -text
-experiments/pcqm_k1_slot_width96/** -text
 platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/** -text
-research_memory/policies/k1-slot96-*.json -text
 platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/** -text
-experiments/pcqm_k1_local_mixing_clean_aux/** -text
-platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/** -text
-experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/** -text
 platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/** -text
-experiments/pcqm_k1_variants_100k/decision.md -text
-experiments/pcqm_k1_consistency_residual_screen/** -text
-research_memory/policies/pcqm-k1-consistency-residual-screen.1.json -text
-experiments/pcqm_k1_consistency_fusion_transfer/** -text
-research_memory/policies/pcqm-k1-consistency-fusion-transfer.1.json -text
 src/molgap/k1_frozen_inference.py -text
-
-experiments/pcqm_k1_fusion_distillation/** -text
 
 platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/** -text
 
 platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/** -text
-experiments/pcqm_k1_500k_bottleneck_diagnostic/** -text
-research_memory/policies/pcqm-k1-500k-bottleneck-diagnostic.1.json -text
-experiments/pcqm_k1_500k_bn_calibration/** -text
-research_memory/policies/pcqm-k1-500k-bn-calibration.1.json -text
 src/molgap/k1_bn_calibration.py -text
-experiments/pcqm_k1_colab_execution_profile/** -text
-research_memory/policies/pcqm-k1-colab-execution-profile.1.json -text
-experiments/pcqm_k1_bn_mechanism_a100/** -text
-research_memory/policies/pcqm-k1-bn-mechanism-a100.1.json -text
 src/molgap/k1_bn_mechanism.py -text
-experiments/pcqm_k1_late_weight_average/** -text
-experiments/pcqm_k1_complete_local_audit/** -text
 src/molgap/k1_weight_average_diagnostic.py -text
 src/molgap/k1_component_diagnostic.py -text
 src/molgap/frozen_diagnostic_closure.py -text
-research_memory/policies/pcqm-k1-late-weight-average.1.json -text
-research_memory/policies/pcqm-k1-complete-module-audit.1.json -text
 src/molgap/k1_saved_analysis.py -text
 src/molgap/saved_diagnostic_closure.py -text
-experiments/pcqm_k1_consistency_stage_analysis/** -text
-experiments/pcqm_k1_bn_row_attribution/** -text
-research_memory/policies/pcqm-k1-saved-trace-pair.1.json -text
-research_memory/policies/pcqm-k1-saved-bn-rows.1.json -text
-experiments/pcqm_k1_clean_fit_generalization_500k/** -text
-research_memory/policies/pcqm-k1-clean-fit-generalization-500k.1.json -text
 src/molgap/k1_clean_fit_diagnostic.py -text
 src/molgap/k1_bn_diagnostic.py -text
-experiments/pcqm_k1_consistency_ablation_500k/** -text
 platforms/_records/integrations/gptrans_execution_tuning_v3/** -text
-experiments/pcqm_input_pipeline/** -text
-research_memory/policies/pcqm-input-pipeline-local.1.json -text
 src/molgap/input_pipeline_diagnostic.py -text
 src/molgap/family_training_loaders.py -text
-experiments/family_checkpoint_efficiency/** -text
-research_memory/policies/family-checkpoint-efficiency.1.json -text
 src/molgap/training_reproducibility.py -text
 src/molgap/experiment_family_workflow.py -text
 src/molgap/checkpoint_diagnostic.py -text
-experiments/family_session_execution_speed/** -text whitespace=cr-at-eol
-research_memory/policies/family-session-speed.1.json -text
+experiments/family_session_execution_speed/** whitespace=cr-at-eol
 src/molgap/family_execution_diagnostic.py -text
-experiments/family_100k_operator_profile/** -text whitespace=cr-at-eol
-experiments/family_topology_t4_100k/** -text whitespace=cr-at-eol
-research_memory/policies/family-topology-t4-100k-s42.1.json -text
-research_memory/policies/family-100k-operator-profile-s42.1.json -text
+experiments/family_100k_operator_profile/** whitespace=cr-at-eol
+experiments/family_topology_t4_100k/** whitespace=cr-at-eol
 
-# Preserve exact bytes of the accepted structural-bias question.
-experiments/pcqm_structural_bias_norm_100k/** -text whitespace=cr-at-eol
+experiments/pcqm_structural_bias_norm_100k/** whitespace=cr-at-eol
 platforms/_records/kaggle/training/structural_bias_norm_100k/** -text whitespace=cr-at-eol
 experiments/pcqm_structural_bias_norm_100k/terminal_acceptance/analyze_saved_artifacts.py whitespace=cr-at-eol,-blank-at-eof
-research_memory/policies/pcqm-k1-post-ln-100k-s42-20261020.1.json -text
-research_memory/policies/pcqm-gptrans-resistance-100k-s42-20261020.1.json -text
 
-# Preserve exact terminal BatchRenorm evidence and diagnostic source bytes.
-experiments/pcqm_k1_batch_renorm_100k/** -text whitespace=cr-at-eol
-research_memory/policies/pcqm-k1-batch-renorm-100k.1.json -text
-research_memory/policies/pcqm-k1-brn-clean-bn-100k.1.json -text
+experiments/pcqm_k1_batch_renorm_100k/** whitespace=cr-at-eol
 
-experiments/pcqm_k1_scale_attribution_20261025/** -text -filter -ident -working-tree-encoding
-research_memory/policies/pcqm-k1-scale-attribution-20261025.1.json -text -filter -ident -working-tree-encoding
 src/molgap/k1_retained_tail_diagnostic.py -text -filter -ident -working-tree-encoding
-research_memory/policies/pcqm-k1-scale-attribution-20261025-attempt-002.1.json -text -filter -ident -working-tree-encoding
 
-experiments/pcqm_k1_tail_regularization_500k/** -text whitespace=cr-at-eol
+experiments/pcqm_k1_tail_regularization_500k/** whitespace=cr-at-eol
 
-research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json -text whitespace=cr-at-eol
+research_memory/policies/pcqm-k1-tail-regularization-500k-s42.1.json whitespace=cr-at-eol
 
-experiments/pcqm_k1_initialization_forward_500k/** -text whitespace=cr-at-eol
-research_memory/policies/pcqm-k1-init-forward-500k-mean2-s42.1.json -text
-research_memory/policies/pcqm-k1-init-forward-500k-single-s42.1.json -text
+experiments/pcqm_k1_initialization_forward_500k/** whitespace=cr-at-eol
 
-experiments/pcqm_k1_message_droppath_100k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
-research_memory/policies/pcqm-k1-message-droppath-100k.1.json -text -filter -ident -working-tree-encoding
-experiments/pcqm_gptrans_bondlocal_pairnorm_100k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
-research_memory/policies/pcqm-gptrans-bondlocal-pairnorm-100k.1.json -text -filter -ident -working-tree-encoding
+experiments/pcqm_k1_message_droppath_100k/** whitespace=cr-at-eol
+experiments/pcqm_gptrans_bondlocal_pairnorm_100k/** whitespace=cr-at-eol
 experiments/pcqm_gptrans_bondlocal_pairnorm_100k/terminal_acceptance/decision.md whitespace=cr-at-eol,-blank-at-eol
-experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/** -text -filter -ident -working-tree-encoding whitespace=cr-at-eol
-research_memory/policies/pcqm-gptrans-bondlocal-pairnorm-lr-500k.1.json -text -filter -ident -working-tree-encoding
-experiments/pcqm_k1_init_noise_100k/** -text
-experiments/pcqm_k1_lr8e4_warmup_100k/** -text
-experiments/pcqm_k1_lr2e4_100k/** -text
-experiments/pcqm_k1_wd5e2_100k/** -text
-research_memory/policies/pcqm-k1-init-noise-100k.1.json -text
-research_memory/policies/pcqm-k1-lr2e4-100k.1.json -text
+experiments/pcqm_gptrans_bondlocal_pairnorm_lr_500k/** whitespace=cr-at-eol
