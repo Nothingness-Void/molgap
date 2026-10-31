@@ -13,7 +13,8 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-_STOP = frozenset({"the", "and", "for", "with", "of", "to", "in", "a", "step", "only", "new"})
+_STOP = frozenset("the and for with step only new training train mean all one two three nine atom same model change "
+                  "unchanged accepted existing fixed selected before keep replace exact from into both".split())
 
 
 def _keywords(*texts) -> list[str]:
@@ -55,7 +56,7 @@ def _evidence(root: Path, row: dict, record: dict, effects: dict) -> dict:
 
 
 def _scale(card: dict):
-    m = re.search(r"-(\d+)k(?:-|$)", card["family_id"])
+    m = re.search(r"-(\d+)k(?=-|$)", f"{card['trajectory_id']}-{card['family_id']}")
     return int(m.group(1)) if m else None
 
 
@@ -91,10 +92,10 @@ def select(cards, *, outcome=None, term=None) -> list[dict]:
             and (term is None or term in json.dumps(c, ensure_ascii=False).lower())]
 
 
-def lookup(cards, *, mechanism=None, failure_mode=None, family=None) -> dict:
+def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) -> dict:
     """Related closed work, why it failed (with source), open directions and search terms."""
-    hit = [c for c in cards
-           if (mechanism is None or mechanism.lower() in " ".join(c["keywords"] + [c["mechanism"] or ""]).lower())
+    hit = [c for c in select(cards, term=term)
+           if (mechanism is None or mechanism.lower() in " ".join(c["keywords"] + [c["mechanism"] or "", c["family_id"]]).lower())
            and (failure_mode is None or c["failure_mode"] == failure_mode)
            and (family is None or family.lower() in c["family_id"].lower())]
     by_family = defaultdict(list)
@@ -107,27 +108,26 @@ def lookup(cards, *, mechanism=None, failure_mode=None, family=None) -> dict:
                    if not any(c["outcome"] == "NEGATIVE_UNDER_CONTRACT" and c["effect_meV"] is not None for c in cs)]
     closing = [t for c in hit for t in c["search_terms"]]
     frequent = [w for w, _ in Counter(w for c in hit for w in c["keywords"]).most_common(12)]
-    return {"query": {"mechanism": mechanism, "failure_mode": failure_mode, "family": family},
+    return {"query": {"mechanism": mechanism, "failure_mode": failure_mode, "family": family, "term": term},
             "matches": hit, "unfalsified": unfalsified,
             "search_terms": list(dict.fromkeys(closing + frequent))}
 
 
 def gaps(cards) -> dict:
     """Thin or conflicting regions. Contradictions are prompts for review, not findings."""
-    by_family = defaultdict(list)
+    by_family, by_arm = defaultdict(list), defaultdict(list)
     for c in cards:
         by_family[c["family_id"]].append(c)
+        if _scale(c) and c["outcome"] in {"POSITIVE_UNDER_CONTRACT", "NEGATIVE_UNDER_CONTRACT"}:
+            # Same named arm at another scale: trajectory id minus track prefix, scale and seed tokens.
+            by_arm[re.sub(r"^T[A-Z]?-|-(?:s|seed)\d+(?=-|$)|-\d+k(?=-|$)", "", c["trajectory_id"])].append(c)
     sparse = [{"family_id": f, "n_trajectories": len(cs), "n_with_effect": sum(c["effect_meV"] is not None for c in cs)}
               for f, cs in sorted(by_family.items()) if len(cs) == 1]
-    by_mechanism = defaultdict(list)
-    for c in cards:
-        if c["mechanism"] and _scale(c) and c["outcome"] in {"POSITIVE_UNDER_CONTRACT", "NEGATIVE_UNDER_CONTRACT"}:
-            by_mechanism[c["mechanism"]].append(c)
 
     def side(c):
         return {"id": c["trajectory_id"], "scale_k": _scale(c), "outcome": c["outcome"], "effect_meV": c["effect_meV"]}
 
-    contradictions = [{"key": mech, "a": side(a), "b": side(b), "kind": "outcome_differs_across_scale_needs_review"}
-                      for mech, cs in sorted(by_mechanism.items())
+    contradictions = [{"key": arm, "a": side(a), "b": side(b), "kind": "outcome_differs_across_scale_needs_review"}
+                      for arm, cs in sorted(by_arm.items())
                       for a in cs for b in cs if _scale(a) < _scale(b) and a["outcome"] != b["outcome"]]
     return {"sparse": sparse, "contradictions": contradictions}
