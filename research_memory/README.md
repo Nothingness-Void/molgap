@@ -75,6 +75,36 @@ unchanged. Report resulting portable-check gaps honestly. Do not hydrate the
 inherited catalog or claim a portable pass without executing the unchanged check.
 See the [storage lifecycle](../docs/operations/LOCAL_STORAGE_RETIREMENT.md).
 
+## Query, analysis and corrections
+
+```text
+python -m molgap.research_memory cards [--outcome OUTCOME] [--term TERM]
+python -m molgap.research_memory lookup [--mechanism M] [--failure-mode F] [--family F] [--term T]
+python -m molgap.research_memory gaps
+python -m molgap.research_memory analyze --op {paired,ensemble-curve,residual-corr,summary,floor} --predictions PATH... | ARM=PATH... [--pair CAND=REF] --role-id ROLE --out OUT
+python platforms/local/infra_budget.py
+```
+
+`cards` prints one JSON line per closed trajectory. `lookup` returns matches, families with no
+measured negative result (`unfalsified`) and search terms. `gaps` lists single-trajectory families
+and outcomes that differ across scale; these are review prompts, not findings. `analyze` reads saved
+development predictions only: it refuses `official_validation`, `test_dev` and `test_challenge` as
+`--role-id`, writes only outside `research_memory/` and `experiments/`, and marks every output
+`posthoc: true` (never a gate decision). `infra_budget.py` prints each size metric against
+`docs/operations/INFRA_BUDGET.json` and exits 1 when any metric is over its limit.
+
+Per-arm closure facts (`molgap-closure-facts-v1`, passed as `--arm-facts-ref ARM=PATH` or
+`facts_ref` in a closure input) hold `failure_mode` (a fixed enum), up to 8 `search_terms`, and
+optional `effect_meV`/`ci_meV`, which must equal the candidate's pair in the measured `source` file.
+`draft-closure` writes them with the measured numbers and null interpretation.
+
+An erratum (`molgap-erratum-v1`, `artifact_class: narrative`, `effect: narrative_only`) lives in the
+target experiment's `errata/` and excuses only a narrative `.md` decision file whose recorded and
+observed SHA-256 exactly match its `recorded_sha256`/`observed_sha256` pair. It affects `validate`
+only, which reports the file under `known_gaps`. Strict recheck (`accept_run.py --strict --execute`)
+does not read errata: `pcqm-k1-init-noise-100k-s43` stays `BLOCKED` on the
+`terminal_decision.md` SHA mismatch by design. When the two disagree, strict recheck holds for replay.
+
 ## Research workflow
 
 Every new research question follows this order:

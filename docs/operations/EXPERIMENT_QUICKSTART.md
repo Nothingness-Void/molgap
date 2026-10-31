@@ -214,13 +214,9 @@ No manual manifest/SHA file is needed for the
 registered `experiment/<arm>` layout. Strict continuation also supplies
 `--continuation-receipt` and `--resume-prepared`; historical layouts may set
 `--remote-root`. Without `--execute`, all-arm retrieval only plans locally.
-Per-arm retrieval remains available for explicit historical pins.
-`inspect-output`, `accept-workflow`, `build-resume` and `prepare-resume` resolve
-the original Spec/package/receipt from the run ID.
-Supply the actual output/evidence inputs required by the existing owners.
-`prepare-resume` returns `RESUME_INPUTS_PREPARED` for local continuation inputs.
-The owning continuation adapter must bind a physical successor; this result is
-not a registered new attempt or a fresh-release Kaggle submission.
+Per-arm retrieval remains available for explicit historical pins. Run-ID forms of
+`inspect-output`, `accept-workflow`, `build-resume` and `prepare-resume` are in the
+[CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id).
 
 For a retrieved frozen run, the local acceptance script resolves every arm's
 expectations and prospective locations, inspects the artifacts, diagnoses the
@@ -251,9 +247,12 @@ outcome and decision path (and an optional role audit) in one human-authored fil
 instead of repeated flags or hand-written code (`draft-closure` drafts it; see the CLI
 reference). Where the producer lacks observed role truth, `--role-audit` supplies a
 retained audit or an arm-to-audit-path JSON map. Audits bind the exact RunContext and
-existing role events. `draft-role-audit` drafts them; protected-role states are never
-derived and stay `unknown` (blocking closure) unless you pass them. Closure reports
-missing evidence; positive/READY claims still need their owning scientific acceptance.
+existing role events. `draft-role-audit` and `draft-closure` draft them. Protected-role states
+stay `unknown` (blocking closure) unless you pass them, or the draft derives `untouched` from a new
+run's hash-bound `data_open_provenance.json` (observed opens) or, for a package frozen before that
+recorder, from its reviewed loader, manifest and mounts (`structural_untouched`, not observed); see
+the CLI reference. Closure reports missing evidence; positive/READY claims still need their owning
+scientific acceptance.
 
 For first closure after continuation, pass the same `--continuation-receipt`
 to retrieval, `draft-role-audit` and acceptance. Acceptance also takes the existing
