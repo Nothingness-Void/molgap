@@ -132,6 +132,8 @@ Track C.
 | Does initial residual improve K1 at 100K? | Candidate 0.708 meV worse, misses the 3 meV gate; NEGATIVE_UNDER_CONTRACT | [Decision](pcqm_k1_initial_residual_100k/decision.md) |
 | Does SAM improve K1 at 100K? | Candidate 2.834 meV worse, interval excludes zero; NEGATIVE_UNDER_CONTRACT, no rho sweep | [Decision](pcqm_k1_sam_100k/decision.md) |
 | Does a 16x256 model beat 12x384 at a matched total budget (500K)? | 16x256 is 0.71 meV better, below the 3 meV gate; noncausal delivery experiment, no adoption | [Terminal decision](pcqm_single_model_total_budget/terminal_decision.md) |
+| Does an equal-compute 2 x 20-pass K1 100K ensemble beat one 40-pass model? | No: ensemble 145.075 meV against 140.535 meV for the 40-pass single mean; NEGATIVE_UNDER_CONTRACT, nothing adopted | [Decision](pcqm_k1_short_ensemble_100k/decision.md) |
+| How large is GPTrans PairNorm 500K initialization noise? | D 1.332 meV (3 meV gate stays, 1-2 meV 500K verdicts unresolved); 5-init ensemble gain E5 4.507 meV; NEGATIVE_UNDER_CONTRACT, nothing adopted | [Decision](pcqm_gptrans_pairnorm_init_noise_500k/decision.md) |
 
 | Frozen-initialization and cohort-transfer control? | Local paired 100K candidate 6.185 meV better, 5.792 meV on the 500K cohort without retraining; cohort change alone does not explain the later contraction; no 500K release | `pcqm_gptrans_100k_transfer_control/` |
 | Noisy Nodes 100K screen? | POSITIVE_UNDER_CONTRACT: 4.840 meV gain over the 0.156627 eV reference; the 500K transfer did not hold it | `pcqm_gptrans_noisy_nodes_100k/` |
