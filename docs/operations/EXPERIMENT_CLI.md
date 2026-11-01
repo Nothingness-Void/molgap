@@ -115,10 +115,12 @@ Missing historical roles or scientific decisions remain explicit inputs.
 Runtime role sidecars are consumed automatically when available.
 
 `--closure-input FILE` supplies one reviewed JSON object:
-`{"arms":{"ARM":{"outcome":"OUTCOME","decision_ref":"experiments/Q/decision.md"}},
-"role_audit":"experiments/Q/audits/audit_map.json"}`. It replaces the separate
-outcome/decision/audit flags; each frozen arm keeps its own decision.
-`--arm-outcome ARM=OUTCOME` and `--arm-decision-ref ARM=PATH` remain available.
+`{"arms":{"ARM":{"outcome":"OUTCOME","decision_ref":"experiments/Q/decision.md",
+"facts_ref":PATH}},"role_audit":"experiments/Q/audits/audit_map.json"}` (`facts_ref`,
+`role_audit` optional). It replaces the outcome/decision/[facts](../../research_memory/README.md#query-analysis-and-corrections)/audit
+flags (`--arm-outcome`, `--arm-decision-ref`, `--arm-facts-ref ARM=PATH`); each arm keeps its own decision.
+`draft-closure` (the `draft-role-audit` flags) drafts that file, the role audits,
+`measured_<run>.json` and `closure_facts_<arm>.json`; fill `outcome` and `decision_ref`.
 
 `draft-role-audit --profile PROFILE --repo-root ROOT --run-id RUN --attempt-id V
 --output-dir REPO_DIR` writes per-arm drafts and `audit_map.json`; add the bound
@@ -138,7 +140,6 @@ Frozen Specs and recipes are read independently of retired Addon catalog entries
 This permits retained-artifact inspection only; execution continues to require
 registered model/addon implementations. Frozen evaluation-weight selection
 controls which live/EMA curve is required.
-
 
 For a scratch/pretrained pair, declare `purpose: initialization_comparison` and
 one reference and one candidate with their own frozen recipes, data declarations
@@ -179,6 +180,9 @@ optionally accounts for bound allocation windows once per job/version.
 The owning family retriever accepts the continued receipt and
 `--strict --resume-prepared`. It selects manifest/certificate dependencies only,
 verifies retained files before reuse and reports actual downloads separately.
+For a STOP_FOR_COST run without `output_manifest.json`, `--all-arms --paused` fetches the
+declared paused files, records each digest and size at download, and checks the pause
+receipt's run context and checkpoint digest. It is unstrict and not an acceptance.
 Lossless proof archives preserve original tensor-file hashes; tensor semantics
 are checked by strict acceptance. `closure_complete` reports terminal completion
 separately from scientific qualification and replay status.
@@ -327,9 +331,8 @@ model check. Their model smoke remains unsupported; see
 [preflight](EXPERIMENT_PREFLIGHT.md) for supported identities and source modules.
 EdgeState's recipe is model-only; a platform-specific trainer
 addon must freeze and enforce its own executable training contract.
-No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
-training launch or production promotion is provided. Local CLI success cannot
-release any of those operations.
+It provides no credentials, monitor, remote API, GPU canary, official role access,
+training launch or promotion, and its success releases none of them.
 
 ## Local Verification
 
@@ -338,7 +341,6 @@ checkout and project interpreter. Local CLI/package fixtures mock platform
 effects and do not establish remote/native qualification. Commands and scope
 are in [infrastructure verification](INFRASTRUCTURE_VERIFICATION.md); retained
 server evidence is in [the integration review](shared_experiment_verification.md).
-
 
 ## Registered family lifecycle
 
@@ -371,7 +373,6 @@ incomplete checkpoint transport over the original prepared package and a
 reconciled receipt. Their fields, supported limits and allocation-retention
 option `accept-workflow --execution-root ROOT` are defined once in the
 [registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow).
-
 
 ## Shared family training
 

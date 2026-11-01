@@ -248,6 +248,7 @@ and execution-cost records; existing hash-matching files are reused. Its returne
 `execution_root` is passed to acceptance. Without `--execute`, it plans locally.
 Continuations use the original `--continuation-receipt` and `--resume-prepared`.
 `--status` labels the latest scheduler observation separately from receipt identity.
+A STOP_FOR_COST run is fetched with `--all-arms --paused` (unstrict, not an acceptance).
 
 After retrieval, the local entry resolves frozen expectations and closure
 locations, inspects each arm, writes attribution and stages terminal drafts:
@@ -341,10 +342,7 @@ trainer; `--pause-after-step` and reentry use its existing checkpoint. Its
 `--accept-only` route supports `--closure-input FILE` and `--draft-role-audit DIR`,
 and closes only `INFRASTRUCTURE_ONLY`. It grants no scientific or compute authority.
 
-For run-keyed acceptance, `draft-role-audit` writes immutable per-arm drafts and
-`audit_map.json`. New outputs may bind observed `data_open` evidence; old outputs
-without it keep protected-role use unknown. This observation covers Python file
-opens in the worker process only, not native IO, subprocesses or network access.
-`--closure-input FILE` supplies `{arms: {ARM: {outcome, decision_ref}}, role_audit?}`
-to `accept_run.py --strict --execute`; the decision remains an explicit judgment.
-See the [CLI reference](EXPERIMENT_CLI.md) for the exact arguments.
+For run-keyed acceptance, `draft-closure` drafts the role audits, measured numbers,
+closure facts and the `--closure-input` file for `accept_run.py --strict --execute`;
+outcome and decision stay explicit judgments. Protected-role coverage and exact
+arguments are in the [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id).

@@ -36,9 +36,9 @@ evidence is never fabricated, and frozen evidence is never rewritten.
   the user.
 - Each fact (hash, pin, identity) has one owning check. Later stages call that owner or
   read its recorded result; never reimplement the comparison, and never remove an
-  owning check without approval.
-- Derive, do not copy: identities, refs and retry records come from recorded evidence
-  by code, not from hand-edited copies of a predecessor.
+  owning check without approval. Derive identities, refs and retry records from recorded
+  evidence by code, never hand-copy them. Bind a hash only to an artifact something
+  consumes.
 - Never revert changes you did not make. Use no destructive git command (reset --hard,
   forced checkout or push, clean) unless asked.
 
@@ -52,18 +52,17 @@ evidence is never fabricated, and frozen evidence is never rewritten.
   stated reason and a raised ceiling (below).
 - Assert behaviour, not wording. Match an exact error message only when the message is
   the contract.
-- When a test fails: read the failure, decide whether your change caused it, fix the
-  cause. Never weaken or delete an assertion to pass, and never add tests to justify a
-  patch. Report unrelated failures; do not fix them.
+- When a test fails, decide whether your change caused it and fix the cause. Never
+  weaken or delete an assertion to pass or add tests to justify a patch. Report
+  unrelated failures; do not fix them.
 - Test ceiling: `TEST_SUITE_LIMITS` in `src/molgap/documentation_check.py` caps the
   count and total lines of `tests/test_*.py`; any change that adds test lines runs
   `tests/test_documentation_check.py`. Raise the cap only in a commit that states why.
 - The coordinator does not run tests. It assigns test workers (at most five at once,
-  independent module scopes, separate scratch and report paths, within available
-  memory). A worker runs its assigned suites itself, never spawns or relays to another
-  worker, is reused for a related retry, and is closed after reporting. Report a
-  recurring environment blocker instead of multiplying workers. This grants no remote
-  compute or experiment authority.
+  independent module scopes, separate scratch and report paths, within memory). A worker
+  runs its suites itself, never spawns or relays to another worker, is reused for a
+  related retry and closed after reporting. Report a recurring environment blocker
+  instead of multiplying workers. This grants no remote compute or experiment authority.
 
 ## Hard constraints
 - **Python**: always `.venv\Scripts\python.exe`; system Python lacks torch/pyg.
@@ -74,34 +73,26 @@ evidence is never fabricated, and frozen evidence is never rewritten.
   diagnostic, receipt and terminal entry point only. Never add a platform submitter;
   use the owning platform adapter and workload skill.
 - **Experiment plumbing**: read `.agents/skills/molgap-experiment-reuse/SKILL.md`
-  before writing a runner, diagnostic, packaging or RML adapter. Do not recreate an
-  existing wheel.
-- **Completed experiments** are not re-run; cite the experiment's decision record
-  under `experiments/`.
-- **Remote durability**: every cloud job checkpoints atomically and produces
-  independently retrievable output chunks; never rely on a transient worker
-  filesystem or one long task as the only copy of results.
-- **Remote resource separation**: high-memory CPU jobs do parsing, ETKDG, graph
-  construction and acceptance. GPU/DCU jobs start only after an immutable graph cache
-  passes acceptance and are reserved for encoder training, embedding extraction and
-  fusion.
-- **Kaggle accelerators**: request `NvidiaTeslaT4` only (P100 is unavailable). With two
-  or more independent candidates that can be isolated, use T4x2 candidate parallelism,
-  each worker with its own model, RNG, optimizer, checkpoint directory and one visible
-  GPU. One justified candidate may still receive two devices: isolate one visible
-  device before importing CUDA, record the full allocation and cost, and never run an
-  unapproved second experiment on the idle device. Record why a job needs a single
-  accelerator.
-- **Seed budget**: architecture discovery defaults to one paired seed-42 screen. A win
-  never automatically triggers seeds 43/44; multi-seed confirmation is reserved for
-  the final shortlist after a material gain and an explicit compute decision. Protocols
-  may restrict but not broaden this rule.
+  before writing a runner, diagnostic, packaging or RML adapter; reuse what exists.
+- **Completed experiments** are not re-run; cite their decision record in `experiments/`.
+- **Remote durability**: every cloud job checkpoints atomically and writes separately
+  retrievable output chunks; a transient filesystem or one task is never the only copy.
+- **Remote resource separation**: high-memory CPU jobs do parsing, ETKDG, graphs and
+  acceptance. GPU/DCU jobs start only after an immutable graph cache passes acceptance
+  and only train encoders, extract embeddings and fuse.
+- **Kaggle accelerators**: request `NvidiaTeslaT4` only (P100 is unavailable). Two or
+  more isolable candidates use T4x2 parallelism, each with its own model, RNG,
+  optimizer, checkpoint directory and one visible GPU. One justified candidate may get
+  two devices: isolate one before importing CUDA, record full allocation and cost, run
+  no unapproved second experiment on the idle one. Record why a job needs one device.
+- **Seed budget**: discovery defaults to one paired seed-42 screen. A win never auto-runs
+  seeds 43/44; multi-seed confirmation is for the final shortlist after a material gain
+  and an explicit compute decision. Protocols may restrict, not broaden, this rule.
 - **Screen comparability**: new model screens follow `experiments/SCREENING_POLICY.md`
   (physical batch exactly 128 per independent model/device). A baseline is trained and
-  frozen once per benchmark contract. Cross-platform candidates compare with that
-  reference when the scientific-contract fingerprint is identical and each
-  platform/runtime has one reusable accepted calibration certificate; platform
-  identity is provenance, not a forced match.
+  frozen once per benchmark contract. Cross-platform candidates compare with it when the
+  scientific-contract fingerprint is identical and each platform/runtime has one
+  reusable accepted calibration certificate; platform identity is provenance only.
 - **Fixed PCQM data identity**: every PCQM 100K/500K screen on Kaggle, SCNet or IMS
   consumes the accepted cross-platform fixed dataset assets. Never rebuild graphs per
   platform or substitute a platform-local split/cache for a comparable claim. Exact
@@ -109,6 +100,15 @@ evidence is never fabricated, and frozen evidence is never rewritten.
 - **IMS access boundary**: before any molecular-research-server command, read and
   obey `platforms/REMOTE_HANDOFF.md`; it restricts all path access, including
   read-only probes.
+- **Infrastructure budget**: before an infrastructure commit run `python
+  platforms/local/infra_budget.py` ([limits](docs/operations/INFRA_BUDGET.json),
+  [commands](research_memory/README.md#query-analysis-and-corrections)); exit 1 blocks
+  that commit, never an experiment. New-experiment rule (only here): it adds files under
+  `experiments/<q>/`, one recipe/spec and, for new model code, one self-contained addon
+  module plus its catalog entry, never edits to shared trainers, verifiers,
+  `.gitattributes` or tests (those need an approved infrastructure commit). A fix
+  deletes at least what it adds or cites an observed failure. A new format version
+  names the removal date of the one it replaces.
 
 ## Remote monitor handoff
 The always-on server runs one local two-conversation loop for server-owned chains
