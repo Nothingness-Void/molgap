@@ -50,7 +50,10 @@
     "estimated_wall_hours": 4
   },
   "shared": {
-    "preset_ref": "experiments/presets/k1-post-bn-100k-v1.json",
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
     "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
     "purpose": "optimizer_comparison"
   },
