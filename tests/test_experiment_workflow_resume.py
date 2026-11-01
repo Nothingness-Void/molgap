@@ -378,6 +378,41 @@ def test_build_resume_requires_a_reconciled_receipt(tmp_path, resume_case):
         )
 
 
+def test_resume_checks_frozen_release_bytes_not_verifier_report_equality(tmp_path, resume_case):
+    case = resume_case
+    arm_id = next(iter(case["bundles"]))
+    report_path = case["prepared"] / "release_report.json"
+    report_raw = report_path.read_bytes()
+    release = json.loads(report_raw)
+
+    def build(name):
+        return build_workflow_resume(
+            case["spec"], case["repo"], case["prepared"], case["package"],
+            case["package_identity"], case["receipt"], tmp_path / name,
+            arm_id=arm_id, source_output=case["sources"][arm_id],
+        )
+
+    # A report today's verifier would not reproduce, with the same released bytes, still resumes.
+    drifted = json.loads(report_raw)
+    drifted["checks"]["verifier_added_later:package"] = True
+    drifted["limitations"] = ["Reworded by a newer verifier."]
+    try:
+        report_path.write_bytes(json_bytes(drifted))
+        assert build("same-bytes")["status"] == "RESUME_VERIFIED"
+    finally:
+        report_path.write_bytes(report_raw)
+
+    for key in ("entry_script", "kernel_metadata"):
+        path = Path(release["inputs"][key])
+        original = path.read_bytes()
+        try:
+            path.write_bytes(original + b"\n")
+            with pytest.raises(ValueError, match="Original release input changed"):
+                build("changed-" + key)
+        finally:
+            path.write_bytes(original)
+
+
 def test_changed_canonical_trajectory_rejects_resume_export(resume_case):
     case = resume_case
     arm_id = next(iter(case["bundles"]))
