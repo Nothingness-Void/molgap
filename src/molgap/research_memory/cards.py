@@ -116,6 +116,50 @@ def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) 
             "search_terms": list(dict.fromkeys(closing + frequent))}
 
 
+def _slug(text) -> str:
+    if not text or re.fullmatch(r"[a-z0-9_-]+", text):
+        return text or "-"
+    return "-".join(re.findall(r"[a-z0-9]+", text.lower())[:6])
+
+
+def _effect(card: dict, *, see_decision=False) -> str:
+    if card["effect_meV"] is not None:
+        return f"{card['effect_meV']:+.2f}"
+    if see_decision and card["outcome"] == "NEGATIVE_UNDER_CONTRACT" and card.get("decision_ref"):
+        return f"null (see {card['decision_ref']})"
+    return "null"
+
+
+def compact_line(card: dict) -> str:
+    """One line: id | outcome | family | mechanism slug | effect_meV | failure_mode."""
+    return " | ".join([card["trajectory_id"], card["outcome"], card["family_id"], _slug(card["mechanism"]),
+                       _effect(card), card["failure_mode"] or "-"])
+
+
+def levers(cards, family: str) -> list[str]:
+    """Every tested lever in the matching families: a substring, or a glob when it holds '*'.
+
+    Same-run reference arms (outcome CLOSED) are omitted unless a family has nothing else.
+    A NEGATIVE card without a recorded effect points at its decision file; prose is not read.
+    """
+    from fnmatch import fnmatchcase
+    pattern = family.lower()
+    hit = [c for c in cards if (fnmatchcase(c["family_id"].lower(), pattern) if "*" in pattern
+                                else pattern in c["family_id"].lower())]
+    by_family = defaultdict(list)
+    for c in hit:
+        by_family[c["family_id"]].append(c)
+    rows = ["family | arm | outcome | effect_meV | failure_mode | mechanism"]
+    for fam, cs in sorted(by_family.items()):
+        tested = [c for c in cs if c["outcome"] != "CLOSED"] or cs
+        for c in tested:
+            arm = c["trajectory_id"].removeprefix("T-").removeprefix("TB-").removeprefix("TC-")
+            arm = arm.removeprefix(fam).lstrip("-") or arm
+            rows.append(" | ".join([fam, arm, c["outcome"], _effect(c, see_decision=True),
+                                    c["failure_mode"] or "-", _slug(c["mechanism"])]))
+    return rows
+
+
 def gaps(cards) -> dict:
     """Thin or conflicting regions. Contradictions are prompts for review, not findings."""
     by_family, by_arm = defaultdict(list), defaultdict(list)

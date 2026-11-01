@@ -56,6 +56,24 @@ def test_legacy_declaration_only_families_are_not_implicitly_promoted():
     assert ("edge_state_gps", "1") not in execution.TRAINING_ADAPTERS
 
 
+def test_catalog_cli_marks_compiler_runnable_entries_from_the_same_registry(capsys):
+    import json
+    from molgap import experiment_cli as cli
+    assert cli.main(["catalog"]) == 0
+    value = json.loads(capsys.readouterr().out)
+    addons = {a["name"]: a for a in value["addons"]}
+    families = {(f["name"], f["version"]): f for f in value["families"]}
+    assert addons["k1_pair_value"]["runnable_via_compiler"] is False
+    assert "empty execution_modes" in addons["k1_pair_value"]["runnable_reason"]
+    compiler = {a.family: {(x.name, x.version) for x in a.addons} for a in execution.shared_training_adapters().values()}
+    assert {k for k, f in families.items() if f["runnable_via_compiler"]} == set(compiler)
+    assert {(a["name"], a["version"]) for a in value["addons"] if a["runnable_via_compiler"]} == set().union(*compiler.values())
+    assert cli.main(["catalog", "--compact"]) == 0
+    lines = capsys.readouterr().out.splitlines()
+    assert len(lines) == len(FAMILIES) + len(ADDONS)
+    assert any(line.startswith("addon k1_pair_value/1 (neural_atom_k1) runnable=false |") for line in lines)
+
+
 def test_desktop_replication_seed_and_addon_policy_survive_catalog_projection():
     assert FAMILIES[("neural_atom_k1", "3")].allow_any_seed
     assert FAMILIES[("gptrans_t", "2")].allow_any_seed
