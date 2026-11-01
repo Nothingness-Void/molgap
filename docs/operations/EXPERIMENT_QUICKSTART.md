@@ -292,6 +292,8 @@ termination can still leave scratch behind.
 - Keep input ABI, objective and parameter ownership explicit. Reuse the family
   trainer and [runtime extension API](MODULAR_EXPERIMENT_RUNTIME.md). Use the
   [operation map](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) to find the owner.
+  The [new addon checklist](EXPERIMENT_ADDON_GUIDE.md#new-addon-checklist) lists
+  the module, catalog fields and local CPU check for a slot addon.
 
 Desktop's existing family/addon declarations, accelerated defaults, full/SCNet
 paths and native training implementations are preserved. Catalog registration

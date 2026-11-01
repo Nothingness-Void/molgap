@@ -44,6 +44,48 @@ state, one-batch sandbox, then source closure. Do not copy a trainer or launcher
 | Close and index evidence | [RML entry](../../research_memory/README.md), [lifecycle](../../research_memory/LIFECYCLE.md), [experiment_terminal.py](../../src/molgap/experiment_terminal.py) | Query canonical evidence first; never hand-edit derived indexes. |
 | Submit, reconcile or retrieve on a platform | Platform skills and existing adapters | Use `kaggle-molgap-workloads`, `ims-molgap-workloads`, or `scnet-bw-dcu-molgap`; see [platform routing](../../platforms/README.md) and the [prepared Kaggle adapter](KAGGLE_WORKFLOW_SUBMISSION.md), which journals uncertain publication/POST outcomes instead of resubmitting. |
 
+## New addon checklist
+
+For a slot addon on the shared K1/3 or GPTrans/2 recipe. Each step was run on a
+throwaway K1 `post_aggregation` gain on 2026-11-01.
+
+1. **Module.** Add `src/molgap/<name>.py`. The first docstring line is the
+   `catalog --compact` purpose. Define `apply_addon(model, config)`: take
+   `model._molgap_substrate` or create `ModelSubstrate(model, family)`, then
+   `owner.attach(config["name"], module, SlotBinding(family, SlotName.<SLOT>, layer))`
+   and return the model. `substrate_scale_addon.py` is the template. Slots
+   (`model_substrate.py`): `PRE_MESSAGE` (field `node`), `POST_AGGREGATION`
+   (K1 `aggregated`, GPTrans `node_update`), `PRE_READOUT` (`embedding`, layer `None`).
+   Start parameters at zero or identity.
+2. **Catalog entry.** Add one `(name, "1"): AddonContract(...)` to `ADDONS` in
+   `src/molgap/experiment_catalog.py`: `family`; a new `exclusive_group`
+   (addons with the same group cannot compose); `source_module`;
+   `config_fields` as `AddonConfigField(key, value=...)` (literal), or `kind=
+   "integer"` with bounds, or `"initialization_seed"`; `family_versions=("3",)`;
+   `execution_modes=(("3", "composed"),)`; `apply_hook="molgap.<name>:apply_addon"`.
+   The hook must end in `:apply_addon` and live in `source_module`.
+3. **Compiler.** Nothing else to register. `experiment_execution.py` derives the
+   adapter from `execution_modes`, and the source inventory adds `source_module`.
+   An addon with a `policy_hook` or `extra_source_files` also lists those here.
+4. **Local test, no Kaggle** (CPU, `CUDA_VISIBLE_DEVICES=-1`):
+   - `python -m molgap.experiment_cli catalog --compact` shows
+     `addon <name>/1 (...) runnable=true | registered for compiler family ...`.
+   - One synthetic batch, which checks finite output, the addon's own gradients
+     and the state roundtrip; expect `PASSED`:
+     ```python
+     from molgap.experiment_execution import build_addon_declaration
+     from molgap.fast_sandbox import run_family_sandbox
+     d = build_addon_declaration(("neural_atom_k1", "3"), "<name>", repo_root=".")
+     print(run_family_sandbox("neural_atom_k1", addons=(d,))["status"])
+     ```
+   - After the Spec exists: `experiment_cli sandbox --spec ... --arm candidate --plan ...`
+     ([quickstart](EXPERIMENT_QUICKSTART.md#happy-path)).
+5. **Do not touch** trainers (`family_training_runner.py`, `k1_screen_training.py`,
+   `pcqm_gptrans_v4.py`), `experiment_execution.py`, `experiment_source_inventory.py`,
+   other `ADDONS` entries, anything under `experiments/` you do not own, or
+   `research_memory/derived/`. Then follow the quickstart from
+   "Supply one human input".
+
 ## Addon boundary
 
 The family trainer owns model construction, loader-facing training, optimizer,

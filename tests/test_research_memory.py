@@ -878,6 +878,11 @@ def test_lookup_and_gaps_are_read_only_views():
     assert levers(cards, "b-100k")[1:] == [
         "b-100k | b-100k | NEGATIVE_UNDER_CONTRACT | null (see experiments/b/terminal_decision.md) | - | norm"]
     assert [row.split(" | ")[0] for row in levers(cards, "*-100k")[1:]] == ["a-100k", "b-100k"]
+    from molgap.research_memory.cards import gaps_compact
+    assert gaps_compact(gaps(cards)) == [
+        "sparse | a-100k | n=1 with_effect=1", "sparse | b-100k | n=1 with_effect=0",
+        "sparse | b-500k | n=1 with_effect=0",
+        "contradiction | b | b-100k 100k NEGATIVE_UNDER_CONTRACT null vs b-500k 500k POSITIVE_UNDER_CONTRACT null"]
 
 
 def test_levers_lists_every_tested_k1_100k_lever_from_real_cards():
@@ -888,6 +893,16 @@ def test_levers_lists_every_tested_k1_100k_lever_from_real_cards():
         assert f"pcqm-k1-{lever}-100k" in families
     lr = [row for row in rows if row.startswith("pcqm-k1-lr2e4-100k |")]
     assert lr and all("null (see experiments/pcqm_k1_lr2e4_100k/terminal_decision.md)" in row for row in lr)
+    # Uncarded historical trajectories surface as one pointer line, never as cards.
+    from molgap.research_memory.cards import historical_pointer
+    cards = build_cards(REPO_ROOT)
+    degree = historical_pointer(REPO_ROOT, cards, mechanism="degree")
+    assert degree.startswith("# not in cards: 2 historical trajectories match in "
+                             "experiments/pcqm_k1_complete_local_audit/historical_evidence.md")
+    assert "TC-k1-degree-balance-100k-s42 POSITIVE_BELOW_GATE" in degree
+    assert historical_pointer(REPO_ROOT, cards, family="pcqm-k1-*-100k").startswith("# not in cards: 37 ")
+    assert historical_pointer(REPO_ROOT, cards, term="degree") and not historical_pointer(REPO_ROOT, cards)
+    assert historical_pointer(REPO_ROOT, cards, mechanism="no-such-mechanism") is None
 
 
 def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):

@@ -46,7 +46,9 @@ def main(argv: list[str] | None = None) -> None:
     levers = commands.add_parser("levers", help="read-only table of tested levers for one family")
     levers.add_argument("--family", required=True,
                         help="case-insensitive family id substring, or a glob with '*' (e.g. 'pcqm-k1-*-100k')")
-    commands.add_parser("gaps")
+    gaps = commands.add_parser("gaps")
+    gaps.add_argument("--compact", action="store_true",
+                      help="one line per item: sparse | family | counts, or contradiction | arm | a vs b")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
@@ -181,7 +183,8 @@ def main(argv: list[str] | None = None) -> None:
         from . import cards as _cards
         built = _cards.build_cards(root)
         if args.command == "levers":
-            print("\n".join(_cards.levers(built, args.family)))
+            pointer = _cards.historical_pointer(root, built, family=args.family)
+            print("\n".join([*_cards.levers(built, args.family), *filter(None, [pointer])]))
             return
         if args.command == "cards":
             selected = _cards.select(built, outcome=args.outcome, term=args.term)
@@ -190,10 +193,17 @@ def main(argv: list[str] | None = None) -> None:
             return
         result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
                   if args.command == "lookup" else _cards.gaps(built))
+        if args.command == "gaps" and args.compact:
+            print("\n".join(_cards.gaps_compact(result)))
+            return
+        pointer = args.command == "lookup" and _cards.historical_pointer(
+            root, built, mechanism=args.mechanism, term=args.term, family=args.family)
+        if pointer:
+            result["historical_pointer"] = pointer
         if args.command == "lookup" and args.compact:
             print("\n".join([*map(_cards.compact_line, result["matches"]),
                              f"# unfalsified families: {len(result['unfalsified'])}; "
-                             f"search_terms: {' '.join(result['search_terms'])}"]))
+                             f"search_terms: {' '.join(result['search_terms'])}", *filter(None, [pointer])]))
             return
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return

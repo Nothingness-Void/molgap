@@ -160,6 +160,52 @@ def levers(cards, family: str) -> list[str]:
     return rows
 
 
+# Older (mostly server-branch) trajectories are indexed here as table rows but have
+# no desktop trajectory record, hence no card. Read-only; nothing is inferred.
+HISTORICAL_INDEX = "experiments/pcqm_k1_complete_local_audit/historical_evidence.md"
+_HISTORICAL_SECTION = "## Indexed trajectory and attempt coverage"
+
+
+def historical_pointer(repo_root, cards, *, mechanism=None, term=None, family=None):
+    """One line naming uncarded rows of HISTORICAL_INDEX that match the query, else None.
+
+    --mechanism is a substring and --term a whole word of the row (id, outcome,
+    mechanism, locator); --family matches 'pcqm-' + the id without track prefix
+    and seed/version suffixes, as levers does for family ids.
+    """
+    from fnmatch import fnmatchcase
+    path = Path(repo_root) / HISTORICAL_INDEX
+    if not path.is_file() or not (mechanism or term or family):
+        return None
+    section = path.read_text(encoding="utf-8").partition(_HISTORICAL_SECTION)[2]
+    carded = {c["trajectory_id"] for c in cards}
+    word = term and re.compile(r"(?<![a-z0-9])" + re.escape(term.lower()) + r"(?![a-z0-9])")
+    hits = []
+    for line in section.splitlines():
+        cells = [cell.strip() for cell in line.split("|")[1:-1]]
+        if len(cells) < 4 or not cells[0].startswith("`") or cells[0].strip("`") in carded:
+            continue
+        row, ident = " ".join(cells).lower(), cells[0].strip("`")
+        fam = "pcqm-" + re.sub(r"^T[A-Z]?-|(?:-(?:s|v|r)\d+)+$", "", ident).lower()
+        pattern = (family or "").lower()
+        if ((mechanism is None or mechanism.lower() in row) and (not word or word.search(row))
+                and (family is None or (fnmatchcase(fam, pattern) if "*" in pattern else pattern in fam))):
+            hits.append(f"{ident} {cells[1]}")
+    if not hits:
+        return None
+    shown = ", ".join(hits[:5]) + (f", +{len(hits) - 5} more" if len(hits) > 5 else "")
+    return f"# not in cards: {len(hits)} historical trajectories match in {HISTORICAL_INDEX}: {shown}"
+
+
+def gaps_compact(result: dict) -> list[str]:
+    """One short line per gaps item."""
+    def side(s):
+        return f"{s['id']} {s['scale_k']}k {s['outcome']} {_effect(s)}"
+    return ([f"sparse | {s['family_id']} | n={s['n_trajectories']} with_effect={s['n_with_effect']}"
+             for s in result["sparse"]]
+            + [f"contradiction | {c['key']} | {side(c['a'])} vs {side(c['b'])}" for c in result["contradictions"]])
+
+
 def gaps(cards) -> dict:
     """Thin or conflicting regions. Contradictions are prompts for review, not findings."""
     by_family, by_arm = defaultdict(list), defaultdict(list)
