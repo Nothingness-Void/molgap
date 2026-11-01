@@ -362,7 +362,7 @@ def test_no_execute_verifies_actual_original_context_without_auth_or_writes(retr
     assert result["status"] == "READY_FOR_RETRIEVAL"
     assert result["producer_version"] == "7"
     assert result["executed"] is result["network_accessed"] is result["scientific_acceptance"] is False
-    original.assert_called_once_with(case.profile, case.repo, "synthetic-run", "v1")
+    assert original.call_count == 1 and original.call_args.args == (case.profile, case.repo, "synthetic-run", "v1")
     case.auth.assert_not_called()
     case.retrieve.assert_not_called()
     assert case.api.client_builds == 0 and case.http.urls == []
