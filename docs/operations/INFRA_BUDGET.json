@@ -1,16 +1,16 @@
 {
-  "measured": "2026-11-01",
-  "note": "molgap-server limits equal this branch's measurement before the other reform workers' changes land; the integrator re-measures after merging. Lower a limit whenever infrastructure shrinks; raising one needs user approval.",
+  "measured": "2026-11-02",
+  "note": "User-approved Desktop 04a54a41 shared-infrastructure migration on molgap-server; limits match the final measured checkout. Lower a limit whenever infrastructure shrinks; raising one needs user approval.",
   "limits": {
     "src_py_files": 459,
-    "src_py_lines": 146288,
-    "research_memory_lines": 8165,
+    "src_py_lines": 146478,
+    "research_memory_lines": 8313,
     "src_hashlib_files": 139,
     "gitattributes_text_rules": 9,
     "test_files": 394,
     "test_files_mentioning_hash": 210,
     "format_version_strings": 431,
-    "docs_operations_files": 64,
-    "docs_operations_lines": 10922
+    "docs_operations_files": 65,
+    "docs_operations_lines": 11834
   }
 }

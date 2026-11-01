@@ -25,7 +25,8 @@ def _root(value: str | None) -> Path:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="python -m molgap.research_memory")
-    parser.add_argument("--repo-root")
+    parser.add_argument("--repo-root", help="default: the checkout holding the imported molgap package "
+                        "(the primary checkout under .venv, not a worktree); lookup/cards/gaps read only that")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("validate")
     commands.add_parser("rebuild")
@@ -34,12 +35,24 @@ def main(argv: list[str] | None = None) -> None:
     cards = commands.add_parser("cards")
     cards.add_argument("--outcome")
     cards.add_argument("--term", help=term_help)
+    lookup_term_help = ("one or more whole words, case-insensitive; a card must contain every word "
+                        "(e.g. --term ensemble seed)")
     lookup = commands.add_parser("lookup")
-    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism field")
-    lookup.add_argument("--term", help=term_help)
+    lookup.add_argument("--mechanism", nargs="+", metavar="WORD",
+                        help="one or more case-insensitive substrings; each must occur in the card's "
+                             "mechanism, family id or failure_mode (e.g. --mechanism init noise)")
+    lookup.add_argument("--term", nargs="+", metavar="WORD", help=lookup_term_help)
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
-    commands.add_parser("gaps")
+    compact_help = "one line per card: id | outcome | family | mechanism slug | effect_meV | failure_mode"
+    for command in (cards, lookup):
+        command.add_argument("--compact", action="store_true", help=compact_help)
+    levers = commands.add_parser("levers", help="read-only table of tested levers for one family")
+    levers.add_argument("--family", required=True,
+                        help="case-insensitive family id substring, or a glob with '*' (e.g. 'pcqm-k1-*-100k')")
+    gaps = commands.add_parser("gaps")
+    gaps.add_argument("--compact", action="store_true",
+                      help="one line per item: sparse | family | counts, or contradiction | arm | a vs b")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
@@ -161,14 +174,35 @@ def main(argv: list[str] | None = None) -> None:
         else:
             print("RML derived outputs are frozen and current")
         return
-    if args.command in {"lookup", "gaps", "cards"}:
+    if args.command == "lookup":
+        # Several words travel as one space-separated string; matching splits it again.
+        args.mechanism, args.term = (" ".join(v) if v else None for v in (args.mechanism, args.term))
+    if args.command in {"lookup", "gaps", "cards", "levers"}:
         from . import cards as _cards
         built = _cards.build_cards(root)
+        if args.command == "levers":
+            pointer = _cards.historical_pointer(root, built, family=args.family)
+            print("\n".join([*_cards.levers(built, args.family), *filter(None, [pointer])]))
+            return
         if args.command == "cards":
-            print("\n".join(json.dumps(c, ensure_ascii=False) for c in _cards.select(built, outcome=args.outcome, term=args.term)))
+            selected = _cards.select(built, outcome=args.outcome, term=args.term)
+            print("\n".join(_cards.compact_line(c) if args.compact else json.dumps(c, ensure_ascii=False)
+                            for c in selected))
             return
         result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
                   if args.command == "lookup" else _cards.gaps(built))
+        if args.command == "gaps" and args.compact:
+            print("\n".join(_cards.gaps_compact(result)))
+            return
+        pointer = args.command == "lookup" and _cards.historical_pointer(
+            root, built, mechanism=args.mechanism, term=args.term, family=args.family)
+        if pointer:
+            result["historical_pointer"] = pointer
+        if args.command == "lookup" and args.compact:
+            print("\n".join([*map(_cards.compact_line, result["matches"]),
+                             f"# unfalsified families: {len(result['unfalsified'])}; "
+                             f"search_terms: {' '.join(result['search_terms'])}", *filter(None, [pointer])]))
+            return
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "status":

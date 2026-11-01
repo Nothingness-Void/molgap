@@ -67,3 +67,26 @@ def test_session_interfaces_keep_cpu_defaults_separate_from_mature_and_native_fa
         adapter = execution.TRAINING_ADAPTERS[key]
         assert not adapter.cpu_synthetic_only
         assert adapter.integration_preview or adapter.formal_training
+
+
+def test_catalog_cli_marks_compiler_runnable_entries_from_the_same_registry(capsys):
+    import json
+    from molgap import experiment_cli as cli
+    assert cli.main(["catalog"]) == 0
+    value = json.loads(capsys.readouterr().out)
+    addons = {a["name"]: a for a in value["addons"]}
+    families = {(f["name"], f["version"]): f for f in value["families"]}
+    assert addons["k1_pair_value"]["runnable_via_compiler"] is False
+    assert "empty execution_modes" in addons["k1_pair_value"]["runnable_reason"]
+    compiler = {a.family: {(x.name, x.version) for x in a.addons} for a in execution.shared_training_adapters().values()}
+    assert {k for k, f in families.items() if f["runnable_via_compiler"]} == set(compiler)
+    assert {(a["name"], a["version"]) for a in value["addons"] if a["runnable_via_compiler"]} == set().union(*compiler.values())
+    assert cli.main(["catalog", "--compact"]) == 0
+    lines = capsys.readouterr().out.splitlines()
+    assert len(lines) == len(FAMILIES) + len(ADDONS)
+    assert any(line.startswith("addon k1_pair_value/1 (neural_atom_k1) runnable=false |") for line in lines)
+    purpose = {line.split()[1]: line.rsplit(" | ", 1)[1] for line in lines if line.startswith("addon ")}
+    # Purpose comes from catalog data; a shared trainer docstring is never presented as an addon's purpose.
+    assert purpose["k1_two_pass_mean/1"] == "k1-training-view; modes 3:mean2"
+    assert purpose["k1_node_scale/1"].startswith("slot-node; slot pre_message; modes 3:composed")
+    assert purpose["k1_mean2_clean_second/1"] != purpose["k1_two_pass_mean/1"]

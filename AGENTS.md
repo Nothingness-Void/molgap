@@ -164,6 +164,8 @@ training, and only a validated delivery candidate is promoted to `master`.
   environment. Editable installs are for a dedicated development venv only.
 
 ## Doc map
+
+RML commands, record formats and verifier precedence: [interface reference](docs/operations/RML_INTERFACES.md).
 How it was done: the experiment's `decision.md` under `experiments/`. What ships:
 `production/README.md`. Remote runs: `platforms/README.md`. Install, inference and
 experiment infrastructure: `README.md`, `docs/operations/EXPERIMENT_QUICKSTART.md`,

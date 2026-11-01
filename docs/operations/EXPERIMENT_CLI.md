@@ -1,9 +1,9 @@
 # Unified Local Experiment CLI
 
-The [quickstart](EXPERIMENT_QUICKSTART.md) owns the default workflow. This page
-is the command/result and compatibility reference for `molgap.experiment_cli`.
-It provides local identity, preparation and evidence operations; family trainers
-and platform adapters retain training and submission.
+Start new work with the [quickstart](EXPERIMENT_QUICKSTART.md), which owns the
+ordered end-to-end commands, failure recovery, freeze/commit order and Kaggle
+quota rules. This page owns command flags and behavior; it is an operation
+lookup, not a required reading or validation checklist.
 
 Use the selected checkout launcher and its configured project interpreter:
 

@@ -491,6 +491,8 @@ def test_cards_filter_by_outcome_and_term(tmp_path):
     assert select(cards, outcome="NEGATIVE_UNDER_CONTRACT", term="SHARPNESS") == cards[:1]
     assert select(cards, term="sharp") == []  # whole words only: "SAM" must not match "same"/"sample"
     assert select(cards, term="PAIR") == cards[1:]
+    assert select(cards, term="pair NORM") == select(cards, term=["pair", "norm"]) == cards[1:]  # every word
+    assert select(cards, term="pair sharpness") == [] and select(cards, term="pair nor") == []
     assert select(cards) == cards
 
 
@@ -521,10 +523,11 @@ def test_card_effect_is_own_run_against_closed_reference(tmp_path):
 
 
 def test_lookup_and_gaps_are_read_only_views():
-    from molgap.research_memory.cards import gaps, lookup
+    from molgap.research_memory.cards import _search_terms, gaps, lookup
 
     def card(fam, outcome, effect=None):
         return {"trajectory_id": fam, "family_id": fam, "outcome": outcome, "mechanism": "norm", "keywords": ["norm"],
+                "failure_mode": None,
                 "falsifier": "f", "reopen_conditions": None, "effect_meV": effect, "search_terms": []}
 
     cards = [card("a-100k", "NEGATIVE_UNDER_CONTRACT", 1.0), card("b-100k", "NEGATIVE_UNDER_CONTRACT"),
@@ -532,12 +535,34 @@ def test_lookup_and_gaps_are_read_only_views():
     found = lookup(cards, mechanism="norm")
     assert [u["family_id"] for u in found["unfalsified"]] == ["b-100k", "b-500k"]
     assert lookup(cards, family="a-")["matches"] == cards[:1]
-    assert lookup(cards, mechanism="b-5")["matches"] == []  # mechanism matches only the mechanism field
+    assert lookup(cards, mechanism="B-5")["matches"] == cards[2:]  # also the family id, case-insensitive
     assert lookup(cards, mechanism="NOR")["matches"] == cards  # case-insensitive substring
+    cards[0]["failure_mode"] = "below_gate"
+    assert lookup(cards, mechanism="below")["matches"] == cards[:1]  # and the failure_mode
+    assert lookup(cards, mechanism="ensemble")["matches"] == []
+    assert _search_terms({"mechanism": "lower-peak-lr", "family_id": "pcqm-k1-sam-100k", "failure_mode": "below_gate",
+                          "search_terms": ["sharpness"]}) == ["sharpness", "below_gate", "lower", "peak", "sam"]
+    many = "-".join(f"w{c}{c}" for c in "abcdefghi")
+    assert _search_terms({"mechanism": "Free prose norm.", "family_id": many, "failure_mode": None,
+                          "search_terms": []}) == many.split("-")[:8]  # prose is not tokenized; capped at 8
     assert lookup(cards, term="1.0", mechanism="norm")["matches"] == cards[:1]
+    assert lookup(cards, mechanism="nor B-")["matches"] == cards[1:]  # several substrings, all required
+    assert lookup(cards, mechanism="norm ensemble")["matches"] == []
     flagged = gaps(cards)["contradictions"]  # same arm "b" across scales; "a" has no 500K partner
     assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
     assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
+    from molgap.research_memory.cards import compact_line, levers
+    cards[1]["decision_ref"] = "experiments/b/terminal_decision.md"
+    assert compact_line(cards[0]) == "a-100k | NEGATIVE_UNDER_CONTRACT | a-100k | norm | +1.00 | below_gate"
+    assert compact_line(cards[1]).endswith("| null | -")
+    assert levers(cards, "b-100k")[1:] == [
+        "b-100k | b-100k | NEGATIVE_UNDER_CONTRACT | null (see experiments/b/terminal_decision.md) | - | norm"]
+    assert [row.split(" | ")[0] for row in levers(cards, "*-100k")[1:]] == ["a-100k", "b-100k"]
+    from molgap.research_memory.cards import gaps_compact
+    assert gaps_compact(gaps(cards)) == [
+        "sparse | a-100k | n=1 with_effect=1", "sparse | b-100k | n=1 with_effect=0",
+        "sparse | b-500k | n=1 with_effect=0",
+        "contradiction | b | b-100k 100k NEGATIVE_UNDER_CONTRACT null vs b-500k 500k POSITIVE_UNDER_CONTRACT null"]
 
 
 def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):
@@ -565,6 +590,7 @@ def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):
     for where, change in [("exp_a", {"target_locator": run + "paired_analysis.json"}),  # result, not .md
                           ("exp_a", {"target_locator": run + "cost_records.json"}),  # contract, not .md
                           ("exp_b", {}),  # erratum filed in another experiment's dir
+                          ("exp_a", {"target_locator": real.replace("/", "\\")}),
                           ("exp_a", {"artifact_class": "result"}),
                           ("exp_a", {"effect": "replay"})]:
         errata_dir = tmp_path / "experiments" / where / "errata"
@@ -588,7 +614,7 @@ def test_crlf_tolerance_needs_head_roles_normalize_and_closure_numbers_are_finit
         verify_bound_artifact(tmp_path, "note.md", lf_sha)
     subprocess.run(["git", "-c", "user.email=t@e.invalid", "-c", "user.name=t", "commit", "-qm", "x"], cwd=tmp_path, check=True)
     verify_bound_artifact(tmp_path, "note.md", lf_sha)
-    for role in ("Official_Validation", "official_validation ", "test-dev"):
+    for role in ("Official_Validation", "official_validation ", "test-dev", "test dev", " Test \t Challenge"):
         with pytest.raises(ValueError, match="protected"):
             run("paired", [], role_id=role)
     facts = {"format": "molgap-closure-facts-v1"}
