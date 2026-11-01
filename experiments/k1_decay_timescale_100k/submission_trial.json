@@ -26,5 +26,50 @@
   },
   "qualification": "No prospective run freeze, remote receipt, native result or RML terminal acceptance established.",
   "confirmed_recipe_blocker": "Pinned preset recipe retains obsolete resume_chunks; existing read_recipe rejects it after supported metadata stripping.",
-  "luna_review": "experiments/k1_decay_timescale_100k/luna_review.md"
+  "luna_review": "experiments/k1_decay_timescale_100k/luna_review.md",
+  "repair_verification": {
+    "source_commit": "7fecf23a9e47da74485b5795dc6e4e81b99fd6a9",
+    "desktop_reference": "04a54a41a",
+    "entry": "platforms/kaggle/submit_workflow.py --experiment experiments/k1_decay_timescale_100k/experiment.json --repo-root . --verbose",
+    "execute": false,
+    "checks": {
+      "dataset_manifests": {
+        "bound_arms": [
+          "reference",
+          "wd1e3"
+        ]
+      },
+      "family_recipes": {
+        "reference": {
+          "family": {
+            "name": "neural_atom_k1",
+            "version": "3"
+          },
+          "mode": "reference",
+          "recipe": "frozen_recipe_verified"
+        },
+        "wd1e3": {
+          "family": {
+            "name": "neural_atom_k1",
+            "version": "3"
+          },
+          "mode": "reference",
+          "recipe": "frozen_recipe_verified"
+        }
+      }
+    },
+    "status": "BLOCKED",
+    "blockers": [
+      {
+        "check": "prospective",
+        "error_type": "PlanBatchError",
+        "message": "batch plan failed at item 1/2: prospective trajectory requires supporting evidence; 0 earlier plan(s) remain published"
+      }
+    ],
+    "inputs_frozen": false,
+    "submitted": false,
+    "native_qualification": "NOT_EVALUATED",
+    "local_metadata_manifest": "E:/MolGap/data/pcqm_fixed_100k_v1/manifest.json",
+    "local_graph_shards_staged": false
+  }
 }
