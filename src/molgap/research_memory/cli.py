@@ -25,7 +25,8 @@ def _root(value: str | None) -> Path:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="python -m molgap.research_memory")
-    parser.add_argument("--repo-root")
+    parser.add_argument("--repo-root", help="default: the checkout holding the imported molgap package "
+                        "(the primary checkout under .venv, not a worktree); lookup/cards/gaps read only that")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("validate")
     commands.add_parser("rebuild")
@@ -35,7 +36,7 @@ def main(argv: list[str] | None = None) -> None:
     cards.add_argument("--outcome")
     cards.add_argument("--term", help=term_help)
     lookup = commands.add_parser("lookup")
-    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism field")
+    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism, family id or failure_mode")
     lookup.add_argument("--term", help=term_help)
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)

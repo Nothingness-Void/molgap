@@ -86,7 +86,9 @@ python platforms/local/infra_budget.py
 ```
 
 `cards` prints one JSON line per closed trajectory. `lookup` returns matches, families with no
-measured negative result (`unfalsified`) and search terms. `gaps` lists single-trajectory families
+measured negative result (`unfalsified`) and search terms; `--mechanism` is a case-insensitive
+substring of mechanism, family id or failure_mode. Card `search_terms` are closure-fact terms, then
+failure_mode, mechanism-slug and family-id tokens (at most 8). `gaps` lists single-trajectory families
 and outcomes that differ across scale; these are review prompts, not findings. `analyze` reads saved
 development predictions only: it refuses `official_validation`, `test_dev` and `test_challenge` as
 `--role-id`, writes only outside `research_memory/` and `experiments/`, and marks every output
