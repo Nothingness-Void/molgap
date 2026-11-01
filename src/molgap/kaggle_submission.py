@@ -442,7 +442,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             raise ValueError("Continuation allocation must be explicit and within the packaged authority ceiling")
         budget = wall * devices / 3600
         quota_budget = wall / 3600
-    else:
+    elif "kaggle_quota_hours_ceiling" not in authority:
         # Kaggle charges session wall hours, so an explicit wall cap bounds the quota draw.
         wall = launch.get("allocation_wall_limit_seconds")
         if type(wall) is int and wall > 0:
