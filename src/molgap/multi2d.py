@@ -1,7 +1,6 @@
 """Reusable inference and evaluation helpers for frozen dual-GPS experts."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 from dataclasses import dataclass
@@ -19,6 +18,7 @@ from .fusion import DualGPSFusionHead
 from .gps import GPSWrapper
 from .graphs import smiles_to_2d_pyg
 from .router import paired_bootstrap_mean
+from .training_reproducibility import sha256_file as _sha256
 
 
 TARGETS = ("homo", "lumo", "gap")
@@ -30,14 +30,6 @@ class DualGPSExpertPaths:
     gps7: Path
     gps9: Path
     head: Path
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def stage_dual_gps_embedding_prefixes(

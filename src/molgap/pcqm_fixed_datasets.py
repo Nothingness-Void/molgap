@@ -7,6 +7,7 @@ import os
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
+from .training_reproducibility import sha256_file
 
 
 OFFICIAL_ARCHIVE_SHA256 = (
@@ -44,14 +45,6 @@ FIXED_SCALES = (
     FixedScale("ogb-train-1m", 1_000_000, 50_000, False),
     FixedScale("ogb-train-full", OFFICIAL_TRAIN_ROWS, 0, False),
 )
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, payload: object) -> None:

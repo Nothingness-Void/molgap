@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from .training_reproducibility import sha256_file
 
 
 PARENT_GEOMETRY_CACHE_SHA256 = (
@@ -30,14 +31,6 @@ FUNCTIONAL_GROUP_SMARTS = {
     "alkyne": "[CX2]#[CX2]",
     "ring_heteroatom": "[n,o,s;r]",
 }
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, value: dict) -> None:

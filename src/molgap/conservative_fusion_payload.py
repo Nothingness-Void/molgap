@@ -11,19 +11,11 @@ import torch
 from sklearn.model_selection import GroupShuffleSplit
 
 from .hierarchical_fusion import hierarchical_context
+from .training_reproducibility import sha256_file
 
 
 TRAINING_FORMAT = "molgap-conservative-fusion-training-v1"
 EXTERNAL_FORMAT = "molgap-conservative-fusion-external-v1"
-
-
-def sha256_file(path: Path) -> str:
-    """Hash a payload without importing graph-model runtime dependencies."""
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _atomic_torch(value: object, path: Path) -> None:

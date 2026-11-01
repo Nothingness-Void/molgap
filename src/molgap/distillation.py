@@ -13,6 +13,7 @@ import torch.nn as nn
 from torch_geometric.loader import DataLoader
 
 from .fusion import DualGPSFusionHead
+from .training_reproducibility import sha256_file
 
 
 def atomic_torch_save(value: object, path: Path) -> None:
@@ -27,14 +28,6 @@ def atomic_json_write(value: dict, path: Path) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     temporary.write_text(json.dumps(value, indent=2), encoding="utf-8")
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _source_indices(graphs: Sequence[object], start: int, end: int) -> torch.Tensor:

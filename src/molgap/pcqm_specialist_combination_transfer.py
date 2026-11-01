@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import time
@@ -10,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from .training_reproducibility import sha256_file as _sha256
 
 
 MATRIX_SHA256 = "c52e944def35d8d9ccb41011c9cf820182702c1a9006189b6fc488397169edbb"
@@ -20,14 +20,6 @@ PAIR_NAME = "neural_atom_k1_pair_token"
 ALPHA_GRID = np.linspace(0.0, 1.0, 41)
 BIN_WEIGHTS = np.array([0.0, 0.5, 1.0])
 FOLD_COUNT = 5
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def _atomic_json(path: Path, payload: dict) -> None:

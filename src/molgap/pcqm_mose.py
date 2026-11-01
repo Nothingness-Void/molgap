@@ -16,6 +16,7 @@ import os
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Iterable
+from .training_reproducibility import sha256_file as _sha256
 
 
 MOSE_DIM = 31
@@ -148,14 +149,6 @@ def _atomic_json(path: Path, payload: dict) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     os.replace(temporary, path)
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def build_mose_cache(output_root: Path, workers: int = 4) -> dict:
