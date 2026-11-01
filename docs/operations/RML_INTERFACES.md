@@ -9,7 +9,9 @@ lifecycle internals (`plan`, `finalize`, traces, policies) live in
 `schemas.py`, `validate.py`).
 
 Samples below were produced on 2026-11-01 from `molgap-desktop` at `6087301a`
-(185 trajectories, 173 evidence records). Counts will change; formats will not.
+(185 trajectories, 173 evidence records). Samples for `levers`, `--compact` and
+`experiment_cli catalog --compact` were produced the same day at `5f829540`
+(185 cards). Counts will change; formats will not.
 
 ## Invocation
 
@@ -32,12 +34,12 @@ when to use it. Unless noted, the command only reads files.
 
 ### Planning queries (read-only, about 0.5 s)
 
-`cards`, `lookup` and `gaps` read `research_memory/derived/trajectory_index.json`,
+`cards`, `lookup`, `levers` and `gaps` read `research_memory/derived/trajectory_index.json`,
 each trajectory record, the trajectory's own bound `paired_analysis.json`, and any
 `attribution_label.json` beside its decision. They do not verify hashes. Run
 `check --frozen` first if the index might be stale.
 
-#### `cards [--outcome OUTCOME] [--term TERM]`
+#### `cards [--outcome OUTCOME] [--term TERM] [--compact]`
 
 Prints one JSON object per line, one line per trajectory (all outcomes, not only
 closed ones). `--outcome` is an exact outcome string. `--term` is one whole word,
@@ -49,11 +51,11 @@ and exits 0.
 | `trajectory_id`, `family_id`, `outcome`, `decision_ref` | trajectory index row |
 | `mechanism`, `deficiency`, `falsifier` | `hypothesis.changed_mechanism`, `observed_deficiency`, `cheapest_falsifier`; free text or a slug, `null` if absent |
 | `related_families` | `hypothesis.related_closed_family_ids` |
-| `keywords` | tokens of `mechanism` and `family_id` (stop words, digits, `s42`, `100k`, `pcqm`, `r1` dropped) |
+| `keywords` | tokens of `mechanism` and `family_id` (see [search terms](#how-search_terms-are-derived)) |
 | `reopen_conditions` | `decision.reopen_conditions` |
 | `effect_meV`, `ci_meV`, `effect_source` | see [limits](#planning-with-the-evidence) |
 | `failure_mode`, `failure_mode_source` | `decision.facts.failure_mode` (`closure_facts`), else an attribution label (`agent_interpretation`), else `null` |
-| `search_terms` | at most 8: closure-fact terms, then `failure_mode`, then mechanism-slug and family-id tokens |
+| `search_terms` | at most 8: closure-fact terms, then `failure_mode`, then mechanism-slug and family-id tokens (see [search terms](#how-search_terms-are-derived)) |
 
 ```text
 {"trajectory_id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4", "family_id": "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
@@ -65,10 +67,30 @@ and exits 0.
 Use it to scan prior work by outcome or by a word, for example
 `cards --outcome NEGATIVE_UNDER_CONTRACT` or `cards --term readout`.
 
-#### `lookup [--mechanism M] [--failure-mode F] [--family F] [--term T]`
+`--compact` prints one line per card instead of JSON:
+`trajectory_id | outcome | family_id | mechanism slug | effect_meV | failure_mode`.
+The mechanism slug is the mechanism itself when it is already a slug
+(`[a-z0-9_-]+`), else the first 6 lowercase alphanumeric words joined by `-`, else
+`-`. The effect is signed with 2 decimals (`+0.52`) or `null`. A missing failure
+mode prints `-`. Sample, `cards --outcome NEGATIVE_UNDER_CONTRACT --compact`
+(first 3 lines):
 
-All filters are optional and combine with AND. `--mechanism` is a case-insensitive
-substring of the card's `mechanism`, `family_id` or `failure_mode` joined together.
+```text
+T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4 | NEGATIVE_UNDER_CONTRACT | pcqm-gptrans-bondlocal-pairnorm-lr-500k | peak-learning-rate | +0.52 | early_gain_fades
+T-pcqm-k1-batch-renorm-100k-s42-brn_affine | NEGATIVE_UNDER_CONTRACT | pcqm-k1-batch-renorm-100k | detached-training-mean-correction | +1.65 | endpoint_regression
+T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-added-to-pooled-embedding | +3.33 | -
+```
+
+#### `lookup [--mechanism M] [--failure-mode F] [--family F] [--term T] [--compact]`
+
+All filters are optional and combine with AND. `--mechanism` is a plain
+case-insensitive substring test (not whole-word) against one string: the card's
+`mechanism`, `family_id` and `failure_mode`, with `null` fields dropped, joined by
+single spaces. So `--mechanism lr` also matches `pcqm-gptrans-bondlocal-pairnorm-lr-500k`
+through the family id, and `--mechanism readout` matches a family id even when the
+mechanism text is a sentence without that word. A query that contains a space can
+match across the field boundary. Free-text mechanisms are matched as written, so
+synonyms are missed; try several words, or use `--term` for whole words.
 `--failure-mode` is an exact match on the card's `failure_mode`. `--family` is a
 case-insensitive substring of `family_id`. `--term` works as in `cards`. An
 unknown failure mode simply matches nothing. Exit 0.
@@ -82,7 +104,7 @@ Output is one JSON object:
   `reason`, the first card's `falsifier` and `reopen_conditions`. Read it as "not
   falsified by a measured effect". It does not mean promising.
 - `search_terms`: the matches' card `search_terms`, then the 12 most frequent
-  keywords, without duplicates.
+  keywords, without duplicates (see [search terms](#how-search_terms-are-derived)).
 
 ```text
 lookup --mechanism readout
@@ -92,6 +114,130 @@ lookup --mechanism readout
                    "reason": "no NEGATIVE_UNDER_CONTRACT with a measured effect", ...}
   search_terms: ["zero", "init", "max", "min", "std", "branch", "added", "pooled", "gptrans", "readout", ...]
 ```
+
+`--compact` prints the matches as `cards --compact` lines, then one footer line
+`# unfalsified families: N; search_terms: <space-separated terms>`. It omits the
+`unfalsified` details; drop `--compact` to see them. Sample,
+`lookup --mechanism readout --compact` (mechanism slugs shortened here with `...`):
+
+```text
+T-pcqm-k1-extremal-readout-100k-s42-baseline | CLOSED | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-...-embedding | null | -
+T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-...-embedding | +3.33 | -
+TB-gptrans-500k-frozen-readout-attribution | INCONCLUSIVE | gptrans-500k-readout-attribution | no-encoder-change-compare-frozen-feature | null | -
+TB-k1-slot-readout-diagnostic-20261002 | NO_TRAIN | k1-slot-readout-diagnostic | no-change-observational-hooks-and-exact | null | discriminator_missing
+# unfalsified families: 2; search_terms: zero init max min std branch added pooled gptrans readout attribution discriminator_missing slot diagnostic embedding extremal
+```
+
+#### How `search_terms` are derived
+
+All terms come from fields already in the records (`cards.py`). Nothing is read
+from decision prose.
+
+1. **Keywords** (`keywords` on each card): `mechanism` and `family_id` are joined,
+   lowercased and split on every character outside `a-z0-9`. A token is kept when
+   it has more than 2 characters, is not all digits, is not a stop word (`the`,
+   `and`, `for`, `with`, `training`, `model`, `fixed`, `selected`, ... in `_STOP`)
+   and does not match `s<digits>`, `<digits>k`, `pcqm` or `r<digit>`. The list is unique and
+   sorted alphabetically.
+2. **Card `search_terms`**, in this order, without duplicates, cut to 8:
+   closure-fact `decision.facts.search_terms`; the card's `failure_mode` (from
+   closure facts or an attribution label); tokens of the mechanism, used only when
+   the whole mechanism is a slug (`[a-z0-9_-]+`; a sentence contributes nothing
+   here); tokens of `family_id`. Slug and family tokens keep their order of
+   appearance and pass the same filter as keywords.
+3. **`lookup` `search_terms`**: every match's card `search_terms` in match order,
+   then the 12 most frequent keywords across the matches (ties keep first-seen
+   order), without duplicates. There is no length cap.
+
+On the sample date no file under `experiments/` held a non-empty
+`search_terms` list, so every term came from `failure_mode` and id tokens.
+
+#### `levers --family PATTERN`
+
+A read-only table of tested levers for every family whose id matches `PATTERN`.
+`--family` is required. Without `*` it is a case-insensitive substring of
+`family_id`; with `*` it is a case-insensitive glob over the whole id
+(`fnmatch`, so `pcqm-k1-*-100k` must match the full id). Exit 0, also when nothing
+matches (only the header prints).
+
+- Columns: `family | arm | outcome | effect_meV | failure_mode | mechanism`.
+- Families are sorted by id. `arm` is the trajectory id with the `T-`/`TB-`/`TC-`
+  prefix and the family id removed; when the id does not start with the family id,
+  the stripped id stays (see the pairnorm sample).
+- Same-run reference arms (`CLOSED`) are left out unless the family has nothing
+  else.
+- `effect_meV` is the card effect. A `NEGATIVE_UNDER_CONTRACT` row without a
+  recorded effect prints `null (see <decision_ref>)`; open that decision file for
+  the reason. Other missing effects print `null`. `failure_mode` prints `-` when
+  absent. `mechanism` is the compact slug.
+
+`levers --family 'pcqm-k1-*-100k'` (first 9 of 16 lines):
+
+```text
+family | arm | outcome | effect_meV | failure_mode | mechanism
+pcqm-k1-batch-renorm-100k | s42-brn_affine | NEGATIVE_UNDER_CONTRACT | +1.65 | endpoint_regression | detached-training-mean-correction
+pcqm-k1-extremal-readout-100k | s42-candidate | NEGATIVE_UNDER_CONTRACT | +3.33 | - | zero-init-max-min-std-branch-added-to-pooled-embedding
+pcqm-k1-hop-shell-100k | s42-hop_ordered | NEGATIVE_UNDER_CONTRACT | -1.12 | - | exact-shortest-hop-content-partition
+pcqm-k1-init-noise-100k | s43-init_s43 | NEGATIVE_UNDER_CONTRACT | -1.63 | - | initialization-seed-noise
+pcqm-k1-initial-residual-100k | s42-initial_residual | NEGATIVE_UNDER_CONTRACT | +0.71 | - | gated-initial-residual-h0-into-conv-input-blocks-2-to-9
+pcqm-k1-lr2e4-100k | s42-lr2e4_i43 | NEGATIVE_UNDER_CONTRACT | null (see experiments/pcqm_k1_lr2e4_100k/terminal_decision.md) | - | lower-peak-lr
+pcqm-k1-lr8e4-warmup-100k | s42-lr8e4w3_i43 | NEGATIVE_UNDER_CONTRACT | null (see experiments/pcqm_k1_lr8e4_warmup_100k/terminal_decision.md) | - | higher-peak-lr-with-warmup
+pcqm-k1-message-droppath-100k | s42-message_droppath | NEGATIVE_UNDER_CONTRACT | +2.37 | endpoint_regression | graph-wise-neighbor-aggregate-droppath
+```
+
+`levers --family pairnorm` (substring):
+
+```text
+family | arm | outcome | effect_meV | failure_mode | mechanism
+pcqm-gptrans-bondlocal-pairnorm-100k | s42-pair_update_norm | POSITIVE_UNDER_CONTRACT | -3.14 | boundary_pass | pair-update-channel-normalization
+pcqm-gptrans-bondlocal-pairnorm-lr-500k | pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4 | NEGATIVE_UNDER_CONTRACT | +0.52 | early_gain_fades | peak-learning-rate
+pcqm-k1-gptrans-pairnorm-fusion-500k | k1-gptrans-pairnorm-fusion-500k-20261027 | NO_TRAIN | null | comparator_missing | fixed-averaging-of-saved-model-predictions
+pcqm-pairnorm-prediction-router-500k | 20261027 | NO_TRAIN | null | below_gate | existing-hard-and-convex-soft-cross
+```
+
+The init-noise rows show why effect needs reading: their lever is seed noise, so
+`-1.63` is a seed difference, not a method gain.
+
+### Addon catalog (`experiment_cli`)
+
+`.venv\Scripts\python.exe -m molgap.experiment_cli catalog [--compact]` is owned by
+`src/molgap/experiment_cli.py` ([CLI reference](EXPERIMENT_CLI.md)). It reads code
+only and exits 0. Use it before planning to see which family or addon the
+scientific input compiler can run without new code.
+
+Plain output is JSON `{"families": [...], "addons": [...], "submitted": false}`.
+Besides the declared contract fields, each entry has:
+
+- `runnable_via_compiler`: `true` when the compiler accepts it. A family is runnable
+  when it is a shared recipe owner (`family_training_runner.INTERFACES`). An addon
+  is runnable when a runnable family of the same name registers that exact
+  name/version.
+- `runnable_reason`: for families `shared recipe owner`, `no training adapter`, or
+  `not a shared recipe owner (<module>)`. For addons
+  `registered for compiler family <name>/<version>`,
+  `empty execution_modes (declaration only)`, `no compiler family for <family>`,
+  or `execution_modes cover versions <v,...>; compiler family is <name>/<version>`.
+- Families also carry `execution_support`: `DECLARATION_ONLY`,
+  `CPU_SYNTHETIC_ONLY` or `REGISTERED_REQUIRES_QUALIFICATION`.
+
+`--compact` prints `{"lines": [...]}`, one line per family and then per addon:
+`family <name>/<version> runnable=<bool> | <reason> | <purpose>` or
+`addon <name>/<version> (<family>) runnable=<bool> | <reason> | <purpose>`. The
+purpose is the first docstring line of the entry's `source_module`. On the sample
+date it printed 26 lines, 9 of them `runnable=false`. Sample (excerpt):
+
+```text
+family neural_atom_k1/3 runnable=true | shared recipe owner | Registered shared K1/GPTrans entrypoints; platform skills own job operations.
+family gptrans_t/2 runnable=true | shared recipe owner | Registered shared K1/GPTrans entrypoints; platform skills own job operations.
+family edge_state_gps/1 runnable=false | no training adapter | OGB EdgeState architecture variants; no training or submission authority.
+family gptrans_t/1 runnable=false | not a shared recipe owner (molgap.gptrans_screen_workflow) | GPTrans-T core adapted to MolGap's accepted PyG graph batches.
+addon k1_node_scale/1 (neural_atom_k1) runnable=true | registered for compiler family neural_atom_k1/3 | Small registered slot example shared by the two accelerated backbones.
+addon k1_pair_value/1 (neural_atom_k1) runnable=false | empty execution_modes (declaration only) | Value-decoupled pair token on the existing K1; provenance in K1_ADAPTER.md.
+```
+
+`runnable=false` does not forbid the work. It means the change needs its existing
+typed builder or a new addon module and catalog entry (AGENTS infrastructure
+budget rule).
 
 #### `gaps`
 
