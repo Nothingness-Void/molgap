@@ -13,7 +13,7 @@ _CLOSURE_REPLACES = {"--outcome", "--arm-outcome", "--decision-ref", "--arm-deci
 def _expand_closure_input(arguments):
     """Turn --closure-input FILE into the existing per-arm accept-workflow options.
 
-    The file is {"arms": {arm: {"outcome": ..., "decision_ref": ...}}, "role_audit": path?}.
+    The file is {"arms": {arm: {"outcome": ..., "decision_ref": ..., "facts_ref"?: ...}}, "role_audit": path?}.
     It only carries human decisions; the acceptance owner still validates them.
     """
     from molgap.experiment_terminal_staging import load_closure_input
@@ -60,7 +60,7 @@ def main(argv=None):
                     raise
         help_output = json.loads(output.getvalue())
         help_output["help"] += (
-            "\nWrapper option:\n  --closure-input FILE  JSON with arms: {ARM: {outcome, decision_ref}} "
+            "\nWrapper option:\n  --closure-input FILE  JSON with arms: {ARM: {outcome, decision_ref, facts_ref?}} "
             "and optional role_audit; replaces individual outcome, decision and role-audit options.\n")
         print(json.dumps(help_output))
         return 0
