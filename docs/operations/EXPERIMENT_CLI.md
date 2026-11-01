@@ -1,7 +1,9 @@
 # Unified Local Experiment CLI
 
-Start new work with the [quickstart](EXPERIMENT_QUICKSTART.md). This page is an
-operation lookup, not a required end-to-end reading or validation checklist.
+Start new work with the [quickstart](EXPERIMENT_QUICKSTART.md), which owns the
+ordered end-to-end commands, failure recovery, freeze/commit order and Kaggle
+quota rules. This page owns command flags and behavior; it is an operation
+lookup, not a required reading or validation checklist.
 
 `sandbox`, `source-dependencies` and optional `--auto-dependencies` packaging
 are documented in the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md).
@@ -12,17 +14,21 @@ Cross-scale K1/GPTrans `prepare-family-training` staging is described in
 inputs, not submission/full admission/scientific acceptance. See
 [CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
 
-Run from the selected checkout using its configured project environment.
-These examples assume PowerShell is already at that checkout's root; use its
-primary `.venv` (shared across temporary worktrees), not system Python. For a
-temporary checkout use the selected-checkout wrapper in the quickstart:
+Run from the selected checkout's root with the primary checkout's `.venv`
+interpreter, not system Python. In a worktree, use the
+[selected-checkout wrapper](EXPERIMENT_QUICKSTART.md#select-code-and-storage)
+`platforms/local/run.py --profile $profilePath -- <command> ...` so the
+worktree's own source runs; `python -m molgap.experiment_cli` imports the primary
+checkout's source. `<command> --help` prints that command's flags as JSON.
 
 ```powershell
+$python = 'D:/文档/molgap/.venv/Scripts/python.exe'
+$profilePath = 'D:/molgap-machine-profile.json'
 $repoRoot = (Get-Location).Path
-.\.venv\Scripts\python.exe -m molgap.experiment_cli --help
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/gptrans_t_v1.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/k1_v1.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/edge_state_v1.json
+& $python platforms/local/run.py --profile $profilePath -- --help
+& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/gptrans_t_v1.json
+& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/k1_v1.json
+& $python platforms/local/run.py --profile $profilePath -- validate-spec --spec docs/operations/examples/edge_state_v1.json
 ```
 
 The module is the unified local entry point, not a migration of every historical
@@ -75,9 +81,13 @@ import, training shortcut, platform submit command or authority override exists.
 
 The [quickstart](EXPERIMENT_QUICKSTART.md) is the default human-input path.
 `catalog` lists declared family/addon capabilities and their derived execution
-support. `freeze-input --experiment $experiment --repo-root $repoRoot` freezes
-the editable input locally; it is optional (a commit between freeze and prepare needs a new
-`logical_run_id`); preparation performs the same operation. The scientific compiler currently supports
+support (`addons`, `families`); an addon with empty `family_versions` or
+`execution_modes` cannot be compiled. `freeze-input --experiment $experiment
+--repo-root $repoRoot` freezes the editable input locally and returns
+`INPUTS_FROZEN`. It is optional, because preparation performs the same freeze,
+and it starts the window in which no commit may land
+([freeze and commit order](EXPERIMENT_QUICKSTART.md#freeze-and-commit-order)).
+The scientific compiler currently supports
 shared K1/3 and GPTrans/2 parameter/addon deltas; unsupported recipe changes use
 their existing typed builders. Missing authority/reference/target/data identity
 remains a blocker.
@@ -91,7 +101,8 @@ source. Data/weight payloads are not part of this source distribution.
 ## Local lifecycle by run ID
 
 `locate-run --profile $profilePath --repo-root $repoRoot --run-id $runId
---attempt-id $attemptId` reads the frozen local run without contacting a platform.
+--attempt-id $attemptId` reads the frozen local run without contacting a platform
+(under 1 s) and prints each frozen file's path and SHA-256.
 The following commands can use these same four options instead of `--spec`:
 
 | Command | Additional inputs / behavior |
@@ -115,7 +126,15 @@ accepts these inputs only with explicit recovery authorization/SHA and exact
 successor versions; fresh-release defaults reject them before authentication.
 
 The platform-owned `submit_workflow.py --experiment` path compiles/prepares and
-can reuse the original journal when separately authorized to execute. The
+can reuse the original journal when separately authorized to execute. Its flags
+are `--experiment` or `--prepared` (plus `--recover-prepared`), `--repo-root`,
+`--credentials`, `--execute`, `--verbose`, and, with `--prepared` only,
+`--output`, `--authority`, `--monitor-path`, `--recovery-authority`,
+`--recovery-authority-sha256`, `--source-version` and `--kernel-version`.
+`--execute` requires `--credentials`. Success statuses are
+`PREPARED_FOR_PLATFORM` (without `--execute`), `READY_FOR_PLATFORM_OPERATIONS`
+(`--prepared` without `--execute`) and `SUBMISSION_BOUND`; other statuses are in
+the [failure table](EXPERIMENT_QUICKSTART.md#failure-table). The
 family-output retrieval adapter accepts run identity plus independently pinned
 manifest/arm identity; `--execute` is explicit. Neither path infers scientific
 acceptance. Other platform and historical protocols keep their owning adapters.
@@ -141,9 +160,18 @@ only their verified available evidence; missing predictions/curves remain
 insufficient evidence. Run mode defaults to zero bootstrap samples and does not
 apply the directory mode's descriptive thresholds as frozen scientific gates.
 
+### Run-keyed acceptance
+
 `accept-workflow` Run mode adds `--diagnose`, `--stage-terminal`, `--outcome`,
 `--decision-ref`, `--role-audit`, and `--output`. The thin
-`platforms/local/accept_run.py` selects diagnosis and staging automatically.
+`platforms/local/accept_run.py` (run directly with the interpreter; it adds
+`--repo-root` for its own checkout) selects diagnosis and staging automatically:
+without `--strict` it adds `--diagnose`; with `--strict` it diagnoses only when
+`--diagnose` is passed; without `--locations` it adds `--stage-terminal`.
+Exit code 0 means `COMPLETE` or `MECHANICALLY_VERIFIED`; every other status,
+including `STAGED_DRAFT` and `BLOCKED`, exits 1. The compact stdout carries
+`status`, `executed`, `closure_complete`, `blockers` (prefixed `<arm>: `),
+`replay_readiness`, `strict_mode`, `closure` and `strict_validation`.
 For different arm decisions, repeat `--arm-outcome ARM=OUTCOME` and
 `--arm-decision-ref ARM=PATH`, for example `--arm-outcome reference=CLOSED
 --arm-outcome candidate=NEGATIVE_UNDER_CONTRACT --arm-decision-ref
@@ -161,8 +189,16 @@ expands to the options above; `facts_ref` becomes `--arm-facts-ref ARM=PATH`
 options, and the acceptance owner still validates every value. The closure file and
 `role_audit` paths resolve from the current directory; each `decision_ref` resolves
 from the repository root.
-`experiment_cli draft-closure` (flags of `draft-role-audit` plus `--output-dir`) drafts
-that file, the role audits, `measured_<run>.json` and `closure_facts_<arm>.json`; fill `outcome` and `decision_ref`.
+`draft-closure` (the same flags as `draft-role-audit`: `--profile`, `--repo-root`,
+`--run-id`, `--attempt-id`, `--output-dir`, optional `--retrieved-root`,
+`--continuation-receipt`, `--protected-role-use`) returns `DRAFT` and writes into
+the repository-local `--output-dir`: `roles_<arm>.json`, `audit_map.json`,
+`measured_<run>.json` (paired development MAE from saved predictions; `delta`
+is candidate minus reference in meV), `closure_facts_<arm>.json` (measured
+`effect_meV`/`ci_meV`, null `failure_mode`/`search_terms`) and
+`closure_input.draft.json` with empty `outcome` and `decision_ref`. Files are
+immutable; a rerun that would change them needs a new `--output-dir`. The
+[quickstart](EXPERIMENT_QUICKSTART.md#happy-path) lists the human fields.
 Explicit reviewed `--locations` skips default staging; an explicit
 `--stage-terminal` still requests the stager.
 With `--strict`, reviewed locations and no `--execute`, `--stage-terminal` or
@@ -298,7 +334,13 @@ context and remote bytes are still checked per arm. The execution-retention bund
 keeps its own `--execution-retention` call.
 A STOP_FOR_COST run has no `output_manifest.json`; `--all-arms --paused` fetches its declared paused files and records each
 digest and byte count at download (`observed_at_download`, integrity from receipt only), then checks the pause receipt's run
-context and checkpoint digest. It is unstrict and not an acceptance.
+context and checkpoint digest. It returns `PAUSED_RETRIEVED` and refuses `--strict` and `--resume-prepared`. It is unstrict
+and not an acceptance; the [quickstart](EXPERIMENT_QUICKSTART.md#paused-stop_for_cost-runs) owns the continuation steps.
+
+All-arm retrieval statuses: `READY_FOR_RETRIEVAL` (no `--execute`; prints `pin_command`), `OBSERVED` (`--status`, with
+`scheduler`), `WAIT_REMOTE_TERMINAL` (the version is still running), `RETRIEVED` (prints `execution_root`),
+`PAUSED_RETRIEVED`, `BLOCKED` (with `stage`) and `RECONCILIATION_REQUIRED`. `--credentials` is required with `--execute` or
+`--status` and rejected otherwise. Retrieved files land under `<artifact_root>/retrieved/<run>/<attempt>/version<N>/<arm>`.
 
 Retained Spec and recipe readers validate frozen declarations independently of
 the current Addon catalog. Package, receipt and artifact hash bindings still
@@ -326,6 +368,8 @@ owning qualification and remains blocked by this staging shortcut.
 per-arm `closure` results distinguish successful closure from partial or failed
 transactions; strict replay status remains separate.
 Incomplete staging returns top-level `STAGED_DRAFT` and a nonzero CLI status.
+### Role audits
+
 `--role-audit` accepts an observed audit with exact `context`, protected
 `role_use` states and existing-schema `roles`, or a JSON arm-to-path map. Unknown
 role use blocks closure rather than becoming an untouched claim. No script
@@ -361,7 +405,7 @@ from observed facts.
 `workflow-info --spec $spec` reports registered training/profiler capabilities.
 Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot
 --plan $plan`; it reports independent recipe/profiler and RML-policy gaps without
-staging or publication. A blocked check exits1. Do not use a fresh-declaration
+staging or publication. A blocked check exits 1. Do not use a fresh-declaration
 check to recreate already published prospective records. See the
 [prepared Kaggle adapter](KAGGLE_WORKFLOW_SUBMISSION.md) for platform operations;
 this local CLI still does not submit.
