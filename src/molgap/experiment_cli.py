@@ -108,6 +108,14 @@ def _parser() -> argparse.ArgumentParser:
     draft.add_argument("--retrieved-root", type=_local)
     draft.add_argument("--continuation-receipt", type=_local)
     draft.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE")
+    closure=commands.add_parser("draft-closure")
+    for flag in ("--profile", "--repo-root", "--output-dir"):
+        closure.add_argument(flag, required=True, type=_local)
+    closure.add_argument("--run-id", required=True)
+    closure.add_argument("--attempt-id", required=True)
+    closure.add_argument("--retrieved-root", type=_local)
+    closure.add_argument("--continuation-receipt", type=_local)
+    closure.add_argument("--protected-role-use", action="append", default=[], metavar="ROLE=STATE")
     diagnose=commands.add_parser("diagnose")
     diagnose.add_argument("--control",type=_local)
     diagnose.add_argument("--candidate",type=_local)
@@ -185,6 +193,8 @@ def _parser() -> argparse.ArgumentParser:
             decisions.add_argument("--decision-ref", type=_local)
             decisions.add_argument("--arm-decision-ref", action="append", metavar="ARM=PATH",
                 help="Per-arm repository-local decision path; repeat for each arm")
+            command.add_argument("--arm-facts-ref", action="append", metavar="ARM=PATH",
+                help="Optional per-arm closure_facts JSON, hash-bound into the decision")
             command.add_argument("--role-audit", type=_evidence_argument,
                 help="Observed audit JSON file, per-arm path-map file, or inline JSON map")
             command.add_argument("--scientific-acceptance", type=_evidence_argument,
@@ -318,6 +328,12 @@ def _dispatch(args) -> tuple[dict, int]:
             retrieved_root=args.retrieved_root, output_dir=args.output_dir,
             protected_role_use=_bindings(args.protected_role_use),
             continuation_receipt=args.continuation_receipt), 0
+    if args.command == "draft-closure":
+        from .experiment_terminal_staging import draft_closure
+        return draft_closure(args.profile, args.repo_root, args.run_id, args.attempt_id,
+            retrieved_root=args.retrieved_root, output_dir=args.output_dir,
+            protected_role_use=_bindings(args.protected_role_use),
+            continuation_receipt=args.continuation_receipt), 0
     if args.command == "catalog":
         from dataclasses import asdict
         from .experiment_execution import TRAINING_ADAPTERS
@@ -412,6 +428,8 @@ def _dispatch(args) -> tuple[dict, int]:
                             seed=args.seed)
                     elif args.output is not None or args.bootstrap_samples is not None or args.seed != 42:
                         raise ValueError("Diagnostic options require --diagnose")
+                    if args.arm_facts_ref is not None:
+                        options["facts_ref"] = _bindings(args.arm_facts_ref)
                     if args.role_audit is not None:
                         options["role_audit"] = args.role_audit
                     if args.scientific_acceptance is not None:
@@ -431,7 +449,8 @@ def _dispatch(args) -> tuple[dict, int]:
             raise ValueError("--profile and --attempt-id require --run-id")
         if args.command == "accept-workflow":
             if any((args.retrieved_root, args.diagnose, args.stage_terminal, args.outcome, args.arm_outcome,
-                    args.decision_ref, args.arm_decision_ref, args.role_audit, args.scientific_acceptance, args.output,
+                    args.decision_ref, args.arm_decision_ref, args.arm_facts_ref, args.role_audit,
+                    args.scientific_acceptance, args.output,
                     args.continuation_receipt, args.resume_prepared, args.resume_authority,
                     args.strict_inputs, args.strict, args.physical_runs, args.physical_observation)):
                 raise ValueError("Automatic acceptance requires --run-id")

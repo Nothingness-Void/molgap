@@ -106,9 +106,44 @@ def test_explicit_decision_and_observed_audit_enable_nonpositive_closure(staging
     root, resolved = staging_case
     decision = root / "explicit_decision.md"
     decision.write_text("Explicit infrastructure-only terminal disposition.", encoding="utf-8")
-    result = stage(staging_case, outcome="INCONCLUSIVE", decision_ref="explicit_decision.md", role_audit=audit_files(staging_case))
+    ref, cand = sorted(resolved["outputs"])
+    inputs = [{"sha256": file_digest(resolved["outputs"][a]["output_dir"] / "predictions.pt")} for a in (cand, ref)]
+    pair = {"candidate": cand, "reference": ref, "delta": -1.5, "ci95": [-2.0, -1.0]}
+    measured = root / "measured_synthetic-run.json"
+    measured.write_text(json.dumps({"inputs": inputs, "results": {"pairs": [pair]}}), encoding="utf-8")
+    facts = {"format": "molgap-closure-facts-v1", "failure_mode": "below_gate", "search_terms": ["synthetic"],
+             "effect_meV": -1.5, "ci_meV": [-2.0, -1.0], "source": measured.name}
+    expected = {cand: facts, ref: {**facts, "effect_meV": None, "ci_meV": None, "source": None}}
+    facts_ref = {arm: f"closure_facts_{arm}.json" for arm in expected}
+    outcome = {ref: "CLOSED", cand: "INCONCLUSIVE"}
+    write = lambda arm, value: (root / facts_ref[arm]).write_text(json.dumps(value), encoding="utf-8")
+    for arm, value in expected.items():
+        write(arm, value)
+    kwargs = dict(decision_ref="explicit_decision.md", facts_ref=facts_ref)
+    # A copy error, an unknown failure mode, a reference arm not closing CLOSED and a
+    # hand-written source without bound prediction inputs all fail.
+    for bad, out in (({"effect_meV": -1.4}, outcome), ({"failure_mode": "harmful"}, outcome),
+                     ({}, {ref: "INCONCLUSIVE", cand: "INCONCLUSIVE"}), ("hand", outcome)):
+        if bad == "hand":
+            measured.write_text(json.dumps({"results": {"pairs": [pair]}}), encoding="utf-8")
+        write(cand, {**facts, **(bad if isinstance(bad, dict) else {})})
+        with pytest.raises(ValueError, match="closure facts|measured pair"):
+            stage(staging_case, outcome=out, role_audit=audit_files(staging_case), **kwargs)
+    measured.write_text(json.dumps({"inputs": inputs, "results": {"pairs": [pair]}}), encoding="utf-8")
+    write(cand, facts)
+    result = stage(staging_case, outcome=outcome, role_audit=audit_files(staging_case), **kwargs)
     assert result["status"] == "STAGED_CLOSURE_READY", result
+    for arm, paths in result["paths"].items():
+        package = json.loads(Path(paths["terminal"]).read_bytes())
+        assert package["decision"]["outcome"] == outcome[arm]
+        assert package["decision"]["facts"] == expected[arm]
+        assert package["artifact_hashes"][facts_ref[arm]] == file_digest(root / facts_ref[arm])
     descriptor = build_verified_terminal_descriptor(root, resolved["spec"], outputs=resolved["outputs"], locations=result["locations"])
+    # Finalization re-verifies every bound hash, so an edited facts file cannot close.
+    write(cand, {**facts, "failure_mode": "endpoint_regression"})
+    with pytest.raises(ValueError, match="SHA mismatch: " + facts_ref[cand]):
+        close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
+    write(cand, facts)
     closure = close_verified_outputs(root, resolved["spec"], descriptor, outputs=resolved["outputs"], execute=True)
     assert closure["status"] == "COMPLETE", closure
     for where in resolved["locations"].values():
