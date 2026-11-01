@@ -77,13 +77,28 @@ def test_closure_input_expands_to_per_arm_options_and_rejects_mixing(tmp_path, m
     closure = tmp_path / "closure.json"
     closure.write_text(json.dumps({"arms": {
         "reference": {"outcome": "CLOSED", "decision_ref": "reference.md"},
-        "candidate": {"outcome": "INCONCLUSIVE", "decision_ref": "candidate.md"}},
+        "candidate": {"outcome": "INCONCLUSIVE", "decision_ref": "candidate.md",
+                      "facts_ref": "closure_facts_candidate.json"}},
         "role_audit": str(tmp_path / "roles.json")}), encoding="utf-8")
-    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 0
+    (tmp_path / "roles.json").write_text("{}", encoding="utf-8")
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--profile", str(tmp_path / "p.json"),
+                       "--closure-input", str(closure)]) == 0
     arguments = owner.call_args.args[0]
     assert "--closure-input" not in arguments and "--stage-terminal" in arguments
     assert arguments[arguments.index("reference=CLOSED") - 1] == "--arm-outcome"
     assert arguments[arguments.index("candidate=candidate.md") - 1] == "--arm-decision-ref"
+    assert arguments[arguments.index("candidate=closure_facts_candidate.json") - 1] == "--arm-facts-ref"
+    assert arguments.count("--arm-facts-ref") == 1
+    options = Mock(return_value={"status": "MECHANICALLY_VERIFIED"})
+    monkeypatch.setattr(runs, "accept_run_workflow", options)
+    assert cli._dispatch(cli._parser().parse_args(arguments))[1] == 0
+    assert options.call_args.kwargs["facts_ref"] == {"candidate": "closure_facts_candidate.json"}
+    owner.reset_mock()
+    # An old closure input without facts_ref still loads and adds no facts option.
+    closure.write_text(json.dumps({"arms": {"reference": {"outcome": "CLOSED", "decision_ref": "reference.md"}}}),
+                       encoding="utf-8")
+    assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 0
+    assert "--arm-facts-ref" not in owner.call_args.args[0]
     owner.reset_mock()
     closure.write_text(json.dumps({"arms": {"reference": {"outcome": "CLOSED"}}}), encoding="utf-8")
     assert entry.main(["--run-id", "test", "--attempt-id", "v1", "--closure-input", str(closure)]) == 2

@@ -147,7 +147,7 @@ def main(argv=None):
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
     if args.accept_only:
-        closure_arm = None
+        closure_arm = facts_ref = None
         if args.closure_input is not None:
             if any((args.outcome, args.decision_ref, args.role_audit)):
                 parser.error("--closure-input replaces --outcome, --decision-ref and --role-audit")
@@ -160,6 +160,7 @@ def main(argv=None):
                 parser.error("The local adapter runs exactly one arm; name only that arm in --closure-input")
             (closure_arm, item), = arms.items()
             args.outcome, args.decision_ref = item["outcome"], item["decision_ref"]
+            facts_ref = {closure_arm: item["facts_ref"]} if "facts_ref" in item else None
             if args.outcome != "INFRASTRUCTURE_ONLY":
                 parser.error("The local adapter closes only INFRASTRUCTURE_ONLY")
         if args.draft_role_audit and args.role_audit:
@@ -178,7 +179,7 @@ def main(argv=None):
             acceptance_plan=args.acceptance_plan, outcome=args.outcome,
             decision_ref=args.decision_ref, role_audit=args.role_audit, execute=args.execute,
             draft_role_audit_dir=args.draft_role_audit, protected_role_use=protected,
-            closure_arm=closure_arm)
+            closure_arm=closure_arm, facts_ref=facts_ref)
         path = args.output / "local_acceptance_report.json"
     else:
         if any((args.outcome, args.decision_ref, args.role_audit, args.execute, args.closure_input,
@@ -196,7 +197,7 @@ def main(argv=None):
 
 def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
                           outcome=None, decision_ref=None, role_audit=None, execute=False,
-                          draft_role_audit_dir=None, protected_role_use=None, closure_arm=None):
+                          draft_role_audit_dir=None, protected_role_use=None, closure_arm=None, facts_ref=None):
     """Use the existing mechanical inspector, terminal staging and RML closure."""
     from .experiment_family_workflow import prepare_terminal_outputs, TargetIdentityBinding
     from .experiment_package import read_packaged_text
@@ -246,7 +247,7 @@ def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
             role_audit = write_role_audits(root, resolved, draft_role_audit_dir, protected_role_use)
         staged = stage_verified_terminal_packages(None, root, declaration["logical_run_id"], "v1",
             resolved=resolved, reports=mechanical["arms"], outcome=outcome,
-            decision_ref=decision_ref, role_audit=role_audit)
+            decision_ref=decision_ref, role_audit=role_audit, facts_ref=facts_ref)
         result = {**mechanical, "terminal_staging": staged,
                   "status": staged["status"], "blockers": staged.get("blockers", [])}
         if execute:
