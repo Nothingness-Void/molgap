@@ -1,0 +1,23 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "nvoid912",
+  "arms": [
+    "init_s45",
+    "init_s46"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "init_s45",
+  "allocated_t4_hours_ceiling": 23.8333333334,
+  "allocation_wall_limit_seconds": 42900,
+  "cleanup_reserve_seconds": 180,
+  "automatic_retry": false,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authorized_at": "2026-10-31T01:00:00+09:00",
+  "protocol_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/protocol.md",
+  "reference_semantics": "init_s45 is the same-run reference by role only; both arms use the accepted 500K PairNorm recipe and differ only in initial weights; the seed-42 reference is retained, not re-run.",
+  "scope": "one 500K two-arm GPTrans PairNorm init-noise kernel; no retry, full training, adoption or protected roles"
+}

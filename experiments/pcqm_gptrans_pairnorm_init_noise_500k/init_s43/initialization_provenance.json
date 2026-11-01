@@ -1,0 +1,12 @@
+{
+  "format": "molgap-initialization-provenance-v1",
+  "arm_id": "init_s43",
+  "builder": "D:/molgap-scratch/plan-round5/build_init.py (mirrors molgap.gptrans_bond_local.make_bond_local_model with torch.manual_seed changed)",
+  "builder_source": "src/molgap/gptrans_bond_local.py",
+  "reference_seed_42_state_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
+  "note": "spec seed label stays 42 because the compiler permits only seed 42; sampler/data order and dropout RNG are seed 42; the seed-42 build reproduces the frozen reference state",
+  "state_file": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s43.pt",
+  "state_file_sha256": "2ccd1eb79de4b82fffb58522b9e2325026d36f04f398be0d49d3eea55ee05f3c",
+  "state_sha256": "c95da412764ea1b9a701ae9421c167e32a18f9dc423d364aa3d4fe8c0a8d5f5b",
+  "torch_seed": 43
+}

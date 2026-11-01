@@ -1,0 +1,229 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/init_s46/terminal_staging/v1/3a58985648fc772c/acceptance.json",
+      "sha256": "9d7c19f2e8bd67ba71acb2ee810c9ffed2ca233c64082b753655477b03d189a2"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s46/selected_model.pt",
+      "sha256": "81c6fc2274c11da625434c46648e734faa6e1d1916e0766acd1bccbb093b30cc"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/cost_records.json",
+      "sha256": "679ec1725bf9cc49d4c7095de6538b17759bb336873a58f432c3f97bea4cfb0f"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md",
+      "sha256": "0aded9ffedc215ff2fd41d865f22beb3449538e79076d46708370eb840237dda"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/paired_analysis.json",
+      "sha256": "a71f1b66f60552eb542bda8deed0c9958c24dfd76c18ccc49cc54bc7f707ccc6"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/prediction_manifest.json",
+      "sha256": "970069a335758f493a3fa3b485e8a48068af356bacdd8c73ff78f9e74c405fcc"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/role_history.json",
+      "sha256": "41bffa0dcfc458605dc89868173debe0f7b48f01c83e7e41dfa57ec3578cba91"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/row_manifest.json",
+      "sha256": "696df9d274fe3f1a50edd0d3d5c8eb4cd8271701155d17040785178a0f91ce43"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s46/runtime_certificate.json",
+      "sha256": "5240899091ee49ab45294585dd3026911eb4a1f562dfda961ad5c5c927b9a66a"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s46/training_contract.json",
+      "sha256": "8c61f521f0f4d77740899674dc0fccc74e21929ae70f896ab02020f142b035af"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/target_manifest.json",
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/comparison_assets/9633b247773bcfc322ad013a9c8a272b1014478eb229f598a996b9d566f45c27/target_transform.json",
+      "sha256": "4824c60a726b7844f9de458947a070341dc0bdf1e777c70939f0e82f8bcded32"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s46/bound_trace_manifest.json",
+      "sha256": "046bf81aa8007f68e8a7c65a352d143ebbfe08c52df9c0078bee7570921afdba"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "initialization_identity"
+  ],
+  "experiment_purpose": "initialization_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "initialization-seed-noise",
+  "matched_fields": {
+    "architecture_config_identity": "7ec57d0b0d8986701aaae88b2a2008cf728dd3fd19875926c206e7ddb068b842",
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-ema",
+    "data_role_identity": "2ead10a2e44e0feda04910c6b6b51c961bb69488be9403978e64134e3f2f9d06",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+    "evaluation_weight_source": "ema",
+    "feature_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "69f5e97752e51a8d4f0ae8ff4fcd278f7e093c8810e8fbe785f8382c62f2bc35",
+    "optimizer_fused": false,
+    "optimizer_identity": "b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8",
+    "optimizer_mode": "foreach-adamw",
+    "optimizer_steps": 234360,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1",
+    "row_order_identity": "39d6dbfcf3809666cea7ce344742b0272792fb334cec0ebcc9afcf8c020044a1",
+    "runtime_certificate_scope": "60677044cd34a634c634235baae7da7f5c0c0c2163b1587a901e9b4405772b7f",
+    "sample_presentations": 29998080,
+    "schedule_identity": "5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0",
+    "seed": 42,
+    "selection_role_identity": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "9633b247773bcfc322ad013a9c8a272b1014478eb229f598a996b9d566f45c27",
+    "target_transform_identity": "9c05be497123f3433e24f26c1baa327ffcef3b8c1cd17b91f9ca83eef868b83c",
+    "tf32_enabled": false,
+    "weight_semantics": "ema"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "initialization_identity": {
+      "candidate": "3a050daafe5349d092a9c12644c25a706101ee95ab9668842c5aaa4ce4bb5357",
+      "reference": "12c050052539bcf89096892aa138d94b02e22ef9a5a7594dda60b9c3b8591226"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/init_s45/terminal_staging/v1/78f8d790952ff8a4/acceptance.json",
+      "sha256": "185dd39b7d9f0965a73a9b3f10dddca2f26978052a7600b48f1a2e26467ec202"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s45/selected_model.pt",
+      "sha256": "c89f31dd82eac514c0c35c831b112f168735e86b886b1e38a25faf337048e5fe"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/cost_records.json",
+      "sha256": "3d7e63a0ef622f1e60709009edd8393fe10e4e142e0e7f5f5c31eaa1b93919a5"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md",
+      "sha256": "0aded9ffedc215ff2fd41d865f22beb3449538e79076d46708370eb840237dda"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/prediction_manifest.json",
+      "sha256": "2af2bab244564e2ef9b9d7b08125e5819037cae2374db54264e2462e8355484c"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/role_history.json",
+      "sha256": "3c43db4a96a298011198fe7fb81e343c31fe728b2d16c1c4a234e906cf271c08"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/row_manifest.json",
+      "sha256": "696df9d274fe3f1a50edd0d3d5c8eb4cd8271701155d17040785178a0f91ce43"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s45/runtime_certificate.json",
+      "sha256": "b8b955bdd3c874bcbfe4a5680d060a68577621ad158610175c2e363928ecf961"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s45/v1/version1/init_s45/training_contract.json",
+      "sha256": "9fd667218adfd952800ef4d4fbcccc7e4983de99e28754b135ad3933e3b73164"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/target_manifest.json",
+      "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/comparison_assets/9633b247773bcfc322ad013a9c8a272b1014478eb229f598a996b9d566f45c27/target_transform.json",
+      "sha256": "4824c60a726b7844f9de458947a070341dc0bdf1e777c70939f0e82f8bcded32"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/strict_qualification/96ff6bd696a223c080ec/init_s45/bound_trace_manifest.json",
+      "sha256": "6166645fb8b927560b59f9c7179f4398501a47c1f4125261f3b22829e800dca8"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-96ff6bd696a223c080ec",
+  "reference_bundle_sha256": "d87f0f6dd0ac1b4bdc95701df8c70b7cf3fb71bc84efaf2d59edda25f1671654",
+  "reference_id": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

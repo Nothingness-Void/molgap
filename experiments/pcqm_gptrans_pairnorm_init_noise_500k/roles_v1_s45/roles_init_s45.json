@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "init_s45",
+    "arm_identity": "0d8c201d604b351f2392c565a47934e1953fa25b21a39fc03aca4f37d80449b5",
+    "experiment_id": "pcqm_gptrans_pairnorm_init_noise_500k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45",
+    "package_identity": "d6dbc79e230cecfafa0d181da94a7bb670ea4c9d52463b3cf3986a327484e294",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-gptrans-init-noise-500k-k3",
+    "source_archive_sha256": "4aae93a43d89ea2084a029b130ac8517a0601273e8decf944c9e34d8872422cb",
+    "source_commit": "9d82f1cb6b150752f0602d21f10692cc6029de0f",
+    "spec_identity": "e6e5cd53fe94b5aac235a2405d7ed3287d8256784067da64bdefb7833355a0c6",
+    "training_recipe_sha256": "9fd667218adfd952800ef4d4fbcccc7e4983de99e28754b135ad3933e3b73164"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "24ac55728fe1330cfa8f1dea99c913dbc5fb85934fcd85045f86fee6ffe6ca0d"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 24ac55728fe1330cfa8f1dea99c913dbc5fb85934fcd85045f86fee6ffe6ca0d, listed in output_manifest.json) shows the frozen training process opened 11 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s45/roles_init_s45.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s45/roles_init_s45.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s45/roles_init_s45.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s45/roles_init_s45.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/roles_v1_s45/roles_init_s45.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/init_s46/terminal_staging/v1/3a58985648fc772c/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 10.469343231257223
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s46:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s45/prospective/init_s46/terminal_staging/v1/3a58985648fc772c/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 10.594759954559166
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s45:init_s46:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46"
+    }
+  ]
+}

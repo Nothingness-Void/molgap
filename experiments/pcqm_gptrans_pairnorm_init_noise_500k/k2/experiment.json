@@ -1,0 +1,111 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_pairnorm_init_noise_500k",
+  "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-10-30T16:30:00+00:00",
+  "authority_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/k2/authority.json",
+  "role_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-pairnorm-init-noise-500k",
+    "action": "RUN_PAIRED_500K",
+    "question": "How much does the accepted 500K GPTrans BondLocal+PairNorm recipe (99.987 meV) change with initial weights alone, and what does a same-recipe mean of five predictions gain?",
+    "deficiency": "Every 500K verdict is single-seed at 0.5-2.1 meV and no 500K noise floor exists; the 500K ensemble curve mixes size and LR variants.",
+    "changed_mechanism": "initialization-seed-noise",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44",
+      "ev-terminal-T-pcqm-single-model-total-budget-500k-s42-b_16x256"
+    ],
+    "alternatives": [
+      "500K init noise is below 1 meV so past verdicts stand",
+      "Data order or dropout noise dominates init noise",
+      "Same-recipe members are too correlated at 500K for ensembling to pay"
+    ],
+    "closed_families": [
+      "gptrans-pair-norm-500k",
+      "gptrans-noisy-pair-norm-500k",
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "pcqm-single-model-total-budget-500k"
+    ],
+    "positive_decision": "Singles: x42 = 99.987 (retained) and x43..x46 from the new arms (50K dev MAE, meV, best-development-EMA selection as in the reference). D = max - min over the five; SD = sample standard deviation over the five. E5 = mean single MAE minus MAE of the 5-member equal mean prediction. Fit a + b/N over all subsets. - D < 1.0 meV: 500K init noise is small; past 500K single-seed verdicts of 1-2 meV stand as measured. - 1.0 <= D < 2.0 meV: 500K gates of 3 meV stay; 1-2 meV verdicts are unresolved. - D >= 2.0 meV: single-seed 500K screens are underpowered; future 500K screens need >= 2 inits per arm. - E5 >= 4.0 meV and a <= 95.5 meV: same-recipe ensembling is the leading 500K lever; nominate a deliverable-ensemble or out-of-fold distillation question to the owner (no adoption here). - E5 < 2.0 meV: the mixed 500K curve overstated ensembling; same-recipe ensembling has low value at 500K. - Cross-architecture readout: MAE of 5 GPTrans + best K1 500K (late-weight-average clean, 103.85) with equal and split-half-fitted weights, against the 5-member mean. A gain >= 1.0 meV keeps K1 + GPTrans mixing open at 500K; a gain < 0.5 meV closes it at 500K. - If only one kernel finishes: report its two singles as noise samples with x42; no D threshold. Falsifier: D < 1.0 meV and E5 < 2.0 meV together mean neither init noise nor variance limits 500K GPTrans, and the floor is data or representation. Row bootstrap is reported but is not training stochasticity.",
+    "negative_decision": "Any outcome closes this question with its measured noise and ensemble values; it releases no retry, more seeds, full training or adoption. A nomination is a question for the owner, not authority."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "D < 1.0 meV and E5 < 2.0 meV over five same-recipe inits falsify noise and variance as the 500K limit.",
+    "estimated_device_hours": 21.1,
+    "estimated_wall_hours": 10.6
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-gptrans-init-noise-500k-k2",
+      "title": "MolGap GPTrans Init Noise 500K K2",
+      "datasets": [
+        "kaseichou/gptrans-init-noise-500k-k2-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "kaseichou/gptrans-init-noise-500k-k2-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 42900,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "init_s43",
+      "recipe_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s43/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s43/data_declaration.json",
+        "arm_id": "init_s43"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s43.pt"
+    },
+    {
+      "arm_id": "init_s44",
+      "recipe_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s44/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s44/data_declaration.json",
+        "arm_id": "init_s44"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s44.pt"
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "init_s43",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
+}

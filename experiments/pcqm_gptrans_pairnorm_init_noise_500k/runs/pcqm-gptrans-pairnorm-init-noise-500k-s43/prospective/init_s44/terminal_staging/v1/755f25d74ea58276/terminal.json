@@ -1,0 +1,274 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/generated/0da5c6fb61b8845f69dc4b3b7cb5707fac8af08eb2ca078f7af76fb79724b520/init_s44/recipe.json": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/acceptance.json": "cab4f88a11d983d3a8dc956b7218e8ee808229853a8de824d58b720c96c9c4db",
+    "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json": "d1ebe5d8213390569f05ccee3c7a98e7954f10c173b830ce3e183e5d6af8b323",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/allocation_ledger.json": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/execution_retention.json": "83dfc6785129a962e3ea1d6eefe9cac519c1f5e62693a82c76696b4bb10d1332",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/init_s44/allocation_ledger.json": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/canonical_trace.json": "14792cc98fea96eae094f7d968680196e0ce336f603ea94d2482ed117a6228d1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/canonical_trace.json.context.json": "d8551d9cc69420b3ed2abce273ac48d432f3aac6fa0f604eeb6b9852822416de",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/data_open_provenance.json": "cef080cf991700ed12a7d2629c82f380992fcae66eb75353c22b3fe26f6b0c1e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/development_predictions.pt": "fc5a9f5e11c303a8c5c1d1603f75b8ba853c23755db8e48538c52593e193a29e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/last_checkpoint.pt": "170b62f8123c4d872cc3fb50189e92e996db27743261982854420ca2faffe511",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/output_manifest.json": "2a439ae42a10179897ebf51d11a8a6db03d45029647c15781ec84af86e7a0f0a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/selected_model.pt": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/training_contract.json": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/reports/diagnostic_be5fc0fefd811f87880ddf02f1884931c599fa88c914345be08cdd33d89f9e30.json": "ebe30d9c7a94b95c40a291d9a8afb246c916bdf82b1691037b9a0e144e5680cc"
+  },
+  "closure_blockers": [
+    "explicit_outcome_and_decision_ref_required",
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 10.478269585363057
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 10.578932474885557
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    }
+  ],
+  "decision": {
+    "decision_ref": null,
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "83dfc6785129a962e3ea1d6eefe9cac519c1f5e62693a82c76696b4bb10d1332"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/init_s44/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "38c88a964fcb7ca8a7e93fcad569faea8483e9853166efd498e24b0fb1826de1"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/training_contract.json",
+        "name": "contract",
+        "sha256": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "cef080cf991700ed12a7d2629c82f380992fcae66eb75353c22b3fe26f6b0c1e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "fc5a9f5e11c303a8c5c1d1603f75b8ba853c23755db8e48538c52593e193a29e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "170b62f8123c4d872cc3fb50189e92e996db27743261982854420ca2faffe511"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "14792cc98fea96eae094f7d968680196e0ce336f603ea94d2482ed117a6228d1"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "d8551d9cc69420b3ed2abce273ac48d432f3aac6fa0f604eeb6b9852822416de"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/generated/0da5c6fb61b8845f69dc4b3b7cb5707fac8af08eb2ca078f7af76fb79724b520/init_s44/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.10131948657989502,
+      "missing_reason": null,
+      "selected_optimizer_step": 222642,
+      "selected_weights": "ema",
+      "source_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-31T04:09:15.275864+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": null,
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43-v1",
+    "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-gptrans-init-noise-500k-k2",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "9d82f1cb6b150752f0602d21f10692cc6029de0f",
+    "source_package_sha256": "d865eb2f3941fefb76bd903be9a57accfd0de1f1cce467d4f922b97b69d7b8ec",
+    "spec_identity": "4f92f3bbc27fa493bc1d4ef6c4aca0634f6bfc9da7ce5596519d347e09fc7c39"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_234360",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/generated/0da5c6fb61b8845f69dc4b3b7cb5707fac8af08eb2ca078f7af76fb79724b520/init_s44/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/generated/0da5c6fb61b8845f69dc4b3b7cb5707fac8af08eb2ca078f7af76fb79724b520/init_s44/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+    "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/init_s44/canonical_trace.json",
+    "trace_artifact_sha256": "14792cc98fea96eae094f7d968680196e0ce336f603ea94d2482ed117a6228d1",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+}

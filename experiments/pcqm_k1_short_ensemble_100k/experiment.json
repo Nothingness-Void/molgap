@@ -1,0 +1,74 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_short_ensemble_100k",
+  "logical_run_id": "pcqm-k1-short-ensemble-100k-k2-r2",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-10-31T16:35:00+00:00",
+  "authority_ref": "experiments/pcqm_k1_short_ensemble_100k/authority.json",
+  "monitor_paths": ["experiments/pcqm_k1_short_ensemble_100k/STATUS.md"],
+  "question": {
+    "policy_id": "pcqm-k1-short-ensemble-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "At equal training compute, does the mean prediction of two independently initialized 20-pass K1 post-BN 100K models beat one 40-pass model on the 50000 development rows?",
+    "deficiency": "Same-recipe ensembling gains 5.70 meV (N=2) and 7.68 meV (N=3) at 40 passes per member, but costs N times the training. No compute-matched comparison exists, so the value of ensembling per unit compute is unknown.",
+    "changed_mechanism": "equal-compute-two-member-ensemble",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    ],
+    "alternatives": [
+      "A 20-pass schedule costs one model more than the ensemble gain, so the ensemble loses",
+      "The ensemble gain at 20 passes is larger than at 40 because short members are more diverse",
+      "Ensemble value is real only when each member is fully trained"
+    ],
+    "closed_families": [
+      "K1 fixed-fusion output distillation",
+      "K1 hop-fusion qualification"
+    ],
+    "positive_decision": "POSITIVE: 2-member 20-pass ensemble MAE <= 137.535 meV (3 meV below the retained mean single 40-pass model, 140.535 meV). The equal-compute ensemble becomes a candidate for the owner; nothing is adopted.",
+    "negative_decision": "NEGATIVE: ensemble MAE >= 139.663 meV (the best retained 40-pass single) or the mean 20-pass single exceeds 148.535 meV. Close the route with no retry, continuation, 500K, full training, distillation or adoption. Between the two bounds the result is INCONCLUSIVE."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "Mean 20-pass single MAE more than 8.0 meV above the retained mean 40-pass single (140.535 meV).",
+    "estimated_device_hours": 2.0,
+    "estimated_wall_hours": 1.0
+  },
+  "role_ref": "experiments/pcqm_k1_short_ensemble_100k/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_short_ensemble_100k/decision.md",
+  "seeds": [42],
+  "shared": {
+    "model": {"family": "neural_atom_k1", "version": "3", "addons": []},
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "short_s43",
+      "recipe_ref": "experiments/pcqm_k1_short_ensemble_100k/short_s43/recipe.json",
+      "data_ref": {
+        "arm_id": "short_s43",
+        "spec_ref": "experiments/pcqm_k1_short_ensemble_100k/short_s43/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s43.pt"
+    },
+    {
+      "arm_id": "short_s44",
+      "recipe_ref": "experiments/pcqm_k1_short_ensemble_100k/short_s44/recipe.json",
+      "data_ref": {
+        "arm_id": "short_s44",
+        "spec_ref": "experiments/pcqm_k1_short_ensemble_100k/short_s44/data_declaration.json"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s44.pt"
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "short_s43",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}

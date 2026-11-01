@@ -1,0 +1,23 @@
+{
+  "account": "kaseichou",
+  "allocated_t4_hours_ceiling": 4,
+  "allocation_wall_limit_seconds": 7200,
+  "arms": [
+    "short_s43",
+    "short_s44"
+  ],
+  "authorized_at": "2026-11-01T01:30:00+09:00",
+  "automatic_retry": false,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "format": "molgap-execution-authority-v1",
+  "protected_roles_authorized": [],
+  "protocol_ref": "experiments/pcqm_k1_short_ensemble_100k/protocol.md",
+  "reference_semantics": "short_s43 is the reference slot of the same-run pair; short_s44 changes only the initial weights (torch seed 44). Both use the 20-pass schedule; the 40-pass comparator is the retained init-noise predictions.",
+  "same_run_reference_arm_id": "short_s43",
+  "scope": "one 100K two-arm 20-pass kernel on kaggle2; no retry, continuation, 500K, full or adoption",
+  "seeds": [
+    42
+  ],
+  "user_authorized": true
+}

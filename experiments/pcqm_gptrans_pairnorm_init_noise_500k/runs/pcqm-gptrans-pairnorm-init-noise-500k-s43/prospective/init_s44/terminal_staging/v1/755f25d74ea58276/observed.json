@@ -1,0 +1,232 @@
+{
+  "allocation_observation": {
+    "artifact_refs": [
+      "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/allocation_ledger.json",
+      "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/execution_retention.json",
+      "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/version1/_execution/init_s44/allocation_ledger.json"
+    ],
+    "cumulative_costs_evaluated": false,
+    "devices": [
+      {
+        "allocated_seconds": 38084.156909588004,
+        "arm_id": "init_s44",
+        "device": 1,
+        "hardware": "Tesla T4"
+      }
+    ],
+    "event_status": "recorded_current_window",
+    "observed_at": "2026-10-31T03:09:28.691251+00:00",
+    "prior_segments_recorded": 0,
+    "prior_unobserved_intervals": false,
+    "scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+    "started_at": "2026-10-30T16:34:44.534334+00:00",
+    "status": "complete"
+  },
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "init_s44",
+    "arm_identity": "d63cf3e47978d5d8cfcdbdb30de7412d31ecff66c903916093f63e59d944bf33",
+    "experiment_id": "pcqm_gptrans_pairnorm_init_noise_500k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+    "package_identity": "399741ff68573bfce6d34f1b81a8938a6fd1415bd770a5f2fa6ee986af295d66",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-gptrans-init-noise-500k-k2",
+    "source_archive_sha256": "d865eb2f3941fefb76bd903be9a57accfd0de1f1cce467d4f922b97b69d7b8ec",
+    "source_commit": "9d82f1cb6b150752f0602d21f10692cc6029de0f",
+    "spec_identity": "4f92f3bbc27fa493bc1d4ef6c4aca0634f6bfc9da7ce5596519d347e09fc7c39",
+    "training_recipe_sha256": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 10.478269585363057
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/prospective/init_s44/terminal_staging/v1/755f25d74ea58276/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 10.578932474885557
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43:init_s44:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    }
+  ],
+  "diagnostic_report": {
+    "locator": "external:///D:/molgap-artifacts/runs/pcqm-gptrans-pairnorm-init-noise-500k-s43/v1/reports/diagnostic_be5fc0fefd811f87880ddf02f1884931c599fa88c914345be08cdd33d89f9e30.json",
+    "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+    "sha256": "ebe30d9c7a94b95c40a291d9a8afb246c916bdf82b1691037b9a0e144e5680cc",
+    "spec_identity": "4f92f3bbc27fa493bc1d4ef6c4aca0634f6bfc9da7ce5596519d347e09fc7c39"
+  },
+  "mechanical_verification": {
+    "blockers": [],
+    "context": {
+      "account": "kaseichou",
+      "arm_id": "init_s44",
+      "arm_identity": "d63cf3e47978d5d8cfcdbdb30de7412d31ecff66c903916093f63e59d944bf33",
+      "experiment_id": "pcqm_gptrans_pairnorm_init_noise_500k",
+      "family_name": "gptrans_t",
+      "family_version": "2",
+      "logical_run_id": "pcqm-gptrans-pairnorm-init-noise-500k-s43",
+      "package_identity": "399741ff68573bfce6d34f1b81a8938a6fd1415bd770a5f2fa6ee986af295d66",
+      "platform": "kaggle",
+      "platform_version": "1",
+      "run_reference": "kaseichou/molgap-gptrans-init-noise-500k-k2",
+      "source_archive_sha256": "d865eb2f3941fefb76bd903be9a57accfd0de1f1cce467d4f922b97b69d7b8ec",
+      "source_commit": "9d82f1cb6b150752f0602d21f10692cc6029de0f",
+      "spec_identity": "4f92f3bbc27fa493bc1d4ef6c4aca0634f6bfc9da7ce5596519d347e09fc7c39",
+      "training_recipe_sha256": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "594da69200aac0818af0fb2f4e9fb7b3938b5b5e48a235cb485f826373e4e7b1"
+        },
+        "data_open": {
+          "path": "data_open_provenance.json",
+          "sha256": "cef080cf991700ed12a7d2629c82f380992fcae66eb75353c22b3fe26f6b0c1e"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "fc5a9f5e11c303a8c5c1d1603f75b8ba853c23755db8e48538c52593e193a29e"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "170b62f8123c4d872cc3fb50189e92e996db27743261982854420ca2faffe511"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "a680e311a04548e9440d4b68866501d6dd8c3b49e96c86315699621bd0457ceb"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "14792cc98fea96eae094f7d968680196e0ce336f603ea94d2482ed117a6228d1"
+        },
+        "trace_context": {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "d8551d9cc69420b3ed2abce273ac48d432f3aac6fa0f604eeb6b9852822416de"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "Tesla T4",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 37721.770507307
+        },
+        {
+          "hardware": "Tesla T4",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.10131948657989502,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 234360,
+        "sample_presentations": 29998080,
+        "status": "complete"
+      },
+      "selected_optimizer_step": 222642,
+      "selected_weights": "ema",
+      "target_identity": {
+        "acceptance_plan_sha256": "ce5f69541b40659d52fe0134087668916b9d1b6b2c928bf84b12a91a231930ff",
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": {
+          "path": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json",
+          "sha256": "6c692170ac97e5c92f5323691a2428c19d8ad5b983744c2973e458043865dc80"
+        }
+      }
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "missing_evidence": [
+    "scientific_comparison_not_evaluated",
+    "runtime_qualification_not_evaluated",
+    "replay_readiness_not_evaluated",
+    "observed_protected_role_audit_missing"
+  ],
+  "native_costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 37721.770507307
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "roles": []
+}
