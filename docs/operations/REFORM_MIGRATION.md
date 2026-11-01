@@ -894,7 +894,7 @@ by manufacturing an extra training run for this verification.
 
 ### Additional bounded cleanup
 
-The new default runtime distribution excludes exactly `src/molgap/archive/`:
+The new default runtime distribution excludes exactly the archive package (now only on branch origin/archive):
 23 Python files, 67,449 committed source bytes. Historical explicit inventories
 and frozen-package readers remain supported, with credential/path restrictions
 unchanged. Thirty focused boundary/cache tests passed in 72.16s. JUnit:
