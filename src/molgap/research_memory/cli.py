@@ -35,9 +35,13 @@ def main(argv: list[str] | None = None) -> None:
     cards = commands.add_parser("cards")
     cards.add_argument("--outcome")
     cards.add_argument("--term", help=term_help)
+    lookup_term_help = ("one or more whole words, case-insensitive; a card must contain every word "
+                        "(e.g. --term ensemble seed)")
     lookup = commands.add_parser("lookup")
-    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism, family id or failure_mode")
-    lookup.add_argument("--term", help=term_help)
+    lookup.add_argument("--mechanism", nargs="+", metavar="WORD",
+                        help="one or more case-insensitive substrings; each must occur in the card's "
+                             "mechanism, family id or failure_mode (e.g. --mechanism init noise)")
+    lookup.add_argument("--term", nargs="+", metavar="WORD", help=lookup_term_help)
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
     compact_help = "one line per card: id | outcome | family | mechanism slug | effect_meV | failure_mode"
@@ -179,6 +183,9 @@ def main(argv: list[str] | None = None) -> None:
         else:
             print("RML derived outputs are frozen and current")
         return
+    if args.command == "lookup":
+        # Several words travel as one space-separated string; matching splits it again.
+        args.mechanism, args.term = (" ".join(v) if v else None for v in (args.mechanism, args.term))
     if args.command in {"lookup", "gaps", "cards", "levers"}:
         from . import cards as _cards
         built = _cards.build_cards(root)

@@ -310,15 +310,25 @@ def _dispatch(args) -> tuple[dict, int]:
             addons.append({"name":name,"version":version,**asdict(c),
                            "runnable_via_compiler":runnable,"runnable_reason":reason})
         if args.compact:
-            def purpose(module):
+            def doc(module):
+                # First docstring paragraph, whitespace collapsed so each entry stays one line.
                 import ast, importlib.util
                 origin=importlib.util.find_spec(module).origin
-                doc=ast.get_docstring(ast.parse(Path(origin).read_text(encoding="utf-8"))) or ""
-                return doc.strip().splitlines()[0] if doc.strip() else module
+                text=ast.get_docstring(ast.parse(Path(origin).read_text(encoding="utf-8"))) or ""
+                return " ".join(text.strip().split("\n\n")[0].split())
+            def one_line(*parts):
+                return " ".join("; ".join(p for p in parts if p).split())
+            family_modules={f["source_module"] for f in families}
+            def addon_purpose(a):
+                # Catalog data first: a family trainer's docstring describes the trainer, not the addon.
+                modes=",".join(v+":"+m for v,m in a["execution_modes"]) or "none (declaration only)"
+                slot=next((f["value"] for f in a["config_fields"] if f["name"]=="slot"),None)
+                return one_line(a["exclusive_group"],"slot "+slot if slot else "","modes "+modes,
+                                "" if a["source_module"] in family_modules else doc(a["source_module"]))
             rows=[f"family {f['name']}/{f['version']} runnable={str(f['runnable_via_compiler']).lower()} "
-                  f"| {f['runnable_reason']} | {purpose(f['source_module'])}" for f in families]
+                  f"| {f['runnable_reason']} | {one_line('recipe '+f['recipe'],doc(f['source_module']))}" for f in families]
             rows+=[f"addon {a['name']}/{a['version']} ({a['family']}) runnable={str(a['runnable_via_compiler']).lower()} "
-                   f"| {a['runnable_reason']} | {purpose(a['source_module'])}" for a in addons]
+                   f"| {a['runnable_reason']} | {addon_purpose(a)}" for a in addons]
             return {"lines":rows},0
         return {"families":families,"addons":addons,"submitted":False},0
     if args.command == "freeze-input":

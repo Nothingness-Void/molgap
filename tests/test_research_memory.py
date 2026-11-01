@@ -815,6 +815,8 @@ def test_cards_filter_by_outcome_and_term(tmp_path):
     assert select(cards, outcome="NEGATIVE_UNDER_CONTRACT", term="SHARPNESS") == cards[:1]
     assert select(cards, term="sharp") == []  # whole words only: "SAM" must not match "same"/"sample"
     assert select(cards, term="PAIR") == cards[1:]
+    assert select(cards, term="pair NORM") == select(cards, term=["pair", "norm"]) == cards[1:]  # every word
+    assert select(cards, term="pair sharpness") == [] and select(cards, term="pair nor") == []
     assert select(cards) == cards
 
 
@@ -868,6 +870,15 @@ def test_lookup_and_gaps_are_read_only_views():
     assert _search_terms({"mechanism": "Free prose norm.", "family_id": many, "failure_mode": None,
                           "search_terms": []}) == many.split("-")[:8]  # prose is not tokenized; capped at 8
     assert lookup(cards, term="1.0", mechanism="norm")["matches"] == cards[:1]
+    assert lookup(cards, mechanism="nor B-")["matches"] == cards[1:]  # several substrings, all required
+    assert lookup(cards, mechanism="norm ensemble")["matches"] == []
+    from molgap.research_memory.cli import main
+    import contextlib, io
+    with contextlib.redirect_stdout(io.StringIO()) as out:  # CLI: several words per flag, one call
+        main(["--repo-root", str(REPO_ROOT), "lookup", "--term", "initialization", "noise",
+              "--mechanism", "init", "seed", "--compact"])
+    rows = out.getvalue().splitlines()
+    assert rows[:-1] and all("initialization-seed-noise" in row for row in rows[:-1])
     flagged = gaps(cards)["contradictions"]  # same arm "b" across scales; "a" has no 500K partner
     assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
     assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
@@ -903,6 +914,8 @@ def test_levers_lists_every_tested_k1_100k_lever_from_real_cards():
     assert historical_pointer(REPO_ROOT, cards, family="pcqm-k1-*-100k").startswith("# not in cards: 37 ")
     assert historical_pointer(REPO_ROOT, cards, term="degree") and not historical_pointer(REPO_ROOT, cards)
     assert historical_pointer(REPO_ROOT, cards, mechanism="no-such-mechanism") is None
+    assert historical_pointer(REPO_ROOT, cards, mechanism="degree balance") == historical_pointer(
+        REPO_ROOT, cards, mechanism="balance") and historical_pointer(REPO_ROOT, cards, term="degree no-such") is None
 
 
 def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):
