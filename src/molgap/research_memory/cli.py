@@ -30,6 +30,16 @@ def main(argv: list[str] | None = None) -> None:
     commands.add_parser("validate")
     commands.add_parser("rebuild")
     commands.add_parser("status")
+    term_help = "whole word, case-insensitive, anywhere in the card"
+    cards = commands.add_parser("cards")
+    cards.add_argument("--outcome")
+    cards.add_argument("--term", help=term_help)
+    lookup = commands.add_parser("lookup")
+    lookup.add_argument("--mechanism", help="case-insensitive substring of the card's mechanism field")
+    lookup.add_argument("--term", help=term_help)
+    for flag in ("--failure-mode", "--family"):
+        lookup.add_argument(flag)
+    commands.add_parser("gaps")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
     check = commands.add_parser("check")
@@ -55,6 +65,13 @@ def main(argv: list[str] | None = None) -> None:
     recovery.add_argument("--source", action="append", required=True)
     recovery.add_argument("--spec", required=True)
     recovery.add_argument("--output", required=True)
+    analyze = commands.add_parser("analyze")
+    from .saved_analysis import OPS
+    analyze.add_argument("--op", required=True, choices=OPS)
+    analyze.add_argument("--predictions", nargs="+", required=True, help="PATH... or ARM=PATH...")
+    analyze.add_argument("--pair", action="append", default=[], help="CAND=REF arm names (summary op)")
+    analyze.add_argument("--role-id", required=True)
+    analyze.add_argument("--out", required=True)
     commands.add_parser("replay-pool")
     policy = commands.add_parser("backtest-policy")
     policy.add_argument("--policy-id")
@@ -88,9 +105,19 @@ def main(argv: list[str] | None = None) -> None:
             raise SystemExit(1)
         return
 
+    if args.command == "analyze":
+        from .saved_analysis import run, write_output
+        named = [p.partition("=")[::2] for p in args.predictions]
+        paths = dict(named) if all(path for _, path in named) else args.predictions
+        result = run(args.op, paths, role_id=args.role_id, pairs=[tuple(p.split("=", 1)) for p in args.pair] or None)
+        write_output(result, args.out, root)
+        print(json.dumps({"op": args.op, "rows": result["row_count"], "out": args.out, "posthoc": True}))
+        return
     if args.command == "validate":
         validated = validate_repository_records(root)
-        print(json.dumps({key: len(value) for key, value in validated["records"].items()}, indent=2))
+        summary = {key: len(value) for key, value in validated["records"].items()}
+        summary["known_gaps"] = validated["known_gaps"]
+        print(json.dumps(summary, indent=2))
         return
     if args.command == "rebuild":
         payloads = rebuild_research_memory(root)
@@ -133,6 +160,16 @@ def main(argv: list[str] | None = None) -> None:
             )
         else:
             print("RML derived outputs are frozen and current")
+        return
+    if args.command in {"lookup", "gaps", "cards"}:
+        from . import cards as _cards
+        built = _cards.build_cards(root)
+        if args.command == "cards":
+            print("\n".join(json.dumps(c, ensure_ascii=False) for c in _cards.select(built, outcome=args.outcome, term=args.term)))
+            return
+        result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
+                  if args.command == "lookup" else _cards.gaps(built))
+        print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "status":
         path = root / "research_memory" / "derived" / "research_summary.md"

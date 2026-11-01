@@ -1427,3 +1427,13 @@ def test_multi_trace_with_ambiguous_arm_identifier_fails_closed():
         match="FAIL CLOSED: ambiguous trace retention evidence for arm",
     ):
         inspect_trace_retention_evidence(ev, arm_identifier="arm_variant")
+
+
+def test_unreadable_unrelated_record_does_not_block_closing_a_new_arm(tmp_path):
+    setup_mock_repo(tmp_path)
+    from molgap.research_memory.finalize import finalize
+    bystander, new = (create_candidate_arm(tmp_path, f"isolation_{label}", f"T-isolation-{label}",
+        f"run-isolation-{label}", f"ev-isolation-{label}", include_trace_artifact=False) for label in "ab")
+    # An unrelated historical trajectory that no longer parses must not stop this closure.
+    bystander["traj_path"].write_bytes(b"{not json")
+    assert finalize(tmp_path, new["traj_path"], new["terminal_path"])["status"] != "ALREADY_FINALIZED"
