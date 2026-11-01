@@ -1,0 +1,70 @@
+{
+  "record_kind": "retrospective-research-reserve-not-rml-terminal",
+  "review_date": "2026-10-23",
+  "branch": "molgap-server",
+  "head": "7e4ae1226018a92bc94b81cae8937cf9d8e59e9c",
+  "working_tree_was_dirty": true,
+  "report": "rml_route_reserve_2026-10-23.md",
+  "source_reader": "molgap.research_curve_review.review_repository",
+  "record_counts": {
+    "trajectories": 165,
+    "evidence": 130,
+    "costs": 247,
+    "roles": 517,
+    "traces": 64,
+    "ready": 0,
+    "comparison_prelaunch": 62,
+    "comparison_readiness": 45,
+    "reference_bundles": 17,
+    "target_transform_assets": 3
+  },
+  "source_outcomes": {
+    "ACTIVE": 32,
+    "CLOSED": 4,
+    "INCONCLUSIVE": 31,
+    "INFRASTRUCTURE_ONLY": 38,
+    "NEGATIVE_UNDER_CONTRACT": 14,
+    "NO_TRAIN": 21,
+    "POSITIVE_BELOW_GATE": 13,
+    "POSITIVE_UNDER_CONTRACT": 7,
+    "STOP_FOR_COST": 5
+  },
+  "source_built_replay": {
+    "entries": 54,
+    "unique_trajectories": 47,
+    "comparable_groups": 10,
+    "candidate_pairs": 44,
+    "gptrans_candidate_pairs": 24,
+    "k1_metagin_candidate_pairs": 20,
+    "source_digest": "303f60db0b37459aa2eda96440892dfd9c522ea17ddb598e0c9ddd5a3ab179d4"
+  },
+  "analysis_artifact": {
+    "path": "E:/MolGap/artifacts/research-reserve-2026-10-23/curve_review.json",
+    "size_bytes": 2009267,
+    "sha256": "b09ebcd3be751dceb2cba4cbafc0d0db90efaa283ee44261784c2b45cd4b61bc"
+  },
+  "stored_derived_snapshot": {
+    "trajectories": 127,
+    "evidence_as_reported_by_summary": 110,
+    "trajectory_source_digest": "e01653e510de442dd4e552384df24eeefa10bae3e7c0e1b0f2e2552f39c8e8ae",
+    "disposition": "preserved-not-rebuilt; not a live scheduler inventory"
+  },
+  "author_config_evidence": {
+    "repository": "https://github.com/LiamMa/PPGT",
+    "commit": "62cafd3abbb8d72e9a8b3146f947a192cf0aacaf",
+    "path": "configs/pcqm4mv2-PPGT-ViT-B-BS256x2GPU.yaml",
+    "git_blob_sha1": "7c5c7c92d48160df6cc380cd240264d985586663",
+    "limitation": "Paper v4 and released YAML differ; effective global batch and per-result precision were not verified."
+  },
+  "authority": {
+    "training_executed": false,
+    "model_inference_executed": false,
+    "remote_job_operation": false,
+    "protected_role_access": false,
+    "graph_cache_access_or_rebuild": false,
+    "canonical_rml_modified": false,
+    "derived_views_rebuilt": false,
+    "historical_outcomes_modified": false,
+    "compute_released": false
+  }
+}

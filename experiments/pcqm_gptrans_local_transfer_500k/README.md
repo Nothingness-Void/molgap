@@ -13,6 +13,11 @@ after fixed500K optimization at the same update budget as its100K discovery?
 - [Acceptance entry](accept.py): shared saved-output acceptance and actual Replay admission.
 - [Terminal interpretation](gpu/results/interpretation.md): matched500K result,
   limitations, allocation cost and actual Replay proof.
+- [Revised late-contribution proposal](late_contribution_plan.md): planned
+  60-pass no-local control versus a qualified retained desktop local package;
+  no duplicate local training or overnight-completion promise.
+- [Superseded late-exposure proposal](late_exposure_plan.md): unexecuted24-pass
+  planning history, retained without release authority.
 
 Live operation belongs to `CURRENT_STATE.md`. The thin freeze and acceptance
 entries reuse shared source, native500K training, release, terminal and RML owners.

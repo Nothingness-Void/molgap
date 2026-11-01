@@ -59,7 +59,7 @@ Start with the [new-agent quickstart](docs/operations/EXPERIMENT_QUICKSTART.md),
 [shared training core](docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md), [batch-topology reuse](docs/operations/TOPOLOGY_REUSE_SERVER_REVIEW.md),
 [four-module runtime guide](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md), [shared graph owner](docs/operations/GRAPH_SCREEN_EXTENSION.md),
 [bounded verification record](docs/operations/INFRASTRUCTURE_VERIFICATION.md) and [workflow reform record](docs/operations/REFORM_MIGRATION.md)
-(`INFRA_CPU_ACCEPTED`, server-local scope). Prior narrative: [archive](docs/operations/CURRENT_STATE_ARCHIVE_2026-10.md#shared-infrastructure-narrative-part-1), [reform verdicts](docs/operations/CURRENT_STATE_ARCHIVE_2026-10.md#workflow-reform-records-cpu-accepted).
+(`INFRA_CPU_ACCEPTED`, server-local scope). Infrastructure synced to the desktop 2026-11-01 reform. Prior narrative: [archive](docs/operations/CURRENT_STATE_ARCHIVE_2026-10.md#shared-infrastructure-narrative-part-1), [reform verdicts](docs/operations/CURRENT_STATE_ARCHIVE_2026-10.md#workflow-reform-records-cpu-accepted).
 
 ## Production
 
