@@ -14,6 +14,7 @@ import pandas as pd
 
 from .router_sampling import compute_scaffold_keys, select_descriptor_diverse
 from .utils import canonicalize_smiles
+from .training_reproducibility import sha256_file
 
 
 TRAIN_COLUMNS = (
@@ -53,14 +54,6 @@ def atomic_json(value: Mapping[str, object], path: Path) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     temporary.write_text(json.dumps(value, indent=2), encoding="utf-8")
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def validate_labels(frame: pd.DataFrame, label: str) -> float:

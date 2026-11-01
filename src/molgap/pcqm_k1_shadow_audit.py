@@ -9,6 +9,7 @@ import os
 import time
 import zipfile
 from pathlib import Path
+from .training_reproducibility import sha256_file
 
 
 SHADOW_ROWS = 10_000
@@ -30,14 +31,6 @@ EXPECTED_K1_MODEL_SHA256 = (
     "9e9ac63a9887030dcfbdc795d843cc10e70f8d9dcec7421a13cff98970203784"
 )
 EXPECTED_PARAMETERS = {"full_gps": 4_771_073, "neural_atom_k1": 3_658_817}
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, payload: dict) -> None:

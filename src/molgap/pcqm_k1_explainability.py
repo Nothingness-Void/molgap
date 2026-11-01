@@ -8,13 +8,13 @@ generation only: it cannot promote a model or authorize a sealed-role read.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 from pathlib import Path
 
 import numpy as np
 import torch
+from .training_reproducibility import sha256_file
 
 
 EXPECTED_MANIFEST_SHA256 = (
@@ -25,14 +25,6 @@ EXPECTED_GEOMETRY_SHA256 = (
 )
 REFERENCE = "neural_atom_k1_v4"
 DEVELOPMENT_ROWS = 50_000
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _atomic_json(path: Path, payload: dict) -> None:

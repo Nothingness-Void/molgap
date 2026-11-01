@@ -16,6 +16,7 @@ import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Lipinski, rdMolDescriptors
 from rdkit.Chem.Scaffolds import MurckoScaffold
+from .training_reproducibility import sha256_file
 
 
 TARGET_COLUMNS = ("homo", "lumo", "gap")
@@ -53,14 +54,6 @@ def atomic_json(value: object, path: Path) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     temporary.write_text(json.dumps(value, indent=2), encoding="utf-8")
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def stable_hash(*parts: object, seed: int) -> str:

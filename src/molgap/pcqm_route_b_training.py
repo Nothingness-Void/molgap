@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import copy
 import gc
-import hashlib
 import json
 import math
 import os
@@ -21,6 +20,7 @@ from torch_geometric.loader import DataLoader
 
 from .gps import GPSWrapper
 from .schnet import SchNetWrapper
+from .training_reproducibility import sha256_file
 
 EXPECTED_MANIFEST_SHA256 = (
     "561c64074102ed9244ade72b9e60f5a5a9f6c81173f6ce33b59a5c517d4f9aae"
@@ -110,14 +110,6 @@ class PackedGraphDataset(InMemoryDataset):
         self.data, self.slices = torch.load(
             path, map_location="cpu", weights_only=False
         )
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(8 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, payload: object) -> None:

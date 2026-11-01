@@ -10,19 +10,12 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from .training_reproducibility import sha256_file
 
 
 MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
 SAMPLE_PER_SHARD = 256
 MAX_DISTANCE = 20
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def atomic_json(path: Path, value: dict) -> None:

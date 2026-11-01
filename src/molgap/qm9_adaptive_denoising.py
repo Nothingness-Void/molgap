@@ -20,6 +20,7 @@ from pathlib import Path
 import numpy as np
 
 from .screen_policy import validate_paired_screen_contract, validate_screen_arm
+from .training_reproducibility import sha256_file
 
 
 TRAIN_ROWS = 30_000
@@ -83,14 +84,6 @@ def atomic_torch_save(path: Path, value) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     torch.save(value, temporary)
     os.replace(temporary, path)
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def state_sha256(module) -> str:
