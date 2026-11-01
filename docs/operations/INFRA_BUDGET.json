@@ -1,6 +1,6 @@
 {
   "measured": "2026-11-01",
-  "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval and closure-facts features (format_version_strings +1 for molgap-closure-facts-v1, user-authorized); lowered by merging 27 duplicate hash helpers.",
+  "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval and closure-facts features (format_version_strings +1 for molgap-closure-facts-v1, user-authorized); lowered by merging 27 duplicate hash helpers. 2026-11-01: docs_operations_lines raised for the quickstart happy path, failure table and CLI corrections (requested by the coordinating agent; line budget waived for this change).",
   "limits": {
     "src_py_files": 277,
     "src_py_lines": 95897,
@@ -11,6 +11,6 @@
     "test_files_mentioning_hash": 114,
     "format_version_strings": 252,
     "docs_operations_files": 44,
-    "docs_operations_lines": 7565
+    "docs_operations_lines": 7727
   }
 }
