@@ -11,8 +11,10 @@ from ..research_memory.paths import repo_local_path
 from ..research_memory.trace import file_digest
 
 
-def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tuple[str, str]],
-                       destination: Path, http_session=None) -> list[dict[str, str]]:
+def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tuple[str, str | None]],
+                       destination: Path, http_session=None, observe: bool = False) -> list[dict[str, str]]:
+    """With ``observe`` a pin may be None: the digest is then recorded at download
+    (``observed_at_download``) and proves integrity from receipt onward only."""
     if not isinstance(required, Mapping) or not required:
         raise ValueError("Pinned downloads require a non-empty allowlist")
     paths = set()
@@ -22,7 +24,8 @@ def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tup
             raise ValueError("Pinned download requires a local path and SHA256")
         relative, pin = binding
         _path(relative)
-        _digest(pin, "download SHA256")
+        if pin is not None or not observe:
+            _digest(pin, "download SHA256")
         if relative.casefold() in paths:
             raise ValueError("Pinned download paths are aliased")
         paths.add(relative.casefold())
@@ -43,12 +46,14 @@ def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tup
         _safe_local(target)
         target = repo_local_path(root, relative)
         if target.exists():
-            if not target.is_file() or file_digest(target) != pin:
+            if not target.is_file() or (pin is not None and file_digest(target) != pin):
                 raise ValueError("Retained output conflicts with pinned artifact")
-            retained.append({"path": relative, "sha256": pin, "state": "ALREADY_RETAINED"})
+            retained.append({"path": relative, "sha256": pin or file_digest(target), "state": "ALREADY_RETAINED",
+                             **({"bytes": target.stat().st_size} if pin is None else {})})
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
         temporary = None
+        size = 0
         try:
             digest = hashlib.sha256()
             try:
@@ -59,6 +64,7 @@ def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tup
                         temporary = Path(handle.name)
                         for chunk in response.iter_content(1024 * 1024):
                             if chunk:
+                                size += len(chunk)
                                 digest.update(chunk)
                                 handle.write(chunk)
                         handle.flush()
@@ -66,13 +72,13 @@ def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tup
             except Exception:
                 # Do not expose a signed URL from an SDK/HTTP exception.
                 raise RuntimeError("Selected output retrieval failed") from None
-            if digest.hexdigest() != pin:
+            if pin is not None and digest.hexdigest() != pin:
                 raise ValueError("Retrieved output hash disagrees with pinned attempt")
             _safe_local(target)
             try:
                 os.link(temporary, target)
             except FileExistsError:
-                if not target.is_file() or file_digest(target) != pin:
+                if not target.is_file() or file_digest(target) != digest.hexdigest():
                     raise ValueError("Concurrent output publication conflicts")
         except ValueError:
             raise
@@ -81,5 +87,6 @@ def download_pinned_files(*, urls: Mapping[str, str], required: Mapping[str, tup
         finally:
             if temporary is not None:
                 temporary.unlink(missing_ok=True)
-        retained.append({"path": relative, "sha256": pin, "state": "RETAINED"})
+        retained.append({"path": relative, "sha256": digest.hexdigest(), "state": "RETAINED",
+                         **({"bytes": size} if pin is None else {})})
     return retained
