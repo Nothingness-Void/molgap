@@ -36,7 +36,8 @@ when to use it. Unless noted, the command only reads files.
 
 `cards`, `lookup`, `levers` and `gaps` read `research_memory/derived/trajectory_index.json`,
 each trajectory record, the trajectory's own bound `paired_analysis.json`, and any
-`attribution_label.json` beside its decision. They do not verify hashes. Run
+`attribution_label.json` beside its decision; `lookup` and `levers` also read one
+historical index (see "Uncarded historical trajectories"). They do not verify hashes. Run
 `check --frozen` first if the index might be stale.
 
 #### `cards [--outcome OUTCOME] [--term TERM] [--compact]`
@@ -239,9 +240,35 @@ addon k1_pair_value/1 (neural_atom_k1) runnable=false | empty execution_modes (d
 typed builder or a new addon module and catalog entry (AGENTS infrastructure
 budget rule).
 
-#### `gaps`
+#### Uncarded historical trajectories
 
-No flags. Exit 0. Prints `{"sparse": [...], "contradictions": [...]}`.
+Older K1 trajectories, mostly from the server branch, have no desktop trajectory
+record, so they have no card and `lookup`/`levers` cannot list them. Their one
+index is the table under "Indexed trajectory and attempt coverage" in
+`experiments/pcqm_k1_complete_local_audit/historical_evidence.md` (87 rows, 27 of
+them carded on 2026-11-01). Example: `TC-k1-degree-balance-100k-s42`,
+`POSITIVE_BELOW_GATE`, +1.28 meV against the 3 meV gate on K1 v4 100K, and a
+500K regression (same file, lines 151-153).
+
+When a query matches uncarded rows of that table, `lookup` (plain and
+`--compact`) and `levers` add one line, and plain `lookup` JSON adds the same text as
+`historical_pointer`:
+`# not in cards: N historical trajectories match in <file>: <id> <outcome>, ... (first 5)`.
+`--mechanism` is a substring and `--term` a whole word of the row text. `--family`
+matches `pcqm-` + the row id without track prefix and `-sNN`/`-vN`/`-rN`
+suffixes, so `pcqm-k1-*-100k` lists 37 rows. `--failure-mode` alone prints no pointer.
+Open the file for effects; these rows carry no effect field.
+
+```text
+lookup --mechanism degree --compact   (last line)
+# not in cards: 2 historical trajectories match in experiments/pcqm_k1_complete_local_audit/historical_evidence.md: TB-k1-ssma-qualification-s42-v1 NO_TRAIN, TC-k1-degree-balance-100k-s42 POSITIVE_BELOW_GATE
+```
+
+#### `gaps [--compact]`
+
+Exit 0. Prints `{"sparse": [...], "contradictions": [...]}`. `--compact` prints
+one line per item instead: `sparse | <family_id> | n=<N> with_effect=<N>` and
+`contradiction | <arm> | <id> <scale>k <outcome> <effect> vs <id> <scale>k <outcome> <effect>`.
 
 - `sparse`: families with exactly one trajectory, as
   `{family_id, n_trajectories, n_with_effect}` (58 on the sample date).
