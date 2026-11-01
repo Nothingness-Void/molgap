@@ -871,6 +871,23 @@ def test_lookup_and_gaps_are_read_only_views():
     flagged = gaps(cards)["contradictions"]  # same arm "b" across scales; "a" has no 500K partner
     assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
     assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
+    from molgap.research_memory.cards import compact_line, levers
+    cards[1]["decision_ref"] = "experiments/b/terminal_decision.md"
+    assert compact_line(cards[0]) == "a-100k | NEGATIVE_UNDER_CONTRACT | a-100k | norm | +1.00 | below_gate"
+    assert compact_line(cards[1]).endswith("| null | -")
+    assert levers(cards, "b-100k")[1:] == [
+        "b-100k | b-100k | NEGATIVE_UNDER_CONTRACT | null (see experiments/b/terminal_decision.md) | - | norm"]
+    assert [row.split(" | ")[0] for row in levers(cards, "*-100k")[1:]] == ["a-100k", "b-100k"]
+
+
+def test_levers_lists_every_tested_k1_100k_lever_from_real_cards():
+    from molgap.research_memory.cards import build_cards, levers
+    rows = levers(build_cards(REPO_ROOT), "pcqm-k1-*-100k")
+    families = {row.split(" | ")[0] for row in rows[1:]}
+    for lever in ("lr2e4", "lr8e4-warmup", "wd5e2", "init-noise", "sam", "extremal-readout", "initial-residual"):
+        assert f"pcqm-k1-{lever}-100k" in families
+    lr = [row for row in rows if row.startswith("pcqm-k1-lr2e4-100k |")]
+    assert lr and all("null (see experiments/pcqm_k1_lr2e4_100k/terminal_decision.md)" in row for row in lr)
 
 
 def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):

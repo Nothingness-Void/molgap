@@ -56,7 +56,9 @@ def _bindings(values, local=False):
 def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("catalog")
+    catalog=commands.add_parser("catalog")
+    catalog.add_argument("--compact",action="store_true",
+        help="One text line per family/addon: id, runnable_via_compiler, reason, purpose")
     freeze=commands.add_parser("freeze-input")
     freeze.add_argument("--experiment",required=True,type=_local)
     freeze.add_argument("--repo-root",required=True,type=_local)
@@ -282,16 +284,43 @@ def _dispatch(args) -> tuple[dict, int]:
             continuation_receipt=args.continuation_receipt), 0
     if args.command == "catalog":
         from dataclasses import asdict
-        from .experiment_execution import TRAINING_ADAPTERS
+        from .experiment_execution import TRAINING_ADAPTERS, shared_training_adapters
         from .experiment_catalog import FAMILIES,ADDONS
+        # The scientific input compiler accepts exactly the shared recipe owners
+        # (family_training_runner.INTERFACES) and only the addons they register.
+        compiler={a.family:a for a in shared_training_adapters().values()}
         families=[]
         for key,contract in FAMILIES.items():
             adapter=TRAINING_ADAPTERS.get(key)
             families.append({**asdict(contract),"execution_support":
                 "DECLARATION_ONLY" if adapter is None else
-                "CPU_SYNTHETIC_ONLY" if adapter.cpu_synthetic_only else "REGISTERED_REQUIRES_QUALIFICATION"})
-        return {"families":families,"addons":[{"name":name,"version":version,**asdict(c)}
-            for (name,version),c in ADDONS.items()],"submitted":False},0
+                "CPU_SYNTHETIC_ONLY" if adapter.cpu_synthetic_only else "REGISTERED_REQUIRES_QUALIFICATION",
+                "runnable_via_compiler":key in compiler,
+                "runnable_reason":"shared recipe owner" if key in compiler else
+                    "no training adapter" if adapter is None else "not a shared recipe owner ("+adapter.module+")"})
+        addons=[]
+        for (name,version),c in ADDONS.items():
+            owners=[k for k in compiler if k[0]==c.family]
+            runnable=any((name,version) in {(a.name,a.version) for a in compiler[k].addons} for k in owners)
+            reason=("registered for compiler family "+"/".join(owners[0]) if runnable else
+                "empty execution_modes (declaration only)" if not c.execution_modes else
+                "no compiler family for "+c.family if not owners else
+                "execution_modes cover versions "+",".join(v for v,_ in c.execution_modes)
+                +"; compiler family is "+"/".join(owners[0]))
+            addons.append({"name":name,"version":version,**asdict(c),
+                           "runnable_via_compiler":runnable,"runnable_reason":reason})
+        if args.compact:
+            def purpose(module):
+                import ast, importlib.util
+                origin=importlib.util.find_spec(module).origin
+                doc=ast.get_docstring(ast.parse(Path(origin).read_text(encoding="utf-8"))) or ""
+                return doc.strip().splitlines()[0] if doc.strip() else module
+            rows=[f"family {f['name']}/{f['version']} runnable={str(f['runnable_via_compiler']).lower()} "
+                  f"| {f['runnable_reason']} | {purpose(f['source_module'])}" for f in families]
+            rows+=[f"addon {a['name']}/{a['version']} ({a['family']}) runnable={str(a['runnable_via_compiler']).lower()} "
+                   f"| {a['runnable_reason']} | {purpose(a['source_module'])}" for a in addons]
+            return {"lines":rows},0
+        return {"families":families,"addons":addons,"submitted":False},0
     if args.command == "freeze-input":
         from .experiment_input import freeze_experiment_input
         return freeze_experiment_input(args.experiment,args.repo_root),0
@@ -574,6 +603,9 @@ def main(argv: list[str] | None = None) -> int:
                                          or "diagnosis" in result or "strict_validation" in result
                                          or "strict_comparison" in result)):
             result = _acceptance_summary(result)
+        if args.command == "catalog" and args.compact:
+            print("\n".join(result["lines"]))
+            return code
         print(canonical_json(result))
         return code
     except Exception as exc:

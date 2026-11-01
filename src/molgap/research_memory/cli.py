@@ -40,6 +40,12 @@ def main(argv: list[str] | None = None) -> None:
     lookup.add_argument("--term", help=term_help)
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
+    compact_help = "one line per card: id | outcome | family | mechanism slug | effect_meV | failure_mode"
+    for command in (cards, lookup):
+        command.add_argument("--compact", action="store_true", help=compact_help)
+    levers = commands.add_parser("levers", help="read-only table of tested levers for one family")
+    levers.add_argument("--family", required=True,
+                        help="case-insensitive family id substring, or a glob with '*' (e.g. 'pcqm-k1-*-100k')")
     commands.add_parser("gaps")
     doctor = commands.add_parser("doctor")
     doctor.add_argument("--strict", action="store_true")
@@ -171,14 +177,24 @@ def main(argv: list[str] | None = None) -> None:
         else:
             print("RML derived outputs are frozen and current")
         return
-    if args.command in {"lookup", "gaps", "cards"}:
+    if args.command in {"lookup", "gaps", "cards", "levers"}:
         from . import cards as _cards
         built = _cards.build_cards(root)
+        if args.command == "levers":
+            print("\n".join(_cards.levers(built, args.family)))
+            return
         if args.command == "cards":
-            print("\n".join(json.dumps(c, ensure_ascii=False) for c in _cards.select(built, outcome=args.outcome, term=args.term)))
+            selected = _cards.select(built, outcome=args.outcome, term=args.term)
+            print("\n".join(_cards.compact_line(c) if args.compact else json.dumps(c, ensure_ascii=False)
+                            for c in selected))
             return
         result = (_cards.lookup(built, **{k: getattr(args, k) for k in ("mechanism", "failure_mode", "family", "term")})
                   if args.command == "lookup" else _cards.gaps(built))
+        if args.command == "lookup" and args.compact:
+            print("\n".join([*map(_cards.compact_line, result["matches"]),
+                             f"# unfalsified families: {len(result['unfalsified'])}; "
+                             f"search_terms: {' '.join(result['search_terms'])}"]))
+            return
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
     if args.command == "status":
