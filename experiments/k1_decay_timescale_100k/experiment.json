@@ -25,7 +25,10 @@
     "question": "Does increasing AdamW decay from the unchanged post-BN K1 preset coefficient1e-5 to1e-3 improve late generalization at identical exposure?",
     "deficiency": "Small 100K architecture gains often fade across cohorts; triplet communication fits training better after its best development endpoint. Test optimizer regularization separately before adding model capacity. This is a hypothesis transfer, not proof that K1 is underregularized.",
     "changed_mechanism": "adamw-weight-decay-timescale",
-    "supporting_evidence": [],
+    "supporting_evidence": [
+      "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+      "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+    ],
     "alternatives": [
       "Both coefficients are ineffective at this LR and exposure.",
       "Lower decay preserves useful chemical features.",
@@ -38,7 +41,10 @@
     "positive_decision": "Retain only a qualified within-pair positive with favorable last-five/final evidence; no automatic scaling or seeds.",
     "negative_decision": "Close this coefficient contrast without a new grid.",
     "reference_ids": [],
-    "prior_trajectories": []
+    "prior_trajectories": [
+      "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    ]
   },
   "profile": {
     "owner": "server",
