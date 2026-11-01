@@ -75,7 +75,8 @@ def _load_errata(root: Path) -> dict[tuple[str, str], dict[str, Any]]:
     for path in sorted(root.glob("experiments/**/errata/*.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
         target = Path(str(record.get("target_locator", "")))
-        if (record.get("format") != "molgap-erratum-v1" or record.get("artifact_class") != "narrative"
+        if ("\\" in str(record.get("target_locator", ""))
+                or record.get("format") != "molgap-erratum-v1" or record.get("artifact_class") != "narrative"
                 or record.get("effect") != "narrative_only" or target.suffix != ".md"
                 or target.parts[:2] != path.relative_to(root).parts[:2]):
             raise ValueError(f"{path}: an erratum may only excuse a narrative .md file in its own experiment")

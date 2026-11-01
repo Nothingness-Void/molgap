@@ -23,13 +23,20 @@ def _keywords(*texts) -> list[str]:
                     and not re.fullmatch(r"s\d+|\d+k|pcqm|r\d", w)})
 
 
+def _search_terms(card: dict) -> list[str]:
+    """Closure-fact terms, then failure_mode, mechanism slug tokens and family id tokens; at most 8."""
+    slug = card["mechanism"] if re.fullmatch(r"[a-z0-9_-]+", card["mechanism"] or "") else None
+    words = [w for t in (slug, card["family_id"]) if t for w in re.split(r"[^a-z0-9]+", t.lower()) if w in _keywords(t)]
+    return list(dict.fromkeys([*card["search_terms"], *filter(None, [card["failure_mode"]]), *words]))[:8]
+
+
 def _evidence(root: Path, row: dict, record: dict, outcomes: dict) -> dict:
     """Effect and failure mode only where a record states them; each carries its source."""
     facts = (record.get("decision") or {}).get("facts") or {}
     out = {"effect_meV": facts.get("effect_meV"), "ci_meV": facts.get("ci_meV"), "effect_source": facts.get("source"),
            "failure_mode": facts.get("failure_mode"),
            "failure_mode_source": "closure_facts" if facts.get("failure_mode") else None,
-           "search_terms": facts.get("search_terms") or []}
+           "search_terms": list(facts.get("search_terms") or [])}
     # Only this trajectory's own bound paired file, and only against a reference arm that closed CLOSED:
     # two lever arms differing by seed measure seed noise, not the lever, so their effect stays None.
     ready = root / (record.get("comparison_readiness_ref") or "-")
@@ -75,6 +82,7 @@ def build_cards(repo_root) -> list[dict]:
             "reopen_conditions": (record.get("decision") or {}).get("reopen_conditions"),
             **_evidence(root, row, record, outcomes),
         })
+        cards[-1]["search_terms"] = _search_terms(cards[-1])
     return cards
 
 
@@ -89,7 +97,8 @@ def select(cards, *, outcome=None, term=None) -> list[dict]:
 def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) -> dict:
     """Related closed work, why it failed (with source), open directions and search terms."""
     hit = [c for c in select(cards, term=term)
-           if (mechanism is None or mechanism.lower() in (c["mechanism"] or "").lower())
+           if (mechanism is None or mechanism.lower() in
+               " ".join(filter(None, (c["mechanism"], c["family_id"], c["failure_mode"]))).lower())
            and (failure_mode is None or c["failure_mode"] == failure_mode)
            and (family is None or family.lower() in c["family_id"].lower())]
     by_family = defaultdict(list)
