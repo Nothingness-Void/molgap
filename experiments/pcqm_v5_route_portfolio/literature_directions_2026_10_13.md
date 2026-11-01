@@ -169,7 +169,7 @@ returns **seven objects** at line837. The graph branch of
 [training entry](https://github.com/davidbuterez/edge-set-attention/blob/861a0b12d445ae80cc69b3948af623b4331321d4/esa/train.py)
 unpacks six. This is a static executable-interface mismatch, not a model run.
 The PCQM loader returns scaler=None; ordinary scaled regression metrics in
-`esa/models.py` include inverse transformation. The inspected path therefore
+ESA `models.py` include inverse transformation. The inspected path therefore
 does **not** establish a missing-inverse-transform explanation for0.0235.
 
 The README explicitly calls the release a refactored demonstration, requires
@@ -655,7 +655,7 @@ UTF8-decoded text SHA256s for the key public audit files (not archive-byte hashe
 - DGT `topology_edge_encoder.py`: `83b8427329ddc3c9d46b14c4795416eca33055b76064d66f742ee0c397efb2f5`.
 - DGT QM9 YAML: `201eba5f794de9fadc1e636f0cf9dd22e3bda250bf86120e71de14423bdbeaa3`.
 - ESA `data_loading.py`: `668bef47ef0968982f6a37525ec1d27a06172f5938e022a8b922ed4aa674b3ac`.
-- ESA `esa/train.py`: `c8ffca1680ad7d695578ec44749043ea09ec082edd774707ac4243fc3a30a82e`.
+- ESA `train.py`: `c8ffca1680ad7d695578ec44749043ea09ec082edd774707ac4243fc3a30a82e`.
 
 All paper numbers remain author-reported unless explicitly identified as local
 accepted results. QM9 B3LYP/6-31G(2df,p), matrix-learning basis/theory conventions,
