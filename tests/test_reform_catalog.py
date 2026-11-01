@@ -72,6 +72,11 @@ def test_catalog_cli_marks_compiler_runnable_entries_from_the_same_registry(caps
     lines = capsys.readouterr().out.splitlines()
     assert len(lines) == len(FAMILIES) + len(ADDONS)
     assert any(line.startswith("addon k1_pair_value/1 (neural_atom_k1) runnable=false |") for line in lines)
+    purpose = {line.split()[1]: line.rsplit(" | ", 1)[1] for line in lines if line.startswith("addon ")}
+    # Purpose comes from catalog data; a shared trainer docstring is never presented as an addon's purpose.
+    assert purpose["k1_two_pass_mean/1"] == "k1-training-objective; modes 2:mean2,3:mean2"
+    assert purpose["k1_node_scale/1"].startswith("slot-node; slot pre_message; modes 3:composed")
+    assert purpose["k1_mean2_clean_second/1"] != purpose["k1_two_pass_mean/1"]
 
 
 def test_desktop_replication_seed_and_addon_policy_survive_catalog_projection():

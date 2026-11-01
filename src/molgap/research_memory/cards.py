@@ -86,19 +86,34 @@ def build_cards(repo_root) -> list[dict]:
     return cards
 
 
+def _words(value) -> list[str]:
+    """None, one string, or several strings; each string may hold several space-separated words."""
+    if value is None:
+        return []
+    return [w.lower() for v in ([value] if isinstance(value, str) else value) for w in v.split()]
+
+
+def _all_words(text: str, term) -> bool:
+    """Every --term word occurs as a whole word (letters/digits boundary) in text."""
+    return all(re.search(r"(?<![a-z0-9])" + re.escape(w) + r"(?![a-z0-9])", text) for w in _words(term))
+
+
+def _all_substrings(text: str, mechanism) -> bool:
+    return all(w in text for w in _words(mechanism))
+
+
 def select(cards, *, outcome=None, term=None) -> list[dict]:
-    """--term is one whole word (letters/digits), case-insensitive, anywhere in the card."""
-    word = term and re.compile(r"(?<![a-z0-9])" + re.escape(term.lower()) + r"(?![a-z0-9])")
+    """--term: one or more whole words (letters/digits), case-insensitive, all anywhere in the card."""
     return [c for c in cards
             if (outcome is None or c["outcome"] == outcome)
-            and (not word or word.search(json.dumps(c, ensure_ascii=False).lower()))]
+            and _all_words(json.dumps(c, ensure_ascii=False).lower(), term)]
 
 
 def lookup(cards, *, mechanism=None, failure_mode=None, family=None, term=None) -> dict:
     """Related closed work, why it failed (with source), open directions and search terms."""
     hit = [c for c in select(cards, term=term)
-           if (mechanism is None or mechanism.lower() in
-               " ".join(filter(None, (c["mechanism"], c["family_id"], c["failure_mode"]))).lower())
+           if _all_substrings(" ".join(filter(None, (c["mechanism"], c["family_id"], c["failure_mode"]))).lower(),
+                              mechanism)
            and (failure_mode is None or c["failure_mode"] == failure_mode)
            and (family is None or family.lower() in c["family_id"].lower())]
     by_family = defaultdict(list)
@@ -169,7 +184,7 @@ _HISTORICAL_SECTION = "## Indexed trajectory and attempt coverage"
 def historical_pointer(repo_root, cards, *, mechanism=None, term=None, family=None):
     """One line naming uncarded rows of HISTORICAL_INDEX that match the query, else None.
 
-    --mechanism is a substring and --term a whole word of the row (id, outcome,
+    Each --mechanism word is a substring and each --term word a whole word of the row (id, outcome,
     mechanism, locator); --family matches 'pcqm-' + the id without track prefix
     and seed/version suffixes, as levers does for family ids.
     """
@@ -179,7 +194,6 @@ def historical_pointer(repo_root, cards, *, mechanism=None, term=None, family=No
         return None
     section = path.read_text(encoding="utf-8").partition(_HISTORICAL_SECTION)[2]
     carded = {c["trajectory_id"] for c in cards}
-    word = term and re.compile(r"(?<![a-z0-9])" + re.escape(term.lower()) + r"(?![a-z0-9])")
     hits = []
     for line in section.splitlines():
         cells = [cell.strip() for cell in line.split("|")[1:-1]]
@@ -188,7 +202,7 @@ def historical_pointer(repo_root, cards, *, mechanism=None, term=None, family=No
         row, ident = " ".join(cells).lower(), cells[0].strip("`")
         fam = "pcqm-" + re.sub(r"^T[A-Z]?-|(?:-(?:s|v|r)\d+)+$", "", ident).lower()
         pattern = (family or "").lower()
-        if ((mechanism is None or mechanism.lower() in row) and (not word or word.search(row))
+        if (_all_substrings(row, mechanism) and _all_words(row, term)
                 and (family is None or (fnmatchcase(fam, pattern) if "*" in pattern else pattern in fam))):
             hits.append(f"{ident} {cells[1]}")
     if not hits:

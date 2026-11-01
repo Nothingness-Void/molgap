@@ -82,18 +82,19 @@ T-pcqm-k1-batch-renorm-100k-s42-brn_affine | NEGATIVE_UNDER_CONTRACT | pcqm-k1-b
 T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-added-to-pooled-embedding | +3.33 | -
 ```
 
-#### `lookup [--mechanism M] [--failure-mode F] [--family F] [--term T] [--compact]`
+#### `lookup [--mechanism M...] [--failure-mode F] [--family F] [--term T...] [--compact]`
 
-All filters are optional and combine with AND. `--mechanism` is a plain
-case-insensitive substring test (not whole-word) against one string: the card's
-`mechanism`, `family_id` and `failure_mode`, with `null` fields dropped, joined by
-single spaces. So `--mechanism lr` also matches `pcqm-gptrans-bondlocal-pairnorm-lr-500k`
+All filters are optional and combine with AND. `--mechanism` takes one or more
+words; each is a plain case-insensitive substring test (not whole-word) against one
+string: the card's `mechanism`, `family_id` and `failure_mode`, with `null` fields
+dropped, joined by single spaces. Every word must match (`--mechanism init noise`).
+So `--mechanism lr` also matches `pcqm-gptrans-bondlocal-pairnorm-lr-500k`
 through the family id, and `--mechanism readout` matches a family id even when the
-mechanism text is a sentence without that word. A query that contains a space can
-match across the field boundary. Free-text mechanisms are matched as written, so
-synonyms are missed; try several words, or use `--term` for whole words.
+mechanism text is a sentence without that word. Free-text mechanisms are matched as
+written, so synonyms are missed; try other words, or use `--term` for whole words.
 `--failure-mode` is an exact match on the card's `failure_mode`. `--family` is a
-case-insensitive substring of `family_id`. `--term` works as in `cards`. An
+case-insensitive substring of `family_id`. `--term` takes one or more words, each a
+whole word as in `cards`, and every word must occur in the card. An
 unknown failure mode simply matches nothing. Exit 0.
 
 Output is one JSON object:
