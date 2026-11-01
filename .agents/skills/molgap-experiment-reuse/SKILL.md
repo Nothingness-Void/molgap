@@ -26,9 +26,9 @@ Read `docs/operations/EXPERIMENT_QUICKSTART.md` only for a missing input shape;
 read the matching CLI section for advanced options. Do not chain low-level
 validation commands before a front door that already performs them.
 
-Prior art for a new idea (innovation layer): besides RML replay, grep
-`experiments/**/*.md` audit tables (e.g. `experiments/pcqm_gap_architecture/architecture_route_audit.md`),
-since RML has no by-mechanism query; if WebSearch fails, WebFetch the arXiv abstract.
+For prior art, start with RML `lookup --mechanism WORD... --compact` and
+`levers --family PATTERN`. Follow decision pointers; search experiment audit
+tables for unindexed history. Matching uses recorded terms, not semantic search.
 
 ## When implementation is required
 

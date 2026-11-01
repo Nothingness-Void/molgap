@@ -32,8 +32,9 @@ $python = '.\.venv\Scripts\python.exe'
 [local_testing.py](../../src/molgap/local_testing.py) owns the fixed pytest
 nodeids. New files and unrelated tests in the same file do not enter a scope.
 Several scopes can share a journey; one invocation deduplicates it. There is
-no implicit full-suite run. Use direct pytest for an affected lower-level
-invariant; full-suite maintenance is an explicit separate operation.
+no implicit full-suite run. Tests run when implementation changes, not before each
+routine experiment. Use direct pytest for an affected lower-level invariant;
+full-suite maintenance is an explicit separate operation.
 
 | Scope | Local behaviour selected |
 |---|---|
@@ -74,9 +75,11 @@ reported as partial execution, not a completed workflow check.
    continuous versus serialized-resumed state. Calling the same helper to
    produce and verify a counter is not independent evidence.
 
-Runtime validation still protects actual data, artifact identity and external
-authority. Keep those owning checks; do not add another certificate, registry,
-mandatory audit document, or a validator solely to satisfy a new test.
+Runtime checks belong to their existing data, identity and authority owners.
+Routine execution calls the front door, without a chain of manual tests or hash
+commands. Reuse results for unchanged inputs; recheck at a changed input or trust
+boundary. Fix failures in that owner and consolidate superseded checks; do not
+append a certificate, validator or default test gate for each incident.
 
 ## Report the exercised path
 

@@ -222,20 +222,13 @@ Besides the declared contract fields, each entry has:
 - Families also carry `execution_support`: `DECLARATION_ONLY`,
   `CPU_SYNTHETIC_ONLY` or `REGISTERED_REQUIRES_QUALIFICATION`.
 
-`--compact` prints `{"lines": [...]}`, one line per family and then per addon:
+`--compact` prints plain text, one line per family and then per addon:
 `family <name>/<version> runnable=<bool> | <reason> | <purpose>` or
-`addon <name>/<version> (<family>) runnable=<bool> | <reason> | <purpose>`. The
-purpose is the first docstring line of the entry's `source_module`. On the sample
-date it printed 26 lines, 9 of them `runnable=false`. Sample (excerpt):
-
-```text
-family neural_atom_k1/3 runnable=true | shared recipe owner | Registered shared K1/GPTrans entrypoints; platform skills own job operations.
-family gptrans_t/2 runnable=true | shared recipe owner | Registered shared K1/GPTrans entrypoints; platform skills own job operations.
-family edge_state_gps/1 runnable=false | no training adapter | OGB EdgeState architecture variants; no training or submission authority.
-family gptrans_t/1 runnable=false | not a shared recipe owner (molgap.gptrans_screen_workflow) | GPTrans-T core adapted to MolGap's accepted PyG graph batches.
-addon k1_node_scale/1 (neural_atom_k1) runnable=true | registered for compiler family neural_atom_k1/3 | Small registered slot example shared by the two accelerated backbones.
-addon k1_pair_value/1 (neural_atom_k1) runnable=false | empty execution_modes (declaration only) | Value-decoupled pair token on the existing K1; provenance in K1_ADAPTER.md.
-```
+`addon <name>/<version> (<family>) runnable=<bool> | <reason> | <purpose>`.
+Family purposes combine the recipe and first module-docstring paragraph. Addon
+purposes come from catalog metadata: exclusive group, optional slot and execution
+modes. A module description is appended only when it is not a family trainer.
+Whitespace is collapsed to one line per entry; capabilities follow this checkout's catalog.
 
 `runnable=false` does not forbid the work. It means the change needs its existing
 typed builder or a new addon module and catalog entry (AGENTS infrastructure

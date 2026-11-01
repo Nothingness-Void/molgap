@@ -204,8 +204,12 @@ seconds are not invented from process wall time.
 
 A new addon adds a small model/loss hook and static mode/Spec/execution/source
 registration, not a trainer, optimizer, loader or platform script. JSON cannot
-select arbitrary imports. Current adapters allow one reviewed addon mode per
-arm; new combinations require explicit registration and a new frozen recipe.
+select arbitrary imports. Registered `apply_hook` slots compose in frozen Spec
+order; replacement/objective modes remain exclusive and cannot mix with slots.
+Lifecycle deviations use `TrainingAddon.policy_hook` returning `FamilyModePolicy`,
+never a host/controller branch in the kernel. See the
+[two-family examples](FAMILY_TRAINING_EXAMPLES.md) and
+[server adoption boundary](SHARED_TRAINING_CORE_SERVER_RETURN.md).
 
 Mechanical verification keeps science/runtime/replay `NOT_EVALUATED`. Final-only
 outputs have no predictions or development score; scientific/full-scale closure

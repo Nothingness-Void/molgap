@@ -28,17 +28,17 @@ evidence is never fabricated, and frozen evidence is never rewritten.
   density. Comments say why, not what. Reuse what exists: reusable logic lives in
   `src/molgap/`, stage and experiment `scripts/` are thin CLI wrappers, and model
   classes are never redefined in scripts.
-- Fix the root cause once. State the cause in one sentence before editing. Do not add
-  a guard, retry, special case or message-only change for a symptom whose cause is
-  unknown; temporary diagnostics to find the cause are allowed.
+- Fix the root cause in its existing owner; consolidate or replace obsolete paths,
+  rather than accumulating per-incident guards, retries, wrappers or checks. State
+  the cause before editing; temporary diagnostics may establish an unknown cause.
 - If the same check fails the same way after your fix, do not patch it again: write
   down the cause and the assumption that was wrong, then change approach or report to
   the user.
-- Each fact (hash, pin, identity) has one owning check. Later stages call that owner or
-  read its recorded result; never reimplement the comparison, and never remove an
-  owning check without approval. Derive identities, refs and retry records from recorded
-  evidence by code, never hand-copy them. Bind a hash only to an artifact something
-  consumes.
+- Each fact (hash, pin, identity) has one owning check at its consumption or trust
+  boundary. Reuse its result while its inputs remain unchanged; do not repeat it
+  across wrappers or add hash gates for incidental files. Never remove an owning
+  check without approval. Derive identities, refs and retry records from evidence
+  by code, never hand-copy them; bind hashes only to consumed artifacts.
 - Never revert changes you did not make. Use no destructive git command (reset --hard,
   forced checkout or push, clean) unless asked.
 
