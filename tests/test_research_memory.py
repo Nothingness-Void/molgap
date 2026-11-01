@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -476,3 +478,148 @@ def test_invalid_derived_output_is_rejected():
     outputs["cost_ledger.json"]["cross_hardware_total"] = 0
     with pytest.raises(ValueError, match="must not aggregate across hardware"):
         validate_derived_outputs(outputs)
+
+
+def test_cards_filter_by_outcome_and_term(tmp_path):
+    from molgap.research_memory.cards import _keywords, select
+
+    assert _keywords("training mean of all two atom pair norm", "pcqm-k1-sam-100k") == ["norm", "pair", "sam"]
+    cards = [
+        {"outcome": "NEGATIVE_UNDER_CONTRACT", "mechanism": "sharpness-aware step", "keywords": ["sharpness"]},
+        {"outcome": "POSITIVE_UNDER_CONTRACT", "mechanism": "pair norm", "keywords": ["pair"]},
+    ]
+    assert select(cards, outcome="NEGATIVE_UNDER_CONTRACT", term="SHARPNESS") == cards[:1]
+    assert select(cards, term="sharp") == []  # whole words only: "SAM" must not match "same"/"sample"
+    assert select(cards, term="PAIR") == cards[1:]
+    assert select(cards) == cards
+
+
+def test_card_effect_is_own_run_against_closed_reference(tmp_path):
+    from molgap.research_memory.cards import build_cards
+
+    def put(rel, value):
+        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / rel).write_text(json.dumps(value), encoding="utf-8")
+        return rel
+
+    rows = []
+    # Two runs share the arm name "pretrained"; run "lever" has two lever arms (reference closes NEGATIVE).
+    for run, delta, ref_outcome in (("a", 0.001, "CLOSED"), ("b", 0.002, "CLOSED"), ("lever", -0.0008, "NEGATIVE_UNDER_CONTRACT")):
+        pa = put(f"experiments/x/{run}/pretrained/paired_analysis.json",
+                 {"mean_delta_eV": delta, "lower_95_eV": delta - 1e-4, "upper_95_eV": delta + 1e-4})
+        ready = put(f"experiments/x/{run}/ready.json", {"reference_id": f"ev-{run}-ref",
+                    "candidate_artifact_bindings": {"paired_analysis": {"ref": pa}}})
+        for arm, outcome, record in (("ref", ref_outcome, {}), ("pretrained", "NEGATIVE_UNDER_CONTRACT",
+                                                             {"comparison_readiness_ref": ready})):
+            rows.append({"trajectory_id": f"T-{run}-{arm}", "family_id": "f", "outcome": outcome,
+                         "result_evidence_ids": [f"ev-{run}-{arm}"],
+                         "record_path": put(f"experiments/x/{run}/{arm}.json", record)})
+    put("research_memory/derived/trajectory_index.json", {"trajectories": rows})
+    effects = {c["trajectory_id"]: c["effect_meV"] for c in build_cards(tmp_path)}
+    assert effects == {"T-a-ref": None, "T-a-pretrained": pytest.approx(1.0), "T-b-ref": None,
+                       "T-b-pretrained": pytest.approx(2.0), "T-lever-ref": None, "T-lever-pretrained": None}
+
+
+def test_lookup_and_gaps_are_read_only_views():
+    from molgap.research_memory.cards import gaps, lookup
+
+    def card(fam, outcome, effect=None):
+        return {"trajectory_id": fam, "family_id": fam, "outcome": outcome, "mechanism": "norm", "keywords": ["norm"],
+                "falsifier": "f", "reopen_conditions": None, "effect_meV": effect, "search_terms": []}
+
+    cards = [card("a-100k", "NEGATIVE_UNDER_CONTRACT", 1.0), card("b-100k", "NEGATIVE_UNDER_CONTRACT"),
+             card("b-500k", "POSITIVE_UNDER_CONTRACT")]
+    found = lookup(cards, mechanism="norm")
+    assert [u["family_id"] for u in found["unfalsified"]] == ["b-100k", "b-500k"]
+    assert lookup(cards, family="a-")["matches"] == cards[:1]
+    assert lookup(cards, mechanism="b-5")["matches"] == []  # mechanism matches only the mechanism field
+    assert lookup(cards, mechanism="NOR")["matches"] == cards  # case-insensitive substring
+    assert lookup(cards, term="1.0", mechanism="norm")["matches"] == cards[:1]
+    flagged = gaps(cards)["contradictions"]  # same arm "b" across scales; "a" has no 500K partner
+    assert [(f["key"], f["a"]["scale_k"], f["b"]["scale_k"]) for f in flagged] == [("b", 100, 500)]
+    assert flagged[0]["kind"] == "outcome_differs_across_scale_needs_review"
+
+
+def test_erratum_scope_comes_from_the_bound_file_and_its_experiment(tmp_path):
+    from molgap.research_memory.validate import _load_errata, _verify_with_errata
+
+    home = tmp_path / "experiments" / "exp_a"
+    (home / "errata").mkdir(parents=True)
+    real = "experiments/exp_a/terminal_decision.md"
+    (tmp_path / real).write_bytes(b"observed\n")
+    recorded, observed = "1" * 64, hashlib.sha256(b"observed\n").hexdigest()
+    base = {"format": "molgap-erratum-v1", "artifact_class": "narrative", "effect": "narrative_only",
+            "target_locator": real, "recorded_sha256": recorded, "observed_sha256": observed}
+    (home / "errata" / "e.json").write_text(json.dumps(base), encoding="utf-8")
+    errata = _load_errata(tmp_path)
+    assert list(errata) == [(real, recorded)]
+    gaps = []
+    _verify_with_errata(tmp_path, errata, gaps, real, recorded)
+    assert gaps == [real]
+    for pointer, digest, pair in [(real, "2" * 64, base),  # recorded digest not in the erratum
+                                  (real, recorded, {**base, "observed_sha256": "3" * 64})]:  # observed differs
+        with pytest.raises(ValueError, match="SHA mismatch"):
+            _verify_with_errata(tmp_path, {(real, recorded): pair}, [], pointer, digest)
+    (home / "errata" / "e.json").unlink()
+    run = "experiments/exp_a/runs/x/"
+    for where, change in [("exp_a", {"target_locator": run + "paired_analysis.json"}),  # result, not .md
+                          ("exp_a", {"target_locator": run + "cost_records.json"}),  # contract, not .md
+                          ("exp_b", {}),  # erratum filed in another experiment's dir
+                          ("exp_a", {"artifact_class": "result"}),
+                          ("exp_a", {"effect": "replay"})]:
+        errata_dir = tmp_path / "experiments" / where / "errata"
+        errata_dir.mkdir(parents=True, exist_ok=True)
+        (errata_dir / "e.json").write_text(json.dumps({**base, **change}), encoding="utf-8")
+        with pytest.raises(ValueError, match="erratum may only excuse"):
+            _load_errata(tmp_path)
+        (errata_dir / "e.json").unlink()
+
+
+def test_crlf_tolerance_needs_head_roles_normalize_and_closure_numbers_are_finite(tmp_path):
+    from molgap.research_memory.paths import verify_bound_artifact
+    from molgap.research_memory.saved_analysis import run
+    from molgap.research_memory.schemas import validate_closure_facts
+
+    (tmp_path / "note.md").write_bytes(b"a\r\nb\r\n")
+    lf_sha = hashlib.sha256(b"a\nb\n").hexdigest()
+    for args in (["init", "-q"], ["add", "note.md"]):
+        subprocess.run(["git", *args], cwd=tmp_path, check=True)
+    with pytest.raises(ValueError, match="SHA mismatch"):  # staged only, not in HEAD
+        verify_bound_artifact(tmp_path, "note.md", lf_sha)
+    subprocess.run(["git", "-c", "user.email=t@e.invalid", "-c", "user.name=t", "commit", "-qm", "x"], cwd=tmp_path, check=True)
+    verify_bound_artifact(tmp_path, "note.md", lf_sha)
+    for role in ("Official_Validation", "official_validation ", "test-dev"):
+        with pytest.raises(ValueError, match="protected"):
+            run("paired", [], role_id=role)
+    facts = {"format": "molgap-closure-facts-v1"}
+    for bad in ({"effect_meV": float("nan")}, {"effect_meV": float("inf")}, {"ci_meV": [0.0, float("-inf")]}):
+        with pytest.raises(ValueError, match="closure facts"):
+            validate_closure_facts({**facts, **bad})
+    assert validate_closure_facts({**facts, "effect_meV": -1.5, "ci_meV": [-2, 0.5]})["effect_meV"] == -1.5
+
+
+def test_research_memory_analyze_ensemble_and_refusals(tmp_path):
+    torch = pytest.importorskip("torch")
+    from molgap.research_memory.saved_analysis import run, write_output
+    ids, target = torch.arange(100, 108), torch.linspace(-1, 1, 8)
+    paths = []
+    for i, offset in enumerate((.1, -.1, .1)):
+        path = tmp_path / f"p{i}.pt"
+        torch.save({"source_idx": ids, "target_eV": target, "prediction_eV": target + offset}, path)
+        paths.append(path)
+    result = run("ensemble-curve", paths, role_id="internal_development")
+    assert result["posthoc"] is True and result["row_count"] == 8
+    assert result["results"]["mae_by_n_members_meV"]["1"] == pytest.approx(100.)
+    assert result["results"]["mae_by_n_members_meV"]["3"] == pytest.approx(100. / 3)
+    named = {f"m{i}": path for i, path in enumerate(paths)}
+    summary = run("summary", named, role_id="internal_development", pairs=[("m1", "m0")])["results"]
+    assert summary["D_meV"] == pytest.approx(0.) and summary["ensemble_gain_meV"] == pytest.approx(200. / 3)
+    assert summary["fit"] is not None and summary["m_meV"] == pytest.approx(0.)
+    assert run("floor", named, role_id="internal_development")["results"]["members_used"] == 2
+    with pytest.raises(ValueError, match="protected"):
+        run("paired", paths, role_id="test_dev")
+    torch.save({"source_idx": ids + 1, "target_eV": target, "prediction_eV": target}, tmp_path / "x.pt")
+    with pytest.raises(ValueError, match="differ"):
+        run("paired", [paths[0], tmp_path / "x.pt"], role_id="internal_development")
+    with pytest.raises(ValueError, match="scratch"):
+        write_output(result, tmp_path / "research_memory" / "derived" / "o.json", tmp_path)

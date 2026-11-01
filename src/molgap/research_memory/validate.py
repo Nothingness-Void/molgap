@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
@@ -9,7 +10,7 @@ from typing import Any
 from molgap.evidence_pointers import (
     load_json_object as load_json,
 )
-from .paths import bound_artifact_path, resolve_repo_pointer, verify_bound_artifact
+from .paths import bound_artifact_path, file_digest, resolve_repo_pointer, verify_bound_artifact
 from .paired import pair_binding, reference_trajectory
 
 from molgap.v5_common import (
@@ -65,6 +66,34 @@ def _trajectory_pointers(record: Mapping[str, Any]) -> list[str]:
     if isinstance(comparison_readiness_ref, str) and comparison_readiness_ref:
         pointers.append(comparison_readiness_ref)
     return pointers
+
+
+def _load_errata(root: Path) -> dict[tuple[str, str], dict[str, Any]]:
+    """Known narrative gaps: (locator, recorded digest) -> erratum, for a .md file in the erratum's experiment."""
+    found = {}
+    for path in sorted(root.glob("experiments/**/errata/*.json")):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        target = Path(str(record.get("target_locator", "")))
+        if (record.get("format") != "molgap-erratum-v1" or record.get("artifact_class") != "narrative"
+                or record.get("effect") != "narrative_only" or target.suffix != ".md"
+                or target.parts[:2] != path.relative_to(root).parts[:2]):
+            raise ValueError(f"{path}: an erratum may only excuse a narrative .md file in its own experiment")
+        found[(record["target_locator"], record["recorded_sha256"])] = record
+    return found
+
+
+def _verify_with_errata(root: Path, errata: Mapping[tuple[str, str], Mapping[str, Any]], known_gaps: list[str],
+                        pointer: str, digest: str) -> None:
+    try:
+        verify_bound_artifact(root, pointer, digest)
+    except ValueError:
+        # Only an exact digest pair from an in-experiment .md erratum (_load_errata) is tolerated.
+        erratum = errata.get((pointer, digest))
+        if erratum is None:
+            raise
+        if erratum["observed_sha256"] != file_digest(resolve_repo_pointer(root, pointer)):
+            raise
+        known_gaps.append(pointer)
 
 
 def validate_repository_records(
@@ -178,6 +207,12 @@ def validate_repository_records(
     for path in discovered.comparison_prelaunch:
         record = validate_comparison_prelaunch(load_json(path))
         records["comparison_prelaunch"].append((path, record))
+    errata = _load_errata(root)
+    known_gaps: list[str] = []
+
+    def verify_with_errata(pointer: str, digest: str) -> None:
+        _verify_with_errata(root, errata, known_gaps, pointer, digest)
+
     for path in discovered.comparison_readiness:
         record = load_json(path)
         from .candidate_qualification import qualified_candidate_record
@@ -187,9 +222,7 @@ def validate_repository_records(
         )
         record = validate_comparison_readiness(
             record,
-            evidence_verifier=(
-                lambda pointer, digest: verify_bound_artifact(root, pointer, digest)
-            ) if verify_comparison_artifacts else None,
+            evidence_verifier=verify_with_errata if verify_comparison_artifacts else None,
             metadata_only=not verify_comparison_artifacts,
         )
         records["comparison_readiness"].append((path, record))
@@ -510,4 +543,5 @@ def validate_repository_records(
             for unit in ("device_hours", "cpu_hours")
         ):
             raise ValueError(f"{path}:native cost has no measured device or CPU hours")
-    return {"root": root, "discovered": discovered, "records": records}
+    return {"root": root, "discovered": discovered, "records": records,
+            "known_gaps": sorted(set(known_gaps))}

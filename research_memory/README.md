@@ -90,3 +90,29 @@ Only completed `NO_TRAIN / context_only` diagnostics qualify; training traces,
 existing frozen run overrides, action replay and causal claims are rejected.
 The terminal overlay adds the ID while the original snapshot remains unchanged.
 This provenance repair does not confer training replay readiness.
+
+## Query, analysis and corrections
+
+```text
+python -m molgap.research_memory cards [--outcome OUTCOME] [--term TERM]
+python -m molgap.research_memory lookup [--mechanism M] [--failure-mode F] [--family F] [--term T]
+python -m molgap.research_memory gaps
+python -m molgap.research_memory analyze --op {paired,ensemble-curve,residual-corr,summary,floor} --predictions PATH... | ARM=PATH... [--pair CAND=REF] --role-id ROLE --out OUT
+```
+
+`cards` prints one JSON line per closed trajectory. `lookup` returns matches, families with no
+measured negative result (`unfalsified`) and search terms. `gaps` lists single-trajectory families
+and outcomes that differ across scale; these are review prompts, not findings. `analyze` reads saved
+development predictions only: it refuses `official_validation`, `test_dev` and `test_challenge` as
+`--role-id`, writes only outside `research_memory/` and `experiments/`, and marks every output
+`posthoc: true` (never a gate decision).
+
+Optional per-arm closure facts (`molgap-closure-facts-v1`, at `trajectory.decision.facts`) hold
+`failure_mode` (a fixed enum), up to 8 `search_terms`, and optional measured `effect_meV`/`ci_meV`
+with their `source` file. `validate` rejects any other shape.
+
+An erratum (`molgap-erratum-v1`, `artifact_class: narrative`, `effect: narrative_only`) lives in the
+target experiment's `errata/` and excuses only a narrative `.md` file whose recorded and observed
+SHA-256 exactly match its `recorded_sha256`/`observed_sha256` pair. It affects `validate` only,
+which reports the file under `known_gaps`. Strict recheck does not read errata; when the two
+disagree, strict recheck holds for replay.

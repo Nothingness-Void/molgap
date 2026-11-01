@@ -3,15 +3,22 @@
 from __future__ import annotations
 
 import hashlib
+import subprocess
+from functools import lru_cache
 from pathlib import Path, PureWindowsPath
 from urllib.parse import quote, unquote, urlparse
 
 from molgap.evidence_pointers import ALLOWED_REMOTE_SCHEMES
 
 
+@lru_cache(maxsize=16)
+def _resolved_root(repo_root: str) -> Path:
+    return Path(repo_root).resolve()
+
+
 def repo_local_path(repo_root: str | Path, value: str | Path) -> Path:
     """Reject traversal before normalization and escapes through existing links."""
-    root = Path(repo_root).resolve()
+    root = _resolved_root(str(repo_root))
     raw = str(value)
     if not raw or "://" in raw:
         raise ValueError("a local filesystem path is required, not a metadata URI")
@@ -77,14 +84,24 @@ def artifact_locator(root: str | Path, path: str | Path) -> str:
         return locator
 
 
-def verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
-    path = (bound_artifact_path(root, pointer) if pointer.startswith("external://")
-            else resolve_repo_pointer(root, pointer))
-    if path is None:
-        raise ValueError(f"bound artifact must be repository-local: {pointer}")
+def file_digest(path: str | Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as stream:
+    with Path(path).open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
-    if digest.hexdigest() != expected_sha256:
+    return digest.hexdigest()
+
+
+def verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> None:
+    external = pointer.startswith("external://")
+    path = bound_artifact_path(root, pointer) if external else resolve_repo_pointer(root, pointer)
+    if path is None:
+        raise ValueError(f"bound artifact must be repository-local: {pointer}")
+    if file_digest(path) == expected_sha256:
+        return
+    # autocrlf checkouts of text committed in HEAD hold LF or CRLF; other bytes stay exact.
+    lf = b"\0" if external else path.read_bytes().replace(b"\r\n", b"\n")
+    if b"\0" in lf or expected_sha256 not in {hashlib.sha256(f).hexdigest() for f in (lf, lf.replace(b"\n", b"\r\n"))} \
+            or subprocess.run(["git", "cat-file", "-e", f"HEAD:./{path.relative_to(_resolved_root(str(root))).as_posix()}"],
+                              cwd=root, capture_output=True).returncode:
         raise ValueError(f"bound artifact SHA mismatch: {pointer}")

@@ -59,6 +59,23 @@ SHA256_PATTERN = re.compile(r"^[0-9a-fA-F]{64}$")
 MEASUREMENT_STATUSES = frozenset(
     {"measured", "estimated", "measurement_missing", "not_applicable"}
 )
+CLOSURE_FACTS_FORMAT = "molgap-closure-facts-v1"
+FAILURE_MODES = frozenset({"infra_failure", "gate_or_cost_stop", "lost_at_scale", "early_gain_fades", "endpoint_regression",
+    "below_gate", "confounded_change", "comparator_missing", "discriminator_missing", "boundary_pass"})
+
+
+def validate_closure_facts(facts: Any) -> dict[str, Any]:
+    """Optional per-arm closure facts: interpretation by enum, numbers only from a measured file."""
+    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool) and abs(x) < float("inf")  # no NaN/inf
+    ci = _mapping(facts, "closure_facts").get("ci_meV")
+    if (facts.get("format") != CLOSURE_FACTS_FORMAT or facts.get("failure_mode") not in FAILURE_MODES | {None}
+            or set(facts) - {"format", "failure_mode", "search_terms", "effect_meV", "ci_meV", "source"}
+            or facts.get("search_terms") is not None and len(_texts(facts, "search_terms", "closure_facts")) > 8
+            or not (facts.get("effect_meV") is None or num(facts["effect_meV"]))
+            or not (ci is None or isinstance(ci, list) and len(ci) == 2 and all(map(num, ci)))
+            or not isinstance(facts.get("source"), (str, type(None)))):
+        raise ValueError(f"closure facts must be {CLOSURE_FACTS_FORMAT}: known failure_mode, <= 8 search_terms, numbers")
+    return dict(facts)
 
 def _mapping(value: Any, label: str) -> Mapping[str, Any]:
     if not isinstance(value, Mapping):
@@ -189,6 +206,7 @@ def validate_trajectory(record: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError(f"unsupported trajectory outcome: {outcome}")
     _texts(decision, "next_allowed_actions", "trajectory.decision")
     _texts(decision, "reopen_conditions", "trajectory.decision")
+    if "facts" in decision: validate_closure_facts(decision["facts"])
 
     for field in ("supporting_evidence_ids",):
         for value in hypothesis[field]:
