@@ -1,0 +1,29 @@
+{
+  "train": {
+    "membership": [
+      0,
+      100000
+    ],
+    "usage": [
+      "optimizer",
+      "target_transform",
+      "native_scratch_preflight"
+    ]
+  },
+  "development": {
+    "membership": [
+      100000,
+      150000
+    ],
+    "usage": [
+      "live_metrics",
+      "live_checkpoint_selection"
+    ]
+  },
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "later_internal_development": "not_authorized",
+  "500k_training": "forbidden",
+  "geometry_features": "forbidden"
+}

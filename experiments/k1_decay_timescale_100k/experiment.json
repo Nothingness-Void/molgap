@@ -1,0 +1,71 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "k1_decay_timescale_100k",
+  "logical_run_id": "k1-decay-timescale-100k-s42-v1",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/k1_decay_timescale_100k/authority.json",
+  "platform_ref": "experiments/k1_decay_timescale_100k/platform.json",
+  "role_ref": "experiments/k1_decay_timescale_100k/roles.json",
+  "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+  "monitor_paths": [
+    "experiments/k1_decay_timescale_100k/STATUS.md"
+  ],
+  "timestamp": "2026-11-01T18:02:31.000831+00:00",
+  "seeds": [
+    42
+  ],
+  "same_run": {
+    "reference_arm_id": "wd1e4",
+    "minimum_material_gain_eV": 0.003
+  },
+  "question": {
+    "policy_id": "k1-decay-timescale-100k",
+    "action": "RUN_SCREEN",
+    "question": "Does a tenfold increase of AdamW decay from 1e-4 to 1e-3 improve late generalization of fixed post-BN K1 at identical exposure?",
+    "deficiency": "Small 100K architecture gains often fade across cohorts; triplet communication fits training better after its best development endpoint. Test optimizer regularization separately before adding model capacity. This is a hypothesis transfer, not proof that K1 is underregularized.",
+    "changed_mechanism": "adamw-weight-decay-timescale",
+    "supporting_evidence": [],
+    "alternatives": [
+      "Both coefficients are ineffective at this LR and exposure.",
+      "Lower decay preserves useful chemical features.",
+      "A single reused development role and seed cannot establish scale transfer."
+    ],
+    "closed_families": [
+      "gptrans-all-parameter-wd001-at-100k",
+      "ppgt-width-only-expansion"
+    ],
+    "positive_decision": "Retain only a qualified within-pair positive with favorable last-five/final evidence; no automatic scaling or seeds.",
+    "negative_decision": "Close this coefficient contrast without a new grid.",
+    "reference_ids": [],
+    "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server",
+    "track": "C",
+    "platform": "kaggle",
+    "hardware": "T4x2",
+    "cheapest_falsifier": "One paired seed42 fixed100K optimizer comparison, no new model code or data.",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4
+  },
+  "shared": {
+    "preset_ref": "experiments/presets/k1-post-bn-100k-v1.json",
+    "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "wd1e4",
+      "training": {
+        "weight_decay": 0.0001
+      }
+    },
+    {
+      "arm_id": "wd1e3",
+      "training": {
+        "weight_decay": 0.001
+      }
+    }
+  ]
+}

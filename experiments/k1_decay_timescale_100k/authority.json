@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "purpose": "OPTIMIZER_COMPARISON",
+  "account": "kaseichou",
+  "platform": "kaggle2",
+  "arms": [
+    "wd1e4",
+    "wd1e3"
+  ],
+  "same_run_reference_arm_id": "wd1e4",
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "allocation_wall_limit_seconds": 21600,
+  "allocated_t4_hours_ceiling": 12,
+  "kaggle_quota_hours_ceiling": 6,
+  "protected_role_access_authorized": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "full_training_authorized": false,
+  "authorization_basis": "User 2026-11-02 authorized planning one evidence/literature-driven experiment and submission through updated infrastructure. One two-arm optimizer study; no successor, extra seed or scale-up."
+}
