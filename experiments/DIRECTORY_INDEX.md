@@ -88,3 +88,5 @@ and its decision remains the authority. Grouping is by routing domain only.
 `pcqm_gptrans_triplet_portability/` · `pcqm_gptrans_source_dependence/` ·
 `pcqm_gptrans_execution40/` · `pcqm_gptrans_execution_tuning40/` ·
 `esa_count_persistence_100k/` · `family_retention_challenge_500k/`
+
+`k1_decay_timescale_100k/` - [registered-front-door trial](k1_decay_timescale_100k/README.md), blocked before remote submission.

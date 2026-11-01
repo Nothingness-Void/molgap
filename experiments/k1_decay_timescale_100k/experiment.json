@@ -16,13 +16,13 @@
     42
   ],
   "same_run": {
-    "reference_arm_id": "wd1e4",
+    "reference_arm_id": "reference",
     "minimum_material_gain_eV": 0.003
   },
   "question": {
     "policy_id": "k1-decay-timescale-100k",
     "action": "RUN_SCREEN",
-    "question": "Does a tenfold increase of AdamW decay from 1e-4 to 1e-3 improve late generalization of fixed post-BN K1 at identical exposure?",
+    "question": "Does increasing AdamW decay from the unchanged post-BN K1 preset coefficient1e-5 to1e-3 improve late generalization at identical exposure?",
     "deficiency": "Small 100K architecture gains often fade across cohorts; triplet communication fits training better after its best development endpoint. Test optimizer regularization separately before adding model capacity. This is a hypothesis transfer, not proof that K1 is underregularized.",
     "changed_mechanism": "adamw-weight-decay-timescale",
     "supporting_evidence": [],
@@ -59,10 +59,8 @@
   },
   "arms": [
     {
-      "arm_id": "wd1e4",
-      "training": {
-        "weight_decay": 0.0001
-      }
+      "arm_id": "reference",
+      "training": {}
     },
     {
       "arm_id": "wd1e3",

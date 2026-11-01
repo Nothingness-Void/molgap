@@ -1,0 +1,30 @@
+{
+  "status": "BLOCKED_LOCAL_PREPARATION",
+  "remote_submission": false,
+  "gpu_training_started": false,
+  "replay_ready": false,
+  "attempts": [
+    {
+      "input_commit": "d4ad4ea6c",
+      "stage": "local_preparation",
+      "status": "BLOCKED",
+      "reason": "Local validation failed: baseline preset pin: expected exactly fields [path sha256]",
+      "disposition": "Input pin corrected through existing preset owner."
+    },
+    {
+      "input_commit": "9550a2bcd",
+      "stage": "local_preparation",
+      "status": "BLOCKED",
+      "reason": "Local validation failed: Missing or unknown shared training recipe fields",
+      "disposition": "Retained preset recipe incompatible; no shared-code workaround applied."
+    }
+  ],
+  "host_prerequisite": {
+    "profile": "E:/MolGap/machine-profile.json",
+    "declared_data_root": "E:/MolGap/data",
+    "directory_exists": false
+  },
+  "qualification": "No prospective run freeze, remote receipt, native result or RML terminal acceptance established.",
+  "confirmed_recipe_blocker": "Pinned preset recipe retains obsolete resume_chunks; existing read_recipe rejects it after supported metadata stripping.",
+  "luna_review": "experiments/k1_decay_timescale_100k/luna_review.md"
+}

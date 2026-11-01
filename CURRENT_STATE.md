@@ -6,6 +6,10 @@
 
 ## Server execution status
 
+The authorized [K1 optimizer/front-door trial](experiments/k1_decay_timescale_100k/submission_trial.md)
+blocked during local preparation. No Kaggle submission or GPU training occurred;
+resolve the documented preset/host-input prerequisites before another release attempt.
+
 The [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/STATUS.md)
 completed both endpoints on Kaggle2. Its
 [terminal analysis](experiments/ppgt_capacity500k/results/completed_v3/decision.md)

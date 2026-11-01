@@ -1,3 +1,3 @@
 # Execution status
 
-Inputs authored; not yet submitted. Exact submission result will be recorded here.
+BLOCKED_LOCAL_PREPARATION; no remote submission. [Exact trial and prerequisites](submission_trial.md), [machine-readable result](submission_trial.json). Revised input remains unsubmitted. No active monitor or automatic successor.

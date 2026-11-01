@@ -1,3 +1,3 @@
 # Planning decision — 2026-11-02
 
-Authorize only the protocol-bound WD1e-4 versus WD1e-3 paired K1 test through the existing front door. No model, trainer, verifier or platform code change. Scientific outcome and Replay readiness remain unestablished until observed terminal acceptance. Paper and RML rationale: [protocol](protocol.md).
+The proposed contrast was corrected before freeze to retain the unchanged post-BN K1 reference coefficient1e-5 against candidate1e-3. A compatible accepted reference must be reused when available; an unqualified legacy scalar is not a substitute. No model, trainer, verifier or platform code change. The registered front door blocked local preparation; no run was submitted or scientific outcome established. [Protocol](protocol.md); [submission trial](submission_trial.md).

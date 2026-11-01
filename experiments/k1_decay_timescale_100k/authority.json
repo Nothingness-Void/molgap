@@ -6,10 +6,10 @@
   "account": "kaseichou",
   "platform": "kaggle2",
   "arms": [
-    "wd1e4",
+    "reference",
     "wd1e3"
   ],
-  "same_run_reference_arm_id": "wd1e4",
+  "same_run_reference_arm_id": "reference",
   "seeds": [
     42
   ],
@@ -21,5 +21,6 @@
   "automatic_successor_authorized": false,
   "retry_authorized": false,
   "full_training_authorized": false,
-  "authorization_basis": "User 2026-11-02 authorized planning one evidence/literature-driven experiment and submission through updated infrastructure. One two-arm optimizer study; no successor, extra seed or scale-up."
+  "authorization_basis": "User 2026-11-02 authorized planning one evidence/literature-driven experiment and submission through updated infrastructure. One two-arm optimizer study; no successor, extra seed or scale-up.",
+  "reference_scope": "One newly qualified shared-runtime reference only if no compatible accepted reference is reusable; never an automatic baseline per candidate."
 }
