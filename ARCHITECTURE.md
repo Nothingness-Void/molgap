@@ -21,11 +21,14 @@ ownership index, not execution authority or a copy of scientific contracts.
 ## Boundary
 
 - Reusable behavior lives in `src/molgap/`.
-- `scripts/` parse arguments, call package code, and persist outputs.
-- `results/` contains evidence and never supplies runtime logic.
+- Stage `scripts/` under `production/`, experiment wrappers and `platforms/local/`
+  entry points parse arguments, call package code, and persist outputs.
+- Evidence lives in `experiments/` and `platforms/_records/` and never supplies
+  runtime logic.
 - `models/` contains assets; registration is explicit in `constants.py`.
-- Archived code is reproducibility evidence and is not imported by supported
-  paths.
+- Archived code lives on the `archive` branch and is not imported by supported
+  paths. Commit `9bd942fd` removed 28 files kept there (the in-package phase-8
+  archive plus `hybrid.py`, `late_router.py`, `schnetpack.py`, `visnet.py`).
 
 ## Package Map
 
@@ -100,7 +103,11 @@ ownership index, not execution authority or a copy of scientific contracts.
 | `comparison_readiness.py` | Fail-closed prelaunch/post-run comparison classes, reference bundles, role/trace applicability, and artifact bindings | Changing V5 comparability rules |
 | `evidence_pointers.py` | Safe repository pointer resolution and immutable artifact SHA verification | Changing repository evidence binding safety |
 | `v5_desktop.py` | Pure V5 desktop durability, reconciliation, ownership, role, and full-admission gates; re-exports shared evidence validation and delegates Desktop promotion comparison to `screen_policy.py` | Changing local desktop workflow decisions or pointer-only evidence migration without adding live orchestration |
-| `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules |
+| `research_memory/` | Deterministic V5 trajectory, cost, role, reference, READY, completeness, and screening-trace compilation; `cards.py` (read-only `cards`/`lookup`/`gaps`), `saved_analysis.py` (post-hoc `analyze` over saved predictions), `schemas.py` (outcomes, closure facts, failure-mode enum), `validate.py` (catalog and errata) | Changing the committed research-memory schemas, compiler, CLI, or fail-closed package rules; see the [interface reference](docs/operations/RML_INTERFACES.md) |
+| `experiment_cli.py`, `experiment_terminal_staging.py`, `experiment_run_acceptance.py`, `local_training.py` | Local experiment CLI, `draft-closure`/role-audit drafting, closure-facts binding, run-ID acceptance and local single-process training | Changing local closure/acceptance mechanics; see the [CLI reference](docs/operations/EXPERIMENT_CLI.md) |
+| `experiment_attribution.py` | Post-training diagnostic and failure-mode attribution helpers for family runs | Changing reusable attribution analysis |
+| `common/`, `compat/` under `src/molgap/` | Shared identity/IO/path/spec/transport mechanisms; lazy legacy import aliases | Changing a cross-host mechanism or retained public import |
+| `platforms/local/infra_budget.py` | Standalone infrastructure size report against `docs/operations/INFRA_BUDGET.json` | Changing a budget metric; no experiment flow calls it |
 | `v4_runtime.py` | Legacy-compatible Torch loading/statistics/optimizer setup, source bundle validation, and bounded numerical-repeatability certificates | Changing shared V4 runtime compatibility behavior |
 | `v4_bundle.py` | Deterministic, allowlisted, commit-bound minimal source archives | Changing V4 source packaging or reproducibility |
 | `v4_submission.py`, `v4_cli.py`, `v4_audit.py` | Run-spec identities, adapter dispatch, local preflight, and fail-closed static checks | Changing V4 preparation and submission checks |

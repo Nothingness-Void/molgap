@@ -98,7 +98,9 @@ Generated summaries are navigation, not primary scientific evidence.
 ## RML and Research Entry
 
 - Query [RML](research_memory/README.md) and targeted derived indexes before
-  proposing, modifying or submitting a new scientific question. Follow their
+  proposing, modifying or submitting a new scientific question; commands, record
+  formats, the planning recipe and verifier precedence are in the
+  [RML interface reference](docs/operations/RML_INTERFACES.md). Follow their
   pointers to canonical evidence before deciding; do not repeat a completed
   experiment without a new decision-relevant question.
 - Canonical trajectory, cost, role, trace and handoff records stay beside the
@@ -170,10 +172,11 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   debugging or infrastructure tests. Explicit applicable role authority is required.
 - **No fabrication:** missing reference, cost, role, artifact or comparison stays
   missing/pending. No silent reference retraining or synthetic bookkeeping evidence.
-- **Infrastructure budget:** `python platforms/local/infra_budget.py` compares size
-  with [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json); run it before an
-  infrastructure commit (exit 1 when over; [RML README](research_memory/README.md#query-analysis-and-corrections)).
-  Over a limit blocks that commit, never an experiment. One fact has one owner; bind a
+- **Infrastructure budget:** `python platforms/local/infra_budget.py` compares
+  `src/molgap`, `tests` and `docs/operations` size with
+  [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json) and exits 1 when over.
+  No flow runs it; run it before an infrastructure commit. Raising a limit needs
+  user approval. Over a limit blocks that commit, never an experiment. One fact has one owner; bind a
   hash only to an artifact something consumes. The new-experiment rule lives only in
   this bullet (no R-number label): a new experiment adds files under `experiments/<q>/`,
   one recipe/spec and, if it needs new model code, one self-contained addon module plus

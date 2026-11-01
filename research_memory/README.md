@@ -41,16 +41,12 @@ Missing ignored weights in a fresh worktree do not require hydration for this
 check. `validate`, `check --frozen --portable`, and strict run acceptance retain
 their artifact checks; index freshness alone never establishes replay readiness.
 
-```text
-python -m molgap.research_memory validate
-python -m molgap.research_memory rebuild
-python -m molgap.research_memory status
-python -m molgap.research_memory doctor
-python -m molgap.research_memory check --frozen
-python -m molgap.research_memory check --frozen --portable
-python -m molgap.research_memory package-ready --trajectory <trajectory-id>
-python -m molgap.research_memory backtest-screening
-```
+Every subcommand, its flags, exit codes, output fields and record formats are in
+the [RML interface reference](../docs/operations/RML_INTERFACES.md). Its
+subcommands are `validate`, `rebuild`, `status`, `doctor`, `check --frozen
+[--portable]`, `cards`, `lookup`, `gaps`, `analyze`, `package-ready`,
+`backtest-screening`, `replay-pool`, `backtest-policy`, `plan`, `finalize`,
+`terminal-pipeline`, `terminal-rebuild` and `recover-trace`.
 
 RML is pointer-only. Repository pointers are root-confined; supported remote
 locators remain explicit URIs. Missing historical facts remain missing, and no
@@ -77,42 +73,27 @@ See the [storage lifecycle](../docs/operations/LOCAL_STORAGE_RETIREMENT.md).
 
 ## Query, analysis and corrections
 
-```text
-python -m molgap.research_memory cards [--outcome OUTCOME] [--term TERM]
-python -m molgap.research_memory lookup [--mechanism M] [--failure-mode F] [--family F] [--term T]
-python -m molgap.research_memory gaps
-python -m molgap.research_memory analyze --op {paired,ensemble-curve,residual-corr,summary,floor} --predictions PATH... | ARM=PATH... [--pair CAND=REF] --role-id ROLE --out OUT
-python platforms/local/infra_budget.py
-```
-
-`cards` prints one JSON line per closed trajectory. `lookup` returns matches, families with no
-measured negative result (`unfalsified`) and search terms; `--mechanism` is a case-insensitive
-substring of mechanism, family id or failure_mode. Card `search_terms` are closure-fact terms, then
-failure_mode, mechanism-slug and family-id tokens (at most 8). `gaps` lists single-trajectory families
-and outcomes that differ across scale; these are review prompts, not findings. `analyze` reads saved
-development predictions only: it refuses `official_validation`, `test_dev` and `test_challenge` as
-`--role-id`, writes only outside `research_memory/` and `experiments/`, and marks every output
-`posthoc: true` (never a gate decision). `infra_budget.py` prints each size metric against
-`docs/operations/INFRA_BUDGET.json` and exits 1 when any metric is over its limit.
-
-Per-arm closure facts (`molgap-closure-facts-v1`, passed as `--arm-facts-ref ARM=PATH` or
-`facts_ref` in a closure input) hold `failure_mode` (a fixed enum), up to 8 `search_terms`, and
-optional `effect_meV`/`ci_meV`, which must equal the candidate's pair in the measured `source` file.
-`draft-closure` writes them with the measured numbers and null interpretation.
-
-An erratum (`molgap-erratum-v1`, `artifact_class: narrative`, `effect: narrative_only`) lives in the
-target experiment's `errata/` and excuses only a narrative `.md` decision file whose recorded and
-observed SHA-256 exactly match its `recorded_sha256`/`observed_sha256` pair. It affects `validate`
-only, which reports the file under `known_gaps`. Strict recheck (`accept_run.py --strict --execute`)
-does not read errata: `pcqm-k1-init-noise-100k-s43` stays `BLOCKED` on the
-`terminal_decision.md` SHA mismatch by design. When the two disagree, strict recheck holds for replay.
+`cards`, `lookup` and `gaps` are read-only planning views over the derived index
+and closure facts or labels. `analyze` reads saved development predictions and
+writes only post-hoc scratch output. Per-arm closure facts
+(`molgap-closure-facts-v1`) carry an enum `failure_mode`, search terms and a
+measured effect. `attribution_label.json` files are weak `agent_interpretation`
+labels. An erratum (`molgap-erratum-v1`) excuses only a narrative `.md` hash
+mismatch inside its own experiment, and only for `validate`. When `validate` and
+strict recheck disagree, strict recheck holds for replay. The formats, the
+planning recipe, the limits and the verifier order are in the
+[interface reference](../docs/operations/RML_INTERFACES.md#data-contracts).
+The infrastructure size check is `python platforms/local/infra_budget.py`; it
+prints each metric against `docs/operations/INFRA_BUDGET.json` and exits 1 when
+any metric is over its limit.
 
 ## Research workflow
 
 Every new research question follows this order:
 
 1. Query the generated RML indexes for prior work, failures in the same family,
-   strict references, consumed roles, and native cost history.
+   strict references, consumed roles, and native cost history
+   ([planning recipe](../docs/operations/RML_INTERFACES.md#planning-with-the-evidence)).
 2. Follow the RML pointers to the authoritative experiment decision,
    acceptance, contract, and artifact records.
 3. Decide whether the evidence leaves a genuinely new question. Do not rerun a
