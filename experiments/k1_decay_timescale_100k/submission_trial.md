@@ -26,3 +26,7 @@ or publication because `question.supporting_evidence` is empty. The scientific
 owner must supply the actual reviewed RML evidence IDs before re-entering the
 same command; no parser bypass, invented evidence or GPU execution is justified.
 The compact machine result is retained in `submission_trial.json`.
+
+## Resubmission after infrastructure repair
+
+Two existing RML evidence IDs were bound in source commit 9b5bb985c. The original submit_workflow entry completed local preparation, then returned BLOCKED / PLATFORM_VALUEERROR at platform_operations, reporting a submission journal path that does not exist. No Kaggle receipt is available. The same original request was re-entered once with verbose output and returned the same error. Account quota lookup reported 29.01 GPU hours available; this does not establish the cause. Preserve the prepared request and reconcile before retry; no GPU execution or Replay readiness is claimed.

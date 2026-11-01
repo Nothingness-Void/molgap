@@ -1,3 +1,3 @@
 # Execution status
 
-BLOCKED_LOCAL_PREPARATION; no remote submission. [Exact trial and prerequisites](submission_trial.md), [machine-readable result](submission_trial.json). Revised input remains unsubmitted. No active monitor or automatic successor.
+Local preparation completed at source commit 9b5bb985c; platform submission returned BLOCKED / PLATFORM_VALUEERROR. No remote receipt is available. Reconcile the original request before any retry; see submission_trial.md. Replay readiness remains unverified.
