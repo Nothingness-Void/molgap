@@ -86,7 +86,10 @@ For an explicit T4x2 wall-bound authority, `kaggle_quota_hours_ceiling` equals
 physical devices. These are separate quantities. The adapter and `platforms/kaggle/check_quota.py` read session quota through the
 official SDK `quota_view` (`kaggle_submission.sdk_quota_payload`), preserving total
 duration seconds and UTC refresh time; uncertain quota is not permission to submit. Historical declarations without
-the explicit quota field retain their conservative budget check.
+the explicit quota field retain their conservative budget check; for those only, a fresh
+submit with a positive launch `allocation_wall_limit_seconds` checks quota against
+min(ceiling, wall hours). Continuations always check wall hours. The quota receipt
+field stays `authorized_ceiling_gpu_hours` on this server line.
 
 ```powershell
 .venv\Scripts\python.exe platforms/kaggle/submit_workflow.py --prepared $prepared --credentials $credentials --output $operations --authority $authorityRelativePath --monitor-path $statusRelativePath

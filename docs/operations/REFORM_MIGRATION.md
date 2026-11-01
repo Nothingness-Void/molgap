@@ -959,3 +959,40 @@ Desktop was not synchronized; the human may review explicit Server commits for
 its independent application. Historical source/readers, data assets, V5 text
 and experimental conclusions remain intact. No extra seed, candidate, dataset
 cache construction, protected-role access or GPU job was introduced.
+
+## Accepting the 2026-11 desktop reform port on the server host
+
+The port (`4e7c8c4c..ce437f7f`, base `93180eca`) adds draft-closure and per-arm
+closure facts, `--paused` retrieval, `research_memory cards|lookup|gaps|analyze`,
+narrative `.md` errata, LF/CRLF-tolerant Git-content hashing, byte-based resume
+release checks, one shared `sha256_file`, decoupled closure staging and
+`platforms/local/infra_budget.py`. It deletes `src/molgap/archive/`, `hybrid.py`,
+`late_router.py`, `visnet.py` and `schnetpack.py` (read them on `origin/archive`).
+Server-only scnet/ims/GPTrans modules, the common-contract structure and V5
+handoff docs are kept. `family_training_runner.py` is deliberately byte-identical
+to the base so frozen packages resume as before. The Kaggle quota receipt keeps
+`authorized_ceiling_gpu_hours`; the fresh-submit wall cap applies only when the
+authority lacks `kaggle_quota_hours_ceiling`.
+
+On the server host, with its project interpreter and payloads:
+
+1. Baseline vs now: run `python -m molgap.research_memory validate` and
+   `check --frozen [--portable]` on `93180eca` and on the port head; each must end
+   with the same result. A clean checkout stops at `finalized package changed:
+   prospective_snapshot.json` (11 `pcqm_k1_*` receipts, 2026-09-20..25); only the
+   host payloads can resolve that, so record it, do not suppress it.
+2. Tests: `tests/test_research_memory.py tests/test_run_acceptance_cli.py
+   tests/test_terminal_trace_closure.py tests/test_experiment_terminal_staging.py
+   tests/test_experiment_workflow_resume.py tests/test_kaggle_submission.py
+   tests/test_kaggle_family_retrieval.py tests/test_reform_retrieval.py
+   tests/test_documentation_check.py tests/test_repository_layout.py`. Compare
+   failures with the base; `test_tracked_active_repository_docs_pass_navigation`
+   fails only on dead pointers inside committed experiment evidence.
+3. New-command smoke: `research_memory cards`, `lookup --term gptrans`, `gaps`,
+   `analyze --help`; `experiment_cli draft-closure --help`;
+   `retrieve_family_outputs.py --all-arms --paused --run-id R --attempt-id A
+   --profile P --repo-root .` without `--execute` (returns `READY_FOR_RETRIEVAL`,
+   no download); `python platforms/local/infra_budget.py`.
+4. Strict read-only recheck of one closed server run:
+   `platforms/local/accept_run.py --profile P --run-id R --attempt-id A --strict
+   --execute`. It must report the accepted tips unchanged and write no terminal.

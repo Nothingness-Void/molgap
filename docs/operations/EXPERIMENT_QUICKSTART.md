@@ -332,8 +332,8 @@ removal reports `STOPPED`. Age alone never establishes that a file is disposable
 `--report` summarizes artifact sizes and `--dedupe` reports identical-file groups;
 hardlink mutation is disabled because resume writers can overwrite shared bytes.
 
-Migration evidence and remaining capabilities route through the
-[cumulative reform record](REFORM_MIGRATION.md).
+Migration evidence, remaining capabilities and [server port acceptance](REFORM_MIGRATION.md#accepting-the-2026-11-desktop-reform-port-on-the-server-host)
+route through the [cumulative reform record](REFORM_MIGRATION.md).
 
 ## Local execution and closure inputs
 

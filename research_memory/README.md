@@ -31,6 +31,12 @@ RML rather than replacing it. The optional
 does not authorize baseline retraining or upgrade historical trajectories.
 Run from the selected checkout with its project virtualenv, not system Python.
 
+On a clean `molgap-server` checkout `validate` exits with
+`finalized package changed: prospective_snapshot.json`: 11 finalization receipts
+(2026-09-20..25, `pcqm_k1_*`) do not match their committed snapshot bytes. This is
+the pre-port baseline and needs the server host payloads; it is not hidden by errata.
+Bound artifacts match exactly, or as LF/CRLF variants only for text committed in HEAD.
+
 ```text
 .venv\Scripts\python.exe -m molgap.research_memory validate
 .venv\Scripts\python.exe -m molgap.research_memory rebuild

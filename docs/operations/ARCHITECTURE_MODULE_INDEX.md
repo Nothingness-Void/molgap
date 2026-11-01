@@ -44,7 +44,6 @@ move reusable behavior into experiment result directories.
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |
 | `geometry_features.py` | Low-cost local angle and dihedral features for 3D encoders | Changing the geometric feature set |
-| `schnetpack.py` | Optional SchNetPack 2.x batching/regression | Changing the alternate DCU-portable 3D path |
 | `portable_radius.py` | Vectorized PyTorch batched radius graph | Running SchNet where `torch_cluster` is ABI-incompatible |
 | `etkdg_array.py` | Framework-neutral ETKDG shard construction for CPU clusters | Building conformer shards without PyG |
 | `ogb_features.py`, `v4_runtime.py` | OGB categorical features and portable source/state/runtime helpers | Changing feature encoding or low-level compatibility |
@@ -66,7 +65,7 @@ move reusable behavior into experiment result directories.
 | `oof_planning.py` | Immutable scaffold folds and OOF prediction contracts | Changing Router-label preparation |
 | `hierarchical_fusion.py`, `hierarchical_external_eval.py` | Frozen 2D plus bounded dual-SchNet correction and same-molecule external evaluation | Changing staged Fusion behavior |
 | `conservative_fusion_payload.py`, `conservative_fusion_runner.py` | Aligned frozen-2D/dual-SchNet training, resumable execution, and external gate | Changing the Colab precision path |
-| `fusion.py`, `hybrid.py` | `FusionHead` and `EndToEndHybrid` | Changing embedding-level or joint 2D/3D fusion |
+| `fusion.py` | `FusionHead` | Changing embedding-level 2D/3D fusion |
 | `gap_specialization.py` | Gap-only caches, embedding parts, and specialist head training | Changing frozen-embedding Gap specialization |
 | `pubchemqc_architecture.py`, `repaired_2m_3d_colab.py`, `repaired_2m_schnet.py` | PubChemQC and repaired-2M 3D training/shards | Changing accepted 3D production research |
 | `multi2d.py`, `multi2d_data.py`, `multi2d_router_fusion.py` | Aligned experts, fixed ensembles, accepted pools, scaffold caches, and prediction routing | Changing pure-2D serving or dataset assembly |
@@ -115,7 +114,11 @@ move reusable behavior into experiment result directories.
 | `artifact_acceptance.py` | SchNet, repaired-2M primary, and independent secondary 3D artifact gates | Changing remote-output acceptance |
 | `inference.py`, `inference_benchmark.py`, `__init__.py` | Model loading, batch prediction, routing, embeddings, UQ, latency, and lazy public exports | Changing prediction or public import behavior |
 | `production/history/` | Frozen phase 1-7 reproducibility evidence | Reproducing linked history only; do not extend |
-| `tensornet.py`, `visnet.py`, `late_router.py` | Vendored or closed historical implementations | Reproducing the linked archive decision only |
+| `tensornet.py` | Vendored historical implementation | Reproducing the linked archive decision only |
+
+`hybrid.py`, `visnet.py`, `late_router.py`, `schnetpack.py` and
+`src/molgap/archive/` were deleted in the reform port; read them on the
+`origin/archive` branch (`git show origin/archive:<path>`).
 
 The exact registry and asset paths remain authoritative in
 [`src/molgap/constants.py`](../../src/molgap/constants.py). Family contracts,
