@@ -116,6 +116,7 @@ class FamilyRecipe:
     k1_execution: K1ExecutionConfig | None = None
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
+    resume_chunks: bool = False
     development_reports: tuple[str, ...] = ()
     model_config: object | None = None
     family_version: str | None = None
@@ -129,6 +130,8 @@ class FamilyRecipe:
     def __post_init__(self, _frozen_read):
         from .experiment_spec import _digest
         object.__setattr__(self, "_frozen_read", _frozen_read)
+        if type(self.resume_chunks) is not bool:
+            raise ValueError("Resume chunk selection must be an exact boolean")
         if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
         if self.cpu_synthetic_only or self.integration_preview or self.formal_interface:
@@ -347,6 +350,8 @@ class FamilyRecipe:
             values.pop("clean_bn")
         else:
             values["clean_bn"] = self.clean_bn.to_dict()
+        if not self.resume_chunks:
+            values.pop("resume_chunks")
         if not self.development_reports:
             values.pop("development_reports")
         else:
@@ -364,7 +369,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "development_reports", "model_config", "family_version", "qualification", "formal_training"):
+        for name in ("addons", "clean_bn", "resume_chunks", "development_reports", "model_config", "family_version", "qualification", "formal_training"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:

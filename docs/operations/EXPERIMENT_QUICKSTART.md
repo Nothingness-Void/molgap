@@ -385,7 +385,7 @@ For catalog addons with literal-only defaults, `config: null` selects those
 reviewed defaults; bounded/configurable addons still require explicit values.
 Addon names alone select version `1` and reviewed literal defaults. Inline
 `authority`/`platform` may replace their `_ref` fields. Repeated arm fields may
-live in `shared`; a pinned `preset_ref` supplies an existing baseline definition.
+live in `shared`; `preset_ref: {"path": "...", "sha256": "..."}` pins an existing baseline.
 These shorthands preserve the same recipe and authority checks.
 
 For inputs at `experiments/<experiment_id>/experiment.json`, omitted mechanical

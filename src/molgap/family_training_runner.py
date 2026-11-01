@@ -1235,7 +1235,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options.get("prospective_root") or options["input_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if recipe.formal_interface or mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
+            if recipe.resume_chunks or recipe.formal_interface or mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)
