@@ -2,9 +2,6 @@
 # The frozen GPTrans architecture contract hashes its historical source file.
 src/molgap/gptrans.py text eol=lf
 tests/vendor/ppgt_reference/* -text
-# This failed profile retains hashed remote bytes and canonical closure metadata.
-experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/** -text
-experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/rml_finalized/** -text
 # Modern2D pinned author files and compact CPU evidence bind exact bytes.
 tests/vendor/esa_reference/* -text
 src/molgap/ppgt_*.py text eol=lf
@@ -12,7 +9,6 @@ src/molgap/esa_*.py text eol=lf
 src/molgap/modern2d_*.py text eol=lf
 src/molgap/kaggle_mounts.py text eol=lf
 platforms/kaggle/run_modern2d_qualification.py text eol=lf
-experiments/modern2d_model_integration/*.json -text
 experiments/modern2d_model_integration/native_preflight/*.json text eol=lf
 experiments/modern2d_model_integration/native_preflight/**/*.json text eol=lf
 experiments/modern2d_model_integration/native_preflight/results/ims_metadata_accounting.txt text eol=lf
@@ -77,44 +73,34 @@ experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md text eol=lf
 experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/** text eol=lf
 experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/** text eol=lf
 
-# These terminal receipts bind exact retained bytes, including frozen CRLF plans.
-# Disable conversion only for these two evidence trees, not the wider corpus.
-experiments/pcqm_gptrans_v5_audit_reference/** -text
-experiments/pcqm_k1_explainability_audit/representation/** -text
-experiments/pcqm_k1_explainability_audit/representation_protocol.md -text
-
 # Shared family outputs retain their exact manifest-bound bytes.
 platforms/_records/**/family_outputs/** -text
 
 # G1/G2 qualification and its frozen inputs bind exact retained file bytes.
-experiments/pcqm_gptrans_author_alignment/gpu/** -text
 experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json whitespace=cr-at-eol
 experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json whitespace=cr-at-eol
-experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json -text whitespace=cr-at-eol
-experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json -text whitespace=cr-at-eol
-experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json -text whitespace=cr-at-eol
-experiments/pcqm_gptrans_input_ema_100k/** -text
+experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json whitespace=cr-at-eol
+experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json whitespace=cr-at-eol
+experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json whitespace=cr-at-eol
 experiments/pcqm_gptrans_input_ema_100k/**/*.json whitespace=cr-at-eol
 # Prospective combination evidence binds retained bytes, not checkout EOLs.
 experiments/k1_infrastructure_t4_100k/** text eol=lf
 # This accepted round binds the retained Windows JSON bytes exactly.
-experiments/k1_infrastructure_t4_100k/execution_providers/results/summary.json -text whitespace=cr-at-eol
-experiments/k1_infrastructure_t4_100k/execution_providers/results/terminal_scheduler_observation.json -text whitespace=cr-at-eol
+experiments/k1_infrastructure_t4_100k/execution_providers/results/summary.json whitespace=cr-at-eol
+experiments/k1_infrastructure_t4_100k/execution_providers/results/terminal_scheduler_observation.json whitespace=cr-at-eol
 research_memory/policies/k1-infrastructure-execution.v1.json text eol=lf
-experiments/pcqm_gptrans_path_ema_combination_100k/** -text
 experiments/pcqm_gptrans_path_ema_combination_100k/**/*.json whitespace=cr-at-eol
-experiments/pcqm_gptrans_readout_100k/** -text
 experiments/pcqm_gptrans_readout_100k/**/*.json whitespace=cr-at-eol
 
 # Preserve this audit's exact manifest-bound terminal and retrieved metadata.
-experiments/pcqm_gptrans_ema_portability/attempt_v4/** -text whitespace=cr-at-eol
+experiments/pcqm_gptrans_ema_portability/attempt_v4/** whitespace=cr-at-eol
 platforms/_records/kaggle/training/gptrans_ema_portability_v4/** -text whitespace=cr-at-eol
 
 # Coefficient-study terminal records bind exact prospective and observed bytes.
-experiments/pcqm_gptrans_decay_clock_100k/** -text whitespace=cr-at-eol
+experiments/pcqm_gptrans_decay_clock_100k/** whitespace=cr-at-eol
 
 # Pair-transition evidence binds exact prospective, remote and terminal bytes.
-experiments/pcqm_gptrans_pair_transition_100k/** -text whitespace=cr-at-eol
+experiments/pcqm_gptrans_pair_transition_100k/** whitespace=cr-at-eol
 
 # GPTrans terminal receipts bind these exact LF evidence bytes.
 experiments/gptrans_infrastructure_t4_100k/results/** text eol=lf
@@ -127,13 +113,13 @@ experiments/modern2d_100k_formal_screen/** text eol=lf
 research_memory/policies/modern2d-formal-100k-reference-screen.v1.json text eol=lf
 research_memory/policies/modern2d-formal-100k-reference-screen-retry-v2.v2.json text eol=lf
 # Retained failure evidence includes raw Windows and Linux byte-bound metadata.
-experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/** -text whitespace=cr-at-eol
-experiments/modern2d_100k_formal_screen/retry_v2/results/indexed_loader_probe_2026-10-18.json -text whitespace=cr-at-eol
-experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/** -text whitespace=cr-at-eol
+experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/** whitespace=cr-at-eol
+experiments/modern2d_100k_formal_screen/retry_v2/results/indexed_loader_probe_2026-10-18.json whitespace=cr-at-eol
+experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/** whitespace=cr-at-eol
 # This bounded workflow binds literal metadata bytes across host checkouts.
-experiments/family_workflow_trial_100k/** -text whitespace=cr-at-eol
+experiments/family_workflow_trial_100k/** whitespace=cr-at-eol
 research_memory/policies/family-workflow-trial.v1.json text eol=lf
 # Native research evidence and staged terminal inputs bind literal bytes.
-experiments/modern2d_configured_100k/research_arms/*/results/** -text whitespace=cr-at-eol
-experiments/modern2d_configured_100k/runs/modern2d-*-research-*/prospective/*/terminal_staging/** -text whitespace=cr-at-eol
+experiments/modern2d_configured_100k/research_arms/*/results/** whitespace=cr-at-eol
+experiments/modern2d_configured_100k/runs/modern2d-*-research-*/prospective/*/terminal_staging/** whitespace=cr-at-eol
 experiments/modern2d_scale500k/results/completed_v3/decision.md text eol=lf
