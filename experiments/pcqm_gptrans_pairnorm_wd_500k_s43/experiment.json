@@ -98,7 +98,7 @@
         "gptrans_degree_bond_local_pair_update_norm"
       ]
     },
-    "recipe_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s43/recipe.json",
+    "recipe_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/recipe.json",
     "data_ref": {
       "spec_ref": "experiments/pcqm_gptrans_pairnorm_init_noise_500k/init_s43/data_declaration.json",
       "arm_id": "init_s43"
@@ -109,10 +109,7 @@
   },
   "arms": [
     {
-      "arm_id": "wd_low",
-      "training": {
-        "weight_decay": 0.01
-      }
+      "arm_id": "wd_low"
     },
     {
       "arm_id": "wd_high",
