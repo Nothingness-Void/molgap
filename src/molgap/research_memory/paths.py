@@ -99,7 +99,7 @@ def verify_bound_artifact(root: Path, pointer: str, expected_sha256: str) -> Non
         raise ValueError(f"bound artifact must be repository-local: {pointer}")
     if file_digest(path) == expected_sha256:
         return
-    # autocrlf checkouts of text committed in HEAD hold LF or CRLF; other bytes stay exact.
+    # autocrlf: any NUL-free HEAD file matches its uniform LF/CRLF form (attributes ignored); external, mixed-ending bytes stay exact.
     lf = b"\0" if external else path.read_bytes().replace(b"\r\n", b"\n")
     if b"\0" in lf or expected_sha256 not in {hashlib.sha256(f).hexdigest() for f in (lf, lf.replace(b"\n", b"\r\n"))} \
             or subprocess.run(["git", "cat-file", "-e", f"HEAD:./{path.relative_to(_resolved_root(str(root))).as_posix()}"],

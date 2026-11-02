@@ -545,7 +545,7 @@ Limits (`validate._load_errata`):
 
 | Class | Examples | Checked by | Strength |
 |---|---|---|---|
-| Bound artifact SHA-256 | V5 evidence artifacts, `comparison_readiness` bindings, `trace_artifact_sha256`, reference bundle digests | `validate`, `replay-pool`/backtests, strict acceptance | strict, fail-closed. Git-tracked text also matches its LF or CRLF form; external and binary files must match byte for byte |
+| Bound artifact SHA-256 | V5 evidence artifacts, `comparison_readiness` bindings, `trace_artifact_sha256`, reference bundle digests | `validate`, `replay-pool`/backtests, strict acceptance | strict, fail-closed. a NUL-free file in Git `HEAD` also matches its uniform LF or CRLF form, whatever its text attribute; external, NUL-containing and mixed-ending files, and `finalization.json` receipts, must match byte for byte |
 | Closure input hashes | `finalization.json` / `terminal_input.json` digests of decision, facts, role audit, manifest | strict recheck (`accept_run.py --strict`) | strict; errata do not apply |
 | Erratum digest pair | `recorded_sha256`/`observed_sha256` | `validate` only | exact match required, effect is narrative only |
 | Index freshness | derived bytes, `source_digest` | `check --frozen` | strict for the index, says nothing about artifacts |

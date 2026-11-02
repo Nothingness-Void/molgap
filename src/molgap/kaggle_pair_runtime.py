@@ -246,7 +246,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 if worker["finished"]:
                     continue
                 try:
-                    code = process.wait(timeout=10)
+                    code = process.wait(timeout=300)  # SIGTERM only flags a pause; step+checkpoint+receipt exceed 10s (unmeasured bound)
                 except subprocess.TimeoutExpired:
                     try:
                         process.kill()
