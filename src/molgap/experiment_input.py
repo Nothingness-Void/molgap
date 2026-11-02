@@ -1332,7 +1332,7 @@ def local_preparation_error(error,stage):
     }
     field,reason=known.get(str(error),("configuration","Local validation failed: "+str(error)[:300]))
     if isinstance(error,FileNotFoundError):
-        field,reason="referenced_file","A required local file is missing"
+        field,reason="referenced_file","A required local file is missing: "+str(error.filename or error)[:300]
     return {"status":"BLOCKED","error_type":type(error).__name__,"stage":stage,"field":field,"reason":reason}
 
 

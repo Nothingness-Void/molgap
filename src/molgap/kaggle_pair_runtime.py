@@ -261,7 +261,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     p.terminate()
             for p, _, _ in workers:
                 try:
-                    p.wait(timeout=10)
+                    p.wait(timeout=300)  # SIGTERM only flags a pause; step+checkpoint+receipt exceed 10s (unmeasured bound)
                 except subprocess.TimeoutExpired:
                     p.kill()
                     p.wait()
