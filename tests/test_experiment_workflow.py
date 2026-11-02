@@ -643,7 +643,7 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
     return path.relative_to(repo).as_posix()
 
 
-def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path):
+def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path, monkeypatch):
     from molgap.experiment_family_workflow import TargetIdentityBinding
 
     repo, spec = workflow_case["repo"], workflow_case["spec"]
@@ -675,6 +675,27 @@ def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_ca
     projected["conflicting_source"] = {"path": "nested/source.json", "sha256": "b" * 64}
     with pytest.raises(ValueError, match="Conflicting acceptance artifact pins"):
         acceptance_dependency_pins(projected)
+    # The worker forwards the staged binding to the owning check and names its blockers.
+    import molgap.experiment_execution as execution
+    from molgap.experiment_training_worker import main
+    staged = tmp_path / "worker-stage"
+    kaggle_backend.stage_acceptance_inputs(spec, repo, plan_path, staged / "acceptance")
+    (staged / "experiment_spec.json").write_text(spec.to_json(), encoding="utf-8")
+    arm_id = spec.to_dict()["arms"][0]["arm_id"]
+    _write_json(staged / "experiment_launch.json", {"jobs": [{"arm_id": arm_id}],
+        "expected_package_identity": HEX_A, "account": "synthetic-account",
+        "run_reference": "synthetic-account/workload-1", "prospective_sha256": {arm_id: HEX_B},
+        "target_identity": binding})
+    monkeypatch.setattr(execution, "validate_execution_plan", lambda _spec, jobs: jobs)
+    dispatch = Mock(return_value={"status": "BLOCKED", "blockers": ["Development target identity mismatch"]})
+    monkeypatch.setattr(execution, "execute_training_phase", dispatch)
+    with pytest.raises(RuntimeError, match="Development target identity mismatch"):
+        main(["--source-root", str(repo), "--package-dir", str(staged), "--input-root", str(staged),
+              "--output", str(tmp_path / "worker-output"), "--launch", str(staged / "experiment_launch.json"),
+              "--arm", arm_id, "--phase", "train"])
+    forwarded = dispatch.call_args.kwargs["target_identity"]
+    assert isinstance(forwarded, TargetIdentityBinding)
+    assert (forwarded.repo_root, forwarded.plan_sha256) == ((staged / "acceptance").absolute(), binding["plan_sha256"])
 
 
 def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates(
