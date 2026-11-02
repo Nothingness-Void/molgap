@@ -88,9 +88,9 @@ authorities require and read the `gpu` block (devices, accelerator, owner, wall 
 The adapter and `platforms/kaggle/check_quota.py` read session quota through the
 official SDK `quota_view` (`kaggle_submission.sdk_quota_payload`), preserving total
 duration seconds and UTC refresh time; uncertain quota is not permission to submit.
-A fresh submit checks min(ceiling, wall hours) with a positive launch wall cap,
-otherwise the physical ceiling. Continuations check wall hours and physical cost. The quota receipt
-field stays `authorized_ceiling_gpu_hours` on this server line.
+A fresh submit checks min(ceiling, wall hours) with a positive launch wall cap, else the physical ceiling; continuations
+check wall hours and physical cost. Running sibling sessions on one account are not subtracted (`timeReserved` was 0 in
+every recorded receipt), so sum their ceilings before parallel submits. The receipt field stays `authorized_ceiling_gpu_hours`.
 
 ```powershell
 .venv\Scripts\python.exe platforms/kaggle/submit_workflow.py --prepared $prepared --credentials $credentials --output $operations --authority $authorityRelativePath --monitor-path $statusRelativePath
