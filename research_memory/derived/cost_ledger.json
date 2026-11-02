@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 125,
-  "event_count": 428,
+  "estimated_event_count": 129,
+  "event_count": 432,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 388,
+  "measurement_missing_event_count": 392,
   "not_applicable_event_count": 103,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -4264,12 +4264,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 26
+        "unknown_records": 30
       },
       "Tesla T4x2 FP32, one arm per device:device_hours": {
         "estimated": {
-          "known_records": 26,
-          "known_total": 174.39999999999992
+          "known_records": 30,
+          "known_total": 259.1999999999999
         },
         "measured": {
           "known_records": 0,
@@ -4288,12 +4288,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 26
+        "unknown_records": 30
       },
       "Tesla T4x2 FP32, one arm per device:wall_hours": {
         "estimated": {
-          "known_records": 26,
-          "known_total": 92.39999999999998
+          "known_records": 30,
+          "known_total": 134.79999999999995
         },
         "measured": {
           "known_records": 0,
@@ -7308,12 +7308,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 26
+        "unknown_records": 30
       },
       "device_hours": {
         "estimated": {
-          "known_records": 26,
-          "known_total": 174.39999999999992
+          "known_records": 30,
+          "known_total": 259.1999999999999
         },
         "measured": {
           "known_records": 0,
@@ -7332,12 +7332,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 26
+        "unknown_records": 30
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 26,
-          "known_total": 92.39999999999998
+          "known_records": 30,
+          "known_total": 134.79999999999995
         },
         "measured": {
           "known_records": 0,
@@ -8679,6 +8679,206 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high": {
+      "Tesla T4x2 FP32, one arm per device:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 21.2
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32, one arm per device:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 10.6
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low": {
+      "Tesla T4x2 FP32, one arm per device:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 21.2
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32, one arm per device:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 10.6
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high": {
+      "Tesla T4x2 FP32, one arm per device:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 21.2
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32, one arm per device:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 10.6
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low": {
+      "Tesla T4x2 FP32, one arm per device:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 21.2
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4x2 FP32, one arm per device:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4x2 FP32, one arm per device:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 10.6
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "T-pcqm-k1-batch-renorm-100k-s42-brn_affine": {

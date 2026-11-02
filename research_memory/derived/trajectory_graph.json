@@ -41,6 +41,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high:A001",
+      "target": "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/generated/122d0539365f295f52d798c5517351ad25d3e7ebac753bbdf16ff5dc7ef82c16/wd_high/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low:A001",
+      "target": "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/generated/122d0539365f295f52d798c5517351ad25d3e7ebac753bbdf16ff5dc7ef82c16/wd_low/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high:A001",
+      "target": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/wd_high/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low:A001",
+      "target": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/wd_low/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
       "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
       "type": "action_produced_evidence"
@@ -1681,6 +1701,26 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
       "target": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "type": "prior_evidence"
@@ -1698,6 +1738,26 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
       "target": "T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "target": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
       "type": "prior_evidence"
     },
     {
@@ -4348,6 +4408,22 @@
     },
     {
       "id": "T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr5e4",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
       "type": "trajectory"
     },
     {
