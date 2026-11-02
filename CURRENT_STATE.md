@@ -6,18 +6,15 @@
 
 ## Server execution status
 
-The authorized [K1 optimizer/front-door trial](experiments/k1_decay_timescale_100k/submission_trial.md)
-has frozen inputs and supporting RML evidence. Submission stopped at a Server-only
-duplicate quota-field check before journal creation or a platform call. Read-only
-reconciliation found neither remote object. The Desktop quota-owner repair passed
-local platform admission on the original frozen run; remote submission remains pending.
+The authorized [K1 optimizer trial](experiments/k1_decay_timescale_100k/STATUS.md)
+is submitted on Kaggle2 and was observed running. Terminal acceptance and Replay qualification remain pending.
 
 The [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/STATUS.md)
 completed both endpoints on Kaggle2. Its
 [terminal analysis](experiments/ppgt_capacity500k/results/completed_v3/decision.md)
 rejected width expansion under the frozen recipe. Both outputs are mechanically
 verified; strict reference/role evidence and RML terminal/Replay qualification
-remain blocked. Luna B is paused and no successor is authorized or active.
+remain blocked. The PPGT chain is paused with no successor authorized.
 
 The [family-retention and GRIT challenge](experiments/family_retention_challenge_500k/README.md)
 is a research proposal only: park PPGT expansion, retain ESA as an efficiency reserve, and qualify
