@@ -1151,6 +1151,31 @@ def test_pair_runtime_stops_training_at_frozen_allocation_ceiling(tmp_path, monk
     trained = [process for process in processes if process.phase == "train"]
     assert len(trained) == 2 and all(process.terminated for process in trained)
 
+    # Without a ceiling, a failed training arm lets its independent peer finish.
+    failing, peer_arm = (job["arm_id"] for job in _jobs(spec))
+
+    class Drained(Process):
+        def __init__(self, command):
+            super().__init__(command)
+            self.arm_id, self.polls = command[command.index("--arm") + 1], 0
+
+        def poll(self):
+            if self.phase == "train" and self.returncode is None:
+                self.polls += 1
+                self.returncode = 23 if self.arm_id == failing else (0 if self.polls >= 3 else None)
+            return self.returncode
+
+    monkeypatch.setattr(pair_runtime.subprocess, "Popen",
+                        lambda command, **kwargs: processes.append(Drained(command)) or processes[-1])
+    with pytest.raises(RuntimeError, match="Arm failed during train"):
+        pair_runtime.run_two_phase_pair(source_root=tmp_path, package_dir=tmp_path / "package",
+            input_root=tmp_path, launch_path=launch, output=tmp_path / "drained")
+    peer = next(p for p in processes if isinstance(p, Drained) and p.phase == "train" and p.arm_id == peer_arm)
+    assert peer.returncode == 0 and not peer.terminated
+    state = json.loads((tmp_path / "drained/pair_state.json").read_text())
+    assert {arm: state["arms"][arm]["terminal_status"] for arm in (failing, peer_arm)} == {
+        failing: "failed", peer_arm: "complete"}
+
 
 def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path, monkeypatch):
     from test_experiment_launch_config import launch_case

@@ -240,7 +240,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 if (bounded or execution_comparison or explicit_budget) and elapsed_allocation >= wall_ceiling - hard_stop_reserve:
                     report["exit_reason"] = "native_allocation_hard_budget"
                     raise TimeoutError("Frozen allocation ceiling; stop and retain checkpoints")
-                if any(p.poll() not in (None, 0) for p, _, _ in workers):
+                # Qualification is an all-arm barrier. A training peer owns its
+                # independent lifetime, so it finishes after another arm exits.
+                if phase != "train" and any(p.poll() not in (None, 0) for p, _, _ in workers):
                     raise RuntimeError(f"Arm failed during {phase}; retained logs identify the blocker")
                 if time.perf_counter() - ledger_updated >= 30:
                     ledger.write(output, "running", arm_roots=[output / j["arm_id"] for j in jobs])
