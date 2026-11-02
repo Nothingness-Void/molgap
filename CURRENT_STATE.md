@@ -7,9 +7,10 @@
 ## Server execution status
 
 The authorized [K1 optimizer/front-door trial](experiments/k1_decay_timescale_100k/submission_trial.md)
-passed recipe and dataset-manifest admission after the Desktop implementation
-repair. Local preparation still blocks on empty supporting RML evidence in the
-scientific input; no run freeze, Kaggle submission or GPU training occurred.
+has frozen inputs and supporting RML evidence. Submission stopped at a Server-only
+duplicate quota-field check before journal creation or a platform call. Read-only
+reconciliation found neither remote object. The Desktop quota-owner repair passed
+local platform admission on the original frozen run; remote submission remains pending.
 
 The [PPGT width-capacity500K pair](experiments/ppgt_capacity500k/STATUS.md)
 completed both endpoints on Kaggle2. Its

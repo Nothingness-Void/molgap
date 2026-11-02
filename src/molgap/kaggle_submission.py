@@ -419,15 +419,6 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
     if (authority.get("user_authorized") is not True or type(budget) not in {int, float}
             or not math.isfinite(budget) or budget <= 0):
         raise ValueError("Packaged authority must authorize a positive allocated T4-hour ceiling")
-    quota_budget = authority.get("kaggle_quota_hours_ceiling", budget)
-    if "kaggle_quota_hours_ceiling" in authority:
-        gpu = authority.get("gpu", {})
-        wall, devices = gpu.get("wall_ceiling_seconds"), gpu.get("allocated_devices")
-        if (type(quota_budget) not in (int, float) or not math.isfinite(quota_budget) or quota_budget <= 0
-                or type(wall) is not int or wall <= 0 or devices != 2
-                or gpu.get("accelerator") != "NvidiaTeslaT4"
-                or quota_budget != wall / 3600 or budget < devices * quota_budget):
-            raise ValueError("Kaggle session quota must bind the wall ceiling separately from physical device cost")
     arms = spec.to_dict()["arms"]
     if (authority.get("arms") != [arm["arm_id"] for arm in arms]
             or authority.get("seeds") != sorted({arm["initialization"]["seed"] for arm in arms})):
@@ -441,12 +432,11 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 or wall * devices / 3600 > budget):
             raise ValueError("Continuation allocation must be explicit and within the packaged authority ceiling")
         budget = wall * devices / 3600
-        quota_budget = wall / 3600
-    elif "kaggle_quota_hours_ceiling" not in authority:
+        quota_hours = wall / 3600
+    else:
         # Kaggle charges session wall hours, so an explicit wall cap bounds the quota draw.
         wall = launch.get("allocation_wall_limit_seconds")
-        if type(wall) is int and wall > 0:
-            quota_budget = min(quota_budget, wall / 3600)
+        quota_hours = min(budget, wall / 3600) if type(wall) is int and wall > 0 else budget
     from .experiment_terminal import _path
     if not monitor_paths or len(monitor_paths) != len(set(monitor_paths)):
         raise ValueError("Expected explicit unique monitor pointers")
@@ -568,7 +558,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             except ReleaseRecheckError as error:
                 retain_release_failure(error, state["phase"])
                 raise
-            atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_budget, api=api))
+            atomic_json(output / "quota_before_publication.json", _quota(http_session, quota_hours, api=api))
             def check_predecessor():
                 prior_kernel = _kernel_source(api, ref)
                 if not continuation:
@@ -652,7 +642,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 retain_release_failure(error, state["phase"])
                 raise error
             atomic_json(output / "remote_release_report.json", release)
-            atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_budget, api=api))
+            atomic_json(output / "quota_before_submit.json", _quota(http_session, quota_hours, api=api))
             check_predecessor()
             if continuation and _dataset_details(api, dataset).current_version_number != source_version:
                 raise ValueError("Source dataset version changed before POST; reconcile")

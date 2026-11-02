@@ -1,3 +1,3 @@
 # Execution status
 
-Local preparation completed at source commit 9b5bb985c; platform submission returned BLOCKED / PLATFORM_VALUEERROR. No remote receipt is available. Reconcile the original request before any retry; see submission_trial.md. Replay readiness remains unverified.
+The original prepared run passed local platform admission after the Desktop quota-owner repair. Read-only reconciliation found no kernel or source dataset for the blocked request; no remote receipt exists. Resume through the original submission entry under its authority; see [the trial record](submission_trial.md). Remote execution and Replay readiness remain unverified.

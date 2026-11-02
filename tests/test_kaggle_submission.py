@@ -64,13 +64,6 @@ def _sdk_quota_observation():
         time_reserved=timedelta(hours=5.6165)))
 
 
-def _session_quota_authority(quota_hours=9):
-    return {"user_authorized": True, "arms": ["original", "optimized"], "seeds": [42],
-        "allocated_t4_hours_ceiling": 18, "kaggle_quota_hours_ceiling": quota_hours,
-        "gpu": {"accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
-            "wall_ceiling_seconds": 32400}}
-
-
 @pytest.fixture
 def release(tmp_path, monkeypatch, request, staged_source=None):
     continuation = getattr(request, "param", False)
@@ -98,6 +91,7 @@ def release(tmp_path, monkeypatch, request, staged_source=None):
         staged.mkdir()
         atomic_json(staged / "dataset-metadata.json", {"id": "owner/new-source"})
         atomic_json(staged / "experiment_launch.json", {"account": "owner", "run_reference": metadata["id"], "accelerator": "NvidiaTeslaT4",
+            "allocation_wall_limit_seconds": 18000,
             "jobs": [{"arm_id": binding["arm_id"], "device": device,
                       "recipe": f"recipes/{binding['arm_id']}.json",
                       "initial_state": f"initial_states/{binding['arm_id']}.pt",
@@ -637,8 +631,12 @@ def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch, ca
     assert json.loads((release.output / "submission_state.json").read_bytes())["platform_error"] == detail
 
 
-def test_quota_shortfall_stops_before_publication(release):
-    release.http.quota_hours = 4  # Below the 5 h wall cap; the 14 T4-h ceiling is not the quota draw.
+def test_quota_shortfall_stops_before_publication(release, monkeypatch):
+    # The legacy session-quota field cannot bypass the frozen five-hour launch wall.
+    authority = {"user_authorized": True, "arms": ["original", "optimized"], "seeds": [42],
+        "allocated_t4_hours_ceiling": 14, "kaggle_quota_hours_ceiling": 1}
+    monkeypatch.setattr(owner, "read_packaged_text", lambda *_, **__: json.dumps(authority))
+    release.http.quota_hours = 4
     with pytest.raises(ValueError, match="quota"):
         release.run()
     assert release.api.created == release.api.pushed == 0
@@ -679,8 +677,9 @@ def test_sdk_quota_unknown_fails_closed_without_rest_fallback():
     assert calls == []
 
 
-def test_explicit_session_quota_binds_nine_wall_hours_and_eighteen_physical(release, monkeypatch):
-    authority = _session_quota_authority()
+def test_sdk_quota_uses_launch_wall_cap_not_legacy_authority_ceiling(release, monkeypatch):
+    authority = {"user_authorized": True, "arms": ["original", "optimized"], "seeds": [42],
+        "allocated_t4_hours_ceiling": 18, "kaggle_quota_hours_ceiling": 9}
     monkeypatch.setattr(owner, "read_packaged_text", lambda *_, **__: json.dumps(authority))
     observations = []
     release.api.quota_view = lambda: (observations.append(True) or _sdk_quota_observation())
@@ -692,24 +691,11 @@ def test_explicit_session_quota_binds_nine_wall_hours_and_eighteen_physical(rele
     assert result["status"] == "SUBMISSION_BOUND"
     assert authority["allocated_t4_hours_ceiling"] == 18
     assert authority["kaggle_quota_hours_ceiling"] == 9
-    assert authority["gpu"] == {"accelerator": "NvidiaTeslaT4", "allocated_devices": 2,
-        "wall_ceiling_seconds": 32400}
     assert len(observations) == 2 and release.api.pushed == 1
     for name in ("quota_before_publication.json", "quota_before_submit.json"):
         receipt = json.loads((release.output / name).read_bytes())
-        assert receipt["authorized_ceiling_gpu_hours"] == 9
+        assert receipt["authorized_ceiling_gpu_hours"] == pytest.approx(5)
         assert receipt["available_gpu_hours"] == pytest.approx(12.3835)
-
-
-def test_forged_session_quota_authority_fails_before_post(release, monkeypatch):
-    authority = _session_quota_authority(quota_hours=10)
-    monkeypatch.setattr(owner, "read_packaged_text", lambda *_, **__: json.dumps(authority))
-
-    with pytest.raises(ValueError, match="session quota must bind"):
-        release.run()
-
-    assert release.api.created == release.api.pushed == 0
-    assert not release.output.exists()
 
 
 def test_extra_upload_file_is_rejected_before_publication(release):

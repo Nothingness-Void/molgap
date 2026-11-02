@@ -30,3 +30,34 @@ The compact machine result is retained in `submission_trial.json`.
 ## Resubmission after infrastructure repair
 
 Two existing RML evidence IDs were bound in source commit 9b5bb985c. The original submit_workflow entry completed local preparation, then returned BLOCKED / PLATFORM_VALUEERROR at platform_operations, reporting a submission journal path that does not exist. No Kaggle receipt is available. The same original request was re-entered once with verbose output and returned the same error. Account quota lookup reported 29.01 GPU hours available; this does not establish the cause. Preserve the prepared request and reconcile before retry; no GPU execution or Replay readiness is claimed.
+
+## Quota-owner reconciliation — 2026-11-02
+
+The real prepared package reproduced the failure before journal creation or an API
+call: Server required duplicate `authority.gpu` fields introduced in `9a291e209`.
+The frozen launch already declared two T4 devices and a 21600-second wall cap;
+the packaged authority declared 12 physical T4 hours. Authenticated read-only owner
+listings found neither `kaseichou/molgap-k1-decay-timescale-100k-s42` nor source
+dataset `kaseichou/molgap-k1-decay-timescale-100k-src`. No remote retry was made.
+
+The repair copied the quota-budget block from Desktop `04a54a41a` unchanged:
+consume the frozen launch wall cap, retain the packaged physical budget and
+exact arm/seed authority, and retain Server's SDK transport. The earlier suggestion
+to add a duplicate `gpu` declaration and prepare a replacement run was superseded;
+the original authority, prepared package and prospective records were preserved.
+
+The repaired `submit_prepared_workflow(execute=False)` returned
+`READY_FOR_PLATFORM_OPERATIONS` for the original external prepared directory.
+Package, release report, authority, launch and upload allowlist checks were real;
+only credentials were replaced with the account name, and API/HTTP access was
+forbidden by the diagnostic. No journal, operation directory or owner pointer
+was written. This established local platform admission, not cloud execution,
+native training completion or Replay qualification.
+
+Existing `tests/test_kaggle_submission.py` quota and local dry-check nodes passed,
+as did `test_full_submission_and_repeated_call_never_duplicate` for both K1 and
+GPTrans fixtures, including continuation and receipt reuse. These were CPU
+journeys with generated data and substituted platform transport/allocation;
+they did not execute the actual candidate on Kaggle. Infrastructure budget passed.
+`tests/test_documentation_check.py` retained one unrelated failure: three source
+line pointers in `luna_review.md` were unresolved. No new test file or scope was added.
