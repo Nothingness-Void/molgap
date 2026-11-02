@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1-decay-timescale-100k-s42-r2-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-k1-decay-timescale-100k-s42-r2-reference-planned",
+  "evidence_ref": "experiments/k1_decay_timescale_100k/retry_v2/authority.json",
+  "hardware": "T4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "k1-decay-timescale-100k-s42-r2:reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-reference"
+}
