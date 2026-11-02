@@ -24,7 +24,7 @@ $runId = '<logical_run_id>'; $attemptId = 'v1'
 | # | Step | Command | Expected stdout `status` | Typical wall time |
 |---|---|---|---|---|
 | 1 | Choose the question from RML | `research_memory lookup/cards/gaps`, `catalog`, `check_quota.py` (below) | JSON / table | 4-7 min reading |
-| 2 | Create the worktree | `git worktree add` a dedicated worktree of `origin/molgap-server`; do not share one checkout, because prepare stops if a packaged source file is uncommitted or `HEAD` moves | - | 16 s |
+| 2 | Create the worktree | `git worktree add` a dedicated worktree of `origin/molgap-server`; do not share one checkout, because prepare stops if a packaged source file is uncommitted or `HEAD` moves. Older records cite about 90 ignored local files (checkpoints, receipts); when `research_memory validate` reports `authority pointer is missing: <path>`, hardlink or copy that path from the primary checkout | - | 16 s |
 | 3 | Write and commit inputs | `experiment.json`, `protocol.md`, `decision.md`, `STATUS.md` ([format](#3-write-one-scientific-input)) | - | about 10 min |
 | 4 | Prepare and submit | `submit_workflow.py --experiment ... --execute` | `SUBMISSION_BOUND` | 2-5 min |
 | 5 | Commit generated records | `git add experiments/<id> research_memory/policies; git commit` | - | seconds |

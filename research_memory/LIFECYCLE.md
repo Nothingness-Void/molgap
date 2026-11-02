@@ -99,7 +99,7 @@ Evidence, terminal-package and acceptance `role_use` claims are checked against
 source-verified role events: consumed/read/used requires matching observed access,
 and untouched/not_applicable conflicts with any observed access for that role.
 
-The transaction stages under ignored `research_memory/.staging/`, validates
+The transaction stages under the ignored .staging directory of research_memory, validates
 record shapes, cross-links, trace and publication hashes, then renames one
 directory to `experiments/<question>/rml_finalized/`. That directory contains
 terminal trajectory, evidence, events, optional trace/manifest, the original
