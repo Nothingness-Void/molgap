@@ -1487,6 +1487,7 @@ def test_prepare_and_accept_workflow_cli_json_dispatch(tmp_path, capsys, monkeyp
     _write_json(plan_path, {"synthetic": True})
     _write_json(outputs_path, {"synthetic": True})
     _write_json(locations_path, {"synthetic": True})
+    _write_json(tmp_path / "prepared" / "workflow_report.json", {"synthetic": True})  # mocked prepare writes none; the CLI reports only an existing file
 
     prepare = Mock(return_value={"status": "PREPARED_FOR_PLATFORM", "submitted": False})
     accept = Mock(return_value={"status": "BLOCKED", "arms": {}, "executed": False})
