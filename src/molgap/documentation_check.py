@@ -298,7 +298,7 @@ def _resolve_local(
         return document, None
     normalized = raw_path.replace("\\", "/")
     if kind == "code_pointer":
-        normalized = re.sub(r":(?:\d+|[A-Za-z_]\w*)$", "", normalized)
+        normalized = re.sub(r":(?:\d+(?:-\d+)?(?:,\d+(?:-\d+)?)*|[A-Za-z_]\w*)$", "", normalized)
     first = normalized.split("/", 1)[0]
     base = root if normalized in ROOT_DOCUMENTS or first in ACTIVE_ROOTS else document.parent
     candidate = (base / Path(normalized)).resolve()
