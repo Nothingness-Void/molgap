@@ -29,8 +29,8 @@ def _retain_failure(report, operations):
 
 
 def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path,
-                       launch_path: Path, output: Path, allocation_started=None,
-                       manifest=None) -> dict:
+                       launch_path: Path, output: Path, maximum_wall_seconds: float | None = None,
+                       allocation_started=None, manifest=None) -> dict:
     """Preflight every assigned arm before any formal training is spawned."""
     source_root, package_dir, input_root, output = map(Path, (source_root, package_dir, input_root, output))
     if output.exists() and any(output.iterdir()):
@@ -124,6 +124,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         "terminal_status": "not_started", "worker_wall_seconds": 0.0}
                        for j in jobs}}
     started = time.perf_counter()
+    deadline = None if maximum_wall_seconds is None else started + maximum_wall_seconds
+    if deadline is not None:
+        report["maximum_wall_seconds"] = maximum_wall_seconds
     ledger = AllocationLedger(spec_identity=spec.identity, hardware=names,
         assignments={job["arm_id"]: job["device"] for job in jobs}, started=allocation_started,
         prior_segments=prior_segments)
@@ -220,6 +223,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         item["finished"] = time.perf_counter()
                 return any(p.returncode is None for p, _, _ in workers)
             while poll_workers():
+                if deadline is not None and time.perf_counter() >= deadline:
+                    report["stop_reason"] = "STOP_FOR_COST"
+                    raise TimeoutError("Frozen allocation ceiling exhausted; retain complete-epoch resume state")
                 wall_ceiling = 7 * 3600 if execution_comparison else WALL_CEILING_SECONDS
                 if explicit_budget:
                     wall_ceiling = extension.wall_ceiling_seconds

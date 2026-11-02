@@ -251,8 +251,17 @@ def _workload(allocation_started):
                 timeout=(None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10)))
         return
     # Legacy/default bootstrap remains separate from the pinned shared runtime.
+    limit, reserve = config.get("allocation_wall_limit_seconds"), config.get("cleanup_reserve_seconds", 60)
+
+    def remaining():
+        if limit is None:
+            return None
+        seconds = limit - (time.perf_counter() - allocation_started) - reserve
+        if seconds <= 0:
+            raise TimeoutError("Allocation budget exhausted during bootstrap")
+        return seconds
     subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy<2",
-                    "torch-geometric==2.6.1", "ogb==1.3.6"], check=True)
+                    "torch-geometric==2.6.1", "ogb==1.3.6"], check=True, timeout=remaining())
     sys.path.insert(0, str(source / "src"))
     from molgap.experiment_package import verify_experiment_source_package
     from molgap.experiment_spec import ExperimentSpec
@@ -266,7 +275,8 @@ def _workload(allocation_started):
                            staged_root=launch.parent)
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
                        launch_path=launch, output=Path("/kaggle/working/experiment"),
-                       allocation_started=allocation_started, manifest=manifest)
+                       maximum_wall_seconds=remaining(), allocation_started=allocation_started,
+                       manifest=manifest)
 
 
 def main():

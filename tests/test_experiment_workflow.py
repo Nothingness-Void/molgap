@@ -1086,6 +1086,51 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     assert "training_progress_not_retained" in unknown["missing_evidence"]
 
 
+def test_pair_runtime_stops_training_at_frozen_allocation_ceiling(tmp_path, monkeypatch):
+    from molgap import kaggle_pair_runtime as pair_runtime
+    from molgap import experiment_package
+    spec, budget = _candidate_pair_spec(), 100.0
+    (tmp_path / "package").mkdir()
+    (tmp_path / "package/experiment_spec.json").write_bytes(spec.to_json().encode())
+    launch = tmp_path / "launch.json"
+    _write_json(launch, {"jobs": _jobs(spec), "expected_package_identity": HEX_A,
+                         "expected_source_archive_sha256": HEX_B})
+    monkeypatch.setattr(experiment_package, "verify_experiment_source_package", lambda _package: {
+        "package_identity": HEX_A, "spec_identity": spec.identity, "archive_sha256": HEX_B,
+        "source_commit": "c" * 40})
+    monkeypatch.setattr(pair_runtime.subprocess, "check_output", lambda *a, **k: "Tesla T4\nTesla T4\n")
+    clock = [0.0]
+    monkeypatch.setattr(pair_runtime.time, "perf_counter", lambda: clock[0])
+    monkeypatch.setattr(pair_runtime.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + budget / 2))
+    processes = []
+
+    class Process:
+        def __init__(self, command):
+            self.phase = command[command.index("--phase") + 1]
+            self.returncode = 0 if self.phase == "preflight" else None
+            self.terminated = False
+
+        def poll(self):
+            return self.returncode
+
+        def terminate(self):
+            self.terminated, self.returncode = True, -15
+
+        def wait(self, timeout=None):
+            return self.returncode
+
+    monkeypatch.setattr(pair_runtime.subprocess, "Popen",
+                        lambda command, **kwargs: processes.append(Process(command)) or processes[-1])
+    with pytest.raises(TimeoutError, match="allocation ceiling"):
+        pair_runtime.run_two_phase_pair(source_root=tmp_path, package_dir=tmp_path / "package",
+            input_root=tmp_path, launch_path=launch, output=tmp_path / "output", maximum_wall_seconds=budget)
+    state = json.loads((tmp_path / "output/pair_state.json").read_text())
+    assert state["status"] == "failed" and state["stop_reason"] == "STOP_FOR_COST"
+    assert state["maximum_wall_seconds"] == budget
+    trained = [process for process in processes if process.phase == "train"]
+    assert len(trained) == 2 and all(process.terminated for process in trained)
+
+
 def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path, monkeypatch):
     from test_experiment_launch_config import launch_case
     spec, staged, launch_path, launch, manifest, recipes, initial_states = launch_case.__wrapped__(tmp_path, monkeypatch)
