@@ -9,14 +9,14 @@ scientific acceptance or cross-machine custody.
 ## Happy path
 
 Set these once per PowerShell session. Every command below runs from the
-experiment worktree root. `platforms/local/run.py` runs the worktree's own code
-with the primary checkout's interpreter; a plain `& $python -m molgap...` from a
-worktree imports the primary checkout's code instead.
+experiment worktree root. The `.venv` editable install points at the primary
+checkout, so run scripts through `platforms/local/run.py`, which runs the worktree's
+code; a plain `& $python -m molgap...` imports the primary checkout's code instead.
 
 ```powershell
 $python = 'C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe'
 $profilePath = 'E:/MolGap/machine-profile.json'
-$credentials = (Join-Path $env:MOLGAP_KAGGLE_KEY_DIR '.kaggle3_cli/kaggle.json')   # the account named in authority.account
+$credentials = '<path>'   # the account's key file, passed explicitly as --credentials; submit rejects one inside a Git checkout or whose username differs from launch.account
 $experiment = 'experiments/<experiment_id>/experiment.json'
 $runId = '<logical_run_id>'; $attemptId = 'v1'
 ```
@@ -24,7 +24,7 @@ $runId = '<logical_run_id>'; $attemptId = 'v1'
 | # | Step | Command | Expected stdout `status` | Typical wall time |
 |---|---|---|---|---|
 | 1 | Choose the question from RML | `research_memory lookup/cards/gaps`, `catalog`, `check_quota.py` (below) | JSON / table | 4-7 min reading |
-| 2 | Create the worktree | Reuse the `molgap-server` checkout; use a short-lived `work/<topic>` only when isolation is required | - | 16 s |
+| 2 | Create the worktree | `git worktree add` a dedicated worktree of `origin/molgap-server`; do not share one checkout, because prepare stops if a packaged source file is uncommitted or `HEAD` moves | - | 16 s |
 | 3 | Write and commit inputs | `experiment.json`, `protocol.md`, `decision.md`, `STATUS.md` ([format](#3-write-one-scientific-input)) | - | about 10 min |
 | 4 | Prepare and submit | `submit_workflow.py --experiment ... --execute` | `SUBMISSION_BOUND` | 2-5 min |
 | 5 | Commit generated records | `git add experiments/<id> research_memory/policies; git commit` | - | seconds |
@@ -160,7 +160,7 @@ result, `--verbose` prints the full owner report.
 | Where | Output | Cause | Next command |
 |---|---|---|---|
 | submit | `RECONCILIATION_REQUIRED`, reason `Unpublished preparation requires the original bound source checkout; current HEAD is not substituted` | A commit landed between the freeze and a successful preparation, for example committing the generated policy after `freeze-input` ([rule](#freeze-and-commit-order)). | Set a new `logical_run_id` (`...-r2`) in `experiment.json`, commit, rerun step 4. Do not check out the old commit. |
-| submit | `BLOCKED`, `LOCAL_PREPARATION_VALUEERROR`, `field` and `reason` (for example `Local validation failed: Unknown addon/version`) | The input fails a local check; `reason` holds the message. `Unknown addon/version` means the addon is not in this checkout's catalog. | Fix the named field and commit. If `E:/MolGap/artifacts/runs/<run>/<attempt>/inputs/` already exists, also set a new `logical_run_id`. |
+| submit | `BLOCKED`, `LOCAL_PREPARATION_VALUEERROR`, `field` and `reason` (for example `Local validation failed: Unknown addon/version`) | The input fails a local check; `reason` holds the message. `Unknown addon/version` means the addon is not in this checkout's catalog; `Expected one uniquely mounted pinned manifest` means the pinned fixed-dataset manifest is absent or not unique under the profile `data_root` (for example `E:/MolGap/data/pcqm_fixed_100k_v1/manifest.json`). | Fix the named field and commit. If `E:/MolGap/artifacts/runs/<run>/<attempt>/inputs/` already exists, also set a new `logical_run_id`. |
 | submit | `BLOCKED`, `field: logical_run_id`, reason `Scientific input changed; create an explicit new run rather than overwrite this run` | `experiment.json` changed after its run was frozen. | New `logical_run_id`, commit, rerun step 4. |
 | submit | `BLOCKED`, `stage: workflow_readiness`, `blockers` list | Admission failed before the freeze; nothing was frozen. | Fix the listed blockers, commit, rerun with the same run ID. |
 | submit | `BLOCKED`, `LOCAL_PREPARATION_FILENOTFOUNDERROR`, reason `A required local file is missing` | A referenced file (preset, initialization, `protocol.md`, `decision.md`) is absent. | Create or correct the path, commit, rerun. |
@@ -241,10 +241,9 @@ successor `--continuation-receipt` and `--resume-prepared` to retrieval and
   about 1.5 s and exits 1 if any account fails. Its `Username` column is the value
   for `authority.account`.
 - Before dataset publication and again before the kernel POST, the submitter
-  uses the authority's explicit `kaggle_quota_hours_ceiling` when present; otherwise it
-  requires `min(allocated_t4_hours_ceiling, allocation_wall_limit_seconds / 3600)` and saves `quota_before_publication.json`
-  and `quota_before_submit.json` in the run's `operations/`. Continuations compare
-  against the wall limit alone.
+  requires `min(allocated_t4_hours_ceiling, allocation_wall_limit_seconds / 3600)`
+  and saves `quota_before_publication.json` and `quota_before_submit.json` in the
+  run's `operations/`. Continuations compare against the wall limit alone.
 - Set `allocation_wall_limit_seconds` to bound both the session and the quota
   draw. When it is hit the run pauses (`STOP_FOR_COST`) instead of losing its work.
 

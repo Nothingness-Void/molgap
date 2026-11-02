@@ -82,8 +82,9 @@ this adapter creates no monitor, thread or automatic successor.
 Kaggle quota hours are session wall hours, not the sum of physical devices
 ([official T4x2 announcement](https://www.kaggle.com/product-feedback/361104)).
 The frozen launch's `allocation_wall_limit_seconds` owns session duration;
-`allocated_t4_hours_ceiling` covers device cost. Duplicate `gpu` and
-`kaggle_quota_hours_ceiling` fields are neither required nor consumed.
+`allocated_t4_hours_ceiling` covers device cost. Plain families neither require nor
+consume duplicate `gpu` or `kaggle_quota_hours_ceiling` fields; Modern2D-configured
+authorities require and read the `gpu` block (devices, accelerator, owner, wall ceiling).
 The adapter and `platforms/kaggle/check_quota.py` read session quota through the
 official SDK `quota_view` (`kaggle_submission.sdk_quota_payload`), preserving total
 duration seconds and UTC refresh time; uncertain quota is not permission to submit.
