@@ -102,3 +102,5 @@ This provenance repair does not confer training replay readiness.
 Commands, compact views, record formats and verifier precedence live in the
 [interface reference](../docs/operations/RML_INTERFACES.md). These read-only views
 use this checkout's evidence; Desktop examples do not describe Server custody.
+With `--ref <git-rev>`, `cards`, `lookup` and `gaps` also list what another branch (e.g.
+`origin/molgap-desktop`) has committed, each card linked to its source, never copied.
