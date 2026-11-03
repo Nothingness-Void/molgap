@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "purpose": "OPTIMIZER_COMPARISON",
+  "account": "kaseichou",
+  "platform": "kaggle2",
+  "arms": [
+    "reference",
+    "wd1e3"
+  ],
+  "same_run_reference_arm_id": "reference",
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "allocation_wall_limit_seconds": 8779,
+  "allocated_t4_hours_ceiling": 4.8777,
+  "protected_role_access_authorized": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "full_training_authorized": false,
+  "authorization_basis": "User instruction, 2026-11-03: clean rerun of two infrastructure-failed attempts of this study. First (k1-decay-timescale-100k-s42-v1): the training worker did not bind the frozen float32 target identity. Second (k1-decay-timescale-100k-s42-r2): training completed, but the canonical trace omitted learning_rate and checkpoint_identity, so strict comparison is impossible. Infrastructure-failure experiments continue by default; scientific failures ask first. Consumed of the original 12 allocated T4-hours: 3.5547 (first) + 3.5676 (second, 12843.3 device-seconds) = 7.1223, leaving 4.8777; 8779 s wall x 2 devices stays within it. No change to the science; same arms and seed 42; no successor, extra seed, protected role or scale-up.",
+  "reference_scope": "One newly qualified shared-runtime reference only if no compatible accepted reference is reusable; never an automatic baseline per candidate."
+}
