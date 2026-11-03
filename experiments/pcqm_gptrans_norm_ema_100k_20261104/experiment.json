@@ -1,0 +1,128 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_norm_ema_100k_20261104",
+  "logical_run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42",
+  "attempt_id": "v1",
+  "timestamp": "2026-11-03T16:15:17.587429+00:00",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "role_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_norm_ema_100k_20261104/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-norm-ema-100k-20261104",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does exempting LayerNorm affine parameters from WD improve matched100K development performance, and does longer EMA improve either exact live trajectory?",
+    "deficiency": "Whole-model WD0.10 regressed at500K but did not isolate normalization parameters. Accepted100K retention contains only EMA0.999 and sparse final/probe states, not a live weight sequence capable of exact alternative EMA reconstruction.",
+    "changed_mechanism": "normalization-affine-decay-and-same-trajectory-ema-timescale",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high"
+    ],
+    "alternatives": [
+      "LayerNorm decay is benign",
+      "Longer EMA lags useful learning",
+      "Normalization and EMA effects interact or remain below the material gate"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-pairnorm-wd-500k-s43",
+      "pcqm-gptrans-pairnorm-wd-500k-s44"
+    ],
+    "positive_decision": "Nominate normalization exemption only for <=-3meV primary paired MAE delta and negative upper95%CI. Report both within-trajectory EMA contrasts under the same3meV gate as descriptive evidence; no automatic scale-up.",
+    "negative_decision": "Close a failed material normalization gate without a WD grid. EMA contrasts that fail the predeclared gate do not nominate a longer EMA. Incomplete evidence remains inconclusive.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 7,
+    "estimated_wall_hours": 3.5,
+    "cheapest_falsifier": "One100K matched pair with only normalization affine decay changed and two EMA states per live trajectory; no extra baseline-only arm."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "uniform_wd_multi_ema",
+      "norm_no_decay_multi_ema"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "uniform_wd_multi_ema",
+    "allocated_t4_hours_ceiling": 9,
+    "user_notebook_wall_ceiling_seconds": 16200,
+    "allocation_wall_limit_seconds": 16200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized Kaggle1 norm-exemption and multi-EMA trial; after questioning500K user accepted the100K information audit and instructed completion on2026-11-04.",
+    "scope": "100K60-pass two-arm evidence-discriminating screen, no additional baseline-only run, no automatic retry/continuation/scale-up/adoption."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-gptrans-norm-ema-100k-20261104-s42",
+      "title": "MolGap GPTrans Norm EMA 100K 20261104 S42",
+      "datasets": [
+        "nothingnessvoid/molgap-gptrans-norm-ema-100k-20261104-s42-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "nothingnessvoid/molgap-gptrans-norm-ema-100k-20261104-s42-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 16200,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/data_declaration.json",
+      "arm_id": "pair_update_norm"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "uniform_wd_multi_ema"
+    },
+    {
+      "arm_id": "norm_no_decay_multi_ema",
+      "training": {
+        "no_decay_modules": [
+          "LayerNorm"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "uniform_wd_multi_ema",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}
