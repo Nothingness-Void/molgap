@@ -1,0 +1,12 @@
+{
+  "arm_id": "init_s46",
+  "builder": "torch seed then molgap.qm9_neural_atom.make_encoder",
+  "builder_source": "experiments/k1_init_noise_server_100k/build_initial_states.py",
+  "format": "molgap-initialization-provenance-v1",
+  "note": "spec seed label stays 42 because the compiler permits only seed 42; sampler/data order are seed 42",
+  "reference_seed_42_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "state_file": "platforms/_records/kaggle/initializations/k1_init_noise_s46.pt",
+  "state_file_sha256": "1dc6aa6fd34f2f2796c456062c376caafb15e3613b6efa59cbaa58c7ec3e1ebe",
+  "state_sha256": "db5f7aaa6c7549f9d4db944af329bcb68db7419f8eca3a01976658c512b5d1b1",
+  "torch_seed": 46
+}

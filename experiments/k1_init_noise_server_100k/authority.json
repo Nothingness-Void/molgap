@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "purpose": "INITIALIZATION_COMPARISON",
+  "account": "nvoid912",
+  "platform": "kaggle3",
+  "arms": [
+    "init_s45",
+    "init_s46"
+  ],
+  "same_run_reference_arm_id": "init_s45",
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "allocation_wall_limit_seconds": 7800,
+  "allocated_t4_hours_ceiling": 4.5,
+  "protected_role_access_authorized": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "full_training_authorized": false,
+  "authorization_basis": "User instruction, 2026-11-03: 'measure our actual training noise (0.19 meV effect vs the 1.6 meV range) on this setup; explicit compute decision for noise measurement only'. One kaggle3 T4x2 session, arms init_s45 and init_s46 of the frozen K1 post-BN recipe, initial weights only; 7800 s wall x 2 devices = 4.333 T4-hours within 4.5. No successor, extra seed, protected role, 500K or full training.",
+  "reference_scope": "init_s45 is the same-run reference only for the mechanics of the pair; neither arm is a baseline to beat."
+}

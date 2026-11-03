@@ -1,0 +1,85 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "k1_init_noise_server_100k",
+  "logical_run_id": "k1-init-noise-100k-s45",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/k1_init_noise_server_100k/authority.json",
+  "platform_ref": "experiments/k1_init_noise_server_100k/platform.json",
+  "timestamp": "2026-11-03T14:26:13.840190+00:00",
+  "seeds": [
+    42
+  ],
+  "same_run": {
+    "reference_arm_id": "init_s45",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "question": {
+    "policy_id": "k1-init-noise-server-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "How much does the selected development MAE of the K1 post-BN 100K recipe vary with the initial weights alone (torch seeds 45 and 46, added to measured seeds 42, 43 and 44)?",
+    "deficiency": "K1 100K screens are single-seed. Three initial states (42, 43, 44) span 1.63 meV, while recent screen effects are below 1 meV (decay timescale -0.19 meV); n=3 cannot estimate the noise floor that the 3 meV gate is read against.",
+    "changed_mechanism": "initialization-seed-noise",
+    "supporting_evidence": [
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ],
+    "alternatives": [
+      "Data order or dropout noise dominates init noise",
+      "Five initial states still underestimate full seed variance",
+      "Kaggle hardware nondeterminism adds run-to-run drift"
+    ],
+    "closed_families": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "positive_decision": "Measurement only, no gate: report per-seed selected MAE (n=5), range, sample SD with chi-square 95% CI, paired-delta SD and the ratio of the 3 meV gate to it, for a human reading of past and future screens.",
+    "negative_decision": "Measurement only, no gate: if either arm fails, report the available seeds as measured and run no successor, retry outside the infrastructure rule, extra seed or scale-up.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "TC-k1-chem-typed-pair-token-100k-s42",
+      "TC-k1-spd-pair-token-100k-s42",
+      "TC-k1-mose-residual-gate-100k-s42"
+    ]
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "T4x2",
+    "cheapest_falsifier": "One T4x2 session, two init-only replicates of the frozen K1 post-BN recipe, one arm per device.",
+    "estimated_device_hours": 3.6,
+    "estimated_wall_hours": 1.8
+  },
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "init_s45",
+      "recipe_ref": "experiments/k1_init_noise_server_100k/init_s45/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/k1_init_noise_server_100k/init_s45/data_declaration.json",
+        "arm_id": "init_s45"
+      },
+      "initial_state_ref": "platforms/_records/kaggle/initializations/k1_init_noise_s45.pt"
+    },
+    {
+      "arm_id": "init_s46",
+      "recipe_ref": "experiments/k1_init_noise_server_100k/init_s46/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/k1_init_noise_server_100k/init_s46/data_declaration.json",
+        "arm_id": "init_s46"
+      },
+      "initial_state_ref": "platforms/_records/kaggle/initializations/k1_init_noise_s46.pt"
+    }
+  ]
+}
