@@ -315,6 +315,10 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             execution_root=execution_root, _retention=retention,
             **({"scientific_acceptance": scientific_acceptance} if scientific_acceptance is not None else {}))
         result["terminal_staging"] = staged
+        if strict_inputs is not None and staged.get("blockers"):
+            return {**result, "status": "BLOCKED", "executed": False,
+                "strict_validation": {"status": "BLOCKED", "native": native},
+                "blockers": staged["blockers"]}
         if execute:
             if staged.get("blockers") or outcome is None:
                 return {**result, "status": "BLOCKED", "executed": False}

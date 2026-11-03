@@ -229,6 +229,21 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert set(result["terminal_staging"]["paths"]) == set(arms)
     assert all(result["terminal_staging"]["paths"][arm]["closure_ready"] is False for arm in arms)
     assert all(result["terminal_staging"]["locations"][arm]["trace"].startswith("external://") for arm in arms)
+    # Strict acceptance without a closure input stages only a draft and stops.
+    # The fixture has no native proof, so only that owner is substituted.
+    from molgap import family_training_runner
+    provenances = [case.paths.artifact_root / "retrieved" / arm / "runtime_provenance.json" for arm in arms]
+    for path in provenances:
+        path.write_bytes(b"{}")
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(family_training_runner, "inspect_retained_native_qualification", lambda *_, **__: {
+            "status": "VERIFIED", "blockers": [], "dependencies": [], "known_local_bytes": 0})
+        strict = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
+            stage_terminal=True, strict_inputs={})
+    for path in provenances:
+        path.unlink()
+    assert strict["status"] == "BLOCKED" and strict["executed"] is False, strict
+    assert strict["blockers"] == strict["terminal_staging"]["blockers"]
 
     audit_dir = case.repo / "audits"
     capsys.readouterr()
