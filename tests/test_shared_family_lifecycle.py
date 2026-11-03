@@ -27,6 +27,7 @@ class StateKernel(FamilyKernel):
         self.model = self.make_clean_model()
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay)
+        self.auxiliary_emas = {}
         self.weight_view = ReusedWeightView()
 
     def make_clean_model(self):

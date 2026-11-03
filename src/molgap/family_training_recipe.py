@@ -21,6 +21,26 @@ ADAMW_EPSILON = 1e-8
 from .experiment_execution import shared_training_adapters
 from .family_training_policy import mode_policy
 
+# Reviewed normalization owners. Recipes name the kind; classes stay in code.
+NORM_MODULE_TYPES = {"LayerNorm": "LayerNorm", "BatchNorm": "_BatchNorm"}
+
+
+def ema_label(decay):
+    """One stable text key for a decay in checkpoints, artifacts and roles."""
+    return repr(float(decay))
+
+
+def aux_ema_names(decay):
+    label = ema_label(decay)
+    slug = label.replace(".", "p")
+    return (label, slug, f"selected_model_ema_{slug}", f"predictions_ema_{slug}",
+            f"selected_model_ema{label}.pt", f"development_predictions_ema{label}.pt", f"ema_{slug}_dev_metric")
+
+
+AUX_EMA_ROLES = {d: aux_ema_names(d)[2:4] for d in (.999, .9999)}
+AUX_EMA_FILES = tuple(f for d in (.999, .9999) for f in aux_ema_names(d)[4:6])
+
+
 MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in adapter.addons))))
     for family, adapter in shared_training_adapters().items()}
 
@@ -117,6 +137,8 @@ class FamilyRecipe:
     clean_bn: CalibrationPolicy | None = None
     resume_chunks: bool = False
     development_reports: tuple[str, ...] = ()
+    no_decay_modules: tuple[str, ...] = ()
+    auxiliary_ema_decays: tuple[float, ...] = ()
     _frozen_read: InitVar[bool] = False
 
     def __post_init__(self, _frozen_read):
@@ -182,6 +204,14 @@ class FamilyRecipe:
                 or any(v not in {"live", "ema"} for v in self.development_reports)
                 or ("ema" in self.development_reports and self.ema_decay is None)):
             raise ValueError("Development reporting requires distinct available weight states")
+        if (type(self.no_decay_modules) is not tuple or len(set(self.no_decay_modules)) != len(self.no_decay_modules)
+                or any(name not in NORM_MODULE_TYPES for name in self.no_decay_modules)):
+            raise ValueError("Zero-decay ownership must name distinct reviewed normalization module kinds")
+        if (type(self.auxiliary_ema_decays) is not tuple or len(set(self.auxiliary_ema_decays)) != len(self.auxiliary_ema_decays)
+                or any(type(v) not in (float, int) or v not in (.999, .9999) or v == self.ema_decay for v in self.auxiliary_ema_decays)
+                or (self.auxiliary_ema_decays and (self.ema_decay is None or self.selection.endswith("clean-ema")
+                    or (self.dataset.development and self.selection != "best-development-ema")))):
+            raise ValueError("Auxiliary EMAs require distinct supported decays, a primary EMA and best-development-ema selection")
         if self.selection.endswith("clean-ema") and "ema" in self.development_reports:
             raise ValueError("Raw EMA reporting cannot overwrite the selected Clean-EMA trace field")
         if (self.clean_bn is not None) != self.selection.endswith("clean-ema"):
@@ -224,28 +254,22 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
+        if self.no_decay_modules:
+            policy["weight_decay_exempt"] = list(self.no_decay_modules)
+        if self.auxiliary_ema_decays:
+            policy["auxiliary_ema"] = [ema_label(v) for v in self.auxiliary_ema_decays]
         return policy
 
     def to_dict(self):
         values = asdict(self)
-        if self.input_sidecar is None:
-            values.pop("input_sidecar")
-        if self.k1_execution is None:
-            values.pop("k1_execution")
-        if not self.addons:
-            values.pop("addons")
-        else:
-            values["addons"] = list(values["addons"])
-        if self.clean_bn is None:
-            values.pop("clean_bn")
-        else:
-            values["clean_bn"] = self.clean_bn.to_dict()
-        if not self.resume_chunks:
-            values.pop("resume_chunks")
-        if not self.development_reports:
-            values.pop("development_reports")
-        else:
-            values["development_reports"] = list(self.development_reports)
+        for name in ("input_sidecar", "k1_execution"):
+            if getattr(self, name) is None: values.pop(name)
+        if self.clean_bn is None: values.pop("clean_bn")
+        else: values["clean_bn"] = self.clean_bn.to_dict()
+        if not self.resume_chunks: values.pop("resume_chunks")
+        for name in ("addons", "development_reports", "no_decay_modules", "auxiliary_ema_decays"):
+            if not getattr(self, name): values.pop(name)
+            else: values[name] = list(getattr(self, name))
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -255,13 +279,9 @@ class FamilyRecipe:
     @classmethod
     def from_dict(cls, record, *, _frozen_read=False):
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
-        if type(record) is dict and "input_sidecar" not in record:
-            expected.remove("input_sidecar")
-        if type(record) is dict and "k1_execution" not in record:
-            expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "resume_chunks", "development_reports"):
-            if type(record) is dict and name not in record:
-                expected.remove(name)
+        for name in ("input_sidecar", "k1_execution", "addons", "clean_bn", "resume_chunks",
+                     "development_reports", "no_decay_modules", "auxiliary_ema_decays"):
+            if type(record) is dict and name not in record: expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
         values = {field.name: record[field.name] for field in fields(cls) if field.name in record}
@@ -274,6 +294,11 @@ class FamilyRecipe:
                 if type(values["development_reports"]) is not list:
                     raise ValueError("Development reports must be a list")
                 values["development_reports"] = tuple(values["development_reports"])
+            for name in ("no_decay_modules", "auxiliary_ema_decays"):
+                if name in values:
+                    if type(values[name]) is not list:
+                        raise ValueError("Optional recipe sequences must be lists")
+                    values[name] = tuple(values[name])
             if "input_sidecar" in values:
                 values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
             if "k1_execution" in values:

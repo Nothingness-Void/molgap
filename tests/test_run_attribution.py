@@ -238,6 +238,25 @@ def test_run_diagnosis_uses_pinned_retained_reference_curve(monkeypatch, tmp_pat
     assert "canonical_trace_sha256" in pair["artifact_hashes"]["control"]
     assert "reference_trace_dynamics" not in pair["unknowns"]
 
+    # The original terminal owner kept coarse labels; selected trace semantics
+    # still have to match the prediction bundle exactly.
+    entry = resolved["acceptance_plan"]["arms"][0]
+    manifest_path = tmp_path / entry["reference_artifacts"]["trace_manifest"]["path"]
+    manifest = json.loads(manifest_path.read_bytes())
+    manifest.update(evaluation_role_identity="internal_development", weight_semantics="ema_and_live")
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    entry["reference_artifacts"]["trace_manifest"]["sha256"] = sha256_file(manifest_path)
+    assert _diagnose(resolved, tmp_path)["status"] == "DIAGNOSED"
+    trace["metric_semantics"]["live_dev_metric"]["role_identity"] = "different-development-role"
+    trace_path = tmp_path / manifest["trace_artifact_ref"]
+    trace_path.write_text(json.dumps(trace), encoding="utf-8")
+    manifest["trace_artifact_sha256"] = sha256_file(trace_path)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    entry["reference_artifacts"]["trace_manifest"]["sha256"] = sha256_file(manifest_path)
+    rejected = _diagnose(resolved, tmp_path)
+    assert rejected["status"] == "INSUFFICIENT_EVIDENCE", rejected
+    assert any("curve metric differs" in reason for reason in rejected["blockers"])
+
 
 def test_run_diagnosis_tampered_retained_reference_curve_is_insufficient(monkeypatch, tmp_path):
     candidate = _write_native_arm(tmp_path / "candidate", arm_id="candidate")

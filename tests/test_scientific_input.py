@@ -425,14 +425,95 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     value = deepcopy(case.value)
     value.update(logical_run_id="scientific-pair-run", authority_ref="experiments/pair/authority.json")
     second = deepcopy(value["arms"][0])
-    second.update(arm_id="candidate_two", training={"learning_rate": .0006})
+    value["arms"][0]["training"] = {"no_decay_modules": ["LayerNorm", "BatchNorm"]}
+    second.update(arm_id="candidate_two", training={"ema_decay": .9999, "auxiliary_ema_decays": [.999]},
+                  purpose="ema_comparison")
     value["arms"].append(second)
     authority = {"user_authorized": True, "allocated_t4_hours_ceiling": 1,
                  "arms": ["candidate", "candidate_two"], "seeds": [42], "fixture_only": True}
+    # Reuse the retained bundle for one arm; keep the plan-based entry on its peer.
+    from molgap.common.wire import canonical_fingerprint as fingerprint
+    from molgap.family_training_runner import read_recipe, comparison_objective_identity
+    baseline_arm = value["arms"][0]
+    record, baseline = read_recipe(case.repo / baseline_arm["recipe_ref"])
+    source_spec = json.loads((case.repo / baseline_arm["data_ref"]["spec_ref"]).read_bytes())
+    source = source_spec["arms"][0]
+    old_plan = json.loads((case.repo / baseline_arm["reference_ref"]["plan_ref"]).read_bytes())["arms"][0]
+    bundle = json.loads((case.repo / old_plan["reference_bundle"]["path"]).read_bytes())
+    # Both interventions retain a frozen EMA-selected baseline, as in the real run.
+    from dataclasses import replace
+    baseline = replace(baseline, selection="best-development-ema", ema_decay=.999)
+    record = build_screen_recipe("reference", configuration=baseline,
+        family=(source["family"]["name"], source["family"]["version"]),
+        source_idx_sha256=record["acceptance_requirements"]["source_idx_sha256"],
+        target_sha256=record["acceptance_requirements"]["target_sha256"],
+        train_role_identity=record["train_role_identity"], development_role_identity=record["development_role_identity"])
+    recipe_name, spec_name = "experiments/pair/recipe.json", "experiments/pair/experiment_spec.json"
+    _write_json(case.repo / recipe_name, record)
+    source["training"]["recipe"]["sha256"] = _pointer(case.repo, case.repo / recipe_name)["sha256"]
+    _write_json(case.repo / spec_name, source_spec)
+    for arm in value["arms"]:
+        arm["recipe_ref"] = recipe_name
+        arm["data_ref"]["spec_ref"] = spec_name
+    old_plan["contract"] = _pointer(case.repo, case.repo / recipe_name)
+    bundle["comparison_identity"].update(ema_enabled=True, ema_decay=.999, ema_update_frequency=1,
+                                          weight_semantics="ema", evaluation_weight_source="ema")
+    bundle.update(contract_ref=baseline_arm["recipe_ref"], checkpoint_identity=old_plan["reference_artifacts"]["checkpoint"]["sha256"])
+    roles = {r["role"]: r for r in source["data"]["roles"]}
+    policy = record["execution_policy"]
+    bundle["comparison_identity"].update(
+        benchmark_identity=source["data"]["dataset"]["name"], dataset_identity=source["data"]["dataset"]["sha256"],
+        data_role_identity=fingerprint({"roles": source["data"]["roles"]}),
+        row_membership_identity=fingerprint({k: r["membership_sha256"] for k, r in roles.items()}),
+        row_order_identity=fingerprint({k: r["row_order_sha256"] for k, r in roles.items()}),
+        feature_identity=source["data"]["feature_sha256"], target_identity=source["data"]["target"],
+        architecture_config_identity=fingerprint({k: source[k] for k in ("base", "addons")}),
+        schedule_identity=fingerprint(record["schedule"]), loss_identity=comparison_objective_identity(source, baseline),
+        optimizer_identity=fingerprint({"recipe": {k: record[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
+                                        "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
+        optimizer_mode=policy["optimizer"], optimizer_fused=False, tf32_enabled=False, deterministic_algorithms=True,
+        tail_batch_policy="drop_last" if baseline.drop_last else "keep_last", checkpoint_selection_identity=baseline.selection,
+        selection_role_identity=record["development_role_identity"], evaluation_role_identity=record["development_role_identity"])
+    bundle["architecture_config_identity"] = bundle["comparison_identity"]["architecture_config_identity"]
+    bundle["prediction_manifest"]["evaluation_role_identity"] = record["development_role_identity"]
+    bundle_name = "experiments/pair/reference_bundle.json"
+    _write_json(case.repo / bundle_name, bundle)
+    _write_json(case.repo / "experiments/pair/prediction_manifest.json", bundle["prediction_manifest"])
+    old_plan["reference_artifacts"]["prediction_manifest"] = _pointer(case.repo, case.repo / "experiments/pair/prediction_manifest.json")
+    artifacts = [{"name": name, "locator": old_plan["reference_artifacts"][key]["path"],
+                  "sha256": old_plan["reference_artifacts"][key]["sha256"]}
+                 for name, key in (("selected_model", "checkpoint"), ("predictions", "predictions"))]
+    _write_json(case.repo / "experiments/pair/qualified_terminal.json", {
+        "evidence": {"evidence_id": bundle["reference_id"], "artifacts": artifacts},
+        "artifact_hashes": {bundle_name: _pointer(case.repo, case.repo / bundle_name)["sha256"],
+                            baseline_arm["recipe_ref"]: old_plan["contract"]["sha256"],
+                            **{a["locator"]: a["sha256"] for a in artifacts}}})
+    from molgap.comparison_readiness import assess_comparison_prelaunch
+    previous_prelaunch = json.loads((case.repo / old_plan["comparison_prelaunch"]["path"]).read_bytes())
+    trace_plan = {**previous_prelaunch["trace_plan"], "ema_dev_metric": True, "live_dev_metric": False}
+    planned_identity = {**bundle["comparison_identity"], "optimizer_identity": fingerprint({"fixture_optimizer": record})}
+    prelaunch = assess_comparison_prelaunch(candidate_id="fixture-next-optimizer",
+        candidate_plan={"comparison_identity": planned_identity, "source_config_status": "frozen",
+                        "source_commit_or_archive": "2" * 40},
+        reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose="optimizer_comparison",
+        intervention_group_id="fixture-optimizer", declared_intervention_fields=["optimizer_identity"],
+        role_applicability_plan=previous_prelaunch["role_applicability_plan"], trace_plan=trace_plan,
+        runtime_qualification_plan=previous_prelaunch["runtime_qualification_plan"])
+    assert prelaunch["prelaunch_ready"]
+    _write_json(case.repo / "experiments/pair/comparison_prelaunch.json", prelaunch)
+    old_plan.update(reference_bundle=_pointer(case.repo, case.repo / bundle_name),
+                    comparison_prelaunch=_pointer(case.repo, case.repo / "experiments/pair/comparison_prelaunch.json"))
+    legacy_plan = "experiments/pair/retained_plan.json"
+    _write_json(case.repo / legacy_plan, {"format": "molgap-family-acceptance-plan-v1",
+        "spec_identity": ExperimentSpec(source_spec).identity, "arms": [old_plan]})
+    second["reference_ref"]["plan_ref"] = legacy_plan
+    baseline_arm["reference_ref"] = {"bundle_ref": bundle_name,
+        "comparison_plan": {k: prelaunch[k] for k in ("role_applicability_plan", "trace_plan", "runtime_qualification_plan")}}
+    value["question"]["reference_ids"] = [bundle["reference_id"]]
     path = case.repo / "experiments/pair/experiment.json"
     _write_json(path, value)
     _write_json(case.repo / value["authority_ref"], authority)
-    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix(), value["authority_ref"])
+    _git(case.repo, "add", "--", "experiments/pair")
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Explicit synthetic two-arm inputs")
     _, spec, plan, _ = resolve_experiment_input(path, case.repo)
     assert [a["device"] for a in plan["arms"]] == [0, 1]
@@ -441,6 +522,13 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["candidate", "candidate"]
     assert "same_run_replay" not in spec.to_dict()["prospective"]
     assert len(plan["generated_records"]) == 7
+    first_recipe, second_recipe = [json.loads((case.repo / job["recipe"]).read_bytes()) for job in plan["arms"]]
+    assert first_recipe["no_decay_modules"] == ["LayerNorm", "BatchNorm"]
+    assert second_recipe["ema_decay"] == .9999 and second_recipe["auxiliary_ema_decays"] == [.999]
+    prelaunches = [json.loads((case.repo / entry["comparison_prelaunch"]["path"]).read_bytes())
+                  for entry in json.loads((case.repo / plan["acceptance_plan"]).read_bytes())["arms"]]
+    assert prelaunches[0]["declared_intervention_fields"] == ["optimizer_identity"]
+    assert prelaunches[1]["declared_intervention_fields"] == ["ema_decay"]
 
 
 def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_property):

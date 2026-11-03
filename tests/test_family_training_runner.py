@@ -183,6 +183,11 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         "best-development-ema" if development else "final-live", "torch-pass-randperm", 1,
         target_mean_eV=3., target_std_eV=2., ema_decay=.999 if development else None,
         torch_version=str(torch.__version__).split("+", 1)[0])
+    legacy = recipe.to_dict()
+    assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy
+    assert FamilyRecipe.from_dict(legacy).identity == canonical_fingerprint(legacy)
+    if family == "gptrans_t" and development:
+        recipe = replace(recipe, no_decay_modules=("LayerNorm",), auxiliary_ema_decays=(.9999,))
     if family == "neural_atom_k1" and development:
         from molgap.family_training_state import CalibrationPolicy, source_order_sha256
         recipe = replace(recipe, selection="best-development-clean-ema", development_reports=("live",),
@@ -359,6 +364,17 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     report = outputs.complete(progress, runtime=runtime, costs=costs)
     assert report["status"] == "MECHANICALLY_VERIFIED", report
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
+    if recipe.auxiliary_ema_decays:
+        from molgap.family_training_recipe import aux_ema_names
+        label, _, model_role, pred_role, model_file, pred_file, metric = aux_ema_names(.9999)
+        assert (restored / model_file).is_file() and (restored / pred_file).is_file()
+        assert {model_role, pred_role} <= report["observed"]["artifacts"].keys()
+        trace = json.loads((restored / "canonical_trace.json").read_text(encoding="utf-8"))
+        auxiliary = report["observed"]["auxiliary_ema"][label]
+        assert auxiliary["development_mae_eV"] == pytest.approx(min(row[metric] for row in trace["observations"]))
+        assert expected_state["cursor"]["auxiliary_selections"][label]["selected_step"] == auxiliary["selected_optimizer_step"]
+        assert any(not torch.equal(expected_state["ema"][key], value)
+                   for key, value in expected_state["auxiliary_ema"][label].items())
     assert (outputs.root / "development_predictions.pt").is_file() == development
     assert ("development_mae_eV" in report["observed"]) == development
     telemetry = json.loads((outputs.root / "training_progress.json").read_text(encoding="utf-8"))

@@ -50,9 +50,16 @@ def bundle_case(tmp_path):
 
 def test_roundtrip_retains_source_and_only_restores_artifacts(bundle_case, tmp_path, monkeypatch):
     source, bundle, context, trajectory, _ = bundle_case
+    from molgap.family_training_recipe import aux_ema_names
+    _, _, model_role, pred_role, model_file, pred_file, _ = aux_ema_names(.9999)
+    torch.save({"model": {"weight": torch.ones(1)}, "weights": "ema-0.9999"}, source / model_file)
+    torch.save({"prediction_eV": torch.ones(3)}, source / pred_file)
+    bundle = tmp_path / "auxiliary-bundle"
+    transport.create_resume_bundle(source, context, trajectory, bundle)
     before = {path.name: path.read_bytes() for path in source.iterdir()}
     report = transport.validate_resume_bundle(bundle, context=context, trajectory=trajectory)
     assert report["status"] == "TRANSPORT_VERIFIED"
+    assert all(report["manifest"]["artifacts"][role]["required"] for role in (model_role, pred_role))
     assert "pending_absolute" not in report["manifest"]["cursor"]
     assert "weight_state" not in report["manifest"]["cursor"]
     # Pre-fix bundles retained this empty JSON field; remain readable unchanged.
