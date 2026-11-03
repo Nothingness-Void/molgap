@@ -1,0 +1,120 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "k1-init-noise-100k-s45-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-k1-init-noise-100k-s45-init_s45-planned"
+      ],
+      "evidence_refs": [
+        "experiments/k1_init_noise_server_100k/generated/03d343532a85fa2ea0accc8092f9a46f34ab530962ec60c89b53b42962c9e47a/init_s45/recipe.json"
+      ],
+      "run_ids": [
+        "k1-init-noise-100k-s45:init_s45:downstream"
+      ],
+      "source_commit": "67f4852b9e748c14da4617977a3eb771ac35691b",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/k1_init_noise_server_100k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_init_noise_server_100k/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "k1-init-noise-server-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/k1_init_noise_server_100k/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/rml_decision_snapshots/3c7eaeefe1fc1a47fca1d460793f0a91b23ec05c5d73bf382327bf7c28aa1dff.json",
+    "snapshot_sha256": "3c7eaeefe1fc1a47fca1d460793f0a91b23ec05c5d73bf382327bf7c28aa1dff",
+    "state_timestamp": "2026-11-03T14:26:13.840190+00:00"
+  },
+  "family_id": "k1-init-noise-server-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Data order or dropout noise dominates init noise",
+      "Five initial states still underestimate full seed variance",
+      "Kaggle hardware nondeterminism adds run-to-run drift"
+    ],
+    "changed_mechanism": "initialization-seed-noise",
+    "cheapest_falsifier": "One T4x2 session, two init-only replicates of the frozen K1 post-BN recipe, one arm per device.",
+    "decision_changed_if_negative": "Measurement only, no gate: if either arm fails, report the available seeds as measured and run no successor, retry outside the infrastructure rule, extra seed or scale-up.",
+    "decision_changed_if_positive": "Measurement only, no gate: report per-seed selected MAE (n=5), range, sample SD with chi-square 95% CI, paired-delta SD and the ratio of the 3 meV gate to it, for a human reading of past and future screens.",
+    "expected_native_cost_ref": "cost-T-k1-init-noise-100k-s45-init_s45-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-k1-init-noise-100k-s45-init_s45",
+    "observed_deficiency": "K1 100K screens are single-seed. Three initial states (42, 43, 44) span 1.63 meV, while recent screen effects are below 1 meV (decay timescale -0.19 meV); n=3 cannot estimate the noise floor that the 3 meV gate is read against.",
+    "related_closed_family_ids": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "How much does the selected development MAE of the K1 post-BN 100K recipe vary with the initial weights alone (torch seeds 45 and 46, added to measured seeds 42, 43 and 44)?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/k1_init_noise_server_100k/authority.json",
+    "contract_refs": [
+      "experiments/k1_init_noise_server_100k/generated/03d343532a85fa2ea0accc8092f9a46f34ab530962ec60c89b53b42962c9e47a/init_s45/recipe.json",
+      "experiments/k1_init_noise_server_100k/init_s45/data_declaration.json",
+      "experiments/k1_init_noise_server_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-spd-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-k1-chem-typed-pair-token-100k-s42",
+      "TC-k1-spd-pair-token-100k-s42",
+      "TC-k1-mose-residual-gate-100k-s42"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/k1_init_noise_server_100k/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "init_s45",
+      "comparison_role": "reference",
+      "logical_run_id": "k1-init-noise-100k-s45",
+      "reference_arm_id": "init_s45",
+      "reference_trajectory_id": "T-k1-init-noise-100k-s45-init_s45",
+      "reference_trajectory_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "7594d3dfc293d1cddcd385222df416868dfbc4b43dc32b09f502dca71aefa517"
+    },
+    "source_commit": "67f4852b9e748c14da4617977a3eb771ac35691b",
+    "source_config_identity": "8a2f33f3d91852ee4667cf0f9aa6726bb6047d5bbbfa406a731344dfde7cd129"
+  },
+  "track": "B",
+  "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+}
