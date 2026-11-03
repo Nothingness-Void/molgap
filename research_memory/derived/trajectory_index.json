@@ -1,7 +1,711 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "8629b68840708290016165e17f9acae13abf5145105c9e0db21c18698f9e7865",
+  "source_digest": "449cdc7546e3325cb53366d4eb2f2074afc56fef0bb408658eab769d9e7d226d",
   "trajectories": [
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/esa_count_persistence_100k/results/completed_v2/decision.md",
+      "family_id": "esa-count-persistence-repair-100k",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_count/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      ],
+      "track": "C",
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/esa_count_persistence_100k/results/completed_v2/decision.md",
+      "family_id": "esa-count-persistence-repair-100k",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-r2/prospective/esa_reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      ],
+      "track": "C",
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/esa_count_persistence_100k/protocol.md",
+      "family_id": "esa-count-persistence-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-v1-v2/prospective/esa_count/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-v1-v2-esa_count"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/esa_count_persistence_100k/protocol.md",
+      "family_id": "esa-count-persistence-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/esa_count_persistence_100k/runs/esa-count-persistence-k2-100k-s42-v1-v2/prospective/esa_reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-esa-count-persistence-k2-100k-s42-v1-v2-esa_reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr1e4/decision.json",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "STOP_FOR_COST",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr1e4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "esa-lr-attribution-100k-s42-v1-lr1e4-partial"
+      ],
+      "track": "B",
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/lr/results/partial_2026_10_21/lr3e4/decision.json",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "STOP_FOR_COST",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/esa-lr-attribution-100k-s42-v1/prospective/lr3e4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "esa-lr-attribution-100k-s42-v1-lr3e4-partial"
+      ],
+      "track": "B",
+      "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/wd/results/partial_2026_10_21/reference/decision.json",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "STOP_FOR_COST",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/esa-wd-attribution-100k-s42-v1/prospective/reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "esa-wd-attribution-100k-s42-v1-reference-partial"
+      ],
+      "track": "B",
+      "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/esa_attribution/wd/results/partial_2026_10_21/wd1e3/decision.json",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "STOP_FOR_COST",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/esa-wd-attribution-100k-s42-v1/prospective/wd1e3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "esa-wd-attribution-100k-s42-v1-wd1e3-partial"
+      ],
+      "track": "B",
+      "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/results/completed_r3/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "CLOSED",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference"
+      ],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/results/completed_r3/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/wd1e3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      ],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-v1/prospective/reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-v1-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "family_id": "k1-decay-timescale-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-v1/prospective/wd1e3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-v1-wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/protocol.md",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-configured-100k-s42-v2/prospective/esa_native_v3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-modern2d-configured-100k-s42-v2-esa_native_v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/protocol.md",
+      "family_id": "modern2d-configured-100k-screen",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-configured-100k-s42-v2/prospective/ppgt_author_v2/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-modern2d-configured-100k-s42-v2-ppgt_author_v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_identity3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_identity3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot1-s42-v1/prospective/esa_lr3/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-esa-research-slot1-s42-v1-esa_lr3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_identity1/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-esa-research-slot2-s42-v1-esa_identity1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-esa-research-slot2-s42-v1/prospective/esa_lr1/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-esa-research-slot2-s42-v1-esa_lr1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/execution_repair/results/bootstrap_failure_v1/decision.md",
+      "family_id": "modern2d-execution-repair",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v1/prospective/esa/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-execution-repair-s42-v1-esa-bootstrap-failure"
+      ],
+      "track": "B",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v1-esa"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/execution_repair/results/bootstrap_failure_v1/decision.md",
+      "family_id": "modern2d-execution-repair",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v1/prospective/ppgt/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure"
+      ],
+      "track": "B",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v1-ppgt"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+      "family_id": "modern2d-execution-repair",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/esa/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-execution-repair-s42-v2-esa-accepted"
+      ],
+      "track": "B",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/execution_repair/retry_v2/results/decision.md",
+      "family_id": "modern2d-execution-repair",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-execution-repair-s42-v2/prospective/ppgt/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-execution-repair-s42-v2-ppgt-accepted"
+      ],
+      "track": "B",
+      "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-ppgt-research-slot1-s42-v1/prospective/ppgt_base/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-ppgt-research-slot1-s42-v1-ppgt_base"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-ppgt-research-slot1-s42-v1/prospective/ppgt_mean/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-ppgt-research-slot1-s42-v1-ppgt_mean"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-ppgt-research-slot2-s42-v1/prospective/ppgt_both/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-ppgt-research-slot2-s42-v1-ppgt_both"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/research_arms/protocol.md",
+      "family_id": "modern2d-research-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-ppgt-research-slot2-s42-v1/prospective/ppgt_scale/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-ppgt-research-slot2-s42-v1-ppgt_scale"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/prepared_pair/protocol.md",
+      "family_id": "modern2d-prepared-execution-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-prepared-pair-100k-s42-v1-v2/prospective/esa_native/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-prepared-pair-100k-s42-v1-v2-esa_native"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/prepared_pair/protocol.md",
+      "family_id": "modern2d-prepared-execution-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/modern2d-prepared-pair-100k-s42-v1-v2/prospective/ppgt_mean/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-prepared-pair-100k-s42-v1-v2-ppgt_mean"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/retry_v2/decision.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r2/prospective/esa_count_500k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r2-esa_count_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/retry_v2/decision.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r2/prospective/ppgt_mean_500k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r2-ppgt_mean_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/results/completed_v3/decision.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/esa_count_500k/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      ],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/results/completed_v3/decision.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-r3/prospective/ppgt_mean_500k/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      ],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/protocol.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-v1/prospective/esa_count_500k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-v1-esa_count_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/protocol.md",
+      "family_id": "modern2d-scale500k-family-rescue",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/runs/modern2d-scale500k-k2-s42-v1/prospective/ppgt_mean_500k/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-k2-s42-v1-ppgt_mean_500k"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/decision.md",
+      "family_id": "modern2d-scale500k-input-export",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/cpu/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-selected-export-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_scale500k/decision.md",
+      "family_id": "modern2d-scale500k-input-metadata",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_scale500k/cpu/metadata_rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-scale500k-selected-metadata-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_structure_100k/protocol.md",
+      "family_id": "modern2d-structure-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_structure_100k/runs/modern2d-structure-100k-s42-v1/prospective/esa_count/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-structure-100k-s42-v1-esa_count"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_structure_100k/protocol.md",
+      "family_id": "modern2d-structure-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_structure_100k/runs/modern2d-structure-100k-s42-v1/prospective/ppgt_content/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-structure-100k-s42-v1-ppgt_content"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_structure_100k/kaggle2/release.md",
+      "family_id": "modern2d-structure-k2-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/esa_count/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-structure-k2-100k-s42-v1-esa_count"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_structure_100k/kaggle2/release.md",
+      "family_id": "modern2d-structure-k2-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_structure_100k/runs/modern2d-structure-k2-100k-s42-v1/prospective/ppgt_content/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-modern2d-structure-k2-100k-s42-v1-ppgt_content"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/ppgt_capacity500k/protocol.md",
+      "family_id": "ppgt-capacity500k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1/prospective/ppgt_w192/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-ppgt_w192"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/ppgt_capacity500k/protocol.md",
+      "family_id": "ppgt-capacity500k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1/prospective/ppgt_w384/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-ppgt_w384"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/ppgt_capacity500k/protocol.md",
+      "family_id": "ppgt-capacity500k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1-v3/prospective/ppgt_w192/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w192"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/ppgt_capacity500k/protocol.md",
+      "family_id": "ppgt-capacity500k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/ppgt_capacity500k/runs/ppgt-capacity500k-k2-s42-v1-v3/prospective/ppgt_w384/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "T-ppgt-capacity500k-k2-s42-v1-v3-ppgt_w384"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/results/bootstrap_failure_v1/decision.json",
+      "family_id": "ppgt-execution-profile",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v1/prospective/ppgt_author_v2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ppgt-execution-profile-s42-v1-bootstrap-failure"
+      ],
+      "track": "B",
+      "trajectory_id": "T-ppgt-execution-profile-s42-v1-ppgt_author_v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_configured_100k/ppgt_profile/retry_v2/results/accepted_profile/decision.json",
+      "family_id": "ppgt-execution-profile",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_configured_100k/runs/ppgt-execution-profile-s42-v2/prospective/ppgt_author_v2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ppgt-execution-profile-s42-v2-accepted"
+      ],
+      "track": "B",
+      "trajectory_id": "T-ppgt-execution-profile-s42-v2-ppgt_author_v2"
+    },
     {
       "completeness_status": "partial",
       "decision_ref": "experiments/pcqm_gptrans_prenorm_500k_v5/decision.md",
@@ -35,6 +739,242 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-pair-token-500k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/gptrans/decision.json",
+      "family_id": "family-workflow-trial",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/family_workflow_trial_100k/gptrans/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "family-workflow-trial-gptrans-100k-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/family_workflow_trial_100k/results/accepted_workflow_trial_v1/k1/decision.json",
+      "family_id": "family-workflow-trial",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/family_workflow_trial_100k/k1/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "family-workflow-trial-k1-100k-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v1.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/carry/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v2.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-carry-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/carry/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/protocol.md",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-carry-100k-s42",
+        "TC-gptrans-aggregate-carry-100k-s42-r2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/carry/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v1.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v2.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-correspondence-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/correspondence/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/protocol.md",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-correspondence-100k-s42",
+        "TC-gptrans-aggregate-correspondence-100k-s42-r2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/correspondence/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v1.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v2.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-cycle-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/cycle/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/protocol.md",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-cycle-100k-s42",
+        "TC-gptrans-aggregate-cycle-100k-s42-r2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/cycle/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v1.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/reference/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/bootstrap_failure_v2.json",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-reference-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/reference/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42-r2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/protocol.md",
+      "family_id": "gptrans-aggregate-research-campaign",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-reference-100k-s42",
+        "TC-gptrans-aggregate-reference-100k-s42-r2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/reference/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42-r2-r3"
     },
     {
       "completeness_status": "complete",
@@ -811,6 +1751,130 @@
       "trajectory_id": "TC-gptrans-g1-scale500k-qualification-s42"
     },
     {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md",
+      "family_id": "gptrans-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-optimized-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md",
+      "family_id": "gptrans-execution-followup",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-optimized-100k-s42-v2"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md",
+      "family_id": "gptrans-execution-followup",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-optimized-100k-s42-v3"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md",
+      "family_id": "gptrans-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-original-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md",
+      "family_id": "gptrans-execution-followup",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-original-100k-s42-v2"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md",
+      "family_id": "gptrans-execution-followup",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-infrastructure-original-100k-s42-v3"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "family_id": "gptrans-shared-cycle-pair",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/cycle_common/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-shared-cycle-common-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "family_id": "gptrans-shared-cycle-pair",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-shared-local-reference-100k-s42"
+    },
+    {
       "completeness_status": "partial",
       "decision_ref": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md",
       "family_id": "gptrans-runtime-profiling",
@@ -1164,6 +2228,70 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-functional-group-token-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md",
+      "family_id": "k1-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/results/decision_2026-10-15.md",
+      "family_id": "k1-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42-v2"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md",
+      "family_id": "k1-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-infrastructure-original-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/results/decision_2026-10-15.md",
+      "family_id": "k1-infrastructure-execution",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-infrastructure-original-100k-s42-v2"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
     },
     {
       "completeness_status": "complete",
@@ -1806,6 +2934,162 @@
       ],
       "track": "C",
       "trajectory_id": "TC-metagin-2d-3hop-100k-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/esa_native_v3/decision.json",
+      "family_id": "modern2d-formal-100k-reference-screen",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_100k_formal_screen/esa_native_v3/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md",
+      "family_id": "modern2d-formal-100k-reference-screen-retry-v2",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_100k_formal_screen/retry_v2/esa_native_v3/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_100k_formal_screen/results/preflight_terminal_v1/ppgt_author_v2/decision.json",
+      "family_id": "modern2d-formal-100k-reference-screen",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_100k_formal_screen/ppgt_author_v2/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_100k_formal_screen/retry_v2/STATUS.md",
+      "family_id": "modern2d-formal-100k-reference-screen-retry-v2",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_100k_formal_screen/retry_v2/ppgt_author_v2/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/STATUS.md",
+      "family_id": "modern2d-native-qualification",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/esa_native_v3/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/STATUS.md",
+      "family_id": "modern2d-native-qualification-retry-v2",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-modern2d-qualification-esa_native_v3-s42-v1"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/retry_v2/esa_native_v3/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/esa_native_v3/decision.json",
+      "family_id": "modern2d-native-qualification-retry-v4",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-modern2d-qualification-esa_native_v3-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/retry_v4/esa_native_v3/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-qualification-esa_native_v3-s42-v4"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/STATUS.md",
+      "family_id": "modern2d-native-qualification",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/ppgt_author_v2/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/STATUS.md",
+      "family_id": "modern2d-native-qualification-retry-v2",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-modern2d-qualification-ppgt_author_v2-s42-v1"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/retry_v2/ppgt_author_v2/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v4/results/qualification_terminal/ppgt_author_v2/decision.json",
+      "family_id": "modern2d-native-qualification-retry-v4",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-modern2d-qualification-ppgt_author_v2-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/modern2d_model_integration/native_preflight/retry_v4/ppgt_author_v2/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "modern2d-qualification-ppgt_author_v2-s42-v4"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
     },
     {
       "completeness_status": "partial",

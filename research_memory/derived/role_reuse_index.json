@@ -1,7 +1,987 @@
 {
-  "ambiguous_historical_role_record_count": 491,
+  "ambiguous_historical_role_record_count": 693,
   "coarse_historical_role_records": [
     {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "role_identity": null,
+      "role_name": "train_500k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "role_identity": null,
+      "role_name": "train_500k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-gptrans-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-workflow-trial-k1-100k-s42-v1",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-esa-accepted",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-esa_native_v3-s42-v4",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "modern2d-qualification-ppgt_author_v2-s42-v4",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-gptrans-author-degree-scale-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -1346,6 +2326,216 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -1914,6 +3104,146 @@
     },
     {
       "evidence_id": "pcqm-k1-functional-group-token-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42-v2",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-infrastructure-original-100k-s42-v2",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -3418,6 +4748,90 @@
       "state": "unknown"
     },
     {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "audit",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "common_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ppgt-execution-profile-s42-v2-accepted",
+      "role_identity": null,
+      "role_name": "train_100k",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "v5-legacy-evidence-migration-2026-09-17",
       "role_identity": null,
       "role_name": "official_validation",
@@ -3439,14 +4853,177 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 427,
+  "explicit_role_event_count": 565,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
+    "common_dev",
+    "development",
     "internal_development",
     "internal_development_100000_150000",
-    "internal_development_500000_550000"
+    "internal_development_500000_550000",
+    "train_100k"
   ],
   "identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b:internal_development_100k": [
       {
         "access_kind": "labels_read",
@@ -3541,6 +5118,448 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40:train_500k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-ppgt-execution-profile-s42-v2-ppgt_author_v2-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-ppgt-execution-profile-s42-v2-ppgt_author_v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-ppgt-execution-profile-s42-v2-ppgt_author_v2-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-ppgt-execution-profile-s42-v2-ppgt_author_v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-qualification-esa_native_v3-s42-v4-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-qualification-esa_native_v3-s42-v4-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323:common_dev": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
       }
     ],
     "ogb-train-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500k_550k": [
@@ -4834,6 +6853,174 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
@@ -5692,6 +7879,216 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-g1-local-triplet-product-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [
@@ -6505,6 +8902,30 @@
   },
   "protected_roles_reported_untouched": {
     "official_validation": [
+      "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "family-workflow-trial-gptrans-100k-s42-v1",
+      "family-workflow-trial-k1-100k-s42-v1",
+      "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "modern2d-execution-repair-s42-v2-esa-accepted",
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "modern2d-qualification-esa_native_v3-s42-v4",
+      "modern2d-qualification-ppgt_author_v2-s42-v4",
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
@@ -6542,6 +8963,12 @@
       "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
       "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
       "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "pcqm-gptrans-infrastructure-original-100k-s42",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v3",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-source-dependence-s42-v1",
@@ -6560,6 +8987,10 @@
       "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "pcqm-k1-infrastructure-original-100k-s42",
+      "pcqm-k1-infrastructure-original-100k-s42-v2",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
@@ -6593,9 +9024,35 @@
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
       "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
-      "pcqm-metagin-2d-3hop-100k-s42-v2"
+      "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "ppgt-execution-profile-s42-v2-accepted"
     ],
     "test_challenge": [
+      "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "family-workflow-trial-gptrans-100k-s42-v1",
+      "family-workflow-trial-k1-100k-s42-v1",
+      "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "modern2d-execution-repair-s42-v2-esa-accepted",
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "modern2d-qualification-esa_native_v3-s42-v4",
+      "modern2d-qualification-ppgt_author_v2-s42-v4",
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
@@ -6633,6 +9090,12 @@
       "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
       "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
       "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "pcqm-gptrans-infrastructure-original-100k-s42",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v3",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-source-dependence-s42-v1",
@@ -6651,6 +9114,10 @@
       "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "pcqm-k1-infrastructure-original-100k-s42",
+      "pcqm-k1-infrastructure-original-100k-s42-v2",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
@@ -6684,9 +9151,35 @@
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
       "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
-      "pcqm-metagin-2d-3hop-100k-s42-v2"
+      "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "ppgt-execution-profile-s42-v2-accepted"
     ],
     "test_dev": [
+      "esa-lr-attribution-100k-s42-v1-lr1e4-partial",
+      "esa-lr-attribution-100k-s42-v1-lr3e4-partial",
+      "esa-wd-attribution-100k-s42-v1-reference-partial",
+      "esa-wd-attribution-100k-s42-v1-wd1e3-partial",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_count",
+      "ev-terminal-T-esa-count-persistence-k2-100k-s42-r2-esa_reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-esa_count_500k",
+      "ev-terminal-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k",
+      "family-workflow-trial-gptrans-100k-s42-v1",
+      "family-workflow-trial-k1-100k-s42-v1",
+      "modern2d-execution-repair-s42-v1-esa-bootstrap-failure",
+      "modern2d-execution-repair-s42-v1-ppgt-bootstrap-failure",
+      "modern2d-execution-repair-s42-v2-esa-accepted",
+      "modern2d-execution-repair-s42-v2-ppgt-accepted",
+      "modern2d-formal-100k-esa_native_v3-s42-v1-preflight-failure",
+      "modern2d-formal-100k-ppgt_author_v2-s42-v1-preflight-failure",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_base-partial",
+      "modern2d-ppgt-research-slot1-s42-v1-ppgt_mean-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_both-partial",
+      "modern2d-ppgt-research-slot2-s42-v1-ppgt_scale-partial",
+      "modern2d-qualification-esa_native_v3-s42-v4",
+      "modern2d-qualification-ppgt_author_v2-s42-v4",
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
@@ -6724,6 +9217,12 @@
       "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
       "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
       "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-optimized-100k-s42-v3",
+      "pcqm-gptrans-infrastructure-original-100k-s42",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v2",
+      "pcqm-gptrans-infrastructure-original-100k-s42-v3",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-source-dependence-s42-v1",
@@ -6742,6 +9241,10 @@
       "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
       "pcqm-k1-degree-balance-100k-s42",
       "pcqm-k1-functional-group-token-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42",
+      "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "pcqm-k1-infrastructure-original-100k-s42",
+      "pcqm-k1-infrastructure-original-100k-s42-v2",
       "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
       "pcqm-k1-joint-atom-post100k-audit-s42-v3",
       "pcqm-k1-linear-attention-100k-s42",
@@ -6775,10 +9278,240 @@
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
       "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
-      "pcqm-metagin-2d-3hop-100k-s42-v2"
+      "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "ppgt-execution-profile-s42-v1-bootstrap-failure",
+      "ppgt-execution-profile-s42-v2-accepted"
     ]
   },
   "repeatedly_selected_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323:common_dev": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      }
+    ],
     "ogb-train-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500k_550k": [
       {
         "access_kind": "labels_read",
@@ -7516,6 +10249,183 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_development-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
@@ -8441,6 +11351,608 @@
     ]
   },
   "reused_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-reference-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-k1-decay-timescale-100k-s42-r3-wd1e3-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-family-workflow-trial-gptrans-100k-s42-v1-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-gptrans-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-family-workflow-trial-k1-100k-s42-v1-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-family-workflow-trial-k1-100k-s42-v1"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:26dacde10b68eccb321103de6d2516b746bddb6700f2d120f870df1ada80fc40:train_500k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-train_500k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-train_500k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-train_100k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-train_100k-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-train_100k-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-train_100k-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-esa-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-esa"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-execution-repair-s42-v2-ppgt-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-execution-repair-s42-v2-ppgt"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-ppgt-execution-profile-s42-v2-ppgt_author_v2-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-ppgt-execution-profile-s42-v2-ppgt_author_v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-ppgt-execution-profile-s42-v2-ppgt_author_v2-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-ppgt-execution-profile-s42-v2-ppgt_author_v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-qualification-esa_native_v3-s42-v4-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-qualification-esa_native_v3-s42-v4-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-qualification-ppgt_author_v2-s42-v4-scratch-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v4"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_100k": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-formal-100k-esa_native_v3-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-esa_native_v3-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-modern2d-formal-100k-ppgt_author_v2-s42-v1"
+      }
+    ],
+    "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077:df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323:common_dev": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_count-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_count"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-esa-count-persistence-k2-100k-s42-r2-esa_reference-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-count-persistence-k2-100k-s42-r2-esa_reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr1e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr1e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-lr-attribution-100k-s42-v1-lr3e4-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-lr-attribution-100k-s42-v1-lr3e4"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-reference-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-esa-wd-attribution-100k-s42-v1-wd1e3-common_dev-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-esa-wd-attribution-100k-s42-v1-wd1e3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-esa_count_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k-common_dev-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-ppgt_mean_500k"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269:internal_development": [
       {
         "access_kind": "labels_read",
@@ -9621,6 +13133,183 @@
         "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_development-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
       {
         "access_kind": "labels_read",
@@ -10477,6 +14166,216 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-g1-local-triplet-product-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:official_train_prefix_0_100000": [

@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "unknown",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/k1_decay_timescale_100k/generated/b3da4efce052e658c585e5d6a5b1f6b602cfd9c5dd874316890a40452487551a/wd1e3/recipe.json",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/k1_decay_timescale_100k/generated/b3da4efce052e658c585e5d6a5b1f6b602cfd9c5dd874316890a40452487551a/wd1e3/recipe.json",
+  "reference_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+  "run_id": "k1-decay-timescale-100k-s42-r3:wd1e3:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/wd1e3/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/wd1e3/rml_finalized/trace.json",
+  "trace_artifact_sha256": "b7465642591c852283d9534594c1390fdc9502cdee047f9f487050f261824d4e",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-wd1e3",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

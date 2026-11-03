@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "4beb6b105727da2e8b13f5d3ff04afe526fa5d7c14522e8662415093f0ac1a5d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "9c0d0cce8c2aaca4a679934585b56e677e9b60ddec05bac33725818938bec4b6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/_execution/reference/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "9c0d0cce8c2aaca4a679934585b56e677e9b60ddec05bac33725818938bec4b6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "a38fb72b68dfd86c8fe9bc77bbeb4effe048e412d2e43ffebecd0c0b368c3ca1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "0242847aaec73a94e390e812fa0a2c7bcd48507916e7e368421aa94c92a25a58"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "4d4e6bb2a86ae88ea0f2507b4c68c5addf7c2e2b78d93ffae16f0e03aaa47c12"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "d2f5bfbb9a4680850c858fab6dac36b5164ae265824e3c1e45b08dfb999e5409"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "ebaf4b364091e78293df13aeb5fe085fc766ff15bea33664fd5431bfda1b0575"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "0e05404b59d60ee1712bd89e118aab4dba7229a14fcdb9f824440b40b04eb641"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "b7ee488c5865f9eeb3c1f27b3cb95f55fad7d677fcc748b671688eb7d1b7c6bc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "9deef38b4c515b2fb5f7f0f1b4e55ee6fa1c31d896f0c84c277e35a2752717ac"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r3/v1/version1/reference/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "a66b68f7a72ec6292b9be7b2f5d69d72ca8bc2076df64dff867aa9bece5bada0"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_decay_timescale_100k/results/completed_r3/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_decay_timescale_100k/generated/b3da4efce052e658c585e5d6a5b1f6b602cfd9c5dd874316890a40452487551a/reference/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1412944608205557,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/reference/terminal_staging/v1/635b2859f2a56544/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "C"
+}

@@ -1,5 +1,7 @@
 # Execution status
 
+**Closed 2026-11-03.** The third attempt (`k1-decay-timescale-100k-s42-r3`, Kaggle2 kernel 142433892 version 1) completed both arms and passed strict mechanical verification; its reference closes `CLOSED` and `wd1e3` closes `INCONCLUSIVE` (selected-MAE difference -0.19 meV, row interval including 0, frozen 3 meV gate not met). See the [terminal decision](results/completed_r3/decision.md). The first attempt failed for an infrastructure reason; the second trained but cannot be strictly accepted (its traces omitted two fields) and stays unclosed. The sections below are the history of those two attempts.
+
 On 2026-11-02 Kaggle2 `kaseichou/molgap-k1-decay-timescale-100k-s42` kernel142216564 version1 (original run `k1-decay-timescale-100k-s42-v1` attempt `v1`; journal `E:/MolGap/artifacts/runs/k1-decay-timescale-100k-s42-v1/v1/operations/submission_state.json`) ended with scheduler status ERROR after about 6398 s wall on T4x2 (about 3.55 allocated T4-hours).
 
 - Both arms passed preflight. `wd1e3` trained 40/40 passes, but its owning output check returned BLOCKED (`Development target identity mismatch`): the training worker did not bind the frozen float32 target identity carried by the launch, so development targets were hashed as float64.

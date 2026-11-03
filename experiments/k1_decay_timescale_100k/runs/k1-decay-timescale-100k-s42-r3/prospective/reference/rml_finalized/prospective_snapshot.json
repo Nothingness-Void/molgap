@@ -1,0 +1,116 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "k1-decay-timescale-100k-s42-r3-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-k1-decay-timescale-100k-s42-r3-reference-planned"
+      ],
+      "evidence_refs": [
+        "experiments/k1_decay_timescale_100k/generated/b3da4efce052e658c585e5d6a5b1f6b602cfd9c5dd874316890a40452487551a/reference/recipe.json"
+      ],
+      "run_ids": [
+        "k1-decay-timescale-100k-s42-r3:reference:downstream"
+      ],
+      "source_commit": "c8cf7d1f24332169aa36a28a3040a20e16aef0bf",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_SCREEN",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_decay_timescale_100k/retry_v3/authority.json",
+    "chosen_action": "RUN_SCREEN",
+    "policy_id": "k1-decay-timescale-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/rml_decision_snapshots/e09e3691df5424a26fe8c7b3bea84be767caed98b2d366d88b8d2990796c3e93.json",
+    "snapshot_sha256": "e09e3691df5424a26fe8c7b3bea84be767caed98b2d366d88b8d2990796c3e93",
+    "state_timestamp": "2026-11-03T05:11:35.075050+00:00"
+  },
+  "family_id": "k1-decay-timescale-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Both coefficients are ineffective at this LR and exposure.",
+      "Lower decay preserves useful chemical features.",
+      "A single reused development role and seed cannot establish scale transfer."
+    ],
+    "changed_mechanism": "adamw-weight-decay-timescale",
+    "cheapest_falsifier": "One paired seed42 fixed100K optimizer comparison, no new model code or data.",
+    "decision_changed_if_negative": "Close this coefficient contrast without a new grid.",
+    "decision_changed_if_positive": "Retain only a qualified within-pair positive with favorable last-five/final evidence; no automatic scaling or seeds.",
+    "expected_native_cost_ref": "cost-T-k1-decay-timescale-100k-s42-r3-reference-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-k1-decay-timescale-100k-s42-r3-reference",
+    "observed_deficiency": "Small 100K architecture gains often fade across cohorts; triplet communication fits training better after its best development endpoint. Test optimizer regularization separately before adding model capacity. This is a hypothesis transfer, not proof that K1 is underregularized.",
+    "related_closed_family_ids": [
+      "gptrans-all-parameter-wd001-at-100k",
+      "ppgt-width-only-expansion"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+      "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does increasing AdamW decay from the unchanged post-BN K1 preset coefficient1e-5 to1e-3 improve late generalization at identical exposure?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/k1_decay_timescale_100k/retry_v3/authority.json",
+    "contract_refs": [
+      "experiments/k1_decay_timescale_100k/generated/b3da4efce052e658c585e5d6a5b1f6b602cfd9c5dd874316890a40452487551a/reference/recipe.json",
+      "experiments/presets/k1-post-bn-100k-data.json",
+      "experiments/k1_decay_timescale_100k/retry_v3/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+      "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "reference",
+      "comparison_role": "reference",
+      "logical_run_id": "k1-decay-timescale-100k-s42-r3",
+      "reference_arm_id": "reference",
+      "reference_trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference",
+      "reference_trajectory_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r3/prospective/reference/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "86471c9a3245ce25fd10182af53ee85e2528c5faa34e2014748084bc3a42ac68"
+    },
+    "source_commit": "c8cf7d1f24332169aa36a28a3040a20e16aef0bf",
+    "source_config_identity": "53175cc2b3e8bc89f78d77c28dca06af22a59521b3aa5e8dc817db18ae64cb98"
+  },
+  "track": "C",
+  "trajectory_id": "T-k1-decay-timescale-100k-s42-r3-reference"
+}
