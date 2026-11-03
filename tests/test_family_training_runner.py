@@ -99,6 +99,10 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
     assert (outputs.root / "development_predictions.pt").is_file() == development
     assert ("development_mae_eV" in report["observed"]) == development
+    # A reference-mode pass row carries the LR it updated with and its checkpoint.
+    rows = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))["observations"]
+    assert all(row["learning_rate"] is not None and row["checkpoint_identity"] is not None
+               for row in rows if float(row["epoch_or_pass"]).is_integer())
     if report_ema:
         trace = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))
         assert trace["metric_semantics"]["live_dev_metric"]["weights"] == "live"

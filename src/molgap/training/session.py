@@ -222,6 +222,7 @@ class FamilyTrainingSession:
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
         self.best, self.selected_step = None, None
+        self._last_update_learning_rates = None
         self.closed = False
 
     def _flush_metrics(self):
@@ -384,6 +385,7 @@ class FamilyTrainingSession:
                     elif weights == "ema":
                         ema_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
         metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
+        metrics["learning_rates_used"] = self._last_update_learning_rates
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
         if ema_evaluation is not None:
@@ -412,6 +414,8 @@ class FamilyTrainingSession:
         if self.closed:
             raise RuntimeError("Family session is closed")
         def step(batch, *, check_finite):
+            # before_step has applied warmup; after_step/after_pass may change LR.
+            self._last_update_learning_rates = [group["lr"] for group in self.kernel.optimizer.param_groups]
             return self.kernel.step(batch, check_finite=check_finite)
         def observe(processed):
             _, absolute, rows = processed.value

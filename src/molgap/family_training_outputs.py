@@ -464,8 +464,9 @@ class SessionOutputs:
             recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
                 epoch_or_pass=progress.optimizer_step / self.recipe.loop_plan.steps_per_pass, **fields,
                 checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
-                wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
-                device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+                **({"wall_time_seconds": duration, "cumulative_wall_time_seconds": cumulative,
+                    "device_time_seconds": duration, "cumulative_device_time_seconds": cumulative}
+                    if self.bounded_pair else {}))
             if "canonical_trace.json" not in changed:
                 changed.append("canonical_trace.json")
         if changed:
@@ -505,6 +506,11 @@ class SessionOutputs:
                     {"context": self.context.to_dict(), **{key: metrics["development"][key].detach().cpu()
                         for key in ("source_idx", "target_eV", "prediction_eV")}})
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
+        used = metrics.get("learning_rates_used")
+        if used is not None:
+            if len(used) != 1:
+                raise ValueError("Canonical family trace requires the frozen single LR group")
+            fields["learning_rate"] = used[0]
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
         if metrics.get("development_live") is not None:
@@ -513,13 +519,7 @@ class SessionOutputs:
             fields["ema_dev_metric"] = metrics["development_ema"]["mae_eV"]
         if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
-        if self.bounded_pair:
-            self.pending_pass = (progress, fields)
-            return
-        recorder = deepcopy(self.stage.recorder)
-        recorder.path = self.pending / "canonical_trace.json"
-        recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
-            epoch_or_pass=progress.optimizer_step / self.recipe.loop_plan.steps_per_pass, **fields)
+        self.pending_pass = (progress, fields)
 
     def retained_state(self):
         import torch
