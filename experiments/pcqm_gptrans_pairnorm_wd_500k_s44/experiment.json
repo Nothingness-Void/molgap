@@ -1,0 +1,125 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_pairnorm_wd_500k_s44",
+  "logical_run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-02T17:20:09.837725+00:00",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/STATUS.md"
+  ],
+  "role_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/decision.md",
+  "question": {
+    "policy_id": "pcqm-gptrans-pairnorm-wd-500k-s44",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does decoupled weight-decay strength change the late-development behavior of GPTrans BondLocal plus PairNorm at500K, reproducibly across two retained initializations?",
+    "deficiency": "The retained500K curves show falling stochastic training objective with late EMA-development regression; the cause is unresolved. Init-only spread1.332meV makes a new single-initialization microgain insufficient.",
+    "changed_mechanism": "decoupled-weight-decay-strength",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "alternatives": [
+      "The late divergence is a metric/selection or EMA effect, not insufficient regularization",
+      "Stronger shrinkage hurts representation learning",
+      "The conditional effect reverses across initialization"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "pcqm-k1-tail-regularization-500k-s42",
+      "pcqm-k1-wd5e2-100k"
+    ],
+    "positive_decision": "Nominate WD0.10 only if its candidate-minus-reference selected EMA MAE is<=-0.003eV with paired-row95%CI upper<0 in both initialization pairs. Report each pair independently; this does not prove superiority to historical WD0.05.",
+    "negative_decision": "Close stronger WD when the material gate fails; inconsistent directions across pairs mean no reproducible nomination. No schedule grid, seed retry, full-data run or automatic adoption."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "A same-job low/high WD pair; repeat with another retained initialization in the second slot to reject an unstable direction.",
+    "estimated_device_hours": 21.2,
+    "estimated_wall_hours": 10.6
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "wd_low",
+      "wd_high"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "wd_low",
+    "allocated_t4_hours_ceiling": 23.8333333334,
+    "user_notebook_wall_ceiling_seconds": 43200,
+    "allocation_wall_limit_seconds": 42900,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized Kaggle1 overnight two slots/four arms on 2026-11-03 and requested timed submission with current infrastructure.",
+    "scope": "One 500K 60-pass WD0.01 versus WD0.10 pair, initial weights 44, fixed sampler/dropout42. Two slots combined quota ceiling23.8334 session-hours; no automatic retry or continuation."
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-gptrans-pairnorm-wd-500k-s44-20261103",
+      "title": "MolGap GPTrans PairNorm WD 500K S44 20261103",
+      "datasets": [
+        "nothingnessvoid/molgap-gptrans-pairnorm-wd-500k-s44-20261103-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/molgap-gptrans-pairnorm-wd-500k-s44-20261103-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 42900,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/data_declaration.json",
+      "arm_id": "init_s44"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s44.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "wd_low"
+    },
+    {
+      "arm_id": "wd_high",
+      "training": {
+        "weight_decay": 0.1
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "wd_low",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
+}
