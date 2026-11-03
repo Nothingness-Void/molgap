@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "wd_low",
+    "arm_identity": "c345407e42ba25e60466c7bb1ad098e26f6e94d8efb48d68cece4b3437b69e7d",
+    "experiment_id": "pcqm_gptrans_pairnorm_wd_500k_s44",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103",
+    "package_identity": "d76cf603517221269de53ad345479e7f310cf86dabc5f6e46ca2f4753a01a505",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-gptrans-pairnorm-wd-500k-s44-20261103",
+    "source_archive_sha256": "e8f0c2b4fbf9f273965ab983f582f457ad33011daab420d3dee1dad4354dabf6",
+    "source_commit": "975523e376097bd126b372d87a12ed8757c2a13f",
+    "spec_identity": "48b5283fc16e9cc28b651b2f154942686b036ea25f4c962ca56ce91e7a39beda",
+    "training_recipe_sha256": "ceffe536544b09ddd262a6cbc98b4481f375e3edda1b2a858cb9a1a90a530460"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "cd38ace1839b474b7b6307c569a2dd3b7790f010b2aec031c075efb2f536a960"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 cd38ace1839b474b7b6307c569a2dd3b7790f010b2aec031c075efb2f536a960, listed in output_manifest.json) shows the frozen training process opened 11 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/roles_wd_low.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/roles_wd_low.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/roles_wd_low.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/roles_wd_low.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/roles_wd_low.json",
+      "role_event_id": "role-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    }
+  ]
+}

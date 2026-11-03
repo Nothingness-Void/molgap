@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "wd_high": {
+      "decision_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/closure_facts_wd_high.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "wd_low": {
+      "decision_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/closure_facts_wd_low.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/closure_v1/audit_map.json"
+}

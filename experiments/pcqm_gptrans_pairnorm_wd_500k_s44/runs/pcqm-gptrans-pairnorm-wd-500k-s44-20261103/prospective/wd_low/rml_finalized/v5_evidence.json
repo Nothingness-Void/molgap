@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "ae0af6398875901edb9f3a67fb04d9c85904414d37ae30bd0658451c321d1396"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "8c22f35f23ae8e43712ecf084ae85e22c781dc3f6c33de43890b2de6b331f4ba"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/_execution/wd_low/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "8c22f35f23ae8e43712ecf084ae85e22c781dc3f6c33de43890b2de6b331f4ba"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/training_contract.json",
+      "name": "contract",
+      "sha256": "ceffe536544b09ddd262a6cbc98b4481f375e3edda1b2a858cb9a1a90a530460"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "cd38ace1839b474b7b6307c569a2dd3b7790f010b2aec031c075efb2f536a960"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "0168e69be91809aa16589f5b1ef0d15007d0b51380cf4b08d5d1b8d46f0aa071"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "d187ee402520e5349a646082fdd0c8b49966655cdaa58b3f88e5c903aa6191cc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "3f0067139dfe670d5324da3113a0d0f74557cb8862223f76ff10d85b36ef4bd5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "9d99fb6b4c5f026f7f9862fa7adf2a5174f0f7c040642a777d6adc1a2b37ecfa"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/v1/version1/wd_low/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "7acc405abd90f5544bf3844b96d9625809267559dfb9614aca537b58a07927ef"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/wd_low/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.10172872150421143,
+    "missing_reason": null,
+    "selected_optimizer_step": 144522,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/terminal_staging/v1/3f29fcb58e41be28/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

@@ -1,9 +1,7 @@
-# Status
+# Terminal status
 
-2026-11-03 JST: SUBMISSION_BOUND, Kaggle1 job 142336418/version1; submission receipt reports QUEUED.
-
-Kernel: nothingnessvoid/molgap-gptrans-pairnorm-wd-500k-s44-20261103.
-Run: pcqm-gptrans-pairnorm-wd-500k-s44-20261103 / v1.
-Arms: wd_low (0.01), wd_high (0.10); retained initialization44;60passes each.
-
-Luna owns read-only runtime checks. No terminal result or replay acceptance yet.
+Kaggle1 job 142336418/v1 is complete.
+Both arms finish60passes/234360steps/29998080presentations.
+Strict closure COMPLETE: native and replay VERIFIED, no exclusions; candidate comparison STRICT_CAUSAL.
+wd_low=CLOSED; wd_high=NEGATIVE_UNDER_CONTRACT. No adoption or successor.
+Decision: [decision.md](decision.md); attribution: [attribution.md](attribution.md).

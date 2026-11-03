@@ -1,0 +1,125 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-pairnorm-wd-500k-s44-20261103-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-planned",
+        "cost-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-0",
+        "cost-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/wd_low/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-pairnorm-wd-500k-s44-20261103:wd_low:downstream"
+      ],
+      "source_commit": "975523e376097bd126b372d87a12ed8757c2a13f",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/authority.json",
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "pcqm-gptrans-pairnorm-wd-500k-s44",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/rml_decision_snapshots/42e229c2d0907ee7c984bf2774277fef516cf8999a942ff5c2c575b2bf21a3b4.json",
+    "snapshot_sha256": "42e229c2d0907ee7c984bf2774277fef516cf8999a942ff5c2c575b2bf21a3b4",
+    "state_timestamp": "2026-11-02T17:20:09.837725+00:00"
+  },
+  "family_id": "pcqm-gptrans-pairnorm-wd-500k-s44",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The late divergence is a metric/selection or EMA effect, not insufficient regularization",
+      "Stronger shrinkage hurts representation learning",
+      "The conditional effect reverses across initialization"
+    ],
+    "changed_mechanism": "decoupled-weight-decay-strength",
+    "cheapest_falsifier": "A same-job low/high WD pair; repeat with another retained initialization in the second slot to reject an unstable direction.",
+    "decision_changed_if_negative": "Close stronger WD when the material gate fails; inconsistent directions across pairs mean no reproducible nomination. No schedule grid, seed retry, full-data run or automatic adoption.",
+    "decision_changed_if_positive": "Nominate WD0.10 only if its candidate-minus-reference selected EMA MAE is<=-0.003eV with paired-row95%CI upper<0 in both initialization pairs. Report each pair independently; this does not prove superiority to historical WD0.05.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+    "observed_deficiency": "The retained500K curves show falling stochastic training objective with late EMA-development regression; the cause is unresolved. Init-only spread1.332meV makes a new single-initialization microgain insufficient.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "pcqm-k1-tail-regularization-500k-s42",
+      "pcqm-k1-wd5e2-100k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does decoupled weight-decay strength change the late-development behavior of GPTrans BondLocal plus PairNorm at500K, reproducibly across two retained initializations?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/generated/68cb4226ab4b33a572c84def52552b0275ceb0ff49ed19e16cfad67916d360a4/wd_low/recipe.json",
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/data_declaration.json",
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-lr-500k-s42-pairnorm_lr1e3",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "wd_low",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-gptrans-pairnorm-wd-500k-s44-20261103",
+      "reference_arm_id": "wd_low",
+      "reference_trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "48b5283fc16e9cc28b651b2f154942686b036ea25f4c962ca56ce91e7a39beda"
+    },
+    "source_commit": "975523e376097bd126b372d87a12ed8757c2a13f",
+    "source_config_identity": "c345407e42ba25e60466c7bb1ad098e26f6e94d8efb48d68cece4b3437b69e7d"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+}

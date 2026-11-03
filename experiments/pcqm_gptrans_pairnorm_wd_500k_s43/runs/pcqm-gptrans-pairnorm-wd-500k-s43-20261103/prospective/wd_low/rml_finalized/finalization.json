@@ -1,0 +1,53 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-d777b2c8403b25d6a7ada4ff41c740efdf84eca25fb4c32f87b41545bc88c891",
+  "finalized_at": "2026-11-03T06:14:58.487854+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/closure_v1/closure_facts_wd_low.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/closure_v1/roles_wd_low.json": "5082fa70fee84cea6ea07979a1e73c67046c0ebd62443e6ed25c4497d8acf6ad",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/decision.md": "0314e9fb2d5ae62808701ae177374a237bc8a45cf0584ef3d282364a8a05b568",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/generated/122d0539365f295f52d798c5517351ad25d3e7ebac753bbdf16ff5dc7ef82c16/authority.json": "6f01bbe7844f04712059139e7e46ee6da26fdc294c20d9f4a07f44dc652025a5",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/generated/122d0539365f295f52d798c5517351ad25d3e7ebac753bbdf16ff5dc7ef82c16/wd_low/recipe.json": "d3ca75ce3876d48243cae76664616d990bd0b76f8545e8b811bc89a16f99591e",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/prospective/strict_qualification/d33f7b4c1e03c4dfbad3/wd_low/reference_bundle.json": "e3ea572a7e789b05c1d4f301e4ea62d980742aeed1809f4c8f6069d6c55d4ee9",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/prospective/wd_low/terminal_staging/v1/5a5279d4435625f7/acceptance.json": "572854bf69828d90af862429c8a265da9e5128703f65770c0838b7c869d53806",
+    "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/prospective/wd_low/terminal_staging/v1/5a5279d4435625f7/observed.json": "332aeae557216462917d4a12b032c97ed6c85beeec4bd20bd779a17ce0fad6ee",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/_execution/allocation_ledger.json": "a42a2e6d645917fb96794e5a8e172a171bc4ef73076d9d7bacf54d1885ca156d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/_execution/execution_retention.json": "cc9632fdbb1c6f0fc57c4a6174506e46901b0ad9b3dad0593b2ae5411d66c2ce",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/_execution/wd_low/allocation_ledger.json": "a42a2e6d645917fb96794e5a8e172a171bc4ef73076d9d7bacf54d1885ca156d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/canonical_trace.json": "920d3b45dd2690c4e4a4cb6d7ef827af556ec3295357563af8b1208c8c2f6f5c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/canonical_trace.json.context.json": "ecce5bd7ddf2a15aa8391b0d16359efd3bee329c3b4a135f5f855dd411a18d27",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/data_open_provenance.json": "c7c351f3feb814251a54de814b92ed3efd6ba5ed7365f6997447a1da4ea5680b",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/development_predictions.pt": "0583c99c77a961d362831113863f5ca411802ea40a162df44ec5d1628af21dec",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/last_checkpoint.pt": "5ff9b429245741e59867e464a43d9e10378bc9b181d6c909a6f5a333e4d78f31",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/output_manifest.json": "99fef55bd984e96e77ff0111ab049e89cb9379f75a650ba0fedbc8252dfe127f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/selected_model.pt": "3b3868a7bb3262b6ae8905125c79bc95ce6a098314b830eb9bc8c8ebbe4adacd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/version1/wd_low/training_contract.json": "d3ca75ce3876d48243cae76664616d990bd0b76f8545e8b811bc89a16f99591e",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/v1/reports/diagnostic_a5f6c51d66e80a034d360a072544416beab32f3cbb11b459aa8f2cdccfd9fc76.json": "452f160a165848b2dc69a4fdb1c578a934d37833ea1bccc439163390fa1e62f4"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/prospective/wd_low/trajectory.json",
+  "prospective_sha256": "121f107f15ce3b53500266b7bedcedc99610be4c95090697de4b1894155f5789",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-0.json": "b75b586409c7d0bb82cf950354f1e4dbc9d4bf64e1029a0b5285e6e55899b855",
+    "costs/cost-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-allocation-0.json": "59c5905bbd07b659db28d00413c36e61fd0181d089da06d11f58cf7fdf179a2d",
+    "roles/role-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-development-labels_read.json": "175149b6f790258c11737790de0c17632583fce5303a8554f50849d5d11f80b2",
+    "roles/role-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-development-metric_computed.json": "62e5b600ea1a67e45317c7b15ea2b6e864ea8547a19b18ee0bc74a1255be9e08",
+    "roles/role-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-development-prediction_input.json": "9259b67dc99079952c5208f814a075036f4e5805d23027704ccbe765f6d77277",
+    "roles/role-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-development-selection_used.json": "20964eaf162582a9129fec991f7ffe550c125f16063123ce34fa43034cc2291a",
+    "roles/role-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low-train-training_membership.json": "bac9e21d0f2d26d9f5b98a400421cfbdbdb9a55248ce110604bea1f94f0866f2",
+    "terminal_input.json": "83f3264230d88ff30c6b8a988fb664c733797d6f6ae50443d8000fa4d2038221",
+    "trace.json": "920d3b45dd2690c4e4a4cb6d7ef827af556ec3295357563af8b1208c8c2f6f5c",
+    "trace_manifest.json": "85e9d9b768b794e7dd9dbb5c18f092c5865468e4dcb4d495472922f1da328885",
+    "trajectory.json": "a7347a9cc770fd10b35256f6ef0d04fa9dc5205ad72f514f653768faa50cb431",
+    "v5_evidence.json": "2c6620fe3b6a23840d081df2569befd215a301e97e71a2f85a66eb3fe00b1a05"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_pairnorm_wd_500k_s43/runs/pcqm-gptrans-pairnorm-wd-500k-s43-20261103/prospective/wd_low/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "d777b2c8403b25d6a7ada4ff41c740efdf84eca25fb4c32f87b41545bc88c891",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low"
+}
