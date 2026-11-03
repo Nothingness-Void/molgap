@@ -1,9 +1,9 @@
 {
   "measured": "2026-11-01",
-  "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval and closure-facts features (format_version_strings +1 for molgap-closure-facts-v1, user-authorized); lowered by merging 27 duplicate hash helpers. 2026-11-01: docs_operations limits reset to measurement after adding RML_INTERFACES.md (user-authorized). 2026-11-01: research_memory and docs limits reset after gaps --compact, historical pointer and addon checklist (user-authorized).",
+  "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval and closure-facts features (format_version_strings +1 for molgap-closure-facts-v1, user-authorized); lowered by merging 27 duplicate hash helpers. 2026-11-01: docs_operations limits reset to measurement after adding RML_INTERFACES.md (user-authorized). 2026-11-01: research_memory and docs limits reset after gaps --compact, historical pointer and addon checklist (user-authorized). 2026-11-03: user-authorized normalization-only weight decay and independently resumable auxiliary EMA support; src_py_lines raised only to measured implementation size. File, format and default test scope counts unchanged.",
   "limits": {
     "src_py_files": 277,
-    "src_py_lines": 96076,
+    "src_py_lines": 96462,
     "research_memory_lines": 6941,
     "src_hashlib_files": 87,
     "gitattributes_text_rules": 42,

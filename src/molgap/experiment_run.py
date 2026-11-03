@@ -200,7 +200,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     resolved["mechanical_reports"] = result["arms"]
     target_transforms = None
     same_run = spec.to_dict().get("prospective", {}).get("same_run_replay")
-    if strict_inputs is not None and not read_only_strict and same_run is not None:
+    has_strict_plan = same_run is not None or resolved.get("acceptance_plan", {}).get("format") == "molgap-family-acceptance-plan-v1"
+    if strict_inputs is not None and not read_only_strict and has_strict_plan:
         from .experiment_family_workflow import resolve_strict_target_transforms
         target_transforms = resolve_strict_target_transforms(repo_root, resolved, strict_inputs)
         if target_transforms["status"] == "BLOCKED":
@@ -306,13 +307,11 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
     if strict_inputs is not None:
         from .experiment_family_workflow import qualify_same_run_terminal_packages
         active_locations = result.get("terminal_staging", {}).get("locations", resolved["locations"])
-        if same_run is not None:
+        if has_strict_plan:
             qualification = qualify_same_run_terminal_packages(repo_root, resolved, active_locations, native,
                 reports=result["arms"], strict_inputs=strict_inputs, _target_transforms=target_transforms,
                 _paired_cache=paired_cache)
         else:
-            # Historical references use their retained comparison bindings;
-            # they cannot be translated into a same-run reference declaration.
             qualification = {"locations": active_locations, "qualification_mode": "RETAINED_REFERENCE"}
         if qualification.get("status") == "BLOCKED":
             return {**result, "status": "BLOCKED", "executed": False,

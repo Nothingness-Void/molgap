@@ -184,6 +184,11 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
         roles = roles | {"trace_context"}
         if manifest["artifacts"]["trace_context"]["path"] != manifest["artifacts"]["trace"]["path"] + ".context.json":
             raise ValueError("Trace companion is not bound to the declared trace")
+    if profile.protocol == "family-session":
+        from molgap.family_training_recipe import AUX_EMA_ROLES
+        for model_role, pred_role in AUX_EMA_ROLES.values():
+            if model_role in manifest["artifacts"] or pred_role in manifest["artifacts"]:
+                roles = roles | ({model_role, pred_role} if "predictions" in manifest["artifacts"] else {model_role})
     if profile.protocol == "family-session" and "data_open" in manifest["artifacts"]:
         roles = roles | {"data_open"}
     if set(manifest["artifacts"]) != roles:
@@ -220,7 +225,7 @@ PAUSED_ARM_FILES = ("pause_receipt.json", "last_checkpoint.pt", "canonical_trace
 
 
 def retrieve_paused_arm(api, *, context: RunContext, remote_root: str, destination: Path,
-                        http_session=None, on_plan=None) -> dict:
+                        extra_files: tuple[str, ...] = (), http_session=None, on_plan=None) -> dict:
     """Fetch a paused arm's declared files at the receipt version; digests are observed at download.
 
     A paused run has no output_manifest.json, so nothing pre-pins these bytes. The
@@ -229,7 +234,7 @@ def retrieve_paused_arm(api, *, context: RunContext, remote_root: str, destinati
     """
     version = context.platform_version
     prefix = PurePosixPath(remote_root) / context.arm_id
-    files = {(prefix / name).as_posix(): (name, None) for name in PAUSED_ARM_FILES}
+    files = {(prefix / name).as_posix(): (name, None) for name in (*PAUSED_ARM_FILES, *extra_files)}
     result = retrieve_pinned_exact_files(api, context=context, remote_manifest_path=(prefix / "pause_receipt.json").as_posix(),
         files=files, destination=destination, http_session=http_session, on_plan=on_plan, observe=True)
     receipt = _json(destination / "pause_receipt.json")
@@ -326,15 +331,23 @@ def _retrieve_all_arms(argv, *, status_only=False):
             if args.paused:
                 stage = "paused_retrieval"
                 _safe_local(destination)
+                from molgap.experiment_package import read_packaged_text
+                from molgap.family_training_recipe import aux_ema_names
+                workflow = json.loads((prepared.parent / "inputs/workflow_plan.json").read_text(encoding="utf-8"))
+                arm_extras = {}
+                for job in workflow.get("arms", []):
+                    rec = json.loads(read_packaged_text(options["package_dir"], job["recipe"], _verification=verification))
+                    arm_extras[job["arm_id"]] = tuple(f for d in rec.get("auxiliary_ema_decays", []) for f in aux_ema_names(d)[4:6])
                 if not args.execute:
                     result = {"status": "READY_FOR_RETRIEVAL", "paused": True, "version": version,
-                              "files": list(PAUSED_ARM_FILES), "arms": sorted(contexts)}
+                              "files": list(PAUSED_ARM_FILES), "arms": sorted(contexts),
+                              **({"auxiliary_files": {k: list(v) for k, v in arm_extras.items() if v}} if any(arm_extras.values()) else {})}
                 else:
                     api = connect_kaggle(args.credentials)
                     if api.get_config_value(api.CONFIG_NAME_USER) != context.account:
                         raise ValueError("Credential owner differs from original receipt")
                     paused = {arm: retrieve_paused_arm(api, context=contexts[arm], remote_root=args.remote_root,
-                                                       destination=destination / arm) for arm in contexts}
+                        extra_files=arm_extras.get(arm, ()), destination=destination / arm) for arm in contexts}
                     result = {"status": "PAUSED_RETRIEVED", "version": version, "scientific_acceptance": False,
                               "arms": {arm: {"digest_basis": item["digest_basis"], "files": item["files_observed"]}
                                        for arm, item in paused.items()}}

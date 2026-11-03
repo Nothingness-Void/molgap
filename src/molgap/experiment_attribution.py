@@ -193,12 +193,25 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
     payload = torch.load(io.BytesIO(predictions_bytes), map_location="cpu", weights_only=True)
     source_idx, target, pred = (payload[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV"))
     selected_step = observed["selected_optimizer_step"]
-    selected_info = {
-        "pass_index": selected_step / recipe.loop_plan.steps_per_pass,
-        "optimizer_steps": selected_step,
-        "mae_eV": observed["development_mae_eV"],
-        "weights": observed["selected_weights"],
-    }
+    selected_info = {"pass_index": selected_step / recipe.loop_plan.steps_per_pass,
+        "optimizer_steps": selected_step, "mae_eV": observed["development_mae_eV"], "weights": observed["selected_weights"]}
+    aux_loaded = {}
+    if recipe.auxiliary_ema_decays and recipe.dataset.development:
+        from .family_training_recipe import aux_ema_names
+        for decay in recipe.auxiliary_ema_decays:
+            label, _, _, pred_role, _, _, metric_name = aux_ema_names(decay)
+            aux_bytes = inspected_bytes(pred_role)
+            aux_payload = torch.load(io.BytesIO(aux_bytes), map_location="cpu", weights_only=True)
+            aux_idx, aux_tgt, aux_pred = (aux_payload[k].detach().cpu() for k in ("source_idx", "target_eV", "prediction_eV"))
+            if not torch.equal(aux_idx, source_idx) or not torch.equal(aux_tgt, target):
+                raise ValueError("Auxiliary EMA predictions are not aligned with primary development rows")
+            aux_obs = observed["auxiliary_ema"][label]
+            astep = aux_obs["selected_optimizer_step"]
+            aux_loaded[label] = {"weights": aux_obs["selected_weights"], "metric_key": metric_name,
+                "selected_checkpoint": {"pass_index": astep / recipe.loop_plan.steps_per_pass,
+                    "optimizer_steps": astep, "mae_eV": aux_obs["development_mae_eV"], "weights": aux_obs["selected_weights"]},
+                "prediction_eV": aux_pred.numpy().astype(np.float64, copy=False),
+                "predictions_sha256": hashlib.sha256(aux_bytes).hexdigest()}
 
     timings_path = root / "epoch_step_timings.json"
     timings = _read_json(timings_path) if timings_path.is_file() else None
@@ -227,12 +240,11 @@ def _load_arm_artifacts(arm_dir: Path, *, context=None, expected=None,
         "prediction_eV": pred.numpy().astype(np.float64, copy=False),
         "timings": timings,
         "profile": profile,
-        "hashes": {
-            "output_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+        **({"auxiliary_ema": aux_loaded} if aux_loaded else {}),
+        "hashes": {"output_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
             "training_contract_sha256": hashlib.sha256(contract_bytes).hexdigest(),
             "canonical_trace_sha256": hashlib.sha256(trace_bytes).hexdigest(),
-            "development_predictions_sha256": hashlib.sha256(predictions_bytes).hexdigest(),
-        },
+            "development_predictions_sha256": hashlib.sha256(predictions_bytes).hexdigest()},
     }
 
 
@@ -679,66 +691,34 @@ def _analyze_loaded_pair(ctrl, cand, *, output_dir=None, primary_metric=None,
     row_delta = cand_abs - ctrl_abs  # negative means candidate improved
 
     # 2. Primary Paired Bootstrap & Row Win/Loss
-    paired = _compare_paired_errors(
-        ctrl_abs,
-        cand_abs,
-        threshold_eV=threshold_eV,
-        noninferiority_margin_eV=noninferiority_margin_eV,
-        n_bootstrap=n_bootstrap,
-        seed=seed,
-    )
+    paired = _compare_paired_errors(ctrl_abs, cand_abs, threshold_eV=threshold_eV,
+        noninferiority_margin_eV=noninferiority_margin_eV, n_bootstrap=n_bootstrap, seed=seed)
     row_gain = ctrl_abs - cand_abs  # positive means candidate beat control
     q25_gain, q50_gain, q75_gain = [float(v) for v in np.quantile(row_gain, [0.25, 0.50, 0.75])]
-    row_win_loss = {
-        "candidate_better_rows": int(np.sum(cand_abs < ctrl_abs)),
-        "control_better_rows": int(np.sum(cand_abs > ctrl_abs)),
-        "tie_rows": int(np.sum(cand_abs == ctrl_abs)),
+    row_win_loss = {"candidate_better_rows": int(np.sum(cand_abs < ctrl_abs)),
+        "control_better_rows": int(np.sum(cand_abs > ctrl_abs)), "tie_rows": int(np.sum(cand_abs == ctrl_abs)),
         "candidate_win_fraction": float(np.mean(cand_abs < ctrl_abs)),
-        "median_row_gain_eV": q50_gain,
-        "iqr_row_gain_eV": q75_gain - q25_gain,
-    }
+        "median_row_gain_eV": q50_gain, "iqr_row_gain_eV": q75_gain - q25_gain}
 
     # 3. Signed Error Bias & Post-hoc Constant Shift Diagnostic
     ctrl_shift, ctrl_shifted_mae = _optimal_constant_shift(ctrl_signed)
     cand_shift, cand_shifted_mae = _optimal_constant_shift(cand_signed)
     raw_delta = float(paired["mean_delta_eV"])
     shifted_delta = cand_shifted_mae - ctrl_shifted_mae
-    fraction_removed = (
-        float((raw_delta - shifted_delta) / raw_delta)
-        if abs(raw_delta) > 1e-9 else None
-    )
+    fraction_removed = float((raw_delta - shifted_delta) / raw_delta) if abs(raw_delta) > 1e-9 else None
     signed_bias = {
-        "control": {
-            "mean_signed_error_eV": float(np.mean(ctrl_signed)),
-            "median_signed_error_eV": float(np.median(ctrl_signed)),
-            "optimal_constant_shift_eV": ctrl_shift,
-            "shift_corrected_mae_eV": ctrl_shifted_mae,
-        },
-        "candidate": {
-            "mean_signed_error_eV": float(np.mean(cand_signed)),
-            "median_signed_error_eV": float(np.median(cand_signed)),
-            "optimal_constant_shift_eV": cand_shift,
-            "shift_corrected_mae_eV": cand_shifted_mae,
-        },
-        "raw_delta_eV": raw_delta,
-        "shift_corrected_delta_eV": shifted_delta,
-        "fraction_of_delta_removed_by_posthoc_shift": fraction_removed,
-    }
+        "control": {"mean_signed_error_eV": float(np.mean(ctrl_signed)), "median_signed_error_eV": float(np.median(ctrl_signed)),
+                    "optimal_constant_shift_eV": ctrl_shift, "shift_corrected_mae_eV": ctrl_shifted_mae},
+        "candidate": {"mean_signed_error_eV": float(np.mean(cand_signed)), "median_signed_error_eV": float(np.median(cand_signed)),
+                      "optimal_constant_shift_eV": cand_shift, "shift_corrected_mae_eV": cand_shifted_mae},
+        "raw_delta_eV": raw_delta, "shift_corrected_delta_eV": shifted_delta,
+        "fraction_of_delta_removed_by_posthoc_shift": fraction_removed}
 
     # 4. Quantiles & Top-20 Worst Rows
-    ctrl_q = _quantiles(ctrl_abs)
-    cand_q = _quantiles(cand_abs)
-    worst_cand_idx = np.argsort(-cand_abs)[:20]
-    worst_rows = [
-        {
-            "source_idx": int(ctrl["source_idx"][i]),
-            "target_eV": float(target[i]),
-            "control_abs_error_eV": float(ctrl_abs[i]),
-            "candidate_abs_error_eV": float(cand_abs[i]),
-            "delta_abs_error_eV": float(row_delta[i]),
-        }
-        for i in worst_cand_idx
-    ]
+    ctrl_q, cand_q = _quantiles(ctrl_abs), _quantiles(cand_abs)
+    worst_rows = [{"source_idx": int(ctrl["source_idx"][i]), "target_eV": float(target[i]),
+        "control_abs_error_eV": float(ctrl_abs[i]), "candidate_abs_error_eV": float(cand_abs[i]),
+        "delta_abs_error_eV": float(row_delta[i])} for i in np.argsort(-cand_abs)[:20]]
 
     # 5. Target Gap Stratification
     strata = _strata_table(target, ctrl_abs, cand_abs)
@@ -773,42 +753,36 @@ def _analyze_loaded_pair(ctrl, cand, *, output_dir=None, primary_metric=None,
     ctrl_name = ctrl["arm_id"]
     cand_name = cand["arm_id"]
 
+    within_ema = {}
+    for label, aux in cand.get("auxiliary_ema", {}).items():
+        aux_signed = aux["prediction_eV"] - target
+        aux_abs = np.abs(aux_signed)
+        aux_cmp = _compare_paired_errors(aux_abs, cand_abs, threshold_eV=threshold_eV,
+            noninferiority_margin_eV=noninferiority_margin_eV, n_bootstrap=n_bootstrap, seed=seed)
+        for key in ("threshold_eV", "noninferiority_margin_eV", "passes_material_gate", "passes_noninferiority_gate"):
+            aux_cmp.pop(key)
+        aux_cmp["gate_status"] = "NOT_EVALUATED"
+        within_ema[label] = {"primary_ema_decay": x_rec.get("ema_decay"), "auxiliary_ema_decay": float(label),
+            "interpretation": "WITHIN_TRAJECTORY_DESCRIPTIVE_ONLY",
+            "primary_selected_checkpoint": cand["selected_checkpoint"],
+            "auxiliary_selected_checkpoint": aux["selected_checkpoint"],
+            "auxiliary_predictions_sha256": aux["predictions_sha256"],
+            "primary_minus_auxiliary": aux_cmp, "signed_residual_pearson_r": _pearson(aux_signed, cand_signed)}
     report: dict[str, Any] = {
-        "format": ATTRIBUTION_FORMAT,
-        "status": "DIAGNOSED",
-        "mechanical_acceptance": "MECHANICALLY_VERIFIED",
-        "scientific_acceptance": "NOT_EVALUATED",
-        "replay_readiness": "NOT_EVALUATED",
+        "format": ATTRIBUTION_FORMAT, "status": "DIAGNOSED", "mechanical_acceptance": "MECHANICALLY_VERIFIED",
+        "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED",
         "limitations": ["Post-hoc same-role shift/oracle blend diagnostics are not held-out gains.",
                         "Row bootstrap does not measure training stochasticity or establish strict V5 comparison."],
-        "control_arm": ctrl_name,
-        "candidate_arm": cand_name,
-        "primary_metric": metric_key,
-        "alignment": {
-            "rows": int(target.size),
-            "source_idx_identical": True,
-            "target_eV_identical": True,
-            "selection_weights": weights_mode,
-            "seed": int(c_rec["seed"]),
-        },
-        "artifact_hashes": {
-            "control": ctrl["hashes"],
-            "candidate": cand["hashes"],
-        },
-        "primary_comparison": paired,
-        "row_win_loss": row_win_loss,
-        "signed_bias_and_shift": signed_bias,
-        "error_quantiles": {
-            "control": ctrl_q,
-            "candidate": cand_q,
+        "control_arm": ctrl_name, "candidate_arm": cand_name, "primary_metric": metric_key,
+        "alignment": {"rows": int(target.size), "source_idx_identical": True, "target_eV_identical": True,
+                      "selection_weights": weights_mode, "seed": int(c_rec["seed"])},
+        "artifact_hashes": {"control": ctrl["hashes"], "candidate": cand["hashes"]},
+        "primary_comparison": paired, "row_win_loss": row_win_loss, "signed_bias_and_shift": signed_bias,
+        "error_quantiles": {"control": ctrl_q, "candidate": cand_q,
             "delta_candidate_minus_control": {k: cand_q[k] - ctrl_q[k] for k in ctrl_q},
-            "candidate_top20_worst_rows": worst_rows,
-        },
-        "strata": strata,
-        "complementarity": complementarity,
-        "trace_dynamics": dynamics,
-        "cost": cost,
-        "signals": signals,
+            "candidate_top20_worst_rows": worst_rows},
+        "strata": strata, "complementarity": complementarity, "trace_dynamics": dynamics, "cost": cost, "signals": signals,
+        **({"within_trajectory_ema": within_ema} if within_ema else {}),
     }
 
     if output_dir is not None:
@@ -835,12 +809,12 @@ def _retained_reference(entry, *, repo_root, candidate, inputs):
     import torch
     from .comparison_readiness import validate_reference_bundle
     from .experiment_family_workflow import tensor_digest
-    from .research_memory.paths import repo_local_path
+    from .research_memory.paths import bound_artifact_path
 
     def pinned(pointer):
         if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
             raise ValueError("Retained reference requires a frozen path/hash pointer")
-        path = repo_local_path(repo_root, pointer["path"])
+        path = bound_artifact_path(Path(repo_root).resolve(), pointer["path"])
         _safe_local(path)
         if sha256_file(path) != pointer["sha256"]:
             raise ValueError("Retained reference artifact hash mismatch: " + str(path))
@@ -903,10 +877,16 @@ def _retained_reference(entry, *, repo_root, candidate, inputs):
         from .research_memory.paths import bound_artifact_path, verify_bound_artifact
         from .research_memory.trace import load_canonical_trace
         trace_manifest = validate_trace_manifest(_read_json(pinned(trace_pointer)))
+        # The original terminal owner wrote coarse development/weight labels.
+        # Selected metric semantics below, in the pinned trace, resolve those
+        # labels; other manifest mismatches still fail.
         if (trace_manifest["reference_id"] != bundle["reference_id"]
-                or trace_manifest["evaluation_role_identity"] != manifest["evaluation_role_identity"]
-                or trace_manifest["weight_semantics"] != weights):
-            raise ValueError("Retained reference trace differs from its frozen reference/role/weights")
+                or trace_manifest["evaluation_role_identity"] not in {manifest["evaluation_role_identity"], "internal_development"}
+                or trace_manifest["weight_semantics"] not in {weights, "ema_and_live"}):
+            raise ValueError("Retained reference trace differs from its frozen reference/role/weights: " + repr({
+                "manifest": {key: trace_manifest[key] for key in ("reference_id", "evaluation_role_identity", "weight_semantics")},
+                "expected": {"reference_id": bundle["reference_id"], "evaluation_role_identity": manifest["evaluation_role_identity"],
+                             "weight_semantics": weights}}))
         trace_ref = trace_manifest.get("trace_artifact_ref")
         trace_sha = trace_manifest.get("trace_artifact_sha256")
         trace_path = bound_artifact_path(repo_root, trace_ref) if trace_ref else None
@@ -919,7 +899,8 @@ def _retained_reference(entry, *, repo_root, candidate, inputs):
             if (not isinstance(metric, dict) or metric.get("metric") != "MAE" or metric.get("unit") != "eV"
                     or metric.get("role_identity") != manifest["evaluation_role_identity"]
                     or metric.get("weights") != weights):
-                raise ValueError("Retained reference curve metric differs from development predictions")
+                raise ValueError("Retained reference curve metric differs from development predictions: " + repr({
+                    "metric": metric, "expected_role_identity": manifest["evaluation_role_identity"], "expected_weights": weights}))
             reference["trace"] = trace
             reference["hashes"]["canonical_trace_sha256"] = trace_sha
     return reference
@@ -976,6 +957,9 @@ def _write_run_diagnosis(report, output, resolved):
             if pair["status"] == "DIAGNOSED":
                 point = pair["primary_comparison"]
                 lines.append(f"  Candidate minus reference MAE: {point['mean_delta_eV']:+.6f} eV on {point['n_molecules']} aligned rows.")
+                for label, item in pair.get("within_trajectory_ema", {}).items():
+                    wp = item["primary_minus_auxiliary"]
+                    lines.append(f"  Primary EMA minus EMA {label} MAE: {wp['mean_delta_eV']:+.6f} eV.")
             else:
                 lines.extend(f"  {blocker}" for blocker in pair["blockers"])
         markdown.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1061,11 +1045,11 @@ def diagnose_run(profile, repo_root, run_id, attempt_id, *, retrieved_root=None,
                     repo_root=Path(repo_root).absolute(), candidate=loaded[candidate_id], inputs=inputs[candidate_id]))
                 result = _analyze_loaded_pair(reference, loaded[candidate_id],
                     n_bootstrap=n_bootstrap, seed=seed, compare_recipes=bool(pair))
-                if pair and _paired_cache is not None:
+                if _paired_cache is not None:
                     # Keep the original numerical result before the descriptive
                     # report deliberately removes its gate fields.
                     _paired_cache[candidate_id] = {
-                        "reference_id": reference_id,
+                        "reference_id": reference_id if pair else reference["arm_id"],
                         "hashes": (reference["hashes"], loaded[candidate_id]["hashes"]),
                         "paired": dict(result["primary_comparison"]),
                     }

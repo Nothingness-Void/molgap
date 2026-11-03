@@ -359,12 +359,12 @@ never invented.
 `research_memory/derived/trajectory_index.json`); cite papers in `protocol.md`.
 `authority.account` must be the Kaggle username of `$credentials`.
 
-Known limits: Kaggle T4x2 only; seed 42 only; one reference plus one candidate;
-typed edits limited to `learning_rate` and `weight_decay`; the derived Kaggle
-block supports only the fixed 100K mount (write `platform` explicitly otherwise).
-Fixture identities in
-[`tests/test_scientific_input_ergonomics.py`](../../tests/test_scientific_input_ergonomics.py)
-are examples, never authorization or evidence.
+Training edits: `learning_rate`, `weight_decay`, `no_decay_modules` (normalization
+`weight/bias` only), `ema_decay` (primary), `auxiliary_ema_decays` (independent
+same-trajectory selection/predictions/trace/resume). Retained `reference_ref` accepts
+`bundle_ref` plus explicit `comparison_plan`; auxiliary EMA comparisons are descriptive.
+Kaggle T4x2, seed 42; the derived platform uses the fixed 100K mount. Other mounts
+need explicit `platform`. Test fixtures are examples, never authority or evidence.
 
 ## Preparation details
 

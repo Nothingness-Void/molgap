@@ -212,7 +212,7 @@ def _compile_scientific_input(path, root, value):
     """Compile declarations, not permission, reference acceptance or trainer code.
 
     The existing recipe fixes data, sampler, budget, selection and runtime. Only
-    catalog addons and typed optimizer parameters are editable in this version.
+    catalog addons and typed optimizer/EMA parameters are editable in this version.
     Derived JSON is explicitly separate from committed executable source.
     """
     from copy import deepcopy
@@ -417,8 +417,9 @@ def _compile_scientific_input(path, root, value):
         source_spec = ExperimentSpec(_read(local(item["data_ref"]["spec_ref"])))
         source = source_spec.to_dict()
         previous = next((a for a in source["arms"] if a["arm_id"] == item["data_ref"]["arm_id"]), None)
+        recipe_bytes = _payload(local(item["recipe_ref"]))
         if (previous is None or previous["family"] != {"name": family[0], "version": family[1]}
-                or previous["training"]["recipe"]["sha256"] != hashlib.sha256(_payload(local(item["recipe_ref"]))).hexdigest()
+                or previous["training"]["recipe"]["sha256"] != hashlib.sha256(recipe_bytes).hexdigest()
                 or previous["data"]["dataset"]["sha256"] != baseline.dataset.manifest_sha256
                 or previous["initialization"] != {"kind": "frozen_state", "seed": 42,
                                                    "state_sha256": baseline.initialization_sha256}
@@ -429,8 +430,15 @@ def _compile_scientific_input(path, root, value):
         if set(roles) != {"train", "development"} or any(
                 record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - {"learning_rate", "weight_decay"}:
-            raise ValueError("Unsupported training parameter; only learning_rate and weight_decay are editable")
+        editable_training = {"learning_rate", "weight_decay", "no_decay_modules", "ema_decay", "auxiliary_ema_decays"}
+        if type(item["training"]) is not dict or set(item["training"]) - editable_training:
+            raise ValueError("Unsupported training parameter override")
+        training_overrides = dict(item["training"])
+        for seq_key in ("no_decay_modules", "auxiliary_ema_decays"):
+            if seq_key in training_overrides:
+                if type(training_overrides[seq_key]) is not list:
+                    raise ValueError(seq_key + " must be a list")
+                training_overrides[seq_key] = tuple(training_overrides[seq_key])
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
         addons = []
@@ -446,7 +454,7 @@ def _compile_scientific_input(path, root, value):
         arm.update(arm_id=item["arm_id"], scientific_role="reference" if is_reference else "candidate", addons=addons,
                    addon_semantics="ordered" if addons else "baseline")
         mode = training_adapter(arm).mode(arm)
-        recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **item["training"])
+        recipe = replace(baseline, mode=mode, addons=tuple(addons) if mode == "composed" else (), **training_overrides)
         bindings = family_arm_bindings(recipe)
         arm["base"] = bindings["base"]
         arm["training"].update({k: bindings[k] for k in ("sampler", "transform", "objective")})
@@ -485,24 +493,75 @@ def _compile_scientific_input(path, root, value):
             compiled.append((item, arm, new_record, None, None, None, None, [],
                              str(initial.absolute()), source["evidence"]))
             continue
-        _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
-        reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
-        if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
-            raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
-        reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
-        if reference is None:
-            raise ValueError("Existing retained reference arm is missing; no baseline is trained")
-        if preset is not None and reference["reference_artifacts"]["target_manifest"] != preset["target_manifest"]:
-            raise ValueError("Retained target differs from its frozen baseline preset")
-        if reference["contract"] != pin(item["recipe_ref"]):
-            raise ValueError("Retained reference is not bound to the frozen baseline recipe")
-        bundle = validate_reference_bundle(retained(reference["reference_bundle"]))
-        context = retained(reference["comparison_prelaunch"])
-        for pointer in reference["reference_artifacts"].values():
-            if pin(pointer["path"], packaged=False) != pointer:
-                raise ValueError("Retained reference artifact bytes changed")
+        from .research_memory.paths import bound_artifact_path
+        def ext_pin(loc, *, packaged=True):
+            if type(loc) is str and loc.startswith("external://"):
+                resolved_ext = bound_artifact_path(root, loc)
+                _safe_local(resolved_ext)
+                if not resolved_ext.is_file(): raise FileNotFoundError(loc)
+                return {"path": loc, "sha256": file_digest(resolved_ext)}
+            return pin(loc, packaged=packaged)
+        if type(item["reference_ref"]) is dict and "bundle_ref" in item["reference_ref"]:
+            _object(item["reference_ref"], "bundle_ref comparison_plan", "reference_ref")
+            b_rel = item["reference_ref"]["bundle_ref"]
+            bundle = validate_reference_bundle(_read(local(b_rel)))
+            s_dir = str(Path(b_rel).parent.as_posix())
+            qt = _read(local(s_dir + "/qualified_terminal.json"))
+            from .research_memory.paths import verify_bound_artifact
+            if qt["evidence"]["evidence_id"] != bundle["reference_id"] or b_rel not in qt["artifact_hashes"]:
+                raise ValueError("Reference bundle is not bound to its qualified terminal evidence")
+            verify_bound_artifact(root, b_rel, qt["artifact_hashes"][b_rel])
+            by_name = {a["name"]: a for a in qt["evidence"]["artifacts"]}
+            sel_loc, pred_loc = by_name["selected_model"]["locator"], by_name["predictions"]["locator"]
+            ref_arts = {"checkpoint": ext_pin(sel_loc, packaged=False), "predictions": ext_pin(pred_loc, packaged=False),
+                "prediction_manifest": pin(s_dir + "/prediction_manifest.json")}
+            for k, f in (("runtime_certificate", "runtime_certificate_ref"), ("row_manifest", "row_manifest_ref"),
+                    ("target_manifest", "target_manifest_ref"), ("trace_manifest", "trace_manifest_ref"),
+                    ("role_history", "role_history_ref"), ("target_transform_asset", "target_transform_asset_ref"),
+                    ("cost_records", "cost_records_ref"), ("acceptance", "acceptance_ref"), ("decision", "decision_ref")):
+                ref_arts[k] = ext_pin(bundle[f])
+            if ref_arts["checkpoint"]["sha256"] != bundle["checkpoint_identity"]:
+                raise ValueError("Retained checkpoint hash differs from reference bundle")
+            for name, expected in (("selected_model", bundle["checkpoint_identity"]),
+                    ("predictions", bundle["prediction_manifest"]["prediction_sha256"])):
+                artifact = by_name[name]
+                if artifact["sha256"] != expected or qt["artifact_hashes"].get(artifact["locator"]) != expected:
+                    raise ValueError("Retained artifact differs from qualified terminal evidence")
+                verify_bound_artifact(root, artifact["locator"], expected)
+            context = item["reference_ref"]["comparison_plan"]
+            _object(context, "role_applicability_plan trace_plan runtime_qualification_plan", "comparison_plan")
+            if bundle["reference_id"] not in question.reference_ids:
+                raise ValueError("Scientific question must explicitly name the retained reference ID")
+            reference = {"reference_bundle": pin(b_rel), "reference_artifacts": ref_arts}
+            contract_sha = qt["artifact_hashes"].get(bundle["contract_ref"])
+            if contract_sha is None:
+                raise ValueError("Reference contract has no qualified terminal byte binding")
+            verify_bound_artifact(root, bundle["contract_ref"], contract_sha)
+            if contract_sha != hashlib.sha256(recipe_bytes).hexdigest():
+                raise ValueError("Retained reference bundle contract differs from the frozen baseline recipe")
+            if preset is not None and _read(bound_artifact_path(root, ref_arts["target_manifest"]["path"])) != preset["target"]:
+                raise ValueError("Retained target differs from its frozen baseline preset")
+        else:
+            _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
+            reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
+            if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
+                raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
+            reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
+            if reference is None:
+                raise ValueError("Existing retained reference arm is missing; no baseline is trained")
+            if preset is not None and reference["reference_artifacts"]["target_manifest"] != preset["target_manifest"]:
+                raise ValueError("Retained target differs from its frozen baseline preset")
+            if reference["contract"] != pin(item["recipe_ref"]):
+                raise ValueError("Retained reference is not bound to the frozen baseline recipe")
+            bundle = validate_reference_bundle(retained(reference["reference_bundle"]))
+            context = retained(reference["comparison_prelaunch"])
+            for pointer in reference["reference_artifacts"].values():
+                if ext_pin(pointer["path"], packaged=False) != pointer:
+                    raise ValueError("Retained reference artifact bytes changed")
+            if bundle["contract_ref"] != item["recipe_ref"]:
+                raise ValueError("Retained comparison identity is incompatible with the shared reference recipe")
         identity = deepcopy(bundle["comparison_identity"])
-        transform = validate_target_transform_asset(retained(reference["reference_artifacts"]["target_transform_asset"]))
+        transform = validate_target_transform_asset(_read(bound_artifact_path(root, reference["reference_artifacts"]["target_transform_asset"]["path"])))
         if (transform["mean"] != baseline.target_mean_eV or transform["std"] != baseline.target_std_eV
                 or transform["ddof"] != 1 or transform["variance_convention"] != "sample"
                 or transform["asset_id"] != identity["target_transform_identity"]
@@ -512,15 +571,51 @@ def _compile_scientific_input(path, root, value):
             "gradient_accumulation_steps": 1, "optimizer_steps": requirements["optimizer_steps"],
             "sample_presentations": requirements["sample_presentations"], "ema_enabled": baseline.ema_decay is not None,
             "evaluation_weight_source": baseline.selection_weights}
-        if bundle["contract_ref"] != item["recipe_ref"] or any(identity[k] != v for k, v in required_identity.items()):
+        if "bundle_ref" in item["reference_ref"]:
+            required_identity.update(
+                benchmark_identity=previous["data"]["dataset"]["name"],
+                dataset_identity=previous["data"]["dataset"]["sha256"],
+                data_role_identity=canonical_fingerprint({"roles": previous["data"]["roles"]}),
+                row_membership_identity=canonical_fingerprint({k: v["membership_sha256"] for k, v in roles.items()}),
+                row_order_identity=canonical_fingerprint({k: v["row_order_sha256"] for k, v in roles.items()}),
+                feature_identity=previous["data"]["feature_sha256"], target_identity=previous["data"]["target"],
+                architecture_config_identity=canonical_fingerprint({k: previous[k] for k in ("base", "addons")}),
+                schedule_identity=canonical_fingerprint(record["schedule"]),
+                loss_identity=comparison_objective_identity(previous, baseline),
+                optimizer_identity=canonical_fingerprint({"recipe": {k: record[k] for k in (
+                    "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in record else ()))},
+                    "policy": {k: record["execution_policy"][k] for k in ("adamw_betas", "adamw_epsilon")}}),
+                optimizer_mode=record["execution_policy"]["optimizer"],
+                optimizer_fused=record["execution_policy"]["optimizer"] == "fused-adamw",
+                tf32_enabled=record["execution_policy"]["tf32"], deterministic_algorithms=True,
+                tail_batch_policy="drop_last" if baseline.drop_last else "keep_last",
+                checkpoint_selection_identity=baseline.selection,
+                selection_role_identity=record["development_role_identity"],
+                evaluation_role_identity=record["development_role_identity"],
+                ema_decay=baseline.ema_decay, ema_update_frequency=1 if baseline.ema_decay is not None else None,
+                weight_semantics=baseline.selection_weights)
+            if "initialization_identity" in identity:
+                required_identity["initialization_identity"] = canonical_fingerprint(previous["initialization"])
+            predictions = bundle["prediction_manifest"]
+            if any(predictions[key] != requirements[key] for key in ("source_idx_sha256", "target_sha256")) or predictions["row_count"] != requirements["development_rows"]:
+                raise ValueError("Retained predictions differ from the frozen development contract")
+        if any(identity[k] != v for k, v in required_identity.items()):
             raise ValueError("Retained comparison identity is incompatible with the shared reference recipe")
         if any(arm["training"][k] != previous["training"][k] for k in ("sampler", "transform")):
             raise ValueError("Scientific compilation cannot silently change frozen sampler or normalization")
         changed = []
-        if (recipe.learning_rate, recipe.weight_decay) != (baseline.learning_rate, baseline.weight_decay):
-            identity["optimizer_identity"] = canonical_fingerprint({"reference": identity["optimizer_identity"],
-                "learning_rate": recipe.learning_rate, "weight_decay": recipe.weight_decay})
+        if (recipe.learning_rate, recipe.weight_decay, recipe.no_decay_modules) != (
+                baseline.learning_rate, baseline.weight_decay, baseline.no_decay_modules):
+            identity["optimizer_identity"] = canonical_fingerprint({"recipe": {k: new_record[k] for k in (
+                "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in new_record else ()))},
+                "policy": {k: new_record["execution_policy"][k] for k in ("adamw_betas", "adamw_epsilon")}})
             changed.append("optimizer_identity")
+        if recipe.ema_decay != baseline.ema_decay:
+            identity.update(ema_enabled=recipe.ema_decay is not None, ema_decay=recipe.ema_decay,
+                ema_update_frequency=1 if recipe.ema_decay is not None else None,
+                weight_semantics=recipe.selection_weights, evaluation_weight_source=recipe.selection_weights)
+            changed.extend(k for k in ("ema_enabled", "ema_decay", "ema_update_frequency", "weight_semantics", "evaluation_weight_source")
+                           if identity[k] != bundle["comparison_identity"][k])
         if arm["base"] != previous["base"] or addons != previous["addons"]:
             identity["architecture_config_identity"] = canonical_fingerprint({"base": arm["base"], "addons": addons})
             changed.append("architecture_config_identity")
@@ -544,8 +639,10 @@ def _compile_scientific_input(path, root, value):
             if row is reference:
                 continue
             changed = []
-            if any(row[2][key] != reference[2][key] for key in ("learning_rate", "weight_decay")):
+            if any(row[2].get(key) != reference[2].get(key) for key in ("learning_rate", "weight_decay", "no_decay_modules")):
                 changed.append("optimizer_identity")
+            if row[2].get("ema_decay") != reference[2].get("ema_decay"):
+                changed.append("ema_decay")
             if any(row[1][key] != reference[1][key] for key in ("base", "addons")):
                 changed.append("architecture_config_identity")
             if row[1]["initialization"] != reference[1]["initialization"]:
@@ -627,7 +724,7 @@ def _compile_scientific_input(path, root, value):
         "molgap-family-same-run-acceptance-plan-v1" if pair is not None else "molgap-family-acceptance-plan-v1"),
         "spec_identity": spec.identity, "arms": acceptance,
         **({"comparison_source": {"path": config_name, "sha256": input_sha}}
-           if pair is not None and any(item[0]["purpose"] == "initialization_comparison" for item in compiled)
+           if pair is not None and any(item[0]["purpose"] != "architecture_comparison" for item in compiled)
            else {})})
     plan = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity, "arms": jobs,
         "acceptance_plan": acceptance_pin["path"], "kaggle": platform["kaggle"], "source_profile": "runtime-v1",

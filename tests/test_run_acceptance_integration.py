@@ -838,6 +838,63 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         assert package["artifact_hashes"][supplement["path"]] == supplement["sha256"]
     assert package_before == {path.relative_to(case.package): path.read_bytes()
         for path in case.package.rglob("*") if path.is_file()}
+    if comparison_purpose == "single_module_ablation":
+        # Reuse a genuinely closed reference and real saved outputs. Only the
+        # Spec dispatch view is substituted; this does not freeze a new run.
+        from types import SimpleNamespace
+        from molgap.research_memory.finalize import current_finalized_directory, verified_receipt
+        reference_where = qualified["locations"][reference_arm]
+        reference_closed = close_terminal_multi_arm(case.repo, [
+            {key: reference_where[key] for key in ("trajectory", "terminal", "trace")}])
+        assert reference_closed[0]["pipeline_status"] == "COMPLETE", reference_closed
+        verified_receipt(current_finalized_directory(case.repo, reference_where["trajectory"]))
+        bundle_ref = qualified["reference_bundle_ref"]
+        bundle = json.loads((case.repo / bundle_ref).read_bytes())
+        candidate = next(iter(qualified["comparisons"]))
+        scope = scopes[candidate]
+        accepted_comparison = qualified["comparisons"][candidate]
+        assert accepted_comparison["strict_ready"] is True, accepted_comparison
+        candidate_identity = {**accepted_comparison["matched_fields"], **{
+            key: value["candidate"] for key, value in accepted_comparison["mismatched_fields"].items()}}
+        accepted_trace = json.loads((case.repo / reference_where["terminal"]).read_bytes())["trace_manifest"]
+        planned = comparison_owner.assess_comparison_prelaunch(
+            candidate_id=candidate, candidate_plan={"comparison_identity": candidate_identity,
+                "source_config_status": "frozen", "source_commit_or_archive": contexts[candidate].source_archive_sha256},
+            reference_id=bundle["reference_id"], reference_bundle=bundle,
+            role_applicability_plan=accepted_comparison["candidate_role_applicability_plan"],
+            trace_plan=accepted_trace["trace_fields"],
+            runtime_qualification_plan={"status": "declared", "runtime_certificate_required": True,
+                "qualification_scope": "synthetic CPU fixture"}, **scope)
+        assert planned["prelaunch_ready"] is True, planned
+        plan_path = Path(qualified["directory"]) / "retained_prelaunch.json"
+        plan_path.write_bytes(canonical_json(planned).encode())
+        from molgap.research_memory.paths import bound_artifact_path
+        pin = lambda name: {"path": name, "sha256": file_digest(bound_artifact_path(case.repo, name))}
+        bindings = {name: pin(bundle[name + "_ref"]) for name in (
+            "runtime_certificate", "row_manifest", "target_manifest", "trace_manifest", "role_history",
+            "target_transform_asset", "cost_records", "acceptance", "decision")}
+        reference_output = Path(resolved["outputs"][reference_arm]["output_dir"])
+        bindings["checkpoint"] = pin(artifact_locator(case.repo, reference_output / "selected_model.pt"))
+        bindings["predictions"] = pin(artifact_locator(case.repo, reference_output / "development_predictions.pt"))
+        bindings["prediction_manifest"] = pin((Path(qualified["directory"]) / reference_arm /
+            "prediction_manifest.json").relative_to(case.repo).as_posix())
+        assert json.loads((case.repo / bindings["prediction_manifest"]["path"]).read_bytes()) == bundle["prediction_manifest"]
+        assert set(bindings) == comparison_owner.REQUIRED_REFERENCE_ARTIFACTS | {"predictions"}
+        retained_declaration = deepcopy(resolved["spec"].to_dict())
+        retained_declaration["prospective"].pop("same_run_replay")
+        retained_resolved = {**resolved, "spec": SimpleNamespace(to_dict=lambda: retained_declaration),
+            "outputs": {candidate: resolved["outputs"][candidate]},
+            "acceptance_plan": {"format": "molgap-family-acceptance-plan-v1", "arms": [{"arm_id": candidate,
+                "comparison_prelaunch": pin(plan_path.relative_to(case.repo).as_posix()),
+                "reference_bundle": pin(bundle_ref), "reference_artifacts": bindings}]}}
+        transforms = family.resolve_strict_target_transforms(case.repo, resolved, supplements)
+        retained_qualification = family.qualify_same_run_terminal_packages(case.repo, retained_resolved,
+            {candidate: result["terminal_staging"]["locations"][candidate]}, {candidate: native[candidate]},
+            reports={candidate: result["arms"][candidate]}, _target_transforms={**transforms,
+                "arms": {candidate: transforms["arms"][candidate]}})
+        assert retained_qualification["comparisons"][candidate]["strict_ready"] is True
+        assert retained_qualification["comparisons"][candidate]["reference_id"] == bundle["reference_id"]
+        assert retained_qualification["reference_bundle_ref"] is None and set(retained_qualification["locations"]) == {candidate}
     # Real custody can keep identical transforms under more than one question.
     transform = next((case.repo / "experiments").rglob("target_transform.json"))
     shared_copy = case.repo / "experiments/shared_transform/target_transform.json"

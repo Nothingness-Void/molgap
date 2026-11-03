@@ -23,6 +23,9 @@ class SyntheticKernel(FamilyKernel):
         self.model = torch.nn.Sequential(torch.nn.Linear(1, 2), torch.nn.Dropout(.2), torch.nn.Linear(2, 1))
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay else None
+        from molgap.family_training_recipe import ema_label
+        self.auxiliary_emas = {ema_label(decay): BoundForeachEMA(self.model, decay)
+                               for decay in recipe.auxiliary_ema_decays}
         self.weight_view = ReusedWeightView()
 
     def forward(self, batch):
@@ -36,6 +39,8 @@ class SyntheticKernel(FamilyKernel):
         loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, loss_builder,
             clip_norm=self.recipe.gradient_clip, check_finite=check_finite, ema=self.ema,
             observer=getattr(self, "update_observer", None))
+        for auxiliary in self.auxiliary_emas.values():
+            auxiliary.update(self.model)
         return loss, absolute, rows
 
 

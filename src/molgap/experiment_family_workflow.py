@@ -77,6 +77,7 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     allowed = {"architecture_comparison": ["architecture_config_identity"],
                "mechanism_comparison": ["architecture_config_identity"],
                "optimizer_comparison": ["optimizer_identity"],
+               "ema_comparison": ["ema_enabled", "ema_decay", "ema_update_frequency", "weight_semantics", "evaluation_weight_source"],
                "initialization_comparison": ["initialization_identity"]}
     if purpose not in allowed:
         raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
@@ -223,9 +224,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     import copy
     import numpy as np
     from .comparison_readiness import (CAUSAL_REQUIRED_ROLE_KINDS, ROLE_EVENT_KINDS,
-        assess_comparison_readiness, reference_bundle_digest,
+        assess_comparison_readiness, reference_bundle_digest, validate_comparison_prelaunch,
         validate_comparison_readiness, validate_reference_bundle)
-    from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
+    from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors, _retained_reference
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
     from .family_training_runner import read_recipe, comparison_objective_identity
@@ -234,9 +235,10 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     root = Path(repo_root).resolve()
     declaration = resolved["spec"].to_dict()
     pair = declaration["prospective"].get("same_run_replay")
-    if pair is None:
-        raise ValueError("Automatic strict comparison requires the frozen same-run declaration")
-    reference_id = pair["reference_arm_id"]
+    plan_entries = {e["arm_id"]: e for e in resolved.get("acceptance_plan", {}).get("arms", [])}
+    if pair is None and resolved.get("acceptance_plan", {}).get("format") != "molgap-family-acceptance-plan-v1":
+        raise ValueError("Automatic strict comparison requires same-run or retained-reference acceptance bindings")
+    reference_id = pair["reference_arm_id"] if pair is not None else None
     if any(native_reports[arm]["status"] != "VERIFIED" for arm in locations):
         raise ValueError("Every same-run arm requires independently reverified native proof")
     packages, finalized = {}, {}
@@ -283,8 +285,10 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
                 comparison = _json(repo_local_path(root, pointer))
                 validate_comparison_readiness(comparison,
                     evidence_verifier=lambda ref, sha: verify_bound_artifact(root, ref, sha))
+                expected_ref = (packages[reference_id]["evidence"]["evidence_id"] if reference_id is not None
+                                else _json(bound_artifact_path(root, plan_entries[arm_id]["reference_bundle"]["path"]))["reference_id"])
                 if (not comparison["strict_ready"] or comparison["candidate_id"] != package["evidence"]["evidence_id"]
-                        or comparison["reference_id"] != packages[reference_id]["evidence"]["evidence_id"]):
+                        or comparison["reference_id"] != expected_ref):
                     raise ValueError("Canonical strict comparison differs from the accepted pair")
                 comparisons[arm_id] = comparison
             reused[arm_id] = {**locations[arm_id],
@@ -297,14 +301,24 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
                      resolve_strict_target_transforms(root, resolved, strict_inputs))
     if target_report["status"] != "VERIFIED":
         return {**target_report, "executed": False}
-    scopes = _frozen_same_run_scopes(resolved)
+    retained_refs = {}
+    if pair is not None:
+        scopes = _frozen_same_run_scopes(resolved)
+    else:
+        scopes = {}
+        for arm_id, entry in plan_entries.items():
+            pre = validate_comparison_prelaunch(_json(bound_artifact_path(root, entry["comparison_prelaunch"]["path"])))
+            ref_b = validate_reference_bundle(_json(bound_artifact_path(root, entry["reference_bundle"]["path"])))
+            retained_refs[arm_id] = (entry, pre, ref_b)
+            scopes[arm_id] = {k: pre[k] for k in ("experiment_purpose", "intervention_group_id", "mechanism_id", "declared_intervention_fields")}
     retained_recipes = {arm_id: read_recipe(Path(item["output_dir"]) / "training_contract.json", _frozen_read=True)
                         for arm_id, item in resolved["outputs"].items()}
     by_arm = {arm["arm_id"]: arm for arm in declaration["arms"]}
-    for arm_id, scope in scopes.items():
-        if scope["experiment_purpose"] == "initialization_comparison":
-            validate_initialization_peer(by_arm[arm_id], by_arm[reference_id],
-                retained_recipes[arm_id][0], retained_recipes[reference_id][0])
+    if pair is not None:
+        for arm_id, scope in scopes.items():
+            if scope["experiment_purpose"] == "initialization_comparison":
+                validate_initialization_peer(by_arm[arm_id], by_arm[reference_id],
+                    retained_recipes[arm_id][0], retained_recipes[reference_id][0])
     transforms = {arm: row["transform"] for arm, row in target_report["arms"].items()}
     target_manifests = {arm: row["targets"] for arm, row in target_report["arms"].items()}
     appended = {arm: row["supplemental_binding"] for arm, row in target_report["arms"].items()
@@ -325,7 +339,8 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     identity = canonical_fingerprint({"packages": packages, "native": native_reports,
         "target_transforms": transforms, "target_transform_evidence": appended,
         "qualification_adapter_sha256": adapter_sha256})
-    directory = repo_local_path(root, Path(locations[reference_id]["trajectory"]).parent.parent
+    anchor_arm = reference_id if reference_id is not None else sorted(locations)[0]
+    directory = repo_local_path(root, Path(locations[anchor_arm]["trajectory"]).parent.parent
         / "strict_qualification" / identity[:20])
 
     def publish(arm, name, value):
@@ -368,7 +383,8 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "precision": policy["precision"], "tf32_enabled": policy["tf32"], "deterministic_algorithms": True,
             "physical_batch_per_device": recipe.batch_size, "gradient_accumulation_steps": 1,
             "tail_batch_policy": "drop_last" if recipe.drop_last else "keep_last",
-            "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
+            "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in (
+                "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in contract else ()))},
                 "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
             "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
             "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": comparison_objective_identity(arm, recipe),
@@ -381,7 +397,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "ema_enabled": recipe.ema_decay is not None, "ema_decay": recipe.ema_decay,
             "ema_update_frequency": 1 if recipe.ema_decay is not None else None,
             "evaluation_weight_source": data["selection_weights"]}
-        if any(scope["experiment_purpose"] == "initialization_comparison" for scope in scopes.values()):
+        need_init = (any(scope["experiment_purpose"] == "initialization_comparison" for scope in scopes.values())
+                     or (arm_id in retained_refs and "initialization_identity" in retained_refs[arm_id][2]["comparison_identity"]))
+        if need_init:
             if recipe.initialization_sha256 != arm["initialization"]["state_sha256"]:
                 raise ValueError("Observed recipe initialization differs from frozen Spec")
             comparison_identity["initialization_identity"] = canonical_fingerprint(arm["initialization"])
@@ -420,9 +438,11 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "observed_role_event_kinds": sorted({event["access_kind"] for event in package["roles"]}),
             "trace_status": "complete", "trace_field_availability": package["trace_manifest"]["trace_fields"],
             "stochasticity_status": "unavailable", "terminal_complete": data["manifest"]["progress"]["status"] == "complete", "artifact_bindings": bindings}
-    reference_bundle = bundles[reference_id]
-    bundle_ref = publish(reference_id, "reference_bundle.json", reference_bundle)
-    sides[reference_id].update(reference_bundle_id=reference_bundle["reference_bundle_id"], reference_bundle_sha256=reference_bundle_digest(reference_bundle))
+    bundle_ref = None
+    if reference_id is not None:
+        reference_bundle = bundles[reference_id]
+        bundle_ref = publish(reference_id, "reference_bundle.json", reference_bundle)
+        sides[reference_id].update(reference_bundle_id=reference_bundle["reference_bundle_id"], reference_bundle_sha256=reference_bundle_digest(reference_bundle))
     comparisons, qualified = {}, {}
     for arm_id, package in packages.items():
         package = copy.deepcopy(package)
@@ -437,12 +457,35 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             if artifact not in package["evidence"]["artifacts"]:
                 package["evidence"]["artifacts"].append(artifact)
         if arm_id != reference_id:
-            left, right = loaded[reference_id], loaded[arm_id]
+            if reference_id is not None:
+                left, ref_eid, ref_side, arm_bundle_ref = loaded[reference_id], packages[reference_id]["evidence"]["evidence_id"], sides[reference_id], bundle_ref
+                ref_key = reference_id
+            else:
+                entry, pre, ref_b = retained_refs[arm_id]
+                item = resolved["outputs"][arm_id]
+                left = _retained_reference(entry, repo_root=root, candidate=loaded[arm_id],
+                    inputs={**item, "context": resolved["contexts"][arm_id], "target_identity": resolved.get("target_identities", {}).get(arm_id)})
+                if "canonical_trace_sha256" not in left["hashes"] or not left["trace"].get("observations"):
+                    raise ValueError("Strict retained reference requires its verified canonical trace")
+                ref_eid, arm_bundle_ref, ref_key = ref_b["reference_id"], entry["reference_bundle"]["path"], ref_b["reference_id"]
+                ref_bindings = {k: {"ref": v["path"], "sha256": v["sha256"]} for k, v in entry["reference_artifacts"].items() if k != "predictions"}
+                ref_bindings["source_config"] = binding(ref_b["contract_ref"])
+                for p in ref_bindings.values(): verify_bound_artifact(root, p["ref"], p["sha256"])
+                ref_roles = _json(bound_artifact_path(root, entry["reference_artifacts"]["role_history"]["path"]))
+                ref_tm = _json(bound_artifact_path(root, entry["reference_artifacts"]["trace_manifest"]["path"]))
+                ref_side = {"comparison_identity": ref_b["comparison_identity"], "artifacts": {k: "complete" for k in ref_bindings if k != "source_config"},
+                    "prediction_status": "complete", "row_alignment_status": "aligned", "runtime_certificate_status": "accepted",
+                    "role_status": "complete", "role_applicability_plan": pre["role_applicability_plan"],
+                    "observed_role_event_kinds": sorted({ev["access_kind"] for ev in ref_roles["roles"]}),
+                    "trace_status": "complete", "trace_field_availability": ref_tm["trace_fields"], "stochasticity_status": "unavailable",
+                    "terminal_complete": True, "artifact_bindings": ref_bindings,
+                    "reference_bundle_id": ref_b["reference_bundle_id"], "reference_bundle_sha256": reference_bundle_digest(ref_b)}
+            right = loaded[arm_id]
             if not np.array_equal(left["source_idx"], right["source_idx"]) or not np.array_equal(left["target_eV"], right["target_eV"]):
                 raise ValueError("Strict comparison predictions/targets are not aligned")
             cached = (_paired_cache or {}).get(arm_id, {})
             paired = cached.get("paired", {})
-            if not (cached.get("reference_id") == reference_id
+            if not (cached.get("reference_id") == ref_key
                     and cached.get("hashes") == (left["hashes"], right["hashes"])
                     and paired.get("n_bootstrap") == 2000 and paired.get("seed") == 42
                     and paired.get("threshold_eV") == 0.003
@@ -453,8 +496,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             sides[arm_id]["artifacts"]["paired_analysis"] = "complete"
             sides[arm_id]["artifact_bindings"]["paired_analysis"] = binding(paired_ref)
             comparison = assess_comparison_readiness(candidate_id=package["evidence"]["evidence_id"], candidate=sides[arm_id],
-                reference_id=packages[reference_id]["evidence"]["evidence_id"], reference=sides[reference_id],
-                **scopes[arm_id])
+                reference_id=ref_eid, reference=ref_side, **scopes[arm_id])
             validate_comparison_readiness(comparison, evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha))
             comparisons[arm_id] = comparison
             comparison_ref = publish(arm_id, "comparison_readiness.json", comparison)
@@ -462,8 +504,11 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
                 raise ValueError("Strict comparison remains blocked: " + repr(comparison["blocker_codes"]))
             package["comparison_readiness_ref"] = comparison_ref
             package["artifact_hashes"][comparison_ref] = file_digest(root / comparison_ref)
-        package["artifact_hashes"][bundle_ref] = file_digest(root / bundle_ref)
-        package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+        else:
+            arm_bundle_ref = bundle_ref
+        package["artifact_hashes"][arm_bundle_ref] = file_digest(bound_artifact_path(root, arm_bundle_ref))
+        if package["trace_manifest"].get("reference_id") is not None:
+            package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
         if arm_id in finalized:
             previous = (finalized[arm_id] / "finalization.json").relative_to(root).as_posix()
             package["supersedes_finalization_ref"] = previous
@@ -647,12 +692,17 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
     roles = ROLES
     if profile.protocol == "family-session" and "predictions" not in artifacts:
         roles = ROLES - {"predictions"}
-    if profile.protocol == "family-session" and "trace_context" in artifacts:
-        roles = roles | {"trace_context"}
-        if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
-            raise ValueError("Trace companion must bind the declared trace")
-    if profile.protocol == "family-session" and "data_open" in artifacts:
-        roles = roles | {"data_open"}
+    if profile.protocol == "family-session":
+        from .family_training_recipe import AUX_EMA_ROLES
+        for model_role, pred_role in AUX_EMA_ROLES.values():
+            if model_role in artifacts or pred_role in artifacts:
+                roles = roles | ({model_role, pred_role} if "predictions" in artifacts else {model_role})
+        if "trace_context" in artifacts:
+            roles = roles | {"trace_context"}
+            if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
+                raise ValueError("Trace companion must bind the declared trace")
+        if "data_open" in artifacts:
+            roles = roles | {"data_open"}
     if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}
@@ -686,6 +736,7 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
                        optimizer_state: dict, rng_state: dict, cursor: dict,
                        optimizer_step: int, sample_presentations: int,
                        scheduler_state: dict | None = None, ema_state: dict | None = None,
+                       auxiliary_ema_state: dict | None = None,
                        owner_state: dict | None = None) -> Path:
     """Atomic output translation; resume loading stays with the owning trainer."""
     from .training_reproducibility import atomic_torch_save
@@ -700,6 +751,8 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
         state["scheduler"] = scheduler_state
     if ema_state is not None:
         state["ema"] = ema_state
+    if auxiliary_ema_state is not None:
+        state["auxiliary_ema"] = auxiliary_ema_state
     if owner_state is not None:
         if type(owner_state) is not dict or not owner_state:
             raise ValueError("Owner checkpoint state must be a nonempty mapping")
@@ -781,7 +834,9 @@ def _development_role(contract: dict) -> str:
 
 def _validate_development_semantics(contract: dict, semantics: dict) -> None:
     role = _development_role(contract)
-    for field, weights in (("live_dev_metric", "live"), ("ema_dev_metric", "ema")):
+    pairs = (("live_dev_metric", "live"), ("ema_dev_metric", "ema"),
+             ("ema_0p999_dev_metric", "ema-0.999"), ("ema_0p9999_dev_metric", "ema-0.9999"))
+    for field, weights in pairs:
         definition = semantics.get(field)
         if definition is None:
             continue  # The selected metric still requires an observation below.
@@ -957,7 +1012,7 @@ class TargetIdentityBinding:
         _digest(plan_sha256, "acceptance plan digest")
         if file_digest(path) != plan_sha256:
             raise ValueError("Target identity acceptance plan hash mismatch")
-        report = check_acceptance_plan(spec, root, _json(path))
+        report = check_acceptance_plan(spec, root, _json(path), allow_absent_external=True)
         if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
             raise ValueError("Target identity acceptance plan is blocked")
         return cls(root, plan_path, plan_sha256)
@@ -1364,8 +1419,12 @@ def acceptance_dependency_pins(plan: dict) -> dict[str, str]:
         if type(value) is dict:
             if set(value) == {"path", "sha256"}:
                 name = value["path"]
-                validate_relative_path(name)
                 _digest(value["sha256"], "acceptance dependency digest")
+                if type(name) is str and name.startswith("external://"):
+                    from .research_memory.paths import bound_artifact_path
+                    bound_artifact_path(Path.cwd(), name)
+                    return
+                validate_relative_path(name)
                 if pins.setdefault(name, value["sha256"]) != value["sha256"]:
                     raise ValueError("Conflicting acceptance artifact pins")
             else:
@@ -1380,7 +1439,7 @@ def acceptance_dependency_pins(plan: dict) -> dict[str, str]:
 
 
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
-                          require_training_targets=False) -> dict:
+                          require_training_targets=False, allow_absent_external=False) -> dict:
     """Prelaunch capability and retained-reference check, without execution.
 
     The owning contract still provides comparison_prelaunch and reference_bundle.
@@ -1419,11 +1478,20 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
                 _digest(entry["expected"][key], key)
             if entry["expected"]["precision"] not in {"fp32", "fp16", "bf16"}:
                 raise ValueError("Unsupported precision")
+            from .research_memory.paths import bound_artifact_path
             def pinned(pointer):
                 if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
                     raise ValueError("Expected pinned repository artifact")
                 _digest(pointer["sha256"], "plan artifact digest")
-                path = _artifact_path(Path(repo_root).absolute(), pointer["path"])
+                if type(pointer["path"]) is str and pointer["path"].startswith("external://"):
+                    path = bound_artifact_path(Path(repo_root).resolve(), pointer["path"])
+                    _safe_local(path)
+                    if allow_absent_external and not path.is_file():
+                        return path
+                    if not path.is_file():
+                        raise ValueError("Missing artifact: " + pointer["path"])
+                else:
+                    path = _artifact_path(Path(repo_root).absolute(), pointer["path"])
                 if file_digest(path) != pointer["sha256"]:
                     raise ValueError("Plan artifact hash mismatch")
                 return path
@@ -1454,7 +1522,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
                       "role_history": "role_history_ref", "target_transform_asset": "target_transform_asset_ref",
                       "cost_records": "cost_records_ref", "acceptance": "acceptance_ref", "decision": "decision_ref"}
             for artifact, field in owners.items():
-                if repo_local_path(repo_root, bindings[artifact]["path"]) != repo_local_path(repo_root, bundle[field]):
+                if bound_artifact_path(Path(repo_root).resolve(), bindings[artifact]["path"]) != bound_artifact_path(Path(repo_root).resolve(), bundle[field]):
                     raise ValueError("Reference artifact/owner pointer mismatch: " + artifact)
         except (ValueError, TypeError, KeyError, OSError) as exc:
             blockers.append(str(exc))
