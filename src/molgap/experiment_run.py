@@ -319,7 +319,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             return {**result, "status": "BLOCKED", "executed": False,
                 "strict_validation": {"status": "BLOCKED", "native": native},
                 "blockers": staged["blockers"]}
-        if execute:
+        if execute and strict_inputs is None:
             if staged.get("blockers") or outcome is None:
                 return {**result, "status": "BLOCKED", "executed": False}
             closed = accept_workflow(spec, supplied=resolved["outputs"], locations=staged["locations"],
