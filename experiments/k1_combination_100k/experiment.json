@@ -1,0 +1,96 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "k1_combination_100k",
+  "logical_run_id": "k1-combination-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/k1_combination_100k/authority.json",
+  "platform_ref": "experiments/k1_combination_100k/platform.json",
+  "role_ref": "experiments/k1_decay_timescale_100k/roles.json",
+  "decision_ref": "experiments/k1_combination_100k/decision.md",
+  "monitor_paths": [
+    "experiments/k1_combination_100k/STATUS.md"
+  ],
+  "timestamp": "2026-11-04T12:41:32+00:00",
+  "seeds": [
+    42
+  ],
+  "same_run": {
+    "reference_arm_id": "reference"
+  },
+  "question": {
+    "policy_id": "k1-combination-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does one combination of the zero-start relation pair token (k1_pair_token/1) and the readout gain (k1_readout_scale/1) on the frozen K1 post-BN 100K recipe improve selected development MAE by at least the frozen 3 meV material gate over a same-run reference from the same initial state?",
+    "deficiency": "Fourteen server K1 100K screens stayed below the 3 meV gate one at a time, and the only K1 mechanism that cleared it at 100K (PairToken on K1-v4) was never run on the post-BN K1/3 recipe or composed with another sub-gate candidate. The same-init readout gain measured -0.81 meV alone.",
+    "changed_mechanism": "pair-token-and-readout-gain-combination",
+    "supporting_evidence": [
+      "pcqm-k1-pair-token-100k-s42",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-reference",
+      "ev-terminal-T-k1-init-noise-100k-s45-init_s46"
+    ],
+    "alternatives": [
+      "The pair-token gain was specific to the K1-v4 recipe and does not reappear on post-BN K1/3",
+      "The two zero-start mechanisms are sub-additive, as PairToken plus MoSE was",
+      "The difference is within the same-init perturbation floor"
+    ],
+    "closed_families": [
+      "K1 PairToken 500K promotion",
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "positive_decision": "Retain a material lead only if every frozen protocol condition holds; any multi-seed confirmation needs a separate explicit compute decision. No 500K or full training follows.",
+    "negative_decision": "Close the combination of these two addons at 100K with no successor, extra seed or scale-up.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-k1-perturbation-floor-100k-s42-reference",
+      "T-k1-perturbation-floor-100k-s42-readout_scale",
+      "TC-k1-pair-token-100k-s42",
+      "TB-k1-pair-token-500k-s42",
+      "TC-k1-pair-token-mose-100k-s42"
+    ]
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "T4x2",
+    "cheapest_falsifier": "One T4x2 session: same-run reference plus one combination arm, one arm per device.",
+    "estimated_device_hours": 3.9,
+    "estimated_wall_hours": 1.95
+  },
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "reference",
+      "training": {}
+    },
+    {
+      "arm_id": "combination",
+      "training": {},
+      "model": {
+        "addons": [
+          {
+            "name": "k1_pair_token",
+            "version": "1",
+            "config": null
+          },
+          {
+            "name": "k1_readout_scale",
+            "version": "1",
+            "config": null
+          }
+        ]
+      }
+    }
+  ]
+}
