@@ -1,0 +1,133 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_triplet_norm_100k_20261104",
+  "logical_run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42",
+  "attempt_id": "v1",
+  "timestamp": "2026-11-04T17:24:09.012949+00:00",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "role_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-triplet-norm-100k-20261104",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does joint versus separate normalization retain useful third-pair-gated relation communication on the accepted PairNorm parent?",
+    "deficiency": "PairNorm and third-pair aggregation each passed a matched100K gate on their respective parents; their normalization-boundary interaction is unmeasured. Frozen aggregation later-cohort gain is uncertain.",
+    "changed_mechanism": "triplet-return-normalization-order",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "Joint normalization suppresses useful return amplitude",
+      "Separate returns destabilize the pair state",
+      "Both mechanisms are redundant on PairNorm"
+    ],
+    "closed_families": [
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "gptrans-pair-memory-replay"
+    ],
+    "positive_decision": "Nominate only delta<=-3meV and upper paired95%CI<0 against retained parent; no automatic500K.",
+    "negative_decision": "Close failed material gates without a new seed, optimizer grid or automatic successor.",
+    "reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4,
+    "cheapest_falsifier": "Two same-parameter candidates differing only in return normalization order; reuse accepted parent without baseline training."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "joint_norm",
+      "separate_norm"
+    ],
+    "seeds": [
+      42
+    ],
+    "allocated_t4_hours_ceiling": 12,
+    "user_notebook_wall_ceiling_seconds": 21600,
+    "allocation_wall_limit_seconds": 21600,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User approved the ordering pair and requested Kaggle1 submission without baseline retraining; resumed after infrastructure repair2026-11-05.",
+    "scope": "Two100K60-pass candidates only; no reference training, successor, protected role or scale-up."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/generated/92cb4884c511adb30ed6480456082af2054ec917a8f7d09f0c877c83b8c17bc2/uniform_wd_multi_ema/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/data_declaration.json",
+      "arm_id": "uniform_wd_multi_ema"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {
+      "auxiliary_ema_decays": []
+    },
+    "purpose": "architecture_comparison",
+    "reference_ref": {
+      "bundle_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/strict_qualification/59c1bdc2b16e2e04e975/uniform_wd_multi_ema/reference_bundle.json",
+      "comparison_plan": {
+        "role_applicability_plan": {
+          "metric_computed": "applicable",
+          "prediction_input": "applicable",
+          "labels_read": "applicable",
+          "selection_used": "applicable",
+          "external_submission": "not_applicable",
+          "training_membership": "applicable"
+        },
+        "trace_plan": {
+          "optimizer_step": true,
+          "epoch_or_pass": true,
+          "ema_dev_metric": true,
+          "sample_presentations": true,
+          "live_train_metric": true,
+          "checkpoint_identity": true,
+          "learning_rate": true,
+          "live_dev_metric": false
+        },
+        "runtime_qualification_plan": {
+          "status": "declared",
+          "runtime_certificate_required": true,
+          "qualification_scope": "Per-candidate native T4 optimizer-repeat/resume and retained reference qualification"
+        }
+      }
+    }
+  },
+  "arms": [
+    {
+      "arm_id": "joint_norm",
+      "model": {
+        "addons": [
+          "gptrans_triplet_norm_joint"
+        ]
+      }
+    },
+    {
+      "arm_id": "separate_norm",
+      "model": {
+        "addons": [
+          "gptrans_triplet_norm_separate"
+        ]
+      }
+    }
+  ]
+}
