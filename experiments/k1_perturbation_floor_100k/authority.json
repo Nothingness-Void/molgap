@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "purpose": "ARCHITECTURE_COMPARISON",
+  "account": "kaseichou",
+  "platform": "kaggle2",
+  "arms": [
+    "reference",
+    "readout_scale"
+  ],
+  "same_run_reference_arm_id": "reference",
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "allocation_wall_limit_seconds": 7680,
+  "allocated_t4_hours_ceiling": 4.27,
+  "protected_role_access_authorized": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "full_training_authorized": false,
+  "authorization_basis": "User instruction, 2026-11-04: 'plan worthwhile tasks after last night's noise result and submit overnight'. One kaggle2 T4x2 session measuring the same-init perturbation floor of the frozen K1 post-BN recipe: arms reference and readout_scale (k1_readout_scale/1, gain initialised to 1). Wall 7680 s (6400 s x 1.2) x 2 devices = 4.2667 T4-hours, ceiling 4.27. No successor, extra seed, protected role, 500K or full training.",
+  "reference_scope": "Same-run reference retrained from the frozen preset; it also measures rerun drift against the retained seed-42 reference."
+}

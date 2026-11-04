@@ -1,0 +1,89 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "k1_perturbation_floor_100k",
+  "logical_run_id": "k1-perturbation-floor-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/k1_perturbation_floor_100k/authority.json",
+  "platform_ref": "experiments/k1_perturbation_floor_100k/platform.json",
+  "role_ref": "experiments/k1_decay_timescale_100k/roles.json",
+  "decision_ref": "experiments/k1_perturbation_floor_100k/decision.md",
+  "monitor_paths": [
+    "experiments/k1_perturbation_floor_100k/STATUS.md"
+  ],
+  "timestamp": "2026-11-04T04:29:23.355928+00:00",
+  "seeds": [
+    42
+  ],
+  "same_run": {
+    "reference_arm_id": "reference"
+  },
+  "question": {
+    "policy_id": "k1-perturbation-floor-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "How large is the same-initial-state perturbation floor of the K1 post-BN 100K recipe: the selected development MAE change caused by a step-0 identity perturbation (one learnable readout gain initialised to 1) with initial state, data order and dropout unchanged?",
+    "deficiency": "The 14 sub-gate server K1 100K screens were each measured against one shared reference at the same initial state with a zero-start perturbation. Init-only noise (SD 1.074 meV, n=5) does not describe that comparison, and the same-init floor is unmeasured.",
+    "changed_mechanism": "same-init-identity-perturbation",
+    "supporting_evidence": [
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ],
+    "alternatives": [
+      "The same-init floor is as large as init-only noise",
+      "Sub-gate screen deltas reflect real small effects above the floor",
+      "Kaggle hardware nondeterminism alone moves the same-init result"
+    ],
+    "closed_families": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "positive_decision": "Measurement only, no gate: report the readout_scale minus reference delta with its row CI, the reference rerun drift against the retained 141.2945 meV, and their comparison with init-only noise and the 14 sub-gate deltas. No promotion.",
+    "negative_decision": "Measurement only, no gate: if an arm fails, report what was measured; no successor, extra seed or scale-up.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-k1-decay-timescale-100k-s42-r3-reference",
+      "T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "T-k1-init-noise-100k-s45-init_s45",
+      "T-k1-init-noise-100k-s45-init_s46"
+    ]
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "T4x2",
+    "cheapest_falsifier": "One T4x2 session: same-run reference plus one step-0 identity perturbation, one arm per device.",
+    "estimated_device_hours": 3.6,
+    "estimated_wall_hours": 1.8
+  },
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "reference",
+      "training": {}
+    },
+    {
+      "arm_id": "readout_scale",
+      "training": {},
+      "model": {
+        "addons": [
+          {
+            "name": "k1_readout_scale",
+            "version": "1",
+            "config": null
+          }
+        ]
+      }
+    }
+  ]
+}
