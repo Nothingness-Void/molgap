@@ -1,4 +1,4 @@
-"""Value-decoupled pair token on the existing K1; provenance in K1_ADAPTER.md.
+"""Coupled and value-decoupled pair tokens; provenance in K1_ADAPTER.md.
 
 Only the model path is migrated. No experimental registry or runner is imported.
 """
@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import math
 
+MODE = "neural_atom_k1_pair_token"
 VALUE_DECOUPLED_MODE = "neural_atom_k1_pair_token_value_decoupled"
 HIDDEN_CHANNELS = 192
 PAIR_CHANNELS = 32
@@ -14,7 +15,7 @@ TARGET_LAYER = 6
 
 class _PairTokenFactory:
     @staticmethod
-    def make():
+    def make(mode=VALUE_DECOUPLED_MODE):
         import torch
         import torch.nn as nn
         import torch.nn.functional as functional
@@ -23,7 +24,7 @@ class _PairTokenFactory:
         class PairToken(nn.Module):
             def __init__(self):
                 super().__init__()
-                self.mode = VALUE_DECOUPLED_MODE
+                self.mode = mode
                 self.source = nn.Linear(HIDDEN_CHANNELS, PAIR_CHANNELS)
                 self.target = nn.Linear(HIDDEN_CHANNELS, PAIR_CHANNELS)
                 self.pair_norm = nn.LayerNorm(PAIR_CHANNELS)
@@ -39,12 +40,9 @@ class _PairTokenFactory:
                     PAIR_CHANNELS, HIDDEN_CHANNELS, bias=False,
                 )
                 nn.init.zeros_(self.return_projection.weight)
-                # Identity preserves the coupled pair-token function initially;
-                # keys and transmitted values can specialize independently later.
-                self.value_projection = nn.Linear(
-                    PAIR_CHANNELS, PAIR_CHANNELS, bias=False,
-                )
-                nn.init.eye_(self.value_projection.weight)
+                if mode == VALUE_DECOUPLED_MODE:
+                    self.value_projection = nn.Linear(PAIR_CHANNELS, PAIR_CHANNELS, bias=False)
+                    nn.init.eye_(self.value_projection.weight)
 
             def compute_update(self, hidden, batch):
                 dense, valid = to_dense_batch(hidden, batch)
@@ -56,7 +54,7 @@ class _PairTokenFactory:
                 logits = logits / math.sqrt(PAIR_CHANNELS)
                 logits = logits.masked_fill(~pair_valid, float("-inf"))
                 assignment = torch.softmax(logits.flatten(1), dim=-1).reshape_as(logits)
-                value = self.value_projection(pair)
+                value = self.value_projection(pair) if self.mode == VALUE_DECOUPLED_MODE else pair
                 token = torch.einsum("bij,bijd->bd", assignment, value)
                 token = self.token_norm(token + self.token_ffn(token))
                 return_features = token[batch]

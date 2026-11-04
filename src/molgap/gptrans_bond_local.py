@@ -58,7 +58,7 @@ class BondLocalGPTrans(OGBGPTransTiny):
 def make_bond_local_model():
     """Construct the retained seed42 shape; the family loader supplies frozen tensors."""
     with torch.random.fork_rng(devices=[]):
-        torch.manual_seed(42)
+        torch.random.default_generator.manual_seed(42)
         model = OGBGPTransTiny()
         with torch.no_grad():
             model.in_degree_encoder.weight.mul_(.0897)

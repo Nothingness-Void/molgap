@@ -191,9 +191,14 @@ def test_simple_path_bound_matches_original_capped_reachability(nodes, cap):
     assert len(calls) == max(0, min(cap, nodes - 1) - 1)
 
 
-def test_retained_local_model_parameter_identity_is_unchanged():
+def test_retained_local_model_parameter_identity_is_unchanged(monkeypatch):
     from molgap.v4_runtime import state_dict_sha256
+    cuda_seeds = []
+    monkeypatch.setattr(torch.cuda, "manual_seed_all", cuda_seeds.append)
+    rng = torch.get_rng_state().clone()
     model = local.make_bond_local_model()
+    assert not cuda_seeds
+    assert torch.equal(rng, torch.get_rng_state())
     assert sum(parameter.numel() for parameter in model.parameters()) == 5_871_201
     assert state_dict_sha256(model.state_dict()) == (
         "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b")

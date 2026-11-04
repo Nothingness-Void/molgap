@@ -140,7 +140,7 @@ def test_baseline_matches_old_factory(spec, synthetic_inputs):
     assert spec.to_json() == before
 
 
-def test_candidate_real_module_identity_and_mechanism(spec, synthetic_inputs):
+def test_candidate_real_module_identity_and_mechanism(spec, synthetic_inputs, monkeypatch):
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(42)
         baseline = qm9_neural_atom.make_encoder("neural_atom_k1")
@@ -193,6 +193,36 @@ def test_candidate_real_module_identity_and_mechanism(spec, synthetic_inputs):
         assert operation.call_count == 1
     finally:
         handle.remove()
+
+    from molgap.experiment_execution import TRAINING_ADAPTERS, build_addon_declaration
+    from molgap.shared_model_adapter import apply_reviewed_addons, validate_family_addons
+    from pathlib import Path
+    adapter = TRAINING_ADAPTERS[("neural_atom_k1", "3")]
+    addons = [build_addon_declaration(adapter.family, name, repo_root=Path(__file__).resolve().parents[1])
+              for name in ("k1_pair_token", "k1_readout_scale")]
+    validate_family_addons("neural_atom_k1", addons)
+    assert adapter.mode({"addons": addons}) == "composed"
+    cuda_seeds = []
+    monkeypatch.setattr(torch.cuda, "manual_seed_all", cuda_seeds.append)
+    rng = torch.get_rng_state().clone()
+    apply_reviewed_addons(adapter, {"addons": addons}, baseline)
+    assert torch.equal(rng, torch.get_rng_state()) and not cuda_seeds
+    baseline._molgap_substrate.seal()
+    pair = baseline._molgap_addons.pair_token
+    assert sum(p.numel() for p in pair.parameters()) == 22_848
+    assert [b.name for b in baseline._molgap_substrate.bindings] == ["pair_token", "readout_scale"]
+    assert baseline._molgap_substrate.bindings[0].binding.layer == 7
+    assert all(name.startswith("_molgap_addons.pair_token.") for name, p in baseline.named_parameters()
+               if any(p is owned for owned in pair.parameters()))
+    baseline.eval()
+    actual = baseline(**synthetic_inputs)
+    assert torch.equal(actual, prediction)
+    optimizer = torch.optim.SGD(baseline.parameters(), lr=.01)
+    actual.sum().backward()
+    assert pair.token.return_projection.weight.grad.count_nonzero()
+    assert baseline._molgap_addons.readout_scale.gain.grad.count_nonzero()
+    optimizer.step()
+    assert pair.token.return_projection.weight.count_nonzero()
 
 
 @pytest.mark.parametrize("arm_id", VARIANTS)
