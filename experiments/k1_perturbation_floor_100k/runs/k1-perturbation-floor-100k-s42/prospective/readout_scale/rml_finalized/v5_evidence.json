@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "daa62f3ecba14d8bb4daac74b3266524033d102545fb2143b4492facbf21c727"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/readout_scale/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "0415dc76b20f701853f9de28c588da3416ac9b54deb4c4f212c03f6118964b51"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "e6b49841f4e2946c741188c76dcba09099694c47989ed7871b3ca210fc1b158e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "7e6aaffc60f130ea164c5da92236a26d35aed349aae097032d2e937e0ca183f2"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "239aa6cda8589d921232ac67344ad86fcb0d5c27936231750c53d951532b646c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "a040c16779c2f2acb316366cccf43503ac4a7228fd52303f43ea91482bcdb4c2"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "55d295de88165bf63fd0b03a8e73c82d5f6d65e916133dd0b4d798b179524f0e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "2f11514c23b338721ab98a1a1942a78774bd39154704668015e6258660427a76"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "a6238985a210e8dbdab766fee510fb3dda3283c2120b7ad481c37e6befa1ee5d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "570e724a3850301bc533e62d21874934bd71a80bd9d4b16f93e7382ce7a66081"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "f39a044ed6d0b5accf7e6483d04916a904863b67e5b0c68df558fd623b85518c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_perturbation_floor_100k/results/completed/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14048657770574094,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

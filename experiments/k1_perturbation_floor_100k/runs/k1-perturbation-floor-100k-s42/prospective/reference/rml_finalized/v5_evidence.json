@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "daa62f3ecba14d8bb4daac74b3266524033d102545fb2143b4492facbf21c727"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/reference/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "aa0922bad0a4d6f73a8d4efe0a7c2bb704879a708221383f3087c90dd62a3ccd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "dcc422f401f075a8f512a0dcc6c43ef6574eb821876d4a2d43a3918cd3d7f131"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "67c3d04d3e558a38500428dc341d77e2da7bce1f519057397a9fc5cafa022235"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "8c4b23fce417621096df5a336f6497de348738b249861a75c515592d9a6edace"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "6dd22e33625b73c2653a12602aca64c8ea7566c08478d5d492258a745a361b73"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "aab482a1f3194e72f305eb965e6fe1e73f43f76896cfe1fa2a0f11004aac4a5b"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "b40074e165e57290a25b4d6a60f1aaf548c88992eb53593d54dead99169b68fe"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "949decc600ad45f3d9699fd5812db2b5a79d52ab4cb4de15c3124845aa3ce6ed"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/reference/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "8d552143a3ee61d059c2d34badaf005e827711ccc9f67167edc7aecb8950a291"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_perturbation_floor_100k/results/completed/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-perturbation-floor-100k-s42-reference",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/reference/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1412944608205557,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/reference/terminal_staging/v1/76fe8f877e456c12/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

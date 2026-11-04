@@ -417,6 +417,17 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"409a4ee2a46b2d8215773b08fcd076286d5a4df688ea45478d77c9e3661e34ac\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-k1-perturbation-floor-100k-s42-reference\"}",
+      "run_ids": [
+        "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+        "k1-perturbation-floor-100k-s42:reference:downstream"
+      ],
+      "trajectory_ids": [
+        "T-k1-perturbation-floor-100k-s42-readout_scale",
+        "T-k1-perturbation-floor-100k-s42-reference"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"live\\\",\\\"weight_semantics\\\":\\\"live\\\"}\",\"evaluation_role_identity\":\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\",\"lr_schedule_identity\":\"924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3\\\",\\\"comparison_sha256\\\":\\\"3db0abd9705f946233482c699d6d29f67578e5283d7cd92810c254d7876ff42e\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"d33d726f7394182fa979b75a88679aaf327b9666d9ceb44cb48e587ea0c38240\\\",\\\"reference\\\":\\\"f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"adamw-weight-decay-timescale\\\",\\\"reference_id\\\":\\\"ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-live\\\",\\\"selection_role_identity\\\":\\\"0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b\\\"}\",\"strict_identity_sha256\":\"080da9cdcb31f6c52a96895cb810dd76fd07bd6091071498ceb97552f0a03c2c\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f\\\",\\\"target_transform_identity\\\":\\\"b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":31240,\\\"sample_presentations\\\":3998720}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference\"}",
       "run_ids": [
         "k1-decay-timescale-100k-s42-r3:reference:downstream",
@@ -515,6 +526,8 @@
     "T-k1-decay-timescale-100k-s42-r3-wd1e3",
     "T-k1-init-noise-100k-s45-init_s45",
     "T-k1-init-noise-100k-s45-init_s46",
+    "T-k1-perturbation-floor-100k-s42-readout_scale",
+    "T-k1-perturbation-floor-100k-s42-reference",
     "TC-gptrans-author-degree-scale-100k-s42",
     "TC-gptrans-author-path-bond-mean-100k-s42",
     "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
@@ -546,5 +559,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 74
+  "trace_count": 76
 }

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "444017e9cb6add06c76e3dd95df490127b90b5e2ea96ebb92665ae6e45857fef",
+  "source_digest": "a4c3bc2c414e26ef3c6d90dccf281f6a0904749e191834e78c14485950451980",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -252,29 +252,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/k1_perturbation_floor_100k/decision.md",
+      "decision_ref": "experiments/k1_perturbation_floor_100k/results/completed/decision.md",
       "family_id": "k1-perturbation-floor-100k",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale"
+      ],
       "track": "B",
       "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/k1_perturbation_floor_100k/decision.md",
+      "decision_ref": "experiments/k1_perturbation_floor_100k/results/completed/decision.md",
       "family_id": "k1-perturbation-floor-100k",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/reference/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-perturbation-floor-100k-s42-reference"
+      ],
       "track": "B",
       "trajectory_id": "T-k1-perturbation-floor-100k-s42-reference"
     },

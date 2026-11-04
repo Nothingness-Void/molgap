@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1-perturbation-floor-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-k1-perturbation-floor-100k-s42-readout_scale-0",
+  "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.8097252810633335
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+}

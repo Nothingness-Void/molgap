@@ -1,0 +1,426 @@
+{
+  "acceptance_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/k1_perturbation_floor_100k/closure_v1/closure_facts_readout_scale.json": "527942bdb5120e0d47f5eaebba3066f92903a8387564a8000217ccec0366100e",
+    "experiments/k1_perturbation_floor_100k/closure_v1/measured_k1-perturbation-floor-100k-s42.json": "194efac57d5c5d3a78a6abb33d7c34a87ff2a0cb95c7684a351590df6bee6139",
+    "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json": "0415dc76b20f701853f9de28c588da3416ac9b54deb4c4f212c03f6118964b51",
+    "experiments/k1_perturbation_floor_100k/results/completed/decision.md": "ff2ec2b7725481992be6ccc2e93330def49c6900b2260ea9f725c08e173feeca",
+    "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/acceptance.json": "e0f2e2367d78a1b4f6c2f3f0290a83e86312b1882d2d4420edef52992da42410",
+    "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json": "546d4dd7a48704f1a9414fb8bba271527b3a7ea7a92c76fc2f34335ff3e77e8b",
+    "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json": "e3142cc2007dd3089a9b031afeb24054e6ac6f637a78263c684af98e57c5c057",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/allocation_ledger.json": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/execution_retention.json": "daa62f3ecba14d8bb4daac74b3266524033d102545fb2143b4492facbf21c727",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/readout_scale/allocation_ledger.json": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json": "570e724a3850301bc533e62d21874934bd71a80bd9d4b16f93e7382ce7a66081",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json.context.json": "f39a044ed6d0b5accf7e6483d04916a904863b67e5b0c68df558fd623b85518c",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/data_open_provenance.json": "e6b49841f4e2946c741188c76dcba09099694c47989ed7871b3ca210fc1b158e",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/development_predictions.pt": "7e6aaffc60f130ea164c5da92236a26d35aed349aae097032d2e937e0ca183f2",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/last_checkpoint.pt": "239aa6cda8589d921232ac67344ad86fcb0d5c27936231750c53d951532b646c",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/output_manifest.json": "3ed51585d927dd6b96b7d465a5e2a53681606efdf0b4f3fb9885b8008fa7dd24",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/role_audit.json": "a040c16779c2f2acb316366cccf43503ac4a7228fd52303f43ea91482bcdb4c2",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_certificate.json": "55d295de88165bf63fd0b03a8e73c82d5f6d65e916133dd0b4d798b179524f0e",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_provenance.json": "2f11514c23b338721ab98a1a1942a78774bd39154704668015e6258660427a76",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/selected_model.pt": "a6238985a210e8dbdab766fee510fb3dda3283c2120b7ad481c37e6befa1ee5d",
+    "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/training_contract.json": "0415dc76b20f701853f9de28c588da3416ac9b54deb4c4f212c03f6118964b51",
+    "external:///E:/MolGap/artifacts/runs/k1-perturbation-floor-100k-s42/v1/reports/diagnostic_129614b33b784197d3cb9442d07559469f4c981ec0909ec7f3ba4f854a8dc3e0.json": "01d4a453a3e8ea09fa5ff73636ae396c97fd8ad934f2aef501d1a447880550ab"
+  },
+  "closure_blockers": [],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-perturbation-floor-100k-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-k1-perturbation-floor-100k-s42-readout_scale-0",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.8097252810633335
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-perturbation-floor-100k-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-k1-perturbation-floor-100k-s42-readout_scale-allocation-0",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.9000063051808334
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/k1_perturbation_floor_100k/results/completed/decision.md",
+    "facts": {
+      "ci_meV": [
+        -1.7005672550201416,
+        0.06432706725597323
+      ],
+      "effect_meV": -0.8078831148147583,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/k1_perturbation_floor_100k/closure_v1/measured_k1-perturbation-floor-100k-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "daa62f3ecba14d8bb4daac74b3266524033d102545fb2143b4492facbf21c727"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/_execution/readout_scale/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "f2472c73f3b6b0ae6b02f6245747cd5b10e06b88c701b3aabf0b591488c58359"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/training_contract.json",
+        "name": "contract",
+        "role": "contract",
+        "sha256": "0415dc76b20f701853f9de28c588da3416ac9b54deb4c4f212c03f6118964b51"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/data_open_provenance.json",
+        "name": "data_open",
+        "role": "data_open",
+        "sha256": "e6b49841f4e2946c741188c76dcba09099694c47989ed7871b3ca210fc1b158e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/development_predictions.pt",
+        "name": "predictions",
+        "role": "predictions",
+        "sha256": "7e6aaffc60f130ea164c5da92236a26d35aed349aae097032d2e937e0ca183f2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/last_checkpoint.pt",
+        "name": "resume",
+        "role": "resume",
+        "sha256": "239aa6cda8589d921232ac67344ad86fcb0d5c27936231750c53d951532b646c"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/role_audit.json",
+        "name": "role_audit",
+        "role": "role_audit",
+        "sha256": "a040c16779c2f2acb316366cccf43503ac4a7228fd52303f43ea91482bcdb4c2"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_certificate.json",
+        "name": "runtime_certificate",
+        "role": "runtime_certificate",
+        "sha256": "55d295de88165bf63fd0b03a8e73c82d5f6d65e916133dd0b4d798b179524f0e"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/runtime_provenance.json",
+        "name": "runtime_provenance",
+        "role": "runtime_provenance",
+        "sha256": "2f11514c23b338721ab98a1a1942a78774bd39154704668015e6258660427a76"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/selected_model.pt",
+        "name": "selected_model",
+        "role": "selected_model",
+        "sha256": "a6238985a210e8dbdab766fee510fb3dda3283c2120b7ad481c37e6befa1ee5d"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json",
+        "name": "training_trace",
+        "role": "training_trace",
+        "sha256": "570e724a3850301bc533e62d21874934bd71a80bd9d4b16f93e7382ce7a66081"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "role": "trace_context",
+        "sha256": "f39a044ed6d0b5accf7e6483d04916a904863b67e5b0c68df558fd623b85518c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/k1_perturbation_floor_100k/results/completed/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.14048657770574094,
+      "missing_reason": null,
+      "selected_optimizer_step": 31240,
+      "selected_weights": "live",
+      "source_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-04T07:50:33.711234+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": "INCONCLUSIVE",
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-train-prediction_input",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/role_audit-readout_scale-113a325ad24084f7.json",
+      "role_event_id": "role-T-k1-perturbation-floor-100k-s42-readout_scale-train-metric_computed",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    }
+  ],
+  "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+  "same_run_observation": {
+    "attempt_id": "k1-perturbation-floor-100k-s42-v1",
+    "logical_run_id": "k1-perturbation-floor-100k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-perturbation-floor-100k-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "8c1707382b7fd69c0e02bb8e58b8166055406c19",
+    "source_package_sha256": "26ec96d05e188b86c75a4445bc15080acfd24ec6fa001681577dffe0eaa181cb",
+    "spec_identity": "46781302fed5c747df00d5047bf705d1eb0302aab60d194ca0fe2386d7158702"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json",
+    "reference_id": "ev-terminal-T-k1-perturbation-floor-100k-s42-reference",
+    "run_id": "k1-perturbation-floor-100k-s42:readout_scale:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/terminal_staging/v1/db06a22f7f841b85/terminal.json",
+    "trace_artifact_ref": "external:///E:/MolGap/artifacts/retrieved/k1-perturbation-floor-100k-s42/v1/version1/readout_scale/canonical_trace.json",
+    "trace_artifact_sha256": "570e724a3850301bc533e62d21874934bd71a80bd9d4b16f93e7382ce7a66081",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+}

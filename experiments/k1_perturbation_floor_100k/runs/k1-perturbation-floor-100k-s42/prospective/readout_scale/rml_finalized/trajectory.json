@@ -1,0 +1,141 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "k1-perturbation-floor-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-k1-perturbation-floor-100k-s42-readout_scale-planned",
+        "cost-terminal-T-k1-perturbation-floor-100k-s42-readout_scale-0",
+        "cost-terminal-T-k1-perturbation-floor-100k-s42-readout_scale-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json"
+      ],
+      "run_ids": [
+        "k1-perturbation-floor-100k-s42:readout_scale:downstream"
+      ],
+      "source_commit": "8c1707382b7fd69c0e02bb8e58b8166055406c19",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/strict_qualification/f3ab38113a0d8f1ac4f0/readout_scale/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/k1_perturbation_floor_100k/results/completed/decision.md",
+    "facts": {
+      "ci_meV": [
+        -1.7005672550201416,
+        0.06432706725597323
+      ],
+      "effect_meV": -0.8078831148147583,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/k1_perturbation_floor_100k/closure_v1/measured_k1-perturbation-floor-100k-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_perturbation_floor_100k/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "k1-perturbation-floor-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/rml_decision_snapshots/32852d24523b2bbbc3a0c1bc7c7330ca758b92d5127141b1e65573883a62ad6e.json",
+    "snapshot_sha256": "32852d24523b2bbbc3a0c1bc7c7330ca758b92d5127141b1e65573883a62ad6e",
+    "state_timestamp": "2026-11-04T04:29:23.355928+00:00"
+  },
+  "family_id": "k1-perturbation-floor-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The same-init floor is as large as init-only noise",
+      "Sub-gate screen deltas reflect real small effects above the floor",
+      "Kaggle hardware nondeterminism alone moves the same-init result"
+    ],
+    "changed_mechanism": "same-init-identity-perturbation",
+    "cheapest_falsifier": "One T4x2 session: same-run reference plus one step-0 identity perturbation, one arm per device.",
+    "decision_changed_if_negative": "Measurement only, no gate: if an arm fails, report what was measured; no successor, extra seed or scale-up.",
+    "decision_changed_if_positive": "Measurement only, no gate: report the readout_scale minus reference delta with its row CI, the reference rerun drift against the retained 141.2945 meV, and their comparison with init-only noise and the 14 sub-gate deltas. No promotion.",
+    "expected_native_cost_ref": "cost-T-k1-perturbation-floor-100k-s42-readout_scale-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-k1-perturbation-floor-100k-s42-readout_scale",
+    "observed_deficiency": "The 14 sub-gate server K1 100K screens were each measured against one shared reference at the same initial state with a zero-start perturbation. Init-only noise (SD 1.074 meV, n=5) does not describe that comparison, and the same-init floor is unmeasured.",
+    "related_closed_family_ids": [
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ]
+  },
+  "owner": "server",
+  "question": "How large is the same-initial-state perturbation floor of the K1 post-BN 100K recipe: the selected development MAE change caused by a step-0 identity perturbation (one learnable readout gain initialised to 1) with initial state, data order and dropout unchanged?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-k1-perturbation-floor-100k-s42-reference-f3ab38113a0d8f1ac4f0",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale"
+    ],
+    "evidence_refs": [
+      "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/k1_perturbation_floor_100k/authority.json",
+    "contract_refs": [
+      "experiments/k1_perturbation_floor_100k/generated/a9f9cf2e580280ebf2a0573e72b9cad4fdf46dbc27ffed167518f7c08dbc4484/readout_scale/recipe.json",
+      "experiments/presets/k1-post-bn-100k-data.json",
+      "experiments/k1_perturbation_floor_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
+      "ev-terminal-T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "pcqm-k1-mose-residual-gate-100k-s42"
+    ],
+    "prior_trajectory_ids": [
+      "T-k1-decay-timescale-100k-s42-r3-reference",
+      "T-k1-decay-timescale-100k-s42-r3-wd1e3",
+      "T-k1-init-noise-100k-s45-init_s45",
+      "T-k1-init-noise-100k-s45-init_s46"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "readout_scale",
+      "comparison_role": "candidate",
+      "logical_run_id": "k1-perturbation-floor-100k-s42",
+      "reference_arm_id": "reference",
+      "reference_trajectory_id": "T-k1-perturbation-floor-100k-s42-reference",
+      "reference_trajectory_ref": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/reference/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "46781302fed5c747df00d5047bf705d1eb0302aab60d194ca0fe2386d7158702"
+    },
+    "source_commit": "8c1707382b7fd69c0e02bb8e58b8166055406c19",
+    "source_config_identity": "92a6fdc69fa53561227a94cce3d1e45213d777fe5bf29748e2d484efb3917ade"
+  },
+  "track": "B",
+  "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+}
