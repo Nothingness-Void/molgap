@@ -103,13 +103,23 @@ def test_binding_and_reproducibility(package, repo, payload, tmp_path):
 
 def test_exact_reviewed_dataset_source_roundtrip(repo, payload, tmp_path):
     name = "src/molgap/packed_graph_dataset.py"
+    costs = "experiments/reference/runs/run/prospective/strict_qualification/identity/arm/cost_records.json"
+    (repo / costs).parent.mkdir(parents=True)
+    (repo / costs).write_bytes(b'[]\n')
+    git(repo, "add", costs)
+    git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Retained reference cost metadata")
     output = tmp_path / "reviewed-source"
-    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, [name], output)
+    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, [name, costs], output)
     assert manifest == verify_experiment_source_package(output, repo)
-    assert manifest["relative_allowlist"] == [name]
+    assert manifest["relative_allowlist"] == [name, costs]
     with tarfile.open(output / "source.tar.gz") as archive:
-        assert archive.getnames() == [name]
+        assert archive.getnames() == sorted([name, costs])
         assert archive.extractfile(name).read() == b"VALUE = 2\n"
+        assert archive.extractfile(costs).read() == b'[]\n'
+    for forbidden in (costs.replace("arm/", "credentials/"), costs.replace("arm/", "cost_records/"),
+                      costs.replace(".json", ".pt")):
+        with pytest.raises(ValueError, match="reserved or sensitive"):
+            build_experiment_source_package(ExperimentSpec(payload), repo, [forbidden], tmp_path / "bad-cost")
 
 
 @pytest.mark.parametrize("name", [
