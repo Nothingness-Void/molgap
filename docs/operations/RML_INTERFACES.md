@@ -35,17 +35,19 @@ when to use it. Unless noted, the command only reads files.
 ### Planning queries (read-only, about 0.5 s)
 
 `cards`, `lookup`, `levers` and `gaps` read `research_memory/derived/trajectory_index.json`,
-each trajectory record, the trajectory's own bound `paired_analysis.json`, and any
-`attribution_label.json` beside its decision; `lookup` and `levers` also read one
-historical index (see "Uncarded historical trajectories"). They do not verify hashes. Run
-`check --frozen` first if the index might be stale.
+each trajectory record, its own bound `paired_analysis.json` and any `attribution_label.json`
+beside its decision; `lookup` and `levers` also read one historical index (see "Uncarded
+historical trajectories"). They do not verify hashes; run `check --frozen` first if the index
+might be stale. `--ref REV` (`cards`, `lookup`, `gaps`) also reads those files as committed at git
+revision REV (e.g. `origin/molgap-desktop`) and adds its cards absent locally; every card then has
+`source: {ref, record_path, last_commit}` (`ref` is `local` for this checkout; it ends each
+`--compact` line). REV is only read, never validated, rebuilt or copied; an unreadable REV exits 1.
 
-#### `cards [--outcome OUTCOME] [--term TERM] [--compact]`
+#### `cards [--outcome OUTCOME] [--term TERM] [--compact] [--ref REV]`
 
-Prints one JSON object per line, one line per trajectory (all outcomes, not only
-closed ones). `--outcome` is an exact outcome string. `--term` is one whole word,
-case-insensitive, matched anywhere in the card's JSON. No match prints nothing
-and exits 0.
+Prints one JSON object per line, one per trajectory (all outcomes, not only closed
+ones). `--outcome` is an exact outcome string; `--term` is one whole word,
+case-insensitive, anywhere in the card's JSON. No match prints nothing and exits 0.
 
 | Field | Source |
 |---|---|
@@ -82,20 +84,18 @@ T-pcqm-k1-batch-renorm-100k-s42-brn_affine | NEGATIVE_UNDER_CONTRACT | pcqm-k1-b
 T-pcqm-k1-extremal-readout-100k-s42-candidate | NEGATIVE_UNDER_CONTRACT | pcqm-k1-extremal-readout-100k | zero-init-max-min-std-branch-added-to-pooled-embedding | +3.33 | -
 ```
 
-#### `lookup [--mechanism M...] [--failure-mode F] [--family F] [--term T...] [--compact]`
+#### `lookup [--mechanism M...] [--failure-mode F] [--family F] [--term T...] [--compact] [--ref REV]`
 
 All filters are optional and combine with AND. `--mechanism` takes one or more
-words; each is a plain case-insensitive substring test (not whole-word) against one
-string: the card's `mechanism`, `family_id` and `failure_mode`, with `null` fields
-dropped, joined by single spaces. Every word must match (`--mechanism init noise`).
-So `--mechanism lr` also matches `pcqm-gptrans-bondlocal-pairnorm-lr-500k`
-through the family id, and `--mechanism readout` matches a family id even when the
-mechanism text is a sentence without that word. Free-text mechanisms are matched as
-written, so synonyms are missed; try other words, or use `--term` for whole words.
-`--failure-mode` is an exact match on the card's `failure_mode`. `--family` is a
-case-insensitive substring of `family_id`. `--term` takes one or more words, each a
-whole word as in `cards`, and every word must occur in the card. An
-unknown failure mode simply matches nothing. Exit 0.
+words, each a case-insensitive substring (not whole-word) of the card's `mechanism`,
+`family_id` and `failure_mode` joined by spaces (nulls dropped); every word must match
+(`--mechanism init noise`). So `--mechanism lr` also matches
+`pcqm-gptrans-bondlocal-pairnorm-lr-500k` through the family id, and `--mechanism readout`
+matches a family id even when the mechanism sentence lacks that word. Free-text
+mechanisms are matched as written, so synonyms are missed; try other words, or `--term`.
+`--failure-mode` is an exact match (an unknown one matches nothing). `--family` is a
+case-insensitive substring of `family_id`. `--term` takes one or more whole words as in
+`cards`, all of which must occur in the card. Exit 0.
 
 Output is one JSON object:
 
@@ -258,7 +258,7 @@ lookup --mechanism degree --compact   (last line)
 # not in cards: 2 historical trajectories match in experiments/pcqm_k1_complete_local_audit/historical_evidence.md: TB-k1-ssma-qualification-s42-v1 NO_TRAIN, TC-k1-degree-balance-100k-s42 POSITIVE_BELOW_GATE
 ```
 
-#### `gaps [--compact]`
+#### `gaps [--compact] [--ref REV]`
 
 Exit 0. Prints `{"sparse": [...], "contradictions": [...]}`. `--compact` prints
 one line per item instead: `sparse | <family_id> | n=<N> with_effect=<N>` and
