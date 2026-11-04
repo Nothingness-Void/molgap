@@ -50,6 +50,13 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    **{("gptrans_triplet_norm_" + order, "1"): AddonContract(
+        "gptrans_t", "local-bond-architecture", "molgap.gptrans_triplet_norm",
+        family_versions=("2",), single_addon=True,
+        execution_modes=(("2", "triplet_norm_" + order),),
+        policy_hook="molgap.gptrans_triplet_norm:policy",
+        extra_source_files=("src/molgap/gptrans_bond_pair_norm.py", "src/molgap/gptrans_bond_local.py"))
+       for order in ("joint", "separate")},
     **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",
