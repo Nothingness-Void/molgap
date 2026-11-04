@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "norm_no_decay_multi_ema",
+    "arm_identity": "6dcc4ee74e510722184c87f644dfe876780dccae52441dcc38146716dbfc865b",
+    "experiment_id": "pcqm_gptrans_norm_ema_100k_20261104",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42",
+    "package_identity": "14de351c195d59c8c6296363f52b70212c3a23227782824fe3c001d88c6315f3",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-gptrans-norm-ema-100k-20261104-s42",
+    "source_archive_sha256": "3d8b8700365c17e8857d4b0c04c176c9b09ceb8519fa80c32e0c2ecb72fa401f",
+    "source_commit": "cec17977c38551d4f4d70c8ee82cd0d4a437e7a0",
+    "spec_identity": "e363494b2e6888b5d6ccc78b032aa664448c95537ae2e84136dab460c2f93df7",
+    "training_recipe_sha256": "00bf2651b564a1872c4e497187208fa9ea38652aec012a34d518d8bb79608b7a"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "b457deab1d34bbca4a2e08835319b52e0d5e9f47ec962e5940277319d9b4ac1f"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 b457deab1d34bbca4a2e08835319b52e0d5e9f47ec962e5940277319d9b4ac1f, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/role_audit_v1/roles_norm_no_decay_multi_ema.json",
+      "role_event_id": "role-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/role_audit_v1/roles_norm_no_decay_multi_ema.json",
+      "role_event_id": "role-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/role_audit_v1/roles_norm_no_decay_multi_ema.json",
+      "role_event_id": "role-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/role_audit_v1/roles_norm_no_decay_multi_ema.json",
+      "role_event_id": "role-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/role_audit_v1/roles_norm_no_decay_multi_ema.json",
+      "role_event_id": "role-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    }
+  ]
+}
