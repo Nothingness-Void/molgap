@@ -214,6 +214,13 @@ ADDONS = MappingProxyType({
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
     ),
+    ("k1_pair_token", "1"): AddonContract("neural_atom_k1",
+        "slot-pair-token", "molgap.k1_pair_token_slot",
+        tuple(AddonConfigField(key, value=value) for key, value in (
+            ("name", "pair_token"), ("layer", 7), ("seed", 42))),
+        ("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_pair_token_slot:apply_addon",
+        extra_source_files=("src/molgap/k1_pair_token.py",)),
     **{(name, "1"): AddonContract("gptrans_t", "readout-intervention", "molgap.gptrans_readout")
        for name in ("degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999")},
     ("k1_joint_aggregation", "1"): AddonContract(
