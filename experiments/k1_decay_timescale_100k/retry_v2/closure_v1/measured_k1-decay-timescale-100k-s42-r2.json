@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-decay-timescale-100k-s42-r2\\v1\\version1\\reference\\development_predictions.pt",
+      "sha256": "92733b12247bcd32a8c59f64e83c4c9bf01cc7228269a9d8c067f44c3f0a5120"
+    },
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-decay-timescale-100k-s42-r2\\v1\\version1\\wd1e3\\development_predictions.pt",
+      "sha256": "e1717cabab75a04129b42699bbb8e391efcea9ad21cd55feecd703346269b7f7"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 0.19343771934509846,
+    "ensemble_gain_meV": 5.331216142177595,
+    "ensemble_mae_meV": 135.86652581870555,
+    "fit": null,
+    "m_meV": -0.19343771934509277,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "wd1e3",
+        "ci95": [
+          -1.098928030371666,
+          0.6900954381227487
+        ],
+        "delta": -0.19343771934509277,
+        "n_bootstrap": 2000,
+        "probability_better": 0.667,
+        "reference": "reference",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "reference": 141.29446082055568,
+      "wd1e3": 141.1010231012106
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

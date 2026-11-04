@@ -68540,6 +68540,45 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "k1-decay-timescale-100k-s42-r2:reference:downstream",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-reference"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "k1-decay-timescale-100k-s42-r2:wd1e3:downstream",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "k1-decay-timescale-100k-s42-r2:wd1e3:downstream",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "modern2d-scale500k-k2-s42-r3:esa_count_500k:downstream",
       "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
     },
@@ -68773,5 +68812,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "83c43b09003b43a73dc8e8feb7307e667207219159b125bfb14291bd3e12b31f"
+  "source_digest": "83502c8c3090b782f3a26c57ab5681a5493511f0c3ded8c0ddb30266b92f501a"
 }

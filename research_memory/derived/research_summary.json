@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 30,
-    "excluded": 42,
+    "excluded": 44,
     "status": "available"
   },
   "cost": {
@@ -574,7 +574,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 19
         },
         "device_hours": {
           "estimated": {
@@ -582,11 +582,11 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 9,
-            "known_total": 25.72843571270778
+            "known_records": 11,
+            "known_total": 29.296022744494444
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 8
         },
         "queue_hours": {
           "estimated": {
@@ -598,7 +598,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 15
+          "unknown_records": 19
         },
         "wall_hours": {
           "estimated": {
@@ -606,11 +606,11 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 9,
-            "known_total": 16.021970893830556
+            "known_records": 11,
+            "known_total": 19.34324507715639
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 8
         }
       },
       "Tesla_P100_PCIE_16GB": {
@@ -1414,17 +1414,17 @@
         }
       }
     },
-    "unknown_events": 282
+    "unknown_events": 286
   },
   "evidence": {
-    "validated": 138,
+    "validated": 140,
     "without_trajectory": 6
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 120,
+      "count": 118,
       "severity": "INFO"
     },
     {
@@ -1439,12 +1439,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 82,
+      "count": 80,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 59,
+      "count": 57,
       "severity": "WARN"
     },
     {
@@ -1454,18 +1454,18 @@
     }
   ],
   "roles": {
-    "coarse_historical": 703,
-    "explicit_events": 581,
+    "coarse_historical": 713,
+    "explicit_events": 597,
     "repeatedly_selected": 7
   },
-  "source_digest": "cac7467cfb87988566d5bd676c5be487c0afe7535c5002373e0aadaa4fdb9c9a",
+  "source_digest": "444017e9cb6add06c76e3dd95df490127b90b5e2ea96ebb92665ae6e45857fef",
   "trajectories": {
     "count": 191,
     "outcomes": {
-      "ACTIVE": 50,
+      "ACTIVE": 48,
       "CLOSED": 6,
       "INCONCLUSIVE": 35,
-      "INFRASTRUCTURE_ONLY": 38,
+      "INFRASTRUCTURE_ONLY": 40,
       "NEGATIVE_UNDER_CONTRACT": 15,
       "NO_TRAIN": 21,
       "POSITIVE_BELOW_GATE": 13,

@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "30983556c42bb173e32a60748c485403e0ca817c86f5d2d99cea212da74944c0"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "dd9e1d511ff92027f4b3ff72f003b320c10068b64ffde846fe77b4e0546b1148"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/reference/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "dd9e1d511ff92027f4b3ff72f003b320c10068b64ffde846fe77b4e0546b1148"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "558602650fc50be51028157c273f0e8cbf42812056a034abba1f32258953a8b8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "92733b12247bcd32a8c59f64e83c4c9bf01cc7228269a9d8c067f44c3f0a5120"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "95c243c9a09b01c980ab3e09e08a3db2b077cadec767e19bc7ce9dc4012b4ee7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "4eccb53e2736e0eb7f7b485e094826e55721bd2d4f39f376ceeb15b6f87393ae"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "05bf5840418380a64e3d33eee951b48d87f349499053b500a124dafee2ff3cc6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "a64cc0755b5d9ef6a4b8f74da7e80bec52471fc7ea427b4f09b450a6d23e029a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "ccf2a38ba7a8d0cd4a2b7a121b9625d2dc8c028dd3a6c1d1ab04f4f1eb278533"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "c00b04cd90cb9378ef24a0593453e15b538786fb38d8813ccda6cb9a4e476dbe"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/reference/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "0d57412e83b2e6d8cd9bc0298e946c1b88b2c404c635c486657453ec600aa976"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_decay_timescale_100k/results/completed_r2/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r2-reference",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_decay_timescale_100k/generated/b45e430d50482e70c165e834703f0a3cc7999ce25635559354c1e825baba242e/reference/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1412944608205557,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/reference/terminal_staging/v1/7f280e9c662a2ccb/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "INFRASTRUCTURE_ONLY",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "C"
+}

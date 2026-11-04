@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "cac7467cfb87988566d5bd676c5be487c0afe7535c5002373e0aadaa4fdb9c9a",
+  "source_digest": "444017e9cb6add06c76e3dd95df490127b90b5e2ea96ebb92665ae6e45857fef",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -128,29 +128,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "decision_ref": "experiments/k1_decay_timescale_100k/results/completed_r2/decision.md",
       "family_id": "k1-decay-timescale-100k",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/reference/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-decay-timescale-100k-s42-r2-reference"
+      ],
       "track": "C",
       "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-reference"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/k1_decay_timescale_100k/decision.md",
+      "decision_ref": "experiments/k1_decay_timescale_100k/results/completed_r2/decision.md",
       "family_id": "k1-decay-timescale-100k",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-decay-timescale-100k-s42-r2-wd1e3"
+      ],
       "track": "C",
       "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
     },

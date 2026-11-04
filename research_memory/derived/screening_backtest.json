@@ -15,6 +15,38 @@
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
+      "run_id": "k1-decay-timescale-100k-s42-r2:reference:downstream",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-reference"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
+      "run_id": "k1-decay-timescale-100k-s42-r2:wd1e3:downstream",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity",
+        "missing_frozen_reference"
+      ],
       "run_id": "modern2d-scale500k-k2-s42-r3:esa_count_500k:downstream",
       "trajectory_id": "T-modern2d-scale500k-k2-s42-r3-esa_count_500k"
     },
@@ -514,5 +546,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 72
+  "trace_count": 74
 }

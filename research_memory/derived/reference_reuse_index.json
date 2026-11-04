@@ -142,6 +142,48 @@
       "comparison_status": "NOT_EVALUATED",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r2-reference",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/reference/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r2-wd1e3",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "ev-terminal-T-k1-decay-timescale-100k-s42-r3-reference",
       "role_use": {
         "development": "consumed",

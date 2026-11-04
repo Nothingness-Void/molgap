@@ -1,0 +1,255 @@
+{
+  "allocation_observation": {
+    "artifact_refs": [
+      "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/allocation_ledger.json",
+      "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/execution_retention.json",
+      "external:///E:/MolGap/artifacts/retrieved/k1-decay-timescale-100k-s42-r2/v1/version1/_execution/wd1e3/allocation_ledger.json"
+    ],
+    "cumulative_costs_evaluated": false,
+    "devices": [
+      {
+        "allocated_seconds": 6421.656657216,
+        "arm_id": "wd1e3",
+        "device": 1,
+        "hardware": "Tesla T4"
+      }
+    ],
+    "event_status": "recorded_current_window",
+    "observed_at": "2026-11-02T19:00:39.914374+00:00",
+    "prior_segments_recorded": 0,
+    "prior_unobserved_intervals": false,
+    "scope": "Python bootstrap/runtime observation window; includes idle allocated devices",
+    "started_at": "2026-11-02T17:13:38.257706+00:00",
+    "status": "complete"
+  },
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "wd1e3",
+    "arm_identity": "ab4881f0f72e8af89b8500c478ec5ec45ce5571a47723d4fc3ed99e6427d8440",
+    "experiment_id": "k1_decay_timescale_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "k1-decay-timescale-100k-s42-r2",
+    "package_identity": "94a286ce96ca49619e161046a4c8c27848bd53b6a7a24db0ff198eac08859b29",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-k1-decay-timescale-100k-s42-r2",
+    "source_archive_sha256": "135a191031733841b44e68215e9fd15631e151e5095bd788f7f8cad3241c1ff0",
+    "source_commit": "2ce9419e986a1ba6e46a5fee7fed060a59e7e93b",
+    "spec_identity": "87174ddfc53f0b37d44e7d8dc249cf17421d3549a2c77f621c2b4777d679b22f",
+    "training_recipe_sha256": "9ff7b9e1f661cdfb3906717ce56ac4a9541a6686cb5c74c74aedd49c976182e9"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-decay-timescale-100k-s42-r2-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-k1-decay-timescale-100k-s42-r2-wd1e3-0",
+      "evidence_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/terminal_staging/v1/8679f82662c952ef/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.6674377766413888
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "k1-decay-timescale-100k-s42-r2:wd1e3:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "k1-decay-timescale-100k-s42-r2-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-k1-decay-timescale-100k-s42-r2-wd1e3-allocation-0",
+      "evidence_ref": "experiments/k1_decay_timescale_100k/runs/k1-decay-timescale-100k-s42-r2/prospective/wd1e3/terminal_staging/v1/8679f82662c952ef/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.7837935158933333
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "k1-decay-timescale-100k-s42-r2:wd1e3:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-k1-decay-timescale-100k-s42-r2-wd1e3"
+    }
+  ],
+  "diagnostic_report": {
+    "locator": "external:///E:/MolGap/artifacts/runs/k1-decay-timescale-100k-s42-r2/v1/reports/diagnostic_d0a37e3a3f86bf2aa4ee53dd46149934c3deb593b4499d229a8e98e189318b0e.json",
+    "logical_run_id": "k1-decay-timescale-100k-s42-r2",
+    "sha256": "17c3cb89f1948a4396657bacee4831ef091bef83e69d619215fe6a45e3564675",
+    "spec_identity": "87174ddfc53f0b37d44e7d8dc249cf17421d3549a2c77f621c2b4777d679b22f"
+  },
+  "mechanical_verification": {
+    "blockers": [],
+    "context": {
+      "account": "kaseichou",
+      "arm_id": "wd1e3",
+      "arm_identity": "ab4881f0f72e8af89b8500c478ec5ec45ce5571a47723d4fc3ed99e6427d8440",
+      "experiment_id": "k1_decay_timescale_100k",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "k1-decay-timescale-100k-s42-r2",
+      "package_identity": "94a286ce96ca49619e161046a4c8c27848bd53b6a7a24db0ff198eac08859b29",
+      "platform": "kaggle",
+      "platform_version": "1",
+      "run_reference": "kaseichou/molgap-k1-decay-timescale-100k-s42-r2",
+      "source_archive_sha256": "135a191031733841b44e68215e9fd15631e151e5095bd788f7f8cad3241c1ff0",
+      "source_commit": "2ce9419e986a1ba6e46a5fee7fed060a59e7e93b",
+      "spec_identity": "87174ddfc53f0b37d44e7d8dc249cf17421d3549a2c77f621c2b4777d679b22f",
+      "training_recipe_sha256": "9ff7b9e1f661cdfb3906717ce56ac4a9541a6686cb5c74c74aedd49c976182e9"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "9ff7b9e1f661cdfb3906717ce56ac4a9541a6686cb5c74c74aedd49c976182e9"
+        },
+        "data_open": {
+          "path": "data_open_provenance.json",
+          "sha256": "29ff1dfd6fd6434460423b5caf07a0536a5385351a48fcc1a5dda77a2559dfb0"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "e1717cabab75a04129b42699bbb8e391efcea9ad21cd55feecd703346269b7f7"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "080a19dbff13d84b8ee6f242a0a923f1aac7122e542167a392662da8a54f6ae4"
+        },
+        "role_audit": {
+          "path": "role_audit.json",
+          "sha256": "b3ce9ad108ad231ad98e8aef6bbf2e3e543d6379c7017ee392ec586448bf7e9f"
+        },
+        "runtime_certificate": {
+          "path": "runtime_certificate.json",
+          "sha256": "8fb44cd681eeba4dc9b00f21aa26e2bf6dcbc568d0accdd1cce1032eec6d8415"
+        },
+        "runtime_provenance": {
+          "path": "runtime_provenance.json",
+          "sha256": "06f0564a5c656f592fc4a4d2e3868151c6357da821f759663ea812df032369ac"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "b389c55bab3a2d47732946460a706fa26961fa9f93a9db5e36bea890ea9de8ef"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "f8d3c5b4dfbf5bb6e4c2b8a677b4f061015ca5694ec30e3be09800929d8a3248"
+        },
+        "trace_context": {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "344cbab78bf9e8d8306d0bb0a92ec0220acff9e232c4287561e2addae97a2c7d"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "Tesla T4",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 6002.775995909
+        },
+        {
+          "hardware": "Tesla T4",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.1411010231012106,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "role_audit": {
+        "event_count": 8,
+        "path": "role_audit.json",
+        "role_use": {
+          "development": "consumed",
+          "official_validation": "untouched",
+          "test_challenge": "untouched",
+          "test_dev": "untouched",
+          "train": "consumed"
+        },
+        "sha256": "b3ce9ad108ad231ad98e8aef6bbf2e3e543d6379c7017ee392ec586448bf7e9f"
+      },
+      "selected_optimizer_step": 28116,
+      "selected_weights": "live",
+      "target_identity": {
+        "acceptance_plan_sha256": "242c6ccf109a111ceaabdf9354209d0a46233e69f96ecf1fa16558a1b8a380ee",
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": {
+          "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        }
+      }
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "missing_evidence": [
+    "scientific_comparison_not_evaluated",
+    "runtime_qualification_not_evaluated",
+    "replay_readiness_not_evaluated"
+  ],
+  "native_costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 6002.775995909
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "roles": []
+}
