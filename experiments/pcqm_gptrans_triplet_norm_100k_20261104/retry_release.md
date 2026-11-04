@@ -12,4 +12,4 @@ No baseline is retrained. Same question and experiment branch retain all records
 R2 SDK validation rejected its52-character source slug before upload.
 The infrastructure owner observed both its dataset and kernel absent on Kaggle1.
 The shorter r3 physical name is molgap-triplet-norm-100k-s42-r3;
-its source slug is36characters (within SDK6..50). No r2 journal is cleared.
+its source slug is within SDK6..50. No r2 journal is cleared.

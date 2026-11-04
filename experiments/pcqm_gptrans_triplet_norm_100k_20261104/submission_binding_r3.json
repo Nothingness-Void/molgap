@@ -1,0 +1,29 @@
+{
+  "kernel": "nothingnessvoid/molgap-triplet-norm-100k-s42-r3",
+  "kernel_id": 142747352,
+  "version": 1,
+  "logical_run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3",
+  "attempt_id": "v1",
+  "binding": {
+    "arms": [
+      {
+        "arm_id": "joint_norm",
+        "arm_identity": "0d1bf1c890287716848372ac4d8f32faffa707b480a8513e4a8a7c78fa0e1747"
+      },
+      {
+        "arm_id": "separate_norm",
+        "arm_identity": "4fa423e969716213ea5e6ef56dac37e51b75124a1d405029094eae8c64562eca"
+      }
+    ],
+    "experiment_id": "pcqm_gptrans_triplet_norm_100k_20261104",
+    "logical_run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3",
+    "package_identity": "1505b59e60b94f60bac2be10890cfecb97006d9c30e822b426ddd20a01a6173c",
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "9fbd199eafcf70fd5199d5bb8f1ff5ef1bfa8eae7334dd9d2dec1a734e320e94",
+    "source_commit": "e0439644a4b860a61ab74c2f70437e38a42c5baf",
+    "spec_identity": "912bb7f8c7f26596c106db6f4aa31336c0112eeaf2db7677c3ae6d2fd0f0b722",
+    "spec_sha256": "912bb7f8c7f26596c106db6f4aa31336c0112eeaf2db7677c3ae6d2fd0f0b722"
+  },
+  "launch_receipt_ref": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-triplet-norm-100k-20261104-s42-r3\\v1\\operations\\launch_receipt.json",
+  "submission_state_ref": "D:\\molgap-artifacts\\runs\\pcqm-gptrans-triplet-norm-100k-20261104-s42-r3\\v1\\operations\\submission_state.json"
+}
