@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1-perturbation-floor-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-k1-perturbation-floor-100k-s42-reference-planned",
+  "evidence_ref": "experiments/k1_perturbation_floor_100k/authority.json",
+  "hardware": "T4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 3.6
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 1.8
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "k1-perturbation-floor-100k-s42:reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-k1-perturbation-floor-100k-s42-reference"
+}
