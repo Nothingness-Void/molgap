@@ -1,7 +1,8 @@
 # Triplet return and pair-update normalization: 100K ordering test
 
-Desktop-owned; user authorized Kaggle1 submission of two candidates on2026-11-04.
-No reference retraining. Base desktop d0ea8b84; reference is the accepted
+Desktop-owned; user authorized Kaggle1 submission of two candidates on2026-11-04,
+and resumed submission after the shared loading repair on2026-11-05.
+No reference retraining. Base desktop d6da59c9; reference is the accepted
 uniform_wd_multi_ema endpoint from pcqm_gptrans_norm_ema_100k_20261104.
 
 ## Evidence review and alternatives
