@@ -25,3 +25,9 @@ D:/molgap-artifacts/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42/v1/diagnost
 Only the kernel log and two preflight text files were initially downloaded;
 no model outputs or proof archives were downloaded for this diagnosis.
 The infrastructure owner received the exact traceback and frozen run identities.
+
+Exact-version execution ledger:236.730593818Python-allocation wall seconds,
+473.461187636allocated Tesla T4-device seconds (two devices, includes idle).
+Queue and pre-Python provisioning are measurement_missing; no billing claim.
+Root execution JSON files live under diagnostics/experiment/ in the same
+artifact directory. Both workers returned1 during preflight.
