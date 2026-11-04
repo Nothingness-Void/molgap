@@ -49,7 +49,7 @@ def _synthetic_padding_batch():
 @pytest.mark.parametrize("device", _DEVICES)
 @pytest.mark.parametrize("mode", ["reference", "pair_prenorm", "centered_logits",
                                   "memory_value", "memory_message", "degree_bond_local_ema999"])
-def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_states, tmp_path, mode, device):
+def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_states, tmp_path, mode, device, monkeypatch):
     from molgap.experiment_family_workflow import tensor_safe_rng_state
     path, digest = initial_states["gptrans_t"]
     if mode == "degree_bond_local_ema999":
@@ -61,6 +61,21 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
             digest = state_dict_sha256(state)
             path = tmp_path / "synthetic-local-initial.pt"
             atomic_torch_save(path, {"model_state": state, "state_sha256": digest})
+        from dataclasses import replace
+        from molgap import gptrans_bond_local
+        from molgap.family_training_policy import mode_policy
+        from molgap.model_substrate import ModelSubstrate
+        original_policy = gptrans_bond_local.policy
+        def mount(recipe, model):
+            assert_equal(state, model.state_dict())
+            projection = torch.nn.Linear(1, 1, bias=False)
+            torch.nn.init.ones_(projection.weight)
+            ModelSubstrate(model, "gptrans_t").replace_submodule(
+                "readout_projection", "readout", torch.nn.Sequential(model.readout, projection))
+            return model
+        monkeypatch.setattr(gptrans_bond_local, "policy",
+                            lambda mode: replace(original_policy(mode), mount=mount))
+        mode_policy.cache_clear()
     recipe = FamilyRecipe("gptrans_t", mode, 42, digest,
         DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 2,
         .001, .01, ScheduleSpec("cosine_epoch", 2), "final-ema", "torch-pass-randperm", 1,
@@ -76,6 +91,8 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
             configure_fp32_determinism(42)
             torch.utils.deterministic.fill_uninitialized_memory = True
             kernel = FamilyKernel(recipe, path, device=device)
+            if mode == "degree_bond_local_ema999":
+                assert kernel.model._molgap_substrate.sealed
             kernel._qualification_memory_fill = reference
             observations = []
             kernel._qualification_execution_observer = lambda boundary: observations.append((
@@ -83,6 +100,21 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
             losses = []
             for _ in range(2):
                 losses.append(kernel.step(_synthetic_padding_batch(), check_finite=True))
+                if mode == "degree_bond_local_ema999" and not reference and _ == 0:
+                    checkpoint = tmp_path / "mounted-state.pt"
+                    torch.save({"model": kernel.model.state_dict(), "optimizer": kernel.optimizer.state_dict(),
+                                "ema": kernel.ema.state_dict()}, checkpoint)
+                    saved_rng = capture_rng_state()
+                    kernel.close()
+                    kernel = FamilyKernel(recipe, path, device=device)
+                    retained = torch.load(checkpoint, weights_only=True, map_location=device)
+                    kernel.model.load_state_dict(retained["model"], strict=True)
+                    kernel.optimizer.load_state_dict(retained["optimizer"])
+                    kernel.ema.load_state_dict(retained["ema"])
+                    restore_rng_state(saved_rng)
+                    kernel._qualification_memory_fill = reference
+                    kernel._qualification_execution_observer = lambda boundary: observations.append((
+                        boundary, torch.utils.deterministic.fill_uninitialized_memory))
                 assert torch.utils.deterministic.fill_uninitialized_memory is True
                 assert torch.are_deterministic_algorithms_enabled()
             assert observations == [(boundary, reference) for boundary in (
@@ -94,6 +126,8 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
             kernel.close()
         assert_equal(*records)
     finally:
+        if mode == "degree_bond_local_ema999":
+            mode_policy.cache_clear()
         torch.use_deterministic_algorithms(deterministic)
         torch.utils.deterministic.fill_uninitialized_memory = fill
         torch.set_num_threads(threads)
