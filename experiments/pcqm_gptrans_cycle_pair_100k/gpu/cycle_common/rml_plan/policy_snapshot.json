@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_SHARED_CYCLE_PAIR",
+    "field": "accepted_cache_and_explicit_same_run_authority",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-reference-plus-candidate-pair",
+    "authority_ref": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "gptrans-shared-local-cycle100k-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "full native T4x2 allocation including idle devices",
+      "no cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "gptrans-shared-cycle-pair",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_cache_and_explicit_same_run_authority"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}
