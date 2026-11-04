@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 125,
-  "event_count": 293,
+  "estimated_event_count": 127,
+  "event_count": 295,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-T-modern2d-execution-repair-s42-v1-esa-full-missing",
@@ -36,7 +36,7 @@
     "cost-TC-modern2d-formal-100k-esa_native_v3-s42-v1-full-missing",
     "cost-TC-modern2d-formal-100k-ppgt_author_v2-s42-v1-full-missing"
   ],
-  "measurement_missing_event_count": 290,
+  "measurement_missing_event_count": 292,
   "not_applicable_event_count": 11,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -1887,12 +1887,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 12
       },
       "T4x2:device_hours": {
         "estimated": {
-          "known_records": 10,
-          "known_total": 62.400000000000006
+          "known_records": 12,
+          "known_total": 70.19999999999999
         },
         "measured": {
           "known_records": 0,
@@ -1911,12 +1911,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 12
       },
       "T4x2:wall_hours": {
         "estimated": {
-          "known_records": 10,
-          "known_total": 31.200000000000003
+          "known_records": 12,
+          "known_total": 35.099999999999994
         },
         "measured": {
           "known_records": 0,
@@ -2871,12 +2871,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 12
       },
       "device_hours": {
         "estimated": {
-          "known_records": 10,
-          "known_total": 62.400000000000006
+          "known_records": 12,
+          "known_total": 70.19999999999999
         },
         "measured": {
           "known_records": 0,
@@ -2895,12 +2895,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 10
+        "unknown_records": 12
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 10,
-          "known_total": 31.200000000000003
+          "known_records": 12,
+          "known_total": 35.099999999999994
         },
         "measured": {
           "known_records": 0,
@@ -4448,6 +4448,106 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "T-k1-combination-100k-s42-combination": {
+      "T4x2:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "T4x2:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 3.9
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "T4x2:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "T4x2:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.95
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "T-k1-combination-100k-s42-reference": {
+      "T4x2:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "T4x2:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 3.9
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "T4x2:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "T4x2:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 1.95
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "T-k1-decay-timescale-100k-s42-r2-reference": {
