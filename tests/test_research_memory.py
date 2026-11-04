@@ -820,7 +820,7 @@ def test_cards_filter_by_outcome_and_term(tmp_path):
     assert select(cards) == cards
 
 
-def test_card_effect_is_own_run_against_closed_reference(tmp_path):
+def test_card_effect_is_own_run_against_closed_reference(tmp_path, capsys):
     from molgap.research_memory.cards import build_cards
 
     def put(rel, value):
@@ -844,6 +844,31 @@ def test_card_effect_is_own_run_against_closed_reference(tmp_path):
     effects = {c["trajectory_id"]: c["effect_meV"] for c in build_cards(tmp_path)}
     assert effects == {"T-a-ref": None, "T-a-pretrained": pytest.approx(1.0), "T-b-ref": None,
                        "T-b-pretrained": pytest.approx(2.0), "T-lever-ref": None, "T-lever-pretrained": None}
+
+    # --ref: another revision's committed cards join the local ones, each naming its source; local wins an id.
+    from molgap.research_memory.cli import main
+
+    def cards(*extra):
+        main(["--repo-root", str(tmp_path), "cards", *extra])
+        return [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+
+    before = cards()
+    git = ["git", "-C", str(tmp_path), "-c", "user.name=t", "-c", "user.email=t@t"]
+    other = [rows[0], {**rows[3], "outcome": "INCONCLUSIVE"}, {**rows[1], "trajectory_id": "T-other"}]
+    put("research_memory/derived/trajectory_index.json", {"trajectories": other})
+    for args in (["init", "-q"], ["add", "-A"], ["commit", "-qm", "other"], ["tag", "other"]):
+        subprocess.run(git + args, check=True)
+    put("research_memory/derived/trajectory_index.json", {"trajectories": rows})
+    assert cards() == before and all("source" not in c for c in before)
+    merged = {c["trajectory_id"]: c for c in cards("--ref", "other")}
+    assert len(merged) == len(rows) + 1 and merged["T-b-pretrained"]["outcome"] == "NEGATIVE_UNDER_CONTRACT"
+    assert merged["T-b-pretrained"]["source"]["ref"] == "local"
+    assert merged["T-other"]["source"]["ref"] == "other" and merged["T-other"]["source"]["last_commit"]
+    assert merged["T-other"]["source"]["record_path"] == rows[1]["record_path"]
+    assert merged["T-other"]["effect_meV"] == pytest.approx(1.0)  # same projection, read from git objects
+    with pytest.raises(SystemExit) as failed:
+        cards("--ref", "missing")
+    assert failed.value.code not in (0, None)
 
 
 def test_lookup_and_gaps_are_read_only_views():

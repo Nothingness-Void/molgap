@@ -9,7 +9,9 @@ prose: a field the record does not carry stays None.
 from __future__ import annotations
 
 import json
+import posixpath
 import re
+import subprocess
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -60,13 +62,59 @@ def _scale(card: dict):
     return int(m.group(1)) if m else None
 
 
-def build_cards(repo_root) -> list[dict]:
+class _GitTree:
+    """The Path subset _evidence reads (/, suffix, is_file, read_text), over one commit's git objects."""
+
+    def __init__(self, batch, rev, rel="."):
+        self.batch, self.rev, self.rel, self.suffix = batch, rev, rel, posixpath.splitext(rel)[1]
+
+    def __truediv__(self, other):
+        rel = posixpath.normpath(posixpath.join(self.rel, str(other).replace("\\", "/")))
+        return _GitTree(self.batch, self.rev, rel)
+
+    def _blob(self):
+        self.batch.stdin.write(f"{self.rev}:{self.rel}\n".encode())
+        self.batch.stdin.flush()
+        head = self.batch.stdout.readline().split()
+        if head[-1] == b"missing":
+            return None
+        data = self.batch.stdout.read(int(head[2]) + 1)[:-1]
+        return data if head[1] == b"blob" else None
+
+    def is_file(self):
+        return self._blob() is not None
+
+    def read_text(self, encoding):
+        if (data := self._blob()) is None:
+            raise ValueError(f"cannot read {self.rel} at {self.rev}")
+        return data.decode(encoding)
+
+
+def _git(root, *args) -> str:
+    done = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True)
+    if done.returncode:
+        raise ValueError(f"git {' '.join(args)}: {done.stderr.strip()}")
+    return done.stdout
+
+
+def build_cards(repo_root, ref=None, *, source=None) -> list[dict]:
+    """ref: read that revision's committed files, not the working tree. source: label of a 'source' field."""
     root = Path(repo_root).resolve()
-    index = json.loads((root / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))
+    rev = _git(root, "rev-parse", "--verify", f"{ref}^{{commit}}").strip() if ref else "HEAD"
+    batch = ref and subprocess.Popen(["git", "-C", str(root), "cat-file", "--batch"],
+                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    tree = _GitTree(batch, rev) if ref else root
+    index = json.loads((tree / "research_memory/derived/trajectory_index.json").read_text(encoding="utf-8"))
     outcomes = {e: row["outcome"] for row in index["trajectories"] for e in row.get("result_evidence_ids") or []}
+    last = {}  # Newest commit touching each path at rev, from one history walk.
+    for line in _git(root, "log", "--format=>%h %cs", "--name-only", rev).splitlines() if source else []:
+        if line.startswith(">"):
+            commit = line[1:]
+        elif line:
+            last.setdefault(line, commit)
     cards = []
     for row in index["trajectories"]:
-        record = json.loads((root / row["record_path"]).read_text(encoding="utf-8"))
+        record = json.loads((tree / row["record_path"]).read_text(encoding="utf-8"))
         hyp = record.get("hypothesis") or {}
         mechanism = hyp.get("changed_mechanism")
         cards.append({
@@ -80,10 +128,22 @@ def build_cards(repo_root) -> list[dict]:
             "keywords": _keywords(mechanism, row["family_id"]),
             "decision_ref": row.get("decision_ref"),
             "reopen_conditions": (record.get("decision") or {}).get("reopen_conditions"),
-            **_evidence(root, row, record, outcomes),
+            **_evidence(tree, row, record, outcomes),
         })
         cards[-1]["search_terms"] = _search_terms(cards[-1])
+        if source:
+            cards[-1]["source"] = {"ref": source, "record_path": row["record_path"],
+                                   "last_commit": last.get(row["record_path"])}
+    if batch:
+        batch.communicate()
     return cards
+
+
+def with_ref(repo_root, ref) -> list[dict]:
+    """Local cards plus those only ref has (local wins an id), read as committed; links naming their source."""
+    local = build_cards(repo_root, source="local")
+    ids = {c["trajectory_id"] for c in local}
+    return local + [c for c in build_cards(repo_root, ref, source=ref) if c["trajectory_id"] not in ids]
 
 
 def _words(value) -> list[str]:
@@ -146,9 +206,9 @@ def _effect(card: dict, *, see_decision=False) -> str:
 
 
 def compact_line(card: dict) -> str:
-    """One line: id | outcome | family | mechanism slug | effect_meV | failure_mode."""
+    """One line: id | outcome | family | mechanism slug | effect_meV | failure_mode [| source ref]."""
     return " | ".join([card["trajectory_id"], card["outcome"], card["family_id"], _slug(card["mechanism"]),
-                       _effect(card), card["failure_mode"] or "-"])
+                       _effect(card), card["failure_mode"] or "-", *[s["ref"] for s in [card.get("source")] if s]])
 
 
 def levers(cards, family: str) -> list[str]:

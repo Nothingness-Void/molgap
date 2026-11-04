@@ -45,12 +45,15 @@ def main(argv: list[str] | None = None) -> None:
     for flag in ("--failure-mode", "--family"):
         lookup.add_argument(flag)
     compact_help = "one line per card: id | outcome | family | mechanism slug | effect_meV | failure_mode"
+    ref_help = "also read the cards only this git revision has committed (local wins); every card names its source"
     for command in (cards, lookup):
         command.add_argument("--compact", action="store_true", help=compact_help)
+        command.add_argument("--ref", help=ref_help)
     levers = commands.add_parser("levers", help="read-only table of tested levers for one family")
     levers.add_argument("--family", required=True,
                         help="case-insensitive family id substring, or a glob with '*' (e.g. 'pcqm-k1-*-100k')")
     gaps = commands.add_parser("gaps")
+    gaps.add_argument("--ref", help=ref_help)
     gaps.add_argument("--compact", action="store_true",
                       help="one line per item: sparse | family | counts, or contradiction | arm | a vs b")
     doctor = commands.add_parser("doctor")
@@ -188,7 +191,11 @@ def main(argv: list[str] | None = None) -> None:
         args.mechanism, args.term = (" ".join(v) if v else None for v in (args.mechanism, args.term))
     if args.command in {"lookup", "gaps", "cards", "levers"}:
         from . import cards as _cards
-        built = _cards.build_cards(root)
+        built = None if getattr(args, "ref", None) else _cards.build_cards(root)
+        try:
+            built = built if built is not None else _cards.with_ref(root, args.ref)
+        except ValueError as exc:  # an unreadable revision fails loudly, never as fewer cards
+            raise SystemExit(f"--ref {args.ref}: {exc}") from exc
         if args.command == "levers":
             pointer = _cards.historical_pointer(root, built, family=args.family)
             print("\n".join([*_cards.levers(built, args.family), *filter(None, [pointer])]))

@@ -74,7 +74,9 @@ See the [storage lifecycle](../docs/operations/LOCAL_STORAGE_RETIREMENT.md).
 ## Query, analysis and corrections
 
 `cards`, `lookup` and `gaps` are read-only planning views over the derived index
-and closure facts or labels. `analyze` reads saved development predictions and
+and closure facts or labels. With `--ref <git-rev>` they also list another branch's
+committed cards (e.g. `origin/molgap-server`), linked to their source, never copied.
+`analyze` reads saved development predictions and
 writes only post-hoc scratch output. Per-arm closure facts
 (`molgap-closure-facts-v1`) carry an enum `failure_mode`, search terms and a
 measured effect. `attribution_label.json` files are weak `agent_interpretation`
