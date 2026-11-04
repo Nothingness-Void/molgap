@@ -5,7 +5,9 @@ Kernel nothingnessvoid/molgap-gptrans-triplet-norm-100k-20261104-s42.
 Run pcqm-gptrans-triplet-norm-100k-20261104-s42 / attempt v1.
 Submission bound successfully with initial RUNNING response. Luna's subsequent
 read-only check observed latest version1 ERROR, matching receipt version1.
-Training progress and root cause remain unknown; minimal diagnostic log pending.
+Both preflight logs report Target identity acceptance plan is blocked at
+experiment_family_workflow.py:1017. Neither arm entered formal training.
+See attempt_v1_failure.md. Infrastructure owner is investigating this blocker.
 
 Arms joint_norm and separate_norm both train new candidates. The accepted
 uniform_wd_multi_ema PairNorm endpoint is retained, not retrained.
