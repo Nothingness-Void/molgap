@@ -685,6 +685,18 @@ def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tm
     )
     assert len(digest) == 64
     assert (tmp_path / "comparison_readiness_prelaunch.json").is_file()
+    # Real custody can keep the identical shared transform under another run.
+    from molgap.research_memory.validate import validate_repository_records
+    shared_copy = tmp_path / "experiments" / "shared_transform" / "target_transform.json"
+    shared_copy.parent.mkdir(parents=True)
+    shared_copy.write_bytes((tmp_path / bundle["target_transform_asset_ref"]).read_bytes())
+    assert len(validate_repository_records(tmp_path)["records"]["target_transform_assets"]) == 2
+    conflicting = _target_transform_asset()
+    conflicting["mean"] += 1
+    conflicting["asset_sha256"] = target_transform_asset_digest(conflicting)
+    shared_copy.write_text(json.dumps(conflicting), encoding="utf-8")
+    with pytest.raises(ValueError, match="duplicate target_transform_asset_id"):
+        validate_repository_records(tmp_path)
 
     forged = copy.deepcopy(prelaunch)
     forged["reference_bundle_id"] = "fake-reference-bundle-id"
