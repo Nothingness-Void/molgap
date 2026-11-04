@@ -3,7 +3,12 @@
 SUBMISSION_BOUND,2026-11-05 JST. Corrected Kaggle1 job142747352/version1.
 Kernel nothingnessvoid/molgap-triplet-norm-100k-s42-r3.
 Run pcqm-gptrans-triplet-norm-100k-20261104-s42-r3 / attempt v1.
-Submission returned RUNNING. Luna owns the finite actual-training startup check.
+Submission returned RUNNING. Luna completed six finite read-only checks:
+latest version1 and receipt version1 matched, scheduler remained RUNNING.
+The SDK returned empty kernel logs and no per-arm preflight output files.
+Actual preflight completion/training steps remain unverified; do not infer
+them from scheduler status. Finite startup observation stopped without a cron.
+Source, receipt and prospective RML were saved before user-requested shutdown.
 Frozen binding and exact receipt locations: submission_binding_r3.json.
 
 Original job142743304/version1 failed before training at target identity binding;
