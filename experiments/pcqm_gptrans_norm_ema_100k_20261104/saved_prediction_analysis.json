@@ -1,0 +1,93 @@
+{
+  "inputs": [
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-norm-ema-100k-20261104-s42/v1/version1/uniform_wd_multi_ema/development_predictions.pt",
+      "sha256": "d537ffd9787297867397e2c0a930359cb4e9b58e1e80f8fbcb3850e1380945d0"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-norm-ema-100k-20261104-s42/v1/version1/uniform_wd_multi_ema/development_predictions_ema0.9999.pt",
+      "sha256": "b14447106ddc788a296b5da72cf1ce889606df43cf4d1a0618e23b062f3147e6"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-norm-ema-100k-20261104-s42/v1/version1/norm_no_decay_multi_ema/development_predictions.pt",
+      "sha256": "3e1b2ce5023421950622137805160fbf8aab95d5c44dd1e6f994650d140fe202"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-norm-ema-100k-20261104-s42/v1/version1/norm_no_decay_multi_ema/development_predictions_ema0.9999.pt",
+      "sha256": "fae480ff57ee283c2304c531b8fde98604aaf7da0a5714b6f6ef3657bd1bd4ef"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 3.9265308332443283,
+    "ensemble_gain_meV": 6.792309122085555,
+    "ensemble_mae_meV": 134.61058405458928,
+    "fit": {
+      "a_meV": 132.3746564720202,
+      "b_meV": 9.02937844422344,
+      "form": "a + b/N over all member subsets"
+    },
+    "m_meV": 1.078174912929535,
+    "n_inits": 4,
+    "pairs": [
+      {
+        "candidate": "exempt999",
+        "ci95": [
+          0.8495000023841859,
+          2.673037862300873
+        ],
+        "delta": 1.767923731803894,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0005,
+        "reference": "uniform999",
+        "seed": 42
+      },
+      {
+        "candidate": "uniform9999",
+        "ci95": [
+          3.5493892338275908,
+          4.320382889270783
+        ],
+        "delta": 3.926530833244324,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0,
+        "reference": "uniform999",
+        "seed": 42
+      },
+      {
+        "candidate": "exempt9999",
+        "ci95": [
+          0.15635337519645692,
+          0.6160490877628326
+        ],
+        "delta": 0.3884260940551758,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0005,
+        "reference": "exempt999",
+        "seed": 42
+      },
+      {
+        "candidate": "exempt9999",
+        "ci95": [
+          -2.7406447894573214,
+          -0.8594058549404159
+        ],
+        "delta": -1.770181007385254,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "reference": "uniform9999",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "exempt999": 141.2081158107519,
+      "exempt9999": 141.59654190480708,
+      "uniform999": 139.44019207894803,
+      "uniform9999": 143.36672291219236
+    }
+  },
+  "role_id": "development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

@@ -1,5 +1,11 @@
 # Experiments
 
+[GPTrans normalization-decay and multi-EMA100K](pcqm_gptrans_norm_ema_100k_20261104/decision.md)
+is closed without adoption: normalization exemption regresses1.768meV;
+EMA0.9999 regresses on both trajectories. Two strict replay entries are complete.
+See [attribution](pcqm_gptrans_norm_ema_100k_20261104/analysis.md) and
+[custody](pcqm_gptrans_norm_ema_100k_20261104/terminal_custody.md).
+
 [K1 scale attribution](pcqm_k1_scale_attribution_20261025/README.md) combines
 the historical comparison audit with an accepted fixed five-state NO_TRAIN
 diagnostic. The tested Clean-BN procedure does not recover the negative tail:

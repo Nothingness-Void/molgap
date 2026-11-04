@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "36b54710bffed6c2dabe75a45ce669acb402da92bedd86040639e786a543158f",
+  "source_digest": "993754a35a7c043af95ab77fc75418f095663d3f33675536e24b3c4a7b10b862",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -49,6 +49,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/decision.md",
+      "family_id": "pcqm-gptrans-norm-ema-100k-20261104",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/norm_no_decay_multi_ema/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/decision.md",
+      "family_id": "pcqm-gptrans-norm-ema-100k-20261104",
+      "outcome": "CLOSED",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/uniform_wd_multi_ema/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
     },
     {
       "completeness_status": "complete",
