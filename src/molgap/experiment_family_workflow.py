@@ -1012,9 +1012,10 @@ class TargetIdentityBinding:
         _digest(plan_sha256, "acceptance plan digest")
         if file_digest(path) != plan_sha256:
             raise ValueError("Target identity acceptance plan hash mismatch")
-        report = check_acceptance_plan(spec, root, _json(path), allow_absent_external=True)
+        report = check_acceptance_plan(spec, root, _json(path), external_metadata_only=True)
         if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
-            raise ValueError("Target identity acceptance plan is blocked")
+            raise ValueError("Target identity acceptance plan is blocked: " + "; ".join(
+                arm["arm_id"] + ": " + issue for arm in report["arms"] for issue in arm["blockers"]))
         return cls(root, plan_path, plan_sha256)
 
     @classmethod
@@ -1439,7 +1440,7 @@ def acceptance_dependency_pins(plan: dict) -> dict[str, str]:
 
 
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
-                          require_training_targets=False, allow_absent_external=False) -> dict:
+                          require_training_targets=False, external_metadata_only=False) -> dict:
     """Prelaunch capability and retained-reference check, without execution.
 
     The owning contract still provides comparison_prelaunch and reference_bundle.
@@ -1484,10 +1485,10 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
                     raise ValueError("Expected pinned repository artifact")
                 _digest(pointer["sha256"], "plan artifact digest")
                 if type(pointer["path"]) is str and pointer["path"].startswith("external://"):
+                    if external_metadata_only:
+                        return pointer["path"]  # Other-host reference custody is not a worker input.
                     path = bound_artifact_path(Path(repo_root).resolve(), pointer["path"])
                     _safe_local(path)
-                    if allow_absent_external and not path.is_file():
-                        return path
                     if not path.is_file():
                         raise ValueError("Missing artifact: " + pointer["path"])
                 else:
@@ -1522,7 +1523,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict, *,
                       "role_history": "role_history_ref", "target_transform_asset": "target_transform_asset_ref",
                       "cost_records": "cost_records_ref", "acceptance": "acceptance_ref", "decision": "decision_ref"}
             for artifact, field in owners.items():
-                if bound_artifact_path(Path(repo_root).resolve(), bindings[artifact]["path"]) != bound_artifact_path(Path(repo_root).resolve(), bundle[field]):
+                if bindings[artifact]["path"] != bundle[field] and bound_artifact_path(Path(repo_root).resolve(), bindings[artifact]["path"]) != bound_artifact_path(Path(repo_root).resolve(), bundle[field]):
                     raise ValueError("Reference artifact/owner pointer mismatch: " + artifact)
         except (ValueError, TypeError, KeyError, OSError) as exc:
             blockers.append(str(exc))

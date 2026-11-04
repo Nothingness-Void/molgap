@@ -659,7 +659,7 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
     return path.relative_to(repo).as_posix()
 
 
-def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path):
+def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path, monkeypatch):
     from molgap.experiment_family_workflow import TargetIdentityBinding
 
     repo, spec = workflow_case["repo"], workflow_case["spec"]
@@ -691,6 +691,36 @@ def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_ca
     projected["conflicting_source"] = {"path": "nested/source.json", "sha256": "b" * 64}
     with pytest.raises(ValueError, match="Conflicting acceptance artifact pins"):
         acceptance_dependency_pins(projected)
+    # Remote target checks must not resolve a reference retained on another OS.
+    from molgap.research_memory import paths
+    from molgap.comparison_readiness import reference_bundle_digest
+    original = paths.bound_artifact_path
+    def remote_path(root, pointer):
+        if str(pointer).startswith("external://"):
+            raise ValueError("external artifact requires an absolute file path")
+        return original(root, pointer)
+    monkeypatch.setattr(paths, "bound_artifact_path", remote_path)
+    for entry in plan["arms"]:
+        pointer = entry["reference_bundle"]
+        bundle = json.loads((destination / pointer["path"]).read_bytes())
+        uri = "external:///D:/retained/runtime_certificate.json"
+        bundle["runtime_certificate_ref"] = uri
+        entry["reference_artifacts"]["runtime_certificate"]["path"] = uri
+        _write_json(destination / pointer["path"], bundle)
+        pointer["sha256"] = _sha((destination / pointer["path"]).read_bytes())
+        comparison_pin = entry["comparison_prelaunch"]
+        comparison = json.loads((destination / comparison_pin["path"]).read_bytes())
+        comparison["reference_bundle_sha256"] = reference_bundle_digest(bundle)
+        _write_json(destination / comparison_pin["path"], comparison)
+        comparison_pin["sha256"] = _sha((destination / comparison_pin["path"]).read_bytes())
+    _write_json(destination / plan_path, plan)
+    plan_sha = _sha((destination / plan_path).read_bytes())
+    TargetIdentityBinding.from_acceptance_plan(spec, destination, plan_path, plan_sha256=plan_sha)
+    from molgap.experiment_family_workflow import check_acceptance_plan
+    assert check_acceptance_plan(spec, destination, plan)["status"] == "BLOCKED"
+    (destination / plan["arms"][0]["reference_artifacts"]["target_manifest"]["path"]).write_bytes(b'{}')
+    with pytest.raises(ValueError, match="Plan artifact hash mismatch"):
+        TargetIdentityBinding.from_acceptance_plan(spec, destination, plan_path, plan_sha256=plan_sha)
 
 
 @pytest.mark.parametrize("phase", ["preflight", "train"])
