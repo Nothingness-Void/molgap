@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "993754a35a7c043af95ab77fc75418f095663d3f33675536e24b3c4a7b10b862",
+  "source_digest": "93a66de199e3831d7501194fb095efc9b303043523bb2bc68f8f554f8dd7135b",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -241,6 +241,34 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+      "family_id": "pcqm-gptrans-triplet-norm-100k-20261104",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42/prospective/joint_norm/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+      "family_id": "pcqm-gptrans-triplet-norm-100k-20261104",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42/prospective/separate_norm/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm"
     },
     {
       "completeness_status": "complete",

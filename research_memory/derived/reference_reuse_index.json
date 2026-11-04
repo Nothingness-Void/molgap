@@ -410,7 +410,10 @@
       "source_envelope": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/uniform_wd_multi_ema/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm"
+      ]
     },
     {
       "artifact_availability": [
