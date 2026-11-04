@@ -84,9 +84,16 @@ def _groups(model, requested):
     parameters = dict(model.named_parameters())
     if requested is None:
         owner = getattr(model, "_molgap_substrate", None)
-        requested = {} if owner is None else {
-            entry.name: [name for name in parameters if name.startswith(owner.namespace + "." + entry.name + ".")]
-            for entry in owner.bindings}
+        if owner is None:
+            requested = {}
+        else:
+            requested = {
+                entry.name: [name for name in parameters if name.startswith(owner.namespace + "." + entry.name + ".")]
+                for entry in owner.bindings}
+            for mutation_name, target_path in getattr(owner, "mutations", ()):
+                prefix = target_path + "."
+                requested[mutation_name] = [
+                    name for name in parameters if name == target_path or name.startswith(prefix)]
     if type(requested) is not dict:
         raise ValueError("addon_parameters must map addon names to parameter-name sequences")
     groups, seen = {}, set()

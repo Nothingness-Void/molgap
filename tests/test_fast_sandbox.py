@@ -99,6 +99,53 @@ def test_one_connected_parameter_does_not_hide_an_unused_addon_parameter():
     assert "state_dict_roundtrip" not in report["checks"]
 
 
+class _ToyBackbone(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.embed = nn.Embedding(32, 8)
+        self.local_blocks = nn.ModuleList([nn.Linear(8, 8)])
+        self.head = nn.Linear(8, 1)
+
+    def forward(self, batch):
+        h = self.local_blocks[0](self.embed(batch.x[:, 0]))
+        out = torch.zeros(batch.num_graphs, h.shape[-1], dtype=h.dtype, device=h.device)
+        out.index_add_(0, batch.batch, h)
+        return self.head(out).squeeze(-1)
+
+
+def test_substrate_replace_submodule_tracks_ownership_and_sandbox_gradients():
+    def factory():
+        model = _ToyBackbone()
+        substrate = ModelSubstrate(model, "neural_atom_k1")
+        replacement = nn.Sequential(nn.Linear(8, 8), nn.SiLU(), nn.Linear(8, 8))
+        substrate.replace_submodule("custom_block0", "local_blocks.0", replacement)
+        substrate.seal()
+        return model
+
+    report = run_sandbox(factory)
+    assert report["status"] == "PASSED"
+    assert report["addons"]["custom_block0"]["status"] == "PASSED"
+    assert report["addons"]["custom_block0"]["trainable_parameters"] == 4
+
+
+def test_replaced_submodule_with_disconnected_parameter_fails():
+    class _DisconnectedReplacement(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.dead = nn.Parameter(torch.ones(4))
+
+        def forward(self, x):
+            return x
+
+    model = _ToyBackbone()
+    substrate = ModelSubstrate(model, "neural_atom_k1")
+    substrate.replace_submodule("dead_addon", "local_blocks.0", _DisconnectedReplacement())
+    substrate.seal()
+
+    report = run_sandbox(lambda: model)
+    assert report["status"] == "FAILED"
+
+
 def test_stateless_addon_reports_gradient_not_applicable():
     report = run_sandbox(slot_factory("stateless"), forward=owning_forward)
     assert report["status"] == "PASSED", report
