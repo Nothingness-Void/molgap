@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "449cdc7546e3325cb53366d4eb2f2074afc56fef0bb408658eab769d9e7d226d",
+  "source_digest": "cac7467cfb87988566d5bd676c5be487c0afe7535c5002373e0aadaa4fdb9c9a",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -213,6 +213,66 @@
       "result_evidence_ids": [],
       "track": "C",
       "trajectory_id": "T-k1-decay-timescale-100k-s42-v1-wd1e3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_init_noise_server_100k/results/completed/decision.md",
+      "family_id": "k1-init-noise-server-100k",
+      "outcome": "CLOSED",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-init-noise-100k-s45-init_s45"
+      ],
+      "track": "B",
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_init_noise_server_100k/results/completed/decision.md",
+      "family_id": "k1-init-noise-server-100k",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s46/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-init-noise-100k-s45-init_s46"
+      ],
+      "track": "B",
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s46"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_perturbation_floor_100k/decision.md",
+      "family_id": "k1-perturbation-floor-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/readout_scale/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-readout_scale"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_perturbation_floor_100k/decision.md",
+      "family_id": "k1-perturbation-floor-100k",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_perturbation_floor_100k/runs/k1-perturbation-floor-100k-s42/prospective/reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-k1-perturbation-floor-100k-s42-reference"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,132 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "init_s45",
+    "arm_identity": "8a2f33f3d91852ee4667cf0f9aa6726bb6047d5bbbfa406a731344dfde7cd129",
+    "experiment_id": "k1_init_noise_server_100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "k1-init-noise-100k-s45",
+    "package_identity": "737f493f4e5707a794dc1c20d60aa7d9862311e37f69c8f9053b4282b203bf84",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-k1-init-noise-server-100k-s45",
+    "source_archive_sha256": "d34988c8fd1d23b14ce1dab09f166930aae53806b701a9ebd1b33d6a442f9cfe",
+    "source_commit": "67f4852b9e748c14da4617977a3eb771ac35691b",
+    "spec_identity": "7594d3dfc293d1cddcd385222df416868dfbc4b43dc32b09f502dca71aefa517",
+    "training_recipe_sha256": "fa85cd6d3fb73aec16dc22e6318f7198b0c0e69c7cece195c654c124a5c4c8b0"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-train-prediction_input",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-train-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s45/terminal_staging/v1/role_audit-init_s45-f6647b04f8ee19d3.json",
+      "role_event_id": "role-T-k1-init-noise-100k-s45-init_s45-train-metric_computed",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "k1-init-noise-100k-s45:init_s45:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-k1-init-noise-100k-s45-init_s45"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "2750afbd43441d6150efcd903420981999452012870110f13d239c6dc543999f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "6072ada70c0a3db58c100c18fd008380f12a495705d28c115d48f54e79d47944"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/_execution/init_s46/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "6072ada70c0a3db58c100c18fd008380f12a495705d28c115d48f54e79d47944"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "8b928f50e3c7d2e4754070453b9d5c19e4e2756a926b2932e49883b2be155844"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "7b539169dfbcaa3cb97f8efe119b7c0c6f5a29b4192788486ef0326acd935c99"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "102b0ed49e55ea2730260fbda45e44bdc036aa2feb920eb919eb1e7d77352aff"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "7a2dd8605d4c4f40ee5d1d594cf4b9abba4eddbbcb64c203d4a77ac6f24df671"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "00277a9b7f9dace3fbe5fa97711b9121d747bf7311f7190a0ca6835556ec72fc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "dec651b1a97576dbffb5234c4ad88bdd6b753a3598c9848cb228da602d86d3b3"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "1ad0a9600f641475fff2aaca1dc1f898cf6fc6068deeb97158acaad3af6da2aa"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "f785104f1f42342af219eb6ab357314c2f7170cc6a54733c0375dcda44867d02"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "f9c6bc8923e368221079ab1ac7ced211382790063244f2ef6db5611750bf21f1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-init-noise-100k-s45/v1/version1/init_s46/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "c20e9cd92ad816098712fac8873287e9e8eb14bf4fca2dd64c75e145378a4be3"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_init_noise_server_100k/results/completed/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-init-noise-100k-s45-init_s46",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_init_noise_server_100k/generated/03d343532a85fa2ea0accc8092f9a46f34ab530962ec60c89b53b42962c9e47a/init_s46/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.14253839413106442,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_init_noise_server_100k/runs/k1-init-noise-100k-s45/prospective/init_s46/terminal_staging/v1/aec0aaaf0b63645e/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}
