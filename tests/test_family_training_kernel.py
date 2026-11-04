@@ -30,6 +30,30 @@ def test_initialization_dtype_must_not_be_silently_cast(initial_states, tmp_path
         load_family_model(recipe, wrong)
 
 
+def test_replace_submodule_only_addon_is_accepted_and_sealed(initial_states, monkeypatch):
+    from pathlib import Path
+    from molgap import shared_model_adapter
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.family_training_kernel import load_family_model
+    from molgap.model_substrate import ModelSubstrate
+    def replace_head(adapter, spec, model):
+        ModelSubstrate(model, "neural_atom_k1").replace_submodule("head_swap", "head", deepcopy(model.head))
+        return model
+    monkeypatch.setattr(shared_model_adapter, "apply_reviewed_addons", replace_head)
+    path, digest = initial_states["neural_atom_k1"]
+    addon = build_addon_declaration(("neural_atom_k1", "3"), "k1_readout_scale",
+        repo_root=Path(__file__).resolve().parents[1])
+    recipe = FamilyRecipe("neural_atom_k1", "composed", 42, digest,
+        DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 1,
+        .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1,
+        target_mean_eV=0., target_std_eV=1., addons=(addon,))
+    with torch.random.fork_rng(devices=[]):
+        model, _ = load_family_model(recipe, path)
+    owner = model._molgap_substrate
+    assert owner.sealed and not owner.bindings
+    assert owner.mutations == (("head_swap", "head"),)
+
+
 @pytest.fixture(scope="module")
 def initial_states(tmp_path_factory):
     from molgap.qm9_neural_atom import make_encoder
