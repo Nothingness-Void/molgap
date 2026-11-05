@@ -2,9 +2,12 @@
 
 Desktop-owned Track B question, 2026-11-06 JST. The user authorized Kaggle2
 submission after reviewing the two-fresh-training-arm design. Shared Muon
-infrastructure is not implemented at the planning source 986db6ea; its separate
-implementation approval and qualification are pending. This protocol is a draft
-until the exact supported optimizer implementation and recipe are committed.
+infrastructure was absent at the planning source986db6ea. The user separately
+approved implementation and its measured budget on2026-11-06. Reviewed shared
+implementation0d6beda4 is applied here as b36e541b; existing CPU update/recovery/
+output/replay checks passed. Native GPU qualification remains in the worker.
+The executable input is experiment.json; candidate training.optimizer is
+`k1-muon-adamw-fp32-v1`.
 
 ## A: proposal and evidence
 
@@ -37,8 +40,8 @@ switching a trained Adam checkpoint to Muon.
 PyTorch2.11's native Muon internally converts Newton-Schulz tensors to BF16.
 The implementation must not be described as FP32 merely because model tensors
 are FP32. This run retains the approved FP32/noTF32 condition; precise optimizer
-arithmetic, update scaling and parameter assignment must be resolved and frozen
-before source publication. The existing shared owner currently constructs AdamW.
+arithmetic, update scaling and parameter assignment are fixed by the reviewed
+shared optimizer policy. The standard arm still constructs native AdamW.
 No experiment-specific replacement trainer or runtime monkeypatch is permitted.
 
 Ruling: qualify a complete100K pair first. No500K or full release, no automatic
@@ -70,8 +73,12 @@ cosine40passes to1e-6, no warmup. EMA.999 tracking is descriptive; primary
 selection stays best development Live. All optimizer groups follow the frozen
 schedule. Proposed Muon settings are momentum.95,5Newton-Schulz iterations,
 epsilon1e-7 and Moonlight update scaling0.2*sqrt(max(matrix dimensions)), with
-base LR4e-4/WD1e-5. These are a literature-motivated fixed configuration, not
-K1-tuned settings; their final encoding waits for the reviewed shared interface.
+base LR4e-4/WD1e-5 and Nesterov enabled. The normalized momentum recurrence is
+buffer=.95*buffer+.05*gradient; the Nesterov input is .05*gradient+.95*buffer,
+then normalized by its Frobenius norm before NS. Hidden nn.Linear/PyG Linear
+weights and MultiheadAttention in_proj_weight outside head use Muon; other
+parameters use AdamW, with sorted named ownership saved in groups. These are
+literature-motivated fixed settings, not K1-tuned or native BF16 Muon settings.
 
 ## Endpoint and cost
 
@@ -107,4 +114,7 @@ measured native cost and observed role history. Strict comparison must permit
 the declared optimizer intervention; no verifier is bypassed. Close with two
 distinct complete replay entries and no exclusions before claiming replay-ready.
 Official validation/test roles remain sealed; record observed data access.
-Luna owns status checks. No new cron, shutdown, automatic retry or promotion.
+Luna owns status checks. No new cron, automatic retry or promotion. The user
+separately requested shutdown after successful submission and durable receipts;
+one Luna scheduler check precedes shutdown. No claim of training entry follows
+from scheduler RUNNING alone.
