@@ -360,7 +360,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
     from .comparison_readiness import validate_comparison_readiness
     from .experiment_family_workflow import _artifact_path
     from .family_training_runner import inspect_retained_native_qualification
-    from .research_memory.finalize import verified_receipt, load_terminal_input, _bindings
+    from .research_memory.finalize import current_finalized_directory, verified_receipt, load_terminal_input, _bindings
     from .research_memory.paths import repo_local_path, bound_artifact_path, verify_bound_artifact
     from .research_memory.replay import build_replay_pool
     from .research_memory.schemas import validate_trace_manifest, validate_trajectory
@@ -381,7 +381,6 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
             trajectory_path = repo_local_path(root, resolved["locations"][arm_id]["trajectory"])
             finalized = trajectory_path.parent / "rml_finalized"
             if require_finalized:
-                from .research_memory.finalize import current_finalized_directory
                 finalized = current_finalized_directory(root, trajectory_path)
                 verified_receipt(finalized)
                 terminal = load_terminal_input(finalized)
@@ -489,6 +488,38 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
         return {"status": "BLOCKED" if blockers else "VERIFIED", "arms": arms, "blockers": blockers,
             "replay_readiness": "PENDING_FINALIZATION", "ready_for_desktop": "NOT_EVALUATED"}
     try:
+        for _, comparison in records["comparison_readiness"]:
+            reference_id = comparison["reference_id"]
+            if any(evidence["evidence_id"] == reference_id for _, evidence in records["evidence"]):
+                continue
+            index = _json(root / "research_memory/derived/trajectory_index.json")
+            references = [entry for entry in index["trajectories"]
+                if reference_id in entry["result_evidence_ids"]]
+            if len(references) != 1:
+                raise ValueError("Strict retained reference requires one accepted canonical trajectory")
+            reference_directory = current_finalized_directory(root, references[0]["record_path"])
+            verified_receipt(reference_directory)
+            reference_trajectory = validate_trajectory(_json(reference_directory / "trajectory.json"))
+            reference_evidence = _json(reference_directory / "v5_evidence.json")
+            reference_manifest = validate_trace_manifest(_json(reference_directory / "trace_manifest.json"))
+            binding = comparison["reference_artifact_bindings"]["trace_manifest"]
+            bound_manifest = validate_trace_manifest(_json(bound_artifact_path(root, binding["ref"])))
+            if (reference_evidence["evidence_id"] != reference_id
+                    or reference_id not in reference_trajectory["result"]["evidence_ids"]
+                    or reference_manifest["comparison_role"] != "reference"
+                    or reference_manifest["reference_id"] != reference_id
+                    or any(reference_manifest[field] != bound_manifest[field] for field in (
+                        "trajectory_id", "run_id", "trace_artifact_sha256"))):
+                raise ValueError("Strict retained reference differs from accepted canonical evidence")
+            verify_bound_artifact(root, reference_manifest["trace_artifact_ref"], reference_manifest["trace_artifact_sha256"])
+            validate_manifest_trace(reference_manifest, load_canonical_trace(
+                bound_artifact_path(root, reference_manifest["trace_artifact_ref"])))
+            for kind, filename, value in (("trajectories", "trajectory.json", reference_trajectory),
+                    ("evidence", "v5_evidence.json", reference_evidence),
+                    ("traces", "trace_manifest.json", reference_manifest)):
+                records[kind].append((reference_directory / filename, value))
+            for path in sorted((reference_directory / "costs").glob("*.json")):
+                records["costs"].append((path, _json(path)))
         pool = build_replay_pool(root, records)
         eligible = {entry["trajectory_id"] for entry in pool["entries"]}
         for arm_id, row in arms.items():

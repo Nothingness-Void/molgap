@@ -137,7 +137,9 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
             references = [(p, m) for p, m in records["traces"]
                 if m["comparison_role"] == "reference" and m["reference_id"] == comparison["reference_id"]]
             candidates = [m for _, m in records["traces"]
-                if m["comparison_role"] == "candidate" and m["reference_id"] == comparison["reference_id"]]
+                if m["comparison_role"] == "candidate" and m["reference_id"] == comparison["reference_id"]
+                and evidence[resolve_repo_pointer(root, m["terminal_evidence_ref"])]["evidence_id"]
+                == comparison["candidate_id"]]
             if len(references) != 1 or len(candidates) != 1:
                 raise ValueError("Intervention replay requires one exact accepted candidate/reference trace pair")
             ref_path, ref_manifest = references[0]
@@ -161,6 +163,11 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
                 intervention_scopes[eid] = (scope_name, projected)
 
     result = []
+    unscoped_references = {m["reference_id"] for m in manifests
+        if m["comparison_role"] == "candidate"
+        and (accepted := evidence.get(resolve_repo_pointer(root, m["terminal_evidence_ref"])))
+        and accepted["evidence_id"] in identities
+        and accepted["evidence_id"] not in intervention_scopes}
     for manifest in manifests:
         accepted = evidence.get(resolve_repo_pointer(root, manifest["terminal_evidence_ref"]))
         strict = identities.get(accepted["evidence_id"]) if accepted else None
@@ -184,8 +191,10 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
             if "initialization_identity" in strict:
                 identity["initialization_identity"] = strict["initialization_identity"]
             if accepted["evidence_id"] in intervention_scopes:
+                if manifest["comparison_role"] == "reference" and manifest["reference_id"] in unscoped_references:
+                    result.append({**manifest, "comparability_identity": identity})
                 scope_name, scope = intervention_scopes[accepted["evidence_id"]]
-                identity[scope_name] = scope
+                identity = {**identity, scope_name: scope}
             manifest = {**manifest, "comparability_identity": identity}
         result.append(manifest)
     return result
@@ -201,7 +210,8 @@ def build_replay_pool(root: Path, records: dict[str, list], *, manifests=None) -
     excluded = list(grouping["excluded_traces"])
     eligible = []
     from collections import Counter
-    identities = Counter((m["trajectory_id"], m["run_id"]) for m in manifests)
+    # Derived reference views may serve distinct comparisons; physical duplicates remain ambiguous.
+    identities = Counter((m["trajectory_id"], m["run_id"]) for _, m in records["traces"])
     for manifest in sorted(manifests, key=lambda m: (m["trajectory_id"], m["run_id"])):
         if manifest["reference_id"] is None:
             continue
