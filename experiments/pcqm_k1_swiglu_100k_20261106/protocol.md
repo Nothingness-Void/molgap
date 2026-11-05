@@ -1,7 +1,13 @@
 # Prospective protocol draft — K1 node SwiGLU
 
-Planning/implementation only. No diagnostic, data-role consumption, training,
-submission, retry or promotion authority is granted by this document.
+The initial planning-only scope was superseded by the user's2026-11-06
+"开跑吧" instruction. experiment.json owns necessary local qualification and
+one fixed100K40-pass Kaggle3 candidate release; the original qualified comparator
+is reused. There are two scientific arms and one newly trained worker. No original
+reference retraining, unrelated candidate, protected-role access, successor or
+promotion is authorized. A4h allocation bound (8 allocated T4-device-hours)
+uses the retained1.68h process observation with qualification/headroom; this is
+a new explicit execution bound, not an inherited GPTrans budget.
 
 ## Scientific intervention
 
