@@ -32,8 +32,8 @@ $runId = '<logical_run_id>'; $attemptId = 'v1'
 | 7 | Retrieve | `retrieve_family_outputs.py --all-arms --strict ... --execute` | `RETRIEVED`, prints `execution_root` | 1.5-2 min |
 | 8 | Draft the closure | `draft-closure ...` | `DRAFT` | 7 s |
 | 9 | Human decision | fill `outcome` and `decision_ref`, write `decision.md` | - | 2-3 min |
-| 10 | Close | `accept_run.py --strict --closure-input ... --execution-root ... --execute` | `COMPLETE`, `closure_complete: true` | about 1.5 min |
-| 11 | Strict read-only recheck | `accept_run.py --strict` | `MECHANICALLY_VERIFIED`, `replay_readiness: VERIFIED`, `strict_mode: CANONICAL_READ_ONLY` | 10-14 s (up to about 40 s on a cold file cache) |
+| 10 | Close | `accept_run.py --strict --closure-input ... --execute` | `COMPLETE`, `closure_complete: true` | about 1.5 min |
+| 11 | Optional later recheck | `accept_run.py --strict` | `MECHANICALLY_VERIFIED`, `replay_readiness: VERIFIED`, `strict_mode: CANONICAL_READ_ONLY` | 10-14 s (up to about 40 s on a cold file cache) |
 | 12 | Check RML and commit | `research_memory check --frozen`, update `STATUS.md`, commit | `RML derived outputs are frozen and current` | 25 s |
 
 Targets: steps 3-4 (first input line to `SUBMISSION_BOUND`) under 10 minutes;
@@ -87,8 +87,8 @@ limit.
 & $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --strict --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --credentials $credentials --execute
 ```
 
-Keep `execution_root` from the retrieval output; it is
-`E:/MolGap/artifacts/retrieved/<run>/<attempt>/version<N>/_execution`.
+Acceptance discovers the shared `_execution` directory beside retrieved arms.
+Use `--execution-root` only when execution records are retained elsewhere.
 An `--execute` call before the kernel ends returns `WAIT_REMOTE_TERMINAL` and
 downloads nothing. If the scheduler shows `error` or `cancelled`, or the kernel
 hit its wall cap (`STOP_FOR_COST`), see the [failure table](#failure-table).
@@ -131,17 +131,17 @@ Copy `closure_input.draft.json` to `closure_input.json` in the same directory,
 fill each arm's `outcome` and `decision_ref`, and close:
 
 ```powershell
-& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --strict --closure-input $closureDir/closure_input.json --execution-root <execution_root> --execute
+& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --strict --closure-input $closureDir/closure_input.json --execute
 ```
 
 The draft's `role_audit` is an absolute path, which works; a repository-relative
 path keeps the committed file portable. The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id)
 owns the closure file shape and path rules.
 
-**Steps 11-12: recheck and record.**
+**Steps 11-12: record.** Strict closure already checks replay. Use
+`accept_run.py --strict` only for later inspection or recovery, not after success.
 
 ```powershell
-& $python platforms/local/accept_run.py --profile $profilePath --run-id $runId --attempt-id $attemptId --strict
 & $python platforms/local/run.py --profile $profilePath --module molgap.research_memory -- --repo-root . check --frozen
 ```
 
@@ -486,7 +486,7 @@ The run directory locates its frozen inputs, package and operation journal.
 For registered runs, `platforms/kaggle/retrieve_family_outputs.py --all-arms
 --execute` retrieves the exact receipt version's manifests, required artifacts
 and execution-cost records; existing hash-matching files are reused. Its returned
-`execution_root` is passed to acceptance. Without `--execute`, it plans locally.
+`execution_root` is optional for acceptance. Without `--execute`, it plans locally.
 Continuations use the original `--continuation-receipt` and `--resume-prepared`.
 `--status` labels the latest scheduler observation separately from receipt identity.
 A STOP_FOR_COST run is fetched with `--all-arms --paused` (unstrict, not an acceptance).

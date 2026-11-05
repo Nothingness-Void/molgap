@@ -153,6 +153,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         resolved["continuations"] = resolve_terminal_resume(resolved, resume_prepared,
             resume_authority, strict_inputs=strict_inputs)
     spec, options = resolved["spec"], resolved["options"]
+    if execution_root is None:
+        parents = {Path(item["output_dir"]).parent for item in resolved["outputs"].values()}
+        if len(parents) == 1:
+            retained_execution = parents.pop() / "_execution"
+            if (retained_execution / "execution_retention.json").is_file():
+                execution_root = retained_execution
     retention = None
     if execution_root is not None:
         from .experiment_retention import validate_execution_retention

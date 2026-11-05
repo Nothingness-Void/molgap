@@ -231,12 +231,21 @@ def test_original_frozen_run_reaches_diagnosis_and_terminal_staging_cpu_only(tmp
     assert all(result["terminal_staging"]["locations"][arm]["trace"].startswith("external://") for arm in arms)
     audit_dir = case.repo / "audits"
     capsys.readouterr()
-    assert experiment_cli.main(["draft-role-audit", "--profile", str(case.profile),
-        "--repo-root", str(case.repo), "--run-id", declaration["logical_run_id"],
-        "--attempt-id", "v1", "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
-        "--output-dir", str(audit_dir)]) == 0
+    draft = ["--profile", str(case.profile), "--repo-root", str(case.repo),
+        "--run-id", declaration["logical_run_id"], "--attempt-id", "v1",
+        "--retrieved-root", str(case.paths.artifact_root / "retrieved")]
+    assert experiment_cli.main(["draft-role-audit", *draft, "--output-dir", str(audit_dir)]) == 0
     audits = json.loads(capsys.readouterr().out)
     assert set(audits) == set(arms)
+    from molgap import experiment_run as run_owner
+    resolve, resolutions = run_owner.resolve_run_acceptance_inputs, []
+    def count_resolution(*args, **kwargs):
+        resolutions.append(True)
+        return resolve(*args, **kwargs)
+    with pytest.MonkeyPatch.context() as drafting:
+        drafting.setattr(run_owner, "resolve_run_acceptance_inputs", count_resolution)
+        assert experiment_cli.main(["draft-closure", *draft, "--output-dir", str(case.repo / "drafts")]) == 0
+    assert len(resolutions) == 1 and set(json.loads(capsys.readouterr().out)["roles"]) == set(arms)
     for arm_id, reference in audits.items():
         audit = json.loads((case.repo / reference).read_bytes())
         assert set(audit["role_use"].values()) == {"untouched"}
@@ -423,7 +432,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     for name in case.generated:
         (case.repo / name).unlink()
 
-    retention_root = tmp_path / "execution-retention"
+    retention_root = case.paths.artifact_root / "retrieved" / "_execution"
     sealed = _seal_shared_retention(case, retention_root)
     import molgap.experiment_family_workflow as family_workflow
     import molgap.experiment_package as experiment_package
@@ -443,7 +452,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     monkeypatch.setattr(family_workflow, "capture_output_inspection", counted_capture)
     result = accept_run_workflow(*case.original,
         retrieved_root=case.paths.artifact_root / "retrieved", locations=locations,
-        execute=True, execution_root=retention_root, stage_terminal=True, outcome="INCONCLUSIVE",
+        execute=True, stage_terminal=True, outcome="INCONCLUSIVE",
         decision_ref=decisions)
 
     assert result["status"] == "COMPLETE", result
