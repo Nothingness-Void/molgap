@@ -44,7 +44,7 @@
     "prior_trajectories": [
       "T-k1-perturbation-floor-100k-s42-reference",
       "T-k1-init-noise-100k-s45-init_s46",
-      "TC-k1-combination-100k-s42-combination"
+      "T-k1-combination-100k-s42-combination"
     ]
   },
   "profile": {
@@ -62,7 +62,7 @@
       "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
     },
     "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
-    "purpose": "architecture_comparison"
+    "purpose": "training_objective_comparison"
   },
   "arms": [
     {
