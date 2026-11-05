@@ -1,9 +1,10 @@
 # K1 node SwiGLU — design and implementation preparation
 
-Status: design/code prepared; runtime qualification and execution are not authorized.
-No model construction, forward/backward, checkpoint inference, training, source
-publication or remote submission was performed. This worktree is independent of
-the GPTrans query-readout experiment.
+Current release/job state: [STATUS](STATUS.md). The user's subsequent execution
+approval released necessary qualification and one fixed100K candidate run.
+The [execution qualification](execution_qualification.md) records the real sandbox
+failure, infrastructure repair, corrected pass and submission. This worktree is
+independent of the GPTrans query-readout experiment.
 
 ## Decision
 
@@ -25,10 +26,9 @@ Exactly two scientific comparison arms are planned:
 | B candidate | Same K1, nine node FFNs replaced with SwiGLU | Future authorized100K candidate training only |
 
 A retained comparator is part of the two-arm scientific comparison, but is not
-a new running worker. No physical notebook layout is released here. If a later
-execution request interprets even arms as newly launched workers, resolve that
-layout before submission; do not silently launch an odd-worker job or retrain A
-to fill a slot. No unrelated second candidate is invented.
+a new running worker. The reviewed design was approved for execution: only B is
+newly trained, while A is reused. The platform retains its T4x2 allocation shape;
+this is not two newly trained workers. No unrelated second candidate is invented.
 
 ## Implementation and reuse
 
@@ -39,12 +39,13 @@ the composed addon then uses `ModelSubstrate.replace_submodule` on only
 packaging, platform submission, strict acceptance and RML owners are unchanged.
 
 `candidate_recipe.json` was built with the existing `build_family_recipe` metadata
-API. It is a draft recipe, not an execution authority, frozen Spec or submission.
-No editable account/key/budget authority was invented. Its reference is pinned
-by the paths in qualification.md, rather than copying retained scientific evidence.
+API. The authorized input is experiment.json; it binds the retained reference's
+exact canonical recipe bytes and the baseline projection of its original frozen
+Spec in data_declaration.json. The candidate draft's initial metadata alone did
+not authorize execution. Reference scientific evidence stays with its original owner.
 
-Do not run `prepare-family-training` or the submit front door as a harmless
-metadata check: preparation executes a model sandbox. Before any such diagnostic,
-publish a canonical prospective trajectory through the existing RML owner and
-obtain applicable diagnostic authority. No prospective trajectory is published
-by this planning-only change; no ACTIVE training record is invented.
+Preparation is not a metadata-only check. Execution used the published prospective
+record and applicable authority, existing sandbox and prepared-run submitter.
+The [initial qualification snapshot](qualification.md) remains historical;
+it is superseded by the execution report for actual CPU checks. Native runtime
+qualification and final replay-ready scientific closure remain separate.

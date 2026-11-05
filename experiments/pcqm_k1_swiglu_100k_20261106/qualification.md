@@ -1,4 +1,7 @@
-# Qualification preparation — no model execution
+# Initial qualification preparation — before execution release
+
+This is the original planning-only snapshot. Actual later checks and submission
+are owned by [execution qualification](execution_qualification.md) and [STATUS](STATUS.md).
 
 ## Selected retained reference
 

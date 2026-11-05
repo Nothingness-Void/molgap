@@ -271,6 +271,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu:A001",
+      "target": "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/swiglu/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2:A001",
       "target": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
       "type": "action_produced_evidence"
@@ -2061,6 +2066,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "target": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "target": "T-pcqm-k1-init-noise-100k-s43-init_s43",
       "type": "prior_evidence"
@@ -3476,6 +3486,11 @@
       "type": "reference_used"
     },
     {
+      "source": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "target": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
       "type": "reference_used"
@@ -4824,6 +4839,10 @@
     },
     {
       "id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu",
       "type": "trajectory"
     },
     {
