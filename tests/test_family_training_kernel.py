@@ -52,6 +52,12 @@ def test_replace_submodule_only_addon_is_accepted_and_sealed(initial_states, mon
     owner = model._molgap_substrate
     assert owner.sealed and not owner.bindings
     assert owner.mutations == (("head_swap", "head"),)
+    from molgap.fast_sandbox import run_frozen_arm_sandbox
+    sandbox = run_frozen_arm_sandbox(recipe, recipe, path)
+    assert sandbox["status"] == "PASSED", sandbox
+    assert sandbox["step0_reference"] == "same_recipe"
+    assert sandbox["checks"]["addon_taps_fire"] == {"status": "PASSED", "attached": 1, "silent": []}
+    assert sandbox["checks"]["save_fresh_load_bitwise"]["moved_parameters_change_output"] is True
 
 
 @pytest.fixture(scope="module")
