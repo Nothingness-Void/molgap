@@ -238,4 +238,7 @@ ADDONS = MappingProxyType({
         "molgap.k1_screen_training", family_versions=("3",), single_addon=True,
         execution_modes=(("3",mode),))
        for name,mode in (("k1_two_pass_mean","mean2"),("k1_mean2_clean_second","mean2_clean_second"))},
+    ("k1_rank_contrast", "1"): AddonContract("neural_atom_k1", "k1-training-view",
+        "molgap.k1_rank_contrast", family_versions=("3",), single_addon=True,
+        execution_modes=(("3","rnc"),)),
 })

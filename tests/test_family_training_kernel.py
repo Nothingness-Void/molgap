@@ -89,7 +89,7 @@ def synthetic_batch():
 
 @pytest.mark.parametrize("family,mode", [
     ("neural_atom_k1", "reference"), ("neural_atom_k1", "ssma"),
-    ("neural_atom_k1", "mean2"), ("neural_atom_k1", "mean2_clean_second"),
+    ("neural_atom_k1", "mean2"), ("neural_atom_k1", "mean2_clean_second"), ("neural_atom_k1", "rnc"),
     ("gptrans_t", "reference"), ("gptrans_t", "pair_prenorm"),
     ("gptrans_t", "centered_logits"), ("gptrans_t", "memory_value"), ("gptrans_t", "memory_message"),
 ])

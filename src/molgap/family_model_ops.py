@@ -43,7 +43,7 @@ def k1_optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
     call = forward or k1_forward
 
     def loss_builder():
-        if mode == "clean_fingerprint":
+        if mode in ("clean_fingerprint", "rnc"):
             representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
                                            batch.batch, batch.random_walk_pe)
             prediction = model.head(representation).view(-1)
@@ -62,6 +62,9 @@ def k1_optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
                 second = call(model, batch)
             loss = 0.5 * (loss + functional.l1_loss(second, target))
             absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
+        if mode == "rnc":
+            from .k1_rank_contrast import LAMBDA, rank_contrast_loss
+            loss = loss + LAMBDA * rank_contrast_loss(representation, target)
         if mode == "clean_fingerprint":
             loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
                 model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
