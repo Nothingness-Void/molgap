@@ -228,6 +228,43 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path, 
                     manifest["comparability_identity"]["strict_identity"]["architecture_config_identity"] = "different-architecture"
             assert build_screening_backtest(altered)["included_comparable_groups"] == []
 
+    if purpose == "optimizer_comparison":
+        retained = create_candidate_arm(
+            tmp_path, "retained_candidate", "T-retained-candidate", "run-retained", "ev-retained"
+        )
+        retained_trace = _prepare_arm(tmp_path, retained, reference, "candidate")
+        trajectory = json.loads(retained["traj_path"].read_bytes())
+        del trajectory["state_at_start"]["same_run_replay"]
+        trajectory["state_at_start"]["reference_ids"] = [reference["ev_id"]]
+        _put(retained["traj_path"], trajectory)
+        retained_ref, _ = _strict_comparison(tmp_path, reference, retained)
+        retained_comparison = json.loads((tmp_path / retained_ref).read_bytes())
+        retained_comparison["matched_fields"]["optimizer_identity"] = comparison["mismatched_fields"]["optimizer_identity"]["reference"]
+        _put(tmp_path / retained_ref, retained_comparison)
+        terminal = json.loads(retained["terminal_path"].read_bytes())
+        del terminal["same_run_observation"]
+        terminal["comparison_readiness_ref"] = retained_ref
+        terminal["artifact_hashes"][retained_ref] = file_digest(tmp_path / retained_ref)
+        _put(retained["terminal_path"], terminal)
+        assert close_terminal_arm(tmp_path, retained["traj_path"], retained["terminal_path"], trace=retained_trace)["pipeline_status"] == "COMPLETE"
+        pool = compile_research_memory(tmp_path)["replay_pool.json"]
+        retained_entries = json.loads(pool)["entries"]
+        assert {entry["trajectory_id"] for entry in retained_entries} == {
+            reference["traj_id"], candidate["traj_id"], retained["traj_id"]
+        }
+        groups = {}
+        for entry in retained_entries:
+            groups.setdefault(entry["comparability_key"], set()).add(entry["trajectory_id"])
+        assert list(sorted(groups.values(), key=sorted)) == sorted([
+            {reference["traj_id"], candidate["traj_id"]},
+            {reference["traj_id"], retained["traj_id"]},
+        ], key=sorted)
+        records = validate_repository_records(tmp_path)["records"]
+        duplicated = {**records, "traces": [*records["traces"], next(
+            item for item in records["traces"] if item[1]["comparison_role"] == "reference")]}
+        with pytest.raises(ValueError, match="one exact accepted candidate/reference trace pair"):
+            replay_manifests(tmp_path, duplicated)
+
     # A fresh checkout inherits accepted metadata without ignored checkpoints.
     # Index checking must match rebuild; strict artifact validation stays strict.
     from molgap.research_memory.compiler import rebuild_research_memory

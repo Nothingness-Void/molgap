@@ -38,14 +38,23 @@ def _json(path: Path) -> dict:
 
 def _verify_canonical_output(root, spec, context, package, observed, output_dir):
     """Bind accepted evidence to this observed run without relying on artifact names."""
-    from .research_memory.paths import bound_artifact_path
+    from .research_memory.paths import bound_artifact_path, verify_bound_artifact
     expected = {"schema": "molgap-same-run-observation-v1", "spec_identity": spec.identity,
         "logical_run_id": context.logical_run_id, "platform_name": context.platform,
         "platform_run_reference": context.run_reference,
         "attempt_id": terminal_attempt_id(spec, context.arm_id, context.platform_version),
         "source_commit": context.source_commit, "source_package_sha256": context.source_archive_sha256}
-    if package.get("same_run_observation") != expected:
-        raise ValueError("Canonical qualification differs from the observed run context")
+    if (package.get("same_run_observation") is not None
+            or spec.to_dict()["prospective"].get("same_run_replay") is not None):
+        if package.get("same_run_observation") != expected:
+            raise ValueError("Canonical qualification differs from the observed run context")
+    else:
+        contexts = [item for item in package["evidence"]["artifacts"] if item["name"] == "trace_context"]
+        if len(contexts) != 1:
+            raise ValueError("Canonical qualification requires one bound trace context")
+        item = contexts[0]
+        verify_bound_artifact(root, item["locator"], item["sha256"])
+        _check_context(_json(bound_artifact_path(root, item["locator"]))["context"], context)
     artifacts = {(bound_artifact_path(root, item["locator"]).resolve(), item["sha256"])
                  for item in package["evidence"]["artifacts"]}
     for item in observed["artifacts"].values():

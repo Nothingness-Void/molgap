@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import hashlib
 from collections import Counter
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -395,8 +396,8 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     case = frozen_shared_acceptance_run(tmp_path, repo, retain_training_target=False,
                                        comparison_purpose=comparison_purpose)
     declaration, arms, locations, contexts = _materialize_shared_case(case)
-    # Legacy producers wrote the companion but omitted it from their manifest.
-    # Exercise real pinned retrieval before the same acceptance/closure journey.
+    # Cover legacy reference manifests and the current candidate's bound context
+    # through real pinned retrieval before acceptance and closure.
     from test_kaggle_family_retrieval import _module, _Api, _File, _ResponsePage, _Http
     with monkeypatch.context() as network:
         retriever = _module(network)
@@ -404,7 +405,8 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             output = case.paths.artifact_root / "retrieved" / arm_id
             manifest_path = output / "output_manifest.json"
             manifest = json.loads(manifest_path.read_bytes())
-            manifest["artifacts"].pop("trace_context")
+            if arm_id == declaration["prospective"]["same_run_replay"]["reference_arm_id"]:
+                manifest["artifacts"].pop("trace_context")
             manifest_path.write_bytes(canonical_json(manifest).encode())
             companion = output / (manifest["artifacts"]["trace"]["path"] + ".context.json")
             payload = companion.read_bytes()
@@ -882,7 +884,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         assert set(bindings) == comparison_owner.REQUIRED_REFERENCE_ARTIFACTS | {"predictions"}
         retained_declaration = deepcopy(resolved["spec"].to_dict())
         retained_declaration["prospective"].pop("same_run_replay")
-        retained_resolved = {**resolved, "spec": SimpleNamespace(to_dict=lambda: retained_declaration),
+        retained_resolved = {**resolved, "spec": SimpleNamespace(to_dict=lambda: retained_declaration, identity=resolved["spec"].identity),
             "outputs": {candidate: resolved["outputs"][candidate]},
             "acceptance_plan": {"format": "molgap-family-acceptance-plan-v1", "arms": [{"arm_id": candidate,
                 "comparison_prelaunch": pin(plan_path.relative_to(case.repo).as_posix()),
@@ -895,6 +897,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         assert retained_qualification["comparisons"][candidate]["strict_ready"] is True
         assert retained_qualification["comparisons"][candidate]["reference_id"] == bundle["reference_id"]
         assert retained_qualification["reference_bundle_ref"] is None and set(retained_qualification["locations"]) == {candidate}
+        retained_terminal = json.loads((case.repo / retained_qualification["locations"][candidate]["terminal"]).read_bytes())
+        retained_terminal.pop("same_run_observation")
+        observed = result["arms"][candidate]["observed"]
+        output = resolved["outputs"][candidate]["output_dir"]
+        family._verify_canonical_output(case.repo, retained_resolved["spec"], contexts[candidate], retained_terminal, observed, output)
+        with pytest.raises(ValueError, match="observed run context"):
+            family._verify_canonical_output(case.repo, resolved["spec"], contexts[candidate], retained_terminal, observed, output)
+        with pytest.raises(ValueError, match="Output context/source/arm mismatch"):
+            family._verify_canonical_output(case.repo, retained_resolved["spec"], replace(contexts[candidate], arm_id="wrong"), retained_terminal, observed, output)
     # Real custody can keep identical transforms under more than one question.
     transform = next((case.repo / "experiments").rglob("target_transform.json"))
     shared_copy = case.repo / "experiments/shared_transform/target_transform.json"
@@ -903,6 +914,15 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     closed = close_terminal_multi_arm(case.repo, [{key: where[key] for key in ("trajectory", "terminal", "trace")}
         for _, where in sorted(qualified["locations"].items(), key=lambda item: item[0] != reference_arm)])
     assert all(item["pipeline_status"] == "COMPLETE" for item in closed), closed
+    if comparison_purpose == "single_module_ablation":
+        from molgap.experiment_run import inspect_run_strict_evidence
+        # Inspect just the candidate: its closed reference must be discovered
+        # automatically. Native qualification remains synthetic in this fixture.
+        inspected = inspect_run_strict_evidence(case.repo,
+            {**resolved, "outputs": {candidate: resolved["outputs"][candidate]},
+                "locations": qualified["locations"], "mechanical_reports": result["arms"]}, {})
+        assert inspected["arms"][candidate]["comparison"]["status"] == "VERIFIED", inspected
+        assert inspected["arms"][candidate]["replay"]["status"] == "VERIFIED", inspected
     before_reuse = {path.relative_to(case.repo).as_posix(): path.read_bytes()
         for path in (case.repo / "experiments").rglob("*") if path.is_file()}
     reused = family.qualify_same_run_terminal_packages(case.repo, resolved,
