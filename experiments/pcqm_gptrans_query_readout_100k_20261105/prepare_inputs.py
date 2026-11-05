@@ -27,7 +27,7 @@ for slot, reference, candidate, reference_mode, candidate_addon in (
     recipe = json.loads(recipe_path.read_text())
     recipe["mode"] = reference_mode
     recipe["auxiliary_ema_decays"] = []
-    recipe["execution_policy"]["auxiliary_ema"] = []
+    recipe["execution_policy"].pop("auxiliary_ema")
     recipe["profiling"] = {"warmup_steps": 2, "active_steps": 4,
                            "record_shapes": True, "profile_memory": True,
                            "module_paths": [], "capture_off_training_spans": False}
