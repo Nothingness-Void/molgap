@@ -358,10 +358,11 @@ def _closure_facts(root, ref, arm_id, hashes, predictions, outcome):
 
 
 def draft_run_role_audits(profile, repo_root, run_id, attempt_id, *, retrieved_root, output_dir,
-                          protected_role_use=None, continuation_receipt=None):
+                          protected_role_use=None, continuation_receipt=None, _resolved=None):
     """Write ``roles_<arm>.json`` for every arm of a run; return {arm: repo-relative path}."""
     from .experiment_run import resolve_run_acceptance_inputs
-    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
+    resolved = _resolved if _resolved is not None else resolve_run_acceptance_inputs(
+        profile, repo_root, run_id, attempt_id,
         retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
     from .common.paths import MachinePaths
     drafted = write_role_audits(repo_root, resolved, output_dir, protected_role_use,
@@ -380,10 +381,10 @@ def draft_closure(profile, repo_root, run_id, attempt_id, *, retrieved_root, out
     """
     from .experiment_run import resolve_run_acceptance_inputs
     from .research_memory.saved_analysis import run as analyze
-    drafted = draft_run_role_audits(profile, repo_root, run_id, attempt_id, retrieved_root=retrieved_root,
-        output_dir=output_dir, protected_role_use=protected_role_use, continuation_receipt=continuation_receipt)
     resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id,
         retrieved_root=retrieved_root, continuation_receipt=continuation_receipt)
+    drafted = draft_run_role_audits(profile, repo_root, run_id, attempt_id, retrieved_root=retrieved_root,
+        output_dir=output_dir, protected_role_use=protected_role_use, _resolved=resolved)
     root = Path(repo_root).resolve()
     arms = resolved["spec"].to_dict()["arms"]
     paths = {arm["arm_id"]: Path(resolved["outputs"][arm["arm_id"]]["output_dir"]) / "development_predictions.pt"

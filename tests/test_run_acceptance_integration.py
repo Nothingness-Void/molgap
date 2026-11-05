@@ -484,8 +484,17 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             assert first["protected_role_evidence"]["status"] == "recorder_expected_record_missing"
     record_path.write_bytes(intact)
     manifest_path.write_bytes(manifest_bytes)
-    assert experiment_cli.main([*draft, "--output-dir", str(case.repo / "audits")]) == 0
-    audits = json.loads(capsys.readouterr().out)
+    from molgap import experiment_run as run_owner
+    resolve = run_owner.resolve_run_acceptance_inputs
+    resolutions = []
+    def count_resolution(*args, **kwargs):
+        resolutions.append(True)
+        return resolve(*args, **kwargs)
+    with monkeypatch.context() as drafting:
+        drafting.setattr(run_owner, "resolve_run_acceptance_inputs", count_resolution)
+        assert experiment_cli.main(["draft-closure", *draft[1:], "--output-dir", str(case.repo / "audits")]) == 0
+    audits = json.loads(capsys.readouterr().out)["roles"]
+    assert len(resolutions) == 1
     drafted = json.loads((case.repo / audits[next(iter(contexts))]).read_bytes())
     assert set(drafted["role_use"].values()) == {"untouched"}, drafted.get("protected_role_evidence")
     evidence = drafted["protected_role_evidence"]
@@ -494,7 +503,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert audits == {arm_id: "audits/roles_" + arm_id + ".json" for arm_id in contexts}
     assert all(len(json.loads((case.repo / ref).read_bytes())["roles"]) == 5 for ref in audits.values())
 
-    retention_root = tmp_path / "execution-retention"
+    retention_root = case.paths.artifact_root / "retrieved" / "_execution"
     remote_retention = tmp_path / "remote-execution-retention"
     sealed = _seal_shared_retention(case, remote_retention, prior_segments=[{
         "format": "molgap-allocation-ledger-v1", "spec_identity": case.spec.identity,
@@ -560,7 +569,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         "--attempt-id", "v1", "--repo-root", str(case.repo), "--profile", str(case.profile),
         "--retrieved-root", str(case.paths.artifact_root / "retrieved"),
         "--locations", str(tmp_path / "locations.json"), "--stage-terminal", "--execute",
-        "--execution-root", str(retention_root), "--role-audit", str(audit_map),
+        "--role-audit", str(audit_map),
         *[value for arm, outcome in outcomes.items() for value in ("--arm-outcome", arm + "=" + outcome)],
         *[value for arm, decision in decisions.items() for value in ("--arm-decision-ref", arm + "=" + decision)]]
     for bad in ({**options, "outcome": {reference_arm: "CLOSED"}},
