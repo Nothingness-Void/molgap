@@ -13,6 +13,37 @@ from molgap.training_reproducibility import atomic_torch_save
 from molgap.v4_runtime import state_dict_sha256
 
 
+def test_k1_muon_matches_fp32_matrix_update_and_native_adamw():
+    from molgap.k1_muon import MuonAdamW, parameter_groups
+    model = torch.nn.Module()
+    model.hidden = torch.nn.Linear(2, 3)
+    model.head = torch.nn.Linear(3, 1)
+    optimizer = MuonAdamW(parameter_groups(model, .03), lr=.01, weight_decay=.03)
+    assert optimizer.param_groups[0]["param_names"] == ["hidden.weight"]
+    native_head = torch.nn.Parameter(model.head.weight.detach().clone())
+    native = torch.optim.AdamW([native_head], lr=.01, weight_decay=.03)
+    expected = model.hidden.weight.detach().double().clone()
+    buffer = torch.zeros_like(expected)
+    for scale in (1., .7):
+        grad = torch.tensor([[.2, -.4], [.1, .6], [-.5, .3]]) * scale
+        model.hidden.weight.grad = grad.clone()
+        model.head.weight.grad = torch.full_like(model.head.weight, .2 * scale)
+        native_head.grad = model.head.weight.grad.clone()
+        buffer = .95 * buffer + .05 * grad.double()
+        update = (.05 * grad.double() + .95 * buffer).T
+        update = update / update.norm().clamp(min=1e-7)
+        for _ in range(5):
+            gram = update @ update.T
+            update = 3.4445 * update - 4.775 * (gram @ update) + 2.0315 * (gram @ gram @ update)
+        expected = expected * (1 - .01 * .03) - .01 * .2 * (3 ** .5) * update.T
+        optimizer.step()
+        native.step()
+        torch.testing.assert_close(model.hidden.weight, expected.float(), atol=1e-6, rtol=1e-6)
+        torch.testing.assert_close(model.head.weight, native_head, atol=0, rtol=0)
+    assert set(optimizer.state[model.hidden.weight]) == {"step", "momentum_buffer"}
+    assert optimizer.state[model.hidden.weight]["step"].item() == 2
+
+
 def test_initialization_dtype_must_not_be_silently_cast(initial_states, tmp_path):
     from molgap.family_training_kernel import load_family_model
     from molgap.v4_runtime import read_frozen_state_artifact

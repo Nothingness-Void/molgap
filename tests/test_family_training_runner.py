@@ -184,8 +184,10 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         target_mean_eV=3., target_std_eV=2., ema_decay=.999 if development else None,
         torch_version=str(torch.__version__).split("+", 1)[0])
     legacy = recipe.to_dict()
-    assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy
+    assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy and "optimizer" not in legacy
     assert FamilyRecipe.from_dict(legacy).identity == canonical_fingerprint(legacy)
+    if family == "neural_atom_k1" and not development:
+        recipe = replace(recipe, optimizer="k1-muon-adamw-fp32-v1")
     if family == "gptrans_t" and development:
         recipe = replace(recipe, no_decay_modules=("LayerNorm",), auxiliary_ema_decays=(.9999,))
     if family == "neural_atom_k1" and development:

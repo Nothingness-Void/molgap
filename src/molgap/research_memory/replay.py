@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from molgap.evidence_pointers import load_json_object
+from molgap.comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .backtest import BOUND_REPLAY_INTERVENTIONS, _comparison_key, build_screening_backtest
 from .trace import load_canonical_trace, json_bytes, trace_digest, validate_manifest_trace
@@ -129,9 +130,11 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
                 raise ValueError("Conflicting strict replay identities for accepted evidence")
             identities[eid] = identity
         projection = BOUND_REPLAY_INTERVENTIONS.get(comparison.get("experiment_purpose"))
+        declared = comparison.get("declared_intervention_fields", [])
         if (projection is not None and comparison.get("comparison_class") == "STRICT_CAUSAL"
-                and comparison.get("declared_intervention_fields") == [projection[0]]
-                and set(comparison["mismatched_fields"]) == {projection[0]}
+                and projection[0] in declared
+                and set(declared) <= INTERVENTION_FIELDS_BY_PURPOSE[comparison["experiment_purpose"]]
+                and set(comparison["mismatched_fields"]) == set(declared)
                 and terminal.get("same_run_observation") is not None):
             field, scope_name, format_name = projection
             references = [(p, m) for p, m in records["traces"]
@@ -154,7 +157,8 @@ def replay_manifests(root: Path, records: dict[str, list]) -> list[dict[str, Any
                 "declared_intervention_fields": comparison["declared_intervention_fields"],
                 "candidate_id": comparison["candidate_id"], "reference_id": comparison["reference_id"],
                 "comparison_sha256": terminal["artifact_hashes"][pointer],
-                "expected": comparison["mismatched_fields"][field]}
+                "expected": (comparison["mismatched_fields"][field] if declared == [field]
+                             else comparison["mismatched_fields"])}
             for side in ("candidate", "reference"):
                 eid = comparison[side + "_id"]
                 projected = {**scope, "evidence_id": eid}

@@ -85,7 +85,7 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
         purpose = "mechanism_comparison"
     allowed = {"architecture_comparison": ["architecture_config_identity"],
                "mechanism_comparison": ["architecture_config_identity"],
-               "optimizer_comparison": ["optimizer_identity"],
+               "optimizer_comparison": ["optimizer_identity", "optimizer_mode", "optimizer_fused"],
                "ema_comparison": ["ema_enabled", "ema_decay", "ema_update_frequency", "weight_semantics", "evaluation_weight_source"],
                "initialization_comparison": ["initialization_identity"]}
     if purpose not in allowed:
@@ -94,9 +94,14 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     group = question.get("changed_mechanism") if type(question) is dict else None
     if group is None:
         group = "architecture-config" if purpose == "architecture_comparison" else None
+    default_fields = allowed[purpose]
+    if purpose == "optimizer_comparison":
+        default_fields = ["optimizer_identity"]
+        if candidate.get("training", {}).get("optimizer", "adamw") != reference.get("training", {}).get("optimizer", "adamw"):
+            default_fields.append("optimizer_mode")
     scope = {"experiment_purpose": purpose, "intervention_group_id": group,
              "mechanism_id": group if purpose == "mechanism_comparison" else None,
-             "declared_intervention_fields": allowed[purpose] if declared_fields is None else declared_fields}
+             "declared_intervention_fields": default_fields if declared_fields is None else declared_fields}
     _validate_intervention_scope(**scope, require_nonempty=True)
     if set(scope["declared_intervention_fields"]) - set(allowed[purpose]):
         raise ValueError("Same-run declaration exceeds supported scientific changes")
@@ -239,6 +244,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
     from .family_training_runner import read_recipe, comparison_objective_identity
+    from .family_training_recipe import optimizer_identity
     from .research_memory.finalize import (current_finalized_directory, load_terminal_input,
         verified_receipt, prospective_bytes, _qualification_amendment, _bindings)
     root = Path(repo_root).resolve()
@@ -392,9 +398,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "precision": policy["precision"], "tf32_enabled": policy["tf32"], "deterministic_algorithms": True,
             "physical_batch_per_device": recipe.batch_size, "gradient_accumulation_steps": 1,
             "tail_batch_policy": "drop_last" if recipe.drop_last else "keep_last",
-            "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in (
-                "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in contract else ()))},
-                "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
+            "optimizer_identity": optimizer_identity(contract),
             "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
             "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": comparison_objective_identity(arm, recipe),
             "target_transform_identity": arm["training"]["transform"]["sha256"], "target_transform_asset_sha256": transform["asset_sha256"],

@@ -359,12 +359,12 @@ never invented.
 `research_memory/derived/trajectory_index.json`); cite papers in `protocol.md`.
 `authority.account` must be the Kaggle username of `$credentials`.
 
-Training edits: `learning_rate`, `weight_decay`, `no_decay_modules` (normalization
-`weight/bias` only), `ema_decay` (primary), `auxiliary_ema_decays` (independent
-same-trajectory selection/predictions/trace/resume). Retained `reference_ref` accepts
-`bundle_ref` plus explicit `comparison_plan`; auxiliary EMA comparisons are descriptive.
-Kaggle T4x2, seed 42; the derived platform uses the fixed 100K mount. Other mounts
-need explicit `platform`. Test fixtures are examples, never authority or evidence.
+Training edits: `learning_rate`, `weight_decay`, normalization-only `no_decay_modules`,
+`ema_decay`, and independent `auxiliary_ema_decays` (descriptive comparisons).
+`optimizer: "k1-muon-adamw-fp32-v1"` selects K1-reference hidden-matrix Muon plus
+AdamW; omit it for unchanged AdamW. Use `purpose: "optimizer_comparison"` for a pair.
+Retained `reference_ref` takes `bundle_ref` plus `comparison_plan`. Default platform:
+Kaggle T4x2, seed 42, fixed 100K mount; other mounts need explicit `platform`.
 
 ## Preparation details
 

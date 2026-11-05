@@ -25,6 +25,13 @@ from .family_training_policy import mode_policy
 NORM_MODULE_TYPES = {"LayerNorm": "LayerNorm", "BatchNorm": "_BatchNorm"}
 
 
+def optimizer_identity(record):
+    return canonical_fingerprint({"recipe": {k: record[k] for k in (
+        "learning_rate", "weight_decay", "gradient_clip", "no_decay_modules", "optimizer") if k in record},
+        "policy": {k: record["execution_policy"][k] for k in (
+            "adamw_betas", "adamw_epsilon", "muon") if k in record["execution_policy"]}})
+
+
 def ema_label(decay):
     """One stable text key for a decay in checkpoints, artifacts and roles."""
     return repr(float(decay))
@@ -139,6 +146,7 @@ class FamilyRecipe:
     development_reports: tuple[str, ...] = ()
     no_decay_modules: tuple[str, ...] = ()
     auxiliary_ema_decays: tuple[float, ...] = ()
+    optimizer: str = "adamw"
     _frozen_read: InitVar[bool] = False
 
     def __post_init__(self, _frozen_read):
@@ -148,6 +156,11 @@ class FamilyRecipe:
         object.__setattr__(self, "_frozen_read", _frozen_read)
         if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
+        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1"}:
+            raise ValueError("Unsupported frozen optimizer")
+        if self.optimizer != "adamw" and (self.family != "neural_atom_k1" or
+                self.mode != "reference" or self.no_decay_modules):
+            raise ValueError("K1 Muon requires the reference model and uniform weight decay")
         from .common.spec import _text, _addon_declaration
         _text(self.mode, "mode")
         if type(self.resume_chunks) is not bool:
@@ -254,6 +267,9 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
+        if self.optimizer != "adamw":
+            from .k1_muon import MUON_POLICY
+            policy.update(optimizer=self.optimizer, muon=dict(MUON_POLICY))
         if self.no_decay_modules:
             policy["weight_decay_exempt"] = list(self.no_decay_modules)
         if self.auxiliary_ema_decays:
@@ -262,6 +278,7 @@ class FamilyRecipe:
 
     def to_dict(self):
         values = asdict(self)
+        if self.optimizer == "adamw": values.pop("optimizer")
         for name in ("input_sidecar", "k1_execution"):
             if getattr(self, name) is None: values.pop(name)
         if self.clean_bn is None: values.pop("clean_bn")
@@ -280,7 +297,7 @@ class FamilyRecipe:
     def from_dict(cls, record, *, _frozen_read=False):
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
         for name in ("input_sidecar", "k1_execution", "addons", "clean_bn", "resume_chunks",
-                     "development_reports", "no_decay_modules", "auxiliary_ema_decays"):
+                     "development_reports", "no_decay_modules", "auxiliary_ema_decays", "optimizer"):
             if type(record) is dict and name not in record: expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
