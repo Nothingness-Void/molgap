@@ -83,6 +83,14 @@ for slot, reference, candidate, reference_mode, candidate_addon in (
                      "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"},
     }
     write(directory / "experiment.json", value)
+    declaration.update(experiment_id=experiment_id, logical_run_id=value["logical_run_id"])
+    declaration["prospective"] = {"arms": [{
+        "arm_id": reference, "trajectory_id": "T-" + value["logical_run_id"] + "-" + reference,
+        "plan_spec_ref": relative + "/experiment.json",
+        "plan_spec_sha256": hashlib.sha256((directory / "experiment.json").read_bytes()).hexdigest(),
+        "output": relative + "/declaration_only/" + reference,
+    }]}
+    write(directory / "data_declaration.json", declaration)
     (directory / "decision.md").write_text("# Decision\n\nPending execution and strict acceptance. No model benefit or replay readiness is claimed.\n", encoding="utf-8")
     (directory / "STATUS.md").write_text("# Status\n\nProspective input drafted; not submitted. See experiment.json for exact identity and authority.\n", encoding="utf-8")
     (directory / "protocol.md").write_text(f"""# Protocol — dynamic molecular relation readout / {slot.upper()}

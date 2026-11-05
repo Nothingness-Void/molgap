@@ -94,8 +94,8 @@
       "terminal_artifact"
     ]
   },
-  "experiment_id": "pcqm_gptrans_norm_ema_100k_20261104",
-  "logical_run_id": "pcqm-gptrans-norm-ema-100k-20261104-s42",
+  "experiment_id": "pcqm_gptrans_query_readout_ad_100k_20261105",
+  "logical_run_id": "pcqm-gptrans-query-readout-ad-100k-20261105-s42",
   "platform": {
     "accelerator": "NvidiaTeslaT4",
     "atomic_checkpoints": true,
@@ -108,26 +108,13 @@
   "prospective": {
     "arms": [
       {
-        "arm_id": "uniform_wd_multi_ema",
-        "output": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/uniform_wd_multi_ema",
-        "plan_spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/generated/92cb4884c511adb30ed6480456082af2054ec917a8f7d09f0c877c83b8c17bc2/uniform_wd_multi_ema/plan_input.json",
-        "plan_spec_sha256": "70b01dfab0a6d3061d6a1fc60d90906ead2701d1a51e3f9a52ff5c2a5aa6d509",
-        "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
-      },
-      {
-        "arm_id": "norm_no_decay_multi_ema",
-        "output": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/norm_no_decay_multi_ema",
-        "plan_spec_ref": "experiments/pcqm_gptrans_norm_ema_100k_20261104/generated/92cb4884c511adb30ed6480456082af2054ec917a8f7d09f0c877c83b8c17bc2/norm_no_decay_multi_ema/plan_input.json",
-        "plan_spec_sha256": "d317b0b405db956aa2bd19751b47655a375c6cc25ce0560324a2071865040faa",
-        "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema"
+        "arm_id": "full12",
+        "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12",
+        "plan_spec_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/experiment.json",
+        "plan_spec_sha256": "66d6bad10dfc6ed1011162d567fa927f96e90926b5ed1c460b435feacb8becb3",
+        "output": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/declaration_only/full12"
       }
-    ],
-    "same_run_replay": {
-      "candidate_arm_ids": [
-        "norm_no_decay_multi_ema"
-      ],
-      "reference_arm_id": "uniform_wd_multi_ema"
-    }
+    ]
   },
   "schema_version": "molgap-experiment-spec-v2",
   "terminal_protocol": "molgap-experiment-terminal-descriptor-v1"
