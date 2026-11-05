@@ -300,15 +300,10 @@ def run_family_sandbox(family: str, *, addons=(), k1_execution=None, addon_param
 
 
 def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, threads=1):
-    """Check one candidate on the real frozen initial state against its baseline, on CPU.
-
-    Step-0 outputs must be bitwise equal to the baseline (eval and train, same RNG).
-    Every substrate-owned addon parameter needs a finite non-zero gradient after
-    one backward (through verify_loaded_family_model, the single gradient probe).
-    Every attached addon module must fire in a forward, and a strict save, fresh
-    load roundtrip must reproduce predictions bitwise after moving the addon
-    parameters off their start. No dataset rows, optimizer continuation or
-    accelerator is involved.
+    """Probe frozen CPU models on synthetic graphs, without training qualification.
+    Identical recipes prove repeatability, not baseline equivalence.
+    Require owned gradients, executed attachments/replacements and bitwise
+    fresh-load predictions after a small parameter perturbation.
     """
     from io import BytesIO
     import torch
@@ -316,7 +311,8 @@ def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, t
     from .shared_model_adapter import validate_model_output
     report = {"format": FORMAT, "status": "FAILED", "seed": seed, "device": "cpu", "synthetic_data": True,
         "family": recipe.family, "model_identity": "frozen initialization",
-        "frozen_initialization_loaded": True, "checks": {}, "addons": {}, "limitations": list(LIMITATIONS)}
+        "frozen_initialization_loaded": True, "step0_reference": "same_recipe" if baseline_recipe == recipe else "baseline_recipe",
+        "checks": {}, "addons": {}, "limitations": list(LIMITATIONS)}
     bits = lambda t: t.detach().contiguous().view(torch.int32)
     try:
         model = _module(load_family_model(recipe, initial_state)[0])
@@ -340,6 +336,9 @@ def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, t
                 raise ValueError("Candidate has parameters absent from the baseline that no attached addon owns")
             fired = {}
             modules = dict(getattr(model, "_molgap_addons", {}))
+            owner = getattr(model, "_molgap_substrate", None)
+            if owner is not None:
+                modules.update((name, model.get_submodule(path)) for name, path in owner.mutations)
             hooks = [m.register_forward_hook(lambda _m, _i, _o, key=k: fired.__setitem__(key, fired.get(key, 0) + 1))
                      for k, m in modules.items()]
             try:
@@ -355,17 +354,17 @@ def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, t
             for mode in ("eval", "train"):
                 getattr(base, mode)(), getattr(model, mode)()
                 with torch.enable_grad() if mode == "train" else torch.no_grad():
-                    torch.manual_seed(7)
+                    torch.random.default_generator.manual_seed(7)
                     expected = predict(base)
-                    torch.manual_seed(7)
+                    torch.random.default_generator.manual_seed(7)
                     observed = predict(model)
                 same = bool(torch.equal(bits(expected), bits(observed)))
                 report["checks"]["step0_bitwise_" + mode] = {"status": "PASSED" if same else "FAILED"}
-            with torch.no_grad():
-                for name in added:
-                    parameters[name].add_(torch.linspace(-0.3, 0.3, parameters[name].numel()).reshape(parameters[name].shape))
             model.eval()
             with torch.no_grad():
+                before_move = predict(model).clone()
+                for name in sorted(owned):
+                    parameters[name].add_(torch.linspace(-1e-3, 1e-3, parameters[name].numel()).reshape(parameters[name].shape))
                 moved = predict(model).clone()
             buffer = BytesIO()
             torch.save(_tensor_state(model), buffer)
@@ -375,7 +374,7 @@ def run_frozen_arm_sandbox(baseline_recipe, recipe, initial_state, *, seed=42, t
             fresh.eval()
             with torch.no_grad():
                 roundtrip = bool(torch.equal(bits(moved), bits(predict(fresh))))
-                changed = not added or not torch.equal(bits(moved), bits(predict(base.eval())))
+                changed = not owned or not torch.equal(bits(moved), bits(before_move))
             report["checks"]["save_fresh_load_bitwise"] = {"status": "PASSED" if roundtrip and changed else "FAILED",
                 "predictions_bitwise_equal": roundtrip, "moved_parameters_change_output": changed}
         failed = [k for k, v in {**report["checks"], **report["addons"]}.items() if v["status"] == "FAILED"]

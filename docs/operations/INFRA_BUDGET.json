@@ -1,9 +1,9 @@
 {
-  "measured": "2026-11-05",
+  "measured": "2026-11-06",
   "note": "Limits equal the current measurement. Lower a limit whenever infrastructure shrinks; raising one needs user approval. 2026-10-31 reform: raised for the approved erratum, saved-analysis and paused-retrieval and closure-facts features (format_version_strings +1 for molgap-closure-facts-v1, user-authorized); lowered by merging 27 duplicate hash helpers. 2026-11-01: docs_operations limits reset to measurement after adding RML_INTERFACES.md (user-authorized). 2026-11-01: research_memory and docs limits reset after gaps --compact, historical pointer and addon checklist (user-authorized). 2026-11-03: user-authorized normalization-only weight decay and independently resumable auxiliary EMA support; src_py_lines raised only to measured implementation size. File, format and default test scope counts unchanged. 2026-11-04: user-authorized read-only cross-branch RML catalog from molgap-server c6c178784; source and research_memory ceilings match measured +67 source lines. Facts are not copied; the second place is a link. File, format and default test scope counts unchanged. 2026-11-05: user-authorized PairToken slot import from server 5cc68570 and CPU-only BondLocal seeding; measured source +1 file/+37 lines, existing tests extended only. 2026-11-05: authorized frozen-base post-load mount repair; measured +5 source lines, no new files, formats or default tests. 2026-11-05: qualified-reference cost metadata packaging repair; measured +4 source lines, existing package roundtrip extended. 2026-11-05: remote target binding preserves other-host reference locators as metadata; measured +1 source line, existing staged-acceptance test extended. 2026-11-05: authorized retained-reference closure repair; measured +50 source lines (+10 RML), reusing bound context and canonical reference records; no new files, formats or default test nodes. 2026-11-05: acceptance simplification, measured +7 source lines for shared execution-retention discovery and single-resolution closure drafting; no new files, formats or default tests; docs net zero.",
   "limits": {
     "src_py_files": 278,
-    "src_py_lines": 96633,
+    "src_py_lines": 96632,
     "research_memory_lines": 7017,
     "src_hashlib_files": 87,
     "gitattributes_text_rules": 42,

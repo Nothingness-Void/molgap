@@ -81,6 +81,13 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
         .001, .01, ScheduleSpec("cosine_epoch", 2), "final-ema", "torch-pass-randperm", 1,
         target_mean_eV=0., target_std_eV=1., ema_decay=.999,
         torch_version=str(torch.__version__).split("+", 1)[0])
+    if mode == "degree_bond_local_ema999":
+        from molgap.fast_sandbox import run_frozen_arm_sandbox
+        sandbox = run_frozen_arm_sandbox(recipe, recipe, path)
+        assert sandbox["status"] == "PASSED", sandbox
+        assert sandbox["checks"]["addon_taps_fire"] == {"status": "PASSED", "attached": 1, "silent": []}
+        assert sandbox["step0_reference"] == "same_recipe"
+        assert sandbox["checks"]["save_fresh_load_bitwise"]["moved_parameters_change_output"] is True
     rng, threads = capture_rng_state(), torch.get_num_threads()
     deterministic = torch.are_deterministic_algorithms_enabled()
     fill = torch.utils.deterministic.fill_uninitialized_memory
