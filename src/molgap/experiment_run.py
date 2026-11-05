@@ -319,6 +319,8 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             outcome=outcome, decision_ref=decision_ref, role_audit=role_audit, facts_ref=facts_ref,
             diagnostic_report=result.get("diagnosis"), resolved=resolved, reports=result["arms"],
             execution_root=execution_root, _retention=retention,
+            # Only the same-run strict owner below qualifies the pair comparison.
+            _strict_transaction=strict_inputs is not None and same_run is not None,
             **({"scientific_acceptance": scientific_acceptance} if scientific_acceptance is not None else {}))
         result["terminal_staging"] = staged
         if strict_inputs is not None and staged.get("blockers"):

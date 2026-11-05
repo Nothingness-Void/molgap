@@ -185,6 +185,15 @@ def test_staged_blockers_cannot_be_bypassed_by_terminal_execution(
         )
     assert all(not (root / where["trajectory"]).parent.joinpath("rml_finalized").exists()
                for where in resolved["locations"].values())
+    if with_audit:
+        # The strict run owner admits a reviewed positive into a new immutable
+        # package and leaves the rejected draft intact; READY stays blocked.
+        reviewed = stage(staging_case, **kwargs, _strict_transaction=True)
+        assert reviewed["status"] == "STAGED_CLOSURE_READY", reviewed
+        assert reviewed["paths"] != result["paths"]
+        assert stage(staging_case, **kwargs, _strict_transaction=True) == reviewed
+        ready = stage(staging_case, **{**kwargs, "outcome": "READY_FOR_DESKTOP"}, _strict_transaction=True)
+        assert all(expected_blocker in paths["blockers"] for paths in ready["paths"].values())
 
 
 def test_staging_rechecks_observed_bytes_even_when_report_reused(staging_case):

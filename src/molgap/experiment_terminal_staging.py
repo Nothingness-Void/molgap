@@ -553,7 +553,8 @@ def _diagnostic_binding(root, resolved, report, attempt_id):
 def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
         diagnostic_report=None, role_audit=None, resolved=None, reports=None,
-        package_dir=None, scientific_acceptance=None, execution_root=None, _retention=None, facts_ref=None):
+        package_dir=None, scientific_acceptance=None, execution_root=None, _retention=None, facts_ref=None,
+        _strict_transaction=False):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -562,6 +563,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
     and existing-schema ``roles``; recipe authorization is never an audit.
     An owner supplied ``molgap-rml-terminal-package-v1`` may be reused after
     its decision, role, evidence, and current artifact bindings are checked.
+    Positive decisions use the same explicit outcome/decision inputs inside the
+    run owner's strict transaction; that owner qualifies the pair before closure.
     """
     if resolved is None:
         from .experiment_run import resolve_run_acceptance_inputs
@@ -677,9 +680,11 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             blockers.append("explicit_outcome_and_decision_ref_required")
         if explicit_outcome is not None and explicit_outcome not in TRAJECTORY_OUTCOMES - {"ACTIVE"}:
             raise ValueError("Expected an explicit existing terminal trajectory outcome")
+        strict_reviewed = (_strict_transaction and comparison is None
+                           and explicit_outcome in {"POSITIVE_UNDER_CONTRACT", "POSITIVE_BELOW_GATE"})
         if (explicit_outcome == "READY_FOR_DESKTOP"
                 or (explicit_outcome in {"POSITIVE_UNDER_CONTRACT", "POSITIVE_BELOW_GATE"}
-                    and comparison is None)):
+                    and comparison is None and not _strict_transaction)):
             blockers.append("positive_or_ready_requires_owning_scientific_acceptance")
         if explicit_decision is not None:
             explicit_decision = repo_local_path(root, explicit_decision).relative_to(root).as_posix()
@@ -728,7 +733,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         # or explicit decision completes it. Retried identical staging is stable.
         identity = canonical_fingerprint({"report": report, "outcome": explicit_outcome,
             "decision_ref": explicit_decision, "bindings": hashes, "role_use": role_use,
-            "roles": roles, "diagnostic": diagnostic_binding})
+            "roles": roles, "diagnostic": diagnostic_binding,
+            **({"strict_reviewed_outcome": explicit_outcome} if strict_reviewed else {})})
         directory = repo_local_path(root, trajectory_path.parent / "terminal_staging" / attempt_id / identity[:16])
         pointer = lambda name: (directory / name).relative_to(root).as_posix()
         objective_ref, acceptance_ref = pointer("observed.json"), pointer("acceptance.json")
