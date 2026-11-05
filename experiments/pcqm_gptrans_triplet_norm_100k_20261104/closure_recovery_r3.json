@@ -1,0 +1,68 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 17.14,
+  "watched_files": 101,
+  "files_unchanged": true,
+  "result": {
+    "arms": {
+      "joint_norm": {
+        "blockers": [],
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "separate_norm": {
+        "blockers": [],
+        "status": "MECHANICALLY_VERIFIED"
+      }
+    },
+    "attempt_id": "v1",
+    "blockers": [],
+    "executed": false,
+    "replay_readiness": "VERIFIED",
+    "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3",
+    "scientific_outcome": "NOT_EVALUATED",
+    "spec_identity": "912bb7f8c7f26596c106db6f4aa31336c0112eeaf2db7677c3ae6d2fd0f0b722",
+    "status": "MECHANICALLY_VERIFIED",
+    "strict_mode": "CANONICAL_READ_ONLY",
+    "strict_validation": {
+      "arms": {
+        "joint_norm": {
+          "blockers": [],
+          "comparison": {
+            "blockers": [],
+            "comparison_class": "STRICT_CAUSAL",
+            "status": "VERIFIED"
+          },
+          "native_qualification": {
+            "blockers": [],
+            "missing": [],
+            "status": "VERIFIED"
+          },
+          "replay": {
+            "exclusions": [],
+            "status": "VERIFIED"
+          }
+        },
+        "separate_norm": {
+          "blockers": [],
+          "comparison": {
+            "blockers": [],
+            "comparison_class": "STRICT_CAUSAL",
+            "status": "VERIFIED"
+          },
+          "native_qualification": {
+            "blockers": [],
+            "missing": [],
+            "status": "VERIFIED"
+          },
+          "replay": {
+            "exclusions": [],
+            "status": "VERIFIED"
+          }
+        }
+      },
+      "blockers": [],
+      "ready_for_desktop": "NOT_EVALUATED",
+      "status": "VERIFIED"
+    }
+  }
+}
