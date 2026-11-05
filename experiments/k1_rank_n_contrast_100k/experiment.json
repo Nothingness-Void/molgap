@@ -1,0 +1,86 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "k1_rank_n_contrast_100k",
+  "logical_run_id": "k1-rank-n-contrast-100k-s42",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/k1_rank_n_contrast_100k/authority.json",
+  "platform_ref": "experiments/k1_rank_n_contrast_100k/platform.json",
+  "role_ref": "experiments/k1_decay_timescale_100k/roles.json",
+  "decision_ref": "experiments/k1_rank_n_contrast_100k/decision.md",
+  "monitor_paths": [
+    "experiments/k1_rank_n_contrast_100k/STATUS.md"
+  ],
+  "timestamp": "2026-11-06T00:00:00+00:00",
+  "seeds": [
+    42
+  ],
+  "same_run": {
+    "reference_arm_id": "reference"
+  },
+  "question": {
+    "policy_id": "k1-rank-n-contrast-100k",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does adding the Rank-n-Contrast term (lambda 0.007, tau 0.1, unit-normalised pooled embedding of the single training forward, no projection head) to the frozen K1 post-BN 100K recipe improve selected development MAE by at least the frozen 3 meV material gate over a same-run reference from the same initial state?",
+    "deficiency": "Every recorded K1 100K screen changed architecture, optimizer or same-molecule view agreement; none constrained the cross-molecule geometry of the pooled embedding by Gap distance. Rank-n-Contrast (arXiv 2210.01189) did so for image and EEG regression, but its weakest scheme is the joint one used here.",
+    "changed_mechanism": "cross-molecule-gap-distance-embedding-rank-contrast",
+    "supporting_evidence": [
+      "ev-terminal-T-k1-init-noise-100k-s45-init_s46",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-reference"
+    ],
+    "alternatives": [
+      "The 192-d pooled embedding already orders Gap through the L1 head and the extra geometry constraint only competes with it",
+      "Train-mode BatchNorm and dropout make embedding distances too noisy for the contrast to help",
+      "A below-gate difference is inside the same-init perturbation floor"
+    ],
+    "closed_families": [
+      "K1 dropout consistency (same molecule, Desktop)",
+      "K1 joint atom reconstruction",
+      "K1 combination 100K"
+    ],
+    "positive_decision": "Retain a material lead only if every frozen protocol condition holds; any multi-seed confirmation needs a separate explicit compute decision. No 500K or full training follows.",
+    "negative_decision": "Close Rank-n-Contrast at 100K with no tau, lambda, projection-head or RankSim successor.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-k1-perturbation-floor-100k-s42-reference",
+      "T-k1-init-noise-100k-s45-init_s46",
+      "TC-k1-combination-100k-s42-combination"
+    ]
+  },
+  "profile": {
+    "owner": "server",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "T4x2",
+    "cheapest_falsifier": "One T4x2 session: same-run reference plus one Rank-n-Contrast arm, one arm per device.",
+    "estimated_device_hours": 3.9,
+    "estimated_wall_hours": 1.95
+  },
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "reference",
+      "training": {}
+    },
+    {
+      "arm_id": "rnc",
+      "training": {},
+      "model": {
+        "addons": [
+          {
+            "name": "k1_rank_contrast",
+            "version": "1",
+            "config": null
+          }
+        ]
+      }
+    }
+  ]
+}

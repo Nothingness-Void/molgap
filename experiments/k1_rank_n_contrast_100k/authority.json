@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "user_authorized": true,
+  "scientific_training_authorized": true,
+  "purpose": "ARCHITECTURE_COMPARISON",
+  "account": "nvoid912",
+  "platform": "kaggle3",
+  "arms": [
+    "reference",
+    "rnc"
+  ],
+  "same_run_reference_arm_id": "reference",
+  "seeds": [
+    42
+  ],
+  "physical_batch_size": 128,
+  "allocation_wall_limit_seconds": 7680,
+  "allocated_t4_hours_ceiling": 4.27,
+  "protected_role_access_authorized": false,
+  "automatic_successor_authorized": false,
+  "retry_authorized": false,
+  "full_training_authorized": false,
+  "authorization_basis": "User instruction, 2026-11-06: research and advance a K1 single-model Rank-n-Contrast fusion with a council review; user approved (AskUserQuestion, same day) the infrastructure commit, one kaggle3 T4x2 pair of up to 4.27 T4-hours, and closure with no successor if below the gate, tau 0.1 and the 0.25 gradient-share lambda rule frozen. One kaggle3 T4x2 session, arms reference and rnc of the frozen K1 post-BN recipe, seed 42. Wall 7680 s x 2 devices = 4.2667 T4-hours, ceiling 4.27. No successor, extra seed, protected role, 500K or full training.",
+  "reference_scope": "Same-run reference retrained from the frozen preset; its retained seed-42 value is 141.2945 meV and the perturbation-floor rerun reproduced it bit-identically."
+}
