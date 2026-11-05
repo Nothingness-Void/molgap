@@ -102,6 +102,8 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict,
     reference_side["reference_bundle_id"] = bundle["reference_bundle_id"]
     reference_side["reference_bundle_sha256"] = reference_bundle_digest(bundle)
     candidate_side = _side("candidate-arch")
+    for side in (candidate_side, reference_side):
+        side["comparison_identity"]["optimizer_mode"] = "native-adamw"
     field = {"architecture_comparison": "architecture_config_identity",
              "optimizer_comparison": "optimizer_identity",
              "initialization_comparison": "initialization_identity"}[purpose]
@@ -109,6 +111,10 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict,
         candidate_side["comparison_identity"]["architecture_config_identity"] = "reference-arch"
         for side, value in ((candidate_side, "a" * 64), (reference_side, "b" * 64)):
             side["comparison_identity"][field] = value
+    declared_fields = [field]
+    if purpose == "optimizer_comparison":
+        candidate_side["comparison_identity"]["optimizer_mode"] = "k1-muon-adamw-fp32-v1"
+        declared_fields.append("optimizer_mode")
     for side, directory, names in (
         (reference_side, reference_root, REQUIRED_OBSERVED_BINDINGS),
         (candidate_side, candidate_root, REQUIRED_CANDIDATE_OBSERVED_BINDINGS),
@@ -126,7 +132,7 @@ def _strict_comparison(root: Path, reference: dict, candidate: dict,
     comparison = assess_comparison_readiness(
         candidate_id=candidate["ev_id"], candidate=candidate_side,
         reference_id=reference["ev_id"], reference=reference_side,
-        declared_intervention_fields=[field], experiment_purpose=purpose,
+        declared_intervention_fields=declared_fields, experiment_purpose=purpose,
         intervention_group_id=field,
     )
     assert comparison["strict_ready"] is True
@@ -185,7 +191,7 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path, 
     # even when the older coarse labels and reference ID happen to match.
     for field, changed in (("physical_batch_per_device", 129), ("loss_identity", "different-loss"),
                            ("schedule_identity", "different-schedule"), ("seed", 43),
-                           ("feature_identity", "different-features")):
+                           ("feature_identity", "different-features"), ("optimizer_fused", True)):
         altered = copy.deepcopy(manifests)
         for manifest in altered:
             if manifest["comparison_role"] == "candidate":
@@ -195,10 +201,11 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path, 
         field = comparison["declared_intervention_fields"][0]
         scope_name = "bound_" + field.removesuffix("_identity") + "_intervention"
         assert all(scope_name in entry["comparability_identity"] for entry in entries)
-        altered = copy.deepcopy(manifests)
-        altered[0]["comparability_identity"]["strict_identity"][field] = "unexpected"
-        with pytest.raises(ValueError, match="differs from its bound comparison"):
-            build_screening_backtest(altered)
+        for declared_field in comparison["declared_intervention_fields"]:
+            altered = copy.deepcopy(manifests)
+            altered[0]["comparability_identity"]["strict_identity"][declared_field] = "unexpected"
+            with pytest.raises(ValueError, match="differs from its bound comparison"):
+                build_screening_backtest(altered)
         other_scope = ("bound_optimizer_intervention" if purpose == "initialization_comparison"
                        else "bound_initialization_intervention")
         for extra_scope in ("bound_unknown_intervention", other_scope):

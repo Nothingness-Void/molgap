@@ -12,6 +12,7 @@ from uuid import uuid4
 from .common.io import _safe_local, publish_immutable_bytes
 from .common.paths import MachinePaths, validate_relative_path
 from .common.wire import canonical_fingerprint
+from .family_training_recipe import optimizer_identity
 from .common.spec import _object, _identifier, _unique_object
 from .experiment_spec import ExperimentSpec
 from .research_memory.paths import repo_local_path
@@ -430,7 +431,7 @@ def _compile_scientific_input(path, root, value):
         if set(roles) != {"train", "development"} or any(
                 record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        editable_training = {"learning_rate", "weight_decay", "no_decay_modules", "ema_decay", "auxiliary_ema_decays"}
+        editable_training = {"learning_rate", "weight_decay", "no_decay_modules", "ema_decay", "auxiliary_ema_decays", "optimizer"}
         if type(item["training"]) is not dict or set(item["training"]) - editable_training:
             raise ValueError("Unsupported training parameter override")
         training_overrides = dict(item["training"])
@@ -582,9 +583,7 @@ def _compile_scientific_input(path, root, value):
                 architecture_config_identity=canonical_fingerprint({k: previous[k] for k in ("base", "addons")}),
                 schedule_identity=canonical_fingerprint(record["schedule"]),
                 loss_identity=comparison_objective_identity(previous, baseline),
-                optimizer_identity=canonical_fingerprint({"recipe": {k: record[k] for k in (
-                    "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in record else ()))},
-                    "policy": {k: record["execution_policy"][k] for k in ("adamw_betas", "adamw_epsilon")}}),
+                optimizer_identity=optimizer_identity(record),
                 optimizer_mode=record["execution_policy"]["optimizer"],
                 optimizer_fused=record["execution_policy"]["optimizer"] == "fused-adamw",
                 tf32_enabled=record["execution_policy"]["tf32"], deterministic_algorithms=True,
@@ -604,12 +603,13 @@ def _compile_scientific_input(path, root, value):
         if any(arm["training"][k] != previous["training"][k] for k in ("sampler", "transform")):
             raise ValueError("Scientific compilation cannot silently change frozen sampler or normalization")
         changed = []
-        if (recipe.learning_rate, recipe.weight_decay, recipe.no_decay_modules) != (
-                baseline.learning_rate, baseline.weight_decay, baseline.no_decay_modules):
-            identity["optimizer_identity"] = canonical_fingerprint({"recipe": {k: new_record[k] for k in (
-                "learning_rate", "weight_decay", "gradient_clip", *(("no_decay_modules",) if "no_decay_modules" in new_record else ()))},
-                "policy": {k: new_record["execution_policy"][k] for k in ("adamw_betas", "adamw_epsilon")}})
+        if (recipe.learning_rate, recipe.weight_decay, recipe.no_decay_modules, recipe.optimizer) != (
+                baseline.learning_rate, baseline.weight_decay, baseline.no_decay_modules, baseline.optimizer):
+            identity["optimizer_identity"] = optimizer_identity(new_record)
             changed.append("optimizer_identity")
+        if recipe.optimizer != baseline.optimizer:
+            identity["optimizer_mode"] = recipe.execution_policy["optimizer"]
+            changed.append("optimizer_mode")
         if recipe.ema_decay != baseline.ema_decay:
             identity.update(ema_enabled=recipe.ema_decay is not None, ema_decay=recipe.ema_decay,
                 ema_update_frequency=1 if recipe.ema_decay is not None else None,
@@ -639,8 +639,10 @@ def _compile_scientific_input(path, root, value):
             if row is reference:
                 continue
             changed = []
-            if any(row[2].get(key) != reference[2].get(key) for key in ("learning_rate", "weight_decay", "no_decay_modules")):
+            if any(row[2].get(key) != reference[2].get(key) for key in ("learning_rate", "weight_decay", "no_decay_modules", "optimizer")):
                 changed.append("optimizer_identity")
+            if row[2]["execution_policy"]["optimizer"] != reference[2]["execution_policy"]["optimizer"]:
+                changed.append("optimizer_mode")
             if row[2].get("ema_decay") != reference[2].get("ema_decay"):
                 changed.append("ema_decay")
             if any(row[1][key] != reference[1][key] for key in ("base", "addons")):

@@ -19,10 +19,15 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
     from ..family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON
     groups = optimizer.get("param_groups")
     expected_decays = (recipe.weight_decay, 0.0) if recipe.no_decay_modules else (recipe.weight_decay,)
+    if recipe.optimizer != "adamw":
+        expected_decays = (recipe.weight_decay, recipe.weight_decay)
     if not isinstance(groups, list) or len(groups) != len(expected_decays) or any(type(g) is not dict for g in groups):
         raise ValueError("Optimizer parameter-group count differs from recipe")
     ids = []
-    for g, wd in zip(groups, expected_decays):
+    muon_ids = set()
+    for index, (g, wd) in enumerate(zip(groups, expected_decays)):
+        if recipe.optimizer != "adamw" and g.get("algorithm") != ("muon", "adamw")[index]:
+            raise ValueError("Resume changed frozen optimizer partition")
         frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": wd,
             "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
             "foreach": None if recipe.family == "neural_atom_k1" else True,
@@ -36,23 +41,26 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
         if not isinstance(g_ids, list) or not g_ids or any(type(v) is not int for v in g_ids) or g_ids != list(range(len(ids), len(ids) + len(g_ids))):
             raise ValueError("Resume parameter mapping differs from frozen group ordering")
         ids.extend(g_ids)
+        if recipe.optimizer != "adamw" and index == 0:
+            muon_ids.update(g_ids)
     group = groups[0]
     if any(g.get("lr") != group.get("lr") for g in groups[1:]):
         raise ValueError("Resume parameter groups diverge in learning rate")
     moments = optimizer.get("state")
     if not isinstance(moments, dict) or not moments or not set(moments) <= set(ids):
         raise ValueError("Missing or unbound optimizer moments")
-    for record in moments.values():
-        if type(record) is not dict or set(record) != {"step", "exp_avg", "exp_avg_sq"}:
-            raise ValueError("Incomplete AdamW moments")
+    for parameter_id, record in moments.items():
+        keys = ("momentum_buffer",) if parameter_id in muon_ids else ("exp_avg", "exp_avg_sq")
+        if type(record) is not dict or set(record) != {"step", *keys}:
+            raise ValueError("Incomplete optimizer moments")
         count = record["step"]
         if (not isinstance(count, torch.Tensor) or count.ndim != 0 or not count.is_floating_point() or
                 not bool(torch.isfinite(count)) or not 1 <= float(count) <= step or float(count) != int(float(count))):
             raise ValueError("Optimizer update exposure is outside acknowledged work")
-        first, second = record["exp_avg"], record["exp_avg_sq"]
+        first, second = record[keys[0]], record[keys[-1]]
         if (not isinstance(first, torch.Tensor) or not isinstance(second, torch.Tensor) or
                 not first.is_floating_point() or first.shape != second.shape or first.dtype != second.dtype):
-            raise ValueError("AdamW moment tensor schema differs")
+            raise ValueError("Optimizer moment tensor schema differs")
     schedule = recipe.schedule
     units = pass_index if schedule.epoch_based else step
     if (type(scheduler) is not dict or set(scheduler) != {"completed_units", "native"}
@@ -315,7 +323,7 @@ class FamilyTrainingSession:
                     not (self.recipe.mode == "ssma" and names[id(parameter)].startswith("k1_joint_aggregation."))):
                 raise ValueError("Resume lost required parameter moments")
             if moments is not None and any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
-                    for key in ("exp_avg", "exp_avg_sq")):
+                    for key in moments if key != "step"):
                 raise ValueError("Resume optimizer moments do not match the live parameter schema")
         _finite_tree(state, "family.resume")
         _validate_rng_state(state["rng_state"])

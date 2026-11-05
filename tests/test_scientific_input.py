@@ -436,6 +436,8 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     from molgap.family_training_runner import read_recipe, comparison_objective_identity
     baseline_arm = value["arms"][0]
     record, baseline = read_recipe(case.repo / baseline_arm["recipe_ref"])
+    if baseline.family == "neural_atom_k1":
+        baseline_arm["training"] = {"optimizer": "k1-muon-adamw-fp32-v1"}
     source_spec = json.loads((case.repo / baseline_arm["data_ref"]["spec_ref"]).read_bytes())
     source = source_spec["arms"][0]
     old_plan = json.loads((case.repo / baseline_arm["reference_ref"]["plan_ref"]).read_bytes())["arms"][0]
@@ -523,11 +525,15 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     assert "same_run_replay" not in spec.to_dict()["prospective"]
     assert len(plan["generated_records"]) == 7
     first_recipe, second_recipe = [json.loads((case.repo / job["recipe"]).read_bytes()) for job in plan["arms"]]
-    assert first_recipe["no_decay_modules"] == ["LayerNorm", "BatchNorm"]
+    if baseline.family == "neural_atom_k1":
+        assert first_recipe["optimizer"] == "k1-muon-adamw-fp32-v1"
+    else:
+        assert first_recipe["no_decay_modules"] == ["LayerNorm", "BatchNorm"]
     assert second_recipe["ema_decay"] == .9999 and second_recipe["auxiliary_ema_decays"] == [.999]
     prelaunches = [json.loads((case.repo / entry["comparison_prelaunch"]["path"]).read_bytes())
                   for entry in json.loads((case.repo / plan["acceptance_plan"]).read_bytes())["arms"]]
-    assert prelaunches[0]["declared_intervention_fields"] == ["optimizer_identity"]
+    assert prelaunches[0]["declared_intervention_fields"] == ["optimizer_identity", *(
+        ["optimizer_mode"] if baseline.family == "neural_atom_k1" else [])]
     assert prelaunches[1]["declared_intervention_fields"] == ["ema_decay"]
 
 

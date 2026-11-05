@@ -52,6 +52,9 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
         value["logical_run_id"] = "compact-initialization-pair"
     recipe_path = case.repo / value["shared"]["recipe_ref"]
     guarded_recipe = json.loads(recipe_path.read_bytes())
+    muon = purpose == "optimizer_comparison" and guarded_recipe["family"] == "neural_atom_k1"
+    if muon:
+        value["shared"]["training"] = {"optimizer": "k1-muon-adamw-fp32-v1"}
     guard = {"prediction_tolerance_eV": 1e-4, "mae_tolerance_eV": 1e-6}
     guarded_recipe["initial_development_check"] = guard
     _write_json(recipe_path, guarded_recipe)
@@ -120,7 +123,8 @@ def test_shared_same_job_pair_uses_existing_acceptance_and_exact_attempt(scienti
     from molgap.experiment_family_workflow import same_run_comparison_scope
     scope = same_run_comparison_scope(value, "candidate", "baseline")
     assert scope["experiment_purpose"] == purpose
-    assert scope["declared_intervention_fields"] == ["initialization_identity" if purpose == "initialization_comparison" else "optimizer_identity"]
+    assert scope["declared_intervention_fields"] == (["initialization_identity"] if purpose == "initialization_comparison"
+        else ["optimizer_identity", *(["optimizer_mode"] if muon else [])])
     for invalid_purpose in ("architecture_comparison", "unknown"):
         invalid = deepcopy(value)
         invalid["shared"]["purpose"] = invalid_purpose
