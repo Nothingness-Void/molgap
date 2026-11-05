@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "joint_norm": {
+      "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/closure_facts_joint_norm.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "separate_norm": {
+      "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+      "facts_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/closure_facts_separate_norm.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    }
+  },
+  "role_audit": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/audit_map.json"
+}

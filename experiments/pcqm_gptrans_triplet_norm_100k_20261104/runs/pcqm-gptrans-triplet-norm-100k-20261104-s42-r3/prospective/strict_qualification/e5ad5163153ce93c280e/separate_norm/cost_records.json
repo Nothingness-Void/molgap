@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "separate_norm-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-0",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/terminal_staging/v1/d0d56efb0968fb0e/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.8497828485525
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "separate_norm-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-allocation-0",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/terminal_staging/v1/d0d56efb0968fb0e/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.940733912526667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    }
+  ]
+}

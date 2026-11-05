@@ -1,0 +1,49 @@
+{
+  "inputs": [
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-norm-ema-100k-20261104-s42/v1/version1/uniform_wd_multi_ema/development_predictions.pt",
+      "sha256": "d537ffd9787297867397e2c0a930359cb4e9b58e1e80f8fbcb3850e1380945d0"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/development_predictions.pt",
+      "sha256": "c8a6d015fc556d92903c9679e81f00d7b08296db6f2e8b5ccf9f9bf61040964d"
+    },
+    {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/development_predictions.pt",
+      "sha256": "077dd44a1ccd0370fae342308629f9d7e11f711f5397c208a6832f6c15aafbfd"
+    }
+  ],
+  "op": "paired",
+  "posthoc": true,
+  "results": {
+    "candidates": {
+      "joint": {
+        "ci95": [
+          -0.27786239099502563,
+          1.5846327004432676
+        ],
+        "delta": 0.6494018840789795,
+        "mae_meV": 140.089593963027,
+        "n_bootstrap": 2000,
+        "probability_better": 0.0855,
+        "seed": 42
+      },
+      "separate": {
+        "ci95": [
+          -1.627374081850052,
+          0.2809349032640454
+        ],
+        "delta": -0.6239852523803711,
+        "mae_meV": 138.81620682656765,
+        "n_bootstrap": 2000,
+        "probability_better": 0.911,
+        "seed": 42
+      }
+    },
+    "reference": "parent",
+    "reference_mae_meV": 139.44019207894803
+  },
+  "role_id": "development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

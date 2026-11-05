@@ -1,0 +1,137 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/terminal_staging/v1/a105e74a73722a78/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/strict_qualification/59c1bdc2b16e2e04e975/uniform_wd_multi_ema/reference_bundle.json": "c216213907704f53a7773f89f45121aeea6a1f1b2c6fa27e06f7d00239db3d49",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/closure_facts_joint_norm.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_joint_norm.json": "27ab394e31f6f2bdc185ed15a069914f3f78d759b3ba177c370fdd625c740216",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md": "328526859b71a8dd0b502d22a994992b1cd8cdadeb42861eae4c6c0c972c9506",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/authority.json": "f4e47a954802b73f4f5c33ae92905dc80cc90ab45fea14bb00f032ab72344d2f",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/joint_norm/recipe.json": "b7b4efc86e75df646901f3b05f73358a6f26b9e83865d3ec789446c3d0eafa13",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/terminal_staging/v1/a105e74a73722a78/acceptance.json": "f382a246f7dc1b887460fb088a1458e62bb7aa5682ea56cecf9b7678d159f695",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/terminal_staging/v1/a105e74a73722a78/observed.json": "68a3fe611c6f9cb31d6c56b88330bf87da55d2ee6b3f84e234bfabf0014a3617",
+    "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/strict_qualification/e5ad5163153ce93c280e/joint_norm/comparison_readiness.json": "6a55fee873a3584268339e6f7e88c03215b8641e89f523a5558f60f6b1ad26bb",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/allocation_ledger.json": "cea66cf89b730bf0d5e7568911d97226804e041efde001763e93d7e66f44a1db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/execution_retention.json": "bb6cf95b0af14245c166ed67052db23b77b7369ca6cf56fcfb79cfff494334bb",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/joint_norm/allocation_ledger.json": "cea66cf89b730bf0d5e7568911d97226804e041efde001763e93d7e66f44a1db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/canonical_trace.json": "344597de792e72c9ed0ded2dc6f6d4631ba2cb4847b201c9a21a8ebb0747e4ee",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/canonical_trace.json.context.json": "54dee3b4d6e576aa2a4687b29459a5a0bb56725858c013d4481dff57b29992fa",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/data_open_provenance.json": "411dbc34ea2f8cfe24e4be8bb3810ecefa1a517b921f7de3963e6061ee2c007e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/development_predictions.pt": "c8a6d015fc556d92903c9679e81f00d7b08296db6f2e8b5ccf9f9bf61040964d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/last_checkpoint.pt": "450604fbc46249deeb0f9f60263bc8bd843edc7ac2a34ffe1a3294aff43fab61",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/output_manifest.json": "bd936119fd5500d34620d82a39172efd8a379feb9dee20a55428bf5a536f45ce",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/selected_model.pt": "5e5ed231d20d5d194b75464366048c35b394e1f012ed10080016c91596afbed7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/training_contract.json": "b7b4efc86e75df646901f3b05f73358a6f26b9e83865d3ec789446c3d0eafa13",
+    "external:///D:/molgap-artifacts/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/reports/diagnostic_cb9ed41ea58b2c0e41ebffcfe7bd386301a560ec7b6e4b97fcef6b803f4ebc69.json": "7d87a5ac79dacc02f1c7c7219b1373cf762354cf1ad4c4a9a7cbb8142abf2505"
+  },
+  "closure_blockers": [],
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/strict_qualification/e5ad5163153ce93c280e/joint_norm/comparison_readiness.json",
+  "finalized_at": "2026-11-05T07:25:54.332335+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-0.json",
+        "sha256": "94c98cadf30ad7421d078840ebbfdd4650e55bff41264d79a2511baf8d8ecd04"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-allocation-0.json",
+        "sha256": "30fa0cfe08fcea692543cd41de5de20a4c0ade90a6edb109d912888708ccfa5a"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "0b4c6060e44843ee3ea597c5d8750ebd4522c54d7fb874f714f2890cabf7a308"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "9a02fd5001fc4eadb3bc97ffc0edc4c66d12b4acc7153ef85562e2694a3d9c1a"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-train-training_membership.json",
+        "sha256": "6f3fc7236b466eb62e2821e957845bae6ac4c69f13b25aeaa8ccef27949a6939"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-prediction_input.json",
+        "sha256": "ce14bcc883c61faad83d7e09422bf9b489fe004c6b9d617e3b52e17aa99ab941"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read.json",
+        "sha256": "dfce25e7b004c1dff4a0cc4c78a3f3cba122ec97b90fe1e5624a9f14ed316cef"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-metric_computed.json",
+        "sha256": "5b0290bd2a62893e60317cbf10bfbc87909b5707c47deacefc2861af3364c238"
+      },
+      {
+        "ref": "roles/role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-selection_used.json",
+        "sha256": "9ac6e524e78cf8ef4659bd8ceaa39111814ed30721e24dd7e4635aa55454226a"
+      }
+    ]
+  },
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:joint_norm:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/joint_norm/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/joint_norm/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+    "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:joint_norm:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/terminal_staging/v1/a105e74a73722a78/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/joint_norm/canonical_trace.json",
+    "trace_artifact_sha256": "344597de792e72c9ed0ded2dc6f6d4631ba2cb4847b201c9a21a8ebb0747e4ee",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+}

@@ -1,14 +1,16 @@
 # Status
 
-SUBMISSION_BOUND,2026-11-05 JST. Corrected Kaggle1 job142747352/version1.
+TRAINING_COMPLETE_RML_BLOCKED,2026-11-05 JST. Kaggle1 job142747352/version1.
 Kernel nothingnessvoid/molgap-triplet-norm-100k-s42-r3.
 Run pcqm-gptrans-triplet-norm-100k-20261104-s42-r3 / attempt v1.
-Submission returned RUNNING. Luna completed six finite read-only checks:
-latest version1 and receipt version1 matched, scheduler remained RUNNING.
-The SDK returned empty kernel logs and no per-arm preflight output files.
-Actual preflight completion/training steps remain unverified; do not infer
-them from scheduler status. Finite startup observation stopped without a cron.
-Source, receipt and prospective RML were saved before user-requested shutdown.
+Luna observed COMPLETE at latest version1, matching receipt version1, then
+completed strict minimal retrieval. Both arms finish60passes/46860updates.
+Mechanical acceptance and native qualification are VERIFIED. Shared closure
+finalizes both records but fails derived update with:
+Intervention replay requires one exact accepted candidate/reference trace pair.
+Strict replay also reports: Canonical qualification differs from the observed
+run context. No replay-ready claim. Original result: closure_result_r3.json.
+Infrastructure owner received the error and exact artifacts; no retraining.
 Frozen binding and exact receipt locations: submission_binding_r3.json.
 
 Original job142743304/version1 failed before training at target identity binding;
@@ -26,4 +28,6 @@ Luna owns finite status checks; no new automation was created.
 Prepublication incidents: incomplete per-arm model declaration corrected;
 loader repair d6da59c9 and cost metadata allowlist repair7ee4c07c applied.
 Original failure is infrastructure-only evidence, not a scientific negative.
-Strict replay-ready acceptance awaits terminal native/artifact/role/cost evidence.
+Both scientific outcomes are NEGATIVE_UNDER_CONTRACT under the3meV gate;
+separate return has a small numerical gain whose interval includes zero.
+See decision.md and analysis.md. Replay/index recovery remains pending.

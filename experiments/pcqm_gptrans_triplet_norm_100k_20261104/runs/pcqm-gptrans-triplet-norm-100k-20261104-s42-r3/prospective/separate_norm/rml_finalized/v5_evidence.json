@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "bb6cf95b0af14245c166ed67052db23b77b7369ca6cf56fcfb79cfff494334bb"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "cea66cf89b730bf0d5e7568911d97226804e041efde001763e93d7e66f44a1db"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/_execution/separate_norm/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "cea66cf89b730bf0d5e7568911d97226804e041efde001763e93d7e66f44a1db"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/training_contract.json",
+      "name": "contract",
+      "sha256": "13c89506c1dd91c7ba7b269610f328edc8c374c934ecb555b5d32f62afa525b6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "c9e1b4faabbc9f88b547d33680c41cc1d1c592d068da056c324755b914f32d24"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "077dd44a1ccd0370fae342308629f9d7e11f711f5397c208a6832f6c15aafbfd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "d771c5f1c4fa7ed7ce54d31cd200e21d3213f1ff6326216d15273c992d4fb815"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "bef3a19feae39c19964fcff29d5500470b8ca2a1f8ee13f329e2ef3ba9d003f5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "da7b2ee9dd75944e0a0fd0e7bd3d34ddca03c3b83d867d2652ee175ab7cc11bd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/v1/version1/separate_norm/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "2eb624908cd5dd54acbfa7c4acd80135e8051ee6b3c03cc84c297cd1509fdd5b"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/separate_norm/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13881620682656765,
+    "missing_reason": null,
+    "selected_optimizer_step": 33583,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/terminal_staging/v1/d0d56efb0968fb0e/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}
