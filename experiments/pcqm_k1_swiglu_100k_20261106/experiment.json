@@ -67,10 +67,10 @@
         "k1_swiglu_ffn"
       ]
     },
-    "recipe_ref": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
+    "recipe_ref": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
     "data_ref": {
-      "spec_ref": "experiments/pcqm_k1_message_droppath_100k/baseline_data_declaration.json",
-      "arm_id": "post_bn"
+      "spec_ref": "experiments/pcqm_k1_swiglu_100k_20261106/data_declaration.json",
+      "arm_id": "baseline"
     },
     "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
     "training": {},
