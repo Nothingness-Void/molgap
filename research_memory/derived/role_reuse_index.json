@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 861,
+  "ambiguous_historical_role_record_count": 867,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -822,6 +822,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6029,7 +6071,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 669,
+  "explicit_role_event_count": 679,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -6873,6 +6915,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
       },
       {
         "access_kind": "labels_read",
@@ -8109,6 +8207,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
       },
       {
         "access_kind": "training_membership",
@@ -10897,6 +11009,8 @@
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
@@ -11083,6 +11197,8 @@
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
       "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
       "ev-terminal-T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
       "ev-terminal-T-pcqm-k1-extremal-readout-100k-s42-baseline",
@@ -12038,6 +12154,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
       },
       {
         "access_kind": "labels_read",
@@ -15231,6 +15403,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-extremal-readout-100k-s42-baseline-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -16418,6 +16646,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
       },
       {
         "access_kind": "training_membership",

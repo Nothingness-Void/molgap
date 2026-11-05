@@ -410,7 +410,16 @@
       "source_envelope": "experiments/pcqm_gptrans_norm_ema_100k_20261104/runs/pcqm-gptrans-norm-ema-100k-20261104-s42/prospective/uniform_wd_multi_ema/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm"
+      ]
     },
     {
       "artifact_availability": [
@@ -598,6 +607,44 @@
       },
       "scientific_scope": "terminal_output_inspection",
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/joint_norm/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42-r3/prospective/separate_norm/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
       "used_by_trajectory_ids": []

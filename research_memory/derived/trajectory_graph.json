@@ -71,6 +71,46 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/joint_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/2e7664bf4e64f7b678a85dd986c313d3e34688d11a0a4c96bdfe09aeaa59a5bd/joint_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/2e7664bf4e64f7b678a85dd986c313d3e34688d11a0a4c96bdfe09aeaa59a5bd/separate_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/joint_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/05970d2c8f945590c2e7512d0a25c43bb4baf6ccef0e534b40fb0a897e076874/separate_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/separate_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/ba02dfa7e6d3c6c626f76ce387a49e7916fa48c03288104fede5ddde7173ac34/joint_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm:A001",
+      "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/ba02dfa7e6d3c6c626f76ce387a49e7916fa48c03288104fede5ddde7173ac34/separate_norm/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-batch-renorm-100k-s42-brn_affine:A001",
       "target": "experiments/pcqm_k1_batch_renorm_100k/generated/fa0db39f303756466250e9077982d8e753ebcca496cc2b6189c76aabe37c61fe/brn_affine/recipe.json",
       "type": "action_produced_evidence"
@@ -1721,6 +1761,86 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "target": "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_high",
       "type": "prior_evidence"
@@ -3306,6 +3426,46 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "reference_used"
+    },
+    {
       "source": "ev-terminal-T-pcqm-k1-hop-shell-100k-s42-hop_mixed",
       "target": "TB-k1-hop-fusion-qualification-100k",
       "type": "reference_used"
@@ -3816,6 +3976,14 @@
     },
     {
       "id": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
       "type": "evidence"
     },
     {
@@ -4496,6 +4664,38 @@
     },
     {
       "id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
       "type": "trajectory"
     },
     {

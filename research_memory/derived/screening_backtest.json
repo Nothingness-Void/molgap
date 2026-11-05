@@ -444,6 +444,19 @@
       ]
     },
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema\"}",
+      "run_ids": [
+        "pcqm-gptrans-norm-ema-100k-20261104-s42:uniform_wd_multi_ema:downstream",
+        "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:joint_norm:downstream",
+        "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema\\\",\\\"comparison_sha256\\\":\\\"20dfdd36c1d2f2e3a97128d866628edcdf7bf7a044c527cd6be239f39c2beda1\\\",\\\"declared_intervention_fields\\\":[\\\"optimizer_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"51f2462b60e174f4aa95220c7bf84eb4a60edf0f3224f0fc3ce5e165a43bf169\\\",\\\"reference\\\":\\\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\\\"},\\\"experiment_purpose\\\":\\\"optimizer_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-optimizer-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"normalization-affine-decay-and-same-trajectory-ema-timescale\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema\\\"}\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"ed9a95313cb91eb6529b03cf4eef79f8c3990503540bcf2a3d9c355f94d8062c\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema\"}",
       "run_ids": [
         "pcqm-gptrans-norm-ema-100k-20261104-s42:norm_no_decay_multi_ema:downstream",
@@ -764,6 +777,8 @@
     "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
     "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
     "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+    "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+    "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
     "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
     "T-pcqm-k1-extremal-readout-100k-s42-baseline",
@@ -817,5 +832,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 98
+  "trace_count": 101
 }

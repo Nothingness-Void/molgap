@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 61, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 27, in main
+    target_identity = TargetIdentityBinding.from_acceptance_plan(
+        spec, args.launch.parent / "acceptance", binding["plan_path"],
+        plan_sha256=binding["plan_sha256"],
+    )
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_family_workflow.py", line 1017, in from_acceptance_plan
+    raise ValueError("Target identity acceptance plan is blocked")
+ValueError: Target identity acceptance plan is blocked

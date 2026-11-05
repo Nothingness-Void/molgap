@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "separate_norm",
+    "arm_identity": "4fa423e969716213ea5e6ef56dac37e51b75124a1d405029094eae8c64562eca",
+    "experiment_id": "pcqm_gptrans_triplet_norm_100k_20261104",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3",
+    "package_identity": "1505b59e60b94f60bac2be10890cfecb97006d9c30e822b426ddd20a01a6173c",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-triplet-norm-100k-s42-r3",
+    "source_archive_sha256": "9fbd199eafcf70fd5199d5bb8f1ff5ef1bfa8eae7334dd9d2dec1a734e320e94",
+    "source_commit": "e0439644a4b860a61ab74c2f70437e38a42c5baf",
+    "spec_identity": "912bb7f8c7f26596c106db6f4aa31336c0112eeaf2db7677c3ae6d2fd0f0b722",
+    "training_recipe_sha256": "13c89506c1dd91c7ba7b269610f328edc8c374c934ecb555b5d32f62afa525b6"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "c9e1b4faabbc9f88b547d33680c41cc1d1c592d068da056c324755b914f32d24"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 c9e1b4faabbc9f88b547d33680c41cc1d1c592d068da056c324755b914f32d24, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_separate_norm.json",
+      "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_separate_norm.json",
+      "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_separate_norm.json",
+      "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_separate_norm.json",
+      "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/closure_r3/roles_separate_norm.json",
+      "role_event_id": "role-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r3:separate_norm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm"
+    }
+  ]
+}

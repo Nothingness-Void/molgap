@@ -1,0 +1,30 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-triplet-norm-100k-20261104-s42-r3\\v1\\version1\\joint_norm\\development_predictions.pt",
+      "sha256": "c8a6d015fc556d92903c9679e81f00d7b08296db6f2e8b5ccf9f9bf61040964d"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-triplet-norm-100k-20261104-s42-r3\\v1\\version1\\separate_norm\\development_predictions.pt",
+      "sha256": "077dd44a1ccd0370fae342308629f9d7e11f711f5397c208a6832f6c15aafbfd"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.2733871364593483,
+    "ensemble_gain_meV": 6.499078001976017,
+    "ensemble_mae_meV": 132.9538223928213,
+    "fit": null,
+    "m_meV": null,
+    "n_inits": 2,
+    "pairs": [],
+    "singles_meV": {
+      "joint_norm": 140.089593963027,
+      "separate_norm": 138.81620682656765
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

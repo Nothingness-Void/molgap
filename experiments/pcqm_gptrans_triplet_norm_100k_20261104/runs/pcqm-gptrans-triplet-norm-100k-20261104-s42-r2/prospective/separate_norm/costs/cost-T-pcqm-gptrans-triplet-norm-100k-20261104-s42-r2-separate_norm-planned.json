@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "separate_norm-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/2e7664bf4e64f7b678a85dd986c313d3e34688d11a0a4c96bdfe09aeaa59a5bd/authority.json",
+  "hardware": "Tesla T4x2 FP32",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42-r2:separate_norm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm"
+}

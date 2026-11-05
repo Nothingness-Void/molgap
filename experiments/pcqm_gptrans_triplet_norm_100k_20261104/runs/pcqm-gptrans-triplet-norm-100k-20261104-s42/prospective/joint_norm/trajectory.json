@@ -1,0 +1,107 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "joint_norm-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/joint_norm/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-triplet-norm-100k-20261104-s42:joint_norm:downstream"
+      ],
+      "source_commit": "7ee4c07cc2850fe5b3cc9bdf5bec64f4524648b5",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-triplet-norm-100k-20261104",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/runs/pcqm-gptrans-triplet-norm-100k-20261104-s42/prospective/rml_decision_snapshots/0ea235664540d82be587254f316fdcbc37438663045e171c5f402515f98b2b0b.json",
+    "snapshot_sha256": "0ea235664540d82be587254f316fdcbc37438663045e171c5f402515f98b2b0b",
+    "state_timestamp": "2026-11-05T02:24:09.012949+09:00"
+  },
+  "family_id": "pcqm-gptrans-triplet-norm-100k-20261104",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Joint normalization suppresses useful return amplitude",
+      "Separate returns destabilize the pair state",
+      "Both mechanisms are redundant on PairNorm"
+    ],
+    "changed_mechanism": "triplet-return-normalization-order",
+    "cheapest_falsifier": "Two same-parameter candidates differing only in return normalization order; reuse accepted parent without baseline training.",
+    "decision_changed_if_negative": "Close failed material gates without a new seed, optimizer grid or automatic successor.",
+    "decision_changed_if_positive": "Nominate only delta<=-3meV and upper paired95%CI<0 against retained parent; no automatic500K.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+    "observed_deficiency": "PairNorm and third-pair aggregation each passed a matched100K gate on their respective parents; their normalization-boundary interaction is unmeasured. Frozen aggregation later-cohort gain is uncertain.",
+    "related_closed_family_ids": [
+      "pcqm-gptrans-norm-ema-100k-20261104",
+      "gptrans-pair-memory-replay"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does joint versus separate normalization retain useful third-pair-gated relation communication on the accepted PairNorm parent?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/joint_norm/recipe.json",
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/data_declaration.json",
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_triplet_norm_100k_20261104/protocol.md"
+    ],
+    "source_commit": "7ee4c07cc2850fe5b3cc9bdf5bec64f4524648b5",
+    "source_config_identity": "0d1bf1c890287716848372ac4d8f32faffa707b480a8513e4a8a7c78fa0e1747"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm"
+}

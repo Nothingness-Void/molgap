@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 197,
+    "trajectories_total": 205,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 186,
-    "with_incomplete_native_measurement": 154,
+    "with_cost_event": 194,
+    "with_incomplete_native_measurement": 162,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,9 +15,15 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 99,
+      "count": 105,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -148,7 +154,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 154,
+      "count": 162,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -165,6 +171,14 @@
         "T-pcqm-gptrans-pairnorm-wd-500k-s43-20261103-wd_low",
         "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_high",
         "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r3-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_affine",
         "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
         "T-pcqm-k1-extremal-readout-100k-s42-baseline",
@@ -327,9 +341,15 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 47,
+      "count": 53,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -381,8 +401,14 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 18,
       "items": [
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
+        "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

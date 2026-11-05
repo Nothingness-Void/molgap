@@ -1,5 +1,11 @@
 # Experiments
 
+[GPTrans triplet-return normalization100K](pcqm_gptrans_triplet_norm_100k_20261104/decision.md)
+is closed without adoption. Both candidates miss the3meV gate against retained
+PairNorm; both strict replay entries are complete with no exclusions.
+See [attribution](pcqm_gptrans_triplet_norm_100k_20261104/analysis.md) and
+[custody](pcqm_gptrans_triplet_norm_100k_20261104/terminal_custody.md).
+
 [GPTrans normalization-decay and multi-EMA100K](pcqm_gptrans_norm_ema_100k_20261104/decision.md)
 is closed without adoption: normalization exemption regresses1.768meV;
 EMA0.9999 regresses on both trajectories. Two strict replay entries are complete.

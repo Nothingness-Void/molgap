@@ -1,0 +1,11 @@
+{
+  "retry_authorized": true,
+  "retry_of": {
+    "logical_run_id": "pcqm-gptrans-triplet-norm-100k-20261104-s42",
+    "attempt_id": "v1",
+    "spec_identity": "8db5e4e9a84d1d5ac4dcf4e1e09006ef188d23db7c0d3fb822f6a4add4927f71"
+  },
+  "remote_state": "ERROR",
+  "evidence_ref": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/v1_preflight_error.log",
+  "reason": "Both arms failed preflight target identity binding before training; reviewed repair87ac7861 preserves science and fixes foreign-reference metadata handling. Retry continues the authorized submission task without baseline training."
+}
