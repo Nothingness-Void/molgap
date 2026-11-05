@@ -71,6 +71,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12:A001",
+      "target": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/generated/3fdf83fe99436427261d5189083877b8129d9ed3ea9a95e1d3759a5a213743a9/full12/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4:A001",
+      "target": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/generated/3fdf83fe99436427261d5189083877b8129d9ed3ea9a95e1d3759a5a213743a9/full8_query4/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6:A001",
+      "target": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/full6/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6:A001",
+      "target": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/full6_query6/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm:A001",
       "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/joint_norm/recipe.json",
       "type": "action_produced_evidence"
@@ -1798,6 +1818,26 @@
     {
       "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6",
       "type": "prior_evidence"
     },
     {
@@ -4664,6 +4704,22 @@
     },
     {
       "id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6",
       "type": "trajectory"
     },
     {

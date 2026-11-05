@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-query-readout-ad-100k-20261105-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12-planned",
+  "evidence_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/generated/3fdf83fe99436427261d5189083877b8129d9ed3ea9a95e1d3759a5a213743a9/authority.json",
+  "hardware": "Tesla T4x2 FP32, one independent arm per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 6
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-query-readout-ad-100k-20261105-s42:full12:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12"
+}
