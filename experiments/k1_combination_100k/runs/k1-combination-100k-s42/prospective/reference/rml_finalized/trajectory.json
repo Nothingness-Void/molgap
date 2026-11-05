@@ -1,0 +1,136 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "k1-combination-100k-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-k1-combination-100k-s42-reference-planned",
+        "cost-terminal-T-k1-combination-100k-s42-reference-0",
+        "cost-terminal-T-k1-combination-100k-s42-reference-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/k1_combination_100k/generated/eb0fdc1a446cfbd414a4b6055d7238d5545df488de3621d39e5b240f9e60218d/reference/recipe.json"
+      ],
+      "run_ids": [
+        "k1-combination-100k-s42:reference:downstream"
+      ],
+      "source_commit": "7a460224f29501fa2d90e1195622af9e87a8567b",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/k1_combination_100k/results/completed/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_combination_100k/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "k1-combination-100k",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/k1_combination_100k/runs/k1-combination-100k-s42/prospective/rml_decision_snapshots/64b54ab0d7dd854767740f5ac8fb91cf72583f2ca3eb2c00e238970e67fdeb63.json",
+    "snapshot_sha256": "64b54ab0d7dd854767740f5ac8fb91cf72583f2ca3eb2c00e238970e67fdeb63",
+    "state_timestamp": "2026-11-04T12:41:32+00:00"
+  },
+  "family_id": "k1-combination-100k",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The pair-token gain was specific to the K1-v4 recipe and does not reappear on post-BN K1/3",
+      "The two zero-start mechanisms are sub-additive, as PairToken plus MoSE was",
+      "The difference is within the same-init perturbation floor"
+    ],
+    "changed_mechanism": "pair-token-and-readout-gain-combination",
+    "cheapest_falsifier": "One T4x2 session: same-run reference plus one combination arm, one arm per device.",
+    "decision_changed_if_negative": "Close the combination of these two addons at 100K with no successor, extra seed or scale-up.",
+    "decision_changed_if_positive": "Retain a material lead only if every frozen protocol condition holds; any multi-seed confirmation needs a separate explicit compute decision. No 500K or full training follows.",
+    "expected_native_cost_ref": "cost-T-k1-combination-100k-s42-reference-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-k1-combination-100k-s42-reference",
+    "observed_deficiency": "Fourteen server K1 100K screens stayed below the 3 meV gate one at a time, and the only K1 mechanism that cleared it at 100K (PairToken on K1-v4) was never run on the post-BN K1/3 recipe or composed with another sub-gate candidate. The same-init readout gain measured -0.81 meV alone.",
+    "related_closed_family_ids": [
+      "K1 PairToken 500K promotion",
+      "K1 message norm 100K",
+      "K1 hop shell 100K",
+      "K1 batch renorm 100K"
+    ],
+    "supporting_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-reference",
+      "ev-terminal-T-k1-init-noise-100k-s45-init_s46"
+    ]
+  },
+  "owner": "server",
+  "question": "Does one combination of the zero-start relation pair token (k1_pair_token/1) and the readout gain (k1_readout_scale/1) on the frozen K1 post-BN 100K recipe improve selected development MAE by at least the frozen 3 meV material gate over a same-run reference from the same initial state?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-k1-combination-100k-s42-reference"
+    ],
+    "evidence_refs": [
+      "experiments/k1_combination_100k/runs/k1-combination-100k-s42/prospective/reference/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/k1_combination_100k/authority.json",
+    "contract_refs": [
+      "experiments/k1_combination_100k/generated/eb0fdc1a446cfbd414a4b6055d7238d5545df488de3621d39e5b240f9e60218d/reference/recipe.json",
+      "experiments/presets/k1-post-bn-100k-data.json",
+      "experiments/k1_combination_100k/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "pcqm-k1-pair-token-100k-s42",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-readout_scale",
+      "ev-terminal-T-k1-perturbation-floor-100k-s42-reference",
+      "ev-terminal-T-k1-init-noise-100k-s45-init_s46"
+    ],
+    "prior_trajectory_ids": [
+      "T-k1-perturbation-floor-100k-s42-reference",
+      "T-k1-perturbation-floor-100k-s42-readout_scale",
+      "TC-k1-pair-token-100k-s42",
+      "TB-k1-pair-token-500k-s42",
+      "TC-k1-pair-token-mose-100k-s42"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/k1_decay_timescale_100k/roles.json"
+    ],
+    "same_run_replay": {
+      "arm_id": "reference",
+      "comparison_role": "reference",
+      "logical_run_id": "k1-combination-100k-s42",
+      "reference_arm_id": "reference",
+      "reference_trajectory_id": "T-k1-combination-100k-s42-reference",
+      "reference_trajectory_ref": "experiments/k1_combination_100k/runs/k1-combination-100k-s42/prospective/reference/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "7cc14f83a54fb38f3a6c6c765c3537f463304d52d8fd128076d67053aaac32ee"
+    },
+    "source_commit": "7a460224f29501fa2d90e1195622af9e87a8567b",
+    "source_config_identity": "53175cc2b3e8bc89f78d77c28dca06af22a59521b3aa5e8dc817db18ae64cb98"
+  },
+  "track": "B",
+  "trajectory_id": "T-k1-combination-100k-s42-reference"
+}

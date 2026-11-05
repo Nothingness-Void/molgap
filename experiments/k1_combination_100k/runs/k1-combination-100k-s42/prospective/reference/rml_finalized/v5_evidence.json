@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "a93ba35c235c25515b7b54e3bb06d50caa540710dddc33ac7bb03daf1a97e05f"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "93670e8897d5be1fdcf732c24d5226518cb5b308a8c0254c03cac86458691aa5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/_execution/reference/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "93670e8897d5be1fdcf732c24d5226518cb5b308a8c0254c03cac86458691aa5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/training_contract.json",
+      "name": "contract",
+      "role": "contract",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/data_open_provenance.json",
+      "name": "data_open",
+      "role": "data_open",
+      "sha256": "092e988ca6bc7cad0c120272fda3246c13b9b42d23e1d5b65d23a0da088da7dc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/development_predictions.pt",
+      "name": "predictions",
+      "role": "predictions",
+      "sha256": "e25ec64eb406d2cb6a20401ed9df2191e359d9d72b151430332e1cd1f82e02ef"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/last_checkpoint.pt",
+      "name": "resume",
+      "role": "resume",
+      "sha256": "ad1c70efcf0f3a321df94750ad6372e1d6b8428c8a0507f783168ecf9a017cb9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/role_audit.json",
+      "name": "role_audit",
+      "role": "role_audit",
+      "sha256": "27ac55372594c96a75695426850e0f65fa7d187099a114fc78b27b2d8eadfecb"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "role": "runtime_certificate",
+      "sha256": "e7e7a5df6ac70418320dce32eea1d77f0bec87b300e7ec0d1ebe43faa1a21252"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/runtime_provenance.json",
+      "name": "runtime_provenance",
+      "role": "runtime_provenance",
+      "sha256": "87c5968a4a3b5106cb8980b7ca679de48868576e5146f9950bc20940128d9bfc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/selected_model.pt",
+      "name": "selected_model",
+      "role": "selected_model",
+      "sha256": "00fdb9b2061eea4dae3db8a0a1e9436945147172b69aed310c8c50b11e417858"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/canonical_trace.json",
+      "name": "training_trace",
+      "role": "training_trace",
+      "sha256": "e12a7523ca51a38f50e1464a2e03e198be81de61fc9e814e08ef47e62c9f8c1e"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///E:/MolGap/artifacts/retrieved/k1-combination-100k-s42/v1/version1/reference/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "role": "trace_context",
+      "sha256": "970315708c977a9159cc3a73d0b56fbe0d541a8dd20343189514600623422250"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/k1_combination_100k/results/completed/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-k1-combination-100k-s42-reference",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/k1_combination_100k/generated/eb0fdc1a446cfbd414a4b6055d7238d5545df488de3621d39e5b240f9e60218d/reference/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1412944608205557,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/k1_combination_100k/runs/k1-combination-100k-s42/prospective/reference/terminal_staging/v1/4db3cdda9dc5345d/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

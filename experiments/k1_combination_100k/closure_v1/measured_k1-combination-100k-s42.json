@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-combination-100k-s42\\v1\\version1\\reference\\development_predictions.pt",
+      "sha256": "e25ec64eb406d2cb6a20401ed9df2191e359d9d72b151430332e1cd1f82e02ef"
+    },
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-combination-100k-s42\\v1\\version1\\combination\\development_predictions.pt",
+      "sha256": "aa3f9cd7aed9f096baeed5bac7543b4fb6b670a26aa37d2d1aa09b5e983ba9b8"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.3647087001800458,
+    "ensemble_gain_meV": 5.386659185886401,
+    "ensemble_mae_meV": 135.22544728457927,
+    "fit": null,
+    "m_meV": -1.3647087001800537,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "combination",
+        "ci95": [
+          -2.2542213870286942,
+          -0.5241123864650726
+        ],
+        "delta": -1.3647087001800537,
+        "n_bootstrap": 2000,
+        "probability_better": 0.9995,
+        "reference": "reference",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "combination": 139.92975212037564,
+      "reference": 141.29446082055568
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}
