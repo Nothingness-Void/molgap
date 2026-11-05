@@ -1,15 +1,28 @@
 # Status
 
 2026-11-06 JST: Kaggle2 two-fresh-arm100K submission authorized by the user.
-Not submitted. Shared Muon support0d6beda4 is applied as b36e541b following user
-approval of the adaptation and measured budget. Existing CPU update/recovery/
-output/replay checks passed; native GPU qualification remains with the worker.
-The scientific conditions are in protocol.md and executable input experiment.json.
-No source/Spec/prospective is frozen yet; no experiment model diagnostic or
-training executed, no quota allocated.
+Submitted to Kaggle2 at2026-11-06 03:01:51 JST, job142927073/version1:
+`kaseichou/molgap-k1-muon-100k-20261106-s42`.
+The existing submitter returned SUBMISSION_BOUND and scheduler RUNNING. This
+does not establish native qualification, training entry or replay readiness.
+Luna's one-shot check at03:02:27-03:02:31 JST observed latest version1 RUNNING,
+matching receipt version1, with zero artifact downloads. No persistent monitor
+or new cron was installed.
+Shared Muon support0d6beda4 is applied as b36e541b following user approval of the
+adaptation and measured budget; existing CPU update/recovery/output/replay checks
+passed. Native qualification executes through the existing worker.
+
+Frozen source62c70310d0528b0e8e1181c943ca10e9e6282bb4;
+Spec975d4f6f1da6b0ee6d2d6545d17550b6e3cfb3b55b2efad3d5bc366419420a1f;
+packagefddb6e19c9070b0e23d299727ab23c2be4a97d6ae0e1b379134de8886fb90118.
+Runpcqm-k1-muon-100k-20261106-s42, attemptv1.
+Durable launch receipt and submission journal are under
+`D:/molgap-artifacts/runs/pcqm-k1-muon-100k-20261106-s42/v1/operations/`.
+Prepared payload and frozen inputs remain beside operations. Prospective records
+for both arms are published under this experiment's runs directory.
 
 Owner branch: codex/exp/k1-muon-100k-20261106.
 Owner checkout: D:/molgap-worktrees/k1-muon-100k-20261106.
-Planned arms: adamw, muon; both actual new training in one Kaggle2 T4x2 session.
+Arms: adamw, muon; both new training in one Kaggle2 T4x2 session,40passes each.
 The user requested computer shutdown after successful submission and retained
 receipts; a one-shot Luna scheduler check precedes shutdown.
