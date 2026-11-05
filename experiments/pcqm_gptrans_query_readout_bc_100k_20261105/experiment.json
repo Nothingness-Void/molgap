@@ -1,0 +1,97 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_query_readout_bc_100k_20261105",
+  "logical_run_id": "pcqm-gptrans-query-readout-bc-100k-20261105-s42",
+  "attempt_id": "v1",
+  "timestamp": "2026-11-05T09:22:08.700280+00:00",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "question": {
+    "policy_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
+    "action": "RUN_PAIRED_100K",
+    "question": "Do six dynamic relation-query layers recover accuracy beyond six propagation layers and the original head?",
+    "deficiency": "The final GPTrans head reads only the molecular node and self pair; the value of continuing all-atom propagation versus differentiable query readout is unmeasured.",
+    "changed_mechanism": "propagation-depth-and-dynamic-molecular-query-readout",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ],
+    "alternatives": [
+      "Later all-atom propagation is necessary",
+      "Simple truncation is sufficient",
+      "Dynamic relation queries recover useful computation"
+    ],
+    "closed_families": [
+      "gptrans-pair-memory-replay",
+      "gptrans-frozen-readout"
+    ],
+    "positive_decision": "Establish C-B readout value only for >=3meV improvement with upper paired95%CI<0; no cross-slot strict causal or promotion claim.",
+    "negative_decision": "Retain truthful quality/cost evidence; no automatic successor, baseline substitution or scale-up."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one independent arm per device",
+    "estimated_device_hours": 6,
+    "estimated_wall_hours": 3,
+    "cheapest_falsifier": "Same-job paired100K complete60 epochs; independent truncation pair separates removed propagation from readout value."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "full6",
+      "full6_query6"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "full6",
+    "allocated_t4_hours_ceiling": 24,
+    "allocation_wall_limit_seconds": 43200,
+    "cleanup_reserve_seconds": 180,
+    "authority": "User explicitly authorized four100K arms60 epochs in two independent T4x2 notebooks; account selected from available API quota. No additional experiment total time cap. Numeric ceilings represent the12h platform session boundary only, not a user scientific budget.",
+    "scope": "A/full12 vs D/full8-query4 and B/full6 vs C/full6-query6; frozen seed42. Continuation authorized if necessary from reconciled state; no monitors or queue triggers.",
+    "development_role_label_use": true,
+    "protected_roles_authorized": []
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_bond_pairnorm_full6"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/reference_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/data_declaration.json",
+      "arm_id": "full6"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/gptrans.pt",
+    "training": {},
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "full6"
+    },
+    {
+      "arm_id": "full6_query6",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_bond_pairnorm_query6"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "full6",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}
