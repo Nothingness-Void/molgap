@@ -1,6 +1,6 @@
 {
   "backtest": {
-    "eligible": 62,
+    "eligible": 66,
     "excluded": 38,
     "status": "available"
   },
@@ -1574,7 +1574,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 143
+          "unknown_records": 151
         },
         "device_hours": {
           "estimated": {
@@ -1582,11 +1582,11 @@
             "known_total": 55.0
           },
           "measured": {
-            "known_records": 73,
-            "known_total": 273.91968636443914
+            "known_records": 77,
+            "known_total": 284.64762939145123
           },
           "not_applicable_records": 0,
-          "unknown_records": 62
+          "unknown_records": 66
         },
         "queue_hours": {
           "estimated": {
@@ -1598,7 +1598,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 143
+          "unknown_records": 151
         },
         "wall_hours": {
           "estimated": {
@@ -1606,11 +1606,11 @@
             "known_total": 55.0
           },
           "measured": {
-            "known_records": 65,
-            "known_total": 257.47291725556335
+            "known_records": 69,
+            "known_total": 266.87359094319555
           },
           "not_applicable_records": 0,
-          "unknown_records": 70
+          "unknown_records": 74
         }
       },
       "Tesla T4 FP32": {
@@ -3364,17 +3364,17 @@
         }
       }
     },
-    "unknown_events": 422
+    "unknown_events": 430
   },
   "evidence": {
-    "validated": 187,
+    "validated": 191,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 109,
+      "count": 105,
       "severity": "INFO"
     },
     {
@@ -3394,31 +3394,31 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 57,
+      "count": 53,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 22,
+      "count": 18,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 867,
-    "explicit_events": 679,
+    "coarse_historical": 879,
+    "explicit_events": 699,
     "repeatedly_selected": 26
   },
-  "source_digest": "c09fe64c3d12a5f3e7c5d72de55e3832f5534e8a06052727aae34bfbf1718d80",
+  "source_digest": "05dc10df9793a9e15680dc6325b0bbd109fceedba78dd5d3f1c30985eef57d48",
   "trajectories": {
     "count": 209,
     "outcomes": {
-      "ACTIVE": 11,
-      "CLOSED": 36,
+      "ACTIVE": 7,
+      "CLOSED": 38,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 10,
-      "NEGATIVE_UNDER_CONTRACT": 63,
+      "NEGATIVE_UNDER_CONTRACT": 64,
       "NO_TRAIN": 57,
-      "POSITIVE_UNDER_CONTRACT": 9
+      "POSITIVE_UNDER_CONTRACT": 10
     }
   },
   "transfer": {

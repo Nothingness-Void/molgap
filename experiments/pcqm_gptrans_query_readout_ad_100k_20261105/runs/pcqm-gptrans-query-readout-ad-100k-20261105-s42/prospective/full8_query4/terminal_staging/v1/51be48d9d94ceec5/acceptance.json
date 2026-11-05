@@ -1,0 +1,38 @@
+{
+  "closure_blockers": [],
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4",
+  "mechanical_status": "MECHANICALLY_VERIFIED",
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-gptrans-query-readout-ad-100k-20261105-s42:full8_query4:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/decision.md",
+    "facts": {
+      "ci_meV": [
+        0.5336329115629197,
+        2.4091568353176114
+      ],
+      "effect_meV": 1.4934224462509156,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/closure_v1/measured_pcqm-gptrans-query-readout-ad-100k-20261105-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

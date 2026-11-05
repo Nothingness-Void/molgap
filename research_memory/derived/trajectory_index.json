@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c09fe64c3d12a5f3e7c5d72de55e3832f5534e8a06052727aae34bfbf1718d80",
+  "source_digest": "05dc10df9793a9e15680dc6325b0bbd109fceedba78dd5d3f1c30985eef57d48",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -246,13 +246,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/decision.md",
       "family_id": "pcqm-gptrans-query-readout-ad-100k-20261105",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full12/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full12/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full12"
     },
@@ -260,13 +262,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/decision.md",
       "family_id": "pcqm-gptrans-query-readout-ad-100k-20261105",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full8_query4/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_query_readout_ad_100k_20261105/runs/pcqm-gptrans-query-readout-ad-100k-20261105-s42/prospective/full8_query4/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-ad-100k-20261105-s42-full8_query4"
     },
@@ -274,13 +278,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/decision.md",
       "family_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6"
     },
@@ -288,13 +294,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/decision.md",
       "family_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
     },

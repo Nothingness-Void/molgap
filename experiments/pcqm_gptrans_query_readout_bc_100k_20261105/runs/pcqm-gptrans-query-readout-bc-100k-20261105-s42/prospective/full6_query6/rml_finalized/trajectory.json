@@ -1,0 +1,129 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-query-readout-bc-100k-20261105-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6-planned",
+        "cost-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6-0",
+        "cost-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/full6_query6/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-query-readout-bc-100k-20261105-s42:full6_query6:downstream"
+      ],
+      "source_commit": "b886a814ad4931a36a70a06c9e92ebbd71674700",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/strict_qualification/2b7467b0fbd1f2aae518/full6_query6/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/decision.md",
+    "facts": {
+      "ci_meV": [
+        -5.312516337752342,
+        -3.196582906603813
+      ],
+      "effect_meV": -4.2062116050720215,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/closure_v1/measured_pcqm-gptrans-query-readout-bc-100k-20261105-s42.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/rml_decision_snapshots/cb2915c635a8d83f760f138d3254c5d7cede2a3d6d41b86f0b0fb1191850c622.json",
+    "snapshot_sha256": "cb2915c635a8d83f760f138d3254c5d7cede2a3d6d41b86f0b0fb1191850c622",
+    "state_timestamp": "2026-11-05T09:25:19.684601+00:00"
+  },
+  "family_id": "pcqm-gptrans-query-readout-bc-100k-20261105",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Later all-atom propagation is necessary",
+      "Simple truncation is sufficient",
+      "Dynamic relation queries recover useful computation"
+    ],
+    "changed_mechanism": "propagation-depth-and-dynamic-molecular-query-readout",
+    "cheapest_falsifier": "Same-job paired100K complete60 epochs; independent truncation pair separates removed propagation from readout value.",
+    "decision_changed_if_negative": "Retain truthful quality/cost evidence; no automatic successor, baseline substitution or scale-up.",
+    "decision_changed_if_positive": "Establish C-B readout value only for >=3meV improvement with upper paired95%CI<0; no cross-slot strict causal or promotion claim.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6",
+    "observed_deficiency": "The final GPTrans head reads only the molecular node and self pair; the value of continuing all-atom propagation versus differentiable query readout is unmeasured.",
+    "related_closed_family_ids": [
+      "gptrans-pair-memory-replay",
+      "gptrans-frozen-readout"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Do six dynamic relation-query layers recover accuracy beyond six propagation layers and the original head?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6-2b7467b0fbd1f2aae518",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6_query6/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/generated/593fb52248b90de12cad469ede676901c758cdf15dbf4939890fb95347d71bdc/full6_query6/recipe.json",
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/data_declaration.json",
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "full6_query6",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-query-readout-bc-100k-20261105-s42",
+      "reference_arm_id": "full6",
+      "reference_trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_query_readout_bc_100k_20261105/runs/pcqm-gptrans-query-readout-bc-100k-20261105-s42/prospective/full6/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "01b4efb953951b86cf8ddb77fcada441fa52d6fb4f54b05dad4365736a16cb1e"
+    },
+    "source_commit": "b886a814ad4931a36a70a06c9e92ebbd71674700",
+    "source_config_identity": "d5cfa803af44b693025c230d28c60520b4b9b6631b54112bfc590ca308108124"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-query-readout-bc-100k-20261105-s42-full6_query6"
+}

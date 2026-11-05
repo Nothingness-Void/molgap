@@ -47,6 +47,22 @@ Reproduction from this worktree with the primary project interpreter:
 & 'D:/文档/molgap/.venv/Scripts/python.exe' -c "import sys,runpy; sys.path.insert(0,r'D:/molgap-worktrees/gptrans-query-readout-100k-20261105/src'); sys.argv=['check_model.py','--output','D:/molgap-artifacts/reviews/query-readout-local-check-20261105.json']; runpy.run_path(r'experiments/pcqm_gptrans_query_readout_100k_20261105/check_model.py',run_name='__main__')"
 ```
 
-No persistent monitoring or local queue trigger is configured. Each remote slot
-must retain its independently retrievable strict replay artifacts through the
-existing output manifest. Retrieval will request only those required files.
+## Terminal reconciliation — 2026-11-06
+
+Both version1 kernels completed all60 passes. The existing strict finalizer
+closed four trajectories with VERIFIED native qualification, VERIFIED replay,
+no exclusions, and STRICT_CAUSAL candidate comparisons within each notebook.
+The [AD decision](../pcqm_gptrans_query_readout_ad_100k_20261105/decision.md)
+rejects quality non-inferiority; the
+[BC decision](../pcqm_gptrans_query_readout_bc_100k_20261105/decision.md)
+accepts useful query-readout computation against truncation. Neither adopts a
+model or releases500K. The accepted full12 recommendation remains unchanged.
+Paired curves, measured process-cost scopes and limitations remain with the
+two attribution files beside their decisions.
+
+Retrieval used only receipt-version-pinned manifests and strict dependencies,
+not all outputs. Canonical trace per-pass wall fields are null, so mature-pass
+timing remains unmeasured; that observed artifact gap was reported to the
+infrastructure chat without modifying shared code. No persistent monitoring,
+queue trigger or successor was created. Linked positive/negative results remain
+on this owner branch pending an adoption/archive disposition.
