@@ -13,7 +13,9 @@ codex/exp/k1-muon-100k-20261106`. The canonical100K pair at commit5039fa0c is
 strictly qualified, two complete replay entries, comparison STRICT_CAUSAL:
 AdamW0.141294460821, Muon0.132520667662eV; improvement8.773793meV,
 paired95%interval7.861417-9.708100meV in the improvement direction.
-Evidence remains on its owner, not copied into this branch:
+The accepted canonical records are imported byte-for-byte from the100K owner
+62702224 for the prospective planner's local evidence registry; no historical
+implementation is merged and the original source/receipt/hash authority remains:
 https://github.com/Nothingness-Void/molgap/blob/5039fa0c/experiments/pcqm_k1_muon_100k_20261106/decision.md
 
 The gain narrows from28.113meV at100K pass10 to8.774 at40, with8.487meV

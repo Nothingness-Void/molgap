@@ -231,6 +231,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-muon-100k-20261106-s42-adamw:A001",
+      "target": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-muon-100k-20261106-s42-muon:A001",
+      "target": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/muon/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms:A001",
       "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/post_node_rms/recipe.json",
       "type": "action_produced_evidence"
@@ -2058,6 +2068,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s44-init_s44",
       "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "target": "T-pcqm-k1-muon-100k-20261106-s42-adamw",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline",
+      "target": "T-pcqm-k1-muon-100k-20261106-s42-muon",
       "type": "prior_evidence"
     },
     {
@@ -4083,6 +4103,14 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "type": "evidence"
     },
@@ -4792,6 +4820,14 @@
     },
     {
       "id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-100k-20261106-s42-adamw",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-100k-20261106-s42-muon",
       "type": "trajectory"
     },
     {

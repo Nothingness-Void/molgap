@@ -1,0 +1,53 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-f180664c860fd8851b82c49fca493e97f0a9aa8d042e5c7b75b8e34049316b32",
+  "finalized_at": "2026-11-06T04:51:41.992175+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_muon_100k_20261106/closure_v1/closure_facts_adamw.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
+    "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json": "ac35a20cbdf3b6c9e9117fc1ac3ebdcaabf49c649ff6a82533636d9fc55bdeb6",
+    "experiments/pcqm_k1_muon_100k_20261106/decision.md": "28c045316459bad8d3cb6fbbf4ff71c4a77d3b535f888b0559a9ec02def86406",
+    "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/authority.json": "ec60a2c29fff502c92c51eaace507f5282bed13a4cbbb81a4d3524b24057485b",
+    "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/1fd0d7c7b3001ff2/acceptance.json": "dcc24fbfc94e4d386e7c9b4a0023942ec2b3c81636be96cd69d4f9364adcd84d",
+    "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/1fd0d7c7b3001ff2/observed.json": "76a50116846f3db755c49948555f9c0098f53be6b7ac60bfb11652d639fc8d12",
+    "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/strict_qualification/f4005a7e77752152c375/adamw/reference_bundle.json": "538dece57fc8ea5df498f7750c9036df1904432b33023f6c67050411b961cf25",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/adamw/allocation_ledger.json": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "ba96ac558d5675e95c7ecf2132d587e6d91395e812c43e2ba20c80c0538901f5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json": "80f77a0ef63dfd5b85c004ac1c3f7f839f1b0cc4b760427f6c3627623c3ee743",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json.context.json": "2900926bcdc5904e7190d7bc0c9c6e7ea9a0abeaff25e3056a3cd564019fd2db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/data_open_provenance.json": "32604958d60752bc3093292eb2e334d12f5595c4f034ecf365fe19f4cc465305",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/development_predictions.pt": "83e23d92b0a81f03a7a34940c485d9b9fa24e73dfa4d6a8f6d4386583914d3ae",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/last_checkpoint.pt": "095cd6ae5ded09ddabfd2b3c5b709c63bdcfbd622b957a9af5e74217f3e58c24",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/output_manifest.json": "be0c7f5863b225912c08a4b0467295878877e39bcaf13f6a27a874c906f87108",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/selected_model.pt": "812731dded24aecc768e3d94236c0c5453206b315edbcf111bcf1eff5af69c96",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/training_contract.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-100k-20261106-s42/v1/reports/diagnostic_3783bbb3ca8ead538f96ff212a58b3e38dfff6142dc4995ab3562762a5d55b88.json": "45a8ff74d4e584e2638445bec42229b32c6b30991b190f0a116243b74adb9faf"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/trajectory.json",
+  "prospective_sha256": "7314d8e4173699959edf572c8d14d8733c118b7390c2ffcaad065b9c0e657eae",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw-0.json": "fcc33ca9f97e8ab80b2eb1e7a243853c150aa64e57994cf6702ed1410ef03b8d",
+    "costs/cost-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw-allocation-0.json": "40a94f19252f9a14da28395a325d98b5cf05ff2db740b3c4d1e1715b09ab2d2f",
+    "roles/role-pcqm-k1-muon-100k-20261106-s42-adamw-development-labels_read.json": "07732fd7739d9558a8f13b19c685aa09da54a274fde43b3e6bab6a7bf83d7974",
+    "roles/role-pcqm-k1-muon-100k-20261106-s42-adamw-development-metric_computed.json": "02dd8a6aaa17ab7b51e712df18a0f29ad75026df6141454f7fad717e1869d6b9",
+    "roles/role-pcqm-k1-muon-100k-20261106-s42-adamw-development-prediction_input.json": "ee39b73809afc249612cb9bdfb409caeabc3f3bd7c0a51eb39cc54d3adb10e32",
+    "roles/role-pcqm-k1-muon-100k-20261106-s42-adamw-development-selection_used.json": "fe3aba31386cb3bad43287390b7a1c1f43bc03d11fd1be84c1d4f2e522e9d037",
+    "roles/role-pcqm-k1-muon-100k-20261106-s42-adamw-train-training_membership.json": "15df61ce8c9716ce845a939208439b90ef75fb06a0a664035a931e5c080e5ebc",
+    "terminal_input.json": "fd6f876d51325acd234d0cc3ad002e74523ad4f459aa95e957a5b39b03be8d3f",
+    "trace.json": "80f77a0ef63dfd5b85c004ac1c3f7f839f1b0cc4b760427f6c3627623c3ee743",
+    "trace_manifest.json": "9bcfbcf63ef26300585dca4ed073269a0def2ea51b075993d65d800460068b77",
+    "trajectory.json": "4b2ccb98e02711ec4e86198bcd924aa7801d68ca6e04206ae268cc945983fcb7",
+    "v5_evidence.json": "6f7a66e000eb383a63e436d8ae84f24ea8698f84efb8685101cd44a39b9e494e"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "f180664c860fd8851b82c49fca493e97f0a9aa8d042e5c7b75b8e34049316b32",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+}
