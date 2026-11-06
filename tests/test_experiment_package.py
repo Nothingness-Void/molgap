@@ -161,6 +161,20 @@ def test_invalid_paths_rejected(repo, payload, tmp_path, names):
         build_experiment_source_package(ExperimentSpec(payload), repo, names, tmp_path / "bad")
 
 
+def test_qualified_reference_cost_metadata_packages_but_lookalikes_do_not(repo, payload, tmp_path):
+    costs = "experiments/reference/runs/run/prospective/strict_qualification/identity/arm/cost_records.json"
+    (repo / costs).parent.mkdir(parents=True)
+    (repo / costs).write_bytes(b"[]")
+    git(repo, "add", costs)
+    git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Retained reference cost metadata")
+    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, [costs], tmp_path / "ok")
+    assert manifest["relative_allowlist"] == [costs]
+    for forbidden in (costs.replace("arm/", "credentials/"), costs.replace("arm/", "cost_records/"),
+                      costs.replace(".json", ".pt")):
+        with pytest.raises(ValueError, match="reserved or sensitive"):
+            build_experiment_source_package(ExperimentSpec(payload), repo, [forbidden], tmp_path / "bad-cost")
+
+
 @pytest.mark.parametrize("state", ["untracked", "dirty", "staged"])
 def test_uncommitted_source_rejected(repo, payload, tmp_path, state):
     name = "new.py" if state == "untracked" else "src/example.py"
