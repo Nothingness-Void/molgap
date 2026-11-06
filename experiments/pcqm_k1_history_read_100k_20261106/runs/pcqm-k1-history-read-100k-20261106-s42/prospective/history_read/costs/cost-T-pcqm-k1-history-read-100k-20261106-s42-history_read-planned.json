@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-history-read-100k-20261106-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-history-read-100k-20261106-s42-history_read-planned",
+  "evidence_ref": "experiments/pcqm_k1_history_read_100k_20261106/generated/11541c790c147b1cf791241034dbf7002933cb5b4ffaa1f11d71f0e0cba80a2f/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-history-read-100k-20261106-s42:history_read:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+}
