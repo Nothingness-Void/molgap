@@ -4,7 +4,7 @@
   "logical_run_id": "pcqm-k1-read-calibration-100k-20261107-s42",
   "attempt_id": "v1",
   "machine_profile": "D:/molgap-machine-profile.json",
-  "timestamp": "2026-11-06T17:38:23.427861+00:00",
+  "timestamp": "2026-11-07T02:38:23.427861+09:00",
   "question": {
     "policy_id": "pcqm-k1-read-calibration-100k-20261107",
     "action": "RUN_PAIRED_100K",
@@ -81,6 +81,8 @@
     {
       "arm_id": "current_read",
       "model": {
+        "family": "neural_atom_k1",
+        "version": "3",
         "addons": [
           "k1_current_read"
         ]
