@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/rnc/terminal_staging/v1/2b6ed897eb477853/acceptance.json",
+      "sha256": "ac501786d9ae39cbf431922d34b09edb7e13b51112a726e95e55e02014fe6628"
+    },
+    "checkpoint": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/rnc/selected_model.pt",
+      "sha256": "06301f3ad431f628a11bb227ba6cf719393ff61b788b9e86e5f663f54778046e"
+    },
+    "cost_records": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/cost_records.json",
+      "sha256": "31c78f2f80720326da90b8613b02d5d44e977420dcd5a9eb3bd644c7f7b9a8ad"
+    },
+    "decision": {
+      "ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+      "sha256": "3ff11215ef83f3ba2f629d9e281f31910fe5fe553bb68fa46bad912038504aee"
+    },
+    "paired_analysis": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/paired_analysis.json",
+      "sha256": "a089ac3b97718cec5fba4401e09ae39b2cd36fd8119f96d4027b9c143da7ffbe"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/prediction_manifest.json",
+      "sha256": "06b406cca56d0e09d0272727632e38362d7c31a2991482f2bdd8d876f7ac5991"
+    },
+    "role_history": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/role_history.json",
+      "sha256": "d7198ed252418588c050aac576aa73d4fa6896d2077984b9ad2e14c27d3251d8"
+    },
+    "row_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/rnc/runtime_certificate.json",
+      "sha256": "a73c6afa35678a89060af380758669fe058dd457041b01f5b6e559bb16176807"
+    },
+    "source_config": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/rnc/training_contract.json",
+      "sha256": "eb641871891e9c4acb65a60e7ecf81a68ad579b47343576ae42b48e540e4f756"
+    },
+    "target_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/rnc/bound_trace_manifest.json",
+      "sha256": "8c245afb0797dc1e5bf92783d13346ffe535d8454984529bcb660b16f98ba3bc"
+    }
+  },
+  "candidate_id": "ev-terminal-T-k1-rank-n-contrast-100k-s42-rnc",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "loss_identity"
+  ],
+  "experiment_purpose": "training_objective_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "cross-molecule-gap-distance-embedding-rank-contrast",
+  "matched_fields": {
+    "architecture_config_identity": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d",
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "optimizer_fused": false,
+    "optimizer_identity": "f92a8d84871bb559ac9e0b9fd007b2145e6aeb298240ffe6f0362bb48dd76e8c",
+    "optimizer_mode": "native-adamw",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "f16834ab64d4ce9f76a385cfb5e0dfda2036efb21224a7576097dc6e3d0c5713",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "loss_identity": {
+      "candidate": "8c13f82188b99c0796418a1c0b7a0a9afa2b41642a541f6c3589a95d516f41c5",
+      "reference": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/acceptance.json",
+      "sha256": "0dfac7ff8e753868e4242ba6b65bdaa016a53953073617328455b3184d4e2c04"
+    },
+    "checkpoint": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/reference/selected_model.pt",
+      "sha256": "cd10cf4b8d3d16db9613efc2ce51ad4f089dbe82bced2d702ccaf4b93403fc3d"
+    },
+    "cost_records": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/cost_records.json",
+      "sha256": "74906d1e18ca283b6915d3525bd4333e7f708d39091eece2e0f5b97c736f9e75"
+    },
+    "decision": {
+      "ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+      "sha256": "3ff11215ef83f3ba2f629d9e281f31910fe5fe553bb68fa46bad912038504aee"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/prediction_manifest.json",
+      "sha256": "42f4277e27189b318c67f8c92b037e142e5e9c2c80532ec0fa93012f6ab82b7a"
+    },
+    "role_history": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/role_history.json",
+      "sha256": "6b6b2fcf0813182fece7364debf1e6a0373d54749a3594484224e8abf6bfe15a"
+    },
+    "row_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/reference/runtime_certificate.json",
+      "sha256": "1b4e8f55a7a3df07008fcbcc5239ea44189b80f6496b250ccd7c325ddbf41777"
+    },
+    "source_config": {
+      "ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/reference/training_contract.json",
+      "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+    },
+    "target_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/strict_qualification/362203bc2063477e871b/reference/bound_trace_manifest.json",
+      "sha256": "98d5a71c1d1fb9bdc043c448b53fbe39ded2a953686024ff67450794934b43f8"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-k1-rank-n-contrast-100k-s42-reference-362203bc2063477e871b",
+  "reference_bundle_sha256": "fa3de4689f3cdece836393c44afd95bbf5b5d08e60025d4fc9eec45f1e6172cc",
+  "reference_id": "ev-terminal-T-k1-rank-n-contrast-100k-s42-reference",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}

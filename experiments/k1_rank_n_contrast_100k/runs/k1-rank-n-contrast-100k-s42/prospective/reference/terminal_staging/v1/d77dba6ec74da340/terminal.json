@@ -1,10 +1,12 @@
 {
-  "acceptance_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/acceptance.json",
+  "acceptance_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/acceptance.json",
   "action_id": "A001",
   "artifact_hashes": {
+    "experiments/k1_rank_n_contrast_100k/closure_v1/closure_facts_reference.json": "a830aacc3643af8b04454f604ff377e756b0571739b91ce053b7d0226de58ab4",
     "experiments/k1_rank_n_contrast_100k/generated/d3cf93a491aafb2bb2f69e2cc8b93f607db52b9369603a46c4e2c5019ae97c70/reference/recipe.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
-    "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/acceptance.json": "8d54d51a5ebfd3e4c5a598365a03137efc8bcbd2b001bebeacd9c86ad33fd7d2",
-    "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/observed.json": "4032cda49f2e949dfea4cd09b3063cc6eed318bacf5912b25db75f952124129e",
+    "experiments/k1_rank_n_contrast_100k/results/completed/decision.md": "3ff11215ef83f3ba2f629d9e281f31910fe5fe553bb68fa46bad912038504aee",
+    "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/acceptance.json": "0dfac7ff8e753868e4242ba6b65bdaa016a53953073617328455b3184d4e2c04",
+    "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json": "7eb6e9edaf346a8862d5f54b5697923c92d954272114921409c8f566558aa20c",
     "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/role_audit-reference-7f89a0baac54d88a.json": "5e80646e423558f109db5b5753903d00b49969ee925a3eb4da062be230322d6a",
     "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/allocation_ledger.json": "901207b59e2633c015b554bd98db4feca4125c48db3a716debb6c6f2f6b8513f",
     "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/execution_retention.json": "73b4a08b557f25f961a0068638c23f2d382dd5342cd2bf87deab0d5e9bf44af2",
@@ -22,16 +24,14 @@
     "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/reference/training_contract.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
     "external:///E:/MolGap/artifacts/runs/k1-rank-n-contrast-100k-s42/v1/reports/diagnostic_942764953467315046bcbe8a36a878f16c9ef8f24aa2361284219a80a9bf44cd.json": "1347634558e2dc335efee01cbc732c4a6f0de978295a4891d04caf21313ca7ae"
   },
-  "closure_blockers": [
-    "explicit_outcome_and_decision_ref_required"
-  ],
+  "closure_blockers": [],
   "costs": [
     {
       "action_id": "A001",
       "attempt_id": "k1-rank-n-contrast-100k-s42-v1",
       "category": "training",
       "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-reference-0",
-      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/observed.json",
+      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
       "hardware": "Tesla T4",
       "measurement": {
         "cpu_hours": {
@@ -61,7 +61,7 @@
       "attempt_id": "k1-rank-n-contrast-100k-s42-v1",
       "category": "other",
       "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-reference-allocation-0",
-      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/observed.json",
+      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
       "hardware": "Tesla T4",
       "measurement": {
         "cpu_hours": {
@@ -88,10 +88,18 @@
     }
   ],
   "decision": {
-    "decision_ref": null,
-    "final": false,
+    "decision_ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
     "next_allowed_actions": [],
-    "outcome": "ACTIVE",
+    "outcome": "CLOSED",
     "reopen_conditions": []
   },
   "evidence": {
@@ -187,7 +195,7 @@
     ],
     "authority": {
       "pointers": [
-        "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/observed.json"
+        "experiments/k1_rank_n_contrast_100k/results/completed/decision.md"
       ]
     },
     "contract": "MOLGAP-COMMON-V5-FINAL",
@@ -199,7 +207,7 @@
       "missing_reason": null,
       "selected_optimizer_step": 31240,
       "selected_weights": "live",
-      "source_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/observed.json",
+      "source_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
       "unit": "eV"
     },
     "migration": {
@@ -215,7 +223,7 @@
       "comparison_status": "NOT_EVALUATED",
       "execution_status": "complete",
       "full_handoff_status": "NOT_EVALUATED",
-      "scientific_status": "NOT_EVALUATED",
+      "scientific_status": "CLOSED",
       "transfer_status": "NOT_EVALUATED"
     },
     "role_use": {
@@ -228,9 +236,9 @@
     "scope": "terminal_output_inspection",
     "track": "B"
   },
-  "finalized_at": "2026-11-06T07:08:53.625287+00:00",
+  "finalized_at": "2026-11-06T07:57:16.195047+00:00",
   "format": "molgap-rml-terminal-package-v1",
-  "requested_outcome": null,
+  "requested_outcome": "CLOSED",
   "role_use": {
     "development": "consumed",
     "official_validation": "untouched",
@@ -393,7 +401,7 @@
     "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
     "schema": "molgap-trace-manifest-v1",
     "selection_semantics": "best_development_metric",
-    "terminal_evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/0f6951bb25daa79c/terminal.json",
+    "terminal_evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/terminal.json",
     "trace_artifact_ref": "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/reference/canonical_trace.json",
     "trace_artifact_sha256": "39bec8d0f932c11b533660ff039a8318abfc7a564a66bbdf718a1c731a935284",
     "trace_fields": {

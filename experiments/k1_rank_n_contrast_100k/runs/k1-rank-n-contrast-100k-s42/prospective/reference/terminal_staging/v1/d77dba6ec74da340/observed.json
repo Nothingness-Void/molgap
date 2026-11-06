@@ -3,14 +3,14 @@
     "artifact_refs": [
       "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/allocation_ledger.json",
       "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/execution_retention.json",
-      "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/rnc/allocation_ledger.json"
+      "external:///E:/MolGap/artifacts/retrieved/k1-rank-n-contrast-100k-s42/v1/version1/_execution/reference/allocation_ledger.json"
     ],
     "cumulative_costs_evaluated": false,
     "devices": [
       {
         "allocated_seconds": 6619.264981167,
-        "arm_id": "rnc",
-        "device": 1,
+        "arm_id": "reference",
+        "device": 0,
         "hardware": "Tesla T4"
       }
     ],
@@ -24,8 +24,8 @@
   },
   "context": {
     "account": "nvoid912",
-    "arm_id": "rnc",
-    "arm_identity": "abeb7db392741573235ef92ed79ea85793d9756e3544b133794b08a98b3f19e6",
+    "arm_id": "reference",
+    "arm_identity": "53175cc2b3e8bc89f78d77c28dca06af22a59521b3aa5e8dc817db18ae64cb98",
     "experiment_id": "k1_rank_n_contrast_100k",
     "family_name": "neural_atom_k1",
     "family_version": "3",
@@ -37,15 +37,15 @@
     "source_archive_sha256": "6bae9f353138f98d5e1e6933e12247da1c7684cbaf0f08a28c6e90be1fb162e5",
     "source_commit": "042ad3eed67e7aae30071765e86c184b4da5d160",
     "spec_identity": "011f6522390b18b76c05ed5a042620f97271e2e927aeb6e20a8a322a0c259b66",
-    "training_recipe_sha256": "eb641871891e9c4acb65a60e7ecf81a68ad579b47343576ae42b48e540e4f756"
+    "training_recipe_sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
   },
   "costs": [
     {
       "action_id": "A001",
       "attempt_id": "k1-rank-n-contrast-100k-s42-v1",
       "category": "training",
-      "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-rnc-0",
-      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/rnc/terminal_staging/v1/f19dc7cfcb7f1712/observed.json",
+      "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-reference-0",
+      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
       "hardware": "Tesla T4",
       "measurement": {
         "cpu_hours": {
@@ -62,20 +62,20 @@
         },
         "wall_hours": {
           "status": "measured",
-          "value": 1.7440471804997222
+          "value": 1.728440608119722
         }
       },
       "platform": "kaggle",
-      "run_id": "k1-rank-n-contrast-100k-s42:rnc:downstream",
+      "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
       "schema": "molgap-cost-event-v1",
-      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-rnc"
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
     },
     {
       "action_id": "A001",
       "attempt_id": "k1-rank-n-contrast-100k-s42-v1",
       "category": "other",
-      "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-rnc-allocation-0",
-      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/rnc/terminal_staging/v1/f19dc7cfcb7f1712/observed.json",
+      "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-reference-allocation-0",
+      "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
       "hardware": "Tesla T4",
       "measurement": {
         "cpu_hours": {
@@ -96,9 +96,9 @@
         }
       },
       "platform": "kaggle",
-      "run_id": "k1-rank-n-contrast-100k-s42:rnc:downstream",
+      "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
       "schema": "molgap-cost-event-v1",
-      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-rnc"
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
     }
   ],
   "diagnostic_report": {
@@ -111,8 +111,8 @@
     "blockers": [],
     "context": {
       "account": "nvoid912",
-      "arm_id": "rnc",
-      "arm_identity": "abeb7db392741573235ef92ed79ea85793d9756e3544b133794b08a98b3f19e6",
+      "arm_id": "reference",
+      "arm_identity": "53175cc2b3e8bc89f78d77c28dca06af22a59521b3aa5e8dc817db18ae64cb98",
       "experiment_id": "k1_rank_n_contrast_100k",
       "family_name": "neural_atom_k1",
       "family_version": "3",
@@ -124,49 +124,49 @@
       "source_archive_sha256": "6bae9f353138f98d5e1e6933e12247da1c7684cbaf0f08a28c6e90be1fb162e5",
       "source_commit": "042ad3eed67e7aae30071765e86c184b4da5d160",
       "spec_identity": "011f6522390b18b76c05ed5a042620f97271e2e927aeb6e20a8a322a0c259b66",
-      "training_recipe_sha256": "eb641871891e9c4acb65a60e7ecf81a68ad579b47343576ae42b48e540e4f756"
+      "training_recipe_sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
     },
     "observed": {
       "artifacts": {
         "contract": {
           "path": "training_contract.json",
-          "sha256": "eb641871891e9c4acb65a60e7ecf81a68ad579b47343576ae42b48e540e4f756"
+          "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
         },
         "data_open": {
           "path": "data_open_provenance.json",
-          "sha256": "4237cac6607e175be0f92ab2d3291c2a308a120ece1afc370ebdea130546b0e2"
+          "sha256": "419d005536f9c98158b7560e25f0b0ce5b9e858002cc584a5098048c16d1dbb9"
         },
         "predictions": {
           "path": "development_predictions.pt",
-          "sha256": "e6c6ccadf96fa0f7cc0188bac554232e65020f63f39a8ef77ad5158bc6ff5b11"
+          "sha256": "498c1cb51a6297c1cc43e9164decded0b8e8fa1cad32ac15e709c56d9c28bdce"
         },
         "resume": {
           "path": "last_checkpoint.pt",
-          "sha256": "2d326c9bac79c11d79f6e135dda7c4ff5451dc25a7955b6e3769aae06d7123ea"
+          "sha256": "74cdb985449c399c6a834eecc8b5acd3127c0622b91b8c582476b510cc57d552"
         },
         "role_audit": {
           "path": "role_audit.json",
-          "sha256": "65fa65431f6d628c72d758fcf4adbef45f3ecf0c331997a0820adf4bc1a93967"
+          "sha256": "298207bb7e7852ecd85e2aa543fb644c4815ee93b3d1bd3a85f22ec5d3d373e3"
         },
         "runtime_certificate": {
           "path": "runtime_certificate.json",
-          "sha256": "a73c6afa35678a89060af380758669fe058dd457041b01f5b6e559bb16176807"
+          "sha256": "1b4e8f55a7a3df07008fcbcc5239ea44189b80f6496b250ccd7c325ddbf41777"
         },
         "runtime_provenance": {
           "path": "runtime_provenance.json",
-          "sha256": "c49aa4e833601e0748e7037ad24ab2897fe72d2437e43d14bc970e807fa5d722"
+          "sha256": "f0b9efb9535d24868514c61729ac95d720e59af03c6934b76bc42029c8c7c399"
         },
         "selected_model": {
           "path": "selected_model.pt",
-          "sha256": "06301f3ad431f628a11bb227ba6cf719393ff61b788b9e86e5f663f54778046e"
+          "sha256": "cd10cf4b8d3d16db9613efc2ce51ad4f089dbe82bced2d702ccaf4b93403fc3d"
         },
         "trace": {
           "path": "canonical_trace.json",
-          "sha256": "bcaf3018239d3a49fab43aaaf3536a37ee1b62fe5806e492cfd50938de699139"
+          "sha256": "39bec8d0f932c11b533660ff039a8318abfc7a564a66bbdf718a1c731a935284"
         },
         "trace_context": {
           "path": "canonical_trace.json.context.json",
-          "sha256": "8f4b76ac73b3426c020bde1e8538ff2b28a899f9f2fcdcb9a190fa78a281e534"
+          "sha256": "0e7e93a542da03debd10bb690db8dc3b573a4d87bf8546156477dcf49f41ac30"
         }
       },
       "costs": [
@@ -177,7 +177,7 @@
           "semantics": "process_wall",
           "status": "measured",
           "unit": "seconds",
-          "value": 6278.569849799
+          "value": 6222.386189231
         },
         {
           "hardware": "Tesla T4",
@@ -189,7 +189,7 @@
           "value": null
         }
       ],
-      "development_mae_eV": 0.140236075887084,
+      "development_mae_eV": 0.1412944608205557,
       "producer_platform_version": null,
       "progress": {
         "completed_passes": 40,
@@ -208,9 +208,9 @@
           "test_dev": "untouched",
           "train": "consumed"
         },
-        "sha256": "65fa65431f6d628c72d758fcf4adbef45f3ecf0c331997a0820adf4bc1a93967"
+        "sha256": "298207bb7e7852ecd85e2aa543fb644c4815ee93b3d1bd3a85f22ec5d3d373e3"
       },
-      "selected_optimizer_step": 28897,
+      "selected_optimizer_step": 31240,
       "selected_weights": "live",
       "target_identity": {
         "acceptance_plan_sha256": "be6649d42ba70d2282c19fe01ee59fdfa33c26f1159bdd82b0bdaa3bf632157d",
@@ -239,7 +239,7 @@
       "semantics": "process_wall",
       "status": "measured",
       "unit": "seconds",
-      "value": 6278.569849799
+      "value": 6222.386189231
     },
     {
       "hardware": "Tesla T4",

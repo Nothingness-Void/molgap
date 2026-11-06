@@ -1,7 +1,5 @@
 {
-  "closure_blockers": [
-    "explicit_outcome_and_decision_ref_required"
-  ],
+  "closure_blockers": [],
   "evidence_id": "ev-terminal-T-k1-rank-n-contrast-100k-s42-reference",
   "mechanical_status": "MECHANICALLY_VERIFIED",
   "outcome": {
@@ -10,7 +8,7 @@
     "comparison_status": "NOT_EVALUATED",
     "execution_status": "complete",
     "full_handoff_status": "NOT_EVALUATED",
-    "scientific_status": "NOT_EVALUATED",
+    "scientific_status": "CLOSED",
     "transfer_status": "NOT_EVALUATED"
   },
   "role_use": {
@@ -22,10 +20,18 @@
   },
   "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
   "trajectory_decision": {
-    "decision_ref": null,
-    "final": false,
+    "decision_ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": null
+    },
+    "final": true,
     "next_allowed_actions": [],
-    "outcome": "ACTIVE",
+    "outcome": "CLOSED",
     "reopen_conditions": []
   }
 }
