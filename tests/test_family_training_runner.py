@@ -187,7 +187,9 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy and "optimizer" not in legacy
     assert FamilyRecipe.from_dict(legacy).identity == canonical_fingerprint(legacy)
     if family == "neural_atom_k1" and not development:
-        recipe = replace(recipe, optimizer="k1-muon-adamw-fp32-v1")
+        from molgap.experiment_execution import build_addon_declaration
+        addon = build_addon_declaration((family, "3"), "k1_pair_token", repo_root=Path(__file__).resolve().parents[1])
+        recipe = replace(recipe, mode="composed", addons=(addon,), optimizer="k1-muon-adamw-fp32-v1")
     if family == "gptrans_t" and development:
         recipe = replace(recipe, no_decay_modules=("LayerNorm",), auxiliary_ema_decays=(.9999,))
     if family == "neural_atom_k1" and development:
@@ -218,6 +220,8 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     path.write_bytes(path.read_bytes() + b"\r\n")
     recipe_source_sha = normalized_source_sha256(path)
     arm = _arm(family, INTERFACES[family][1], "reference", recipe_sha256=recipe_source_sha, state_sha256=digest)
+    arm["addons"] = list(recipe.addons)
+    arm["addon_semantics"] = "ordered" if recipe.addons else "baseline"
     bindings = family_arm_bindings(recipe)
     arm["base"] = bindings["base"]
     arm["training"].update({key: bindings[key] for key in ("sampler", "transform", "objective")})
