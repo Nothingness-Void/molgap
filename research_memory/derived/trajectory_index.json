@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7dd148c74c52b406858f5f86dda98a8aa98b9fd57022e4a8f2151444970a578e",
+  "source_digest": "8a765fdad77bab879dbe535c9551c15b707b7374e9151340ba84093d2dbabf3f",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -906,13 +906,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_soap_100k_20261106/decision.md",
       "family_id": "pcqm-k1-soap-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
     },
@@ -920,13 +922,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_soap_100k_20261106/decision.md",
       "family_id": "pcqm-k1-soap-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
     },

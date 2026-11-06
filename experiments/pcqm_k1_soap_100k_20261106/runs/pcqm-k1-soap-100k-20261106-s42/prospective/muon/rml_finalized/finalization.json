@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-78a282b465ce26e78bcb4fbcced6e637a912f98eaff73b09631548fc28abd7af",
+  "finalized_at": "2026-11-06T16:29:19.932624+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_soap_100k_20261106/decision.md": "7c251ee9c7f079bf4ce24a98fd5702d482587bf8d3e6d5d223beb897079b58a6",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json": "614d9a768e0021ea7aad882a3996f44042c6e0ba784dd158f67d583ef4b56168",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/muon/recipe.json": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/terminal_staging/v1/8e374a51d0436dd5/acceptance.json": "4c1dd51d371f262712b2540971abecceb62670f8b682d436101f895ce30acaa1",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/terminal_staging/v1/8e374a51d0436dd5/observed.json": "8bc16942a0ab2895b4ae7629f0d77dfa89bea3241aa195498507cdb85899b54b",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/muon/reference_bundle.json": "14d4f71dd0e08fc854eaee70110979693674bfd7044106da003264d47cf7155b",
+    "experiments/pcqm_k1_soap_100k_20261106/terminal_acceptance/role_audit/roles_muon.json": "cb3cf250b41bfce17bab452dd958ae722a0ceb104e363309af136d4fb8fd0368",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "61fd3186a03a7bcfdfbc83ec2d0c8c760139bb59cb01e47dab9780ac3f3fc961",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/muon/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/canonical_trace.json": "7b84f4906b07568a3331755523d7c88d9aee91fe5d6705375abf0a980bc8a03d",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/canonical_trace.json.context.json": "763227bda18ea03c0ba80df9f874a7eca772dff5ee95fcab0277d7b16103f2cd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/data_open_provenance.json": "e9a0b9cbbd3295e04fc86eca659f4d766761c340beb79bec015fccde3535bf32",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/development_predictions.pt": "1fa231f163d56ae2cd922316805a993dc16e404d9e56607f2a917d989fb798a7",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/last_checkpoint.pt": "b46eac05e36a278cbbef997ffd03f6f8e49f01cfd3a7e25eeeb6af4492fc88d8",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/output_manifest.json": "114959662060303d649932514cd1ff13724a65f3a140d2b38122478820a5af89",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/selected_model.pt": "ec77b4ed814676b35c60116fed7661dd84a44e9cd3be4f206fc7d995f1b97d68",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/muon/training_contract.json": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-soap-100k-20261106-s42/v1/reports/diagnostic_fdc1d7c421c016bdd1ec3dd8d2ba56be016b854b3cb2bb0300655b2bf5f3d489.json": "91fa3f9476efb3c4d963b57de4e710f42aed495f809e654669c589442571cc54"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/trajectory.json",
+  "prospective_sha256": "8c5a4adbaa6b48e5e0479a0ca9a2bd433bba48f904a78fb3c719d0ca8cfbb439",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon-0.json": "8c5e33ad1b6ad0f3b3cf04b00a469668771b12c264edc60f486fd8ec2e85963d",
+    "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon-allocation-0.json": "7f45392cd08d660eedd11fc792ed605390bf99a783c3a917c655464d6de0a2ee",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-muon-development-labels_read.json": "4bfb7202be834a024c3997a10c890fbbc253e3960b468358adb5e1b835f472c9",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-muon-development-metric_computed.json": "335c8e2b07e3a83066838e35a453b05940660f975e3376855ff1e2113f66ab87",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-muon-development-prediction_input.json": "eb1207105668c3141dfffb997ee3a6b11023b518750e22e0d450a9ed59d1510f",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-muon-development-selection_used.json": "183ebb758ebf91530def9bd6ce5a1e6952d623ca70e835042da42df37fdc5987",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-muon-train-training_membership.json": "4af00288216b78f5fe6981413c9283e39bbdd36e4f60804eec1788d29acc9310",
+    "terminal_input.json": "3ef0534acdd023e5003955d3d24b22f11fee7affabb19385b78317f357c2bac5",
+    "trace.json": "7b84f4906b07568a3331755523d7c88d9aee91fe5d6705375abf0a980bc8a03d",
+    "trace_manifest.json": "b89bdba97035d29170595410ad5c3ae1d41c900b681c4517cc71019f41e1b11c",
+    "trajectory.json": "6d38fc8d219ac76e328ec8d3b67d2f52e0ec269706fdcc28a895a4ac4dc3b02f",
+    "v5_evidence.json": "88e1504e411e9a3041412b660113e9a7be089dc936d440d71dfe7d42b5143160"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/muon/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "78a282b465ce26e78bcb4fbcced6e637a912f98eaff73b09631548fc28abd7af",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+}

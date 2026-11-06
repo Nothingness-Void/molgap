@@ -1,0 +1,53 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-7b49bf2459a51eb7ecc146d7ff14274776ccee59cc29340896d5134744dc5923",
+  "finalized_at": "2026-11-06T16:29:20.244890+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_soap_100k_20261106/decision.md": "7c251ee9c7f079bf4ce24a98fd5702d482587bf8d3e6d5d223beb897079b58a6",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json": "614d9a768e0021ea7aad882a3996f44042c6e0ba784dd158f67d583ef4b56168",
+    "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json": "0eda692d9199bdc2e95bc2524a001cf2887b96eb2030f74497e199cb4d9e5e85",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/acceptance.json": "e739450ebed68468079252b16fd188cde01f32965cbe342dcca3f7fed643c61b",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/terminal_staging/v1/1181bdcd34e2933f/observed.json": "db9826190862dee1ea974bd2e351b022dbc98628d7bda0f861bf55a96b5e4a0d",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/muon/reference_bundle.json": "14d4f71dd0e08fc854eaee70110979693674bfd7044106da003264d47cf7155b",
+    "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/strict_qualification/c5043d78ec499488c50b/soap/comparison_readiness.json": "4d2c715ff4f8a401edb152714251c7f6bd34dbfbde1cab02d0ec3759ac64e437",
+    "experiments/pcqm_k1_soap_100k_20261106/terminal_acceptance/role_audit/roles_soap.json": "14bd8a1c0d670f33705eaf5f2c25392d8f2706c869be326411c3c6dd582eb20c",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "61fd3186a03a7bcfdfbc83ec2d0c8c760139bb59cb01e47dab9780ac3f3fc961",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/_execution/soap/allocation_ledger.json": "765a8f4ddc42725a9c4862ae4a0028ecfd519b6888475a5f3486cee33cbfa46a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/canonical_trace.json": "372161d52bc35a3ef924c8aa5f856f241491348289bebf78d6a2dc6bfebb9243",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/canonical_trace.json.context.json": "3e41f4c05ccd385a06ccfdf4085cd6ac895f1b58d604728c88c5b6a4e9dea87e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/data_open_provenance.json": "fa0b2ca2d776b700a28303cb77fd78c0f3010e9911264482a16211e2ad33c0e1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/development_predictions.pt": "ce6569aafeac86cf6a1862089ffa8fe546c03f30ba07d176122fec130922df1a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/last_checkpoint.pt": "dfbb89e74f4e71a34c86b812b400ab2a422a0bb49397c38a23a5f4b50d2d88f2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/output_manifest.json": "aec0cfda3fc5dd26414c8b43758255d5134ef87944b5b06995b8623969769d13",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/selected_model.pt": "bad3f567ab64d5888e11ae0d4b1990b33bbec4424ed61b4e14e7f99b48086fd5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-soap-100k-20261106-s42/v1/version1/soap/training_contract.json": "0eda692d9199bdc2e95bc2524a001cf2887b96eb2030f74497e199cb4d9e5e85",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-soap-100k-20261106-s42/v1/reports/diagnostic_fdc1d7c421c016bdd1ec3dd8d2ba56be016b854b3cb2bb0300655b2bf5f3d489.json": "91fa3f9476efb3c4d963b57de4e710f42aed495f809e654669c589442571cc54"
+  },
+  "outcome": "POSITIVE_BELOW_GATE",
+  "prospective_ref": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/trajectory.json",
+  "prospective_sha256": "67a74ebfde856d1c656eb8c242835eb594066a28d6ab04503831eb77556f0829",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap-0.json": "e7a611a1c19459404c48715c51abc070d405e5a4fd4f300d885ca3f0a0bbd5f0",
+    "costs/cost-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap-allocation-0.json": "db9f2db1206f42b3503b39a0ba9cc4dc5a614f3c7d7a97cb439e37cf856a45a0",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-labels_read.json": "9ed0bb9f6695c5ba30485ec5238b6f6def4da6b5928fa1c72c1f439330b5582a",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-metric_computed.json": "c1a74708cdc324627cc23f8d4d2b35d8bbbc782746b3ddbf6028ec3cede0ceeb",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-prediction_input.json": "ad0377b14a70d6c8b20056dbe964371b8676dd9255ab336043630cc87b3cb886",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-development-selection_used.json": "83b2608294c55b055f8170c8b78cf36548cd38195a6b0f66c23e44f4bb54e923",
+    "roles/role-pcqm-k1-soap-100k-20261106-s42-soap-train-training_membership.json": "6936653f9b1a3742f65055fc6c585fc6a2c6a0bc2942701e3d2a11deea2a7d0e",
+    "terminal_input.json": "4a5b0dfb55807011089b6cc4c0328c3aac51be031e83b38732f4f58c6396222f",
+    "trace.json": "372161d52bc35a3ef924c8aa5f856f241491348289bebf78d6a2dc6bfebb9243",
+    "trace_manifest.json": "b6d6810c7561ac4f0c9abfb4e52408927a3bf37129b9f2449e16c9f050763569",
+    "trajectory.json": "e9ae490f57c75762e98cc34162eac580d63aeae14c675f2415b3c08e2e34bbcf",
+    "v5_evidence.json": "ea74e4f8dbdcd2e727ecc480c4e8764dc36fba42bbd90ae0abfb322e37b1389b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_soap_100k_20261106/runs/pcqm-k1-soap-100k-20261106-s42/prospective/soap/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "7b49bf2459a51eb7ecc146d7ff14274776ccee59cc29340896d5134744dc5923",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+}

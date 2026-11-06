@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 873,
+  "ambiguous_historical_role_record_count": 879,
   "coarse_historical_role_records": [
     {
       "evidence_id": "EV-pcqm-gptrans-resistance-100k-s42-20261020-bond_local-bootstrap-terminal",
@@ -1858,6 +1858,48 @@
     },
     {
       "evidence_id": "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -6113,7 +6155,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 689,
+  "explicit_role_event_count": 699,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -7520,6 +7562,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-wd5e2-100k-s42-wd5e2_i43-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -8445,6 +8543,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
       },
       {
         "access_kind": "training_membership",
@@ -11157,6 +11269,8 @@
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
       "ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
@@ -11347,6 +11461,8 @@
       "ev-terminal-T-pcqm-k1-sam-100k-s42-r2-sam",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
       "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "ev-terminal-T-pcqm-k1-soap-100k-20261106-s42-soap",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2",
       "ev-terminal-T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e3",
       "ev-terminal-T-pcqm-k1-wd5e2-100k-s42-wd5e2_i43",
@@ -12830,6 +12946,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
       },
       {
         "access_kind": "labels_read",
@@ -16135,6 +16307,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-pcqm-k1-wd5e2-100k-s42-wd5e2_i43-development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -17014,6 +17242,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-muon-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-pcqm-k1-soap-100k-20261106-s42-soap-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-soap"
       },
       {
         "access_kind": "training_membership",
