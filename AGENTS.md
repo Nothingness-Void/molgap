@@ -175,8 +175,11 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 - **Infrastructure budget:** `python platforms/local/infra_budget.py` compares
   `src/molgap`, `tests` and `docs/operations` size with
   [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json) and exits 1 when over.
-  No flow runs it; run it before an infrastructure commit. Raising a limit needs
-  user approval. Over a limit blocks that commit, never an experiment. One fact has one owner; bind a
+  No flow runs it; run it before an infrastructure commit. Requested bug fixes with
+  total net source growth of at most 20 lines are preapproved for measured source-line
+  limit adjustments; count the whole fix, not individual commits. Other increases need
+  explicit approval. This allowance excludes rewrites and unrequested features.
+  Over a limit blocks that commit, never an experiment. One fact has one owner; bind a
   hash only to an artifact something consumes. The new-experiment rule lives only in
   this bullet (no R-number label): a new experiment adds files under `experiments/<q>/`,
   one recipe/spec and, if it needs new model code, one self-contained addon module plus
