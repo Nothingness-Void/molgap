@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "cb296d45b734e85fad831a4a638e89a93acb07c151bea9862a43268602ac80c2",
+  "source_digest": "49fa357164c141f99a824ad6a78bac7bc9f9cbb1314a45771d0c2aba19767776",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -746,13 +746,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/decision.md",
       "family_id": "pcqm-k1-message-statistics-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_mean/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_mean/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean"
     },
@@ -760,13 +762,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/decision.md",
       "family_id": "pcqm-k1-message-statistics-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_std/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_std/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-message-statistics-100k-20261106-s42-message_std"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std"
     },

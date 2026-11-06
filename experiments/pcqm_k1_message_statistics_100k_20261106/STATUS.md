@@ -16,3 +16,5 @@ Both RML prospective records are published; derived index rebuilt once and check
 
 Luna observed scheduler running on2026-11-06 09:07:31-33 UTC; scope latest,
 observed version1 matches receipt version1; exit0 and zero files downloaded.
+
+2026-11-07 JST: both40-pass arms FINALIZED via strict shared closure. Native qualification/replay VERIFIED, exclusions empty; comparison STRICT_CAUSAL. Mean reference CLOSED, std POSITIVE_BELOW_GATE; see decision.md for attribution. No automatic dispersion scale-up or successor.

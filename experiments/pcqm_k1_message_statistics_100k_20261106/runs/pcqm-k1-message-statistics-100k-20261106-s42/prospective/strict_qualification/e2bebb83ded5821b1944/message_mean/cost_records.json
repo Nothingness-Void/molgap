@@ -1,0 +1,64 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-message-statistics-100k-20261106-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean-0",
+      "evidence_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_mean/terminal_staging/v1/c7f9aac8efc4d596/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.259749748035278
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-message-statistics-100k-20261106-s42:message_mean:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-message-statistics-100k-20261106-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_mean/terminal_staging/v1/c7f9aac8efc4d596/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.4332407806580556
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-message-statistics-100k-20261106-s42:message_mean:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean"
+    }
+  ]
+}
