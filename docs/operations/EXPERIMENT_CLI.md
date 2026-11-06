@@ -486,34 +486,31 @@ family recipe. `locations.json` maps every arm to existing `trajectory_id`,
 without terminal/RML writes. `--execute` delegates to the existing per-arm
 terminal pipeline; it does not set scientific acceptance or replay readiness.
 
-Use `accept-workflow` for completed outputs. For an all-incomplete failed,
-cancelled or interrupted pair, `build-terminal` writes the existing descriptor
-to `--output`; it never executes terminal closure or writes RML. It requires
-`--receipt`, `--package`, `--expected-package-identity`, `--locations`,
-`--output`, and exactly one of `--observations` or `--execution-state`.
+Use `accept-workflow` for completed outputs. A failed single-arm session can
+stage its existing terminal package without a final manifest or tensor download:
 
-Prefer `--execution-state` with the runtime's retained `pair_state.json`. It
-requires format `molgap-kaggle-two-phase-pair-v2`, the exact Spec identity,
-top-level `status: failed`, and every arm with a retained `training_started`,
-`terminal_status`, `exit_reason` and `worker_wall_seconds`. The runtime saves
-`training_started` before spawning each formal training worker. If training
-never started, progress is observed as zero; once it started, unretained epoch,
-step and sample counters stay unknown. The helper maps retained worker time and
-facts into the descriptor; it does not create scientific role, decision or
-acceptance records.
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- build-terminal --repo-root . --profile $profilePath --run-id $runId --attempt-id $attemptId --retrieved-root $retrieved --execution-state "$retrieved/execution_report.json" --outcome INCONCLUSIVE --decision-ref $decision --output $descriptor
+& $python platforms/local/run.py --profile $profilePath -- terminal --repo-root . --spec $frozenSpec --descriptor $descriptor --execute
+```
 
-With `--observations`, supply every arm as an object with required `status` and
-`exit_reason` (`failed`, `cancelled`, or `interrupted`) and optional observed
-`progress` (`epoch`, `step`, `samples`), `costs`, `artifacts` (`metrics`,
-`predictions`, `checkpoint`, `trace`), and `missing_evidence`. `locations.json`
-maps every arm to existing `trajectory_id`, `run_id`, `trajectory`, and
-`terminal`, with optional `trace`. Unknown counters/costs/artifacts remain
-missing. A pair state containing any completed or unknown arm fails closed;
-use the existing per-arm output inspection and terminal path so completed-arm
-evidence is retained. Descriptor schema and later path/evidence validation
-remain with [`experiment_terminal.py`](../../src/molgap/experiment_terminal.py).
+The first command resolves original receipt/prospective paths and reports the
+frozen Spec path. It needs retained execution/retention/allocation records plus
+the arm's training contract, partial canonical trace/context and data-open record.
+It reuses role auditing and terminal staging; only `INCONCLUSIVE` or `STOP_FOR_COST`
+can close. Final exposure stays unknown; the last retained trace point is a lower
+bound. Full allocated cost includes idle devices. No strict replay is claimed.
+The second command owns canonical closure and its one derived-index update;
+identical reentry returns `ALREADY_FINALIZED`.
 
-Example using retained Kaggle execution state:
+The existing `--spec` mode still only builds a descriptor for every incomplete
+arm, requiring package/receipt pins, `--locations`, `--output` and either
+`--execution-state` or explicit `--observations`. It does not generate packages.
+Observations contain `status`, `exit_reason` and optional progress/cost/artifacts;
+locations name existing trajectory/run/terminal paths and optional trace.
+Unknown observations stay missing; completed arms require ordinary acceptance.
+
+Example for existing terminal packages:
 
 ```powershell
 $pairState = 'D:\local-work\attempt-01\pair_state.json'
