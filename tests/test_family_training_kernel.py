@@ -101,6 +101,12 @@ def test_family_addons_share_kernel_and_do_not_mutate_cpu_data(initial_states, f
         kernel.model.eval()
         with torch.no_grad():
             assert kernel.forward(batch).shape == (2,)
+            if (family, mode) == ("neural_atom_k1", "reference"):
+                from molgap.training.core import evaluate_development
+                kernel.model.head[-1].bias.fill_(float("nan"))
+                with pytest.raises(ValueError, match=r"predictions non-finite: count=2; source_idx=\[0, 1\]"):
+                    evaluate_development(kernel.model, [batch], forward=lambda model, batch: kernel.forward(batch),
+                                         rows=2, source_start=0, mean=0., std=1.)
         assert not hasattr(kernel.model, "_execution_layout")
         assert not hasattr(kernel.model, "_execution_graph_count")
         kernel.close()

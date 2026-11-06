@@ -309,9 +309,13 @@ def evaluate_development(model, batches, *, forward, rows, source_start, mean, s
             predictions.append(forward(model, batch).reshape(-1) * std + mean)
     prediction, target, source = torch.cat(predictions).cpu(), torch.cat(targets), torch.cat(sources)
     if (prediction.shape != target.shape or prediction.numel() != rows or
-            not torch.equal(source, torch.arange(source_start, source_start + rows)) or
-            not bool(torch.isfinite(prediction).all()) or not bool(torch.isfinite(target).all())):
-        raise ValueError("Development count/order/finite predictions differ")
+            not torch.equal(source, torch.arange(source_start, source_start + rows))):
+        raise ValueError("Development count/order differs")
+    for name, values in (("predictions", prediction), ("targets", target)):
+        invalid = ~torch.isfinite(values)
+        if bool(invalid.any()):
+            raise ValueError(f"Development {name} non-finite: count={int(invalid.sum())}; "
+                             f"source_idx={source[invalid][:8].tolist()}")
     return {"mae_eV": float((prediction - target).abs().mean()), "prediction_eV": prediction,
             "target_eV": target, "source_idx": source}
 
