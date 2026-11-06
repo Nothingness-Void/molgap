@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e6cbf9efa9aca1ca81263d310191b519d791abc5522378dc5d89ac9b56136db3",
+  "source_digest": "cb296d45b734e85fad831a4a638e89a93acb07c151bea9862a43268602ac80c2",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -741,6 +741,34 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-message-statistics-100k-20261106",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_mean/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_message_statistics_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-message-statistics-100k-20261106",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_message_statistics_100k_20261106/runs/pcqm-k1-message-statistics-100k-20261106-s42/prospective/message_std/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std"
     },
     {
       "completeness_status": "complete",

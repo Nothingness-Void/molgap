@@ -231,6 +231,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean:A001",
+      "target": "experiments/pcqm_k1_message_statistics_100k_20261106/generated/a7b396c4382b53ac71368a6b8079903e958ad10abba55b8026ef02f196838af4/message_mean/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std:A001",
+      "target": "experiments/pcqm_k1_message_statistics_100k_20261106/generated/a7b396c4382b53ac71368a6b8079903e958ad10abba55b8026ef02f196838af4/message_std/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-muon-100k-20261106-s42-adamw:A001",
       "target": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json",
       "type": "action_produced_evidence"
@@ -2098,6 +2108,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "target": "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std",
       "type": "prior_evidence"
     },
     {
@@ -4820,6 +4840,14 @@
     },
     {
       "id": "T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_mean",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-message-statistics-100k-20261106-s42-message_std",
       "type": "trajectory"
     },
     {
