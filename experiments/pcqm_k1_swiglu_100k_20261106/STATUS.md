@@ -11,17 +11,12 @@ decision.md for INCONCLUSIVE disposition, actual cost and attribution.
 Kernel/train logs, partial trace, execution/allocation records, role provenance
 and pass10 resume metadata were selectively retained under
 `D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/`.
-No tensor payloads or unselected outputs were downloaded for this failed run.
-The pass10 checkpoint remains bound by its exact-version remote resume bundle.
+Closure completed as INCONCLUSIVE in c4b39846; repeat finalization was idempotent.
+Later checkpoint diagnosis selectively retrieved the latest root checkpoint and
+reproduced model-side eval instability; see [failure diagnosis](failure_diagnosis.md).
+The pass10 chunk remains separately bound by its exact-version remote bundle.
 Owner branch stays retained; no recovery training or new run was launched.
-
-Existing build_incomplete_terminal_descriptor generated
-closure_failure_v1/terminal_descriptor.json with the actual10/7810/999680
-counters. Canonical RML finalization remains pending the reported infrastructure
-gap: failed partial outputs lack the output_manifest required by existing
-terminal-package and role-audit staging. The descriptor itself does not finalize
-RML. The infrastructure owner received exact paths and observed failures; no
-hand-authored V5/role/cost framework was introduced here.
+User chose a minimal stabilization proposal for confirmation before submission.
 
 ## Submission history
 
