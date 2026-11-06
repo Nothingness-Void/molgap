@@ -121,6 +121,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate:A001",
+      "target": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/degree_gate/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon:A001",
+      "target": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/muon/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-extremal-readout-100k-s42-baseline:A001",
       "target": "experiments/pcqm_k1_extremal_readout_100k/generated/125a6da5d907170c3b43fbb7ca64b16bffabe1669d79d550e75487342d4b70ca/baseline/recipe.json",
       "type": "action_produced_evidence"
@@ -2098,6 +2108,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "target": "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
       "type": "prior_evidence"
     },
     {
@@ -4732,6 +4752,14 @@
     },
     {
       "id": "T-pcqm-k1-batch-renorm-100k-s42-brn_scale",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
       "type": "trajectory"
     },
     {

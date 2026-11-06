@@ -1,11 +1,14 @@
-# Preparation status
+# Bound submission — 2026-11-07 JST
 
-2026-11-07: scientific input authored; no freeze, prospective publication, source package, native qualification or remote submission performed. The coordinator owns the normal submit workflow. Kaggle3 `nvoid912` is confirmed: quota10.08h available and its two previous jobs complete, observed2026-11-07 02:31JST.
+Kaggle3 job143096927/version1 SUBMISSION_BOUND; Luna observed RUNNING/latest1 matching receipt1 at2026-11-07 02:55 JST.
+Kernel: nvoid912/molgap-k1-degree-calibration-100k-20261107-s42
+Logical run: pcqm-k1-degree-calibration-100k-20261107-s42-r2 / v1
+Arms: original Muon, degree_gate; both fresh100K40-pass training.
+Frozen source: 331cab39e53bbb6441706440a308fcec7c703262
+Spec: 24fe26f7f532c86598081c18181e78674b945b21b203f916340c9e4b395b328d
+Package: ca555ec10b58f60e54c508ca11c5f8ad000c6319dfc66029ed985d4bee2accf6
+Receipt/operation journal: D:/molgap-artifacts/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/operations
 
-The compiler consumes local byte-reused frozen Muon control_recipe.json and its data_declaration.json recipe-hash projection; the target reference remains on desktop. All recipe/data/target references resolve on this owner. Native qualification, immutable source/input packaging, prospective trajectories and actual training remain pending through the standard front door. Protected roles remain sealed by the contract; observed role use will come from retained worker provenance.
-
-Static verification: existing preset expansion and recipe builder reproduce the accepted EC owner's degree control_recipe.json exactly, field for field. All preset recipe/data/target pins resolve locally; initialization file exists. Addon bytes match SHA256554d069dc3ff6401434af6b0682d845c1268e4450b75ba89f61dcda0a925577a. Python AST/input JSON and git whitespace checks pass. No tests or model/data execution were run for this configuration-only reuse.
-
-RML check --frozen passed: derived outputs are frozen and current.
-
-The first formal submit entry rejected a nonempty shared optimizer override for a same-run reference before publication. Fixed the scientific input to retain an already-frozen Muon reference with empty overrides. No owner runs/generated records or artifact run/v1 directory existed at inspection; nothing was deleted. Initial metadata reconstruction proved recipe equivalence but did not test this compiler boundary.
+Native qualification and training evidence remain with the worker. No terminal science or replay claim before actual acceptance.
+The original unpublished run is retained. Configuration failures included unsupported preset reference override, incomplete candidate model fields and CRLF scientific-input bytes; source was corrected and committed before the explicit r2 freeze. No original run reached a remote POST.
+Existing submit_workflow performed release/source/account/quota/explicit T4/mount binding. No new trainer/verifier/tests or monitor was added. Kaggle2 unchanged.

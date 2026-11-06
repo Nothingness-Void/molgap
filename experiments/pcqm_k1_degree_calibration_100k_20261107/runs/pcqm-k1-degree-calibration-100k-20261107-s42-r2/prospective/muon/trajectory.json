@@ -1,0 +1,111 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-degree-calibration-100k-20261107-s42-r2-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/muon/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-degree-calibration-100k-20261107-s42-r2:muon:downstream"
+      ],
+      "source_commit": "331cab39e53bbb6441706440a308fcec7c703262",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-degree-calibration-100k-20261107",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/rml_decision_snapshots/97b3bf25f5117c92ddec4fdc5a5f9d482c5bce6ba93d4a4731d5f2cfceec9eac.json",
+    "snapshot_sha256": "97b3bf25f5117c92ddec4fdc5a5f9d482c5bce6ba93d4a4731d5f2cfceec9eac",
+    "state_timestamp": "2026-11-07T02:38:08.40409+09:00"
+  },
+  "family_id": "pcqm-k1-degree-calibration-100k-20261107",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The historical difference is run/runtime variation",
+      "The added gate is neutral or harmful against unmodified Muon",
+      "A selected-endpoint gain fades at final or last-five passes"
+    ],
+    "changed_mechanism": "source-degree-residual-message-gate-at-local-layers-two-and-three",
+    "cheapest_falsifier": "One same-job seed42 100K40-pass pair with original frozen K1 initialization, matching data/optimizer/schedule/selection and degree gating as the only intervention.",
+    "decision_changed_if_negative": "Close the exact degree recipe without tuning, retries or automatic scale-up.",
+    "decision_changed_if_positive": "Nominate only with degree-minus-muon selected delta<=-3meV, paired2000-resample95%upper<0, negative final and last-five deltas, strict qualification; no automatic500K.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+    "observed_deficiency": "Accepted EC job143052037/version1 compares degree with EC, without an unmodified Muon control. Its degree0.131312467eV versus historical Muon0.132520668eV is cross-run evidence and cannot establish the gate effect.",
+    "related_closed_family_ids": [
+      "pcqm-k1-ec-gate-100k-20261106",
+      "k1-topology-portability"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does the accepted source-degree residual message gate improve original unmodified K1 plus Muon in a same-job 100K calibration?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/muon/recipe.json",
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/data_declaration.json",
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2",
+      "reference_arm_id": "muon",
+      "reference_trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
+      "reference_trajectory_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "24fe26f7f532c86598081c18181e78674b945b21b203f916340c9e4b395b328d"
+    },
+    "source_commit": "331cab39e53bbb6441706440a308fcec7c703262",
+    "source_config_identity": "1ebad35a3cb0d323dbe8b1ce4967a9df9be6aedc7fc2bf0fd4f7fe13ecc7c493"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+}

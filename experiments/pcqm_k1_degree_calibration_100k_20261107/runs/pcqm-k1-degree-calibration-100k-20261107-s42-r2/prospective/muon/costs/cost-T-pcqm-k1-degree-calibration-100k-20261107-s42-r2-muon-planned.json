@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon-planned",
+  "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one freshly trained arm per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:muon:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+}
