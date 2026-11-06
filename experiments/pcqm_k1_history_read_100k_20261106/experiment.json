@@ -60,15 +60,14 @@
     42
   ],
   "shared": {
-    "preset_ref": {
-      "path": "experiments/presets/k1-post-bn-100k-v1.json",
-      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
-    },
     "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
-    "training": {
-      "optimizer": "k1-muon-adamw-fp32-v1"
-    },
-    "purpose": "architecture_comparison"
+    "training": {},
+    "purpose": "architecture_comparison",
+    "recipe_ref": "experiments/pcqm_k1_history_read_100k_20261106/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_history_read_100k_20261106/data_declaration.json",
+      "arm_id": "post_bn"
+    }
   },
   "arms": [
     {
@@ -89,6 +88,7 @@
     }
   ],
   "same_run": {
-    "reference_arm_id": "current_read"
+    "reference_arm_id": "current_read",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
   }
 }
