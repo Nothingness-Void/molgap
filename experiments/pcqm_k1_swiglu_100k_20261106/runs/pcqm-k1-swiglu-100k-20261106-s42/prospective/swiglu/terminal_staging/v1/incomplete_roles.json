@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "swiglu",
+    "arm_identity": "8d5f91599125cdfe4e4b59e6c080101d715587b657afdcc938596c84863c8a40",
+    "experiment_id": "pcqm_k1_swiglu_100k_20261106",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-swiglu-100k-20261106-s42",
+    "package_identity": "acc69d83e9d1b15f7c0149506d4c8c881f77833ae7ef4bd38c0c8cf4488fb96d",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-k1-swiglu-100k-20261106-s42",
+    "source_archive_sha256": "9e31931aac0e9910160cf30967796d02f33e8af730259693658f45ad14b860de",
+    "source_commit": "b43b7fc70320caf4ca588620d76b7f0ea2a10f70",
+    "spec_identity": "af3b8b526cd10056375afc0e59b878c780599c709b06bdedb64cf7ce62b7f2fe",
+    "training_recipe_sha256": "53a632f726fec1d06ee57c41301b1024f3ffaa74edc9385cc45933523216db03"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "0f4710798525b8d06a606e0eb9cae2590fa98ca90dd4894e675cce329116336d"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 0f4710798525b8d06a606e0eb9cae2590fa98ca90dd4894e675cce329116336d, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json",
+      "role_event_id": "role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json",
+      "role_event_id": "role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json",
+      "role_event_id": "role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json",
+      "role_event_id": "role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/terminal_staging/v1/incomplete_roles.json",
+      "role_event_id": "role-pcqm-k1-swiglu-100k-20261106-s42-swiglu-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    }
+  ]
+}

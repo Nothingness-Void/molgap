@@ -12,6 +12,21 @@
         "missing_comparability_identity:optimizer_identity",
         "missing_comparability_identity:precision_identity",
         "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
@@ -832,5 +847,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 101
+  "trace_count": 102
 }

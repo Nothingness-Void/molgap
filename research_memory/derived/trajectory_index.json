@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "5cb2e5c4704cab88ff4b30a10ca6f6fe6d2f7a163e081a0e7de7c52392a27dd3",
+  "source_digest": "6b04b56d4d97841a4f537b3d85e6be823da004e40f559ae35c247f0732b24f14",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -874,13 +874,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_swiglu_100k_20261106/decision.md",
       "family_id": "pcqm-k1-swiglu-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
     },

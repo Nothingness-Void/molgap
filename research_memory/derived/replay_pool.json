@@ -100680,6 +100680,21 @@
         "missing_comparability_identity:optimizer_identity",
         "missing_comparability_identity:precision_identity",
         "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream",
+      "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:optimizer_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
         "missing_comparability_identity:target_transform_identity",
         "missing_frozen_reference"
       ],
@@ -101094,5 +101109,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "4331d75fdab3c0b5715e7991b5e188ed972c5ad31413001a3ccf77acc8bf3cf0"
+  "source_digest": "5e9a4b9b0a113fd665a411fafa920e11a9df3168ffb794304dd6644724a73a2c"
 }

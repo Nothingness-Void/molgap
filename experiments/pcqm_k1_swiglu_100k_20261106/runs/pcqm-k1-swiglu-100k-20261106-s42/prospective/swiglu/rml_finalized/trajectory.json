@@ -1,0 +1,108 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "swiglu-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-planned",
+        "cost-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-0",
+        "cost-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-1"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/swiglu/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-swiglu-100k-20261106-s42:swiglu:downstream"
+      ],
+      "source_commit": "b43b7fc70320caf4ca588620d76b7f0ea2a10f70",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_swiglu_100k_20261106/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-swiglu-100k-20261106",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_swiglu_100k_20261106/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/rml_decision_snapshots/50dc955b8c3bfe32beb9f2597a5a910aa4556912294373d9816346a7b8fb5225.json",
+    "snapshot_sha256": "50dc955b8c3bfe32beb9f2597a5a910aa4556912294373d9816346a7b8fb5225",
+    "state_timestamp": "2026-11-05T17:03:11.732610+00:00"
+  },
+  "family_id": "pcqm-k1-swiglu-100k-20261106",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The original SiLU FFN is sufficient",
+      "Gating reduces useful hidden width",
+      "An endpoint change reflects initialization or single-seed variation"
+    ],
+    "changed_mechanism": "matrix-budget-matched-node-swiglu-ffn",
+    "cheapest_falsifier": "Two scientific arms: retained qualified original K1 versus one new100K40pass SwiGLU candidate.",
+    "decision_changed_if_negative": "Close without adoption, blind seed/width/WD grid or automatic successor.",
+    "decision_changed_if_positive": "Nominate only delta<=-3meV with paired95%CI upper<0 and strict qualification; no automatic scale-up.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu",
+    "observed_deficiency": "Original K1 lacks multiplicative channel gating in its node FFNs; whether this limits retained development quality is untested, not presumed.",
+    "related_closed_family_ids": [
+      "pcqm-k1-message-droppath-100k",
+      "K1-normalization-exposure160pass"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does matrix-budget-matched SwiGLU in the nine node FFNs improve original K1 on fixed100K?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_swiglu_100k_20261106/runs/pcqm-k1-swiglu-100k-20261106-s42/prospective/swiglu/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_swiglu_100k_20261106/generated/873d20cc4c5e6967f527cea57f968f8f4db693b20834351a55d9c9fc49c03edd/swiglu/recipe.json",
+      "experiments/pcqm_k1_swiglu_100k_20261106/data_declaration.json",
+      "experiments/pcqm_k1_swiglu_100k_20261106/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_swiglu_100k_20261106/protocol.md"
+    ],
+    "source_commit": "b43b7fc70320caf4ca588620d76b7f0ea2a10f70",
+    "source_config_identity": "8d5f91599125cdfe4e4b59e6c080101d715587b657afdcc938596c84863c8a40"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+}
