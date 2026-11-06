@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "4c18016f6416794debbb427fc429b9cd998737197d6c0c4a6eb4042dd3af19d7",
+  "source_digest": "7b4eb38ec8e73cfdf3ea4a4fe421f11f33c5a029d0f5721824e5ccd18b330afe",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -313,6 +313,38 @@
       ],
       "track": "B",
       "trajectory_id": "T-k1-perturbation-floor-100k-s42-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+      "family_id": "k1-rank-n-contrast-100k",
+      "outcome": "CLOSED",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-rank-n-contrast-100k-s42-reference"
+      ],
+      "track": "B",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/k1_rank_n_contrast_100k/results/completed/decision.md",
+      "family_id": "k1-rank-n-contrast-100k",
+      "outcome": "POSITIVE_BELOW_GATE",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/rnc/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-k1-rank-n-contrast-100k-s42-rnc"
+      ],
+      "track": "B",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-rnc"
     },
     {
       "completeness_status": "complete",

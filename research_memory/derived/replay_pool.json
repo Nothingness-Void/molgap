@@ -71708,6 +71708,20 @@
     },
     {
       "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "k1-rank-n-contrast-100k-s42:rnc:downstream",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-rnc"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
@@ -71952,5 +71966,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "d1bd0c16be2945376b743524c8e09eee0d312fe235e541bcfca7d65d35089476"
+  "source_digest": "cba19b83efe4a5c0ab599198181df026c936499aabae7a3e4b566456e31fba51"
 }

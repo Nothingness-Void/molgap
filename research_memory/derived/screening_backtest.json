@@ -36,6 +36,20 @@
     },
     {
       "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "k1-rank-n-contrast-100k-s42:rnc:downstream",
+      "trajectory_id": "T-k1-rank-n-contrast-100k-s42-rnc"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "closure_synthesized_manifest_not_prelaunch_calibrated",
         "missing_comparability_identity:dataset_identity",
@@ -572,5 +586,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 78
+  "trace_count": 80
 }

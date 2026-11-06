@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1-rank-n-contrast-100k-s42-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-k1-rank-n-contrast-100k-s42-reference-allocation-0",
+  "evidence_ref": "experiments/k1_rank_n_contrast_100k/runs/k1-rank-n-contrast-100k-s42/prospective/reference/terminal_staging/v1/d77dba6ec74da340/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.8386847169908334
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "k1-rank-n-contrast-100k-s42:reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-k1-rank-n-contrast-100k-s42-reference"
+}
