@@ -281,6 +281,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-soap-100k-20261106-s42-muon:A001",
+      "target": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/muon/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-soap-100k-20261106-s42-soap:A001",
+      "target": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/soap/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-tail-regularization-500k-s42-tail_wd1e2:A001",
       "target": "experiments/pcqm_k1_tail_regularization_500k/generated/d33412b0d70f352901d79c7ac46d5a38ef3dd7712a0b426b65b7f526ddc4ef3a/tail_wd1e2/recipe.json",
       "type": "action_produced_evidence"
@@ -2098,6 +2108,16 @@
     {
       "source": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "target": "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-soap-100k-20261106-s42-soap",
       "type": "prior_evidence"
     },
     {
@@ -4860,6 +4880,14 @@
     },
     {
       "id": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-soap-100k-20261106-s42-muon",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-soap-100k-20261106-s42-soap",
       "type": "trajectory"
     },
     {

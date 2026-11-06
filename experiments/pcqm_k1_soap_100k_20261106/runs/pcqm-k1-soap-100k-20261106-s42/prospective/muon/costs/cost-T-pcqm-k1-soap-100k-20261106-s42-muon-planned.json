@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-soap-100k-20261106-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-soap-100k-20261106-s42-muon-planned",
+  "evidence_ref": "experiments/pcqm_k1_soap_100k_20261106/generated/223cd08c400e400cb94ccae4d4d00308e7f33a60027e435b78f0b032e56c92dc/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 10
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-soap-100k-20261106-s42:muon:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-soap-100k-20261106-s42-muon"
+}
