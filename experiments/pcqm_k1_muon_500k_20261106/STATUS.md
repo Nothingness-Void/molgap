@@ -1,5 +1,12 @@
 # Status
 
+2026-11-07 JST: version1 is the verified planned20-pass PAUSED segment, not the
+60-pass endpoint. Both arms retain step78120/samples9999360 and pass existing
+build-resume verification. Muon selected MAE0.107192405 versus AdamW0.115122743;
+remaining40passes follow the unchanged preauthorized continuation contract.
+See [segment review](segment20_review_20261107.md) for evidence, costs and recovery.
+No continuation was submitted during this review; prospective RML stays open.
+
 2026-11-06 JST: user authorized Kaggle2 fresh AdamW/Muon500K60-pass pair and
 prearranged segmented continuation. Shutdown was explicitly revoked.
 
