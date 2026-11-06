@@ -1,0 +1,86 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_muon_100k_20261106",
+  "logical_run_id": "pcqm-k1-muon-100k-20261106-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-05T17:48:29Z",
+  "question": {
+    "policy_id": "pcqm-k1-muon-100k-20261106",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does a fixed FP32 Muon/AdamW optimizer recipe improve original K1 versus same-job native AdamW at a complete100K endpoint?",
+    "deficiency": "Original K1 scale gains have not been established by stacking prior small-module wins; matrix-preconditioned optimization is untested, not a proven bottleneck.",
+    "changed_mechanism": "hidden-matrix-fp32-muon-with-adamw-remainder",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "alternatives": [
+      "AdamW is sufficient for this model and exposure",
+      "Muon improves early optimization but loses after decay",
+      "The fixed Muon configuration is poorly matched to molecular regression",
+      "Orthogonalization overhead outweighs the accuracy benefit"
+    ],
+    "closed_families": [
+      "pcqm-k1-init-forward-500k-single-s42",
+      "pcqm-k1-tail-regularization-500k-s42",
+      "pcqm-k1-message-droppath-100k"
+    ],
+    "positive_decision": "Nominate only with delta<=-3meV,paired95%CI upper<0,negative final and last-five deltas,strict qualification; no automatic500K/adoption.",
+    "negative_decision": "Close this fixed configuration without blind grids, successors or automatic scale-up."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+    "estimated_device_hours": 5,
+    "estimated_wall_hours": 2.5,
+    "cheapest_falsifier": "One same-job100K40pass pair, identical model/random initial tensors/data/exposure/output policy; two frozen optimizer recipes."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "kaseichou",
+    "arms": [
+      "adamw",
+      "muon"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "adamw",
+    "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User requested Kaggle2 two-arm submission and separately approved shared Muon adaptation on2026-11-06.",
+    "scope": "One T4x2 session, two actual fresh-training arms,100K40passes,train/development only. No automatic retries/continuation/500K/full/promotion or protected roles. Shutdown after successful submission and durable receipts."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "adamw"
+    },
+    {
+      "arm_id": "muon",
+      "training": {
+        "optimizer": "k1-muon-adamw-fp32-v1"
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "adamw"
+  }
+}

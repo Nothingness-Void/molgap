@@ -19,6 +19,14 @@ This file owns recommendations, blockers and queue observations, not evidence.
 
 ## Track B Recommendation and Blockers
 
+K1 FP32 Muon100K is accepted and adopted as the selected optimizer route for
+the user-authorized500K transfer pair, not as a full/production replacement.
+Selected Live MAE0.132520668eV versus same-job AdamW0.141294461eV; both strict
+replay entries complete. [Decision](experiments/pcqm_k1_muon_100k_20261106/decision.md)
+and [cost/scale review](experiments/pcqm_k1_muon_100k_20261106/cost_and_scale_review_20261106.md)
+own the evidence. The500K question remains on codex/exp/k1-muon-500k-20261106;
+its source/prospective/receipt determines execution state.
+
 Track B predicts PCQM4Mv2 Gap only; it does not change Track A.
 Accepted full EdgeState remains the operational full-scale reference.
 [Scale reassessment](experiments/pcqm_scale_transfer_reassessment/decision.md)
