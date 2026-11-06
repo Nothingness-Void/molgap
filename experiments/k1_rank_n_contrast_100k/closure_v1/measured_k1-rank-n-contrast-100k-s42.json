@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-rank-n-contrast-100k-s42\\v1\\version1\\reference\\development_predictions.pt",
+      "sha256": "498c1cb51a6297c1cc43e9164decded0b8e8fa1cad32ac15e709c56d9c28bdce"
+    },
+    {
+      "path": "E:\\MolGap\\artifacts\\retrieved\\k1-rank-n-contrast-100k-s42\\v1\\version1\\rnc\\development_predictions.pt",
+      "sha256": "e6c6ccadf96fa0f7cc0188bac554232e65020f63f39a8ef77ad5158bc6ff5b11"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 1.0583849334716717,
+    "ensemble_gain_meV": 5.535218467712411,
+    "ensemble_mae_meV": 135.23004988610745,
+    "fit": null,
+    "m_meV": -1.0583849334716797,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "rnc",
+        "ci95": [
+          -1.9834317771196366,
+          -0.1524921209812181
+        ],
+        "delta": -1.0583849334716797,
+        "n_bootstrap": 2000,
+        "probability_better": 0.987,
+        "reference": "reference",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "reference": 141.29446082055568,
+      "rnc": 140.236075887084
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}
