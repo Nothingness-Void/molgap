@@ -159,8 +159,8 @@ class FamilyRecipe:
         if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1"}:
             raise ValueError("Unsupported frozen optimizer")
         if self.optimizer != "adamw" and (self.family != "neural_atom_k1" or
-                self.mode != "reference" or self.no_decay_modules):
-            raise ValueError("K1 Muon requires the reference model and uniform weight decay")
+                self.mode not in {"reference", "composed"} or self.no_decay_modules):
+            raise ValueError("K1 Muon requires reference/composed mode and uniform weight decay")
         from .common.spec import _text, _addon_declaration
         _text(self.mode, "mode")
         if type(self.resume_chunks) is not bool:

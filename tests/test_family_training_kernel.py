@@ -207,6 +207,7 @@ def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initi
         DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 1,
         .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1,
         target_mean_eV=0., target_std_eV=1., addons=addons,
+        optimizer="k1-muon-adamw-fp32-v1" if prefix == "k1" and not cached else "adamw",
         k1_execution=K1ExecutionConfig() if cached else None,
         torch_version=str(torch.__version__).split("+", 1)[0])
     assert FamilyRecipe.from_dict(recipe.to_dict()) == recipe
