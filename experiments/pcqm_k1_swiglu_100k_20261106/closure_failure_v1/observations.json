@@ -1,0 +1,30 @@
+{
+  "swiglu": {
+    "status": "failed",
+    "exit_reason": "train_worker_exit_1",
+    "progress": {
+      "epoch": 10,
+      "step": 7810,
+      "samples": 999680
+    },
+    "costs": [
+      {
+        "metric": "wall_seconds",
+        "unit": "seconds",
+        "value": 1509.927665186,
+        "status": "measured",
+        "reason": null
+      },
+      {
+        "metric": "device_seconds",
+        "unit": "seconds",
+        "value": 1509.927665186,
+        "status": "measured",
+        "reason": null
+      }
+    ],
+    "missing_evidence": [
+      "training_progress_not_retained"
+    ]
+  }
+}

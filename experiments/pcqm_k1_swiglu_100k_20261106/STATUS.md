@@ -1,5 +1,30 @@
 # Status — 2026-11-06
 
+## Terminal inspection
+
+Luna observed job142921674/version1 ERROR at13:46:57-13:47:01 JST, latest and
+receipt versions both1. Preflight exited0. Formal training completed10passes,
+7810updates/999680presentations, best retained development0.17512261867523193eV.
+The next development evaluation failed its count/order/finite guard; see
+decision.md for INCONCLUSIVE disposition, actual cost and attribution.
+
+Kernel/train logs, partial trace, execution/allocation records, role provenance
+and pass10 resume metadata were selectively retained under
+`D:/molgap-artifacts/reconciliation/k1-swiglu-100k-20261106-failure/`.
+No tensor payloads or unselected outputs were downloaded for this failed run.
+The pass10 checkpoint remains bound by its exact-version remote resume bundle.
+Owner branch stays retained; no recovery training or new run was launched.
+
+Existing build_incomplete_terminal_descriptor generated
+closure_failure_v1/terminal_descriptor.json with the actual10/7810/999680
+counters. Canonical RML finalization remains pending the reported infrastructure
+gap: failed partial outputs lack the output_manifest required by existing
+terminal-package and role-audit staging. The descriptor itself does not finalize
+RML. The infrastructure owner received exact paths and observed failures; no
+hand-authored V5/role/cost framework was introduced here.
+
+## Submission history
+
 User authorized execution of the reviewed design. Exactly two scientific arms:
 retained qualified original K1 reference A and new SwiGLU candidate B. Only B is
 newly trained. Kaggle3 (`nvoid912`) selected; no reference retraining. Physical
