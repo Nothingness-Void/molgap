@@ -107,7 +107,7 @@ def _derived_kaggle(value, authority, manifests):
     kaggle = {"account": account, "kernel": account + "/molgap-" + stem + "-s42", "title": " ".join(words),
               "datasets": [source, account + "/" + _FIXED_100K[1]], "source_dataset": source,
               "accelerator": "NvidiaTeslaT4"}
-    kaggle.update({k: authority[k] for k in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds") if k in authority})
+    kaggle.update({k: authority[k] for k in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step") if k in authority})
     return kaggle
 
 

@@ -345,7 +345,7 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                    expected_package_identity, receipt_path, _verification=verification,
                    recovery_repair=plan.get("recovery_repair") if type(plan) is dict else None) as original:
         manifest, release, launch, contexts, trajectories = original
-        if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"} != {"format", "spec_identity", "arms"}
+        if (type(plan) is not dict or set(plan) - {"recovery_repair", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"} != {"format", "spec_identity", "arms"}
                 or plan["format"] != RESUME_PLAN_FORMAT or plan["spec_identity"] != spec.identity
                 or type(plan["arms"]) is not dict or set(plan["arms"]) != set(contexts)):
             raise ValueError("Resume plan must bind every Spec arm exactly once")
@@ -376,6 +376,11 @@ def prepare_resumed_workflow(spec, repo_root, prepared, package_dir, expected_pa
                 if key == "allocation_wall_limit_seconds" and original_limit is not None and value > original_limit:
                     raise ValueError("Recovery allocation ceiling cannot increase")
                 platform_plan[key] = value
+        if "pause_after_step" in launch or "pause_after_step" in plan:
+            boundary = plan.get("pause_after_step")
+            if type(boundary) is not int or boundary <= max(item["owner"]["optimizer_steps"] for item in checked.values()):
+                raise ValueError("Resume plan requires pause_after_step beyond every retained cursor")
+            platform_plan["pause_after_step"] = boundary
         backend.validate_plan(spec, platform_plan)
         output.mkdir(parents=True)
         report = {"format": "molgap-workflow-recovery-preparation-v1", "status": "PREPARING",

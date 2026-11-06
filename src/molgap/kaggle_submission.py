@@ -523,7 +523,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 # The SDK status endpoint addresses only owner/slug. The source
                 # check above observes the predecessor as the latest version.
                 prior_status = api.kernels_status(ref)
-                if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled"}:
+                if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled", "complete"}:
                     raise ValueError("Continuation predecessor must be authoritatively terminal")
                 atomic_json(output / "predecessor_scheduler_observation.json", {
                     "kernel": ref, "scheduler_scope": "latest", "observed_latest_version": kernel_version - 1,

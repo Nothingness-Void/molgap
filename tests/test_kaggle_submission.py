@@ -727,7 +727,7 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
                 transport_state["transport"] = release.__wrapped__(
                     transport_root, stubs, NS(param=continuation), staged_source=prepared / "source_dataset")
             if continuation:
-                transport_state["transport"].api.predecessor_status = "ERROR"
+                transport_state["transport"].api.predecessor_status = "COMPLETE"
             shutil.copyfile(prepared / "kernel/run.py", transport_state["transport"].kernel / "run.py")
         return transport_state["transport"]
 
@@ -872,7 +872,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             checkpoint=output.checkpoint, selected=output.selected, pass_finished=output.pass_finished)
         session.batch_finished = output.batch_finished
         try:
-            progress = session.run(should_pause=lambda: session.progress.optimizer_step >= 2)
+            progress = session.run(should_pause=lambda: session.progress.optimizer_step >= launch["pause_after_step"])
             assert progress.status == "paused" and progress.optimizer_step == 2
             checkpoint = torch.load(output.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
             assert checkpoint["optimizer"]["state"]
@@ -894,7 +894,8 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         preparation.setattr("molgap.experiment_workflow.plan_prospective", no_new_question)
         resumed = prepare_run_resume(case.value["machine_profile"], case.repo, run_id, attempt,
             plan={"format": "molgap-workflow-resume-v1", "spec_identity": spec.identity, "arms": bundles,
-                  "allocation_wall_limit_seconds": 120, "cleanup_reserve_seconds": 5}, output=resumed_prepared)
+                  "allocation_wall_limit_seconds": 120, "cleanup_reserve_seconds": 5,
+                  "pause_after_step": recipe.optimizer_steps}, output=resumed_prepared)
     assert resumed["status"] == "RESUME_INPUTS_PREPARED", resumed
     assert resumed["prospective_published"] is False
     authority = paths.artifact_root / "continuation" / "authority.md"
@@ -929,7 +930,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         assert session.progress.optimizer_step == 2
         started = time.perf_counter()
         try:
-            progress = session.run()
+            progress = session.run(should_pause=lambda: session.progress.optimizer_step >= resumed_launch["pause_after_step"])
             checked = output.complete(progress, runtime={"platform": context.platform, "account": context.account,
                 "precision": "fp32", "source_commit": context.source_commit,
                 "source_archive_sha256": context.source_archive_sha256}, costs=[{
@@ -1190,7 +1191,7 @@ def test_real_package_release_post_receipt_reuses_only_exact_content(scientific,
     (case.repo / "experiments/history/comparison_readiness.json").unlink()
     platform_path = case.repo / value["platform_ref"]
     platform = json.loads(platform_path.read_bytes())
-    platform["kaggle"].update(allocation_wall_limit_seconds=32400, cleanup_reserve_seconds=180)
+    platform["kaggle"].update(allocation_wall_limit_seconds=32400, cleanup_reserve_seconds=180, pause_after_step=2)
     _write_json(platform_path, platform)
     _commit(case, value, authority, input_path)
     child = r'''

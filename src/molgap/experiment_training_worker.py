@@ -43,7 +43,8 @@ def main(argv=None):
         input_root=args.input_root, output=args.output, account=config["account"],
         run_reference=config["run_reference"], staged_root=args.launch.parent,
         prospective_sha256=config["prospective_sha256"][job["arm_id"]],
-        target_identity=target_identity, **recovery)
+        target_identity=target_identity,
+        pause_after_step=config.get("pause_after_step") if args.phase == "train" else None, **recovery)
     paused_session = (args.phase == "train" and job.get("module") == "molgap.family_training_runner"
                       and result.get("status") == "PAUSED")
     passed = (result.get("status") == "MECHANICALLY_VERIFIED" or paused_session if args.phase == "train" else

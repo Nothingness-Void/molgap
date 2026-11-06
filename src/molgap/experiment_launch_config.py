@@ -30,7 +30,7 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
@@ -80,6 +80,8 @@ def validate_recovery_repair(root, *, expected_sha256, manifest, package_dir, so
 
 def validate_allocation_budget(config: dict) -> None:
     """Check explicit launch fields without materializing legacy defaults."""
+    if "pause_after_step" in config and (type(config["pause_after_step"]) is not int or config["pause_after_step"] < 1):
+        raise ValueError("pause_after_step must be a positive absolute optimizer step")
     limit = config.get("allocation_wall_limit_seconds")
     reserve = config.get("cleanup_reserve_seconds", 60)
     if limit is not None and (type(limit) is not int or limit <= 0):
