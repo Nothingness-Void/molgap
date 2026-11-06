@@ -5,8 +5,19 @@ prearranged segmented continuation. Shutdown was explicitly revoked.
 
 Owner codex/exp/k1-muon-500k-20261106, based on clean verified local desktop
 3c1189ca (includes0d6beda4 and5f423ece; origin desktop was three commits behind).
-No remote run or prospective publication yet. Scientific recipe/data metadata
-prepared through existing owners. Shared pause/resume wiring e2d01f7c is applied
+Submitted and receipt-bound: Kaggle2 kernel143011302/version1,
+`kaseichou/molgap-k1-muon-500k-20261106-s42`, observed2026-11-06T07:01:24Z.
+Frozen source `ae61a9153a6bdf4f6e31b40a0d9366d2445c7a1a`;
+Spec `d82519ff3d64e476ccb117171371f2f0725ce2b10e4cbc4358e486359f6e5144`;
+package `5bc3e3e70457dec92810d010ee918df66256bfbb18e980bc2ee6b79db32e492d`.
+Submission receipt is retained under
+`D:/molgap-artifacts/runs/pcqm-k1-muon-500k-20261106-s42/v1/operations/`.
+Startup observation timed out; submission acceptance alone does not establish
+training progress. Luna observed scheduler `running` at2026-11-06 07:05:34-37 UTC;
+observed latest version1 matches receipt version1; zero files downloaded.
+This scheduler response supplies no native training-progress proof.
+Scientific recipe/data metadata prepared through existing owners.
+Shared pause/resume wiring e2d01f7c is applied
 here as7f69a815 after the existing CPU pause/resume/output/RML journey passed;
 native GPU qualification remains with the worker. Initial absolute pause is78120.
 Platform COMPLETE at this boundary means a planned segment ended; retained
