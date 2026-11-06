@@ -195,7 +195,7 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
                 # Discovery already verified this chain in this invocation;
                 # strict inspection below independently checks its bound bytes.
                 current, terminal = retained
-            canonical_eligible = canonical_eligible and terminal["trace_manifest"]["backtest_eligibility"]["eligible"]
+            canonical_eligible = canonical_eligible and (terminal["trace_manifest"]["backtest_eligibility"]["eligible"] or "comparison_readiness_ref" in terminal)
             canonical[arm_id] = {**where,
                 "terminal": (current / "terminal_input.json").relative_to(Path(repo_root).resolve()).as_posix(),
                 "trace": terminal["trace_manifest"]["trace_artifact_ref"]}
@@ -284,10 +284,10 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         # Reviewed locations select the existing canonical qualification. The
         # mechanical report above is reused; no draft or terminal is published.
         strict = inspect_run_strict_evidence(repo_root, resolved, strict_inputs)
-        return {**result, "status": result["status"] if strict["status"] == "VERIFIED" else "BLOCKED",
+        return {**result, "status": result["status"] if strict["closure_ready"] else "BLOCKED",
             "strict_validation": strict, "strict_mode": "CANONICAL_READ_ONLY", "executed": False,
             "replay_readiness": "VERIFIED" if strict["status"] == "VERIFIED" else "BLOCKED",
-            "blockers": strict["blockers"]}
+            "closure_complete": canonical_inputs, "blockers": [] if strict["closure_ready"] else strict["blockers"]}
     if (stage_terminal or outcome is not None) and not canonical_inputs:
         from .experiment_terminal_staging import stage_verified_terminal_packages
         staged = stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id,
@@ -327,12 +327,12 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
         if qualification.get("canonical_reused"):
             strict = inspect_run_strict_evidence(repo_root, qualified, strict_inputs,
                 _native_reports=native_cache)
-            return {**result, "status": "COMPLETE" if strict["status"] == "VERIFIED" else "BLOCKED",
+            return {**result, "status": "COMPLETE" if strict["closure_ready"] else "BLOCKED",
                 "strict_validation": strict, "strict_mode": "CANONICAL_READ_ONLY",
-                "executed": False, "blockers": strict["blockers"]}
+                "executed": False, "closure_complete": True, "blockers": [] if strict["closure_ready"] else strict["blockers"]}
         result["strict_validation"] = inspect_run_strict_evidence(repo_root, qualified, strict_inputs,
             require_finalized=False, _native_reports=native_cache)
-        if result["strict_validation"]["status"] != "VERIFIED":
+        if not result["strict_validation"]["closure_ready"]:
             return {**result, "status": "BLOCKED", "executed": False,
                 "blockers": result["strict_validation"]["blockers"]}
         if execute:
@@ -342,8 +342,9 @@ def accept_run_workflow(profile, repo_root, run_id, attempt_id, *, supplied=None
             result.update(closed)
             result["strict_validation"] = inspect_run_strict_evidence(repo_root, qualified, strict_inputs,
                 _native_reports=native_cache)
-            if result["strict_validation"]["status"] != "VERIFIED":
+            if not result["strict_validation"]["closure_ready"]:
                 result["status"] = "BLOCKED"
+        result["replay_readiness"] = result["strict_validation"].get("replay_readiness", "VERIFIED" if result["strict_validation"]["status"] == "VERIFIED" else "BLOCKED")
         return result
     elif execute and automatic:
         if locations is None:
@@ -380,7 +381,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
         supplied = inputs.get(arm_id, {})
         output = Path(item["output_dir"]).absolute()
         row = {"native_qualification": {"status": "BLOCKED"},
-            "comparison": {"status": "BLOCKED"}, "replay": {"status": "BLOCKED"}, "blockers": []}
+            "comparison": {"status": "BLOCKED"}, "replay": {"status": "BLOCKED"}, "blockers": [], "closure_ready": False}
         arms[arm_id] = row
         terminal, continuation_record, metadata_error = None, None, None
         try:
@@ -478,11 +479,13 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
                 if comparison["candidate_id"] != terminal["evidence"]["evidence_id"]:
                     raise ValueError("Strict comparison candidate differs from the accepted terminal result")
                 row["comparison"] = {"status": "VERIFIED" if comparison["strict_ready"] else "BLOCKED",
+                    "environment_difference": comparison["mismatched_fields"].get("runtime_certificate_scope"),
                     "comparison_class": comparison["comparison_class"], "blockers": comparison["blocker_codes"]}
                 if not comparison["strict_ready"]:
                     row["blockers"].extend(comparison["blocker_codes"] or ["strict_comparison_not_ready"])
             if not manifest["backtest_eligibility"]["eligible"]:
                 row["blockers"].extend(manifest["backtest_eligibility"]["exclusion_reasons"])
+            row["closure_ready"] = row["native_qualification"]["status"] == "VERIFIED"
         except (ValueError, OSError, KeyError) as exc:
             row["replay"]["error"] = str(exc)
             row["blockers"].append("accepted_replay_evidence_missing_or_invalid")
@@ -492,6 +495,7 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
             row["blockers"] = sorted(set(row["blockers"]))
             blockers.extend(arm_id + ":" + value for value in row["blockers"])
         return {"status": "BLOCKED" if blockers else "VERIFIED", "arms": arms, "blockers": blockers,
+            "closure_ready": all(row["closure_ready"] for row in arms.values()),
             "replay_readiness": "PENDING_FINALIZATION", "ready_for_desktop": "NOT_EVALUATED"}
     try:
         for _, comparison in records["comparison_readiness"]:
@@ -537,12 +541,14 @@ def inspect_run_strict_evidence(repo_root, resolved, inputs, *, require_finalize
                 row["blockers"].append("strict_replay_pool_membership_missing")
     except (ValueError, OSError, KeyError) as exc:
         for row in arms.values():
+            row["closure_ready"] = False
             row["replay"]["error"] = str(exc)
             row["blockers"].append("strict_replay_pool_invalid")
     for arm_id, row in arms.items():
         row["blockers"] = sorted(set(row["blockers"]))
         blockers.extend(arm_id + ":" + value for value in row["blockers"])
     return {"status": "BLOCKED" if blockers else "VERIFIED", "arms": arms, "blockers": blockers,
+        "closure_ready": all(row["closure_ready"] for row in arms.values()),
         "scientific_acceptance": "NOT_EVALUATED", "ready_for_desktop": "NOT_EVALUATED",
         "training_executed": False, "inference_executed": False, "network_accessed": False}
 

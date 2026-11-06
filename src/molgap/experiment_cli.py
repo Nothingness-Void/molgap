@@ -649,7 +649,7 @@ def _acceptance_summary(result):
     if "strict_validation" in result:
         strict = result["strict_validation"]
         summary["strict_validation"] = {key: strict[key] for key in
-            ("status", "blockers", "replay_readiness", "ready_for_desktop") if key in strict}
+            ("status", "closure_ready", "blockers", "replay_readiness", "ready_for_desktop") if key in strict}
         summary["strict_validation"]["arms"] = {
             arm: {**{key: row[key] for key in ("comparison", "replay", "blockers") if key in row},
                 "native_qualification": {key: row.get("native_qualification", {})[key]

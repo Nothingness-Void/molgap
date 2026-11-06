@@ -285,7 +285,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             packages[arm_id] = incoming
         else:
             raise ValueError("Strict qualification requires staged or canonical terminal evidence")
-    if len(finalized) == len(locations) and all(package["trace_manifest"]["backtest_eligibility"]["eligible"]
+    if len(finalized) == len(locations) and all(package["trace_manifest"]["backtest_eligibility"]["eligible"] or "comparison_readiness_ref" in package
             for package in packages.values()):
         comparisons, reused = {}, {}
         for arm_id, package in packages.items():
@@ -302,7 +302,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
                     evidence_verifier=lambda ref, sha: verify_bound_artifact(root, ref, sha))
                 expected_ref = (packages[reference_id]["evidence"]["evidence_id"] if reference_id is not None
                                 else _json(bound_artifact_path(root, plan_entries[arm_id]["reference_bundle"]["path"]))["reference_id"])
-                if (not comparison["strict_ready"] or comparison["candidate_id"] != package["evidence"]["evidence_id"]
+                if (comparison["candidate_id"] != package["evidence"]["evidence_id"]
                         or comparison["reference_id"] != expected_ref):
                     raise ValueError("Canonical strict comparison differs from the accepted pair")
                 comparisons[arm_id] = comparison
@@ -513,7 +513,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             validate_comparison_readiness(comparison, evidence_verifier=lambda pointer, sha: verify_bound_artifact(root, pointer, sha))
             comparisons[arm_id] = comparison
             comparison_ref = publish(arm_id, "comparison_readiness.json", comparison)
-            if not comparison["strict_ready"]:
+            if not comparison["strict_ready"] and (package["requested_outcome"] != "INCONCLUSIVE"
+                    or set(comparison["blocker_codes"]) != {"SCIENTIFIC_CONTRACT_MISMATCH"}
+                    or set(comparison["mismatched_fields"]) - set(comparison["declared_intervention_fields"]) != {"runtime_certificate_scope"}):
                 raise ValueError("Strict comparison remains blocked: " + repr(comparison["blocker_codes"]))
             package["comparison_readiness_ref"] = comparison_ref
             package["artifact_hashes"][comparison_ref] = file_digest(root / comparison_ref)
@@ -521,7 +523,9 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             arm_bundle_ref = bundle_ref
         package["artifact_hashes"][arm_bundle_ref] = file_digest(bound_artifact_path(root, arm_bundle_ref))
         if package["trace_manifest"].get("reference_id") is not None:
-            package["trace_manifest"]["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+            eligible = arm_id == reference_id or comparisons[arm_id]["strict_ready"]
+            package["trace_manifest"]["backtest_eligibility"] = {"eligible": eligible,
+                "exclusion_reasons": [] if eligible else comparisons[arm_id]["blocker_codes"]}
         if arm_id in finalized:
             previous = (finalized[arm_id] / "finalization.json").relative_to(root).as_posix()
             package["supersedes_finalization_ref"] = previous

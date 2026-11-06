@@ -735,7 +735,8 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         directory = Path(item["output_dir"])
         (directory / "runtime_certificate.json").write_text('{}', encoding="utf-8")
         (directory / "runtime_provenance.json").write_text(
-            json.dumps({"runtime_fingerprint": "synthetic-runtime"}), encoding="utf-8")
+            json.dumps({"runtime_fingerprint": "candidate-runtime" if comparison_purpose == "single_module_ablation"
+                and arm_id != reference_arm else "synthetic-runtime"}), encoding="utf-8")
         native[arm_id] = {"status": "VERIFIED", "dependencies": [{"path": "runtime_certificate.json",
             "local_path": str(directory / "runtime_certificate.json")}], "synthetic_substitute": True}
     assess = comparison_owner.assess_comparison_readiness
@@ -864,7 +865,8 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
         candidate = next(iter(qualified["comparisons"]))
         scope = scopes[candidate]
         accepted_comparison = qualified["comparisons"][candidate]
-        assert accepted_comparison["strict_ready"] is True, accepted_comparison
+        assert accepted_comparison["strict_ready"] is False, accepted_comparison
+        assert accepted_comparison["blocker_codes"] == ["SCIENTIFIC_CONTRACT_MISMATCH"]
         candidate_identity = {**accepted_comparison["matched_fields"], **{
             key: value["candidate"] for key, value in accepted_comparison["mismatched_fields"].items()}}
         accepted_trace = json.loads((case.repo / reference_where["terminal"]).read_bytes())["trace_manifest"]
@@ -876,7 +878,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             trace_plan=accepted_trace["trace_fields"],
             runtime_qualification_plan={"status": "declared", "runtime_certificate_required": True,
                 "qualification_scope": "synthetic CPU fixture"}, **scope)
-        assert planned["prelaunch_ready"] is True, planned
+        assert planned["prelaunch_ready"] is False, planned
         plan_path = Path(qualified["directory"]) / "retained_prelaunch.json"
         plan_path.write_bytes(canonical_json(planned).encode())
         from molgap.research_memory.paths import bound_artifact_path
@@ -903,7 +905,7 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
             {candidate: result["terminal_staging"]["locations"][candidate]}, {candidate: native[candidate]},
             reports={candidate: result["arms"][candidate]}, _target_transforms={**transforms,
                 "arms": {candidate: transforms["arms"][candidate]}})
-        assert retained_qualification["comparisons"][candidate]["strict_ready"] is True
+        assert retained_qualification["comparisons"][candidate]["strict_ready"] is False
         assert retained_qualification["comparisons"][candidate]["reference_id"] == bundle["reference_id"]
         assert retained_qualification["reference_bundle_ref"] is None and set(retained_qualification["locations"]) == {candidate}
         retained_terminal = json.loads((case.repo / retained_qualification["locations"][candidate]["terminal"]).read_bytes())
@@ -925,18 +927,30 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     assert all(item["pipeline_status"] == "COMPLETE" for item in closed), closed
     if comparison_purpose == "single_module_ablation":
         from molgap.experiment_run import inspect_run_strict_evidence
+        from molgap import family_training_runner as native_owner
+        monkeypatch.setattr(native_owner, "inspect_retained_native_qualification",
+            lambda directory, **kwargs: native[kwargs["context"].arm_id])
         # Inspect just the candidate: its closed reference must be discovered
         # automatically. Native qualification remains synthetic in this fixture.
-        inspected = inspect_run_strict_evidence(case.repo,
+        strict_report = inspect_run_strict_evidence(case.repo,
             {**resolved, "outputs": {candidate: resolved["outputs"][candidate]},
                 "locations": qualified["locations"], "mechanical_reports": result["arms"]}, {})
-        assert inspected["arms"][candidate]["comparison"]["status"] == "VERIFIED", inspected
-        assert inspected["arms"][candidate]["replay"]["status"] == "VERIFIED", inspected
+        assert strict_report["arms"][candidate]["comparison"]["status"] == "BLOCKED", strict_report
+        assert strict_report["arms"][candidate]["replay"]["status"] == "BLOCKED", strict_report
+        assert strict_report["closure_ready"] is True and strict_report["status"] == "BLOCKED"
+        assert strict_report["arms"][candidate]["comparison"]["environment_difference"] == {
+            "candidate": "candidate-runtime", "reference": "synthetic-runtime"}
     before_reuse = {path.relative_to(case.repo).as_posix(): path.read_bytes()
         for path in (case.repo / "experiments").rglob("*") if path.is_file()}
     reused = family.qualify_same_run_terminal_packages(case.repo, resolved,
         result["terminal_staging"]["locations"], native, reports=result["arms"])
     assert reused["canonical_reused"] is True
+    if comparison_purpose == "single_module_ablation":
+        repeated = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
+            strict_inputs={}, execute=True)
+        assert repeated["status"] == "MECHANICALLY_VERIFIED" and repeated["closure_complete"] is True, repeated
+        assert repeated["executed"] is False and repeated["replay_readiness"] == "BLOCKED"
+        assert repeated["strict_validation"]["arms"][candidate]["native_qualification"]["status"] == "VERIFIED"
     assert before_reuse == {path.relative_to(case.repo).as_posix(): path.read_bytes()
         for path in (case.repo / "experiments").rglob("*") if path.is_file()}
     changed = deepcopy(json.loads((case.repo / qualified["locations"][arm_id]["terminal"]).read_bytes()))

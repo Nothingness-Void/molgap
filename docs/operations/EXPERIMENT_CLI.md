@@ -211,17 +211,17 @@ Already finalized runs need no hand-written locations or repeated outcome/role
 inputs: `accept_run.py --strict --execute --profile <profile> --run-id <run>
 --attempt-id <attempt>` discovers their canonical tips and verified retrieval
 maps. A continuation still selects its exact `--continuation-receipt`. Accepted
-artifact locators/hashes and observations must match the retrieved run. Fully
-qualified tips are rechecked read-only even with `--execute`; mechanical-only
-tips reuse their accepted facts for qualification. Explicit `--diagnose` remains
-available; strict rechecks do not run it by default.
+artifact locators/hashes and observations must match the retrieved run. Tips with
+bound comparisons are read-only even with `--execute`, including blocked comparisons;
+mechanical-only tips reuse accepted facts for qualification. Explicit `--diagnose`
+remains optional; strict rechecks do not run it by default.
 
 Run-ID acceptance also accepts `--strict`. It inventories and rechecks retained
 native proof tensors on CPU, then translates the frozen same-run pair into the
 existing target-transform asset, reference bundle and comparison-readiness
-records. Only the selected evaluation weight source requires its development
-curve: tracking EMA with explicit Live selection still retains EMA identity.
-Unknown weight sources keep the conservative EMA trace requirement.
+records. Environment-only drift permits explicit INCONCLUSIVE closure, never strict
+comparison or replay-pool eligibility. `closure_ready`, `native_qualification`,
+`comparison.environment_difference` and `replay` report separate evidence scopes.
 `--strict-inputs` optionally supplies per-arm `native_root` and
 `comparison_readiness_ref` locations. Missing proof files report their pinned
 hashes and unknown missing-byte sizes; they cannot establish qualification.
