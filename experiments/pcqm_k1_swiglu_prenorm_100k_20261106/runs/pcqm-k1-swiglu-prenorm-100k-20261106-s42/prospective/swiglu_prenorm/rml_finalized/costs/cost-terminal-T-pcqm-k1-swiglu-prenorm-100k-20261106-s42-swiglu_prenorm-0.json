@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "swiglu_prenorm-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm-0",
+  "evidence_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/terminal_staging/v1/a141e05f96f09487/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.368605649726389
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42:swiglu_prenorm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
+}

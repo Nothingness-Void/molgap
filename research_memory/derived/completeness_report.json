@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 106,
+      "count": 105,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -24,7 +24,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -344,7 +343,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 54,
+      "count": 53,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -353,7 +352,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -405,7 +403,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 19,
+      "count": 18,
       "items": [
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
@@ -413,7 +411,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
