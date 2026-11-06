@@ -53,8 +53,16 @@ No new trainer, verifier, scheduler, tests or framework is introduced.
 
 ## Recipe, roles and budget
 
-experiment.json reuses the immutable k1-post-bn-100k-v1 preset plus the fixed
-k1-muon-adamw-fp32-v1 optimizer for both arms. BS128/drop_last, single forward,
+experiment.json binds the already frozen no-addon Muon control_recipe.json,
+reused byte-for-byte from owner codex/exp/k1-soap-100k-20261106,
+experiments/pcqm_k1_soap_100k_20261106/control_recipe.json. Its SHA256 is
+bf4621e4679ca41386d99d3fee2cab086fffec08bf922c8e8b313cc773ac610e.
+Both arms use k1-muon-adamw-fp32-v1 without shared training overrides.
+The local data_declaration.json projects desktop k1-post-bn-100k-data.json
+by changing only its consumed training.recipe.sha256 to those frozen Muon
+recipe bytes; all data identities stay unchanged. same_run explicitly binds
+the existing desktop target manifest. This avoids overriding the reference's
+frozen recipe, as rejected by the registered submit flow on the degree pair. BS128/drop_last, single forward,
 FP32/noTF32/native Torch2.11, LR4e-4/WD1e-5/clip1, cosine40 to1e-6 without
 warmup,31240updates/3998720presentations. Best-development Live selection;
 EMA.999 is tracked, with no Clean-BN selection. Existing checkpoint/resume,
