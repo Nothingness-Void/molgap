@@ -1,5 +1,12 @@
 # Status
 
+2026-11-07 JST: continued both verified20-pass states through existing owners;
+Kaggle2 kernel143011302/version2 SUBMISSION_BOUND. Frozen v2 bound is40passes;
+the user's subsequent instruction is to proceed through the remaining work to
+the unchanged60-pass endpoint without another discretionary confirmation.
+See [v2 receipt/custody and remaining plan](continuation_v2_20261107.md).
+Luna owns runtime status. No shutdown or state/schedule reset.
+
 2026-11-07 JST: version1 is the verified planned20-pass PAUSED segment, not the
 60-pass endpoint. Both arms retain step78120/samples9999360 and pass existing
 build-resume verification. Muon selected MAE0.107192405 versus AdamW0.115122743;
