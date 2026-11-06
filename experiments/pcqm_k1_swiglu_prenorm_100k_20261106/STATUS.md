@@ -25,6 +25,26 @@ Protected roles untouched within the retained data-open provenance scope.
 No new training,inference,successor,monitor,shutdown or500K changes.
 Retain owner branch pending reviewed custody/archive routing.
 
+## Qualification repair — 2026-11-06 JST
+
+Desktop infrastructure `7add4c09` completed the existing `accept_run.py --strict
+--execute` route against this checkout and retained local artifacts. The new
+[qualification tip](runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/qualification_revisions/b9f39461d51a1ea3047f7c86b11c445240aaeef03508fada5d8b122d03769231/rml_finalized/finalization.json)
+adds the bound environment-mismatch comparison; it preserves the original
+INCONCLUSIVE decision, acceptance, roles and both cost events unchanged. No training, inference, downloads or new scientific closure.
+Mechanical acceptance and closure complete; native repeat/resume proof VERIFIED;
+strict comparison remains PAIRED_ENDPOINT/NOT_STRICT and replay-pool eligibility
+remains blocked. This does not establish cross-runtime replay equivalence.
+A second identical command took 8.27 s and returned CANONICAL_READ_ONLY with
+executed=false; all 85 experiment/derived files remained byte-identical.
+`research_memory check --frozen` passed after the shared qualification update.
+Use the desktop script explicitly for this retained owner (its frozen source is
+unchanged):
+
+```powershell
+& 'D:/文档/molgap/.venv/Scripts/python.exe' -B 'D:/文档/molgap/platforms/local/accept_run.py' --profile D:/molgap-machine-profile.json --repo-root D:/molgap-worktrees/k1-swiglu-100k-20261106 --run-id pcqm-k1-swiglu-prenorm-100k-20261106-s42 --attempt-id v1 --strict --execute
+```
+
 ## Submission history
 
 # Status — 2026-11-06 JST
