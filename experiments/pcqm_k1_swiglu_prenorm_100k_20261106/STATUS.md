@@ -1,5 +1,8 @@
 # Terminal status — 2026-11-06 JST
 
+Later clarification: runtime_stack_addendum.md identifies Torch+CUDA build
+differences in retained profiler reports. The finalized decision remains unchanged.
+
 Training COMPLETE:40passes/31240updates/3998720presentations; selected Live
 pass40,MAE0.1420404841130972eV,finite aligned50000development rows.
 Kaggle3 job143019649/version1; Luna observed COMPLETE at11:22:30-33 UTC,
