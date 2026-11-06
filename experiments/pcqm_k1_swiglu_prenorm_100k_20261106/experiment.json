@@ -1,0 +1,113 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_swiglu_prenorm_100k_20261106",
+  "logical_run_id": "pcqm-k1-swiglu-prenorm-100k-20261106-s42",
+  "attempt_id": "v1",
+  "timestamp": "2026-11-06T08:03:17.743549+00:00",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "question": {
+    "policy_id": "pcqm-k1-swiglu-prenorm-100k-20261106",
+    "action": "RUN_PAIRED_100K",
+    "question": "Can affine-free input LayerNorm stabilize matrix-budget-matched K1 SwiGLU and improve the retained original K1 at fixed100K?",
+    "deficiency": "The original SwiGLU attempt produced nonfinite evaluation predictions; the real checkpoint diagnostic observed multiplicative amplification under fixed BN statistics.",
+    "changed_mechanism": "affine-free-prenorm-node-swiglu-ffn",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ],
+    "alternatives": [
+      "Input scaling does not prevent the evaluation failure",
+      "Stable SwiGLU has no material accuracy benefit",
+      "An endpoint difference reflects one initialization or training realization"
+    ],
+    "closed_families": [
+      "pcqm-k1-message-droppath-100k",
+      "K1-normalization-exposure160pass",
+      "pcqm-k1-swiglu-100k-20261106"
+    ],
+    "positive_decision": "Nominate only delta<=-3meV with paired95%CI upper<0 and strict qualification; no automatic scale-up.",
+    "negative_decision": "Close without adoption, blind seed/width/WD grid or automatic successor.",
+    "reference_ids": [
+      "ev-terminal-T-pcqm-k1-message-droppath-100k-s42-baseline"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 allocation, candidate on GPU0; original reference retained without training",
+    "estimated_device_hours": 4,
+    "estimated_wall_hours": 2,
+    "cheapest_falsifier": "One40-pass stabilized SwiGLU candidate versus the retained original K1, after the existing sandbox; no baseline retraining."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "swiglu_prenorm"
+    ],
+    "seeds": [
+      42
+    ],
+    "allocated_t4_hours_ceiling": 8,
+    "allocation_wall_limit_seconds": 14400,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User approved the affine-free input LayerNorm stabilization proposal and instructed submission in this chat on2026-11-06.",
+    "scope": "One fresh100K40-pass stabilized SwiGLU candidate on Kaggle3, original random initialization; retained original K1 comparator. Necessary existing sandbox qualification included. No baseline retraining, old-checkpoint continuation, successor, protected roles,500K or promotion."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": [
+        "k1_swiglu_prenorm_ffn"
+      ]
+    },
+    "recipe_ref": "experiments/pcqm_k1_message_droppath_100k/generated/9d282b81d38710d97582708fa26d3a608fffa93766ff813ac82fc66bb74148dd/baseline/recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_swiglu_100k_20261106/data_declaration.json",
+      "arm_id": "baseline"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "architecture_comparison",
+    "reference_ref": {
+      "bundle_ref": "experiments/pcqm_k1_message_droppath_100k/runs/pcqm-k1-message-droppath-100k-s42/prospective/strict_qualification/9c363e4431ff81182b2a/baseline/reference_bundle.json",
+      "comparison_plan": {
+        "role_applicability_plan": {
+          "metric_computed": "applicable",
+          "prediction_input": "applicable",
+          "labels_read": "applicable",
+          "selection_used": "applicable",
+          "external_submission": "not_applicable",
+          "training_membership": "applicable"
+        },
+        "trace_plan": {
+          "optimizer_step": true,
+          "epoch_or_pass": true,
+          "ema_dev_metric": false,
+          "sample_presentations": true,
+          "live_train_metric": true,
+          "checkpoint_identity": true,
+          "learning_rate": true,
+          "live_dev_metric": true
+        },
+        "runtime_qualification_plan": {
+          "status": "declared",
+          "runtime_certificate_required": true,
+          "qualification_scope": "Candidate native T4 repeat/resume and retained original K1 qualification; strict cross-source/runtime equivalence required."
+        }
+      }
+    }
+  },
+  "arms": [
+    {
+      "arm_id": "swiglu_prenorm"
+    }
+  ]
+}

@@ -50,6 +50,12 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    ("k1_swiglu_prenorm_ffn", "1"): AddonContract(
+        "neural_atom_k1", "k1-node-ffn", "molgap.k1_swiglu_prenorm_ffn",
+        (AddonConfigField("seed", "initialization_seed", value=42),),
+        ("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_swiglu_prenorm_ffn:apply_addon",
+    ),
     ("k1_swiglu_ffn", "1"): AddonContract(
         "neural_atom_k1", "k1-node-ffn", "molgap.k1_swiglu_ffn",
         (AddonConfigField("seed", "initialization_seed", value=42),),
