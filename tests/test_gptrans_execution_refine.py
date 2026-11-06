@@ -49,7 +49,7 @@ def _synthetic_padding_batch():
 @pytest.mark.parametrize("device", _DEVICES)
 @pytest.mark.parametrize("mode", ["reference", "pair_prenorm", "centered_logits",
                                   "memory_value", "memory_message", "degree_bond_local_ema999"])
-def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_states, tmp_path, mode, device):
+def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_states, tmp_path, mode, device, monkeypatch, request):
     from molgap.experiment_family_workflow import tensor_safe_rng_state
     path, digest = initial_states["gptrans_t"]
     if mode == "degree_bond_local_ema999":
@@ -63,11 +63,34 @@ def test_gptrans_safety_fill_preserves_optimizer_gradients_ema_and_rng(initial_s
             digest = state_dict_sha256(state)
             path = tmp_path / "synthetic-local-initial.pt"
             atomic_torch_save(path, {"model_state": state, "state_sha256": digest})
+        from dataclasses import replace
+        from molgap import gptrans_training_policy
+        from molgap.family_training_policy import mode_policy
+        from molgap.model_substrate import ModelSubstrate
+        original_policy = gptrans_training_policy.policy
+        def mount(recipe, model):
+            assert_equal(state, model.state_dict())
+            projection = torch.nn.Linear(1, 1, bias=False)
+            torch.nn.init.ones_(projection.weight)
+            ModelSubstrate(model, "gptrans_t").replace_submodule(
+                "readout_projection", "readout", torch.nn.Sequential(model.readout, projection))
+            return model
+        monkeypatch.setattr(gptrans_training_policy, "policy",
+                            lambda mode: replace(original_policy(mode), mount=mount))
+        mode_policy.cache_clear()
+        request.addfinalizer(mode_policy.cache_clear)
     recipe = FamilyRecipe("gptrans_t", mode, 42, digest,
         DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 2,
         .001, .01, ScheduleSpec("cosine_epoch", 2), "final-ema", "torch-pass-randperm", 1,
         target_mean_eV=0., target_std_eV=1., ema_decay=.999,
         torch_version=str(torch.__version__).split("+", 1)[0])
+    if mode == "degree_bond_local_ema999":
+        from molgap.fast_sandbox import run_frozen_arm_sandbox
+        sandbox = run_frozen_arm_sandbox(recipe, recipe, path)
+        assert sandbox["status"] == "PASSED", sandbox
+        assert sandbox["checks"]["addon_taps_fire"] == {"status": "PASSED", "attached": 1, "silent": []}
+        assert sandbox["step0_reference"] == "same_recipe"
+        assert sandbox["checks"]["save_fresh_load_bitwise"]["moved_parameters_change_output"] is True
     rng, threads = capture_rng_state(), torch.get_num_threads()
     deterministic = torch.are_deterministic_algorithms_enabled()
     fill = torch.utils.deterministic.fill_uninitialized_memory

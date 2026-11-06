@@ -22,6 +22,7 @@ def load_family_model(recipe, initial_state):
         raise ValueError("Shared family construction requires the frozen FP32 default dtype")
     state, initialization = read_frozen_state_artifact(Path(initial_state),
         expected_state_sha256=recipe.initialization_sha256)
+    policy = None if recipe.modern2d_model else mode_policy(recipe.family, recipe.mode)
     def exact_load(model):
         expected = model.state_dict()
         if expected.keys() != state.keys() or any(
@@ -50,17 +51,20 @@ def load_family_model(recipe, initial_state):
     else:
         from .family_model_ops import make_gptrans_backbone
         from .gptrans_execution_backend import bind_model_layout
-        construct = mode_policy(recipe.family, recipe.mode).construct
+        construct = policy.construct
         model = (construct(recipe, state) if construct is not None else
                  make_gptrans_backbone(variant="reference" if recipe.mode == "composed" else recipe.mode))
         exact_load(model)
         bind_model_layout(model)
+    if policy is not None and policy.mount is not None:
+        model = policy.mount(recipe, model)
     if recipe.addons:
         from .experiment_execution import TRAINING_ADAPTERS
         from .shared_model_adapter import apply_reviewed_addons
         interface = recipe.interface
         model = apply_reviewed_addons(TRAINING_ADAPTERS[interface],
             {"addons": list(recipe.addons)}, model)
+    if recipe.addons or (policy is not None and policy.mount is not None):
         substrate = getattr(model, "_molgap_substrate", None)
         if substrate is None or not (substrate.bindings or getattr(substrate, "mutations", ())):
             raise ValueError("Accelerated addons must attach to the reviewed substrate slots")

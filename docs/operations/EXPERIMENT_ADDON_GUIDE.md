@@ -59,12 +59,12 @@ throwaway K1 `post_aggregation` gain on 2026-11-01.
 
 ## Addon boundary
 
-The family trainer owns model construction, loader-facing training, optimizer,
-selection and resume behavior. Once its addon is registered, a same-family
-experiment supplies only the addon selection, frozen contract/recipe and
-config. It does not add an experiment-specific training loop, packager,
-terminal writer or platform submitter. A new family registers its model/trainer
-adapter, output profile and explicit package dependencies once.
+The family trainer owns construction, loading, optimizer, selection and resume.
+For a frozen nondefault base, a registered `policy_hook` supplies
+`FamilyModePolicy(construct=..., mount=...)`: construct returns the base;
+`mount(recipe, model)` attaches parameters after strict loading and returns the model.
+Use the existing substrate; the loader seals it before optimizer/EMA creation.
+Slot-only addons retain `composed`; no separate training or packaging path is needed.
 
 Unknown families, addon versions, modes and output profiles fail closed. A Spec
 that passes structural validation is not thereby executable, GPU-qualified,
