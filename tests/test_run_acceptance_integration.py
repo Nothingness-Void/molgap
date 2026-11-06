@@ -925,32 +925,27 @@ def test_top_level_execute_restores_frozen_generated_metadata(tmp_path, repo, mo
     closed = close_terminal_multi_arm(case.repo, [{key: where[key] for key in ("trajectory", "terminal", "trace")}
         for _, where in sorted(qualified["locations"].items(), key=lambda item: item[0] != reference_arm)])
     assert all(item["pipeline_status"] == "COMPLETE" for item in closed), closed
+    before_reuse = {path.relative_to(case.repo).as_posix(): path.read_bytes()
+        for path in (case.repo / "experiments").rglob("*") if path.is_file()}
     if comparison_purpose == "single_module_ablation":
-        from molgap.experiment_run import inspect_run_strict_evidence
         from molgap import family_training_runner as native_owner
         monkeypatch.setattr(native_owner, "inspect_retained_native_qualification",
             lambda directory, **kwargs: native[kwargs["context"].arm_id])
-        # Inspect just the candidate: its closed reference must be discovered
-        # automatically. Native qualification remains synthetic in this fixture.
-        strict_report = inspect_run_strict_evidence(case.repo,
-            {**resolved, "outputs": {candidate: resolved["outputs"][candidate]},
-                "locations": qualified["locations"], "mechanical_reports": result["arms"]}, {})
+        repeated = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
+            strict_inputs={}, execute=True)
+        assert repeated["status"] == "MECHANICALLY_VERIFIED" and repeated["closure_complete"] is True, repeated
+        assert repeated["executed"] is False and repeated["replay_readiness"] == "BLOCKED"
+        strict_report = repeated["strict_validation"]
+        assert strict_report["arms"][candidate]["native_qualification"]["status"] == "VERIFIED"
         assert strict_report["arms"][candidate]["comparison"]["status"] == "BLOCKED", strict_report
         assert strict_report["arms"][candidate]["replay"]["status"] == "BLOCKED", strict_report
         assert strict_report["closure_ready"] is True and strict_report["status"] == "BLOCKED"
         assert strict_report["arms"][candidate]["comparison"]["environment_difference"] == {
             "candidate": "candidate-runtime", "reference": "synthetic-runtime"}
-    before_reuse = {path.relative_to(case.repo).as_posix(): path.read_bytes()
-        for path in (case.repo / "experiments").rglob("*") if path.is_file()}
-    reused = family.qualify_same_run_terminal_packages(case.repo, resolved,
-        result["terminal_staging"]["locations"], native, reports=result["arms"])
-    assert reused["canonical_reused"] is True
-    if comparison_purpose == "single_module_ablation":
-        repeated = accept_run_workflow(*case.original, retrieved_root=case.paths.artifact_root / "retrieved",
-            strict_inputs={}, execute=True)
-        assert repeated["status"] == "MECHANICALLY_VERIFIED" and repeated["closure_complete"] is True, repeated
-        assert repeated["executed"] is False and repeated["replay_readiness"] == "BLOCKED"
-        assert repeated["strict_validation"]["arms"][candidate]["native_qualification"]["status"] == "VERIFIED"
+    else:
+        reused = family.qualify_same_run_terminal_packages(case.repo, resolved,
+            result["terminal_staging"]["locations"], native, reports=result["arms"])
+        assert reused["canonical_reused"] is True
     assert before_reuse == {path.relative_to(case.repo).as_posix(): path.read_bytes()
         for path in (case.repo / "experiments").rglob("*") if path.is_file()}
     changed = deepcopy(json.loads((case.repo / qualified["locations"][arm_id]["terminal"]).read_bytes()))

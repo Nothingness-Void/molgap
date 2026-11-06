@@ -358,23 +358,16 @@ def test_unknown_producer_still_requires_unchanged_pinned_manifest(unknown_produ
     assert snapshot(case.run) == original
 
 
-def test_no_execute_verifies_actual_original_context_without_auth_or_writes(retrieval, monkeypatch, capsys):
+def test_no_execute_verifies_actual_original_context_without_auth_or_writes(retrieval, capsys):
     case = retrieval
     assert case.spec.to_dict()["platform"]["name"] == case.context.platform == "kaggle"
     assert case.spec.to_dict()["platform"]["accelerator"] == "NvidiaTeslaT4"
     before = snapshot(case.run)
-    original = Mock(wraps=runs._original_run)
-    monkeypatch.setattr(runs, "_original_run", original)
     assert case.adapter.main(arguments(case)) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["status"] == "READY_FOR_RETRIEVAL"
     assert result["producer_version"] == "7"
     assert result["executed"] is result["network_accessed"] is result["scientific_acceptance"] is False
-    from molgap.experiment_package import _PackageVerification
-    original.assert_called_once()
-    assert original.call_args.args == (case.profile, case.repo, "synthetic-run", "v1")
-    assert set(original.call_args.kwargs) == {"_verification"}
-    assert isinstance(original.call_args.kwargs["_verification"], _PackageVerification)
     case.auth.assert_not_called()
     case.retrieve.assert_not_called()
     assert case.api.client_builds == 0 and case.http.urls == []

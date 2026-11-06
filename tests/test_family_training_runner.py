@@ -526,6 +526,10 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         probe = actual_session()
         try:
             reference = probe.kernel.evaluate(probe.loaders, weights="live")
+            with torch.no_grad():
+                probe.kernel.model.head[-1].bias.fill_(float("nan"))
+            with pytest.raises(ValueError, match=r"predictions non-finite: count=2; source_idx=\[256, 257\]"):
+                probe.kernel.evaluate(probe.loaders, weights="live")
         finally:
             probe.close()
         guarded_initial = tmp_path / "guarded-initial.pt"
