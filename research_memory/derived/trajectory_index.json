@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "9fa7ae0647d5dbdd1270bb2c6d3c9cc0050a18f454748325d52776bde1009233",
+  "source_digest": "fb2cf1880cde1e289bdf7bd3e657c6f3716de8ecde61e3b8b427ad7747f38396",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -394,13 +394,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/decision.md",
       "family_id": "pcqm-k1-ec-gate-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate"
     },
@@ -408,13 +410,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/decision.md",
       "family_id": "pcqm-k1-ec-gate-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate"
     },

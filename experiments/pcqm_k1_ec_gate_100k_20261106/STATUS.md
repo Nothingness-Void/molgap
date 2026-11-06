@@ -1,5 +1,14 @@
 # Submitted status — 2026-11-06 JST
 
+2026-11-07 JST terminal: both40-pass arms accepted and closed through the
+existing strict acceptance owner. Native qualification and replay VERIFIED
+for each arm with no blockers/exclusions; candidate comparison STRICT_CAUSAL.
+Degree guide CLOSED; EC guide NEGATIVE_UNDER_CONTRACT (+0.556478meV selected
+difference). See [scientific decision and attribution](decision.md).
+No successor/model adoption. Canonical closure is under each prospective
+arm/rml_finalized; raw closure report: D:/molgap-artifacts/runs/pcqm-k1-ec-gate-100k-20261106-s42/v1/operations/accept-run-close-20261107.log.
+This terminal paragraph supersedes the submission-only observations below.
+
 Kaggle3 job143052037/version1 SUBMISSION_BOUND.
 Kernel: nvoid912/molgap-k1-ec-gate-100k-20261106-s42
 Arms: degree_gate, expansion_gate,both actual fresh100K40-pass training.

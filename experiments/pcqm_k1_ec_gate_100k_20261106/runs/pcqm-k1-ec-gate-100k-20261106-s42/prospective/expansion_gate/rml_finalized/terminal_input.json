@@ -1,0 +1,146 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/terminal_staging/v1/db01cf14d36b2fae/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_ec_gate_100k_20261106/decision.md": "a7d86a0b8a0ba76825d5e277189ada7e4f5fe6c341d95a9750ca39188da1dbe0",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/authority.json": "573590f177771da4316f68d1d262eb813e44a74f567d89de6eedacc3571482ac",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/expansion_gate/recipe.json": "ace56d412e965561a503f716e95fcb9d1b479a476d8923580b3818339a6860ad",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/terminal_staging/v1/db01cf14d36b2fae/acceptance.json": "a4dde8d1618810b87bdeec3bff9416cd3801e63a6248bbd89327257674ad4c3c",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/terminal_staging/v1/db01cf14d36b2fae/observed.json": "f35bcd2c261e262eae094de714fe389ac103a848f534fc193a1e0ba48f11b5a5",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/strict_qualification/0432debd2ecfee57e62a/degree_gate/reference_bundle.json": "31b2705ad8646370fcaf27423b0117fbb59ec78d04cfbf1e3f21b827af7d4994",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/strict_qualification/0432debd2ecfee57e62a/expansion_gate/comparison_readiness.json": "ec9dfda281575133be1a2ad3bdb12ceb143a47c36a7c4e7b138b175fac9c40d0",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/terminal_acceptance/role_audit/roles_expansion_gate.json": "fa220278d48f3a76a7a8e771c806bb2c01828af6821bc6d1deaf5b5bec216e80",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "ed71e007d79862ded7f7ca7967f71513c44281bed08e5e9fca02cef92c6d8232",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "4e74c183732b0bbd954655c4d484ac7f5f339a9cbf1d5af5fa0c6d85ed649549",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/expansion_gate/allocation_ledger.json": "ed71e007d79862ded7f7ca7967f71513c44281bed08e5e9fca02cef92c6d8232",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/canonical_trace.json": "bcd158e487205ca0438d2068db717326d256d87a60eb333c20ea6efca0074493",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/canonical_trace.json.context.json": "87423022239bdb086234acca2de195507254ef1f979e51a2933a7977381eda7a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/data_open_provenance.json": "a318d8eac4d9b8f92504272a4b43dc7ddd1cae7492fbb703ccb8fa3e4698eb2e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/development_predictions.pt": "55188cae45a626bdc9c61430408d4c4b0298a118eabc9298c500fd150318cf90",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/last_checkpoint.pt": "8512172a7b7f2c14c9bc50d550345a93f79e6de90a48c844db4fe1f1e54f46cf",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/output_manifest.json": "0b4c2a40dc655eda45e3b9e74dceacc0d05169c9e98977064721a1a872684e06",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/selected_model.pt": "8d8dcffe43ca5921a24bec82ed5f73ac11b2990aadd3d8c3a735fcf01b5c8661",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/training_contract.json": "ace56d412e965561a503f716e95fcb9d1b479a476d8923580b3818339a6860ad",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-ec-gate-100k-20261106-s42/v1/reports/diagnostic_76214434a23ec90281c45cf22fff7d1d209823a89104b0f72765ba5e12667fad.json": "62e3f47aa84db28ca9767c2901ca19bc2ce0f5da5e357402001d12018d96bda1"
+  },
+  "closure_blockers": [],
+  "comparison_readiness_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/strict_qualification/0432debd2ecfee57e62a/expansion_gate/comparison_readiness.json",
+  "finalized_at": "2026-11-06T16:29:56.382467+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-0.json",
+        "sha256": "6f8d99799f3beb8da9ffff8d8fe9f9acb893e34551dd99801ceae0011670cabb"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-allocation-0.json",
+        "sha256": "a2fa8d5b1e377b7a13f103a30ff05676e371ee2923cae7652422cd66652ace81"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "6ade1d84c350fa572a0e2be786162689f55737c088e3abcfcf88d7b44ec84ad2"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "b46d34106566149033a0d24ac69357dd768c491e63869333936c88929e22646a"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-train-training_membership.json",
+        "sha256": "f6ad631df28a68729db8a05797522ce8a21b956ad24f48511ad635d421fe7b73"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-development-prediction_input.json",
+        "sha256": "b35831c51737c4a96baa824456a98b21cd4b9de3c8e2f49eb4827d0a26b14d14"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-development-labels_read.json",
+        "sha256": "91b5b79fa25f6003ec44a2dc09593d348fc03966a24789871eaad9daaf22c15c"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-development-metric_computed.json",
+        "sha256": "4d8bf62473a8a7c7f180f8d757b3cc87e9184f93b83ae62fa7cd6e1ed96d53a6"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate-development-selection_used.json",
+        "sha256": "5e29cdbeb70aa9648b483599f646f85168dc58352790fee3fb794d66402c46c7"
+      }
+    ]
+  },
+  "requested_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-ec-gate-100k-20261106-s42:expansion_gate:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-ec-gate-100k-20261106-s42-v1",
+    "logical_run_id": "pcqm-k1-ec-gate-100k-20261106-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-k1-ec-gate-100k-20261106-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "aede1f674ca1d5b84a5f65d2ce025f790c07aea1",
+    "source_package_sha256": "5b1df736fb80852bbc78b5dbd83f07c267c8bbc4536736a4e39b722781d80197",
+    "spec_identity": "350136aeee02349dcb10bdfd89c5e416c5e799d4a581cf00a72b36278e68a30d"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "k1-muon-adamw-fp32-v1",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/expansion_gate/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/expansion_gate/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate",
+    "run_id": "pcqm-k1-ec-gate-100k-20261106-s42:expansion_gate:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/expansion_gate/terminal_staging/v1/db01cf14d36b2fae/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/expansion_gate/canonical_trace.json",
+    "trace_artifact_sha256": "bcd158e487205ca0438d2068db717326d256d87a60eb333c20ea6efca0074493",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-expansion_gate"
+}

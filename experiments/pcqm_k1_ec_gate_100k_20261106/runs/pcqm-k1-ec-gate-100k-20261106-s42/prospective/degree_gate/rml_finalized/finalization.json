@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-681ccc655bdef3468ae80ae92be63a03e009d27a675e34199c51a7ffcc7bd978",
+  "finalized_at": "2026-11-06T16:29:56.093020+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_ec_gate_100k_20261106/decision.md": "a7d86a0b8a0ba76825d5e277189ada7e4f5fe6c341d95a9750ca39188da1dbe0",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/authority.json": "573590f177771da4316f68d1d262eb813e44a74f567d89de6eedacc3571482ac",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/generated/790b246a230e29dba7a545ced560853a42504163f206766c23ce2353bae1a96a/degree_gate/recipe.json": "f553247f76c8197d1fb1adc699f910e0b9481b526900a3caf642df10b14d4df7",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/terminal_staging/v1/3964245a4d0dbdda/acceptance.json": "dd997f1c954542f95c9800eb57ea686774b3f6f83fb6dc358a1ab89d74b00a9f",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/terminal_staging/v1/3964245a4d0dbdda/observed.json": "2888fa8b11137b467b986495d0478972d8e46f3a566d28b5df2b471c2ee0406e",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/strict_qualification/0432debd2ecfee57e62a/degree_gate/reference_bundle.json": "31b2705ad8646370fcaf27423b0117fbb59ec78d04cfbf1e3f21b827af7d4994",
+    "experiments/pcqm_k1_ec_gate_100k_20261106/terminal_acceptance/role_audit/roles_degree_gate.json": "561fa88944d8106f8c7c9f4773735773db5fc010b7420ec02b4c6a9b9d491d2f",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "ed71e007d79862ded7f7ca7967f71513c44281bed08e5e9fca02cef92c6d8232",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/degree_gate/allocation_ledger.json": "ed71e007d79862ded7f7ca7967f71513c44281bed08e5e9fca02cef92c6d8232",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "4e74c183732b0bbd954655c4d484ac7f5f339a9cbf1d5af5fa0c6d85ed649549",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/canonical_trace.json": "4044a40086792ae178d35840f1087cbb293f38f7c34495fd7b3c03530fcd845a",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/canonical_trace.json.context.json": "53468b5ab63e0ee92a7c5ff501a4a729ab9b4c2ed0a081ca7d838ddce961a663",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/data_open_provenance.json": "d111d2f4b8f9efa55739cab6f0959c8f5df4828835bcf5303edcec78a1562c59",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/development_predictions.pt": "8b7c1e0651808a42333a38ea01333ec9552c9449e4b31fb2a9f19bf78b5856dd",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/last_checkpoint.pt": "5c702392f717195fd0915a6fa04240dee36b1558180db5c80309ef32cd4479b0",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/output_manifest.json": "4e3b2ff70c49b37fd80cf277782d756c41aacd4727b808d39c0d5c8a2fc98a16",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/selected_model.pt": "7ac521271093254917beb89dd84f46067f558199c2a574292187e28efea359bf",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-ec-gate-100k-20261106-s42/v1/version1/degree_gate/training_contract.json": "f553247f76c8197d1fb1adc699f910e0b9481b526900a3caf642df10b14d4df7",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-ec-gate-100k-20261106-s42/v1/reports/diagnostic_76214434a23ec90281c45cf22fff7d1d209823a89104b0f72765ba5e12667fad.json": "62e3f47aa84db28ca9767c2901ca19bc2ce0f5da5e357402001d12018d96bda1"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/trajectory.json",
+  "prospective_sha256": "e3d9b9d38fa2d7d09fbb8ed0b327ea0e4e791d0d577c298ba139d52fbd2baabe",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-0.json": "5adeb18e4d9b63f3349b0b14f662457b4e59661b14ff1b7923ddade3678933f5",
+    "costs/cost-terminal-T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-allocation-0.json": "7e67a8cf5d89bcc6a216bcc7e6f74318b29c16df6b1392caa0964456961f80a7",
+    "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-development-labels_read.json": "330720e04a61e83ac38ee4befb8ba5bd2a848d02ab4d2d9a340a57a37b74635b",
+    "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-development-metric_computed.json": "4bed60a3db6448f1ecc9d3d8b4ff92d33d9e19ca5e43e370b02e55fb895345b7",
+    "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-development-prediction_input.json": "8ec75f18a23968edce266f00808deff2a1202c25acc73478351a6594dfe44483",
+    "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-development-selection_used.json": "759d7de7d35235dc47073469a7a131debf10add374a9197a1a351eb8826743e5",
+    "roles/role-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate-train-training_membership.json": "45869d290eda0819548bb603c65075042eae868542b018d847239a6ab9983ef2",
+    "terminal_input.json": "765e731c25559d2afb707cc15cbfef6705b2f14e45b86e2ee6da276f5f044afc",
+    "trace.json": "4044a40086792ae178d35840f1087cbb293f38f7c34495fd7b3c03530fcd845a",
+    "trace_manifest.json": "b56e7b598cefce5fae35a008650ecf140bddf19ecab0d1504e2c836dba65c0c9",
+    "trajectory.json": "703b4482f8eb698faf22feff8b70fe977bd2cd11cf156433632cbe87eaee2155",
+    "v5_evidence.json": "003856c4fe8f82aece4ec9f8e6a4532ce51a151b5a39375e7594b5ab89e3d171"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_ec_gate_100k_20261106/runs/pcqm-k1-ec-gate-100k-20261106-s42/prospective/degree_gate/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "681ccc655bdef3468ae80ae92be63a03e009d27a675e34199c51a7ffcc7bd978",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-ec-gate-100k-20261106-s42-degree_gate"
+}
