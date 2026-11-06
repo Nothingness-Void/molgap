@@ -195,6 +195,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     if family == "neural_atom_k1" and development:
         from molgap.family_training_state import CalibrationPolicy, source_order_sha256
         recipe = replace(recipe, selection="best-development-clean-ema", development_reports=("live",),
+            optimizer="k1-soap-adamw-fp32-v1",
             clean_bn=CalibrationPolicy(selection.manifest_sha256, "3" * 64,
                 source_order_sha256(torch.arange(128)), 1))
     data = TrainingData([graph(i) for i in range(256)],

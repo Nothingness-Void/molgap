@@ -25,13 +25,22 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
         raise ValueError("Optimizer parameter-group count differs from recipe")
     ids = []
     muon_ids = set()
+    soap_ids = set()
     for index, (g, wd) in enumerate(zip(groups, expected_decays)):
-        if recipe.optimizer != "adamw" and g.get("algorithm") != ("muon", "adamw")[index]:
+        soap = recipe.optimizer == "k1-soap-adamw-fp32-v1" and index == 0
+        hidden_algorithm = "soap" if recipe.optimizer == "k1-soap-adamw-fp32-v1" else "muon"
+        if recipe.optimizer != "adamw" and g.get("algorithm") != (hidden_algorithm, "adamw")[index]:
             raise ValueError("Resume changed frozen optimizer partition")
         frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": wd,
             "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
             "foreach": None if recipe.family == "neural_atom_k1" else True,
             "fused": None if recipe.family == "neural_atom_k1" else False}
+        if soap:
+            from ..k1_soap import SOAP_POLICY
+            frozen = {name: SOAP_POLICY[name] for name in ("betas", "shampoo_beta", "eps",
+                "precondition_frequency", "max_precond_dim", "merge_dims", "precondition_1d",
+                "normalize_grads", "correct_bias")}
+            frozen.update(betas=tuple(frozen["betas"]), weight_decay=wd)
         for name, value in frozen.items():
             if name not in g or type(g[name]) is not type(value) or g[name] != value:
                 raise ValueError("Resume changed frozen AdamW field: " + name)
@@ -42,7 +51,7 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
             raise ValueError("Resume parameter mapping differs from frozen group ordering")
         ids.extend(g_ids)
         if recipe.optimizer != "adamw" and index == 0:
-            muon_ids.update(g_ids)
+            (soap_ids if soap else muon_ids).update(g_ids)
     group = groups[0]
     if any(g.get("lr") != group.get("lr") for g in groups[1:]):
         raise ValueError("Resume parameter groups diverge in learning rate")
@@ -51,16 +60,39 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
         raise ValueError("Missing or unbound optimizer moments")
     for parameter_id, record in moments.items():
         keys = ("momentum_buffer",) if parameter_id in muon_ids else ("exp_avg", "exp_avg_sq")
-        if type(record) is not dict or set(record) != {"step", *keys}:
+        required = {"step", *keys}
+        if parameter_id in soap_ids:
+            required.update(("GG", "Q", "precondition_frequency", "shampoo_beta"))
+        if type(record) is not dict or set(record) != required:
             raise ValueError("Incomplete optimizer moments")
         count = record["step"]
-        if (not isinstance(count, torch.Tensor) or count.ndim != 0 or not count.is_floating_point() or
+        if parameter_id in soap_ids:
+            if type(count) is not int or not 0 <= count < step:
+                raise ValueError("SOAP update exposure is outside acknowledged work")
+        elif (not isinstance(count, torch.Tensor) or count.ndim != 0 or not count.is_floating_point() or
                 not bool(torch.isfinite(count)) or not 1 <= float(count) <= step or float(count) != int(float(count))):
             raise ValueError("Optimizer update exposure is outside acknowledged work")
         first, second = record[keys[0]], record[keys[-1]]
         if (not isinstance(first, torch.Tensor) or not isinstance(second, torch.Tensor) or
                 not first.is_floating_point() or first.shape != second.shape or first.dtype != second.dtype):
             raise ValueError("Optimizer moment tensor schema differs")
+        if parameter_id in soap_ids:
+            if first.ndim != 2 or first.dtype != torch.float32:
+                raise ValueError("SOAP moments require FP32 hidden matrices")
+            for name in ("precondition_frequency", "shampoo_beta"):
+                if type(record[name]) is not type(SOAP_POLICY[name]) or record[name] != SOAP_POLICY[name]:
+                    raise ValueError("Resume changed frozen SOAP state: " + name)
+            for name in ("GG", "Q"):
+                matrices = record[name]
+                if type(matrices) is not list or len(matrices) != first.ndim:
+                    raise ValueError("SOAP preconditioner dimensions differ")
+                for size, matrix in zip(first.shape, matrices):
+                    if size > SOAP_POLICY["max_precond_dim"]:
+                        if type(matrix) is not list or matrix:
+                            raise ValueError("SOAP excluded preconditioner dimension changed")
+                    elif (not isinstance(matrix, torch.Tensor) or matrix.shape != (size, size)
+                            or matrix.dtype != torch.float32):
+                        raise ValueError("SOAP preconditioner tensor schema differs")
     schedule = recipe.schedule
     units = pass_index if schedule.epoch_based else step
     if (type(scheduler) is not dict or set(scheduler) != {"completed_units", "native"}
@@ -322,9 +354,12 @@ class FamilyTrainingSession:
             if (moments is None and parameter.requires_grad and
                     not (self.recipe.mode == "ssma" and names[id(parameter)].startswith("k1_joint_aggregation."))):
                 raise ValueError("Resume lost required parameter moments")
-            if moments is not None and any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
-                    for key in moments if key != "step"):
-                raise ValueError("Resume optimizer moments do not match the live parameter schema")
+            if moments is not None:
+                moment_keys = (("exp_avg", "exp_avg_sq") if self.recipe.optimizer == "k1-soap-adamw-fp32-v1"
+                    else tuple(key for key in moments if key != "step"))
+                if any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
+                        for key in moment_keys):
+                    raise ValueError("Resume optimizer moments do not match the live parameter schema")
         _finite_tree(state, "family.resume")
         _validate_rng_state(state["rng_state"])
         previous = deepcopy(self.state_dict())

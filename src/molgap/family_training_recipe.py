@@ -29,7 +29,7 @@ def optimizer_identity(record):
     return canonical_fingerprint({"recipe": {k: record[k] for k in (
         "learning_rate", "weight_decay", "gradient_clip", "no_decay_modules", "optimizer") if k in record},
         "policy": {k: record["execution_policy"][k] for k in (
-            "adamw_betas", "adamw_epsilon", "muon") if k in record["execution_policy"]}})
+            "adamw_betas", "adamw_epsilon", "muon", "soap") if k in record["execution_policy"]}})
 
 
 def ema_label(decay):
@@ -156,11 +156,11 @@ class FamilyRecipe:
         object.__setattr__(self, "_frozen_read", _frozen_read)
         if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
-        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1"}:
+        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1", "k1-soap-adamw-fp32-v1"}:
             raise ValueError("Unsupported frozen optimizer")
         if self.optimizer != "adamw" and (self.family != "neural_atom_k1" or
                 self.mode not in {"reference", "composed"} or self.no_decay_modules):
-            raise ValueError("K1 Muon requires reference/composed mode and uniform weight decay")
+            raise ValueError("K1 hybrid optimizers require reference/composed mode and uniform weight decay")
         from .common.spec import _text, _addon_declaration
         _text(self.mode, "mode")
         if type(self.resume_chunks) is not bool:
@@ -267,9 +267,12 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
-        if self.optimizer != "adamw":
+        if self.optimizer == "k1-muon-adamw-fp32-v1":
             from .k1_muon import MUON_POLICY
             policy.update(optimizer=self.optimizer, muon=dict(MUON_POLICY))
+        elif self.optimizer == "k1-soap-adamw-fp32-v1":
+            from .k1_soap import SOAP_POLICY
+            policy.update(optimizer=self.optimizer, soap=dict(SOAP_POLICY))
         if self.no_decay_modules:
             policy["weight_decay_exempt"] = list(self.no_decay_modules)
         if self.auxiliary_ema_decays:

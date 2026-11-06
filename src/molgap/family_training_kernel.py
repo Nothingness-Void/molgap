@@ -68,7 +68,10 @@ def load_family_model(recipe, initial_state):
 def parameter_groups_for_recipe(recipe, model):
     if recipe.optimizer != "adamw":
         from .k1_muon import parameter_groups
-        return parameter_groups(model, recipe.weight_decay)
+        groups = parameter_groups(model, recipe.weight_decay)
+        if recipe.optimizer == "k1-soap-adamw-fp32-v1":
+            groups[0]["algorithm"] = "soap"
+        return groups
     if not recipe.no_decay_modules:
         return model.parameters()
     import torch.nn as nn
@@ -95,7 +98,10 @@ def make_family_optimizer(recipe, parameters):
     """One optimizer owner; explicit constants equal the existing native defaults."""
     import torch
     from .v4_runtime import make_adamw_compat
-    if recipe.optimizer != "adamw":
+    if recipe.optimizer == "k1-soap-adamw-fp32-v1":
+        from .k1_soap import SOAPAdamW
+        return SOAPAdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay)
+    if recipe.optimizer == "k1-muon-adamw-fp32-v1":
         from .k1_muon import MuonAdamW
         return MuonAdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay)
     if recipe.family == "neural_atom_k1":
