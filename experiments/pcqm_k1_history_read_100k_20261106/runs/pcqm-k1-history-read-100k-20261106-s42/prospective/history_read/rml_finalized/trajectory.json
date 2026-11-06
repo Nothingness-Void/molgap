@@ -1,0 +1,119 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-history-read-100k-20261106-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-history-read-100k-20261106-s42-history_read-planned",
+        "cost-terminal-T-pcqm-k1-history-read-100k-20261106-s42-history_read-0",
+        "cost-terminal-T-pcqm-k1-history-read-100k-20261106-s42-history_read-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_history_read_100k_20261106/generated/11541c790c147b1cf791241034dbf7002933cb5b4ffaa1f11d71f0e0cba80a2f/history_read/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-history-read-100k-20261106-s42:history_read:downstream"
+      ],
+      "source_commit": "e463356bf8e0c110a370e2d2b0aad18de0be0811",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/strict_qualification/f364755fe334ab2c12b2/history_read/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_history_read_100k_20261106/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "POSITIVE_BELOW_GATE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_history_read_100k_20261106/generated/11541c790c147b1cf791241034dbf7002933cb5b4ffaa1f11d71f0e0cba80a2f/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-history-read-100k-20261106",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_history_read_100k_20261106/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/rml_decision_snapshots/bee754b34952628a04083a89217bfb62f8df0e61b26a3e81f93724b6fb24001a.json",
+    "snapshot_sha256": "bee754b34952628a04083a89217bfb62f8df0e61b26a3e81f93724b6fb24001a",
+    "state_timestamp": "2026-11-06T08:37:51.875060+00:00"
+  },
+  "family_id": "pcqm-k1-history-read-100k-20261106",
+  "hypothesis": {
+    "alternative_explanations": [
+      "The existing model already preserves sufficient information",
+      "Additional decoding capacity explains any gain",
+      "Early fitting improves without retained late-horizon generalization"
+    ],
+    "changed_mechanism": "current-only-versus-cross-layer-normalized-associative-read",
+    "cheapest_falsifier": "Two real100K40-pass candidate trainings with matched backbone,MUON recipe,seed,data and exposure; one mechanism toggle, no baseline retraining.",
+    "decision_changed_if_negative": "Close the frozen pair without adoption, blind grids,automatic successor or scale-up.",
+    "decision_changed_if_positive": "Nominate only with candidate-control selected gain>=3meV,paired95percent interval upper<0,negative final and last-five deltas,strict acceptance. Also assess against the retained Muon endpoint without silently claiming cross-run qualification.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-history-read-100k-20261106-s42-history_read-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-history-read-100k-20261106-s42-history_read",
+    "observed_deficiency": "Server current-layer linear-attention replacement lost early gains and ended0.399meV worse; the usefulness of history while preserving original slot mixers is unresolved.",
+    "related_closed_family_ids": [
+      "k1-ssma",
+      "pcqm-k1-extremal-readout-100k",
+      "node-query-linear-global-exchange"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does carrying normalized associative statistics across layers improve K1 plus Muon versus a matched current-layer-only read?",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-current_read-f364755fe334ab2c12b2",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/history_read/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_history_read_100k_20261106/generated/11541c790c147b1cf791241034dbf7002933cb5b4ffaa1f11d71f0e0cba80a2f/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_history_read_100k_20261106/generated/11541c790c147b1cf791241034dbf7002933cb5b4ffaa1f11d71f0e0cba80a2f/history_read/recipe.json",
+      "experiments/pcqm_k1_history_read_100k_20261106/data_declaration.json",
+      "experiments/pcqm_k1_history_read_100k_20261106/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_history_read_100k_20261106/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "history_read",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-k1-history-read-100k-20261106-s42",
+      "reference_arm_id": "current_read",
+      "reference_trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-current_read",
+      "reference_trajectory_ref": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/current_read/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "654cc8828cc1f85b3327e021b292bbb90873edc578c315db8a4d80c4d999deb6"
+    },
+    "source_commit": "e463356bf8e0c110a370e2d2b0aad18de0be0811",
+    "source_config_identity": "23811894dce34d6022dd56d8b763ddb7202671678fbc9dc06e35701fdb496a59"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+}

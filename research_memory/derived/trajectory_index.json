@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "5e323c265472cd5aeb2e0133375d993d594b86e82c4aee2c6fb98670290444fa",
+  "source_digest": "8ee10015ab2043c005293e45d5224e30fa0991c29a7888ac191b951354c83876",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -426,13 +426,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_history_read_100k_20261106/decision.md",
       "family_id": "pcqm-k1-history-read-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/current_read/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/current_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-current_read"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-current_read"
     },
@@ -440,13 +442,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_history_read_100k_20261106/decision.md",
       "family_id": "pcqm-k1-history-read-100k-20261106",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/history_read/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_history_read_100k_20261106/runs/pcqm-k1-history-read-100k-20261106-s42/prospective/history_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-history-read-100k-20261106-s42-history_read"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-history-read-100k-20261106-s42-history_read"
     },
