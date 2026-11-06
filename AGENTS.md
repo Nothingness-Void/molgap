@@ -179,6 +179,7 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   total net source growth of at most 20 lines are preapproved for measured source-line
   limit adjustments; count the whole fix, not individual commits. Other increases need
   explicit approval. This allowance excludes rewrites and unrequested features.
+  如果测试代码增量大于功能代码增量就需返工。
   Over a limit blocks that commit, never an experiment. One fact has one owner; bind a
   hash only to an artifact something consumes. The new-experiment rule lives only in
   this bullet (no R-number label): a new experiment adds files under `experiments/<q>/`,
