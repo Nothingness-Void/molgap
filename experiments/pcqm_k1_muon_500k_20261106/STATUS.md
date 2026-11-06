@@ -39,3 +39,5 @@ PAUSED/cursor metadata and the60-pass contract determine the remaining work.
 
 Kaggle2 quota observed by Luna2026-11-06 15:34:51 JST:18.57hours remaining,
 next reset2026-11-07 09:00 JST. Future segments recheck actual quota.
+
+Luna observed v2 scheduler RUNNING/latest2 matching continuation receipt2 at 2026-11-07 01:54 JST; zero files downloaded. This is scheduler status, not native resumed-training qualification.
