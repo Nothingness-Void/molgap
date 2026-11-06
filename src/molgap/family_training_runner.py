@@ -69,14 +69,33 @@ def _objective_binding(family, gradient_clip, mode):
         "mode": mode, "family": family, "gradient_clip": gradient_clip})}
 
 
+def objective_only_addons(arm):
+    """Addons that only select a training mode: no model delta, policy hook or optimizer-state tail."""
+    from .experiment_spec import ADDONS
+    return [addon for addon in arm.get("addons", ())
+            if (contract := ADDONS[(addon["name"], addon["version"])]).execution_modes
+            and not (contract.apply_hook or contract.policy_hook or contract.conditional_optimizer_prefixes)]
+
+
+def architecture_addons(arm):
+    """Addons that count towards architecture identity; objective-only ones belong to the loss."""
+    only = objective_only_addons(arm)
+    return [addon for addon in arm.get("addons", ()) if addon not in only]
+
+
 def comparison_objective_identity(arm, recipe):
     """Project equivalent reference/composed default-loss declarations."""
     objective = arm["training"]["objective"]
     fields = recipe if isinstance(recipe, dict) else vars(recipe)
     family, clip, mode = (fields[key] for key in ("family", "gradient_clip", "mode"))
     if mode in {"reference", "composed"} and objective == _objective_binding(family, clip, mode):
-        return _objective_binding(family, clip, "reference")["sha256"]
-    return objective["sha256"]
+        identity = _objective_binding(family, clip, "reference")["sha256"]
+    else:
+        identity = objective["sha256"]
+    only = objective_only_addons(arm)
+    # The mode string alone does not bind constants held in the addon source.
+    return identity if not only else canonical_fingerprint({"objective": identity, "addons": [
+        {key: addon[key] for key in ("name", "version", "source_sha256")} for addon in only]})
 
 
 def family_arm_bindings(recipe):

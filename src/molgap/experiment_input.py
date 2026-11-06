@@ -282,7 +282,8 @@ def _compile_scientific_input(path, root, value):
     from .experiment_launch import canonical_json
     from .experiment_source_inventory import runtime_source_files
     from .experiment_spec import FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
-    from .family_training_runner import INTERFACES, read_recipe, family_arm_bindings, comparison_objective_identity
+    from .family_training_runner import (INTERFACES, read_recipe, family_arm_bindings, comparison_objective_identity,
+        architecture_addons)
     from .v4_bundle import _assert_clean_paths, _payload, committed_payloads
     from .research_memory.trace import file_digest
 
@@ -887,8 +888,8 @@ def _compile_scientific_input(path, root, value):
                    for key in ("learning_rate", "weight_decay")):
                 changed.append("optimizer_identity")
             configuration_changed = row[2].get("model_config") != reference[2].get("model_config")
-            if configuration_changed or any(row[1][key] != reference[1][key]
-                                            for key in ("base", "addons")):
+            if configuration_changed or row[1]["base"] != reference[1]["base"] or (
+                    architecture_addons(row[1]) != architecture_addons(reference[1])):
                 changed.append("architecture_config_identity")
             if row[1]["initialization"] != reference[1]["initialization"]:
                 if (modern and configuration_changed

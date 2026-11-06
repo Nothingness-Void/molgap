@@ -91,6 +91,7 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
         "mechanism_comparison": ["architecture_config_identity"],
         "optimizer_comparison": ["optimizer_identity"],
         "initialization_comparison": ["initialization_identity"],
+        "training_objective_comparison": ["loss_identity"],
     }
     if purpose not in allowed:
         raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
@@ -272,7 +273,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     from .experiment_attribution import _load_arm_artifacts, _compare_paired_errors
     from .research_memory.paths import artifact_locator, bound_artifact_path, verify_bound_artifact
     from .research_memory.roles import validate_observed_role_truth
-    from .family_training_runner import read_recipe, comparison_objective_identity
+    from .family_training_runner import read_recipe, comparison_objective_identity, architecture_addons
     from .research_memory.finalize import (current_finalized_directory, load_terminal_input,
         verified_receipt, prospective_bytes, _qualification_amendment, _bindings)
     root = Path(repo_root).resolve()
@@ -427,7 +428,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "sample_presentations": data["manifest"]["progress"]["sample_presentations"],
             "optimizer_steps": data["manifest"]["progress"]["optimizer_steps"], "checkpoint_selection_identity": recipe.selection,
             "evaluation_role_identity": contract["development_role_identity"], "selection_role_identity": contract["development_role_identity"],
-            "architecture_config_identity": canonical_fingerprint({k: arm[k] for k in ("base", "addons")}),
+            "architecture_config_identity": canonical_fingerprint({"base": arm["base"], "addons": architecture_addons(arm)}),
             "runtime_certificate_scope": provenance["runtime_fingerprint"], "weight_semantics": data["selection_weights"],
             "ema_enabled": recipe.ema_decay is not None, "ema_decay": recipe.ema_decay,
             "ema_update_frequency": 1 if recipe.ema_decay is not None else None,

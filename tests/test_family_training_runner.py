@@ -70,6 +70,14 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
         candidate["training"]["objective"]["sha256"] = canonical_fingerprint({
             "mode": "composed", "family": family, "gradient_clip": 2.})
         assert comparison_objective_identity(candidate, {**composed, "gradient_clip": 2.}) != comparison_objective_identity(reference, recipe)
+        if family == "neural_atom_k1":
+            from molgap.family_training_runner import architecture_addons
+            addon = {"name": "k1_rank_contrast", "version": "1", "source_sha256": "a" * 64}
+            candidate = {**reference, "addons": [addon]}
+            changed = comparison_objective_identity(candidate, recipe)
+            assert changed != comparison_objective_identity(reference, recipe) and architecture_addons(candidate) == []
+            candidate["addons"] = [{**addon, "source_sha256": "b" * 64}]
+            assert comparison_objective_identity(candidate, recipe) != changed
     finally:
         session.close()
 
