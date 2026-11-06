@@ -359,10 +359,10 @@ never invented.
 `research_memory/derived/trajectory_index.json`); cite papers in `protocol.md`.
 `authority.account` must be the Kaggle username of `$credentials`.
 
-Training edits: `learning_rate`, `weight_decay`, normalization-only `no_decay_modules`,
-`ema_decay`, and independent `auxiliary_ema_decays` (descriptive comparisons).
-`optimizer: "k1-muon-adamw-fp32-v1"` selects K1 reference/composed hidden-matrix Muon plus
-AdamW; omit it for unchanged AdamW. Use `purpose: "optimizer_comparison"` for a pair.
+Training edits: `learning_rate`, `weight_decay`, `no_decay_modules`, `ema_decay`, `auxiliary_ema_decays`.
+K1 reference/composed supports `optimizer: "k1-muon-adamw-fp32-v1"` or `"k1-soap-adamw-fp32-v1"`.
+Both share hidden-matrix selection and native AdamW remainder; SOAP first initializes preconditioning only.
+Omit optimizer for unchanged AdamW; use `purpose: "optimizer_comparison"` for a pair.
 Retained `reference_ref` takes `bundle_ref` plus `comparison_plan`. Default platform:
 Kaggle T4x2, seed 42, fixed 100K mount; other mounts need explicit `platform`.
 

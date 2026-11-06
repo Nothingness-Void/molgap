@@ -13,7 +13,7 @@ from molgap.training_reproducibility import atomic_torch_save
 from molgap.v4_runtime import state_dict_sha256
 
 
-def test_k1_muon_matches_fp32_matrix_update_and_native_adamw():
+def test_k1_muon_matches_fp32_matrix_update_and_native_adamw(tmp_path, monkeypatch):
     from molgap.k1_muon import MuonAdamW, parameter_groups
     model = torch.nn.Module()
     model.hidden = torch.nn.Linear(2, 3)
@@ -42,6 +42,43 @@ def test_k1_muon_matches_fp32_matrix_update_and_native_adamw():
         torch.testing.assert_close(model.head.weight, native_head, atol=0, rtol=0)
     assert set(optimizer.state[model.hidden.weight]) == {"step", "momentum_buffer"}
     assert optimizer.state[model.hidden.weight]["step"].item() == 2
+
+    from molgap.family_training_kernel import make_family_optimizer, parameter_groups_for_recipe
+    model.hidden = torch.nn.Linear(2, 2, bias=False)
+    model.hidden.weight.data.copy_(torch.tensor([[.1, .2], [-.3, .4]]))
+    recipe = SimpleNamespace(optimizer="k1-soap-adamw-fp32-v1", learning_rate=.01, weight_decay=.03)
+    optimizer = make_family_optimizer(recipe, parameter_groups_for_recipe(recipe, model))
+    native_head = torch.nn.Parameter(model.head.weight.detach().clone())
+    native = torch.optim.AdamW([native_head], lr=.01, weight_decay=.03)
+    initial = model.hidden.weight.detach().clone()
+    for index in range(12):
+        model.hidden.weight.grad = torch.tensor([[.2, -.4], [.1, .6]]) + index * torch.tensor([[.003, .002], [-.004, .005]])
+        model.head.weight.grad = torch.full_like(model.head.weight, .2)
+        native_head.grad = model.head.weight.grad.clone()
+        optimizer.step()
+        native.step()
+        torch.testing.assert_close(model.head.weight, native_head, atol=0, rtol=0)
+        if index == 0:
+            assert torch.equal(model.hidden.weight, initial)
+            assert optimizer.state[model.hidden.weight]["step"] == 0
+            path = tmp_path / "soap-initialized.pt"
+            torch.save(optimizer.state_dict(), path)
+            optimizer = make_family_optimizer(recipe, parameter_groups_for_recipe(recipe, model))
+            optimizer.load_state_dict(torch.load(path, weights_only=True))
+    # Pinned author's implementation on these fixed gradients, including its QR refresh.
+    expected = torch.tensor([[-.04356049746274948, .17716053128242493],
+                             [-.27684491872787476, .25547081232070923]])
+    torch.testing.assert_close(model.hidden.weight, expected, atol=1e-6, rtol=1e-6)
+    assert optimizer.state[model.hidden.weight]["step"] == 11
+    assert all(matrix.dtype == torch.float32 for key in ("GG", "Q")
+               for matrix in optimizer.state[model.hidden.weight][key])
+    def failed_eigh(matrix):
+        assert matrix.dtype == torch.float32
+        raise torch.linalg.LinAlgError("observed FP32 failure")
+    monkeypatch.setattr(torch.linalg, "eigh", failed_eigh)
+    optimizer.state.clear()
+    with pytest.raises(torch.linalg.LinAlgError, match="observed FP32 failure"):
+        optimizer.step()
 
 
 def test_initialization_dtype_must_not_be_silently_cast(initial_states, tmp_path):
