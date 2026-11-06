@@ -742,7 +742,7 @@ def test_worker_validates_staged_binding_before_dispatch(
     arm_id = spec.to_dict()["arms"][0]["arm_id"]
     config = {"jobs": [{"arm_id": arm_id}], "expected_package_identity": HEX_A,
               "account": "synthetic-account", "run_reference": "synthetic-account/workload-1",
-              "prospective_sha256": {arm_id: HEX_B}}
+              "prospective_sha256": {arm_id: HEX_B}, "pause_after_step": 3}
     if binding_mode != "omitted":
         config["target_identity"] = dict(binding)
     if binding_mode == "malformed":
@@ -764,6 +764,7 @@ def test_worker_validates_staged_binding_before_dispatch(
         dispatch.assert_not_called()
     else:
         main(argv)
+        assert dispatch.call_args.kwargs["pause_after_step"] == (3 if phase == "train" else None)
         forwarded = dispatch.call_args.kwargs["target_identity"]
         if binding_mode == "omitted":
             assert forwarded is None

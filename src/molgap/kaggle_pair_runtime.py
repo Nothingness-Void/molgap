@@ -119,6 +119,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             worker["returncode"] = returncode
             status = terminal_status or (("preflight_complete" if phase == "preflight" else "complete")
                                          if returncode == 0 else "failed")
+            arm_output = output / job["arm_id"]
+            if phase == "train" and returncode == 0 and (arm_output / "pause_receipt.json").is_file() and not (arm_output / "output_manifest.json").is_file():
+                status = "paused"
             reason = exit_reason or phase + "_worker_exit_" + str(returncode)
             state["worker_wall_seconds"] += elapsed
             state["terminal_status"] = status
@@ -306,7 +309,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         atomic_json(output / "pair_state.json", report)
                     except OSError:
                         pass  # Preserve the original worker failure if storage also failed.
-    report["status"] = "complete"
+    report["status"] = "paused" if any(arm["terminal_status"] == "paused" for arm in report["arms"].values()) else "complete"
     atomic_json(output / "pair_state.json", report)
     ledger.write(output, "complete", arm_roots=[output / j["arm_id"] for j in jobs])
     retain_execution()

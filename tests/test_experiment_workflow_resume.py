@@ -608,6 +608,12 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
         assert sorted(validation_arms) == (sorted(config["resume"]) if manifest_change == "before_restore" else [])
 
     validation_arms.clear()
+    start_worker = kaggle_pair_runtime.subprocess.Popen
+    def paused_worker(command, **kwargs):
+        if _command_value(command, "--phase") == "train":
+            (Path(_command_value(command, "--output")) / "pause_receipt.json").write_text('{}')
+        return start_worker(command, **kwargs)
+    monkeypatch.setattr(kaggle_pair_runtime.subprocess, "Popen", paused_worker)
     report = kaggle_pair_runtime.run_two_phase_pair(
         source_root=case["repo"],
         package_dir=case["package"],
@@ -617,7 +623,8 @@ def test_resumed_pair_runtime_restores_bundles_and_binds_resume_paths_and_retent
         manifest=manifest,
     )
 
-    assert report["status"] == "complete"
+    assert report["status"] == "paused"
+    assert all(arm["terminal_status"] == "paused" for arm in report["arms"].values())
     assert sorted(validation_arms) == sorted(config["resume"])
     assert len(commands) == len(case["spec"].to_dict()["arms"]) * 2
     for arm_id in case["bundles"]:

@@ -59,23 +59,23 @@ to continue directly through the original journaled submitter when authorized.
 
 ## Platform operation
 
-For an authorized checkpoint continuation, pass the existing `prepare-resume`
-directory to the same adapter, retain `--authority` from the original immutable
-package, and add `--recovery-authority $retainedAuthorization
+For an authorized continuation, pass the `prepare-resume` directory to this adapter;
+retain original `--authority` and add `--recovery-authority $retainedAuthorization
 --recovery-authority-sha256 $sha256 --source-version 2 --kernel-version 2`.
-The authorization is retained verbatim and SHA-bound; its content remains the
-owning contract's authority, not a new launcher schema. Source and kernel
-successor versions are independent explicit integers. Each must immediately
-follow its observed predecessor; the predecessor kernel must be terminal
-error/failed/cancelled. The adapter versions the same private source dataset,
-round-trips exact successor bytes, and binds a physical successor receipt over
-the original Spec/package/context. It shares the existing journal, release,
-quota, push and receipt owners. Unknown requests never cause another mutation;
-BOUND re-entry verifies locally without consulting a newer remote version.
+Each version must immediately follow its observed predecessor. The predecessor
+must be terminal error/failed/cancelled or complete with a validated incomplete
+checkpoint. Completed training outputs remain ineligible for resume.
+For planned segments, set `platform.kaggle.pause_after_step` in the experiment
+input (or `authority.pause_after_step` when deriving the platform). This is an
+absolute cumulative optimizer step, shared by all arms, within the frozen horizon.
+Each resume plan sets its top-level `pause_after_step` beyond every retained cursor;
+the final boundary equals the original horizon. Keep the full scientific recipe.
+The allocation ends normally; `pair_state.json` records `paused` until training completes.
+The same dataset, Spec/package/context, journal, quota and receipt owners are reused.
+Unknown requests never trigger another mutation; BOUND re-entry is local.
 Default mode makes no API calls. This route grants no new training authority.
 
-The prepared source package must contain a bounded authority with
-`user_authorized: true`, the exact `arms` and `seeds`, and a positive
+The source package must bind `user_authorized: true`, exact `arms` and `seeds`, and a positive
 `allocated_t4_hours_ceiling`. Credentials stay outside Git. The operations
 directory must be separate from immutable prepared inputs, preferably beside
 them in ignored platform storage. Monitor pointers identify the existing owner;
