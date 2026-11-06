@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6b04b56d4d97841a4f537b3d85e6be823da004e40f559ae35c247f0732b24f14",
+  "source_digest": "e887d16e8e91877420afef6db19aa6a8268e9072c95c1e8bd8d1286343e163df",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -885,6 +885,20 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-swiglu-100k-20261106-s42-swiglu"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/decision.md",
+      "family_id": "pcqm-k1-swiglu-prenorm-100k-20261106",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_swiglu_prenorm_100k_20261106/runs/pcqm-k1-swiglu-prenorm-100k-20261106-s42/prospective/swiglu_prenorm/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-swiglu-prenorm-100k-20261106-s42-swiglu_prenorm"
     },
     {
       "completeness_status": "complete",

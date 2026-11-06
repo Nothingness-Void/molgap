@@ -5,7 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 7
+- ACTIVE: 8
 - CLOSED: 36
 - INCONCLUSIVE: 24
 - INFRASTRUCTURE_ONLY: 10
@@ -256,10 +256,10 @@
 - Tesla T4x2 FP32; one newly trained arm per device device_hours: measured=unknown (0 measured records), estimated=12.600000 (6 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4x2 FP32; one newly trained arm per device queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
 - Tesla T4x2 FP32; one newly trained arm per device wall_hours: measured=unknown (0 measured records), estimated=12.600000 (6 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
-- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training wall_hours: measured=unknown (0 measured records), estimated=2.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training device_hours: measured=unknown (0 measured records), estimated=8.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla T4x2 allocation, candidate on GPU0; original reference retained without training wall_hours: measured=unknown (0 measured records), estimated=4.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - Tesla_P100_PCIE_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -292,8 +292,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 421
-- Cost-event coverage: 195/206 trajectories; incomplete native measurement=163
+- Measurement-missing cost events: 422
+- Cost-event coverage: 196/207 trajectories; incomplete native measurement=164
 
 ## Screening Backtest
 - Status: available
@@ -301,9 +301,9 @@
 - Excluded traces: 39
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 105
+- [INFO] trace_unavailable_for_backtest: 106
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 163
+- [WARN] incomplete_native_cost_measurement: 164
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 53
-- [WARN] trajectory_without_v5_evidence: 18
+- [WARN] missing_explicit_role_identity: 54
+- [WARN] trajectory_without_v5_evidence: 19
