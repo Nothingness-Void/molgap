@@ -1,16 +1,16 @@
-# Prepared — 2026-11-07 JST
+# Bound submission — 2026-11-07 JST
 
-Scientific input and exact reused current_read addon prepared on desktop eca56da4.
-No freeze, submission or training performed here. Main agent owns submission
-through the registered Kaggle flow. Prospective publication and RML update
-remain inside that flow; no protected-role files were read.
+Kaggle1 job143097149/version1 SUBMISSION_BOUND.
+Kernel: nothingnessvoid/molgap-k1-read-calibration-100k-20261107-s42
+Logical run: pcqm-k1-read-calibration-100k-20261107-s42-r2 / v1
+Arms: original Muon, current_read; both fresh100K40-pass training.
+Frozen source: fe5a02a016de856e766beb1401f4fec3b895f39f
+Spec: f44e3108a64c7f8b4899cbddb442d7c52773930bb757424536f26e3f9f94c158
+Package: bf967c0e9357e6085882726661fdab94c180d1ee1e503d26933ecd509cbdfa38
+Receipt/operation journal: D:/molgap-artifacts/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/operations
 
-Original metadata recipe comparison passed field-for-field against the old
-current_read control recipe, and module bytes matched SHA256
-2e712058fe694652c38ac230df036098264c1bf40b036d8fba7adebe3d08d80c.
-That check did not cover the real compiler same-run reference boundary.
-After the degree pair's submit flow rejected shared optimizer overrides,
-the input now binds the unchanged SOAP-owner no-addon Muon recipe and a local
-data declaration changing only the consumed recipe hash. No shared code,
-trainer, verifier or tests changed in this correction. Formal submit flow owns
-remaining input validation; no extra tests or RML rebuild were run.
+Native qualification and actual training evidence remain with the worker; Luna owns scheduler observations. No terminal replay claim before actual acceptance.
+Unpublished original run retained: input reference-override/model-field and CRLF issues were corrected in source, then explicit r2 frozen. Old credential location inside the checkout was rejected before any remote mutation; the existing external Key directory credential was used through the same entry. No duplicate remote POST.
+Existing source/package/qualification/logging/submission/role/cost/acceptance/RML owners are reused. No new trainer, verifier, scheduler or tests. Kaggle2 unchanged.
+
+Luna observed RUNNING/latest1 matching receipt1 at2026-11-07 02:56 JST; status downloaded zero files. Scheduler status does not establish native training qualification.

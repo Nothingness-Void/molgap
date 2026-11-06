@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e6cbf9efa9aca1ca81263d310191b519d791abc5522378dc5d89ac9b56136db3",
+  "source_digest": "073b760782d24f374543677e646f3d05a534d1f60294a68854fd5bd906d9a4eb",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -773,6 +773,34 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "family_id": "pcqm-k1-read-calibration-100k-20261107",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "family_id": "pcqm-k1-read-calibration-100k-20261107",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
     },
     {
       "completeness_status": "complete",
