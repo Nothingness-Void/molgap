@@ -21,6 +21,10 @@ from .research_memory.paths import repo_local_path
 from .research_memory.trace import file_digest
 
 
+class ExactMetadataRetrievalError(RuntimeError):
+    """Transport failure containing only safe file, stage and status facts."""
+
+
 def _digest(value: Any, label: str) -> str:
     from .experiment_spec import _digest as validate_digest
 
@@ -86,7 +90,7 @@ def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
                         observed = getattr(getattr(error, "response", None), "status_code", None)
                     status = observed if type(observed) is int else None
                 # Finite transport facts only; SDK text can contain signed URLs.
-                raise RuntimeError(f"Exact metadata retrieval failed; path={path}; stage={phase}; "
+                raise ExactMetadataRetrievalError(f"Exact metadata retrieval failed; path={path}; stage={phase}; "
                     f"status={status}; error_type={type(error).__name__}; no bulk fallback") from None
             import json
             json.loads(data)

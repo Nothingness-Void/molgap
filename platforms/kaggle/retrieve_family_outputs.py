@@ -19,6 +19,7 @@ from molgap.experiment_family_artifacts import artifact_adapter
 from molgap.experiment_launch import _safe_local
 from molgap.experiment_terminal import _path
 from molgap.kaggle_output_retrieval import (
+    ExactMetadataRetrievalError,
     retrieve_execution_retention as _retrieve_execution_retention,
     retrieve_exact_metadata,
     retrieve_pinned_exact_files,
@@ -432,7 +433,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
             code = max(code, status)
     except Exception as error:
         print(canonical_json({"status": "RECONCILIATION_REQUIRED" if isinstance(error, RunReconciliationRequired) else "BLOCKED",
-                              "stage": stage, "error": type(error).__name__}))
+                              "stage": stage, "error": type(error).__name__,
+                              **({"detail": str(error)} if isinstance(error, ExactMetadataRetrievalError) else {})}))
         return 2
     print(canonical_json({"status": "BLOCKED" if code else (
         "RETRIEVED" if args.execute else "READY_FOR_RETRIEVAL"),
@@ -618,10 +620,11 @@ def main(argv=None, *, _verification=None):
                 result.update(status="RETRIEVED", executed=True, scientific_acceptance=False)
             encoded = canonical_json(result)
     except Exception as error:
-        # Never serialize exception text: even local paths may contain secrets.
+        # Only the transport's explicitly sanitized error may expose its text.
         status = "RECONCILIATION_REQUIRED" if isinstance(error, RunReconciliationRequired) else "BLOCKED"
         print(canonical_json({"status": status, "stage": stage,
-                              "error": "Retrieval checks or operation failed"}))
+                              "error": "Retrieval checks or operation failed",
+                              **({"detail": str(error)} if isinstance(error, ExactMetadataRetrievalError) else {})}))
         return 2
     print(encoded)
     return 0

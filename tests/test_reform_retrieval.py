@@ -256,6 +256,18 @@ def test_all_arms_retrieves_every_pinned_manifest_from_the_run_directory(retriev
     assert case.http.urls == [] and snapshot(case.run) == original
     # A newer running version cannot block retrieval of the pinned completed v8.
     remote_source.metadata.current_version_number = 9
+    missing_path = f"runs/version8/{next(iter(manifests))}/output_manifest.json"
+    failed_url = f"https://signed.invalid/{missing_path}?token=SECRET"
+    failure = RuntimeError(f"request failed: {failed_url}")
+    failure.status_code = 404
+    case.http.fail_once[failed_url] = failure
+    assert case.adapter.main([*base, "--execute", "--credentials", credentials]) == 2
+    failure_output = capsys.readouterr().out
+    blocked = json.loads(failure_output)
+    assert blocked["status"] == "BLOCKED" and blocked["stage"] == "remote_manifests"
+    assert f"path={missing_path}; stage=http; status=404" in blocked["detail"]
+    assert "SECRET" not in failure_output and "https://" not in failure_output
+    assert native.call_count == 0 and snapshot(case.run) == original
     assert case.adapter.main([*base, "--execute", "--credentials", credentials]) == 0
     done = json.loads(capsys.readouterr().out)
     assert done["status"] == "RETRIEVED" and set(done["arms"]) == set(manifests)
@@ -290,7 +302,7 @@ def test_all_arms_retrieves_every_pinned_manifest_from_the_run_directory(retriev
     assert set(case.http.urls) == set(payloads)
     for arm_id in manifests:
         url = f"https://signed.invalid/runs/version8/{arm_id}/output_manifest.json?token=SECRET"
-        assert case.http.urls.count(url) == 1
+        assert case.http.urls.count(url) == (2 if url == failed_url else 1)
     downloaded = list(case.http.urls)
     assert case.adapter.main([*base, "--execute", "--credentials", credentials]) == 0
     assert json.loads(capsys.readouterr().out)["status"] == "RETRIEVED"
