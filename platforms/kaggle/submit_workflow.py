@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 
 from molgap.experiment_launch import canonical_json
-from molgap.kaggle_submission import submit_prepared_workflow
+from molgap.kaggle_submission import SourceVerificationError, submit_prepared_workflow
 
 
 def main(argv=None):
@@ -91,6 +91,9 @@ def main(argv=None):
                      "next_action":"Inspect the submission journal and reconcile before retrying"}
             if args.output:
                 payload["journal"]=str(args.output / "submission_state.json")
+            if isinstance(error, SourceVerificationError):
+                payload.update(field="source_upload", reason=str(error),
+                    error_code="SOURCE_VERIFICATION_FAILED")
             if getattr(error,"release_recheck",None) is not None:
                 payload["release_recheck"]=error.release_recheck
                 payload["field"]="release.inputs"

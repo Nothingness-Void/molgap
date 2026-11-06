@@ -393,9 +393,10 @@ def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch, ca
     entry_spec.loader.exec_module(entry)
     monkeypatch.setattr(owner, "connect_kaggle", lambda _: release.api)
     monkeypatch.setattr(requests, "Session", lambda: release.http)
-    assert entry.main(["--prepared", str(release.prepared), "--credentials", str(release.credentials),
+    args = ["--prepared", str(release.prepared), "--credentials", str(release.credentials),
         "--output", str(release.output), "--authority", "authority.json",
-        "--monitor-path", "experiments/example/STATUS.md", "--execute"]) == 1
+        "--monitor-path", "experiments/example/STATUS.md", "--execute"]
+    assert entry.main(args) == 1
     printed = capsys.readouterr().out
     compact = json.loads(printed)
     assert compact["status"] == "RECONCILIATION_REQUIRED" and compact["phase"] == "SOURCE_UNKNOWN"
@@ -405,6 +406,16 @@ def test_source_timeout_with_created_dataset_reconciles(release, monkeypatch, ca
     assert state["platform_error"] == compact["platform_error"] == detail
     assert "do-not-print" not in printed + canonical_json(state)
     assert release.api.created == 1 and release.api.pushed == 0
+    with monkeypatch.context() as drift:
+        drift.setattr(owner, "_dataset_details", lambda _api, ref:
+            NS(ref=ref, is_private=True, current_version_number=2))
+        assert entry.main(args) == 2
+    blocked = json.loads(capsys.readouterr().out)
+    state = json.loads((release.output / "submission_state.json").read_bytes())
+    assert blocked["field"] == "source_upload"
+    assert "expected_version=1; observed_version=2" in blocked["reason"]
+    assert state["source_verification_error"] == blocked["reason"]
+    assert state["phase"] == "SOURCE_PUBLISHED" and release.api.pushed == 0
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
     assert json.loads((release.output / "submission_state.json").read_bytes())["platform_error"] == detail
@@ -579,14 +590,6 @@ def test_dataset_details_uses_sdk_request_and_checks_identity(ref, private):
     else:
         with pytest.raises(ValueError, match="identity/private"):
             owner._dataset_details(api, "owner/new-source")
-
-
-def test_source_version_drift_blocks_post(release, monkeypatch):
-    monkeypatch.setattr(owner, "_dataset_details", lambda _api, ref:
-                        NS(ref=ref, is_private=True, current_version_number=2))
-    with pytest.raises(ValueError, match="exact requested version"):
-        release.run()
-    assert release.api.created == 1 and release.api.pushed == 0
 
 
 def test_remote_release_keeps_dataset_and_pickle_bindings(release, monkeypatch):

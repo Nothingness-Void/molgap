@@ -32,6 +32,10 @@ from .research_memory.trace import atomic_write
 from .training_reproducibility import atomic_json, sha256_file
 
 
+class SourceVerificationError(ValueError):
+    """Safe source-upload mismatch facts, excluding SDK text and URLs."""
+
+
 def _credentials(path):
     path = Path(path).absolute()
     _safe_local(path)
@@ -133,17 +137,21 @@ def _roundtrip_source(api, http, staged, remote, ref, *, version=1):
     details = _dataset_details(api, ref)
     if (not isinstance(status, dict) or status.get("status") != "ready"
             or type(details.current_version_number) is not int or details.current_version_number != version):
-        raise ValueError("Source dataset must be ready at the exact requested version")
+        observed = details.current_version_number if type(details.current_version_number) is int else None
+        raise SourceVerificationError("Source dataset must be ready at the exact requested version; "
+            f"expected_version={version}; observed_version={observed}; ready={isinstance(status, dict) and status.get('status') == 'ready'}")
     listing = api.dataset_list_files(ref, page_size=100)
     files = listing.files
     if (getattr(listing, "next_page_token", None) or len(files) != len(expected)
             or {f.name for f in files} != set(expected)):
-        raise ValueError("Remote source layout differs from the prepared allowlist")
+        raise SourceVerificationError(f"Remote source layout differs from the prepared allowlist; "
+            f"expected_files={len(expected)}; observed_files={len(files)}; paginated={bool(getattr(listing, 'next_page_token', None))}")
     records = []
     for item in files:
         path = expected[item.name]
         if item.total_bytes != path.stat().st_size:
-            raise ValueError("Remote source file size differs")
+            raise SourceVerificationError(f"Remote source file size differs; path={item.name}; "
+                f"expected_bytes={path.stat().st_size}; observed_bytes={item.total_bytes}")
         records.append({"path": item.name, "sha256": sha256_file(path), "bytes": item.total_bytes})
     # Resolve a stable directory tree before parallel readers start. Windows
     # realpath can expose an extended-path alias if an ancestor appears midway
@@ -566,8 +574,12 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             if not source_status or source_status.get("status") != "ready":
                 save("SOURCE_PENDING")
                 return {"status": "WAIT_SOURCE_READY", "submitted": False}
-            proof = _roundtrip_source(api, http_session, staged, output / "source_roundtrip", dataset,
-                                      version=source_version)
+            try:
+                proof = _roundtrip_source(api, http_session, staged, output / "source_roundtrip", dataset,
+                                          version=source_version)
+            except SourceVerificationError as error:
+                save("SOURCE_PUBLISHED", source_verification_error=str(error))
+                raise
             atomic_json(output / "source_upload_verification.json", proof)
             from .experiment_preflight import check_release_inputs
             prior = _json(prepared / "release_report.json")
