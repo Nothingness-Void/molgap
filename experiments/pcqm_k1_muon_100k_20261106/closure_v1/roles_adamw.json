@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "adamw",
+    "arm_identity": "fce8c4988c2dbb155a3a774b0bbb49605d43592eb11cc04f7d204aa73670b984",
+    "experiment_id": "pcqm_k1_muon_100k_20261106",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-muon-100k-20261106-s42",
+    "package_identity": "fddb6e19c9070b0e23d299727ab23c2be4a97d6ae0e1b379134de8886fb90118",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-k1-muon-100k-20261106-s42",
+    "source_archive_sha256": "bce5ef5ffee839a5e563e8864f1f57c164195818ee2b45e180ef8dc80c768498",
+    "source_commit": "62c70310d0528b0e8e1181c943ca10e9e6282bb4",
+    "spec_identity": "975d4f6f1da6b0ee6d2d6545d17550b6e3cfb3b55b2efad3d5bc366419420a1f",
+    "training_recipe_sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "32604958d60752bc3093292eb2e334d12f5595c4f034ecf365fe19f4cc465305"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 32604958d60752bc3093292eb2e334d12f5595c4f034ecf365fe19f4cc465305, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json",
+      "role_event_id": "role-pcqm-k1-muon-100k-20261106-s42-adamw-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json",
+      "role_event_id": "role-pcqm-k1-muon-100k-20261106-s42-adamw-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json",
+      "role_event_id": "role-pcqm-k1-muon-100k-20261106-s42-adamw-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json",
+      "role_event_id": "role-pcqm-k1-muon-100k-20261106-s42-adamw-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/closure_v1/roles_adamw.json",
+      "role_event_id": "role-pcqm-k1-muon-100k-20261106-s42-adamw-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    }
+  ]
+}

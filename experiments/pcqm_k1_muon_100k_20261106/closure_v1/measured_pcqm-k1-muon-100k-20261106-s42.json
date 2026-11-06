@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-muon-100k-20261106-s42\\v1\\version1\\adamw\\development_predictions.pt",
+      "sha256": "83e23d92b0a81f03a7a34940c485d9b9fa24e73dfa4d6a8f6d4386583914d3ae"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-k1-muon-100k-20261106-s42\\v1\\version1\\muon\\development_predictions.pt",
+      "sha256": "4b9b614276de4d17c4652ec47ae4d4c481ab7bb498f0593b03c05606d3f281dc"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 8.773793158531191,
+    "ensemble_gain_meV": 6.990956428050993,
+    "ensemble_mae_meV": 129.9166078132391,
+    "fit": null,
+    "m_meV": -8.77379315853119,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "muon",
+        "ci95": [
+          -9.708100417733192,
+          -7.861417455792427
+        ],
+        "delta": -8.77379315853119,
+        "n_bootstrap": 2000,
+        "probability_better": 1.0,
+        "reference": "adamw",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "adamw": 141.29446082055568,
+      "muon": 132.5206676620245
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

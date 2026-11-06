@@ -1,0 +1,275 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/authority.json": "ec60a2c29fff502c92c51eaace507f5282bed13a4cbbb81a4d3524b24057485b",
+    "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/acceptance.json": "cef31e2e4abb59e85283632b6dc9fcecfb925b44c6091eec6b8c0346b1a6aa2c",
+    "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/observed.json": "0174b5de03d44ec5c38872cb34d87c977fcc4f961d4b78a6a73ca1ab540dd68e",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/adamw/allocation_ledger.json": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/execution_retention.json": "ba96ac558d5675e95c7ecf2132d587e6d91395e812c43e2ba20c80c0538901f5",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json": "80f77a0ef63dfd5b85c004ac1c3f7f839f1b0cc4b760427f6c3627623c3ee743",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json.context.json": "2900926bcdc5904e7190d7bc0c9c6e7ea9a0abeaff25e3056a3cd564019fd2db",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/data_open_provenance.json": "32604958d60752bc3093292eb2e334d12f5595c4f034ecf365fe19f4cc465305",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/development_predictions.pt": "83e23d92b0a81f03a7a34940c485d9b9fa24e73dfa4d6a8f6d4386583914d3ae",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/last_checkpoint.pt": "095cd6ae5ded09ddabfd2b3c5b709c63bdcfbd622b957a9af5e74217f3e58c24",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/output_manifest.json": "be0c7f5863b225912c08a4b0467295878877e39bcaf13f6a27a874c906f87108",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/selected_model.pt": "812731dded24aecc768e3d94236c0c5453206b315edbcf111bcf1eff5af69c96",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/training_contract.json": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-100k-20261106-s42/v1/reports/diagnostic_3783bbb3ca8ead538f96ff212a58b3e38dfff6142dc4995ab3562762a5d55b88.json": "45a8ff74d4e584e2638445bec42229b32c6b30991b190f0a116243b74adb9faf"
+  },
+  "closure_blockers": [
+    "explicit_outcome_and_decision_ref_required",
+    "observed_protected_role_audit_missing"
+  ],
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-muon-100k-20261106-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw-0",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.527736359370278
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-muon-100k-20261106-s42-v1",
+      "category": "other",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw-allocation-0",
+      "evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/observed.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.195204825941944
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+    }
+  ],
+  "decision": {
+    "decision_ref": null,
+    "final": false,
+    "next_allowed_actions": [],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/execution_retention.json",
+        "name": "execution_retention",
+        "sha256": "ba96ac558d5675e95c7ecf2132d587e6d91395e812c43e2ba20c80c0538901f5"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/_execution/adamw/allocation_ledger.json",
+        "name": "arm_allocation_ledger",
+        "sha256": "40afbb11d0ee719ecc91916073f6c3b380585444456365522ec91568b349e183"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/training_contract.json",
+        "name": "contract",
+        "sha256": "84c37c9173fc5acc7c4379f33d01d3f06b8d28c19caa06897cf87c19a8c806c9"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/data_open_provenance.json",
+        "name": "data_open",
+        "sha256": "32604958d60752bc3093292eb2e334d12f5595c4f034ecf365fe19f4cc465305"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/development_predictions.pt",
+        "name": "predictions",
+        "sha256": "83e23d92b0a81f03a7a34940c485d9b9fa24e73dfa4d6a8f6d4386583914d3ae"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/last_checkpoint.pt",
+        "name": "resume",
+        "sha256": "095cd6ae5ded09ddabfd2b3c5b709c63bdcfbd622b957a9af5e74217f3e58c24"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/selected_model.pt",
+        "name": "selected_model",
+        "sha256": "812731dded24aecc768e3d94236c0c5453206b315edbcf111bcf1eff5af69c96"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "80f77a0ef63dfd5b85c004ac1c3f7f839f1b0cc4b760427f6c3627623c3ee743"
+      },
+      {
+        "availability": "machine_local_verified",
+        "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json.context.json",
+        "name": "trace_context",
+        "sha256": "2900926bcdc5904e7190d7bc0c9c6e7ea9a0abeaff25e3056a3cd564019fd2db"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/observed.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json",
+    "metrics": {
+      "development_mae_eV": 0.1412944608205557,
+      "missing_reason": null,
+      "selected_optimizer_step": 31240,
+      "selected_weights": "live",
+      "source_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/observed.json",
+      "unit": "eV"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "terminal_staging",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "retained output bytes and explicit decision"
+    },
+    "outcome": {
+      "artifact_status": "mechanically_verified",
+      "budget_decision": "NOT_EVALUATED",
+      "comparison_status": "NOT_EVALUATED",
+      "execution_status": "complete",
+      "full_handoff_status": "NOT_EVALUATED",
+      "scientific_status": "NOT_EVALUATED",
+      "transfer_status": "NOT_EVALUATED"
+    },
+    "role_use": {
+      "official_validation": "unknown",
+      "test_challenge": "unknown",
+      "test_dev": "unknown"
+    },
+    "scope": "terminal_output_inspection",
+    "track": "B"
+  },
+  "finalized_at": "2026-11-06T04:50:01.388392+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "requested_outcome": null,
+  "role_use": {
+    "official_validation": "unknown",
+    "test_challenge": "unknown",
+    "test_dev": "unknown"
+  },
+  "roles": [],
+  "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-muon-100k-20261106-s42-v1",
+    "logical_run_id": "pcqm-k1-muon-100k-20261106-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-muon-100k-20261106-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "62c70310d0528b0e8e1181c943ca10e9e6282bb4",
+    "source_package_sha256": "bce5ef5ffee839a5e563e8864f1f57c164195818ee2b45e180ef8dc80c768498",
+    "spec_identity": "975d4f6f1da6b0ee6d2d6545d17550b6e3cfb3b55b2efad3d5bc366419420a1f"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "reference",
+    "contract_ref": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_muon_100k_20261106/generated/e28a9713953f7585845659296717f4d20df32153d01960bc82dc9eee136e91d0/adamw/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-adamw",
+    "run_id": "pcqm-k1-muon-100k-20261106-s42:adamw:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_muon_100k_20261106/runs/pcqm-k1-muon-100k-20261106-s42/prospective/adamw/terminal_staging/v1/5ba0b97afceb0192/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-100k-20261106-s42/v1/version1/adamw/canonical_trace.json",
+    "trace_artifact_sha256": "80f77a0ef63dfd5b85c004ac1c3f7f839f1b0cc4b760427f6c3627623c3ee743",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-adamw"
+}

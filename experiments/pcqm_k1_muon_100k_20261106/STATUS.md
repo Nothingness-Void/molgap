@@ -1,5 +1,26 @@
 # Status
 
+## Terminal acceptance:2026-11-06 JST
+
+Both arms completed40passes/31240updates/3998720presentations. Existing strict
+acceptance returned COMPLETE/closure_complete=true: both native and replay
+VERIFIED with no exclusions; Muon comparison STRICT_CAUSAL. Both RML trajectories
+were finalized through the shared closure, which owns its derived-index update.
+
+AdamW CLOSED:0.14129446082055568eV. Muon POSITIVE_UNDER_CONTRACT:
+0.1325206676620245eV; effect-8.773793159meV,95%row interval
+[-9.708100418,-7.861417456]meV. See decision.md and attribution.md.
+Actual allocation6.390410T4-device-hours; Muon process wall2.03x reference.
+Source/config/receipt identities below are unchanged. No new training submitted.
+Keep this owner branch pending an explicit adoption/scale decision.
+
+Strict qualification directory:
+`runs/pcqm-k1-muon-100k-20261106-s42/prospective/strict_qualification/f4005a7e77752152c375/`.
+Role audit and reviewed closure input:closure_v1/. Only selected required
+artifacts were retrieved to D:; no all-output download was used.
+
+## Submission history
+
 2026-11-06 JST: Kaggle2 two-fresh-arm100K submission authorized by the user.
 Submitted to Kaggle2 at2026-11-06 03:01:51 JST, job142927073/version1:
 `kaseichou/molgap-k1-muon-100k-20261106-s42`.
