@@ -1,0 +1,94 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_message_statistics_100k_20261106",
+  "logical_run_id": "pcqm-k1-message-statistics-100k-20261106-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-06T08:37:51.871484+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-message-statistics-100k-20261106",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does channelwise incoming gated-message dispersion improve K1 plus Muon versus a parameter-matched mean residual?",
+    "deficiency": "SSMA regressed2.067051meV at48.977153percent measured step overhead; whether cheap low-order local statistics add useful information remains untested.",
+    "changed_mechanism": "layer6-gated-message-mean-versus-standard-deviation",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "The existing model already preserves sufficient information",
+      "Additional decoding capacity explains any gain",
+      "Early fitting improves without retained late-horizon generalization"
+    ],
+    "closed_families": [
+      "k1-ssma",
+      "pcqm-k1-extremal-readout-100k",
+      "node-query-linear-global-exchange"
+    ],
+    "positive_decision": "Nominate only with candidate-control selected gain>=3meV,paired95percent interval upper<0,negative final and last-five deltas,strict acceptance. Also assess against the retained Muon endpoint without silently claiming cross-run qualification.",
+    "negative_decision": "Close the frozen pair without adoption, blind grids,automatic successor or scale-up."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4,
+    "cheapest_falsifier": "Two real100K40-pass candidate trainings with matched backbone,MUON recipe,seed,data and exposure; one mechanism toggle, no baseline retraining."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "message_mean",
+      "message_std"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "message_mean",
+    "allocated_t4_hours_ceiling": 10,
+    "allocation_wall_limit_seconds": 18000,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User explicitly approved Kaggle1 two slots/four arms on2026-11-06 after reviewing both paired designs.",
+    "scope": "One of two authorized independent T4x2 sessions. Exactly these two actual100K40-pass workers; maximum5h allocation wall/10T4-device-hours for this session. Training and internal development only. No baseline retraining,changes to Muon500K or SwiGLU,automatic retries,successors,scale-up,protected roles or shutdown."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {
+      "optimizer": "k1-muon-adamw-fp32-v1"
+    },
+    "purpose": "architecture_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "message_mean",
+      "model": {
+        "addons": [
+          "k1_message_mean"
+        ]
+      }
+    },
+    {
+      "arm_id": "message_std",
+      "model": {
+        "addons": [
+          "k1_message_std"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "message_mean"
+  }
+}
