@@ -1,0 +1,88 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_degree_calibration_100k_20261107",
+  "logical_run_id": "pcqm-k1-degree-calibration-100k-20261107-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-06T17:38:08.404090+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-degree-calibration-100k-20261107",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does the accepted source-degree residual message gate improve original unmodified K1 plus Muon in a same-job 100K calibration?",
+    "deficiency": "Accepted EC job143052037/version1 compares degree with EC, without an unmodified Muon control. Its degree0.131312467eV versus historical Muon0.132520668eV is cross-run evidence and cannot establish the gate effect.",
+    "changed_mechanism": "source-degree-residual-message-gate-at-local-layers-two-and-three",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "The historical difference is run/runtime variation",
+      "The added gate is neutral or harmful against unmodified Muon",
+      "A selected-endpoint gain fades at final or last-five passes"
+    ],
+    "closed_families": [
+      "pcqm-k1-ec-gate-100k-20261106",
+      "k1-topology-portability"
+    ],
+    "positive_decision": "Nominate only with degree-minus-muon selected delta<=-3meV, paired2000-resample95%upper<0, negative final and last-five deltas, strict qualification; no automatic500K.",
+    "negative_decision": "Close the exact degree recipe without tuning, retries or automatic scale-up."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one freshly trained arm per device",
+    "estimated_device_hours": 8,
+    "estimated_wall_hours": 4,
+    "cheapest_falsifier": "One same-job seed42 100K40-pass pair with original frozen K1 initialization, matching data/optimizer/schedule/selection and degree gating as the only intervention."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nvoid912",
+    "arms": [
+      "muon",
+      "degree_gate"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "muon",
+    "allocated_t4_hours_ceiling": 10,
+    "allocation_wall_limit_seconds": 18000,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized one valuable overnight two-arm job each on Kaggle1 and Kaggle3 on2026-11-07, including decision-relevant baseline calibration and native qualification.",
+    "scope": "One fresh100K40-pass Muon-versus-degree pair, two actual training arms, train/development only, one worker per T4. Maximum5h allocation wall/10T4-device-hours including qualification. Protected roles sealed. No automatic retry/continuation/500K/full/adoption."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "preset_ref": {
+      "path": "experiments/presets/k1-post-bn-100k-v1.json",
+      "sha256": "ea35cceb32bcc951d113f8265d9feedb4e0a31d5868a992e6e9eaac49f0fbc61"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {
+      "optimizer": "k1-muon-adamw-fp32-v1"
+    },
+    "purpose": "single_module_ablation"
+  },
+  "arms": [
+    {
+      "arm_id": "muon"
+    },
+    {
+      "arm_id": "degree_gate",
+      "model": {
+        "addons": [
+          "k1_ec_degree_gate"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon"
+  }
+}

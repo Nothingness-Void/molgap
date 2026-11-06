@@ -50,6 +50,13 @@ FAMILIES = MappingProxyType({
 
 # Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    ("k1_ec_degree_gate", "1"): AddonContract(
+        "neural_atom_k1", "k1-ec-gate", "molgap.k1_ec_gate",
+        (AddonConfigField("seed", "initialization_seed", value=42),
+         AddonConfigField("guidance", value="degree")),
+        ("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_ec_gate:apply_addon",
+    ),
     **{
         (prefix + "_" + suffix + "_scale", "1"): AddonContract(
             family, "slot-" + suffix, "molgap.substrate_scale_addon",

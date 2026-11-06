@@ -1,0 +1,31 @@
+# Degree residual gate100K: prospective calibration contract
+
+The user authorized two actual fresh-training arms for a useful overnight Kaggle1/3 question on2026-11-07, including decision-relevant baseline calibration and native qualification. This owner tests one pair only. The coordinator confirmed Kaggle3 `nvoid912`, quota10.08h available and its two previous jobs complete at2026-11-07 02:31JST.
+
+## Evidence review and decision gap
+
+Local and `molgap-server` RML lookups for degree and Muon were read before authoring. Accepted original K1/Muon100K (job142927073/version1) improves AdamW by8.773793meV; its Muon selected MAE is0.132520667662eV. Canonical context: `experiments/pcqm_k1_muon_100k_20261106/decision.md` and `attribution.md`. Its extra process wall is measured; no efficiency or scale-transfer claim follows.
+
+Accepted EC owner `codex/exp/k1-ec-gate-100k-20261106` commit `bf35618fe0191d9f75d190bb3ee96345d8e7f915`, `experiments/pcqm_k1_ec_gate_100k_20261106/decision.md`, records job143052037/version1: degree0.131312467455eV, EC0.131868945331eV, EC-minus-degree+0.556478meV, failing the3meV gate. That decision explicitly identifies the missing same-job original-K1/Muon comparator. Its EC result stays negative. This pair supplies that discriminator; it does not repeat EC or relabel its decision. EC evidence is branch-local and cited by owner/commit rather than copied into this experiment or invented as a local RML entry.
+
+Server `TC-k1-degree-balance-100k-s42` is a different zero-start graph-relative multiplier:100K+1.277089meV gain below gate, then frozen-weight500K+2.170682meV regression. Canonical `molgap-server:experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/decision.md` closes only that mechanism; it supplies caution about transfer, not a causal answer for this residual gate. GPTrans degree-scale entries change a different model. Neither local nor server lookup supplies a same-job degree-gate versus unmodified-Muon result. No established over-squashing or degree bottleneck is asserted.
+
+## Intervention and reuse
+
+Reference `muon`: original unmodified K1 with Muon. Candidate `degree_gate`: the same model plus the frozen degree-guided residual message path at local layers2/3. Reuse `src/molgap/k1_ec_gate.py` byte-for-byte from the accepted EC owner. Its source-degree feature is log1p(max(source_degree-1,0));8 group gates add0.1*tanh(MLP(feature))*Linear192to192(message). Projection starts at identity;1to16to8 SiLU gate final weights start at1e-3 scale and bias zero. Seed42-isolated addon initialization preserves original K1 tensors. Candidate adds74064 parameters. Original edge-state updates, BN, global slots, residuals and readout remain unchanged. Retained topology-statistics computation, including its EC statistics, stays unchanged to preserve exact accepted implementation; this comparison measures its full actual overhead.
+
+Only the degree catalog entry is exposed. No addon stacking, code cleanup, EC retraining, new topology diagnostic or scratch tests. The standard native qualification owns runtime/memory, repeat/resume and finite-gradient checks under this authorization. Existing source/checkpoint/output/acceptance/role/cost/RML machinery remains the sole owner.
+
+## Frozen recipe and roles
+
+Use the committed hash-pinned `experiments/presets/k1-post-bn-100k-v1.json`, its original baseline recipe/data/target pins and the shared `optimizer=k1-muon-adamw-fp32-v1` override. The compiler derives both actual recipes from those pins; it installs only the candidate degree addon. This avoids unresolved cross-owner paths and duplicating another experiment. Preserve all dataset, row-order, target, transform and initialization hashes.
+
+Both arms:100K fixed official-train rows/50K internal development, seed42, original frozen K1 initialization SHA256 `8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd`, pure2D OGB atom9/bond3/RWSE16,40passes/31240optimizer updates/3998720presentations, BS128/drop_last, one supervised forward, FP32/noTF32, native Torch2.11, Muon with AdamW remainder, LR4e-4/WD1e-5/clip1, cosine40 to1e-6/no warmup. Best-development Live selection, EMA.999 tracking, no Clean-BN. Retain checkpoint/resume, inherited short profiler and epoch-only logging. Train and reused internal-development labels only; official validation/test-dev/test-challenge stay sealed. Role authorization does not substitute for observed role-use evidence.
+
+One worker per T4 in one T4x2 allocation. Ceiling18000wall seconds/36000allocated T4-device-seconds, cleanup reserve180seconds. Estimated wall4h/device8h from historical degree runtime plus headroom; actual cost remains pending. Allocation, process wall, busy time and queue time remain distinct. Stop at the frozen cap with epoch resume state through the existing owner; no unauthorized continuation follows.
+
+## Preregistered terminal gate
+
+Primary effect is degree_gate-minus-muon selected Live MAE. Nominate only if delta<=-0.003eV, paired2000-resample row-bootstrap95%upper<0, final matched-pass delta<0, and mean of last-five matched-pass deltas<0. Require aligned finite50000-row artifacts, complete matched40-pass exposure, exact source/runtime/native qualification, strict replay with no exclusions, observed roles and native cost for both arms. Retained historical Muon is context, not this pair's strict comparator. Row intervals do not estimate seed variation.
+
+If any scientific gate fails, close this fixed degree recipe without tuning thresholds/layers/strength/seeds. Missing qualification/artifacts or incomplete exposure means unresolved/inconclusive or STOP_FOR_COST as supported, never a positive claim. Write failure-mode attribution beside the terminal decision, then use shared terminal closure and its one RML update. Passing100K nominates a separately reviewed question only: no automatic500K/full, adoption, protected-role access or successor.
