@@ -324,6 +324,7 @@ def test_paused_arm_records_digests_at_download_and_binds_the_receipt(tmp_path, 
     from molgap.family_training_recipe import aux_ema_names
     extra_files = aux_ema_names(.9999)[4:6]
     payloads = {name: f"synthetic-{name}".encode() for name in (*retrieve.PAUSED_ARM_FILES, *extra_files)}
+    payloads["data_open_provenance.json"] = b'{"invocations":[{"had_checkpoint":false}]}'
     payloads["last_checkpoint.pt"] = checkpoint
     payloads["pause_receipt.json"] = json.dumps({"context": context.to_dict(), "status": "PAUSED",
         "checkpoint_sha256": hashlib.sha256(checkpoint).hexdigest()}).encode()

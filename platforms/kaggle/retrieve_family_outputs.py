@@ -222,6 +222,7 @@ def _family_files(context, remote_manifest_path, local_manifest, manifest_sha256
 PAUSED_ARM_FILES = ("pause_receipt.json", "last_checkpoint.pt", "canonical_trace.json",
     "canonical_trace.json.context.json", "selected_model.pt", "development_predictions.pt",
     "runtime_certificate.json", "runtime_provenance.json", "training_contract.json",
+    "data_open_provenance.json",
     "allocation_costs.json", "allocation_ledger.json", "invocation_cost_state.json", "preflight_costs.json")
 
 
