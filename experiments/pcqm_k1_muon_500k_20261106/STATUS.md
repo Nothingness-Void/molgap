@@ -1,5 +1,21 @@
 # Status
 
+2026-11-08 JST: terminal version3 retrieved at exact receipt version. Both arms
+complete60passes/234360updates/29998080presentations. AdamW CLOSED; Muon
+POSITIVE_BELOW_GATE: saved-prediction selected delta -1.814291meV, paired95%
+[-2.385675,-1.249631]meV, below the3meV nomination gate. Final and last-five
+matched deltas are -2.185151/-2.023706meV. Both native/replay qualifications
+VERIFIED; Muon comparison STRICT_CAUSAL. No adoption/full release or training.
+See [decision and attribution](decision.md) and [retained analysis](terminal_acceptance/diagnosis.json).
+Observed protected dataset-open states come from all three exact physical
+versions, documented in terminal_acceptance/role_provenance/receipt.json.
+Both canonical arms finalized. The initial derived update failed because this
+review's unused draft directory was named roles, which the RML scanner treats
+as canonical role-event JSON; it was renamed unresolved_audit_draft without
+changing bytes. Its internal paths retain the original unpublished draft
+location. Existing terminal-rebuild completed successfully (VALID/COMPLETE); both replay
+entries were added. No second rebuild was run.
+
 2026-11-07 JST: version2 is the verified planned40-pass PAUSED segment.
 Both arms retain step156240/samples19998720 and pass existing build-resume;
 selected Live MAE is AdamW0.106885798275 at pass40 versus

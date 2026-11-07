@@ -1,0 +1,71 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-500k-20261106-s42/v1/version3/_resume_preflight/muon/actual_resume_certificate.json",
+    "sha256": "2fed9ed5fd53bbdbead7edb3e511527a6b346be78eba61d93e9d72c4cda2c735"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_muon_500k_20261106/authority.json",
+    "sha256": "9ff89d018c7fba99b3b07ba486666c822c4c872f170b78b9f6c68f63628891ab"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-500k-20261106-s42/v3/prepared/source_dataset/resume/muon/files/last_checkpoint.pt",
+    "sha256": "bbb46f607c12d2e39cbb6b5a9e23d358353c375cb9aa7b79f7cc01dcb964de5b"
+  },
+  "continued": {
+    "attempt_id": "pcqm-k1-muon-500k-20261106-s42-v3",
+    "logical_run_id": "pcqm-k1-muon-500k-20261106-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-muon-500k-20261106-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "ae61a9153a6bdf4f6e31b40a0d9366d2445c7a1a",
+    "source_package_sha256": "57975626246987aeb607b9d513e12acb836c420b117ab0d4b342c4d83df87383",
+    "spec_identity": "d82519ff3d64e476ccb117171371f2f0725ce2b10e4cbc4358e486359f6e5144"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-500k-20261106-s42/v1/version3/muon/output_manifest.json",
+    "sha256": "1fed227a2b1b3fc5006d7493c4f9dcb097582c601b8d12ae4c370e0f376e9e17"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-500k-20261106-s42/v3/operations/launch_receipt.json",
+    "sha256": "d941e27856c401ff3e1a634d5dc249e6f7d71cb1f5a274093e934169bb227a29"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-500k-20261106-s42/v1/version3/muon/canonical_trace.json",
+    "sha256": "140807bf5a3a2f0c3b6cf10bce3f13d7001cdd620ec3cb658c6df76eec377142"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-muon-500k-20261106-s42/v1/version3/_resume_preflight/muon/runtime_certificate.json",
+    "sha256": "0693f9dc75b2e867291eb9a1f52201fa06be27fc4ee3f2e110c9c6dfadc72b64"
+  },
+  "origin": {
+    "attempt_id": "pcqm-k1-muon-500k-20261106-s42-v1",
+    "logical_run_id": "pcqm-k1-muon-500k-20261106-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-muon-500k-20261106-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "ae61a9153a6bdf4f6e31b40a0d9366d2445c7a1a",
+    "source_package_sha256": "57975626246987aeb607b9d513e12acb836c420b117ab0d4b342c4d83df87383",
+    "spec_identity": "d82519ff3d64e476ccb117171371f2f0725ce2b10e4cbc4358e486359f6e5144"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-500k-20261106-s42/v1/operations/launch_receipt.json",
+    "sha256": "9a6f2cdeeea5a8b10c5eae3d1ca859188c69cbfab80d9fab2b80b20735845129"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-500k-20261106-s42/v3/prepared/source_dataset/resume/muon/resume_bundle.json",
+    "sha256": "05f82ff0a9163cf4969eb77366eda0f4defb942cbc20062422ef35d3e503a3c5"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-500k-20261106-s42/v3/prepared/source_dataset/resume/muon/files/canonical_trace.json.context.json",
+    "sha256": "4ccbd52af2e219dafbc745cb0e86f0f8fcf6db5d267e5d23685a2d1a97ac1af3"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-muon-500k-20261106-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "eb3eeb5f3b5d90a659c5b4a50548b2d758d5d4a0487b2aca9f0465b78561e809"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-muon-500k-20261106-s42/v3/prepared/source_dataset/resume/muon/files/canonical_trace.json",
+    "sha256": "3f0f861abaf78e07360b008f9115e9fe9a20877d8c8a01de1367c260efd750de"
+  }
+}

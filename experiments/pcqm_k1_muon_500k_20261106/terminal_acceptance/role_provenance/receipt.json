@@ -1,0 +1,50 @@
+{
+  "kernel": "kaseichou/molgap-k1-muon-500k-20261106-s42",
+  "records": [
+    {
+      "version": 1,
+      "arm": "adamw",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version1/adamw/data_open_provenance.json",
+      "sha256": "b54e12e85dd91b3e338fbdb32667592c0e0cd1eca9b16bdc915c92d42f0bfb2d",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 1,
+      "arm": "muon",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version1/muon/data_open_provenance.json",
+      "sha256": "6a99f8527e34f3a485ecb69b2c61759f9f80eae4cd267ca6ad7b6fc6bcf72e4d",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 2,
+      "arm": "adamw",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version2/adamw/data_open_provenance.json",
+      "sha256": "7fccfe361ded7f4e11fe412f41024082e260f89781c73815a976dbb907e295f9",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 2,
+      "arm": "muon",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version2/muon/data_open_provenance.json",
+      "sha256": "f85a64d5cca3ba114a094fb8fd751de3e58094e7e1e18d5afe52db42dff42587",
+      "transport": "version_specific_exact_file"
+    },
+    {
+      "version": 3,
+      "arm": "adamw",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version3/adamw/data_open_provenance.json",
+      "sha256": "7fccfe361ded7f4e11fe412f41024082e260f89781c73815a976dbb907e295f9",
+      "transport": "version_specific_manifest_pinned_files"
+    },
+    {
+      "version": 3,
+      "arm": "muon",
+      "path": "experiments/pcqm_k1_muon_500k_20261106/terminal_acceptance/role_provenance/version3/muon/data_open_provenance.json",
+      "sha256": "f85a64d5cca3ba114a094fb8fd751de3e58094e7e1e18d5afe52db42dff42587",
+      "transport": "version_specific_manifest_pinned_files"
+    }
+  ],
+  "conclusion": "All three physical versions independently record all eleven train/development shards plus manifest, no other dataset opens, false protected-role read flags; version1 starts without a checkpoint. Explicit untouched states cover this recorded dataset-open boundary.",
+  "boundary": "Python dataset-manifest directory opens; excludes native code, child processes and network.",
+  "automatic_draft_gap": "Latest resumed invocation begins had_checkpoint=true; automatic audit cannot resolve earlier physical versions."
+}
