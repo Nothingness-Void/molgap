@@ -1,5 +1,14 @@
 # Status
 
+2026-11-07 JST: version2 is the verified planned40-pass PAUSED segment.
+Both arms retain step156240/samples19998720 and pass existing build-resume;
+selected Live MAE is AdamW0.106885798275 at pass40 versus
+Muon0.102467745543 at pass36. The preauthorized final continuation is
+SUBMISSION_BOUND at Kaggle2 kernel143011302/version3, preserving the original
+source/Spec/package/optimizer and60-pass endpoint234360. Luna observed
+RUNNING/latest3 matching receipt3 at13:19:41–45 JST; native progress and terminal
+qualification remain pending. See [40-pass review and v3 provenance](segment40_review_20261107.md).
+No terminal closure or RML rebuild; no shutdown.
 2026-11-07 JST: continued both verified20-pass states through existing owners;
 Kaggle2 kernel143011302/version2 SUBMISSION_BOUND. Frozen v2 bound is40passes;
 the user's subsequent instruction is to proceed through the remaining work to
@@ -41,3 +50,4 @@ Kaggle2 quota observed by Luna2026-11-06 15:34:51 JST:18.57hours remaining,
 next reset2026-11-07 09:00 JST. Future segments recheck actual quota.
 
 Luna observed v2 scheduler RUNNING/latest2 matching continuation receipt2 at 2026-11-07 01:54 JST; zero files downloaded. This is scheduler status, not native resumed-training qualification.
+
