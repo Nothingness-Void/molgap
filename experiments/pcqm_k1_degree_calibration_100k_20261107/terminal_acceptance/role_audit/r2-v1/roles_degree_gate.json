@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "degree_gate",
+    "arm_identity": "6c066d1ac2563def0d318c25650c0053aff3943cca2f13154eb7227db5edeba4",
+    "experiment_id": "pcqm_k1_degree_calibration_100k_20261107",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2",
+    "package_identity": "ca555ec10b58f60e54c508ca11c5f8ad000c6319dfc66029ed985d4bee2accf6",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nvoid912/molgap-k1-degree-calibration-100k-20261107-s42",
+    "source_archive_sha256": "e589c729d25014ebade971e9b099d3dbc7756bc5e70f1c535ab967f6dcbda608",
+    "source_commit": "331cab39e53bbb6441706440a308fcec7c703262",
+    "spec_identity": "24fe26f7f532c86598081c18181e78674b945b21b203f916340c9e4b395b328d",
+    "training_recipe_sha256": "f553247f76c8197d1fb1adc699f910e0b9481b526900a3caf642df10b14d4df7"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "20a9b76f5440bbfb912ddf46e7995d7c07ddbbff31d6d7c33bec9de87035edb2"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 20a9b76f5440bbfb912ddf46e7995d7c07ddbbff31d6d7c33bec9de87035edb2, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_degree_gate.json",
+      "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_degree_gate.json",
+      "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_degree_gate.json",
+      "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_degree_gate.json",
+      "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_degree_gate.json",
+      "role_event_id": "role-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-degree-calibration-100k-20261107-s42-r2:degree_gate:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+    }
+  ]
+}

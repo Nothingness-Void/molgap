@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c1271f263c8f5f8a10130d71d7171b59c30125e84c4dfb31d27735ccfc3b19bd",
+  "source_digest": "b0bf8ebe976feb4d5865a45778a1051d8d1af17cbe7252319395a9a709ac0a13",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -394,13 +394,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/decision.md",
       "family_id": "pcqm-k1-degree-calibration-100k-20261107",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/degree_gate/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/degree_gate/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate"
     },
@@ -408,13 +410,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/decision.md",
       "family_id": "pcqm-k1-degree-calibration-100k-20261107",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/muon/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon"
     },

@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 107,
+      "count": 105,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -24,8 +24,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
@@ -347,7 +345,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 55,
+      "count": 53,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -356,8 +354,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -409,7 +405,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 20,
+      "count": 18,
       "items": [
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
@@ -417,8 +413,6 @@
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-separate_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-v2-separate_norm",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
-        "T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-muon",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

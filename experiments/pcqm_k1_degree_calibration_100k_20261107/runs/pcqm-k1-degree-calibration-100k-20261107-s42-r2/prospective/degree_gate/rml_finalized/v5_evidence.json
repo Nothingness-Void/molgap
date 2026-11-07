@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "6e6f414fa4ddea9261f82eaa5284279d4d07a2562485d9fc4c51d0c761a89407"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "4a0dc69fbc34fc4c706aae892ea99be3d7e2307922e2641e802f56ae3cf9e5fc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/_execution/degree_gate/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "4a0dc69fbc34fc4c706aae892ea99be3d7e2307922e2641e802f56ae3cf9e5fc"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/training_contract.json",
+      "name": "contract",
+      "sha256": "f553247f76c8197d1fb1adc699f910e0b9481b526900a3caf642df10b14d4df7"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "20a9b76f5440bbfb912ddf46e7995d7c07ddbbff31d6d7c33bec9de87035edb2"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "d9629f1df26e1155e03412d8bb1b7be42bbe02b48443712f9e4deb9d99a57eb5"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "511b0578f51f52b7b6581ed0da6a6974bfaae86ccf173d5758fd194c49713702"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "dbcb28cb7aeedfd50b9bbcd58f73214b2b010a51c0f8ed0bf24b322b2ba1e88d"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "61dd5c50070312743a2ecf79f01356a1fdcc7eeff7e481a909575f6c07e466c9"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-degree-calibration-100k-20261107-s42-r2/v1/version1/degree_gate/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "21e04fce656e9ba158c6a5f5599649f2d348c01d284824146157034e162b2dd2"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_degree_calibration_100k_20261107/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-degree-calibration-100k-20261107-s42-r2-degree_gate",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_degree_calibration_100k_20261107/generated/0685b9d8d740495d4af628185631c639414a5b37e9444c2ef0efb83adc2a2261/degree_gate/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.1313124674552679,
+    "missing_reason": null,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_degree_calibration_100k_20261107/runs/pcqm-k1-degree-calibration-100k-20261107-s42-r2/prospective/degree_gate/terminal_staging/v1/ac1e6e7bc5a7dbab/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "POSITIVE_BELOW_GATE",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}
