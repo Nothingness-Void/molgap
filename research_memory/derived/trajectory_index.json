@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "073b760782d24f374543677e646f3d05a534d1f60294a68854fd5bd906d9a4eb",
+  "source_digest": "cd29d607a1ceb8e592715afc34f51c1ecdf828baf38b321d01da13b6cec1c9aa",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -778,13 +778,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
       "family_id": "pcqm-k1-read-calibration-100k-20261107",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_BELOW_GATE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
     },
@@ -792,13 +794,15 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
       "family_id": "pcqm-k1-read-calibration-100k-20261107",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+      ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
     },

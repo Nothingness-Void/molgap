@@ -1,0 +1,146 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/terminal_staging/v1/b76c122625a1e25f/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md": "e3b83ef14365298f40f980d97cc0809aec2959a6de289df7a318d6cdc91adbee",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/authority.json": "f04a3f9bd32554f07d1b557824455726ac646205afe03e10e3b223575daa7be7",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/current_read/recipe.json": "f102431ff3d8777731f7592e418467cde87e9f43ba957273c40bbea0fcc62ef2",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/terminal_staging/v1/b76c122625a1e25f/acceptance.json": "094f0ff4757fda8cc6386a7d09cce3e0a978b679e04026391081b6b0cd8db3be",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/terminal_staging/v1/b76c122625a1e25f/observed.json": "02a6b9616667dcd5f6aae437c05b973d71c31b7060ccac167a86ade289bc7f9c",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/comparison_readiness.json": "03cc37642d8455229c9692e233c4158a9d7309c8802d5034f69dfe69e59cb1fa",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/reference_bundle.json": "36722c5fbc57cc3878d50206a6e694873feabe5b5429eea728e06ec098aac2c2",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_current_read.json": "7d4aa04ad7a04e3ef9cd36ef2ca3b7ff00a4fc738812006e9a99a77f162fe273",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/allocation_ledger.json": "74d98a5d00cc0b600f51490c75b0f5e2cf505146010360bdb1680564d3bcf4e2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/current_read/allocation_ledger.json": "74d98a5d00cc0b600f51490c75b0f5e2cf505146010360bdb1680564d3bcf4e2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/execution_retention.json": "922a6c8951f8e6e8fb489d61866dd620106defe0946036e0f5cbc3654545fef1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/canonical_trace.json": "12763f1f3da4795cfd17a143dd75444ad3a3c658a609caecacf6f76b00dca991",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/canonical_trace.json.context.json": "5069930f65828cba4e6100f2454162c6f26966d215b1e66e6c0c9342edc7eb56",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/data_open_provenance.json": "5dba80b50f27ae32b3f410377117b9b24e77fea998e54eab4559f77fe6e163d4",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/development_predictions.pt": "6b1501561c78f9253e62f70c37c5583bf3acfcc46adcfd210f364462a5046775",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/last_checkpoint.pt": "0cd6ab1f57501a8d9c5e7bea4defe0b32c779a9b6448be49c84a3abdf22eb524",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/output_manifest.json": "3eb8d9827c3e9e6d225976d0b2c746935f040a9690b4cb2d8aa8f6751339cebc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/selected_model.pt": "435c548c3fd37ea47933282fb87fec421b1d10690db64cdf05654904ee812e32",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/training_contract.json": "f102431ff3d8777731f7592e418467cde87e9f43ba957273c40bbea0fcc62ef2",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/reports/diagnostic_5c7699bb471cbcf29daf0c65b2185a06814b3abf8c8695808a901c0da5c14de6.json": "8b8ff604bd251626e62a5a045ec7c996fef9b9c1e73bef4393daab0459c7f5c0"
+  },
+  "closure_blockers": [],
+  "comparison_readiness_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/comparison_readiness.json",
+  "finalized_at": "2026-11-07T03:35:39.831674+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-0.json",
+        "sha256": "bf44d9cc9c819f7df5653db007b3f3176d00547c77b8fb48caa1ec76d0479cad"
+      },
+      {
+        "ref": "costs/cost-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-allocation-0.json",
+        "sha256": "1f4d51546a4098ade598dbc6cbdfe957cafe04da052cac4dc3b790e8dcafe88f"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "38b1f63bb84b69ea7f5a7fe8fcc5ad6925b2b94f84b67b4a9aa28a1a13ad83d4"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "1827b33661637733a3b8f5c737724c51ede690566a8fdb84996a20d599ff18dc"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-train-training_membership.json",
+        "sha256": "2550106dfa61a209ae2892f0658accece65ecea4558a856a88d0797f3bd4c3f5"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-prediction_input.json",
+        "sha256": "f934df26cfb93457af157b2d9bcce500680303929458d08daca5c895004fa369"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-labels_read.json",
+        "sha256": "f7926e3e4875ab79efe8f70668c71ee874bd0c0599c2e0c95c94ae731a2994a6"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-metric_computed.json",
+        "sha256": "18024415c068ea15ffc9765647dc82f8b0f9d027afcbca5f65b95fb1d5b79716"
+      },
+      {
+        "ref": "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read-development-selection_used.json",
+        "sha256": "295592dde6ee6d3b93d5e9e598aac3e564fe94ef50cf40da3479ad5a38d4b2c3"
+      }
+    ]
+  },
+  "requested_outcome": "POSITIVE_BELOW_GATE",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "pcqm-k1-read-calibration-100k-20261107-s42-r2:current_read:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-read-calibration-100k-20261107-s42-r2-v1",
+    "logical_run_id": "pcqm-k1-read-calibration-100k-20261107-s42-r2",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-read-calibration-100k-20261107-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "fe5a02a016de856e766beb1401f4fec3b895f39f",
+    "source_package_sha256": "575db9832f16dc8b485dea3f2abb1b441e0e5c6c4349593c800aa0e2f1c2403d",
+    "spec_identity": "f44e3108a64c7f8b4899cbddb442d7c52773930bb757424536f26e3f9f94c158"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "unknown",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "k1-muon-adamw-fp32-v1",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "molgap-family-training-recipe-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_31240",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/current_read/recipe.json",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/current_read/recipe.json",
+    "reference_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
+    "run_id": "pcqm-k1-read-calibration-100k-20261107-s42-r2:current_read:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/terminal_staging/v1/b76c122625a1e25f/terminal.json",
+    "trace_artifact_ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/canonical_trace.json",
+    "trace_artifact_sha256": "12763f1f3da4795cfd17a143dd75444ad3a3c658a609caecacf6f76b00dca991",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read"
+}

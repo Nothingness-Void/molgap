@@ -1,5 +1,13 @@
 # Bound submission — 2026-11-07 JST
 
+2026-11-07 JST terminal: both40-pass arms FINALIZED through existing strict
+acceptance. Native qualification and replay VERIFIED independently, no missing
+proofs/blockers/exclusions; candidate comparison STRICT_CAUSAL.
+Muon CLOSED; current_read POSITIVE_BELOW_GATE, selected improvement2.376164meV
+and measured process-wall overhead4.1911%. See [decision and attribution](decision.md).
+Canonical outcomes live under the r2 prospective arms/rml_finalized. No automatic
+500K/model adoption. This terminal paragraph supersedes submission-only state below.
+
 Kaggle1 job143097149/version1 SUBMISSION_BOUND.
 Kernel: nothingnessvoid/molgap-k1-read-calibration-100k-20261107-s42
 Logical run: pcqm-k1-read-calibration-100k-20261107-s42-r2 / v1

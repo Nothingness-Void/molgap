@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-eb08a32bab9148a70853670d4402438462a2d84b1ae66e1e2c10df605a887122",
+  "finalized_at": "2026-11-07T03:35:40.088261+00:00",
+  "finalizer_version": "2",
+  "format": "molgap-rml-finalization-v2",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md": "e3b83ef14365298f40f980d97cc0809aec2959a6de289df7a318d6cdc91adbee",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/authority.json": "f04a3f9bd32554f07d1b557824455726ac646205afe03e10e3b223575daa7be7",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/generated/84d42b8db3a8b56080e2fa7d46dd0e0bb04ea752e2c816d85151a9a2d4568d47/muon/recipe.json": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/120e4a0fc07d9708/acceptance.json": "371a1b3456ec329766f32806d306c0deca3c6312d2f8f0eb495d413cba0aad5e",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/120e4a0fc07d9708/observed.json": "e0f259d7931b818d93f5353803a3e50feeecd19ad511315becff142dd3f9c127",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/reference_bundle.json": "36722c5fbc57cc3878d50206a6e694873feabe5b5429eea728e06ec098aac2c2",
+    "experiments/pcqm_k1_read_calibration_100k_20261107/terminal_acceptance/role_audit/r2-v1/roles_muon.json": "82bd32541c90ceebb3907b8a6f8691bc9742bf8ef4bd73786cb9ea3db089b424",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/allocation_ledger.json": "74d98a5d00cc0b600f51490c75b0f5e2cf505146010360bdb1680564d3bcf4e2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/execution_retention.json": "922a6c8951f8e6e8fb489d61866dd620106defe0946036e0f5cbc3654545fef1",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/_execution/muon/allocation_ledger.json": "74d98a5d00cc0b600f51490c75b0f5e2cf505146010360bdb1680564d3bcf4e2",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/canonical_trace.json": "5d18e344ffdbb2729383729958ee15df8ac4b48a1903952d7b0332dd0b6ccb62",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/canonical_trace.json.context.json": "fd40f793e437739896e1f2e8ceda037394d0480edf1d351f2c796a6eaad3d7ca",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/data_open_provenance.json": "fe57453b122dbabf77913eca947b5be6c875a2937d7c08ecd9d5f768085f0db6",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/development_predictions.pt": "4a5a90f1a18d50aaaf6d4c89c2fdd49b461206da6cf94ef5fcee02cb9de0e306",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/last_checkpoint.pt": "0dc823fe76d70ff27303e6c41967b7c4ad6dc6f528897e79d39c26015c7a5726",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/output_manifest.json": "ae5b71cc657a56556d5d2b7538c599bf9d1daec7694558560d219adbcb83e614",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/selected_model.pt": "e72f46aaa1287b6e34a9199323b771fb8b9a0b53c1f7f833061071f6f29865cc",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/training_contract.json": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8",
+    "external:///D:/molgap-artifacts/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/reports/diagnostic_5c7699bb471cbcf29daf0c65b2185a06814b3abf8c8695808a901c0da5c14de6.json": "8b8ff604bd251626e62a5a045ec7c996fef9b9c1e73bef4393daab0459c7f5c0"
+  },
+  "outcome": "CLOSED",
+  "prospective_ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json",
+  "prospective_sha256": "feacb657a9fb99a31dcdcd83eee8d717e949ab5deac3eb7061c9394ee575290c",
+  "published_hashes": {
+    "costs/cost-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-0.json": "d3451b0c34342ea1c6281d3ecdcc7dc20eb57916250c25a4c80d07041830a010",
+    "costs/cost-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-allocation-0.json": "296a814441b19831c69c8322194286d0b9deaac712930146e3ca66d14da2f701",
+    "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-labels_read.json": "98e70cf470cc93af1e79f33fd15d1326b0eaa3c6044263cb2d1f98303d8b349f",
+    "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-metric_computed.json": "104cd5d30e5d2f959787809d0194f6e35ef45c6ee21ddc524ca6d8884f1104f1",
+    "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-prediction_input.json": "0d11f930c28496ccf5e1632d911989607351daad6dab8723f104bbadac301d47",
+    "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-development-selection_used.json": "5a6029e3426e032da0daf66afd8fe65baff5909533830a5b984d55a8fdd63082",
+    "roles/role-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-train-training_membership.json": "e2cc1e114655a0357d93f1c0755242d675a034651a99de968734658b0cc8efb1",
+    "terminal_input.json": "836184348fa060dd2af06124e522f08075af736f511e2fa7f5b619058abfe819",
+    "trace.json": "5d18e344ffdbb2729383729958ee15df8ac4b48a1903952d7b0332dd0b6ccb62",
+    "trace_manifest.json": "f43d81439202718ec16047c4bf98d4a25da49083a1d4549febf97527df435f84",
+    "trajectory.json": "237e9ed2884b4a44febe0bc99bb39de8a125d93dcd12d47057e313861b364143",
+    "v5_evidence.json": "fb387e15be8928b32955b3e361fdff53fae0b8c6e55fbe78ec8f8fdb02039562"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "eb08a32bab9148a70853670d4402438462a2d84b1ae66e1e2c10df605a887122",
+  "trace_status": "available",
+  "trajectory_id": "T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon"
+}

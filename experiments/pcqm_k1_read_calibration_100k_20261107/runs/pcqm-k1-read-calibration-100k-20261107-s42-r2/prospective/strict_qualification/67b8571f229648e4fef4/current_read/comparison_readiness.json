@@ -1,0 +1,228 @@
+{
+  "blocker_codes": [],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/current_read/terminal_staging/v1/b76c122625a1e25f/acceptance.json",
+      "sha256": "094f0ff4757fda8cc6386a7d09cce3e0a978b679e04026391081b6b0cd8db3be"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/selected_model.pt",
+      "sha256": "435c548c3fd37ea47933282fb87fec421b1d10690db64cdf05654904ee812e32"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/cost_records.json",
+      "sha256": "3808464695691f479ca528161810b31e50f98c50f582552f18f4121d57d55622"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "sha256": "e3b83ef14365298f40f980d97cc0809aec2959a6de289df7a318d6cdc91adbee"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/paired_analysis.json",
+      "sha256": "1c6842ccc5b2b3db212ef08409e782f50fea765ff7e907c708ccfd25769b8b5d"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/prediction_manifest.json",
+      "sha256": "72f7cd200b66ad3dabc2ed429e0396a55b86b52d7d31eb97cd2fc5018882338f"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/role_history.json",
+      "sha256": "f603e61c7c1768af91a7f38b3152e98f395cd39eaafd79aaedc34a97d83edbcb"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/runtime_certificate.json",
+      "sha256": "d74e7ee2443e2a71328b564481de7007ec915627c9cb64ce4f486e1780c0af86"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/current_read/training_contract.json",
+      "sha256": "f102431ff3d8777731f7592e418467cde87e9f43ba957273c40bbea0fcc62ef2"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/current_read/bound_trace_manifest.json",
+      "sha256": "f99b797d346682306ef5bf781870a08b93bd2c972cf4ff3ff8d5b382e6e04823"
+    }
+  },
+  "candidate_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-current_read",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "STRICT_CAUSAL",
+  "decision_scope": [
+    "causal claim limited to declared intervention fields",
+    "paired endpoint analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "architecture_comparison",
+  "forbidden_claims": [
+    "claim about any undeclared mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "current-layer-normalized-associative-side-path-versus-original-k1-muon",
+  "matched_fields": {
+    "benchmark_identity": "pcqm4mv2",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "2fdfa8403164388371d261501f44b8f1f041d5b95b9176a6f091fc562098af39",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": 0.999,
+    "ema_enabled": true,
+    "ema_update_frequency": 1,
+    "evaluation_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "evaluation_weight_source": "live",
+    "feature_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "a1591cce158c7ba13c1faa0c3f0f8b6b62325c4336c0f02694d6268a355bf058",
+    "optimizer_fused": false,
+    "optimizer_identity": "ed3ebf2f43884116e640e6d7981911829dce85274cab72181a98280d8f84420a",
+    "optimizer_mode": "k1-muon-adamw-fp32-v1",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "row_order_identity": "b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87",
+    "runtime_certificate_scope": "c75011519274a52cd40b1610d8b967276fc8fcad5887ab4ca2b68969533ba539",
+    "sample_presentations": 3998720,
+    "schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+    "seed": 42,
+    "selection_role_identity": "0781d2f9ab330cfa011f8c9cc2d1c355ecfaa5ee88f1d50f05908dee3c9a433b",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f",
+    "target_transform_identity": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": null,
+  "mismatched_fields": {
+    "architecture_config_identity": {
+      "candidate": "935efab9336e6a330fb72537092e6c49ab879fa1997f4ae9e7e70115cf1f91e3",
+      "reference": "5e2e3c89c58bcaa1a1ab596057506038a548fb6d6aef32b39ed43981742a559d"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/muon/terminal_staging/v1/120e4a0fc07d9708/acceptance.json",
+      "sha256": "371a1b3456ec329766f32806d306c0deca3c6312d2f8f0eb495d413cba0aad5e"
+    },
+    "checkpoint": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/selected_model.pt",
+      "sha256": "e72f46aaa1287b6e34a9199323b771fb8b9a0b53c1f7f833061071f6f29865cc"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/cost_records.json",
+      "sha256": "a3ebef18b8e7a883d3482deffd52ba630e3fefeda309327d04e6eb42a02ceb85"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/decision.md",
+      "sha256": "e3b83ef14365298f40f980d97cc0809aec2959a6de289df7a318d6cdc91adbee"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/prediction_manifest.json",
+      "sha256": "ceb627f938a39836c8f6a6f394e0e107c590ee7454a6ca37812b3b4048b69617"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/role_history.json",
+      "sha256": "cbfeebcacdd341303db75dbbf4c66fa133373b2cea0a93845e6e98881395d080"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/row_manifest.json",
+      "sha256": "dbb9ba4e21cc92c8722f7139fa3045d430dbc9d59fe78b3900ef561a77dd1ed6"
+    },
+    "runtime_certificate": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/runtime_certificate.json",
+      "sha256": "d00d588036274707177f9fe791646fa32b67cc2594afe86316839e1f98196c28"
+    },
+    "source_config": {
+      "ref": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-calibration-100k-20261107-s42-r2/v1/version1/muon/training_contract.json",
+      "sha256": "5b95860779e4e2403410f82723a5db6cd40e19ed454b1d8bc86bd748fcc904f8"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/target_manifest.json",
+      "sha256": "1d2669840402c5a9ecddc2bd108c352a1c347e93cb7bab7f394c04c74e4909c6"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/comparison_assets/8f1048d1479b50e514d3d844f11d7ab169eac839abe796b6e7e76e3baae8ba3f/target_transform.json",
+      "sha256": "817895852612434ae9739f72fd39ade5f9c28a42326a858fbb6dfe4efac4f3dd"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_read_calibration_100k_20261107/runs/pcqm-k1-read-calibration-100k-20261107-s42-r2/prospective/strict_qualification/67b8571f229648e4fef4/muon/bound_trace_manifest.json",
+      "sha256": "ba3c02650f3c2f037e43b837434a136bde7351b4146e31b1e63fdbb81f5ab268"
+    }
+  },
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon-67b8571f229648e4fef4",
+  "reference_bundle_sha256": "bfd3fbcd1fb2985f67d86bfa7837c8f0991693b1ecf75c50b0840161e50becfd",
+  "reference_id": "ev-terminal-T-pcqm-k1-read-calibration-100k-20261107-s42-r2-muon",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "unavailable",
+  "strict_ready": true,
+  "strict_status": "READY",
+  "trace_status": "complete"
+}
