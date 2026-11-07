@@ -1,0 +1,35 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "user_authorized": true,
+  "account": "nothingnessvoid",
+  "arms": [
+    "muon",
+    "current_read"
+  ],
+  "seeds": [
+    42
+  ],
+  "same_run_reference_arm_id": "muon",
+  "allocated_t4_hours_ceiling": 36,
+  "allocation_wall_limit_seconds": 32400,
+  "cleanup_reserve_seconds": 180,
+  "development_role_label_use": true,
+  "protected_roles_authorized": [],
+  "authority": "User explicitly authorized original K1 plus accelerated batched Muon versus current_read plus the same optimizer, fixed500K60passes, on2026-11-07.",
+  "scope": "Exactly two fresh seed42 models, TRAIN/internal-development only; at most2physical T4x2 sessions,9h/session,18h cumulative entry wall and36T4-device-hours. Direct terminal pause234360; resume only exact wall-limited state within remaining total budget. No protected roles, extra seed, full, adoption or source/recipe changes.",
+  "continuation": {
+    "logical_attempt": "v1",
+    "maximum_physical_sessions": 2,
+    "cumulative_pass_boundaries": [
+      60
+    ],
+    "cumulative_optimizer_step_boundaries": [
+      234360
+    ],
+    "total_entry_wall_hours_ceiling": 18,
+    "total_allocated_t4_device_hours_ceiling": 36,
+    "quota_policy": "Recheck actual Kaggle1 quota before publication and continuation; retain account and cumulative ceiling.",
+    "recovery_rule": "Wall-limited exact-state continuation only, retaining optimizer/scheduler/RNG/EMA/counters and all receipts. Subtract elapsed entry wall and allocated device costs from total budget.",
+    "operator": "Desktop owner when active; no new polling or unattended service."
+  }
+}

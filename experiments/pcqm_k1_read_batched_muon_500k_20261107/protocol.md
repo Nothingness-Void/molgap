@@ -2,9 +2,8 @@
 
 2026-11-07 JST. Desktop-owned Track B, Kaggle1 `nothingnessvoid`. Compare
 original K1 (`muon`) with `current_read`, using the same newly registered
-`k1-muon-batched-adamw-fp32-v1` in both arms. Registration is pending the
-independent infrastructure commit; actual builder output must replace that
-pending state before freeze. This pair isolates the read intervention under one
+`k1-muon-batched-adamw-fp32-v1` in both arms. Registration is present through reviewed infrastructure commit
+`dd9dbb42`, cherry-picked as `a99bccd3`; the actual builder generates its policy. This pair isolates the read intervention under one
 shared execution identity, not the effect of batched versus unbatched Muon.
 
 ## Evidence and question
@@ -13,7 +12,7 @@ Read-only RML `lookup --mechanism current` and `lookup --mechanism muon` against
 desktop and `codex/exp/k1-read-calibration-100k-20261107` preceded this plan.
 The canonical calibration at commit3659ef15, directory
 `experiments/pcqm_k1_read_calibration_100k_20261107/`, reports strict causal
-comparison, native qualification and four qualified replay entries. Original
+comparison, native qualification and two qualified replay entries. Original
 Muon selected MAE0.132520667662eV versus current0.130144503669eV: gain2.376164meV,
 candidate-minus-reference paired95% interval[-3.122626,-1.679513]meV, final
 gain2.259254meV and last-five gain2.791223meV. It is POSITIVE_BELOW_GATE:
@@ -32,7 +31,7 @@ Question: does the simpler current-only side path retain a material benefit at
 contraction and an effect specific to this seed or execution. The cheapest
 authorized scale discriminator is this one matched pair, not a recipe grid.
 
-The local synthetic RTX5060 optimizer kernel observation (~1.85x) is not a T4
+The local synthetic RTX5060 shared FamilyKernel short-training observation (~1.85x) is not a T4
 end-to-end speed measurement or bit-exactness claim. Batched arithmetic needs
 its own actual-runtime qualification; prior unbatched Muon proof is contextual.
 
