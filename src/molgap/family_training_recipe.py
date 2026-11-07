@@ -156,7 +156,7 @@ class FamilyRecipe:
         object.__setattr__(self, "_frozen_read", _frozen_read)
         if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
-        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1", "k1-soap-adamw-fp32-v1"}:
+        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1", "k1-muon-batched-adamw-fp32-v1", "k1-soap-adamw-fp32-v1"}:
             raise ValueError("Unsupported frozen optimizer")
         if self.optimizer != "adamw" and (self.family != "neural_atom_k1" or
                 self.mode not in {"reference", "composed"} or self.no_decay_modules):
@@ -267,9 +267,11 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
-        if self.optimizer == "k1-muon-adamw-fp32-v1":
+        if self.optimizer in {"k1-muon-adamw-fp32-v1", "k1-muon-batched-adamw-fp32-v1"}:
             from .k1_muon import MUON_POLICY
             policy.update(optimizer=self.optimizer, muon=dict(MUON_POLICY))
+            if self.optimizer == "k1-muon-batched-adamw-fp32-v1":
+                policy["muon"]["execution"] = "shape-batched-bmm-v1"
         elif self.optimizer == "k1-soap-adamw-fp32-v1":
             from .k1_soap import SOAP_POLICY
             policy.update(optimizer=self.optimizer, soap=dict(SOAP_POLICY))

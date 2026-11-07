@@ -104,6 +104,9 @@ def make_family_optimizer(recipe, parameters):
     if recipe.optimizer == "k1-muon-adamw-fp32-v1":
         from .k1_muon import MuonAdamW
         return MuonAdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay)
+    if recipe.optimizer == "k1-muon-batched-adamw-fp32-v1":
+        from .k1_muon import BatchedMuonAdamW
+        return BatchedMuonAdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay)
     if recipe.family == "neural_atom_k1":
         return torch.optim.AdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay,
             betas=ADAMW_BETAS, eps=ADAMW_EPSILON)

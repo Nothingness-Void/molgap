@@ -14,12 +14,15 @@ from molgap.v4_runtime import state_dict_sha256
 
 
 def test_k1_muon_matches_fp32_matrix_update_and_native_adamw(tmp_path, monkeypatch):
-    from molgap.k1_muon import MuonAdamW, parameter_groups
+    from molgap.k1_muon import BatchedMuonAdamW, MuonAdamW, parameter_groups
     model = torch.nn.Module()
     model.hidden = torch.nn.Linear(2, 3)
+    model.twin = deepcopy(model.hidden)
     model.head = torch.nn.Linear(3, 1)
     optimizer = MuonAdamW(parameter_groups(model, .03), lr=.01, weight_decay=.03)
-    assert optimizer.param_groups[0]["param_names"] == ["hidden.weight"]
+    assert optimizer.param_groups[0]["param_names"] == ["hidden.weight", "twin.weight"]
+    batched_model = deepcopy(model)
+    batched = BatchedMuonAdamW(parameter_groups(batched_model, .03), lr=.01, weight_decay=.03)
     native_head = torch.nn.Parameter(model.head.weight.detach().clone())
     native = torch.optim.AdamW([native_head], lr=.01, weight_decay=.03)
     expected = model.hidden.weight.detach().double().clone()
@@ -27,7 +30,10 @@ def test_k1_muon_matches_fp32_matrix_update_and_native_adamw(tmp_path, monkeypat
     for scale in (1., .7):
         grad = torch.tensor([[.2, -.4], [.1, .6], [-.5, .3]]) * scale
         model.hidden.weight.grad = grad.clone()
+        model.twin.weight.grad = grad.flip(0)
         model.head.weight.grad = torch.full_like(model.head.weight, .2 * scale)
+        for source, target in zip(model.parameters(), batched_model.parameters()):
+            target.grad = None if source.grad is None else source.grad.clone()
         native_head.grad = model.head.weight.grad.clone()
         buffer = .95 * buffer + .05 * grad.double()
         update = (.05 * grad.double() + .95 * buffer).T
@@ -37,9 +43,13 @@ def test_k1_muon_matches_fp32_matrix_update_and_native_adamw(tmp_path, monkeypat
             update = 3.4445 * update - 4.775 * (gram @ update) + 2.0315 * (gram @ gram @ update)
         expected = expected * (1 - .01 * .03) - .01 * .2 * (3 ** .5) * update.T
         optimizer.step()
+        batched.step()
         native.step()
         torch.testing.assert_close(model.hidden.weight, expected.float(), atol=1e-6, rtol=1e-6)
         torch.testing.assert_close(model.head.weight, native_head, atol=0, rtol=0)
+        for source, target in zip(model.parameters(), batched_model.parameters()):
+            torch.testing.assert_close(target, source, atol=1e-6, rtol=1e-6)
+        torch.testing.assert_close(batched_model.head.weight, native_head, atol=0, rtol=0)
     assert set(optimizer.state[model.hidden.weight]) == {"step", "momentum_buffer"}
     assert optimizer.state[model.hidden.weight]["step"].item() == 2
 
