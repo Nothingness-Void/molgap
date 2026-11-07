@@ -355,6 +355,12 @@ to existing terminal closure only after independent scientific inputs exist.
 --receipt RECEIPT --observations OBSERVATIONS --locations LOCATIONS --output
 DESCRIPTOR` translates incomplete attempts. Use `--execution-state PAIR_STATE`
 instead of `--observations` only for a retained all-incomplete pair state.
+A failed single-arm session closes from retained partial artifacts with
+`build-terminal --profile P --repo-root ROOT --run-id ID --attempt-id A
+--retrieved-root DIR --execution-state REPORT --outcome INCONCLUSIVE|STOP_FOR_COST
+--decision-ref FILE --output DESCRIPTOR`, then `terminal --execute`. It needs the
+retained execution/retention/allocation records, training contract, partial trace
+and data-open record; final exposure stays unknown and no replay is claimed.
 These commands do not submit, qualify causal comparisons or change the existing
 server `prepare-release`, `check-preparation` and replay-closure entries.
 New K1/GPTrans recipe builders freeze full `metric_semantics` independently;

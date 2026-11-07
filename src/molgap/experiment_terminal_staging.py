@@ -228,7 +228,7 @@ def _protected_roles_from_data_open(output_dir, artifacts, context, dataset, sel
     return {"status": "untouched", "record": entry, "text": text}
 
 
-def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None):
+def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_ref, protected_role_use=None, *, artifacts=None):
     """Draft one arm's role audit from retained, digest-checked session artifacts."""
     states = {role: "unknown" for role in PROTECTED_ROLES}
     for role, state in (protected_role_use or {}).items():
@@ -236,9 +236,10 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
             raise ValueError("Invalid protected-role use: " + str(role) + "=" + str(state))
         states[role] = state
     output_dir = Path(output_dir)
-    manifest = _json(output_dir / "output_manifest.json")
-    artifacts = manifest.get("artifacts", {})
-    for name in ("contract", "predictions", "trace"):
+    partial = artifacts is not None
+    if artifacts is None:
+        artifacts = _json(output_dir / "output_manifest.json").get("artifacts", {})
+    for name in (("contract", "trace", "data_open") if partial else ("contract", "predictions", "trace")):
         if name not in artifacts:
             raise ValueError("Output manifest lacks the " + name + " artifact needed for a role audit")
         if file_digest(_artifact_path(output_dir, artifacts[name]["path"])) != artifacts[name]["sha256"]:
@@ -246,6 +247,11 @@ def draft_role_audit(spec_arm, context, where, action_id, output_dir, evidence_r
     if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
         raise ValueError("Retained training contract differs from the frozen recipe identity")
     contract = _json(_artifact_path(output_dir, artifacts["contract"]["path"]))
+    if partial:
+        trace = load_canonical_trace(_artifact_path(output_dir, artifacts["trace"]["path"]))
+        if not any(row["live_train_metric"] is not None and
+                   (row["live_dev_metric"] is not None or row["ema_dev_metric"] is not None) for row in trace["observations"]):
+            raise ValueError("Partial role audit requires observed training and development metrics")
     roles = {item["role"]: item for item in spec_arm["data"]["roles"]}
     if set(roles) != {"train", "development"} or not contract["dataset"]["development"]:
         raise ValueError("Role audit drafting covers only train and development session screens")
@@ -554,7 +560,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         retrieved_root=None, supplied=None, locations=None, outcome=None, decision_ref=None,
         diagnostic_report=None, role_audit=None, resolved=None, reports=None,
         package_dir=None, scientific_acceptance=None, execution_root=None, _retention=None, facts_ref=None,
-        _strict_transaction=False):
+        _strict_transaction=False, _incomplete=False):
     """Publish drafts, or explicit decision packages, without canonical RML mutation.
 
     ``resolved`` and ``reports`` share observations inside one local acceptance
@@ -598,7 +604,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         reports = {arm_id: inspect_terminal_output(item) for arm_id, item in outputs.items()}
     if set(reports) != arm_ids:
         raise ValueError("Terminal staging requires every independent mechanical report")
-    if any(report["status"] != "MECHANICALLY_VERIFIED" for report in reports.values()):
+    report_status = "INCOMPLETE_OBSERVED" if _incomplete else "MECHANICALLY_VERIFIED"
+    if any(report["status"] != report_status for report in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "paths": {}, "locations": {},
                 "blockers": ["mechanical_output_verification_failed"], "executed": False}
     diagnostic_binding = _diagnostic_binding(root, resolved, diagnostic_report, attempt_id)
@@ -644,13 +651,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
                 raise ValueError("Continuation does not connect the frozen action to this observed attempt")
         observed = report["observed"]
         output_root = Path(item["output_dir"]).absolute()
-        manifest_path = _artifact_path(output_root, "output_manifest.json")
-        manifest = _json(manifest_path)
-        _check_context(manifest.get("context"), context)
-        _runtime(manifest.get("runtime"), context, item["expected"].get("precision", "fp32"))
-        if (manifest.get("artifacts") != observed["artifacts"] or manifest.get("costs") != observed["costs"]
-                or manifest.get("progress") != observed["progress"]):
-            raise ValueError("Inspected output manifest changed before terminal staging")
+        if not _incomplete:
+            manifest_path = _artifact_path(output_root, "output_manifest.json")
+            manifest = _json(manifest_path)
+            _check_context(manifest.get("context"), context)
+            _runtime(manifest.get("runtime"), context, item["expected"].get("precision", "fp32"))
+            if (manifest.get("artifacts") != observed["artifacts"] or manifest.get("costs") != observed["costs"]
+                    or manifest.get("progress") != observed["progress"]):
+                raise ValueError("Inspected output manifest changed before terminal staging")
         artifacts, hashes = [], {}
         hashes.update(restored)
         if continuation is not None:
@@ -661,7 +669,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             hashes.update(bindings)
             artifacts.extend(retained_artifacts)
         for name, binding in observed["artifacts"].items():
-            path = _artifact_path(output_root, binding["path"])
+            path = (bound_artifact_path(root, binding["locator"]) if "locator" in binding
+                    else _artifact_path(output_root, binding["path"]))
             locator = artifact_locator(root, path)
             verify_bound_artifact(root, locator, binding["sha256"])
             hashes[locator] = binding["sha256"]
@@ -675,6 +684,8 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         if (trace["trajectory_id"], trace["run_id"]) != (where["trajectory_id"], where["run_id"]):
             raise ValueError("Actual canonical trace differs from the prospective owner/run")
         explicit_outcome, explicit_decision = _per_arm(outcome, arm_id), _per_arm(decision_ref, arm_id)
+        if _incomplete and explicit_outcome not in {"INCONCLUSIVE", "STOP_FOR_COST"}:
+            raise ValueError("Incomplete execution closes only INCONCLUSIVE or STOP_FOR_COST")
         blockers = []
         if explicit_outcome is None or explicit_decision is None:
             blockers.append("explicit_outcome_and_decision_ref_required")
@@ -725,8 +736,9 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         blockers.extend(role_blockers)
         if audit_ref is not None:
             hashes[audit_ref] = file_digest(root / audit_ref)
-        manifest_locator = artifact_locator(root, manifest_path)
-        hashes[manifest_locator] = file_digest(manifest_path)
+        if not _incomplete:
+            manifest_locator = artifact_locator(root, manifest_path)
+            hashes[manifest_locator] = file_digest(manifest_path)
         if diagnostic_binding is not None:
             hashes[diagnostic_binding["locator"]] = diagnostic_binding["sha256"]
         # Input-addressed metadata avoids overwriting a draft when a later audit
@@ -743,7 +755,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         # action.  A continuation's physical attempt is retained only in its
         # same_run_observation, never substituted into cost/action evidence.
         costs = _cost_events(observed["costs"], {"attempt_id": action_attempt_id, "platform": context.platform},
-            where, action["action_id"], objective_ref)
+            where, action["action_id"], objective_ref, category="other" if _incomplete else "training")
         if allocation is not None:
             existing_allocation = any(event["measurement"]["device_hours"]["status"] == "measured"
                                       for event in costs)
@@ -756,7 +768,7 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         objective = {"context": context.to_dict(), "mechanical_verification": report,
             "native_costs": observed["costs"], "costs": costs, "roles": [],
             "missing_evidence": ["scientific_comparison_not_evaluated", "runtime_qualification_not_evaluated",
-                "replay_readiness_not_evaluated", *role_blockers], "diagnostic_report": diagnostic_binding}
+                "replay_readiness_not_evaluated", *observed.get("missing_evidence", []), *role_blockers], "diagnostic_report": diagnostic_binding}
         if allocation is not None:
             objective["allocation_observation"] = allocation
         publish_immutable_bytes(directory / "observed.json", json_bytes(objective))
@@ -765,13 +777,14 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
         final_decision = {"outcome": explicit_outcome if closure_ready else "ACTIVE", "final": closure_ready,
             "decision_ref": explicit_decision, "next_allowed_actions": [], "reopen_conditions": [],
             **({"facts": facts} if facts else {})}
-        dimensions = {"execution_status": "complete", "artifact_status": "mechanically_verified",
+        dimensions = {"execution_status": observed["terminal_status"] if _incomplete else "complete",
+            "artifact_status": "partial" if _incomplete else "mechanically_verified",
             "comparison_status": "NOT_EVALUATED", "scientific_status": explicit_outcome if closure_ready else "NOT_EVALUATED",
             "transfer_status": "NOT_EVALUATED", "budget_decision": "NOT_EVALUATED", "full_handoff_status": "NOT_EVALUATED"}
         evidence_id = "ev-terminal-" + where["trajectory_id"]
         acceptance = {"run_id": where["run_id"], "evidence_id": evidence_id, "outcome": dimensions,
             "trajectory_decision": final_decision, "role_use": role_use,
-            "mechanical_status": "MECHANICALLY_VERIFIED", "closure_blockers": blockers}
+            "mechanical_status": report_status, "closure_blockers": blockers}
         publish_immutable_bytes(directory / "acceptance.json", json_bytes(acceptance))
         hashes[acceptance_ref] = file_digest(directory / "acceptance.json")
         evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
@@ -832,3 +845,80 @@ def stage_verified_terminal_packages(profile, repo_root, run_id, attempt_id, *,
             order = [pair["reference_arm_id"], *pair["candidate_arm_ids"]]
             result["locations"] = {arm_id: result["locations"][arm_id] for arm_id in order}
     return result
+
+
+def stage_incomplete_run(profile, repo_root, run_id, attempt_id, *, retrieved_root,
+                         execution_state, outcome, decision_ref, output):
+    """Use retained failed-worker metadata to stage the existing terminal package."""
+    from .experiment_run import resolve_run_acceptance_inputs
+    from .experiment_family_workflow import build_incomplete_terminal_descriptor, incomplete_observations_from_execution
+    from .experiment_retention import validate_execution_retention_manifest, validate_allocation_ledger
+    if any(value is None for value in (retrieved_root, execution_state, outcome, decision_ref)):
+        raise ValueError("Incomplete run staging requires --retrieved-root, --execution-state, --outcome and --decision-ref")
+    resolved = resolve_run_acceptance_inputs(profile, repo_root, run_id, attempt_id, retrieved_root=retrieved_root)
+    root, spec = Path(repo_root).resolve(), resolved["spec"]
+    if len(spec.to_dict()["arms"]) != 1:
+        raise ValueError("Partial run staging currently requires one failed arm; mixed arm outcomes need separate dispositions")
+    execution_state = Path(execution_state).resolve()
+    context = next(iter(resolved["contexts"].values()))
+    retention_path = execution_state.parent / "execution_retention.json"
+    retention = validate_execution_retention_manifest(_json(retention_path), spec,
+        package_identity=context.package_identity, source_commit=context.source_commit,
+        source_archive_sha256=context.source_archive_sha256)
+    if execution_state != retention_path.parent / retention["execution_report"]["path"]:
+        raise ValueError("Execution report differs from the sealed retention path")
+    verify_bound_artifact(root, artifact_locator(root, execution_state), retention["execution_report"]["sha256"])
+    ledger_ref = retention["allocation_ledger"]["root"]
+    ledger_path = retention_path.parent / ledger_ref["path"]
+    verify_bound_artifact(root, artifact_locator(root, ledger_path), ledger_ref["sha256"])
+    ledger = validate_allocation_ledger(_json(ledger_path), spec)
+    state = _json(execution_state)
+    observations = incomplete_observations_from_execution(spec, state)
+    reports, audits = {}, {}
+    for arm in spec.to_dict()["arms"]:
+        arm_id = arm["arm_id"]
+        context, where = resolved["contexts"][arm_id], resolved["locations"][arm_id]
+        directory = Path(resolved["outputs"][arm_id]["output_dir"])
+        _check_context(_json(directory / "canonical_trace.json.context.json")["context"], context)
+        artifacts = {name: {"path": filename, "sha256": file_digest(directory / filename)} for name, filename in (
+            ("contract", "training_contract.json"), ("trace", "canonical_trace.json"),
+            ("trace_context", "canonical_trace.json.context.json"), ("data_open", "data_open_provenance.json"))}
+        trace = load_canonical_trace(directory / "canonical_trace.json")
+        if (trace["trajectory_id"], trace["run_id"]) != (where["trajectory_id"], where["run_id"]):
+            raise ValueError("Partial trace differs from the frozen run")
+        observation = observations[arm_id]
+        observation["costs"] = [{"metric": metric, "unit": "seconds", "value": ledger[key],
+            "status": "measured", "reason": None} for metric, key in (
+                ("wall_seconds", "wall_seconds"), ("device_seconds", "allocated_device_seconds"))]
+        # The last retained epoch is a lower bound, not the failed process's final exposure.
+        observation["missing_evidence"] += ["final_exposure_unknown", "final_predictions_and_checkpoint_not_verified"]
+        observation["artifacts"] = {"trace": {"status": "available", "locator": artifact_locator(root,
+            directory / "canonical_trace.json"), "sha256": artifacts["trace"]["sha256"], "missing_reason": None}}
+        trajectory = _json(repo_local_path(root, where["trajectory"]))
+        action = next(a for a in trajectory["actions"] if where["run_id"] in a["run_ids"])
+        audit_path = Path(where["trajectory"]).parent / "terminal_staging" / attempt_id / "incomplete_roles.json"
+        audit = draft_role_audit(arm, context, where, action["action_id"], directory,
+            audit_path.as_posix(), artifacts=artifacts)
+        publish_immutable_bytes(root / audit_path, json_bytes(audit))
+        audits[arm_id] = audit_path.as_posix()
+        for name, path in (("execution_report", execution_state), ("execution_retention", retention_path),
+                           ("allocation_ledger", ledger_path)):
+            artifacts[name] = {"locator": artifact_locator(root, path), "sha256": file_digest(path)}
+        hardware = state["hardware"][state["arms"][arm_id]["device"]]
+        costs = [{**cost, "hardware": hardware,
+            "semantics": "process_wall" if cost["metric"] == "wall_seconds" else "allocated_device"}
+            for cost in observation["costs"]]
+        reports[arm_id] = {"status": "INCOMPLETE_OBSERVED", "context": context.to_dict(), "observed": {
+            "artifacts": artifacts, "costs": costs, "terminal_status": observation["status"],
+            "exit_reason": observation["exit_reason"], "progress": observation["progress"],
+            "last_retained_trace_observation": trace["observations"][-1],
+            "missing_evidence": observation["missing_evidence"]}}
+    staged = stage_verified_terminal_packages(profile, root, run_id, attempt_id, resolved=resolved,
+        reports=reports, outcome=outcome, decision_ref=decision_ref, role_audit=audits, _incomplete=True)
+    if staged["blockers"]:
+        return staged
+    descriptor = build_incomplete_terminal_descriptor(spec, contexts=resolved["contexts"],
+        locations=staged["locations"], observations=observations)
+    publish_immutable_bytes(output, descriptor.to_json().encode())
+    return {"status": "DESCRIPTOR_BUILT", "descriptor": str(output), "spec": str(resolved["run_directory"] / "inputs/experiment_spec.json"),
+            "terminal_staging": {key: staged[key] for key in ("status", "paths", "blockers")}, "executed": False}

@@ -139,7 +139,7 @@ def _parser() -> argparse.ArgumentParser:
                  "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
                  "workflow-info", "check-workflow", "build-resume", "prepare-resume", "source-dependencies"):
         command = commands.add_parser(name)
-        by_run = name in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}
+        by_run = name in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume", "build-terminal"}
         if by_run:
             identity = command.add_mutually_exclusive_group(required=True)
             identity.add_argument("--spec", type=_local)
@@ -170,12 +170,15 @@ def _parser() -> argparse.ArgumentParser:
         elif name in {"prepare-release", "check-preparation"}:
             command.add_argument("--workflow", required=True, type=_local)
         elif name == "build-terminal":
-            command.add_argument("--receipt", required=True, type=_local)
+            command.add_argument("--receipt", type=_local)
             source = command.add_mutually_exclusive_group(required=True)
             source.add_argument("--observations", type=_local)
             source.add_argument("--execution-state", type=_local)
-            command.add_argument("--locations", required=True, type=_local)
+            command.add_argument("--locations", type=_local)
             command.add_argument("--output", required=True, type=_local)
+            command.add_argument("--retrieved-root", type=_local)
+            command.add_argument("--outcome")
+            command.add_argument("--decision-ref", type=_local)
         elif name in {"prepare-workflow", "prepare-family-training", "check-workflow"}:
             command.add_argument("--plan", required=True, type=_local)
             if name == "prepare-family-training":
@@ -415,7 +418,7 @@ def _dispatch(args) -> tuple[dict, int]:
                 raise ValueError("--arm and --plan are only used with a Spec")
             result = run_family_sandbox(args.family)
         return result, 0 if result["status"] == "PASSED" else 1
-    if args.command in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}:
+    if args.command in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume", "build-terminal"}:
         frozen = (args.package, args.expected_package_identity, args.receipt)
         if args.command in {"build-resume", "prepare-resume"}:
             frozen += (args.prepared,)
@@ -429,6 +432,12 @@ def _dispatch(args) -> tuple[dict, int]:
             from .experiment_family_workflow import _json
             original = (args.profile, args.repo_root, args.run_id, args.attempt_id)
             try:
+                if args.command == "build-terminal":
+                    from .experiment_terminal_staging import stage_incomplete_run
+                    result = stage_incomplete_run(*original, retrieved_root=args.retrieved_root,
+                        execution_state=args.execution_state, outcome=args.outcome,
+                        decision_ref=args.decision_ref, output=args.output)
+                    return result, 0 if result["status"] == "DESCRIPTOR_BUILT" else 1
                 if args.command == "inspect-output":
                     result = inspect_run_output(*original, arm_id=args.arm,
                         artifact_root=args.artifact_root, expectations=_json(args.expectations))
@@ -500,7 +509,7 @@ def _dispatch(args) -> tuple[dict, int]:
         if any(value is None for value in frozen):
             raise ValueError("--spec requires --package, --expected-package-identity, --receipt and, for recovery, --prepared")
     raw = _read(args.spec)
-    spec = ExperimentSpec.from_json(raw)
+    spec = (ExperimentSpec.from_frozen_json if args.command == "terminal" else ExperimentSpec.from_json)(raw)
     if raw != spec.to_json():
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
@@ -541,6 +550,8 @@ def _dispatch(args) -> tuple[dict, int]:
         result = prepare_family_training(spec, args.repo_root, plan, args.output)
         return result, 0 if result["status"] == "SOURCE_INPUTS_PREPARED" else 1
     if args.command == "build-terminal":
+        if args.locations is None:
+            raise ValueError("Explicit Spec terminal descriptor requires --locations")
         from .experiment_family_workflow import (RunContext, _json, build_incomplete_terminal_descriptor,
                                                  incomplete_observations_from_execution)
         from .experiment_launch import publish_immutable_bytes
@@ -655,6 +666,7 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical TerminalDescriptor JSON bytes (no newline)")
     if args.execute:
         results = execute_terminal_descriptor(args.repo_root, spec, descriptor)
+        results = [{key: value for key, value in row.items() if key != "candidate_policy_deltas"} for row in results]
         return {"executed": True, "results": results}, 0 if all(
             result.get("pipeline_status") == "COMPLETE" for result in results
         ) else 1

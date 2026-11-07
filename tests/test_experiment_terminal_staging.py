@@ -88,6 +88,31 @@ def test_stage_draft_needs_no_existing_terminal_and_preserves_large_bytes(stagin
     assert all(Path(path).read_bytes() == content for path, content in originals.items())
     assert not list(root.rglob("*.pt"))
     assert stage(staging_case) == result
+    # A worker can retain a trace and then fail before publishing its final manifest.
+    from molgap.experiment_family_workflow import build_incomplete_terminal_descriptor
+    from molgap.experiment_terminal import execute_terminal_descriptor
+    reports = {arm: inspect_terminal_output(item) for arm, item in resolved["outputs"].items()}
+    (root / "decision.md").write_text("Incomplete execution; no scientific conclusion.", encoding="utf-8")
+    for arm, item in resolved["outputs"].items():
+        (item["output_dir"] / "output_manifest.json").unlink()
+        reports[arm]["status"] = "INCOMPLETE_OBSERVED"
+        observed = reports[arm]["observed"]
+        observed["terminal_status"] = "failed"
+        observed["artifacts"] = {name: value for name, value in observed["artifacts"].items() if name in {"contract", "trace"}}
+    incomplete = stage(staging_case, reports=reports, _incomplete=True,
+        outcome="INCONCLUSIVE", decision_ref="decision.md", role_audit=audit_files(staging_case))
+    descriptor = build_incomplete_terminal_descriptor(resolved["spec"], locations=incomplete["locations"],
+        contexts={arm: item["context"] for arm, item in resolved["outputs"].items()},
+        observations={arm: {"status": "failed", "exit_reason": "worker_exit_1"} for arm in resolved["outputs"]})
+    closed = execute_terminal_descriptor(root, resolved["spec"], descriptor)
+    assert all(row["pipeline_status"] == "COMPLETE" for row in closed), closed
+    repeated = execute_terminal_descriptor(root, resolved["spec"], descriptor)
+    assert all(row["finalization_status"] == "ALREADY_FINALIZED" for row in repeated)
+    assert [row["finalization_id"] for row in repeated] == [row["finalization_id"] for row in closed]
+    for paths in incomplete["paths"].values():
+        terminal = json.loads(Path(paths["terminal"]).read_bytes())
+        assert terminal["evidence"]["outcome"]["execution_status"] == "failed"
+        assert terminal["trace_manifest"]["backtest_eligibility"]["eligible"] is False
 
 
 def audit_files(case):
