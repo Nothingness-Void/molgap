@@ -189,7 +189,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     if family == "neural_atom_k1" and not development:
         from molgap.experiment_execution import build_addon_declaration
         addon = build_addon_declaration((family, "3"), "k1_pair_token", repo_root=Path(__file__).resolve().parents[1])
-        recipe = replace(recipe, mode="composed", addons=(addon,), optimizer="k1-muon-adamw-fp32-v1")
+        recipe = replace(recipe, mode="composed", addons=(addon,), optimizer="k1-muon-batched-adamw-fp32-v1")
     if family == "gptrans_t" and development:
         recipe = replace(recipe, no_decay_modules=("LayerNorm",), auxiliary_ema_decays=(.9999,))
     if family == "neural_atom_k1" and development:

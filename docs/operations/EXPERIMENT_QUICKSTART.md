@@ -360,8 +360,8 @@ never invented.
 `authority.account` must be the Kaggle username of `$credentials`.
 
 Training edits: `learning_rate`, `weight_decay`, `no_decay_modules`, `ema_decay`, `auxiliary_ema_decays`.
-K1 reference/composed supports `optimizer: "k1-muon-adamw-fp32-v1"` or `"k1-soap-adamw-fp32-v1"`.
-Both share hidden-matrix selection and native AdamW remainder; SOAP first initializes preconditioning only.
+K1 reference/composed supports `optimizer: "k1-muon-adamw-fp32-v1"`, `"k1-muon-batched-adamw-fp32-v1"`, or `"k1-soap-adamw-fp32-v1"`.
+All use hidden matrices and native AdamW remainder; batched Muon is not bit-exact with original Muon; SOAP first initializes preconditioning only.
 Omit optimizer for unchanged AdamW; use `purpose: "optimizer_comparison"` for a pair.
 Retained `reference_ref` takes `bundle_ref` plus `comparison_plan`. Default platform:
 Kaggle T4x2, seed 42, fixed 100K mount; other mounts need explicit `platform`.

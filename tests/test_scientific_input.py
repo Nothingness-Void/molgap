@@ -437,7 +437,7 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     baseline_arm = value["arms"][0]
     record, baseline = read_recipe(case.repo / baseline_arm["recipe_ref"])
     if baseline.family == "neural_atom_k1":
-        baseline_arm["training"] = {"optimizer": "k1-soap-adamw-fp32-v1"}
+        baseline_arm["training"] = {"optimizer": "k1-muon-batched-adamw-fp32-v1"}
     source_spec = json.loads((case.repo / baseline_arm["data_ref"]["spec_ref"]).read_bytes())
     source = source_spec["arms"][0]
     old_plan = json.loads((case.repo / baseline_arm["reference_ref"]["plan_ref"]).read_bytes())["arms"][0]
@@ -526,8 +526,8 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     assert len(plan["generated_records"]) == 7
     first_recipe, second_recipe = [json.loads((case.repo / job["recipe"]).read_bytes()) for job in plan["arms"]]
     if baseline.family == "neural_atom_k1":
-        assert first_recipe["optimizer"] == "k1-soap-adamw-fp32-v1"
-        assert first_recipe["execution_policy"]["soap"]["first_step"] == "preconditioner_only"
+        assert first_recipe["optimizer"] == "k1-muon-batched-adamw-fp32-v1"
+        assert first_recipe["execution_policy"]["muon"]["execution"] == "shape-batched-bmm-v1"
     else:
         assert first_recipe["no_decay_modules"] == ["LayerNorm", "BatchNorm"]
     assert second_recipe["ema_decay"] == .9999 and second_recipe["auxiliary_ema_decays"] == [.999]
