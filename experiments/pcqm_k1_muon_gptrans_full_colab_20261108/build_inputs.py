@@ -9,7 +9,7 @@ import subprocess
 from molgap.common.io import publish_immutable_bytes
 from molgap.experiment_execution import build_addon_declaration, build_family_recipe
 from molgap.experiment_family_workflow import tensor_digest
-from molgap.experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
+from molgap.experiment_spec import ExperimentSpec, FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
 from molgap.experiment_source_inventory import runtime_source_files
 from molgap.family_training_data import DatasetSelection
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
@@ -90,7 +90,7 @@ def plans():
             "base": bindings["base"], "initialization": {"kind": "frozen_state", "seed": 42, "state_sha256": item["state"]},
             "data": {"dataset": {"name": "pcqm4mv2", "version": "1", "sha256": MANIFEST_SHA},
                 "split": {"name": "official-train-full", "version": "1", "sha256": canonical_fingerprint({"train": [0, 3378606], "development": None})},
-                "roles": role_plan["roles"], "feature_schema": "ogb-atom9-bond3-rwse16-v1", "feature_sha256": MANIFEST_SHA,
+                "roles": role_plan["roles"], "feature_schema": FAMILIES[INTERFACES[recipe.family]].feature_schema, "feature_sha256": MANIFEST_SHA,
                 "target": "pcqm4mv2-gap-eV-direct"},
             "training": {"recipe": {"name": "shared-family-training", "version": "1", "sha256": normalized_source_sha256(ROOT / recipe_ref)},
                 "overrides": {}, **{key: bindings[key] for key in ("sampler", "transform", "objective")}},
