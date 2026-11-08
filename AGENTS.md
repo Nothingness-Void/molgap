@@ -100,7 +100,7 @@ evidence is never fabricated, and frozen evidence is never rewritten.
 - **IMS access boundary**: before any molecular-research-server command, read and
   obey `platforms/REMOTE_HANDOFF.md`; it restricts all path access, including
   read-only probes.
-- **Infrastructure budget**: before an infrastructure commit run `python
+- **Infrastructure budget**: before an infrastructure commit run `.venv\Scripts\python.exe
   platforms/local/infra_budget.py` ([limits](docs/operations/INFRA_BUDGET.json),
   [commands](research_memory/README.md#query-analysis-and-corrections)); exit 1 blocks
   that commit, never an experiment. New-experiment rule (only here): it adds files under
@@ -120,7 +120,7 @@ authorized submission. Conversation B uses the configured monitor runtime and a 
   server-owned bound job. Healthy `QUEUED`/`RUNNING` is silent. A confirmed completion
   or actionable execution fault is persisted atomically as one idempotent event for the
   existing A.
-- Uncertain API/status is `UNKNOWN`, not failure. B never selects candidates, edits
+- Uncertain API/status (`UNKNOWN`, `API_UNKNOWN`, `STATUS_UNKNOWN`) is not failure. B never selects candidates, edits
   code, contracts or scientific fields, retries, cancels or submits jobs, opens
   protected roles, or creates another A.
 - A claims events idempotently, separates infrastructure from scientific outcomes,
@@ -128,6 +128,11 @@ authorized submission. Conversation B uses the configured monitor runtime and a 
   chain.
 - A submission timeout is `SUBMIT_UNKNOWN` and needs reconciliation before any retry;
   duplicate ticks never create duplicate successors.
+- Status words are code-defined and per object: submission phases in
+  `kaggle_submission_phases.py`, server events in `server_control.py`. Persisted lowercase
+  `complete` (ledgers, manifests) and uppercase run statuses are separate vocabularies;
+  never rename or compare across them. `CLOSED` is a server binding event, `READY_FOR_DESKTOP`
+  a final event and a handoff file; neither is an experiment's closure label.
 - Desktop is independent: the server never monitors, adopts, continues or wakes
   desktop-owned jobs, and there is no default cross-machine live control plane.
 

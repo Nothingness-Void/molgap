@@ -1,4 +1,5 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
+import re
 import importlib.util
 import json
 from datetime import datetime, timedelta, timezone
@@ -1218,3 +1219,12 @@ def _assert_real_package_release_post_receipt(case, monkeypatch):
     return {"status": result["status"], "family": spec.to_dict()["arms"][0]["family"]["name"],
             "lifecycle": lifecycle, "api_created": case.transport().api.created,
             "api_pushed": case.transport().api.pushed}
+
+
+def test_phase_machine_is_closed_and_matches_the_timing_phases():
+    from molgap import experiment_timings
+    assert tuple(experiment_timings._PHASES) == tuple(owner.PHASE_NEXT)
+    known = set(owner.PHASE_NEXT)
+    assert all(set(nxt) <= known for nxt in owner.PHASE_NEXT.values())
+    text = Path(owner.__file__).read_text(encoding="utf-8")
+    assert set(re.findall(r'(?:save|retain_platform_failure|retain_release_failure)\([^"\n]*"([A-Z_]+)"', text)) <= known

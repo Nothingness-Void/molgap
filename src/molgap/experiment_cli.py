@@ -22,6 +22,9 @@ from .experiment_terminal import (
 )
 
 
+_SUCCESS = {"COMPLETE", "MECHANICALLY_VERIFIED"}  # any other status exits 1
+
+
 class _Parser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **dict(kwargs, allow_abbrev=False))
@@ -483,7 +486,7 @@ def _dispatch(args) -> tuple[dict, int]:
                     if args.scientific_acceptance is not None:
                         options["scientific_acceptance"] = args.scientific_acceptance
                     result = accept_run_workflow(*original, **options)
-                    return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
+                    return result, 0 if result["status"] in _SUCCESS else 1
                 if args.command == "build-resume":
                     return build_run_resume(*original, arm_id=args.arm,
                         source_output=args.source_output, output=args.output,
@@ -575,7 +578,7 @@ def _dispatch(args) -> tuple[dict, int]:
             expected_package_identity=args.expected_package_identity,
             locations=_json(args.locations) if args.locations is not None else None, execute=args.execute,
             execution_root=args.execution_root)
-        return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
+        return result, 0 if result["status"] in _SUCCESS else 1
     if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
         from .experiment_family_workflow import (
             RunContext, _json, check_acceptance_plan, inspect_output, close_family_replay,
@@ -598,7 +601,7 @@ def _dispatch(args) -> tuple[dict, int]:
         if descriptor_raw != descriptor.to_json():
             raise ValueError("Expected canonical TerminalDescriptor JSON")
         result = close_family_replay(args.repo_root, spec, descriptor, outputs=outputs, execute=args.execute)
-        return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
+        return result, 0 if result["status"] in _SUCCESS else 1
     if args.command == "plan-prospective":
         return plan_prospective(spec, args.repo_root)
     if args.command == "prepare-release":

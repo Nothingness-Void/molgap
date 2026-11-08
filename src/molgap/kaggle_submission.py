@@ -103,6 +103,15 @@ def _exclusive(output):
         lock.unlink()
 
 
+# Journal phase machine; the key order is the timing order. A move not listed here, and not to an
+# uncertain phase (always recordable), raises before the journal is written.
+PHASE_NEXT = {"NEW": ("SOURCE_SUBMITTING",), "SOURCE_SUBMITTING": ("SOURCE_PUBLISHED",),
+    "SOURCE_PUBLISHED": ("SOURCE_PENDING", "KERNEL_SUBMITTING"), "SOURCE_PENDING": ("SOURCE_PUBLISHED", "KERNEL_SUBMITTING"),
+    "SOURCE_UNKNOWN": ("SOURCE_PENDING", "SOURCE_PUBLISHED", "KERNEL_SUBMITTING"),
+    "KERNEL_SUBMITTING": ("SOURCE_PENDING", "SOURCE_PUBLISHED", "KERNEL_ACCEPTED"),
+    "SUBMIT_UNKNOWN": ("SOURCE_PENDING", "KERNEL_ACCEPTED"), "KERNEL_ACCEPTED": ("BOUND",), "BOUND": ()}
+
+
 SOURCE_POLL_FIRST_SECONDS, SOURCE_POLL_MAX_SECONDS, SOURCE_POLL_BUDGET_SECONDS = 5, 60, 300
 _poll_sleep, _poll_clock = sleep, perf_counter
 
@@ -486,6 +495,8 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         phase_start = perf_counter()
         def save(phase, **fields):
             nonlocal phase_start
+            if phase != state["phase"] and phase not in ("SOURCE_UNKNOWN", "SUBMIT_UNKNOWN") and phase not in PHASE_NEXT.get(state["phase"], ()):
+                raise ValueError(f"Submission phase {state['phase']} cannot move to {phase}; allowed: {PHASE_NEXT.get(state['phase'])}")
             state["timings"][state["phase"]] = state["timings"].get(state["phase"], 0) + perf_counter() - phase_start
             phase_start = perf_counter()
             state.update(phase=phase, observed_at=datetime.now(timezone.utc).isoformat(), **fields)
