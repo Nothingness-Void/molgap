@@ -1,0 +1,134 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-muon-gptrans-fusion-500k-20261108",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "pcqm-k1-muon-gptrans-fusion-500k",
+    "question": "Does the accepted batched-Muon K1 add complementary error reduction to GPTrans PairNorm at 500K beyond the existing two-GPTrans equal blend?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-muon-gptrans-fusion-500k-20261108",
+      "observed_deficiency": "An older Clean-BN K1 plus GPTrans blend did not outperform the existing two-GPTrans blend; the newly accepted batched-Muon K1 predictions change the expert set.",
+      "alternative_explanations": [
+        "Batched-Muon K1 supplies complementary errors",
+        "GPTrans PairNorm predictions make K1 redundant at the same two-model count",
+        "Apparent gain is specific to consumed development rows or selected weights"
+      ],
+      "changed_mechanism": "Fixed float64 averaging of accepted batched-Muon K1 LIVE pass54 and GPTrans PairNorm EMA pass52 saved predictions; no fitting or model execution",
+      "cheapest_falsifier": "Hash-bound aligned development predictions; fixed equal blend against each constituent and the existing two-GPTrans equal blend, 2000 paired row resamples seed42",
+      "supporting_evidence_ids": [],
+      "expected_native_cost_ref": "cost-k1-muon-gptrans-fusion-500k-planned",
+      "related_closed_family_ids": [
+        "pcqm-k1-gptrans-pairnorm-fusion-500k",
+        "k1-gptrans-full-fusion"
+      ],
+      "decision_changed_if_positive": "Recommend whether a separately authorized full-training question merits priority; no launch or promotion",
+      "decision_changed_if_negative": "Do not prioritize full training of this heterogeneous pair from these predictions"
+    },
+    "state_at_start": {
+      "source_commit": "PENDING_SOURCE_COMMIT",
+      "source_config_identity": "PENDING_INPUTS_SHA256",
+      "contract_refs": [
+        "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
+        "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json",
+        "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/evidence_review.md",
+        "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/run.py"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_saved_artifact_analysis",
+        "run_ids": [
+          "local-k1-muon-gptrans-fusion-500k-20261108"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "PENDING_SOURCE_COMMIT",
+        "evidence_refs": [
+          "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-muon-gptrans-fusion-500k-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/decision.md",
+      "next_allowed_actions": [
+        "One bounded CPU saved-prediction comparison"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
+    "comparison_blockers": [
+      "Selection-used development; not independent generalization or training-seed variance.",
+      "Heterogeneous optimizer, architecture, runtime and selected-weight recipes; no strict causal training comparison.",
+      "External new K1 canonical evidence remains at immutable owner commit 6a006272164bc01d5f6848dca49defa9ded67cf8 and is not imported into desktop RML.",
+      "No measured full-training or serving marginal cost; CPU arithmetic cannot establish those costs."
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-muon-gptrans-fusion-500k-planned",
+      "trajectory_id": "TB-k1-muon-gptrans-fusion-500k-20261108",
+      "action_id": "A001",
+      "run_id": "local-k1-muon-gptrans-fusion-500k-20261108",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four native threads; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-gptrans-pairnorm-fusion-500k",
+    "policy_version": "1",
+    "state_timestamp": "2026-11-08T06:32:12.0802576Z",
+    "source_commit": "PENDING_SOURCE_COMMIT",
+    "budget_snapshot_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"
+    ]
+  }
+}

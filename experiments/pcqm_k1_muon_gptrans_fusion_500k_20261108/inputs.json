@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "gptrans": {
+      "path": "D:/molgap-artifacts/reconciliation/gptrans-bondlocal-pairnorm-lr-500k/v1/manifest/experiment/pairnorm_lr1e3/development_predictions.pt",
+      "sha256": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2",
+      "weights": "ema",
+      "selected_step": 203112,
+      "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+      "accepted_owner_commit": "baedffc211490b1d0e805891c04a5628317908b9"
+    },
+    "k1": {
+      "path": "D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/muon/development_predictions.pt",
+      "sha256": "bd6186db7d12bc0a4f8b07f5b098c4791b1b410f4f373e06e747e186b82f2835",
+      "weights": "live",
+      "selected_step": 210924,
+      "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+      "accepted_owner_commit": "6a006272164bc01d5f6848dca49defa9ded67cf8"
+    },
+    "gptrans_low_lr": {
+      "path": "D:/molgap-artifacts/reconciliation/gptrans-bondlocal-pairnorm-lr-500k/v1/manifest/experiment/pairnorm_lr5e4/development_predictions.pt",
+      "sha256": "bbb4d17c985bfd59634e98901170cefc377f69b245d3b64383eca364d8872873",
+      "weights": "ema",
+      "selected_step": 171864,
+      "source_commit": "a95883ab2a9e28ac08f7832bc428be43e826ae37",
+      "accepted_owner_commit": "baedffc211490b1d0e805891c04a5628317908b9"
+    }
+  },
+  "development_bounds": [500000, 550000],
+  "source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+  "target_sha256": "5a8ef02a608f73dad257269d253d5c507b4e3aa480ce4c452b79e4384095b9a2",
+  "input_qualification": "Each payload hash matches its accepted output manifest; all three int64 source_idx and float32 target_eV tensors are pairwise torch.equal. All predictions are finite physical Gap eV. Input qualification occurred before fusion arithmetic.",
+  "fixed_formulas": {
+    "equal": {"k1": 0.5, "gptrans": 0.5},
+    "k1_quarter": {"k1": 0.25, "gptrans": 0.75},
+    "k1_three_quarters": {"k1": 0.75, "gptrans": 0.25},
+    "two_gptrans": {"gptrans": 0.5, "gptrans_low_lr": 0.5}
+  },
+  "comparisons": {
+    "equal_vs_gptrans": ["gptrans", "equal"],
+    "equal_vs_k1": ["k1", "equal"],
+    "equal_vs_two_gptrans": ["two_gptrans", "equal"],
+    "quarter_vs_gptrans": ["gptrans", "k1_quarter"],
+    "three_quarters_vs_gptrans": ["gptrans", "k1_three_quarters"],
+    "two_gptrans_vs_gptrans": ["gptrans", "two_gptrans"]
+  },
+  "material_threshold_eV": 0.003,
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "ceiling_seconds": 600,
+  "comparison_limits": [
+    "Previously selection-used internal development; not independent heldout performance or training-seed variance.",
+    "Heterogeneous LIVE K1 and EMA GPTrans with distinct recipe and role-identity hashes but exactly identical physical targets and rows; this is fixed deployment arithmetic, not STRICT_CAUSAL model-training attribution.",
+    "No fitted weights; secondary predeclared weights do not replace the primary equal mixture.",
+    "No new inference, training or protected-role data access; serving latency and full-scale gains remain unmeasured."
+  ]
+}
