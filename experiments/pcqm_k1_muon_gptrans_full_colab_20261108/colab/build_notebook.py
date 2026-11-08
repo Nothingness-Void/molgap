@@ -1,4 +1,4 @@
-"""Build a self-contained Colab preparation/launch notebook; never execute it."""
+"""Build the single-path A100 Colab launcher; never execute it locally."""
 import ast
 import hashlib
 import json
@@ -38,8 +38,7 @@ def main():
 import json, os, subprocess, sys, time, tarfile, zipfile, shutil, signal
 from google.colab import runtime
 
-# prepare 模式请使用 CPU；train 模式请在设置中明确选择 A100。
-MODE = 'train'
+# 先选择A100，再运行全部单元。每个新运行时从Drive重建本地环境。
 AUTO_RELEASE = True
 DRIVE_ROOT = Path('/content/drive/MyDrive/MolGap/V5')
 FULL_CACHE_ON_DRIVE = DRIVE_ROOT / 'fixed_data/full_train_v1'
@@ -59,15 +58,13 @@ def release_after_error(result):
         runtime.unassign()
 
 get_ipython().events.register('post_run_cell', release_after_error)
-assert MODE == 'train'
 print('Full TRAIN: 3378606 rows | 60 passes/model | FP32 | sequential A100')
 """)
     add("code", "mount", """from google.colab import drive
 drive.mount('/content/drive')
 RUN_ROOT.mkdir(parents=True, exist_ok=True)
-if MODE == 'train':
-    observed_gpu = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'], text=True).strip().splitlines()
-    assert len(observed_gpu) == 1 and 'A100' in observed_gpu[0], observed_gpu
+observed_gpu = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'], text=True).strip().splitlines()
+assert len(observed_gpu) == 1 and 'A100' in observed_gpu[0], observed_gpu
 print('Outputs:', RUN_ROOT)
 """)
     add("code", "frozen-source", f"""# 身份来自已准备的训练包；不在笔记本嵌入源码。
@@ -105,13 +102,12 @@ sys.path.insert(0, str(SOURCE_ROOT / 'src'))
 print('Both frozen full prepared bundles are available.')
 """)
     add("code", "environment", """# 使用独立环境，不改变Colab内核环境。
-ENV_ROOT = Path('/content/molgap-full-' + MODE + '-py311')
+ENV_ROOT = Path('/content/molgap-full-train-py311')
 subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', 'uv'], check=True)
 subprocess.run([sys.executable, '-m', 'uv', 'venv', '--python', '3.11', '--seed', str(ENV_ROOT)], check=True)
 PYTHON = str(ENV_ROOT / 'bin/python')
-wheel_channel = 'cpu' if MODE == 'prepare' else 'cu128'
 subprocess.run([PYTHON, '-m', 'pip', 'install', '--no-cache-dir', 'torch==2.11.0',
-    '--index-url', 'https://download.pytorch.org/whl/' + wheel_channel], check=True)
+    '--index-url', 'https://download.pytorch.org/whl/cu128'], check=True)
 subprocess.run([PYTHON, '-m', 'pip', 'install', '--no-cache-dir',
     'numpy<2', 'torch-geometric==2.6.1', 'ogb==1.3.6'], check=True)
 env = dict(os.environ, PYTHONPATH=str(SOURCE_ROOT / 'src'), PYTHONUNBUFFERED='1',
@@ -149,7 +145,7 @@ atomic_json(RUN_ROOT / 'cache_staging.json', {'manifest_sha256': ACCEPTED_MANIFE
 """)
     add("markdown", "training-notes", """## A100 正式阶段
 
-仅在 `MODE='train'` 执行。`RELEASE_ROOT/<arm>/` 必须由已有 `prepare-family-training` 生成，包含
+选择A100后执行。切换运行时会清空 `/content`，必须从头运行全部单元；源码、依赖和SSD缓存自动重建，训练检查点从Drive恢复。`RELEASE_ROOT/<arm>/` 必须由已有 `prepare-family-training` 生成，包含
 `prepared_training.json`、`package/`、`inputs/`、无错误的 `release_report.json`。
 每份必须是一个单臂 Colab/A100 全量任务，数据无 development；K1 final-live、GPTrans final-ema、步数和学习率均由冻结recipe决定。
 
@@ -157,96 +153,95 @@ atomic_json(RUN_ROOT / 'cache_staging.json', {'manifest_sha256': ACCEPTED_MANIFE
 长任务在会话墙限到达前向worker发送SIGTERM，由已有训练器原子保存PAUSED状态；重新运行同任务时验证并恢复完整状态。
 所有正式输出直接落Drive。若进程异常中断导致文件损坏，保留现场交给原验收/恢复入口，不覆盖重试。
 """)
-    add("code", "a100-run", """if MODE == 'train':
-    from threading import Timer
-    from molgap.experiment_package import verify_experiment_source_package
-    from molgap.experiment_allocation import AllocationLedger
-    allocation_boundary = SESSION_STARTED
-    for arm in ARM_ORDER:
-        prepared = RELEASE_ROOT / arm
-        report = json.loads((prepared / 'prepared_training.json').read_text())
-        release = json.loads((prepared / 'release_report.json').read_text())
-        assert report['status'] == 'SOURCE_INPUTS_PREPARED' and not release['errors']
-        assert len(report['jobs']) == 1 and report['jobs'][0]['arm_id'] == arm
-        package = prepared / 'package'
-        verified = verify_experiment_source_package(package)
-        assert verified['package_identity'] == report['expected_package_identity']
-        spec = json.loads((package / 'experiment_spec.json').read_text())
-        assert spec['platform']['name'] == 'colab' and 'A100' in spec['platform']['accelerator']
-        assert spec['platform']['device_count'] == 1
-        source_root = Path('/content/molgap-full-source-' + arm)
-        source_root.mkdir(exist_ok=True)
-        with tarfile.open(package / 'source.tar.gz', 'r:gz') as frozen:
-            frozen.extractall(source_root, filter='data')
-        job = report['jobs'][0]
-        recipe = json.loads((source_root / job['recipe']).read_text())
-        assert recipe['train_rows'] == 3378606 and recipe['development_rows'] == 0
-        assert recipe['dataset']['manifest_sha256'] == ACCEPTED_MANIFEST_SHA256
-        assert recipe['dataset']['development'] is False
-        assert recipe['logging'] == {'mode': 'epoch', 'interval': None}
-        if arm == 'k1_muon':
-            assert recipe['family'] == 'neural_atom_k1' and recipe['mode'] == 'reference'
-            assert recipe['optimizer'] == 'k1-muon-batched-adamw-fp32-v1'
-            assert recipe['selection'] == 'final-live'
-        else:
-            assert recipe['family'] == 'gptrans_t'
-            assert recipe['mode'] == 'degree_bond_local_pair_update_norm_ema999'
-            assert recipe['selection'] == 'final-ema'
-        staged = prepared / 'inputs'
-        launch = {'jobs': report['jobs'], 'expected_package_identity': report['expected_package_identity'],
-            'prospective_sha256': report['prospective_sha256'], 'account': 'desktop-colab',
-            'run_reference': 'desktop-colab/' + spec['logical_run_id']}
-        launch_path = staged / 'colab_launch.json'
-        if launch_path.exists():
-            assert json.loads(launch_path.read_text()) == launch, 'Preserve the original launch identity'
-        else:
-            atomic_json(launch_path, launch)
-        output = RUN_ROOT / arm
-        preflight = RUN_ROOT / (arm + '-preflight-' + str(time.time_ns()))
-        worker_env = dict(env, CUDA_VISIBLE_DEVICES='0', PYTHONPATH=str(source_root / 'src'))
-        common = [PYTHON, '-u', '-m', 'molgap.experiment_training_worker',
-            '--source-root', str(source_root), '--package-dir', str(package), '--input-root', str(DATA_ROOT),
-            '--launch', str(launch_path), '--arm', arm]
-        if (output / 'output_manifest.json').is_file():
-            # The existing completed-run path inspects artifacts without training.
-            subprocess.run(common + ['--phase', 'train', '--output', str(output)],
-                env=worker_env, check=True)
-            print('Existing terminal artifacts verified by the owning worker:', arm)
-            continue
-        active_allocation_root = RUN_ROOT / 'allocation' / arm / str(time.time_ns())
-        active_allocation = AllocationLedger(spec_identity=report['spec_identity'],
-            hardware=observed_gpu, assignments={arm: 0}, started=allocation_boundary)
-        active_allocation.write(active_allocation_root, 'running')
-        remaining = SESSION_SECONDS - (time.perf_counter()-SESSION_STARTED) - CLEANUP_SECONDS
-        assert remaining > CLEANUP_SECONDS, 'Resume in a new session; insufficient remaining wall budget'
-        preflight_cmd = common + ['--phase', 'preflight', '--output', str(preflight)]
-        if (output / 'last_checkpoint.pt').is_file():
-            preflight_cmd += ['--resume-output', str(output)]
-        preflight_log = RUN_ROOT / (preflight.name + '.log')
-        with preflight_log.open('w') as log:
-            checked = subprocess.run(preflight_cmd, env=worker_env, stdout=log,
-                stderr=subprocess.STDOUT, timeout=remaining)
-        print(preflight_log.read_text(), flush=True)
-        checked.check_returncode()
-        remaining = SESSION_SECONDS - (time.perf_counter()-SESSION_STARTED) - CLEANUP_SECONDS
-        assert remaining > 0
-        process = subprocess.Popen(common + ['--phase', 'train', '--output', str(output),
-            '--preflight-output', str(preflight)], env=worker_env)
-        pause_timer = Timer(remaining, lambda: process.send_signal(signal.SIGTERM))
-        pause_timer.start()
-        try:
-            returncode = process.wait(timeout=remaining+CLEANUP_SECONDS)
-        finally:
-            pause_timer.cancel()
-        assert returncode == 0, f'Worker exit {returncode}; preserve {output}'
-        allocated = active_allocation.write(active_allocation_root, 'complete')
-        allocation_boundary = active_allocation.started + allocated['wall_seconds']
-        active_allocation = None
-        if not (output / 'output_manifest.json').is_file():
-            assert (output / 'pause_receipt.json').is_file(), 'Missing terminal and pause records'
-            print('Durable PAUSED state retained. Reconnect and resume the same frozen task:', arm)
-            break
-    print('Colab execution ended; scientific/RML acceptance is a separate existing local operation.')
+    add("code", "a100-run", """from threading import Timer
+from molgap.experiment_package import verify_experiment_source_package
+from molgap.experiment_allocation import AllocationLedger
+allocation_boundary = SESSION_STARTED
+for arm in ARM_ORDER:
+    prepared = RELEASE_ROOT / arm
+    report = json.loads((prepared / 'prepared_training.json').read_text())
+    release = json.loads((prepared / 'release_report.json').read_text())
+    assert report['status'] == 'SOURCE_INPUTS_PREPARED' and not release['errors']
+    assert len(report['jobs']) == 1 and report['jobs'][0]['arm_id'] == arm
+    package = prepared / 'package'
+    verified = verify_experiment_source_package(package)
+    assert verified['package_identity'] == report['expected_package_identity']
+    spec = json.loads((package / 'experiment_spec.json').read_text())
+    assert spec['platform']['name'] == 'colab' and 'A100' in spec['platform']['accelerator']
+    assert spec['platform']['device_count'] == 1
+    source_root = Path('/content/molgap-full-source-' + arm)
+    source_root.mkdir(exist_ok=True)
+    with tarfile.open(package / 'source.tar.gz', 'r:gz') as frozen:
+        frozen.extractall(source_root, filter='data')
+    job = report['jobs'][0]
+    recipe = json.loads((source_root / job['recipe']).read_text())
+    assert recipe['train_rows'] == 3378606 and recipe['development_rows'] == 0
+    assert recipe['dataset']['manifest_sha256'] == ACCEPTED_MANIFEST_SHA256
+    assert recipe['dataset']['development'] is False
+    assert recipe['logging'] == {'mode': 'epoch', 'interval': None}
+    if arm == 'k1_muon':
+        assert recipe['family'] == 'neural_atom_k1' and recipe['mode'] == 'reference'
+        assert recipe['optimizer'] == 'k1-muon-batched-adamw-fp32-v1'
+        assert recipe['selection'] == 'final-live'
+    else:
+        assert recipe['family'] == 'gptrans_t'
+        assert recipe['mode'] == 'degree_bond_local_pair_update_norm_ema999'
+        assert recipe['selection'] == 'final-ema'
+    staged = prepared / 'inputs'
+    launch = {'jobs': report['jobs'], 'expected_package_identity': report['expected_package_identity'],
+        'prospective_sha256': report['prospective_sha256'], 'account': 'desktop-colab',
+        'run_reference': 'desktop-colab/' + spec['logical_run_id']}
+    launch_path = staged / 'colab_launch.json'
+    if launch_path.exists():
+        assert json.loads(launch_path.read_text()) == launch, 'Preserve the original launch identity'
+    else:
+        atomic_json(launch_path, launch)
+    output = RUN_ROOT / arm
+    preflight = RUN_ROOT / (arm + '-preflight-' + str(time.time_ns()))
+    worker_env = dict(env, CUDA_VISIBLE_DEVICES='0', PYTHONPATH=str(source_root / 'src'))
+    common = [PYTHON, '-u', '-m', 'molgap.experiment_training_worker',
+        '--source-root', str(source_root), '--package-dir', str(package), '--input-root', str(DATA_ROOT),
+        '--launch', str(launch_path), '--arm', arm]
+    if (output / 'output_manifest.json').is_file():
+        # The existing completed-run path inspects artifacts without training.
+        subprocess.run(common + ['--phase', 'train', '--output', str(output)],
+            env=worker_env, check=True)
+        print('Existing terminal artifacts verified by the owning worker:', arm)
+        continue
+    active_allocation_root = RUN_ROOT / 'allocation' / arm / str(time.time_ns())
+    active_allocation = AllocationLedger(spec_identity=report['spec_identity'],
+        hardware=observed_gpu, assignments={arm: 0}, started=allocation_boundary)
+    active_allocation.write(active_allocation_root, 'running')
+    remaining = SESSION_SECONDS - (time.perf_counter()-SESSION_STARTED) - CLEANUP_SECONDS
+    assert remaining > CLEANUP_SECONDS, 'Resume in a new session; insufficient remaining wall budget'
+    preflight_cmd = common + ['--phase', 'preflight', '--output', str(preflight)]
+    if (output / 'last_checkpoint.pt').is_file():
+        preflight_cmd += ['--resume-output', str(output)]
+    preflight_log = RUN_ROOT / (preflight.name + '.log')
+    with preflight_log.open('w') as log:
+        checked = subprocess.run(preflight_cmd, env=worker_env, stdout=log,
+            stderr=subprocess.STDOUT, timeout=remaining)
+    print(preflight_log.read_text(), flush=True)
+    checked.check_returncode()
+    remaining = SESSION_SECONDS - (time.perf_counter()-SESSION_STARTED) - CLEANUP_SECONDS
+    assert remaining > 0
+    process = subprocess.Popen(common + ['--phase', 'train', '--output', str(output),
+        '--preflight-output', str(preflight)], env=worker_env)
+    pause_timer = Timer(remaining, lambda: process.send_signal(signal.SIGTERM))
+    pause_timer.start()
+    try:
+        returncode = process.wait(timeout=remaining+CLEANUP_SECONDS)
+    finally:
+        pause_timer.cancel()
+    assert returncode == 0, f'Worker exit {returncode}; preserve {output}'
+    allocated = active_allocation.write(active_allocation_root, 'complete')
+    allocation_boundary = active_allocation.started + allocated['wall_seconds']
+    active_allocation = None
+    if not (output / 'output_manifest.json').is_file():
+        assert (output / 'pause_receipt.json').is_file(), 'Missing terminal and pause records'
+        print('Durable PAUSED state retained. Reconnect and resume the same frozen task:', arm)
+        break
+print('Colab execution ended; scientific/RML acceptance is a separate existing local operation.')
 """)
     add("code", "release-runtime", """# 成功收尾；错误时首单元注册的hook也会调用同一个Colab官方接口。
 print('Durable records:', RUN_ROOT, flush=True)

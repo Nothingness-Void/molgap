@@ -10,7 +10,7 @@ Frozen source: `e17758f8f42892b4b0163669b11092ac34e92112`.
 The same notebook is staged privately in
 [Google Drive](https://drive.google.com/file/d/14c0zOXY2XvlV6bYtWwKKfqEbJdnEhshW/view).
 
-1. Upload `D:/下载/MolGap-Colab-Full-20261108/MolGap_K1_Muon_GPTrans_Full_A100.ipynb`
+1. Upload `D:/涓嬭浇/MolGap-Colab-Full-20261108/MolGap_K1_Muon_GPTrans_Full_A100.ipynb`
    to Colab, select one A100 and run all cells. Authorize the Drive mount.
 2. The notebook reads the already staged private `MyDrive/MolGap/V5` assets,
    checks transport hashes, extracts the two frozen prepared packages, and stages
@@ -36,7 +36,7 @@ Normal completion, controlled pause and cell errors invoke Colab's
 ## Asset ownership
 
 - Local exported notebook and the two transport ZIPs:
-  `D:/下载/MolGap-Colab-Full-20261108/`.
+  `D:/涓嬭浇/MolGap-Colab-Full-20261108/`.
 - Original prepared directories:
   `D:/molgap-artifacts/colab-full-20261108/releases/{k1_muon,gptrans_pairnorm}`.
 - Drive prepared ZIPs: `MolGap/V5/releases/k1-muon-gptrans-full-20261108/`.
@@ -81,3 +81,7 @@ retained in a Drive `.log` beside its preflight directory and displayed before
 checking the return code. The reported preflight exit 1 remains undiagnosed
 until the worker traceback is captured; this change does not claim to fix its
 unknown cause. No frozen scientific package or training state was changed.
+
+The launcher has one A100 execution path, with no prepare/train mode switch.
+Changing runtime deletes `/content`; run all cells again to rebuild dependencies,
+source and SSD data from Drive and resume the same durable checkpoint.
