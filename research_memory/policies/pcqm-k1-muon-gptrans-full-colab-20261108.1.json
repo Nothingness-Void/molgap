@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "PREPARE_FULL_COLAB",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-muon-gptrans-full-colab-20261108"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "8d06760ad0014b3a76182576b458370c03d151123313326899c870f0ef3ea290",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-muon-gptrans-full-colab-20261108",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

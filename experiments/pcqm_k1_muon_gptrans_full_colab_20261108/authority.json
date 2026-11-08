@@ -1,0 +1,21 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "owner": "desktop",
+  "platform": "colab",
+  "arms": ["k1_muon", "gptrans_pairnorm"],
+  "seeds": [42],
+  "local_preparation_authorized": true,
+  "user_initiated_notebook_training_authorized": true,
+  "agent_cloud_training_started": false,
+  "train_rows": 3378606,
+  "passes_per_arm": 60,
+  "optimizer_steps_per_arm": 1583700,
+  "sample_presentations_per_arm": 202713600,
+  "accelerator": "A100",
+  "device_count": 1,
+  "allocation_wall_limit_seconds": 36000,
+  "cleanup_reserve_seconds": 300,
+  "protected_roles_authorized": [],
+  "authority": "User requested both full training packages and a Colab notebook that runs them directly after upload, reusing existing infrastructure.",
+  "scope": "Prepare both fresh full-train recipes and their required pure TRAIN topology, publish prospective inputs, and deliver runnable local artifacts. User starts the Colab notebook. Sequential single-A100 exact-state continuation to the same fixed horizon; no automatic new session, extra model/seed, official scoring, test submission, production adoption or server takeover."
+}
