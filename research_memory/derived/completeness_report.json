@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 207,
+    "trajectories_total": 209,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 196,
-    "with_incomplete_native_measurement": 164,
+    "with_cost_event": 198,
+    "with_incomplete_native_measurement": 166,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 105,
+      "count": 107,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -108,6 +108,8 @@
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -154,7 +156,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 164,
+      "count": 166,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -306,6 +308,8 @@
         "TB-pcqm-k1-ln-norm-160ep-100k-s42-20261021-release1-ln_long",
         "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr",
         "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
@@ -343,7 +347,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 55,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -386,6 +390,8 @@
         "TB-local-k1-channel-gain-flow-20261023-r3",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-bond_local",
         "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn",
         "TB-pcqm-k1-post-ln-100k-s42-20261020-post_ln",
         "TB-pcqm-k1-single-true-ema-100k",
@@ -403,7 +409,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 20,
       "items": [
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
@@ -420,6 +426,8 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+        "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
         "TB-pcqm-k1-single-true-ema-100k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"

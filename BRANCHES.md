@@ -12,6 +12,12 @@ ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch befo
 
 ## New desktop experiment lifecycle
 
+Current full-Colab preparation owner: `codex/exp/k1-muon-gptrans-full-colab-20261108`
+at `D:/molgap-worktrees/k1-muon-gptrans-full-colab-20261108`.
+[Delivery](experiments/pcqm_k1_muon_gptrans_full_colab_20261108/colab/README.md)
+records the two frozen prepared packages. Keep this pending owner until results
+have an accepted disposition; source commit `e17758f8` remains immutable.
+
 New questions use a separate `codex/exp/<question>` worktree from verified desktop,
 never a retained experiment/archive/server tip. Verify upstream/worktree first.
 Query desktop routing/RML/evidence; inspect other branches only for their question or explicit integration.

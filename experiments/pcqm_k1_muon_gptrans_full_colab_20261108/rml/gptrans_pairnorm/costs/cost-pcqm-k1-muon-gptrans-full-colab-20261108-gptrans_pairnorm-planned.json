@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "gptrans_pairnorm-v1",
+  "category": "training",
+  "cost_event_id": "cost-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm-planned",
+  "evidence_ref": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/authority.json",
+  "hardware": "NVIDIA A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "colab",
+  "run_id": "pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm:gptrans_pairnorm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm"
+}

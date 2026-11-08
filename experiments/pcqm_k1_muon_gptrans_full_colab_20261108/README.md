@@ -8,3 +8,6 @@ native qualification, exact resume, atomic outputs and standard epoch logging.
 [prior evidence](evidence_review.md) owns the review; [authority](authority.json)
 records the requested scope; [decision](decision.md) awaits actual results.
 No package is a claimed native or scientific acceptance.
+
+[Colab delivery](colab/README.md) provides the runnable notebook, two prepared
+packages, frozen transport indexes and user-started multi-session resume steps.

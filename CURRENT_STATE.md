@@ -66,6 +66,17 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+- User-requested full Colab preparation (2026-11-09 JST):
+  `codex/exp/k1-muon-gptrans-full-colab-20261108`, local owner
+  `D:/molgap-worktrees/k1-muon-gptrans-full-colab-20261108`.
+  Both accelerated K1 Muon and GPTrans BondLocal+PairNorm single-arm packages
+  are prepared at frozen source `e17758f8`; the user starts the notebook.
+  This explicit scope supersedes the earlier no-full-rerun recommendation for
+  this question only. No cloud training or official evaluation started here.
+  [Protocol](experiments/pcqm_k1_muon_gptrans_full_colab_20261108/protocol.md)
+  owns the 60-pass full horizon and train-only roles;
+  [Colab delivery](experiments/pcqm_k1_muon_gptrans_full_colab_20261108/colab/README.md)
+  owns package/data locations and exact resume instructions.
 - K1 mean2 versus single-forward EMA 500K: desktop-owned on
   `codex/exp/k1-mean2-single-ema-500k-20261013` (see [owner custody index](BRANCHES.md#retained-checkout-map)).
   Kaggle1 kernel ID 138365645/version2: scheduler ERROR is the frozen nine-hour

@@ -886,6 +886,36 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/evidence_review.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/training_recipe_gptrans_pairnorm.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/evidence_review.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_full_colab_20261108/training_recipe_k1_muon.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-k1-post-ln-100k-s42-20261020-post_bn-r2:A001",
       "target": "experiments/pcqm_structural_bias_norm_100k/k1/training_recipe_post_bn.json",
       "type": "action_produced_evidence"
@@ -3192,6 +3222,16 @@
     },
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
+      "target": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
       "type": "prior_evidence"
     },
@@ -5380,6 +5420,14 @@
     },
     {
       "id": "TB-pcqm-k1-ln-optimization-160ep-100k-s42-20261021-release1-ln_low_lr_warmup",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-gptrans_pairnorm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-muon-gptrans-full-colab-20261108-k1_muon",
       "type": "trajectory"
     },
     {
