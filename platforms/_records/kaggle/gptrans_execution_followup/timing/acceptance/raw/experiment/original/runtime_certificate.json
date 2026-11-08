@@ -1,0 +1,38 @@
+{
+  "format": "molgap-runtime-certificate-v1",
+  "status": "accepted",
+  "platform_id": "kaggle",
+  "accelerator": "Tesla T4",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "tail_batch_policy": "drop_last",
+  "software_fingerprint": "3a88b0b258397ed2963c212a2f5df4044b40cf08e4df5e3bcf066ed86ad47e5d",
+  "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+  "calibration_fixture_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+  "calibration_output_sha256": "d17f6764e9234d5b9994bfb34887bed51aabbf213f4857296652f40e18e2bb4e",
+  "calibration_checks_passed": true,
+  "runtime_fingerprint": "f529ab91151c4facde169e75d8db3c783309829d4b93ccb13a6f9b2cd57504f4",
+  "profile_proof": {
+    "report": "profile_qualification/profile.json",
+    "sha256": "7b9a446497acc0464b64c3101b57f6a2228fd3d2fb4096d3cb2d65075d4d8175"
+  },
+  "profile_state_proof": {
+    "format": "molgap-gptrans-profile-state-proof-v1",
+    "status": "accepted",
+    "recipe_identity": "5e9ab3800faeb3983bc286d61d4bfea74dbda5ec69064810aa3cf34457cebc03",
+    "updates": 2,
+    "plain": {
+      "path": "profile_qualification/plain-state.pt",
+      "sha256": "a8e83ca98b3ee9ce6d77978191043ffef6ebc180e586a6f186de085197278069",
+      "fingerprint": "045e2deb13d9fc096d5531c5586285e8318e20f5f2b0c5838274041897219666"
+    },
+    "profiled": {
+      "path": "profile_qualification/profiled-state.pt",
+      "sha256": "865f0ad09bab48f4a13bca29b91c52cc0272157dd6ccbfd99486941fba6aaad5",
+      "fingerprint": "045e2deb13d9fc096d5531c5586285e8318e20f5f2b0c5838274041897219666"
+    },
+    "equal": true
+  }
+}

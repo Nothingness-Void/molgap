@@ -1,0 +1,75 @@
+{
+  "allocated_t4_hours": 0.3057584043811111,
+  "checked_artifact_count": 51,
+  "endpoint_fingerprints": {
+    "optimized": {
+      "diagnostic-0/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+      "diagnostic-1/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+      "diagnostic-2/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+      "diagnostic-profile/optimized": "ec55f2e80919d3cc2ddf9817c2fc9d480ebfb8f90d8d13c4e968bb91f784a597"
+    },
+    "original": {
+      "diagnostic-0/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+      "diagnostic-1/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+      "diagnostic-2/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+      "diagnostic-profile/native": "2d6d22083b435df67915ca532ff4e0730b289711cefdd4c6d4fa6a11ef17fd14"
+    }
+  },
+  "kind": "timing",
+  "native_preflight": {
+    "optimized": "ACCEPTED",
+    "original": "ACCEPTED"
+  },
+  "package_identity": "b38aa68f1ba7c0877587f198ece8303dc9ccca1faa4022b9e34e09318bf94025",
+  "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "source_archive_sha256": "4d4dc2c2b20e873542450bcbde3d6cc3a29f8cd129689dd066f1b42eaf3cf99f",
+  "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+  "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f",
+  "status": "SHORT_PROBE_VERIFIED",
+  "summary": {
+    "format": "molgap-gptrans-probe-summary-v1",
+    "kind": "timing",
+    "median_paired_speedup": 1.2552648456723972,
+    "paired_timings": [
+      {
+        "optimized_seconds": 70.558612864,
+        "original_seconds": 88.01426256899998,
+        "phase": "diagnostic-0",
+        "physical_devices": {
+          "optimized": "1",
+          "original": "0"
+        },
+        "speedup_factor": 1.247392189223523,
+        "wall_reduction_percent": 19.832751187701415
+      },
+      {
+        "optimized_seconds": 69.38290190700002,
+        "original_seconds": 87.75417239500007,
+        "phase": "diagnostic-1",
+        "physical_devices": {
+          "optimized": "0",
+          "original": "1"
+        },
+        "speedup_factor": 1.2647809472227707,
+        "wall_reduction_percent": 20.934925356377452
+      },
+      {
+        "optimized_seconds": 70.62867511000002,
+        "original_seconds": 88.65769296200006,
+        "phase": "diagnostic-2",
+        "physical_devices": {
+          "optimized": "1",
+          "original": "0"
+        },
+        "speedup_factor": 1.2552648456723972,
+        "wall_reduction_percent": 20.335536883107856
+      }
+    ],
+    "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "scientific_training_executed": false,
+    "scope": "common one-worker loader and one CPU thread; training updates only; no development/checkpoint throughput claim",
+    "status": "COMPLETE"
+  }
+}

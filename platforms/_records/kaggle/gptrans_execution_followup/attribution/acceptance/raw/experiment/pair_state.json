@@ -1,0 +1,71 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 36.01991683199998
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 42.020928301000026
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-0",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 93.54297375300001
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 69.53287334199996
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "original": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 129.562890585,
+      "exit_reason": "diagnostic-0_worker_exit_0"
+    },
+    "optimized": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 111.55380164299999,
+      "exit_reason": "diagnostic-0_worker_exit_0"
+    }
+  },
+  "pair_process_wall_seconds": 135.569031011,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "diagnostic_summary": {
+    "path": "diagnostic_summary.json",
+    "sha256": "b551f734976d8e62faf518f503fdd2a6d9f406a4b19f509f516e3472926d2b38"
+  }
+}

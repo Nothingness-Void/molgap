@@ -1,0 +1,79 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "physical-v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 1,
+      "wall_hours": 0.5
+    },
+    "campaign_id": "gptrans-triplet-portability",
+    "chain_id": "gptrans-triplet-portability-s42",
+    "decision_ref": "experiments/pcqm_gptrans_triplet_portability/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "release_identity": "70fc668f4a8d78ae1b663d8cc9df9317c21296da4b922ba4540bd8b1e09593ff",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+      "kernel_id": 137912406,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-triplet-portability-s42:v1"
+  },
+  "events": {
+    "evt-ccf5912453ca046186df51e3": {
+      "attempt_id": "physical-v1",
+      "claimed_at": "2026-10-09T18:55:59Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-09T18:55:05Z",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_portability/decision_terminal.md",
+      "delivered_at": "2026-10-09T18:55:27Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-ccf5912453ca046186df51e3",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-09T19:00:29Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "accepted": true,
+        "comparison_class": "PAIRED_ENDPOINT",
+        "consideration_gate_passed": false,
+        "rml_finalized": true,
+        "scientific_status": "positive_point_uncertain_portability",
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+          "kernel_id": 137912406,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-triplet-portability-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_triplet_portability/decision_terminal.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+        "kernel_id": 137912406,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-09T18:55:05Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

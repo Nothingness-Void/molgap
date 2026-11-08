@@ -1,0 +1,77 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "allocated_T4_device_hours": 1.0
+    },
+    "campaign_id": "gptrans-bottleneck-frozen",
+    "chain_id": "gptrans-bottleneck-frozen-v1",
+    "decision_ref": "experiments/pcqm_gptrans_bottleneck_audit/decision.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "release_identity": "f97693d70c3254b5b419aabb398ea411c7953a223bdde86018e3b5c19916862e",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+      "kernel_id": 137289711,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-bottleneck-audit:v1"
+  },
+  "events": {
+    "evt-391295519aee368f28db43ee": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-06T08:07:35Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-06T08:06:38Z",
+      "decision_ref": "experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md",
+      "delivered_at": "2026-10-06T08:06:57Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-391295519aee368f28db43ee",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-06T08:15:37Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "artifact_status": "accepted",
+        "execution_status": "complete",
+        "scientific_status": "no_train_bottleneck_observations",
+        "successor_authorized": false,
+        "training_replay_ready": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+          "kernel_id": 137289711,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-bottleneck-audit:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+        "kernel_id": 137289711,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-06T08:06:38Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

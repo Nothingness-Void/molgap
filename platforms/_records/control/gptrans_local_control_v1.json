@@ -1,0 +1,79 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 14.0,
+      "wall_hours": 7.0
+    },
+    "campaign_id": "gptrans-local-control",
+    "chain_id": "local-control-100k-s42",
+    "decision_ref": "experiments/pcqm_gptrans_local_control_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "release_identity": "99ebb25594dbec705ec2cec4ae5bd5aacb799a2dd6c14073e5acdb122b98f924",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+      "kernel_id": 137425845,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-local-control-s42:v1"
+  },
+  "events": {
+    "evt-8af86611412e3032022ae9a7": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-07T07:29:15Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-07T07:25:01Z",
+      "decision_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md",
+      "delivered_at": "2026-10-07T07:25:19Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-8af86611412e3032022ae9a7",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-07T07:38:32Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "actual_complete_replay_pair": true,
+        "artifact_acceptance": true,
+        "comparison": "STRICT_CAUSAL",
+        "execution": "complete",
+        "scientific_disposition": "exact route closed without promotion",
+        "successor_authorized": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+          "kernel_id": 137425845,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-local-control-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+        "kernel_id": 137425845,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-07T07:25:01Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

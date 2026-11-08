@@ -1,0 +1,78 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "physical-v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 14,
+      "wall_hours": 7
+    },
+    "campaign_id": "gptrans-local-relation-dual100k",
+    "chain_id": "gptrans-local-relation-s42",
+    "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "release_identity": "9f8c8ae3f93c5d5535d2d5b8baeff583fbed70e85ef58e93a2f2e65ae476a726",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+      "kernel_id": 137648190,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-local-relation-dual-s42:v1"
+  },
+  "events": {
+    "evt-1e6f95e4635a6b6e5367dbb6": {
+      "attempt_id": "physical-v1",
+      "claimed_at": "2026-10-08T15:16:02Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-08T15:14:28Z",
+      "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md",
+      "delivered_at": "2026-10-08T15:14:38Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-1e6f95e4635a6b6e5367dbb6",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-08T15:29:18Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "acceptance": "accepted",
+        "complete_replay_pairs": 2,
+        "nomination_passed_arms": [],
+        "policy_terminal_truth_available": false,
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+          "kernel_id": 137648190,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-local-relation-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+        "kernel_id": 137648190,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-08T15:14:28Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

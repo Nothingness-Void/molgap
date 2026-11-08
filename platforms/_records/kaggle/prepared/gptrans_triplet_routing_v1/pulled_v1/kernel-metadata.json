@@ -1,0 +1,22 @@
+{
+  "id": "kaseichou/molgap-gptrans-triplet-routing-dual-s42",
+  "id_no": 138425374,
+  "title": "MolGap GPTrans Triplet Routing Dual S42",
+  "code_file": "molgap-gptrans-triplet-routing-dual-s42.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "kaseichou/molgap-gptrans-triplet-routing-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "machine_shape": "NvidiaTeslaT4"
+}

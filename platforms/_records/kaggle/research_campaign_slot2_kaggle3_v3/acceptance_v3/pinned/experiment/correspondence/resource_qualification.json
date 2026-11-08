@@ -1,0 +1,32 @@
+{
+  "status": "accepted",
+  "estimated_remaining_seconds": 26418.57650177008,
+  "maximum_observed_train_step_seconds": 0.3171864899999832,
+  "maximum_observed_forward_seconds": 0.09390360199995484,
+  "reserved_bytes": 1417674752,
+  "total_bytes": 15636037632,
+  "memory_headroom_fraction": 0.9093328639028949,
+  "scope": "20 training batches; conservative maximum timings with35percent margin; not a speed claim",
+  "zero_start": {
+    "accepted": true,
+    "maximum_prediction_delta": 0.0,
+    "rows": 128
+  },
+  "connected": {
+    "all_return_gradients_connected": true,
+    "gradient_norms": [
+      0.005632932297885418,
+      0.002259894274175167,
+      0.001310241874307394,
+      0.000806602940429002
+    ],
+    "mechanism_gradient_norms": {
+      "atom_projection.weight": 0.005847856868058443,
+      "atom_projection.bias": 4.187275771982968e-05,
+      "bond_projection.weight": 0.0024087089113891125,
+      "bond_projection.bias": 7.168475713115185e-05
+    }
+  },
+  "formal_training_exposure": 0,
+  "disposable_optimizer_updates": 21
+}

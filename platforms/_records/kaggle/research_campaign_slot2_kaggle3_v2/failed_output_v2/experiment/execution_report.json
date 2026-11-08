@@ -1,0 +1,47 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "6fbe6100308a51177769618d674bb7d9cf7962e8b67433e74654e9f322696c90",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "carry",
+          "device": 0,
+          "returncode": 1
+        },
+        {
+          "arm_id": "correspondence",
+          "device": 1,
+          "returncode": 1
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "arms": {
+    "carry": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 2.501998341999979,
+      "exit_reason": "preflight_worker_exit_1"
+    },
+    "correspondence": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "failed",
+      "worker_wall_seconds": 2.500897426999927,
+      "exit_reason": "preflight_worker_exit_1"
+    }
+  },
+  "pair_process_wall_seconds": 2.5041348409999955,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}

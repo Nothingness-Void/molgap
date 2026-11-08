@@ -1,0 +1,77 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "physical-v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 16,
+      "wall_hours": 8
+    },
+    "campaign_id": "gptrans-triplet-followup-dual100k",
+    "chain_id": "gptrans-triplet-followup-s42",
+    "decision_ref": "experiments/pcqm_gptrans_triplet_followup_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+    "release_identity": "68866f1d58f9e6d50a2a2aa4ead10481882630c2e3c15246eb1de6ee50ef391d",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-triplet-followup-dual-s42",
+      "kernel_id": 138367521,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-triplet-followup-dual-s42:v1"
+  },
+  "events": {
+    "evt-0a3f97d6272896aadbcc8bf9": {
+      "attempt_id": "physical-v1",
+      "claimed_at": "2026-10-12T22:03:27Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-12T22:02:52Z",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md",
+      "delivered_at": "2026-10-12T22:02:59Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-0a3f97d6272896aadbcc8bf9",
+      "event_status": "CLOSED",
+      "event_type": "ERROR",
+      "finalized_at": "2026-10-12T22:14:34Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "complete_arm": "accepted_no_nomination_replay_admitted",
+        "failed_arm": "infrastructure_only_no_replay",
+        "physical_status": "ERROR",
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "ERROR",
+        "kernel": "kaseichou/molgap-gptrans-triplet-followup-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-triplet-followup-dual-s42",
+          "kernel_id": 138367521,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-triplet-followup-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "ERROR",
+      "kernel": "kaseichou/molgap-gptrans-triplet-followup-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-triplet-followup-dual-s42",
+        "kernel_id": 138367521,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-12T22:02:52Z",
+    "remote_state_version": null,
+    "status": "ERROR"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

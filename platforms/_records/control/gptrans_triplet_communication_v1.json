@@ -1,0 +1,79 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "physical-v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 14,
+      "wall_hours": 7
+    },
+    "campaign_id": "gptrans-triplet-communication-dual100k",
+    "chain_id": "gptrans-triplet-communication-s42",
+    "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "release_identity": "205413f31bbcb27e45f98afa80ad8e9a2a04580ee01443da9c28eead11167e18",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+      "kernel_id": 137723341,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-triplet-communication-dual-s42:v1"
+  },
+  "events": {
+    "evt-16cb70377c681764807597a1": {
+      "attempt_id": "physical-v1",
+      "claimed_at": "2026-10-09T00:07:42Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-09T00:04:38Z",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md",
+      "delivered_at": "2026-10-09T00:04:48Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-16cb70377c681764807597a1",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-09T00:15:03Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "accepted": true,
+        "independent_complete_replay_pairs": 2,
+        "next_action": "CLOSE",
+        "scientific_status": "both_100k_positive_under_contract",
+        "successor_submitted": false,
+        "transfer_status": "not_evaluated"
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+          "kernel_id": 137723341,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-triplet-communication-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+        "kernel_id": 137723341,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-09T00:04:38Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

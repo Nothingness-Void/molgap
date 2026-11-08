@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+    "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "dataset": "nvoid912/molgap-gptrans-drift-attribution-v1-source",
+    "authority_ref": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/authority.json",
+    "authority_sha256": "334c39057b91bce3ddce01af1381214c5010b686da75beb433c35a824200f0c5",
+    "monitor_paths": [
+      "experiments/gptrans_infrastructure_t4_100k/followup/STATUS.md"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 22.668228000053205,
+    "SOURCE_SUBMITTING": 22.225074299960397,
+    "SOURCE_PUBLISHED": 2.1224795000161976,
+    "SOURCE_PENDING": 33.52996409998741,
+    "KERNEL_SUBMITTING": 11.96083529992029,
+    "KERNEL_ACCEPTED": 10.897393599967472
+  },
+  "observed_at": "2026-10-15T14:30:34.545557+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "url": "https://www.kaggle.com/code/nvoid912/molgap-gptrans-drift-attribution-v1",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 138868822,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+      "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+      "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+      "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e"
+    },
+    "platform_response": {
+      "ref": "/code/nvoid912/molgap-gptrans-drift-attribution-v1",
+      "url": "https://www.kaggle.com/code/nvoid912/molgap-gptrans-drift-attribution-v1",
+      "versionNumber": 1,
+      "kernelId": 138868822,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}

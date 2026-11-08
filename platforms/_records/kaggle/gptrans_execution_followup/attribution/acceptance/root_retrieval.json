@@ -1,0 +1,33 @@
+{
+  "files": [
+    {
+      "path": "bootstrap_allocation.json",
+      "sha256": "5a555fbc345fa2d028a13cc56f4e5d34ec67eb157f069a97ca4652e2dc766dd1"
+    },
+    {
+      "path": "experiment/execution_retention.json",
+      "sha256": "dc8a889bff04f4d9133712f07fe66288fafa15a16b312d13fb191d3720c0660b"
+    },
+    {
+      "path": "experiment/execution_report.json",
+      "sha256": "51af96b3779095ff73f13ce52f38027e991a4a309fefcc443e6b2dbd694eea98"
+    },
+    {
+      "path": "experiment/allocation_ledger.json",
+      "sha256": "dbcb6527bb546bd083559747ac4fbe793cdeabf260d6fe5d895fa4cf26fc5204"
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "b60bbb8c0eb674e4751743ba72d7f7a3056e269e7493919decdb85e25c21cf61"
+    },
+    {
+      "path": "experiment/diagnostic_summary.json",
+      "sha256": "b551f734976d8e62faf518f503fdd2a6d9f406a4b19f509f516e3472926d2b38"
+    }
+  ],
+  "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+  "scientific_acceptance": false,
+  "transport": "version_specific_exact_file",
+  "unselected_outputs_downloaded": false,
+  "version": 1
+}

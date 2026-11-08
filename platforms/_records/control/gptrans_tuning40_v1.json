@@ -1,0 +1,79 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "t4_hours": 14
+    },
+    "campaign_id": "gptrans-execution-tuning40",
+    "chain_id": "gptrans-tuning40-dual",
+    "decision_ref": "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": null,
+    "release_identity": "f138732784d70d5b0052a3e5c2a9a112aa38982aedac0d05991395a83d772ad7",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+      "kernel_id": 138254522,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-tuning40-dual-s42:v1"
+  },
+  "events": {
+    "evt-c8aeba9ad0322dd1aec1b2c7": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-12T05:15:18Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-12T05:14:17Z",
+      "decision_ref": "experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md",
+      "delivered_at": "2026-10-12T05:14:28Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-c8aeba9ad0322dd1aec1b2c7",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-12T05:24:18Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "artifact_status": "accepted",
+        "comparison_class": "PAIRED_ENDPOINT",
+        "delivery_gate_passed": true,
+        "execution_status": "complete",
+        "experiment_purpose": "delivery_experiment",
+        "replay_ready": false,
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+          "kernel_id": 138254522,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-tuning40-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+        "kernel_id": 138254522,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-12T05:14:17Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

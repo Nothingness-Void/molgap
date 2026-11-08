@@ -1,0 +1,384 @@
+{
+  "candidate_prefix_rule": null,
+  "confounding_warnings": [],
+  "excluded_traces": [
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_exact_matched60_v4_reference_prediction_bundle",
+        "strict_paired_comparison_pending"
+      ],
+      "run_id": "122312462",
+      "trajectory_id": "TB-k1-pair-token-500k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-local-scale-s42:degree_bond_local_ema999",
+      "trajectory_id": "TC-gptrans-g1-bond-local-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-readout-dual-s42:degree_bond_mean_readout_ema999",
+      "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-path-ema-dual-s42:degree_scale_ema999",
+      "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-node-capacity-s42:degree_ffn2_ema999",
+      "trajectory_id": "TC-gptrans-g1-ffn2-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-pair-scale-dual-s42:degree_group_decay_ema999",
+      "trajectory_id": "TC-gptrans-g1-group-decay-recovery-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_bond_return_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-bond-return-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-control-s42:degree_bond_local_cap_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-control-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_aggregate_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-followup-dual-s42:degree_local_triplet_drop_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-drop-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_product_v2_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-readout-dual-s42:degree_node_mean_readout_ema999",
+      "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-node-capacity-s42:degree_node352_ema999",
+      "trajectory_id": "TC-gptrans-g1-node352-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-pair-scale-dual-s42:degree_pair_depth_scale_ema999",
+      "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-pair-transition-s42:degree_pair_transition_ema999",
+      "trajectory_id": "TC-gptrans-g1-pair-transition-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-group-path-dual-s42:degree_path_endpoints_ema999",
+      "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-path-ema-dual-s42:degree_path_bond_mean",
+      "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen prior anchors storage only; no scientific comparison acceptance",
+        "no causal/replay qualification"
+      ],
+      "run_id": "gptrans-infrastructure-t4-100k-s42-v1:optimized:downstream",
+      "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "frozen prior anchors storage only; no scientific comparison acceptance",
+        "no causal/replay qualification"
+      ],
+      "run_id": "gptrans-infrastructure-t4-100k-s42-v1:original:downstream",
+      "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42"
+    },
+    {
+      "reasons": [
+        "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4",
+      "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no frozen scientific reference or causal/replay qualification",
+        "standalone execution diagnostic; self ID anchors storage only"
+      ],
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:optimized:downstream",
+      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no frozen scientific reference or causal/replay qualification",
+        "standalone execution diagnostic; self ID anchors storage only"
+      ],
+      "run_id": "k1-infrastructure-t4-100k-s42-v2:optimized:downstream",
+      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no frozen scientific reference or causal/replay qualification",
+        "standalone execution diagnostic; self ID anchors storage only"
+      ],
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no frozen scientific reference or causal/replay qualification",
+        "standalone execution diagnostic; self ID anchors storage only"
+      ],
+      "run_id": "k1-infrastructure-t4-100k-s42-v2:original:downstream",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "undeclared_feature_identity_mismatch"
+      ],
+      "run_id": "kaseichou/molgap-k1-pairtoken-mose-s42:v1",
+      "trajectory_id": "TC-k1-pair-token-mose-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:fp32",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "no_prospectively_frozen_strict_reference_bundle",
+        "noncausal_precision_execution_diagnostic"
+      ],
+      "run_id": "ims-k1-tf32-paired-v1:tf32_matmul",
+      "trajectory_id": "TC-k1-tf32-a100-paired-s42"
+    }
+  ],
+  "false_promote_count": null,
+  "false_promote_rate": null,
+  "false_stop_count": null,
+  "false_stop_rate": null,
+  "family_coverage": [],
+  "format": "molgap-rml-screening-backtest-v1",
+  "included_comparable_groups": [
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"ae8fcc3afdb48297016236834ba76b24bb11399b7a16987b5ea1d4698c80c6e5\",\"ema_semantics\":\"ema\",\"evaluation_role_identity\":\"internal_development\",\"lr_schedule_identity\":\"unspecified_in_contract\",\"optimizer_identity\":\"AdamW-foreach-false-lr0.001-weight-decay0.05\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"87c1f83b5caf329d15b0eb688bcb89132d5fa4eb15cb667e0c6eebc1f19652f6\",\"scientific_contract\":\"pcqm4mv2-fixed500k-ema-equal-update-v1\",\"selection_role_identity\":\"best_development_metric\",\"target_transform_identity\":\"unspecified_in_contract\",\"terminal_endpoint_identity\":\"endpoint_46860\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42\"}",
+      "run_ids": [
+        "gptrans-g1-local-scale-s42:scale_ema",
+        "gptrans-local-transfer500k-s42:scale_ema"
+      ],
+      "trajectory_ids": [
+        "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+        "TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema9999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-v5-audit-reference-s42\"}",
+      "run_ids": [
+        "gptrans-author-inputs-dual-s42:degree_scale",
+        "gptrans-author-inputs-dual-s42:path_bond_mean",
+        "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1"
+      ],
+      "trajectory_ids": [
+        "TC-gptrans-author-degree-scale-100k-s42",
+        "TC-gptrans-author-path-bond-mean-100k-s42",
+        "TC-gptrans-v5-audit-reference-100k"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f\",\"optimizer_identity\":\"1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34\",\"scientific_contract\":\"pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7\",\"terminal_endpoint_identity\":\"31240-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-k1-v4-100k-reference-s42\"}",
+      "run_ids": [
+        "kaseichou/molgap-k1-chem-local-s42:v1",
+        "kaseichou/molgap-k1-chem-local-s42:v1",
+        "kaseichou/molgap-k1-chemistry-typed-pairtoken-s42:v1",
+        "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
+        "kaseichou/molgap-k1-conjugated-dual-s42:v1-planned",
+        "kaseichou/molgap-k1-functional-group-token-s42:v1",
+        "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "kaseichou/molgap-k1-joint-atom-s42:v3",
+        "kaseichou/molgap-k1-motif-hierarchy-s42:v3",
+        "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+        "kaseichou/molgap-k1-receiver-triplet-s42:v1",
+        "kaseichou/molgap-k1-rrwp-pair-s42:v1",
+        "kaseichou/molgap-metagin-2d-s42:v2",
+        "nothingnessvoid/molgap-k1-linear-attention-s42:v1",
+        "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+        "nothingnessvoid/molgap-k1-topology-portability-dual-s42:v1-planned",
+        "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
+        "nothingnessvoid/molgap-pcqm-k1-mose-hidden-bn-s42:v1",
+        "nothingnessvoid/molgap-pcqm-k1-mose-residual-gate-s42:v1",
+        "nvoid912/molgap-k1-multiplicative-pairvalue-s42:v1",
+        "nvoid912/molgap-k1-one-shot-triplet-pairtoken-s42:v1",
+        "nvoid912/molgap-k1-sparse-triplet-s42:v1",
+        "nvoid912/molgap-k1-spd-pairtoken-s42:v1",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_mose",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_pair_token_node_return",
+        "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4"
+      ],
+      "trajectory_ids": [
+        "TC-k1-atom-pair-local-100k-s42",
+        "TC-k1-bond-type-local-100k-s42",
+        "TC-k1-chem-typed-pair-token-100k-s42",
+        "TC-k1-conjugated-oneshot-100k-s42",
+        "TC-k1-conjugated-persistent-100k-s42",
+        "TC-k1-corrupt-gap-100k-s42-v3",
+        "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+        "TC-k1-degree-balance-100k-s42",
+        "TC-k1-functional-group-token-100k-s42",
+        "TC-k1-linear-attention-100k-s42",
+        "TC-k1-mose-context-gate-100k-s42",
+        "TC-k1-mose-hidden-bn-100k-s42",
+        "TC-k1-mose-replacement-100k-s42",
+        "TC-k1-mose-residual-gate-100k-s42",
+        "TC-k1-motif-hierarchy-100k-s42-v3",
+        "TC-k1-multiplicative-pair-value-100k-s42",
+        "TC-k1-oneshot-triplet-pair-token-100k-s42",
+        "TC-k1-pair-token-100k-s42",
+        "TC-k1-pair-token-node-return-100k-s42",
+        "TC-k1-receiver-pair-100k-s42",
+        "TC-k1-rrwp-pair-100k-s42",
+        "TC-k1-rwse-refresh-100k-s42",
+        "TC-k1-sparse-triplet-100k-s42",
+        "TC-k1-spd-pair-token-100k-s42",
+        "TC-k1-triplet-aggregate-100k-s42",
+        "TC-k1-v4-100k-reference-s42",
+        "TC-metagin-2d-3hop-100k-s42-v2"
+      ]
+    }
+  ],
+  "included_trajectory_ids": [
+    "TC-gptrans-author-degree-scale-100k-s42",
+    "TC-gptrans-author-path-bond-mean-100k-s42",
+    "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+    "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+    "TC-gptrans-v5-audit-reference-100k",
+    "TC-k1-atom-pair-local-100k-s42",
+    "TC-k1-bond-type-local-100k-s42",
+    "TC-k1-chem-typed-pair-token-100k-s42",
+    "TC-k1-conjugated-oneshot-100k-s42",
+    "TC-k1-conjugated-persistent-100k-s42",
+    "TC-k1-corrupt-gap-100k-s42-v3",
+    "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+    "TC-k1-degree-balance-100k-s42",
+    "TC-k1-functional-group-token-100k-s42",
+    "TC-k1-linear-attention-100k-s42",
+    "TC-k1-mose-context-gate-100k-s42",
+    "TC-k1-mose-hidden-bn-100k-s42",
+    "TC-k1-mose-replacement-100k-s42",
+    "TC-k1-mose-residual-gate-100k-s42",
+    "TC-k1-motif-hierarchy-100k-s42-v3",
+    "TC-k1-multiplicative-pair-value-100k-s42",
+    "TC-k1-oneshot-triplet-pair-token-100k-s42",
+    "TC-k1-pair-token-100k-s42",
+    "TC-k1-pair-token-node-return-100k-s42",
+    "TC-k1-receiver-pair-100k-s42",
+    "TC-k1-rrwp-pair-100k-s42",
+    "TC-k1-rwse-refresh-100k-s42",
+    "TC-k1-sparse-triplet-100k-s42",
+    "TC-k1-spd-pair-token-100k-s42",
+    "TC-k1-triplet-aggregate-100k-s42",
+    "TC-k1-v4-100k-reference-s42",
+    "TC-metagin-2d-3hop-100k-s42-v2"
+  ],
+  "native_cost_added": null,
+  "native_cost_saved": null,
+  "policy_activated": false,
+  "recommended_early_stop": null,
+  "slow_starter_count": null,
+  "status": "available",
+  "trace_count": 64
+}

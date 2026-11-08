@@ -1,0 +1,419 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 36.01991683199998
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 42.020928301000026
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-0",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 93.54297375300001
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 69.53287334199996
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "original": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 129.562890585,
+      "exit_reason": "diagnostic-0_worker_exit_0"
+    },
+    "optimized": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 111.55380164299999,
+      "exit_reason": "diagnostic-0_worker_exit_0"
+    }
+  },
+  "pair_process_wall_seconds": 135.569031011,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "diagnostic_summary": {
+    "path": "diagnostic_summary.json",
+    "sha256": "b551f734976d8e62faf518f503fdd2a6d9f406a4b19f509f516e3472926d2b38"
+  },
+  "profile_artifacts": {
+    "original": [
+      {
+        "path": "preflight.json",
+        "sha256": "f91516c5826b39691afd66e0ecc529b987874d70c7857bbad452f908c79e459e"
+      },
+      {
+        "path": "profile_qualification/plain-state.pt",
+        "sha256": "a8e83ca98b3ee9ce6d77978191043ffef6ebc180e586a6f186de085197278069"
+      },
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "bd05f90cfc43b52670840efb07950029a3c7e386d78c04af86de16bb24e30cc1"
+      },
+      {
+        "path": "profile_qualification/profiled-state.pt",
+        "sha256": "865f0ad09bab48f4a13bca29b91c52cc0272157dd6ccbfd99486941fba6aaad5"
+      },
+      {
+        "path": "profile_qualification/state_proof.json",
+        "sha256": "4fe95d45a22857a2c76a720bdc3dad2a0450e0dedb1b21bd153c8be4a06822f7"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "98cc0b239a896a1329d4b8b950f9ab9dc388a1436fdf10d9358c2c115a7308dd"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "f4f4102e8679a2354143d9004afe21d5086340f0ba9c8b32a3b3ae7ea8976337"
+      },
+      {
+        "path": "runtime_manifest.json",
+        "sha256": "99aae33901fc28a30b04aac8dbceda6d0009e458b7fdab8e79baf130a80904f1"
+      }
+    ],
+    "optimized": [
+      {
+        "path": "fill-enabled.pt",
+        "sha256": "74c01030dd81e5aef0c2d68feff124c8a9c5e986d018ab81c2dd13583cdc1b0b"
+      },
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "bd8314eb66530b9660c4149daf697fa3b8e2d4584b6023701540198c0774026e"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "376fca57224f523a15039c41af6150acea36ff903c367005524b45af597f9861"
+      },
+      {
+        "path": "repeat-a.pt",
+        "sha256": "c08e177d0bd1e4e3fd7033f8f66f6e1372121d0f2ce33c1f7e53a217905566a4"
+      },
+      {
+        "path": "repeat-b.pt",
+        "sha256": "71e153e65fd0b48c5c0b5de6c18047743096f5f1e0568ef7514b60c225380c76"
+      },
+      {
+        "path": "resumed-first.pt",
+        "sha256": "e9c8551c81176e2ca05c4a2fd811a0fc309927d2e2e4ca1ccdff798a7ef82554"
+      },
+      {
+        "path": "resumed.pt",
+        "sha256": "6bd6f38b776aa9a934935f7dfc245645ce21b058c0068b591dd7f17f68960ce6"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "169e64dc41dd015884c63e535e65058f63f23d80534a058ab8081bdef12cc061"
+      },
+      {
+        "path": "runtime_provenance.json",
+        "sha256": "49c0a7552e8b1c12e711edf560f7d8b695bc3f6551bfd5fb9343b9a8a53e0c60"
+      }
+    ]
+  },
+  "diagnostic": {
+    "allocated_t4_hours_ceiling": 0.6666666666666666,
+    "attribution_steps": 10,
+    "cpu_threads": 1,
+    "development_role_read": false,
+    "format": "molgap-gptrans-execution-probe-v1",
+    "kind": "attribution",
+    "measured_steps": 500,
+    "official_validation_role_read": false,
+    "physical_batch": 128,
+    "profile_steps": 16,
+    "scientific_training_executed": false,
+    "seed": 42,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "timing_repeats": 3,
+    "wall_ceiling_seconds": 1200,
+    "warmup_steps": 120
+  },
+  "scientific_training_executed": false,
+  "diagnostic_artifacts": {
+    "original": [
+      {
+        "path": "diagnostic-0/output_manifest.json",
+        "sha256": "529274b7b2f7240b8b222621922298f776e181365e490b80d8adee4dccfa4c6c"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-last.pt",
+        "sha256": "389d9dbd35f4f036cbbbf58f3f31cdf4223d37667a4a763eccabaa12e2339d5c"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-01.pt",
+        "sha256": "23ded085f14dd5f9914f5d9294c8511e5e332f5c04f255ebd62b9d4613e9e93b"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-02.pt",
+        "sha256": "9213fea5fe3ec52219ae159f05465f53292b94593fafec6bcef0761d15429dd5"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-03.pt",
+        "sha256": "10bc86d3d81b7022cdac979acbf36e309e386ccb168e87582c0c39b606039931"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-04.pt",
+        "sha256": "f85acd47531557dc2d17653998336af489abc641f794ffc2d524bf5d438c847e"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-05.pt",
+        "sha256": "c2109f9d39a6e4f28c9f4cff8ce493e44c79789060b62def99b8c3f1683c1b9d"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-06.pt",
+        "sha256": "e4e7d41b971f997a0eced8d5ccb37597a9a187ca30f34a4929e6e0f3e684ef55"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-07.pt",
+        "sha256": "8a0ab4a1e9db400ee14673da0b68c4ccc6a0e69be9cf2680e3da9469b6e16c63"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-08.pt",
+        "sha256": "9131757a1725be84729eadef6a8e98ef72f8dc4337bfcd5d61a866a0e16881dd"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-09.pt",
+        "sha256": "125e8491e649ac42a5121b1abbe90546c5cff1b238b98bf843e3744e6e38f0c4"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-step-10.pt",
+        "sha256": "5761d5a593abf54f145b89ab7a028da017ff0766da78f70bf405f6b2196d8d3b"
+      },
+      {
+        "path": "diagnostic-0/foreach_optimizer-steps.json",
+        "sha256": "fe4cdf2e0e90038bfa541fcab384c16ae666b271ff1768249312601476a10b54"
+      },
+      {
+        "path": "diagnostic-0/native-last.pt",
+        "sha256": "17cd3b912122a0dec6c7661468f09e6de9c163796f5e8beab8f543a3f1c549a4"
+      },
+      {
+        "path": "diagnostic-0/native-step-01.pt",
+        "sha256": "b37dcfb17d09130c3db94be163af66f4e96d5d0d1fe249969fa611715627627e"
+      },
+      {
+        "path": "diagnostic-0/native-step-02.pt",
+        "sha256": "6dd0753e761aba0b77d6db26ff2e289823406ebfd469ee0ffb9108ac7a8e8eea"
+      },
+      {
+        "path": "diagnostic-0/native-step-03.pt",
+        "sha256": "7496b45a514d1ffe0371120212efe508b9ef5b4e43b4e78a3b9bc81252c54b22"
+      },
+      {
+        "path": "diagnostic-0/native-step-04.pt",
+        "sha256": "84d0c19a4962e883525dafcf3850d83dd554075d1988fa933110e9597cff0b34"
+      },
+      {
+        "path": "diagnostic-0/native-step-05.pt",
+        "sha256": "9c6b099d268f1b51293cd897b48acc612ad62a59e15a0170609a9e08b8250748"
+      },
+      {
+        "path": "diagnostic-0/native-step-06.pt",
+        "sha256": "2b74cba718085fe5e25fd01f79b22a8c402cd8b43b2c41ff9a3667aac252f833"
+      },
+      {
+        "path": "diagnostic-0/native-step-07.pt",
+        "sha256": "4e0c79c2403ee4deffa2db097c759eac61d7da66962c786469ef927c1114e501"
+      },
+      {
+        "path": "diagnostic-0/native-step-08.pt",
+        "sha256": "fb155ba16eb1ca1e8aa3a56e965f7815448452476a67f38d1621c03b5c315452"
+      },
+      {
+        "path": "diagnostic-0/native-step-09.pt",
+        "sha256": "5b6fe3df4c6f589cb51fc615e46569348dd7ecc55925caf3a9272ddb02cb5f0c"
+      },
+      {
+        "path": "diagnostic-0/native-step-10.pt",
+        "sha256": "5d5be8cf89ce91f7155764ff4e25d126302e02776dedb41b553e4ce153ac7b58"
+      },
+      {
+        "path": "diagnostic-0/native-steps.json",
+        "sha256": "58c599d3088dd58d4f92d7d8b6dc3e7e2b240b84f6405f32a358bbd7be27aceb"
+      },
+      {
+        "path": "diagnostic-0/prepared-last.pt",
+        "sha256": "7efbde0baca67d4fe69dbb46b66ec9d41f155b6d3d6bde0d7afe027b442f547a"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-01.pt",
+        "sha256": "c67fe0d4daa2784cfe663f324d11db05d8b1ed65f40660ba3e00ac02a90894d8"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-02.pt",
+        "sha256": "1cd1e89ce273f07e53854c8f39f7ccd5dc5672e6c01b5fdaa2bd989a5f67ff74"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-03.pt",
+        "sha256": "fee692e516dbecefcd63f65a3f53d4210a9bc82330c660d80c1aad1275adc627"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-04.pt",
+        "sha256": "7fbeba1509c9189f7b0657348b22fd1783787d920b8ed4c420d896456e2a4188"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-05.pt",
+        "sha256": "77bef51db9844c00863c7c6bc51748b0feddfb75cee07b98a785f18a165bfed6"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-06.pt",
+        "sha256": "812257c1a3fd2d9e7369c8e172e20d3ef5e1d13197a903f405784cc1071db623"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-07.pt",
+        "sha256": "f5c9e7c6ef0053d3d1f2c39752e97701bbd138fa6f227021121d1b5aca818330"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-08.pt",
+        "sha256": "7d190abdb0bfd0db73c885fa715470b8db5075146190af0af6164986bd20559e"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-09.pt",
+        "sha256": "e56b8b2e3a6577b01c4d0c9085141741ce327b065fad4370d80c174bc28f1bd6"
+      },
+      {
+        "path": "diagnostic-0/prepared-step-10.pt",
+        "sha256": "f362db17fb9bf370ff67aeaea046349349e2dc6d06f1064b02cf4d0353192018"
+      },
+      {
+        "path": "diagnostic-0/prepared-steps.json",
+        "sha256": "ab1219e9f4119ccf563a45a73d646e6463407fbc0111522445a19b5995ac6be3"
+      }
+    ],
+    "optimized": [
+      {
+        "path": "diagnostic-0/output_manifest.json",
+        "sha256": "bdc33be5a81b4323d65dc021d90aacda13420fd2eebd0dc71bd408391898b5b3"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-last.pt",
+        "sha256": "b6ac5c4a27ac32197aa5d97d1fb45bf96b3b166d3578f8129cd6871fd9dcc818"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-01.pt",
+        "sha256": "5edbf374d96b79c00fdd76784fae16e8a657081c7e9e7070dc4a657caa356bf6"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-02.pt",
+        "sha256": "64704d78925b10b7efb1d947507bde64ffcd948328fa0f2692a1adba7a314850"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-03.pt",
+        "sha256": "bc6305998a77f914363553b0de2e40bdbf2a6ffb75af76adfc278f228234ea36"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-04.pt",
+        "sha256": "306178fae31a098838bf20f4329d8772d682458bf4f6b1da1fa390f75a271d90"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-05.pt",
+        "sha256": "2b654cbfd630c739e03647642eedc7c9b8b92a92fa0a15fe35ed1c590a75d20d"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-06.pt",
+        "sha256": "ee3d10ee400f1aa4ccd57a7427c935e5d79b53c8870657d534f711f79f03ebe0"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-07.pt",
+        "sha256": "940c4e5224c3ba0d8c1bd23405033b87927e0af52e3c525b9d50e0b1597e435c"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-08.pt",
+        "sha256": "e6e6261b4e1c277e8d9e6a53243c7e14852a189d03d12faae3c61175431150bf"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-09.pt",
+        "sha256": "794ff5383bbdd4b1001a07daaf9c0702080b86503df9868a6c2e23723c828a76"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-step-10.pt",
+        "sha256": "c9551c5dd220a94a07a9bc266415c755ac7bc353156cb8c78e10b6c685aee176"
+      },
+      {
+        "path": "diagnostic-0/foreach_ema-steps.json",
+        "sha256": "0d5f30937e0e3f085bd50871581f146d36cf2130e7050ee3815feb266009db84"
+      },
+      {
+        "path": "diagnostic-0/optimized-last.pt",
+        "sha256": "ee650792a46161757870cc7b83091eee4822e395d72166e141d957d8422bbf25"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-01.pt",
+        "sha256": "b746d2e6680b64ad4274998cad45f157e744e5d1d4dbcb600020ef3c29a1925a"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-02.pt",
+        "sha256": "a9dd1198eb807303a6140824084ae9458898e1a364fd05e799e98326e0eabc0d"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-03.pt",
+        "sha256": "0f06d9640ada4a5b5bec34766410fe153c3000ceef1c2e5e040ddde5df70553f"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-04.pt",
+        "sha256": "5422829db0ae419dbd1a79f89d5d4eb4481518d5c4392889e437ae38fba4cfc8"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-05.pt",
+        "sha256": "126e3f3e528f9f8889ded3ec60eeca2190dbc774de5a6bfd57ff06b5bc461e89"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-06.pt",
+        "sha256": "b4b5dac154fc52b39d0804078ac38def7482f58dcc806b89da784bb13214283a"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-07.pt",
+        "sha256": "697ba7f21f38f77997687818c727898af473186c405ee1aefdbbbeed25f77bd8"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-08.pt",
+        "sha256": "ba3282614ba4710f5ac560566a52e33ed31340f97470792ff702a4a53c86a9f5"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-09.pt",
+        "sha256": "5b1b50bbb5029fe8b83d2b002dda2186e4ef76375d18e2fa0c8654484813f6d7"
+      },
+      {
+        "path": "diagnostic-0/optimized-step-10.pt",
+        "sha256": "8c6017eaaad275ef5f9a5524bb2e8470b18940ce533ae23688e4f7f6a32bb1f1"
+      },
+      {
+        "path": "diagnostic-0/optimized-steps.json",
+        "sha256": "fd9bd18fb95ce492c57afd871531b7eaf758e1f21b1488c7315c4a77a9c821c4"
+      }
+    ]
+  }
+}

@@ -1,0 +1,4179 @@
+{
+  "edges": [
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/infrastructure_failure_2026-09-18.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A002",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A003",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/resume_infrastructure_failure_122518428.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42:A003",
+      "target": "experiments/pcqm_gptrans_prenorm_500k_v5/results/trajectory_stop_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/preflight_122311513.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/preflight_runtime_failure_122310888.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/training_adapter_failure_122312155.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_500k/results/v5_acceptance_122312462.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42-r2-r3:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42-r2:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42-r2:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42-r2:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42-r2-r3:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42-r2:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-degree-scale-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-input-preparation-verification-recovery-v2:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/verification_recovery/fixed_cache_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-input-preparation-verification-recovery:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/verification_recovery/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-input-preparation:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/preparation_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-path-bond-mean-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-bottleneck-frozen-v1:A001",
+      "target": "experiments/pcqm_gptrans_bottleneck_audit/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-cycle-input-preparation-recovery-v2:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-cycle-input-preparation-recovery:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-cycle-input-preparation:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-ema-runtime-qualification-v1:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/environment_protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution-tuning40-optimized-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution-tuning40-original-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution40-optimized-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution40/gpu/execution_optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution40-original-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution40/gpu/execution_original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-mean-readout-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-decay-clock-wd001-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v2:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v3:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v4:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ffn2-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-group-decay-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-group-decay-recovery-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-bond-return-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-connected-pair-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-control-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-attention-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-bond-route-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-drop-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-product-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-node-mean-readout-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-node352-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-pair-depth-scale-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-pair-transition-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-endpoints-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-mean-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-scale500k-qualification-s42:A001",
+      "target": "experiments/pcqm_gptrans_scale_qualification/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-optimized-100k-s42-v2:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-optimized-100k-s42-v3:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-optimized-100k-s42:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-original-100k-s42-v2:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-original-100k-s42-v3:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-infrastructure-original-100k-s42:A001",
+      "target": "experiments/gptrans_infrastructure_t4_100k/original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shared-cycle-common-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/cycle_common/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shared-local-reference-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-source-dependence-s42-v1:A001",
+      "target": "experiments/pcqm_gptrans_source_dependence/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-step-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_step_profile_v5/results/summary_122499114.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-step-profile-v5:A001",
+      "target": "experiments/pcqm_gptrans_step_profile_v5/results/v5_acceptance_122499114.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-t-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-t-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-triplet-portability-s42-v1:A001",
+      "target": "experiments/pcqm_gptrans_triplet_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-atom-pair-local-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-bond-type-local-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-chem-local-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-chem-typed-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_typed_pair_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-chem-typed-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_chem_typed_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-conjugated-oneshot-100k-s42:A001",
+      "target": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-conjugated-oneshot-100k-s42:A001",
+      "target": "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-conjugated-persistent-100k-s42:A001",
+      "target": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-conjugated-persistent-100k-s42:A001",
+      "target": "experiments/pcqm_k1_conjugated_hyperedge_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-degree-balance-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-degree-balance-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-functional-group-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_functional_group_token_100k/sidecar_acceptance_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-functional-group-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_functional_group_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-functional-group-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_functional_group_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-infrastructure-optimized-100k-s42-v2:A001",
+      "target": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-infrastructure-optimized-100k-s42:A001",
+      "target": "experiments/k1_infrastructure_t4_100k/optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-infrastructure-original-100k-s42-v2:A001",
+      "target": "experiments/k1_infrastructure_t4_100k/execution_providers/original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-infrastructure-original-100k-s42:A001",
+      "target": "experiments/k1_infrastructure_t4_100k/original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42-v2:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42-v3:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-joint-atom-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_joint_atom_reconstruction_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-linear-attention-100k-s42:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-linear-attention-post100k-audit-s42-recovery:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/audit_recovery.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-linear-attention-post100k-audit-s42-recovery:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/results/audit_recovery_receipt.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-linear-attention-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_linear_attention_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-context-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_context_gate_100k/results/acceptance_summary_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-context-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_context_gate_100k/results/submission_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/acceptance_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/postmortem_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-hidden-bn-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_hidden_bn_100k/results/submission_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_100k/results/cache_acceptance_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_100k/results/cache_submission.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/acceptance_v5.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v1_infrastructure_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v2_allocation_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v3_tf32_preflight_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42:A002",
+      "target": "experiments/pcqm_k1_mose_100k/results/gpu_v4_encoder_interface_failure.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/acceptance_summary_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/submission_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_mose_residual_gate_100k/results/trajectory_v1.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-motif-hierarchy-100k-s42-v2:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-motif-hierarchy-100k-s42-v3:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-motif-hierarchy-100k-s42:A001",
+      "target": "experiments/pcqm_motif_hierarchy_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-multiplicative-pair-value-100k-s42:A001",
+      "target": "experiments/pcqm_k1_multiplicative_pair_value_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-multiplicative-pair-value-100k-s42:A001",
+      "target": "experiments/pcqm_k1_multiplicative_pair_value_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-oneshot-triplet-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-oneshot-triplet-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/infrastructure_failure_122272523.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/retry_122275244.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_infrastructure_failure_122303028.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/causal_audit_retry_122305552.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-batch-profile:A001",
+      "target": "experiments/pcqm_k1_pair_token_batch_profile/results/v5_acceptance_122388380.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A001",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/preflight.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A002",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A002",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/job_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-frozen-cross-scale-20260924:A003",
+      "target": "experiments/pcqm_k1_cross_scale_frozen/results/terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/contextual_endpoint.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-mose-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_mose_100k/trace_manifest.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A001",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/acceptance_summary_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/paired_analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/results/infrastructure_failure_v1.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/results/submission_v2.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42:A002",
+      "target": "experiments/pcqm_k1_pair_token_node_return_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/preflight_122742924.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round1_terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A001",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/target_transform.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A002",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A002",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round2_residual_analysis.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_submission.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution:A003",
+      "target": "experiments/pcqm_k1_pair_token_scale_attribution/results/round3_terminal.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/results/acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-pairtoken-combination-transfer:A001",
+      "target": "experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-receiver-pair-100k-s42:A001",
+      "target": "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-relation-frozen-intervention-s42:A001",
+      "target": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-relation-resolution-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-representation-100k-500k:A001",
+      "target": "experiments/pcqm_k1_explainability_audit/representation/input_binding.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-rrwp-pair-100k-s42:A001",
+      "target": "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-rwse-refresh-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-rwse-refresh-100k-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-sparse-triplet-100k-s42:A001",
+      "target": "experiments/pcqm_k1_sparse_triplet_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-sparse-triplet-100k-s42:A001",
+      "target": "experiments/pcqm_k1_sparse_triplet_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-spd-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_spd_pair_token_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-spd-pair-token-100k-s42:A001",
+      "target": "experiments/pcqm_k1_spd_pair_token_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/submission.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/results/terminal_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/role_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-tf32-a100-paired-s42:A001",
+      "target": "experiments/pcqm_k1_tf32_runtime_comparison_100k/trace_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-topology-portability-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/audit/role_plan.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-topology-portability-post100k-audit-s42:A001",
+      "target": "experiments/pcqm_k1_portability_dual_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-triplet-aggregate-100k-s42:A001",
+      "target": "experiments/pcqm_k1_relation_resolution_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_k1_variants_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42-v2:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/attempt_v2/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42-v2:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/attempt_v2/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/comparison_readiness_prelaunch.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-metagin-2d-3hop-100k-s42:A001",
+      "target": "experiments/pcqm_metagin_2d_100k/source_config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TS-v5-legacy-evidence-migration:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TS-v5-legacy-evidence-migration:A002",
+      "target": "experiments/pcqm_k1_pair_token_100k/results/v5_evidence_overlay.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-pair-prenorm-500k-s42",
+      "target": "TC-gptrans-shortest-path-profile-v5",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-batch-profile",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution40-original-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "target": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-shortest-path-profile-v5",
+      "target": "TC-gptrans-step-profile-v5",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-input-preparation",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-atom-pair-local-100k-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-bond-type-local-100k-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42-v2",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-100k-s42-v3",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-degree-balance-100k-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-functional-group-token-100k-s42",
+      "target": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-linear-attention-100k-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-linear-attention-post100k-audit-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-mose-residual-gate-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TB-k1-pair-token-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-node-return-100k-s42",
+      "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-pair-token-scale-attribution",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-receiver-pair-100k-s42",
+      "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-relation-resolution-post100k-audit-s42",
+      "target": "TC-k1-relation-frozen-intervention-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-rrwp-pair-100k-s42",
+      "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-rwse-refresh-100k-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-triplet-aggregate-100k-s42",
+      "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-oneshot-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-receiver-pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rrwp-pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-k1-triplet-aggregate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-carry-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-shared-cycle-common-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "target": "TC-gptrans-shared-local-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-ema-portability-infrastructure-v1",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution40-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-shared-cycle-common-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-shared-local-reference-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-ema-portability-frozen-s42-v4",
+      "target": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "target": "TB-gptrans-pair-prenorm-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "target": "TC-gptrans-shortest-path-profile-v5",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "target": "TC-gptrans-step-profile-v5",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-triplet-portability-s42-v1",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-paired-v3-scalar-reference",
+      "target": "TB-k1-pair-token-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-functional-group-token-100k-s42",
+      "target": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-hidden-bn-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-hidden-bn-100k-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-replacement-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-mose-residual-gate-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TB-k1-pair-token-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-batch-profile",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pair-token-scale-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-pair-token-node-return-100k-s42",
+      "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "target": "TC-k1-relation-frozen-intervention-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-sparse-triplet-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-sparse-triplet-100k-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-spd-pair-token-100k-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-oneshot-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-infrastructure-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-infrastructure-optimized-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-infrastructure-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-infrastructure-original-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-replacement-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-receiver-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-relation-frozen-intervention-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-representation-100k-500k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rrwp-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-tf32-a100-paired-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-shared-cycle-common-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-shared-local-reference-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "target": "TB-gptrans-pair-prenorm-500k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-optimized-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-infrastructure-original-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-triplet-portability-s42-v1",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-500k-paired-v3-scalar-reference",
+      "target": "TB-k1-pair-token-500k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-mose-residual-gate-100k-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-pair-token-500k-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-atom-pair-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-bond-type-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-oneshot-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-degree-balance-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-functional-group-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-context-gate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-replacement-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-mose-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-pairtoken-combination-transfer",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-receiver-pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-relation-frozen-intervention-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-representation-100k-500k",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rrwp-pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-rwse-refresh-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-sparse-triplet-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-spd-pair-token-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-k1-triplet-aggregate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "reference_used"
+    }
+  ],
+  "format": "molgap-rml-trajectory-graph-v1",
+  "nodes": [
+    {
+      "id": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-bottleneck-frozen-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-runtime-qualification-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-local-cap-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-mean-readout-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-ffn2-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-bond-route-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-product-v2-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-node-mean-readout-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-node352-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-pair-transition-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-path-bond-mean-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-infrastructure-optimized-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-infrastructure-original-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-pair-prenorm-500k-partial-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-shortest-path-profile-122484011",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-source-dependence-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-step-profile-122499114",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-t-500k-partial-reference-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-triplet-portability-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-v5-audit-reference-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-500k-paired-v3-scalar-reference",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-atom-pair-local-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-bond-type-local-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-chem-typed-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-conjugated-oneshot-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-conjugated-persistent-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-corrupt-gap-100k-s42-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-degree-balance-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-functional-group-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-infrastructure-optimized-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-infrastructure-original-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-infrastructure-original-100k-s42-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-joint-atom-post100k-audit-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-joint-audit-cancelled-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-joint-k1-corrupt-gap-atom-aux-cancelled-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-joint-k1-corrupt-gap-cancelled-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-post100k-audit-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-mose-context-gate-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-mose-hidden-bn-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-mose-replacement-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-mose-residual-gate-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-motif-hierarchy-100k-s42-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-multiplicative-pair-value-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-batch-profile-122388380",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-mose-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pair-token-node-return-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-pairtoken-combination-transfer-20260923",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-receiver-pair-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-relation-frozen-intervention-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-relation-resolution-post100k-audit-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-representation-100k-500k-123315282",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-rrwp-pair-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-rwse-refresh-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-sparse-triplet-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-spd-pair-token-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-tf32-a100-paired-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-topology-portability-post100k-audit-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-triplet-aggregate-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-v4-100k-reference-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1_corrupt_gap-100k-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1_corrupt_gap_atom_aux-100k-s42-infrastructure-failure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-metagin-2d-3hop-100k-s42-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-conditional-audit-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-metagin-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-motif-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-motif-v2-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-preparation-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-recovery-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-recovery-v2-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "v5-legacy-evidence-migration-2026-09-17",
+      "type": "evidence"
+    },
+    {
+      "id": "TB-gptrans-pair-prenorm-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-pair-token-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-carry-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-carry-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-correspondence-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-correspondence-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-cycle-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-cycle-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-reference-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-reference-100k-s42-r2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-input-preparation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-input-preparation-verification-recovery",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution40-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-node352-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-optimized-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-optimized-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-original-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-infrastructure-original-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-shared-cycle-common-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-shared-local-reference-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-shortest-path-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-source-dependence-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-step-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-t-v4-100k-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-v5-audit-reference-100k",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-atom-pair-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-bond-type-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-chem-local-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-chem-typed-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-conjugated-oneshot-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-conjugated-persistent-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-corrupt-gap-atom-aux-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-degree-balance-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-functional-group-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-infrastructure-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-infrastructure-optimized-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-infrastructure-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-infrastructure-original-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-joint-atom-post100k-audit-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-linear-attention-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-linear-attention-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-linear-attention-post100k-audit-s42-recovery",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-context-gate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-hidden-bn-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-replacement-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-mose-residual-gate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-motif-hierarchy-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-multiplicative-pair-value-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-oneshot-triplet-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-batch-profile",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-frozen-cross-scale-20260924",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-mose-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-node-return-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pair-token-scale-attribution",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-pairtoken-combination-transfer",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-receiver-pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-relation-frozen-intervention-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-relation-resolution-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-representation-100k-500k",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-rrwp-pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-rwse-refresh-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-sparse-triplet-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-spd-pair-token-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-tf32-a100-paired-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-topology-portability-post100k-audit-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-triplet-aggregate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-v4-100k-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-metagin-2d-3hop-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-metagin-2d-3hop-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TS-v5-legacy-evidence-migration",
+      "type": "trajectory"
+    }
+  ]
+}

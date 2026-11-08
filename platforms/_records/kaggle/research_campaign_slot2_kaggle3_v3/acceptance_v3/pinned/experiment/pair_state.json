@@ -1,0 +1,63 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "carry",
+          "device": 0,
+          "returncode": 0
+        },
+        {
+          "arm_id": "correspondence",
+          "device": 1,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "carry",
+          "device": 0,
+          "returncode": 0
+        },
+        {
+          "arm_id": "correspondence",
+          "device": 1,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "carry": {
+      "device": 0,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "interrupted",
+      "worker_wall_seconds": 2219.064813136,
+      "exit_reason": "durable_ten_pass_segment_complete_scientific_horizon_incomplete"
+    },
+    "correspondence": {
+      "device": 1,
+      "training_started": true,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "interrupted",
+      "worker_wall_seconds": 2286.59241366,
+      "exit_reason": "durable_ten_pass_segment_complete_scientific_horizon_incomplete"
+    }
+  },
+  "pair_process_wall_seconds": 2287.1000261209997,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}

@@ -1,0 +1,76 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 12
+    },
+    "campaign_id": "gptrans-g1-followup",
+    "chain_id": "gptrans-g1-pair-scale",
+    "decision_ref": "experiments/pcqm_gptrans_pair_scale_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "release_identity": "5d14a5cde67c2a0aa36edee38f0a7ce1c4dd10fe271f6e52694b7ffcdd8ea391",
+    "remote_job_identity": {
+      "kernel": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42",
+      "kernel_id": 136742270,
+      "version": 1
+    },
+    "remote_platform": "kaggle3",
+    "run_id": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42:v1"
+  },
+  "events": {
+    "evt-bec51f3ce1688ee33afa0b5c": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-02T09:18:12Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-02T09:17:27Z",
+      "decision_ref": "experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md",
+      "delivery_attempts": 0,
+      "event_id": "evt-bec51f3ce1688ee33afa0b5c",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-02T09:29:23Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "acceptance": "accepted",
+        "execution_status": "COMPLETE",
+        "promotion_passed": false,
+        "replay_pairs": 2,
+        "successor_authorized": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42",
+          "kernel_id": 136742270,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "nvoid912/molgap-gptrans-g1-pair-scale-dual-s42",
+        "kernel_id": 136742270,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-02T09:17:27Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

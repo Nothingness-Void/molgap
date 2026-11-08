@@ -1,0 +1,76 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "allocated_t4_hours": 1
+    },
+    "campaign_id": "gptrans-source-dependence",
+    "chain_id": "gptrans-source-dependence-v1",
+    "decision_ref": "experiments/pcqm_gptrans_source_dependence/decision.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": null,
+    "release_identity": "fd1ac751fd6da70d370423e2a09ea215676a49b1ebf3948fa01e9df6ae3e8632",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+      "kernel_id": 138062707,
+      "version": 1
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-source-dependence-s42:v1"
+  },
+  "events": {
+    "evt-a5f2279330a872e0b5ee5685": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-10T18:17:52Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-10T18:17:25Z",
+      "decision_ref": "experiments/pcqm_gptrans_source_dependence/decision_terminal.md",
+      "delivered_at": "2026-10-10T18:17:32Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-a5f2279330a872e0b5ee5685",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-10T18:24:01Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "artifact_status": "accepted",
+        "execution_status": "complete",
+        "scientific_status": "no_train_source_observations",
+        "successor_authorized": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+          "kernel_id": 138062707,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-source-dependence-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_source_dependence/decision_terminal.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+        "kernel_id": 138062707,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-10T18:17:25Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

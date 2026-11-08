@@ -1,0 +1,2474 @@
+{
+  "allocated_t4_hours": 0.152750479035,
+  "checked_artifact_count": 79,
+  "endpoint_fingerprints": {
+    "optimized": {
+      "diagnostic-0/foreach_ema": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+      "diagnostic-0/optimized": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd"
+    },
+    "original": {
+      "diagnostic-0/foreach_optimizer": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+      "diagnostic-0/native": "b6816b809ad4c4d557bbc2e19ef2157b676580266b6601548209e7da070b4308",
+      "diagnostic-0/prepared": "dce3edb06a5ca005a5c4589ae96baf3ed16c4b4215be512f8b6b9f6bf5bcfc6c"
+    }
+  },
+  "kind": "attribution",
+  "native_preflight": {
+    "optimized": "ACCEPTED",
+    "original": "ACCEPTED"
+  },
+  "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+  "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e",
+  "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+  "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+  "status": "SHORT_PROBE_VERIFIED",
+  "summary": {
+    "factor_comparisons": [
+      {
+        "changed_factor": "prepared",
+        "first_divergence": {
+          "stage": "loss",
+          "step": 4
+        },
+        "original_factor": "native",
+        "steps": [
+          {
+            "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 1
+          },
+          {
+            "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 2
+          },
+          {
+            "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 3
+          },
+          {
+            "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 4
+          },
+          {
+            "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 5
+          },
+          {
+            "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 6
+          },
+          {
+            "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 7
+          },
+          {
+            "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 8
+          },
+          {
+            "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 9
+          },
+          {
+            "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 10
+          }
+        ]
+      },
+      {
+        "changed_factor": "foreach_optimizer",
+        "first_divergence": {
+          "stage": "model",
+          "step": 1
+        },
+        "original_factor": "prepared",
+        "steps": [
+          {
+            "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 5.820766091346741e-11,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.10.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.2.attention.attention_to_pair.weight"
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 1
+          },
+          {
+            "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 1.4901161193847656e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.1.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 1.862645149230957e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 4.76837158203125e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 2
+          },
+          {
+            "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.2351741790771484e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.1.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 2.7939677238464355e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 3.5762786865234375e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 3
+          },
+          {
+            "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.1.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 3.2782554626464844e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 8.940696716308594e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 4
+          },
+          {
+            "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 1.4901161193847656e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.0.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 3.5762786865234375e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 5
+          },
+          {
+            "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.0.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 5.587935447692871e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 3.5762786865234375e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 1.4901161193847656e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 6
+          },
+          {
+            "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 3.725290298461914e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.0.attention.qkv.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 5.587935447692871e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 7
+          },
+          {
+            "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 7.450580596923828e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.2.attention.pair_to_node.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1175870895385742e-08,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 5.960464477539063e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 8
+          },
+          {
+            "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 7.450580596923828e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.2.attention.pair_to_node.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 1.0244548320770264e-08,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.384185791015625e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 9
+          },
+          {
+            "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+            "stages": {
+              "clipped_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 2.9802322387695312e-08,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "ema": {
+                "equal": false,
+                "maximum_absolute_delta": 7.450580596923828e-09,
+                "tensor_count": 265,
+                "worst_leaf": "state/blocks.2.attention.pair_to_node.weight"
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/in_degree_encoder.weight"
+              },
+              "optimizer_moments": {
+                "equal": false,
+                "maximum_absolute_delta": 8.847564458847046e-09,
+                "tensor_count": 795,
+                "worst_leaf": "state/263/exp_avg"
+              },
+              "prediction": {
+                "equal": false,
+                "maximum_absolute_delta": 2.086162567138672e-07,
+                "tensor_count": 1,
+                "worst_leaf": "state"
+              },
+              "raw_gradients": {
+                "equal": false,
+                "maximum_absolute_delta": 1.1920928955078125e-07,
+                "tensor_count": 265,
+                "worst_leaf": "state/readout.3.weight"
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 10
+          }
+        ]
+      },
+      {
+        "changed_factor": "foreach_ema",
+        "first_divergence": null,
+        "original_factor": "foreach_optimizer",
+        "steps": [
+          {
+            "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 1
+          },
+          {
+            "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 2
+          },
+          {
+            "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 3
+          },
+          {
+            "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 4
+          },
+          {
+            "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 5
+          },
+          {
+            "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 6
+          },
+          {
+            "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 7
+          },
+          {
+            "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 8
+          },
+          {
+            "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 9
+          },
+          {
+            "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 10
+          }
+        ]
+      },
+      {
+        "changed_factor": "optimized",
+        "first_divergence": null,
+        "original_factor": "foreach_ema",
+        "steps": [
+          {
+            "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 1
+          },
+          {
+            "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 2
+          },
+          {
+            "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 3
+          },
+          {
+            "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 4
+          },
+          {
+            "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 5
+          },
+          {
+            "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 6
+          },
+          {
+            "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 7
+          },
+          {
+            "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 8
+          },
+          {
+            "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 9
+          },
+          {
+            "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+            "stages": {
+              "clipped_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "ema": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "loss": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "model": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "optimizer_moments": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 795,
+                "worst_leaf": null
+              },
+              "prediction": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 1,
+                "worst_leaf": null
+              },
+              "raw_gradients": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 265,
+                "worst_leaf": null
+              },
+              "rng_before": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              },
+              "rng_state": {
+                "equal": true,
+                "maximum_absolute_delta": 0.0,
+                "tensor_count": 2,
+                "worst_leaf": null
+              }
+            },
+            "step": 10
+          }
+        ]
+      }
+    ],
+    "format": "molgap-gptrans-probe-summary-v1",
+    "kind": "attribution",
+    "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "scientific_training_executed": false,
+    "scope": "ten disposable updates; later differences may propagate from earlier changed state; not a long-run MAE attribution",
+    "status": "COMPLETE"
+  },
+  "verification_record_recovery": "inspect_saved_probes returned successfully; atomic publication then failed with ENOSPC; fields recovered from the same sealed outputs",
+  "verifier_sha256": "0da07aa12d957e468520976e566dcc79b089707492cf30a91069b503038dd12b"
+}

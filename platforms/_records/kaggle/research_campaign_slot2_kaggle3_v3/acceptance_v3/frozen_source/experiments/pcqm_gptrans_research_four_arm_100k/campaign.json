@@ -1,0 +1,86 @@
+{
+  "format": "molgap-four-arm-campaign-plan-v1",
+  "authority": {
+    "path": "experiments/pcqm_gptrans_research_four_arm_100k/authority.json",
+    "sha256": "fb9d7497b840d62da12aa69325aac65e7f4d3fbfcede28b8f418005c235c9912"
+  },
+  "audit": {
+    "path": "experiments/pcqm_gptrans_research_four_arm_100k/audit_action.json",
+    "sha256": "27de8515c3486290a7c00ca5c17cfa8d4a962dd1589d131e0bb8893a2b3833ba"
+  },
+  "arms": {
+    "reference": {
+      "contract": {
+        "path": "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
+        "sha256": "d3e819f9d0359928185fc20f4802ea31c0683ae056f13f5782245d2c2659ca96"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_aggregate_shared_ema999_initial.pt",
+        "sha256": "691e0a7f42c7ed91301a6ba4e304456b7a4edda58283a6a861ceb500e142decf"
+      },
+      "parameters": 5880961,
+      "reference_arm_id": "reference",
+      "mode": "degree_aggregate_shared_ema999"
+    },
+    "cycle": {
+      "contract": {
+        "path": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
+        "sha256": "2d59c88f6697a308b5605983940a4596609079bf15e0c8cdf028ca2908ea4ceb"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_aggregate_cycle_ema999_initial.pt",
+        "sha256": "79b80a13a0e519c05c32330ba09c9842f92f7536832dd9792ec22b7eb6f45dd3"
+      },
+      "parameters": 5881057,
+      "reference_arm_id": "reference",
+      "mode": "degree_aggregate_cycle_ema999"
+    },
+    "carry": {
+      "contract": {
+        "path": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+        "sha256": "56b216be1a29285345fda3fb27d92450c00eecb5e6545986d63e47d090b414cf"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_aggregate_carry_ema999_initial.pt",
+        "sha256": "9d25e8240863f56fb71c02a50b4f6834d142b16b1238420d4c21feda5f6e8bfe"
+      },
+      "parameters": 5880972,
+      "reference_arm_id": "reference",
+      "mode": "degree_aggregate_carry_ema999"
+    },
+    "correspondence": {
+      "contract": {
+        "path": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
+        "sha256": "130233087b03646de35ca8eb1cc15cf18b1923cdb8ce03148108069c37b466ef"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_aggregate_correspondence_ema999_initial.pt",
+        "sha256": "aab357d3141fb865cdf18b47370d5f12abca02af1ce104e7a3dee8786a6b0563"
+      },
+      "parameters": 5890241,
+      "reference_arm_id": "reference",
+      "mode": "degree_aggregate_correspondence_ema999"
+    }
+  },
+  "slots": [
+    {
+      "path": "experiments/pcqm_gptrans_research_four_arm_100k/slot1/scientific_spec.json",
+      "sha256": "08cdb74e64ef3e3e2ffe02b9eb415718508493dca3873492fda1329cac268060"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/scientific_spec.json",
+      "sha256": "b5a038d39f6fcbafe3fc3f8bd8bcfde24cbec14a5525f69e549ccc6ef950bb15"
+    }
+  ],
+  "cpu_acceptance": {
+    "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+    "sha256": "19f001247727a304bb9deda8be056a41d339663b07295043a2868bb1004a8782"
+  },
+  "reference_status": "PLANNED_NOT_ACCEPTED",
+  "terminal_order": [
+    "reference",
+    "cycle",
+    "carry",
+    "correspondence"
+  ]
+}

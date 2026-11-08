@@ -1,0 +1,125 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 38.516053078
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 45.017609325999985
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-0",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 126.06837627499999
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 104.55871316700001
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-1",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 126.07657579799996
+        },
+        {
+          "arm_id": "optimized",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 103.066625875
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-2",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 127.56801105299996
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 104.05759239899999
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-profile",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 51.02522838499999
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 43.021323148999954
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "original": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 469.2542445889999,
+      "exit_reason": "diagnostic-profile_worker_exit_0"
+    },
+    "optimized": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 399.72186391599996,
+      "exit_reason": "diagnostic-profile_worker_exit_0"
+    }
+  },
+  "pair_process_wall_seconds": 475.76841204000004,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "diagnostic_summary": {
+    "path": "diagnostic_summary.json",
+    "sha256": "92244ce648a9a36481994a7d74aea59758e1317d92ed0ecd9d7fb2dd4169a14f"
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 38.516053078
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 45.017609325999985
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-0",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 126.06837627499999
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 104.55871316700001
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-1",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 126.07657579799996
+        },
+        {
+          "arm_id": "optimized",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 103.066625875
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-2",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 127.56801105299996
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 104.05759239899999
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "diagnostic-profile",
+      "workers": [
+        {
+          "arm_id": "original",
+          "device": 0,
+          "returncode": 0,
+          "worker_wall_seconds": 51.02522838499999
+        },
+        {
+          "arm_id": "optimized",
+          "device": 1,
+          "returncode": 0,
+          "worker_wall_seconds": 43.021323148999954
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "original": {
+      "device": 0,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 469.2542445889999,
+      "exit_reason": "diagnostic-profile_worker_exit_0"
+    },
+    "optimized": {
+      "device": 1,
+      "training_started": false,
+      "resumed_from_checkpoint": false,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 399.72186391599996,
+      "exit_reason": "diagnostic-profile_worker_exit_0"
+    }
+  },
+  "pair_process_wall_seconds": 475.76841204000004,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "diagnostic_summary": {
+    "path": "diagnostic_summary.json",
+    "sha256": "92244ce648a9a36481994a7d74aea59758e1317d92ed0ecd9d7fb2dd4169a14f"
+  },
+  "profile_artifacts": {
+    "original": [
+      {
+        "path": "preflight.json",
+        "sha256": "7a0223f7aef98a4b5f1c4e1679e199e64644c3ef89488d66e19726e5ab0f30d8"
+      },
+      {
+        "path": "profile_qualification/plain-state.pt",
+        "sha256": "a8e83ca98b3ee9ce6d77978191043ffef6ebc180e586a6f186de085197278069"
+      },
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "7b9a446497acc0464b64c3101b57f6a2228fd3d2fb4096d3cb2d65075d4d8175"
+      },
+      {
+        "path": "profile_qualification/profiled-state.pt",
+        "sha256": "865f0ad09bab48f4a13bca29b91c52cc0272157dd6ccbfd99486941fba6aaad5"
+      },
+      {
+        "path": "profile_qualification/state_proof.json",
+        "sha256": "4fe95d45a22857a2c76a720bdc3dad2a0450e0dedb1b21bd153c8be4a06822f7"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "f597f11844be5fa64c0eec4d0fecb10571c5d40fe4fab852205974b5637353c4"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "4791c13997f507fb5639e73a1901bc9051288ab61533b1c51108939798a09edc"
+      },
+      {
+        "path": "runtime_manifest.json",
+        "sha256": "99aae33901fc28a30b04aac8dbceda6d0009e458b7fdab8e79baf130a80904f1"
+      }
+    ],
+    "optimized": [
+      {
+        "path": "fill-enabled.pt",
+        "sha256": "e28d7631948723f55ea03cc26f81d1445cf22b531d1abe82b6984b888c967e13"
+      },
+      {
+        "path": "profile_qualification/profile.json",
+        "sha256": "a7759257340b426b77d3073cdd5cbd3fc44415e9a46adfea7f7d1d8318ffdbb1"
+      },
+      {
+        "path": "profile_qualification/trace.json",
+        "sha256": "ad6b5c31c2c71eacb7b2a5a85b9197e2689d87a3bfd0dc63971b904e8cdf8970"
+      },
+      {
+        "path": "repeat-a.pt",
+        "sha256": "c08e177d0bd1e4e3fd7033f8f66f6e1372121d0f2ce33c1f7e53a217905566a4"
+      },
+      {
+        "path": "repeat-b.pt",
+        "sha256": "71e153e65fd0b48c5c0b5de6c18047743096f5f1e0568ef7514b60c225380c76"
+      },
+      {
+        "path": "resumed-first.pt",
+        "sha256": "e9c8551c81176e2ca05c4a2fd811a0fc309927d2e2e4ca1ccdff798a7ef82554"
+      },
+      {
+        "path": "resumed.pt",
+        "sha256": "6bd6f38b776aa9a934935f7dfc245645ce21b058c0068b591dd7f17f68960ce6"
+      },
+      {
+        "path": "runtime_certificate.json",
+        "sha256": "102abdbb2d08018cbcf1f6512b4f75f7e56e72ee81d2bd41b78f05f2ae0525b2"
+      },
+      {
+        "path": "runtime_provenance.json",
+        "sha256": "ec6cc14ba37e2b1c4601536ea0c7510bed8e34cb1211cb64b000df946cb438c2"
+      }
+    ]
+  },
+  "diagnostic": {
+    "allocated_t4_hours_ceiling": 0.6666666666666666,
+    "attribution_steps": 10,
+    "cpu_threads": 1,
+    "development_role_read": false,
+    "format": "molgap-gptrans-execution-probe-v1",
+    "kind": "timing",
+    "measured_steps": 500,
+    "official_validation_role_read": false,
+    "physical_batch": 128,
+    "profile_steps": 16,
+    "scientific_training_executed": false,
+    "seed": 42,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "timing_repeats": 3,
+    "wall_ceiling_seconds": 1200,
+    "warmup_steps": 120
+  },
+  "scientific_training_executed": false,
+  "diagnostic_artifacts": {
+    "original": [
+      {
+        "path": "diagnostic-0/output_manifest.json",
+        "sha256": "c92e204609433283dc2d786798d11ea1aa1bb0a38c11472f8ba3c6b09fe65ddc"
+      },
+      {
+        "path": "diagnostic-0/cursor.json",
+        "sha256": "f2799b953e567d7df987b18bc9f664be8f3efa0a817ff99b3f5bee67817ec0d8"
+      },
+      {
+        "path": "diagnostic-0/native-last.pt",
+        "sha256": "6d6bef8c2e64e39cc7e1a82d17f9a34dcc405e61fd2d00fd61ab8c94d8fc22d2"
+      },
+      {
+        "path": "diagnostic-0/warmup_checkpoint.pt",
+        "sha256": "0408dcb8b5025c56ebf7f1631611017e3fe8209e4729cabb5c18f20f06842649"
+      },
+      {
+        "path": "diagnostic-1/output_manifest.json",
+        "sha256": "4f2e5acabdb76950fa0c1f2ac59e8bd07304959be2091f5509ee4d1aa669c78d"
+      },
+      {
+        "path": "diagnostic-1/cursor.json",
+        "sha256": "f2799b953e567d7df987b18bc9f664be8f3efa0a817ff99b3f5bee67817ec0d8"
+      },
+      {
+        "path": "diagnostic-1/native-last.pt",
+        "sha256": "6d6bef8c2e64e39cc7e1a82d17f9a34dcc405e61fd2d00fd61ab8c94d8fc22d2"
+      },
+      {
+        "path": "diagnostic-1/warmup_checkpoint.pt",
+        "sha256": "0408dcb8b5025c56ebf7f1631611017e3fe8209e4729cabb5c18f20f06842649"
+      },
+      {
+        "path": "diagnostic-2/output_manifest.json",
+        "sha256": "e1d96c351a242adf0695c36294a715bb2246c5d3c0b9a0739b74442c4ee31191"
+      },
+      {
+        "path": "diagnostic-2/cursor.json",
+        "sha256": "f2799b953e567d7df987b18bc9f664be8f3efa0a817ff99b3f5bee67817ec0d8"
+      },
+      {
+        "path": "diagnostic-2/native-last.pt",
+        "sha256": "6d6bef8c2e64e39cc7e1a82d17f9a34dcc405e61fd2d00fd61ab8c94d8fc22d2"
+      },
+      {
+        "path": "diagnostic-2/warmup_checkpoint.pt",
+        "sha256": "0408dcb8b5025c56ebf7f1631611017e3fe8209e4729cabb5c18f20f06842649"
+      },
+      {
+        "path": "diagnostic-profile/output_manifest.json",
+        "sha256": "bd0d0335e61dfffd563bfbdedf31058217bf18405851a41e3a1d4e515dfec3db"
+      },
+      {
+        "path": "diagnostic-profile/cursor.json",
+        "sha256": "71fd34050d2a2b7e3af9681e6fe979ad8895458b28d763cae6b465b1f875cb9f"
+      },
+      {
+        "path": "diagnostic-profile/native-last.pt",
+        "sha256": "408be77aec7349ab9769d2ba2565c7092c2fa0a72c4afa4429dcd61afa85b0b8"
+      },
+      {
+        "path": "diagnostic-profile/trace.json",
+        "sha256": "ebfe2fc23175637ac2a333a8dfd5c8ae68faf1a61a27845e0c93f879f45156d2"
+      },
+      {
+        "path": "diagnostic-profile/warmup_checkpoint.pt",
+        "sha256": "0408dcb8b5025c56ebf7f1631611017e3fe8209e4729cabb5c18f20f06842649"
+      }
+    ],
+    "optimized": [
+      {
+        "path": "diagnostic-0/output_manifest.json",
+        "sha256": "79e9c40ec394fb121e21049290dc7d15c4a93a41c703adaf9a738557e4cee76e"
+      },
+      {
+        "path": "diagnostic-0/cursor.json",
+        "sha256": "37c103a092c948a0955829e40eccec631396faf8732acc10275aef3658f2d784"
+      },
+      {
+        "path": "diagnostic-0/optimized-last.pt",
+        "sha256": "cbfc12a1d01b7dbee48c423ab49e399b5cdfb83abded3e475a8557aadf093fa5"
+      },
+      {
+        "path": "diagnostic-0/warmup_checkpoint.pt",
+        "sha256": "d02b07c2cff54c40a2752e6c3b2fd3dc46ba06d6dd4200daec79ff9927e2f07f"
+      },
+      {
+        "path": "diagnostic-1/output_manifest.json",
+        "sha256": "af3fe9e7ba4e71d1e6ccbbbbae14528be9de7d46bec149b55f89c9a055c55585"
+      },
+      {
+        "path": "diagnostic-1/cursor.json",
+        "sha256": "37c103a092c948a0955829e40eccec631396faf8732acc10275aef3658f2d784"
+      },
+      {
+        "path": "diagnostic-1/optimized-last.pt",
+        "sha256": "cbfc12a1d01b7dbee48c423ab49e399b5cdfb83abded3e475a8557aadf093fa5"
+      },
+      {
+        "path": "diagnostic-1/warmup_checkpoint.pt",
+        "sha256": "d02b07c2cff54c40a2752e6c3b2fd3dc46ba06d6dd4200daec79ff9927e2f07f"
+      },
+      {
+        "path": "diagnostic-2/output_manifest.json",
+        "sha256": "4ecafe82eb5c6d4838dcf7e5dd66d3019be5418974c6db810307c77a9930d054"
+      },
+      {
+        "path": "diagnostic-2/cursor.json",
+        "sha256": "37c103a092c948a0955829e40eccec631396faf8732acc10275aef3658f2d784"
+      },
+      {
+        "path": "diagnostic-2/optimized-last.pt",
+        "sha256": "cbfc12a1d01b7dbee48c423ab49e399b5cdfb83abded3e475a8557aadf093fa5"
+      },
+      {
+        "path": "diagnostic-2/warmup_checkpoint.pt",
+        "sha256": "d02b07c2cff54c40a2752e6c3b2fd3dc46ba06d6dd4200daec79ff9927e2f07f"
+      },
+      {
+        "path": "diagnostic-profile/output_manifest.json",
+        "sha256": "773929531b67fd6e96e76339567e4fb7af45df5bd04d03375d46fa21aa16ae4f"
+      },
+      {
+        "path": "diagnostic-profile/cursor.json",
+        "sha256": "9e27ad7364228ecaac7d63f49bc3068169a282c8f318fa91b73a4bc0d39b9cc5"
+      },
+      {
+        "path": "diagnostic-profile/optimized-last.pt",
+        "sha256": "837840ae24e2bad8d573b10667cef238c0d3c3875fc630e97119f0f7db907886"
+      },
+      {
+        "path": "diagnostic-profile/trace.json",
+        "sha256": "3105a5c9a2db0455e028937f633354e0cc371412d0c239619629028b6ce41749"
+      },
+      {
+        "path": "diagnostic-profile/warmup_checkpoint.pt",
+        "sha256": "d02b07c2cff54c40a2752e6c3b2fd3dc46ba06d6dd4200daec79ff9927e2f07f"
+      }
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "first_optimizer_update": {
+    "largest_model_differences": [
+      {
+        "different_elements": 1,
+        "foreach_value": 0.26580867171287537,
+        "leaf": "blocks.2.attention.attention_to_pair.weight",
+        "maximum_absolute_delta": 2.9802322387695312e-08,
+        "prepared_value": 0.265808641910553,
+        "worst_flat_index": 35
+      },
+      {
+        "different_elements": 9,
+        "foreach_value": -0.1443093866109848,
+        "leaf": "blocks.0.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 1.4901161193847656e-08,
+        "prepared_value": -0.1443093717098236,
+        "worst_flat_index": 826
+      },
+      {
+        "different_elements": 13,
+        "foreach_value": -0.17294685542583466,
+        "leaf": "blocks.2.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 1.4901161193847656e-08,
+        "prepared_value": -0.17294684052467346,
+        "worst_flat_index": 6621
+      },
+      {
+        "different_elements": 13,
+        "foreach_value": -0.12668351829051971,
+        "leaf": "blocks.8.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 1.4901161193847656e-08,
+        "prepared_value": -0.12668350338935852,
+        "worst_flat_index": 1131
+      },
+      {
+        "different_elements": 23,
+        "foreach_value": 0.1703876256942749,
+        "leaf": "blocks.10.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 1.4901161193847656e-08,
+        "prepared_value": 0.1703876107931137,
+        "worst_flat_index": 2796
+      },
+      {
+        "different_elements": 7,
+        "foreach_value": -0.11859714984893799,
+        "leaf": "atom_encoder.atom_embedding_list.0.weight",
+        "maximum_absolute_delta": 7.450580596923828e-09,
+        "prepared_value": -0.11859714239835739,
+        "worst_flat_index": 3625
+      },
+      {
+        "different_elements": 10,
+        "foreach_value": -0.09828666597604752,
+        "leaf": "blocks.1.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 7.450580596923828e-09,
+        "prepared_value": -0.09828665852546692,
+        "worst_flat_index": 3285
+      },
+      {
+        "different_elements": 242,
+        "foreach_value": -0.06253473460674286,
+        "leaf": "blocks.2.ffn.0.weight",
+        "maximum_absolute_delta": 7.450580596923828e-09,
+        "prepared_value": -0.06253474205732346,
+        "worst_flat_index": 62950
+      },
+      {
+        "different_elements": 213,
+        "foreach_value": 0.06256666779518127,
+        "leaf": "blocks.3.attention.output.weight",
+        "maximum_absolute_delta": 7.450580596923828e-09,
+        "prepared_value": 0.06256667524576187,
+        "worst_flat_index": 40844
+      },
+      {
+        "different_elements": 11,
+        "foreach_value": -0.10972007364034653,
+        "leaf": "blocks.4.attention.pair_to_node.weight",
+        "maximum_absolute_delta": 7.450580596923828e-09,
+        "prepared_value": -0.10972006618976593,
+        "worst_flat_index": 1726
+      }
+    ],
+    "stages": {
+      "clipped_gradients": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 265,
+        "worst_leaf": null
+      },
+      "gradient_norm": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 1,
+        "worst_leaf": null
+      },
+      "loss": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 1,
+        "worst_leaf": null
+      },
+      "prediction": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 1,
+        "worst_leaf": null
+      },
+      "raw_gradients": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 265,
+        "worst_leaf": null
+      },
+      "scheduler": {
+        "equal": true,
+        "maximum_absolute_delta": 0.0,
+        "tensor_count": 0,
+        "worst_leaf": null
+      }
+    }
+  },
+  "prepared_step4": {
+    "gradient_norm": {
+      "equal": true,
+      "maximum_absolute_delta": 0.0,
+      "tensor_count": 1,
+      "worst_leaf": null
+    },
+    "loss_delta": {
+      "equal": false,
+      "maximum_absolute_delta": 1.1920928955078125e-07,
+      "tensor_count": 1,
+      "worst_leaf": "state"
+    },
+    "native_loss": 0.8537745475769043,
+    "prepared_loss": 0.8537746667861938,
+    "scheduler": {
+      "equal": true,
+      "maximum_absolute_delta": 0.0,
+      "tensor_count": 0,
+      "worst_leaf": null
+    }
+  },
+  "source_witnesses": {
+    "foreach_optimizer-step-01.pt": "23ded085f14dd5f9914f5d9294c8511e5e332f5c04f255ebd62b9d4613e9e93b",
+    "prepared-step-01.pt": "c67fe0d4daa2784cfe663f324d11db05d8b1ed65f40660ba3e00ac02a90894d8"
+  }
+}

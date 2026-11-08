@@ -1,0 +1,109 @@
+{
+  "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+  "receipt_version": 3,
+  "files": [
+    {
+      "path": "allocation_ledger.json",
+      "sha256": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "carry/allocation_ledger.json",
+      "sha256": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/allocation_ledger.json",
+      "sha256": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "execution_report.json",
+      "sha256": "8ce1401110bc0fb6680fb159d341462bab7b45ed7d265053fdca2ce9cbbbfa05",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/last_checkpoint.pt",
+      "sha256": "796c9008ad37de824f5c6679f1c28d90e0134c37033bfd8127902462a6bc0dd9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/selected_model.pt",
+      "sha256": "ad2794e4fa2021ed600239dc8dd3f4e447c67b57cf5e240b2dc4a2144e489311",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/development_predictions.pt",
+      "sha256": "349c4d6210154514ebb3166d645f8c5853f9479e07a21430654bdd3e5f51c22a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/repeat-a.pt",
+      "sha256": "a19a9ac99517f36b944bb5d1d45cdd59eca6193adaa5698f527d556724b50c8a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/repeat-b.pt",
+      "sha256": "05a1c26c27ad189f84d47ae645483f0d7653ff86a6795a6b52f1f5fb560fc245",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/resumed.pt",
+      "sha256": "f1d8bd8c30c6c79eb806b19a3c092a55a592e3983ab77dd050ea44199a9ed9b9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/resumed-first.pt",
+      "sha256": "2c553531a81fd2286f4e4a220421d4d931950cd468abd64d4257d0be5ec4eefe",
+      "state": "RETAINED"
+    },
+    {
+      "path": "carry/preflight_costs.json",
+      "sha256": "947f5d6f498b7d778e0aa7183b9cef2c5f0f40e747e1180ac68a6d836c485183",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/last_checkpoint.pt",
+      "sha256": "bb04e6b12592a1ec301f3f2ada7020f8aa5b4df8ed7f3633bf3d15cf1bbcfb9d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/selected_model.pt",
+      "sha256": "4ae5af0fbeba5d187c305b11cd55265aa8c9b6e2bd9faf9ee0a036c4206837a7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/development_predictions.pt",
+      "sha256": "d5d8789a058836080481ef801376cfd9f10ce19ca81def5e78d9ecd84761d9f4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/repeat-a.pt",
+      "sha256": "4d5f9340faf020ccabcbc2376b818fe8fe46edf911951e004ba323612b33fdf0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/repeat-b.pt",
+      "sha256": "2794b7bf1ac42d0c2aad8bd0ad113ea8138e4a4fecc0ff0e66bfe1d136640394",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/resumed.pt",
+      "sha256": "9cda96eae6747e28ebcb4f21937f0c460a9baeda35fcb606aff35db370a88908",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/resumed-first.pt",
+      "sha256": "95e15665ec7e5e5badc2eb15ea10810854adb8128e8deafc657c7a803c32724f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "correspondence/preflight_costs.json",
+      "sha256": "8749617071b5a0da7f138fedc3057dfea29cc75f83be950efb228d9a1bed11c5",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

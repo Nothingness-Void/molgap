@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "experiment/optimized/allocation_ledger.json",
+      "sha256": "dbcb6527bb546bd083559747ac4fbe793cdeabf260d6fe5d895fa4cf26fc5204",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/allocation_ledger.json",
+      "sha256": "dbcb6527bb546bd083559747ac4fbe793cdeabf260d6fe5d895fa4cf26fc5204",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/preflight.json",
+      "sha256": "f91516c5826b39691afd66e0ecc529b987874d70c7857bbad452f908c79e459e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/profile_qualification/profile.json",
+      "sha256": "bd05f90cfc43b52670840efb07950029a3c7e386d78c04af86de16bb24e30cc1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/profile_qualification/state_proof.json",
+      "sha256": "4fe95d45a22857a2c76a720bdc3dad2a0450e0dedb1b21bd153c8be4a06822f7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/profile_qualification/trace.json",
+      "sha256": "98cc0b239a896a1329d4b8b950f9ab9dc388a1436fdf10d9358c2c115a7308dd",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/runtime_certificate.json",
+      "sha256": "f4f4102e8679a2354143d9004afe21d5086340f0ba9c8b32a3b3ae7ea8976337",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/runtime_manifest.json",
+      "sha256": "99aae33901fc28a30b04aac8dbceda6d0009e458b7fdab8e79baf130a80904f1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/profile_qualification/profile.json",
+      "sha256": "bd8314eb66530b9660c4149daf697fa3b8e2d4584b6023701540198c0774026e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/profile_qualification/trace.json",
+      "sha256": "376fca57224f523a15039c41af6150acea36ff903c367005524b45af597f9861",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/runtime_certificate.json",
+      "sha256": "169e64dc41dd015884c63e535e65058f63f23d80534a058ab8081bdef12cc061",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/runtime_provenance.json",
+      "sha256": "49c0a7552e8b1c12e711edf560f7d8b695bc3f6551bfd5fb9343b9a8a53e0c60",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/diagnostic-0/output_manifest.json",
+      "sha256": "529274b7b2f7240b8b222621922298f776e181365e490b80d8adee4dccfa4c6c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/diagnostic-0/foreach_optimizer-steps.json",
+      "sha256": "fe4cdf2e0e90038bfa541fcab384c16ae666b271ff1768249312601476a10b54",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/diagnostic-0/native-steps.json",
+      "sha256": "58c599d3088dd58d4f92d7d8b6dc3e7e2b240b84f6405f32a358bbd7be27aceb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/original/diagnostic-0/prepared-steps.json",
+      "sha256": "ab1219e9f4119ccf563a45a73d646e6463407fbc0111522445a19b5995ac6be3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/diagnostic-0/output_manifest.json",
+      "sha256": "bdc33be5a81b4323d65dc021d90aacda13420fd2eebd0dc71bd408391898b5b3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/diagnostic-0/foreach_ema-steps.json",
+      "sha256": "0d5f30937e0e3f085bd50871581f146d36cf2130e7050ee3815feb266009db84",
+      "state": "RETAINED"
+    },
+    {
+      "path": "experiment/optimized/diagnostic-0/optimized-steps.json",
+      "sha256": "fd9bd18fb95ce492c57afd871531b7eaf758e1f21b1488c7315c4a77a9c821c4",
+      "state": "RETAINED"
+    }
+  ],
+  "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+  "platform_version_verified_by_output_api": true,
+  "receipt_version": 1,
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false
+}

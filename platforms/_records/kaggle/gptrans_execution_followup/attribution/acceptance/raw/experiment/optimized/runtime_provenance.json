@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "gptrans-infrastructure-t4-100k",
+    "logical_run_id": "gptrans-infrastructure-t4-100k-s42-v2",
+    "arm_id": "optimized",
+    "arm_identity": "462a730774673687984663a310c9eb43b5b96d5bb0742611bc4abe96d9a1398d",
+    "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+    "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e",
+    "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+    "training_recipe_sha256": "4adec69612423d1ea893cc7922fdbf66c9c142e171dd24859be00364a4fa040e",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "platform_version": null
+  },
+  "recipe_identity": "e7e7848537c84b0c90b723c9ff378e8ea6bebb2f3d71a4f1485d8cc18d288d56",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+    "state_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+    "tensor_count": 265,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "f529ab91151c4facde169e75d8db3c783309829d4b93ccb13a6f9b2cd57504f4",
+  "tuning_identity": "6a82d3555d736219f8b86e21436d2e0f0fa10945c1e3d9a30ecd92a88b1b709a",
+  "accelerator": "Tesla T4"
+}

@@ -1,0 +1,81 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "allocated_T4_device_hours": 14,
+      "wall_hours": 7
+    },
+    "campaign_id": "gptrans-pair-transition",
+    "chain_id": "g1-pair-transition",
+    "decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/submission_v1.json",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "release_identity": "2e2b3aa0c6a44c099d45d327197115911f442a1c3ede451dcf71343d834ec75f",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+      "kernel_id": 137191673,
+      "version": 1
+    },
+    "remote_platform": "kaggle",
+    "run_id": "kaseichou/molgap-gptrans-pair-transition-s42:v1"
+  },
+  "events": {
+    "evt-06ab397380101b855076bb84": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-05T17:55:44Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-05T17:50:26Z",
+      "decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md",
+      "delivered_at": "2026-10-05T17:51:19Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-06ab397380101b855076bb84",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-05T18:04:05Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "actual_complete_replay_pair": true,
+        "artifact_status": "accepted",
+        "comparison_class": "STRICT_CAUSAL",
+        "disconnected_final_branch": true,
+        "execution_status": "COMPLETE",
+        "material_gate_passed": false,
+        "scientific_status": "INCONCLUSIVE",
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+          "kernel_id": 137191673,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "kaseichou/molgap-gptrans-pair-transition-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+        "kernel_id": 137191673,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-05T17:50:26Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

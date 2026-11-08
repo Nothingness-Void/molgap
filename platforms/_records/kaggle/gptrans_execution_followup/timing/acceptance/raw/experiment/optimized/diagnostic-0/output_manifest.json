@@ -1,0 +1,84 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "optimized",
+    "arm_identity": "462a730774673687984663a310c9eb43b5b96d5bb0742611bc4abe96d9a1398d",
+    "experiment_id": "gptrans-infrastructure-t4-100k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "gptrans-infrastructure-t4-100k-s42-v3",
+    "package_identity": "b38aa68f1ba7c0877587f198ece8303dc9ccca1faa4022b9e34e09318bf94025",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-gptrans-execution-repeat-v1",
+    "source_archive_sha256": "4d4dc2c2b20e873542450bcbde3d6cc3a29f8cd129689dd066f1b42eaf3cf99f",
+    "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+    "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f",
+    "training_recipe_sha256": "4adec69612423d1ea893cc7922fdbf66c9c142e171dd24859be00364a4fa040e"
+  },
+  "cpu_threads": 1,
+  "diagnostic": {
+    "allocated_t4_hours_ceiling": 0.6666666666666666,
+    "attribution_steps": 10,
+    "cpu_threads": 1,
+    "development_role_read": false,
+    "format": "molgap-gptrans-execution-probe-v1",
+    "kind": "timing",
+    "measured_steps": 500,
+    "official_validation_role_read": false,
+    "physical_batch": 128,
+    "profile_steps": 16,
+    "scientific_training_executed": false,
+    "seed": 42,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "timing_repeats": 3,
+    "wall_ceiling_seconds": 1200,
+    "warmup_steps": 120
+  },
+  "files": [
+    {
+      "path": "cursor.json",
+      "sha256": "37c103a092c948a0955829e40eccec631396faf8732acc10275aef3658f2d784"
+    },
+    {
+      "path": "optimized-last.pt",
+      "sha256": "cbfc12a1d01b7dbee48c423ab49e399b5cdfb83abded3e475a8557aadf093fa5"
+    },
+    {
+      "path": "warmup_checkpoint.pt",
+      "sha256": "d02b07c2cff54c40a2752e6c3b2fd3dc46ba06d6dd4200daec79ff9927e2f07f"
+    }
+  ],
+  "format": "molgap-gptrans-probe-output-v1",
+  "phase": "diagnostic-0",
+  "physical_device": "1",
+  "runtime": {
+    "cuda": "12.6",
+    "determinism": {
+      "cublas_workspace_config": ":4096:8",
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "float32_matmul_precision": "highest",
+      "precision": "fp32",
+      "seed": 42,
+      "tf32_enabled": false
+    },
+    "device": "Tesla T4",
+    "torch": "2.7.1+cu126"
+  },
+  "status": "COMPLETE",
+  "variants": [
+    {
+      "last_state_fingerprint": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+      "measured_updates": 500,
+      "measured_wall_seconds": 70.558612864,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [],
+      "updates": 620,
+      "variant": "optimized",
+      "warmup_updates": 120
+    }
+  ]
+}

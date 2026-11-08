@@ -208,3 +208,14 @@ platforms/_records/local_infrastructure_audit_*/
 # Compact K1 receipts live with the question; packages and retrieved tensors stay local.
 platforms/_records/kaggle/k1_infrastructure_v1/
 platforms/_records/kaggle/gptrans_infrastructure_v1/
+
+# Local-only scratch: profiler runs, pytest temp trees and review workspaces; never tracked.
+platforms/_records/local/
+
+# Raw profiler traces of the execution follow-up are 50-200 MB each; the receipts cite them by hash.
+platforms/_records/kaggle/gptrans_execution_followup/**/trace.json
+
+# Regenerable GPTrans experiment assets (checkpoints and predictions are already covered by *.pt).
+platforms/_records/kaggle/bottleneck_assets_v1/
+platforms/_records/kaggle/source_dependence_assets_v1/
+platforms/_records/kaggle/triplet_portability_assets_v1/

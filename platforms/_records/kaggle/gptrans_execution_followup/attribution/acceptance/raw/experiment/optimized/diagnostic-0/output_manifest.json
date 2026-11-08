@@ -1,0 +1,320 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "optimized",
+    "arm_identity": "462a730774673687984663a310c9eb43b5b96d5bb0742611bc4abe96d9a1398d",
+    "experiment_id": "gptrans-infrastructure-t4-100k",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "gptrans-infrastructure-t4-100k-s42-v2",
+    "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e",
+    "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+    "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+    "training_recipe_sha256": "4adec69612423d1ea893cc7922fdbf66c9c142e171dd24859be00364a4fa040e"
+  },
+  "cpu_threads": 1,
+  "diagnostic": {
+    "allocated_t4_hours_ceiling": 0.6666666666666666,
+    "attribution_steps": 10,
+    "cpu_threads": 1,
+    "development_role_read": false,
+    "format": "molgap-gptrans-execution-probe-v1",
+    "kind": "attribution",
+    "measured_steps": 500,
+    "official_validation_role_read": false,
+    "physical_batch": 128,
+    "profile_steps": 16,
+    "scientific_training_executed": false,
+    "seed": 42,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "timing_repeats": 3,
+    "wall_ceiling_seconds": 1200,
+    "warmup_steps": 120
+  },
+  "files": [
+    {
+      "path": "foreach_ema-last.pt",
+      "sha256": "b6ac5c4a27ac32197aa5d97d1fb45bf96b3b166d3578f8129cd6871fd9dcc818"
+    },
+    {
+      "path": "foreach_ema-step-01.pt",
+      "sha256": "5edbf374d96b79c00fdd76784fae16e8a657081c7e9e7070dc4a657caa356bf6"
+    },
+    {
+      "path": "foreach_ema-step-02.pt",
+      "sha256": "64704d78925b10b7efb1d947507bde64ffcd948328fa0f2692a1adba7a314850"
+    },
+    {
+      "path": "foreach_ema-step-03.pt",
+      "sha256": "bc6305998a77f914363553b0de2e40bdbf2a6ffb75af76adfc278f228234ea36"
+    },
+    {
+      "path": "foreach_ema-step-04.pt",
+      "sha256": "306178fae31a098838bf20f4329d8772d682458bf4f6b1da1fa390f75a271d90"
+    },
+    {
+      "path": "foreach_ema-step-05.pt",
+      "sha256": "2b654cbfd630c739e03647642eedc7c9b8b92a92fa0a15fe35ed1c590a75d20d"
+    },
+    {
+      "path": "foreach_ema-step-06.pt",
+      "sha256": "ee3d10ee400f1aa4ccd57a7427c935e5d79b53c8870657d534f711f79f03ebe0"
+    },
+    {
+      "path": "foreach_ema-step-07.pt",
+      "sha256": "940c4e5224c3ba0d8c1bd23405033b87927e0af52e3c525b9d50e0b1597e435c"
+    },
+    {
+      "path": "foreach_ema-step-08.pt",
+      "sha256": "e6e6261b4e1c277e8d9e6a53243c7e14852a189d03d12faae3c61175431150bf"
+    },
+    {
+      "path": "foreach_ema-step-09.pt",
+      "sha256": "794ff5383bbdd4b1001a07daaf9c0702080b86503df9868a6c2e23723c828a76"
+    },
+    {
+      "path": "foreach_ema-step-10.pt",
+      "sha256": "c9551c5dd220a94a07a9bc266415c755ac7bc353156cb8c78e10b6c685aee176"
+    },
+    {
+      "path": "foreach_ema-steps.json",
+      "sha256": "0d5f30937e0e3f085bd50871581f146d36cf2130e7050ee3815feb266009db84"
+    },
+    {
+      "path": "optimized-last.pt",
+      "sha256": "ee650792a46161757870cc7b83091eee4822e395d72166e141d957d8422bbf25"
+    },
+    {
+      "path": "optimized-step-01.pt",
+      "sha256": "b746d2e6680b64ad4274998cad45f157e744e5d1d4dbcb600020ef3c29a1925a"
+    },
+    {
+      "path": "optimized-step-02.pt",
+      "sha256": "a9dd1198eb807303a6140824084ae9458898e1a364fd05e799e98326e0eabc0d"
+    },
+    {
+      "path": "optimized-step-03.pt",
+      "sha256": "0f06d9640ada4a5b5bec34766410fe153c3000ceef1c2e5e040ddde5df70553f"
+    },
+    {
+      "path": "optimized-step-04.pt",
+      "sha256": "5422829db0ae419dbd1a79f89d5d4eb4481518d5c4392889e437ae38fba4cfc8"
+    },
+    {
+      "path": "optimized-step-05.pt",
+      "sha256": "126e3f3e528f9f8889ded3ec60eeca2190dbc774de5a6bfd57ff06b5bc461e89"
+    },
+    {
+      "path": "optimized-step-06.pt",
+      "sha256": "b4b5dac154fc52b39d0804078ac38def7482f58dcc806b89da784bb13214283a"
+    },
+    {
+      "path": "optimized-step-07.pt",
+      "sha256": "697ba7f21f38f77997687818c727898af473186c405ee1aefdbbbeed25f77bd8"
+    },
+    {
+      "path": "optimized-step-08.pt",
+      "sha256": "ba3282614ba4710f5ac560566a52e33ed31340f97470792ff702a4a53c86a9f5"
+    },
+    {
+      "path": "optimized-step-09.pt",
+      "sha256": "5b1b50bbb5029fe8b83d2b002dda2186e4ef76375d18e2fa0c8654484813f6d7"
+    },
+    {
+      "path": "optimized-step-10.pt",
+      "sha256": "8c6017eaaad275ef5f9a5524bb2e8470b18940ce533ae23688e4f7f6a32bb1f1"
+    },
+    {
+      "path": "optimized-steps.json",
+      "sha256": "fd9bd18fb95ce492c57afd871531b7eaf758e1f21b1488c7315c4a77a9c821c4"
+    }
+  ],
+  "format": "molgap-gptrans-probe-output-v1",
+  "phase": "diagnostic-0",
+  "physical_device": "1",
+  "runtime": {
+    "cuda": "12.6",
+    "determinism": {
+      "cublas_workspace_config": ":4096:8",
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "float32_matmul_precision": "highest",
+      "precision": "fp32",
+      "seed": 42,
+      "tf32_enabled": false
+    },
+    "device": "Tesla T4",
+    "torch": "2.7.1+cu126"
+  },
+  "status": "COMPLETE",
+  "variants": [
+    {
+      "last_state_fingerprint": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+      "measured_updates": 10,
+      "measured_wall_seconds": null,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [
+        {
+          "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+          "path": "foreach_ema-step-01.pt",
+          "sha256": "5edbf374d96b79c00fdd76784fae16e8a657081c7e9e7070dc4a657caa356bf6",
+          "state_fingerprint": "e244a3e97287a2868f21d6966ccca5489b1995cd3f2889ef6734d7c6a4b15c85",
+          "step": 1
+        },
+        {
+          "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+          "path": "foreach_ema-step-02.pt",
+          "sha256": "64704d78925b10b7efb1d947507bde64ffcd948328fa0f2692a1adba7a314850",
+          "state_fingerprint": "26459e8630785a72c7b609fea060ec50d757f5c614a704e895bf29343bf8e527",
+          "step": 2
+        },
+        {
+          "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+          "path": "foreach_ema-step-03.pt",
+          "sha256": "bc6305998a77f914363553b0de2e40bdbf2a6ffb75af76adfc278f228234ea36",
+          "state_fingerprint": "4d9e1f51f80590ab436449bdefb5611fdde9fa38b44366b77cca753173e601b9",
+          "step": 3
+        },
+        {
+          "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+          "path": "foreach_ema-step-04.pt",
+          "sha256": "306178fae31a098838bf20f4329d8772d682458bf4f6b1da1fa390f75a271d90",
+          "state_fingerprint": "ddab3e3f7b05b637d9650e6358f06f1bfee756b1b86d5f292b49d0c072f011f4",
+          "step": 4
+        },
+        {
+          "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+          "path": "foreach_ema-step-05.pt",
+          "sha256": "2b654cbfd630c739e03647642eedc7c9b8b92a92fa0a15fe35ed1c590a75d20d",
+          "state_fingerprint": "609c758e148f63565c474bd4dfb559208d9f63785df7a4e66ed35571970abec9",
+          "step": 5
+        },
+        {
+          "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+          "path": "foreach_ema-step-06.pt",
+          "sha256": "ee3d10ee400f1aa4ccd57a7427c935e5d79b53c8870657d534f711f79f03ebe0",
+          "state_fingerprint": "9009fd05a778dd9d49bae3f0c8573a12d568a12453c0036e830a9a643b088fd3",
+          "step": 6
+        },
+        {
+          "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+          "path": "foreach_ema-step-07.pt",
+          "sha256": "940c4e5224c3ba0d8c1bd23405033b87927e0af52e3c525b9d50e0b1597e435c",
+          "state_fingerprint": "29aed08ecd4f363c892065a3c652cf57f9229c29e1e58041b5319a55581c240f",
+          "step": 7
+        },
+        {
+          "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+          "path": "foreach_ema-step-08.pt",
+          "sha256": "e6e6261b4e1c277e8d9e6a53243c7e14852a189d03d12faae3c61175431150bf",
+          "state_fingerprint": "ac0555be9a7681f3ab33fffff80f50b6372f6e41dc540020d828d0102e42464c",
+          "step": 8
+        },
+        {
+          "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+          "path": "foreach_ema-step-09.pt",
+          "sha256": "794ff5383bbdd4b1001a07daaf9c0702080b86503df9868a6c2e23723c828a76",
+          "state_fingerprint": "574a58292d0e5f27f1a92170c5d29899afc915401097cc8fb9e903f5e5fbe31f",
+          "step": 9
+        },
+        {
+          "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+          "path": "foreach_ema-step-10.pt",
+          "sha256": "c9551c5dd220a94a07a9bc266415c755ac7bc353156cb8c78e10b6c685aee176",
+          "state_fingerprint": "7e8fe5e2f46607c78c4c29fd4a5603006a9674390d40c66008675706d2f60732",
+          "step": 10
+        }
+      ],
+      "updates": 10,
+      "variant": "foreach_ema",
+      "warmup_updates": 0
+    },
+    {
+      "last_state_fingerprint": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+      "measured_updates": 10,
+      "measured_wall_seconds": null,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [
+        {
+          "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+          "path": "optimized-step-01.pt",
+          "sha256": "b746d2e6680b64ad4274998cad45f157e744e5d1d4dbcb600020ef3c29a1925a",
+          "state_fingerprint": "eb79008dc2c9f57cce11652e20b06013c7935fa24398425c0952da6356af1bd9",
+          "step": 1
+        },
+        {
+          "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+          "path": "optimized-step-02.pt",
+          "sha256": "a9dd1198eb807303a6140824084ae9458898e1a364fd05e799e98326e0eabc0d",
+          "state_fingerprint": "1a31dc6401f923e33b8c9bfcc936ff7e9490ba0ec664422c13dac37fe5b1ab81",
+          "step": 2
+        },
+        {
+          "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+          "path": "optimized-step-03.pt",
+          "sha256": "0f06d9640ada4a5b5bec34766410fe153c3000ceef1c2e5e040ddde5df70553f",
+          "state_fingerprint": "a1cc3213a6461e87c9b367e780cb8e82dbcec541a4ba1339635aa02b3ed8f1fc",
+          "step": 3
+        },
+        {
+          "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+          "path": "optimized-step-04.pt",
+          "sha256": "5422829db0ae419dbd1a79f89d5d4eb4481518d5c4392889e437ae38fba4cfc8",
+          "state_fingerprint": "bd7e9c6256e45f8c7eda1fc9dfada37664ca6037c4b190ba27ace5d3bd917ce8",
+          "step": 4
+        },
+        {
+          "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+          "path": "optimized-step-05.pt",
+          "sha256": "126e3f3e528f9f8889ded3ec60eeca2190dbc774de5a6bfd57ff06b5bc461e89",
+          "state_fingerprint": "40f63348de985f1314c77c42504a15f5508ef47ba3f13699716aed82d6e5f2b2",
+          "step": 5
+        },
+        {
+          "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+          "path": "optimized-step-06.pt",
+          "sha256": "b4b5dac154fc52b39d0804078ac38def7482f58dcc806b89da784bb13214283a",
+          "state_fingerprint": "d667df46a417e3ba4b0ace9806998833b45f0d2f40877ade8565c5424dae6832",
+          "step": 6
+        },
+        {
+          "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+          "path": "optimized-step-07.pt",
+          "sha256": "697ba7f21f38f77997687818c727898af473186c405ee1aefdbbbeed25f77bd8",
+          "state_fingerprint": "63e15b403fd7db1a31beb1398c805045dd745bdea0393f680c46b87a2c61abb0",
+          "step": 7
+        },
+        {
+          "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+          "path": "optimized-step-08.pt",
+          "sha256": "ba3282614ba4710f5ac560566a52e33ed31340f97470792ff702a4a53c86a9f5",
+          "state_fingerprint": "d13dc931c601d9575ef84c07fc2b4feadcae35049606dbf047284431ef886828",
+          "step": 8
+        },
+        {
+          "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+          "path": "optimized-step-09.pt",
+          "sha256": "5b1b50bbb5029fe8b83d2b002dda2186e4ef76375d18e2fa0c8654484813f6d7",
+          "state_fingerprint": "5c3638ae98b5e07a3f33e72c644478496b37cf5b5b4abd5154c38f8572079181",
+          "step": 9
+        },
+        {
+          "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+          "path": "optimized-step-10.pt",
+          "sha256": "8c6017eaaad275ef5f9a5524bb2e8470b18940ce533ae23688e4f7f6a32bb1f1",
+          "state_fingerprint": "1b3ce867fc2b0e9d6fd4dc788463a3b0a9f01f7f9124f9cb6a795661b5e266c9",
+          "step": 10
+        }
+      ],
+      "updates": 10,
+      "variant": "optimized",
+      "warmup_updates": 0
+    }
+  ]
+}

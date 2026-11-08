@@ -1,0 +1,449 @@
+{
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "original",
+    "arm_identity": "62603e472b9cf4501fd5213f9341130f195d98541ee41414aa143d8f11f375d3",
+    "experiment_id": "gptrans-infrastructure-t4-100k",
+    "family_name": "gptrans_t",
+    "family_version": "1",
+    "logical_run_id": "gptrans-infrastructure-t4-100k-s42-v2",
+    "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-gptrans-drift-attribution-v1",
+    "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e",
+    "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+    "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+    "training_recipe_sha256": "9e428cdd761dcc04a5db493ae8a1be827bb6439f0efc80f7a448efca6a61a5a0"
+  },
+  "cpu_threads": 1,
+  "diagnostic": {
+    "allocated_t4_hours_ceiling": 0.6666666666666666,
+    "attribution_steps": 10,
+    "cpu_threads": 1,
+    "development_role_read": false,
+    "format": "molgap-gptrans-execution-probe-v1",
+    "kind": "attribution",
+    "measured_steps": 500,
+    "official_validation_role_read": false,
+    "physical_batch": 128,
+    "profile_steps": 16,
+    "scientific_training_executed": false,
+    "seed": 42,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false,
+    "timing_repeats": 3,
+    "wall_ceiling_seconds": 1200,
+    "warmup_steps": 120
+  },
+  "files": [
+    {
+      "path": "foreach_optimizer-last.pt",
+      "sha256": "389d9dbd35f4f036cbbbf58f3f31cdf4223d37667a4a763eccabaa12e2339d5c"
+    },
+    {
+      "path": "foreach_optimizer-step-01.pt",
+      "sha256": "23ded085f14dd5f9914f5d9294c8511e5e332f5c04f255ebd62b9d4613e9e93b"
+    },
+    {
+      "path": "foreach_optimizer-step-02.pt",
+      "sha256": "9213fea5fe3ec52219ae159f05465f53292b94593fafec6bcef0761d15429dd5"
+    },
+    {
+      "path": "foreach_optimizer-step-03.pt",
+      "sha256": "10bc86d3d81b7022cdac979acbf36e309e386ccb168e87582c0c39b606039931"
+    },
+    {
+      "path": "foreach_optimizer-step-04.pt",
+      "sha256": "f85acd47531557dc2d17653998336af489abc641f794ffc2d524bf5d438c847e"
+    },
+    {
+      "path": "foreach_optimizer-step-05.pt",
+      "sha256": "c2109f9d39a6e4f28c9f4cff8ce493e44c79789060b62def99b8c3f1683c1b9d"
+    },
+    {
+      "path": "foreach_optimizer-step-06.pt",
+      "sha256": "e4e7d41b971f997a0eced8d5ccb37597a9a187ca30f34a4929e6e0f3e684ef55"
+    },
+    {
+      "path": "foreach_optimizer-step-07.pt",
+      "sha256": "8a0ab4a1e9db400ee14673da0b68c4ccc6a0e69be9cf2680e3da9469b6e16c63"
+    },
+    {
+      "path": "foreach_optimizer-step-08.pt",
+      "sha256": "9131757a1725be84729eadef6a8e98ef72f8dc4337bfcd5d61a866a0e16881dd"
+    },
+    {
+      "path": "foreach_optimizer-step-09.pt",
+      "sha256": "125e8491e649ac42a5121b1abbe90546c5cff1b238b98bf843e3744e6e38f0c4"
+    },
+    {
+      "path": "foreach_optimizer-step-10.pt",
+      "sha256": "5761d5a593abf54f145b89ab7a028da017ff0766da78f70bf405f6b2196d8d3b"
+    },
+    {
+      "path": "foreach_optimizer-steps.json",
+      "sha256": "fe4cdf2e0e90038bfa541fcab384c16ae666b271ff1768249312601476a10b54"
+    },
+    {
+      "path": "native-last.pt",
+      "sha256": "17cd3b912122a0dec6c7661468f09e6de9c163796f5e8beab8f543a3f1c549a4"
+    },
+    {
+      "path": "native-step-01.pt",
+      "sha256": "b37dcfb17d09130c3db94be163af66f4e96d5d0d1fe249969fa611715627627e"
+    },
+    {
+      "path": "native-step-02.pt",
+      "sha256": "6dd0753e761aba0b77d6db26ff2e289823406ebfd469ee0ffb9108ac7a8e8eea"
+    },
+    {
+      "path": "native-step-03.pt",
+      "sha256": "7496b45a514d1ffe0371120212efe508b9ef5b4e43b4e78a3b9bc81252c54b22"
+    },
+    {
+      "path": "native-step-04.pt",
+      "sha256": "84d0c19a4962e883525dafcf3850d83dd554075d1988fa933110e9597cff0b34"
+    },
+    {
+      "path": "native-step-05.pt",
+      "sha256": "9c6b099d268f1b51293cd897b48acc612ad62a59e15a0170609a9e08b8250748"
+    },
+    {
+      "path": "native-step-06.pt",
+      "sha256": "2b74cba718085fe5e25fd01f79b22a8c402cd8b43b2c41ff9a3667aac252f833"
+    },
+    {
+      "path": "native-step-07.pt",
+      "sha256": "4e0c79c2403ee4deffa2db097c759eac61d7da66962c786469ef927c1114e501"
+    },
+    {
+      "path": "native-step-08.pt",
+      "sha256": "fb155ba16eb1ca1e8aa3a56e965f7815448452476a67f38d1621c03b5c315452"
+    },
+    {
+      "path": "native-step-09.pt",
+      "sha256": "5b6fe3df4c6f589cb51fc615e46569348dd7ecc55925caf3a9272ddb02cb5f0c"
+    },
+    {
+      "path": "native-step-10.pt",
+      "sha256": "5d5be8cf89ce91f7155764ff4e25d126302e02776dedb41b553e4ce153ac7b58"
+    },
+    {
+      "path": "native-steps.json",
+      "sha256": "58c599d3088dd58d4f92d7d8b6dc3e7e2b240b84f6405f32a358bbd7be27aceb"
+    },
+    {
+      "path": "prepared-last.pt",
+      "sha256": "7efbde0baca67d4fe69dbb46b66ec9d41f155b6d3d6bde0d7afe027b442f547a"
+    },
+    {
+      "path": "prepared-step-01.pt",
+      "sha256": "c67fe0d4daa2784cfe663f324d11db05d8b1ed65f40660ba3e00ac02a90894d8"
+    },
+    {
+      "path": "prepared-step-02.pt",
+      "sha256": "1cd1e89ce273f07e53854c8f39f7ccd5dc5672e6c01b5fdaa2bd989a5f67ff74"
+    },
+    {
+      "path": "prepared-step-03.pt",
+      "sha256": "fee692e516dbecefcd63f65a3f53d4210a9bc82330c660d80c1aad1275adc627"
+    },
+    {
+      "path": "prepared-step-04.pt",
+      "sha256": "7fbeba1509c9189f7b0657348b22fd1783787d920b8ed4c420d896456e2a4188"
+    },
+    {
+      "path": "prepared-step-05.pt",
+      "sha256": "77bef51db9844c00863c7c6bc51748b0feddfb75cee07b98a785f18a165bfed6"
+    },
+    {
+      "path": "prepared-step-06.pt",
+      "sha256": "812257c1a3fd2d9e7369c8e172e20d3ef5e1d13197a903f405784cc1071db623"
+    },
+    {
+      "path": "prepared-step-07.pt",
+      "sha256": "f5c9e7c6ef0053d3d1f2c39752e97701bbd138fa6f227021121d1b5aca818330"
+    },
+    {
+      "path": "prepared-step-08.pt",
+      "sha256": "7d190abdb0bfd0db73c885fa715470b8db5075146190af0af6164986bd20559e"
+    },
+    {
+      "path": "prepared-step-09.pt",
+      "sha256": "e56b8b2e3a6577b01c4d0c9085141741ce327b065fad4370d80c174bc28f1bd6"
+    },
+    {
+      "path": "prepared-step-10.pt",
+      "sha256": "f362db17fb9bf370ff67aeaea046349349e2dc6d06f1064b02cf4d0353192018"
+    },
+    {
+      "path": "prepared-steps.json",
+      "sha256": "ab1219e9f4119ccf563a45a73d646e6463407fbc0111522445a19b5995ac6be3"
+    }
+  ],
+  "format": "molgap-gptrans-probe-output-v1",
+  "phase": "diagnostic-0",
+  "physical_device": "0",
+  "runtime": {
+    "cuda": "12.6",
+    "determinism": {
+      "cublas_workspace_config": ":4096:8",
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "float32_matmul_precision": "highest",
+      "precision": "fp32",
+      "seed": 42,
+      "tf32_enabled": false
+    },
+    "device": "Tesla T4",
+    "torch": "2.7.1+cu126"
+  },
+  "status": "COMPLETE",
+  "variants": [
+    {
+      "last_state_fingerprint": "b6816b809ad4c4d557bbc2e19ef2157b676580266b6601548209e7da070b4308",
+      "measured_updates": 10,
+      "measured_wall_seconds": null,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [
+        {
+          "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+          "path": "native-step-01.pt",
+          "sha256": "b37dcfb17d09130c3db94be163af66f4e96d5d0d1fe249969fa611715627627e",
+          "state_fingerprint": "19aaa3a8662aa49d089c56c44829bc9b6a9fa1d408d35d46267fcec28aef5297",
+          "step": 1
+        },
+        {
+          "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+          "path": "native-step-02.pt",
+          "sha256": "6dd0753e761aba0b77d6db26ff2e289823406ebfd469ee0ffb9108ac7a8e8eea",
+          "state_fingerprint": "3c172677098ea882677296343907c681e1783827edb32ee601f305c3fd9f2d25",
+          "step": 2
+        },
+        {
+          "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+          "path": "native-step-03.pt",
+          "sha256": "7496b45a514d1ffe0371120212efe508b9ef5b4e43b4e78a3b9bc81252c54b22",
+          "state_fingerprint": "342e80a66ffc35b1202393e539b07dd26d9f77ccb96e764067302f948c9a5014",
+          "step": 3
+        },
+        {
+          "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+          "path": "native-step-04.pt",
+          "sha256": "84d0c19a4962e883525dafcf3850d83dd554075d1988fa933110e9597cff0b34",
+          "state_fingerprint": "80cf02f4bc801b39c37f4c41a8b8a34feb17beacd2afc9ab9da79dc717bbb133",
+          "step": 4
+        },
+        {
+          "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+          "path": "native-step-05.pt",
+          "sha256": "9c6b099d268f1b51293cd897b48acc612ad62a59e15a0170609a9e08b8250748",
+          "state_fingerprint": "d69ea69e4bde809268bddbf3133d24b76404f91b04ab5e59202dba3b3a4fb652",
+          "step": 5
+        },
+        {
+          "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+          "path": "native-step-06.pt",
+          "sha256": "2b74cba718085fe5e25fd01f79b22a8c402cd8b43b2c41ff9a3667aac252f833",
+          "state_fingerprint": "6e14fc44cc8c1e38800be35596da3662293d25808ac0f9deb577165bac130b6b",
+          "step": 6
+        },
+        {
+          "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+          "path": "native-step-07.pt",
+          "sha256": "4e0c79c2403ee4deffa2db097c759eac61d7da66962c786469ef927c1114e501",
+          "state_fingerprint": "0fcc82656b0061925a83839725083236ed9dd347f1a416c243ae6ef8b48b6227",
+          "step": 7
+        },
+        {
+          "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+          "path": "native-step-08.pt",
+          "sha256": "fb155ba16eb1ca1e8aa3a56e965f7815448452476a67f38d1621c03b5c315452",
+          "state_fingerprint": "4d073a4c62ad7ce7850a7c5d8d8dfd18e54fad9c66459750b093eb1f54c3b9e5",
+          "step": 8
+        },
+        {
+          "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+          "path": "native-step-09.pt",
+          "sha256": "5b6fe3df4c6f589cb51fc615e46569348dd7ecc55925caf3a9272ddb02cb5f0c",
+          "state_fingerprint": "541ed52856e5f55f29e995dd587f76f3b193a6e97687886cedf9c7b8b6237097",
+          "step": 9
+        },
+        {
+          "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+          "path": "native-step-10.pt",
+          "sha256": "5d5be8cf89ce91f7155764ff4e25d126302e02776dedb41b553e4ce153ac7b58",
+          "state_fingerprint": "8aeb8841b5fa8c5944ec3dca5718d66d0f48145ff116b096733ff45f41f81383",
+          "step": 10
+        }
+      ],
+      "updates": 10,
+      "variant": "native",
+      "warmup_updates": 0
+    },
+    {
+      "last_state_fingerprint": "dce3edb06a5ca005a5c4589ae96baf3ed16c4b4215be512f8b6b9f6bf5bcfc6c",
+      "measured_updates": 10,
+      "measured_wall_seconds": null,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [
+        {
+          "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+          "path": "prepared-step-01.pt",
+          "sha256": "c67fe0d4daa2784cfe663f324d11db05d8b1ed65f40660ba3e00ac02a90894d8",
+          "state_fingerprint": "3d391b684fa41e42f76dcbdeef24d9dabcdc07eebc49eeceb6c872b138907646",
+          "step": 1
+        },
+        {
+          "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+          "path": "prepared-step-02.pt",
+          "sha256": "1cd1e89ce273f07e53854c8f39f7ccd5dc5672e6c01b5fdaa2bd989a5f67ff74",
+          "state_fingerprint": "d2ca2a0e50987acb8ed0c2dd1c431056ee211f6f7b0aade871755653cff3878c",
+          "step": 2
+        },
+        {
+          "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+          "path": "prepared-step-03.pt",
+          "sha256": "fee692e516dbecefcd63f65a3f53d4210a9bc82330c660d80c1aad1275adc627",
+          "state_fingerprint": "e24c96baa352bb59138918076d3c0c895dbf008881ba35b89a56090aae1fafcf",
+          "step": 3
+        },
+        {
+          "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+          "path": "prepared-step-04.pt",
+          "sha256": "7fbeba1509c9189f7b0657348b22fd1783787d920b8ed4c420d896456e2a4188",
+          "state_fingerprint": "d4dcc148e2f42ea6a9a098267e7b19e59e312d2f3ad4427e5d2d1bdcea9aa1bc",
+          "step": 4
+        },
+        {
+          "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+          "path": "prepared-step-05.pt",
+          "sha256": "77bef51db9844c00863c7c6bc51748b0feddfb75cee07b98a785f18a165bfed6",
+          "state_fingerprint": "f4e4a474d9d6caa2d9239952844d0c02f2c1d4716ea35c251d861c41424129ef",
+          "step": 5
+        },
+        {
+          "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+          "path": "prepared-step-06.pt",
+          "sha256": "812257c1a3fd2d9e7369c8e172e20d3ef5e1d13197a903f405784cc1071db623",
+          "state_fingerprint": "42be0beb0a5f17dee302da35a360120dc1897581ac6c5761c0244809749d591d",
+          "step": 6
+        },
+        {
+          "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+          "path": "prepared-step-07.pt",
+          "sha256": "f5c9e7c6ef0053d3d1f2c39752e97701bbd138fa6f227021121d1b5aca818330",
+          "state_fingerprint": "43c2189c4f963630ac59fff5b74c2e2debda826aa214bc824415f4ffe402b570",
+          "step": 7
+        },
+        {
+          "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+          "path": "prepared-step-08.pt",
+          "sha256": "7d190abdb0bfd0db73c885fa715470b8db5075146190af0af6164986bd20559e",
+          "state_fingerprint": "7b2a51a31058f858991acc1e78e193bbc275d91089c1f65b3d42a0ba5f0440c8",
+          "step": 8
+        },
+        {
+          "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+          "path": "prepared-step-09.pt",
+          "sha256": "e56b8b2e3a6577b01c4d0c9085141741ce327b065fad4370d80c174bc28f1bd6",
+          "state_fingerprint": "f700c39912c9f52eb243f4e3050a5024e7ceb849086b2bd8285154e86e6135e1",
+          "step": 9
+        },
+        {
+          "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+          "path": "prepared-step-10.pt",
+          "sha256": "f362db17fb9bf370ff67aeaea046349349e2dc6d06f1064b02cf4d0353192018",
+          "state_fingerprint": "04d4d4604f1eeb9cd6100641ed9b15fddf44a9929afd42708561d3e4069a4665",
+          "step": 10
+        }
+      ],
+      "updates": 10,
+      "variant": "prepared",
+      "warmup_updates": 0
+    },
+    {
+      "last_state_fingerprint": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+      "measured_updates": 10,
+      "measured_wall_seconds": null,
+      "measurement_scope": "common one-worker loader through update return, including small cursor receipts; CUDA synchronized endpoints; tensor checkpoint IO excluded",
+      "steps": [
+        {
+          "batch_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+          "path": "foreach_optimizer-step-01.pt",
+          "sha256": "23ded085f14dd5f9914f5d9294c8511e5e332f5c04f255ebd62b9d4613e9e93b",
+          "state_fingerprint": "71b7a070f1736f3320f65ffb171a13379f8e664528b6bfb7ba108ca11325365b",
+          "step": 1
+        },
+        {
+          "batch_sha256": "c75e95d4525eb704371d13f9a0e3acf0e1b7af5bd7ddd55e65469442936e57ec",
+          "path": "foreach_optimizer-step-02.pt",
+          "sha256": "9213fea5fe3ec52219ae159f05465f53292b94593fafec6bcef0761d15429dd5",
+          "state_fingerprint": "a3869007f0af812aa29d5fa6801147ac3aaf65d97af09880e6ff84165c2e9c65",
+          "step": 2
+        },
+        {
+          "batch_sha256": "a92ef66e883f620cee19e3991313f1ba35b086cb14551411a725414ea4ccf07c",
+          "path": "foreach_optimizer-step-03.pt",
+          "sha256": "10bc86d3d81b7022cdac979acbf36e309e386ccb168e87582c0c39b606039931",
+          "state_fingerprint": "915e351d9e82e19d013385ca0b9288213dbe2e42553c97b1dfaacc53dbef4d35",
+          "step": 3
+        },
+        {
+          "batch_sha256": "8d971590da675e9741017628e01f6ff1f9981fc972a0c5b2d20376d49bc96245",
+          "path": "foreach_optimizer-step-04.pt",
+          "sha256": "f85acd47531557dc2d17653998336af489abc641f794ffc2d524bf5d438c847e",
+          "state_fingerprint": "500e091b2e3000c4cc01e19c8e173f693b69d5b5aa6609a41d1bbcb53798ec6b",
+          "step": 4
+        },
+        {
+          "batch_sha256": "981ad79e96ce18b920728ffba630ef0aae717edf25121fd760ab6831678fdf4f",
+          "path": "foreach_optimizer-step-05.pt",
+          "sha256": "c2109f9d39a6e4f28c9f4cff8ce493e44c79789060b62def99b8c3f1683c1b9d",
+          "state_fingerprint": "6b8d526f9f321fe7271984c193ef89043559d3c62114a44aef22d7cc573d71fd",
+          "step": 5
+        },
+        {
+          "batch_sha256": "df8f5c693cafa1e75301317a9bbeb1b77fd1d629ce34b9a6faa674e6cfec81d5",
+          "path": "foreach_optimizer-step-06.pt",
+          "sha256": "e4e7d41b971f997a0eced8d5ccb37597a9a187ca30f34a4929e6e0f3e684ef55",
+          "state_fingerprint": "af62f488f7ff096c2201baee8b4baf5f4f64c529019bf07ebb0e0fa372165218",
+          "step": 6
+        },
+        {
+          "batch_sha256": "359cce93e24ffcd466e48dc21e6f297fef875d8d559749a8110632d0900dabb8",
+          "path": "foreach_optimizer-step-07.pt",
+          "sha256": "8a0ab4a1e9db400ee14673da0b68c4ccc6a0e69be9cf2680e3da9469b6e16c63",
+          "state_fingerprint": "6c010b888264c32f2ec7cf9a177d96646fba816ac33fd8512e2cccaeba65c094",
+          "step": 7
+        },
+        {
+          "batch_sha256": "feba587085745e325bca89319312884ebad012087d3f0ed9b46b63699bc11ba3",
+          "path": "foreach_optimizer-step-08.pt",
+          "sha256": "9131757a1725be84729eadef6a8e98ef72f8dc4337bfcd5d61a866a0e16881dd",
+          "state_fingerprint": "e17c5a3e27435ea2e06afd6e9797c4e7ec84db6cd47142505ebda79449ab6e28",
+          "step": 8
+        },
+        {
+          "batch_sha256": "98e27bccaa2248b7243780c871f2d110792ee0f9cd365ce295936d036ac1538a",
+          "path": "foreach_optimizer-step-09.pt",
+          "sha256": "125e8491e649ac42a5121b1abbe90546c5cff1b238b98bf843e3744e6e38f0c4",
+          "state_fingerprint": "b127fad8b37a96123b266f955fe792ac06f41d661758c9cb2c40dde1abf0e1c7",
+          "step": 9
+        },
+        {
+          "batch_sha256": "cf04d61862ff7b4bb2f7f2d684eae160b5a6e2e4606cd3b3d356785437a572f6",
+          "path": "foreach_optimizer-step-10.pt",
+          "sha256": "5761d5a593abf54f145b89ab7a028da017ff0766da78f70bf405f6b2196d8d3b",
+          "state_fingerprint": "9e557d9ff1be77ff992fa6937a997cdc5448d4f54c6ee1b0ce357e8573bebc78",
+          "step": 10
+        }
+      ],
+      "updates": 10,
+      "variant": "foreach_optimizer",
+      "warmup_updates": 0
+    }
+  ]
+}

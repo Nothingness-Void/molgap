@@ -1,0 +1,103 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "arms": {
+    "carry": {
+      "status": "MECHANICALLY_VERIFIED",
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "observed": {
+        "development_mae_eV": 0.17402802132070064
+      },
+      "artifacts": {
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\last_checkpoint.pt": "796c9008ad37de824f5c6679f1c28d90e0134c37033bfd8127902462a6bc0dd9",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\selected_model.pt": "ad2794e4fa2021ed600239dc8dd3f4e447c67b57cf5e240b2dc4a2144e489311",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\development_predictions.pt": "349c4d6210154514ebb3166d645f8c5853f9479e07a21430654bdd3e5f51c22a",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\canonical_trace.json": "b0e2c22f21e41eaf0a10dded6aa1d7a6fc85e84773c833c01dc8ca87a1fda558",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\canonical_trace.json.context.json": "7fee223357de1c640136007cbf15c1ab06f9c6120fd60ed6c1fb3a4f8622037b",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\training_contract.json": "56b216be1a29285345fda3fb27d92450c00eecb5e6545986d63e47d090b414cf",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\pause_receipt.json": "a8ac3995d29ee9c12d0f6bcab9f3b9dd40235267b7125bfa17f399c0811df026",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\allocation_costs.json": "2f5474e71ccd35f33e768180e90b66fbcf46436b2fd38a49fb573e89b55ecd5e",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\invocation_cost_state.json": "ef2c871f52544fd56c5f8bc37695e714ddae759c1c123761137b80df786c8e64",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\runtime_provenance.json": "c6eab06a33c4f644aa569d9d6037647644f8f7e301b75a0fa3452df2e463886a",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\runtime_certificate.json": "a79ea7df62830e74c17efd9a8162ab8cfc3f886ae8581c5999f7f5cf7390b6df",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\resource_qualification.json": "c79688e85caec690bdc4e3c79525cd3e9f9bf8fe0f30b48e26f1d7f573f2b708",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\resumed-first.pt": "2c553531a81fd2286f4e4a220421d4d931950cd468abd64d4257d0be5ec4eefe",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\repeat-a.pt": "a19a9ac99517f36b944bb5d1d45cdd59eca6193adaa5698f527d556724b50c8a",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\repeat-b.pt": "05a1c26c27ad189f84d47ae645483f0d7653ff86a6795a6b52f1f5fb560fc245",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\resumed.pt": "f1d8bd8c30c6c79eb806b19a3c092a55a592e3983ab77dd050ea44199a9ed9b9"
+      }
+    },
+    "correspondence": {
+      "status": "MECHANICALLY_VERIFIED",
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "observed": {
+        "development_mae_eV": 0.17289389541566372
+      },
+      "artifacts": {
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\last_checkpoint.pt": "bb04e6b12592a1ec301f3f2ada7020f8aa5b4df8ed7f3633bf3d15cf1bbcfb9d",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\selected_model.pt": "4ae5af0fbeba5d187c305b11cd55265aa8c9b6e2bd9faf9ee0a036c4206837a7",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\development_predictions.pt": "d5d8789a058836080481ef801376cfd9f10ce19ca81def5e78d9ecd84761d9f4",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\canonical_trace.json": "cb03818223d121c3ea45c74529cbdf7227f409d1c2c22008fa4ca90ad61a8193",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\canonical_trace.json.context.json": "53bc70476df8e86ed6ddff14f35fde0c5607b54d898f996003efc05b4c1f79b7",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\training_contract.json": "130233087b03646de35ca8eb1cc15cf18b1923cdb8ce03148108069c37b466ef",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\pause_receipt.json": "08bd93178dc54892c7a8a7552bc5c90ecd23863ab5a5317fcb945e6372b27c97",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\allocation_costs.json": "c418383e73e9bcb5622ad1344e7d02b01ed715a03b8e711c2d94b962df02e151",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\invocation_cost_state.json": "63b23789653e67e9a10dcd708de832a441c32d8451a683cd89b964c1552be7eb",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\runtime_provenance.json": "abc80fa552e6a1172f34d377286b8d7543bcf0753a76bd350935a24fce029117",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\runtime_certificate.json": "185062f3ae1b60f3087012114bab20792faf52ce3e7a87fbd4ef97a7e3cb0cbf",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\resource_qualification.json": "e5a723ce432502be1905ba71714f39e5e2f94d0a48ea254911960f61082fa412",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\resumed-first.pt": "95e15665ec7e5e5badc2eb15ea10810854adb8128e8deafc657c7a803c32724f",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\repeat-a.pt": "4d5f9340faf020ccabcbc2376b818fe8fe46edf911951e004ba323612b33fdf0",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\repeat-b.pt": "2794b7bf1ac42d0c2aad8bd0ad113ea8138e4a4fecc0ff0e66bfe1d136640394",
+        "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\resumed.pt": "9cda96eae6747e28ebcb4f21937f0c460a9baeda35fcb606aff35db370a88908"
+      }
+    }
+  },
+  "full_allocation": {
+    "wall_seconds": 2493.809889985,
+    "allocated_device_seconds": 4987.61977997
+  },
+  "retired_bootstrap_cost": {
+    "wall_seconds": 135.623200676,
+    "allocated_device_seconds": 271.246401352
+  },
+  "artifacts": {
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\source.tar.gz": "ef49815e4fa0f185e4c0c366e513278ab538e0207e479dd3e13aa57c78a3e731",
+    "C:\\Users\\Adminn\\Documents\\molgap\\experiments\\pcqm_gptrans_research_four_arm_100k\\slot2\\launch_receipt_kaggle3_v3.json": "1b1da4e0aa4c2ddd47e35c9a734dedaf88a507361ec174c32c04eb640c622ada",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\allocation_ledger.json": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\training_contract.json": "130233087b03646de35ca8eb1cc15cf18b1923cdb8ce03148108069c37b466ef",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\SOURCE_ARCHIVE_SHA256.txt": "0e10427c72a43c5430f0436a9ba50e044019349492e4d6967f299d55d0756b01",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\correspondence\\allocation_ledger.json": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\execution_retention.json": "a8222281601c9840d862ba0a6a7585712771188967830b68982320017fdd0c7c",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\execution_report.json": "8ce1401110bc0fb6680fb159d341462bab7b45ed7d265053fdca2ce9cbbbfa05",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\allocation_ledger.json": "73e28886e40db6f27aa940d9093822f4fb24621ccb079d052b0586985d5e051f",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\package_manifest.json": "ae1606e37614b3bc940b5c03b656ff2459e905879eb3c31ac00abbfa12e62066",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\SOURCE_FILES.json": "eb62a214c43d9e24c7694a9a0334e74180175c9a6157ba361776dab6a9e23bfb",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\experiment_spec.json": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\pinned\\experiment\\carry\\training_contract.json": "56b216be1a29285345fda3fb27d92450c00eecb5e6545986d63e47d090b414cf",
+    "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\package\\SOURCE_COMMIT.txt": "8144224a24d6fe985dbc5f25a119529d1f8284eefcf797703f1f6f971aaff3ff"
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "submitted": false,
+  "resume_published": false,
+  "validation_provenance": {
+    "consumer_adapter": "C:\\Users\\Adminn\\Documents\\molgap\\src\\molgap\\gptrans_campaign_segments.py",
+    "consumer_adapter_sha256": "2be3250c403da9c21a4d9e91eb60c8207a01d4630111fb21870ed7d81ea31a08",
+    "scientific_owner": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\frozen_source\\src\\molgap\\family_training_runner.py",
+    "scientific_dependencies": "original verified source archive",
+    "local_model_execution": false,
+    "client_review_date": "2026-10-15"
+  }
+}

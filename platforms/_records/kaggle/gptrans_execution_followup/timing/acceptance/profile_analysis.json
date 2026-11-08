@@ -1,0 +1,578 @@
+{
+  "optimized": {
+    "aten_dispatch_calls": {
+      "aten::__and__": 574,
+      "aten::_assert_async": 320,
+      "aten::_convolution": 384,
+      "aten::_foreach_add_": 48,
+      "aten::_foreach_addcdiv_": 16,
+      "aten::_foreach_addcmul_": 16,
+      "aten::_foreach_div_": 16,
+      "aten::_foreach_lerp_": 16,
+      "aten::_foreach_mul_": 64,
+      "aten::_foreach_norm": 16,
+      "aten::_foreach_sqrt": 16,
+      "aten::_index_put_impl_": 80,
+      "aten::_local_scalar_dense": 8560,
+      "aten::_softmax": 384,
+      "aten::_softmax_backward_data": 384,
+      "aten::_to_copy": 463,
+      "aten::_unsafe_view": 1936,
+      "aten::abs": 32,
+      "aten::add": 1632,
+      "aten::add_": 6176,
+      "aten::addmm": 800,
+      "aten::all": 16,
+      "aten::any": 16,
+      "aten::arange": 384,
+      "aten::as_strided": 18496,
+      "aten::bernoulli_": 352,
+      "aten::bitwise_and": 574,
+      "aten::bitwise_not": 16,
+      "aten::bmm": 1407,
+      "aten::broadcast_tensors": 16,
+      "aten::cat": 256,
+      "aten::clamp": 16,
+      "aten::clamp_max": 16,
+      "aten::clone": 2736,
+      "aten::contiguous": 496,
+      "aten::conv2d": 384,
+      "aten::convolution": 384,
+      "aten::convolution_backward": 384,
+      "aten::copy_": 3631,
+      "aten::cudnn_convolution": 384,
+      "aten::cumsum": 16,
+      "aten::detach": 4256,
+      "aten::detach_": 16,
+      "aten::div": 752,
+      "aten::div_": 160,
+      "aten::divide_": 80,
+      "aten::dropout": 784,
+      "aten::embedding": 240,
+      "aten::embedding_backward": 240,
+      "aten::embedding_dense_backward": 240,
+      "aten::empty": 9664,
+      "aten::empty_like": 5408,
+      "aten::empty_strided": 6399,
+      "aten::eq": 271,
+      "aten::equal": 32,
+      "aten::expand": 3328,
+      "aten::eye": 48,
+      "aten::fill_": 656,
+      "aten::flatten": 16,
+      "aten::full": 16,
+      "aten::ge": 176,
+      "aten::gelu": 208,
+      "aten::gelu_backward": 208,
+      "aten::gt": 255,
+      "aten::index": 128,
+      "aten::index_put": 16,
+      "aten::index_put_": 64,
+      "aten::index_select": 256,
+      "aten::is_nonzero": 16,
+      "aten::is_same_size": 32,
+      "aten::item": 8560,
+      "aten::l1_loss": 16,
+      "aten::layer_norm": 416,
+      "aten::le": 16,
+      "aten::lift_fresh": 32,
+      "aten::linalg_vector_norm": 16,
+      "aten::linear": 992,
+      "aten::lt": 176,
+      "aten::masked_fill": 768,
+      "aten::masked_fill_": 1055,
+      "aten::matmul": 576,
+      "aten::max": 176,
+      "aten::mean": 32,
+      "aten::min": 160,
+      "aten::mm": 2176,
+      "aten::mul": 3680,
+      "aten::narrow": 64,
+      "aten::native_dropout": 784,
+      "aten::native_dropout_backward": 784,
+      "aten::native_layer_norm": 416,
+      "aten::native_layer_norm_backward": 416,
+      "aten::new_empty": 448,
+      "aten::new_empty_strided": 96,
+      "aten::new_zeros": 96,
+      "aten::ones": 16,
+      "aten::ones_like": 16,
+      "aten::permute": 544,
+      "aten::reciprocal": 16,
+      "aten::remainder": 416,
+      "aten::repeat_interleave": 32,
+      "aten::reshape": 6304,
+      "aten::resize_": 464,
+      "aten::resolve_conj": 16,
+      "aten::resolve_neg": 16,
+      "aten::result_type": 33920,
+      "aten::select": 960,
+      "aten::select_backward": 48,
+      "aten::sgn": 16,
+      "aten::slice": 896,
+      "aten::slice_backward": 64,
+      "aten::softmax": 384,
+      "aten::squeeze": 32,
+      "aten::stack": 208,
+      "aten::sub": 64,
+      "aten::sum": 2016,
+      "aten::t": 4960,
+      "aten::to": 5471,
+      "aten::transpose": 6880,
+      "aten::unbind": 192,
+      "aten::unsqueeze": 4544,
+      "aten::view": 8448,
+      "aten::zero_": 544,
+      "aten::zeros": 400,
+      "aten::zeros_like": 32
+    },
+    "cuda_runtime_calls": {
+      "cudaDeviceGetAttribute": 256,
+      "cudaDeviceSynchronize": 2,
+      "cudaEventQuery": 80,
+      "cudaEventRecord": 80,
+      "cudaLaunchKernel": 31089,
+      "cudaMemcpyAsync": 1136,
+      "cudaMemsetAsync": 2792,
+      "cudaOccupancyMaxActiveBlocksPerMultiprocessor": 1204,
+      "cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags": 192,
+      "cudaPeekAtLastError": 2096,
+      "cudaPointerGetAttributes": 240,
+      "cudaStreamIsCapturing": 2288,
+      "cudaStreamSynchronize": 16
+    },
+    "device_activity_events": 34657,
+    "device_activity_union_us": 1101354.1662597656,
+    "kernel_duration_sum_us": 1069461.9010000008,
+    "optimizer_steps": {
+      "calls": 16,
+      "inclusive_duration_us": 175771.00400000007
+    },
+    "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization",
+    "top_device_kernels": [
+      {
+        "calls": 768,
+        "duration_us": 81548.98200000008,
+        "fraction_of_kernel_duration_sum": 0.07625234889036035,
+        "name": "volta_sgemm_128x64_nt"
+      },
+      {
+        "calls": 2576,
+        "duration_us": 75950.99200000003,
+        "fraction_of_kernel_duration_sum": 0.07101795017567435,
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+      },
+      {
+        "calls": 2048,
+        "duration_us": 65932.19700000017,
+        "fraction_of_kernel_duration_sum": 0.06164987919471488,
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})"
+      },
+      {
+        "calls": 1984,
+        "duration_us": 62731.79700000005,
+        "fraction_of_kernel_duration_sum": 0.0586573462236875,
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})"
+      },
+      {
+        "calls": 768,
+        "duration_us": 54640.10600000004,
+        "fraction_of_kernel_duration_sum": 0.051091213206294485,
+        "name": "volta_sgemm_128x128_tn"
+      },
+      {
+        "calls": 795,
+        "duration_us": 46766.48699999999,
+        "fraction_of_kernel_duration_sum": 0.04372898834102549,
+        "name": "volta_sgemm_64x64_nn"
+      },
+      {
+        "calls": 192,
+        "duration_us": 43695.91600000001,
+        "fraction_of_kernel_duration_sum": 0.0408578519338951,
+        "name": "volta_sgemm_128x64_tn"
+      },
+      {
+        "calls": 384,
+        "duration_us": 42019.390999999974,
+        "fraction_of_kernel_duration_sum": 0.039290217782147946,
+        "name": "volta_sgemm_128x32_tn"
+      },
+      {
+        "calls": 396,
+        "duration_us": 41204.452,
+        "fraction_of_kernel_duration_sum": 0.038528209337304824,
+        "name": "volta_sgemm_128x32_nn"
+      },
+      {
+        "calls": 228,
+        "duration_us": 40657.323999999964,
+        "fraction_of_kernel_duration_sum": 0.03801661748023311,
+        "name": "volta_sgemm_128x128_nn"
+      },
+      {
+        "calls": 1376,
+        "duration_us": 33690.64900000001,
+        "fraction_of_kernel_duration_sum": 0.03150243030490152,
+        "name": "void at::native::reduce_kernel<128, 4, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>)"
+      },
+      {
+        "calls": 816,
+        "duration_us": 31742.616000000035,
+        "fraction_of_kernel_duration_sum": 0.029680922686744698,
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<float> const&)::{lambda(int)#1})"
+      }
+    ],
+    "top_host_inclusive": [
+      {
+        "calls": 800,
+        "inclusive_duration_us": 380860.5290000003,
+        "name": "autograd::engine::evaluate_function: AddmmBackward0"
+      },
+      {
+        "calls": 2176,
+        "inclusive_duration_us": 368892.553,
+        "name": "aten::mm"
+      },
+      {
+        "calls": 992,
+        "inclusive_duration_us": 318295.4860000005,
+        "name": "aten::linear"
+      },
+      {
+        "calls": 800,
+        "inclusive_duration_us": 304606.87399999995,
+        "name": "AddmmBackward0"
+      },
+      {
+        "calls": 1407,
+        "inclusive_duration_us": 254768.31000000055,
+        "name": "aten::bmm"
+      },
+      {
+        "calls": 576,
+        "inclusive_duration_us": 219080.04100000003,
+        "name": "aten::matmul"
+      },
+      {
+        "calls": 800,
+        "inclusive_duration_us": 200929.34799999997,
+        "name": "aten::addmm"
+      },
+      {
+        "calls": 16,
+        "inclusive_duration_us": 175771.00400000007,
+        "name": "Optimizer.step#AdamW.step"
+      },
+      {
+        "calls": 2736,
+        "inclusive_duration_us": 157404.08100000003,
+        "name": "aten::clone"
+      },
+      {
+        "calls": 6304,
+        "inclusive_duration_us": 140741.381,
+        "name": "aten::reshape"
+      },
+      {
+        "calls": 3680,
+        "inclusive_duration_us": 136407.70600000015,
+        "name": "aten::mul"
+      },
+      {
+        "calls": 384,
+        "inclusive_duration_us": 136306.90299999993,
+        "name": "autograd::engine::evaluate_function: BmmBackward0"
+      }
+    ]
+  },
+  "original": {
+    "aten_dispatch_calls": {
+      "aten::__and__": 672,
+      "aten::_assert_async": 480,
+      "aten::_convolution": 384,
+      "aten::_foreach_mul_": 16,
+      "aten::_foreach_norm": 16,
+      "aten::_index_put_impl_": 160,
+      "aten::_local_scalar_dense": 4336,
+      "aten::_softmax": 384,
+      "aten::_softmax_backward_data": 384,
+      "aten::_to_copy": 4928,
+      "aten::_unsafe_view": 1936,
+      "aten::abs": 32,
+      "aten::add": 1664,
+      "aten::add_": 14656,
+      "aten::addcdiv_": 4240,
+      "aten::addcmul_": 4240,
+      "aten::addmm": 800,
+      "aten::alias": 32,
+      "aten::all": 16,
+      "aten::arange": 544,
+      "aten::as_strided": 18848,
+      "aten::bernoulli_": 352,
+      "aten::bitwise_and": 672,
+      "aten::bitwise_not": 16,
+      "aten::bmm": 1472,
+      "aten::broadcast_tensors": 16,
+      "aten::cat": 272,
+      "aten::clamp": 16,
+      "aten::clamp_max": 16,
+      "aten::clone": 2768,
+      "aten::contiguous": 528,
+      "aten::conv2d": 384,
+      "aten::convolution": 384,
+      "aten::convolution_backward": 384,
+      "aten::copy_": 8160,
+      "aten::cudnn_convolution": 384,
+      "aten::cumsum": 32,
+      "aten::detach": 12736,
+      "aten::div": 4992,
+      "aten::div_": 320,
+      "aten::divide_": 160,
+      "aten::dropout": 784,
+      "aten::embedding": 240,
+      "aten::embedding_backward": 240,
+      "aten::embedding_dense_backward": 240,
+      "aten::empty": 10864,
+      "aten::empty_like": 5600,
+      "aten::empty_strided": 6624,
+      "aten::eq": 320,
+      "aten::equal": 16,
+      "aten::expand": 3456,
+      "aten::expand_as": 64,
+      "aten::eye": 48,
+      "aten::fill_": 23024,
+      "aten::full": 16,
+      "aten::ge": 240,
+      "aten::gelu": 208,
+      "aten::gelu_backward": 208,
+      "aten::gt": 320,
+      "aten::index": 144,
+      "aten::index_put": 16,
+      "aten::index_put_": 144,
+      "aten::index_select": 240,
+      "aten::item": 4336,
+      "aten::l1_loss": 16,
+      "aten::layer_norm": 416,
+      "aten::lerp_": 4240,
+      "aten::lift_fresh": 80,
+      "aten::linalg_vector_norm": 16,
+      "aten::linear": 992,
+      "aten::lt": 240,
+      "aten::masked_fill": 768,
+      "aten::masked_fill_": 1104,
+      "aten::matmul": 576,
+      "aten::max": 320,
+      "aten::mean": 32,
+      "aten::min": 240,
+      "aten::mm": 2176,
+      "aten::mul": 3840,
+      "aten::mul_": 12720,
+      "aten::narrow": 128,
+      "aten::native_dropout": 784,
+      "aten::native_dropout_backward": 784,
+      "aten::native_layer_norm": 416,
+      "aten::native_layer_norm_backward": 416,
+      "aten::ne": 16,
+      "aten::new_empty": 544,
+      "aten::new_empty_strided": 96,
+      "aten::new_ones": 32,
+      "aten::new_zeros": 128,
+      "aten::nonzero": 16,
+      "aten::nonzero_numpy": 16,
+      "aten::ones": 16,
+      "aten::ones_like": 16,
+      "aten::permute": 544,
+      "aten::reciprocal": 16,
+      "aten::remainder": 576,
+      "aten::repeat": 32,
+      "aten::reshape": 6400,
+      "aten::resize_": 560,
+      "aten::resolve_conj": 16,
+      "aten::resolve_neg": 16,
+      "aten::scatter_add_": 32,
+      "aten::select": 928,
+      "aten::select_backward": 48,
+      "aten::set_": 592,
+      "aten::sgn": 16,
+      "aten::slice": 864,
+      "aten::slice_backward": 64,
+      "aten::softmax": 384,
+      "aten::sqrt": 4240,
+      "aten::squeeze": 32,
+      "aten::stack": 208,
+      "aten::sub": 80,
+      "aten::sum": 2016,
+      "aten::t": 4976,
+      "aten::to": 10048,
+      "aten::transpose": 6896,
+      "aten::unbind": 208,
+      "aten::unfold": 64,
+      "aten::unsqueeze": 4512,
+      "aten::view": 8624,
+      "aten::where": 16,
+      "aten::zero_": 640,
+      "aten::zeros": 432,
+      "aten::zeros_like": 32
+    },
+    "cuda_runtime_calls": {
+      "cudaDeviceGetAttribute": 304,
+      "cudaDeviceSynchronize": 2,
+      "cudaEventQuery": 240,
+      "cudaEventRecord": 240,
+      "cudaLaunchKernel": 92360,
+      "cudaMemcpyAsync": 1392,
+      "cudaMemsetAsync": 2792,
+      "cudaOccupancyMaxActiveBlocksPerMultiprocessor": 1204,
+      "cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags": 224,
+      "cudaPeekAtLastError": 2480,
+      "cudaPointerGetAttributes": 240,
+      "cudaStreamIsCapturing": 2288,
+      "cudaStreamSynchronize": 192
+    },
+    "device_activity_events": 96184,
+    "device_activity_union_us": 1302598.5952148438,
+    "kernel_duration_sum_us": 1268917.923999998,
+    "optimizer_steps": {
+      "calls": 16,
+      "inclusive_duration_us": 832287.0999999999
+    },
+    "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization",
+    "top_device_kernels": [
+      {
+        "calls": 6816,
+        "duration_us": 87118.35699999935,
+        "fraction_of_kernel_duration_sum": 0.06865562803729415,
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+      },
+      {
+        "calls": 768,
+        "duration_us": 85772.65100000014,
+        "fraction_of_kernel_duration_sum": 0.06759511342516136,
+        "name": "volta_sgemm_128x64_nt"
+      },
+      {
+        "calls": 13712,
+        "duration_us": 79128.71299999852,
+        "fraction_of_kernel_duration_sum": 0.06235920503870086,
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)"
+      },
+      {
+        "calls": 2048,
+        "duration_us": 66969.39099999999,
+        "fraction_of_kernel_duration_sum": 0.05277677124214071,
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})"
+      },
+      {
+        "calls": 2000,
+        "duration_us": 65311.09199999987,
+        "fraction_of_kernel_duration_sum": 0.0514699105156623,
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})"
+      },
+      {
+        "calls": 768,
+        "duration_us": 57594.97600000002,
+        "fraction_of_kernel_duration_sum": 0.04538904755828802,
+        "name": "volta_sgemm_128x128_tn"
+      },
+      {
+        "calls": 860,
+        "duration_us": 50237.054000000004,
+        "fraction_of_kernel_duration_sum": 0.03959046763374436,
+        "name": "volta_sgemm_64x64_nn"
+      },
+      {
+        "calls": 192,
+        "duration_us": 46194.38899999998,
+        "fraction_of_kernel_duration_sum": 0.036404552356216896,
+        "name": "volta_sgemm_128x64_tn"
+      },
+      {
+        "calls": 384,
+        "duration_us": 44215.05400000002,
+        "fraction_of_kernel_duration_sum": 0.034844691814756086,
+        "name": "volta_sgemm_128x32_tn"
+      },
+      {
+        "calls": 396,
+        "duration_us": 43584.69499999997,
+        "fraction_of_kernel_duration_sum": 0.034347922884254284,
+        "name": "volta_sgemm_128x32_nn"
+      },
+      {
+        "calls": 228,
+        "duration_us": 42826.23499999999,
+        "fraction_of_kernel_duration_sum": 0.03375020100984882,
+        "name": "volta_sgemm_128x128_nn"
+      },
+      {
+        "calls": 13120,
+        "duration_us": 36106.472999999496,
+        "fraction_of_kernel_duration_sum": 0.02845453777355544,
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul> >(int, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)"
+      }
+    ],
+    "top_host_inclusive": [
+      {
+        "calls": 16,
+        "inclusive_duration_us": 832287.0999999999,
+        "name": "Optimizer.step#AdamW.step"
+      },
+      {
+        "calls": 10864,
+        "inclusive_duration_us": 353978.47600000154,
+        "name": "aten::empty"
+      },
+      {
+        "calls": 23024,
+        "inclusive_duration_us": 353971.7970000008,
+        "name": "aten::fill_"
+      },
+      {
+        "calls": 992,
+        "inclusive_duration_us": 348674.80600000033,
+        "name": "aten::linear"
+      },
+      {
+        "calls": 2176,
+        "inclusive_duration_us": 289371.0839999994,
+        "name": "aten::mm"
+      },
+      {
+        "calls": 800,
+        "inclusive_duration_us": 283366.7600000003,
+        "name": "autograd::engine::evaluate_function: AddmmBackward0"
+      },
+      {
+        "calls": 576,
+        "inclusive_duration_us": 237606.93199999986,
+        "name": "aten::matmul"
+      },
+      {
+        "calls": 1472,
+        "inclusive_duration_us": 236481.8580000002,
+        "name": "aten::bmm"
+      },
+      {
+        "calls": 800,
+        "inclusive_duration_us": 226913.73700000014,
+        "name": "aten::addmm"
+      },
+      {
+        "calls": 800,
+        "inclusive_duration_us": 226354.77400000024,
+        "name": "AddmmBackward0"
+      },
+      {
+        "calls": 5600,
+        "inclusive_duration_us": 225863.25400000007,
+        "name": "aten::empty_like"
+      },
+      {
+        "calls": 14656,
+        "inclusive_duration_us": 224067.3390000017,
+        "name": "aten::add_"
+      }
+    ]
+  }
+}

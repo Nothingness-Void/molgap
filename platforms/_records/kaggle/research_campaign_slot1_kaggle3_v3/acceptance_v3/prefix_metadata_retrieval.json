@@ -1,0 +1,89 @@
+{
+  "kernel": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+  "version": 3,
+  "files": [
+    {
+      "path": "experiment/reference/runtime_certificate.json",
+      "sha256": "eda2e79998bea8d579826e47238405e03a795ccd986958c895032f20d4342521"
+    },
+    {
+      "path": "experiment/reference/runtime_provenance.json",
+      "sha256": "fe7fc0dc4bab5827ed6fc90315e8d8cf3e75a0ce0c4b60c9f2761fa574a6d9d8"
+    },
+    {
+      "path": "experiment/reference/resource_qualification.json",
+      "sha256": "8cfbebeac2bbd96af73e12eb288fe968fd4c5230a6180ef559a58610b554daa1"
+    },
+    {
+      "path": "experiment/reference/pause_receipt.json",
+      "sha256": "fb8f8345da6111a0203c9d1689bb9510ddbe55fe4fab56fd9a645a12a525b466"
+    },
+    {
+      "path": "experiment/reference/canonical_trace.json",
+      "sha256": "999d7adfb4e0556bc1fca272428535859979aaaeaf877619c41d0cddd7c62753"
+    },
+    {
+      "path": "experiment/reference/canonical_trace.json.context.json",
+      "sha256": "25562d58823a16ad86cb075032d56f8e856deeb45d32b9b79a250d330d7c315d"
+    },
+    {
+      "path": "experiment/reference/training_contract.json",
+      "sha256": "d3e819f9d0359928185fc20f4802ea31c0683ae056f13f5782245d2c2659ca96"
+    },
+    {
+      "path": "experiment/reference/allocation_costs.json",
+      "sha256": "322d7d17ca846ff7432b80d38bdb962cb7ae6797921d38ae48f8d8738007e5dd"
+    },
+    {
+      "path": "experiment/reference/invocation_cost_state.json",
+      "sha256": "c40764200531bb5358b4168c74831f09d1f891c8e26dfed64d2a6eb8a44b638f"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/reference/pass_10/resume_bundle.json",
+      "sha256": "64753b88c71e9b335fea8a4f549d1e1f20a34a9aa56f18ece0ac45b58021cdfe"
+    },
+    {
+      "path": "experiment/cycle/runtime_certificate.json",
+      "sha256": "f51046f644d5a1d7979f4537cdb49904eca58d4fb157ed6a70878da7648b11f3"
+    },
+    {
+      "path": "experiment/cycle/runtime_provenance.json",
+      "sha256": "e5a63ca1f58cdafa0221556d963f9531c54eeed199ed035053b510c2ade9ea7d"
+    },
+    {
+      "path": "experiment/cycle/resource_qualification.json",
+      "sha256": "3430d112e5caac5964d93af26bd121bbdfc6dca8dc42801867c411bfa98d6153"
+    },
+    {
+      "path": "experiment/cycle/pause_receipt.json",
+      "sha256": "db9b8bfc49d08e08da9f02743620e6c3d3f0dce9b139b081404179b64fd5f5f9"
+    },
+    {
+      "path": "experiment/cycle/canonical_trace.json",
+      "sha256": "c5a339389e1274d5038caffefb7c0cacf6354d923aec59fa1595d9a439d1cc73"
+    },
+    {
+      "path": "experiment/cycle/canonical_trace.json.context.json",
+      "sha256": "0807113093846e0f0e783f7eb78651388213e0d716bab4ee55bb1b5c79f213f4"
+    },
+    {
+      "path": "experiment/cycle/training_contract.json",
+      "sha256": "2d59c88f6697a308b5605983940a4596609079bf15e0c8cdf028ca2908ea4ceb"
+    },
+    {
+      "path": "experiment/cycle/allocation_costs.json",
+      "sha256": "498cbb09ec1b2cf304e158428e31457757b302a6f2a50c40e4547743c48173ac"
+    },
+    {
+      "path": "experiment/cycle/invocation_cost_state.json",
+      "sha256": "ab6454f856b4a8fa6f7f02eab3b53da5894c962bf574f10485424d0bb4aacf67"
+    },
+    {
+      "path": "experiment/checkpoint_chunks/cycle/pass_10/resume_bundle.json",
+      "sha256": "3263313436d82de407f8794292ff1bbcd74884a0ef606382daf347cacee85619"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

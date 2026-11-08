@@ -1,0 +1,42 @@
+{
+  "observed_at_utc": "2026-10-14T17:41:49.242984+00:00",
+  "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+  "requested_version": 3,
+  "kernel_id": 138538193,
+  "status": {
+    "status": "COMPLETE"
+  },
+  "metadata": {
+    "id": 138538193,
+    "ref": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+    "title": "MolGap GPTrans Research Slot2 100K V1",
+    "author": "Nvoid912",
+    "slug": "molgap-gptrans-research-slot2-100k-v1",
+    "lastRunTime": "2026-10-11T17:41:27.511Z",
+    "language": "python",
+    "kernelType": "script",
+    "isPrivate": true,
+    "enableGpu": true,
+    "enableInternet": true,
+    "categoryIds": [
+      "gpu"
+    ],
+    "datasetDataSources": [
+      "nvoid912/molgap-gptrans-common-cycle-inputs-v1",
+      "nvoid912/molgap-gptrans-research-slot2-source-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "enableTpu": false,
+    "currentVersionNumber": 3,
+    "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+    "machineShape": "NvidiaTeslaT4"
+  },
+  "reported_version_number": null,
+  "response_identity": {},
+  "source_sha256": "1fcccb02c95ea4985a2205ecdd05db0c0f1cd5a9f4fe9df88a43825710cec19e",
+  "source_equal_lf": true,
+  "dataset_membership_equal": true,
+  "get_request": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+  "status_request": "nvoid912/molgap-gptrans-research-slot2-100k-v1/3",
+  "scientific_acceptance": false
+}

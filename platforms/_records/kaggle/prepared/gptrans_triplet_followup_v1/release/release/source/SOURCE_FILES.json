@@ -1,0 +1,1606 @@
+{
+  "format": "molgap-v4-source-inventory-v1",
+  "source_commit": "0a4b315d4fc3b23153b9bbc7072da0faa2ab5c4c",
+  "files": [
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/contract.json",
+      "sha256": "075abb4b1fe1b921e7d65ec775fd0985081770eb5e2be6d5f64f24f249c33684",
+      "bytes": 2463
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/contract.json",
+      "sha256": "d1b62ac7c0e8f5b637b16b385a860a96a8cd77eb1fe83444cd7eeb4e3927409e",
+      "bytes": 2500
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/kernel-metadata.json",
+      "sha256": "b375499405d728641b0c9098b61b192b0d24ad0cd20612d9a6981a209d55808a",
+      "bytes": 446
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/screen_config.json",
+      "sha256": "74be9a6d34276ea97f113111d9a10ccfb0b56898d6f16f3c8382b6d2eee8edc1",
+      "bytes": 6863
+    },
+    {
+      "path": "platforms/kaggle/bootstrap_gptrans_author.py",
+      "sha256": "e2d69533ca0cf3845b958d4ba73695b08d3a3bcaa4de6d11e478e80e4d82eb23",
+      "bytes": 2295
+    },
+    {
+      "path": "src/molgap/__init__.py",
+      "sha256": "053a75f05ab6c3b4ba2c19b6a51f8e222b6c637d7177e453630da64aa5bf132f",
+      "bytes": 1355
+    },
+    {
+      "path": "src/molgap/architecture_screen_acceptance.py",
+      "sha256": "8fbeb88aad365141330214e25092d92de92fc660c55c68ef35b63ce16403dfe1",
+      "bytes": 29398
+    },
+    {
+      "path": "src/molgap/artifact_acceptance.py",
+      "sha256": "41a17ff8104c12c5e1fef655189d8a42095d2af1cf540aa2669672fa1ffbc6ee",
+      "bytes": 32409
+    },
+    {
+      "path": "src/molgap/comparison_readiness.py",
+      "sha256": "4617cbd4d5ea446bb8f2c14d76903a211f11471c313ffdb3cdae952667cb0512",
+      "bytes": 51973
+    },
+    {
+      "path": "src/molgap/conformer_ab.py",
+      "sha256": "0697f22cc01f74163acd8d13ec02985b693600fc0c1d557a42edcce56fc648a4",
+      "bytes": 21285
+    },
+    {
+      "path": "src/molgap/conservative_fusion_payload.py",
+      "sha256": "f815dd6ad5730c008be8f98683f8f620db400d60131361846c26a2449772a8c1",
+      "bytes": 13222
+    },
+    {
+      "path": "src/molgap/conservative_fusion_runner.py",
+      "sha256": "f9982af72b5da8b82adbf83a28e46fb47283b508dd4bb991efe435c5f96e5114",
+      "bytes": 17373
+    },
+    {
+      "path": "src/molgap/constants.py",
+      "sha256": "7d43dac802822d445258771f5c957c99c15a7a1c12da0780ba1b97b653a2c563",
+      "bytes": 13115
+    },
+    {
+      "path": "src/molgap/cost_ledger.py",
+      "sha256": "edd53d5f9cbbb180cd619c537f4db2fd8d3a5a1fb712a3bbdf72d64bb2816702",
+      "bytes": 4305
+    },
+    {
+      "path": "src/molgap/database.py",
+      "sha256": "9243698163433dd0e0116b1c9ecb6aa58040d04d368df69ebd3c9ba9d358f221",
+      "bytes": 21055
+    },
+    {
+      "path": "src/molgap/distillation.py",
+      "sha256": "99cf1df438364e2b8837dd1ca96db5510880f88c376baaba9dff426ee89d58ae",
+      "bytes": 14498
+    },
+    {
+      "path": "src/molgap/documentation_check.py",
+      "sha256": "a308e54ddcae8430ca773eccd0ccc4551af590016c0c3cadbe652b1407eeafc7",
+      "bytes": 19419
+    },
+    {
+      "path": "src/molgap/edge_global_2d.py",
+      "sha256": "9cbc88dad69198f5e5676b4aa26b893ce12bd6614c268e0d365c05539e2fb9d8",
+      "bytes": 8186
+    },
+    {
+      "path": "src/molgap/edge_state_adapter.py",
+      "sha256": "002f770fcd2f44ec787dfd8d377e086debbdb633e87c1f0e2c0d024958ecdcf8",
+      "bytes": 4076
+    },
+    {
+      "path": "src/molgap/edge_state_gps.py",
+      "sha256": "15ef75ea26920326b07c91dfc1130a5244108ef24dfc2d7ea85c67416dbe680c",
+      "bytes": 5751
+    },
+    {
+      "path": "src/molgap/edge_state_model_only_v1.py",
+      "sha256": "70b9811a4a024e2828fbfd5c3986140ed94928da1ef6ae9b3ae4d9c30bc17203",
+      "bytes": 1075
+    },
+    {
+      "path": "src/molgap/edge_state_screen_adapter.py",
+      "sha256": "cda087fd9195ba9b4dabee0044ad16c8a89a562f6573292374b6ef2edd13c31d",
+      "bytes": 5171
+    },
+    {
+      "path": "src/molgap/edge_state_training_core.py",
+      "sha256": "00cc1ab62256b324ef7041c3961b40ff7263fb84335accf24e69e398f4c60632",
+      "bytes": 20244
+    },
+    {
+      "path": "src/molgap/egnn.py",
+      "sha256": "d9462e1258f048a60810bb7ac54a33a05ace106644b39b0eaba6a3b436977fb5",
+      "bytes": 3898
+    },
+    {
+      "path": "src/molgap/ensemble_evaluation.py",
+      "sha256": "e5a279365577cb4189af4bdb627120ae0b60694dbff9fb43888e96d5747a406d",
+      "bytes": 6716
+    },
+    {
+      "path": "src/molgap/etkdg_array.py",
+      "sha256": "876b2fde0bdce350cb28591cc5c2cfa74a9e722c6e5299126ae25f8910dc5afb",
+      "bytes": 8694
+    },
+    {
+      "path": "src/molgap/evidence_index.py",
+      "sha256": "c2159ac3b0566ff7933cf31872b122802aba0f31fbbe408dae7e482192ddac94",
+      "bytes": 2787
+    },
+    {
+      "path": "src/molgap/evidence_pointers.py",
+      "sha256": "88076f107bc5808b787e5f12ce054cc189ce7c41a99eae6735a374ee18ec50a2",
+      "bytes": 5229
+    },
+    {
+      "path": "src/molgap/experiment_allocation.py",
+      "sha256": "be85fedd296560bbae72980de5b052e7fd1eb3498c9667dec57a0de6d297fcdc",
+      "bytes": 4469
+    },
+    {
+      "path": "src/molgap/experiment_cli.py",
+      "sha256": "513cd52b5225448607c57aeee5631440a1bab0ba7bb49b5a54b45ed758c918e6",
+      "bytes": 16361
+    },
+    {
+      "path": "src/molgap/experiment_db.py",
+      "sha256": "488374e1cc81c39d24c5876b1db772feafbf2b621dfe0d89bdd71731179238fe",
+      "bytes": 23153
+    },
+    {
+      "path": "src/molgap/experiment_execution.py",
+      "sha256": "a1f55c5f36a94c32d00f759bb727075ba1f997bb4ecefae96ec77de6a450f651",
+      "bytes": 21131
+    },
+    {
+      "path": "src/molgap/experiment_family_artifacts.py",
+      "sha256": "f858230d247d869757e54fbd9f30abef05deffc084e91fdafe2c20526bb793ee",
+      "bytes": 2438
+    },
+    {
+      "path": "src/molgap/experiment_family_workflow.py",
+      "sha256": "8d1d28cbce8ac2b4d8d738ed4445a034c1536a0c217ae5fad1803e0de4a07e16",
+      "bytes": 71167
+    },
+    {
+      "path": "src/molgap/experiment_inspection.py",
+      "sha256": "5dd69e0485fa7190783bb00d0fd14be88c57b5784c500457ceee3c603d46f0f4",
+      "bytes": 10369
+    },
+    {
+      "path": "src/molgap/experiment_launch.py",
+      "sha256": "df089dabd782a6399612abc71d04e35ecf69b7e107c4aa22109fd11584858eef",
+      "bytes": 17516
+    },
+    {
+      "path": "src/molgap/experiment_launch_config.py",
+      "sha256": "7d75194988030b5b2999d3795bf652803bb5392102e81767d7c5411b97000ddf",
+      "bytes": 17709
+    },
+    {
+      "path": "src/molgap/experiment_package.py",
+      "sha256": "b1766014fdda3496c9b8045e6bf241f9e10a9fc0029aa06e6d01afc35a46587a",
+      "bytes": 15083
+    },
+    {
+      "path": "src/molgap/experiment_preflight.py",
+      "sha256": "e38c02c6b350f92dc30120f01e33f6b945df6ea0f6c7230a97b3d5517f035d5a",
+      "bytes": 51112
+    },
+    {
+      "path": "src/molgap/experiment_prospective.py",
+      "sha256": "baad4b2c48aad66fbcf60a823554de1ed3c4d89fe27b6efca596395e534ef040",
+      "bytes": 6885
+    },
+    {
+      "path": "src/molgap/experiment_resume.py",
+      "sha256": "b31d1db13403255043c0166bc0519baff2d85ba7b0b0fce57930ac54d65cc889",
+      "bytes": 38391
+    },
+    {
+      "path": "src/molgap/experiment_retention.py",
+      "sha256": "f9c5f99b183f57470ea3cd5e02902e381f7e3192cf0fa9d065b8ab3ee65f13a2",
+      "bytes": 25983
+    },
+    {
+      "path": "src/molgap/experiment_runner.py",
+      "sha256": "ad4d896d337ddd3ba071169e561f72a6df9496c12c65305fb8e57cacc7914088",
+      "bytes": 17682
+    },
+    {
+      "path": "src/molgap/experiment_source_inventory.py",
+      "sha256": "050a7e01de0d1833b57b0e3164589aa09f972f927a8834cc4d520dc874e7d80b",
+      "bytes": 4882
+    },
+    {
+      "path": "src/molgap/experiment_spec.py",
+      "sha256": "4b90666a361fe40531dfc77ac0e0c1726b93b021aba9e2b717bd619fe958af38",
+      "bytes": 21900
+    },
+    {
+      "path": "src/molgap/experiment_staging.py",
+      "sha256": "eea0486e8c367f01a8e6088087f91547bc6e8c5569997d93eaa153f4a1cd9dc7",
+      "bytes": 8316
+    },
+    {
+      "path": "src/molgap/experiment_terminal.py",
+      "sha256": "c8b2a0e7286885bf4f039bcb3f43f95f723da9b603f7b0810b114df889b93b8d",
+      "bytes": 22979
+    },
+    {
+      "path": "src/molgap/experiment_training_hooks.py",
+      "sha256": "7fc9db76eb97be66a202139de66674ba86094810893a54494ea7589855f28f88",
+      "bytes": 11476
+    },
+    {
+      "path": "src/molgap/experiment_training_worker.py",
+      "sha256": "a72ba340d4ae4f5ac5ad4c69b79d50890e17daa5b8859d501d1c9dbd137ca674",
+      "bytes": 2115
+    },
+    {
+      "path": "src/molgap/experiment_workflow.py",
+      "sha256": "fa9be4487e3e140f02eadfb930e17e35e8847e3520f106eb979cd5e4471c6954",
+      "bytes": 24113
+    },
+    {
+      "path": "src/molgap/experiment_workflow_resume.py",
+      "sha256": "5a6692766ffe4284997c4a9f0484f3f684a8bcb5c6cf879cee87991e255188e8",
+      "bytes": 11619
+    },
+    {
+      "path": "src/molgap/family_training_core.py",
+      "sha256": "045f4f35f7327ae13c2384af4165718e6647a2bcdcdf00e4431ef637a137e87b",
+      "bytes": 10760
+    },
+    {
+      "path": "src/molgap/family_training_data.py",
+      "sha256": "af38fceb00417690d9d93dd554cce3185dbb85cae102ec697f81ec4edf5fa84e",
+      "bytes": 8514
+    },
+    {
+      "path": "src/molgap/family_training_kernel.py",
+      "sha256": "7bf53383cb3a86b3a3f78018d4b6891e7f9c4150ff3fa53d8ed11e8ac942dd8d",
+      "bytes": 9855
+    },
+    {
+      "path": "src/molgap/family_training_loaders.py",
+      "sha256": "03951662e51afcb0b884d97eeefd5230762386d2804ccb28c84af3dbd9ef0903",
+      "bytes": 4050
+    },
+    {
+      "path": "src/molgap/family_training_outputs.py",
+      "sha256": "49463c4920e8bae9cf16cd04e4f9bb930c4347ec9f8a1d06e95cf6931a6817aa",
+      "bytes": 14592
+    },
+    {
+      "path": "src/molgap/family_training_recipe.py",
+      "sha256": "320f89e715816d91a1a7203adf68a0baad1158f1bb4b70bda89205221e016868",
+      "bytes": 9539
+    },
+    {
+      "path": "src/molgap/family_training_runner.py",
+      "sha256": "6cec478701b714a648f204a1a4c03280df6451caa593dc49461b2ded10c34fce",
+      "bytes": 23894
+    },
+    {
+      "path": "src/molgap/family_training_session.py",
+      "sha256": "c19401abf845af9025d1b8adea296b9d5b794c3829094d5392c67c29e78168a7",
+      "bytes": 17726
+    },
+    {
+      "path": "src/molgap/frozen_audit_prepare.py",
+      "sha256": "b9edce8b5b5b6b391d6d56ec1f97a9b1f74abbca292c69424c80c75e77f5c0ce",
+      "bytes": 3204
+    },
+    {
+      "path": "src/molgap/frozen_audit_runtime.py",
+      "sha256": "2da535e060da28452768cb9e1af5fd5008817a3922992edf9bbb7974727eec89",
+      "bytes": 4877
+    },
+    {
+      "path": "src/molgap/frozen_inference_release.py",
+      "sha256": "8d70e9d4d9e48caeac32d87c30485109c7323e5d5e354c2722c1427b629a946b",
+      "bytes": 6184
+    },
+    {
+      "path": "src/molgap/fusion.py",
+      "sha256": "6f028b812453a9693fb23704650d55b09b6835ab77370a28303aeb8f114ed540",
+      "bytes": 8316
+    },
+    {
+      "path": "src/molgap/gap_specialization.py",
+      "sha256": "7e0fb309884abe744e83a60ca61fcfed1b949e653b52cd2f432ef45253e40400",
+      "bytes": 15513
+    },
+    {
+      "path": "src/molgap/geometry_features.py",
+      "sha256": "0620b81ead4bcab986d2f8f48e95af2809cc18fb811546867b4cc1e3b334cb59",
+      "bytes": 5305
+    },
+    {
+      "path": "src/molgap/gine.py",
+      "sha256": "7f1ee331e066d2b8cfd41c75fb2029fa21182d8d30012dac355f42d397f6adaa",
+      "bytes": 2257
+    },
+    {
+      "path": "src/molgap/gps.py",
+      "sha256": "2a751b9d8c93c8c0ef890d743ccddda90500a67ec7e7813e178a1856d87b0906",
+      "bytes": 39237
+    },
+    {
+      "path": "src/molgap/gptrans.py",
+      "sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+      "bytes": 11350
+    },
+    {
+      "path": "src/molgap/gptrans_adapter.py",
+      "sha256": "2acab916cccb9f3923bac41bdd698aaab537944ab7e1de7c63abcf54c876df7a",
+      "bytes": 5232
+    },
+    {
+      "path": "src/molgap/gptrans_author_acceptance.py",
+      "sha256": "88125860ce0f247cd3a4405084ed6ac6ad6493b25a744f9850538eb093628469",
+      "bytes": 31250
+    },
+    {
+      "path": "src/molgap/gptrans_author_inputs.py",
+      "sha256": "4d708e69538ae2e14ac252b18f015a7eebc8f7ee463d5fd2cf3dd296a2e223e3",
+      "bytes": 58173
+    },
+    {
+      "path": "src/molgap/gptrans_author_release.py",
+      "sha256": "b53efc3981d78fe779504c4126cc4954e2452199035017a6daeb26e8ad635ce2",
+      "bytes": 14912
+    },
+    {
+      "path": "src/molgap/gptrans_author_screen.py",
+      "sha256": "f2159b6e502ff3964c0b5f21c8c11defcbe5b84d78d3bfb4e39d6237004d3fe6",
+      "bytes": 12525
+    },
+    {
+      "path": "src/molgap/gptrans_author_terminal.py",
+      "sha256": "1cab767d07645082fe928f4fbcfa6129f41ea7725a973f100816c7614101fd96",
+      "bytes": 25229
+    },
+    {
+      "path": "src/molgap/gptrans_author_variants.py",
+      "sha256": "f285fc15f56366f31adcd58d2fb4c8b1f7fe36e80adbab62448d42502fcccb9f",
+      "bytes": 5409
+    },
+    {
+      "path": "src/molgap/gptrans_bottleneck.py",
+      "sha256": "90bc4471904dccd059722d698f39707ff583f9be2809c49d2feb1f3d7a2c469e",
+      "bytes": 17699
+    },
+    {
+      "path": "src/molgap/gptrans_candidate_qualification.py",
+      "sha256": "38cfd5a52f9b738256b4b44df006c91a7fc336a09b66f369039470d58f81979d",
+      "bytes": 4283
+    },
+    {
+      "path": "src/molgap/gptrans_capacity.py",
+      "sha256": "716f1bdaf25eaa17d8ec8f7aecc6adffc06f04b9a3c1195b7b5d8adee0489aca",
+      "bytes": 7192
+    },
+    {
+      "path": "src/molgap/gptrans_endpoint_paths.py",
+      "sha256": "4dd436c268fa0db21c27aa60fac6744033364370b0c50d53a9b28c72b8db7699",
+      "bytes": 3105
+    },
+    {
+      "path": "src/molgap/gptrans_execution_acceptance.py",
+      "sha256": "8695bca54db24923fcdad813a4787cd5186d3b6679debeb8f8d6afc448e79e50",
+      "bytes": 17183
+    },
+    {
+      "path": "src/molgap/gptrans_execution_backend.py",
+      "sha256": "cf992ba39eb242629f87a03716733891882f5260bd64605caf2902606dff1989",
+      "bytes": 13699
+    },
+    {
+      "path": "src/molgap/gptrans_execution_hotpath.py",
+      "sha256": "8b490ea7610845a70c655fc3d9e3fa27b5a8ac78905cefff528ec9b2ccf30d70",
+      "bytes": 9491
+    },
+    {
+      "path": "src/molgap/gptrans_execution_prepare.py",
+      "sha256": "263f5c2e97ab64dfdda35fa2cf28b3f7b1b53403f24ecc76fa04b16553a94b05",
+      "bytes": 12747
+    },
+    {
+      "path": "src/molgap/gptrans_execution_study.py",
+      "sha256": "4928d6cc60e54a3c5f38bba21d81e345471739383615f33c36197bbb10dde32a",
+      "bytes": 8384
+    },
+    {
+      "path": "src/molgap/gptrans_execution_tuning.py",
+      "sha256": "4d4476c1502239827f62248628f33b5354f0b43d04dbe3ab502650d9f0559063",
+      "bytes": 13735
+    },
+    {
+      "path": "src/molgap/gptrans_followup_release.py",
+      "sha256": "3934af5b12961510fbe220506c7f9a59809bac1d4a8cc2220fe4c3766663c1a6",
+      "bytes": 28738
+    },
+    {
+      "path": "src/molgap/gptrans_initial_scale_preflight.py",
+      "sha256": "d8685633b93cca1941b8b522c3a8c7f6a561a15b07b0acbd0fdb93ac33404f10",
+      "bytes": 7162
+    },
+    {
+      "path": "src/molgap/gptrans_kaggle_runtime.py",
+      "sha256": "3a0bed0c6c6804f1e0a2d3eda09efc573e00bd1da0adfa042bbfcc031218e4fb",
+      "bytes": 7589
+    },
+    {
+      "path": "src/molgap/gptrans_local_control.py",
+      "sha256": "36dd63b739e6e93346810e0a1f6de9433b5c913d19ed14fc79232dc61e860f62",
+      "bytes": 5837
+    },
+    {
+      "path": "src/molgap/gptrans_local_relation.py",
+      "sha256": "22b6b976fd115227ef0acae11ad6c9ce0e4252a5c3f8b6dfad8398482748df73",
+      "bytes": 12133
+    },
+    {
+      "path": "src/molgap/gptrans_memory.py",
+      "sha256": "fe6b4631b581bdcd7747edd9fa9553ca95f0734bb651961d8887159a2ec6f2ee",
+      "bytes": 2113
+    },
+    {
+      "path": "src/molgap/gptrans_pair_scale.py",
+      "sha256": "eb83163cfe3d5491601211b387b6c0ebb3a0b5ef18c2f160b841488061045fd3",
+      "bytes": 1596
+    },
+    {
+      "path": "src/molgap/gptrans_pair_transition.py",
+      "sha256": "4b362ed7fe783cb2748a4a7d82ca8dc8767574742ca951a25fbfab03976c49a8",
+      "bytes": 5344
+    },
+    {
+      "path": "src/molgap/gptrans_path_real_preflight.py",
+      "sha256": "74e3de37c1c4ba0ff27a27c74f53700024ecc583ceabd21b82763eac228f152f",
+      "bytes": 8228
+    },
+    {
+      "path": "src/molgap/gptrans_portability.py",
+      "sha256": "2c4a3d289e3a77596425d5bd3b63295c9ea4361446020588fc05f4405383c0e4",
+      "bytes": 19187
+    },
+    {
+      "path": "src/molgap/gptrans_readout.py",
+      "sha256": "610098722f5076b68de1810fa0a183597bd9962c5f778c5779128634b57fe7ea",
+      "bytes": 2465
+    },
+    {
+      "path": "src/molgap/gptrans_reference_qualification.py",
+      "sha256": "d9fe58a5e9cafd1eab574eb8bf1b5bb13d5b461219343422029a4598fe364703",
+      "bytes": 6341
+    },
+    {
+      "path": "src/molgap/gptrans_scale_ema.py",
+      "sha256": "8878371b4e88de26d9a04333b0ea5e019ef0b30eccd14c46d2398950962ed632",
+      "bytes": 12006
+    },
+    {
+      "path": "src/molgap/gptrans_scale_ema_acceptance.py",
+      "sha256": "c5e4264471ecc8a4c42494c74eca41cd7f2437bc387604819cc839ace7d082f5",
+      "bytes": 15145
+    },
+    {
+      "path": "src/molgap/gptrans_scale_local_acceptance.py",
+      "sha256": "375117797729bf0d4f142c6dbad4ee1ae411bd8b7ec8e35e5ae4127ead05fc6e",
+      "bytes": 18023
+    },
+    {
+      "path": "src/molgap/gptrans_scale_profile.py",
+      "sha256": "68648dfbf6a611a4a1a9aec15c7351fbde51c9401a59d98653b3948dff1b3144",
+      "bytes": 7679
+    },
+    {
+      "path": "src/molgap/gptrans_scale_profile_acceptance.py",
+      "sha256": "4ff7f40aee73522c4638f2aad9d56a1649c2f55b5114ef749cd6afa6327cd1be",
+      "bytes": 8935
+    },
+    {
+      "path": "src/molgap/gptrans_scale_reference.py",
+      "sha256": "8ce2ea19d463ff91a61d90a6d7447d7ee8e85538183593da87fc370a8f42bf67",
+      "bytes": 8315
+    },
+    {
+      "path": "src/molgap/gptrans_screen_adapter.py",
+      "sha256": "ba36cf8df3465b1adf30364164d3cd69194dffdf713138c118f94494e999b6db",
+      "bytes": 4291
+    },
+    {
+      "path": "src/molgap/gptrans_screen_workflow.py",
+      "sha256": "09c17eca9a4b12e6fdcfab66b3e94cec52b6b37e823a2f7a604428cd556c5207",
+      "bytes": 38483
+    },
+    {
+      "path": "src/molgap/gptrans_source_dependence.py",
+      "sha256": "89aed241ea69311539c067750b19ffab1bd033df1f7aa8027986b540b39dea18",
+      "bytes": 19779
+    },
+    {
+      "path": "src/molgap/gptrans_source_dependence_analysis.py",
+      "sha256": "d32ed676c1ce253bb1eb37d4321661d57947cbc9d87e682b22ae90e331bcb89e",
+      "bytes": 5379
+    },
+    {
+      "path": "src/molgap/gptrans_source_dependence_prepare.py",
+      "sha256": "a37f2e1724d10108bea6717d4c0644ca1841e65106b990ff91d003f76e7c73c3",
+      "bytes": 8924
+    },
+    {
+      "path": "src/molgap/gptrans_triplet_communication.py",
+      "sha256": "f3821faf439f38c36679afa1cd7db5c9fe6068da739db9472b4dbf2dee622954",
+      "bytes": 11922
+    },
+    {
+      "path": "src/molgap/gptrans_triplet_followup.py",
+      "sha256": "c45cba0d1e2b0b083a00614b729692f7238b73098d4d8a365cd0b7a2c5433c80",
+      "bytes": 9021
+    },
+    {
+      "path": "src/molgap/gptrans_triplet_portability.py",
+      "sha256": "e3b2cba5a098f9153f0293375d845cda74406f7bd1cfbd58635d283d268d03a4",
+      "bytes": 8771
+    },
+    {
+      "path": "src/molgap/gptrans_triplet_portability_prepare.py",
+      "sha256": "1f032840c9ff0c6b3ab6c4ef44e559bf16e20fddb361fddebd67a35297bdebc0",
+      "bytes": 12500
+    },
+    {
+      "path": "src/molgap/gptrans_v5_audit_acceptance.py",
+      "sha256": "48ac242cf6375f3e23cb8e1a4307abb701654476645fc7a1e6fac4efb9090fa7",
+      "bytes": 7651
+    },
+    {
+      "path": "src/molgap/gptrans_variant_checks.py",
+      "sha256": "fd6c186b012c2a8ff6185302ea8053bbbd3ae7ddc3424c2f5c70f8e590015de5",
+      "bytes": 2867
+    },
+    {
+      "path": "src/molgap/gptrans_variants.py",
+      "sha256": "a84355f2ab4eaa9cc4c3269d4ba0646c81d03b09a600b1f5e64864951de6a35a",
+      "bytes": 2836
+    },
+    {
+      "path": "src/molgap/graph_screen_training.py",
+      "sha256": "395b2ccb6f473d2dee2d439016d51546aba88b6ab4a3bc7bdf75675c70638457",
+      "bytes": 57300
+    },
+    {
+      "path": "src/molgap/graphs.py",
+      "sha256": "8c087a9e5aefe12abd6786af9becbbc503812ca185395319ff943dd8ca488417",
+      "bytes": 8453
+    },
+    {
+      "path": "src/molgap/hierarchical_external_eval.py",
+      "sha256": "4f66c80d307de4a4cf39abc1f4f4c3e9c3f011e9cc952b5778553df791971a5b",
+      "bytes": 14363
+    },
+    {
+      "path": "src/molgap/hierarchical_fusion.py",
+      "sha256": "c6c18cce1e4a34751fa2a268c313c2587818f5c56fe38d1dc052c3c2245293af",
+      "bytes": 26316
+    },
+    {
+      "path": "src/molgap/hierarchical_oracle.py",
+      "sha256": "48746b72b21382513de67b0369a03ed5410f864a5994198cdc6818c51af682e9",
+      "bytes": 5855
+    },
+    {
+      "path": "src/molgap/hybrid.py",
+      "sha256": "ba20040e18132ee32fe7fb87727026e1dbd62f2661534024f83bc8bb8e50ff7c",
+      "bytes": 1642
+    },
+    {
+      "path": "src/molgap/inference.py",
+      "sha256": "1bc40e05bf46ddae9b9ad07600dcd386d1b6900887b2ec71b2c5b2e2523cf1a3",
+      "bytes": 38055
+    },
+    {
+      "path": "src/molgap/inference_benchmark.py",
+      "sha256": "7bed25fcfdfb97e9ae6210432f87ad47737734f2fe081271800f7a931b84f173",
+      "bytes": 15663
+    },
+    {
+      "path": "src/molgap/k1_adapter.py",
+      "sha256": "22891cc2a94f2e544c50e7a3dc7c5b6bc2fb92a8c49fe41a21ce0634475a5cfb",
+      "bytes": 4133
+    },
+    {
+      "path": "src/molgap/k1_chem_local.py",
+      "sha256": "35ad8ba407c1b74d158f866a3cf67fd1c708dd18a6df013a305b20403e27d976",
+      "bytes": 6989
+    },
+    {
+      "path": "src/molgap/k1_chem_local_study_runtime.py",
+      "sha256": "7770357cad2c9829e568e03c2958ad96577b542ebd2aaf8264db41ce1e1499f6",
+      "bytes": 5817
+    },
+    {
+      "path": "src/molgap/k1_chem_local_terminal.py",
+      "sha256": "6a72ef9775a887ed8f9ae3bf03e9e0d3b856b81b6a2866a15ef5f258981af9ef",
+      "bytes": 6016
+    },
+    {
+      "path": "src/molgap/k1_clean_second.py",
+      "sha256": "605cc9359690d80f406e74e7e1620365f51b32dd67587b35706693dd64921597",
+      "bytes": 886
+    },
+    {
+      "path": "src/molgap/k1_conjugated_hyperedge.py",
+      "sha256": "d9af7245a96ca472f12d3a04661f8c86aa3bac6c26f234e7f78da2552683d2f8",
+      "bytes": 5918
+    },
+    {
+      "path": "src/molgap/k1_conjugated_sidecar.py",
+      "sha256": "cda74c202d9ff72441436f36224df584da53ce806ad5a54bb0f53486f755fa87",
+      "bytes": 9662
+    },
+    {
+      "path": "src/molgap/k1_edge_conditioned_slot.py",
+      "sha256": "fb127545db4ce6e618869197c912873d27027636dd148a4922a10e42bc00773b",
+      "bytes": 9161
+    },
+    {
+      "path": "src/molgap/k1_edge_kaggle_runtime.py",
+      "sha256": "1070c74ba47cb311bcd14a54cbf23d664d5d539056892354608e691c5e9d39f8",
+      "bytes": 11464
+    },
+    {
+      "path": "src/molgap/k1_edge_memory.py",
+      "sha256": "221f5c74d063e9c80f67bfc0aba80548053bbf61acc05784c9a11eeabf4ef351",
+      "bytes": 5574
+    },
+    {
+      "path": "src/molgap/k1_edge_slot_interaction.py",
+      "sha256": "8cb1f0a4671864ff029a01788630bbd35ed8f4c46e8f774822d8fb2345ca00a0",
+      "bytes": 4982
+    },
+    {
+      "path": "src/molgap/k1_execution_layout.py",
+      "sha256": "b524dfe4ec5c798848bcb88eccf67d0c2c089a8ddc38bb3eaf461f389c041aee",
+      "bytes": 3307
+    },
+    {
+      "path": "src/molgap/k1_gpspp_local.py",
+      "sha256": "083a313fcf6d5196af9a1df7eb30c158b4af5d08488388ae14c28f9518072033",
+      "bytes": 9290
+    },
+    {
+      "path": "src/molgap/k1_joint_acceptance.py",
+      "sha256": "f4d441656d921e5e51d2f870b42c59b1c519b837daf888ad1feef81c7c3b0aa7",
+      "bytes": 19264
+    },
+    {
+      "path": "src/molgap/k1_joint_aggregation.py",
+      "sha256": "79680f7165e0773168f01845e45c5917e91d82b79b7bd557bbc74f4056ff39f9",
+      "bytes": 8453
+    },
+    {
+      "path": "src/molgap/k1_joint_objective.py",
+      "sha256": "50db3ef9e06dbbac778f40d812fb94e1efa5109c3de78008f538a8b7026ab770",
+      "bytes": 35099
+    },
+    {
+      "path": "src/molgap/k1_joint_study_ops.py",
+      "sha256": "35cee4d2dc65212f9cbbb57f72f9dec6cdafc711f2246846ad3744f245a0f5df",
+      "bytes": 4671
+    },
+    {
+      "path": "src/molgap/k1_joint_study_runtime.py",
+      "sha256": "118e881c7988708f091c52159987143313160a004ce595d5038f965c7ba9f6bd",
+      "bytes": 11072
+    },
+    {
+      "path": "src/molgap/k1_joint_terminal.py",
+      "sha256": "114abda9ff2448c1559ef255cae16ad8af52d807410a15ae3132e45c2dd7dfc5",
+      "bytes": 13875
+    },
+    {
+      "path": "src/molgap/k1_linear_attention.py",
+      "sha256": "f28e363388825e95c0ff04f2cf2b57b1c8df8d0b313dabcf81a3202a94ac3cc5",
+      "bytes": 4597
+    },
+    {
+      "path": "src/molgap/k1_motif_hierarchy.py",
+      "sha256": "102584e35826412e84aa09769ec620c276522ffbf6740f374dbdf5a28611dbd0",
+      "bytes": 5459
+    },
+    {
+      "path": "src/molgap/k1_motif_study_runtime.py",
+      "sha256": "c5f2a174595a906f01b2cd2bf361157c0788cfa3321e636e154f6e377f3df664",
+      "bytes": 6968
+    },
+    {
+      "path": "src/molgap/k1_multiplicative_pair_value.py",
+      "sha256": "343809cda629c0c77aedac6952dff33e5ca640219a4f60602b74f8335c1f2b86",
+      "bytes": 7773
+    },
+    {
+      "path": "src/molgap/k1_pair_value.py",
+      "sha256": "39ff5e92f5befc3a9e64ca39410ebf3fc7445318c5d1c01c6f5f8c347d726f47",
+      "bytes": 5158
+    },
+    {
+      "path": "src/molgap/k1_portability_audit.py",
+      "sha256": "652d5bb151315c104b3b659bf3f24fd7e1bf2ff6070508c095d17adba0cbb1aa",
+      "bytes": 10050
+    },
+    {
+      "path": "src/molgap/k1_portability_dual.py",
+      "sha256": "dd9ec8c985a53b7de392ae9ae9a986b16084d04ba2595aec4ce5896e131cbac0",
+      "bytes": 4283
+    },
+    {
+      "path": "src/molgap/k1_relation_audit.py",
+      "sha256": "fe1a23c4de42563708b2bdc3ed9ba52e63f877b3f23fb27dd0325fcb84ae3155",
+      "bytes": 14936
+    },
+    {
+      "path": "src/molgap/k1_relation_intervention.py",
+      "sha256": "26b1eb8fdf5c25c8d05ea8b074d12f32e273618aa3948d1b0cd5bc573b5ef825",
+      "bytes": 13450
+    },
+    {
+      "path": "src/molgap/k1_relation_resolution.py",
+      "sha256": "1e9ae39ab26d44245cd6f9b8710ea9ae73feee0fe83cbcb2e2912202bf69f191",
+      "bytes": 26559
+    },
+    {
+      "path": "src/molgap/k1_relation_study_monitor.py",
+      "sha256": "9422f48395a425057afb9bfd060c239062120e2936aeb772f33621aadde11f18",
+      "bytes": 4916
+    },
+    {
+      "path": "src/molgap/k1_relation_study_runtime.py",
+      "sha256": "94de83a6b9de0e467e7a45ff0c71a8ed1b729dea2e469976ecbfd5637bd4aa4f",
+      "bytes": 8603
+    },
+    {
+      "path": "src/molgap/k1_relation_terminal.py",
+      "sha256": "2beafc4afece5036aca7b8f206f70309bc6c734d0d8c1380100d0bdcec34f0b0",
+      "bytes": 6984
+    },
+    {
+      "path": "src/molgap/k1_representation_audit.py",
+      "sha256": "e15db969c8f0ab77262d2b0a9b56e3a7619387ce46a63642ba46154a9dac6b6d",
+      "bytes": 11086
+    },
+    {
+      "path": "src/molgap/k1_screen_trace.py",
+      "sha256": "94078c18a2779d0e0dfd69bea9a488b6e7036a3e6c5cc17cff44e25c38f8613e",
+      "bytes": 2325
+    },
+    {
+      "path": "src/molgap/k1_screen_training.py",
+      "sha256": "c9e621917279c35e83b688cf09f32858bfb021748745c9d36ac9479a098e8222",
+      "bytes": 56361
+    },
+    {
+      "path": "src/molgap/k1_sparse_triplet.py",
+      "sha256": "a0632857b3aec935624e0c33452be26d91fa45617b5166e3437703233c586789",
+      "bytes": 8872
+    },
+    {
+      "path": "src/molgap/k1_terminal_analysis.py",
+      "sha256": "7302c7af93ea3f5e57547ad7d4e2b3d70190810f4ffaa49517a2295c5b8adc24",
+      "bytes": 5179
+    },
+    {
+      "path": "src/molgap/kaggle_accelerator_push.py",
+      "sha256": "af6103b96de861e3ce15cf09b8af7e1d1d82e0c179281d98387650b6c54cf679",
+      "bytes": 9776
+    },
+    {
+      "path": "src/molgap/kaggle_pair_runtime.py",
+      "sha256": "54fd0b26f4ed89868ca899ed8a9126c59157e59a32514dbd0349605e2b12e64b",
+      "bytes": 10943
+    },
+    {
+      "path": "src/molgap/kaggle_python_environment.py",
+      "sha256": "1c8c07958e4bcfb0b2cdd687c4e8217f331dc0d269399a2ef8fdc2983ce4c1e2",
+      "bytes": 3159
+    },
+    {
+      "path": "src/molgap/kaggle_workflow.py",
+      "sha256": "d66729607e59bc4c9fcd8cbe8ca717ff84f3239692ce88218c83027c4b2c36b5",
+      "bytes": 5814
+    },
+    {
+      "path": "src/molgap/late_router.py",
+      "sha256": "8258af65731cf7690d0e0ac8ce39fdc0aecd19501a115706e1ca09b4c732d929",
+      "bytes": 4461
+    },
+    {
+      "path": "src/molgap/model_reporting.py",
+      "sha256": "07efe41c13f9c9dd9bfce829bff8053a7e4f499efedec1230f014424f5318508",
+      "bytes": 9036
+    },
+    {
+      "path": "src/molgap/multi2d.py",
+      "sha256": "b92081a6b8918d2d814b831bef7122aabc860f7c71f28f5932635a10f3207aac",
+      "bytes": 11762
+    },
+    {
+      "path": "src/molgap/multi2d_router_fusion.py",
+      "sha256": "63485819e2ac858d080b5dc2e6e408bcba733100abe976339da6125bd7d43507",
+      "bytes": 19071
+    },
+    {
+      "path": "src/molgap/ogb_features.py",
+      "sha256": "6eff5c05f27dc0e0999d95034a447164dde5fd5c39f9666302bcb12066e92124",
+      "bytes": 1932
+    },
+    {
+      "path": "src/molgap/oof_planning.py",
+      "sha256": "c3b11d1466243927b11223c7416158504a2f4464e7172ecf9c8e9b7160f66cc9",
+      "bytes": 8209
+    },
+    {
+      "path": "src/molgap/packed_graph_dataset.py",
+      "sha256": "552215051a08fe171ab950c3d57449eba2441c1fa95f87ab53207d28b70b3122",
+      "bytes": 562
+    },
+    {
+      "path": "src/molgap/pair_gps_2d.py",
+      "sha256": "cbef36bc033545ba34c650552c32e2dc19840d0dbce8ba00780a4c053527cf4e",
+      "bytes": 32079
+    },
+    {
+      "path": "src/molgap/pair_triplet_2d.py",
+      "sha256": "a818f69570038b013bc2217fe871ce0ff47468c2abf4505cddb99eeac6c2df69",
+      "bytes": 9234
+    },
+    {
+      "path": "src/molgap/pair_triplet_2d_rich.py",
+      "sha256": "09e9934f9359f90b90dc43c3da1d15d1015fd38f4671bba974af5f6c74f9f884",
+      "bytes": 10606
+    },
+    {
+      "path": "src/molgap/payload_multistack_calibrator.py",
+      "sha256": "62980160440c9dbc5aed4595934bbc7ac932f41693bc7017353674093d2c2ccd",
+      "bytes": 17336
+    },
+    {
+      "path": "src/molgap/payload_stack_calibrator.py",
+      "sha256": "f128a653ff16f0b596669df807947a277b7ebc3a0525497df83095598717af49",
+      "bytes": 15179
+    },
+    {
+      "path": "src/molgap/pcqm_conjugated_cache.py",
+      "sha256": "11198268b357b7cd5a935eeeb6691be5b9aa80f056593c152a13e56e200e2d32",
+      "bytes": 5218
+    },
+    {
+      "path": "src/molgap/pcqm_conjugated_state.py",
+      "sha256": "23c2cf56fd91219cd8630d4aa6321ac6fed8717bafbcba53be403323d90426f5",
+      "bytes": 10182
+    },
+    {
+      "path": "src/molgap/pcqm_contact.py",
+      "sha256": "2eebb8f0750ab2cb5265cb0091f039445361f7960dd6c63693f0da40f0cdbab3",
+      "bytes": 7415
+    },
+    {
+      "path": "src/molgap/pcqm_directed_spectral.py",
+      "sha256": "2da8ef250264d509ea2a28e604dcbf8dfade5d0a909c88a3585b65627399ad24",
+      "bytes": 7435
+    },
+    {
+      "path": "src/molgap/pcqm_expert.py",
+      "sha256": "742a84ba3957200cf2c94427dbfb948847fb84626a65ed666643bc337c109bd9",
+      "bytes": 45294
+    },
+    {
+      "path": "src/molgap/pcqm_fourier_edge.py",
+      "sha256": "c370109bcbc937a57fefa0a772316ec83ac571d0fd052fb23c68b0bb06aaef77",
+      "bytes": 12065
+    },
+    {
+      "path": "src/molgap/pcqm_functional_group_sidecar.py",
+      "sha256": "39a4ad383364ae5924188f222d874d27976bdfbba9709b8a1c2bf588875a7a83",
+      "bytes": 17934
+    },
+    {
+      "path": "src/molgap/pcqm_gap_architecture.py",
+      "sha256": "0de3c77c50531d7f49e884c4c2bd5c67a554935c1996bd0eae952c4b5434c045",
+      "bytes": 86997
+    },
+    {
+      "path": "src/molgap/pcqm_geometry.py",
+      "sha256": "c405d8d4d1195e0535c02adfabe68f66bc34243cc91fbfb0f7ba3af8c0d447a1",
+      "bytes": 8441
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_full_runner.py",
+      "sha256": "fea640746644568abe14691688d511d0c3d4f8ff19e418e86b0c5f262e20c8c9",
+      "bytes": 23539
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_prenorm_500k.py",
+      "sha256": "83fcc341defc9b4dd38be859efdfb899e14958a978e7c9417382c1ca2b31954c",
+      "bytes": 24384
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_shortest_path_profile.py",
+      "sha256": "ebe7cd4857ce92c5017d765d597c74d7bdba19e879fc0e908ce214e23c0885d5",
+      "bytes": 14832
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_step_profile.py",
+      "sha256": "285eb0f8db1ba3f6135589eaa34376986b6d0c9fbafd48f8d06a1ee771f8942a",
+      "bytes": 25764
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_v4.py",
+      "sha256": "6cf6f78d0c328fbfca7b0bb604c59d8131c7db39346ac882f9022f01e935f74d",
+      "bytes": 65140
+    },
+    {
+      "path": "src/molgap/pcqm_graph_inputs.py",
+      "sha256": "3437cba0b684abd91c503ea4d39e1f7d0903b2221d4a3819b77019d327ade556",
+      "bytes": 17064
+    },
+    {
+      "path": "src/molgap/pcqm_hop_path.py",
+      "sha256": "69fdca5cdc54ba99ef34d4eb4afb4480534ecdde295246b310a3eb883ce90321",
+      "bytes": 11107
+    },
+    {
+      "path": "src/molgap/pcqm_k1_causal_audit.py",
+      "sha256": "3dc96b589ca263d87c3a6b2340d214ab51d3a2751a8ac69716499f5ecfd5a697",
+      "bytes": 17650
+    },
+    {
+      "path": "src/molgap/pcqm_k1_cross_scale_diagnostic.py",
+      "sha256": "4d3c2a822bc9696b58e825c6e69fc6dee5f012bae3942d347fe0f7fd1a15007b",
+      "bytes": 13683
+    },
+    {
+      "path": "src/molgap/pcqm_k1_explainability.py",
+      "sha256": "82fa255f66db3cf35e39486f1f8b7a5398ca24787e3750d81ebf26e21094367e",
+      "bytes": 11163
+    },
+    {
+      "path": "src/molgap/pcqm_k1_full_runner.py",
+      "sha256": "53f9276fea77225532ddd6df581aee664fefd386de3e984af7c9ec0bf5abf95e",
+      "bytes": 33864
+    },
+    {
+      "path": "src/molgap/pcqm_k1_matched60_500k.py",
+      "sha256": "24f6b88bb55bd8a29ef0d791abce48b2472599e0aafa00f823afd078ca01fe15",
+      "bytes": 787
+    },
+    {
+      "path": "src/molgap/pcqm_k1_pair_selection_acceptance.py",
+      "sha256": "b5abef534ecf36841bdd5b3bd0087fb4d4b94103fcc918b0b3e3c3b8aa8e08ef",
+      "bytes": 5616
+    },
+    {
+      "path": "src/molgap/pcqm_k1_pair_selection_diagnostic.py",
+      "sha256": "766fda3fac9c79efa914dcd19e36d48125789ae7e9fcfdd9310fb222af4b56f0",
+      "bytes": 13781
+    },
+    {
+      "path": "src/molgap/pcqm_k1_scale.py",
+      "sha256": "876e9f07b27ff815cf667f2c51377e00aef02147fa56e0fa08089b4aa3dceba4",
+      "bytes": 2999
+    },
+    {
+      "path": "src/molgap/pcqm_k1_scale_cache.py",
+      "sha256": "94422a6aeaf8439547b3ca33d1b0872c2cd2aec2f69e4b766633dc2160c21976",
+      "bytes": 12798
+    },
+    {
+      "path": "src/molgap/pcqm_k1_scale_runner.py",
+      "sha256": "ebcb7b5c895786b92c3d0a3976126f957e9f0a2666c692f0ca4d0afebe115a35",
+      "bytes": 17899
+    },
+    {
+      "path": "src/molgap/pcqm_k1_shadow_audit.py",
+      "sha256": "babbf520e405e2db73da1ca0c380b5643d94eff2754f616ad9961c7e5d90e843",
+      "bytes": 14207
+    },
+    {
+      "path": "src/molgap/pcqm_k1_strength_audit.py",
+      "sha256": "f346731506404b35d35a1e652f89116341d3085601a2b04f3bbdec3ba4e1ac12",
+      "bytes": 7152
+    },
+    {
+      "path": "src/molgap/pcqm_k1_tf32_comparison.py",
+      "sha256": "93ace1008cb2be9945548f3ebfa0bec426b95269a67ac73e61426abfc9b37a5f",
+      "bytes": 23452
+    },
+    {
+      "path": "src/molgap/pcqm_k1_variants.py",
+      "sha256": "4d0cce3202035d15d8f8d60f0729f0b51eee8b177210d46811c1a2019a551ff6",
+      "bytes": 58583
+    },
+    {
+      "path": "src/molgap/pcqm_k1_variants_runner.py",
+      "sha256": "6d908f9cdd963e04b1b157e7d1d06bc164318867f50d60606d841b1df0e5b1d8",
+      "bytes": 97545
+    },
+    {
+      "path": "src/molgap/pcqm_kunshan_screen.py",
+      "sha256": "a79495fb7e969c0550da7787e47646942b4094fcf9afde429d4c9b50cb37de5e",
+      "bytes": 14889
+    },
+    {
+      "path": "src/molgap/pcqm_local_global_runner.py",
+      "sha256": "8f44e924c6ee4543577bda3423502b3233c84782a120c246eddfa7d95cb0f9d7",
+      "bytes": 87276
+    },
+    {
+      "path": "src/molgap/pcqm_local_hierarchy.py",
+      "sha256": "1931bba752211cbe472395c0f3f765576343583af0569f6762744708ebf8c416",
+      "bytes": 42834
+    },
+    {
+      "path": "src/molgap/pcqm_local_statistics.py",
+      "sha256": "8ed276be81dc458927c06aa50db152d63103fbd76a0e9f39e8dd6661dbfa965b",
+      "bytes": 6972
+    },
+    {
+      "path": "src/molgap/pcqm_metagin.py",
+      "sha256": "ced139ceae5ef04037a4c85418723cbb13c23645407be93ae630bef801c624df",
+      "bytes": 6108
+    },
+    {
+      "path": "src/molgap/pcqm_metagin_profile.py",
+      "sha256": "7a6dcb8b4c7aff9ba3680875e4f401746442827911d7ed48e37ecd5d1469efb4",
+      "bytes": 5899
+    },
+    {
+      "path": "src/molgap/pcqm_metagin_screen.py",
+      "sha256": "ab923773524cf3fcffc715685775daf949cec0c844b9d3810da63aeaef1b6a80",
+      "bytes": 18451
+    },
+    {
+      "path": "src/molgap/pcqm_metagin_sidecar.py",
+      "sha256": "ec26bc55a266615b8989671a19ada24d40224b6af4d1dc2e2ab3516860627994",
+      "bytes": 14629
+    },
+    {
+      "path": "src/molgap/pcqm_moment_readout.py",
+      "sha256": "1542c530a5298dd202485a6b75744ab00b05068f4dfebf5c5bc2f2856a5fc3e9",
+      "bytes": 3603
+    },
+    {
+      "path": "src/molgap/pcqm_mose.py",
+      "sha256": "b06673d8d69306f3ecfc54cbb882d0957833dde11cda7bd0ceec39b8ae5467c5",
+      "bytes": 14769
+    },
+    {
+      "path": "src/molgap/pcqm_motif_partition.py",
+      "sha256": "f3b36e7192b4d8be659081e71ed02e709f344e0fb0ad1e1362fe9773518f0af4",
+      "bytes": 5942
+    },
+    {
+      "path": "src/molgap/pcqm_motif_sidecar.py",
+      "sha256": "f145bcdb9a0ddb1c529e61be63f010dffa115d44a6665cff338329f64ee66543",
+      "bytes": 14898
+    },
+    {
+      "path": "src/molgap/pcqm_pretraining_runner.py",
+      "sha256": "4e9f08b68036e3b846d51f1c0ea7067fb4a5a3c398ad3b3f0a3171609581d9e9",
+      "bytes": 22271
+    },
+    {
+      "path": "src/molgap/pcqm_relative_value.py",
+      "sha256": "883b02b0b7e2e4fccd1adb5b09e5f916872cd6925e54a0e4530aab844862c44b",
+      "bytes": 7635
+    },
+    {
+      "path": "src/molgap/pcqm_ring.py",
+      "sha256": "1d4ee3284e95b8fe73fab857982184fbf2d424219657aca0fbee7e7f36c24eae",
+      "bytes": 10012
+    },
+    {
+      "path": "src/molgap/pcqm_route_b.py",
+      "sha256": "1cf82ae49750aa0f5df9461767d0548a6f37febe847793d3633742c02ecf687d",
+      "bytes": 9808
+    },
+    {
+      "path": "src/molgap/pcqm_route_b_acceptance.py",
+      "sha256": "f2726a2d720367cdb53cfc49c8a76168dfc89203d1be7d3b0701aa7018415f40",
+      "bytes": 6051
+    },
+    {
+      "path": "src/molgap/pcqm_route_b_evaluation.py",
+      "sha256": "5d276fc5d06ec96dc0216a41addbd8db4846790e48a4b95ff55cddf869bb525a",
+      "bytes": 18895
+    },
+    {
+      "path": "src/molgap/pcqm_route_b_fusion.py",
+      "sha256": "50d5915e24a07c052bcd4fd2f5e3bfde96d7f46b6c0d7e649e39d49eafe7335c",
+      "bytes": 31252
+    },
+    {
+      "path": "src/molgap/pcqm_route_b_search.py",
+      "sha256": "77ac044259d986069255f38870b5f47d7955cfb99b86c9a4e856316b3f3fb477",
+      "bytes": 32115
+    },
+    {
+      "path": "src/molgap/pcqm_route_b_training.py",
+      "sha256": "be4e554db24b7b8cecbc93e307a9e85bed2a2a5000661f544b6dc140e6d94721",
+      "bytes": 27735
+    },
+    {
+      "path": "src/molgap/pcqm_screen_policy.py",
+      "sha256": "42ba9ebf1a46f4045f02bee408bc677d14544613e6b851fce662839effcdfe31",
+      "bytes": 775
+    },
+    {
+      "path": "src/molgap/pcqm_shadow.py",
+      "sha256": "791cfffd09c9a19a72e88ede711a51c3ecba654f4729e178ce7daa3622379e0f",
+      "bytes": 11262
+    },
+    {
+      "path": "src/molgap/pcqm_specialist_combination_transfer.py",
+      "sha256": "daf8c96ff7873f2bb7f0670486811e9a95d83a2366b90e57bbacc2f75d89a5cd",
+      "bytes": 11889
+    },
+    {
+      "path": "src/molgap/pcqm_specialist_oracle.py",
+      "sha256": "9b961f80b3459283975fa969a1ec5b628d69a5957ddffbc05115583c0cfb1561",
+      "bytes": 32062
+    },
+    {
+      "path": "src/molgap/pcqm_tgt_hybrid_v3.py",
+      "sha256": "5750c5757ce3e1fd20e25e4e1aec6ffe3345c534c75627907df3e73eaa4f8696",
+      "bytes": 12779
+    },
+    {
+      "path": "src/molgap/pcqm_tgt_lite.py",
+      "sha256": "292e9db958a20774c9b986b3124db4d7e1f3388f71c2ec8f2154bd3d9556df6a",
+      "bytes": 13671
+    },
+    {
+      "path": "src/molgap/pcqm_topology.py",
+      "sha256": "12da67e50e7d11d408ef1b186e9cf6f8ea2547aba0917aa89a8d84de80cb15c1",
+      "bytes": 9786
+    },
+    {
+      "path": "src/molgap/pcqm_vector_state.py",
+      "sha256": "6562566cdc1c2978773643ba2a2e63a4469205244a5a472f2626f808c1031630",
+      "bytes": 14622
+    },
+    {
+      "path": "src/molgap/pcqm_wedge.py",
+      "sha256": "813e27940215881f2052f5d53847a33637b767ff3d26b28dd0b512b37c22ab84",
+      "bytes": 3272
+    },
+    {
+      "path": "src/molgap/portable_radius.py",
+      "sha256": "17c9dbf7f0679de8f439ad83bb1517c94677802dd3f9b93a00440913aa1acf56",
+      "bytes": 2860
+    },
+    {
+      "path": "src/molgap/presentation_figures.py",
+      "sha256": "834e6ae532523274f19fae0c40a19639d22c181900d21cf62e7660ab4bb5302e",
+      "bytes": 14850
+    },
+    {
+      "path": "src/molgap/pubchemqc.py",
+      "sha256": "dbec4f5512462f93472524cf7093c7e9bca25010be030c9341d11b31bcb976f4",
+      "bytes": 8270
+    },
+    {
+      "path": "src/molgap/pubchemqc_architecture.py",
+      "sha256": "d42578bc9440fcb50ca949e252b6de418206595ce7bad7c5002f23cb5d7dea6a",
+      "bytes": 14163
+    },
+    {
+      "path": "src/molgap/pubchemqc_direct_training.py",
+      "sha256": "bed19fcfba2e34d9ca66a3f431b7a362d83e715726d76035b369b0edfc7948a4",
+      "bytes": 12810
+    },
+    {
+      "path": "src/molgap/pubchemqc_pair_gps_2d.py",
+      "sha256": "67ce8ba961afb6bfbb6aa524bea5ca797402d31e144fcba77cf2c365fff809aa",
+      "bytes": 45539
+    },
+    {
+      "path": "src/molgap/pubchemqc_pair_gps_2d_benchmark.py",
+      "sha256": "0aad5458d17752bc7eb5b7f8d7a60ea01470f1653beda1c87beb656fa525a6b0",
+      "bytes": 12406
+    },
+    {
+      "path": "src/molgap/pubchemqc_pair_gps_2d_screen.py",
+      "sha256": "dd1d9543ce40d40351271b492ba6834a4fc9f245dcce01dd9208fa75bcba6f22",
+      "bytes": 28209
+    },
+    {
+      "path": "src/molgap/qm9_adaptive_denoising.py",
+      "sha256": "6917bc893387798a5272b48a9b5450a23eac8f6e884cd2a2e7df157fdcbc900f",
+      "bytes": 50824
+    },
+    {
+      "path": "src/molgap/qm9_cardinality.py",
+      "sha256": "67ec4eddeec46178632d7aced83e88518ec7243db92f5c47ff94c3b366568f03",
+      "bytes": 17582
+    },
+    {
+      "path": "src/molgap/qm9_conformer.py",
+      "sha256": "d247713684bf025aa48ae417a49d3f8fbe905b5787747d066d9a48545799acf1",
+      "bytes": 10199
+    },
+    {
+      "path": "src/molgap/qm9_fourier_edge.py",
+      "sha256": "6cdd635623395e6dec4838b3a7ad465e985ce109c8ee99fe426310087d24ed11",
+      "bytes": 13171
+    },
+    {
+      "path": "src/molgap/qm9_fusion.py",
+      "sha256": "1ed3f6ed4d18b3faaf6baecd88156467f8739f9cf190a25bf40dca0ae1b17689",
+      "bytes": 17123
+    },
+    {
+      "path": "src/molgap/qm9_gape.py",
+      "sha256": "619d6c3719032441cbc01082904f512bbbe5370202263ce60fa428e0e1d373f3",
+      "bytes": 21622
+    },
+    {
+      "path": "src/molgap/qm9_local_hierarchy.py",
+      "sha256": "b9d5b72c02d4ce459cf7b6666daee07e402e493fea64eca9ac08335364efd25b",
+      "bytes": 40884
+    },
+    {
+      "path": "src/molgap/qm9_neural_atom.py",
+      "sha256": "c632c6e7e3e6a8d0ffc1dc4ad474facb9688050fc8ba0506c420d8bffc3d12bb",
+      "bytes": 20520
+    },
+    {
+      "path": "src/molgap/qm9_payloads.py",
+      "sha256": "7447c1d2d3a780c4ea8cb6d7a8d41d145ba12852e048735341aa98e9552528f5",
+      "bytes": 7770
+    },
+    {
+      "path": "src/molgap/qm9_screen.py",
+      "sha256": "ae85a0dc963b18f6001b8d5eeb685d87d37f425cb3823fbc63241da86851c22a",
+      "bytes": 76389
+    },
+    {
+      "path": "src/molgap/repaired_2m_3d_colab.py",
+      "sha256": "2bd6a1249708605cdb27772d588db8932f25f90f998f826331f76176461c15e8",
+      "bytes": 51030
+    },
+    {
+      "path": "src/molgap/repaired_2m_schnet.py",
+      "sha256": "0405e015a19b23f81bd981fc58f11c52bd3f4e3e0bc6312f823b1e802a683322",
+      "bytes": 33314
+    },
+    {
+      "path": "src/molgap/representation_diagnostics.py",
+      "sha256": "1c0295701798f5d20431570961b0104fd9a2e3332a44d85dffc0d7c4eb0c625c",
+      "bytes": 3494
+    },
+    {
+      "path": "src/molgap/research_curve_review.py",
+      "sha256": "e378d69aa3de0227f1b8607fe445311ca8404859d7d82f8744b973a5598a680d",
+      "bytes": 13660
+    },
+    {
+      "path": "src/molgap/research_funnel.py",
+      "sha256": "69fd0d3d9ca11f19f0ab2efe9a69a5a99c128ec321d3dee4651e2f308153e0cf",
+      "bytes": 3218
+    },
+    {
+      "path": "src/molgap/research_memory/__init__.py",
+      "sha256": "172baf3963c36d2a3d9c423ab05db6850a11ac58195a9647d7ee6f95df28fc48",
+      "bytes": 1244
+    },
+    {
+      "path": "src/molgap/research_memory/__main__.py",
+      "sha256": "c2ee4ddb093c9af060cafaf68219907f8a6b7b301ed3f8bea75db7555adec987",
+      "bytes": 62
+    },
+    {
+      "path": "src/molgap/research_memory/backtest.py",
+      "sha256": "c4a76402749c21de6157209ba96fe14daa5dd0fc80dc15911085f43099de67aa",
+      "bytes": 15021
+    },
+    {
+      "path": "src/molgap/research_memory/candidate_qualification.py",
+      "sha256": "ce989e381bc48a09b3f2d6a92a8b44789211bb3734b816be7a4db9ab3e324e19",
+      "bytes": 13416
+    },
+    {
+      "path": "src/molgap/research_memory/candidate_reference.py",
+      "sha256": "ebb4e2a2ed9aad28f8fbdd62a0b1651ba927a8933e815e80a35939245c9d4a4a",
+      "bytes": 14659
+    },
+    {
+      "path": "src/molgap/research_memory/cli.py",
+      "sha256": "0d4bdd2a8e62b05b1f305f51f0ae378ac4881cfe8165c47f3a0e1293b8b7940d",
+      "bytes": 8833
+    },
+    {
+      "path": "src/molgap/research_memory/compiler.py",
+      "sha256": "39e06fed9f2ac437ef2dde5a20e78f1e648f0ab74bac6d5aab82c7c47739e843",
+      "bytes": 13707
+    },
+    {
+      "path": "src/molgap/research_memory/cost.py",
+      "sha256": "471fc2b983417ea59198ce28a40e04c9fc0526160d71474e1f793fbd845392c4",
+      "bytes": 3289
+    },
+    {
+      "path": "src/molgap/research_memory/derived.py",
+      "sha256": "a468ac39279741b06721e4c3161ff898fbea4ebb1c18d0bc597bd6629d7db943",
+      "bytes": 13813
+    },
+    {
+      "path": "src/molgap/research_memory/discovery.py",
+      "sha256": "d93ae30227e8367fc88cb0e80da046e723d1f51ace2daeb2d4c5fb4a463b9b28",
+      "bytes": 2438
+    },
+    {
+      "path": "src/molgap/research_memory/ema_replay.py",
+      "sha256": "adfcf535941dbd366a91900625b4328a01c437397421e2ebbbb905d41297ec11",
+      "bytes": 5944
+    },
+    {
+      "path": "src/molgap/research_memory/finalize.py",
+      "sha256": "904f173411d98a95b17205c5b08b615f3ca6293f6330827eeeb8f5f429bc9ee2",
+      "bytes": 22725
+    },
+    {
+      "path": "src/molgap/research_memory/paired.py",
+      "sha256": "acda3a814661f807e23f012c06dc8b4a6b2893f88c543deb9d108bfb2405585f",
+      "bytes": 7478
+    },
+    {
+      "path": "src/molgap/research_memory/paths.py",
+      "sha256": "48fc8bfac2fe1d91472650c5ee72af2904cf6f546000cadf68b2ca3c08e02b97",
+      "bytes": 2116
+    },
+    {
+      "path": "src/molgap/research_memory/pipeline.py",
+      "sha256": "47258bdb0642a651386e8ecf880e3caac60bbb474ec9695def576e2a233e0b87",
+      "bytes": 2523
+    },
+    {
+      "path": "src/molgap/research_memory/plan.py",
+      "sha256": "c7c6cfc31cb9d6e4a42c755e5b2f8ed6efda03cf93c134ca9131de8629bd6185",
+      "bytes": 20977
+    },
+    {
+      "path": "src/molgap/research_memory/policy.py",
+      "sha256": "7c41b7d8f5ba258f64543ad2313818fc67d8f916bfeb770583c0b02f9818fa57",
+      "bytes": 8159
+    },
+    {
+      "path": "src/molgap/research_memory/portability.py",
+      "sha256": "1dbb1d217c22a9d72435606ff0f471896f4e11fe152c8967c95a826293f39b1e",
+      "bytes": 7754
+    },
+    {
+      "path": "src/molgap/research_memory/ready.py",
+      "sha256": "47c7776c9469cb1e89b5648fd7fc2fd826b4cc83d7bffea16b8d5499b74dc927",
+      "bytes": 8765
+    },
+    {
+      "path": "src/molgap/research_memory/recovery.py",
+      "sha256": "582e0ec58cce2dd28a2b6c337680771070c1b564db6ef20160fa8b9319b07c35",
+      "bytes": 3482
+    },
+    {
+      "path": "src/molgap/research_memory/reference_qualification.py",
+      "sha256": "b5a1cca5fe14c63289ae19954ade63636913f42217177ee2dc90f0182aaf56d9",
+      "bytes": 11436
+    },
+    {
+      "path": "src/molgap/research_memory/references.py",
+      "sha256": "e55d4e025cebd59a7f87c38d05fcb7d018239a43c0d2d963d96fd918eca003a4",
+      "bytes": 1831
+    },
+    {
+      "path": "src/molgap/research_memory/replay.py",
+      "sha256": "0fe81ab9b8bb7bf66cce41f5ba120efc71837a253ed9f8c4419199edbd831e68",
+      "bytes": 17412
+    },
+    {
+      "path": "src/molgap/research_memory/roles.py",
+      "sha256": "34afe417d96d48591427899537e607685fb16f3014314616bd43052d21e6466a",
+      "bytes": 5043
+    },
+    {
+      "path": "src/molgap/research_memory/run_binding.py",
+      "sha256": "90bc688749fc68f51e57c54393b8f181e5b5c20fe8ee3466861ec0fe061a0bbb",
+      "bytes": 4255
+    },
+    {
+      "path": "src/molgap/research_memory/schemas.py",
+      "sha256": "16de05531d73301f4e543cd3e45d483a09dad6ddbadfdb49c857bec17b8702a4",
+      "bytes": 19206
+    },
+    {
+      "path": "src/molgap/research_memory/summary.py",
+      "sha256": "e2a798970e7a16e27d41a23fde6b7fb13077e1af0727cd5f04e8c88cc600dc35",
+      "bytes": 3582
+    },
+    {
+      "path": "src/molgap/research_memory/terminal_wiring.py",
+      "sha256": "e3ce930ea6b8a956fa5ba1b283f9fb6ec36ac6b528bdafc772a0786d8f140e2b",
+      "bytes": 30604
+    },
+    {
+      "path": "src/molgap/research_memory/trace.py",
+      "sha256": "fb795291e83f533cfdfe1bcb21f3c58cb43f8956afa1dc01894be5e2c812559f",
+      "bytes": 10757
+    },
+    {
+      "path": "src/molgap/research_memory/validate.py",
+      "sha256": "c8ea6c7dc964fd8cf5a5793f730efbf613fbfdbcd6951badeea0531cb558ca81",
+      "bytes": 21202
+    },
+    {
+      "path": "src/molgap/residual_attribution.py",
+      "sha256": "bdbd94652ddb6036cba735b7e9e588caef05841c931efef9a8e3a661b7a0d69a",
+      "bytes": 8874
+    },
+    {
+      "path": "src/molgap/retention.py",
+      "sha256": "c064a6c394182c806ee549748812e0c775260eebfe61362671664de341b90272",
+      "bytes": 2184
+    },
+    {
+      "path": "src/molgap/route_b_fusion.py",
+      "sha256": "64c9481cfa413b81218d20e301473061071d8e74632d6a0dc62934ef0730a955",
+      "bytes": 14182
+    },
+    {
+      "path": "src/molgap/router.py",
+      "sha256": "b31f471ec211621cf8b2b5344d62023aca92c0a5f12df3a254853fee78a0baa7",
+      "bytes": 20640
+    },
+    {
+      "path": "src/molgap/router_sampling.py",
+      "sha256": "22f7cce3115c743c3a4ad5dc1ecb6dc5b3b2f5a7152f3428af62157dfc59149a",
+      "bytes": 2808
+    },
+    {
+      "path": "src/molgap/runtime_profiling.py",
+      "sha256": "8dd71f844ed92b0b4fd134f5ac5b798fb9a7ffeb09d63f0d3d2e1003fa265ccb",
+      "bytes": 2654
+    },
+    {
+      "path": "src/molgap/schnet.py",
+      "sha256": "e2ad065e6b9e80f16c4903f577b553d5d783e040f1ba682e0d0ec0a0bb5c8fd9",
+      "bytes": 4967
+    },
+    {
+      "path": "src/molgap/schnetpack.py",
+      "sha256": "257d36eb41788050847fa5f6b062c8ad4217731ee233da1a53f004bd2ad585c0",
+      "bytes": 4262
+    },
+    {
+      "path": "src/molgap/screen_backtest.py",
+      "sha256": "6e149033673e24524e56ca18327d378a187eff67c06e6c3145c9145cf83c4c3b",
+      "bytes": 2592
+    },
+    {
+      "path": "src/molgap/screen_policy.py",
+      "sha256": "d9a1ffedac6ea90b4a2ff43ed972c831a6028769e0f9df21a48b799584d00227",
+      "bytes": 11613
+    },
+    {
+      "path": "src/molgap/server_acceptance.py",
+      "sha256": "165717c15ced6089e72aed31caa924f405548ff3e8aab23088edaa66103e2de5",
+      "bytes": 17186
+    },
+    {
+      "path": "src/molgap/server_control.py",
+      "sha256": "ba8b73edf165420dd403822d3306086a4bed96c6dfb71e13691791f95a714683",
+      "bytes": 17663
+    },
+    {
+      "path": "src/molgap/shared_model_adapter.py",
+      "sha256": "bfef4d02b2b1efaf5a1a58fad404c25599995c70eb9293c7af1e8c8dfc66bc18",
+      "bytes": 10337
+    },
+    {
+      "path": "src/molgap/structural_encoding.py",
+      "sha256": "a3c10cd0ec1940af7f299d9b8abdf25e1278bdb369c2321458b301a3b328e671",
+      "bytes": 6363
+    },
+    {
+      "path": "src/molgap/tensornet.py",
+      "sha256": "8316ad2f6dacf367ffa055458fbf5957fa48afe0c71f57f61a4d153bbf69c989",
+      "bytes": 15032
+    },
+    {
+      "path": "src/molgap/tgt_egt_compact.py",
+      "sha256": "a923436983ec42a63745e6da6c4005cd5cfe6baef75d3068cc3cef010e1a8a02",
+      "bytes": 8735
+    },
+    {
+      "path": "src/molgap/tgt_egt_hybrid.py",
+      "sha256": "021603a5f91fbed585038b5460d91d20956b7403670f8331adff2f1f308d988d",
+      "bytes": 16775
+    },
+    {
+      "path": "src/molgap/tgt_egt_hybrid_plus.py",
+      "sha256": "8234bc82b9ac2de1623ad3d331a6e88ebbd9b780f94cd8efc002aedc3c173352",
+      "bytes": 6741
+    },
+    {
+      "path": "src/molgap/tgt_egt_hybrid_warmblend.py",
+      "sha256": "ba7d499669e06f533763f261da0d08421caee0f40b718b15bee50584fc5f6b28",
+      "bytes": 7917
+    },
+    {
+      "path": "src/molgap/tgt_egt_rich.py",
+      "sha256": "3f9aa5352c972ac74ee6080aa30846ae2f778182283bdd0ff8f6950d2381d150",
+      "bytes": 5877
+    },
+    {
+      "path": "src/molgap/tgt_hybrid.py",
+      "sha256": "0461d8f45aefabce02108473e65b878ad338708c0244e4bf7d8ccbe6e22f1f00",
+      "bytes": 2623
+    },
+    {
+      "path": "src/molgap/tgt_hybrid_v2.py",
+      "sha256": "cc038c15f7f384a5d023936f623cb2eb70ed4eb23a744ef19089754e04d345af",
+      "bytes": 3495
+    },
+    {
+      "path": "src/molgap/tgt_lite.py",
+      "sha256": "d12d40a2e106d0c62455a6f62b3250d775b2337533ff847f690766fd8bc45d2d",
+      "bytes": 8378
+    },
+    {
+      "path": "src/molgap/topology_attention.py",
+      "sha256": "98cc82abd148de2e9803930e56c1ddf9f5306b8a426c70c7bb15fac432075486",
+      "bytes": 7793
+    },
+    {
+      "path": "src/molgap/training_reproducibility.py",
+      "sha256": "2d6aa892d41079697aa9c18a51d5cbe93abd8641feb9b23f03e9616e5eb3bf55",
+      "bytes": 11368
+    },
+    {
+      "path": "src/molgap/utils.py",
+      "sha256": "df5f115b30fc9c8985621735fc729cc7f70649304a54a5aa957823296037dae3",
+      "bytes": 20992
+    },
+    {
+      "path": "src/molgap/v4_bundle.py",
+      "sha256": "a92d7d061d91dafae764f7830cadd8657b07e587c5b1f38ca66be9e31f7639b5",
+      "bytes": 4781
+    },
+    {
+      "path": "src/molgap/v4_runtime.py",
+      "sha256": "994e7080d0940492060c1e13187770569bf24e8bd300d974a1dc92dfefd2c7e0",
+      "bytes": 12100
+    },
+    {
+      "path": "src/molgap/v5_common.py",
+      "sha256": "00e364daa7413b232176957c5e5a100268a33405b33c1230c9abe741931be7c5",
+      "bytes": 6469
+    },
+    {
+      "path": "src/molgap/visnet.py",
+      "sha256": "072bff9364e472659985b048603c18b0d918c6daff99306d26116bbba28a27fe",
+      "bytes": 2467
+    }
+  ]
+}

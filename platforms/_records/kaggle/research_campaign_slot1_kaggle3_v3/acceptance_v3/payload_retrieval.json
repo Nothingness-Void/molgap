@@ -1,0 +1,109 @@
+{
+  "kernel": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+  "receipt_version": 3,
+  "files": [
+    {
+      "path": "allocation_ledger.json",
+      "sha256": "ddb160e12e6a4cae3375cb118582f3ac3390bc4f2c214ab2c21e72620b6ccfed",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "cycle/allocation_ledger.json",
+      "sha256": "ddb160e12e6a4cae3375cb118582f3ac3390bc4f2c214ab2c21e72620b6ccfed",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/allocation_ledger.json",
+      "sha256": "ddb160e12e6a4cae3375cb118582f3ac3390bc4f2c214ab2c21e72620b6ccfed",
+      "state": "RETAINED"
+    },
+    {
+      "path": "execution_report.json",
+      "sha256": "fd6e68c2ac4bc176494123104cbb4c616c8e5a6aa2b2f5890b0dd84de8a8b042",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/last_checkpoint.pt",
+      "sha256": "98e9bc4c989aeb2aa170f93a5d8f329bd39657fef0ca0bc086f1b1ca99672eaf",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/selected_model.pt",
+      "sha256": "154b72e16cf4606e291163c7c6ea92b9861247a7607dc65001e4cd693ea4cd93",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/development_predictions.pt",
+      "sha256": "e356ba830e9637d0ee28713d3af9d976bcda113530275463ec617b21d06eb3f6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/repeat-a.pt",
+      "sha256": "7090a78198a30456e00d72f464e5a30d628baf50432fdb420ed4b52d6298020d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/repeat-b.pt",
+      "sha256": "ddc15de2ede0fde160e6fbe181e1f931954a6d73d033840949a04c38f3c23f13",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/resumed.pt",
+      "sha256": "6323941112c4dee120de0b9a70d18b3d6be33bf1f0f188a8597dff3232041646",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/resumed-first.pt",
+      "sha256": "2917ef61e83b8e63772092c07993810abcab360b5c7e672e7d755df8e2711727",
+      "state": "RETAINED"
+    },
+    {
+      "path": "reference/preflight_costs.json",
+      "sha256": "54d84529fe6ea5bc37df18ba8e3e92870fb4ac96d6c75ede58f0110ce2a33a5e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/last_checkpoint.pt",
+      "sha256": "c87920d3b4dd8da617e179f29719b9c43708e395d741e2e992f7585dcb9742d1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/selected_model.pt",
+      "sha256": "756e28298f53040c1c40b27d454c267f3b5ee7d12b99d5b0f69c0c56eb0ded35",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/development_predictions.pt",
+      "sha256": "3a9210a42cf3cb2ec0a19ac78227800bbf6ff53953766d2b2c436569174593c5",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/repeat-a.pt",
+      "sha256": "8843f007da9e781b6fb0fa85b3dc72e1c2ecb21411d63753f347e2c6d2f36e45",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/repeat-b.pt",
+      "sha256": "b7539fb28820e3d9827455a7f1e850298f5547f9a775fedc9111bba8099fa29b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/resumed.pt",
+      "sha256": "d408dbfdce6686d734610f5cadc403bd2bc66caf312aa072e6e77ea62ce9af77",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/resumed-first.pt",
+      "sha256": "e3d572064aaee24ecd7260531e09b3a4918de532a3bc477d539ae54599ed85da",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cycle/preflight_costs.json",
+      "sha256": "53dd51e1618abfda2869c5c96d2ca6f9e099db71cb2f95513663d62235f971e9",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

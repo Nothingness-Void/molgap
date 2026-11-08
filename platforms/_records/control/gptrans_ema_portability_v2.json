@@ -1,0 +1,75 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v2",
+    "budget_reserved_native": {
+      "T4_device_hours": 3.0
+    },
+    "campaign_id": "gptrans-ema-portability",
+    "chain_id": "gptrans-ema-portability",
+    "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-author-degree-scale-100k-s42",
+    "release_identity": "cdc0264d71114b0e28c44196f3ae0cc708bf0897566a376f0687541a1734a2ed",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+      "kernel_id": 136990464,
+      "version": 2
+    },
+    "remote_platform": "kaggle",
+    "run_id": "kaseichou/molgap-gptrans-ema-portability-audit:v2"
+  },
+  "events": {
+    "evt-fcc369e7e4dd62c2038bc45d": {
+      "attempt_id": "v2",
+      "claimed_at": "2026-10-04T07:58:15Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-04T07:55:08Z",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md",
+      "delivered_at": "2026-10-04T07:57:11Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-fcc369e7e4dd62c2038bc45d",
+      "event_status": "NEXT_RUN_BOUND",
+      "event_type": "ERROR",
+      "finalized_at": "2026-10-04T08:04:44Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "accepted": true,
+        "next_action": "UNCHANGED_GPU_AUDIT_V3",
+        "outcome": "INFRASTRUCTURE_ONLY"
+      },
+      "payload": {
+        "api_status": "ERROR",
+        "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+        "resolved_latest_identity": {
+          "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+          "kernel_id": 136990464,
+          "version": 2
+        },
+        "version": 2
+      },
+      "run_id": "kaseichou/molgap-gptrans-ema-portability-audit:v2"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "ERROR",
+      "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+        "kernel_id": 136990464,
+        "version": 2
+      },
+      "version": 2
+    },
+    "observed_at": "2026-10-04T07:55:08Z",
+    "remote_state_version": null,
+    "status": "ERROR"
+  },
+  "owner_scope": "server",
+  "version": 1
+}

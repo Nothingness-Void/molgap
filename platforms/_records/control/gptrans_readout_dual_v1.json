@@ -1,0 +1,78 @@
+{
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v1",
+    "budget_reserved_native": {
+      "T4_device_hours": 10
+    },
+    "campaign_id": "gptrans-g1-followup",
+    "chain_id": "gptrans-final-readout",
+    "decision_ref": "experiments/pcqm_gptrans_readout_100k/protocol.md",
+    "monitor_generation": 1,
+    "owner_scope": "server",
+    "reference_identity": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "release_identity": "8466fabab0ca8632940d09d0f575c706851dbc3e529737a4f373f19cbb703246",
+    "remote_job_identity": {
+      "kernel": "nvoid912/molgap-gptrans-g1-readout-dual-s42",
+      "kernel_id": 136806829,
+      "version": 1
+    },
+    "remote_platform": "kaggle3",
+    "run_id": "nvoid912/molgap-gptrans-g1-readout-dual-s42:v1"
+  },
+  "events": {
+    "evt-fdd45e634c82044f7f785123": {
+      "attempt_id": "v1",
+      "claimed_at": "2026-10-02T21:20:52Z",
+      "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+      "created_at": "2026-10-02T21:13:09Z",
+      "decision_ref": "experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md",
+      "delivered_at": "2026-10-02T21:18:02Z",
+      "delivery_attempts": 1,
+      "event_id": "evt-fdd45e634c82044f7f785123",
+      "event_status": "CLOSED",
+      "event_type": "COMPLETE",
+      "finalized_at": "2026-10-02T21:24:52Z",
+      "monitor_generation": 1,
+      "outcome": {
+        "actual_replay_pairs_verified": 2,
+        "artifact_status": "accepted",
+        "comparison_status": "strict_causal",
+        "execution_status": "complete",
+        "promotion": false,
+        "successor_submitted": false
+      },
+      "payload": {
+        "api_status": "COMPLETE",
+        "kernel": "nvoid912/molgap-gptrans-g1-readout-dual-s42",
+        "resolved_latest_identity": {
+          "kernel": "nvoid912/molgap-gptrans-g1-readout-dual-s42",
+          "kernel_id": 136806829,
+          "version": 1
+        },
+        "version": 1
+      },
+      "run_id": "nvoid912/molgap-gptrans-g1-readout-dual-s42:v1"
+    }
+  },
+  "format": "molgap-server-control-v5",
+  "last_decision_ref": "experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md",
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "nvoid912/molgap-gptrans-g1-readout-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "nvoid912/molgap-gptrans-g1-readout-dual-s42",
+        "kernel_id": 136806829,
+        "version": 1
+      },
+      "version": 1
+    },
+    "observed_at": "2026-10-02T21:13:09Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "owner_scope": "server",
+  "version": 1
+}
