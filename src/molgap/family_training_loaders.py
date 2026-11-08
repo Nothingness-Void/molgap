@@ -33,7 +33,7 @@ class _ObservedRoleStream:
 
 class FamilyLoaders:
     """Own one immutable train view and an optional bounded development cache."""
-    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning, *, role_audit=None):
+    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning, *, role_audit=None, device_inputs=None):
         import torch
         from torch_geometric.loader import DataLoader
         from .gptrans_execution_backend import PreparedLoader, assert_static_dataset
@@ -99,6 +99,14 @@ class FamilyLoaders:
         self.generator = torch.Generator()
         self.training = DataLoader(data.train, batch_sampler=self.sampler,
             generator=self.generator, **training_loader_options(tuning.training_workers))
+        self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
+        if device_inputs is not None:
+            from .family_training_device_inputs import DeviceResidentTrain
+            estimate = DeviceResidentTrain.estimate_bytes(data.train)
+            if DeviceResidentTrain.admit(estimate, device_inputs):
+                self.device_train = DeviceResidentTrain(data.train, data.train_rows, device=device_inputs)
+            else:
+                self.device_inputs_reason = "device memory or CUDA unavailable for %d bytes" % estimate
         self.development = None
         self.development_cache = None
         self.closed = False
@@ -154,8 +162,12 @@ class FamilyLoaders:
             drop_last=self.recipe.drop_last)
         self.sampler.pass_index, self.sampler.start_batch = validated.pass_index, validated.start_batch
         self.generator.manual_seed(self.recipe.seed + pass_index)
-        return (_ObservedRoleStream(self.training, self.role_audit, "train")
-                if self.role_audit is not None else self.training)
+        source = self.training
+        if self.device_train is not None:
+            from .family_training_device_inputs import device_training_stream
+            source = device_training_stream(self.device_train, self.sampler)
+        return (_ObservedRoleStream(source, self.role_audit, "train")
+                if self.role_audit is not None else source)
 
     def dev(self):
         if not self.closed and self.data.indexed and self.development_cache is not None:

@@ -1209,7 +1209,7 @@ def _finish_cost_interval(root, context, prior, elapsed):
     return total
 
 
-def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **options):
+def run_screen_arm(*, output, preflight_dir=None, target_identity=None, device_resident_train=False, **options):
     """Same callable for every scale/platform; same-budget resume only."""
     if options.get("qualification") is not None:
         raise ValueError("Qualification-only context/recipe cannot enter formal training")
@@ -1266,7 +1266,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda", **kernel_options)
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning,
-        role_audit=outputs.role_audit),
+        role_audit=outputs.role_audit, device_inputs="cuda" if device_resident_train else None),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
@@ -1277,6 +1277,9 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
                         actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
                     raise ValueError("Actual retained-state native resume qualification is missing or changed")
             session.load_state_dict(outputs.retained_state())
+        # Runtime log only: never fingerprinted or written to a receipt.
+        print("device-resident-train:", "on" if session.loaders.device_train is not None else
+              "off (" + session.loaders.device_inputs_reason + ")", flush=True)
         outputs.logger.start(session.progress)
     except Exception:
         session.close()
