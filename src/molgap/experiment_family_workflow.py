@@ -1873,7 +1873,7 @@ class TargetIdentityBinding:
             raise ValueError("Target identity acceptance plan hash mismatch")
         report = check_acceptance_plan(spec, root, _json(path))
         if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
-            raise ValueError("Target identity acceptance plan is blocked")
+            raise ValueError("Target identity acceptance plan is blocked: " + "; ".join(i for a in report["arms"] for i in a["blockers"]))
         return cls(root, plan_path, plan_sha256)
 
     @classmethod
