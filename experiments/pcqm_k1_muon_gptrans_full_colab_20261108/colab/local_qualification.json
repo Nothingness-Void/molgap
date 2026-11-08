@@ -1,12 +1,12 @@
 {
   "status": "local_preparation_verified",
-  "notebook_bytes": 1423892,
-  "notebook_sha256": "adb7fe76b69957888af0a477f55f9b3f8df0645f1544ce2e2cf0d57e645bc973",
+  "notebook_bytes": 18837,
+  "notebook_sha256": "2d81de5081e0cd544fbd9f6cc0f3c12863ccd77c1d9ee12287363d1fdb24f42d",
   "frozen_source_commit": "e17758f8f42892b4b0163669b11092ac34e92112",
   "code_cells_ast_checked": 8,
   "release_package_verifier": "passed_both",
   "release_zip_files_match_prepared": "all_files_both",
-  "bootstrap_matches_package_source_modules": 267,
+  "bootstrap_matches_package_source_modules": "prior_embedded_snapshot_check; current_bootstrap_reads_frozen_package",
   "archive_members": 68,
   "archives": 23,
   "archive_members_match_train_manifest": true,
@@ -17,5 +17,7 @@
   "rml_check_frozen": "passed",
   "shared_training_or_rml_source_changed": false,
   "cloud_training_started": false,
-  "a100_native_preflight": "at_user_started_execution"
+  "a100_native_preflight": "at_user_started_execution",
+  "preflight_exit_1_root_cause": "pending_worker_traceback",
+  "preflight_output": "durable_log_and_display_on_exit"
 }

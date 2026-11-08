@@ -51,9 +51,9 @@ Normal completion, controlled pause and cell errors invoke Colab's
 The Drive API rejects original shards larger than 100 MiB. Only the necessary
 TRAIN topology was therefore compressed into 23 ZIPs below that transport limit;
 no geometry, official-valid/test or raw source dataset was transferred. The
-original data identity is unchanged. The notebook verifies both the ZIP hashes
-and the original extracted file hashes, rather than treating ZIP success as
-data verification. Existing sharing settings are unchanged.
+original data identity is unchanged. The notebook unpacks the TRAIN transport ZIPs; the existing training data
+loader verifies the original manifest and every selected shard before use.
+The notebook does not repeat that data hashing. Existing sharing settings are unchanged.
 
 ## Reuse and qualification
 
@@ -72,3 +72,12 @@ Local preparation and static verification do not replace the actual A100 native
 preflight. Scientific results and measured costs await user-started training;
 subsequent acceptance uses the existing family/V5/RML owners and retrieves only
 the required retained artifacts.
+
+## Simplified launcher revision
+
+The notebook loads bootstrap source from the already verified K1 prepared
+package. It embeds no Base64 source or manifest. Preflight stdout/stderr is
+retained in a Drive `.log` beside its preflight directory and displayed before
+checking the return code. The reported preflight exit 1 remains undiagnosed
+until the worker traceback is captured; this change does not claim to fix its
+unknown cause. No frozen scientific package or training state was changed.

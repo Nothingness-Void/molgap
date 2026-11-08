@@ -1,10 +1,8 @@
 """Build a self-contained Colab preparation/launch notebook; never execute it."""
 import ast
-import base64
 import hashlib
 import json
 from pathlib import Path
-import subprocess
 
 HERE = Path(__file__).resolve().parent
 PRIMARY = Path("D:/文档/molgap")
@@ -14,12 +12,6 @@ SOURCE_COMMIT = "e17758f8f42892b4b0163669b11092ac34e92112"
 
 def main():
     EXPORT.mkdir(parents=True, exist_ok=True)
-    source = subprocess.check_output(["git", "archive", "--format=tar.gz", SOURCE_COMMIT,
-        "src/molgap", "pyproject.toml"], cwd=PRIMARY)
-    manifest = json.loads((PRIMARY / "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-full.manifest.json").read_text())
-    manifest_bytes = json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
-    manifest_sha = hashlib.sha256(manifest_bytes).hexdigest()
-    assert manifest_sha == "7d358a679d299bd5de6c5822e42dcef34b0e0b9fa9598c684709509c0b94021d"
     releases = json.loads((HERE / 'release_assets.json').read_text())
     archives = json.loads((HERE / 'data_archives.json').read_text())
     cells = []
@@ -43,7 +35,7 @@ def main():
 只读取全量 TRAIN 拓扑，不读取几何、官方验证或测试。全量训练没有内部开发集，按冻结合同的 final-live/final-ema 输出；本笔记本不自行选择 epoch、改变学习率或补做官方评测。
 """)
     add("code", "settings", """from pathlib import Path
-import json, os, subprocess, sys, time, tarfile, zipfile, base64, shutil, signal
+import json, os, subprocess, sys, time, tarfile, zipfile, shutil, signal
 from google.colab import runtime
 
 # prepare 模式请使用 CPU；train 模式请在设置中明确选择 A100。
@@ -78,25 +70,15 @@ if MODE == 'train':
     assert len(observed_gpu) == 1 and 'A100' in observed_gpu[0], observed_gpu
 print('Outputs:', RUN_ROOT)
 """)
-    add("code", "frozen-source", f"""# 自包含源码快照；不访问移动分支、不包含模型或凭证。
+    add("code", "frozen-source", f"""# 身份来自已准备的训练包；不在笔记本嵌入源码。
+import hashlib
 SOURCE_COMMIT = '{SOURCE_COMMIT}'
-SOURCE_ARCHIVE_SHA256 = '{hashlib.sha256(source).hexdigest()}'
-SOURCE_ARCHIVE_B64 = '{base64.b64encode(source).decode()}'
-ACCEPTED_MANIFEST_B64 = '{base64.b64encode(manifest_bytes).decode()}'
-ACCEPTED_MANIFEST_SHA256 = '{manifest_sha}'
-RELEASE_ASSETS = json.loads({json.dumps(json.dumps(releases))})
-DATA_ARCHIVES = json.loads({json.dumps(json.dumps(archives))})
-import hashlib, io
-raw_source = base64.b64decode(SOURCE_ARCHIVE_B64)
-assert hashlib.sha256(raw_source).hexdigest() == SOURCE_ARCHIVE_SHA256
-SOURCE_ROOT = Path('/content/molgap-colab-source-' + SOURCE_COMMIT[:8])
-SOURCE_ROOT.mkdir(exist_ok=True)
-with tarfile.open(fileobj=io.BytesIO(raw_source), mode='r:gz') as bundle:
-    bundle.extractall(SOURCE_ROOT, filter='data')
-sys.path.insert(0, str(SOURCE_ROOT / 'src'))
-manifest_bytes = base64.b64decode(ACCEPTED_MANIFEST_B64)
+RELEASE_ASSETS = {repr(releases)}
+ACCEPTED_MANIFEST_SHA256 = '7d358a679d299bd5de6c5822e42dcef34b0e0b9fa9598c684709509c0b94021d'
+manifest_bytes = (FULL_CACHE_ON_DRIVE / 'manifest.json').read_bytes()
 assert hashlib.sha256(manifest_bytes).hexdigest() == ACCEPTED_MANIFEST_SHA256
 accepted_manifest = json.loads(manifest_bytes)
+DATA_ARCHIVES = json.loads((FULL_CACHE_ON_DRIVE / 'archives/data_archives.json').read_text())
 assert accepted_manifest['roles']['train']['rows'] == 3378606
 assert accepted_manifest['roles']['development'] is None
 """)
@@ -113,6 +95,13 @@ for asset in RELEASE_ASSETS:
     report = json.loads((RELEASE_ROOT / asset['arm_id'] / 'prepared_training.json').read_text())
     assert report['expected_package_identity'] == asset['package_identity']
     assert report['spec_identity'] == asset['spec_identity']
+SOURCE_ROOT = Path('/content/molgap-colab-source-' + SOURCE_COMMIT[:8])
+SOURCE_ROOT.mkdir(exist_ok=True)
+bootstrap_package = RELEASE_ROOT / 'k1_muon/package'
+assert (bootstrap_package / 'SOURCE_COMMIT.txt').read_text().strip() == SOURCE_COMMIT
+with tarfile.open(bootstrap_package / 'source.tar.gz', 'r:gz') as frozen:
+    frozen.extractall(SOURCE_ROOT, filter='data')
+sys.path.insert(0, str(SOURCE_ROOT / 'src'))
 print('Both frozen full prepared bundles are available.')
 """)
     add("code", "environment", """# 使用独立环境，不改变Colab内核环境。
@@ -131,7 +120,7 @@ env = dict(os.environ, PYTHONPATH=str(SOURCE_ROOT / 'src'), PYTHONUNBUFFERED='1'
 from molgap.training_reproducibility import sha256_file, atomic_json
 print('Worker Python:', PYTHON)
 """)
-    add("code", "data-stage", """# 仅解压68个TRAIN拓扑分片；运输包及原始文件均核对hash。
+    add("code", "data-stage", """# 仅解压TRAIN拓扑；原始分片SHA由现有训练加载器统一核验。
 topology = accepted_manifest['assets']['topology']
 assert len(topology) == 68 and all(row['role'] == 'train' for row in topology)
 assert sum(row['rows'] for row in topology) == 3378606
@@ -144,16 +133,14 @@ records = {row['file']: row for row in topology}
 assert sorted(name for pack in DATA_ARCHIVES for name in pack['members']) == sorted(records)
 for number, pack in enumerate(DATA_ARCHIVES, 1):
     missing = [name for name in pack['members'] if not (CACHE_ROOT / name).is_file()
-               or sha256_file(CACHE_ROOT / name) != records[name]['sha256']]
+]
     if missing:
         original = FULL_CACHE_ON_DRIVE / 'archives' / pack['file']
         assert original.is_file() and original.stat().st_size == pack['bytes'], original
-        assert sha256_file(original) == pack['sha256'], original
         with zipfile.ZipFile(original) as bundle:
             assert sorted(bundle.namelist()) == sorted(pack['members'])
             for name in missing:
                 bundle.extract(name, CACHE_ROOT)
-                assert sha256_file(CACHE_ROOT / name) == records[name]['sha256'], name
     print('TRAIN topology archive', number, '/', len(DATA_ARCHIVES), flush=True)
 (CACHE_ROOT / 'manifest.json').write_bytes(manifest_bytes)
 atomic_json(RUN_ROOT / 'cache_staging.json', {'manifest_sha256': ACCEPTED_MANIFEST_SHA256,
@@ -235,7 +222,12 @@ atomic_json(RUN_ROOT / 'cache_staging.json', {'manifest_sha256': ACCEPTED_MANIFE
         preflight_cmd = common + ['--phase', 'preflight', '--output', str(preflight)]
         if (output / 'last_checkpoint.pt').is_file():
             preflight_cmd += ['--resume-output', str(output)]
-        subprocess.run(preflight_cmd, env=worker_env, check=True, timeout=remaining)
+        preflight_log = RUN_ROOT / (preflight.name + '.log')
+        with preflight_log.open('w') as log:
+            checked = subprocess.run(preflight_cmd, env=worker_env, stdout=log,
+                stderr=subprocess.STDOUT, timeout=remaining)
+        print(preflight_log.read_text(), flush=True)
+        checked.check_returncode()
         remaining = SESSION_SECONDS - (time.perf_counter()-SESSION_STARTED) - CLEANUP_SECONDS
         assert remaining > 0
         process = subprocess.Popen(common + ['--phase', 'train', '--output', str(output),
