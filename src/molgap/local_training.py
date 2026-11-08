@@ -192,7 +192,7 @@ def main(argv=None):
         "run_id": result.get("logical_run_id"),
         "report": str(path.absolute()), "scientific_acceptance": "NOT_EVALUATED"}
     print(json.dumps(visible, ensure_ascii=False, indent=2))
-    return 1 if result["status"] in {"BLOCKED", "INCOMPLETE", "STAGED_DRAFT"} else 0
+    return 0 if result["status"] in {"MECHANICALLY_VERIFIED", "PAUSED", "STAGED_CLOSURE_READY", "COMPLETE"} else 1
 
 
 def accept_local_training(prepared, repo_root, output, *, acceptance_plan=None,
