@@ -1,3 +1,22 @@
+# Terminal review — 2026-11-08 JST
+
+Exact-version2 retrieval confirms both arms complete60passes/234360updates/
+29998080presentations. Current_read is NEGATIVE_UNDER_CONTRACT; original K1
+batched-Muon reference is CLOSED. Selected development delta is+1.774378meV,
+paired95%[+1.223561,+2.312496]meV; final+2.877653 andlast-five+3.178921meV.
+Complete version1 trace prefixes (50/47observations) match version2 exactly.
+Both arms strict/native/replay VERIFIED; current_read comparison STRICT_CAUSAL.
+Shared closure COMPLETE, closure_complete=true; both finalized and indexed.
+No adoption/full release, new training, archive or integration is performed.
+See [decision and attribution](decision.md), [complete curve](terminal_acceptance/curve.csv),
+[diagnosis](terminal_acceptance/diagnosis.json) and [role provenance](terminal_acceptance/role_provenance/receipt.json).
+
+Cumulative process wall: reference10.499707h, current_read11.202083h (+6.689%).
+Physical pair allocation:11.392538entry-wall hours/22.785076allocated T4-hours
+across two sessions. Cross-job original Muon80,701.437882s versus reference
+37,798.946474s is an observed2.135018x ratio, not a strict batched/unbatched
+speed experiment. The same-job intervention comparison is current_read only.
+
 # Bound continuation — 2026-11-08 JST
 
 Kaggle1 kernel143169366/version2 SUBMISSION_BOUND; physical session2 resumes the same logical attempt.

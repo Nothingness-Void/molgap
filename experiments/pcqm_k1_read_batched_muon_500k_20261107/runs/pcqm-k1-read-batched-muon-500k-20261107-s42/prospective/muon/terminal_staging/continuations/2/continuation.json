@@ -1,0 +1,71 @@
+{
+  "actual_resume_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/_resume_preflight/muon/actual_resume_certificate.json",
+    "sha256": "5e063510c4da4f12768ab5354f59745457f1ba7516c7b801d74a6c1570d6e0c7"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_read_batched_muon_500k_20261107/authority.json",
+    "sha256": "5b0a37d515034d076ace8f37463eca89a5b7e82efb246f6995fb88e8c388ab6b"
+  },
+  "checkpoint": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-read-batched-muon-500k-20261107-s42/v2/prepared/source_dataset/resume/muon/files/last_checkpoint.pt",
+    "sha256": "814ece7e85e8d867068624f0e4d70ac917aa6d34a0bfcb56ff5c01118d15e1d8"
+  },
+  "continued": {
+    "attempt_id": "pcqm-k1-read-batched-muon-500k-20261107-s42-v2",
+    "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+    "source_package_sha256": "581796f208c3e8b0f482665fb649daa268cb882bf268f1e5a442ff262f94e861",
+    "spec_identity": "ec7c2c89fb0ba6b446d9760b8b5d9ac55118ef32404be5bc2130cd65e0f99a26"
+  },
+  "continued_manifest": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/muon/output_manifest.json",
+    "sha256": "0936da1fd9fb35990e3f054b44099b368c89a48d2b3aaa7c45d62ab0a29ab1ef"
+  },
+  "continued_receipt": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-read-batched-muon-500k-20261107-s42/v2/operations/launch_receipt.json",
+    "sha256": "b6d573bc7a02fccb87dfc3ba99c765b3080391458eef6457cda8a31af49c162e"
+  },
+  "continued_trace": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/muon/canonical_trace.json",
+    "sha256": "6d5dad72077e9d9c7996a5f796d7893f3ea643e3df8376f4d9a671f468ae85ad"
+  },
+  "format": "molgap-terminal-continuation-v1",
+  "native_certificate": {
+    "path": "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/_resume_preflight/muon/runtime_certificate.json",
+    "sha256": "a82b396b465c5a5772fe9f8cb6692a996ed34d6969ea72537ac238e50421932f"
+  },
+  "origin": {
+    "attempt_id": "pcqm-k1-read-batched-muon-500k-20261107-s42-v1",
+    "logical_run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nothingnessvoid/molgap-k1-read-batched-muon-500k-20261107-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "f055c137ed27b89c4eb4bc49b5e4aeabc1c84d52",
+    "source_package_sha256": "581796f208c3e8b0f482665fb649daa268cb882bf268f1e5a442ff262f94e861",
+    "spec_identity": "ec7c2c89fb0ba6b446d9760b8b5d9ac55118ef32404be5bc2130cd65e0f99a26"
+  },
+  "origin_receipt": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/operations/launch_receipt.json",
+    "sha256": "cca54ae5da2329b281fe40a9ce3a09d2c1da603638697984d9f66c3c25f1156f"
+  },
+  "resume_bundle": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-read-batched-muon-500k-20261107-s42/v2/prepared/source_dataset/resume/muon/resume_bundle.json",
+    "sha256": "705ed13b555f6a4c5529d9a208c4525c92dff6109e297dcef58cef3b32ffea27"
+  },
+  "source_context": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-read-batched-muon-500k-20261107-s42/v2/prepared/source_dataset/resume/muon/files/canonical_trace.json.context.json",
+    "sha256": "70f3d1fd26a8fe46d3dd6036ad42f73172bec7ece0d2eded95b2081bad971c20"
+  },
+  "source_package": {
+    "path": "external:///D:/molgap-artifacts/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/prepared/package/package_manifest.json",
+    "sha256": "8118eff02bf90a85223d5c17d581fa3bf0cf3d14a34de7e77a84d2c42010770c"
+  },
+  "source_trace": {
+    "path": "external:///D:/molgap-artifacts/continuations/pcqm-k1-read-batched-muon-500k-20261107-s42/v2/prepared/source_dataset/resume/muon/files/canonical_trace.json",
+    "sha256": "b1d53deabca748388cc1e3c09ead68fa1b1344cbf996d00f12a3fccc8381e5b1"
+  }
+}

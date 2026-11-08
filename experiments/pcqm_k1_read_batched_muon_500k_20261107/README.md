@@ -7,5 +7,5 @@ execution. The user explicitly authorized this 500K60-pass exploration on
 
 [Protocol](protocol.md) owns science, roles, budget and acceptance.
 [Status](STATUS.md) owns preparation and run identity; the [decision](decision.md)
-remains pending. Registered family builders, platform submission and shared
+closes current_read NEGATIVE_UNDER_CONTRACT. Registered family builders, platform submission and shared
 acceptance retain their existing responsibilities.

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-read-batched-muon-500k-20261107-s42-v2",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read-0",
+  "evidence_ref": "experiments/pcqm_k1_read_batched_muon_500k_20261107/runs/pcqm-k1-read-batched-muon-500k-20261107-s42/prospective/current_read/terminal_staging/v1/efc5a7d7ba2d0b84/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 11.202083499803333
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-read-batched-muon-500k-20261107-s42:current_read:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-read-batched-muon-500k-20261107-s42-current_read"
+}
