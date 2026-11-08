@@ -1,0 +1,57 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/README.md": "f018a69d57c68fd24edbde98089e36f8344d38998b8004b117e14ed722f3eff9",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/acceptance.json": "0879d715810f982fd35968bf64cdfa9e46d389d0f5fa739589027196b09df492",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/analysis_zh.md": "78a4934a251b8c216eb834a1df5a6512b3bdfbf7a0bd4be11063a27a83311b1d",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/decision.md": "dec03190a215dfdb6250e5bc0fa26bf8d07e2285db6e2c19bf0c2f92766ebc3e",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/evidence_review.md": "22c9d170038691ba6156ca21db01e4f72c0bad5f92390ccf9f237f47296944c5",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json": "842482a38550b61ebc33913ebad187900a7ade46c7f325cb9b6e7ea124442124",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/plan_input.json": "87992f8cf0ee861fc05d1dcbc94b2ef5f41f90558b91e49766054d43173ba823",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md": "e4347899c73de97793d74b44abb4aad5a04100b2872ad41f78b885a18fa662f5",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/results/completion.json": "7fcddf46c1cba702651cc3191a183ebde2760e1c39d4f93f09165869e242b583",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/results/result.json": "99232cfb1e0304438835164a82eef3fb99f53197365b76f220aeedc05ebe1e67",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/rml/costs/cost-k1-muon-gptrans-fusion-500k-planned.json": "901a933be2aa3e1e6e22738fd7f238de8f50a8705d0c5985c4df6ae476376278",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/rml/trajectory.json": "c58771316b2080da7d1608f71f7534492fade439f16f924051cafb3fb00bb440",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/rml_decision_snapshots/4dc0804ee2d4b76f21deb70bba2e94c9ecc0bb9065f76f133c5375bec573a90a.json": "4dc0804ee2d4b76f21deb70bba2e94c9ecc0bb9065f76f133c5375bec573a90a",
+    "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/run.py": "b8c11bbed687b86e77d10005a8bf02f344b34c6be53605bb357e2af92cf23db5",
+    "external:///D:/molgap-artifacts/reconciliation/gptrans-bondlocal-pairnorm-lr-500k/v1/manifest/experiment/pairnorm_lr1e3/development_predictions.pt": "6909b9a00d322499853e6dc36a982571696061b2b2f1af74c670428ab4ed55b2",
+    "external:///D:/molgap-artifacts/reconciliation/gptrans-bondlocal-pairnorm-lr-500k/v1/manifest/experiment/pairnorm_lr5e4/development_predictions.pt": "bbb4d17c985bfd59634e98901170cefc377f69b245d3b64383eca364d8872873",
+    "external:///D:/molgap-artifacts/retrieved/pcqm-k1-read-batched-muon-500k-20261107-s42/v1/version2/muon/development_predictions.pt": "bd6186db7d12bc0a4f8b07f5b098c4791b1b410f4f373e06e747e186b82f2835"
+  },
+  "finalized_at": "2026-11-08T06:37:15.154604+00:00",
+  "format": "molgap-rml-terminal-input-v2",
+  "published_components": {
+    "costs": [
+      {
+        "ref": "costs/cost-k1-muon-gptrans-fusion-500k-observed.json",
+        "sha256": "63e660caac4f205af579a709d1ffc7f7afc952c6158ac45197a6a24097098412"
+      }
+    ],
+    "decision": [
+      {
+        "ref": "trajectory.json",
+        "sha256": "19e58a54553822c24afcfea7cb58b08bbe6905979abec93fe99593f6db410b92"
+      }
+    ],
+    "evidence": [
+      {
+        "ref": "v5_evidence.json",
+        "sha256": "c22c65679444709137c31c9d5dd3618d3b7db73890bf685e30b7b25d28a1ae34"
+      }
+    ],
+    "roles": [
+      {
+        "ref": "roles/role-k1-muon-gptrans-fusion-500k-labels_read.json",
+        "sha256": "3a6e4d1012c2c869dcf66c9a9b863ff77702f60fc8fc212d98b77724d96a39d2"
+      },
+      {
+        "ref": "roles/role-k1-muon-gptrans-fusion-500k-metric_computed.json",
+        "sha256": "d258197bcaa68bf9a359fbb932f743f4e50e27171798d38b71514fd102af08f1"
+      }
+    ]
+  },
+  "run_id": "local-k1-muon-gptrans-fusion-500k-20261108",
+  "trajectory_id": "TB-k1-muon-gptrans-fusion-500k-20261108"
+}

@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 207,
-    "with_complete_native_measurement": 32,
-    "with_cost_event": 196,
+    "trajectories_total": 208,
+    "with_complete_native_measurement": 33,
+    "with_cost_event": 197,
     "with_incomplete_native_measurement": 164,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 105,
+      "count": 106,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
@@ -83,6 +83,7 @@
         "TB-k1-hop-shell-frozen-100k-20261024",
         "TB-k1-hop-shell-frozen-100k-20261024-attempt002",
         "TB-k1-late-weight-average-20261008",
+        "TB-k1-muon-gptrans-fusion-500k-20261108",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v2",

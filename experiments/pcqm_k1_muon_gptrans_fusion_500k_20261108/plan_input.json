@@ -17,7 +17,9 @@
       ],
       "changed_mechanism": "Fixed float64 averaging of accepted batched-Muon K1 LIVE pass54 and GPTrans PairNorm EMA pass52 saved predictions; no fitting or model execution",
       "cheapest_falsifier": "Hash-bound aligned development predictions; fixed equal blend against each constituent and the existing two-GPTrans equal blend, 2000 paired row resamples seed42",
-      "supporting_evidence_ids": [],
+      "supporting_evidence_ids": [
+        "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027"
+      ],
       "expected_native_cost_ref": "cost-k1-muon-gptrans-fusion-500k-planned",
       "related_closed_family_ids": [
         "pcqm-k1-gptrans-pairnorm-fusion-500k",
@@ -27,8 +29,8 @@
       "decision_changed_if_negative": "Do not prioritize full training of this heterogeneous pair from these predictions"
     },
     "state_at_start": {
-      "source_commit": "PENDING_SOURCE_COMMIT",
-      "source_config_identity": "PENDING_INPUTS_SHA256",
+      "source_commit": "0d9454274be4c7d8431613939e4dcdd747bd5f98",
+      "source_config_identity": "842482a38550b61ebc33913ebad187900a7ade46c7f325cb9b6e7ea124442124",
       "contract_refs": [
         "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
         "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json",
@@ -37,7 +39,9 @@
       ],
       "reference_ids": [],
       "parent_trajectory_ids": [],
-      "prior_evidence_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027"
+      ],
       "role_snapshot_refs": [
         "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"
       ],
@@ -53,7 +57,7 @@
         "attempt_ids": [
           "attempt-001"
         ],
-        "source_commit": "PENDING_SOURCE_COMMIT",
+        "source_commit": "0d9454274be4c7d8431613939e4dcdd747bd5f98",
         "evidence_refs": [
           "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"
         ],
@@ -125,7 +129,7 @@
     "policy_id": "pcqm-k1-gptrans-pairnorm-fusion-500k",
     "policy_version": "1",
     "state_timestamp": "2026-11-08T06:32:12.0802576Z",
-    "source_commit": "PENDING_SOURCE_COMMIT",
+    "source_commit": "0d9454274be4c7d8431613939e4dcdd747bd5f98",
     "budget_snapshot_ref": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/protocol.md",
     "role_snapshot_refs": [
       "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json"

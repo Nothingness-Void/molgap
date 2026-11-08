@@ -726,6 +726,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-muon-gptrans-fusion-500k-20261108:A001",
+      "target": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-residual-reconciliation:A001",
       "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
       "type": "action_produced_evidence"
@@ -3197,6 +3202,11 @@
     },
     {
       "source": "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
+      "target": "TB-k1-muon-gptrans-fusion-500k-20261108",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-gptrans-pairnorm-fusion-500k-20261027",
       "target": "TB-pcqm-pairnorm-prediction-router-500k-20261027",
       "type": "prior_evidence"
     },
@@ -4196,6 +4206,10 @@
     },
     {
       "id": "k1-hop-fusion-qualification-100k-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
       "type": "evidence"
     },
     {
@@ -5240,6 +5254,10 @@
     },
     {
       "id": "TB-k1-local-speed-10ep-reference-20261011",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-muon-gptrans-fusion-500k-20261108",
       "type": "trajectory"
     },
     {

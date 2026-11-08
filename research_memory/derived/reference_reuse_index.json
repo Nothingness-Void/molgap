@@ -1636,6 +1636,30 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "descriptive_aligned_retained_predictions",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "k1-muon-gptrans-fusion-500k-20261108-evidence",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "p8_hard": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "untouched"
+      },
+      "scientific_scope": "fixed_fusion_qualification",
+      "source_envelope": "experiments/pcqm_k1_muon_gptrans_fusion_500k_20261108/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "descriptive_saved_evidence_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
