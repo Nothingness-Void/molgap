@@ -172,7 +172,7 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
   debugging or infrastructure tests. Explicit applicable role authority is required.
 - **No fabrication:** missing reference, cost, role, artifact or comparison stays
   missing/pending. No silent reference retraining or synthetic bookkeeping evidence.
-- **Infrastructure budget:** `python platforms/local/infra_budget.py` compares
+- **Infrastructure budget:** `.venv\Scripts\python.exe platforms/local/infra_budget.py` compares
   `src/molgap`, `tests` and `docs/operations` size with
   [INFRA_BUDGET.json](docs/operations/INFRA_BUDGET.json) and exits 1 when over.
   No flow runs it; run it before an infrastructure commit. Requested bug fixes with

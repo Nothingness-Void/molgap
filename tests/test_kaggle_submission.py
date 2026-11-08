@@ -1,4 +1,5 @@
 """Platform state machine with synthetic files and fake APIs; no network/job."""
+import re
 import importlib.util
 import json
 from pathlib import Path
@@ -1262,3 +1263,12 @@ def test_concurrent_other_journal_is_blocked_before_first_publication(release, m
     monkeypatch.setattr(release.api, "dataset_create_new", interleaved)
     assert release.run()["status"] == "SUBMISSION_BOUND"
     assert release.api.created == release.api.pushed == 1
+
+
+def test_phase_machine_is_closed_and_matches_the_timing_phases():
+    from molgap import experiment_timings
+    assert tuple(experiment_timings._PHASES) == tuple(owner.PHASE_NEXT)
+    known = set(owner.PHASE_NEXT)
+    assert all(set(nxt) <= known for nxt in owner.PHASE_NEXT.values())
+    text = Path(owner.__file__).read_text(encoding="utf-8")
+    assert set(re.findall(r'(?:save|retain_platform_failure|retain_release_failure)\([^"\n]*"([A-Z_]+)"', text)) <= known
