@@ -116,8 +116,9 @@ for asset in RELEASE_ASSETS:
 print('Both frozen full prepared bundles are available.')
 """)
     add("code", "environment", """# 使用独立环境，不改变Colab内核环境。
-ENV_ROOT = Path('/content/molgap-full-' + MODE)
-subprocess.run([sys.executable, '-m', 'venv', str(ENV_ROOT)], check=True)
+ENV_ROOT = Path('/content/molgap-full-' + MODE + '-py311')
+subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', 'uv'], check=True)
+subprocess.run([sys.executable, '-m', 'uv', 'venv', '--python', '3.11', '--seed', str(ENV_ROOT)], check=True)
 PYTHON = str(ENV_ROOT / 'bin/python')
 wheel_channel = 'cpu' if MODE == 'prepare' else 'cu128'
 subprocess.run([PYTHON, '-m', 'pip', 'install', '--no-cache-dir', 'torch==2.11.0',
