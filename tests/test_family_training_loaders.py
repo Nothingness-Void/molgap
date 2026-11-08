@@ -107,7 +107,9 @@ def test_final_only_has_no_development_loader_and_rejects_mismatched_data():
 @pytest.mark.parametrize("algorithm", ["python-epoch-shuffle", "torch-pass-randperm"])
 @pytest.mark.parametrize("drop_last", [True, False])
 @pytest.mark.parametrize("start_batch", [0, 2])
-def test_device_resident_stream_is_bit_equal_to_dataloader(algorithm, drop_last, start_batch):
+@pytest.mark.parametrize("device", ["cpu", pytest.param("cuda", marks=pytest.mark.skipif(
+    not torch.cuda.is_available(), reason="CUDA smoke"))])
+def test_device_resident_stream_is_bit_equal_to_dataloader(algorithm, drop_last, start_batch, device):
     from copy import copy
     from torch_geometric.loader import DataLoader
     from molgap.family_training_device_inputs import DeviceResidentTrain, device_training_stream
@@ -116,14 +118,15 @@ def test_device_resident_stream_is_bit_equal_to_dataloader(algorithm, drop_last,
     g = torch.Generator().manual_seed(0)
     graphs = []
     for i in range(40):
-        n = int(torch.randint(2, 7, (1,), generator=g))
+        # One- and two-node graphs, including graph 0, flip PyG's size-based attr guess.
+        n = {0: 1, 7: 1, 3: 2}.get(i) or int(torch.randint(2, 7, (1,), generator=g))
         edges = torch.stack([torch.arange(n - 1), torch.arange(1, n)])
         graphs.append(Data(x=torch.randint(0, 100, (n, 3), generator=g).to(torch.uint8),
             edge_index=edges, edge_attr=torch.randint(0, 99, (n - 1, 2), generator=g).to(torch.int16),
             random_walk_pe=torch.randn(n, 4, generator=g), y=torch.randn(1, generator=g),
             source_idx=torch.tensor([i]), role_name="train_100k"))
     assert DeviceResidentTrain.admit(1, "cuda") == torch.cuda.is_available()
-    store = DeviceResidentTrain(graphs, 40, device="cpu")
+    store = DeviceResidentTrain(graphs, 40).upload(device)
     def sampler():
         return PassBatchSampler(40, 8 if drop_last else 7, 3, algorithm=algorithm, pass_index=1,
                                 start_batch=start_batch, drop_last=drop_last)
@@ -133,7 +136,7 @@ def test_device_resident_stream_is_bit_equal_to_dataloader(algorithm, drop_last,
         assert set(want.keys()) == set(got.keys())
         for key in want.keys():
             if torch.is_tensor(want[key]):
-                assert got[key].dtype == want[key].dtype and torch.equal(got[key], want[key]), key
+                assert got[key].dtype == want[key].dtype and torch.equal(got[key].cpu(), want[key]), key
             else:
                 assert got[key] == want[key], key
         assert got.num_graphs == want.num_graphs

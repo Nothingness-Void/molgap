@@ -102,11 +102,15 @@ class FamilyLoaders:
         self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
         if device_inputs is not None:
             from .family_training_device_inputs import DeviceResidentTrain
-            estimate = DeviceResidentTrain.estimate_bytes(data.train)
-            if DeviceResidentTrain.admit(estimate, device_inputs):
-                self.device_train = DeviceResidentTrain(data.train, data.train_rows, device=device_inputs)
+            from .family_training_policy import mode_policy
+            if mode_policy(recipe.family, recipe.mode).prepare_batch is not None:
+                self.device_inputs_reason = "mode has a prepare_batch hook"
             else:
-                self.device_inputs_reason = "device memory or CUDA unavailable for %d bytes" % estimate
+                store = DeviceResidentTrain(data.train, data.train_rows)
+                if DeviceResidentTrain.admit(store.estimate, device_inputs):
+                    self.device_train = store.upload(device_inputs)
+                else:
+                    self.device_inputs_reason = "device memory or CUDA unavailable for %d bytes" % store.estimate
         self.development = None
         self.development_cache = None
         self.closed = False
