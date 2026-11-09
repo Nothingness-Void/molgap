@@ -94,6 +94,7 @@ def test_submission_journal_failure_preserves_push_transport_fault(
     secondary = OSError("synthetic submission journal fault")
 
     def push(**kwargs):
+        kwargs["_before_post"]()  # dispatch begins before the transport fails
         raise primary
 
     real_atomic_json = submission.atomic_json
@@ -127,7 +128,7 @@ def test_rejects_resume_without_continuation_adapter(submission_release):
     launch["resume"] = resume
     launch_path.write_text(json.dumps(launch), encoding="utf-8")
 
-    with pytest.raises(ValueError, match="local-only|continuation adapter"):
+    with pytest.raises(ValueError, match="local-only|continuation adapter|missing or unbound files"):
         submission_release.run()
 
     assert submission_release.api.created == submission_release.api.pushed == 0

@@ -9,6 +9,7 @@ from molgap import experiment_cli, experiment_workflow
 from molgap.experiment_spec import ExperimentSpec
 from molgap.experiment_staging import UploadArtifact
 from molgap.screen_policy import canonical_fingerprint
+from molgap.v5_common import OUTCOME_FIELDS, V5_CONTRACT_ID, V5_EVIDENCE_FORMAT
 from test_experiment_spec import payload
 from test_research_memory_plan_batch import _item, planning_root
 
@@ -16,6 +17,17 @@ from test_research_memory_plan_batch import _item, planning_root
 @pytest.fixture
 def preparation(planning_root, payload, monkeypatch):
     root, _ = planning_root
+    # The shared planning fixture seeds a stub; this test runs the real envelope validator.
+    (root / "experiments/seed/v5_evidence.json").write_text(json.dumps({
+        "format": V5_EVIDENCE_FORMAT, "contract": V5_CONTRACT_ID, "evidence_id": "E-existing",
+        "track": "C", "scope": "fixture", "legacy_contract": "fixture-v1",
+        "outcome": {field: "not_evaluated" for field in OUTCOME_FIELDS},
+        "authority": {"pointers": ["roles.json"]},
+        "role_use": {role: "untouched" for role in ("official_validation", "test_dev", "test_challenge")},
+        "artifacts": [{"name": "fixture", "locator": "external://fixture", "availability": "durable_remote_verified"}],
+        "migration": {"migrated_at": "2026-09-19", "verification_scope": "schema-only",
+                      "training_executed": False, "inference_executed": False,
+                      "scientific_reinterpretation": False}}))
     source = root / "src/molgap/fixture.py"
     source.parent.mkdir(parents=True)
     source.write_text("VALUE = 42\n")

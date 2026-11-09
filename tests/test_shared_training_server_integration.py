@@ -2,6 +2,7 @@
 from pathlib import Path
 from types import SimpleNamespace
 import importlib
+import json
 
 import pytest
 
@@ -33,13 +34,18 @@ def test_release_checks_actual_shared_initialization_schema(tmp_path, monkeypatc
     monkeypatch.setattr(sys, "path", list(sys.path))
     monkeypatch.setattr(owner, "_origins", lambda root: {})
     observed = []
+    def atomic_json(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value), encoding="utf-8")
     def load(recipe, path):
         observed.append((recipe, path))
         if malformed:
             raise ValueError("Frozen initialization tensor keys/shape/dtype differ")
         return object(), {"state_sha256": "a" * 64, "tensor_count": 1, "device": "cpu"}
     modules = {
-        "molgap.family_training_runner": SimpleNamespace(read_recipe=lambda path: ({}, "recipe")),
+        "molgap.v4_runtime": SimpleNamespace(),
+        "molgap.family_training_runner": SimpleNamespace(read_recipe=lambda path: ({}, "recipe"),
+                                                         atomic_json=atomic_json),
         "molgap.family_training_kernel": SimpleNamespace(load_family_model=load),
     }
     real_import = importlib.import_module
@@ -47,7 +53,7 @@ def test_release_checks_actual_shared_initialization_schema(tmp_path, monkeypatc
         lambda name: modules[name] if name in modules else real_import(name))
     result = owner._release_imports({"source_root": str(tmp_path),
         "dependency_paths": [], "modules": [], "pickle_globals": [],
-        "initializations": [{"arm_id": "candidate", "path": str(tmp_path / "init.pt"),
+        "initializations": [{"arm_id": "candidate", "family": ["gptrans_t", "2"], "path": str(tmp_path / "init.pt"),
                              "recipe_path": str(tmp_path / "recipe.json")}]})
     assert len(observed) == 1
     if malformed:

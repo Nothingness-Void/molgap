@@ -24,9 +24,14 @@ MODULES = (
 )
 
 
-def _frozen_source(path):
+# Freeze moved to a8c20eeb3 for substrate: that approved Desktop port deliberately extended
+# SlotBinding (new families, readout-only rule); the behavioural test stays on BEFORE_MOVE.
+AST_FREEZE = {"src/molgap/model_substrate.py": ("a8c20eeb3", "src/molgap/models/substrate.py")}
+
+
+def _frozen_source(path, commit=BEFORE_MOVE):
     return subprocess.run(
-        ["git", "show", f"{BEFORE_MOVE}:{path}"], cwd=ROOT,
+        ["git", "show", f"{commit}:{path}"], cwd=ROOT,
         check=True, capture_output=True, text=True, encoding="utf-8",
     ).stdout
 
@@ -81,8 +86,9 @@ def test_aliases_keep_all_original_symbols_and_pickle_identity(old, new, path):
     legacy = importlib.import_module(old)
     implementation = importlib.import_module(new)
     assert legacy is implementation
+    commit, frozen_path = AST_FREEZE.get(path, (BEFORE_MOVE, path))
     original_definitions = {
-        node.name: node for node in ast.parse(_frozen_source(path)).body
+        node.name: node for node in ast.parse(_frozen_source(frozen_path, commit)).body
         if isinstance(node, (ast.ClassDef, ast.FunctionDef))
     }
     moved_definitions = {

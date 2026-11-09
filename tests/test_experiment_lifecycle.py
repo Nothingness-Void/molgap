@@ -42,7 +42,7 @@ def test_prospective_to_terminal_is_one_bound_flow_and_fails_closed_on_replay(st
     trajectory["hypothesis"]["expected_native_cost_ref"] = "C-lifecycle"
     trajectory["actions"][0].update(cost_event_ids=["C-lifecycle"], evidence_refs=[])
     policy_dir = root / "research_memory/policies"
-    policy_dir.mkdir()
+    policy_dir.mkdir(exist_ok=True)
     policy_source = Path(__file__).resolve().parents[1] / "research_memory/policies/k1-relation-resolution-bounded-research.v1.json"
     policy = json.loads(policy_source.read_bytes())
     (policy_dir / "synthetic.json").write_bytes(json_bytes(policy))
@@ -62,6 +62,8 @@ def test_prospective_to_terminal_is_one_bound_flow_and_fails_closed_on_replay(st
         "plan_spec_ref": "plan-input.json", "plan_spec_sha256": file_digest(root / "plan-input.json"),
         "output": "experiments/planned-gptrans"}]}
     spec = ExperimentSpec(declaration)
+    (root / ".gitattributes").write_bytes(b"* -text -filter -ident -working-tree-encoding\n")
+    subprocess.run(["git", "config", "core.autocrlf", "false"], cwd=root, check=True)
     subprocess.run(["git", "add", "."], cwd=root, check=True, capture_output=True)
     subprocess.run(["git", "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic lifecycle inputs"],
                    cwd=root, check=True, capture_output=True)

@@ -1,4 +1,5 @@
 """Namespace compatibility using tiny synthetic objects; no accepted data access."""
+from collections import OrderedDict
 import importlib
 import os
 from pathlib import Path
@@ -48,6 +49,7 @@ assert 'molgap.family_training_runner' not in sys.modules
 @pytest.mark.parametrize("new_first", [False, True])
 def test_module_aliases_in_both_import_orders(tmp_path, new_first):
     _isolated(f"""
+from collections import OrderedDict
 import importlib
 pairs = {MODULE_PAIRS!r}
 for old_name, new_name in pairs:
@@ -158,17 +160,27 @@ def test_indexed_legacy_pin_patch_cache_invalidation_and_clone_parity(tmp_path, 
 
     def open_packed(opened_path, *, mmap):
         opens.append((opened_path, mmap))
-        return SimpleNamespace(get=lambda index: graphs[index])
+        from torch_geometric.data import InMemoryDataset
+        data, slices_ = InMemoryDataset.collate(graphs)
+
+        class Shard:
+            _data, slices = data, slices_
+
+            def __len__(self):
+                return len(graphs)
+        return Shard()
 
     monkeypatch.setattr(legacy, "_pin", pin)
     monkeypatch.setattr(packed_legacy, "PackedGraphDataset", open_packed)
     assert indexed_inputs.IndexedRoleDataset._load.__globals__["_pin"] is pin
     dataset = object.__new__(indexed_inputs.IndexedRoleDataset)
     dataset.root = tmp_path
+    dataset.permit = indexed_inputs.IndexedInputPermit("common_dev", *(["a" * 64] * 5))
     dataset.manifest = {"role": "common_dev", "graph_chunks": [item]}
     dataset.source_indices = (7, 11)
     dataset._maps, dataset._ends = [(1, 0)], [2]
     dataset._loaded_index = dataset._loaded = dataset._loaded_file_identity = None
+    dataset._verified_files, dataset._open_shards = {}, OrderedDict()
     assert len(dataset) == 2
     assert [int(dataset[i].source_idx.item()) for i in range(2)] == [7, 11]
     loaded = dataset._loaded
