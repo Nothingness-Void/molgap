@@ -76,10 +76,20 @@ def load_family_model(recipe, initial_state):
     return model, initialization
 
 
+def parameter_groups_for_recipe(recipe, model):
+    if recipe.optimizer != "adamw":
+        from .k1_muon import parameter_groups
+        return parameter_groups(model, recipe.weight_decay)
+    return model.parameters()
+
+
 def make_family_optimizer(recipe, parameters):
     """One optimizer owner; explicit constants equal the existing native defaults."""
     import torch
     from .v4_runtime import make_adamw_compat
+    if recipe.optimizer != "adamw":
+        from .k1_muon import MuonAdamW
+        return MuonAdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay)
     if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only:
         return torch.optim.AdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay,
             betas=ADAMW_BETAS, eps=ADAMW_EPSILON)
@@ -125,7 +135,7 @@ class FamilyKernel:
         self._qualification_execution_observer = None
         self.model, self.initialization = load_family_model(recipe, initial_state)
         self.model.to(self.device)
-        self.optimizer = make_family_optimizer(recipe, self.model.parameters())
+        self.optimizer = make_family_optimizer(recipe, parameter_groups_for_recipe(recipe, self.model))
         self._clip_parameters = tuple(self.model.parameters())
         expected = [id(p) for p in self.model.parameters() if p.requires_grad]
         actual = [id(p) for g in self.optimizer.param_groups for p in g["params"] if p.requires_grad]

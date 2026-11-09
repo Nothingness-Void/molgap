@@ -89,7 +89,7 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     allowed = {
         "architecture_comparison": ["architecture_config_identity"],
         "mechanism_comparison": ["architecture_config_identity"],
-        "optimizer_comparison": ["optimizer_identity"],
+        "optimizer_comparison": ["optimizer_identity", "optimizer_mode", "optimizer_fused"],
         "initialization_comparison": ["initialization_identity"],
         "training_objective_comparison": ["loss_identity"],
     }
@@ -99,11 +99,16 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
     group = question.get("changed_mechanism") if type(question) is dict else None
     if group is None:
         group = "architecture-config" if purpose == "architecture_comparison" else None
+    default_fields = allowed[purpose]
+    if purpose == "optimizer_comparison":
+        default_fields = ["optimizer_identity"]
+        if candidate.get("training", {}).get("optimizer", "adamw") != reference.get("training", {}).get("optimizer", "adamw"):
+            default_fields.append("optimizer_mode")
     scope = {
         "experiment_purpose": purpose,
         "intervention_group_id": group,
         "mechanism_id": group if purpose == "mechanism_comparison" else None,
-        "declared_intervention_fields": (allowed[purpose] if declared_fields is None
+        "declared_intervention_fields": (default_fields if declared_fields is None
                                           else declared_fields),
     }
     _validate_intervention_scope(**scope, require_nonempty=True)
@@ -267,6 +272,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
     """
     import copy
     import numpy as np
+    from .family_training_recipe import optimizer_identity
     from .comparison_readiness import (CAUSAL_REQUIRED_ROLE_KINDS, ROLE_EVENT_KINDS,
         assess_comparison_readiness, reference_bundle_digest,
         validate_comparison_readiness, validate_reference_bundle)
@@ -420,8 +426,7 @@ def qualify_same_run_terminal_packages(repo_root, resolved, locations, native_re
             "precision": policy["precision"], "tf32_enabled": policy["tf32"], "deterministic_algorithms": True,
             "physical_batch_per_device": recipe.batch_size, "gradient_accumulation_steps": 1,
             "tail_batch_policy": "drop_last" if recipe.drop_last else "keep_last",
-            "optimizer_identity": canonical_fingerprint({"recipe": {k: contract[k] for k in ("learning_rate", "weight_decay", "gradient_clip")},
-                "policy": {k: policy[k] for k in ("adamw_betas", "adamw_epsilon")}}),
+            "optimizer_identity": optimizer_identity(contract),
             "optimizer_mode": policy["optimizer"], "optimizer_fused": policy["optimizer"] == "fused-adamw",
             "schedule_identity": canonical_fingerprint(contract["schedule"]), "loss_identity": comparison_objective_identity(arm, recipe),
             "target_transform_identity": arm["training"]["transform"]["sha256"], "target_transform_asset_sha256": transform["asset_sha256"],

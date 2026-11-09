@@ -508,8 +508,8 @@ class SessionOutputs:
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         used = metrics.get("learning_rates_used")
         if used is not None:
-            if len(used) != 1:
-                raise ValueError("Canonical family trace requires the frozen single LR group")
+            if not used or len(set(used)) != 1:
+                raise ValueError("Canonical family trace requires one uniform LR across parameter groups")
             fields["learning_rate"] = used[0]
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]

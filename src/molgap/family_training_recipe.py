@@ -26,6 +26,13 @@ MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for key, adapter
     for family, version in SESSION_INTERFACES.values()}
 
 
+def optimizer_identity(record):
+    return canonical_fingerprint({"recipe": {k: record[k] for k in (
+        "learning_rate", "weight_decay", "gradient_clip", "optimizer") if k in record},
+        "policy": {k: record["execution_policy"][k] for k in (
+            "adamw_betas", "adamw_epsilon", "muon") if k in record["execution_policy"]}})
+
+
 def _integer(value, name, minimum=1):
     if type(value) is not int or value < minimum:
         raise ValueError("Invalid integer: " + name)
@@ -118,6 +125,7 @@ class FamilyRecipe:
     clean_bn: CalibrationPolicy | None = None
     resume_chunks: bool = False
     development_reports: tuple[str, ...] = ()
+    optimizer: str = "adamw"
     model_config: object | None = None
     family_version: str | None = None
     qualification: object | None = None
@@ -134,6 +142,11 @@ class FamilyRecipe:
             raise ValueError("Resume chunk selection must be an exact boolean")
         if self.family not in MODES or (not _frozen_read and self.mode not in MODES[self.family]):
             raise ValueError("Unknown executable family/addon mode")
+        if self.optimizer not in {"adamw", "k1-muon-adamw-fp32-v1"}:
+            raise ValueError("Unsupported frozen optimizer")
+        if self.optimizer != "adamw" and (self.family != "neural_atom_k1" or self.mode != "reference"
+                or self.cpu_synthetic_only or self.integration_preview or self.formal_interface):
+            raise ValueError("K1 Muon requires the reference model")
         if self.cpu_synthetic_only or self.integration_preview or self.formal_interface:
             from copy import deepcopy
             from importlib import import_module
@@ -300,6 +313,9 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
+        if self.optimizer != "adamw":
+            from .k1_muon import MUON_POLICY
+            policy.update(optimizer=self.optimizer, muon=dict(MUON_POLICY))
         if self.cpu_synthetic_only:
             policy.update(name="modern2d-cpu-v1", scope="CPU_SYNTHETIC_ONLY",
                           cpu_layout=False, optimizer="native-adamw")
@@ -352,6 +368,8 @@ class FamilyRecipe:
             values["clean_bn"] = self.clean_bn.to_dict()
         if not self.resume_chunks:
             values.pop("resume_chunks")
+        if self.optimizer == "adamw":
+            values.pop("optimizer")
         if not self.development_reports:
             values.pop("development_reports")
         else:
@@ -369,7 +387,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "resume_chunks", "development_reports", "model_config", "family_version", "qualification", "formal_training"):
+        for name in ("addons", "clean_bn", "resume_chunks", "development_reports", "optimizer", "model_config", "family_version", "qualification", "formal_training"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:

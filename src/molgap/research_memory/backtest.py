@@ -7,6 +7,8 @@ import hashlib
 from collections import defaultdict
 from typing import Any
 
+from molgap.comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE
+
 
 BASE_COMPARABILITY_FIELDS = (
     "scientific_contract",
@@ -49,25 +51,31 @@ def _comparison_key(trace: dict[str, Any]) -> str:
     if len(scope_fields) > 1 or scope_fields - supported.keys():
         raise ValueError("Replay requires one supported bound intervention")
     intervention_field = intervention_key = None
+    intervention_fields = set()
     if scope_fields:
         scope_name = next(iter(scope_fields))
         purpose, intervention_field, format_name = supported[scope_name]
         scope = identity[scope_name]
         side = trace["comparison_role"]
         expected = scope.get("expected", {})
+        declared = scope.get("declared_intervention_fields", [])
+        expected_fields = {intervention_field: expected} if declared == [intervention_field] else expected
         strict = identity.get("strict_group_identity", identity.get("strict_identity", {}))
         if (
             scope.get("format") != format_name
             or scope.get("experiment_purpose") != purpose
-            or scope.get("declared_intervention_fields") != [intervention_field]
+            or intervention_field not in declared
+            or set(declared) - INTERVENTION_FIELDS_BY_PURPOSE[purpose]
             or side not in {"candidate", "reference"}
             or scope.get("reference_id") != trace["reference_id"]
             or scope.get(side + "_id") != scope.get("evidence_id")
-            or set(expected) != {"candidate", "reference"}
-            or identity.get(intervention_field) != expected[side]
-            or strict.get(intervention_field) != expected[side]
+            or set(expected_fields) != set(declared)
+            or any(set(values) != {"candidate", "reference"}
+                   or strict.get(field) != values[side] for field, values in expected_fields.items())
+            or identity.get(intervention_field) != expected_fields[intervention_field][side]
         ):
             raise ValueError("Replay intervention variant differs from its bound comparison")
+        intervention_fields = set(declared)
         intervention_key = json.dumps(
             {key: value for key, value in scope.items() if key != "evidence_id"},
             sort_keys=True, separators=(",", ":"),
@@ -92,7 +100,7 @@ def _comparison_key(trace: dict[str, Any]) -> str:
             if (key != "architecture_config_identity"
                 or identity["matched_architecture_required"]
                 or intervention_field == "initialization_identity")
-            and (key != intervention_field or intervention_key is None)
+            and key not in intervention_fields
         }
         key["identity"]["strict_identity_sha256"] = hashlib.sha256(
             json.dumps(strict, sort_keys=True, separators=(",", ":")).encode("utf-8")

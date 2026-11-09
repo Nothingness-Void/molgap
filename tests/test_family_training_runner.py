@@ -84,8 +84,9 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
 
 @pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
 @pytest.mark.parametrize("development", [False, True])
+@pytest.mark.parametrize("optimizer", ["adamw", "k1-muon-adamw-fp32-v1"])
 def test_actual_session_output_translation_and_cpu_mechanical_inspection(
-        tmp_path, family, development, initial_states):
+        tmp_path, family, development, optimizer, initial_states):
     report_ema = family == "neural_atom_k1" and development
     session = make_session(family, development=development, schedule_kind="cosine_step", events=events(),
         report_ema=report_ema)
@@ -155,7 +156,7 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         clean_recipe = FamilyRecipe(family, "reference", 42, digest, selection, 256, 2, 4,
             .001, .01, ScheduleSpec("cosine_step", 4), "best-development-clean-ema",
             "torch-pass-randperm", 1, target_mean_eV=3., target_std_eV=2., ema_decay=.999,
-            clean_bn=CalibrationPolicy(selection.manifest_sha256, "3" * 64,
+            optimizer=optimizer, clean_bn=CalibrationPolicy(selection.manifest_sha256, "3" * 64,
                 source_order_sha256(torch.arange(128)), 1), development_reports=("live",),
             torch_version=str(torch.__version__).split("+", 1)[0])
         data = TrainingData([graph(i) for i in range(256)],

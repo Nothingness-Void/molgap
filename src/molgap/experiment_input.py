@@ -556,7 +556,7 @@ def _compile_scientific_input(path, root, value):
                 source_record[r + "_role_identity"] != roles[r]["usage_sha256"]
                 or record[r + "_role_identity"] != roles[r]["usage_sha256"] for r in roles):
             raise ValueError("Frozen data role usage differs from reference recipe")
-        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling", "horizon_steps", "evaluation_every_steps"} if modern else {"learning_rate", "weight_decay"}):
+        if type(item["training"]) is not dict or set(item["training"]) - ({"learning_rate", "weight_decay", "horizon_passes", "execution_mode", "profiling", "horizon_steps", "evaluation_every_steps", "optimizer"} if modern else {"learning_rate", "weight_decay", "optimizer"}):
             raise ValueError("Unsupported training parameter; use learning_rate/weight_decay or Modern2D horizon_passes")
         if type(item["model"]["addons"]) is not list:
             raise ValueError("Model addons must be an ordered declaration list")
@@ -857,10 +857,15 @@ def _compile_scientific_input(path, root, value):
         if any(arm["training"][k] != previous["training"][k] for k in ("sampler", "transform")):
             raise ValueError("Scientific compilation cannot silently change frozen sampler or normalization")
         changed = []
-        if (recipe.learning_rate, recipe.weight_decay) != (baseline.learning_rate, baseline.weight_decay):
+        if (recipe.learning_rate, recipe.weight_decay, recipe.optimizer) != (
+                baseline.learning_rate, baseline.weight_decay, baseline.optimizer):
             identity["optimizer_identity"] = canonical_fingerprint({"reference": identity["optimizer_identity"],
-                "learning_rate": recipe.learning_rate, "weight_decay": recipe.weight_decay})
+                "learning_rate": recipe.learning_rate, "weight_decay": recipe.weight_decay,
+                **({"optimizer": recipe.optimizer} if recipe.optimizer != baseline.optimizer else {})})
             changed.append("optimizer_identity")
+        if recipe.optimizer != baseline.optimizer:
+            identity["optimizer_mode"] = recipe.execution_policy["optimizer"]
+            changed.append("optimizer_mode")
         if arm["base"] != previous["base"] or addons != previous["addons"]:
             identity["architecture_config_identity"] = canonical_fingerprint({"base": arm["base"], "addons": addons})
             changed.append("architecture_config_identity")
@@ -884,9 +889,11 @@ def _compile_scientific_input(path, root, value):
             if row is reference:
                 continue
             changed = []
-            if any(row[2][key] != reference[2][key]
-                   for key in ("learning_rate", "weight_decay")):
+            if any(row[2].get(key) != reference[2].get(key)
+                   for key in ("learning_rate", "weight_decay", "optimizer")):
                 changed.append("optimizer_identity")
+            if row[2]["execution_policy"]["optimizer"] != reference[2]["execution_policy"]["optimizer"]:
+                changed.append("optimizer_mode")
             configuration_changed = row[2].get("model_config") != reference[2].get("model_config")
             if configuration_changed or row[1]["base"] != reference[1]["base"] or (
                     architecture_addons(row[1]) != architecture_addons(reference[1])):

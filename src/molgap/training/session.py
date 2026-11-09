@@ -18,35 +18,47 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
     import torch
     from ..family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON
     groups = optimizer.get("param_groups")
-    if not isinstance(groups, list) or len(groups) != 1 or type(groups[0]) is not dict:
-        raise ValueError("Expected the single frozen AdamW parameter group")
+    muon = recipe.optimizer != "adamw"
+    if not isinstance(groups, list) or len(groups) != 1 + muon or any(type(g) is not dict for g in groups):
+        raise ValueError("Optimizer parameter-group count differs from recipe")
     group = groups[0]
     frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": recipe.weight_decay,
         "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
             "foreach": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else True,
             "fused": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else False}
-    for name, value in frozen.items():
-        if name not in group or type(group[name]) is not type(value) or group[name] != value:
-            raise ValueError("Resume changed frozen AdamW field: " + name)
-    if "decoupled_weight_decay" in group and group["decoupled_weight_decay"] is not True:
-        raise ValueError("Resume changed AdamW decoupled weight decay")
-    ids = group.get("params")
-    if not isinstance(ids, list) or not ids or any(type(value) is not int for value in ids) or ids != list(range(len(ids))):
-        raise ValueError("Resume parameter mapping is not the frozen single-group ordering")
+    ids, muon_ids = [], set()
+    for index, g in enumerate(groups):
+        if muon and g.get("algorithm") != ("muon", "adamw")[index]:
+            raise ValueError("Resume changed frozen optimizer partition")
+        for name, value in frozen.items():
+            if name not in g or type(g[name]) is not type(value) or g[name] != value:
+                raise ValueError("Resume changed frozen AdamW field: " + name)
+        if "decoupled_weight_decay" in g and g["decoupled_weight_decay"] is not True:
+            raise ValueError("Resume changed AdamW decoupled weight decay")
+        g_ids = g.get("params")
+        if (not isinstance(g_ids, list) or not g_ids or any(type(v) is not int for v in g_ids)
+                or g_ids != list(range(len(ids), len(ids) + len(g_ids)))):
+            raise ValueError("Resume parameter mapping is not the frozen group ordering")
+        ids.extend(g_ids)
+        if muon and index == 0:
+            muon_ids.update(g_ids)
+    if any(g.get("lr") != group.get("lr") for g in groups[1:]):
+        raise ValueError("Resume parameter groups diverge in learning rate")
     moments = optimizer.get("state")
     if not isinstance(moments, dict) or not moments or not set(moments) <= set(ids):
         raise ValueError("Missing or unbound optimizer moments")
-    for record in moments.values():
-        if type(record) is not dict or set(record) != {"step", "exp_avg", "exp_avg_sq"}:
-            raise ValueError("Incomplete AdamW moments")
+    for parameter_id, record in moments.items():
+        keys = ("momentum_buffer",) if parameter_id in muon_ids else ("exp_avg", "exp_avg_sq")
+        if type(record) is not dict or set(record) != {"step", *keys}:
+            raise ValueError("Incomplete optimizer moments")
         count = record["step"]
         if (not isinstance(count, torch.Tensor) or count.ndim != 0 or not count.is_floating_point() or
                 not bool(torch.isfinite(count)) or not 1 <= float(count) <= step or float(count) != int(float(count))):
             raise ValueError("Optimizer update exposure is outside acknowledged work")
-        first, second = record["exp_avg"], record["exp_avg_sq"]
+        first, second = record[keys[0]], record[keys[-1]]
         if (not isinstance(first, torch.Tensor) or not isinstance(second, torch.Tensor) or
                 not first.is_floating_point() or first.shape != second.shape or first.dtype != second.dtype):
-            raise ValueError("AdamW moment tensor schema differs")
+            raise ValueError("Optimizer moment tensor schema differs")
     schedule = recipe.schedule
     units = pass_index if schedule.epoch_based else step
     if (type(scheduler) is not dict or set(scheduler) != {"completed_units", "native"}
@@ -55,10 +67,10 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
     if schedule.kind.startswith("cosine_"):
         native = scheduler["native"]
         if (type(native) is not dict or type(native.get("T_max")) is not int or native.get("T_max") != schedule.total_units or
-                native.get("eta_min") != schedule.minimum_lr or native.get("base_lrs") != [recipe.learning_rate] or
+                native.get("eta_min") != schedule.minimum_lr or native.get("base_lrs") != [recipe.learning_rate] * len(groups) or
                 type(native.get("last_epoch")) is not int or native.get("last_epoch") != units or
                 type(native.get("_step_count")) is not int or native.get("_step_count") != units + 1 or
-                native.get("_last_lr") != [group.get("lr")] or group.get("initial_lr") != recipe.learning_rate):
+                native.get("_last_lr") != [g.get("lr") for g in groups] or any(g.get("initial_lr") != recipe.learning_rate for g in groups)):
             raise ValueError("Resume changed frozen native cosine schedule")
         expected_lr = schedule.minimum_lr + (recipe.learning_rate - schedule.minimum_lr) * .5 * (
             1 + math.cos(math.pi * units / schedule.total_units))
@@ -149,7 +161,7 @@ def validate_session_resume(recipe, state):
     # A reviewed addon may legitimately skip its conditional parameters on a
     # batch.  New checkpoints carry the exact optimizer parameter order so a
     # conditional addon may occur between parameters from other addons.
-    parameter_ids = optimizer["param_groups"][0].get("params", [])
+    parameter_ids = [i for g in optimizer["param_groups"] for i in g.get("params", [])]
     parameter_names = cursor.get("optimizer_parameter_names")
     if parameter_names is not None:
         if (type(parameter_names) is not list or len(parameter_names) != len(parameter_ids)
@@ -245,7 +257,7 @@ class FamilyTrainingSession:
         self._flush_metrics()
         values = list(torch.tensor(self._metric_host, dtype=self._metric_dtype).unbind()) if self._metric_host else []
         names = {id(value): name for name, value in self.kernel.model.named_parameters()}
-        parameters = self.kernel.optimizer.param_groups[0]["params"]
+        parameters = [p for g in self.kernel.optimizer.param_groups for p in g["params"]]
         if any(id(parameter) not in names for parameter in parameters):
             raise ValueError("Optimizer parameter is not bound to the model")
         cursor = {"recipe_identity": self.recipe.identity, "pass_index": self.progress.pass_index,
@@ -299,7 +311,7 @@ class FamilyTrainingSession:
                 raise ValueError("Resume optimizer defaults or parameter ordering changed")
         names = {id(value): name for name, value in self.kernel.model.named_parameters()}
         conditional = conditional_optimizer_parameters(self.recipe, names.values())
-        live_parameters = self.kernel.optimizer.param_groups[0]["params"]
+        live_parameters = [p for g in self.kernel.optimizer.param_groups for p in g["params"]]
         recorded_names = cursor.get("optimizer_parameter_names")
         if (recorded_names is not None and
                 recorded_names != [names[id(parameter)] for parameter in live_parameters]):
@@ -310,7 +322,7 @@ class FamilyTrainingSession:
                     names[id(parameter)] not in conditional):
                 raise ValueError("Resume lost required parameter moments")
             if moments is not None and any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
-                    for key in ("exp_avg", "exp_avg_sq")):
+                    for key in moments if key != "step"):
                 raise ValueError("Resume optimizer moments do not match the live parameter schema")
         previous = deepcopy(self.state_dict())
         def install(value):
