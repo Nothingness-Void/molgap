@@ -252,6 +252,10 @@ After downtime or stale context, before acting:
 
 Never submit a successor just because local status is stale.
 Unknown remote state is `UNKNOWN`, not failure.
+Submission journal phases are defined once, by `PHASE_NEXT` in `kaggle_submission.py`; a
+`SUBMIT_UNKNOWN` journal needs reconciliation before any retry. Persisted lowercase
+`complete` (ledgers, manifests) and uppercase run statuses are separate vocabularies: never
+rename or compare across them.
 
 ## Comparison, READY and Early Stop
 
