@@ -129,7 +129,7 @@ authorized submission. Conversation B uses the configured monitor runtime and a 
 - A submission timeout is `SUBMIT_UNKNOWN` and needs reconciliation before any retry;
   duplicate ticks never create duplicate successors.
 - Status words are code-defined and per object: submission phases in
-  `kaggle_submission_phases.py`, server events in `server_control.py`. Persisted lowercase
+  `PHASE_NEXT` in `kaggle_submission.py`, server events in `server_control.py`. Persisted lowercase
   `complete` (ledgers, manifests) and uppercase run statuses are separate vocabularies;
   never rename or compare across them. `CLOSED` is a server binding event, `READY_FOR_DESKTOP`
   a final event and a handoff file; neither is an experiment's closure label.
