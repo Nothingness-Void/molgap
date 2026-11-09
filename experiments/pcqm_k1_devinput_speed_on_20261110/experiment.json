@@ -1,0 +1,91 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_devinput_speed_on_20261110",
+  "logical_run_id": "pcqm-k1-devinput-speed-on-20261110-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-10T00:00:00+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-devinput-speed-on-20261110",
+    "action": "RUN_PAIRED_100K",
+    "question": "Throughput only: how much faster does a K1 Muon/SOAP training step run on Kaggle T4 with device_resident_train=on? Infrastructure measurement, not scientific evidence.",
+    "deficiency": "Training is CPU launch-bound; host-side data path is a candidate cost.",
+    "changed_mechanism": "device-resident-training-inputs-throughput-on",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "No measurable speedup on T4"
+    ],
+    "closed_families": [
+      "pcqm-k1-muon-100k-20261106",
+      "pcqm-k1-tail-regularization-500k"
+    ],
+    "positive_decision": "Report per-run wall and epoch loss only; no scientific claim.",
+    "negative_decision": "Close as INFRASTRUCTURE_ONLY."
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+    "estimated_device_hours": 1,
+    "estimated_wall_hours": 0.5,
+    "cheapest_falsifier": "Two-epoch wall time versus the matching run with the flag flipped."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "kaseichou",
+    "arms": [
+      "muon",
+      "soap"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "muon",
+    "allocated_t4_hours_ceiling": 4,
+    "allocation_wall_limit_seconds": 7200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User asked on 2026-11-10 for a Kaggle throughput test of device-resident inputs and authorized Opus decisions while away.",
+    "scope": "One paired K1 Muon/SOAP 100K job paused after step 1562 (two epochs), seed 42, device_resident_train=true. Throughput measurement only; no acceptance as science, no protected roles, no successors.",
+    "pause_after_step": 1562,
+    "device_resident_train": true
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "initial_state_ref": "D:/molgap-artifacts/initializations/structural-bias-norm-100k/k1.pt",
+    "training": {},
+    "purpose": "optimizer_comparison",
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/data_declaration.json",
+      "arm_id": "post_bn"
+    }
+  },
+  "arms": [
+    {
+      "arm_id": "muon"
+    },
+    {
+      "arm_id": "soap",
+      "training": {
+        "optimizer": "k1-soap-adamw-fp32-v1"
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}
