@@ -14,7 +14,7 @@ def training_loader_options(workers):
 
 class FamilyLoaders:
     """Own one immutable train view and an optional bounded development cache."""
-    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning):
+    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning, *, device_inputs=None):
         import torch
         from torch_geometric.loader import DataLoader
         from .gptrans_execution_backend import PreparedLoader, assert_static_dataset
@@ -32,6 +32,18 @@ class FamilyLoaders:
         self.generator = torch.Generator()
         self.training = DataLoader(data.train, batch_sampler=self.sampler,
             generator=self.generator, **training_loader_options(tuning.training_workers))
+        self.device_train, self.device_inputs_reason = None, "off" if device_inputs is None else None
+        if device_inputs is not None:
+            from .family_training_device_inputs import DeviceResidentTrain
+            from .family_training_policy import mode_policy
+            if mode_policy(recipe.family, recipe.mode).prepare_batch is not None:
+                self.device_inputs_reason = "mode has a prepare_batch hook"
+            else:
+                store = DeviceResidentTrain(data.train, data.train_rows)
+                if DeviceResidentTrain.admit(store.estimate, device_inputs):
+                    self.device_train = store.upload(device_inputs)
+                else:
+                    self.device_inputs_reason = "device memory or CUDA unavailable for %d bytes" % store.estimate
         self.development = None
         self.development_cache = None
         self.closed = False
@@ -55,6 +67,9 @@ class FamilyLoaders:
             drop_last=self.recipe.drop_last)
         self.sampler.pass_index, self.sampler.start_batch = validated.pass_index, validated.start_batch
         self.generator.manual_seed(self.recipe.seed + pass_index)
+        if self.device_train is not None:
+            from .family_training_device_inputs import device_training_stream
+            return device_training_stream(self.device_train, self.sampler)
         return self.training
 
     def dev(self):

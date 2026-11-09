@@ -82,6 +82,8 @@ def validate_allocation_budget(config: dict) -> None:
     """Check explicit launch fields without materializing legacy defaults."""
     if "pause_after_step" in config and (type(config["pause_after_step"]) is not int or config["pause_after_step"] < 1):
         raise ValueError("pause_after_step must be a positive absolute optimizer step")
+    if "device_resident_train" in config and type(config["device_resident_train"]) is not bool:
+        raise ValueError("device_resident_train must be a boolean")
     limit = config.get("allocation_wall_limit_seconds")
     reserve = config.get("cleanup_reserve_seconds", 60)
     if limit is not None and (type(limit) is not int or limit <= 0):

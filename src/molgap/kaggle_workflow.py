@@ -13,7 +13,7 @@ from .experiment_package import read_packaged_text
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
-    optional = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"}
+    optional = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step", "device_resident_train"}
     if type(kaggle) is not dict or not fields <= set(kaggle) or set(kaggle) - (fields | optional):
         raise ValueError("Expected explicit Kaggle account/kernel/title/datasets/source_dataset/accelerator")
     validate_allocation_budget(kaggle)
@@ -73,7 +73,7 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
         "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
         "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
-    for field in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"):
+    for field in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step", "device_resident_train"):
         if field in platform_plan:
             launch[field] = platform_plan[field]
     if acceptance_binding is not None:

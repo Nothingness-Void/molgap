@@ -423,7 +423,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
                            account, run_reference, staged_root=None, prospective_sha256=None,
                            target_identity=None, preflight_dir=None, resume_output=None,
-                           pause_after_step=None):
+                           pause_after_step=None, device_resident_train=False):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
@@ -458,6 +458,8 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
     if pause_after_step is not None:
         options["pause_after_step"] = pause_after_step
+    if device_resident_train:
+        options["device_resident_train"] = True
     if phase == "preflight" and resume_output is not None:
         runner = getattr(owner, "run_screen_resume_preflight", None)
         if not callable(runner):

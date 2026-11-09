@@ -962,7 +962,8 @@ def _resume_trajectory(recipe, context, options):
         "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
 
 
-def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_after_step=None, **options):
+def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_after_step=None,
+        device_resident_train=False, **options):
     """Same callable for every scale/platform; same-budget resume only."""
     import torch
     if pause_after_step is not None and (type(pause_after_step) is not int or pause_after_step < 1):
@@ -996,7 +997,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
     prior_cost = interval["prior_wall_seconds"]
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
     _loaded_source(options["package_dir"])
-    session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
+    session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning,
+        device_inputs="cuda" if device_resident_train else None),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
@@ -1009,6 +1011,9 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, pause_af
             session.load_state_dict(outputs.retained_state())
         if pause_after_step is not None and not session.progress.optimizer_step < pause_after_step <= recipe.optimizer_steps:
             raise ValueError("Step pause must follow the retained cursor within the frozen training horizon")
+        # Runtime log only: never fingerprinted or written to a receipt.
+        print("device-resident-train:", "on" if session.loaders.device_train is not None else
+              "off (" + session.loaders.device_inputs_reason + ")", flush=True)
         outputs.logger.start(session.progress)
     except Exception:
         session.close()
