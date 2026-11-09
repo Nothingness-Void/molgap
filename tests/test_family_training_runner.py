@@ -93,6 +93,10 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         report_ema=report_ema, auxiliary_ema_decays=(.9999,) if auxiliary else ())
     legacy = replace(session.recipe, auxiliary_ema_decays=()).to_dict()
     assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy
+    assert type(session.recipe).from_dict(legacy).to_dict() == legacy
+    if family == "neural_atom_k1":
+        with pytest.raises(ValueError, match="unsupported with the Muon partition"):
+            replace(session.recipe, optimizer="k1-muon-adamw-fp32-v1", no_decay_modules=("BatchNorm",))
     path, record = contract_file(tmp_path, session)
     ctx = context(family, path)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
