@@ -579,7 +579,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                 if prior_kernel is None or prior_kernel.metadata.current_version_number != kernel_version - 1:
                     raise ValueError("Continuation requires the exact predecessor kernel version")
                 prior_status = api.kernels_status(ref + "/" + str(kernel_version - 1))
-                if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled"}:
+                if str(prior_status.status).lower().split(".")[-1] not in {"error", "failed", "cancelled", "complete"}:
                     raise ValueError("Continuation predecessor must be authoritatively terminal")
                 atomic_json(output / "predecessor_scheduler_observation.json", {
                     "kernel": ref, "version": kernel_version - 1, "status": str(prior_status.status),

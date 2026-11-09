@@ -238,6 +238,8 @@ def replay_manifests(
                 m for _, m in records["traces"]
                 if m["comparison_role"] == "candidate"
                 and m["reference_id"] == comparison["reference_id"]
+                and (evidence.get(resolve_repo_pointer(root, m["terminal_evidence_ref"])) or {}).get("evidence_id")
+                == comparison["candidate_id"]
             ]
             if len(references) != 1 or len(candidates) != 1:
                 raise ValueError(

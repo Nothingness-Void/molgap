@@ -90,8 +90,8 @@ ENTRYPOINT_LINE_LIMITS = {
 }
 # Owner-approved ceiling for tests/test_*.py.  Fixes extend an existing workflow
 # test instead of adding files; raise these only in a commit that states why.
-# 2026-11-09: 70422 = 70305 (10 over the old 70295) + 43 device-input + 39 fixture-repair + 35 Muon test lines.
-TEST_SUITE_LIMITS = {"files": 383, "lines": 70422}
+# 2026-11-09: 70423 = 70305 (10 over the old 70295) + 43 device-input + 39 fixture-repair + 35 Muon + 1 acceptance test lines.
+TEST_SUITE_LIMITS = {"files": 383, "lines": 70423}
 
 _FENCE = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 _LINK = re.compile(r"(?<!!)(?:\[[^\]\n]+\])\((<[^>\n]+>|[^)\n]+)\)")

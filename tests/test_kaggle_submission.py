@@ -392,6 +392,7 @@ def test_full_submission_and_repeated_call_never_duplicate(scientific, tmp_path,
     model = dict(value["shared"]["model"])
     name = "k1_readout_scale" if model["family"] == "neural_atom_k1" else "gptrans_readout_scale"
     model["addons"] = [name]
+    predecessor_status = "ERROR" if model["family"] == "neural_atom_k1" else "COMPLETE"  # one journey per terminal kind
     value["arms"][1]["model"] = model
     target_path = case.repo / value["same_run"]["target_manifest_ref"]
     target = json.loads(target_path.read_bytes())
@@ -406,7 +407,7 @@ def test_full_submission_and_repeated_call_never_duplicate(scientific, tmp_path,
     child = r'''
 import json, pathlib, sys, torch
 from types import SimpleNamespace as NS
-repo, experiment, temp, tests = map(pathlib.Path, sys.argv[1:])
+repo, experiment, temp, tests, status = map(pathlib.Path, sys.argv[1:])
 sys.path.insert(0, str(repo / "src"))
 sys.path.insert(1, str(tests))
 import pytest
@@ -416,13 +417,13 @@ patch = pytest.MonkeyPatch()
 torch.set_num_threads(1)
 try:
     release = journey._packaged_release(case, temp, patch)
-    summary = journey._assert_real_package_release_post_receipt(release, patch)
+    summary = journey._assert_real_package_release_post_receipt(release, patch, status.name)
 finally:
     patch.undo()
 print(json.dumps(summary))
 '''
     completed = subprocess.run([sys.executable, "-I", "-c", child,
-        str(case.repo), str(input_path), str(tmp_path), str(Path(__file__).resolve().parent)],
+        str(case.repo), str(input_path), str(tmp_path), str(Path(__file__).resolve().parent), predecessor_status],
         cwd=case.repo, text=True, capture_output=True, timeout=360)
     assert completed.returncode == 0, completed.stdout + completed.stderr
     observation = json.loads(completed.stdout.splitlines()[-1])
@@ -810,7 +811,7 @@ def test_private_forbidden_requires_complete_authenticated_owned_absence():
     assert not _owned_absence(api, "owner/missing", "kernel", SimpleNamespace(response=SimpleNamespace(status_code=500)))
 
 
-def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, recovery_authority=None):
+def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, recovery_authority=None, predecessor_status="ERROR"):
     """Run a prepared scientific input through the platform entry offline."""
     import requests
     from molgap.common.paths import MachinePaths
@@ -841,7 +842,7 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
                 transport_state["transport"] = release.__wrapped__(
                     transport_root, stubs, NS(param=continuation), staged_source=prepared / "source_dataset")
             if continuation:
-                transport_state["transport"].api.predecessor_status = "ERROR"
+                transport_state["transport"].api.predecessor_status = predecessor_status  # COMPLETE: a paused segment exits cleanly.
             shutil.copyfile(prepared / "kernel/run.py", transport_state["transport"].kernel / "run.py")
         return transport_state["transport"]
 
@@ -924,7 +925,7 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
               restore_roundtrip=restore_roundtrip, lose_next_post=lose_next_post)
 
 
-def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
+def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch, predecessor_status):
     """Pause actual CPU training, continue it through v2, retrieve, and close RML."""
     import time
     import torch
@@ -1014,7 +1015,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     transport_tmp.mkdir()
     with monkeypatch.context() as transport:
         continued = _packaged_release(NS(repo=case.repo, path=case.input_path, value=case.value),
-            transport_tmp, transport, resume_prepared=resumed_prepared, recovery_authority=authority)
+            transport_tmp, transport, resume_prepared=resumed_prepared, recovery_authority=authority, predecessor_status=predecessor_status)
         code, submitted = continued.run()
         assert code == 0 and submitted["status"] == "SUBMISSION_BOUND", submitted
         continued_receipt = continued.output / "launch_receipt.json"
@@ -1146,7 +1147,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             "native_qualification": "NOT_QUALIFIED"}
 
 
-def _assert_real_package_release_post_receipt(case, monkeypatch):
+def _assert_real_package_release_post_receipt(case, monkeypatch, predecessor_status):
     """Exercise exact receipt reuse and the complete continuation lifecycle.
 
     This intentionally does not instrument the Desktop-only package content
@@ -1210,7 +1211,7 @@ def _assert_real_package_release_post_receipt(case, monkeypatch):
     assert receipt_path.read_bytes() == retained
     assert case.transport().api.created == case.transport().api.pushed == 1
 
-    lifecycle = _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch)
+    lifecycle = _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch, predecessor_status)
     (case.prepared / "package/SOURCE_COMMIT.txt").write_text("0" * 40 + "\n")
     with pytest.raises(ValueError):
         owner.submit_prepared_workflow(case.prepared, case.credentials, case.output,
