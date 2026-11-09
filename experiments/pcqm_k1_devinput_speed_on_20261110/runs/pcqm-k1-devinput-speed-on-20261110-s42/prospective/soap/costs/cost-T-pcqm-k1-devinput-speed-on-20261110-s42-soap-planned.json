@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-devinput-speed-on-20261110-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-k1-devinput-speed-on-20261110-s42-soap-planned",
+  "evidence_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/generated/252dc7dd50fb843a5731f8057f7f7f926f12ccc5aa2030a0e23100aa7be7146c/authority.json",
+  "hardware": "Tesla T4x2 FP32/noTF32, one newly trained model per device",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 1
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-devinput-speed-on-20261110-s42:soap:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-devinput-speed-on-20261110-s42-soap"
+}

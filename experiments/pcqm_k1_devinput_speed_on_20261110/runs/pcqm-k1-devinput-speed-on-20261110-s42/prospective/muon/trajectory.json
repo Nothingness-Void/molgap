@@ -1,0 +1,109 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-k1-devinput-speed-on-20261110-s42-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-devinput-speed-on-20261110-s42-muon-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_devinput_speed_on_20261110/generated/252dc7dd50fb843a5731f8057f7f7f926f12ccc5aa2030a0e23100aa7be7146c/muon/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-devinput-speed-on-20261110-s42:muon:downstream"
+      ],
+      "source_commit": "de0700e3799e77fb9c8c6ad37086ab3e445269af",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/decision.md",
+    "next_allowed_actions": [
+      "one authorized frozen experiment"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": [
+      "terminal evidence"
+    ]
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/generated/252dc7dd50fb843a5731f8057f7f7f926f12ccc5aa2030a0e23100aa7be7146c/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-devinput-speed-on-20261110",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_devinput_speed_on_20261110/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/runs/pcqm-k1-devinput-speed-on-20261110-s42/prospective/rml_decision_snapshots/27d9a158370e06b6042e17e600299bc102b36690382708efaca1df4bb22fa303.json",
+    "snapshot_sha256": "27d9a158370e06b6042e17e600299bc102b36690382708efaca1df4bb22fa303",
+    "state_timestamp": "2026-11-10T00:00:00+00:00"
+  },
+  "family_id": "pcqm-k1-devinput-speed-on-20261110",
+  "hypothesis": {
+    "alternative_explanations": [
+      "No measurable speedup on T4"
+    ],
+    "changed_mechanism": "device-resident-training-inputs-throughput-on",
+    "cheapest_falsifier": "Two-epoch wall time versus the matching run with the flag flipped.",
+    "decision_changed_if_negative": "Close as INFRASTRUCTURE_ONLY.",
+    "decision_changed_if_positive": "Report per-run wall and epoch loss only; no scientific claim.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-devinput-speed-on-20261110-s42-muon-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-devinput-speed-on-20261110-s42-muon",
+    "observed_deficiency": "Training is CPU launch-bound; host-side data path is a candidate cost.",
+    "related_closed_family_ids": [
+      "pcqm-k1-muon-100k-20261106",
+      "pcqm-k1-tail-regularization-500k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Throughput only: how much faster does a K1 Muon/SOAP training step run on Kaggle T4 with device_resident_train=on? Infrastructure measurement, not scientific evidence.",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/generated/252dc7dd50fb843a5731f8057f7f7f926f12ccc5aa2030a0e23100aa7be7146c/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_devinput_speed_on_20261110/generated/252dc7dd50fb843a5731f8057f7f7f926f12ccc5aa2030a0e23100aa7be7146c/muon/recipe.json",
+      "experiments/pcqm_k1_devinput_speed_on_20261110/data_declaration.json",
+      "experiments/pcqm_k1_devinput_speed_on_20261110/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_devinput_speed_on_20261110/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "muon",
+      "comparison_role": "reference",
+      "logical_run_id": "pcqm-k1-devinput-speed-on-20261110-s42",
+      "reference_arm_id": "muon",
+      "reference_trajectory_id": "T-pcqm-k1-devinput-speed-on-20261110-s42-muon",
+      "reference_trajectory_ref": "experiments/pcqm_k1_devinput_speed_on_20261110/runs/pcqm-k1-devinput-speed-on-20261110-s42/prospective/muon/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "540ed3af3cd44cdf125fc5e86a5bbf627b59c3784c682a4e8bde0798b655660a"
+    },
+    "source_commit": "de0700e3799e77fb9c8c6ad37086ab3e445269af",
+    "source_config_identity": "1ebad35a3cb0d323dbe8b1ce4967a9df9be6aedc7fc2bf0fd4f7fe13ecc7c493"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-devinput-speed-on-20261110-s42-muon"
+}
