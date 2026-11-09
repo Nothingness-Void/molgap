@@ -125,12 +125,15 @@ def synthetic_batch():
     ("gptrans_t", "centered_logits"), ("gptrans_t", "memory_value"), ("gptrans_t", "memory_message"),
 ])
 def test_family_addons_share_kernel_and_do_not_mutate_cpu_data(initial_states, family, mode):
+    from dataclasses import replace
     path, digest = initial_states[family]
     recipe = FamilyRecipe(family, mode, 42, digest,
         DatasetSelection("synthetic.json", "2" * 64, True), 128, 2, 1,
         .001, .01, ScheduleSpec("cosine_epoch", 1), "best-development-live",
         "torch-pass-randperm", 1, target_mean_eV=0., target_std_eV=1.,
         torch_version=str(torch.__version__).split("+", 1)[0])
+    if mode == "reference":
+        recipe = replace(recipe, no_decay_modules=("BatchNorm" if family == "neural_atom_k1" else "LayerNorm",))
     rng, threads = torch.get_rng_state(), torch.get_num_threads()
     deterministic = torch.are_deterministic_algorithms_enabled()
     fill = torch.utils.deterministic.fill_uninitialized_memory
@@ -138,6 +141,14 @@ def test_family_addons_share_kernel_and_do_not_mutate_cpu_data(initial_states, f
         torch.set_num_threads(1)
         torch.use_deterministic_algorithms(True)
         kernel = FamilyKernel(recipe, path, device="cpu")
+        if recipe.no_decay_modules:
+            from torch.nn.modules.batchnorm import _BatchNorm
+            norm_type = _BatchNorm if family == "neural_atom_k1" else torch.nn.LayerNorm
+            exempt = {id(p) for module in kernel.model.modules() if isinstance(module, norm_type)
+                      for name, p in module.named_parameters(recurse=False) if name in {"weight", "bias"} and p.requires_grad}
+            assert {id(p) for p in kernel.optimizer.param_groups[1]["params"]} == exempt
+            assert [g["weight_decay"] for g in kernel.optimizer.param_groups] == [.01, 0.]
+            assert all(id(p) not in exempt for p in kernel.optimizer.param_groups[0]["params"])
         batch = synthetic_batch()
         before = deepcopy(batch.to_dict())
         kernel.model.train()

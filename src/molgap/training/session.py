@@ -19,15 +19,16 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
     from ..family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON
     groups = optimizer.get("param_groups")
     muon = recipe.optimizer != "adamw"
-    if not isinstance(groups, list) or len(groups) != 1 + muon or any(type(g) is not dict for g in groups):
+    expected_decays = (recipe.weight_decay, 0.0) if recipe.no_decay_modules else (recipe.weight_decay,) * (1 + muon)
+    if not isinstance(groups, list) or len(groups) != len(expected_decays) or any(type(g) is not dict for g in groups):
         raise ValueError("Optimizer parameter-group count differs from recipe")
     group = groups[0]
-    frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": recipe.weight_decay,
-        "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
+    ids, muon_ids = [], set()
+    for index, (g, wd) in enumerate(zip(groups, expected_decays)):
+        frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": wd,
+            "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
             "foreach": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else True,
             "fused": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else False}
-    ids, muon_ids = [], set()
-    for index, g in enumerate(groups):
         if muon and g.get("algorithm") != ("muon", "adamw")[index]:
             raise ValueError("Resume changed frozen optimizer partition")
         for name, value in frozen.items():
@@ -91,13 +92,16 @@ def validate_session_resume(recipe, state):
     """One metadata/finite-state check shared by replay loading and CPU inspection."""
     import torch
     from ..experiment_family_workflow import _finite_tree, _validate_rng_state
+    from ..family_training_recipe import ema_label
     required = {"model", "optimizer", "scheduler", "ema", "rng_state", "cursor",
-                "optimizer_step", "sample_presentations"}
+                "optimizer_step", "sample_presentations", *(("auxiliary_ema",) if recipe.auxiliary_ema_decays else ())}
     if type(state) is not dict or set(state) != required:
         raise ValueError("Incomplete family resume state")
     cursor, plan, step = state["cursor"], recipe.loop_plan, state["optimizer_step"]
     keys = {"recipe_identity", "pass_index", "next_batch", "status", "pending_absolute",
             "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
+    if recipe.auxiliary_ema_decays:
+        keys.add("auxiliary_selections")
     if recipe.clean_bn is not None:
         keys.add("weight_state")
     accepted_keys = (keys, keys | {"optimizer_parameter_names"})
@@ -139,6 +143,25 @@ def validate_session_resume(recipe, state):
             raise ValueError("Development selection did not occur at a complete pass")
     elif best is not None or selected != (step if step == plan.optimizer_steps else None):
         raise ValueError("Final-only recipe contains development selection")
+    if recipe.auxiliary_ema_decays:
+        aux_sel = cursor["auxiliary_selections"]
+        expected_labels = [ema_label(d) for d in recipe.auxiliary_ema_decays]
+        if type(aux_sel) is not dict or list(aux_sel) != expected_labels:
+            raise ValueError("Resume auxiliary EMA selection keys differ from recipe")
+        for entry in aux_sel.values():
+            if type(entry) is not dict or set(entry) != {"best_development_mae_eV", "selected_step"}:
+                raise ValueError("Invalid auxiliary EMA selection entry")
+            ab, astep = entry["best_development_mae_eV"], entry["selected_step"]
+            if ab is not None and (type(ab) not in (float, int) or not math.isfinite(ab) or ab < 0):
+                raise ValueError("Invalid auxiliary EMA development metric")
+            if astep is not None and (type(astep) is not int or not 1 <= astep <= step):
+                raise ValueError("Invalid auxiliary EMA selected step")
+            if recipe.dataset.development:
+                interval = evaluation_every or plan.steps_per_pass
+                if (ab is None) != (astep is None) or ((step >= interval) != (ab is not None)) or (astep is not None and astep % interval):
+                    raise ValueError("Resume auxiliary EMA selection history is incomplete")
+            elif ab is not None or astep != (step if step == plan.optimizer_steps else None):
+                raise ValueError("Final-only recipe contains auxiliary development selection")
     units = pass_index if recipe.schedule.epoch_based else step
     if type(state["scheduler"]) is not dict or state["scheduler"].get("completed_units") != units:
         raise ValueError("Resume schedule cursor differs from optimizer exposure")
@@ -192,11 +215,19 @@ def validate_session_resume(recipe, state):
             raise ValueError("Resume is missing required optimizer moments")
     if any(not isinstance(value, torch.Tensor) for value in state["model"].values()):
         raise ValueError("Invalid resume model tensors")
-    if state["ema"] is not None and (not isinstance(state["ema"], dict) or
-            state["ema"].keys() != state["model"].keys() or any(
-                not isinstance(value, torch.Tensor) or value.shape != state["model"][key].shape
-                or value.dtype != state["model"][key].dtype for key, value in state["ema"].items())):
-        raise ValueError("Resume EMA tensor schema differs from model")
+    def _check_ema_dict(ema_dict, label):
+        if (not isinstance(ema_dict, dict) or ema_dict.keys() != state["model"].keys() or any(
+                not isinstance(v, torch.Tensor) or v.shape != state["model"][k].shape or v.dtype != state["model"][k].dtype
+                for k, v in ema_dict.items())):
+            raise ValueError(label + " tensor schema differs from model")
+    if state["ema"] is not None:
+        _check_ema_dict(state["ema"], "Resume EMA")
+    if recipe.auxiliary_ema_decays:
+        aux_state = state["auxiliary_ema"]
+        if type(aux_state) is not dict or list(aux_state) != [ema_label(d) for d in recipe.auxiliary_ema_decays]:
+            raise ValueError("Resume auxiliary EMA keys differ from recipe")
+        for k, v in aux_state.items():
+            _check_ema_dict(v, "Resume auxiliary EMA " + k)
     _finite_tree(state, "family.resume")
     _validate_rng_state(state["rng_state"])
     if recipe.clean_bn is not None:
@@ -234,6 +265,9 @@ class FamilyTrainingSession:
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
         self.best, self.selected_step = None, None
+        from ..family_training_recipe import ema_label
+        self.auxiliary_best = {ema_label(d): None for d in self.recipe.auxiliary_ema_decays}
+        self.auxiliary_selected_step = {ema_label(d): None for d in self.recipe.auxiliary_ema_decays}
         self._last_update_learning_rates = None
         self.closed = False
 
@@ -266,6 +300,9 @@ class FamilyTrainingSession:
             "best_development_mae_eV": self.best, "selected_step": self.selected_step,
             "optimizer_state_ids": sorted(optimizer_state["state"]),
             "optimizer_parameter_names": [names[id(parameter)] for parameter in parameters]}
+        if self.recipe.auxiliary_ema_decays:
+            cursor["auxiliary_selections"] = {k: {"best_development_mae_eV": self.auxiliary_best[k],
+                "selected_step": self.auxiliary_selected_step[k]} for k in self.auxiliary_best}
         if self.recipe.clean_bn is not None:
             cursor["weight_state"] = self.kernel.training_state.calibration_state_dict()
         return cursor
@@ -280,6 +317,8 @@ class FamilyTrainingSession:
             "rng_state": tensor_safe_rng_state(capture_rng_state()), "cursor": self._cursor(optimizer_state),
             "optimizer_step": self.progress.optimizer_step,
             "sample_presentations": self.progress.sample_presentations}
+        if self.kernel.auxiliary_emas:
+            state["auxiliary_ema"] = {k: aux.state_dict() for k, aux in self.kernel.auxiliary_emas.items()}
         return state
 
     def state_dict(self):
@@ -337,6 +376,8 @@ class FamilyTrainingSession:
             self.schedule.load_state_dict(value["scheduler"])
             if self.kernel.ema is not None:
                 self.kernel.ema.load_state_dict(value["ema"])
+            for k, aux in self.kernel.auxiliary_emas.items():
+                aux.load_state_dict(value["auxiliary_ema"][k])
             restore_rng_state(value["rng_state"])
         try:
             install(state)
@@ -349,6 +390,9 @@ class FamilyTrainingSession:
         self._metric_dtype = values[0].dtype if values else None
         self.pending_rows = cursor["pending_rows"]
         self.best, self.selected_step = cursor["best_development_mae_eV"], cursor["selected_step"]
+        for k in self.auxiliary_best:
+            self.auxiliary_best[k] = cursor["auxiliary_selections"][k]["best_development_mae_eV"]
+            self.auxiliary_selected_step[k] = cursor["auxiliary_selections"][k]["selected_step"]
         self.progress = progress
 
     def _select(self, progress, evaluation=None):
@@ -359,6 +403,10 @@ class FamilyTrainingSession:
             lambda model: self.selected(progress, weights, model.state_dict(), evaluation),
             calibration_policy=self.recipe.clean_bn if weights == "clean-ema" else None)
         self.selected_step = progress.optimizer_step
+        for k in self.auxiliary_selected_step:
+            self.kernel.training_state.evaluate("ema-" + k,
+                lambda model, key=k: self.selected(progress, "ema-" + key, model.state_dict(), None))
+            self.auxiliary_selected_step[k] = progress.optimizer_step
 
     def _finish_pass(self, pass_index, progress):
         from ..training_reproducibility import sum_scalar_metrics
@@ -371,6 +419,7 @@ class FamilyTrainingSession:
         evaluation = None
         live_evaluation = None
         ema_evaluation = None
+        aux_evaluations = {}
         if self.recipe.dataset.development:
             if self.recipe.selection_weights == "clean-ema":
                 self.kernel.calibrate(self.loaders)
@@ -396,12 +445,21 @@ class FamilyTrainingSession:
                         live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
                     elif weights == "ema":
                         ema_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
+            for k in self.auxiliary_best:
+                def select_aux(result, key=k):
+                    if self.auxiliary_best[key] is None or result["mae_eV"] < self.auxiliary_best[key]:
+                        self.selected(progress, "ema-" + key, self.kernel.evaluation_model.state_dict(), result)
+                        self.auxiliary_selected_step[key] = progress.optimizer_step
+                        self.auxiliary_best[key] = result["mae_eV"]
+                aux_evaluations[k] = self.kernel.evaluate(self.loaders, weights="ema-" + k, on_evaluation=select_aux)
         metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
         metrics["learning_rates_used"] = self._last_update_learning_rates
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
         if ema_evaluation is not None:
             metrics["development_ema"] = ema_evaluation
+        if aux_evaluations:
+            metrics["development_auxiliary_ema"] = aux_evaluations
         self.pass_finished(progress, metrics)
 
     def _persist(self, progress):

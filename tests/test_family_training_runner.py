@@ -88,8 +88,11 @@ def test_one_recipe_builder_and_training_adapter_for_each_scale(family, rows, de
 def test_actual_session_output_translation_and_cpu_mechanical_inspection(
         tmp_path, family, development, optimizer, initial_states):
     report_ema = family == "neural_atom_k1" and development
+    auxiliary = family == "gptrans_t" and development
     session = make_session(family, development=development, schedule_kind="cosine_step", events=events(),
-        report_ema=report_ema)
+        report_ema=report_ema, auxiliary_ema_decays=(.9999,) if auxiliary else ())
+    legacy = replace(session.recipe, auxiliary_ema_decays=()).to_dict()
+    assert "no_decay_modules" not in legacy and "auxiliary_ema_decays" not in legacy
     path, record = contract_file(tmp_path, session)
     ctx = context(family, path)
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
@@ -106,6 +109,14 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(
     report = outputs.complete(progress, runtime=runtime, costs=costs)
     assert report["status"] == "MECHANICALLY_VERIFIED", report
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
+    if auxiliary:
+        from molgap.family_training_recipe import aux_ema_names
+        label, _, model_role, pred_role, model_file, pred_file, metric = aux_ema_names(.9999)
+        assert (outputs.root / model_file).is_file() and (outputs.root / pred_file).is_file()
+        assert {model_role, pred_role} <= report["observed"]["artifacts"].keys()
+        trace = json.loads((outputs.root / "canonical_trace.json").read_text(encoding="utf-8"))
+        assert report["observed"]["auxiliary_ema"][label]["development_mae_eV"] == pytest.approx(
+            min(row[metric] for row in trace["observations"]))
     assert (outputs.root / "development_predictions.pt").is_file() == development
     assert ("development_mae_eV" in report["observed"]) == development
     # A reference-mode pass row carries the LR it updated with and its checkpoint.

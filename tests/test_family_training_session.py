@@ -23,6 +23,9 @@ class SyntheticKernel(FamilyKernel):
         self.model = torch.nn.Sequential(torch.nn.Linear(1, 2), torch.nn.Dropout(.2), torch.nn.Linear(2, 1))
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay else None
+        from molgap.family_training_recipe import ema_label
+        self.auxiliary_emas = {ema_label(decay): BoundForeachEMA(self.model, decay)
+                               for decay in recipe.auxiliary_ema_decays}
         self.weight_view = ReusedWeightView()
 
     def forward(self, batch):
@@ -36,10 +39,13 @@ class SyntheticKernel(FamilyKernel):
         loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, loss_builder,
             clip_norm=self.recipe.gradient_clip, check_finite=check_finite, ema=self.ema,
             observer=getattr(self, "update_observer", None))
+        for auxiliary in self.auxiliary_emas.values():
+            auxiliary.update(self.model)
         return loss, absolute, rows
 
 
-def make_session(family, *, development, schedule_kind, events, drop_last=True, report_ema=False):
+def make_session(family, *, development, schedule_kind, events, drop_last=True, report_ema=False,
+                 auxiliary_ema_decays=()):
     configure_fp32_determinism(42)
     rows = 257
     train = [Data(x=torch.zeros(1, 9, dtype=torch.long),
@@ -66,7 +72,7 @@ def make_session(family, *, development, schedule_kind, events, drop_last=True, 
         "python-epoch-shuffle" if family == "neural_atom_k1" else "torch-pass-randperm",
         checkpoint_every=2, target_mean_eV=3., target_std_eV=2., ema_decay=.999,
         finite_check_every=1, drop_last=drop_last,
-        development_reports=("ema",) if report_ema else ())
+        development_reports=("ema",) if report_ema else (), auxiliary_ema_decays=auxiliary_ema_decays)
     data = TrainingData(train, dev, selection.manifest_sha256, rows, 3 if development else 0,
         0, rows if development else None, 3., 2.)
     pool = FamilyLoaders(recipe, data, ExecutionTuning(training_workers=0))

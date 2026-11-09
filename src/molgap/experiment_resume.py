@@ -450,6 +450,16 @@ def create_resume_bundle(source_dir: Path | str, context: Any, trajectory: Any,
     if selected is not None:
         artifact_sources["selected_model"] = (selected, selected.name, False)
         artifact_sources["predictions"] = (predictions, predictions.name, False)
+    from .family_training_recipe import aux_ema_names
+    for decay in (.999, .9999):
+        _, _, model_role, pred_role, model_file, pred_file, _ = aux_ema_names(decay)
+        aux_m, aux_p = source / model_file, source / pred_file
+        if aux_m.is_file() != aux_p.is_file():
+            raise ValueError("Auxiliary EMA model and development predictions must be retained together")
+        if aux_m.is_file():
+            for item in (aux_m, aux_p): _path(item, "source artifact", regular=True)
+            artifact_sources[model_role] = (aux_m, model_file, True)
+            artifact_sources[pred_role] = (aux_p, pred_file, True)
     all_sources = [item[0] for item in artifact_sources.values() if item[0].is_file()]
     # The synthetic trajectory source is encoded below and never read from the
     # source directory; avoid making a hidden source file there.
@@ -641,14 +651,23 @@ def _validate_manifest(root: Path, manifest: dict) -> dict[str, Any]:
         _text(run[key], "run." + key)
     if type(manifest["cursor"]) is not dict:
         raise ValueError("Invalid resume cursor")
+    from .family_training_recipe import AUX_EMA_ROLES
     artifacts = manifest["artifacts"]
-    if type(artifacts) is not dict or set(artifacts) != set(_REQUIRED_ARTIFACTS) | set(_OPTIONAL_ARTIFACTS):
+    base_roles = set(_REQUIRED_ARTIFACTS) | set(_OPTIONAL_ARTIFACTS)
+    extra_roles = set()
+    if type(artifacts) is dict:
+        for pair_roles in AUX_EMA_ROLES.values():
+            if any(r in artifacts for r in pair_roles):
+                extra_roles.update(pair_roles)
+    if type(artifacts) is not dict or set(artifacts) != base_roles | extra_roles:
         raise ValueError("Resume bundle lacks explicit artifact roles")
     pointers: dict[str, Path | None] = {}
     for role in _REQUIRED_ARTIFACTS:
         pointers[role] = _artifact_pointer(root, artifacts[role], role, required=True)
     for role in _OPTIONAL_ARTIFACTS:
         pointers[role] = _artifact_pointer(root, artifacts[role], role, required=False)
+    for role in sorted(extra_roles):
+        pointers[role] = _artifact_pointer(root, artifacts[role], role, required=True)
     if (pointers["selected_model"] is None) != (pointers["predictions"] is None):
         raise ValueError("Selected model and predictions must be retained together")
     checkpoint_payload = safe_cpu_torch_load(pointers["checkpoint"])

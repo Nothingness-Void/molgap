@@ -18,11 +18,13 @@ from .experiment_launch import _safe_local, publish_immutable_bytes
 from .research_memory.trace import atomic_write, file_digest, json_bytes, sync_directory, validate_canonical_trace
 from .research_memory.roles import validate_observed_role_truth
 from .research_memory.schemas import validate_role_event
+from .family_training_recipe import AUX_EMA_FILES, AUX_EMA_ROLES, aux_ema_names
 from .family_training_session import validate_session_resume
 from .training_reproducibility import atomic_torch_save
 
 
-_COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt", "final_development_predictions.pt"}
+_COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt", "final_development_predictions.pt",
+                *AUX_EMA_FILES}
 
 
 def _recover_commit(root, context):
@@ -400,6 +402,10 @@ class SessionOutputs:
                     "metric": "MAE", "unit": "eV", "target": "Gap",
                     "role_identity": record["development_role_identity"],
                     "weights": extra, "direction": "minimize"}
+            for decay in self.recipe.auxiliary_ema_decays:
+                label, _, _, _, _, _, metric_name = aux_ema_names(decay)
+                semantics[metric_name] = {"metric": "MAE", "unit": "eV", "target": "Gap",
+                    "role_identity": record["development_role_identity"], "weights": "ema-" + label, "direction": "minimize"}
         semantics["live_train_metric"]["unit"] = self.policy.train_metric_unit
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
             semantics, trajectory_id=trajectory_id,
@@ -420,13 +426,18 @@ class SessionOutputs:
         _finite_tree(state, "selected.model")
         if evaluation is not None:
             self.role_audit.observe_metrics("development", selection_used=True)
-        atomic_torch_save(self.pending / "selected_model.pt", {"context": self.context.to_dict(),
+        if weights.startswith("ema-"):
+            label = weights[4:]
+            model_name, pred_name = f"selected_model_ema{label}.pt", f"development_predictions_ema{label}.pt"
+        else:
+            model_name, pred_name = "selected_model.pt", "development_predictions.pt"
+        atomic_torch_save(self.pending / model_name, {"context": self.context.to_dict(),
             "model": state, "optimizer_step": progress.optimizer_step,
             "epoch_or_pass": progress.optimizer_step / self.recipe.loop_plan.steps_per_pass,
             "weights": weights, "selection": self.recipe.selection,
             "development_mae_eV": evaluation["mae_eV"] if evaluation is not None else None})
         if evaluation is not None:
-            atomic_torch_save(self.pending / "development_predictions.pt", {"context": self.context.to_dict(),
+            atomic_torch_save(self.pending / pred_name, {"context": self.context.to_dict(),
                 **{key: evaluation[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV")}})
 
     def checkpoint_from_builder(self, progress, state_builder):
@@ -438,14 +449,15 @@ class SessionOutputs:
     def checkpoint(self, progress, state):
         if self.pending_pass is not None and self.pending_pass[0].optimizer_step != progress.optimizer_step:
             raise ValueError("Pass metrics differ from acknowledged checkpoint")
-        changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json", "final_development_predictions.pt")
+        changed = [name for name in ("selected_model.pt", "development_predictions.pt", *AUX_EMA_FILES, "canonical_trace.json", "final_development_predictions.pt")
                    if (self.pending / name).is_file()]
         destination = self.pending if changed or self.pending_pass is not None else self.root
         write_resume_state(destination / "last_checkpoint.pt", self.context, adapter=self.adapter,
             model_state=state["model"], optimizer_state=state["optimizer"], rng_state=state["rng_state"],
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
-            scheduler_state=state["scheduler"], ema_state=state["ema"])
+            scheduler_state=state["scheduler"], ema_state=state["ema"],
+            auxiliary_ema_state=state.get("auxiliary_ema"))
         observed = None
         if self.pending_pass is not None:
             _, fields = self.pending_pass
@@ -517,6 +529,8 @@ class SessionOutputs:
             fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
         if metrics.get("development_ema") is not None:
             fields["ema_dev_metric"] = metrics["development_ema"]["mae_eV"]
+        for label, item in (metrics.get("development_auxiliary_ema") or {}).items():
+            fields[f"ema_{label.replace('.', 'p')}_dev_metric"] = item["mae_eV"]
         if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
         self.pending_pass = (progress, fields)
@@ -535,6 +549,14 @@ class SessionOutputs:
             _check_context(selected.get("context"), self.context)
             if selected.get("optimizer_step") != state["cursor"]["selected_step"]:
                 raise ValueError("Retained selected endpoint differs from resume history")
+        for decay in self.recipe.auxiliary_ema_decays:
+            label, _, _, _, model_file, _, _ = aux_ema_names(decay)
+            astep = state["cursor"]["auxiliary_selections"][label]["selected_step"]
+            if astep is not None:
+                aux_sel = torch.load(_artifact_path(self.root, model_file), map_location="cpu", weights_only=True)
+                _check_context(aux_sel.get("context"), self.context)
+                if aux_sel.get("optimizer_step") != astep or aux_sel.get("weights") != "ema-" + label:
+                    raise ValueError("Retained auxiliary EMA endpoint differs from resume history")
         return state
 
     def complete(self, progress, *, runtime, costs, target_identity=None):
@@ -552,6 +574,11 @@ class SessionOutputs:
             artifacts["predictions"] = "development_predictions.pt"
             if getattr(self.recipe.formal_training, "evaluation_every_steps", None) is not None:
                 artifacts["final_predictions"] = "final_development_predictions.pt"
+        for decay in self.recipe.auxiliary_ema_decays:
+            _, _, model_role, pred_role, model_file, pred_file, _ = aux_ema_names(decay)
+            artifacts[model_role] = model_file
+            if self.recipe.dataset.development:
+                artifacts[pred_role] = pred_file
         # Bind the recorder's sidecar only when this worker created it for the
         # current output root; an arbitrary file must never become evidence.
         from .family_training_runner import _DATA_OPEN
@@ -633,6 +660,9 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         present_runtime_roles = set(paths) & runtime_roles
         if present_runtime_roles not in (set(), runtime_roles):
             raise ValueError("Runtime certificate/provenance artifact pair is incomplete")
+        for decay in recipe.auxiliary_ema_decays:
+            model_role, pred_role = AUX_EMA_ROLES[decay]
+            required_roles = required_roles | ({model_role, pred_role} if recipe.dataset.development else {model_role})
         if "trace_context" in paths:
             required_roles = required_roles | {"trace_context"}
             if artifacts["trace_context"]["path"] != artifacts["trace"]["path"] + ".context.json":
@@ -721,6 +751,40 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                      else state["ema"] if selected["weights"] == "ema" else state["model"])
             if state_dict_sha256(selected["model"]) != state_dict_sha256(final):
                 raise ValueError("Final selected weights differ from the resume endpoint")
+        aux_observed = {}
+        for decay in recipe.auxiliary_ema_decays:
+            label, _, model_role, pred_role, _, _, metric_name = aux_ema_names(decay)
+            aux_sel = torch.load(paths[model_role], map_location="cpu", weights_only=True)
+            if type(aux_sel) is not dict: raise ValueError("Invalid auxiliary selected payload")
+            _check_context(aux_sel.get("context"), context)
+            _finite_tree(aux_sel, model_role)
+            expected_aux = state["cursor"]["auxiliary_selections"][label]
+            if (not isinstance(aux_sel.get("model"), dict) or not aux_sel["model"]
+                    or aux_sel.get("optimizer_step") != expected_aux["selected_step"]
+                    or aux_sel.get("selection") != recipe.selection or aux_sel.get("weights") != "ema-" + label
+                    or aux_sel.get("epoch_or_pass") != aux_sel["optimizer_step"] / recipe.loop_plan.steps_per_pass):
+                raise ValueError("Selected auxiliary EMA checkpoint identity/policy mismatch")
+            _assert_model_schema(aux_sel["model"], state["model"])
+            if recipe.dataset.development:
+                aux_pred = _inspect_predictions(paths[pred_role], context=context, expected=expected, target_identity=target_identity)
+                if trace["metric_semantics"].get(metric_name) != {"metric": "MAE", "unit": "eV", "target": "Gap",
+                        "role_identity": contract["development_role_identity"], "weights": "ema-" + label, "direction": "minimize"}:
+                    raise ValueError("Auxiliary EMA trace semantics differ")
+                aux_vals = [row[metric_name] for row in rows]
+                if any(type(v) not in (int, float) or not math.isfinite(v) for v in aux_vals):
+                    raise ValueError("Development trace lacks auxiliary EMA observations")
+                at_aux = next(row for row in rows if row["optimizer_step"] == aux_sel["optimizer_step"])
+                for v in (aux_sel.get("development_mae_eV"), expected_aux["best_development_mae_eV"], at_aux[metric_name], min(aux_vals)):
+                    if type(v) not in (int, float) or not math.isclose(v, aux_pred["development_mae_eV"], rel_tol=1e-6, abs_tol=1e-8):
+                        raise ValueError("Auxiliary EMA predictions/trace/resume metric disagree")
+                aux_observed[label] = {**aux_pred, "selected_optimizer_step": aux_sel["optimizer_step"], "selected_weights": aux_sel["weights"]}
+            else:
+                if aux_sel.get("development_mae_eV") is not None or metric_name in trace["metric_semantics"]:
+                    raise ValueError("Final-only output fabricated auxiliary development evidence")
+                if state_dict_sha256(aux_sel["model"]) != state_dict_sha256(state["auxiliary_ema"][label]):
+                    raise ValueError("Final auxiliary EMA weights differ from resume endpoint")
+        if aux_observed:
+            observed["auxiliary_ema"] = aux_observed
         observed.update(progress=actual, artifacts=artifacts, costs=manifest["costs"],
             selected_optimizer_step=selected["optimizer_step"], selected_weights=selected["weights"],
             producer_platform_version=manifest["context"]["platform_version"])

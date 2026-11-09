@@ -18,6 +18,7 @@ from .schemas import validate_id
 
 TRACE_FORMAT = "molgap-trace-v1"
 METRICS = ("live_train_metric", "live_dev_metric", "ema_dev_metric")
+AUX_METRICS = ("ema_0p999_dev_metric", "ema_0p9999_dev_metric")
 NUMBERS = ("optimizer_step", "sample_presentations", "epoch_or_pass", "learning_rate",
            *METRICS, "wall_time_seconds", "cumulative_wall_time_seconds",
            "device_time_seconds", "cumulative_device_time_seconds")
@@ -68,20 +69,21 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"missing trace {field}")
     validate_id(record["trajectory_id"], "trace.trajectory_id")
     semantics = record.get("metric_semantics")
-    if not isinstance(semantics, dict) or set(semantics) != set(METRICS):
+    if not isinstance(semantics, dict) or not set(METRICS) <= set(semantics) or set(semantics) - set(METRICS) - set(AUX_METRICS):
         raise ValueError("every metric needs explicit semantics or null")
+    aux = tuple(name for name in AUX_METRICS if name in semantics)
+    all_metrics, all_numbers, all_fields = (*METRICS, *aux), (*NUMBERS, *aux), (*FIELDS, *aux)
     for name, definition in semantics.items():
         if definition is None:
+            if name in aux: raise ValueError(f"declared auxiliary metric cannot be null: {name}")
             continue
-        if not isinstance(definition, dict) or any(
-            not isinstance(definition.get(field), str) or not definition[field].strip()
-            for field in ("metric", "unit", "target", "role_identity", "weights", "direction")
-        ):
+        if not isinstance(definition, dict) or any(not isinstance(definition.get(f), str) or not definition[f].strip()
+                for f in ("metric", "unit", "target", "role_identity", "weights", "direction")):
             raise ValueError(f"incomplete metric semantics: {name}")
-        if definition["weights"] not in ({"ema", "clean-ema"} if name.startswith("ema_") else {"live"}):
-            raise ValueError("live/EMA weight semantics mismatch")
-        if definition["direction"] not in {"minimize", "maximize"}:
-            raise ValueError("invalid metric direction")
+        allowed = ({"ema-" + name.split("_")[1].replace("p", ".")} if name in aux
+                   else {"ema", "clean-ema"} if name.startswith("ema_") else {"live"})
+        if definition["weights"] not in allowed: raise ValueError("live/EMA weight semantics mismatch")
+        if definition["direction"] not in {"minimize", "maximize"}: raise ValueError("invalid metric direction")
     rows = record.get("observations")
     if not isinstance(rows, list):
         raise ValueError("observations must be ordered array")
@@ -92,24 +94,19 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
     for index, row in enumerate(rows):
         if not isinstance(row, dict) or isinstance(row.get("sequence"), bool) or not isinstance(row.get("sequence"), int) or row.get("sequence") != index:
             raise ValueError("observation sequence must be contiguous and ordered")
-        if set(row) != {*FIELDS, "sequence", "event"}:
+        if set(row) != {*all_fields, "sequence", "event"}:
             raise ValueError("unknown or missing canonical observation fields")
         terminal_count += row.get("event") == "terminal"
-        if terminal_count > 1:
-            raise ValueError("duplicate terminal event")
+        if terminal_count > 1: raise ValueError("duplicate terminal event")
         if terminal or row.get("event") not in {"observation", "checkpoint", "resume", "terminal"}:
             raise ValueError("invalid event or observation after terminal")
         terminal = row["event"] == "terminal"
-        if not set(FIELDS) <= set(row):
-            raise ValueError("missing fields must be explicitly null")
-        for field in NUMBERS:
+        for field in all_numbers:
             value = row[field]
-            if value is None:
-                continue
+            if value is None: continue
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError(f"non-finite/non-numeric {field}")
-            if field not in METRICS and value < 0:
-                raise ValueError(f"negative {field}")
+            if field not in all_metrics and value < 0: raise ValueError(f"negative {field}")
             if field in {"optimizer_step", "sample_presentations"} and not isinstance(value, int):
                 raise ValueError(f"{field} must be integer")
             if field in {"optimizer_step", "sample_presentations", "cumulative_wall_time_seconds",
@@ -119,7 +116,7 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
                 if field in {"optimizer_step", "sample_presentations"} and value == last.get(field):
                     raise ValueError(f"duplicate x-axis observation: {field}")
                 last[field] = value
-            if field in METRICS and semantics[field] is None:
+            if field in all_metrics and semantics[field] is None:
                 raise ValueError(f"observed metric without semantics: {field}")
             if "device_time_seconds" in field and record.get("device_time_semantics") != "sum_over_devices":
                 raise ValueError("observed device time requires sum_over_devices semantics")
@@ -141,10 +138,11 @@ def canonicalize_trace(record: dict[str, Any]) -> dict[str, Any]:
     result.setdefault("schema", TRACE_FORMAT)
     result.setdefault("metric_semantics", {field: None for field in METRICS})
     result.setdefault("observations", [])
+    aux = tuple(name for name in AUX_METRICS if isinstance(result["metric_semantics"], dict) and name in result["metric_semantics"])
     for index, row in enumerate(result["observations"]):
         row.setdefault("sequence", index)
         row.setdefault("event", "observation")
-        for field in FIELDS:
+        for field in (*FIELDS, *aux):
             row.setdefault(field, None)
     return validate_canonical_trace(result)
 
@@ -201,7 +199,8 @@ class RMLTraceRecorder:
         atomic_write(self.path, json_bytes(validate_canonical_trace(self.record)))
 
     def append_observation(self, *, event: str = "observation", **fields: Any) -> None:
-        if set(fields) - set(FIELDS):
+        aux = tuple(name for name in AUX_METRICS if name in self.record["metric_semantics"])
+        if set(fields) - set(FIELDS) - set(aux):
             raise ValueError("unknown observation fields")
         candidate = copy.deepcopy(self.record)
         candidate["observations"].append({"sequence": len(candidate["observations"]),

@@ -8,7 +8,7 @@ from __future__ import annotations
 from copy import copy
 from pathlib import Path
 
-from .family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON, FamilyRecipe
+from .family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON, FamilyRecipe, ema_label
 from .family_training_policy import mode_policy
 
 
@@ -80,7 +80,26 @@ def parameter_groups_for_recipe(recipe, model):
     if recipe.optimizer != "adamw":
         from .k1_muon import parameter_groups
         return parameter_groups(model, recipe.weight_decay)
-    return model.parameters()
+    if not recipe.no_decay_modules:
+        return model.parameters()
+    import torch.nn as nn
+    from torch.nn.modules.batchnorm import _BatchNorm
+    classes = {"LayerNorm": nn.LayerNorm, "BatchNorm": _BatchNorm}
+    exempt, counts = set(), {k: 0 for k in recipe.no_decay_modules}
+    for module in model.modules():
+        for kind in recipe.no_decay_modules:
+            if isinstance(module, classes[kind]):
+                owned = [p for name, p in module.named_parameters(recurse=False)
+                         if name in {"weight", "bias"} and p.requires_grad]
+                exempt.update(id(p) for p in owned)
+                counts[kind] += len(owned)
+    if any(n == 0 for n in counts.values()):
+        raise ValueError("Declared zero-decay normalization module owns no trainable parameters")
+    decayed = [p for p in model.parameters() if p.requires_grad and id(p) not in exempt]
+    no_decay = [p for p in model.parameters() if p.requires_grad and id(p) in exempt]
+    if not decayed or not no_decay:
+        raise ValueError("Selective normalization zero-decay requires nonempty decayed and exempt groups")
+    return [{"params": decayed, "weight_decay": recipe.weight_decay}, {"params": no_decay, "weight_decay": 0.0}]
 
 
 def make_family_optimizer(recipe, parameters):
@@ -143,15 +162,17 @@ class FamilyKernel:
             raise ValueError("Optimizer does not own every trainable backbone/addon parameter exactly once")
         from .gptrans_execution_hotpath import BoundForeachEMA, ReusedWeightView
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay is not None else None
+        self.auxiliary_emas = {ema_label(d): BoundForeachEMA(self.model, d) for d in recipe.auxiliary_ema_decays}
         self.weight_view = ReusedWeightView()
 
     @property
     def training_state(self):
         from .family_training_state import FamilyTrainingState
         if getattr(self, "_training_state", None) is None:
-            self._training_state = FamilyTrainingState(self.model, self.ema,
+            self._training_state = FamilyTrainingState(self.model, self.ema, auxiliary_emas=self.auxiliary_emas,
                 clean_factory=self.make_clean_model, weight_view=self.weight_view)
-        if self._training_state.live_model is not self.model or self._training_state.raw_ema is not self.ema:
+        if (self._training_state.live_model is not self.model or self._training_state.raw_ema is not self.ema
+                or self._training_state.auxiliary_emas != self.auxiliary_emas):
             raise ValueError("Live/EMA owner changed after state binding")
         return self._training_state
 
@@ -304,7 +325,9 @@ class FamilyKernel:
         if on_evaluation is not None and not callable(on_evaluation):
             raise TypeError("Evaluation observer must be a trusted callable")
         weights = weights or self.recipe.selection_weights
-        if weights not in {"live", "ema", "clean-ema"} or (weights != "live" and self.ema is None):
+        aux = weights[4:] if weights.startswith("ema-") else None
+        if (aux is not None and aux not in self.auxiliary_emas) or (
+                aux is None and (weights not in {"live", "ema", "clean-ema"} or (weights != "live" and self.ema is None))):
             raise ValueError("Unavailable evaluation weights")
         def evaluate(model):
             self._evaluation_model = model

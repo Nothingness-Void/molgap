@@ -21,6 +21,26 @@ ADAMW_EPSILON = 1e-8
 from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
 from .family_training_policy import mode_policy
 
+# Reviewed normalization owners. Recipes name the kind; classes stay in code.
+NORM_MODULE_TYPES = {"LayerNorm": "LayerNorm", "BatchNorm": "_BatchNorm"}
+
+
+def ema_label(decay):
+    """One stable text key for a decay in checkpoints, artifacts and roles."""
+    return repr(float(decay))
+
+
+def aux_ema_names(decay):
+    label = ema_label(decay)
+    slug = label.replace(".", "p")
+    return (label, slug, f"selected_model_ema_{slug}", f"predictions_ema_{slug}",
+            f"selected_model_ema{label}.pt", f"development_predictions_ema{label}.pt", f"ema_{slug}_dev_metric")
+
+
+AUX_EMA_ROLES = {d: aux_ema_names(d)[2:4] for d in (.999, .9999)}
+AUX_EMA_FILES = tuple(f for d in (.999, .9999) for f in aux_ema_names(d)[4:6])
+
+
 MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for key, adapter in
     TRAINING_ADAPTERS.items() if key[0] == family for entry in adapter.addons))))
     for family, version in SESSION_INTERFACES.values()}
@@ -28,7 +48,7 @@ MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for key, adapter
 
 def optimizer_identity(record):
     return canonical_fingerprint({"recipe": {k: record[k] for k in (
-        "learning_rate", "weight_decay", "gradient_clip", "optimizer") if k in record},
+        "learning_rate", "weight_decay", "gradient_clip", "optimizer", "no_decay_modules") if k in record},
         "policy": {k: record["execution_policy"][k] for k in (
             "adamw_betas", "adamw_epsilon", "muon") if k in record["execution_policy"]}})
 
@@ -130,6 +150,8 @@ class FamilyRecipe:
     family_version: str | None = None
     qualification: object | None = None
     formal_training: object | None = None
+    no_decay_modules: tuple[str, ...] = ()
+    auxiliary_ema_decays: tuple[float, ...] = ()
     # Retained packages may outlive the executable addon catalog.  This is a
     # read-only parsing mode; it is deliberately excluded from the serialized
     # recipe identity and cannot be used to construct a trainer.
@@ -229,6 +251,16 @@ class FamilyRecipe:
                 or any(value not in {"live", "ema"} for value in self.development_reports)
                 or ("ema" in self.development_reports and self.ema_decay is None)):
             raise ValueError("Development reporting requires distinct available weight states")
+        if (type(self.no_decay_modules) is not tuple or len(set(self.no_decay_modules)) != len(self.no_decay_modules)
+                or any(name not in NORM_MODULE_TYPES for name in self.no_decay_modules)):
+            raise ValueError("Zero-decay ownership must name distinct reviewed normalization module kinds")
+        if self.no_decay_modules and self.optimizer != "adamw":
+            raise ValueError("Zero-decay normalization groups are unsupported with the Muon partition")
+        if (type(self.auxiliary_ema_decays) is not tuple or len(set(self.auxiliary_ema_decays)) != len(self.auxiliary_ema_decays)
+                or any(type(v) not in (float, int) or v not in (.999, .9999) or v == self.ema_decay for v in self.auxiliary_ema_decays)
+                or (self.auxiliary_ema_decays and (self.ema_decay is None or self.selection.endswith("clean-ema")
+                    or (self.dataset.development and self.selection != "best-development-ema")))):
+            raise ValueError("Auxiliary EMAs require distinct supported decays, a primary EMA and best-development-ema selection")
         if self.selection.endswith("clean-ema") and "ema" in self.development_reports:
             raise ValueError("Raw EMA reporting cannot overwrite the selected Clean-EMA trace field")
         if (self.clean_bn is not None) != self.selection.endswith("clean-ema"):
@@ -316,6 +348,10 @@ class FamilyRecipe:
         if self.optimizer != "adamw":
             from .k1_muon import MUON_POLICY
             policy.update(optimizer=self.optimizer, muon=dict(MUON_POLICY))
+        if self.no_decay_modules:
+            policy["weight_decay_exempt"] = list(self.no_decay_modules)
+        if self.auxiliary_ema_decays:
+            policy["auxiliary_ema"] = [ema_label(v) for v in self.auxiliary_ema_decays]
         if self.cpu_synthetic_only:
             policy.update(name="modern2d-cpu-v1", scope="CPU_SYNTHETIC_ONLY",
                           cpu_layout=False, optimizer="native-adamw")
@@ -374,6 +410,9 @@ class FamilyRecipe:
             values.pop("development_reports")
         else:
             values["development_reports"] = list(self.development_reports)
+        for name in ("no_decay_modules", "auxiliary_ema_decays"):
+            if not getattr(self, name): values.pop(name)
+            else: values[name] = list(getattr(self, name))
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -387,7 +426,8 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "resume_chunks", "development_reports", "optimizer", "model_config", "family_version", "qualification", "formal_training"):
+        for name in ("addons", "clean_bn", "resume_chunks", "development_reports", "optimizer", "model_config", "family_version", "qualification", "formal_training",
+                     "no_decay_modules", "auxiliary_ema_decays"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
@@ -422,6 +462,11 @@ class FamilyRecipe:
                 if type(values["development_reports"]) is not list:
                     raise ValueError("Development reports must be a list")
                 values["development_reports"] = tuple(values["development_reports"])
+            for name in ("no_decay_modules", "auxiliary_ema_decays"):
+                if name in values:
+                    if type(values[name]) is not list:
+                        raise ValueError("Optional recipe sequences must be lists")
+                    values[name] = tuple(values[name])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
         recipe = cls(**values, _frozen_read=_frozen_read)

@@ -778,10 +778,9 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
     record, recipe = read_recipe(Path(bundle_root) / "files/training_contract.json")
     validate_screen_recipe(spec, arm_id, record)
     saved = torch.load(artifacts["checkpoint"], map_location="cpu", weights_only=True)
+    producer_context = saved.pop("context")
     if context is not None:
-        _check_context(saved.pop("context"), RunContext(**context))
-    else:
-        saved.pop("context")
+        _check_context(producer_context, RunContext(**context))
     # The wire writer omits disabled EMA, as SessionOutputs.retained_state handles.
     # The session validator still rejects a missing EMA state for EMA-enabled recipes.
     saved.setdefault("ema", None)
@@ -795,6 +794,32 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
         raise ValueError("Resume trace/cursor mismatch")
     if trace["trajectory_id"] != trajectory["trajectory_id"]:
         raise ValueError("Resume trace/trajectory identity mismatch")
+    if recipe.auxiliary_ema_decays:
+        from .family_training_recipe import aux_ema_names
+        from .family_training_outputs import _assert_model_schema
+        from .experiment_family_workflow import _finite_tree, _inspect_predictions
+        for decay in recipe.auxiliary_ema_decays:
+            label, _, model_role, pred_role, _, _, metric = aux_ema_names(decay)
+            has_model, has_pred = artifacts.get(model_role) is not None, artifacts.get(pred_role) is not None
+            if (recipe.dataset.development and progress.optimizer_step >= observation_interval) != has_model or has_model != has_pred:
+                raise ValueError("Resume bundle is missing retained auxiliary EMA endpoint")
+            if has_model:
+                aux_sel = torch.load(artifacts[model_role], map_location="cpu", weights_only=True)
+                selection = saved["cursor"]["auxiliary_selections"][label]
+                if (aux_sel.get("context") != producer_context or aux_sel.get("weights") != "ema-" + label
+                        or aux_sel.get("selection") != recipe.selection
+                        or aux_sel.get("optimizer_step") != selection["selected_step"]):
+                    raise ValueError("Resume bundle auxiliary EMA endpoint differs from cursor")
+                _finite_tree(aux_sel, "resume.auxiliary_selected")
+                _assert_model_schema(aux_sel.get("model"), saved["model"])
+                predictions = _inspect_predictions(artifacts[pred_role], context=RunContext(**producer_context),
+                    expected=record["acceptance_requirements"], target_identity=None)
+                at = next(row for row in observations if row["optimizer_step"] == selection["selected_step"])
+                for value in (aux_sel.get("development_mae_eV"), selection["best_development_mae_eV"],
+                              at.get(metric), min(row[metric] for row in observations)):
+                    if type(value) not in (int, float) or not math.isclose(value,
+                            predictions["development_mae_eV"], rel_tol=1e-6, abs_tol=1e-8):
+                        raise ValueError("Resume auxiliary EMA predictions/trace/selection disagree")
     # Shared family bundles carry the observed role sidecar as provenance.  A
     # direct wire-boundary unit may omit the transport manifest intentionally;
     # the actual portable bundle path always has it and must retain the audit.

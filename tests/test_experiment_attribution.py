@@ -25,8 +25,9 @@ def _write_native_arm(arm_dir, *, arm_id, family="neural_atom_k1", weights="live
     from molgap.gptrans_execution_tuning import ExecutionTuning
 
     session = make_session(family, development=True, schedule_kind="cosine_step", events=events())
-    if weights == "live":
-        recipe = replace(session.recipe, selection="best-development-live", ema_decay=None)
+    if weights == "live" or family == "gptrans_t":
+        recipe = (replace(session.recipe, selection="best-development-live", ema_decay=None)
+                  if weights == "live" else replace(session.recipe, auxiliary_ema_decays=(.9999,)))
         data = session.loaders.data
         session.close()
         session = FamilyTrainingSession(SyntheticKernel(recipe),
@@ -82,6 +83,17 @@ def test_analyze_actual_family_output_and_cli_diagnose(tmp_path, family, weights
     assert len(report["trace_dynamics"]["paired_curve"]) == 2
     assert report["cost"]["candidate_to_control_wall_ratio"] == 1.
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
+    if (family, weights) == ("gptrans_t", "ema"):
+        aux = report["within_trajectory_ema"]["0.9999"]
+        assert aux["primary_ema_decay"] == .999
+        assert aux["auxiliary_ema_decay"] == .9999
+        assert aux["interpretation"] == "WITHIN_TRAJECTORY_DESCRIPTIVE_ONLY"
+        assert aux["primary_minus_auxiliary"]["gate_status"] == "NOT_EVALUATED"
+        assert not any("gate" in key for key in aux["primary_minus_auxiliary"] if key != "gate_status")
+        assert len(aux["auxiliary_predictions_sha256"]) == 64
+        assert aux["auxiliary_selected_checkpoint"]["weights"] == "ema-0.9999"
+    else:
+        assert "within_trajectory_ema" not in report
     assert (out_dir / "analysis_summary.json").is_file()
     assert (out_dir / "attribution_report.md").is_file()
     if (family, weights) == ("neural_atom_k1", "live"):

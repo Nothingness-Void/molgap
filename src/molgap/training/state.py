@@ -138,7 +138,7 @@ class FamilyTrainingState:
     Call ``update_raw_ema`` after the existing optimizer step, never in addition
     to an EMA update already performed by an existing kernel.
     """
-    def __init__(self, live_model, raw_ema=None, *, clean_factory=None, weight_view=None):
+    def __init__(self, live_model, raw_ema=None, *, auxiliary_emas=None, clean_factory=None, weight_view=None):
         import torch
         from ..gptrans_execution_hotpath import ReusedWeightView
         if not isinstance(live_model, torch.nn.Module):
@@ -146,12 +146,18 @@ class FamilyTrainingState:
         if clean_factory is not None and not callable(clean_factory):
             raise TypeError("Clean model factory must be a trusted callable")
         self.live_model, self.raw_ema = live_model, raw_ema
+        self.auxiliary_emas = dict(auxiliary_emas or {})
+        if self.auxiliary_emas and raw_ema is None:
+            raise ValueError("Auxiliary EMA requires a primary EMA")
         self.clean_factory, self.clean_model = clean_factory, None
         self.weight_view = weight_view if weight_view is not None else ReusedWeightView()
         self.raw_revision, self.calibration = 0, None
-        _validate_state(dict(live_model.state_dict()), live_model.state_dict(), "Live")
+        live = live_model.state_dict()
+        _validate_state(dict(live), live, "Live")
         if raw_ema is not None:
-            _validate_state(dict(raw_ema.state_dict()), live_model.state_dict(), "Raw EMA")
+            _validate_state(dict(raw_ema.state_dict()), live, "Raw EMA")
+        for key, aux in self.auxiliary_emas.items():
+            _validate_state(dict(aux.state_dict()), live, "Auxiliary EMA " + str(key))
 
     def _raw_state(self):
         if self.raw_ema is None:
@@ -180,6 +186,8 @@ class FamilyTrainingState:
                  if value.numel()}
         if self.raw_ema is not None:
             owned.update(storage_key(value) for value in self._raw_state().values() if value.numel())
+        for aux in self.auxiliary_emas.values():
+            owned.update(storage_key(value) for value in aux.state_dict().values() if value.numel())
         if any(value.numel() and storage_key(value) in owned
                for value in (*model.parameters(), *model.buffers())):
             raise ValueError("Clean factory aliases Live/Raw tensor storage")
@@ -198,6 +206,8 @@ class FamilyTrainingState:
         if self.raw_ema is None:
             raise ValueError("Raw EMA is unavailable")
         self.raw_ema.update(self.live_model)
+        for aux in self.auxiliary_emas.values():
+            aux.update(self.live_model)
         self.raw_revision += 1
 
     def calibrate(self, policy, batches, *, forward, source_indices):
@@ -317,13 +327,18 @@ class FamilyTrainingState:
             finally:
                 for module, training in modes:
                     module.training = training
-        if weights not in {"live", "raw-ema"}:
+        aux = self.auxiliary_emas.get(weights[4:]) if weights.startswith("ema-") else None
+        if aux is not None:
+            _validate_state(dict(aux.state_dict()), self.live_model.state_dict(), "Auxiliary EMA")
+            ema_source, mode = aux, "ema"
+        elif weights in {"live", "raw-ema"}:
+            if weights == "raw-ema": self._raw_state()
+            ema_source, mode = self.raw_ema, ("live" if weights == "live" else "ema")
+        else:
             raise ValueError("Unknown model weight state")
-        if weights == "raw-ema":
-            self._raw_state()
         modes = [(module, module.training) for module in self.live_model.modules()]
         try:
-            with self.weight_view.use(self.live_model, self.raw_ema, "live" if weights == "live" else "ema"):
+            with self.weight_view.use(self.live_model, ema_source, mode):
                 self.live_model.eval()
                 with torch.no_grad():
                     return evaluator(self.live_model)

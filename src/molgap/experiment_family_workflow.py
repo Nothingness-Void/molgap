@@ -16,7 +16,7 @@ from .experiment_launch import _safe_local, read_launch_receipt, publish_immutab
 from .experiment_spec import ExperimentSpec, _digest, _identifier, _text
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import (
-    RMLTraceRecorder, TRACE_FORMAT, file_digest, json_bytes, validate_canonical_trace,
+    RMLTraceRecorder, TRACE_FORMAT, AUX_METRICS, file_digest, json_bytes, validate_canonical_trace,
 )
 from .screen_policy import canonical_fingerprint
 from .experiment_inspection import InspectionSnapshot, validate_snapshot
@@ -573,7 +573,8 @@ def _metric_semantics(contract: dict) -> dict:
             if name == "live_train_metric":
                 raise ValueError("Frozen recipe requires train/development metric semantics")
             continue
-        weights = "ema" if name == "ema_dev_metric" else "live"
+        weights = ("ema-" + name.split("_")[1].replace("p", ".") if name in AUX_METRICS
+                   else "ema" if name == "ema_dev_metric" else "live")
         required = {"metric": "MAE", "unit": "eV", "target": "Gap",
                     "weights": weights, "direction": "minimize"}
         if any(definition.get(key) != value for key, value in required.items()):
@@ -747,6 +748,11 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
     roles = ROLES
     if profile.protocol == "family-session" and "predictions" not in artifacts:
         roles = ROLES - {"predictions"}
+    if profile.protocol == "family-session":
+        from .family_training_recipe import AUX_EMA_ROLES
+        for model_role, pred_role in AUX_EMA_ROLES.values():
+            if model_role in artifacts or pred_role in artifacts:
+                roles = roles | ({model_role, pred_role} if "predictions" in artifacts else {model_role})
     if profile.protocol == "family-session" and "trace_context" in artifacts:
         roles = roles | {"trace_context"}
         if artifacts["trace_context"] != artifacts["trace"] + ".context.json":
@@ -789,6 +795,7 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
                        optimizer_state: dict, rng_state: dict, cursor: dict,
                        optimizer_step: int, sample_presentations: int,
                        scheduler_state: dict | None = None, ema_state: dict | None = None,
+                       auxiliary_ema_state: dict | None = None,
                        owner_state: dict | None = None) -> Path:
     """Atomic output translation; resume loading stays with the owning trainer."""
     from .training_reproducibility import atomic_torch_save
@@ -803,6 +810,8 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
         state["scheduler"] = scheduler_state
     if ema_state is not None:
         state["ema"] = ema_state
+    if auxiliary_ema_state is not None:
+        state["auxiliary_ema"] = auxiliary_ema_state
     if owner_state is not None:
         if type(owner_state) is not dict or not owner_state:
             raise ValueError("Owner resume state must be a nonempty mapping")
