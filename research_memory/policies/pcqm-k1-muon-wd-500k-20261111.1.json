@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-muon-wd-500k-20261111",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "observation_point": null,
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-muon-wd-500k-20261111"
+  },
+  "action_rule": {
+    "action": "RUN_PAIRED_500K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "borderline_action": "NO_TRAIN",
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "a8a2aeaf157cfa270a69e05f788bd2a4a3de7840fa8b1f33444f6ea3074b7cc2"
+}
