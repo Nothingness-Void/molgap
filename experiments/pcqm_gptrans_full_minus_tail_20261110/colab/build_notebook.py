@@ -66,6 +66,8 @@ print('TRAIN minus tail: 3250000 rows | 60 passes | FP32 | A100 or L4')
     add("code", "mount", """from google.colab import drive
 drive.mount('/content/drive')
 RUN_ROOT.mkdir(parents=True, exist_ok=True)
+WORK_ROOT = Path('/content/molgap-run')
+WORK_ROOT.mkdir(parents=True, exist_ok=True)
 observed_gpu = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'], text=True).strip().splitlines()
 assert len(observed_gpu) == 1 and any(name in observed_gpu[0] for name in ('A100', 'L4')), observed_gpu
 print('GPU:', observed_gpu[0])
@@ -170,6 +172,20 @@ def copy_snapshot(source, directory, name):
     return target
 
 
+def mirror(source, target):
+    # Copy new or changed files; partial files are renamed into place so Drive never shows half a file.
+    for path in sorted(source.rglob('*')):
+        if not path.is_file() or path.name.startswith('.'):
+            continue
+        destination = target / path.relative_to(source)
+        if destination.is_file() and destination.stat().st_size == path.stat().st_size and destination.stat().st_mtime >= path.stat().st_mtime:
+            continue
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        partial = destination.with_name(destination.name + '.partial')
+        shutil.copyfile(path, partial)
+        os.replace(partial, destination)
+
+
 def completed_passes(trace_path):
     try:
         return len(json.loads(trace_path.read_text())['observations'])
@@ -212,8 +228,12 @@ for arm in ARM_ORDER:
         assert json.loads(launch_path.read_text()) == launch, 'Preserve the original launch identity'
     else:
         atomic_json(launch_path, launch)
-    output = RUN_ROOT / arm
-    preflight = RUN_ROOT / (arm + '-preflight-' + str(time.time_ns()))
+    # Drive cannot hard-link, which the native writers need: run on local disk, mirror to Drive.
+    output = WORK_ROOT / arm
+    drive_output = RUN_ROOT / arm
+    if drive_output.is_dir() and not output.exists():
+        mirror(drive_output, output)
+    preflight = WORK_ROOT / (arm + '-preflight-' + str(time.time_ns()))
     worker_env = dict(env, CUDA_VISIBLE_DEVICES='0', PYTHONPATH=str(source_root / 'src'))
     common = [PYTHON, '-u', '-m', 'molgap.experiment_training_worker',
         '--source-root', str(source_root), '--package-dir', str(package), '--input-root', str(DATA_ROOT),
@@ -224,7 +244,7 @@ for arm in ARM_ORDER:
             env=worker_env, check=True)
         print('Existing terminal artifacts verified by the owning worker:', arm)
         continue
-    active_allocation_root = RUN_ROOT / 'allocation' / arm / str(time.time_ns())
+    active_allocation_root = WORK_ROOT / 'allocation' / arm / str(time.time_ns())
     active_allocation = AllocationLedger(spec_identity=report['spec_identity'],
         hardware=observed_gpu, assignments={arm: 0}, started=allocation_boundary)
     active_allocation.write(active_allocation_root, 'running')
@@ -233,7 +253,7 @@ for arm in ARM_ORDER:
     preflight_cmd = common + ['--phase', 'preflight', '--output', str(preflight)]
     if (output / 'last_checkpoint.pt').is_file():
         preflight_cmd += ['--resume-output', str(output)]
-    preflight_log = RUN_ROOT / (preflight.name + '.log')
+    preflight_log = WORK_ROOT / (preflight.name + '.log')
     with preflight_log.open('w') as log:
         checked = subprocess.run(preflight_cmd, env=worker_env, stdout=log,
             stderr=subprocess.STDOUT, timeout=remaining)
@@ -250,8 +270,15 @@ for arm in ARM_ORDER:
     stop_snapshots = Event()
     def snapshot_loop():
         copied = set()
+        mirrored = [0]
         while not stop_snapshots.wait(60):
             done = completed_passes(output / 'canonical_trace.json')
+            if done and done != mirrored[0]:
+                try:
+                    mirror(output, drive_output)
+                    mirrored[0] = done
+                except OSError as error:
+                    print('Mirror skipped:', error, flush=True)
             if done and done % SNAPSHOT_EVERY_PASSES == 0 and done not in copied:
                 try:
                     print('Snapshot:', copy_snapshot(output / 'last_checkpoint.pt', snapshots, 'pass_%03d.pt' % done), flush=True)
@@ -264,6 +291,7 @@ for arm in ARM_ORDER:
     finally:
         pause_timer.cancel()
         stop_snapshots.set()
+        mirror(output, drive_output)
     assert returncode == 0, f'Worker exit {returncode}; preserve {output}'
     allocated = active_allocation.write(active_allocation_root, 'complete')
     allocation_boundary = active_allocation.started + allocated['wall_seconds']
