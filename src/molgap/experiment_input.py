@@ -952,7 +952,7 @@ def _observe_preparation(run, spec, result):
 
 
 def local_preparation_error(error,stage):
-    """Finite local diagnostics, never arbitrary exception/SDK request text."""
+    """Finite local diagnostics; echo message text only when raised by molgap code, never SDK/request text."""
     known={
         "Missing frozen initialization file":("arms.initial_state","Frozen initialization file is missing"),
         "--execute requires explicit credentials before preparation":("credentials","Explicit credentials are required for --execute"),
@@ -970,7 +970,10 @@ def local_preparation_error(error,stage):
         "Frozen scientific input changed; create an explicit new run instead of overwriting":("logical_run_id","Scientific input changed; create an explicit new run rather than overwrite this run"),
         "Original frozen inputs are incomplete; reconcile the original freeze":("run.inputs","Original freeze is incomplete; reconcile it without recompiling under a new HEAD"),
     }
-    field,reason=known.get(str(error),("configuration","Local validation failed: "+str(error)[:300]))
+    tb=error.__traceback__
+    while tb is not None and tb.tb_next is not None: tb=tb.tb_next
+    local=tb is not None and Path(tb.tb_frame.f_code.co_filename).resolve().is_relative_to(Path(__file__).resolve().parent)
+    field,reason=known.get(str(error),("configuration","Local validation failed: "+str(error)[:300] if local else "Local validation failed outside molgap code; inspect error_type and the retained report"))
     if isinstance(error,FileNotFoundError):
         field,reason="referenced_file","A required local file is missing: "+str(error.filename or error)[:300]
     elif isinstance(error,PermissionError):

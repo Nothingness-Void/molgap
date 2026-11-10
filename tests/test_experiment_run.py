@@ -169,7 +169,8 @@ def test_existing_owner_receives_original_bindings_and_explicit_plan(frozen_run,
 
         monkeypatch.setattr("molgap.experiment_run_acceptance.resolve_run_acceptance_inputs", resolve_acceptance)
         monkeypatch.setattr("molgap.experiment_workflow.accept_workflow", owner)
-        supplied, locations = {"original_outputs": True}, {"original_scientific_plan": True}
+        supplied = {"gptrans_t": {"output_dir": str(tmp_path / "out" / "gptrans_t")}}
+        locations = {"original_scientific_plan": True}
         result = runs.accept_run_workflow(*case.original, supplied=supplied, locations=locations)
         original_run.assert_called_once_with(*case.original)
         assert owner.call_args.kwargs["supplied"] is supplied
