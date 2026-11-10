@@ -10,3 +10,9 @@ Continuation steps (follow `../pcqm_k1_read_batched_muon_500k_20261107/continuat
 3. `submit_workflow.py` with `--prepared`, `--recovery-authority authority.json` (+ sha256), `--source-version 2`, `--kernel-version 2`, from this worktree.
 4. After the successor ends: retrieve strict with `--continuation-receipt` and `--resume-prepared`, `draft-closure`, then `accept_run.py --strict`.
 Recheck `check_quota.py` before the continuation.
+
+## Submission (2026-11-10T19:01Z)
+
+SUBMISSION_BOUND v1: kernel nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43, kernel_id 144254965 (running).
+Retrieve/status need --credentials D:/下载/Key/.kaggle1_default/kaggle.json because the machine profile lacks a kaggle1 mapping.
+Deviations: sampler/dropout seed 42 (compiler allows only seed label 42), initial weights from torch seed 43 state; data declaration binds this directory's own recipe digest.
