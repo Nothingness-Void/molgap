@@ -84,8 +84,8 @@ download and submits nothing. Keep each wait plus call under a 10 minute tool
 limit.
 
 ```powershell
-& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --status --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --credentials $credentials
-& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --strict --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --credentials $credentials --execute
+& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --status --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root .
+& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --strict --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --execute
 ```
 
 Acceptance discovers the shared `_execution` directory beside retrieved arms.
@@ -169,7 +169,7 @@ result, `--verbose` prints the full owner report.
 | submit | `WAIT_SOURCE_READY` (exit 1) | The source dataset was not ready within the 300 s poll. | Rerun the identical command; the journal resumes. |
 | submit | `RECONCILIATION_REQUIRED` with `phase` `SOURCE_UNKNOWN`, `SOURCE_PUBLISHED` or `SUBMIT_UNKNOWN` | An uncertain dataset create, a persistent 403 or a lost kernel response. | Stop. Inspect `operations/submission_state.json` and the Kaggle kernel page; never clear the journal or change the slug ([submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md#platform-operation)). |
 | submit | `BLOCKED`, `error_code: PLATFORM_VALUEERROR`, `field: platform.journal` | A platform-stage check failed, for example quota below the allocation ceiling, kernel already exists or credential owner differs. | Run `check_quota.py`; confirm `$credentials` belongs to `authority.account`; inspect the journal. |
-| retrieve | `READY_FOR_RETRIEVAL` with `pin_command` | Run without `--execute`; manifests not yet pinned. | Run step 7 with `--credentials` and `--execute`. |
+| retrieve | `READY_FOR_RETRIEVAL` with `pin_command` | Run without `--execute`; manifests not yet pinned. | Run step 7 with `--execute`; credentials resolve from profile `kaggle_credentials[<receipt account>]`. |
 | retrieve | `WAIT_REMOTE_TERMINAL` | The kernel version is still running. | Wait; poll with `--status`. |
 | retrieve | `BLOCKED`, `stage: remote_manifests` | The kernel stopped with no `output_manifest.json`, usually a `STOP_FOR_COST` pause at its wall cap. | Retrieve unstrict with `--all-arms --paused --execute` and follow [paused runs](#paused-stop_for_cost-runs). |
 | retrieve | `BLOCKED`, error `ValueError`, with `--paused --strict` | A paused run has no strict evidence. | Drop `--strict`. |
@@ -189,7 +189,7 @@ A run that reaches its frozen `allocation_wall_limit_seconds` stops with
 Retrieve its pause files, which records digests at download only:
 
 ```powershell
-& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --paused --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --credentials $credentials --execute
+& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/retrieve_family_outputs.py -- --all-arms --paused --run-id $runId --attempt-id $attemptId --profile $profilePath --repo-root . --execute
 ```
 
 The output is `PAUSED_RETRIEVED`, with files under
@@ -357,7 +357,7 @@ never invented.
 `supporting_evidence` takes RML evidence IDs only (the `evidence_id` of a
 `v5_evidence.json`, listed as `result_evidence_ids` in
 `research_memory/derived/trajectory_index.json`); cite papers in `protocol.md`.
-`authority.account` must be the Kaggle username of `$credentials`.
+`authority.account` must be the Kaggle username of `$credentials`; retrieve/status pick the file from profile `kaggle_credentials` by that account.
 
 Training edits: `learning_rate`, `weight_decay`, `no_decay_modules`, `ema_decay`, `auxiliary_ema_decays`.
 K1 reference/composed supports `optimizer: "k1-muon-adamw-fp32-v1"`, `"k1-muon-batched-adamw-fp32-v1"`, or `"k1-soap-adamw-fp32-v1"`.

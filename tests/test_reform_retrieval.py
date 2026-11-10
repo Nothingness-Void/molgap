@@ -238,6 +238,20 @@ def test_all_arms_retrieves_every_pinned_manifest_from_the_run_directory(retriev
     assert observed["scheduler_scope"] == "latest" and observed["observed_latest_version"] == 8
     case.api.kernels_status.assert_called_once_with(case.context.run_reference)
     assert case.http.urls == [] and snapshot(case.run) == original
+    # Without --credentials the file comes from the profile entry of the receipt account (never read here).
+    mapped = case.profile.parent / "mapped-credentials.json"
+    mapped.write_text("{}")
+    profile = json.loads(case.profile.read_text())
+    case.profile.write_text(json.dumps({**profile, "kaggle_credentials": {case.context.account: str(mapped)}}))
+    case.auth.reset_mock()
+    assert case.adapter.main([*base, "--status"]) == 0
+    case.auth.assert_called_once_with(mapped)
+    capsys.readouterr()
+    mapped.unlink()
+    assert case.adapter.main([*base, "--status"]) == 2
+    blocked = json.loads(capsys.readouterr().out)
+    assert blocked["stage"] == "credentials" and blocked["error"] == "CredentialBindingError" and "does not exist" in blocked["detail"]
+    case.profile.write_text(json.dumps(profile))
     case.auth.reset_mock()
     assert case.adapter.main(base) == 0
     plan = json.loads(capsys.readouterr().out)
