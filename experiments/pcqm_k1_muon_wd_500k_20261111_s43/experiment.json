@@ -1,0 +1,108 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_k1_muon_wd_500k_20261111_s43",
+  "logical_run_id": "pcqm-k1-muon-wd-500k-20261111-s43",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-11T12:00:00+00:00",
+  "question": {
+    "policy_id": "pcqm-k1-muon-wd-500k-20261111-s43",
+    "action": "RUN_PAIRED_500K",
+    "question": "Does raising recipe-level decoupled weight decay from 1e-5 to 0.05 reduce the selected development MAE of original K1 under batched FP32 Muon at 500K and 60 passes, reproducibly across two initializations?",
+    "deficiency": "The batched-Muon gain over AdamW at 500K shrinks with exposure (-7.93 meV at 20 passes, -4.42 at 40, -1.81 at 60). Whether stronger decoupled decay recovers late-pass development MAE under the same optimizer is unmeasured.",
+    "changed_mechanism": "recipe-level-weight-decay-1e-5-to-0.05-under-batched-muon",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-muon"
+    ],
+    "alternatives": [
+      "AdamW catches up with more exposure, so the shrinking Muon gain is not a regularization effect",
+      "A decay of 0.05 is too strong and underfits",
+      "The change is confounded by decay also acting on the AdamW remainder group",
+      "The result is specific to one initialization or this execution"
+    ],
+    "closed_families": [
+      "muon-500k",
+      "read-batched",
+      "k1-associative-history-read"
+    ],
+    "positive_decision": "NOMINATE only if both seeds give candidate-minus-control selected MAE <= -3 meV, both paired 2000-bootstrap 95% uppers < 0, both final and last-five matched-pass deltas < 0, and both kernels pass strict native/replay. NOMINATE authorizes only a separately authorized confirmatory pair against the AdamW reference; no adoption, no full-data, no automatic successor. A single seed never nominates.",
+    "negative_decision": "NEGATIVE/NULL closes the weight-decay lever for K1 batched Muon at 500K. Single predeclared point: no second weight_decay value, no learning-rate change, no post-hoc grid, no module stacking regardless of outcome.",
+    "reference_ids": [],
+    "prior_trajectories": [
+      "T-pcqm-k1-muon-500k-20261106-s42-muon"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device, single forward",
+    "estimated_device_hours": 20,
+    "estimated_wall_hours": 11,
+    "cheapest_falsifier": "One same-job pair under identical registered batched Muon, 500K and 60 passes, differing only in training.weight_decay. Two physical sessions per kernel; planned pause 187488 then terminal 234360; no scientific schedule reset; 60-pass cosine unchanged; continuation submitted by the desktop owner next morning; no unattended polling service."
+  },
+  "authority_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/authority.json",
+  "monitor_paths": [
+    "experiments/pcqm_k1_muon_wd_500k_20261111_s43/STATUS.md"
+  ],
+  "role_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/protocol.md",
+  "decision_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/decision.md",
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "neural_atom_k1",
+      "version": "3",
+      "addons": []
+    },
+    "recipe_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/control_recipe.json",
+    "data_ref": {
+      "spec_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/data_declaration.json",
+      "arm_id": "scratch"
+    },
+    "initial_state_ref": "D:/molgap-artifacts/initializations/k1-init-noise-100k/s43.pt",
+    "training": {},
+    "purpose": "optimizer_comparison"
+  },
+  "arms": [
+    {
+      "arm_id": "muon_wd1e5"
+    },
+    {
+      "arm_id": "muon_wd5e2",
+      "training": {
+        "weight_decay": 0.05
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "muon_wd1e5",
+    "target_manifest_ref": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/target_manifest.json"
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nothingnessvoid",
+      "kernel": "nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43",
+      "title": "MolGap K1 Muon WD 500K 20261111 S43",
+      "datasets": [
+        "nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43-src",
+        "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 32400,
+      "cleanup_reserve_seconds": 180,
+      "pause_after_step": 187488
+    }
+  }
+}
