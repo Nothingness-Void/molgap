@@ -87,7 +87,7 @@ def same_run_comparison_scope(configuration, arm_id, reference_id, *, declared_f
                "mechanism_comparison": ["architecture_config_identity"],
                "optimizer_comparison": ["optimizer_identity", "optimizer_mode", "optimizer_fused"],
                "ema_comparison": ["ema_enabled", "ema_decay", "ema_update_frequency", "weight_semantics", "evaluation_weight_source"],
-               "initialization_comparison": ["initialization_identity"]}
+               "initialization_comparison": ["initialization_identity"], "diagnostic": []}
     if purpose not in allowed:
         raise ValueError("Unsupported same-run scientific comparison purpose: " + str(purpose))
     question = configuration.get("question", {})
