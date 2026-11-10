@@ -1,0 +1,21 @@
+{
+  "format": "molgap-execution-authority-v1",
+  "owner": "desktop",
+  "platform": "colab",
+  "arms": ["gptrans_pairnorm"],
+  "seeds": [42],
+  "local_preparation_authorized": true,
+  "user_initiated_notebook_training_authorized": true,
+  "agent_cloud_training_started": false,
+  "train_rows": 3250000,
+  "passes_per_arm": 60,
+  "optimizer_steps_per_arm": 1523400,
+  "sample_presentations_per_arm": 194995200,
+  "accelerator": "A100/L4",
+  "device_count": 1,
+  "allocation_wall_limit_seconds": 36000,
+  "cleanup_reserve_seconds": 300,
+  "protected_roles_authorized": [],
+  "authority": "User chose route B on 2026-11-10: build a GPT-T full-train package that excludes the tail_holdout_v1 rows, runs on A100 or L4, and can be diagnosed afterwards.",
+  "scope": "Prepare one frozen GPT-T full-train recipe over TRAIN rows [0,3250000) with a derived manifest, deliver a Colab notebook the user starts. tail_holdout_v1 (rows [3250000,3378606)) is never trained on and is scored offline only. No agent cloud training, official scoring, test submission or production adoption."
+}
