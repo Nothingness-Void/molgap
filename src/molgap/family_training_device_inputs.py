@@ -10,7 +10,8 @@ import torch
 from torch_geometric.data import Batch
 
 # Fixed by name: PyG's size-based is_node_attr guess flips for 1-node graphs.
-KINDS = {"x": "node", "random_walk_pe": "node", "edge_attr": "edge", "y": "graph", "source_idx": "graph"}
+KINDS = {"x": "node", "random_walk_pe": "node", "edge_attr": "edge", "y": "graph", "source_idx": "graph",
+         "split_code": "graph", "smiles_sanitized": "graph", "mmff_converged": "graph"}
 DEVICE_KEYS = {"x", "random_walk_pe", "edge_attr", "y"}
 
 
