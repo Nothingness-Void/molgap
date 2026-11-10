@@ -14,6 +14,7 @@ from .common.paths import MachinePaths, validate_relative_path
 from .common.wire import canonical_fingerprint
 from .family_training_recipe import optimizer_identity
 from .common.spec import _object, _identifier, _unique_object
+from .experiment_launch_config import ALLOCATION_OPTION_FIELDS
 from .experiment_spec import ExperimentSpec
 from .research_memory.paths import repo_local_path
 
@@ -107,7 +108,7 @@ def _derived_kaggle(value, authority, manifests):
     kaggle = {"account": account, "kernel": account + "/molgap-" + stem + "-s42", "title": " ".join(words),
               "datasets": [source, account + "/" + _FIXED_100K[1]], "source_dataset": source,
               "accelerator": "NvidiaTeslaT4"}
-    kaggle.update({k: authority[k] for k in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step", "device_resident_train") if k in authority})
+    kaggle.update({k: authority[k] for k in ALLOCATION_OPTION_FIELDS if k in authority})
     return kaggle
 
 
