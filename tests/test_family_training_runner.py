@@ -620,6 +620,7 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
     ("A100", "NVIDIA A100-SXM4-40GB", False),
     ("RTX 5060", "NVIDIA GeForce RTX 5060", False),
     ("DCU", "opaque-device-name", True),
+    ("A100/L4", "NVIDIA L4", False), ("A100/L4", "NVIDIA A100-SXM4-40GB", False),
 ])
 def test_resource_matching_is_metadata_only(requested, observed, hip):
     validate_accelerator_request(requested, observed, hip_runtime=hip)
@@ -633,6 +634,7 @@ def test_resource_matching_is_metadata_only(requested, observed, hip):
     ("---", "---", False), ("CUDA", "CUDA", False),
     ("ACCELERATOR", "ACCELERATOR", False), ("T4", "GPU", False),
     ("DCU", "GPU", True), ("DCU", "NVIDIA", True),
+    ("A100/L4", "Tesla T4", False), ("A100/L4", "GPU", False),
 ])
 def test_wrong_allocation_cannot_be_qualified(requested, observed, hip):
     with pytest.raises(ValueError):

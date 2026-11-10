@@ -162,6 +162,13 @@ def validate_accelerator_request(requested: str, observed: str, *, hip_runtime: 
     if (type(requested) is not str or not requested.strip() or type(observed) is not str
             or not observed.strip() or type(hip_runtime) is not bool):
         raise ValueError("Explicit declared and observed accelerator names are required")
+    if "/" in requested:  # A declared set such as "A100/L4" accepts any member.
+        for option in requested.split("/"):
+            try:
+                return validate_accelerator_request(option, observed, hip_runtime=hip_runtime)
+            except ValueError:
+                pass
+        raise ValueError("Observed accelerator differs from frozen request: " + requested + " / " + observed)
     def compact(value):
         return re.sub(r"[^A-Z0-9]", "", value.upper())
     def model_name(value):
