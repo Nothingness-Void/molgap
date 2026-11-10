@@ -44,7 +44,6 @@
     "seeds": [
       42
     ],
-    "same_run_reference_arm_id": "muon_off",
     "allocated_t4_hours_ceiling": 4,
     "allocation_wall_limit_seconds": 7200,
     "cleanup_reserve_seconds": 180,
@@ -82,9 +81,5 @@
     {
       "arm_id": "muon_on"
     }
-  ],
-  "same_run": {
-    "reference_arm_id": "muon_off",
-    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
-  }
+  ]
 }
