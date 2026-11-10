@@ -45,7 +45,7 @@ def main(argv=None):
         prospective_sha256=config["prospective_sha256"][job["arm_id"]],
         target_identity=target_identity,
         pause_after_step=config.get("pause_after_step") if args.phase == "train" else None,
-        device_resident_train=config.get("device_resident_train", False) and args.phase == "train", **recovery)
+        device_resident_train=args.arm in config.get("device_resident_train", []) and args.phase == "train", **recovery)
     paused_session = (args.phase == "train" and job.get("module") == "molgap.family_training_runner"
                       and result.get("status") == "PAUSED")
     passed = (result.get("status") == "MECHANICALLY_VERIFIED" or paused_session if args.phase == "train" else

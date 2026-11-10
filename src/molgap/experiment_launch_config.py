@@ -30,7 +30,7 @@ _LAUNCH_FIELDS = {
     "dataset_sources", "accelerator", "device_count", "jobs",
     "prospective_sha256",
 }
-_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step"}
+_OPTIONAL_FIELDS = {"resume", "target_identity", "allocation_wall_limit_seconds", "cleanup_reserve_seconds", "pause_after_step", "device_resident_train"}
 _RESUME_FIELDS = {"manifest", "sha256"}
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
@@ -82,8 +82,8 @@ def validate_allocation_budget(config: dict) -> None:
     """Check explicit launch fields without materializing legacy defaults."""
     if "pause_after_step" in config and (type(config["pause_after_step"]) is not int or config["pause_after_step"] < 1):
         raise ValueError("pause_after_step must be a positive absolute optimizer step")
-    if "device_resident_train" in config and type(config["device_resident_train"]) is not bool:
-        raise ValueError("device_resident_train must be a boolean")
+    if type(resident := config.get("device_resident_train", [])) is not list or not all(type(arm) is str and arm for arm in resident):
+        raise ValueError("device_resident_train must list arm ids")
     limit = config.get("allocation_wall_limit_seconds")
     reserve = config.get("cleanup_reserve_seconds", 60)
     if limit is not None and (type(limit) is not int or limit <= 0):
