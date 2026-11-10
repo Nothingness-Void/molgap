@@ -91,3 +91,5 @@ source and SSD data from Drive and resume the same durable checkpoint.
 `python build_notebook_gptrans.py` derives `MolGap_GPTrans_Full_A100.ipynb` from `build_notebook.py`: only the `gptrans_pairnorm` arm (frozen B128 recipe, 60 passes, 1,583,700 steps, final-ema), its package as the bootstrap source, no K1 bundle extraction. Drive layout and frozen identities are unchanged; `k1_muon.zip` is not needed.
 
 Cost gate (Opus decision): no A100 timing for GPTrans exists. Read epoch 1 wall time from the log; projected cost is that x 60. If it exceeds the budget, stop (the run resumes from `last_checkpoint.pt`). A partial cosine run is not comparable with finished runs.
+
+Monitoring snapshots (2026-11-10): the GPTrans notebook copies the trainer rolling `last_checkpoint.pt` every 2 h to `RUN_ROOT/gptrans_pairnorm-snapshots/` (read-only, outside the trainer output, so the commit hash chain is untouched). Each snapshot holds model, EMA and optimizer_step. After the run, evaluating them on official validation needs explicit in-session authority and is for the curve only; never choose a snapshot by it.
