@@ -54,7 +54,8 @@
     "pause_after_step": 1562,
     "device_resident_train": [
       "muon_on"
-    ]
+    ],
+    "same_run_reference_arm_id": "muon_off"
   },
   "seeds": [
     42
@@ -81,5 +82,9 @@
     {
       "arm_id": "muon_on"
     }
-  ]
+  ],
+  "same_run": {
+    "reference_arm_id": "muon_off",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
 }
