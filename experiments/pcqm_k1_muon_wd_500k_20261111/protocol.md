@@ -15,8 +15,8 @@ under the registered `k1-muon-batched-adamw-fp32-v1`, same job, one T4 per arm.
 ## Hypothesis and evidence
 
 H1: with everything else unchanged, recipe-level weight decay 0.05 instead of 1e-5 lowers the selected-point development MAE by >= 3 meV.
-Motivation: the Muon gain over AdamW at K1 500K shrinks with training (-7.93 meV at 20 passes, -4.42 at 40, -1.81 at 60; Muon 500K terminal
-record `ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-muon` and its curve in `experiments/pcqm_k1_muon_500k_20261106/`). Alternatives: AdamW catches up with
+Motivation: the Muon gain over AdamW at K1 500K shrinks with training (-7.93 meV at 20 passes, -4.42 at 40, -1.81 at 60; Muon 500K terminal (owner branch codex/exp/k1-muon-500k-20261106, not registered in desktop RML; registered anchor is the 100K Muon record `ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon`)
+record and its curve in `experiments/pcqm_k1_muon_500k_20261106/`). Alternatives: AdamW catches up with
 more exposure; 0.05 decay is too strong and underfits; the change also decays the AdamW remainder group; seed or execution specificity.
 The control reruns the closed identity of `experiments/pcqm_k1_read_batched_muon_500k_20261107/` (muon arm, selected 0.101863694 eV) as a same-job control only.
 

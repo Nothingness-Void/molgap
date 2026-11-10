@@ -12,7 +12,7 @@
     "deficiency": "The batched-Muon gain over AdamW at 500K shrinks with exposure (-7.93 meV at 20 passes, -4.42 at 40, -1.81 at 60). Whether stronger decoupled decay recovers late-pass development MAE under the same optimizer is unmeasured.",
     "changed_mechanism": "recipe-level-weight-decay-1e-5-to-0.05-under-batched-muon",
     "supporting_evidence": [
-      "ev-terminal-T-pcqm-k1-muon-500k-20261106-s42-muon"
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
     ],
     "alternatives": [
       "AdamW catches up with more exposure, so the shrinking Muon gain is not a regularization effect",
@@ -29,7 +29,7 @@
     "negative_decision": "NEGATIVE/NULL closes the weight-decay lever for K1 batched Muon at 500K. Single predeclared point: no second weight_decay value, no learning-rate change, no post-hoc grid, no module stacking regardless of outcome.",
     "reference_ids": [],
     "prior_trajectories": [
-      "T-pcqm-k1-muon-500k-20261106-s42-muon"
+      "T-pcqm-k1-muon-100k-20261106-s42-muon"
     ]
   },
   "profile": {
