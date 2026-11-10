@@ -44,6 +44,8 @@ def patched_source():
         ("2. 单张 A100 顺序训练加速 K1 Muon、GPTrans BondLocal＋PairNorm，共享 SSD 数据。",
          "2. 单张 A100 训练 GPTrans BondLocal＋PairNorm（B128，冻结配方）。"),
         ("K1完成后继续GPTrans。", ""),
+        ("assert len(observed_gpu) == 1 and 'A100' in observed_gpu[0], observed_gpu",
+         "assert len(observed_gpu) == 1 and any(name in observed_gpu[0] for name in ('A100', 'L4')), observed_gpu\nprint('GPU:', observed_gpu[0], '(冻结规格写的是A100；实际硬件会记入分配账本)')"),
         ("CLEANUP_SECONDS = 300\n", "CLEANUP_SECONDS = 300\nSNAPSHOT_SECONDS = 2 * 3600  # 监控快照间隔；评估只看曲线，不用于挑模型\n"),
         ("from threading import Timer\n", "from threading import Event, Thread, Timer\n" + SNAPSHOT_FUNCTION),
         ("    pause_timer.start()\n", "    pause_timer.start()\n" + SNAPSHOT_START),
