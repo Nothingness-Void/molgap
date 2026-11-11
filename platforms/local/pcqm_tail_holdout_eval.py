@@ -73,6 +73,7 @@ def main(argv=None):
     parser.add_argument("--initial-state", help="the run's frozen initial state file (gptrans_t)")
     parser.add_argument("--weights-key", default="model", choices=["model", "ema"])
     parser.add_argument("--out", required=True)
+    parser.add_argument("--save-predictions", help="folder for per-row eV predictions, one file per run and set")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--src", default=str(Path(__file__).resolve().parents[2] / "src"))
     args = parser.parse_args(argv)
@@ -123,6 +124,10 @@ def main(argv=None):
                 continue
             truth = torch.cat([g.y for g in graphs]).double()
             pred = predict(model, graphs, mean, std, device)
+            if args.save_predictions:
+                folder = Path(args.save_predictions)
+                folder.mkdir(parents=True, exist_ok=True)
+                torch.save({"pred_ev": pred.float(), "truth_ev": truth.float()}, folder / f"{name}_{key}.pt")
             results[name][key] = {"mae_ev": float(evaluator.eval({"y_pred": pred.float(), "y_true": truth.float()})["mae"]), "rows": len(graphs)}
     if args.expect_dev_mae is not None:
         observed = results[runs[0][0]]["development"]["mae_ev"]
@@ -132,7 +137,7 @@ def main(argv=None):
                 "tail_source_idx_sha256": digests[ROLE], "dev_range": args.dev_range, "dev_source_idx_sha256": digests["development"],
                 "protected_roles_read": {"official_validation": False, "test_dev": False, "test_challenge": False},
                 "results": results, "script_sha256": base.sha256(__file__), "environment": base.environment(),
-                "per_row_predictions_saved": False}
+                "per_row_predictions_saved": bool(args.save_predictions)}
     Path(args.out).write_text(json.dumps(evidence, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps(results, indent=2))
     return 0
