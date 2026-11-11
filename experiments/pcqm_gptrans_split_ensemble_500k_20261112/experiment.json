@@ -1,0 +1,116 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_split_ensemble_500k_20261112",
+  "logical_run_id": "pcqm-gptrans-split-ensemble-500k-20261112-s42",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-12T09:00:00+00:00",
+  "authority_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/authority.json",
+  "role_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_split_ensemble_500k_20261112/STATUS.md"
+  ],
+  "question": {
+    "policy_id": "pcqm-gptrans-split-ensemble-500k-20261112",
+    "action": "RUN_PAIRED_500K",
+    "question": "At equal training compute, does the equal-weight mean of two independently initialized 30-pass GPTrans BondLocal+PairNorm 500K models beat one 60-pass model on the tail_holdout_v1 rows?",
+    "deficiency": "Same-recipe 5-member ensembling gains 4.51 meV at 60 passes per member, but costs N times the training. No compute-matched split exists at 500K, so the value of two short members against one long member is unknown.",
+    "changed_mechanism": "equal-compute-two-member-ensemble-30-vs-60-pass",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s44",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s45",
+      "ev-terminal-T-pcqm-gptrans-pairnorm-init-noise-500k-s45-init_s46",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s43",
+      "ev-terminal-T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44"
+    ],
+    "alternatives": [
+      "A 30-pass schedule costs one model more than the ensemble gain, so the split loses (K1 100K reference: +4.54 meV)",
+      "Short members are more diverse and the split wins",
+      "The two are equivalent within the 3 meV margin"
+    ],
+    "closed_families": [
+      "gptrans-pair-norm-500k",
+      "gptrans-noisy-pair-norm-500k",
+      "pcqm-gptrans-bondlocal-pairnorm-lr-500k",
+      "pcqm-gptrans-pairnorm-init-noise-500k"
+    ],
+    "positive_decision": "Frozen in experiments/pcqm_gptrans_split_ensemble_500k_20261112/protocol.md: delta = tail MAE of the equal-weight 2-member mean minus 107.94 meV (mean of four 60-pass singles). delta <= -3 meV: split wins; delta >= +3 meV: split loses; otherwise equivalent. Nothing is adopted.",
+    "negative_decision": "Any outcome closes this question. A second pair (init 45/46) is a separate submission only when 1.5 <= |delta| <= 4.5 meV. No full training, adoption or retry.",
+    "prior_trajectories": [
+      "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43"
+    ]
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32, one arm per device",
+    "cheapest_falsifier": "Mean 30-pass tail MAE of the two members and their equal-weight mean, against the four retained 60-pass singles (mean 107.94 meV, SD about 0.47).",
+    "estimated_device_hours": 10.6,
+    "estimated_wall_hours": 5.3
+  },
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "nvoid912",
+      "kernel": "nvoid912/molgap-gptrans-split-500k-20261112",
+      "title": "MolGap GPTrans Split Ensemble 500K 20261112",
+      "datasets": [
+        "nvoid912/gptrans-split-500k-20261112-src",
+        "nvoid912/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+      ],
+      "source_dataset": "nvoid912/gptrans-split-500k-20261112-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 23400,
+      "cleanup_reserve_seconds": 180
+    }
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "purpose": "initialization_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "split_s43",
+      "recipe_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/split_s43/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/split_s43/data_declaration.json",
+        "arm_id": "split_s43"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s43.pt"
+    },
+    {
+      "arm_id": "split_s44",
+      "recipe_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/split_s44/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_split_ensemble_500k_20261112/split_s44/data_declaration.json",
+        "arm_id": "split_s44"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-pairnorm-init-noise-500k/s44.pt"
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "split_s43",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
+}
