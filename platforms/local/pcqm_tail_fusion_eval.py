@@ -6,7 +6,7 @@ all on the same tail rows). Weights are fixed 0.5/0.5; nothing is fitted. Criter
   2. hetero - homo <= -3 meV
   3. paired row-bootstrap 95% upper bound of both differences < 0
 """
-import argparse, json, sys
+import argparse, hashlib, json, sys
 from pathlib import Path
 
 import numpy as np
@@ -17,14 +17,24 @@ THRESHOLD_MEV, BOOT, SEED = -3.0, 2000, 42
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--member", action="append", required=True, metavar="NAME=PRED.pt")
-    parser.add_argument("--hetero", required=True, help="two member names, comma separated")
-    parser.add_argument("--homo", required=True, help="two member names, comma separated")
+    parser.add_argument("--member", action="append", default=[], metavar="NAME=PRED.pt")
+    parser.add_argument("--hetero", help="two member names, comma separated")
+    parser.add_argument("--homo", help="two member names, comma separated")
+    parser.add_argument("--spec", help='frozen JSON {"members": {name: path}, "hetero": [a,b], "homo": [c,d]}')
     parser.add_argument("--out", required=True)
     args = parser.parse_args(argv)
-    errors, truth = {}, None
-    for text in args.member:
-        name, path = text.split("=", 1)
+    sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    members, spec_sha = {}, None
+    if args.spec:
+        spec, spec_sha = json.loads(Path(args.spec).read_text(encoding="utf-8")), sha(args.spec)
+        members.update(spec["members"])
+        args.hetero = args.hetero or ",".join(spec["hetero"])
+        args.homo = args.homo or ",".join(spec["homo"])
+    members.update(t.split("=", 1) for t in args.member)
+    assert members and args.hetero and args.homo, "need members, --hetero and --homo (directly or via --spec)"
+    errors, truth, inputs = {}, None, {}
+    for name, path in members.items():
+        inputs[name] = {"path": str(Path(path).resolve()), "sha256": sha(path)}
         data = torch.load(path, map_location="cpu", weights_only=True)
         pred, y = data["pred_ev"].double().numpy(), data["truth_ev"].double().numpy()
         if truth is None:
@@ -50,7 +60,7 @@ def main(argv=None):
     crit = {"1_hetero_vs_best_single_le_-3meV": report["hetero_minus_best_single"]["mev"] <= THRESHOLD_MEV,
             "2_hetero_vs_homo_le_-3meV": report["hetero_minus_homo"]["mev"] <= THRESHOLD_MEV,
             "3_both_ci_upper_below_0": all(r["ci95_mev"][1] < 0 for r in report.values())}
-    out = {"format": "molgap-tail-fusion-eval-v1", "rows": rows, "weights": [0.5, 0.5], "hetero": hetero, "homo": homo,
+    out = {"format": "molgap-tail-fusion-eval-v1", "rows": rows, "inputs": inputs, "spec_sha256": spec_sha, "weights": [0.5, 0.5], "hetero": hetero, "homo": homo,
            "bootstrap": {"n": BOOT, "seed": SEED, "paired": True}, "single_mae_ev": {n: float(e.mean()) for n, e in single.items()},
            "strongest_single": best, "hetero_mae_ev": float(err_het.mean()), "homo_mae_ev": float(err_homo.mean()),
            "differences": report, "criteria": crit, "verdict": "PASS" if all(crit.values()) else "FAIL"}
