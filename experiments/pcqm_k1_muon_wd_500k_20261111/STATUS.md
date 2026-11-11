@@ -17,3 +17,7 @@ SUBMISSION_BOUND v1: kernel kaseichou/molgap-k1-muon-wd-500k-20261111-s42, kerne
 Seed-43 companion: experiments/pcqm_k1_muon_wd_500k_20261111_s43, kernel nothingnessvoid/molgap-k1-muon-wd-500k-20261111-s43, kernel_id 144254965 (running).
 Segment 1 is expected to pause at step 187488 within the 9h wall limit. Retrieve with the s43 status/retrieve calls using
 --credentials D:/下载/Key/.kaggle1_default/kaggle.json (profile has no kaggle1 mapping).
+
+## Continuation (2026-11-11)
+
+Segment 1 retrieved PAUSED_RETRIEVED (s42 both arms at step 187488; s43 arms wall-limited at 185310/185529). build-resume RESUME_VERIFIED for all arms, prepare-resume RESUME_INPUTS_PREPARED ([resume_to_pass60.json](resume_to_pass60.json)). Successor SUBMISSION_BOUND as version 2 of the same kernel (journal in continuations/<run>/v2/operations; first call stopped on source version 1 visibility, identical re-entry bound it). No scientific or infrastructure change. Partial traces are not a terminal comparison.
