@@ -241,6 +241,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5:A001",
+      "target": "experiments/pcqm_k1_muon_wd_500k_20261111/generated/93e125a3a5170b2b00bf539c45d3eff1afd73a75bd0161151166af850768ddfb/muon_wd1e5/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2:A001",
+      "target": "experiments/pcqm_k1_muon_wd_500k_20261111/generated/93e125a3a5170b2b00bf539c45d3eff1afd73a75bd0161151166af850768ddfb/muon_wd5e2/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5:A001",
+      "target": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/generated/27d00e3da3c9b421be80824fdd6591f8866bca6660a8773c5ede06d052b1b100/muon_wd1e5/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2:A001",
+      "target": "experiments/pcqm_k1_muon_wd_500k_20261111_s43/generated/27d00e3da3c9b421be80824fdd6591f8866bca6660a8773c5ede06d052b1b100/muon_wd5e2/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms:A001",
       "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/post_node_rms/recipe.json",
       "type": "action_produced_evidence"
@@ -2098,6 +2118,26 @@
     {
       "source": "ev-terminal-T-pcqm-k1-message-norm-100k-s42-msgnorm_learned",
       "target": "T-pcqm-k1-init-noise-100k-s44-ref_s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2",
       "type": "prior_evidence"
     },
     {
@@ -4111,6 +4151,22 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "type": "evidence"
     },
@@ -4828,6 +4884,22 @@
     },
     {
       "id": "T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd1e5",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-wd-500k-20261111-s42-muon_wd5e2",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd1e5",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-muon-wd-500k-20261111-s43-muon_wd5e2",
       "type": "trajectory"
     },
     {
