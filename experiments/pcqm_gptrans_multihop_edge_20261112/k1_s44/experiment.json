@@ -1,0 +1,105 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_multihop_edge_20261112",
+  "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-s44",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-12T12:00:00Z",
+  "question": {
+    "policy_id": "pcqm-gptrans-multihop-edge-20261112",
+    "action": "RUN_PAIRED_100K",
+    "question": "Does the official GPTrans multi-hop shortest-path bond encoding lower the development MAE of the retained BondLocal + pair-update-norm GPT-T at fixed 100K, over two matched initializations?",
+    "deficiency": "Our GPT-T adds bond embeddings only to directly bonded pairs; pairs at hop distance >= 2 see only a distance embedding, while official GPTrans also injects the ordered path bonds (multi_hop_max_dist=20).",
+    "changed_mechanism": "shortest-path-ordered-bond-encoding-with-position-specific-mixing",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "BondLocal and 12 pair-propagation layers already recover path content",
+      "Distance embedding is sufficient for PCQM4Mv2",
+      "Any gain is below initialization noise"
+    ],
+    "closed_families": [
+      "pcqm-k1-hop-shell-100k",
+      "gptrans-t-local-bias-rwse16-local-edge"
+    ],
+    "positive_decision": "Mean of the two paired candidate-minus-reference development MAE deltas <= -3.7 meV and both negative (3.0/0.82, optimistic 18% scale attenuation) releases the frozen 500K E2; no adoption.",
+    "negative_decision": "Otherwise close NEGATIVE_UNDER_CONTRACT: no 500K, retry, tuning grid or adoption.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device",
+    "estimated_device_hours": 6.8,
+    "estimated_wall_hours": 3.4,
+    "cheapest_falsifier": "Two same-job 100K 60-pass pairs (inits 43 and 44), reference BondLocal+PairNorm versus the same plus zero-start multi-hop path edge encoding; the mean paired delta must reach -3.7 meV."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "nothingnessvoid",
+    "arms": [
+      "ref_s44",
+      "mh_s44"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "ref_s44",
+    "allocated_t4_hours_ceiling": 9,
+    "user_notebook_wall_ceiling_seconds": 16200,
+    "allocation_wall_limit_seconds": 16200,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized 30 Kaggle hours for evidence search on 2026-11-12; submission of E1 needs no further request.",
+    "scope": "One T4x2 session, two fresh 100K 60-pass arms, train/development only; no automatic retry/continuation/500K/full/adoption or protected roles."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "purpose": "architecture_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "ref_s44",
+      "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e1/ref_s44/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e1/ref_s44/data_declaration.json",
+        "arm_id": "ref_s44"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-multihop-edge-20261112/ref_s44.pt"
+    },
+    {
+      "arm_id": "mh_s44",
+      "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e1/mh_s44/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e1/mh_s44/data_declaration.json",
+        "arm_id": "mh_s44"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-multihop-edge-20261112/mh_s44.pt",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_degree_bond_local_pair_update_norm_multihop_edge"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "ref_s44",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  }
+}
