@@ -88,7 +88,7 @@ def main():
                       role == "mh")
     for arm, seed in (("ref_s47", 47), ("mh_s47", 47), ("mh_s48", 48)):
         arm_files(E / "e2" / arm, arm, NOISE / "init_s43" / "recipe.json", NOISE / "init_s43" / "data_declaration.json",
-                  st[arm], "pcqm-gptrans-multihop-edge-20261112-e2", arm.startswith("mh"))
+                  st[arm], f"pcqm-gptrans-multihop-edge-20261112-e2-s{seed}", arm.startswith("mh"))
     print(json.dumps({k: v["state_sha256"][:12] for k, v in st.items()}))
 
 

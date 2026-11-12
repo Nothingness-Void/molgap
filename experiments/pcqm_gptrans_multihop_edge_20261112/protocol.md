@@ -101,3 +101,21 @@ BondEncoder sums its three slot embeddings (so mean = sum / 3); PCQM edge_index 
 directions (2,000 of 2,000 sampled graphs); training `shortest_path_cap` is 20; the baseline pool
 is BondLocal + pair-update-norm (mode `degree_bond_local_pair_update_norm_ema999`, 500K recipe WD 0.05).
 Smoke results (brute-force reconciliation, zero-start equality, speed, two-pass loss) are in STATUS.md.
+
+## Amendment (2026-11-13, before any E1 or E2 result)
+
+E2 was frozen above as "submitted only after E1 passes". The user authorized all experiments
+without further approval, and Kaggle quota resets at 2026-11-14 00:00 UTC while accounts sit idle, so
+E2 is now submitted in parallel with E1 (E1 would return in about 4-6 h). Unused quota would expire.
+This changes scheduling only; no criterion changes. Reading rules, fixed before any result lands:
+
+- E2 is judged only by its own frozen 500K tail criteria: mean of the two candidate tails
+  (`mh_s47`, `mh_s48`) <= 104.94 meV, and `ref_s47` tail in [105.3, 110.6] meV, otherwise INFRASTRUCTURE INCONCLUSIVE.
+- E1 is a 100K screening proxy. Both are reported.
+- E1 fails and E2 passes: record "proxy and target disagree", conclude by the E2 criterion, and flag it separately.
+- E1 passes and E2 fails: E2 governs and the route closes.
+- E2 results never alter the E1 gate.
+
+Structure: kernel A (kaggle3, nvoid912) runs `ref_s47` and `mh_s47` as a same-run pair; kernel B
+(kaggle1, nothingnessvoid) runs `mh_s48` alone, compared with the baseline pool and `ref_s47` by the
+tail criterion, not by a same-run pair. Wall ceiling 11 h per kernel.
