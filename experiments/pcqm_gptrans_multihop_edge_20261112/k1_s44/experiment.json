@@ -32,8 +32,8 @@
     "track": "B",
     "platform": "kaggle",
     "hardware": "Tesla T4x2 FP32/noTF32, one arm per device",
-    "estimated_device_hours": 6.8,
-    "estimated_wall_hours": 3.4,
+    "estimated_device_hours": 8.0,
+    "estimated_wall_hours": 4.0,
     "cheapest_falsifier": "Two same-job 100K 60-pass pairs (inits 43 and 44), reference BondLocal+PairNorm versus the same plus zero-start multi-hop path edge encoding; the mean paired delta must reach -3.7 meV."
   },
   "authority": {
@@ -48,9 +48,9 @@
       42
     ],
     "same_run_reference_arm_id": "ref_s44",
-    "allocated_t4_hours_ceiling": 9,
-    "user_notebook_wall_ceiling_seconds": 16200,
-    "allocation_wall_limit_seconds": 16200,
+    "allocated_t4_hours_ceiling": 12,
+    "user_notebook_wall_ceiling_seconds": 21600,
+    "allocation_wall_limit_seconds": 21600,
     "cleanup_reserve_seconds": 180,
     "development_role_label_use": true,
     "protected_roles_authorized": [],

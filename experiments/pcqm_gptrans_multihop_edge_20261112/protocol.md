@@ -89,9 +89,9 @@ differing. Baseline pool: existing 500K PairNorm inits 43-46, tail-holdout mean 
 
 ## Cost and authority
 
-E1: two kernels, estimate 3.4 wall hours each (reference arm about 2.8 h; candidate arm
-slowed by an estimated 15-20%), 2 arms x 3.4 h = 6.8 T4 device hours per kernel, 13.6 total,
-inside the 30 Kaggle hours the user authorized for evidence search. Wall ceiling 4.5 h per kernel.
+E1: two kernels, estimate 4.0 wall hours each (reference arm about 2.8 h; candidate arm measured 1.415x slower per step,
+so about 4.0 h), 2 arms x 4.0 h = 8.0 T4 device hours per kernel, 16 total (Kaggle quota is billed by session wall time: about 8 h),
+inside the 30 Kaggle hours the user authorized for evidence search. Wall ceiling 6.0 h per kernel.
 No retry or automatic continuation; a cap leaves STOP_FOR_COST. E2 estimate about 35-40 T4 hours
 and needs its own authority record when released.
 
