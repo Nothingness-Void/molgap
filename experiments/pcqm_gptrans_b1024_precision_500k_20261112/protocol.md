@@ -6,7 +6,7 @@ codex/exp/gptrans-b1024-precision-500k-20261112.
 ## Question
 
 Does GPT-T 12x256 PairNorm (500K, first 10 shards, 60 passes) trained on Colab with batch 1024,
-TF32, lr 2.828e-3, EMA 0.999 and no compile reach tail_holdout_v1 accuracy comparable to the
+TF32, lr 2.828e-3, EMA 0.992028 (0.999^8) and no compile reach tail_holdout_v1 accuracy comparable to the
 frozen recipe (batch 128, lr 1e-3, fp32)?
 
 ## Evidence
@@ -22,7 +22,7 @@ frozen recipe (batch 128, lr 1e-3, fp32)?
   GPT-T knobs: --gptrans-batch-size --gptrans-lr-mult --gptrans-ema-decay (parser lines 738-740).
 - Arms (primary): init seed 42 (run runs/gptrans-b1024-500k-s42-20261112) and init seed 43
   (runs/gptrans-b1024-500k-s43-20261112). Batch 1024, --gptrans-lr-mult 2.8284271 (lr = 1e-3 x
-  sqrt(8) = 2.828e-3, Muon+AdamW groups the same multiple), --gptrans-ema-decay 0.999, no compile,
+  sqrt(8) = 2.828e-3, Muon+AdamW groups the same multiple), --gptrans-ema-decay 0.992028 (0.999^8), no compile,
   TF32. 500K rows (--max-shards 10), 60 passes, warmup 4 passes then cosine to 1e-6
   (runner lines 195-197), selection final-ema.
 - Training platform: Colab L4 (not A100), torch 2.11.0 pinned. These do not change the decision rule.
@@ -54,7 +54,7 @@ total steps = 976 x 60 = 58,560 (line 184, 520). Warmup is 4 passes (warmup_unit
 counted in passes, not steps, so it is unchanged (3,904 steps at B512; 1,952 at B1024 with 488
 steps/epoch, 29,280 total). Checkpoint every pass (line 200). The lr 2.0e-3 and EMA 0.9960 targets
 are the sqrt-batch lr scaling and 4-step EMA compounding relative to batch 128 (and 0.999^8 =
-0.9920 would be the matching B1024 value; B1024 deliberately keeps 0.999 as stated above).
+0.9920 is the matching B1024 value, used for B1024; B512 fallback uses 0.999^4).
 
 ## Timeline (honest record)
 
@@ -76,3 +76,11 @@ the first scoring.
 - Hardware and torch differ from the reference (L4/torch 2.11.0 vs RTX 5060/2.7.1); confounded
   with batch and precision by design, since the question is the practical Colab recipe.
 - No retry, continuation, adoption into a deliverable or use of official validation.
+
+## Erratum (2026-11-13, before any tail scoring)
+
+The original text wrote the B1024 EMA decay as 0.999. That was a transcription error (the runner
+default was taken for the actual value). The Colab notebook MolGap_GPTrans_B1024_500K.ipynb sets
+EMA_DECAY = 0.999 ** (BATCH // 128) and passes repr() of it as --gptrans-ema-decay; both seeds'
+run_config.json record ema_decay 0.992027944069944 (= 0.999^8). Thresholds and the decision rule
+are unchanged. No B1024 tail or dev result was viewed before this correction.
