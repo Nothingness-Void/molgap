@@ -36,9 +36,9 @@
     "owner": "desktop",
     "track": "B",
     "platform": "kaggle",
-    "hardware": "Tesla T4 FP32/noTF32, one arm",
-    "estimated_device_hours": 8.0,
-    "estimated_wall_hours": 8.0,
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device",
+    "estimated_device_hours": 22.0,
+    "estimated_wall_hours": 11.0,
     "cheapest_falsifier": "Three 500K 60-pass arms (ref_s47, mh_s47, mh_s48) scored once each on tail_holdout_v1; candidate mean must reach <= 104.94 meV."
   },
   "authority": {
@@ -46,12 +46,14 @@
     "user_authorized": true,
     "account": "nothingnessvoid",
     "arms": [
+      "ref_s48",
       "mh_s48"
     ],
     "seeds": [
       42
     ],
-    "allocated_t4_hours_ceiling": 11.0,
+    "same_run_reference_arm_id": "ref_s48",
+    "allocated_t4_hours_ceiling": 22.0,
     "user_notebook_wall_ceiling_seconds": 39600,
     "allocation_wall_limit_seconds": 39600,
     "cleanup_reserve_seconds": 180,
@@ -64,7 +66,7 @@
     "platform": {
       "name": "kaggle",
       "accelerator": "NvidiaTeslaT4",
-      "device_count": 1,
+      "device_count": 2,
       "cpu_cores": 4,
       "memory_gib": 29,
       "atomic_checkpoints": true,
@@ -100,6 +102,15 @@
   },
   "arms": [
     {
+      "arm_id": "ref_s48",
+      "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e2/ref_s48/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e2/ref_s48/data_declaration.json",
+        "arm_id": "ref_s48"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-multihop-edge-20261112/ref_s48.pt"
+    },
+    {
       "arm_id": "mh_s48",
       "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/e2/mh_s48/recipe.json",
       "data_ref": {
@@ -115,5 +126,9 @@
         ]
       }
     }
-  ]
+  ],
+  "same_run": {
+    "reference_arm_id": "ref_s48",
+    "target_manifest_ref": "experiments/pcqm_k1_initialization_forward_500k/target_manifest.json"
+  }
 }

@@ -119,3 +119,35 @@ This changes scheduling only; no criterion changes. Reading rules, fixed before 
 Structure: kernel A (kaggle3, nvoid912) runs `ref_s47` and `mh_s47` as a same-run pair; kernel B
 (kaggle1, nothingnessvoid) runs `mh_s48` alone, compared with the baseline pool and `ref_s47` by the
 tail criterion, not by a same-run pair. Wall ceiling 11 h per kernel.
+
+## Amendment 2 (2026-11-13, before any E1/E2/N1 result)
+
+Pre-registered reading rules. They supersede the Amendment above where they differ.
+
+- E2 is an independent 500K pre-registered test. It is not called a "promotion" by itself.
+- E2 fails: the route closes, whatever E1 shows.
+- E1 passes and E2 passes: promote.
+- E1 fails and E2 passes: run W2 before any promotion. W2 is a third-init pair, reference `ref_s49` plus
+  candidate `mh_s49`, on kaggle3, each tail scored once. Promote only if the mean of the three candidate
+  inits (`mh_s47`, `mh_s48`, `mh_s49`) is <= 104.94 meV, which is stricter than the E2 criterion alone.
+  W2 must be submitted no later than 2026-11-13 13:00 UTC; after that it is not submitted.
+- E1 results never trigger early termination of E2.
+- E2 structure: kernel A (kaggle3) `ref_s47` + `mh_s47`; kernel B (kaggle1) `ref_s48` + `mh_s48`, each a same-run pair,
+  one arm per T4. This replaces the single-arm kernel B of the Amendment above.
+- E2 reference check: both `ref_s47` and `ref_s48` tails must lie in [105.3, 110.6] meV; if either is outside,
+  the result is INCONCLUSIVE (infrastructure). The primary criterion is unchanged: mean tail MAE of the two
+  candidates <= 104.94 meV.
+- tail_holdout_v1 is scored once per checkpoint. Per-row predictions are saved so the residual correlation with K1
+  can be computed offline. The official validation set is not used.
+
+## N1: GPT-T 100K initialization noise (added 2026-11-13, before any result)
+
+Hypothesis: the init spread D of the reference recipe at 100K is <= 1.85 meV (3.7 = 2D).
+Design: one kernel (kaggle3, `nvoid912`), two reference-architecture arms `ref_s45` and `ref_s46` (inits equal to the
+retained 500K init-noise states of seeds 45 and 46; state hashes asserted by `build_inputs.py`), E1's reference recipe with
+only the init changed, 100K 60 passes, spec seed label 42. Wall ceiling 4.5 h, estimate about 3 h.
+Metric: development MAE (`fixed100k-next50k`), best-development-EMA endpoint.
+Criterion: D = max - min over the four reference arms `ref_s43`, `ref_s44` (E1) and `ref_s45`, `ref_s46` (N1).
+D > 1.85 meV means two E1 pairs lack power for 3.7 meV and the E1 conclusion carries a confidence note.
+N1 never changes the E1 gate or its outcome. Cross-job runtime differences are not controlled; N1 uses the same recipe and data.
+Both arms are references, so N1 has no same-run candidate comparison.

@@ -45,11 +45,11 @@ def states():
     INIT.mkdir(parents=True, exist_ok=True)
     assert state_dict_sha256(build(42)) == "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"
     out = {}
-    for seed in (43, 44, 47, 48):
+    for seed in (43, 44, 45, 46, 47, 48):
         ref = build(seed)
         out[f"ref_s{seed}"] = save(ref, INIT / f"ref_s{seed}.pt")
         out[f"mh_s{seed}"] = out[f"ref_s{seed}"]  # same initial state; the addon mounts after load
-    for seed in (43, 44):  # must equal the retained 500K init-noise states
+    for seed in (43, 44, 45, 46):  # must equal the retained 500K init-noise states
         assert out[f"ref_s{seed}"]["state_sha256"] == json.loads((OLD / "states.json").read_text())[str(seed)]["state_sha256"]
     (INIT / "states.json").write_text(json.dumps(out, indent=2))
     return out
@@ -86,9 +86,12 @@ def main():
             arm = f"{role}_s{seed}"
             arm_files(E / "e1" / arm, arm, NORM / "recipe.json", NORM / "data_declaration.json", st[arm], run,
                       role == "mh")
-    for arm, seed in (("ref_s47", 47), ("mh_s47", 47), ("mh_s48", 48)):
+    for arm, seed in (("ref_s47", 47), ("mh_s47", 47), ("ref_s48", 48), ("mh_s48", 48)):
         arm_files(E / "e2" / arm, arm, NOISE / "init_s43" / "recipe.json", NOISE / "init_s43" / "data_declaration.json",
                   st[arm], f"pcqm-gptrans-multihop-edge-20261112-e2-s{seed}", arm.startswith("mh"))
+    for seed in (45, 46):  # N1: init-noise references on the E1 recipe
+        arm_files(E / "n1" / f"ref_s{seed}", f"ref_s{seed}", NORM / "recipe.json", NORM / "data_declaration.json",
+                  st[f"ref_s{seed}"], f"pcqm-gptrans-multihop-edge-20261112-n1-s{seed}", False)
     print(json.dumps({k: v["state_sha256"][:12] for k, v in st.items()}))
 
 
