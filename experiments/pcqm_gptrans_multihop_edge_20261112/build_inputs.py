@@ -48,7 +48,7 @@ def states():
     for seed in (43, 44, 47, 48):
         ref = build(seed)
         out[f"ref_s{seed}"] = save(ref, INIT / f"ref_s{seed}.pt")
-        out[f"mh_s{seed}"] = save({**ref, "path_mix": torch.zeros(20, 32, 32)}, INIT / f"mh_s{seed}.pt")
+        out[f"mh_s{seed}"] = out[f"ref_s{seed}"]  # same initial state; the addon mounts after load
     for seed in (43, 44):  # must equal the retained 500K init-noise states
         assert out[f"ref_s{seed}"]["state_sha256"] == json.loads((OLD / "states.json").read_text())[str(seed)]["state_sha256"]
     (INIT / "states.json").write_text(json.dumps(out, indent=2))

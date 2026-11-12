@@ -4,8 +4,12 @@ import torch
 from torch_geometric.data import InMemoryDataset
 from torch_geometric.loader import DataLoader
 from molgap.gptrans_bond_pair_norm import construct_family_model as reference
-from molgap.gptrans_multihop_edge import construct_family_model as candidate, HOPS
+from molgap.gptrans_multihop_edge import mount, HOPS
 from molgap.gptrans_execution_backend import bind_model_layout, prepare_layout, prepared_forward
+
+
+def candidate(*_):
+    return mount(None, reference(None, None))
 
 
 def shard(i, n):
@@ -16,7 +20,7 @@ def shard(i, n):
 
 
 @torch.no_grad()
-def brute(b, m):
+def brute(b, m, mix):
     graph, src, dst = m._local_edges(b.edge_index, b.batch, len(b.x))
     edge = sum(e(b.edge_attr[:, i].long()) for i, e in enumerate(m.bond_encoder.bond_embedding_list)) / 3
     sizes = torch.bincount(b.batch).tolist()
@@ -34,7 +38,7 @@ def brute(b, m):
                     cur, acc = i, 0
                     for k in range(d):
                         nxt = min(v for v in near[cur] if dist.get(v, 99) == dist[cur] - 1)
-                        acc = acc + edge[ids[g, cur, nxt]] @ m.path_mix[k]
+                        acc = acc + edge[ids[g, cur, nxt]] @ mix[k]
                         cur = nxt
                     out[g, i, j] = acc / d
     return out
@@ -43,7 +47,6 @@ def brute(b, m):
 def main():
     torch.manual_seed(42)
     ref, cand = reference(None, None), candidate(None, None)
-    cand.load_state_dict({**ref.state_dict(), "path_mix": cand.path_mix.data})
     cpu = list(DataLoader(shard(0, 200), batch_size=50))
     for mode in (True, False):  # (b) before path_mix is randomized
         ref.train(mode), cand.train(mode)
@@ -54,12 +57,15 @@ def main():
             torch.manual_seed(7); c = cand(*args)
             same &= torch.equal(a, c)
         print(f"(b) train={mode} bitwise_equal={same}")
-    cand.path_mix.data.normal_(0, 0.3, generator=torch.Generator().manual_seed(1))
+    cand.spatial_encoder.path_mix.data.normal_(0, 0.3, generator=torch.Generator().manual_seed(1))
     worst = 0
     for b in cpu:  # (a)
-        pad = cand._dense_inputs(b.x, b.edge_index, b.edge_attr, b.batch)[2]
-        got = cand._multihop(b.edge_attr, cand._local_edges(b.edge_index, b.batch, len(b.x)), pad).detach()
-        want = brute(b, cand)
+        seen = {}
+        hook = cand.spatial_encoder.register_forward_hook(lambda m, i, o: seen.update(i=i[0], o=o.detach().clone()))
+        cand(b.x, b.edge_index, b.edge_attr, b.batch)
+        hook.remove()
+        got = (seen["o"] - cand.spatial_encoder.base(seen["i"])).detach()
+        want = brute(b, cand, cand.spatial_encoder.path_mix)
         worst = max(worst, float((got[:, :want.shape[1], :want.shape[2]] - want).abs().max()))
     print(f"(a) molecules=200 max_abs_diff={worst:.3e} paths_nonzero={bool(want.abs().sum() > 0)}")
     gpu, step = [prepare_layout(b) for b in DataLoader(shard(0, 128 * 12), batch_size=128)], {}
@@ -86,7 +92,7 @@ def main():
             losses.append(loss.detach())
         losses = torch.stack(losses).cpu()
         print(f"(d) pass={epoch + 1} first100={losses[:100].mean():.4f} last100={losses[-100:].mean():.4f} "
-              f"finite={bool(torch.isfinite(losses).all())} sec={time.perf_counter() - t0:.0f} |path_mix|={float(m.path_mix.abs().mean()):.2e}")
+              f"finite={bool(torch.isfinite(losses).all())} sec={time.perf_counter() - t0:.0f} |path_mix|={float(m.spatial_encoder.path_mix.abs().mean()):.2e}")
 
 
 if __name__ == "__main__":
