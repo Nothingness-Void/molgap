@@ -52,7 +52,8 @@
     "development_role_label_use": true,
     "protected_roles_authorized": [],
     "authority": "User authorized all experiments without further approval (relayed 2026-11-13).",
-    "scope": "One T4x2 session, two reference-architecture 100K 60-pass arms, train/development only; no automatic retry/continuation/500K/full/adoption or protected roles."
+    "scope": "One T4x2 session, two reference-architecture 100K 60-pass arms, train/development only; no automatic retry/continuation/500K/full/adoption or protected roles.",
+    "same_run_reference_arm_id": "ref_s45"
   },
   "seeds": [
     42
@@ -65,7 +66,7 @@
         "gptrans_degree_bond_local_pair_update_norm"
       ]
     },
-    "purpose": "diagnostic",
+    "purpose": "initialization_comparison",
     "training": {}
   },
   "arms": [
@@ -111,5 +112,9 @@
       "allocation_wall_limit_seconds": 16200,
       "cleanup_reserve_seconds": 180
     }
+  },
+  "same_run": {
+    "reference_arm_id": "ref_s45",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
   }
 }
