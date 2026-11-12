@@ -1,25 +1,26 @@
 """Throughput matrix for GPTrans-T BondLocal + pair-update norm (12L/256/32/8).
 
 Measures training-step speed only: no checkpoint, no weights saved, no
-validation/test/protected role. Data are training rows of a fixed dataset
-(--data-root) or, without it, synthetic OGB-style graphs (sizes ~ PCQM4Mv2).
+validation/test/protected role. Data are the first --max-shards TRAIN topology shards of the
+full_train_v1 layout (--data-root/ogb-train-full/{manifest.json,store/topology/train/train_shard_*.pt},
+read like VRAMGraphStore: torch.load mmap + slices) or, without --data-root, synthetic OGB-style
+graphs (sizes ~ PCQM4Mv2).
 The step is built here (forward, backward, clip, AdamW) with a tiny lr; the
 model, input layout and loaders are the repository's own.
 
 --vram-resident adds cells where the whole row set lives on the GPU as compact tensors and batches are
 built on the GPU (VRAMGraphStore.build_batch, gptrans branch, imported from the archived production
 script platforms/colab/pcqm_k1_b1024_production/train_full_b1024.py); no DataLoader. Works for both the
-synthetic and the --data-root rows (the store is filled from the in-memory Data list, not from shards).
+synthetic and the --data-root rows (the store is filled from the in-memory Data list).
 """
 import argparse, gc, hashlib, json, os, platform, random, sys, time
 from pathlib import Path
 
 import torch
-from torch.utils.data import Subset
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
-from molgap.family_training_data import DatasetSelection, PassBatchSampler, load_training_data
+from molgap.family_training_data import PassBatchSampler
 from molgap.family_training_device_inputs import DeviceResidentTrain, device_training_stream
 from molgap.family_training_loaders import training_loader_options
 from molgap.gptrans_bond_pair_norm import construct_family_model
@@ -47,6 +48,27 @@ def synthetic(rows, seed=0):
             edge_attr=torch.tensor([[rng.randrange(d) for d in BOND_DIMS] for _ in both]),
             y=torch.tensor([rng.gauss(MEAN, STD)])))
     return out
+
+
+def real_shards(data_root, max_shards, manifest_name="manifest.json"):
+    """First max_shards TRAIN topology shards (manifest order) as a list of Data; mmap + slices like VRAMGraphStore."""
+    base = Path(data_root) / "ogb-train-full"
+    manifest = base / manifest_name
+    raw = manifest.read_bytes()
+    records = [r for r in json.loads(raw)["assets"]["topology"] if r.get("role") == "train"][:max_shards]
+    missing = [r["file"] for r in records if not (base / r["file"]).is_file()]
+    if missing:
+        raise FileNotFoundError("missing shards under %s: %s" % (base, missing[:3]))
+    out = []
+    for r in records:
+        data, slices = torch.load(base / r["file"], map_location="cpu", weights_only=False, mmap=True)
+        nptr, eptr = slices["x"].tolist(), slices["edge_index"].tolist()
+        y = data.y.view(-1).float()
+        for i in range(len(nptr) - 1):
+            out.append(Data(x=data.x[nptr[i]:nptr[i + 1]].long(), edge_index=data.edge_index[:, eptr[i]:eptr[i + 1]].long(),
+                            edge_attr=data.edge_attr[eptr[i]:eptr[i + 1]].long(), y=y[i:i + 1]))
+    return out, {"kind": "full_train_v1-train-shards", "manifest_sha256": hashlib.sha256(raw).hexdigest(),
+                 "shards": [r["file"] for r in records], "shard_sha256": [r["sha256"] for r in records], "rows": len(out)}
 
 
 class Fp32Head(torch.nn.Module):
@@ -177,9 +199,10 @@ def run_cell(dataset, bs, precision, workers, resident, compiled, warmup, steps,
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--data-root", help="dir holding a fixed-dataset manifest; training role only")
+    p.add_argument("--data-root", help="dir containing ogb-train-full/ (full_train_v1 layout); TRAIN shards only")
     p.add_argument("--manifest", default="manifest.json")
-    p.add_argument("--rows", type=int, default=20480, help="training rows used (or synthetic graphs)")
+    p.add_argument("--max-shards", type=int, default=4, help="with --data-root: first N train shards (50k rows each, ~200k at 4)")
+    p.add_argument("--rows", type=int, default=None, help="cap on rows used; synthetic graph count (default 20480)")
     p.add_argument("--batches", type=int, nargs="+", default=[128, 256, 512, 1024, 2048])
     p.add_argument("--precisions", nargs="+", default=["fp32", "tf32", "bf16"])
     p.add_argument("--workers", type=int, nargs="+", default=[1, 2, 4])
@@ -192,12 +215,12 @@ def main():
     device = torch.device("cuda")
     start = time.time()
     if a.data_root:
-        manifest = Path(a.data_root) / a.manifest
-        sha = hashlib.sha256(manifest.read_bytes()).hexdigest()
-        full = load_training_data(Path(a.data_root), DatasetSelection(a.manifest, sha, False)).train
-        dataset, source = Subset(full, range(min(a.rows, len(full)))), {"kind": "fixed-dataset-train", "manifest_sha256": sha, "rows": min(a.rows, len(full))}
+        dataset, source = real_shards(a.data_root, a.max_shards, a.manifest)
+        if a.rows:
+            dataset, source["rows"] = dataset[:a.rows], min(a.rows, len(dataset))
     else:
-        dataset, source = synthetic(a.rows), {"kind": "synthetic", "rows": a.rows, "note": "OGB-style random graphs, N~N(14,3.5)"}
+        rows = a.rows or 20480
+        dataset, source = synthetic(rows), {"kind": "synthetic", "rows": rows, "note": "OGB-style random graphs, N~N(14,3.5)"}
     doc = {"script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "source": source,
            "gpu": torch.cuda.get_device_name(0), "cpu_cores": os.cpu_count(), "torch": torch.__version__,
            "python": platform.python_version(), "warmup_steps": a.warmup, "timed_steps": a.steps,
