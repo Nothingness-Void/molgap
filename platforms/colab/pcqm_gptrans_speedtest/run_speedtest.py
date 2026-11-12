@@ -5,6 +5,11 @@ validation/test/protected role. Data are training rows of a fixed dataset
 (--data-root) or, without it, synthetic OGB-style graphs (sizes ~ PCQM4Mv2).
 The step is built here (forward, backward, clip, AdamW) with a tiny lr; the
 model, input layout and loaders are the repository's own.
+
+--vram-resident adds cells where the whole row set lives on the GPU as compact tensors and batches are
+built on the GPU (VRAMGraphStore.build_batch, gptrans branch, imported from the archived production
+script platforms/colab/pcqm_k1_b1024_production/train_full_b1024.py); no DataLoader. Works for both the
+synthetic and the --data-root rows (the store is filled from the in-memory Data list, not from shards).
 """
 import argparse, gc, hashlib, json, os, platform, random, sys, time
 from pathlib import Path
@@ -64,6 +69,48 @@ class FloatOut(torch.nn.Module):
         return self.inner(value).float()
 
 
+def _production_module():
+    """Import the archived production script by path (it is not a package)."""
+    import importlib.util
+    path = Path(__file__).resolve().parents[1] / "pcqm_k1_b1024_production" / "train_full_b1024.py"
+    spec = importlib.util.spec_from_file_location("train_full_b1024", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def vram_store(dataset, device):
+    """VRAMGraphStore filled from in-memory Data rows (same uint8/int16/uint8 compact layout as shards)."""
+    cls = _production_module().VRAMGraphStore
+    store = object.__new__(cls)  # skip the shard-reading __init__; build_batch only needs these fields
+    items = [dataset[i] for i in range(len(dataset))]
+    store.device, store.need_rwse, store.all_rwse = torch.device(device), False, None
+    store.num_graphs = len(items)
+    n_counts = torch.tensor([d.x.shape[0] for d in items]); e_counts = torch.tensor([d.edge_index.shape[1] for d in items])
+    store.node_ptr_cpu = torch.cat([torch.zeros(1, dtype=torch.int64), n_counts.cumsum(0)])
+    store.edge_ptr_cpu = torch.cat([torch.zeros(1, dtype=torch.int64), e_counts.cumsum(0)])
+    store.all_x = torch.cat([d.x for d in items]).to(torch.uint8).to(device)
+    store.all_edge_index = torch.cat([d.edge_index for d in items], 1).to(torch.int16).to(device)
+    store.all_edge_attr = torch.cat([d.edge_attr for d in items]).to(torch.uint8).to(device)
+    store.all_y = torch.cat([d.y.view(-1) for d in items]).float().to(device)
+    store.node_ptr_gpu, store.edge_ptr_gpu = store.node_ptr_cpu.to(device), store.edge_ptr_cpu.to(device)
+    return store
+
+
+def vram_batches(store, bs, seed=0):
+    """Endless stream of GPU-built batches (per-pass randperm, drop_last), no DataLoader."""
+    rows, epoch = store.num_graphs, 0
+    arange = torch.arange(bs, dtype=torch.int64, device=store.device)
+    while True:
+        gen = torch.Generator(); gen.manual_seed(seed + epoch)
+        order = torch.randperm(rows, generator=gen, dtype=torch.int64)
+        order_gpu = order.to(store.device)
+        for b in range(rows // bs):
+            yield store.build_batch(order[b * bs:(b + 1) * bs], order_gpu[b * bs:(b + 1) * bs], arange, "gptrans")
+        epoch += 1
+
+
 def batches(dataset, bs, workers, resident, seed=0):
     """Endless stream of CPU-collated (or device-resident) training batches."""
     rows, epoch = len(dataset), 0
@@ -79,7 +126,7 @@ def batches(dataset, bs, workers, resident, seed=0):
         epoch += 1
 
 
-def run_cell(dataset, bs, precision, workers, resident, compiled, warmup, steps, device):
+def run_cell(dataset, bs, precision, workers, resident, compiled, warmup, steps, device, vram=False):
     torch.backends.cuda.matmul.allow_tf32 = torch.backends.cudnn.allow_tf32 = precision == "tf32"
     torch.set_float32_matmul_precision("high" if precision == "tf32" else "highest")
     torch.cuda.empty_cache(); torch.cuda.reset_peak_memory_stats()
@@ -91,7 +138,8 @@ def run_cell(dataset, bs, precision, workers, resident, compiled, warmup, steps,
     model.to(device).train()
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5, weight_decay=0.05, foreach=True)
     run = torch.compile(model, dynamic=True) if compiled else model
-    stream = batches(dataset, bs, workers, resident)
+    store = vram_store(dataset, device) if vram else None
+    stream = vram_batches(store, bs) if vram else batches(dataset, bs, workers, resident)
     wait = total = 0.0
     nodes, padding, max_n = [], [], 0
     begin = time.perf_counter()
@@ -99,7 +147,7 @@ def run_cell(dataset, bs, precision, workers, resident, compiled, warmup, steps,
         t0 = time.perf_counter()
         cpu = next(stream)
         t1 = time.perf_counter()
-        prepared = prepare_layout(cpu).to(device, *MODEL_FIELDS, "y", non_blocking=True)
+        prepared = cpu if vram else prepare_layout(cpu).to(device, *MODEL_FIELDS, "y", non_blocking=True)
         model._execution_layout = prepared.execution_layout
         with torch.autocast("cuda", dtype=torch.bfloat16, enabled=precision == "bf16"):
             out = run(prepared.x, prepared.edge_index, prepared.edge_attr, prepared.batch, None).view(-1)
@@ -137,6 +185,7 @@ def main():
     p.add_argument("--workers", type=int, nargs="+", default=[1, 2, 4])
     p.add_argument("--warmup", type=int, default=50)
     p.add_argument("--steps", type=int, default=200)
+    p.add_argument("--vram-resident", action="store_true", help="add GPU-resident-store / GPU-built-batch cells (loader=vram_resident) per batch x precision")
     p.add_argument("--no-switches", action="store_true", help="skip resident-input and torch.compile cells")
     p.add_argument("--out", default="speedtest_manifest.json")
     a = p.parse_args()
@@ -155,11 +204,12 @@ def main():
            "bf16_note": "autocast; readout runs FP32 (Fp32Head); bond messages are cast to FP32 before the scatter-add; LayerNorm/softmax/loss are FP32 under autocast policy",
            "cells": [], "wall_seconds": None}
 
-    def cell(bs, precision, workers, resident=False, compiled=False):
-        spec = {"batch": bs, "precision": precision, "workers": 0 if resident else workers,
+    def cell(bs, precision, workers, resident=False, compiled=False, vram=False):
+        loader = "vram_resident" if vram else "device_resident" if resident else "dataloader"
+        spec = {"loader": loader, "batch": bs, "precision": precision, "workers": 0 if resident or vram else workers,
                 "device_resident_inputs": resident, "torch_compile": compiled}
         try:
-            spec.update(status="ok", **run_cell(dataset, bs, precision, workers, resident, compiled, a.warmup, a.steps, device))
+            spec.update(status="ok", **run_cell(dataset, bs, precision, workers, resident, compiled, a.warmup, a.steps, device, vram))
         except torch.OutOfMemoryError:
             spec.update(status="oom")
         except Exception as error:  # record and keep going; one bad cell must not end the matrix
@@ -176,8 +226,10 @@ def main():
         for precision in a.precisions:
             for workers in a.workers:
                 cell(bs, precision, workers)
+            if a.vram_resident:
+                cell(bs, precision, 0, vram=True)
     if not a.no_switches:
-        ok = [c for c in doc["cells"] if c["status"] == "ok" and c["batch"] == 1024 and c["precision"] == "fp32"]
+        ok = [c for c in doc["cells"] if c["status"] == "ok" and c["loader"] == "dataloader" and c["batch"] == 1024 and c["precision"] == "fp32"]
         best = max(ok, key=lambda c: c["graphs_per_s"])["workers"] if ok else a.workers[0]
         cell(1024, "fp32", best, resident=True)
         cell(1024, "fp32", best, compiled=True)
