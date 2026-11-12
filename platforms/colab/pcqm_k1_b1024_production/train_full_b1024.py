@@ -37,7 +37,11 @@ MANIFEST_SHA = "7d358a679d299bd5de6c5822e42dcef34b0e0b9fa9598c684709509c0b94021d
 BATCH_SIZE = 1024
 LR_MULT = 6.0
 BASE_LR = 4e-4  # the original recipe lr; the effective lr is BASE_LR * LR_MULT = 2.4e-3 for both optimizer groups
-GPTRANS_BATCH_SIZE = 128  # the gptrans_pairnorm arm is NOT validated for large batch and stays at the original 128
+GPTRANS_BATCH_SIZE = 128  # default for the gptrans_pairnorm arm (CLI --gptrans-batch-size); only the 500K precision-control runs change it
+GPTRANS_INIT_SHA = "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"  # tensor-state sha of gptrans_init.pt (seed 42)
+# train-row mean/std of rows 0:500000 (frozen contract of the 500K GPT-T pairnorm init-noise study); used when the store holds exactly 500K rows
+GPTRANS_500K_STATS = (5.413434769952119, 1.176728647311213)
+SHARD_ROWS = 50_000
 TRAIN_ROWS = 3378606
 STEPS_PER_EPOCH = TRAIN_ROWS // BATCH_SIZE  # 3299 (drop_last, as in _PassIterator)
 TOTAL_EPOCHS = 60
@@ -106,7 +110,7 @@ def compare_message(epoch: int, new_ev: float, old: dict[int, float]) -> tuple[s
     return info, warn
 
 
-def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, recipe_lr: float, lr_mult: float) -> None:
+def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, recipe_lr: float, lr_mult: float, extra: dict | None = None) -> None:
     """Refuse a checkpoint produced with a different batch size or lr. Raises RuntimeError with a clear message."""
     problems = []
     if sidecar is None:
@@ -116,6 +120,9 @@ def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, re
             problems.append(f"batch size: checkpoint run used {sidecar.get('batch_size')}, CLI asks for {recipe_batch}")
         if not math.isclose(float(sidecar.get("learning_rate", -1.0)), recipe_lr, rel_tol=1e-9):
             problems.append(f"learning rate: checkpoint run used {sidecar.get('learning_rate')}, CLI asks for {recipe_lr} (lr-mult {lr_mult})")
+    for key, want in (extra or {}).items():  # GPT-T knobs; sidecars written before they existed lack the key and are not checked
+        if sidecar is not None and key in sidecar and sidecar[key] != want:
+            problems.append(f"{key}: checkpoint run used {sidecar[key]}, CLI asks for {want}")
     step, samples = saved.get("optimizer_step"), saved.get("sample_presentations")
     if isinstance(step, int) and isinstance(samples, int) and samples != step * recipe_batch:
         problems.append(f"sample_presentations {samples} != optimizer_step {step} x batch {recipe_batch} (checkpoint was written with another batch size)")
@@ -127,7 +134,9 @@ def check_resume_compat(saved: dict, sidecar: dict | None, recipe_batch: int, re
                            ". Use the same --batch-size/--lr-mult as the original run, or a new run directory.")
 
 
-def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT) -> tuple[FamilyRecipe, str]:
+def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT, *,
+                gptrans_batch_size: int = GPTRANS_BATCH_SIZE, gptrans_lr_mult: float = 1.0, gptrans_ema_decay: float = 0.999,
+                gptrans_init_sha: str = GPTRANS_INIT_SHA, gptrans_stats: tuple[float, float] | None = None) -> tuple[FamilyRecipe, str]:
     # CHANGED: the k1_muon recipe is first built exactly as in the original (valid batch 128), then re-parameterised.
     steps_per_epoch = total_rows // 128
     total_steps = steps_per_epoch * TOTAL_EPOCHS
@@ -170,33 +179,37 @@ def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_
             object.__setattr__(recipe, "batch_size", batch_size)
         return recipe, "k1_init.pt"
     if arm == "gptrans_pairnorm":
-        # unchanged, batch 128 (not validated for large batch)
-        steps_per_epoch = total_rows // GPTRANS_BATCH_SIZE
+        # defaults are the original batch-128 recipe; a larger batch / other EMA decay is applied after validation (as for K1)
+        steps_per_epoch = total_rows // gptrans_batch_size
         total_steps = steps_per_epoch * TOTAL_EPOCHS
-        return (
-            FamilyRecipe(
-                family="gptrans_t",
-                mode="degree_bond_local_pair_update_norm_ema999",
-                seed=42,
-                initialization_sha256="a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
-                dataset=dataset,
-                train_rows=total_rows,
-                development_rows=0,
-                optimizer_steps=total_steps,
-                learning_rate=1e-3,
-                weight_decay=0.05,
-                schedule=ScheduleSpec("warmup_cosine_epoch", TOTAL_EPOCHS, minimum_lr=1e-6, warmup_units=4),
-                selection="final-ema",
-                sampler="torch-pass-randperm",
-                checkpoint_every=steps_per_epoch,
-                target_mean_eV=5.689459009120812,
-                target_std_eV=1.1621397733722936,
-                ema_decay=0.999,
-                resume_chunks=False,
-                optimizer="adamw",
-            ),
-            "gptrans_init.pt",
+        mean_ev, std_ev = gptrans_stats or (5.689459009120812, 1.1621397733722936)
+        recipe = FamilyRecipe(
+            family="gptrans_t",
+            mode="degree_bond_local_pair_update_norm_ema999",
+            seed=42,
+            initialization_sha256=gptrans_init_sha,
+            dataset=dataset,
+            train_rows=total_rows,
+            development_rows=0,
+            optimizer_steps=total_steps,
+            learning_rate=1e-3 * gptrans_lr_mult,
+            weight_decay=0.05,
+            schedule=ScheduleSpec("warmup_cosine_epoch", TOTAL_EPOCHS, minimum_lr=1e-6, warmup_units=4),
+            selection="final-ema",
+            sampler="torch-pass-randperm",
+            checkpoint_every=steps_per_epoch,
+            target_mean_eV=mean_ev,
+            target_std_eV=std_ev,
+            ema_decay=0.999,
+            resume_chunks=False,
+            optimizer="adamw",
         )
+        # FamilyRecipe validation pins batch 128 and ema_decay in {0.999, 0.9999}; set both on the frozen dataclass afterwards.
+        if gptrans_batch_size != 128:
+            object.__setattr__(recipe, "batch_size", gptrans_batch_size)
+        if gptrans_ema_decay != 0.999:
+            object.__setattr__(recipe, "ema_decay", gptrans_ema_decay)
+        return recipe, "gptrans_init.pt"
     raise ValueError(f"Unknown arm: {arm}")
 
 
@@ -261,13 +274,15 @@ class _DataStub:
 class VRAMGraphStore:
     """Stores all 3.38M graphs contiguously in A100 40GB VRAM (~4.3 GB) for <0.1ms zero-sync batching."""
 
-    def __init__(self, data_root: Path, *, need_rwse: bool, device: str = "cuda"):
+    def __init__(self, data_root: Path, *, need_rwse: bool, device: str = "cuda", max_shards: int | None = None):
         t0 = time.perf_counter()
         self.device = torch.device(device)
         self.need_rwse = need_rwse
         manifest_path = data_root / "ogb-train-full/manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         records = [r for r in manifest["assets"]["topology"] if r.get("role") == "train"]
+        if max_shards is not None:
+            records = records[:max_shards]  # first N train shards in manifest order (as the speedtest)
 
         # Pass 1: fast header scan via mmap (~0.08s) to pre-allocate exact contiguous GPU buffers
         shard_paths = [manifest_path.parent / r["file"] for r in records]
@@ -478,7 +493,9 @@ def make_vram_loaders(recipe: FamilyRecipe, store: VRAMGraphStore) -> FamilyLoad
 
 def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wall_seconds: float, device: str = "cuda",
             batch_size: int = BATCH_SIZE, lr_mult: float = LR_MULT, use_compile: bool = False,
-            compare_log: Path | None = None) -> str:
+            compare_log: Path | None = None, gptrans_batch_size: int = GPTRANS_BATCH_SIZE, gptrans_lr_mult: float = 1.0,
+            gptrans_ema_decay: float = 0.999, init_file: str | None = None, init_sha: str = GPTRANS_INIT_SHA,
+            max_shards: int | None = None) -> str:
     out_dir = run_root / arm
     out_dir.mkdir(parents=True, exist_ok=True)
     done_file = out_dir / "training_complete.json"
@@ -487,11 +504,18 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         return "COMPLETE"
 
     configure_a100_fast_mode(42)
-    store = VRAMGraphStore(data_root, need_rwse=(arm == "k1_muon"), device=device)
+    store = VRAMGraphStore(data_root, need_rwse=(arm == "k1_muon"), device=device, max_shards=max_shards)
+    if max_shards is not None:
+        assert store.num_graphs == SHARD_ROWS * max_shards, (store.num_graphs, max_shards)
     # CHANGED: arm-specific batch size; steps/epoch and total steps derived from the store (drop_last)
-    arm_batch = batch_size if arm == "k1_muon" else GPTRANS_BATCH_SIZE
-    arm_lr_mult = lr_mult if arm == "k1_muon" else 1.0
-    recipe, init_name = make_recipe(arm, total_rows=store.num_graphs, batch_size=arm_batch, lr_mult=arm_lr_mult)
+    arm_batch = batch_size if arm == "k1_muon" else gptrans_batch_size
+    arm_lr_mult = lr_mult if arm == "k1_muon" else gptrans_lr_mult
+    recipe, init_name = make_recipe(arm, total_rows=store.num_graphs, batch_size=arm_batch, lr_mult=arm_lr_mult,
+                                    gptrans_batch_size=gptrans_batch_size, gptrans_lr_mult=gptrans_lr_mult,
+                                    gptrans_ema_decay=gptrans_ema_decay, gptrans_init_sha=init_sha,
+                                    gptrans_stats=GPTRANS_500K_STATS if store.num_graphs == 500_000 else None)
+    if arm == "gptrans_pairnorm" and init_file:
+        init_name = init_file
     steps_per_epoch = steps_per_epoch_for(store.num_graphs, recipe.batch_size)
     total_steps = steps_per_epoch * TOTAL_EPOCHS
     assert recipe.optimizer_steps == total_steps, (recipe.optimizer_steps, total_steps)
@@ -499,7 +523,19 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     print(f"[{arm}] batch={recipe.batch_size} lr={recipe.learning_rate:.3e} (x{arm_lr_mult:g} on both groups) "
           f"steps/epoch={steps_per_epoch:,} total_steps={total_steps:,} compile={use_compile}", flush=True)
 
+    if arm == "gptrans_pairnorm":
+        # FamilyKernel.step enters a context that demands deterministic algorithms, which fast mode turns off (K1 never enters it).
+        # Its only effect is the uninitialised-memory fill, moot without deterministic mode, so a no-op stands in for it here.
+        import contextlib
+        import molgap.training_reproducibility as _repro
+        _repro.deterministic_memory_fill_context = lambda *, enabled: contextlib.nullcontext()
+    want_ema = recipe.ema_decay
+    if want_ema not in (0.999, 0.9999):  # EMA primitives accept only reviewed decays: build with 0.999, then install the requested one
+        object.__setattr__(recipe, "ema_decay", 0.999)
     kernel = FamilyKernel(recipe, init_path, device=device)
+    if kernel.ema is not None and want_ema != kernel.ema.decay:
+        object.__setattr__(recipe, "ema_decay", want_ema)
+        kernel.ema.decay = want_ema
     if use_compile:
         if arm != "k1_muon":
             raise SystemExit("--compile is only offered for the k1_muon arm")
@@ -512,6 +548,11 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     config_path = out_dir / "run_config.json"
     this_config = {"arm": arm, "batch_size": recipe.batch_size, "lr_mult": arm_lr_mult, "learning_rate": recipe.learning_rate,
                    "total_steps": total_steps, "steps_per_epoch": steps_per_epoch, "compile": bool(use_compile)}
+    gptrans_extra = {}
+    if arm == "gptrans_pairnorm":  # settings the recipe validator cannot express (bypassed or derived) are recorded and resume-checked
+        gptrans_extra = {"ema_decay": recipe.ema_decay, "init_file": init_name, "init_sha": init_sha, "max_shards": max_shards,
+                         "train_rows": store.num_graphs, "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV}
+        this_config.update(gptrans_extra)
     old_log = load_compare_log(compare_log) if arm == "k1_muon" else {}
     if old_log:
         print(f"[{arm}] comparing per-epoch train MAE with the OLD run ({len(old_log)} epochs read from {compare_log})", flush=True)
@@ -609,7 +650,7 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         print(f"[{arm}] Resuming from checkpoint: {ckpt_path}", flush=True)
         saved = torch.load(ckpt_path, map_location="cpu", weights_only=True)
         sidecar = json.loads(config_path.read_text(encoding="utf-8")) if config_path.is_file() else None
-        check_resume_compat(saved, sidecar, recipe.batch_size, recipe.learning_rate, arm_lr_mult)  # CHANGED: refuse mismatches
+        check_resume_compat(saved, sidecar, recipe.batch_size, recipe.learning_rate, arm_lr_mult, gptrans_extra)  # CHANGED: refuse mismatches
         if isinstance(saved.get("cursor"), dict):
             saved["cursor"]["recipe_identity"] = recipe.identity
         session.load_state_dict(saved)
@@ -694,6 +735,12 @@ def build_parser() -> argparse.ArgumentParser:
     # CHANGED: production knobs
     parser.add_argument("--batch-size", type=int, default=BATCH_SIZE, help="physical batch for the k1_muon arm (default 1024)")
     parser.add_argument("--lr-mult", type=float, default=LR_MULT, help="multiplier on the base lr 4e-4 for BOTH optimizer groups (default 6 -> 2.4e-3)")
+    parser.add_argument("--gptrans-batch-size", type=int, default=GPTRANS_BATCH_SIZE, help="physical batch for the gptrans_pairnorm arm (default 128)")
+    parser.add_argument("--gptrans-lr-mult", type=float, default=1.0, help="multiplier on the gptrans base lr 1e-3 (default 1)")
+    parser.add_argument("--gptrans-ema-decay", type=float, default=0.999, help="gptrans EMA decay per optimizer step (default 0.999)")
+    parser.add_argument("--init-file", default=None, help="gptrans initial state file name inside --code-dir (default gptrans_init.pt)")
+    parser.add_argument("--init-sha", default=GPTRANS_INIT_SHA, help="tensor-state sha256 of --init-file (default: the seed-42 gptrans_init.pt)")
+    parser.add_argument("--max-shards", type=int, default=None, help="use only the first N train shards (50,000 rows each; 10 -> 500K rows)")
     parser.add_argument("--compile", action="store_true", help="torch.compile(dynamic=True) on the K1 model - accuracy NOT validated")
     parser.add_argument("--compare-log", type=Path, default=None, help="OLD run train_log.jsonl (read-only) for the per-epoch comparison")
     return parser
@@ -702,8 +749,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None):
     parser = build_parser()
     args = parser.parse_args(argv)
-    if args.batch_size < 1 or args.lr_mult <= 0:
-        parser.error("--batch-size must be >= 1 and --lr-mult must be > 0")
+    if min(args.batch_size, args.gptrans_batch_size) < 1 or min(args.lr_mult, args.gptrans_lr_mult) <= 0 or not 0 < args.gptrans_ema_decay < 1:
+        parser.error("batch sizes must be >= 1, lr multipliers > 0 and --gptrans-ema-decay in (0, 1)")
     guard_run_root(args.run_root)
 
     arms = ("k1_muon", "gptrans_pairnorm") if args.arm == "both" else (args.arm,)
@@ -724,6 +771,12 @@ def main(argv=None):
             lr_mult=args.lr_mult,
             use_compile=args.compile,
             compare_log=args.compare_log,
+            gptrans_batch_size=args.gptrans_batch_size,
+            gptrans_lr_mult=args.gptrans_lr_mult,
+            gptrans_ema_decay=args.gptrans_ema_decay,
+            init_file=args.init_file,
+            init_sha=args.init_sha,
+            max_shards=args.max_shards,
         )
         if status == "PAUSED":
             break
