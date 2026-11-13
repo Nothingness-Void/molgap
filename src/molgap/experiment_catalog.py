@@ -104,6 +104,12 @@ ADDONS = MappingProxyType({
         ("3",), execution_modes=(("3", "composed"),),
         apply_hook="molgap.k1_pair_token_slot:apply_addon",
         extra_source_files=("src/molgap/k1_pair_token.py",)),
+    ("k1_nested_subgraph", "1"): AddonContract("neural_atom_k1",
+        "slot-nested-subgraph", "molgap.k1_nested_subgraph",
+        tuple(AddonConfigField(key, value=value) for key, value in (
+            ("name", "nested_subgraph"), ("layer", 4), ("seed", 42))),
+        ("3",), execution_modes=(("3", "composed"),),
+        apply_hook="molgap.k1_nested_subgraph:apply_addon"),
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
         (AddonConfigField("layer", value=6), AddonConfigField("latent_channels", value=64),

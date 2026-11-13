@@ -372,3 +372,30 @@ def test_shared_graph_build_seals_only_after_complete_composition(monkeypatch):
 def test_invalid_api_arguments_raise(options, error):
     with pytest.raises(error):
         run_sandbox(TinyGraph, **options)
+
+
+def test_k1_nested_subgraph_sandbox_two_step_grads_and_muon_groups():
+    from pathlib import Path
+    from molgap.experiment_execution import TRAINING_ADAPTERS, build_addon_declaration
+    from molgap.k1_muon import MuonAdamW, parameter_groups
+    from molgap.qm9_neural_atom import make_encoder
+    from molgap.shared_model_adapter import apply_reviewed_addons
+    addon = build_addon_declaration(("neural_atom_k1", "3"), "k1_nested_subgraph",
+        repo_root=Path(__file__).resolve().parents[1])
+    report = run_family_sandbox("neural_atom_k1", addons=[addon])
+    assert report["status"] == "PASSED", report
+    model = apply_reviewed_addons(TRAINING_ADAPTERS[("neural_atom_k1", "3")], {"addons": [addon]},
+        make_encoder("neural_atom_k1"))
+    model._molgap_substrate.seal()
+    groups = parameter_groups(model, 1e-5)
+    assert "_molgap_addons.nested_subgraph.return_projection.weight" in groups[0]["param_names"]
+    assert "_molgap_addons.nested_subgraph.layers.0.src_proj.weight" in groups[0]["param_names"]
+    opt, batch = MuonAdamW(groups, lr=4e-4, weight_decay=1e-5), synthetic_batch()
+    for step in range(2):
+        opt.zero_grad()
+        owning_forward(model, batch).sub(batch.y.view(-1)).abs().mean().backward()
+        if step == 1:
+            addon_mod = model._molgap_addons["nested_subgraph"]
+            assert addon_mod.layers[0].src_proj.weight.grad.abs().sum() > 0
+            assert addon_mod.node_proj.weight.grad.abs().sum() > 0
+        opt.step()
