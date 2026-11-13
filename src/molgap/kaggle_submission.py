@@ -515,6 +515,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             import requests
             http_session = requests.Session()
         http_session.auth = (account, values["key"])
+        # Kaggle answers 404 to the default requests User-Agent on quota, download and kernel endpoints.
+        if hasattr(http_session, "headers"):
+            http_session.headers["User-Agent"] = "kaggle-api/molgap"
         # Recover a lost response only from the actual matching physical source.
         if state["phase"] in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
             remote = _kernel_source(api, ref)
