@@ -372,3 +372,36 @@ def test_shared_graph_build_seals_only_after_complete_composition(monkeypatch):
 def test_invalid_api_arguments_raise(options, error):
     with pytest.raises(error):
         run_sandbox(TinyGraph, **options)
+
+
+def test_gptrans_tokengt_sandbox_and_permutation_invariance():
+    from molgap.family_training_policy import mode_policy
+    from molgap.fast_sandbox import _family_forward
+    from molgap.gptrans_execution_backend import bind_model_layout
+    from molgap.gptrans_tokengt import TokenGTGPTrans
+    prev = torch.are_deterministic_algorithms_enabled()
+    torch.use_deterministic_algorithms(True, warn_only=False)
+    try:
+        construct = mode_policy("gptrans_t", "tokengt_ema999").construct
+        report = run_sandbox(lambda: bind_model_layout(construct(None, None)), forward=_family_forward("gptrans_t"))
+        assert report["status"] == "PASSED", report
+        assert not report["checks"]["backbone_gradients"]["missing_gradients"]
+        model = TokenGTGPTrans().eval()
+        batch = synthetic_batch()
+        x = torch.cat((batch.x, (torch.arange(6) % 2).unsqueeze(1).repeat(1, 9)))
+        cyc = torch.tensor([[0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 0], [1, 0, 2, 1, 3, 2, 4, 3, 5, 4, 0, 5]]) + 5
+        ei = torch.cat((batch.edge_index, cyc), dim=1)
+        ea = torch.cat((batch.edge_attr, torch.ones((12, 3), dtype=torch.long)))
+        b = torch.cat((batch.batch, torch.full((6,), 2, dtype=torch.long)))
+        perm = torch.tensor([2, 0, 1, 4, 3, 8, 10, 5, 7, 9, 6])
+        inv = torch.argsort(perm)
+        e_perm = torch.randperm(ei.shape[1])
+        flip = (torch.arange(ei.shape[1]) % 2) == 0
+        ei_p = inv[ei[:, e_perm]]
+        ei_p[:, flip] = ei_p[:, flip].flip(0)
+        with torch.no_grad():
+            y0 = model(x, ei, ea, b)
+            y1 = model(x[perm], ei_p, ea[e_perm], b[perm])
+        assert (y0 - y1).abs().max().item() < 1e-5
+    finally:
+        torch.use_deterministic_algorithms(prev, warn_only=False)
