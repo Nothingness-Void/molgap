@@ -45,7 +45,7 @@ def states():
     INIT.mkdir(parents=True, exist_ok=True)
     assert state_dict_sha256(build(42)) == "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"
     out = {}
-    for seed in (43, 44, 45, 46, 47, 48):
+    for seed in (43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54):
         ref = build(seed)
         out[f"ref_s{seed}"] = save(ref, INIT / f"ref_s{seed}.pt")
         out[f"mh_s{seed}"] = out[f"ref_s{seed}"]  # same initial state; the addon mounts after load
@@ -80,11 +80,11 @@ def arm_files(folder, arm, template_recipe, template_decl, state, run, candidate
 
 def main():
     st = states()
-    for seed in (43, 44):
+    for seed in (43, 44, 50, 51, 52, 53, 54):  # 50-54: P1 paired-noise calibration, E1 recipe unchanged
         run = f"pcqm-gptrans-multihop-edge-20261112-s{seed}"
         for role in ("ref", "mh"):
             arm = f"{role}_s{seed}"
-            arm_files(E / "e1" / arm, arm, NORM / "recipe.json", NORM / "data_declaration.json", st[arm], run,
+            arm_files(E / ("e1" if seed < 50 else "p1") / arm, arm, NORM / "recipe.json", NORM / "data_declaration.json", st[arm], run,
                       role == "mh")
     for arm, seed in (("ref_s47", 47), ("mh_s47", 47), ("ref_s48", 48), ("mh_s48", 48)):
         arm_files(E / "e2" / arm, arm, NOISE / "init_s43" / "recipe.json", NOISE / "init_s43" / "data_declaration.json",

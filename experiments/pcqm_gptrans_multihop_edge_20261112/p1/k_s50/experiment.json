@@ -1,0 +1,134 @@
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "pcqm_gptrans_multihop_edge_20261112",
+  "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-s50",
+  "attempt_id": "v1",
+  "machine_profile": "D:/molgap-machine-profile.json",
+  "timestamp": "2026-11-13T06:30:00Z",
+  "question": {
+    "policy_id": "pcqm-gptrans-multihop-edge-20261112-p1",
+    "action": "RUN_PAIRED_100K",
+    "question": "Paired-noise calibration P1: does sharing one frozen init between the arms of a pair cancel GPT-T init noise at 100K? One more E1-identical pair (ref + multi-hop edge candidate) with a fresh init.",
+    "deficiency": "Our GPT-T adds bond embeddings only to directly bonded pairs; pairs at hop distance >= 2 see only a distance embedding, while official GPTrans also injects the ordered path bonds (multi_hop_max_dist=20).",
+    "changed_mechanism": "shortest-path-ordered-bond-encoding-with-position-specific-mixing",
+    "supporting_evidence": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "alternatives": [
+      "BondLocal and 12 pair-propagation layers already recover path content",
+      "Distance embedding is sufficient for PCQM4Mv2",
+      "Any gain is below initialization noise"
+    ],
+    "closed_families": [
+      "pcqm-k1-hop-shell-100k",
+      "gptrans-t-local-bias-rwse16-local-edge"
+    ],
+    "positive_decision": "Descriptive calibration only (protocol Amendment 4): S_pair and S_ref are read after all five pairs; no verdict on multi-hop at 100K.",
+    "negative_decision": "No P1 outcome changes the E1 verdict or reopens multi-hop at 100K; a failed kernel is dropped, not replaced.",
+    "reference_ids": []
+  },
+  "profile": {
+    "owner": "desktop",
+    "track": "B",
+    "platform": "kaggle",
+    "hardware": "Tesla T4x2 FP32/noTF32, one arm per device",
+    "estimated_device_hours": 7.0,
+    "estimated_wall_hours": 3.5,
+    "cheapest_falsifier": "Five E1-identical 100K pairs (inits 50-54); S_pair versus sqrt(2)*S_ref per protocol Amendment 4."
+  },
+  "authority": {
+    "format": "molgap-execution-authority-v1",
+    "user_authorized": true,
+    "account": "kaseichou",
+    "arms": [
+      "ref_s50",
+      "mh_s50"
+    ],
+    "seeds": [
+      42
+    ],
+    "same_run_reference_arm_id": "ref_s50",
+    "allocated_t4_hours_ceiling": 7.0,
+    "user_notebook_wall_ceiling_seconds": 12600,
+    "allocation_wall_limit_seconds": 12600,
+    "cleanup_reserve_seconds": 180,
+    "development_role_label_use": true,
+    "protected_roles_authorized": [],
+    "authority": "User authorized Kaggle experiment submission before the 2026-11-14 00:00 UTC quota reset without further approval (relayed 2026-11-13); protocol Amendment 4.",
+    "scope": "One T4x2 session, two fresh 100K 60-pass arms, train/development only; no continuation/500K/full/adoption or protected roles."
+  },
+  "seeds": [
+    42
+  ],
+  "shared": {
+    "model": {
+      "family": "gptrans_t",
+      "version": "2",
+      "addons": [
+        "gptrans_degree_bond_local_pair_update_norm"
+      ]
+    },
+    "purpose": "architecture_comparison",
+    "training": {}
+  },
+  "arms": [
+    {
+      "arm_id": "ref_s50",
+      "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/p1/ref_s50/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/p1/ref_s50/data_declaration.json",
+        "arm_id": "ref_s50"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-multihop-edge-20261112/ref_s50.pt"
+    },
+    {
+      "arm_id": "mh_s50",
+      "recipe_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/p1/mh_s50/recipe.json",
+      "data_ref": {
+        "spec_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/p1/mh_s50/data_declaration.json",
+        "arm_id": "mh_s50"
+      },
+      "initial_state_ref": "D:/molgap-artifacts/initializations/gptrans-multihop-edge-20261112/ref_s50.pt",
+      "model": {
+        "family": "gptrans_t",
+        "version": "2",
+        "addons": [
+          "gptrans_degree_bond_local_pair_update_norm_multihop_edge"
+        ]
+      }
+    }
+  ],
+  "same_run": {
+    "reference_arm_id": "ref_s50",
+    "target_manifest_ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json"
+  },
+  "role_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/protocol.md",
+  "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision.md",
+  "monitor_paths": [
+    "experiments/pcqm_gptrans_multihop_edge_20261112/STATUS.md"
+  ],
+  "platform": {
+    "platform": {
+      "name": "kaggle",
+      "accelerator": "NvidiaTeslaT4",
+      "device_count": 2,
+      "cpu_cores": 4,
+      "memory_gib": 29,
+      "atomic_checkpoints": true,
+      "retrievable_chunks": true
+    },
+    "kaggle": {
+      "account": "kaseichou",
+      "kernel": "kaseichou/molgap-gptrans-multihop-edge-p1-s50",
+      "title": "MolGap GPTrans MultiHop Edge P1 S50",
+      "datasets": [
+        "kaseichou/gptrans-multihop-edge-p1-s50-src",
+        "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "source_dataset": "kaseichou/gptrans-multihop-edge-p1-s50-src",
+      "accelerator": "NvidiaTeslaT4",
+      "allocation_wall_limit_seconds": 12600,
+      "cleanup_reserve_seconds": 180
+    }
+  }
+}
