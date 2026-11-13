@@ -41,6 +41,9 @@ GPTRANS_BATCH_SIZE = 128  # default for the gptrans_pairnorm arm (CLI --gptrans-
 GPTRANS_INIT_SHA = "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"  # tensor-state sha of gptrans_init.pt (seed 42)
 # train-row mean/std of rows 0:500000 (frozen contract of the 500K GPT-T pairnorm init-noise study); used when the store holds exactly 500K rows
 GPTRANS_500K_STATS = (5.413434769952119, 1.176728647311213)
+# train-row mean/std of rows 0:3250000 (tail_holdout_v1 excluded: --max-shards 65); used when the store holds exactly 3.25M rows
+MINUS_TAIL_STATS = (5.69484785548952, 1.1609073178422544)
+SNAPSHOT_EVERY = 3  # passes between snapshots/pass_NNN.pt (live + EMA state, for offline tail scoring; curves only, no cherry-picking)
 SHARD_ROWS = 50_000
 TRAIN_ROWS = 3378606
 STEPS_PER_EPOCH = TRAIN_ROWS // BATCH_SIZE  # 3299 (drop_last, as in _PassIterator)
@@ -157,8 +160,8 @@ def make_recipe(arm: str, total_rows: int = TRAIN_ROWS, batch_size: int = BATCH_
             selection="final-live",
             sampler="torch-pass-randperm",
             checkpoint_every=steps_per_epoch,
-            target_mean_eV=5.689458847045898,
-            target_std_eV=1.1621397733688354,
+            target_mean_eV=(gptrans_stats or (5.689458847045898, 1.1621397733688354))[0],
+            target_std_eV=(gptrans_stats or (5.689458847045898, 1.1621397733688354))[1],
             ema_decay=0.999,
             resume_chunks=False,
             optimizer="k1-muon-batched-adamw-fp32-v1",
@@ -513,7 +516,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     recipe, init_name = make_recipe(arm, total_rows=store.num_graphs, batch_size=arm_batch, lr_mult=arm_lr_mult,
                                     gptrans_batch_size=gptrans_batch_size, gptrans_lr_mult=gptrans_lr_mult,
                                     gptrans_ema_decay=gptrans_ema_decay, gptrans_init_sha=init_sha,
-                                    gptrans_stats=GPTRANS_500K_STATS if store.num_graphs == 500_000 else None)
+                                    gptrans_stats=(GPTRANS_500K_STATS if store.num_graphs == 500_000
+                                                   else MINUS_TAIL_STATS if store.num_graphs == 3_250_000 else None))
     if arm == "gptrans_pairnorm" and init_file:
         init_name = init_file
     steps_per_epoch = steps_per_epoch_for(store.num_graphs, recipe.batch_size)
@@ -559,6 +563,7 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     t_start = time.perf_counter()
     step_t0 = [time.perf_counter()]
     step_n0 = [0]
+    pass_t0 = [time.perf_counter()]
 
     def on_selected(progress, weights, state, evaluation):
         atomic_torch_save(
@@ -592,7 +597,31 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         ev_mae = norm_mae * recipe.target_std_eV
         lr = metrics["learning_rates_used"][0] if metrics.get("learning_rates_used") else recipe.learning_rate
         elapsed = time.perf_counter() - t_start
+        now = time.perf_counter()
+        pass_sec = now - pass_t0[0]
+        pass_t0[0] = now
+        with torch.no_grad():
+            live_norm = float(sum(p.detach().float().pow(2).sum() for p in kernel.model.parameters()).sqrt())
+            nonfinite = int(sum((~torch.isfinite(p.detach())).sum() for p in kernel.model.parameters()))
+        if kernel.ema is not None:
+            with torch.no_grad():
+                ema_norm = float(sum(v.float().pow(2).sum() for v in kernel.ema.state_dict().values() if torch.is_floating_point(v)).sqrt())
+        else:
+            ema_norm = None
+        if progress.pass_index % SNAPSHOT_EVERY == 0:
+            snap_dir = out_dir / "snapshots"
+            snap_dir.mkdir(exist_ok=True)
+            atomic_torch_save(snap_dir / f"pass_{progress.pass_index:03d}.pt", {
+                "arm": arm, "epoch": progress.pass_index, "optimizer_step": progress.optimizer_step,
+                "live": {k: v.detach().cpu() for k, v in kernel.model.state_dict().items()},
+                "ema": {k: v.detach().cpu() for k, v in kernel.ema.state_dict().items()} if kernel.ema is not None else None})
         record = {
+            "pass_sec": round(pass_sec, 1),
+            "samples_per_sec": round(steps_per_epoch * recipe.batch_size / max(pass_sec, 1e-6), 1),
+            "live_param_norm": round(live_norm, 4),
+            "ema_param_norm": None if ema_norm is None else round(ema_norm, 4),
+            "nonfinite_params": nonfinite,
+            "peak_vram_gb": round(torch.cuda.max_memory_allocated() / 1024 ** 3, 2) if torch.cuda.is_available() else None,
             "arm": arm,
             "epoch": progress.pass_index,
             "optimizer_step": progress.optimizer_step,
