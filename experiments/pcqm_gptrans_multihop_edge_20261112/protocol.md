@@ -151,3 +151,18 @@ Criterion: D = max - min over the four reference arms `ref_s43`, `ref_s44` (E1) 
 D > 1.85 meV means two E1 pairs lack power for 3.7 meV and the E1 conclusion carries a confidence note.
 N1 never changes the E1 gate or its outcome. Cross-job runtime differences are not controlled; N1 uses the same recipe and data.
 Both arms are references, so N1 has no same-run candidate comparison.
+
+### Amendment 3 (2026-11-13, written before any E2 metric was read by the adjudicator)
+
+E2 kernels A and B stopped on their own frozen allocation ceiling (STOP_FOR_COST at 10.95 h) with complete-epoch resume state: ref_s47 55/60, mh_s47 51/60, ref_s48 60/60, mh_s48 57/60 passes. Continuation v2 resumes each paused arm from its pause receipt to the frozen 60 passes with no other change. Wall ceilings: kernel A 3.0 h, kernel B 1.5 h. E2 gate, reference band and W2 trigger/deadline in Amendment 2 are unchanged. A continuation that again stops short leaves E2 INCONCLUSIVE for the unfinished arm; no third segment before the quota reset. If W2 is triggered it is submitted by 2026-11-13 13:00 UTC with whatever wall ceiling the remaining kaggle3 quota allows and is continued after the reset.
+
+### Amendment 4 (2026-11-13): P1, paired-noise calibration at 100K
+
+N1 falsified its hypothesis (D = 3.705 meV > 1.85 over four reference inits) while the two E1 paired deltas were +0.659 and -0.667 meV. Unmeasured: whether sharing one frozen init between the arms of a pair cancels init noise for GPT-T at 100K. P1 adds five E1-identical pairs (ref_sNN + mh_sNN, same recipes as E1 except the init seed; NN = 50, 51 on kaggle2, 52, 53 on kaggle1, 54 on kaggle3), wall ceiling 3.5 h per kernel, development role `fixed100k-next50k` only.
+Quantities: S_ref = sample SD of the nine reference dev MAEs (s43-s46, s50-s54); S_pair = sample SD of the seven paired deltas (s43, s44, s50-s54); m7 = their mean.
+Frozen reading:
+- S_pair <= 0.5 * sqrt(2) * S_ref: shared-init pairing cancels at least half the init noise; later GPT-T 100K screens size their gate from S_pair.
+- S_pair >= 0.8 * sqrt(2) * S_ref: pairing gives no usable benefit; screens are sized from S_ref and need n pairs with 2 * sqrt(2) * S_ref / sqrt(n) <= gate.
+- otherwise: undetermined, report both.
+- S_ref <= 1.3 meV: N1's D is read as a tail draw. S_ref >= 2.0 meV: two-pair GPT-T 100K screens with a gate below 2 * S_ref are underpowered.
+- m7 is descriptive. No P1 outcome changes the E1 verdict or reopens multi-hop at 100K; only E2/W2 decide that line. A kernel that fails for infrastructure reasons is dropped, not replaced, and the statistics use the pairs that finished.
