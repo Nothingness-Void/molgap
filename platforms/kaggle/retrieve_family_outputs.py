@@ -302,6 +302,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--paused", action="store_true",
                         help="Retrieve a STOP_FOR_COST run's paused files; digests are observed at download")
+    parser.add_argument("--arms", help="Comma-separated arm ids; retrieve only these (a mixed paused/complete run); "
+                        "omits the run-level execution retention, which a partial run lacks")
     parser.add_argument("--execute", action="store_true",
                         help="Download missing manifests, arm outputs and execution costs; default is local planning")
     stage = "arguments"
@@ -325,6 +327,11 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 expected_package_identity=options["expected_package_identity"], arm_id=arm["arm_id"],
                 _verification=verification) for arm in spec.to_dict()["arms"]}
             context = next(iter(contexts.values()))
+            if args.arms is not None:
+                selected = set(args.arms.split(","))
+                if not selected or not selected <= set(contexts):
+                    raise ValueError("--arms must name frozen arms")
+                contexts = {arm: value for arm, value in contexts.items() if arm in selected}
             version = context.platform_version
             if (context.platform != "kaggle" or not isinstance(version, str)
                     or not version.isascii() or not version.isdecimal() or int(version) < 1):
@@ -361,7 +368,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
                 if args.resume_prepared is not None:  # retained arms keep their origin-version output
                     for arm in _json(args.resume_prepared / "workflow_report.json").get("retained_arms", {}):
                         names.pop(arm)
-                names["_execution"] = args.remote_root + "/execution_retention.json"
+                if args.arms is None:
+                    names["_execution"] = args.remote_root + "/execution_retention.json"
                 missing = [name for name in names.values() if not (pinned / name).is_file()]
                 stage = "scheduler"
                 if status_only or (args.execute and missing):
@@ -446,7 +454,8 @@ def _retrieve_all_arms(argv, *, status_only=False):
     print(canonical_json({"status": "BLOCKED" if code else (
         "RETRIEVED" if args.execute else "READY_FOR_RETRIEVAL"),
         "arms": {arm: value for arm, value in results.items() if arm != "_execution"},
-        "execution_retention": results["_execution"], "execution_root": str(destination / "_execution")}))
+        **({"execution_retention": results["_execution"], "execution_root": str(destination / "_execution")}
+           if "_execution" in results else {})}))
     return code
 
 
