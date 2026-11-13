@@ -1,0 +1,170 @@
+{
+  "context": {
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "arm_id": "tokengt",
+    "arm_identity": "c721cc0e8860bb0ef2e624f373edf8a5679619e2f390eb32fe7473079e37b87f",
+    "experiment_id": "pcqm_gptrans_tokengt_100k_20261113",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-tokengt-100k-20261113-s42",
+    "package_identity": "ca30239b0f1c9a828c47bf5f14245a3c7e734674d3465333fb46ea5c469d6e18",
+    "platform": "local",
+    "platform_version": null,
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-gptrans-tokengt-100k-20261113-s42",
+    "source_archive_sha256": "acb2e1b45583f1d295b2268914ebb842d3943c69cf8d3cd3b71b49cac810e642",
+    "source_commit": "60e2c68f7f6802a61b453cd0a290ffc608bb0345",
+    "spec_identity": "d1e1e4598a0e6aa27749794ab1a7031a887fb832d754dab15607b4254354994b",
+    "training_recipe_sha256": "85a9eecf52603b41e30e89e5bd2a0e60b22a7673848032e23df4d7a47b8680f4"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "unknown",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt-0",
+      "evidence_ref": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/terminal_staging/v1/83e00ae5a8dcf222/observed.json",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.0082977420833332
+        }
+      },
+      "platform": "local",
+      "run_id": "pcqm-gptrans-tokengt-100k-20261113-s42:tokengt:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt"
+    }
+  ],
+  "diagnostic_report": {
+    "locator": "experiments/pcqm_gptrans_tokengt_100k_20261113/runs/pcqm-gptrans-tokengt-100k-20261113-s42/reports/terminal_diagnostic_e563232409537614.json",
+    "logical_run_id": "pcqm-gptrans-tokengt-100k-20261113-s42",
+    "sha256": "17284b4e207267d310a0779fd955d3ab222836ce9ddb58e8b04fb6263219c273",
+    "spec_identity": "d1e1e4598a0e6aa27749794ab1a7031a887fb832d754dab15607b4254354994b"
+  },
+  "mechanical_verification": {
+    "blockers": [],
+    "context": {
+      "account": "xn--tiq369bpxdruio7k22f89w",
+      "arm_id": "tokengt",
+      "arm_identity": "c721cc0e8860bb0ef2e624f373edf8a5679619e2f390eb32fe7473079e37b87f",
+      "experiment_id": "pcqm_gptrans_tokengt_100k_20261113",
+      "family_name": "gptrans_t",
+      "family_version": "2",
+      "logical_run_id": "pcqm-gptrans-tokengt-100k-20261113-s42",
+      "package_identity": "ca30239b0f1c9a828c47bf5f14245a3c7e734674d3465333fb46ea5c469d6e18",
+      "platform": "local",
+      "platform_version": null,
+      "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-gptrans-tokengt-100k-20261113-s42",
+      "source_archive_sha256": "acb2e1b45583f1d295b2268914ebb842d3943c69cf8d3cd3b71b49cac810e642",
+      "source_commit": "60e2c68f7f6802a61b453cd0a290ffc608bb0345",
+      "spec_identity": "d1e1e4598a0e6aa27749794ab1a7031a887fb832d754dab15607b4254354994b",
+      "training_recipe_sha256": "85a9eecf52603b41e30e89e5bd2a0e60b22a7673848032e23df4d7a47b8680f4"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "85a9eecf52603b41e30e89e5bd2a0e60b22a7673848032e23df4d7a47b8680f4"
+        },
+        "data_open": {
+          "path": "data_open_provenance.json",
+          "sha256": "718af3f45b813278a639360a74ff4c5ea2db29b1e8dc7006ccd026af4af9cfc4"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "d22e7428fe7a53cbed0d2f44ec19d5d95879cf2c589f8692fa65d63ae2624c4a"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "f3afbd30f3fb4a58a3997abd2d1a472fe8532f0202eceb4970935f54eb56096b"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "2dee80d2d913ef6806c05cd5600fbb9a6a15a9d8dd0d254c599e772ab28fd2f9"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "66512237c8a5cb3f3b243deccc6ca17ef55e1cbbfa020c00150f5830739f121a"
+        },
+        "trace_context": {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "60f4211a077e1cabdda7c8f236205cc95269aefb769222e03bd33eb68c767e13"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 3629.8718714999995
+        },
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.2072160782045126,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080,
+        "status": "complete"
+      },
+      "selected_optimizer_step": 45298,
+      "selected_weights": "ema"
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "missing_evidence": [
+    "scientific_comparison_not_evaluated",
+    "runtime_qualification_not_evaluated",
+    "replay_readiness_not_evaluated"
+  ],
+  "native_costs": [
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 3629.8718714999995
+    },
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "roles": []
+}

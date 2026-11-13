@@ -411,6 +411,7 @@
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
       "used_by_trajectory_ids": [
+        "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -607,6 +608,25 @@
       },
       "scientific_scope": "terminal_output_inspection",
       "source_envelope": "experiments/pcqm_gptrans_pairnorm_wd_500k_s44/runs/pcqm-gptrans-pairnorm-wd-500k-s44-20261103/prospective/wd_low/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "NOT_EVALUATED",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "machine_local_verified"
+      ],
+      "comparison_status": "NOT_EVALUATED",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "terminal_output_inspection",
+      "source_envelope": "experiments/pcqm_gptrans_tokengt_100k_20261113/prospective/tokengt/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
       "used_by_trajectory_ids": []

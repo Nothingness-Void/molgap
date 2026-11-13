@@ -71,6 +71,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt:A001",
+      "target": "experiments/pcqm_gptrans_tokengt_100k_20261113/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm:A001",
       "target": "experiments/pcqm_gptrans_triplet_norm_100k_20261104/generated/4e35e68a5e3b13c78258bc4fa55a95a9e8586d84131d3e639118dcb3f7c277ed/joint_norm/recipe.json",
       "type": "action_produced_evidence"
@@ -1812,6 +1817,11 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
       "type": "prior_evidence"
     },
@@ -3447,6 +3457,11 @@
     },
     {
       "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
+      "target": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
       "target": "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
       "type": "reference_used"
     },
@@ -3996,6 +4011,10 @@
     },
     {
       "id": "ev-terminal-T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
       "type": "evidence"
     },
     {
@@ -4692,6 +4711,10 @@
     },
     {
       "id": "T-pcqm-gptrans-pairnorm-wd-500k-s44-20261103-wd_low",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-tokengt-100k-20261113-s42-tokengt",
       "type": "trajectory"
     },
     {
