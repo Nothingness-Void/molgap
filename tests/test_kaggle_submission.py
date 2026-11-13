@@ -760,7 +760,7 @@ def _packaged_release(case, tmp_path, monkeypatch, *, resume_prepared=None, reco
 
     monkeypatch.setattr(owner, "push_kernel_with_accelerator", mutate_roundtrip_before_recheck)
 
-    def post(url, *, auth, json, timeout):
+    def post(url, *, auth, json, timeout, headers=None):
         current = transport()
         metadata = json_module.loads((prepared / "kernel/kernel-metadata.json").read_bytes())
         assert url == "https://www.kaggle.com/api/v1/kernels/push"

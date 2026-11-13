@@ -50,7 +50,7 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     captured = {}
     events = []
 
-    def fake_post(url, *, auth, json, timeout):
+    def fake_post(url, *, auth, json, timeout, headers=None):
         events.append("post")
         captured.update({"url": url, "auth": auth, "json": json, "timeout": timeout})
         return _Response()

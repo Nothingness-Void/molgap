@@ -227,6 +227,7 @@ def push_kernel_with_accelerator(
         response = requests.post(
             KAGGLE_KERNEL_PUSH_URL,
             auth=HTTPBasicAuth(username, key),
+            headers={"User-Agent": "kaggle-api/molgap"},
             json=request,
             timeout=timeout_seconds,
         )
