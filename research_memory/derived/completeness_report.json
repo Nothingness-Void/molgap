@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 207,
+    "trajectories_total": 217,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 196,
-    "with_incomplete_native_measurement": 164,
+    "with_cost_event": 206,
+    "with_incomplete_native_measurement": 174,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,9 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 105,
+      "count": 109,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -154,11 +158,21 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 164,
+      "count": 174,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
+        "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+        "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
+        "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+        "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
+        "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+        "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
         "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
@@ -343,9 +357,13 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 53,
+      "count": 57,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",
@@ -403,8 +421,12 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 18,
+      "count": 22,
       "items": [
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+        "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-joint_norm",
         "T-pcqm-gptrans-triplet-norm-100k-20261104-s42-r2-separate_norm",

@@ -1,0 +1,15 @@
+{
+  "arms": {
+    "mh_s43": {
+      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e1_n1.md",
+      "facts_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s43_v1/closure_facts_mh_s43.json",
+      "outcome": "NEGATIVE_UNDER_CONTRACT"
+    },
+    "ref_s43": {
+      "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e1_n1.md",
+      "facts_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s43_v1/closure_facts_ref_s43.json",
+      "outcome": "CLOSED"
+    }
+  },
+  "role_audit": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s43_v1/audit_map.json"
+}

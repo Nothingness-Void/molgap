@@ -433,6 +433,17 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"initialization_identity\":\"{\\\"candidate_id\\\":\\\"ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46\\\",\\\"comparison_sha256\\\":\\\"3d8de0dbab21ef848332470b6ba4dfa45d67c6d4dc8dacae3bc332ac47dce89a\\\",\\\"declared_intervention_fields\\\":[\\\"initialization_identity\\\"],\\\"expected\\\":{\\\"candidate\\\":\\\"3a050daafe5349d092a9c12644c25a706101ee95ab9668842c5aaa4ce4bb5357\\\",\\\"reference\\\":\\\"12c050052539bcf89096892aa138d94b02e22ef9a5a7594dda60b9c3b8591226\\\"},\\\"experiment_purpose\\\":\\\"initialization_comparison\\\",\\\"format\\\":\\\"molgap-bound-replay-initialization-intervention-v1\\\",\\\"intervention_group_id\\\":\\\"initialization-seed-noise\\\",\\\"reference_id\\\":\\\"ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45\\\"}\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"f9a8dfb3249ead4dbd6b37eea1900cbac599d0de3175cfbd6f3843cee0955791\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45\"}",
+      "run_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-n1-s45:ref_s45:downstream",
+        "pcqm-gptrans-multihop-edge-20261112-n1-s45:ref_s46:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+        "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"207be99dd3bf1dbc33f54173156a77a633ecd6b357855fbcaaeba232dab2daee\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local\"}",
       "run_ids": [
         "pcqm-gptrans-bondlocal-pairnorm-100k-s42:bond_local:downstream",
@@ -441,6 +452,28 @@
       "trajectory_ids": [
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43\"}",
+      "run_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-s43:mh_s43:downstream",
+        "pcqm-gptrans-multihop-edge-20261112-s43:ref_s43:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+        "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43"
+      ]
+    },
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"{\\\"ema_decay\\\":0.999,\\\"ema_enabled\\\":true,\\\"ema_update_frequency\\\":1,\\\"evaluation_weight_source\\\":\\\"ema\\\",\\\"weight_semantics\\\":\\\"ema\\\"}\",\"evaluation_role_identity\":\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\",\"lr_schedule_identity\":\"5d8b0f4ad297d0f57b774412fe9a91871735d89307385e42f54d29138c4267b0\",\"optimizer_identity\":\"b7394eae99fc7b1684b6b230fd092a10a06e4ba341a20793c8c4bc466a9061a8\",\"precision_identity\":\"{\\\"deterministic_algorithms\\\":true,\\\"precision\\\":\\\"fp32\\\",\\\"tf32_enabled\\\":false}\",\"row_split_identity\":\"{\\\"data_role_identity\\\":\\\"375ba8647056a32c7d597d11d4e1b150500d573788299b96d87c65c8f6364cbb\\\",\\\"row_membership_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\",\\\"row_order_identity\\\":\\\"b0927541a7a116fa7587d4f7229d446005f10ce5281127a1f654bbf3bc3fbe87\\\"}\",\"scientific_contract\":\"molgap-family-training-recipe-v1\",\"selection_role_identity\":\"{\\\"checkpoint_selection_identity\\\":\\\"best-development-ema\\\",\\\"selection_role_identity\\\":\\\"b7d8bc6d320d2478fa83f4fb34ce62168d655a28fcf78d90ff7b1648df5a340d\\\"}\",\"strict_identity_sha256\":\"c5e96355144499d913bb051829af11b781ab84773e34175d16e7b7d37db3ddbb\",\"target_transform_identity\":\"{\\\"target_transform_asset_sha256\\\":\\\"acaa8c90faf4b4859b1566ae8488fc77bbad8305bbf6d66c1441c5d213377f0a\\\",\\\"target_transform_identity\\\":\\\"75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b\\\"}\",\"terminal_endpoint_identity\":\"{\\\"optimizer_steps\\\":46860,\\\"sample_presentations\\\":5998080}\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44\"}",
+      "run_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-s44:mh_s44:downstream",
+        "pcqm-gptrans-multihop-edge-20261112-s44:ref_s44:downstream"
+      ],
+      "trajectory_ids": [
+        "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+        "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44"
       ]
     },
     {
@@ -776,6 +809,12 @@
   "included_trajectory_ids": [
     "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
     "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+    "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+    "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
+    "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+    "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
+    "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+    "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
     "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
     "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
     "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
@@ -845,5 +884,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 103
+  "trace_count": 109
 }

@@ -1,0 +1,104 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/_execution/execution_retention.json",
+      "name": "execution_retention",
+      "sha256": "7829fc5b5b2f78f527f7f8fe3f27717ef008d7330394b6619727d6217155f6cf"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/_execution/allocation_ledger.json",
+      "name": "allocation_ledger",
+      "sha256": "cb90b6a8fdac6b9da68b02556017bfd19837671bab7dbf9037fc9ef2f64914bd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/_execution/mh_s43/allocation_ledger.json",
+      "name": "arm_allocation_ledger",
+      "sha256": "cb90b6a8fdac6b9da68b02556017bfd19837671bab7dbf9037fc9ef2f64914bd"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/training_contract.json",
+      "name": "contract",
+      "sha256": "795d2289b035e7c86f42b36deba485bbcedb69e6d6554af6bef07caa4cf7bc32"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "59f3a5b4350f95b11a403e7fd1eefeaf95275795ff54d8cb2013f04a6b1c1cd8"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "ab4b439302b6b4c897d93454d95df8526510f0f5d364eb13715eccfce74bfad6"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "fb6d781034326223f2b7eec73e4c49f8b6fa75625094f0410347c210a2836682"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "c962478622219f838c3d44b0de95195040606fc03c824ed2ad8c37b4cec57087"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "3e2319d7fc907b4051975365c4ba5bf6d3c409a3061c0a25b7424f289d4c1117"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/retrieved/pcqm-gptrans-multihop-edge-20261112-s43/v1/version1/mh_s43/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "c536bb0c8cfd074bc020d0de55ae3bd24d105db73e3b63a8df8fc9c0df556bf5"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/decision_e1_n1.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/165d330f632daf540f104b9d09960260af53d343df4bfa75fa56f47a238eb3a3/mh_s43/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13917193385064602,
+    "missing_reason": null,
+    "selected_optimizer_step": 34364,
+    "selected_weights": "ema",
+    "source_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s43/prospective/mh_s43/terminal_staging/v1/4e1ac48cb47810d9/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

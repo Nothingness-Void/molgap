@@ -11,6 +11,56 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/mh_s47/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f9454755e2f174b2c413d7b094e05a83895713156d1a0b4e3c1d4fc49629eed5/ref_s47/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/c85fc1fc5c34403dc26320f371660839f47409ea0f9d3caec2886f174c9ca896/mh_s48/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/c85fc1fc5c34403dc26320f371660839f47409ea0f9d3caec2886f174c9ca896/ref_s48/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/7499bf701309f207e14de34bcf6bc00f1f89b28758cd0a662db3eb9af0c5dd2f/ref_s45/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/7499bf701309f207e14de34bcf6bc00f1f89b28758cd0a662db3eb9af0c5dd2f/ref_s46/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/165d330f632daf540f104b9d09960260af53d343df4bfa75fa56f47a238eb3a3/mh_s43/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/165d330f632daf540f104b9d09960260af53d343df4bfa75fa56f47a238eb3a3/ref_s43/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/0e92b2d2f37e118de32bb3ee5861cfea94a38823f3f884219a5a9463fd729015/mh_s44/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44:A001",
+      "target": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/0e92b2d2f37e118de32bb3ee5861cfea94a38823f3f884219a5a9463fd729015/ref_s44/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema:A001",
       "target": "experiments/pcqm_gptrans_norm_ema_100k_20261104/generated/92cb4884c511adb30ed6480456082af2054ec917a8f7d09f0c877c83b8c17bc2/norm_no_decay_multi_ema/recipe.json",
       "type": "action_produced_evidence"
@@ -1748,6 +1798,56 @@
     {
       "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
       "target": "TB-pcqm-gptrans-resistance-100k-s42-20261020-resistance-r2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "target": "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
       "type": "prior_evidence"
     },
     {
@@ -3951,6 +4051,30 @@
       "type": "evidence"
     },
     {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
+      "type": "evidence"
+    },
+    {
       "id": "ev-terminal-T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
       "type": "evidence"
     },
@@ -4644,6 +4768,46 @@
     },
     {
       "id": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-mh_s47",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s47-ref_s47",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-mh_s48",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-e2-s48-ref_s48",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s45",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-n1-s45-ref_s46",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-s43-mh_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
       "type": "trajectory"
     },
     {
