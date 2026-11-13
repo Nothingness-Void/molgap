@@ -1,0 +1,22 @@
+{
+  "format": "molgap-workflow-resume-v1",
+  "spec_identity": "16b0b5209a2722ee1ffc5523dd69d86bd0687e2841cadbed4930ced5a3a399a4",
+  "arms": {
+    "mh_s48": "D:/molgap-artifacts/resume-validation/pcqm-gptrans-multihop-edge-20261112-e2-s48/v1/20261114/mh_s48/resume_bundle.json"
+  },
+  "recovery_repair": {
+    "commit": "d73a0c20c291b6cc20f6f3ef65cce5215fe5e0cb",
+    "files": {
+      "src/molgap/family_training_runner.py": {
+        "original_sha256": "42b6ab4dbe4156f78b61b3a0ae8918752f436087eabf03bcdbfab4a19edc71bc",
+        "repaired_sha256": "2bde6f753fd91543146fe987e64da3722a559877e3dfae8c51d554075900c87f"
+      },
+      "src/molgap/kaggle_pair_runtime.py": {
+        "original_sha256": "d0e5c073326222e2563edf8b4dce5d2ca14cfba066b928efa987160cc937b139",
+        "repaired_sha256": "27c71a6e2903b5a86e3a87a69e65a9bc5fa842c44d691381db625ba6e854ad50"
+      }
+    }
+  },
+  "allocation_wall_limit_seconds": 5400,
+  "pause_after_step": 234360
+}
