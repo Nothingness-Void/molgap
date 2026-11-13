@@ -20,9 +20,12 @@ QUOTA_URL = "https://www.kaggle.com/api/v1/kernels/quota"
 
 
 def _duration_seconds(entry: dict | None) -> float:
-    if not isinstance(entry, dict):
+    if isinstance(entry, str) and entry.endswith("s"):
+        seconds = float(entry[:-1])
+    elif isinstance(entry, dict):
+        seconds = float(entry.get("seconds", 0)) + float(entry.get("nanos", 0)) / 1e9
+    else:
         raise ValueError("Missing Kaggle quota duration")
-    seconds = float(entry.get("seconds", 0)) + float(entry.get("nanos", 0)) / 1e9
     if not math.isfinite(seconds) or seconds < 0:
         raise ValueError("Malformed Kaggle quota duration")
     return seconds
@@ -83,7 +86,7 @@ def fetch_account_quota(label: str, cred_path: Path, *, session: requests.Sessio
     if not username or not key:
         raise ValueError(f"Incomplete credentials for {label}")
     http = session or requests.Session()
-    response = http.get(QUOTA_URL, auth=(username, key), timeout=timeout)
+    response = http.get(QUOTA_URL, auth=(username, key), headers={"User-Agent": "kaggle-api/molgap"}, timeout=timeout)
     response.raise_for_status()
     return parse_quota_payload(label, username, response.json())
 
