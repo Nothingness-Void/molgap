@@ -895,7 +895,26 @@
       "source_envelope": "experiments/pcqm_k1_init_noise_100k/runs/pcqm-k1-init-noise-100k-s43/prospective/ref_s42/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "NOT_EVALUATED",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "T-pcqm-ds-d1-k1-n12500",
+        "T-pcqm-ds-d1-k1-n25000",
+        "T-pcqm-ds-d1-k1-n50000",
+        "T-pcqm-ds-d3-k1-ep20",
+        "T-pcqm-ds-d3-k1-ep80",
+        "T-pcqm-ds-d3-k1-lr1e4",
+        "T-pcqm-ds-d3-k1-lr1p6e3",
+        "T-pcqm-ds-d3-k1-soap",
+        "T-pcqm-ds-d3-k1-wd0p1",
+        "T-pcqm-ds-d4-k1-binhyb",
+        "T-pcqm-ds-d4-k1-huber",
+        "T-pcqm-ds-d4-k1-laplace",
+        "T-pcqm-ds-d4-k1-lds",
+        "T-pcqm-ds-d4-k1-mse",
+        "T-pcqm-ds-d4-k1-oversample",
+        "T-pcqm-ds-d7-k1-s42-a100",
+        "T-pcqm-ds-d7-k1-s45",
+        "T-pcqm-ds-d7-k1-s46"
+      ]
     },
     {
       "artifact_availability": [

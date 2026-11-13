@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1_lr1p6e3-v1",
+  "category": "training",
+  "cost_event_id": "cost-T-pcqm-ds-d3-k1-lr1p6e3-planned",
+  "evidence_ref": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+  "hardware": "NVIDIA A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 1.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "ims",
+  "run_id": "pcqm-direction-screen-100k-20261114:k1_lr1p6e3",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-ds-d3-k1-lr1p6e3"
+}

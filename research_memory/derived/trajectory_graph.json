@@ -1,6 +1,191 @@
 {
   "edges": [
     {
+      "source": "T-pcqm-ds-d1-fpmlp-n100000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-fpmlp-n12500:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-fpmlp-n25000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-fpmlp-n50000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-gine-n100000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-gine-n12500:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-gine-n25000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-gine-n50000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-k1-n12500:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-k1-n25000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d1-k1-n50000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d2-gine-h192-l12:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d2-gine-h384-l6:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d2-gine-h96-l6:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-ep20:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-ep80:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-lr1e4:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-lr1p6e3:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-soap:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d3-k1-wd0p1:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-binhyb:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-huber:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-laplace:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-lds:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-mse:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-gine-oversample:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-binhyb:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-huber:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-laplace:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-lds:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-mse:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d4-k1-oversample:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d5-smilest-n100000:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d7-k1-s42-a100:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d7-k1-s45:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d7-k1-s46:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "T-pcqm-ds-d8-d8-residual-lgbm:A001",
+      "target": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local:A001",
       "target": "experiments/pcqm_gptrans_bondlocal_pairnorm_100k/generated/59d3a4973b44bb6b38b8870d50b1d5d63e02926265207fbb76925aa09eb5faf7/bond_local/recipe.json",
       "type": "action_produced_evidence"
@@ -2002,6 +2187,191 @@
     },
     {
       "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-fpmlp-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-fpmlp-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-fpmlp-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-fpmlp-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-gine-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-gine-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-gine-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-gine-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-k1-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-k1-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d1-k1-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d2-gine-h192-l12",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d2-gine-h384-l6",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d2-gine-h96-l6",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-ep20",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-ep80",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-lr1e4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-lr1p6e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-soap",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d3-k1-wd0p1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-binhyb",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-huber",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-laplace",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-lds",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-mse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-gine-oversample",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-binhyb",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-huber",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-laplace",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-lds",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-mse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d4-k1-oversample",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d5-smilest-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d7-k1-s42-a100",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d7-k1-s45",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d7-k1-s46",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "target": "T-pcqm-ds-d8-d8-residual-lgbm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
       "target": "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",
       "type": "prior_evidence"
     },
@@ -2028,6 +2398,191 @@
     {
       "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
       "target": "T-pcqm-k1-short-ensemble-100k-k2-r2-short_s44",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-fpmlp-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-fpmlp-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-fpmlp-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-fpmlp-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-gine-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-gine-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-gine-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-gine-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n12500",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n25000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n50000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d2-gine-h192-l12",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d2-gine-h384-l6",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d2-gine-h96-l6",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-ep20",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-ep80",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-lr1e4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-lr1p6e3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-soap",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-wd0p1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-binhyb",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-huber",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-laplace",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-lds",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-mse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-gine-oversample",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-binhyb",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-huber",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-laplace",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-lds",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-mse",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-oversample",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d5-smilest-n100000",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s42-a100",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s45",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s46",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d8-d8-residual-lgbm",
       "type": "prior_evidence"
     },
     {
@@ -3496,6 +4051,96 @@
       "type": "reference_used"
     },
     {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n12500",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n25000",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d1-k1-n50000",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-ep20",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-ep80",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-lr1e4",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-lr1p6e3",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-soap",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d3-k1-wd0p1",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-binhyb",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-huber",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-laplace",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-lds",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-mse",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d4-k1-oversample",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s42-a100",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s45",
+      "type": "reference_used"
+    },
+    {
+      "source": "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42",
+      "target": "T-pcqm-ds-d7-k1-s46",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
       "type": "reference_used"
@@ -4636,6 +5281,154 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-fpmlp-n100000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-fpmlp-n12500",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-fpmlp-n25000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-fpmlp-n50000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-gine-n100000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-gine-n12500",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-gine-n25000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-gine-n50000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-k1-n12500",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-k1-n25000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d1-k1-n50000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d2-gine-h192-l12",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d2-gine-h384-l6",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d2-gine-h96-l6",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-ep20",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-ep80",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-lr1e4",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-lr1p6e3",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-soap",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d3-k1-wd0p1",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-binhyb",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-huber",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-laplace",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-lds",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-mse",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-gine-oversample",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-binhyb",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-huber",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-laplace",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-lds",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-mse",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d4-k1-oversample",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d5-smilest-n100000",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d7-k1-s42-a100",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d7-k1-s45",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d7-k1-s46",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-ds-d8-d8-residual-lgbm",
       "type": "trajectory"
     },
     {

@@ -1,0 +1,12 @@
+{
+  "format": "molgap-role-plan-declaration-v1",
+  "note": "Declaration only; no role-access event exists until a run reads labels. Row hashes are not asserted here and are verified against the local manifest by smoke.",
+  "official_validation": "forbidden",
+  "roles": [
+    {"role": "train", "rows": "0..99999", "use": "training, target standardization, train probe (first 5000 rows)"},
+    {"role": "development", "label": "fixed100k-next50k", "rows": "100000..149999", "use": "labels read for metric; no selection"}
+  ],
+  "tail_holdout_v1": "forbidden",
+  "test_challenge": "forbidden",
+  "test_dev": "forbidden"
+}

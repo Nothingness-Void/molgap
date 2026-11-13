@@ -1,0 +1,101 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "gine_n50000-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-ds-d1-gine-n50000-planned"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_direction_screen_100k_20261114/protocol.md"
+      ],
+      "run_ids": [
+        "pcqm-direction-screen-100k-20261114:gine_n50000"
+      ],
+      "source_commit": "2f9e1c048524345ac8e82b10b2ad0ff91e5e2168",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_direction_screen_100k_20261114/decision.md",
+    "next_allowed_actions": [
+      "none until separately authorized"
+    ],
+    "outcome": "ACTIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+    "chosen_action": "NO_TRAIN",
+    "policy_id": "pcqm-direction-screen-100k-20261114",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_direction_screen_100k_20261114/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_direction_screen_100k_20261114/prospective/rml_decision_snapshots/c61ba57f8f84622e90c86e316ad2d707d89b53a213ad327d9c8fa604e3f2cc87.json",
+    "snapshot_sha256": "c61ba57f8f84622e90c86e316ad2d707d89b53a213ad327d9c8fa604e3f2cc87",
+    "state_timestamp": "2026-11-13T18:31:51.932738+00:00"
+  },
+  "family_id": "pcqm-direction-d1-data-curve-20261114",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Init-seed noise (single seed per arm)",
+      "A100 vs T4 runtime difference",
+      "N-curve arms change step count with N",
+      "Subgroup composition effects"
+    ],
+    "changed_mechanism": "GINE h192 L6 on first 50000 rows",
+    "cheapest_falsifier": "Flat slope or small train-dev gap against N=100K refutes a data limit; no new decision follows from noise-sized differences",
+    "decision_changed_if_negative": "Close descriptive or NEGATIVE_UNDER_CONTRACT; no retry, no scale-up",
+    "decision_changed_if_positive": "Signal only if overall/subgroup/tail criteria in protocol.md hold; then recommend a separately authorized second-seed and 25K/50K attenuation check, nothing automatic",
+    "expected_native_cost_ref": "cost-T-pcqm-ds-d1-gine-n50000-planned",
+    "hypothesis_id": "H-49197e18601286f940b5",
+    "observed_deficiency": "No same-frame measurement of this paradigm-level lever exists; K1 module-level 100K tests were repeatedly NULL.",
+    "related_closed_family_ids": [
+      "pcqm-k1-init-noise-100k",
+      "pcqm-k1-wd5e2-100k",
+      "pcqm-k1-lr8e4-warmup-100k",
+      "pcqm-k1-muon-100k-20261106"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    ]
+  },
+  "owner": "server",
+  "question": "Does GINE h192 L6 on first 50000 rows change 50K development gap MAE beyond the in-frame init noise floor under the unified 100K direction-screen protocol?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+    "contract_refs": [
+      "experiments/pcqm_direction_screen_100k_20261114/protocol.md",
+      "experiments/pcqm_direction_screen_100k_20261114/DESIGN_opus.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-init_s43",
+      "ev-terminal-T-pcqm-k1-init-noise-100k-s43-ref_s42"
+    ],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_direction_screen_100k_20261114/role_plan.json"
+    ],
+    "source_commit": "642591c9aeb33c199e9b4b68618c13d2bd562b92",
+    "source_config_identity": "27c33220722ba8397601f983ddd826a51781fc81e0ecfb1eae39550df08be350"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-ds-d1-gine-n50000"
+}
