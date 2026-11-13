@@ -10,7 +10,9 @@ Derived from train_full.py with a deliberately small diff (see the CHANGED marke
 from __future__ import annotations
 
 import argparse
-import dataclasses  # CHANGED: needed for the batch-size bypass below
+import dataclasses
+import datetime
+import hashlib  # CHANGED: needed for the batch-size bypass below
 import gc
 import json
 import math  # CHANGED
@@ -44,6 +46,8 @@ GPTRANS_500K_STATS = (5.413434769952119, 1.176728647311213)
 # train-row mean/std of rows 0:3250000 (tail_holdout_v1 excluded: --max-shards 65); used when the store holds exactly 3.25M rows
 MINUS_TAIL_STATS = (5.69484785548952, 1.1609073178422544)
 SNAPSHOT_EVERY = 3  # passes between snapshots/pass_NNN.pt (live + EMA state, for offline tail scoring; curves only, no cherry-picking)
+PROBE_ROWS = 20_480  # fixed in-train probe subset (NOT held out): live MAE per pass, per-row predictions every SNAPSHOT_EVERY passes
+PROBE_SEED = 12345
 SHARD_ROWS = 50_000
 TRAIN_ROWS = 3378606
 STEPS_PER_EPOCH = TRAIN_ROWS // BATCH_SIZE  # 3299 (drop_last, as in _PassIterator)
@@ -553,6 +557,10 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     this_config = {"arm": arm, "batch_size": recipe.batch_size, "lr_mult": arm_lr_mult, "learning_rate": recipe.learning_rate,
                    "total_steps": total_steps, "steps_per_epoch": steps_per_epoch, "compile": bool(use_compile)}
     gptrans_extra = {}
+    if arm == "k1_muon":  # same guard for K1: a resume without --max-shards would silently train on the tail
+        gptrans_extra = {"train_rows": store.num_graphs, "max_shards": max_shards,
+                         "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV}
+        this_config.update(gptrans_extra)
     if arm == "gptrans_pairnorm":  # settings the recipe validator cannot express (bypassed or derived) are recorded and resume-checked
         gptrans_extra = {"ema_decay": recipe.ema_decay, "init_file": init_name, "init_sha": init_sha, "max_shards": max_shards,
                          "train_rows": store.num_graphs, "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV}
@@ -560,6 +568,54 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
     old_log = load_compare_log(compare_log) if arm == "k1_muon" else {}
     if old_log:
         print(f"[{arm}] comparing per-epoch train MAE with the OLD run ({len(old_log)} epochs read from {compare_log})", flush=True)
+    probe_ids = torch.randperm(store.num_graphs, generator=torch.Generator().manual_seed(PROBE_SEED))[:PROBE_ROWS].sort().values
+    probe_meta = out_dir / "probe_meta.pt"
+    if not probe_meta.is_file():  # per-row descriptors for offline error-vs-structure bucketing
+        n_cnt = store.node_ptr_cpu[probe_ids + 1] - store.node_ptr_cpu[probe_ids]
+        e_cnt = store.edge_ptr_cpu[probe_ids + 1] - store.edge_ptr_cpu[probe_ids]
+        atomic_torch_save(probe_meta, {"row_ids": probe_ids, "num_atoms": n_cnt, "num_directed_edges": e_cnt,
+                                       "y_eV": store.all_y[probe_ids.to(store.device)].cpu()})
+
+    def run_probe():
+        """Forward the live model on the fixed probe rows; returns eV predictions (CPU float32) and the MAE in eV."""
+        model = kernel.model
+        was_training = model.training
+        model.eval()
+        preds = []
+        with torch.no_grad():
+            for i in range(0, PROBE_ROWS, 1024):
+                ids = probe_ids[i:i + 1024]
+                batch = store.build_batch(ids, ids.to(store.device), torch.arange(ids.numel(), dtype=torch.int64, device=store.device), recipe.family)
+                out = kernel.forward(batch).detach().float().view(-1)
+                preds.append((out * recipe.target_std_eV + recipe.target_mean_eV).cpu())
+        model.train(was_training)
+        pred = torch.cat(preds)
+        return pred, float((pred - store.all_y[probe_ids.to(store.device)].cpu()).abs().mean())
+
+    gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu"
+    runner_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    sessions_path = out_dir / "sessions.jsonl"
+    session_index = (sum(1 for ln in sessions_path.open(encoding="utf-8") if json.loads(ln)["event"] in ("start", "resume"))
+                     if sessions_path.is_file() else 0)
+
+    def log_session(event: str, **extra):
+        rec = {"event": event, "session_index": session_index, "utc": datetime.datetime.utcnow().isoformat() + "Z",
+               "gpu": gpu_name, "torch": torch.__version__, "cuda": torch.version.cuda, "runner_sha256": runner_sha, **extra}
+        with sessions_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(rec) + chr(10))
+
+    prov_path = out_dir / "run_provenance.json"
+    if not prov_path.is_file():  # RML role/provenance facts: which rows trained, which were never read
+        atomic_json(prov_path, {
+            "arm": arm, "dataset_manifest_sha256": MANIFEST_SHA, "train_rows": store.num_graphs, "train_row_range": [0, store.num_graphs],
+            "training_membership_source_idx": [0, store.num_graphs],
+            "tail_holdout_v1": {"rows": [3250000, 3378606], "read_by_training": store.num_graphs > 3250000,
+                                "selection_used": False},
+            "official_valid_read": False, "test_read": False,
+            "recipe": {"batch_size": recipe.batch_size, "learning_rate": recipe.learning_rate, "selection": recipe.selection,
+                       "ema_decay": recipe.ema_decay, "target_mean_eV": recipe.target_mean_eV, "target_std_eV": recipe.target_std_eV},
+            "probe": {"rows": PROBE_ROWS, "seed": PROBE_SEED, "in_train": True},
+            "snapshot_every_passes": SNAPSHOT_EVERY, "total_steps": total_steps, "steps_per_epoch": steps_per_epoch})
     t_start = time.perf_counter()
     step_t0 = [time.perf_counter()]
     step_n0 = [0]
@@ -608,6 +664,11 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
                 ema_norm = float(sum(v.float().pow(2).sum() for v in kernel.ema.state_dict().values() if torch.is_floating_point(v)).sqrt())
         else:
             ema_norm = None
+        probe_pred, probe_mae = run_probe()
+        if progress.pass_index % SNAPSHOT_EVERY == 0:
+            snap_dir = out_dir / "snapshots"
+            snap_dir.mkdir(exist_ok=True)
+            atomic_torch_save(snap_dir / f"probe_pass_{progress.pass_index:03d}.pt", {"epoch": progress.pass_index, "pred_eV": probe_pred})
         if progress.pass_index % SNAPSHOT_EVERY == 0:
             snap_dir = out_dir / "snapshots"
             snap_dir.mkdir(exist_ok=True)
@@ -616,6 +677,10 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
                 "live": {k: v.detach().cpu() for k, v in kernel.model.state_dict().items()},
                 "ema": {k: v.detach().cpu() for k, v in kernel.ema.state_dict().items()} if kernel.ema is not None else None})
         record = {
+            "event": "observation", "session_index": session_index, "gpu": gpu_name,
+            "device_seconds_this_session": round(elapsed, 1),
+            "checkpoint_identity": (f"snapshots/pass_{progress.pass_index:03d}.pt" if progress.pass_index % SNAPSHOT_EVERY == 0 else None),
+            "probe_live_mae_eV": round(probe_mae, 6),
             "pass_sec": round(pass_sec, 1),
             "samples_per_sec": round(steps_per_epoch * recipe.batch_size / max(pass_sec, 1e-6), 1),
             "live_param_norm": round(live_norm, 4),
@@ -706,6 +771,8 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
             return True
         return False
 
+    log_session("resume" if ckpt_path.is_file() and session_index > 0 else "start",
+                optimizer_step=session.progress.optimizer_step, passes=session.progress.pass_index)
     try:
         final_progress = session.run(should_pause=should_pause)
     finally:
@@ -717,6 +784,9 @@ def run_arm(arm: str, *, code_dir: Path, data_root: Path, run_root: Path, max_wa
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
 
+    log_session("terminal" if final_progress.status == "complete" else "pause", optimizer_step=final_progress.optimizer_step,
+                passes=final_progress.pass_index, wall_hours_this_session=round((time.perf_counter() - t_start) / 3600, 4),
+                device_hours_this_session=round((time.perf_counter() - t_start) / 3600, 4), num_devices=1)
     if final_progress.status == "complete":
         atomic_json(
             done_file,
