@@ -26,7 +26,7 @@ def _recovery_repair(input_root, source, package, expected_sha256):
     """Verify every overlay byte before replacing any original source file."""
     import re
     allowed = {"src/molgap/experiment_resume.py", "src/molgap/common/io.py",
-               "src/molgap/family_training_runner.py"}
+               "src/molgap/family_training_runner.py", "src/molgap/kaggle_pair_runtime.py"}
     path = input_root / "recovery_repair.json"
     raw = path.read_bytes()
     if hashlib.sha256(raw).hexdigest() != expected_sha256:

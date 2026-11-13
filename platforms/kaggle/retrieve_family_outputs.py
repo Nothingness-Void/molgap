@@ -358,6 +358,9 @@ def _retrieve_all_arms(argv, *, status_only=False):
                                        for arm, item in paused.items()}}
             else:
                 names = {arm: args.remote_root + "/" + arm + "/output_manifest.json" for arm in contexts}
+                if args.resume_prepared is not None:  # retained arms keep their origin-version output
+                    for arm in _json(args.resume_prepared / "workflow_report.json").get("retained_arms", {}):
+                        names.pop(arm)
                 names["_execution"] = args.remote_root + "/execution_retention.json"
                 missing = [name for name in names.values() if not (pinned / name).is_file()]
                 stage = "scheduler"
@@ -563,8 +566,11 @@ def main(argv=None, *, _verification=None):
                     raise ValueError("Strict dependency retrieval requires an exact numeric version")
                 if args.resume_prepared is not None:
                     from molgap.experiment_workflow_resume import resolve_terminal_resume
+                    from molgap.experiment_run_acceptance import _mapping_path
+                    retained = _json(args.resume_prepared / "workflow_report.json").get("retained_arms", {})
                     bindings = resolve_terminal_resume({"spec": spec, "options": options, "prepared": prepared,
-                        "outputs": {arm["arm_id"]: {"output_dir": str(args.destination.parent / arm["arm_id"])}
+                        "outputs": {arm["arm_id"]: {"output_dir": _json(_mapping_path(prepared.parent, arm["arm_id"]))["output_dir"]
+                            if arm["arm_id"] in retained else str(args.destination.parent / arm["arm_id"])}
                             for arm in spec.to_dict()["arms"]}}, args.resume_prepared, None)
                     resume_checkpoint = _json(bindings[args.arm]["resume_bundle"])["artifacts"]["checkpoint"]["sha256"]
                     _digest(resume_checkpoint, "resume checkpoint.sha256")

@@ -64,7 +64,7 @@ retain original `--authority` and add `--recovery-authority $retainedAuthorizati
 --recovery-authority-sha256 $sha256 --source-version 2 --kernel-version 2`.
 Each version must immediately follow its observed predecessor. The predecessor
 must be terminal error/failed/cancelled or complete with a validated incomplete
-checkpoint. Completed training outputs remain ineligible for resume.
+checkpoint. A plan may omit completed arms: each needs a retained origin retrieval, pinned in `retained_arms`.
 For planned segments, set `platform.kaggle.pause_after_step` in the experiment
 input (or `authority.pause_after_step` when deriving the platform). This is an
 absolute cumulative optimizer step, shared by all arms, within the frozen horizon.

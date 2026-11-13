@@ -371,8 +371,9 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
             expected_package_identity=manifest["package_identity"], _verification=verification)
         if (origin["submission_state"] != "ACCEPTED"
                 or origin["canonical_platform_reference"]["value"] != ref
-                or set(launch.get("resume", {})) != set(initial_paths)):
-            raise ValueError("Continuation must retain the original launch and resume every frozen arm")
+                or not launch.get("resume") or set(launch["resume"]) & set(report.get("retained_arms", {}))
+                or set(launch["resume"]) | set(report.get("retained_arms", {})) != set(initial_paths)):
+            raise ValueError("Continuation must retain the original launch; resumed and retained arms must cover every frozen arm")
         for arm, pointer in launch["resume"].items():
             bundle_path = _artifact_path(staged, pointer["manifest"])
             if sha256_file(bundle_path) != pointer["sha256"]:

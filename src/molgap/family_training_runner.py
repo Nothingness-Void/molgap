@@ -194,7 +194,7 @@ def _loaded_source(package_dir):
         repair = json.loads(raw)
         manifest = _json(Path(package_dir) / "package_manifest.json")
         allowed = {"src/molgap/experiment_resume.py", "src/molgap/common/io.py",
-                   "src/molgap/family_training_runner.py"}
+                   "src/molgap/family_training_runner.py", "src/molgap/kaggle_pair_runtime.py"}
         if (raw != json.dumps(repair, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode()
                 or set(repair) != {"format", "spec_identity", "package_identity", "archive_sha256", "commit", "files"}
                 or repair["format"] != "molgap-recovery-repair-v1"

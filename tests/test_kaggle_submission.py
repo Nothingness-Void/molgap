@@ -852,6 +852,16 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     contexts, decisions, downloads, inputs, prefixes, bundles = {}, {}, [], {}, {}, {}
     prospective = {binding["arm_id"]: (case.repo / binding["output"] / "trajectory.json").read_bytes()
                    for binding in spec.to_dict()["prospective"]["arms"]}
+    done = launch["jobs"][0]["arm_id"]  # completes in v1; the other pauses and is the only arm resumed
+
+    def complete(output, progress, context):
+        started = time.perf_counter()
+        return output.complete(progress, runtime={"platform": context.platform, "account": context.account,
+            "precision": "fp32", "source_commit": context.source_commit,
+            "source_archive_sha256": context.source_archive_sha256}, costs=[{
+                "metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - started,
+                "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"}])
+
     for job in launch["jobs"]:
         arm_id = job["arm_id"]
         # The worker cannot observe its eventual receipt version. Keep that
@@ -876,7 +886,12 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             checkpoint=output.checkpoint, selected=output.selected, pass_finished=output.pass_finished)
         session.batch_finished = output.batch_finished
         try:
-            progress = session.run(should_pause=lambda: session.progress.optimizer_step >= launch["pause_after_step"])
+            progress = session.run(should_pause=lambda: arm_id != done
+                                   and session.progress.optimizer_step >= launch["pause_after_step"])
+            if arm_id == done:
+                assert complete(output, progress, context)["status"] == "MECHANICALLY_VERIFIED"
+                inputs[arm_id] = None
+                continue
             assert progress.status == "paused" and progress.optimizer_step == 2
             checkpoint = torch.load(output.root / "last_checkpoint.pt", map_location="cpu", weights_only=True)
             assert checkpoint["optimizer"]["state"]
@@ -891,6 +906,39 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         bundles[arm_id] = str(bundle)
         inputs[arm_id] = (context, contract, record, recipe, data, initial, trajectory)
 
+    def retrieve(arm_id, context, source, version, destination, *extra):
+        pinned = source / "output_manifest.json"
+        value = json.loads(pinned.read_bytes())
+        files = {"output_manifest.json", *(item["path"] for item in value["artifacts"].values())}
+        prefix = f"runs/kernel77/version{version}/{arm_id}"
+        payloads = {"https://offline.invalid/" + prefix + "/" + name: source / name for name in files}
+        api = _Api(context.account, [_ResponsePage([_File(prefix + "/" + name, url)
+            for name, url in ((name, "https://offline.invalid/" + prefix + "/" + name) for name in files)])])
+        class Http:
+            def get(self, url, **kwargs):
+                downloads.append(url)
+                return Response(content=payloads[url].read_bytes())
+        with monkeypatch.context() as transport:
+            retriever = _module(transport)
+            transport.setattr(owner, "connect_kaggle", lambda *_: api)
+            transport.setattr("requests.Session", Http)
+            args = ["--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
+                    "--run-id", run_id, "--attempt-id", attempt, "--arm", arm_id,
+                    "--remote-manifest-path", prefix + "/output_manifest.json", "--local-manifest", str(pinned),
+                    "--manifest-sha256", sha256_file(pinned), "--destination", str(paths.artifact_root / destination / arm_id),
+                    *extra, "--credentials", str(case.credentials), "--execute"]
+            captured = StringIO()
+            with redirect_stdout(captured):
+                assert retriever.main(args) == 0, captured.getvalue()
+            assert json.loads(captured.getvalue())["status"] == "RETRIEVED"
+            seen = len(downloads)
+            with redirect_stdout(StringIO()):
+                assert retriever.main(args) == 0
+            assert len(downloads) == seen
+
+    origin_context = RunContext.from_launch(spec, case.prepared.parent / "operations/launch_receipt.json", package,
+        expected_package_identity=manifest["package_identity"], arm_id=done)
+    retrieve(done, origin_context, origin / done, 1, "retrieved-origin")
     resumed_prepared = paths.artifact_root / "continuation" / "prepared"
     with monkeypatch.context() as preparation:
         def no_new_question(*args, **kwargs):
@@ -919,7 +967,14 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         assert continued.transport().api.created == continued.transport().api.pushed == 1
 
     resumed_launch = json.loads((resumed_prepared / "source_dataset/experiment_launch.json").read_bytes())
-    for arm_id, (context, contract, record, recipe, data, initial, trajectory) in inputs.items():
+    assert set(resumed_launch["resume"]) == set(bundles) and done not in bundles
+    retained = json.loads((resumed_prepared / "workflow_report.json").read_bytes())["retained_arms"]
+    assert retained == {done: {"output_manifest_sha256": sha256_file(paths.artifact_root / "retrieved-origin" / done / "output_manifest.json")}}
+    for arm_id, item in inputs.items():
+        if item is None:
+            contexts[arm_id] = origin_context  # retained: stays an origin-attempt arm
+            continue
+        context, contract, record, recipe, data, initial, trajectory = item
         bundle = resumed_prepared / "source_dataset" / resumed_launch["resume"][arm_id]["manifest"]
         restore_resume_bundle(bundle, remote / arm_id, spec, context=context, trajectory=trajectory)
         output = SessionOutputs(remote / arm_id, context, contract=contract, adapter=PROFILES[recipe.family],
@@ -932,14 +987,9 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
         session.batch_finished = output.batch_finished
         session.load_state_dict(output.retained_state())
         assert session.progress.optimizer_step == 2
-        started = time.perf_counter()
         try:
             progress = session.run(should_pause=lambda: session.progress.optimizer_step >= resumed_launch["pause_after_step"])
-            checked = output.complete(progress, runtime={"platform": context.platform, "account": context.account,
-                "precision": "fp32", "source_commit": context.source_commit,
-                "source_archive_sha256": context.source_archive_sha256}, costs=[{
-                    "metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - started,
-                    "status": "measured", "semantics": "process_wall", "hardware": "synthetic-cpu"}])
+            checked = complete(output, progress, context)
             assert checked["status"] == "MECHANICALLY_VERIFIED", checked
             assert progress.optimizer_step == recipe.optimizer_steps
             trace = json.loads((output.root / "canonical_trace.json").read_bytes())
@@ -950,6 +1000,7 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
             expected_package_identity=manifest["package_identity"], arm_id=arm_id)
         assert context.platform_version == "2"
         contexts[arm_id] = context
+    for arm_id in contexts:
         decision = case.repo / "experiments/question" / (arm_id + "-disposition.md")
         decision.write_text("Synthetic infrastructure exercise only; no scientific conclusion.\n", encoding="utf-8")
         decisions[arm_id] = decision.relative_to(case.repo).as_posix()
@@ -963,45 +1014,14 @@ def _train_retrieve_and_close_frozen_addon(case, spec, manifest, monkeypatch):
     seal_execution_retention(remote, spec, package_identity=manifest["package_identity"],
         source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
         arm_roots={arm: remote / arm for arm in contexts})
-    with monkeypatch.context() as transport:
-        retriever = _module(transport)
-        for arm_id, context in contexts.items():
-            pinned = remote / arm_id / "output_manifest.json"
-            value = json.loads(pinned.read_bytes())
-            files = {"output_manifest.json", *(item["path"] for item in value["artifacts"].values())}
-            prefix = f"runs/kernel77/version2/{arm_id}"
-            payloads = {"https://offline.invalid/" + prefix + "/" + name: remote / arm_id / name for name in files}
-            api = _Api(context.account, [_ResponsePage([_File(prefix + "/" + name, url)
-                for name, url in ((name, "https://offline.invalid/" + prefix + "/" + name) for name in files)])])
-            class Http:
-                def get(self, url, **kwargs):
-                    downloads.append(url)
-                    return Response(content=payloads[url].read_bytes())
-            transport.setattr(owner, "connect_kaggle", lambda *_: api)
-            transport.setattr("requests.Session", Http)
-            captured = StringIO()
-            args = ["--profile", case.value["machine_profile"], "--repo-root", str(case.repo),
-                    "--run-id", run_id, "--attempt-id", attempt, "--arm", arm_id,
-                    "--remote-manifest-path", prefix + "/output_manifest.json", "--local-manifest", str(pinned),
-                    "--manifest-sha256", sha256_file(pinned), "--destination", str(paths.artifact_root / "retrieved" / arm_id),
-                    "--continuation-receipt", str(continued_receipt),
-                    "--credentials", str(case.credentials), "--execute"]
-            with redirect_stdout(captured):
-                code = retriever.main(args)
-            assert code == 0, captured.getvalue()
-            assert json.loads(captured.getvalue())["status"] == "RETRIEVED"
-            downloaded = len(downloads)
-            captured = StringIO()
-            with redirect_stdout(captured):
-                code = retriever.main(args)
-            assert code == 0, captured.getvalue()
-            assert len(downloads) == downloaded
-            # CPU transport exercises cannot produce native GPU qualification.
-            # Retain explicit missing-qualification observations at that boundary.
-            native = paths.artifact_root / "retrieved/_resume_preflight" / arm_id
-            native.mkdir(parents=True)
-            for name in ("runtime_certificate.json", "actual_resume_certificate.json"):
-                atomic_json(native / name, {"status": "NOT_QUALIFIED", "reason": "Synthetic CPU journey only"})
+    for arm_id in bundles:
+        retrieve(arm_id, contexts[arm_id], remote / arm_id, 2, "retrieved", "--continuation-receipt", str(continued_receipt))
+        # CPU transport exercises cannot produce native GPU qualification.
+        # Retain explicit missing-qualification observations at that boundary.
+        native = paths.artifact_root / "retrieved/_resume_preflight" / arm_id
+        native.mkdir(parents=True)
+        for name in ("runtime_certificate.json", "actual_resume_certificate.json"):
+            atomic_json(native / name, {"status": "NOT_QUALIFIED", "reason": "Synthetic CPU journey only"})
     # Draft the first role audit against the reconciled successor before any
     # terminal pointer exists to discover that receipt automatically.
     from molgap import experiment_cli

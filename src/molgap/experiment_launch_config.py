@@ -42,7 +42,7 @@ _IDENTITY = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_./:-]{0,511}\Z")
 
 
 RECOVERY_REPAIR_PATHS = frozenset({"src/molgap/experiment_resume.py",
-    "src/molgap/common/io.py", "src/molgap/family_training_runner.py"})
+    "src/molgap/common/io.py", "src/molgap/family_training_runner.py", "src/molgap/kaggle_pair_runtime.py"})
 RECOVERY_REPAIR_FILE = "recovery_repair.json"
 
 
@@ -201,8 +201,8 @@ def _validate_resume(config: dict, arm_ids: set[str], root: Path) -> dict[str, d
     resume = config["resume"]
     if type(resume) is not dict:
         raise ValueError("Launch resume must be an arm-id mapping")
-    if set(resume) != arm_ids:
-        raise ValueError("Launch resume must bind every Spec arm exactly once")
+    if not resume or not set(resume) <= arm_ids:
+        raise ValueError("Launch resume must bind a non-empty subset of the Spec arms")
     validated = {}
     for arm_id, declaration in resume.items():
         if type(arm_id) is not str or type(declaration) is not dict or set(declaration) != _RESUME_FIELDS:
