@@ -310,6 +310,7 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
                              monitor_paths, execute=False, api=None, http_session=None,
                              recovery_authority=None, recovery_authority_sha256=None,
                              source_version=1, kernel_version=1,
+                             owner_reconciliation=None, owner_reconciliation_sha256=None,
                              _content_verification=None, _verification=None):
     """Dry-check or advance one journal; reruns reconcile rather than duplicate."""
     prepared, output = Path(prepared).absolute(), Path(output).absolute()
@@ -522,13 +523,26 @@ def submit_prepared_workflow(prepared, credentials, output, *, authority_ref,
         if state["phase"] in {"KERNEL_SUBMITTING", "SUBMIT_UNKNOWN"}:
             remote = _kernel_source(api, ref)
             if remote is None:
-                return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": "UNKNOWN"}
-            response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
-                        "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
-            if response["version_number"] != kernel_version:
-                raise ValueError("Lost-response reconciliation requires the exact successor physical version")
-            _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
-            save("KERNEL_ACCEPTED", kernel_response=response)
+                prior = state.get("platform_error") or {}
+                if (owner_reconciliation is None or state["phase"] != "SUBMIT_UNKNOWN"
+                        or prior.get("stage") != "kernel_publication" or prior.get("http_status") != 404
+                        or "owner_reconciliation" in state):
+                    return {"status": "RECONCILIATION_REQUIRED", "phase": state["phase"], "submitted": "UNKNOWN"}
+                # Owner-attested reconciliation: the live kernel lookup above just observed absence and the
+                # retained push error is an HTTP 404 rejection, so the owner may release one fresh POST.
+                note = Path(owner_reconciliation).absolute()
+                _safe_local(note)
+                if sha256_file(note) != owner_reconciliation_sha256:
+                    raise ValueError("Owner reconciliation note bytes differ from the explicit SHA256")
+                save("SOURCE_PENDING", owner_reconciliation={"note": str(note), "note_sha256": owner_reconciliation_sha256,
+                    "released_platform_error": prior, "kernel_absent_observed_at": datetime.now(timezone.utc).isoformat()})
+            else:
+                response = {"status": "submitted", "kernel": ref, "kernel_id": remote.metadata.id,
+                            "version_number": remote.metadata.current_version_number, "reconciliation_required": False}
+                if response["version_number"] != kernel_version:
+                    raise ValueError("Lost-response reconciliation requires the exact successor physical version")
+                _verify_remote_kernel(remote, response, metadata, (kernel / "run.py").read_bytes())
+                save("KERNEL_ACCEPTED", kernel_response=response)
         if "kernel_response" not in state:
             try:
                 _verify_release_report(prepared / "release_report.json", kernel / "run.py",

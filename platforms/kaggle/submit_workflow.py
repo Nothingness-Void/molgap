@@ -26,6 +26,9 @@ def main(argv=None):
                         help="Exact source successor version; continuation requires predecessor version minus one")
     parser.add_argument("--kernel-version", type=int, default=1,
                         help="Exact kernel successor version; continuation requires predecessor version minus one")
+    parser.add_argument("--owner-reconciliation", type=Path,
+                        help="Owner note releasing a SUBMIT_UNKNOWN journal whose 404 push provably never reached the platform")
+    parser.add_argument("--owner-reconciliation-sha256")
     parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--verbose", action="store_true", help="Print the full owner report")
@@ -76,6 +79,8 @@ def main(argv=None):
                 recovery_authority=args.recovery_authority,
                 recovery_authority_sha256=args.recovery_authority_sha256,
                 source_version=args.source_version, kernel_version=args.kernel_version,
+                owner_reconciliation=args.owner_reconciliation,
+                owner_reconciliation_sha256=args.owner_reconciliation_sha256,
                 _verification=verification)
     except Exception as error:
         # SDK/HTTP exceptions may contain credential-bearing request details.
