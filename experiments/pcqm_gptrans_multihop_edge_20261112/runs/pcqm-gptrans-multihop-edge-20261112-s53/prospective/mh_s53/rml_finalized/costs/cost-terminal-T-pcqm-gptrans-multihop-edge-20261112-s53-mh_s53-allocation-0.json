@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-gptrans-multihop-edge-20261112-s53-v1",
+  "category": "other",
+  "cost_event_id": "cost-terminal-T-pcqm-gptrans-multihop-edge-20261112-s53-mh_s53-allocation-0",
+  "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s53/prospective/mh_s53/terminal_staging/v1/c5cd56cc4dcef3ff/observed.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 2.7362200868074997
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-gptrans-multihop-edge-20261112-s53:mh_s53:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s53-mh_s53"
+}

@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-multihop-edge-20261112-s54\\v1\\version1\\ref_s54\\development_predictions.pt",
+      "sha256": "07e8954c50f734db41900d602b5a20821744a7f6c2be912fd46d5b8be21d0ce7"
+    },
+    {
+      "path": "D:\\molgap-artifacts\\retrieved\\pcqm-gptrans-multihop-edge-20261112-s54\\v1\\version1\\mh_s54\\development_predictions.pt",
+      "sha256": "c55081b3e73ed1ab54afa1d2dc03bcecce1d705ebe217fbcc42e2da5a2868d2b"
+    }
+  ],
+  "op": "summary",
+  "posthoc": true,
+  "results": {
+    "D_meV": 0.3839836120605469,
+    "ensemble_gain_meV": 5.71159523963928,
+    "ensemble_mae_meV": 133.4190549081564,
+    "fit": null,
+    "m_meV": -0.3839836120605469,
+    "n_inits": 2,
+    "pairs": [
+      {
+        "candidate": "mh_s54",
+        "ci95": [
+          -1.2779430359601975,
+          0.5423674345016478
+        ],
+        "delta": -0.3839836120605469,
+        "n_bootstrap": 2000,
+        "probability_better": 0.7845,
+        "reference": "ref_s54",
+        "seed": 42
+      }
+    ],
+    "singles_meV": {
+      "mh_s54": 138.9386583417654,
+      "ref_s54": 139.32264195382595
+    }
+  },
+  "role_id": "internal_development",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+}

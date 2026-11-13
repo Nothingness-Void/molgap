@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 217,
+    "trajectories_total": 227,
     "with_complete_native_measurement": 32,
-    "with_cost_event": 206,
-    "with_incomplete_native_measurement": 174,
+    "with_cost_event": 216,
+    "with_incomplete_native_measurement": 184,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -158,7 +158,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 174,
+      "count": 184,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-bond_local",
@@ -173,6 +173,16 @@
         "T-pcqm-gptrans-multihop-edge-20261112-s43-ref_s43",
         "T-pcqm-gptrans-multihop-edge-20261112-s44-mh_s44",
         "T-pcqm-gptrans-multihop-edge-20261112-s44-ref_s44",
+        "T-pcqm-gptrans-multihop-edge-20261112-s50-mh_s50",
+        "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50",
+        "T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51",
+        "T-pcqm-gptrans-multihop-edge-20261112-s51-ref_s51",
+        "T-pcqm-gptrans-multihop-edge-20261112-s52-mh_s52",
+        "T-pcqm-gptrans-multihop-edge-20261112-s52-ref_s52",
+        "T-pcqm-gptrans-multihop-edge-20261112-s53-mh_s53",
+        "T-pcqm-gptrans-multihop-edge-20261112-s53-ref_s53",
+        "T-pcqm-gptrans-multihop-edge-20261112-s54-mh_s54",
+        "T-pcqm-gptrans-multihop-edge-20261112-s54-ref_s54",
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-norm_no_decay_multi_ema",
         "T-pcqm-gptrans-norm-ema-100k-20261104-s42-uniform_wd_multi_ema",
         "T-pcqm-gptrans-pairnorm-init-noise-500k-s43-init_s43",

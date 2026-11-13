@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "kaseichou",
+    "arm_id": "ref_s50",
+    "arm_identity": "7b04357a5010b5281b88893ce2cd574ebacd8987592fdbc58dd4a8b19786d41b",
+    "experiment_id": "pcqm_gptrans_multihop_edge_20261112",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-s50",
+    "package_identity": "e813fa771f5da345254fded2fbb42d4407b98c9fd126e50b661178a0e41e44bd",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "kaseichou/molgap-gptrans-multihop-edge-p1-s50",
+    "source_archive_sha256": "c84994df8a50da8c805866be7ae7c5b7fa843395518e84e6ad8c683d18592a0a",
+    "source_commit": "689be7b06f0c8afebe42fee3f428635b84ee00ac",
+    "spec_identity": "8d859ee504ce6f0a5321118510f4083e96faa420c6372c167e956f24a82a97ee",
+    "training_recipe_sha256": "43859fa4ae58a8e281b37fcb2d5158c13f7f2cf42cae937565f41eae75d6ba90"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "f157da43b4eface8917016be3d80363e564c1b08a7aa1a48780e425817eabe7c"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 f157da43b4eface8917016be3d80363e564c1b08a7aa1a48780e425817eabe7c, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s50_v1/roles_ref_s50.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-s50:ref_s50:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s50_v1/roles_ref_s50.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-s50:ref_s50:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s50_v1/roles_ref_s50.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-s50:ref_s50:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s50_v1/roles_ref_s50.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-s50:ref_s50:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s50_v1/roles_ref_s50.json",
+      "role_event_id": "role-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-gptrans-multihop-edge-20261112-s50:ref_s50:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s50-ref_s50"
+    }
+  ]
+}

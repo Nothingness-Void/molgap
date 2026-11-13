@@ -1,0 +1,129 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-s51-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51-planned",
+        "cost-terminal-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51-0",
+        "cost-terminal-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51-allocation-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f95e2c96f3d33c1d775288624d15e5b5778cdc713bcef98c659c8ca06c355594/mh_s51/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-gptrans-multihop-edge-20261112-s51:mh_s51:downstream"
+      ],
+      "source_commit": "689be7b06f0c8afebe42fee3f428635b84ee00ac",
+      "type": "training"
+    }
+  ],
+  "comparison_blockers": [],
+  "comparison_class": "STRICT_CAUSAL",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s51/prospective/strict_qualification/dd7e2196ea2e4f58d963/mh_s51/comparison_readiness.json",
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/decision_p1.md",
+    "facts": {
+      "ci_meV": [
+        0.08348850536346436,
+        1.9342113140821455
+      ],
+      "effect_meV": 1.035560235977173,
+      "failure_mode": null,
+      "format": "molgap-closure-facts-v1",
+      "search_terms": null,
+      "source": "experiments/pcqm_gptrans_multihop_edge_20261112/closure_s51_v1/measured_pcqm-gptrans-multihop-edge-20261112-s51.json"
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f95e2c96f3d33c1d775288624d15e5b5778cdc713bcef98c659c8ca06c355594/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-gptrans-multihop-edge-20261112-p1",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/protocol.md"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s51/prospective/rml_decision_snapshots/ce915de0cf500ec5b4f08cd11ec6ad37429245b29f0c376e4f64a761c8d332ba.json",
+    "snapshot_sha256": "ce915de0cf500ec5b4f08cd11ec6ad37429245b29f0c376e4f64a761c8d332ba",
+    "state_timestamp": "2026-11-13T06:30:00Z"
+  },
+  "family_id": "pcqm-gptrans-multihop-edge-20261112-p1",
+  "hypothesis": {
+    "alternative_explanations": [
+      "BondLocal and 12 pair-propagation layers already recover path content",
+      "Distance embedding is sufficient for PCQM4Mv2",
+      "Any gain is below initialization noise"
+    ],
+    "changed_mechanism": "shortest-path-ordered-bond-encoding-with-position-specific-mixing",
+    "cheapest_falsifier": "Five E1-identical 100K pairs (inits 50-54); S_pair versus sqrt(2)*S_ref per protocol Amendment 4.",
+    "decision_changed_if_negative": "No P1 outcome changes the E1 verdict or reopens multi-hop at 100K; a failed kernel is dropped, not replaced.",
+    "decision_changed_if_positive": "Descriptive calibration only (protocol Amendment 4): S_pair and S_ref are read after all five pairs; no verdict on multi-hop at 100K.",
+    "expected_native_cost_ref": "cost-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51",
+    "observed_deficiency": "Our GPT-T adds bond embeddings only to directly bonded pairs; pairs at hop distance >= 2 see only a distance embedding, while official GPTrans also injects the ordered path bonds (multi_hop_max_dist=20).",
+    "related_closed_family_ids": [
+      "pcqm-k1-hop-shell-100k",
+      "gptrans-t-local-bias-rwse16-local-edge"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Paired-noise calibration P1: does sharing one frozen init between the arms of a pair cancel GPT-T init noise at 100K? One more E1-identical pair (ref + multi-hop edge candidate) with a fresh init.",
+  "record_mode": "prospective",
+  "reference_bundle_id": "ref-ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s51-ref_s51-dd7e2196ea2e4f58d963",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s51/prospective/mh_s51/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f95e2c96f3d33c1d775288624d15e5b5778cdc713bcef98c659c8ca06c355594/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/generated/f95e2c96f3d33c1d775288624d15e5b5778cdc713bcef98c659c8ca06c355594/mh_s51/recipe.json",
+      "experiments/pcqm_gptrans_multihop_edge_20261112/p1/mh_s51/data_declaration.json",
+      "experiments/pcqm_gptrans_multihop_edge_20261112/p1/k_s51/experiment.json"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-gptrans-bondlocal-pairnorm-100k-s42-pair_update_norm"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_multihop_edge_20261112/protocol.md"
+    ],
+    "same_run_replay": {
+      "arm_id": "mh_s51",
+      "comparison_role": "candidate",
+      "logical_run_id": "pcqm-gptrans-multihop-edge-20261112-s51",
+      "reference_arm_id": "ref_s51",
+      "reference_trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s51-ref_s51",
+      "reference_trajectory_ref": "experiments/pcqm_gptrans_multihop_edge_20261112/runs/pcqm-gptrans-multihop-edge-20261112-s51/prospective/ref_s51/trajectory.json",
+      "schema": "molgap-same-run-replay-binding-v1",
+      "spec_identity": "31fce823fd3ecb00c0d683b7a769296cb9dd8c7e0f6ffa4cc26c97ad7549887b"
+    },
+    "source_commit": "689be7b06f0c8afebe42fee3f428635b84ee00ac",
+    "source_config_identity": "1ff5b9315665201e27d3e031be0f80e4a7e1f06bd0dcc6d9e8fd83885b4a901e"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-gptrans-multihop-edge-20261112-s51-mh_s51"
+}
