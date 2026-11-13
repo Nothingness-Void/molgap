@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "nested_subgraph-v1",
+  "category": "training",
+  "cost_event_id": "cost-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-0",
+  "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/nested_subgraph/terminal_staging/v1/f6a32cb6a05748d9/observed.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.224772248583333
+    }
+  },
+  "platform": "local",
+  "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+}

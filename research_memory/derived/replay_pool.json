@@ -103960,6 +103960,20 @@
         "missing_comparability_identity:dataset_identity",
         "missing_comparability_identity:ema_semantics",
         "missing_comparability_identity:lr_schedule_identity",
+        "missing_comparability_identity:precision_identity",
+        "missing_comparability_identity:row_split_identity",
+        "missing_comparability_identity:target_transform_identity"
+      ],
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_comparability_identity:dataset_identity",
+        "missing_comparability_identity:ema_semantics",
+        "missing_comparability_identity:lr_schedule_identity",
         "missing_comparability_identity:optimizer_identity",
         "missing_comparability_identity:precision_identity",
         "missing_comparability_identity:row_split_identity",
@@ -104377,5 +104391,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "64d9402042e8a0c55e35e90caa2fda02f0fafe988aa941eafd154e62fc8053a2"
+  "source_digest": "4f5bd74a31620257cd525dddcda0baebc5c58b03f58927807247cd27b9f1045d"
 }

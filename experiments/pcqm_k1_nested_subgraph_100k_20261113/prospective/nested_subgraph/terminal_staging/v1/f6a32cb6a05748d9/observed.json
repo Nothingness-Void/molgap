@@ -1,0 +1,177 @@
+{
+  "context": {
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "arm_id": "nested_subgraph",
+    "arm_identity": "e6cf2ccd17eb8d62314446f88cf6a47f64db44e7be97f1ca543f1deadb3116bf",
+    "experiment_id": "pcqm_k1_nested_subgraph_100k_20261113",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42",
+    "package_identity": "ed76f3dade8840a9f7b6ab826ca0fefcd927e8859c1de66b0f70233414a2630c",
+    "platform": "local",
+    "platform_version": "1",
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-k1-nested-subgraph-100k-20261113-s42",
+    "source_archive_sha256": "f123bde591457ce5b4d887a4dbf0413e9686927ad3aead54f168223a2572b37a",
+    "source_commit": "a0a65922b83db5b5cf8e19a22ae6c8a741bd7aec",
+    "spec_identity": "48116bd3db25038bbdc6d71d3754b2333d7794c1a7666fa381e4d2235dd8ec19",
+    "training_recipe_sha256": "948dbb5d8771b6323b4222d3b298f0ab5a3ac0ee7270b6e8b11ffb2ce097e488"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "nested_subgraph-v1",
+      "category": "training",
+      "cost_event_id": "cost-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-0",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/nested_subgraph/terminal_staging/v1/f6a32cb6a05748d9/observed.json",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.224772248583333
+        }
+      },
+      "platform": "local",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    }
+  ],
+  "diagnostic_report": {
+    "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/reports/terminal_diagnostic_054316597b5dd9bd.json",
+    "logical_run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42",
+    "sha256": "d544b2dfc457a0f9a5e36ce0b6bd278c4776e429b21e148c373515dad80dd0f2",
+    "spec_identity": "48116bd3db25038bbdc6d71d3754b2333d7794c1a7666fa381e4d2235dd8ec19"
+  },
+  "mechanical_verification": {
+    "blockers": [],
+    "context": {
+      "account": "xn--tiq369bpxdruio7k22f89w",
+      "arm_id": "nested_subgraph",
+      "arm_identity": "e6cf2ccd17eb8d62314446f88cf6a47f64db44e7be97f1ca543f1deadb3116bf",
+      "experiment_id": "pcqm_k1_nested_subgraph_100k_20261113",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42",
+      "package_identity": "ed76f3dade8840a9f7b6ab826ca0fefcd927e8859c1de66b0f70233414a2630c",
+      "platform": "local",
+      "platform_version": "1",
+      "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-k1-nested-subgraph-100k-20261113-s42",
+      "source_archive_sha256": "f123bde591457ce5b4d887a4dbf0413e9686927ad3aead54f168223a2572b37a",
+      "source_commit": "a0a65922b83db5b5cf8e19a22ae6c8a741bd7aec",
+      "spec_identity": "48116bd3db25038bbdc6d71d3754b2333d7794c1a7666fa381e4d2235dd8ec19",
+      "training_recipe_sha256": "948dbb5d8771b6323b4222d3b298f0ab5a3ac0ee7270b6e8b11ffb2ce097e488"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "948dbb5d8771b6323b4222d3b298f0ab5a3ac0ee7270b6e8b11ffb2ce097e488"
+        },
+        "data_open": {
+          "path": "data_open_provenance.json",
+          "sha256": "50c72ac21a6c660f676db4c77c47e8177873c048be9fcd7253e4dbcf074a2b5a"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "a707666b4a06eef5d7279d1a826eae29875529285298b1fd1771c0bdf499d316"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "0ee7b75c2d25d94d8f7cbd61aa45b0f9ac891f7ac0625e639f94ceafeb2cafa1"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "95d158956423d81fa2b217b84b19de1a5c7433d90d440d93282ba9a092f99901"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "ac2ea0d3d04f6d9eb6fd25befb2aa4b504b1e7b0612a486aaa12a9d6a223f57c"
+        },
+        "trace_context": {
+          "path": "canonical_trace.json.context.json",
+          "sha256": "4b0fb5ae54ee53d5a6f819a2078c1983402bc73a6bafcbd21760f27ea98ab596"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "wall_seconds",
+          "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 4409.180094899999
+        },
+        {
+          "hardware": "NVIDIA GeForce RTX 5060",
+          "metric": "device_seconds",
+          "reason": "requires platform allocation accounting",
+          "semantics": "allocated_device",
+          "status": "missing",
+          "unit": "seconds",
+          "value": null
+        }
+      ],
+      "development_mae_eV": 0.13048968615472317,
+      "producer_platform_version": null,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "selected_optimizer_step": 28116,
+      "selected_weights": "live",
+      "target_identity": {
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": {
+          "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        }
+      }
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "missing_evidence": [
+    "scientific_comparison_not_evaluated",
+    "runtime_qualification_not_evaluated",
+    "replay_readiness_not_evaluated"
+  ],
+  "native_costs": [
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "wall_seconds",
+      "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 4409.180094899999
+    },
+    {
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "metric": "device_seconds",
+      "reason": "requires platform allocation accounting",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "roles": []
+}

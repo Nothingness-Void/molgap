@@ -1,0 +1,125 @@
+{
+  "actions": [
+    {
+      "action_id": "A001",
+      "attempt_ids": [
+        "nested_subgraph-v1"
+      ],
+      "cost_event_ids": [
+        "cost-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-planned",
+        "cost-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-0"
+      ],
+      "evidence_refs": [
+        "experiments/pcqm_k1_nested_subgraph_100k_20261113/recipe.json"
+      ],
+      "run_ids": [
+        "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream"
+      ],
+      "source_commit": "a0a65922b83db5b5cf8e19a22ae6c8a741bd7aec",
+      "type": "training"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/decision.md",
+    "facts": {
+      "ci_meV": null,
+      "effect_meV": null,
+      "failure_mode": "below_gate",
+      "format": "molgap-closure-facts-v1",
+      "search_terms": [
+        "k1",
+        "nested_subgraph",
+        "ngnn",
+        "subgraph_mpnn",
+        "muon",
+        "below_gate",
+        "100k"
+      ],
+      "source": null
+    },
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  },
+  "decision_state": {
+    "active_reference_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "available_actions": [
+      "RUN_PAIRED_100K",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/authority.json",
+    "chosen_action": "RUN_PAIRED_100K",
+    "policy_id": "pcqm-k1-nested-subgraph-100k-20261113",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/protocol.md",
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/role_plan.json"
+    ],
+    "schema": "molgap-decision-state-v2",
+    "snapshot_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/rml_decision_snapshots/37ccfd2cbef725faebbcd2f42e956dfe6eee9c805a893a6fd84a2d0a62a11a9a.json",
+    "snapshot_sha256": "37ccfd2cbef725faebbcd2f42e956dfe6eee9c805a893a6fd84a2d0a62a11a9a",
+    "state_timestamp": "2026-11-13T10:47:58.303965+00:00"
+  },
+  "family_id": "pcqm-k1-nested-subgraph-100k-20261113",
+  "hypothesis": {
+    "alternative_explanations": [
+      "Pure-2D 2-hop induced-subgraph message adds redundant local features beyond K1's RWSE+9-layer message passing",
+      "108K zero-init parameters slow optimization or overfit within 100K at LR 4e-4 under Muon",
+      "Hardware/PyTorch 2.7.1 vs Kaggle T4 PyTorch 2.11.0 runtime differences confound small deltas"
+    ],
+    "changed_mechanism": "k1-nested-subgraph-pre-message-layer4",
+    "cheapest_falsifier": "One local RTX 5060 40-pass 100K run on pcqm_fixed_100k_v1 reusing saved k1_100k_muon baseline offline without retraining.",
+    "decision_changed_if_negative": "Close module NEGATIVE_UNDER_CONTRACT on pcqm_fixed_100k_v1 with terminal attribution; no retry or scale-up.",
+    "decision_changed_if_positive": "Nominate delta <= -3.0 meV (paired 95% CI < 0) for runtime-parity check and multi-seed/500K authorization only; no automatic promotion.",
+    "expected_native_cost_ref": "cost-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-planned",
+    "historical_unknowns": [],
+    "hypothesis_id": "H-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
+    "observed_deficiency": "Standard K1 message passing updates node states across single bonds per layer without explicit closed h=2 rooted induced-subgraph message passing.",
+    "related_closed_family_ids": [
+      "pcqm-k1-muon-100k-20261106",
+      "pcqm-k1-hop-shell-100k"
+    ],
+    "supporting_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ]
+  },
+  "owner": "desktop",
+  "question": "Does mounting NestedSubgraphMessage (h=2 rooted subgraph message at PRE_MESSAGE layer 4) lower 50K dev Gap MAE under K1-Muon 100K against ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon?",
+  "record_mode": "prospective",
+  "result": {
+    "evidence_ids": [
+      "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/nested_subgraph/rml_finalized/v5_evidence.json"
+    ]
+  },
+  "schema": "molgap-trajectory-v1",
+  "state_at_start": {
+    "budget_snapshot_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/authority.json",
+    "contract_refs": [
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/recipe.json",
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/protocol.md",
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/README.md"
+    ],
+    "parent_trajectory_ids": [],
+    "prior_evidence_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "prior_trajectory_ids": [],
+    "reference_ids": [
+      "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/protocol.md",
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/role_plan.json"
+    ],
+    "source_commit": "a0a65922b83db5b5cf8e19a22ae6c8a741bd7aec",
+    "source_config_identity": "e6cf2ccd17eb8d62314446f88cf6a47f64db44e7be97f1ca543f1deadb3116bf"
+  },
+  "track": "B",
+  "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+}

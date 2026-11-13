@@ -1,0 +1,86 @@
+{
+  "artifacts": [
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/training_contract.json",
+      "name": "contract",
+      "sha256": "948dbb5d8771b6323b4222d3b298f0ab5a3ac0ee7270b6e8b11ffb2ce097e488"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/data_open_provenance.json",
+      "name": "data_open",
+      "sha256": "50c72ac21a6c660f676db4c77c47e8177873c048be9fcd7253e4dbcf074a2b5a"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/development_predictions.pt",
+      "name": "predictions",
+      "sha256": "a707666b4a06eef5d7279d1a826eae29875529285298b1fd1771c0bdf499d316"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/last_checkpoint.pt",
+      "name": "resume",
+      "sha256": "0ee7b75c2d25d94d8f7cbd61aa45b0f9ac891f7ac0625e639f94ceafeb2cafa1"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/selected_model.pt",
+      "name": "selected_model",
+      "sha256": "95d158956423d81fa2b217b84b19de1a5c7433d90d440d93282ba9a092f99901"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/canonical_trace.json",
+      "name": "training_trace",
+      "sha256": "ac2ea0d3d04f6d9eb6fd25befb2aa4b504b1e7b0612a486aaa12a9d6a223f57c"
+    },
+    {
+      "availability": "machine_local_verified",
+      "locator": "external:///D:/molgap-artifacts/runs/pcqm-k1-nested-subgraph-100k-20261113-s42/v1/nested_subgraph/canonical_trace.json.context.json",
+      "name": "trace_context",
+      "sha256": "4b0fb5ae54ee53d5a6f819a2078c1983402bc73a6bafcbd21760f27ea98ab596"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_nested_subgraph_100k_20261113/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_k1_nested_subgraph_100k_20261113/recipe.json",
+  "metrics": {
+    "development_mae_eV": 0.13048968615472317,
+    "missing_reason": null,
+    "selected_optimizer_step": 28116,
+    "selected_weights": "live",
+    "source_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/nested_subgraph/terminal_staging/v1/f6a32cb6a05748d9/observed.json",
+    "unit": "eV"
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "terminal_staging",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "retained output bytes and explicit decision"
+  },
+  "outcome": {
+    "artifact_status": "mechanically_verified",
+    "budget_decision": "NOT_EVALUATED",
+    "comparison_status": "NOT_EVALUATED",
+    "execution_status": "complete",
+    "full_handoff_status": "NOT_EVALUATED",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "NOT_EVALUATED"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "terminal_output_inspection",
+  "track": "B"
+}

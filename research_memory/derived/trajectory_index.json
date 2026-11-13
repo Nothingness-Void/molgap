@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e6cbf9efa9aca1ca81263d310191b519d791abc5522378dc5d89ac9b56136db3",
+  "source_digest": "c41961df3b16a8af775a8e2edc08af4caae3dab8d9b2508d2550257ccf7a6089",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -773,6 +773,22 @@
       ],
       "track": "B",
       "trajectory_id": "T-pcqm-k1-muon-100k-20261106-s42-muon"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/decision.md",
+      "family_id": "pcqm-k1-nested-subgraph-100k-20261113",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_nested_subgraph_100k_20261113/prospective/nested_subgraph/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+      ],
+      "track": "B",
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
     },
     {
       "completeness_status": "complete",

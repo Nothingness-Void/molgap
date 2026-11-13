@@ -241,6 +241,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph:A001",
+      "target": "experiments/pcqm_k1_nested_subgraph_100k_20261113/recipe.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms:A001",
       "target": "experiments/pcqm_k1_norm_mechanisms_100k/generated/51236b517cf70d1e05388371706384c364494f8da6ef0a2a1d6c26f51ef5ea34/post_node_rms/recipe.json",
       "type": "action_produced_evidence"
@@ -2101,6 +2106,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
+      "type": "prior_evidence"
+    },
+    {
       "source": "ev-terminal-T-pcqm-k1-rms-position-160ep-100k-s42-20261022-post_node_rms",
       "target": "T-pcqm-k1-message-norm-100k-s42-msgnorm_fixed",
       "type": "prior_evidence"
@@ -3496,6 +3506,11 @@
       "type": "reference_used"
     },
     {
+      "source": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "target": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
       "type": "reference_used"
@@ -4108,6 +4123,10 @@
     },
     {
       "id": "ev-terminal-T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "type": "evidence"
+    },
+    {
+      "id": "ev-terminal-T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
       "type": "evidence"
     },
     {
@@ -4828,6 +4847,10 @@
     },
     {
       "id": "T-pcqm-k1-muon-100k-20261106-s42-muon",
+      "type": "trajectory"
+    },
+    {
+      "id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph",
       "type": "trajectory"
     },
     {

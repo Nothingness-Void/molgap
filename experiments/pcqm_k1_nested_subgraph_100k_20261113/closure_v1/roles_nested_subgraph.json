@@ -1,0 +1,99 @@
+{
+  "context": {
+    "account": "xn--tiq369bpxdruio7k22f89w",
+    "arm_id": "nested_subgraph",
+    "arm_identity": "e6cf2ccd17eb8d62314446f88cf6a47f64db44e7be97f1ca543f1deadb3116bf",
+    "experiment_id": "pcqm_k1_nested_subgraph_100k_20261113",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42",
+    "package_identity": "ed76f3dade8840a9f7b6ab826ca0fefcd927e8859c1de66b0f70233414a2630c",
+    "platform": "local",
+    "platform_version": "1",
+    "run_reference": "xn--tiq369bpxdruio7k22f89w/pcqm-k1-nested-subgraph-100k-20261113-s42",
+    "source_archive_sha256": "f123bde591457ce5b4d887a4dbf0413e9686927ad3aead54f168223a2572b37a",
+    "source_commit": "a0a65922b83db5b5cf8e19a22ae6c8a741bd7aec",
+    "spec_identity": "48116bd3db25038bbdc6d71d3754b2333d7794c1a7666fa381e4d2235dd8ec19",
+    "training_recipe_sha256": "948dbb5d8771b6323b4222d3b298f0ab5a3ac0ee7270b6e8b11ffb2ce097e488"
+  },
+  "protected_role_evidence": {
+    "record": {
+      "path": "data_open_provenance.json",
+      "sha256": "50c72ac21a6c660f676db4c77c47e8177873c048be9fcd7253e4dbcf074a2b5a"
+    },
+    "status": "untouched",
+    "text": "Hash-bound record data_open_provenance.json (sha256 50c72ac21a6c660f676db4c77c47e8177873c048be9fcd7253e4dbcf074a2b5a, listed in output_manifest.json) shows the frozen training process opened 3 dataset shard file(s): every selected development/train shard in each of 1 invocation(s), and no official_validation, test_dev or test_challenge file. This record covers only Python-level file opens in the training main process. It does not cover native code or child processes, nor network access (the Kaggle kernel has internet), nor opens of files outside the directory that holds the frozen dataset manifest. 'untouched' means that process did not open protected-role files through Python; it does not prove the data was unreachable."
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/closure_v1/roles_nested_subgraph.json",
+      "role_event_id": "role-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/closure_v1/roles_nested_subgraph.json",
+      "role_event_id": "role-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-development-prediction_input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/closure_v1/roles_nested_subgraph.json",
+      "role_event_id": "role-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-development-labels_read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/closure_v1/roles_nested_subgraph.json",
+      "role_event_id": "role-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-development-metric_computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_nested_subgraph_100k_20261113/closure_v1/roles_nested_subgraph.json",
+      "role_event_id": "role-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph-development-selection_used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-nested-subgraph-100k-20261113-s42:nested_subgraph:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "T-pcqm-k1-nested-subgraph-100k-20261113-s42-nested_subgraph"
+    }
+  ]
+}
